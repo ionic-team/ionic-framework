@@ -74,6 +74,69 @@ backdrop.stopPropagation = false;
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+import { IonBackdrop, IonContent } from '@ionic/react';
+
+export const BackdropExample: React.FunctionComponent = () => (
+  <IonContent>
+    {/*-- Default backdrop --*/}
+    <IonBackdrop />
+
+    {/*-- Backdrop that is not tappable --*/}
+    <IonBackdrop tappable={false} />
+
+    {/*-- Backdrop that is not visible --*/}
+    <IonBackdrop visible={false} />
+
+    {/*-- Backdrop with propagation --*/}
+    <IonBackdrop stopPropagation={false} />
+
+    <IonBackdrop tappable={true} visible={true} stopPropagation={true} />
+  </IonContent>
+);
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default backdrop -->
+  <ion-backdrop></ion-backdrop>
+
+  <!-- Backdrop that is not tappable -->
+  <ion-backdrop tappable="false"></ion-backdrop>
+
+  <!-- Backdrop that is not visible -->
+  <ion-backdrop visible="false"></ion-backdrop>
+
+  <!-- Backdrop with propagation -->
+  <ion-backdrop stopPropagation="false"></ion-backdrop>
+
+  <!-- Backdrop that sets dynamic properties -->
+  <ion-backdrop
+    :tappable="enableBackdropDismiss"
+    :visible="showBackdrop"
+    :stopPropagation="shouldPropagate">
+  </ion-backdrop>
+</template>
+
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+
+  @Component()
+  export default class Example extends Vue {
+    backdropDismiss = false;
+    showBackdrop = false;
+    shouldPropagate = false;
+  }
+</script>
+```
+
+
 
 ## Properties
 
@@ -90,6 +153,31 @@ backdrop.stopPropagation = false;
 | ---------------- | ------------------------------------ | ------------------- |
 | `ionBackdropTap` | Emitted when the backdrop is tapped. | `CustomEvent<void>` |
 
+
+## Dependencies
+
+### Used by
+
+ - [ion-action-sheet](../action-sheet)
+ - [ion-alert](../alert)
+ - [ion-loading](../loading)
+ - [ion-menu](../menu)
+ - [ion-modal](../modal)
+ - [ion-picker](../picker)
+ - [ion-popover](../popover)
+
+### Graph
+```mermaid
+graph TD;
+  ion-action-sheet --> ion-backdrop
+  ion-alert --> ion-backdrop
+  ion-loading --> ion-backdrop
+  ion-menu --> ion-backdrop
+  ion-modal --> ion-backdrop
+  ion-picker --> ion-backdrop
+  ion-popover --> ion-backdrop
+  style ion-backdrop fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

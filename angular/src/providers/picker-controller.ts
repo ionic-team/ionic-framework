@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PickerOptions } from '@ionic/core';
+import { PickerOptions, pickerController } from '@ionic/core';
 
 import { OverlayBaseController } from '../util/overlay';
 
@@ -8,6 +8,6 @@ import { OverlayBaseController } from '../util/overlay';
 })
 export class PickerController extends OverlayBaseController<PickerOptions, HTMLIonPickerElement> {
   constructor() {
-    super('ion-picker-controller');
+    super(pickerController);
   }
 }

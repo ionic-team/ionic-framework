@@ -3,15 +3,15 @@
 :host {
   /**
    * @prop --background: Background of the tab button
-   * @prop --background-focused: Background of the focused tab button
+   * @prop --background-focused: Background of the tab button when focused with the tab key
    *
    * @prop --color: Color of the tab button
    * @prop --color-selected: Color of the selected tab button
    *
    * @prop --padding-top: Top padding of the tab button
-   * @prop --padding-end: End padding of the tab button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the tab button
    * @prop --padding-bottom: Bottom padding of the tab button
-   * @prop --padding-start: Start padding of the tab button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the tab button
    *
    * @prop --ripple-color: Color of the button ripple effect
    */
@@ -24,6 +24,8 @@
   justify-content: center;
 
   height: 100%;
+
+  outline: none;
 
   background: var(--background);
   color: var(--color);
@@ -61,7 +63,7 @@ a {
   -webkit-user-drag: none;
 }
 
-a:focus-visible {
+:host(.ion-focused) {
   background: var(--background-focused);
 }
 

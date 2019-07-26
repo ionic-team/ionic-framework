@@ -40,6 +40,73 @@ The default spinner to use is based on the platform. The default spinner for `io
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+import { IonSpinner, IonContent } from '@ionic/react';
+
+export const SpinnerExample: React.FunctionComponent = () => (
+  <IonContent>
+    {/*-- Default Spinner --*/}
+    <IonSpinner />
+
+    {/*-- Lines --*/}
+    <IonSpinner name="lines" />
+
+    {/*-- Lines Small --*/}
+    <IonSpinner name="lines-small" />
+
+    {/*-- Dots --*/}
+    <IonSpinner name="dots" />
+
+    {/*-- Bubbles --*/}
+    <IonSpinner name="bubbles" />
+
+    {/*-- Circles --*/}
+    <IonSpinner name="circles" />
+
+    {/*-- Crescent --*/}
+    <IonSpinner name="crescent" />
+
+    {/*-- Paused Default Spinner --*/}
+    <IonSpinner paused />
+  </IonContent>
+);
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default Spinner -->
+  <ion-spinner></ion-spinner>
+
+  <!-- Lines -->
+  <ion-spinner name="lines"></ion-spinner>
+
+  <!-- Lines Small -->
+  <ion-spinner name="lines-small"></ion-spinner>
+
+  <!-- Dots -->
+  <ion-spinner name="dots"></ion-spinner>
+
+  <!-- Bubbles -->
+  <ion-spinner name="bubbles"></ion-spinner>
+
+  <!-- Circles -->
+  <ion-spinner name="circles"></ion-spinner>
+
+  <!-- Crescent -->
+  <ion-spinner name="crescent"></ion-spinner>
+
+  <!-- Paused Default Spinner -->
+  <ion-spinner paused></ion-spinner>
+</template>
+```
+
+
 
 ## Properties
 
@@ -57,6 +124,23 @@ The default spinner to use is based on the platform. The default spinner for `io
 | --------- | -------------------- |
 | `--color` | Color of the spinner |
 
+
+## Dependencies
+
+### Used by
+
+ - [ion-infinite-scroll-content](../infinite-scroll-content)
+ - [ion-loading](../loading)
+ - [ion-refresher-content](../refresher-content)
+
+### Graph
+```mermaid
+graph TD;
+  ion-infinite-scroll-content --> ion-spinner
+  ion-loading --> ion-spinner
+  ion-refresher-content --> ion-spinner
+  style ion-spinner fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

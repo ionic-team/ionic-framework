@@ -9,7 +9,8 @@
   --min-height: #{$item-md-min-height};
   --background: #{$item-md-background};
   --background-activated: var(--background);
-  --background-focused: #{$item-md-background-activated};
+  --background-focused: #{$item-md-background-focused};
+  --background-hover: #{$item-md-background-hover};
   --border-color: #{$item-md-border-bottom-color};
   --color: #{$item-md-color};
   --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
@@ -27,6 +28,25 @@
   font-weight: normal;
 
   text-transform: none;
+}
+
+
+// Material Design Item: Focused & Activated
+// --------------------------------------------------
+
+:host(.ion-focused.activated) .item-native {
+  background: var(--background-focused);
+  color: var(--color-focused);
+}
+
+:host(.ion-color.activated) .item-native {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+:host(.ion-color.ion-focused.activated) .item-native {
+  background: current-color(shade);
+  color: current-color(contrast);
 }
 
 
@@ -102,6 +122,10 @@
   color: $item-md-icon-slot-color;
 
   font-size: $item-md-icon-slot-font-size;
+}
+
+:host(.ion-color) ::slotted(ion-icon) {
+  color: current-color(contrast);
 }
 
 ::slotted(ion-icon[slot]) {
@@ -241,7 +265,7 @@
 
 :host(.item-label-floating),
 :host(.item-label-stacked) {
-  --min-height: 65px;
+  --min-height: 55px;
 }
 
 // TODO: refactor, ion-item and ion-textarea have the same CSS

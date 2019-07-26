@@ -1,4 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
+import { IonRouterOutlet } from '@ionic/angular';
 
 @Component({
   selector: 'app-router-link-page',
@@ -11,9 +12,15 @@ export class RouterLinkPageComponent implements OnInit {
   didEnter = 0;
   willLeave = 0;
   didLeave = 0;
+  canGoBack: boolean = null;
+
+  constructor(
+    private ionRouterOutlet: IonRouterOutlet
+  ) {}
 
   ngOnInit() {
     NgZone.assertInAngularZone();
+    this.canGoBack = this.ionRouterOutlet.canGoBack();
     this.onInit++;
   }
 
@@ -21,10 +28,16 @@ export class RouterLinkPageComponent implements OnInit {
     if (this.onInit !== 1) {
       throw new Error('ngOnInit was not called');
     }
+    if (this.canGoBack !== this.ionRouterOutlet.canGoBack()) {
+      throw new Error('canGoBack() changed');
+    }
     NgZone.assertInAngularZone();
     this.willEnter++;
   }
   ionViewDidEnter() {
+    if (this.canGoBack !== this.ionRouterOutlet.canGoBack()) {
+      throw new Error('canGoBack() changed');
+    }
     NgZone.assertInAngularZone();
     this.didEnter++;
   }

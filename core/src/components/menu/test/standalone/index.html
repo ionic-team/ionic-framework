@@ -8,8 +8,8 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-  <style>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <style>
     .ion-page ion-content {
       --padding-top: 16px;
       --padding-end: 16px;
@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <ion-menu side="start">
+    <ion-menu side="start" id="start-menu">
       <ion-header>
         <ion-toolbar>
           <ion-title>Start Menu</ion-title>
@@ -37,7 +37,7 @@
       </ion-content>
     </ion-menu>
 
-    <ion-menu side="end" type="push">
+    <ion-menu side="end" type="push" id="end-menu">
       <ion-header>
         <ion-toolbar>
           <ion-title>End Menu</ion-title>

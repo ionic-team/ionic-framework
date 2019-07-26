@@ -24,9 +24,6 @@
   background: current-color(base);
 }
 
-:host(.ion-color.toggle-checked) .toggle-inner {
-  background: current-color(contrast);
-}
 
 // iOS Toggle Background Track: Unchecked
 // -----------------------------------------
@@ -46,29 +43,10 @@
 
   transition: background-color $toggle-ios-transition-duration;
 
-  background-color: $toggle-ios-border-color-off;
+  background-color: $toggle-ios-background-color-off;
 
   overflow: hidden;
   pointer-events: none;
-}
-
-
-// iOS Toggle Background Oval: Unchecked
-// -----------------------------------------
-
-.toggle-icon::before {
-  @include position($toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width);
-  @include border-radius($toggle-ios-border-radius);
-
-  position: absolute;
-
-  transform: scale3d(1, 1, 1);
-
-  transition: transform $toggle-ios-transition-duration;
-
-  background: var(--background);
-
-  content: "";
 }
 
 

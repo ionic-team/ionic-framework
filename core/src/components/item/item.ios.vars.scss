@@ -25,7 +25,7 @@ $item-ios-paragraph-margin-start:            $item-ios-paragraph-margin-end !def
 $item-ios-paragraph-font-size:               14px !default;
 
 /// @prop - Color of the item paragraph
-$item-ios-paragraph-text-color:              $text-color-step-600 !default;
+$item-ios-paragraph-text-color:              rgba($text-color-rgb, .4) !default;
 
 /// @prop - Width of the avatar in the item
 $item-ios-avatar-width:                      36px !default;

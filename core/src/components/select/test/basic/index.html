@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -53,6 +53,15 @@
           </ion-select>
         </ion-item>
 
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>Object Values with trackBy</ion-list-header>
+
+        <ion-item>
+          <ion-label>Users</ion-label>
+          <ion-select id="objectSelectCompareWith"></ion-select>
+        </ion-item>
       </ion-list>
 
       <ion-list>
@@ -265,7 +274,7 @@
         </ion-item>
       </ion-list>
 
-      <div text-center>
+      <div class="ion-text-center">
         <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
           Toggle Disabled
         </ion-button>
@@ -280,6 +289,48 @@
     </style>
 
     <script>
+      let objectOptions = [
+        {
+          id: 1,
+          first: 'Alice',
+          last: 'Smith',
+        },
+        {
+          id: 2,
+          first: 'Bob',
+          last: 'Davis',
+        },
+        {
+          id: 3,
+          first: 'Charlie',
+          last: 'Rosenburg',
+        }
+      ];
+
+      let compareWithFn = (o1, o2) => {
+        return o1 && o2 ? o1.id === o2.id : o1 === o2;
+      };
+
+      let objectSelectElement = document.getElementById('objectSelectCompareWith');
+      objectSelectElement.compareWith = compareWithFn; // 'id';
+
+      objectOptions.forEach((option, i) => {
+        let selectOption = document.createElement('ion-select-option');
+        selectOption.value = option;
+        selectOption.textContent = option.first + ' ' + option.last;
+        selectOption.selected = (i === 0);
+
+        objectSelectElement.appendChild(selectOption)
+      });
+
+      setTimeout(() => {
+        objectSelectElement.value = {
+          id: 1,
+          first: 'Alice',
+          last: 'Smith',
+        };
+      }, 3000);
+
       var pets = document.getElementById('pets');
       pets.value = ['bird', 'dog'];
 

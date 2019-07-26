@@ -1,4 +1,6 @@
-import { Component, ComponentInterface, Element, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Method, Prop, h, readTask, writeTask } from '@stencil/core';
+
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-ripple-effect',
@@ -8,9 +10,6 @@ import { Component, ComponentInterface, Element, Method, Prop, QueueApi } from '
 export class RippleEffect implements ComponentInterface {
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * Sets the type of ripple-effect:
@@ -24,12 +23,15 @@ export class RippleEffect implements ComponentInterface {
   @Prop() type: 'bounded' | 'unbounded' = 'bounded';
 
   /**
-   * Adds the ripple effect to the parent element
+   * Adds the ripple effect to the parent element.
+   *
+   * @param x The horizontal coordinate of where the ripple should start.
+   * @param y The vertical coordinate of where the ripple should start.
    */
   @Method()
-  async addRipple(pageX: number, pageY: number) {
+  async addRipple(x: number, y: number) {
     return new Promise<() => void>(resolve => {
-      this.queue.read(() => {
+      readTask(() => {
         const rect = this.el.getBoundingClientRect();
         const width = rect.width;
         const height = rect.height;
@@ -38,23 +40,23 @@ export class RippleEffect implements ComponentInterface {
         const maxRadius = this.unbounded ? maxDim : hypotenuse + PADDING;
         const initialSize = Math.floor(maxDim * INITIAL_ORIGIN_SCALE);
         const finalScale = maxRadius / initialSize;
-        let posX = pageX - rect.left;
-        let posY = pageY - rect.top;
+        let posX = x - rect.left;
+        let posY = y - rect.top;
         if (this.unbounded) {
           posX = width * 0.5;
           posY = height * 0.5;
         }
-        const x = posX - initialSize * 0.5;
-        const y = posY - initialSize * 0.5;
+        const styleX = posX - initialSize * 0.5;
+        const styleY = posY - initialSize * 0.5;
         const moveX = width * 0.5 - posX;
         const moveY = height * 0.5 - posY;
 
-        this.queue.write(() => {
-          const div = this.win.document.createElement('div');
+        writeTask(() => {
+          const div = document.createElement('div');
           div.classList.add('ripple-effect');
           const style = div.style;
-          style.top = y + 'px';
-          style.left = x + 'px';
+          style.top = styleY + 'px';
+          style.left = styleX + 'px';
           style.width = style.height = initialSize + 'px';
           style.setProperty('--final-scale', `${finalScale}`);
           style.setProperty('--translate-end', `${moveX}px, ${moveY}px`);
@@ -75,22 +77,27 @@ export class RippleEffect implements ComponentInterface {
     return this.type === 'unbounded';
   }
 
-  hostData() {
-    return {
-      role: 'presentation',
-      class: {
-        'unbounded': this.unbounded
-      }
-    };
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        role="presentation"
+        class={{
+          [mode]: true,
+          'unbounded': this.unbounded
+        }}
+      >
+      </Host>
+    );
   }
 }
 
-function removeRipple(ripple: HTMLElement) {
+const removeRipple = (ripple: HTMLElement) => {
   ripple.classList.add('fade-out');
   setTimeout(() => {
     ripple.remove();
   }, 200);
-}
+};
 
 const PADDING = 10;
 const INITIAL_ORIGIN_SCALE = 0.5;

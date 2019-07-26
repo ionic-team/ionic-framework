@@ -1,5 +1,6 @@
-import { Component, ComponentInterface, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Host, Listen, Prop, h } from '@stencil/core';
 
+import { getIonMode } from '../../global/ionic-global';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { now } from '../../utils/helpers';
 
@@ -17,8 +18,6 @@ export class Backdrop implements ComponentInterface {
   private blocker = GESTURE_CONTROLLER.createBlocker({
     disableScroll: true
   });
-
-  @Prop({ context: 'document' }) doc!: Document;
 
   /**
    * If `true`, the backdrop will be visible.
@@ -74,13 +73,18 @@ export class Backdrop implements ComponentInterface {
     }
   }
 
-  hostData() {
-    return {
-      tabindex: '-1',
-      class: {
-        'backdrop-hide': !this.visible,
-        'backdrop-no-tappable': !this.tappable,
-      }
-    };
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        tabindex="-1"
+        class={{
+          [mode]: true,
+          'backdrop-hide': !this.visible,
+          'backdrop-no-tappable': !this.tappable,
+        }}
+      >
+      </Host>
+    );
   }
 }

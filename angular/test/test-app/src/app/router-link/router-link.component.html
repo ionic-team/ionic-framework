@@ -11,6 +11,7 @@
   <p>ionViewDidEnter: <span id="ionViewDidEnter">{{didEnter}}</span></p>
   <p>ionViewWillLeave: <span id="ionViewWillLeave">{{willLeave}}</span></p>
   <p>ionViewDidLeave: <span id="ionViewDidLeave">{{didLeave}}</span></p>
+  <p>Change Detections: <span id="counter">{{counter()}}</span></p>
 
   <p>
     <ion-button routerLink="/router-link-page" expand="block" color="dark" id="routerLink">ion-button[routerLink]</ion-button>
@@ -26,5 +27,7 @@
   <p><button (click)="navigateForward()" id="button-forward">navigateForward</button></p>
   <p><button (click)="navigateRoot()" id="button-root">navigateForward</button></p>
   <p><button (click)="navigateBack()" id="button-back">navigateBack</button></p>
+
+  <p><button id="queryParamsFragment" routerLink="/router-link-page2/MyPageID==" [queryParams]="{ token: 'A&=#Y' }" fragment="myDiv1">Query Params and Fragment</button></p>
 
 </ion-content>

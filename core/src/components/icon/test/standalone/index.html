@@ -8,8 +8,8 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-icon name="logo-ionic" color="primary"></ion-icon>
@@ -56,6 +56,9 @@
   <ion-icon name="sunny" color="success"></ion-icon>
   <ion-icon name="umbrella"></ion-icon>
   <ion-icon name="rainy" color="primary"></ion-icon>
+
+  <!-- Custom Icon-->
+  <ion-icon src="./standalone/done-all.svg"></ion-icon>
 
   <style>
     ion-icon {

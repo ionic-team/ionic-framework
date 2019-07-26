@@ -6,11 +6,14 @@
 :host {
   /**
    * @prop --background: Background of the input
+   *
    * @prop --color: Color of the input text
+   *
    * @prop --padding-top: Top padding of the input
-   * @prop --padding-end: End padding of the input
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the input
    * @prop --padding-bottom: Bottom padding of the input
-   * @prop --padding-start: Start padding of the input
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the input
+   *
    * @prop --placeholder-color: Color of the input placeholder text
    * @prop --placeholder-font-style: Font style of the input placeholder text
    * @prop --placeholder-font-weight: Font weight of the input placeholder text
@@ -68,7 +71,7 @@
 
   width: 100%;
   max-width: 100%;
-  height: 100%;
+  max-height: 100%;
 
   border: 0;
 

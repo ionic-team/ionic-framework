@@ -40,6 +40,71 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonContent } from '@ionic/react';
+
+export const RadioExample: React.FunctionComponent = () => (
+  <IonContent>
+    <IonList>
+      <IonRadioGroup>
+        <IonListHeader>
+          <IonLabel>Name</IonLabel>
+        </IonListHeader>
+
+        <IonItem>
+          <IonLabel>Biff</IonLabel>
+          <IonRadio slot="start" value="biff" checked />
+        </IonItem>
+
+        <IonItem>
+          <IonLabel>Griff</IonLabel>
+          <IonRadio slot="start" value="griff" />
+        </IonItem>
+
+        <IonItem>
+          <IonLabel>Buford</IonLabel>
+          <IonRadio slot="start" value="buford" />
+        </IonItem>
+      </IonRadioGroup>
+    </IonList>
+  </IonContent>
+);
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-list>
+    <ion-radio-group>
+      <ion-list-header>
+        <ion-label>Name</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Biff</ion-label>
+        <ion-radio slot="start" value="biff" checked></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Griff</ion-label>
+        <ion-radio slot="start" value="griff"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Buford</ion-label>
+        <ion-radio slot="start" value="buford"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</template>
+```
+
+
 
 ## Properties
 
@@ -69,6 +134,19 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 | `--color`         | Color of the radio         |
 | `--color-checked` | Color of the checked radio |
 
+
+## Dependencies
+
+### Used by
+
+ - ion-select-popover
+
+### Graph
+```mermaid
+graph TD;
+  ion-select-popover --> ion-radio
+  style ion-radio fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

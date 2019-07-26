@@ -23,7 +23,6 @@
 // --------------------------------------------------
 
 :host(.ion-color)::slotted(ion-segment-button) {
-  --background-hover: #{current-color(base, .04)};
   --background-activated: #{current-color(base, .16)};
   --ripple-color: #{current-color(base)};
 
@@ -40,15 +39,20 @@
   color: #{current-color(base)};
 }
 
+@media (any-hover: hover) {
+  :host(.ion-color)::slotted(ion-segment-button:hover) {
+    background: #{current-color(base, .04)};
+  }
+}
 
 // Segment: Default Toolbar
 // --------------------------------------------------
 
-:host-context(ion-toolbar):not(.ion-color)::slotted(ion-segment-button) {
+:host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(ion-segment-button) {
   color: #{var(--ion-toolbar-color-unchecked, var(--color))};
 }
 
-:host-context(ion-toolbar):not(.ion-color)::slotted(.segment-button-checked) {
+:host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(.segment-button-checked) {
   --indicator-color-checked: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 
   color: #{var(--ion-toolbar-color-checked, var(--color-checked))};

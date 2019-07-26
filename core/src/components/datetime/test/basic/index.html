@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -30,6 +30,16 @@
         <ion-item>
           <ion-label>Default</ion-label>
           <ion-datetime></ion-datetime>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Default with floating label</ion-label>
+          <ion-datetime></ion-datetime>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Placeholder with floating label</ion-label>
+          <ion-datetime placeholder="Select a date"></ion-datetime>
         </ion-item>
 
         <ion-item>
@@ -97,6 +107,11 @@
         <ion-item>
           <ion-label>HH:mm</ion-label>
           <ion-datetime display-format="HH:mm"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>HH:mm (initial value 00:00)</ion-label>
+          <ion-datetime display-format="HH:mm" value="00:00"></ion-datetime>
         </ion-item>
 
         <ion-item>

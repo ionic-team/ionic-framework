@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActionSheetOptions } from '@ionic/core';
+import { ActionSheetOptions, actionSheetController } from '@ionic/core';
 
 import { OverlayBaseController } from '../util/overlay';
 
@@ -8,6 +8,6 @@ import { OverlayBaseController } from '../util/overlay';
 })
 export class ActionSheetController extends OverlayBaseController<ActionSheetOptions, HTMLIonActionSheetElement> {
   constructor() {
-    super('ion-action-sheet-controller');
+    super(actionSheetController);
   }
 }

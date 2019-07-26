@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Item - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -63,27 +64,27 @@
       </ion-item>
 
       <ion-item>
-        <ion-label text-wrap>
-          Multiline text that should wrap when it is too long to fit on one line in the item. Attribute on .item
+        <ion-label class="ion-text-wrap">
+          Multiline text that should wrap when it is too long to fit on one line in the item. Attribute on ion-label
         </ion-label>
       </ion-item>
 
       <ion-item color="secondary">
-        <ion-label text-wrap>
+        <ion-label class="ion-text-wrap">
           <h1>H1 Title Text</h1>
           <p>Paragraph line 1</p>
         </ion-label>
       </ion-item>
 
       <ion-item>
-        <ion-label text-wrap>
+        <ion-label class="ion-text-wrap">
           <h2>H2 Title Text</h2>
           <p>Paragraph line 1</p>
         </ion-label>
       </ion-item>
 
       <ion-item>
-        <ion-label text-wrap>
+        <ion-label class="ion-text-wrap">
           <ion-text color="primary">
             <h3>H3 Title Text</h3>
           </ion-text>
@@ -95,7 +96,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label text-wrap>
+        <ion-label class="ion-text-wrap">
           <h4>H4 Title Text</h4>
           <p>Paragraph line 1</p>
           <p>Paragraph line 2</p>
@@ -109,6 +110,16 @@
         </ion-label>
       </ion-item>
 
+      <ion-item class="overflow-visible">
+        <ion-label position="fixed">PIN:</ion-label>
+        <ion-input type="number" pattern="[0-9]*" inputmode="numeric" formControlName="acct_no"
+          placeholder="Enter 7 digits"></ion-input>
+        <span class="error">Must enter 7 digits</span>
+      </ion-item>
+
+      <ion-item class="overflow-scroll">
+        <ion-label class="ion-text-wrap">Item with overflow scroll. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mattis molestie a iaculis at erat pellentesque adipiscing commodo. Vulputate enim nulla aliquet porttitor. Fermentum dui faucibus in ornare quam viverra orci sagittis eu. Faucibus scelerisque eleifend donec pretium vulputate sapien nec. Cras semper auctor neque vitae. Cursus eget nunc scelerisque viverra mauris in aliquam. Non sodales neque sodales ut etiam sit amet. Sit amet nulla facilisi morbi tempus. Accumsan in nisl nisi scelerisque eu. Sed elementum tempus egestas sed sed. Urna nunc id cursus metus aliquam. Gravida dictum fusce ut placerat orci nulla pellentesque. Id diam maecenas ultricies mi eget. Elementum nisi quis eleifend quam adipiscing vitae proin.</ion-label>
+      </ion-item>
     </ion-content>
 
     <ion-footer>
@@ -118,6 +129,35 @@
     </ion-footer>
 
   </ion-app>
+
+  <style>
+    .overflow-visible {
+      --highlight-color-focused: transparent;
+      --border-color: red;
+
+      overflow: visible;
+    }
+
+    .overflow-scroll {
+      margin-top: 10px;
+      height: 140px;
+
+      overflow: scroll;
+    }
+
+    .error {
+      display: inline-block;
+      position: absolute;
+      bottom: -4px;
+      right: 1em;
+      padding: 0 6px;
+      color: red;
+      background-color: #fff;
+      font-size: 12px;
+      height: 12px;
+    }
+
+  </style>
 </body>
 
 </html>

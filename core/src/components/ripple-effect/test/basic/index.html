@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <style>
     .my-block {
       position: relative;
@@ -44,7 +44,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding no-bounce>
+    <ion-content class="ion-padding" no-bounce>
       <p>
         <ion-button size="small">Small</ion-button>
       </p>

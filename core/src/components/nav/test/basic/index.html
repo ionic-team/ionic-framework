@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-  <style>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <style>
   :root {
   --ion-background-color: #171717;
   --ion-text-color: #ffffff;
@@ -53,7 +53,7 @@
               <ion-title>Page One</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content class="ion-padding">
             <h1>Page One</h1>
             <ion-nav-push component="page-two">
               <ion-button mode="md" class="next">Go to Page Two</ion-button>
@@ -72,8 +72,21 @@
               </ion-buttons>
               <ion-title>Page Two</ion-title>
             </ion-toolbar>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button>
+                  <ion-icon slot="icon-only" name="star"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              <ion-searchbar></ion-searchbar>
+              <ion-buttons slot="end">
+                <ion-button>
+                  <ion-icon slot="icon-only" name="star"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content class="ion-padding">
             <h1>Page Two</h1>
             <div>
               <ion-nav-push component="page-three">
@@ -104,7 +117,7 @@
               <ion-title>Page Three</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content class="ion-padding">
             <h1>Page Three</h1>
           </ion-content>
         `;

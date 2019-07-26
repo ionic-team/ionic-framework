@@ -1,11 +1,13 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import { RouterDirection, HTMLStencilElement } from '@ionic/core';
 import { RouterOptions } from 'vue-router/types/router';
 
 declare module 'vue-router/types/router' {
   interface VueRouter {
-    direction: number;
-    directionOverride: number | null;
+    direction: RouterDirection;
+    directionOverride: RouterDirection | null;
+    transition: Promise<void>;
     canGoBack(): boolean;
   }
 }
@@ -40,8 +42,6 @@ export interface IonicWindow extends Window {
   Ionic: IonicGlobal;
 }
 
-
-
 export interface FrameworkDelegate {
   attachViewToDom(parentElement: HTMLElement, component: HTMLElement | WebpackFunction | object | Vue, opts?: object, classes?: string[]): Promise<HTMLElement>;
   removeViewFromDom(parentElement: HTMLElement, childElement: HTMLVueElement): Promise<void>;
@@ -60,8 +60,8 @@ export interface ApiCache {
 }
 
 export interface RouterArgs extends RouterOptions {
-  direction: number;
-  viewCount: number;
+  direction?: RouterDirection;
+  viewCount?: number;
 }
 
 export interface ProxyControllerInterface {
@@ -80,7 +80,7 @@ export interface ProxyMenuControllerInterface {
   close(menuId?: string): Promise<boolean>;
   toggle(menuId?: string): Promise<boolean>;
   enable(shouldEnable: boolean, menuId?: string): Promise<HTMLElement>;
-  swipeEnable(shouldEnable: boolean, menuId?: string): Promise<HTMLElement>;
+  swipeGesture(shouldEnable: boolean, menuId?: string): Promise<HTMLElement>;
   isOpen(menuId?: string): Promise<boolean>;
   isEnabled(menuId?: string): Promise<boolean>;
   get(menuId?: string): Promise<HTMLElement>;

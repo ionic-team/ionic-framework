@@ -2,9 +2,9 @@ import { IonicConfig } from '../interface';
 
 export class Config {
 
-  private m: Map<keyof IonicConfig, any>;
+  private m = new Map<keyof IonicConfig, any>();
 
-  constructor(configObj: IonicConfig) {
+  reset(configObj: IonicConfig) {
     this.m = new Map<keyof IonicConfig, any>(Object.entries(configObj) as any);
   }
 
@@ -34,26 +34,27 @@ export class Config {
   }
 }
 
-export function configFromSession(): any {
+export const config = /*@__PURE__*/new Config();
+
+export const configFromSession = (win: Window): any => {
   try {
-    const configStr = window.sessionStorage.getItem(IONIC_SESSION_KEY);
+    const configStr = win.sessionStorage.getItem(IONIC_SESSION_KEY);
     return configStr !== null ? JSON.parse(configStr) : {};
   } catch (e) {
     return {};
   }
-}
+};
 
-export function saveConfig(config: any) {
+export const saveConfig = (win: Window, c: any) => {
   try {
-    window.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(config));
+    win.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(c));
   } catch (e) {
     return;
   }
-}
+};
 
-export function configFromURL() {
-  const config: any = {};
-  const win = window;
+export const configFromURL = (win: Window) => {
+  const configObj: any = {};
   win.location.search.slice(1)
     .split('&')
     .map(entry => entry.split('='))
@@ -61,15 +62,15 @@ export function configFromURL() {
     .filter(([key]) => startsWith(key, IONIC_PREFIX))
     .map(([key, value]) => [key.slice(IONIC_PREFIX.length), value])
     .forEach(([key, value]) => {
-      config[key] = value;
+      configObj[key] = value;
     });
 
-  return config;
-}
+  return configObj;
+};
 
-function startsWith(input: string, search: string): boolean {
+const startsWith = (input: string, search: string): boolean => {
   return input.substr(0, search.length) === search;
-}
+};
 
 const IONIC_PREFIX = 'ionic:';
 const IONIC_SESSION_KEY = 'ionic-persist-config';

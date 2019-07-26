@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -21,7 +21,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" padding>
+    <ion-content class="ion-padding" id="content">
 
       <ion-button onclick="toggleInfiniteScroll()" expand="block">
         Toggle InfiniteScroll
@@ -30,7 +30,7 @@
       <ion-list id="list"></ion-list>
 
       <ion-infinite-scroll threshold="100px" id="infinite-scroll">
-        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        <ion-infinite-scroll-content loading-spinner="crescent" loading-text="Loading more data...">
         </ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-content>

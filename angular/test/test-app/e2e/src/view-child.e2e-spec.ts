@@ -1,13 +1,14 @@
 import { browser, element, by } from 'protractor';
-import { handleErrorMessages } from './utils';
+import { handleErrorMessages, waitTime } from './utils';
 
 describe('view-child', () => {
 
   beforeEach(async () => {
     await browser.get('/view-child');
+    await waitTime(30);
   });
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should get a reference to all children', async () => {

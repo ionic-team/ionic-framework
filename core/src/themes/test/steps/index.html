@@ -9,8 +9,8 @@
 
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <style>
     .block {
       display: inline-block;
@@ -175,7 +175,7 @@
 
 <body>
   <ion-app>
-    <ion-content padding>
+    <ion-content class="ion-padding">
       <div class="block">Background</div>
       <div class="block background-step-50">Step 50</div>
       <div class="block background-step-100">Step 100</div>

@@ -5,8 +5,26 @@
 
 :host {
   /**
+   * @prop --border-radius: Border radius of the menu button
+   *
+   * @prop --background: Background of the menu button
+   * @prop --background-hover: Background of the menu button on hover
+   * @prop --background-focused: Background of the menu button when focused with the tab key
+   *
    * @prop --color: Color of the menu button
+   * @prop --color-hover: Color of the menu button on hover
+   * @prop --color-focused: Color of the menu button when focused with the tab key
+   *
+   * @prop --padding-top: Top padding of the button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
+   * @prop --padding-bottom: Bottom padding of the button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    */
+  --background: transparent;
+  --color-focused: var(--color);
+  --border-radius: initial;
+  --padding-top: 0;
+  --padding-bottom: 0;
 
   color: var(--color);
 
@@ -19,10 +37,11 @@
   font-kerning: none;
 }
 
-button {
+.button-native {
+  @include border-radius(var(--border-radius));
   @include text-inherit();
   @include margin(0);
-  @include padding(0);
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include font-smoothing();
 
   display: flex;
@@ -34,13 +53,14 @@ button {
   align-items: center;
   justify-content: center;
 
-  height: 32px;
+  width: 100%;
+  height: 100%;
 
   border: 0;
 
   outline: none;
 
-  background: transparent;
+  background: var(--background);
 
   line-height: 1;
 
@@ -57,9 +77,54 @@ ion-icon {
   pointer-events: none;
 }
 
+// Menu Button: Hidden
+// --------------------------------------------------
+
+:host(.menu-button-hidden) {
+  display: none;
+}
+
+// Menu Button: Disabled
+// --------------------------------------------------
+
+:host(.menu-button-disabled) {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+
+
+// Menu Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) .button-native {
+    background: var(--background-hover);
+    color: var(--color-hover);
+  }
+}
+
+
+// Menu Button: Focused
+// --------------------------------------------------
+
+:host(.ion-focused) .button-native {
+  background: var(--background-focused);
+  color: var(--color-focused);
+}
+
+
 // Menu Button with Color
 // --------------------------------------------------
 
 :host(.ion-color) .button-native {
   color: current-color(base);
+}
+
+
+// Menu Button in Toolbar: Global Theming
+// --------------------------------------------------
+
+:host-context(ion-toolbar:not(.ion-color)) {
+  color: #{var(--ion-toolbar-color, var(--color))};
 }

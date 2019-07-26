@@ -1,7 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { getIonMode } from '../../global/ionic-global';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
@@ -25,26 +24,13 @@ export class SplitPane implements ComponentInterface {
 
   private rmL: any;
 
-  mode!: Mode;
-
   @Element() el!: HTMLElement;
   @State() visible = false;
-
-  @Prop({ context: 'isServer' }) isServer!: boolean;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The content `id` of the split-pane's main content.
    * This property can be used instead of the `[main]` attribute to select the `main`
    * content of the split-pane.
-   *
-   * ```html
-   * <ion-split-pane content-id="my-content">
-   *   <ion-menu></ion-menu>
-   *   <div id="my-content">
-   * </ion-split-pane>
-   * ```
-   *
    */
   @Prop() contentId?: string;
 
@@ -86,7 +72,7 @@ export class SplitPane implements ComponentInterface {
   @Watch('disabled')
   @Watch('when')
   protected updateState() {
-    if (this.isServer) {
+    if (!Build.isBrowser) {
       return;
     }
     if (this.rmL) {
@@ -116,14 +102,17 @@ export class SplitPane implements ComponentInterface {
       return;
     }
 
-    // Listen on media query
-    const callback = (q: MediaQueryList) => {
-      this.visible = q.matches;
-    };
-    const mediaList = this.win.matchMedia(mediaQuery);
-    mediaList.addListener(callback as any);
-    this.rmL = () => mediaList.removeListener(callback as any);
-    this.visible = mediaList.matches;
+    if ((window as any).matchMedia) {
+      // Listen on media query
+      const callback = (q: MediaQueryList) => {
+        this.visible = q.matches;
+      };
+
+      const mediaList = window.matchMedia(mediaQuery);
+      (mediaList as any).addListener(callback as any);
+      this.rmL = () => (mediaList as any).removeListener(callback as any);
+      this.visible = mediaList.matches;
+    }
   }
 
   private isPane(element: HTMLElement): boolean {
@@ -135,7 +124,7 @@ export class SplitPane implements ComponentInterface {
   }
 
   private styleChildren() {
-    if (this.isServer) {
+    if (!Build.isBrowser) {
       return;
     }
     const contentId = this.contentId;
@@ -147,7 +136,7 @@ export class SplitPane implements ComponentInterface {
       const isMain = contentId !== undefined ? child.id === contentId : child.hasAttribute('main');
       if (isMain) {
         if (foundMain) {
-          console.warn('split pane can not have more than one main node');
+          console.warn('split pane cannot have more than one main node');
           return;
         }
         foundMain = true;
@@ -155,21 +144,29 @@ export class SplitPane implements ComponentInterface {
       setPaneClass(child, isMain);
     }
     if (!foundMain) {
-      console.warn('split pane could not found any main node');
+      console.warn('split pane does not have a specified main node');
     }
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createThemedClasses(this.mode, 'split-pane'),
-        'split-pane-visible': this.visible
-      }
-    };
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+
+          // Used internally for styling
+          [`split-pane-${mode}`]: true,
+
+          'split-pane-visible': this.visible
+        }}
+      >
+      </Host>
+    );
   }
 }
 
-function setPaneClass(el: HTMLElement, isMain: boolean) {
+const setPaneClass = (el: HTMLElement, isMain: boolean) => {
   let toAdd;
   let toRemove;
   if (isMain) {
@@ -182,4 +179,4 @@ function setPaneClass(el: HTMLElement, isMain: boolean) {
   const classList = el.classList;
   classList.add(toAdd);
   classList.remove(toRemove);
-}
+};

@@ -1,6 +1,8 @@
 # ion-router
 
-Router is a component for handling routing inside vanilla JavaScript projects. For Angular projects, use `ion-router-outlet` and the Angular router.
+The router is a component for handling routing inside vanilla and Stencil JavaScript projects.
+
+> Note: this component should only be used with vanilla and Stencil JavaScript projects. For Angular projects, use [`ion-router-outlet`](../router-outlet) and the Angular router.
 
 Apps should have a single `ion-router` component in the codebase.
 This component controls all interactions with the browser history and it aggregates updates through an event system.
@@ -10,9 +12,6 @@ This component controls all interactions with the browser history and it aggrega
 That means the `ion-router` never touches the DOM, it does NOT show the components or emit any kind of lifecycle events, it just tells `ion-nav` and `ion-tabs` what and when to "show" based on the browser's URL.
 
 In order to configure this relationship between components (to load/select) and URLs, `ion-router` uses a declarative syntax using JSX/HTML to define a tree of routes.
-
-If you're using Angular, please see [ion-router-outlet](../router-outlet) instead.
-
 
 
 <!-- Auto Generated Below -->
@@ -82,13 +81,6 @@ Type: `Promise<void>`
 ### `push(url: string, direction?: RouterDirection) => Promise<boolean>`
 
 Navigate to the specified URL.
-
-#### Parameters
-
-| Name        | Type                            | Description |
-| ----------- | ------------------------------- | ----------- |
-| `url`       | `string`                        |             |
-| `direction` | `"back" \| "forward" \| "root"` |             |
 
 #### Returns
 

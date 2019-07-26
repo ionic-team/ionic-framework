@@ -8,8 +8,8 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-toolbar>
@@ -88,6 +88,33 @@
     <ion-segment-button class="segment-slack" value="slack">
       <ion-label>Slack</ion-label>
       <ion-icon name="logo-slack"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-segment value="2" class="custom-indicator">
+    <ion-segment-button value="1">
+      <ion-icon name="home"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button class="large-icon" value="2">
+      <ion-icon name="call"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="3">
+      <ion-icon name="person"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-segment value="2" class="custom-indicator">
+    <ion-segment-button layout="icon-start" value="1">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-segment-button>
+    <ion-segment-button layout="icon-start" class="large-icon" value="2">
+      <ion-icon name="call"></ion-icon>
+      <ion-label>Call</ion-label>
+    </ion-segment-button>
+    <ion-segment-button layout="icon-start" value="3">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Person</ion-label>
     </ion-segment-button>
   </ion-segment>
 </body>
@@ -180,10 +207,14 @@
     --color-checked: #3aaf85;
   }
 
-  .custom-icon ion-icon {
-    font-size: 44px;
+  .custom-indicator {
+    --indicator-color: lightgray;
   }
 
+  .custom-icon ion-icon,
+  .large-icon ion-icon {
+    font-size: 44px;
+  }
 </style>
 
 </html>

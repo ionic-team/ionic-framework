@@ -7,22 +7,33 @@
 :host {
   /**
    * @prop --background: Background of the item divider
+   *
    * @prop --color: Color of the item divider
-   * @prop --padding-start: Start padding of the item divider
-   * @prop --padding-end: End padding of the item divider
+   *
    * @prop --padding-top: Top padding of the item divider
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item divider
    * @prop --padding-bottom: Bottom padding of the item divider
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item divider
+   *
+   * @prop --inner-padding-top: Top inner padding of the item divider
+   * @prop --inner-padding-end: End inner padding of the item divider
+   * @prop --inner-padding-bottom: Bottom inner padding of the item divider
+   * @prop --inner-padding-start: Start inner padding of the item divider
    */
-  --padding-start: 0px;
-  --padding-end: 0px;
   --padding-top: 0px;
+  --padding-end: 0px;
   --padding-bottom: 0px;
+  --padding-start: 0px;
+  --inner-padding-top: 0px;
+  --inner-padding-end: 0px;
+  --inner-padding-bottom: 0px;
+  --inner-padding-start: 0px;
 
   @include font-smoothing();
   @include margin(0);
   @include padding(
     var(--padding-top),
-    calc(var(--padding-end) + var(--ion-safe-area-right, 0px)),
+    var(--padding-end),
     var(--padding-bottom),
     calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
   );
@@ -57,7 +68,12 @@
 
 .item-divider-inner {
   @include margin(0);
-  @include padding(0);
+  @include padding(
+    var(--inner-padding-top),
+    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
+    var(--inner-padding-bottom),
+    var(--inner-padding-start)
+  );
 
   display: flex;
 

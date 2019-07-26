@@ -10,6 +10,7 @@ function outputConfig(suffix, format, opts = {}) {
     {
       file: resolve(`./dist/ionic-vue${suffix}.js`),
       name: 'IonicVue',
+      exports: 'named',
       sourcemap: true,
       format,
     },
@@ -23,9 +24,7 @@ function baseConfig() {
     output: [
       outputConfig('', 'umd', {
         globals: {
-          vue: 'Vue',
-          'vue-class-component': 'VueClassComponent',
-          'vue-property-decorator': 'vue-property-decorator',
+          vue: 'Vue'
         },
       }),
       outputConfig('.esm', 'esm'),
@@ -34,14 +33,19 @@ function baseConfig() {
     external: [
       'vue',
       'vue-router',
-      'vue-class-component',
-      'vue-property-decorator',
+      '@ionic/core',
       '@ionic/core/loader',
-      '@ionic/core/css/ionic.bundle.css',
-      '@ionic/core/dist/ionic/svg',
-      'ionicons/dist/collection/icon/icon.css',
+      'ionicons',
+      'ionicons/icons',
     ],
-    plugins: [vue(), typescript({ useTsconfigDeclarationDir: true })],
+    plugins: [
+      vue(),
+      typescript({
+        useTsconfigDeclarationDir: true,
+        objectHashIgnoreUnknownHack: true,
+        clean: true
+      })
+    ],
   }
 }
 

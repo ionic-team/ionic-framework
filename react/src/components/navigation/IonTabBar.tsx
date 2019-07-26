@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { IonTabBarInner, IonTabButton } from '../index';
+import React from 'react';
+import { IonTabBarInner } from '../inner-proxies';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { Components } from '@ionic/core';
+import { JSX } from '@ionic/core';
+import { IonTabButton } from '../proxies';
 
-type Props = RouteComponentProps & Components.IonTabBarAttributes & {
+type Props = RouteComponentProps & JSX.IonTabBar & {
   children: React.ReactNode;
 }
 
@@ -17,15 +18,15 @@ type State = {
   tabs: { [key: string]: Tab }
 }
 
-class IonTabBar extends Component<Props, State> {
+class TabBar extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
 
     const tabActiveUrls: { [key: string]: Tab } = {};
 
-    React.Children.forEach(this.props.children, (child) => {
-      if (typeof child === 'object' && child.type === IonTabButton) {
+    React.Children.forEach(this.props.children, (child: any) => {
+      if (child != null && typeof child === 'object' && child.props && child.type === IonTabButton) {
         tabActiveUrls[child.props.tab] = {
           originalHref: child.props.href,
           currentHref: child.props.href
@@ -71,13 +72,16 @@ class IonTabBar extends Component<Props, State> {
     this.props.history.push(targetUrl);
   }
 
-  renderChild = (activeTab: string) => (child: React.ReactElement<Components.IonTabButtonAttributes & { onIonTabButtonClick: (e: CustomEvent) => void }>) => {
-    const href = (child.props.tab === activeTab) ? this.props.location.pathname : (this.state.tabs[child.props.tab].currentHref);
+  renderChild = (activeTab: string) => (child: React.ReactElement<JSX.IonTabButton & { onIonTabButtonClick: (e: CustomEvent) => void }>) => {
+    if (child != null && typeof child === 'object' && child.props && child.type === IonTabButton) {
+      const href = (child.props.tab === activeTab) ? this.props.location.pathname : (this.state.tabs[child.props.tab].currentHref);
 
-    return React.cloneElement(child, {
-      href,
-      onIonTabButtonClick: this.onTabButtonClick
-    })
+      return React.cloneElement(child, {
+        href,
+        onIonTabButtonClick: this.onTabButtonClick
+      });
+    }
+    return null;
   }
 
   render() {
@@ -89,4 +93,4 @@ class IonTabBar extends Component<Props, State> {
   }
 }
 
-export default withRouter(IonTabBar);
+export const IonTabBar = /*@__PURE__*/withRouter(TabBar);

@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -20,7 +20,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" padding fullscreen>
+    <ion-content class="ion-padding" id="content" fullscreen>
       <f></f>
       <f></f>
 
@@ -49,7 +49,7 @@
       </ion-fab>
 
       <ion-fab vertical="bottom" horizontal="end" edge id="fab2" slot="fixed">
-        <ion-fab-button onclick="clickMainFAB('fab2')" color="dark" class="e2eFabBottomRight">
+        <ion-fab-button onclick="clickMainFAB('fab2')" color="dark" class="e2eFabBottomRight" disabled>
           <ion-icon name="arrow-dropleft"></ion-icon>
         </ion-fab-button>
         <ion-fab-list side="start">

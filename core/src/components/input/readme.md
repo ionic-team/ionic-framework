@@ -104,6 +104,109 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 ```
 
 
+### React
+
+```tsx
+import React from 'react';
+import { IonInput, IonItem, IonLabel, IonContent } from '@ionic/react';
+
+export const InputExample: React.FunctionComponent = () => (
+  <IonContent>
+    {/*-- Default Input --*/}
+    <IonInput></IonInput>
+
+    {/*-- Input with value --*/}
+    <IonInput value="custom"></IonInput>
+
+    {/*-- Input with placeholder --*/}
+    <IonInput placeholder="Enter Input"></IonInput>
+
+    {/*-- Input with clear button when there is a value --*/}
+    <IonInput clearInput value="clear me"></IonInput>
+
+    {/*-- Number type input --*/}
+    <IonInput type="number" value="333"></IonInput>
+
+    {/*-- Disabled input --*/}
+    <IonInput value="Disabled" disabled></IonInput>
+
+    {/*-- Readonly input --*/}
+    <IonInput value="Readonly" readonly></IonInput>
+
+    {/*-- Inputs with labels --*/}
+    <IonItem>
+      <IonLabel>Default Label</IonLabel>
+      <IonInput></IonInput>
+    </IonItem>
+
+    <IonItem>
+      <IonLabel position="floating">Floating Label</IonLabel>
+      <IonInput></IonInput>
+    </IonItem>
+
+    <IonItem>
+      <IonLabel position="fixed">Fixed Label</IonLabel>
+      <IonInput></IonInput>
+    </IonItem>
+
+    <IonItem>
+      <IonLabel position="stacked">Stacked Label</IonLabel>
+      <IonInput></IonInput>
+    </IonItem>
+  </IonContent>
+);
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default Input -->
+  <ion-input></ion-input>
+
+  <!-- Input with value -->
+  <ion-input value="custom"></ion-input>
+
+  <!-- Input with placeholder -->
+  <ion-input placeholder="Enter Input"></ion-input>
+
+  <!-- Input with clear button when there is a value -->
+  <ion-input clearInput value="clear me"></ion-input>
+
+  <!-- Number type input -->
+  <ion-input type="number" value="333"></ion-input>
+
+  <!-- Disabled input -->
+  <ion-input value="Disabled" disabled></ion-input>
+
+  <!-- Readonly input -->
+  <ion-input value="Readonly" readonly></ion-input>
+
+  <!-- Inputs with labels -->
+  <ion-item>
+    <ion-label>Default Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Floating Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="fixed">Fixed Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Stacked Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+</template>
+```
+
+
 
 ## Properties
 
@@ -160,32 +263,32 @@ Type: `Promise<HTMLInputElement>`
 
 
 
-### `setFocus() => void`
+### `setFocus() => Promise<void>`
 
 Sets focus on the specified `ion-input`. Use this method instead of the global
 `input.focus()`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
 
 ## CSS Custom Properties
 
-| Name                        | Description                               |
-| --------------------------- | ----------------------------------------- |
-| `--background`              | Background of the input                   |
-| `--color`                   | Color of the input text                   |
-| `--padding-bottom`          | Bottom padding of the input               |
-| `--padding-end`             | End padding of the input                  |
-| `--padding-start`           | Start padding of the input                |
-| `--padding-top`             | Top padding of the input                  |
-| `--placeholder-color`       | Color of the input placeholder text       |
-| `--placeholder-font-style`  | Font style of the input placeholder text  |
-| `--placeholder-font-weight` | Font weight of the input placeholder text |
-| `--placeholder-opacity`     | Opacity of the input placeholder text     |
+| Name                        | Description                                                                                              |
+| --------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `--background`              | Background of the input                                                                                  |
+| `--color`                   | Color of the input text                                                                                  |
+| `--padding-bottom`          | Bottom padding of the input                                                                              |
+| `--padding-end`             | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the input |
+| `--padding-start`           | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the input |
+| `--padding-top`             | Top padding of the input                                                                                 |
+| `--placeholder-color`       | Color of the input placeholder text                                                                      |
+| `--placeholder-font-style`  | Font style of the input placeholder text                                                                 |
+| `--placeholder-font-weight` | Font weight of the input placeholder text                                                                |
+| `--placeholder-opacity`     | Opacity of the input placeholder text                                                                    |
 
 
 ----------------------------------------------

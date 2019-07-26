@@ -26,12 +26,12 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 
 ## Events
 
-| Event                  | Description                              | Type                              |
-| ---------------------- | ---------------------------------------- | --------------------------------- |
-| `ionPickerDidDismiss`  | Emitted after the picker has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionPickerDidPresent`  | Emitted after the picker has presented.  | `CustomEvent<void>`               |
-| `ionPickerWillDismiss` | Emitted before the picker has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionPickerWillPresent` | Emitted before the picker has presented. | `CustomEvent<void>`               |
+| Event                  | Description                              | Type                                   |
+| ---------------------- | ---------------------------------------- | -------------------------------------- |
+| `ionPickerDidDismiss`  | Emitted after the picker has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionPickerDidPresent`  | Emitted after the picker has presented.  | `CustomEvent<void>`                    |
+| `ionPickerWillDismiss` | Emitted before the picker has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionPickerWillPresent` | Emitted before the picker has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -39,13 +39,6 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the picker overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
 
 #### Returns
 
@@ -55,13 +48,7 @@ Type: `Promise<boolean>`
 
 ### `getColumn(name: string) => Promise<PickerColumn | undefined>`
 
-Returns the column the matches the specified name
-
-#### Parameters
-
-| Name   | Type     | Description |
-| ------ | -------- | ----------- |
-| `name` | `string` |             |
+Get the column that matches the specified name.
 
 #### Returns
 
@@ -117,6 +104,21 @@ Type: `Promise<void>`
 | `--min-width`      | Minimum width of the picker            |
 | `--width`          | Width of the picker                    |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+- ion-picker-column
+
+### Graph
+```mermaid
+graph TD;
+  ion-picker --> ion-backdrop
+  ion-picker --> ion-picker-column
+  style ion-picker fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

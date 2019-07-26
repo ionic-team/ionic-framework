@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
-import { BackButtonEvent, Config, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
+import { BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
 import { debounce } from '../../utils/helpers';
 
 import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from './utils/constants';
@@ -22,10 +22,6 @@ export class Router implements ComponentInterface {
   private waitPromise?: Promise<void>;
 
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * By default `ion-router` will match the routes at the root path ("/").
@@ -62,18 +58,18 @@ export class Router implements ComponentInterface {
 
   async componentWillLoad() {
     console.debug('[ion-router] router will load');
-    await waitUntilNavNode(this.win);
+    await waitUntilNavNode();
     console.debug('[ion-router] found nav');
 
     await this.onRoutesChanged();
   }
 
   componentDidLoad() {
-    this.win.addEventListener('ionRouteRedirectChanged', debounce(this.onRedirectChanged.bind(this), 10));
-    this.win.addEventListener('ionRouteDataChanged', debounce(this.onRoutesChanged.bind(this), 100));
+    window.addEventListener('ionRouteRedirectChanged', debounce(this.onRedirectChanged.bind(this), 10));
+    window.addEventListener('ionRouteDataChanged', debounce(this.onRoutesChanged.bind(this), 100));
   }
 
-  @Listen('window:popstate')
+  @Listen('popstate', { target: 'window' })
   protected onPopState() {
     const direction = this.historyDirection();
     const path = this.getPath();
@@ -81,13 +77,16 @@ export class Router implements ComponentInterface {
     return this.writeNavStateRoot(path, direction);
   }
 
-  @Listen('document:ionBackButton')
+  @Listen('ionBackButton', { target: 'document' })
   protected onBackButton(ev: BackButtonEvent) {
     ev.detail.register(0, () => this.back());
   }
 
   /**
    * Navigate to the specified URL.
+   *
+   * @param url The url to navigate to.
+   * @param direction The direction of the animation. Defaults to `"forward"`.
    */
   @Method()
   push(url: string, direction: RouterDirection = 'forward') {
@@ -106,13 +105,13 @@ export class Router implements ComponentInterface {
    */
   @Method()
   back() {
-    this.win.history.back();
+    window.history.back();
     return Promise.resolve(this.waitPromise);
   }
 
   /** @internal */
   @Method()
-  printDebug() {
+  async printDebug() {
     console.debug('CURRENT PATH', this.getPath());
     console.debug('PREVIOUS PATH', this.previousPath);
     printRoutes(readRoutes(this.el));
@@ -126,7 +125,7 @@ export class Router implements ComponentInterface {
       console.warn('[ion-router] router is busy, navChanged was cancelled');
       return false;
     }
-    const { ids, outlet } = await readNavState(this.win.document.body);
+    const { ids, outlet } = await readNavState(window.document.body);
     const routes = readRoutes(this.el);
     const chain = routerIDsToChain(ids, routes);
     if (!chain) {
@@ -159,7 +158,7 @@ export class Router implements ComponentInterface {
   }
 
   private historyDirection() {
-    const win = this.win;
+    const win = window;
 
     if (win.history.state === null) {
       this.state++;
@@ -204,7 +203,7 @@ export class Router implements ComponentInterface {
     }
 
     // write DOM give
-    return this.safeWriteNavState(this.win.document.body, chain, direction, path, redirectFrom);
+    return this.safeWriteNavState(document.body, chain, direction, path, redirectFrom);
   }
 
   private async safeWriteNavState(
@@ -267,11 +266,11 @@ export class Router implements ComponentInterface {
 
   private setPath(path: string[], direction: RouterDirection) {
     this.state++;
-    writePath(this.win.history, this.root, this.useHash, path, direction, this.state);
+    writePath(window.history, this.root, this.useHash, path, direction, this.state);
   }
 
   private getPath(): string[] | null {
-    return readPath(this.win.location, this.root, this.useHash);
+    return readPath(window.location, this.root, this.useHash);
   }
 
   private routeChangeEvent(path: string[], redirectFromPath: string[] | null): RouterEventDetail | null {

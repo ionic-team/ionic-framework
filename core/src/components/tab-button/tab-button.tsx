@@ -1,7 +1,13 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, h } from '@stencil/core';
 
-import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
+import { AnchorInterface } from '../../utils/element-interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-tab-button',
   styleUrls: {
@@ -10,23 +16,34 @@ import { Config, Mode, TabBarChangedEventDetail, TabButtonClickEventDetail, TabB
   },
   shadow: true
 })
-export class TabButton implements ComponentInterface {
+export class TabButton implements ComponentInterface, AnchorInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
-  @Prop({ context: 'config' }) config!: Config;
+  /**
+   * If `true`, the user cannot interact with the tab button.
+   */
+  @Prop() disabled = false;
 
   /**
-   * The selected tab component
+   * This attribute instructs browsers to download a URL instead of navigating to
+   * it, so the user will be prompted to save it as a local file. If the attribute
+   * has a value, it is used as the pre-filled file name in the Save prompt
+   * (the user can still change the file name if they want).
    */
-  @Prop({ mutable: true }) selected = false;
+  @Prop() download: string | undefined;
 
   /**
-   * The mode determines which platform styles to use.
+   * Contains a URL or a URL fragment that the hyperlink points to.
+   * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() mode!: Mode;
+  @Prop() href: string | undefined;
+
+  /**
+   * Specifies the relationship of the target object to the link object.
+   * The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+   */
+  @Prop() rel: string | undefined;
 
   /**
    * Set the layout of the text and icon in the tab bar.
@@ -35,9 +52,9 @@ export class TabButton implements ComponentInterface {
   @Prop({ mutable: true }) layout?: TabButtonLayout;
 
   /**
-   * The URL which will be used as the `href` within this tab's button anchor.
+   * The selected tab component
    */
-  @Prop() href?: string;
+  @Prop({ mutable: true }) selected = false;
 
   /**
    * A tab id must be provided for each `ion-tab`. It's used internally to reference
@@ -46,9 +63,11 @@ export class TabButton implements ComponentInterface {
   @Prop() tab?: string;
 
   /**
-   * The selected tab component
+   * Specifies where to display the linked URL.
+   * Only applies when an `href` is provided.
+   * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
    */
-  @Prop() disabled = false;
+  @Prop() target: string | undefined;
 
   /**
    * Emitted when the tab bar is clicked
@@ -56,13 +75,18 @@ export class TabButton implements ComponentInterface {
    */
   @Event() ionTabButtonClick!: EventEmitter<TabButtonClickEventDetail>;
 
-  @Listen('parent:ionTabBarChanged')
+  @Listen('ionTabBarChanged', { target: 'parent' })
   onTabBarChanged(ev: CustomEvent<TabBarChangedEventDetail>) {
     this.selected = this.tab === ev.detail.tab;
   }
 
-  @Listen('click')
-  onClick(ev: Event) {
+  componentWillLoad() {
+    if (this.layout === undefined) {
+      this.layout = config.get('tabButtonLayout', 'icon-top');
+    }
+  }
+
+  private selectTab(ev: Event | KeyboardEvent) {
     if (this.tab !== undefined) {
       if (!this.disabled) {
         this.ionTabButtonClick.emit({
@@ -75,12 +99,6 @@ export class TabButton implements ComponentInterface {
     }
   }
 
-  componentWillLoad() {
-    if (this.layout === undefined) {
-      this.layout = this.config.get('tabButtonLayout', 'icon-top');
-    }
-  }
-
   private get hasLabel() {
     return !!this.el.querySelector('ion-label');
   }
@@ -89,32 +107,65 @@ export class TabButton implements ComponentInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
-  hostData() {
-    const { disabled, hasIcon, hasLabel, layout, selected, tab } = this;
-    return {
-      'role': 'tab',
-      'aria-selected': selected ? 'true' : null,
-      'id': tab !== undefined ? `tab-button-${tab}` : null,
-      class: {
-        'tab-selected': selected,
-        'tab-disabled': disabled,
-        'tab-has-label': hasLabel,
-        'tab-has-icon': hasIcon,
-        'tab-has-label-only': hasLabel && !hasIcon,
-        'tab-has-icon-only': hasIcon && !hasLabel,
-        [`tab-layout-${layout}`]: true,
-        'ion-activatable': true,
-      }
-    };
+  private get tabIndex() {
+    if (this.disabled) { return -1; }
+
+    const hasTabIndex = this.el.hasAttribute('tabindex');
+
+    if (hasTabIndex) {
+      return this.el.getAttribute('tabindex');
+    }
+
+    return 0;
+  }
+
+  private onKeyUp = (ev: KeyboardEvent) => {
+    if (ev.key === 'Enter' || ev.key === ' ') {
+      this.selectTab(ev);
+    }
+  }
+
+  private onClick = (ev: Event) => {
+    this.selectTab(ev);
   }
 
   render() {
-    const { mode, href } = this;
+    const { disabled, hasIcon, hasLabel, tabIndex, href, rel, target, layout, selected, tab } = this;
+    const mode = getIonMode(this);
+    const attrs = {
+      download: this.download,
+      href,
+      rel,
+      target
+    };
+
     return (
-      <a href={href}>
-        <slot></slot>
-        {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
-      </a>
+      <Host
+        onClick={this.onClick}
+        onKeyup={this.onKeyUp}
+        role="tab"
+        tabindex={tabIndex}
+        aria-selected={selected ? 'true' : null}
+        id={tab !== undefined ? `tab-button-${tab}` : null}
+        class={{
+          [mode]: true,
+          'tab-selected': selected,
+          'tab-disabled': disabled,
+          'tab-has-label': hasLabel,
+          'tab-has-icon': hasIcon,
+          'tab-has-label-only': hasLabel && !hasIcon,
+          'tab-has-icon-only': hasIcon && !hasLabel,
+          [`tab-layout-${layout}`]: true,
+          'ion-activatable': true,
+          'ion-selectable': true,
+          'ion-focusable': true
+        }}
+      >
+        <a {...attrs} tabIndex={-1}>
+          <slot></slot>
+          {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
+        </a>
+      </Host>
     );
   }
 }

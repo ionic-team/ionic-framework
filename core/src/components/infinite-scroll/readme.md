@@ -12,6 +12,10 @@ The `ion-infinite-scroll` component has the infinite scroll logic. It requires a
 
 Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` components allows developers to create their own content components, if desired. This content can contain anything, from an SVG element to elements with unique CSS animations.
 
+## React
+
+The Infinite Scroll component is not supported in React.
+
 <!-- Auto Generated Below -->
 
 
@@ -74,7 +78,7 @@ export class InfiniteScrollExample {
 
 ```html
 <ion-content>
-  <ion-button onclick="toggleInfiniteScroll()" expand="block">
+  <ion-button onClick="toggleInfiniteScroll()" expand="block">
     Toggle Infinite Scroll
   </ion-button>
 
@@ -130,7 +134,7 @@ function toggleInfiniteScroll() {
 
 ## Methods
 
-### `complete() => void`
+### `complete() => Promise<void>`
 
 Call `complete()` within the `ionInfinite` output event handler when
 your async operation has completed. For example, the `loading`
@@ -143,7 +147,7 @@ to `enabled`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

@@ -1,9 +1,13 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { Color, InputChangeEventDetail, Mode, StyleEventDetail, TextFieldTypes } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
 import { debounceEvent, findItemLabel } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-input',
   styleUrls: {
@@ -28,11 +32,6 @@ export class Input implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
@@ -241,7 +240,7 @@ export class Input implements ComponentInterface {
    * `input.focus()`.
    */
   @Method()
-  setFocus() {
+  async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
@@ -307,8 +306,22 @@ export class Input implements ComponentInterface {
     }
   }
 
-  private clearTextInput = () => {
+  private clearTextInput = (ev?: Event) => {
+    if (this.clearInput && !this.readonly && !this.disabled && ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+
     this.value = '';
+
+    /**
+     * This is needed for clearOnEdit
+     * Otherwise the value will not be cleared
+     * if user is inside the input
+     */
+    if (this.nativeInput) {
+      this.nativeInput.value = '';
+    }
   }
 
   private focusChanged() {
@@ -322,18 +335,8 @@ export class Input implements ComponentInterface {
     return this.getValue().length > 0;
   }
 
-  hostData() {
-    return {
-      'aria-disabled': this.disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(this.color),
-        'has-value': this.hasValue(),
-        'has-focus': this.hasFocus
-      }
-    };
-  }
-
   render() {
+    const mode = getIonMode(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
@@ -341,46 +344,56 @@ export class Input implements ComponentInterface {
       label.id = labelId;
     }
 
-    return [
-      <input
-        class="native-input"
-        ref={input => this.nativeInput = input}
-        aria-labelledby={labelId}
-        disabled={this.disabled}
-        accept={this.accept}
-        autoCapitalize={this.autocapitalize}
-        autoComplete={this.autocomplete}
-        autoCorrect={this.autocorrect}
-        autoFocus={this.autofocus}
-        inputMode={this.inputmode}
-        min={this.min}
-        max={this.max}
-        minLength={this.minlength}
-        maxLength={this.maxlength}
-        multiple={this.multiple}
-        name={this.name}
-        pattern={this.pattern}
-        placeholder={this.placeholder || ''}
-        readOnly={this.readonly}
-        required={this.required}
-        spellCheck={this.spellcheck}
-        step={this.step}
-        size={this.size}
-        type={this.type}
-        value={value}
-        onInput={this.onInput}
-        onBlur={this.onBlur}
-        onFocus={this.onFocus}
-        onKeyDown={this.onKeydown}
-      />,
-      (this.clearInput && !this.readonly && !this.disabled) && <button
-        type="button"
-        class="input-clear-icon"
-        tabindex="-1"
-        onTouchStart={this.clearTextInput}
-        onMouseDown={this.clearTextInput}
-      />
-    ];
+    return (
+      <Host
+        aria-disabled={this.disabled ? 'true' : null}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'has-value': this.hasValue(),
+          'has-focus': this.hasFocus
+        }}
+      >
+        <input
+          class="native-input"
+          ref={input => this.nativeInput = input}
+          aria-labelledby={labelId}
+          disabled={this.disabled}
+          accept={this.accept}
+          autoCapitalize={this.autocapitalize}
+          autoComplete={this.autocomplete}
+          autoCorrect={this.autocorrect}
+          autoFocus={this.autofocus}
+          inputMode={this.inputmode}
+          min={this.min}
+          max={this.max}
+          minLength={this.minlength}
+          maxLength={this.maxlength}
+          multiple={this.multiple}
+          name={this.name}
+          pattern={this.pattern}
+          placeholder={this.placeholder || ''}
+          readOnly={this.readonly}
+          required={this.required}
+          spellCheck={this.spellcheck}
+          step={this.step}
+          size={this.size}
+          type={this.type}
+          value={value}
+          onInput={this.onInput}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
+          onKeyDown={this.onKeydown}
+        />
+        {(this.clearInput && !this.readonly && !this.disabled) && <button
+          type="button"
+          class="input-clear-icon"
+          tabindex="-1"
+          onTouchStart={this.clearTextInput}
+          onMouseDown={this.clearTextInput}
+        />}
+      </Host>
+    );
   }
 }
 

@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -34,10 +34,13 @@
       </ion-refresher>
 
 
-      <div padding>
+      <div class="ion-padding">
         <ion-button expand="block" onclick="toggleSliding()">Toggle sliding</ion-button>
         <ion-button expand="block" onclick="toggleDynamicOptions()">Toggle Dynamic Options</ion-button>
         <ion-button expand="block" onclick="closeOpened()">Close Opened Items</ion-button>
+        <ion-button expand="block" onclick="openItem('start')">Open Item Start</ion-button>
+        <ion-button expand="block" onclick="openItem('end')">Open Item End</ion-button>
+        <ion-button expand="block" onclick="openItemOneSide()">Open Item with only one side</ion-button>
       </div>
 
       <ion-list id="list">
@@ -59,11 +62,11 @@
             </ion-item>
             <ion-item-options class="show-options">
               <ion-item-option color="primary">
-                <ion-icon name="more"></ion-icon>
+                <ion-icon slot="start" name="more"></ion-icon>
                 <span class="more-text"></span>
               </ion-item-option>
               <ion-item-option color="secondary" onclick="archive('item6')">
-                <ion-icon name="archive"></ion-icon>
+                <ion-icon slot="start" name="archive"></ion-icon>
                 <span class="archive-text"></span>
               </ion-item-option>
             </ion-item-options>
@@ -82,11 +85,11 @@
             </ion-item-options>
             <ion-item-options side="end" class="show-options">
               <ion-item-option color="primary">
-                <ion-icon name="more"></ion-icon>
+                <ion-icon slot="start" name="more"></ion-icon>
                 <span class="more-text"></span>
               </ion-item-option>
               <ion-item-option color="secondary" onclick="archive('item6')">
-                <ion-icon name="archive"></ion-icon>
+                <ion-icon slot="start" name="archive"></ion-icon>
                 <span class="archive-text"></span>
               </ion-item-option>
             </ion-item-options>
@@ -120,9 +123,33 @@
 
           </ion-item-sliding>
 
+          <ion-item-sliding id="item100">
+            <ion-item href="#">
+              <ion-label>
+                <h2>Disabled Buttons</h2>
+                <p>Buttons should not be clickable</p>
+              </ion-label>
+            </ion-item>
+
+            <ion-item-options side="start">
+              <ion-item-option disabled>
+                Disabled
+              </ion-item-option>
+            </ion-item-options>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" disabled>
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+              <ion-item-option disabled>
+                <ion-icon slot="icon-only" name="star"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+
+          </ion-item-sliding>
+
           <ion-item-sliding id="item0">
             <ion-item onclick="clickedItem('item0')">
-              <ion-label text-wrap>
+              <ion-label class="ion-text-wrap">
                 <h2>RIGHT side - no icons</h2>
                 <p>Hey do you want to go to the game tonight?</p>
               </ion-label>
@@ -135,7 +162,7 @@
 
           <ion-item-sliding id="item1">
             <ion-item detail href="#" class="activated">
-              <ion-label text-wrap>
+              <ion-label class="ion-text-wrap">
                 <h2>LEFT side - no icons</h2>
                 <p>I think I figured out how to get more Mountain Dew</p>
               </ion-label>
@@ -149,46 +176,52 @@
 
           <ion-item-sliding id="item2">
             <ion-item detail>
-              <ion-label text-wrap>
+              <ion-label class="ion-text-wrap">
                 <h2>RIGHT/LEFT side - icons</h2>
                 <p>I think I figured out how to get more Mountain Dew</p>
               </ion-label>
             </ion-item>
             <ion-item-options side="start" class="sliding-enabled">
               <ion-item-option color="secondary" expandable onclick="unread('item2')">
-                <ion-icon name="ios-checkmark"></ion-icon>Unread
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Unread
               </ion-item-option>
             </ion-item-options>
 
             <ion-item-options side="end" class="sliding-enabled">
               <ion-item-option color="primary" onclick="archive('item2')">
-                <ion-icon name="mail"></ion-icon>Archive
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Archive
               </ion-item-option>
               <ion-item-option color="danger" onclick="del('item2')" expandable>
-                <ion-icon name="trash"></ion-icon>Delete
+                <ion-icon slot="start" name="trash"></ion-icon>
+                Delete
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
 
           <ion-item-sliding id="item3">
             <ion-item detail>
-              <ion-label text-wrap>
+              <ion-label class="ion-text-wrap">
                 <h2>RIGHT/LEFT side - icons (slot="start")</h2>
                 <p>I think I figured out how to get more Mountain Dew</p>
               </ion-label>
             </ion-item>
             <ion-item-options side="start" icon-start class="sliding-enabled">
               <ion-item-option color="secondary" expandable onclick="unread('item3')">
-                <ion-icon name="ios-checkmark"></ion-icon>Unread
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Unread
               </ion-item-option>
             </ion-item-options>
 
             <ion-item-options icon-start>
               <ion-item-option color="primary" onclick="archive('item3')">
-                <ion-icon name="mail"></ion-icon>Archive
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Archive
               </ion-item-option>
               <ion-item-option color="danger" onclick="del('item3')" expandable class="sliding-enabled">
-                <ion-icon name="trash"></ion-icon>Delete
+                <ion-icon slot="start" name="trash"></ion-icon>
+                Delete
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -203,7 +236,8 @@
             </ion-item>
             <ion-item-options icon-start>
               <ion-item-option color="primary" onclick="archive('item4')" expandable class="sliding-enabled">
-                <ion-icon name="archive"></ion-icon>Archive
+                <ion-icon slot="start" name="archive"></ion-icon>
+                Archive
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -220,13 +254,16 @@
             </ion-item>
             <ion-item-options>
               <ion-item-option color="primary" expandable>
-                <ion-icon name="more"></ion-icon>More
+                <ion-icon slot="start" name="more"></ion-icon>
+                More
               </ion-item-option>
               <ion-item-option color="secondary" onclick="archive('item5')">
-                <ion-icon name="archive"></ion-icon>Archive
+                <ion-icon slot="start" name="archive"></ion-icon>
+                Archive
               </ion-item-option>
               <ion-item-option color="light" onclick="del('item5')">
-                <ion-icon name="trash"></ion-icon>Delete
+                <ion-icon slot="start" name="trash"></ion-icon>
+                Delete
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -240,11 +277,11 @@
             </ion-item>
             <ion-item-options icon-start>
               <ion-item-option color="primary">
-                <ion-icon name="more"></ion-icon>
+                <ion-icon slot="start" name="more"></ion-icon>
                 <span class="more-text"></span>
               </ion-item-option>
               <ion-item-option color="secondary" onclick="archive('item7')">
-                <ion-icon name="archive"></ion-icon>
+                <ion-icon slot="start" name="archive"></ion-icon>
                 <span class="archive-text"></span>
               </ion-item-option>
             </ion-item-options>
@@ -265,10 +302,10 @@
                 <ion-icon name="archive"></ion-icon>Archive
               </ion-item-option>
               <ion-item-option color="secondary" expandable onclick="download('item8')">
-                <ion-icon name="download" class="download-hide"></ion-icon>
+                <ion-icon slot="start" name="download" class="download-hide"></ion-icon>
                 <div class="download-hide">Download</div>
 
-                <ion-icon class="download-spinner" name="refresh"></ion-icon>
+                <ion-icon slot="start" class="download-spinner" name="refresh"></ion-icon>
                 <div class="download-spinner">Loading...</div>
               </ion-item-option>
             </ion-item-options>
@@ -286,15 +323,61 @@
             </ion-item>
           </ion-item-sliding>
 
+          <ion-item-sliding id="item10">
+            <ion-item detail>
+              <ion-label class="ion-text-wrap">
+                <h2>RIGHT/LEFT side - many buttons</h2>
+                <p>Use mobile emulator to check</p>
+              </ion-label>
+            </ion-item>
+            <ion-item-options side="start" class="sliding-enabled">
+              <ion-item-option color="primary" expandable>
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Btn 1
+              </ion-item-option>
+              <ion-item-option color="secondary" expandable>
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Btn 2
+              </ion-item-option>
+              <ion-item-option color="danger" expandable>
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Btn 3
+              </ion-item-option>
+              <ion-item-option color="tertiary" expandable>
+                <ion-icon slot="start" name="ios-checkmark"></ion-icon>
+                Btn 4
+              </ion-item-option>
+            </ion-item-options>
+
+            <ion-item-options side="end" class="sliding-enabled">
+              <ion-item-option color="primary" expandable>
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Btn 5
+              </ion-item-option>
+              <ion-item-option color="secondary" expandable>
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Btn 6
+              </ion-item-option>
+              <ion-item-option color="danger" expandable>
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Btn 7
+              </ion-item-option>
+              <ion-item-option color="tertiary" expandable>
+                <ion-icon slot="start" name="mail"></ion-icon>
+                Btn 8
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
           <ion-item>
-            <ion-label text-wrap>
+            <ion-label class="ion-text-wrap">
               <h2>Normal ion-item (no sliding)</h2>
               <p>Paragraph text.</p>
             </ion-label>
           </ion-item>
 
           <ion-item onclick="clickedItem('item9')">
-            <ion-label text-wrap>
+            <ion-label class="ion-text-wrap">
               <h2>Normal button (no sliding)</h2>
               <p>Hey do you want to go to the game tonight?</p>
             </ion-label>
@@ -341,6 +424,16 @@
         function closeOpened() {
           var list = document.getElementById('list');
           list.closeSlidingItems();
+        }
+
+        function openItem(side) {
+          var item = document.getElementById('item2');
+          item.open(side);
+        }
+
+        function openItemOneSide() {
+          var item = document.getElementById('item1');
+          item.open();
         }
 
         function noclose(item) {
