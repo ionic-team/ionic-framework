@@ -74,9 +74,6 @@ import {
   ViewController,
 } from './interface';
 import {
-  RouterDirection as RouterDirection1,
-} from './components/router/utils/interface';
-import {
   SelectCompareFn,
 } from './components/select/select-interface';
 
