@@ -1,3 +1,12 @@
+## [4.7.1](https://github.com/ionic-team/ionic/compare/v4.7.0...v4.7.1) (2019-07-26)
+
+
+### Bug Fixes
+
+* **angular:** ensure change detection fires properly ([#18896](https://github.com/ionic-team/ionic/issues/18896)) ([962783b](https://github.com/ionic-team/ionic/commit/962783b)), closes [#18894](https://github.com/ionic-team/ionic/issues/18894)
+
+
+
 # [4.7.0 Nitrogen](https://github.com/ionic-team/ionic/compare/v4.6.2...v4.7.0) (2019-07-24)
 
 
