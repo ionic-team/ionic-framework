@@ -471,6 +471,9 @@ export namespace Components {
     */
     'mode'?: "ios" | "md";
   }
+  interface IonCarousel {
+    'indicator'?: 'progress' | 'bullets';
+  }
   interface IonCheckbox {
     /**
     * If `true`, the checkbox is selected.
@@ -2984,6 +2987,12 @@ declare global {
     new (): HTMLIonCardTitleElement;
   };
 
+  interface HTMLIonCarouselElement extends Components.IonCarousel, HTMLStencilElement {}
+  var HTMLIonCarouselElement: {
+    prototype: HTMLIonCarouselElement;
+    new (): HTMLIonCarouselElement;
+  };
+
   interface HTMLIonCheckboxElement extends Components.IonCheckbox, HTMLStencilElement {}
   var HTMLIonCheckboxElement: {
     prototype: HTMLIonCheckboxElement;
@@ -3487,6 +3496,7 @@ declare global {
     'ion-card-header': HTMLIonCardHeaderElement;
     'ion-card-subtitle': HTMLIonCardSubtitleElement;
     'ion-card-title': HTMLIonCardTitleElement;
+    'ion-carousel': HTMLIonCarouselElement;
     'ion-checkbox': HTMLIonCheckboxElement;
     'ion-chip': HTMLIonChipElement;
     'ion-col': HTMLIonColElement;
@@ -3936,6 +3946,10 @@ declare namespace LocalJSX {
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
+  }
+  interface IonCarousel extends JSXBase.HTMLAttributes<HTMLIonCarouselElement> {
+    'indicator'?: 'progress' | 'bullets';
+    'onIonCarouselDrag'?: (event: CustomEvent<any>) => void;
   }
   interface IonCheckbox extends JSXBase.HTMLAttributes<HTMLIonCheckboxElement> {
     /**
@@ -6166,6 +6180,7 @@ declare namespace LocalJSX {
     'ion-card-header': IonCardHeader;
     'ion-card-subtitle': IonCardSubtitle;
     'ion-card-title': IonCardTitle;
+    'ion-carousel': IonCarousel;
     'ion-checkbox': IonCheckbox;
     'ion-chip': IonChip;
     'ion-col': IonCol;

@@ -139,6 +139,19 @@ export class IonCardTitle {
 }
 proxyInputs(IonCardTitle, ['color', 'mode']);
 
+export declare interface IonCarousel extends Components.IonCarousel {}
+@Component({ selector: 'ion-carousel', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['indicator'] })
+export class IonCarousel {
+  ionCarouselDrag!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionCarouselDrag']);
+  }
+}
+proxyInputs(IonCarousel, ['indicator']);
+
 export declare interface IonCheckbox extends Components.IonCheckbox {}
 @Component({ selector: 'ion-checkbox', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['checked', 'color', 'disabled', 'indeterminate', 'mode', 'name', 'value'] })
 export class IonCheckbox {
