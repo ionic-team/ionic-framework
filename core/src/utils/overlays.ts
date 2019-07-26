@@ -195,6 +195,9 @@ const overlayAnimation = async (
     isAnimationBuilder = true;
   } catch (err) {
     animation = animationBuilder(aniRoot, opts);
+
+    // TODO: Clean up
+    animation.fill('both');
   }
 
   overlay.animation = animation;

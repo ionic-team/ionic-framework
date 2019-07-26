@@ -11,7 +11,7 @@ export const createAnimation = (): Animation => {
   let _duration: number | undefined;
   let _easing: string | undefined;
   let _iterations: number | undefined;
-  let _fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined = 'forwards';
+  let _fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined;
   let _direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined;
   let _keyframes: any[] = [];
 

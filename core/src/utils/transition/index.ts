@@ -84,12 +84,11 @@ const animation = async (animationBuilder: IonicAnimation | AnimationBuilder, op
    * TODO: Remove AnimationBuilder
    */
   let trans;
-  // let isAnimationBuilder = false;
   try {
     trans = await import('../animation/old-animation').then(mod => mod.create(animationBuilder as any, opts.baseEl, opts));
-
-    // isAnimationBuilder = true;
   } catch (err) {
+    // @ts-ignore
+    // TODO: Fix this type error
     trans = animationBuilder(opts.baseEl, opts);
   }
 
@@ -97,18 +96,18 @@ const animation = async (animationBuilder: IonicAnimation | AnimationBuilder, op
 
   const didComplete = await playTransition(trans, opts);
 
-  trans.hasCompleted = didComplete;
+  (trans as any).hasCompleted = didComplete;
 
   if (opts.progressCallback) {
     opts.progressCallback(undefined);
   }
 
-  if (trans.hasCompleted) {
+  if ((trans as any).hasCompleted) {
     fireDidEvents(opts.enteringEl, opts.leavingEl);
   }
 
   return {
-    hasCompleted: trans.hasCompleted,
+    hasCompleted: (trans as any).hasCompleted,
     animation: trans
   };
 };
@@ -248,5 +247,5 @@ export interface TransitionOptions extends NavOptions {
 
 export interface TransitionResult {
   hasCompleted: boolean;
-  animation?: Animation;
+  animation?: Animation | IonicAnimation;
 }

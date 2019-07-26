@@ -96,7 +96,13 @@
     customElements.define('page-two', PageTwo);
     customElements.define('page-three', PageThree);
     
-    window.Ionic.config.navAnimation = (AnimationC, navEl, opts) => {
+    
+    /*window.Ionic.config.navAnimation = (AnimationC, navEl, opts) => {
+      
+      const shadow = (el) => {
+        return el.shadowRoot || el;
+      };
+
       const DURATION = 540;
       const EASING = 'cubic-bezier(0.32,0.72,0,1)';
       const OPACITY = 'opacity';
@@ -388,7 +394,7 @@
     
       // Return the rootTransition promise
       return Promise.resolve(rootTransition);
-    };
+    };*/
   </script>
 </head>
 
