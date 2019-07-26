@@ -68,7 +68,7 @@ const getClasses = (element: HTMLElement) => {
   return classes;
 };
 
-function setClasses(element: HTMLElement, classes: string[]) {
+const setClasses = (element: HTMLElement, classes: string[]) => {
   const classList = element.classList;
 
   classList.remove(
@@ -80,8 +80,8 @@ function setClasses(element: HTMLElement, classes: string[]) {
     'ion-pristine'
   );
   classList.add(...classes);
-}
+};
 
-function startsWith(input: string, search: string): boolean {
+const startsWith = (input: string, search: string): boolean => {
   return input.substr(0, search.length) === search;
-}
+};

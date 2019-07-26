@@ -213,7 +213,7 @@ export class NavController {
   }
 }
 
-function getAnimation(direction: RouterDirection, animated: boolean | undefined, animationDirection: 'forward' | 'back' | undefined): NavDirection | undefined {
+const getAnimation = (direction: RouterDirection, animated: boolean | undefined, animationDirection: 'forward' | 'back' | undefined): NavDirection | undefined => {
   if (animated === false) {
     return undefined;
   }
@@ -226,7 +226,7 @@ function getAnimation(direction: RouterDirection, animated: boolean | undefined,
     return 'forward';
   }
   return undefined;
-}
+};
 
 const DEFAULT_DIRECTION = 'auto';
 const DEFAULT_ANIMATED = undefined;
