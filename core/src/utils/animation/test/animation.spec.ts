@@ -37,44 +37,7 @@ describe('Animation Class', () => {
       expect(animation.elements.length).toEqual(1);
     });
   });
-  
-  describe('addTarget()', () => {
-    let animation;
-    beforeEach(() => {
-      animation = createAnimation();
-      document.body.innerHTML = '';
-    });
     
-    it('should add a target', () => {
-      document.body.appendChild(document.createElement('p'));
-      
-      animation.addTarget('p');
-      expect(animation.elements.length).toEqual(1);
-    });
-    
-    it('should add multiple targets of the same type', () => {
-      document.body.appendChild(document.createElement('p'));
-      document.body.appendChild(document.createElement('p'));
-      
-      animation.addTarget('p');
-      expect(animation.elements.length).toEqual(2);
-    });
-    
-    it('should add multiple targets of different types', () => {
-      document.body.appendChild(document.createElement('p'));
-      document.body.appendChild(document.createElement('p'));
-      document.body.appendChild(document.createElement('span'));
-      
-      animation.addTarget('p, span');
-      expect(animation.elements.length).toEqual(3);
-    });
-    
-    it('should not error when trying to add null or undefined', () => {      
-      animation.addTarget('p');
-      expect(animation.elements.length).toEqual(0);
-    });
-  });
-  
   describe('addAnimation()', () => {
     let animation;
     beforeEach(() => {
@@ -119,14 +82,18 @@ describe('Animation Class', () => {
     });
   });
   
+/*
   describe('Before and After Animation Methods', () => {
     let animation;
     beforeEach(() => {
       animation = createAnimation();
     });
     
-    it('should register all "before" styles', () => {
-      animation = animation.beforeStyles({ 'background': 'red', 'opacity': 1 });
+    it.only('should register all "before" styles', () => {
+      animation.beforeStyles({ 'background': 'red', 'opacity': 1 });
+      
+      console.log(animation)
+      
       expect(Object.keys(animation.beforeStylesValue).length).toEqual(2);
     });
     
@@ -250,7 +217,7 @@ describe('Animation Class', () => {
        * Animations don't run in spec tests
        * so we have to fake the end of the animation
        */
-      const ev = new CustomEvent('animationend');
+     /* const ev = new CustomEvent('animationend');
       el.dispatchEvent(ev);
       
       expect(el.style.getPropertyValue('opacity')).toEqual("");
@@ -262,6 +229,7 @@ describe('Animation Class', () => {
 
     });
   });
+*/
   
   describe('Animation Config Methods', () => {
     let animation;

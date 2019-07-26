@@ -12,8 +12,7 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <script type="module">
-    import { createAnimation } from '../../../../dist/collection/utils/animation/animation.js';
-    import { createGesture } from '../../../../dist/ionic/index-91289ad8.js';
+    import { createAnimation, createGesture } from '../../../../dist/index.mjs';
         
     function clamp(val) {
       if (val > 1) {
@@ -42,7 +41,9 @@
       gestureName: 'drag',
       gesturePriority: 100,
       treshold: 5,
-      onStart: () => {},
+      onStart: () => {
+        rootAnimation.progressStart();
+      },
       onMove: (ev) => {
         const start = ev.startX;
         const width = track.clientWidth;
@@ -52,11 +53,12 @@
         
         const current = clamp((ev.currentX - lower) / upper);
         
-        rootAnimation.playStep(current);
+        rootAnimation.progressStep(current);
         cursor.style.transform = `translateX(${ev.currentX - 10}px)`;
       },
       onEnd: (ev) => {
-        rootAnimation.playStep(0);
+        rootAnimation.progressEnd(true, 0);
+        rootAnimation.pause();
         cursor.style.transform = `translateX(${0}px)`;
       }
     });

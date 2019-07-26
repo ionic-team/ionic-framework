@@ -28,10 +28,6 @@ export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionE
   return unregister;
 };
 
-export const supportsWebAnimations = (): boolean => {
-  return !!(window as any).Animation;
-};
-
 export const generateKeyframeString = (name: string | undefined, keyframes: any[] = []): string => {
   if (name === undefined) { console.warn('A name is required to generate keyframes'); }
 

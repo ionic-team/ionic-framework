@@ -2,12 +2,6 @@ export interface Animation {
   parentAnimation: Animation | undefined;
   elements: HTMLElement[];
   childAnimations: Animation[];
-  beforeAddClasses: string[];
-  beforeRemoveClasses: string[];
-  beforeStylesValue: { [property: string]: any };
-  afterAddClasses: string[];
-  afterRemoveClasses: string[];
-  afterStylesValue: { [property: string]: any };
 
   animationFinish(): void;
 
@@ -28,7 +22,6 @@ export interface Animation {
   keyframes(keyframes: any[]): Animation;
 
   addAnimation(animationToADd: Animation | Animation[] | undefined | null): Animation;
-  addTarget(target: string): Animation;
   addElement(el: Element | Element[] | Node | Node[] | NodeList | undefined | null): Animation;
   iterations(iterations: number): Animation;
   fill(fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined): Animation;

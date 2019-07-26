@@ -1,11 +1,11 @@
 import { Animation } from './animation-interface';
-import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeString, supportsWebAnimations } from './animation-utils';
+import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeString } from './animation-utils';
 
 let counter = 0;
 
-export const createAnimation = (): Animation => {
-  let elements: HTMLElement[] = [];
-  let childAnimations: Animation[] = [];
+export const createAnimation = () => {
+  const elements: HTMLElement[] = [];
+  const childAnimations: Animation[] = [];
   let _name: string | undefined;
   let _delay: number | undefined;
   let _duration: number | undefined;
@@ -29,8 +29,8 @@ export const createAnimation = (): Animation => {
   let afterRemoveClasses: string[] = [];
   let afterStylesValue: { [property: string]: any } = {};
 
-  let webAnimations: any[] = [];
-  let onFinishCallbacks: any[] = [];
+  const webAnimations: any[] = [];
+  const onFinishCallbacks: any[] = [];
 
   let numAnimationsRunning = 0;
 
@@ -38,29 +38,32 @@ export const createAnimation = (): Animation => {
   let shouldForceSyncPlayback = false;
   let shouldForceReverseDirection = false;
   let willComplete = true;
+  let ani: Animation;
 
   const _beforeAddReadFunctions: any[] = [];
   const _beforeAddWriteFunctions: any[] = [];
   const _afterAddReadFunctions: any[] = [];
   const _afterAddWriteFunctions: any[] = [];
 
+  const supportsWebAnimations = !!(window as any).Animation;
+
   /**
    * Destroy this animation and all child animations.
    */
-  const destroy = (): Animation => {
+  const destroy = () => {
     childAnimations.forEach(childAnimation => {
       childAnimation.destroy();
     });
 
     cleanUp();
 
-    elements = [];
-    childAnimations = [];
-    onFinishCallbacks = [];
+    elements.length = 0;
+    childAnimations.length = 0;
+    onFinishCallbacks.length = 0;
 
     initialized = false;
 
-    return generatePublicAPI();
+    return ani;
   };
 
   const cleanUp = () => {
@@ -68,19 +71,19 @@ export const createAnimation = (): Animation => {
     cleanUpStyleSheets();
   };
 
-  const onFinish = (callback: any): Animation => {
+  const onFinish = (callback: any) => {
     onFinishCallbacks.push(callback);
 
-    return generatePublicAPI();
+    return ani;
   };
 
   const cleanUpElements = () => {
-    if (supportsWebAnimations()) {
+    if (supportsWebAnimations) {
       webAnimations.forEach(animation => {
         animation.cancel();
       });
 
-      webAnimations = [];
+      webAnimations.length = 0;
     } else {
       elements.forEach(element => {
         element.style.removeProperty('animation-name');
@@ -103,112 +106,111 @@ export const createAnimation = (): Animation => {
     stylesheets = [];
   };
 
-  const beforeAddRead = (readFn: () => void): Animation => {
+  const beforeAddRead = (readFn: () => void) => {
     _beforeAddReadFunctions.push(readFn);
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const beforeAddWrite = (writeFn: () => void): Animation => {
+  const beforeAddWrite = (writeFn: () => void) => {
     _beforeAddWriteFunctions.push(writeFn);
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const afterAddRead = (readFn: () => void): Animation => {
+  const afterAddRead = (readFn: () => void) => {
     _afterAddReadFunctions.push(readFn);
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const afterAddWrite = (writeFn: () => void): Animation => {
+  const afterAddWrite = (writeFn: () => void) => {
     _afterAddWriteFunctions.push(writeFn);
 
-    return generatePublicAPI();
+    return ani;
   };
 
   /**
    * Add CSS class to this animation's elements
    * before the animation begins.
    */
-  const beforeAddClass = (className: string | string[] | undefined): Animation => {
+  const beforeAddClass = (className: string | string[] | undefined) => {
     beforeAddClasses = addClassToArray(beforeAddClasses, className);
 
-    return generatePublicAPI();
+    return ani;
   };
 
   /**
    * Remove CSS class from this animation's elements
    * before the animation begins.
    */
-  const beforeRemoveClass = (className: string | string[] | undefined): Animation => {
+  const beforeRemoveClass = (className: string | string[] | undefined) => {
     beforeRemoveClasses = addClassToArray(beforeRemoveClasses, className);
 
-    return generatePublicAPI();
+    return ani;
   };
 
   /**
    * Set CSS inline styles to this animation's elements
    * before the animation begins.
    */
-  const beforeStyles = (styles: { [property: string]: any } = {}): Animation => {
+  const beforeStyles = (styles: { [property: string]: any } = {}) => {
     beforeStylesValue = styles;
-
-    return generatePublicAPI();
+    return ani;
   };
 
   /**
    * Clear CSS inline styles from this animation's elements
    * before the animation begins.
    */
-  const beforeClearStyles = (propertyNames: string[] = []): Animation => {
+  const beforeClearStyles = (propertyNames: string[] = []) => {
     for (const property of propertyNames) {
       beforeStylesValue[property] = '';
     }
 
-    return generatePublicAPI();
+    return ani;
   };
 
   /**
    * Add CSS class to this animation's elements
    * after the animation ends.
    */
-  const afterAddClass = (className: string | string[] | undefined): Animation => {
+  const afterAddClass = (className: string | string[] | undefined) => {
     afterAddClasses = addClassToArray(afterAddClasses, className);
 
-    return generatePublicAPI();
+    return ani;
   };
 
   /**
    * Remove CSS class from this animation's elements
    * after the animation ends.
    */
-  const afterRemoveClass = (className: string | string[] | undefined): Animation => {
+  const afterRemoveClass = (className: string | string[] | undefined) => {
     afterRemoveClasses = addClassToArray(afterRemoveClasses, className);
 
-    return generatePublicAPI();
+    return ani;
   };
 
   /**
    * Set CSS inline styles to this animation's elements
    * after the animation ends.
    */
-  const afterStyles = (styles: { [property: string]: any } = {}): Animation => {
+  const afterStyles = (styles: { [property: string]: any } = {}) => {
     afterStylesValue = styles;
 
-    return generatePublicAPI();
+    return ani;
   };
 
   /**
    * Clear CSS inline styles from this animation's elements
    * after the animation ends.
    */
-  const afterClearStyles = (propertyNames: string[] = []): Animation => {
+  const afterClearStyles = (propertyNames: string[] = []) => {
     for (const property of propertyNames) {
       afterStylesValue[property] = '';
     }
 
-    return generatePublicAPI();
+    return ani;
   };
 
   const getFill = (): 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined => {
@@ -261,79 +263,75 @@ export const createAnimation = (): Animation => {
     return _keyframes;
   };
 
-  const name = (animationName: string): Animation => {
+  const name = (animationName: string) => {
     _name = animationName;
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const direction = (animationDirection: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'): Animation => {
+  const direction = (animationDirection: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse') => {
     _direction = animationDirection;
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const fill = (animationFill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both'): Animation => {
+  const fill = (animationFill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both') => {
     _fill = animationFill;
 
-    return generatePublicAPI();
+    return ani;
 
   };
 
-  const delay = (animationDelay: number): Animation => {
+  const delay = (animationDelay: number) => {
     _delay = animationDelay;
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const easing = (animationEasing: string): Animation => {
+  const easing = (animationEasing: string) => {
     _easing = animationEasing;
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const duration = (animationDuration: number): Animation => {
+  const duration = (animationDuration: number) => {
     _duration = animationDuration;
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const iterations = (animationIterations: number): Animation => {
+  const iterations = (animationIterations: number) => {
     _iterations = animationIterations;
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const parent = (animation: Animation): Animation => {
+  const parent = (animation: Animation) => {
     parentAnimation = animation;
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const addElement = (el: Element | Element[] | Node | Node[] | NodeList | undefined | null): Animation => {
+  const addElement = (el: Element | Element[] | Node | Node[] | NodeList | undefined | null) => {
     if (el != null) {
-      const nodeList = el as NodeList;
-      if (nodeList.length >= 0) {
-        for (let i = 0; i < nodeList.length; i++) {
+
+      if ((el as Node).nodeType === 1) {
+        elements.push(el as any);
+      } else if ((el as NodeList).length >= 0) {
+        for (let i = 0; i < (el as NodeList).length; i++) {
           elements.push((el as any)[i]);
         }
       } else {
-        elements.push(el as any);
+        console.error('Invalid addElement value');
       }
     }
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const addTarget = (target: string): Animation => {
-    const els = document.querySelectorAll(target);
-
-    return addElement(els);
-  };
-
-  const addAnimation = (animationToAdd: Animation | Animation[] | undefined | null): Animation => {
+  const addAnimation = (animationToAdd: Animation | Animation[] | undefined | null) => {
     if (animationToAdd != null) {
-      const parentAnim = generatePublicAPI();
+      const parentAnim = ani;
       const animationsToAdd = animationToAdd as Animation[];
       if (animationsToAdd.length >= 0) {
         for (const animation of animationsToAdd) {
@@ -346,13 +344,13 @@ export const createAnimation = (): Animation => {
       }
     }
 
-    return generatePublicAPI();
+    return ani;
   };
 
   const keyframes = (keyframeValues: any[]) => {
     _keyframes = keyframeValues;
 
-    return generatePublicAPI();
+    return ani;
   };
 
   const runBeforeRead = () => {
@@ -431,7 +429,7 @@ export const createAnimation = (): Animation => {
     const didComplete = willComplete;
 
     onFinishCallbacks.forEach(callback => {
-      callback(didComplete, generatePublicAPI());
+      callback(didComplete, ani);
     });
   };
 
@@ -514,7 +512,7 @@ export const createAnimation = (): Animation => {
     if (getKeyframes().length === 0) {
       animationFinish();
     } else {
-      if (supportsWebAnimations()) {
+      if (supportsWebAnimations) {
         initializeWebAnimation();
       } else {
         initializeCSSAnimation();
@@ -524,7 +522,7 @@ export const createAnimation = (): Animation => {
     initialized = true;
   };
 
-  const progressStep = (step: number): Animation => {
+  const progressStep = (step: number) => {
     step = Math.min(Math.max(step, 0), 1);
 
     childAnimations.forEach(animation => {
@@ -532,7 +530,7 @@ export const createAnimation = (): Animation => {
     });
 
     if (getDuration() !== undefined) {
-      if (supportsWebAnimations()) {
+      if (supportsWebAnimations) {
         webAnimations.forEach(animation => {
           animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration()! * step);
           animation.pause();
@@ -549,7 +547,7 @@ export const createAnimation = (): Animation => {
       }
     }
 
-    return generatePublicAPI();
+    return ani;
   };
 
   const updateWebAnimation = () => {
@@ -584,14 +582,14 @@ export const createAnimation = (): Animation => {
   };
 
   const updateAnimation = () => {
-    if (supportsWebAnimations()) {
+    if (supportsWebAnimations) {
       updateWebAnimation();
     } else {
       updateCSSAnimation();
     }
   };
 
-  const progressStart = (forceLinearEasing = false): Animation => {
+  const progressStart = (forceLinearEasing = false) => {
     childAnimations.forEach(animation => {
       animation.progressStart(forceLinearEasing);
     });
@@ -600,10 +598,10 @@ export const createAnimation = (): Animation => {
 
     initializeAnimation();
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const progressEnd = (shouldComplete: boolean, step: number): Animation => {
+  const progressEnd = (shouldComplete: boolean, step: number) => {
     childAnimations.forEach(animation => {
       animation.progressEnd(shouldComplete, step);
     });
@@ -622,16 +620,16 @@ export const createAnimation = (): Animation => {
       play();
     }
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const pause = (): Animation => {
+  const pause = () => {
     childAnimations.forEach(animation => {
       animation.pause();
     });
 
     if (initialized) {
-      if (supportsWebAnimations()) {
+      if (supportsWebAnimations) {
         webAnimations.forEach(animation => {
           animation.pause();
         });
@@ -642,7 +640,7 @@ export const createAnimation = (): Animation => {
       }
     }
 
-    return generatePublicAPI();
+    return ani;
   };
 
   const playAsync = (): Promise<Animation> => {
@@ -650,20 +648,20 @@ export const createAnimation = (): Animation => {
       onFinish(resolve);
       play();
 
-      return generatePublicAPI();
+      return ani;
     });
   };
 
-  const playSync = (): Animation => {
+  const playSync = () => {
     shouldForceSyncPlayback = true;
 
     onFinish(() => shouldForceSyncPlayback = false);
     play();
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const play = (): Animation => {
+  const play = () => {
     childAnimations.forEach(animation => {
       animation.play();
     });
@@ -672,7 +670,7 @@ export const createAnimation = (): Animation => {
       initializeAnimation();
     }
 
-    if (supportsWebAnimations()) {
+    if (supportsWebAnimations) {
       webAnimations.forEach(animation => {
         animation.play();
       });
@@ -683,10 +681,10 @@ export const createAnimation = (): Animation => {
       });
     }
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const stop = (): Animation => {
+  const stop = () => {
     childAnimations.forEach(animation => {
       animation.stop();
     });
@@ -696,10 +694,10 @@ export const createAnimation = (): Animation => {
       initialized = false;
     }
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const from = (property: string, value: any): Animation => {
+  const from = (property: string, value: any) => {
     const keyframeValues = getKeyframes();
     const firstFrame = keyframeValues[0];
 
@@ -717,10 +715,10 @@ export const createAnimation = (): Animation => {
       ];
     }
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const to = (property: string, value: any): Animation => {
+  const to = (property: string, value: any) => {
 
     const keyframeValues = getKeyframes();
     const lastFrame = keyframeValues[keyframeValues.length - 1];
@@ -740,77 +738,66 @@ export const createAnimation = (): Animation => {
       ];
     }
 
-    return generatePublicAPI();
+    return ani;
   };
 
-  const fromTo = (property: string, fromValue: any, toValue: any): Animation => {
+  const fromTo = (property: string, fromValue: any, toValue: any) => {
     return from(property, fromValue).to(property, toValue);
-  };
-
-  const generatePublicAPI = (): Animation => {
-    return {
-      parentAnimation,
-      elements,
-      childAnimations,
-      beforeAddClasses,
-      beforeRemoveClasses,
-      beforeStylesValue,
-      afterAddClasses,
-      afterRemoveClasses,
-      afterStylesValue,
-
-      animationFinish,
-
-      from,
-      to,
-      fromTo,
-      parent,
-      play,
-      playAsync,
-      playSync,
-      pause,
-      stop,
-      destroy,
-      keyframes,
-      addAnimation,
-      addTarget,
-      addElement,
-      fill,
-      direction,
-      iterations,
-      duration,
-      easing,
-      delay,
-      name,
-      getKeyframes,
-      getFill,
-      getDirection,
-      getDelay,
-      getIterations,
-      getEasing,
-      getDuration,
-      afterAddRead,
-      afterAddWrite,
-      afterClearStyles,
-      afterStyles,
-      afterRemoveClass,
-      afterAddClass,
-      beforeAddRead,
-      beforeAddWrite,
-      beforeClearStyles,
-      beforeStyles,
-      beforeRemoveClass,
-      beforeAddClass,
-      onFinish,
-
-      progressStart,
-      progressStep,
-      progressEnd
-    };
   };
 
   name(`ion-animation-${counter}`);
   counter++;
 
-  return generatePublicAPI();
+  return ani = {
+    parentAnimation,
+    elements,
+    childAnimations,
+
+    animationFinish,
+
+    from,
+    to,
+    fromTo,
+    parent,
+    play,
+    playAsync,
+    playSync,
+    pause,
+    stop,
+    destroy,
+    keyframes,
+    addAnimation,
+    addElement,
+    fill,
+    direction,
+    iterations,
+    duration,
+    easing,
+    delay,
+    name,
+    getKeyframes,
+    getFill,
+    getDirection,
+    getDelay,
+    getIterations,
+    getEasing,
+    getDuration,
+    afterAddRead,
+    afterAddWrite,
+    afterClearStyles,
+    afterStyles,
+    afterRemoveClass,
+    afterAddClass,
+    beforeAddRead,
+    beforeAddWrite,
+    beforeClearStyles,
+    beforeStyles,
+    beforeRemoveClass,
+    beforeAddClass,
+    onFinish,
+
+    progressStart,
+    progressStep,
+    progressEnd
+  };
 };

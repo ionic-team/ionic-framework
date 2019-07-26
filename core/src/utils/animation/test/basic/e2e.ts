@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 import { listenForEvent, waitForFunctionTestContext } from '../../../test/utils';
 
-test.only(`animation: basic`, async () => {
+test(`animation: basic`, async () => {
   const page = await newE2EPage({ url: '/src/utils/animation/test/basic?ionic:_testing=true' });
   const screenshotCompares = [];
 
