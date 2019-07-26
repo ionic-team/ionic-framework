@@ -54,7 +54,7 @@ function publishGit(tasks, version, changelog) {
     },
     {
       title: 'Push tags to remove',
-      task: () => execa('git', ['push', '--tags'], { cwd: common.rootDir })
+      task: () => execa('git', ['push', '--follow-tags'], { cwd: common.rootDir })
     },
     {
       title: 'Publish Github release',
