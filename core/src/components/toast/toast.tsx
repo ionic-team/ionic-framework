@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
@@ -226,22 +226,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return true;
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      style: {
-        zIndex: 60000 + this.overlayIndex,
-      },
-      class: {
-        [mode]: true,
-
-        ...createColorClasses(this.color),
-        ...getClassMap(this.cssClass),
-        'toast-translucent': this.translucent
-      }
-    };
-  }
-
   renderButtons(buttons: ToastButton[], side: 'start' | 'end') {
     if (buttons.length === 0) {
       return;
@@ -276,29 +260,42 @@ export class Toast implements ComponentInterface, OverlayInterface {
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter(b => b.side === 'start');
     const endButtons = allButtons.filter(b => b.side !== 'start');
-
+    const mode = getIonMode(this);
     const wrapperClass = {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true
     };
 
     return (
-      <div class={wrapperClass}>
-        <div class="toast-container">
-          {this.renderButtons(startButtons, 'start')}
+      <Host
+        style={{
+          zIndex: `${60000 + this.overlayIndex}`,
+        }}
+        class={{
+          [mode]: true,
 
-          <div class="toast-content">
-            {this.header !== undefined &&
-              <div class="toast-header">{this.header}</div>
-            }
-            {this.message !== undefined &&
-              <div class="toast-message" innerHTML={sanitizeDOMString(this.message)}></div>
-            }
+          ...createColorClasses(this.color),
+          ...getClassMap(this.cssClass),
+          'toast-translucent': this.translucent
+        }}
+      >
+        <div class={wrapperClass}>
+          <div class="toast-container">
+            {this.renderButtons(startButtons, 'start')}
+
+            <div class="toast-content">
+              {this.header !== undefined &&
+                <div class="toast-header">{this.header}</div>
+              }
+              {this.message !== undefined &&
+                <div class="toast-message" innerHTML={sanitizeDOMString(this.message)}></div>
+              }
+            </div>
+
+            {this.renderButtons(endButtons, 'end')}
           </div>
-
-          {this.renderButtons(endButtons, 'end')}
         </div>
-      </div>
+      </Host>
     );
   }
 }

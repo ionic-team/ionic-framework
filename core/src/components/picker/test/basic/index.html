@@ -46,7 +46,6 @@
   <script>
     async function presentPicker(customClass) {
       const pickerController = document.querySelector('ion-picker-controller');
-      await pickerController.componentOnReady();
       const pickerElement = await pickerController.create({
         buttons: [{
           text: 'Save',

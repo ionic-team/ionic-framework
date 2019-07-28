@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, Element, Method, Prop, h } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Host, Method, Prop, h } from '@stencil/core';
 
 import { ComponentRef, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
@@ -61,20 +61,20 @@ export class Tab implements ComponentInterface {
     return undefined;
   }
 
-  hostData() {
-    const { tab, active, component } = this;
-    return {
-      'role': 'tabpanel',
-      'aria-hidden': !active ? 'true' : null,
-      'aria-labelledby': `tab-button-${tab}`,
-      'class': {
-        'ion-page': component === undefined,
-        'tab-hidden': !active
-      }
-    };
-  }
-
   render() {
-    return <slot></slot>;
+    const { tab, active, component } = this;
+    return (
+      <Host
+        role="tabpanel"
+        aria-hidden={!active ? 'true' : null}
+        aria-labelledby={`tab-button-${tab}`}
+        class={{
+          'ion-page': component === undefined,
+          'tab-hidden': !active
+        }}
+      >
+        <slot></slot>
+      </Host>
+    );
   }
 }

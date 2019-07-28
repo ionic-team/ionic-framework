@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -46,21 +46,9 @@ export class Spinner implements ComponentInterface {
     return (mode === 'ios') ? 'lines' : 'crescent';
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [mode]: true,
-        [`spinner-${this.getName()}`]: true,
-        'spinner-paused': !!this.paused || config.getBoolean('_testing')
-      }
-    };
-  }
-
   render() {
+    const mode = getIonMode(this);
     const name = this.getName();
-
     const spinner = SPINNERS[name] || SPINNERS['lines'];
     const duration = (typeof this.duration === 'number' && this.duration > 10 ? this.duration : spinner.dur);
     const svgs: any[] = [];
@@ -76,7 +64,18 @@ export class Spinner implements ComponentInterface {
       }
     }
 
-    return svgs;
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          [`spinner-${name}`]: true,
+          'spinner-paused': !!this.paused || config.getBoolean('_testing')
+        }}
+      >
+        {svgs}
+      </Host>
+    );
   }
 }
 

@@ -148,7 +148,6 @@
 
     async function presentToastWithOptions(opts) {
       const toastController = document.querySelector('ion-toast-controller');
-      await toastController.componentOnReady();
       const toastElement = await toastController.create(opts);
       return await toastElement.present();
     }
