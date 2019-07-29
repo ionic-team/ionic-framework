@@ -53,7 +53,6 @@ export const config: Config = {
 
     // Deprecated
     { components: [
-      'ion-anchor',
       'ion-action-sheet-controller',
       'ion-alert-controller',
       'ion-loading-controller',
@@ -129,7 +128,6 @@ export const config: Config = {
         'ion-route-redirect',
         'ion-router-link',
         'ion-router-outlet',
-        'ion-anchor',
 
         // tabs
         'ion-tabs',

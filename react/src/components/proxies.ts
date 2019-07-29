@@ -11,7 +11,6 @@ export const IonIcon = /*@__PURE__*/createReactComponent<IoniconsJSX.IonIcon & R
 
 export const IonTab = /*@__PURE__*/createReactComponent<JSX.IonTab & ReactProps, HTMLIonTabElement>('ion-tab');
 export const IonTabButton = /*@__PURE__*/createReactComponent<JSX.IonTabButton & ReactProps, HTMLIonTabButtonElement>('ion-tab-button');
-export const IonAnchor = /*@__PURE__*/createReactComponent<JSX.IonAnchor & ReactProps, HTMLIonAnchorElement>('ion-anchor');
 export const IonAvatar = /*@__PURE__*/createReactComponent<JSX.IonAvatar & ReactProps, HTMLIonAvatarElement>('ion-avatar');
 export const IonBackdrop = /*@__PURE__*/createReactComponent<JSX.IonBackdrop & ReactProps, HTMLIonBackdropElement>('ion-backdrop');
 export const IonBadge = /*@__PURE__*/createReactComponent<JSX.IonBadge & ReactProps, HTMLIonBadgeElement>('ion-badge');
