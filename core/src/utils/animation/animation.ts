@@ -56,10 +56,6 @@ export const createAnimation = () => {
    * Destroy this animation and all child animations.
    */
   const destroy = () => {
-    childAnimations.forEach(childAnimation => {
-      childAnimation.destroy();
-    });
-
     cleanUp();
 
     elements.length = 0;
@@ -67,6 +63,10 @@ export const createAnimation = () => {
     onFinishCallbacks.length = 0;
 
     initialized = false;
+
+    childAnimations.forEach(childAnimation => {
+      childAnimation.destroy();
+    });
 
     return ani;
   };
@@ -513,7 +513,6 @@ export const createAnimation = () => {
     beforeAnimation();
 
     numAnimationsRunning = childAnimations.length + 1;
-
     if (getKeyframes().length === 0) {
       animationFinish();
     } else {
@@ -529,10 +528,6 @@ export const createAnimation = () => {
 
   const progressStep = (step: number) => {
     step = Math.min(Math.max(step, 0), 1);
-
-    childAnimations.forEach(animation => {
-      animation.progressStep(step);
-    });
 
     if (getDuration() !== undefined) {
       if (supportsWebAnimations) {
@@ -551,6 +546,10 @@ export const createAnimation = () => {
         });
       }
     }
+
+    childAnimations.forEach(animation => {
+      animation.progressStep(step);
+    });
 
     return ani;
   };
@@ -595,22 +594,18 @@ export const createAnimation = () => {
   };
 
   const progressStart = (forceLinearEasing = false) => {
-    childAnimations.forEach(animation => {
-      animation.progressStart(forceLinearEasing);
-    });
-
     shouldForceLinearEasing = forceLinearEasing;
 
     initializeAnimation();
+
+    childAnimations.forEach(animation => {
+      animation.progressStart(forceLinearEasing);
+    });
 
     return ani;
   };
 
   const progressEnd = (shouldComplete: boolean, step: number) => {
-    childAnimations.forEach(animation => {
-      animation.progressEnd(shouldComplete, step);
-    });
-
     shouldForceLinearEasing = false;
     willComplete = shouldComplete;
 
@@ -625,14 +620,14 @@ export const createAnimation = () => {
       play();
     }
 
+    childAnimations.forEach(animation => {
+      animation.progressEnd(shouldComplete, step);
+    });
+
     return ani;
   };
 
   const pause = () => {
-    childAnimations.forEach(animation => {
-      animation.pause();
-    });
-
     if (initialized) {
       if (supportsWebAnimations) {
         webAnimations.forEach(animation => {
@@ -644,6 +639,10 @@ export const createAnimation = () => {
         });
       }
     }
+
+    childAnimations.forEach(animation => {
+      animation.pause();
+    });
 
     return ani;
   };
@@ -667,10 +666,6 @@ export const createAnimation = () => {
   };
 
   const play = () => {
-    childAnimations.forEach(animation => {
-      animation.play();
-    });
-
     if (!initialized) {
       initializeAnimation();
     }
@@ -686,18 +681,22 @@ export const createAnimation = () => {
       });
     }
 
+    childAnimations.forEach(animation => {
+      animation.play();
+    });
+
     return ani;
   };
 
   const stop = () => {
-    childAnimations.forEach(animation => {
-      animation.stop();
-    });
-
     if (initialized) {
       cleanUp();
       initialized = false;
     }
+
+    childAnimations.forEach(animation => {
+      animation.stop();
+    });
 
     return ani;
   };
