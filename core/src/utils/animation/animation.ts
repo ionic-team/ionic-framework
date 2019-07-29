@@ -616,10 +616,8 @@ export const createAnimation = () => {
     beforeAnimation();
 
     numAnimationsRunning = childAnimations.length + 1;
-    
-    if (getKeyframes().length === 0) {
-      animationFinish();
-    } else {
+
+    if (getKeyframes().length > 0) {
       if (supportsWebAnimations) {
         initializeWebAnimation();
       } else {
@@ -631,6 +629,10 @@ export const createAnimation = () => {
   };
 
   const progressStep = (step: number) => {
+    childAnimations.forEach(animation => {
+      animation.progressStep(step);
+    });
+
     step = Math.min(Math.max(step, 0), 1);
 
     if (getDuration() !== undefined) {
@@ -650,10 +652,6 @@ export const createAnimation = () => {
         });
       }
     }
-
-    childAnimations.forEach(animation => {
-      animation.progressStep(step);
-    });
 
     return ani;
   };
@@ -698,18 +696,22 @@ export const createAnimation = () => {
   };
 
   const progressStart = (forceLinearEasing = false) => {
-    shouldForceLinearEasing = forceLinearEasing;
-
-    initializeAnimation();
-
     childAnimations.forEach(animation => {
       animation.progressStart(forceLinearEasing);
     });
+
+    shouldForceLinearEasing = forceLinearEasing;
+
+    initializeAnimation();
 
     return ani;
   };
 
   const progressEnd = (shouldComplete: boolean, step: number) => {
+    childAnimations.forEach(animation => {
+      animation.progressEnd(shouldComplete, step);
+    });
+
     shouldForceLinearEasing = false;
     willComplete = shouldComplete;
 
@@ -724,10 +726,6 @@ export const createAnimation = () => {
       play();
     }
 
-    childAnimations.forEach(animation => {
-      animation.progressEnd(shouldComplete, step);
-    });
-
     return ani;
   };
 
@@ -735,6 +733,10 @@ export const createAnimation = () => {
    * Pause the animation.
    */
   const pause = () => {
+    childAnimations.forEach(animation => {
+      animation.pause();
+    });
+
     if (initialized) {
       if (supportsWebAnimations) {
         webAnimations.forEach(animation => {
@@ -746,10 +748,6 @@ export const createAnimation = () => {
         });
       }
     }
-
-    childAnimations.forEach(animation => {
-      animation.pause();
-    });
 
     return ani;
   };
@@ -790,6 +788,10 @@ export const createAnimation = () => {
       initializeAnimation();
     }
 
+    childAnimations.forEach(animation => {
+      animation.play();
+    });
+
     if (supportsWebAnimations) {
       webAnimations.forEach(animation => {
         animation.play();
@@ -802,9 +804,9 @@ export const createAnimation = () => {
       });
     }
 
-    childAnimations.forEach(animation => {
-      animation.play();
-    });
+    if (getKeyframes().length === 0 || elements.length === 0) {
+      animationFinish();
+    }
 
     return ani;
   };
@@ -814,14 +816,14 @@ export const createAnimation = () => {
    * all elements to their initial state
    */
   const stop = () => {
+    childAnimations.forEach(animation => {
+      animation.stop();
+    });
+
     if (initialized) {
       cleanUp();
       initialized = false;
     }
-
-    childAnimations.forEach(animation => {
-      animation.stop();
-    });
 
     return ani;
   };
@@ -880,7 +882,7 @@ export const createAnimation = () => {
     childAnimations,
 
     animationFinish,
-
+    _name,
     from,
     to,
     fromTo,

@@ -18,12 +18,14 @@
     const squareB = document.querySelector('.square-b');
     const squareC = document.querySelector('.square-c');
     const squareCText = document.querySelectorAll('.square-c .text');
+    const squareCSubText = document.querySelectorAll('.square-c .text-sub');
     
     const rootAnimation = createAnimation();
     const animationA = createAnimation();
     const animationB = createAnimation();
     const animationC = createAnimation();
     const animationCSubA = createAnimation();
+    const animationCSubB = createAnimation();
     
     squareA.addEventListener('ionAnimationFinished', (e) => {
       console.log(e.detail);
@@ -105,7 +107,14 @@
         squareA.dispatchEvent(ev);
       });
       
-    animationC.addAnimation(animationCSubA);
+    animationCSubB
+      .addElement(squareCSubText)
+      .onFinish(() => {
+        const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationCSubBFinished' });
+        squareA.dispatchEvent(ev);
+      });
+      
+    animationC.addAnimation([animationCSubA, animationCSubB]);
     
     rootAnimation
       .addAnimation([animationA, animationB, animationC])
@@ -141,6 +150,18 @@
       margin-left: 25px;
       margin-top: 25px;
       margin-bottom: 25px;
+      position: relative;
+    }
+    .circle {
+      width: 10px;
+      height: 10px;
+      border-radius: 10px;
+      background-color: black;
+      position: absolute;
+      margin: 0 auto;
+      top: 10px;
+      left: 0;
+      right: 0;
     }
   </style>
   </head>
@@ -170,6 +191,7 @@
         
         <div class="square square-c">
           <div class="text">Hello</div>
+          <div class="circle"></div>
         </div>
       </div>
     </ion-content>

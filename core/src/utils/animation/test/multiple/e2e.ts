@@ -21,7 +21,7 @@ test(`animation:web: multiple`, async () => {
   await page.waitForSelector('.play');
 
   await waitForFunctionTestContext((payload: any) => {
-    return payload.animationStatus.join(', ') === ['AnimationBFinished', 'AnimationCSubAFinished', 'AnimationCFinished', 'AnimationAFinished', 'AnimationRootFinished'].join(', ');
+    return payload.animationStatus.join(', ') === ['AnimationCSubBFinished', 'AnimationBFinished', 'AnimationCSubAFinished', 'AnimationCFinished', 'AnimationAFinished', 'AnimationRootFinished'].join(', ');
 
   }, { animationStatus });
   screenshotCompares.push(await page.compareScreenshot());
@@ -46,7 +46,7 @@ test(`animation:css: multiple`, async () => {
   await page.waitForSelector('.play');
 
   await waitForFunctionTestContext((payload: any) => {
-    return payload.animationStatus.join(', ') === ['AnimationBFinished', 'AnimationCSubAFinished', 'AnimationCFinished', 'AnimationAFinished', 'AnimationRootFinished'].join(', ');
+    return payload.animationStatus.join(', ') === ['AnimationCSubBFinished', 'AnimationBFinished', 'AnimationCSubAFinished', 'AnimationCFinished', 'AnimationAFinished', 'AnimationRootFinished'].join(', ');
 
   }, { animationStatus });
   screenshotCompares.push(await page.compareScreenshot());
