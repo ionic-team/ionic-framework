@@ -1,6 +1,6 @@
 import { NavDirection } from '@ionic/core';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { BrowserRouter, BrowserRouterProps, match, matchPath, Redirect, Route, RouteComponentProps, RouteProps, withRouter } from 'react-router-dom';
 import { generateUniqueId } from '../utils';
 import { NavManager } from './NavManager';
@@ -169,10 +169,11 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
     this.listenUnregisterCallback();
   }
 
-  setupIonRouter(id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) {
+  setupIonRouter(id: string, children: any, routerOutlet: HTMLIonRouterOutletElement) {
     const views: ViewItem[] = [];
     let activeId: string;
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
+
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
       views.push(createViewItem.call(this, child));
     });

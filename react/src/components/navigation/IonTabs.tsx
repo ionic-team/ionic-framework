@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavContext, } from '@ionic/react-core'
+import { NavContext } from '@ionic/react-core'
 import { IonRouterOutlet } from '../proxies';
 import { IonTabBar } from './IonTabBar';
 
@@ -51,6 +51,10 @@ export class IonTabs extends React.Component<Props, State> {
         tabBar = child;
       }
     });
+
+    if(!outlet) {
+      throw new Error('IonTabs must contain an IonRouterOutlet');
+    }
 
     const NavManager = this.context.getViewManager();
 
