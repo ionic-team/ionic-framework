@@ -170,6 +170,14 @@ export class Searchbar implements ComponentInterface {
   }
 
   componentDidLoad() {
+    if (this.showCancelButton === 'false' || this.showCancelButton === false) {
+      console.warn('The boolean values of showCancelButton are deprecated. Please use "never" instead of "false".');
+    }
+
+    if (this.showCancelButton === '' || this.showCancelButton === 'true' || this.showCancelButton === true) {
+      console.warn('The boolean values of showCancelButton are deprecated. Please use "focus" instead of "true".');
+    }
+
     this.positionElements();
     this.debounceChanged();
 
