@@ -20,16 +20,15 @@
     const squareCText = document.querySelectorAll('.square-c .text');
     
     const rootAnimation = createAnimation();
-    const animationA = createAnimation('animation-a');
-    const animationB = createAnimation('animation-b');
-    const animationC = createAnimation('animation-c');
-    
-    const animationCSubA = createAnimation('animation-c-sub-a');
+    const animationA = createAnimation();
+    const animationB = createAnimation();
+    const animationC = createAnimation();
+    const animationCSubA = createAnimation();
     
     animationA
       .addElement(squareA)
-      .duration(2000)
-      .delay(5000)
+      .duration(500)
+      .delay(3500)
       .easing('linear')
       .iterations(1)
       .keyframes([
@@ -51,7 +50,7 @@
     animationB
       .addElement(squareB)
       .duration(500)
-      .delay(2000)
+      .delay(1000)
       .easing('ease-in-out')
       .iterations(1)
       .keyframes([
@@ -72,7 +71,7 @@
   
     animationC
       .addElement(squareC)
-      .duration(2000)
+      .duration(1000)
       .delay(500)
       .easing('ease-in-out')
       .iterations(1)
@@ -94,8 +93,8 @@
       
     animationCSubA
       .addElement(squareCText)
-      .duration(1000)
-      .delay(3000)
+      .duration(500)
+      .delay(2000)
       .fromTo('color', 'red', 'blue')
       .onFinish(() => {
         const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationCSubAFinished' });

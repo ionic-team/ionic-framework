@@ -9,63 +9,45 @@ test(`animation:web: multiple`, async () => {
   screenshotCompares.push(await page.compareScreenshot());
 
   const ANIMATION_FINISHED = 'onIonAnimationFinished';
-  const animationStatus: any = {
-    'AnimationRootFinished': false,
-    'AnimationAFinished': false,
-    'AnimationBFinished': false,
-    'AnimationCFinished': false,
-    'AnimationCSubAFinished': false
-  };
+  const animationStatus = [];
   await page.exposeFunction(ANIMATION_FINISHED, (ev: any) => {
-    console.log(ev.detail)
-    
-    // need to check state of animations for on each event
-    animationStatus[ev.detail] = true;
-    
-    console.log(animationStatus)
+    animationStatus.push(ev.detail);
   });
 
   const squareA = await page.$('.square-a');
-  await listenForEvent(page, 'ionAnimationFinished', squareA, ANIMATION_FINISHED)
-  
+  await listenForEvent(page, 'ionAnimationFinished', squareA, ANIMATION_FINISHED);
+
   await page.click('.play');
   await page.waitForSelector('.play');
-  
-  await waitForFunctionTestContext((payload: any) => {
-    return payload.animationStatus['AnimationRootFinished'] === true;
-  }, { animationStatus });
-  
-  // need to ensure all other animations resolved
 
+  await waitForFunctionTestContext((payload: any) => {
+    return payload.animationStatus.join(', ') === ['AnimationBFinished', 'AnimationCSubAFinished', 'AnimationCFinished', 'AnimationAFinished', 'AnimationRootFinished'].join(', ');
+
+  }, { animationStatus });
   screenshotCompares.push(await page.compareScreenshot());
 });
 
-/*
-test(`animation:css: basic`, async () => {
-  const page = await newE2EPage({ url: '/src/utils/animation/test/basic?ionic:_forceCSSAnimations=true' });
-
-  page.evaluate(() => window.Ionic.config._forceCSSAnimations = true);
-
+test(`animation:css: multiple`, async () => {
+  const page = await newE2EPage({ url: '/src/utils/animation/test/multiple?ionic:_forceCSSAnimations=true' });
   const screenshotCompares = [];
 
   screenshotCompares.push(await page.compareScreenshot());
 
   const ANIMATION_FINISHED = 'onIonAnimationFinished';
-  const animationFinishedCount: any = { count: 0 };
-  await page.exposeFunction(ANIMATION_FINISHED, () => {
-    animationFinishedCount.count += 1;
+  const animationStatus = [];
+  await page.exposeFunction(ANIMATION_FINISHED, (ev: any) => {
+    animationStatus.push(ev.detail);
   });
 
-  const square = await page.$('.square-a');
-  await listenForEvent(page, 'ionAnimationFinished', square, ANIMATION_FINISHED);
+  const squareA = await page.$('.square-a');
+  await listenForEvent(page, 'ionAnimationFinished', squareA, ANIMATION_FINISHED);
 
   await page.click('.play');
   await page.waitForSelector('.play');
 
   await waitForFunctionTestContext((payload: any) => {
-    return payload.animationFinishedCount.count === 1;
-  }, { animationFinishedCount });
+    return payload.animationStatus.join(', ') === ['AnimationBFinished', 'AnimationCSubAFinished', 'AnimationCFinished', 'AnimationAFinished', 'AnimationRootFinished'].join(', ');
 
+  }, { animationStatus });
   screenshotCompares.push(await page.compareScreenshot());
 });
-*/

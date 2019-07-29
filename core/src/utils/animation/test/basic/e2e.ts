@@ -11,7 +11,6 @@ test(`animation:web: basic`, async () => {
   const ANIMATION_FINISHED = 'onIonAnimationFinished';
   const animationFinishedCount: any = { count: 0 };
   await page.exposeFunction(ANIMATION_FINISHED, () => {
-    console.log('yay');
     animationFinishedCount.count += 1;
   });
 
@@ -30,9 +29,6 @@ test(`animation:web: basic`, async () => {
 
 test(`animation:css: basic`, async () => {
   const page = await newE2EPage({ url: '/src/utils/animation/test/basic?ionic:_forceCSSAnimations=true' });
-
-  page.evaluate(() => window.Ionic.config._forceCSSAnimations = true);
-
   const screenshotCompares = [];
 
   screenshotCompares.push(await page.compareScreenshot());

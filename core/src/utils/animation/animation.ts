@@ -50,7 +50,7 @@ export const createAnimation = () => {
   const _afterAddReadFunctions: any[] = [];
   const _afterAddWriteFunctions: any[] = [];
 
-  const supportsWebAnimations = !!(window as any).Animation && _forceCSSAnimations !== null;
+  const supportsWebAnimations = !!(window as any).Animation && _forceCSSAnimations === null;
 
   /**
    * Destroy this animation and all child animations.
@@ -445,10 +445,10 @@ export const createAnimation = () => {
 
     if (numAnimationsRunning === 0) {
       afterAnimation();
-    }
 
-    if (parentAnimation) {
-      parentAnimation.animationFinish();
+      if (parentAnimation) {
+        parentAnimation.animationFinish();
+      }
     }
   };
 
