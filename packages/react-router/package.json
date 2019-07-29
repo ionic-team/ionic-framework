@@ -40,7 +40,7 @@
   },
   "peerDependencies": {
     "@ionic/core": "^4.6.0",
-    "@ionic/react-core": "0.0.8-1",
+    "@ionic/react-core": "0.0.8",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",

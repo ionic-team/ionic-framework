@@ -42,7 +42,7 @@
   "peerDependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "ionicons": "^4.6.2-0"
+    "ionicons": "^4.6.2"
   },
   "devDependencies": {
     "@trust/webcrypto": "^0.9.2",
