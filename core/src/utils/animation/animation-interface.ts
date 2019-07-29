@@ -2,7 +2,7 @@ export interface Animation {
   parentAnimation: Animation | undefined;
   elements: HTMLElement[];
   childAnimations: Animation[];
-  _name: any;
+
   animationFinish(): void;
 
   play(): Animation;

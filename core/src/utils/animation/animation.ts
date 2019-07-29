@@ -882,7 +882,6 @@ export const createAnimation = () => {
     childAnimations,
 
     animationFinish,
-    _name,
     from,
     to,
     fromTo,
