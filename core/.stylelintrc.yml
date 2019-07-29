@@ -8,6 +8,7 @@ ignoreFiles:
   - src/css/normalize.scss
   - src/css/text-alignment.scss
   - src/css/display.scss
+  - src/css/roboto.scss
   - src/components/slides/slides-vendor.scss
   - src/themes/ionic.mixins.scss
   - src/themes/ionic.functions.color.scss
