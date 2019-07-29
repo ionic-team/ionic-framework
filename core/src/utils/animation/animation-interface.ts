@@ -29,7 +29,6 @@ export interface Animation {
   duration(duration: number): Animation;
   easing(easing: string): Animation;
   delay(delay: number): Animation;
-  name(name: string): Animation;
   parent(animation: Animation): Animation;
 
   getKeyframes(): any[];

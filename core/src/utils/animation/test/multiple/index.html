@@ -25,6 +25,10 @@
     const animationC = createAnimation();
     const animationCSubA = createAnimation();
     
+    squareA.addEventListener('ionAnimationFinished', (e) => {
+      console.log(e.detail);
+    })
+    
     animationA
       .addElement(squareA)
       .duration(500)

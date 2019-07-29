@@ -11,46 +11,36 @@ const _forceCSSAnimations = new URLSearchParams(window.location.search).get('ion
 export const createAnimation = () => {
   const elements: HTMLElement[] = [];
   const childAnimations: Animation[] = [];
-  let _name: string | undefined;
+  const _beforeAddReadFunctions: any[] = [];
+  const _beforeAddWriteFunctions: any[] = [];
+  const _afterAddReadFunctions: any[] = [];
+  const _afterAddWriteFunctions: any[] = [];
+  const webAnimations: any[] = [];
+  const onFinishCallbacks: any[] = [];
+  const supportsWebAnimations = !!(window as any).Animation && _forceCSSAnimations === null;
+  const _name = `ion-animation-${counter++}`;
   let _delay: number | undefined;
   let _duration: number | undefined;
   let _easing: string | undefined;
   let _iterations: number | undefined;
-  let _fill: 'auto' | 'none' | 'forwards' | 'backwards' | 'both' | undefined;
-  let _direction: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | undefined;
+  let _fill: AnimationFill | undefined;
+  let _direction: AnimationDirection | undefined;
   let _keyframes: any[] = [];
-
   let initialized = false;
-
   let stylesheets: HTMLElement[] = [];
-
   let parentAnimation: Animation | undefined;
-
   let beforeAddClasses: string[] = [];
   let beforeRemoveClasses: string[] = [];
   let beforeStylesValue: { [property: string]: any } = {};
-
   let afterAddClasses: string[] = [];
   let afterRemoveClasses: string[] = [];
   let afterStylesValue: { [property: string]: any } = {};
-
-  const webAnimations: any[] = [];
-  const onFinishCallbacks: any[] = [];
-
   let numAnimationsRunning = 0;
-
   let shouldForceLinearEasing = false;
   let shouldForceSyncPlayback = false;
   let shouldForceReverseDirection = false;
   let willComplete = true;
   let ani: Animation;
-
-  const _beforeAddReadFunctions: any[] = [];
-  const _beforeAddWriteFunctions: any[] = [];
-  const _afterAddReadFunctions: any[] = [];
-  const _afterAddWriteFunctions: any[] = [];
-
-  const supportsWebAnimations = !!(window as any).Animation && _forceCSSAnimations === null;
 
   /**
    * Destroy this animation and all child animations.
@@ -71,17 +61,32 @@ export const createAnimation = () => {
     return ani;
   };
 
+  /**
+   * Cancels any Web Animations, removes
+   * any animation properties from the
+   * animation's elements, and removes the
+   * animation's stylesheets from the DOM.
+   */
   const cleanUp = () => {
     cleanUpElements();
     cleanUpStyleSheets();
   };
 
+  /**
+   * Add a callback to be run
+   * upon the animation ending
+   */
   const onFinish = (callback: any) => {
     onFinishCallbacks.push(callback);
 
     return ani;
   };
 
+  /**
+   * Cancels any Web Animations and removes
+   * any animation properties from the
+   * the animation's elements.
+   */
   const cleanUpElements = () => {
     if (supportsWebAnimations) {
       webAnimations.forEach(animation => {
@@ -103,6 +108,10 @@ export const createAnimation = () => {
     }
   };
 
+  /**
+   * Removes the animation's stylesheets
+   * from the DOM.
+   */
   const cleanUpStyleSheets = () => {
     stylesheets.forEach(stylesheet => {
       stylesheet.parentNode!.removeChild(stylesheet);
@@ -111,24 +120,44 @@ export const createAnimation = () => {
     stylesheets = [];
   };
 
+  /**
+   * Add a function that performs a
+   * DOM read to be run before the
+   * animation starts
+   */
   const beforeAddRead = (readFn: () => void) => {
     _beforeAddReadFunctions.push(readFn);
 
     return ani;
   };
 
+  /**
+   * Add a function that performs a
+   * DOM write to be run before the
+   * animation starts
+   */
   const beforeAddWrite = (writeFn: () => void) => {
     _beforeAddWriteFunctions.push(writeFn);
 
     return ani;
   };
 
+  /**
+   * Add a function that performs a
+   * DOM read to be run after the
+   * animation end
+   */
   const afterAddRead = (readFn: () => void) => {
     _afterAddReadFunctions.push(readFn);
 
     return ani;
   };
 
+  /**
+   * Add a function that performs a
+   * DOM write to be run after the
+   * animation end
+   */
   const afterAddWrite = (writeFn: () => void) => {
     _afterAddWriteFunctions.push(writeFn);
 
@@ -136,8 +165,8 @@ export const createAnimation = () => {
   };
 
   /**
-   * Add CSS class to this animation's elements
-   * before the animation begins.
+   * Add a class to the animation's
+   * elements before the animation starts
    */
   const beforeAddClass = (className: string | string[] | undefined) => {
     beforeAddClasses = addClassToArray(beforeAddClasses, className);
@@ -146,8 +175,8 @@ export const createAnimation = () => {
   };
 
   /**
-   * Remove CSS class from this animation's elements
-   * before the animation begins.
+   * Remove a class from the animation's
+   * elements before the animation starts
    */
   const beforeRemoveClass = (className: string | string[] | undefined) => {
     beforeRemoveClasses = addClassToArray(beforeRemoveClasses, className);
@@ -156,8 +185,8 @@ export const createAnimation = () => {
   };
 
   /**
-   * Set CSS inline styles to this animation's elements
-   * before the animation begins.
+   * Set CSS inline styles to the animation's
+   * elements before the animation begins.
    */
   const beforeStyles = (styles: { [property: string]: any } = {}) => {
     beforeStylesValue = styles;
@@ -165,8 +194,8 @@ export const createAnimation = () => {
   };
 
   /**
-   * Clear CSS inline styles from this animation's elements
-   * before the animation begins.
+   * Clear CSS inline styles from the animation's
+   * elements before the animation begins.
    */
   const beforeClearStyles = (propertyNames: string[] = []) => {
     for (const property of propertyNames) {
@@ -177,8 +206,8 @@ export const createAnimation = () => {
   };
 
   /**
-   * Add CSS class to this animation's elements
-   * after the animation ends.
+   * Add CSS class to the animation's
+   * elements after the animation ends.
    */
   const afterAddClass = (className: string | string[] | undefined) => {
     afterAddClasses = addClassToArray(afterAddClasses, className);
@@ -187,8 +216,8 @@ export const createAnimation = () => {
   };
 
   /**
-   * Remove CSS class from this animation's elements
-   * after the animation ends.
+   * Remove CSS class from the animation's
+   * elements after the animation ends.
    */
   const afterRemoveClass = (className: string | string[] | undefined) => {
     afterRemoveClasses = addClassToArray(afterRemoveClasses, className);
@@ -197,8 +226,8 @@ export const createAnimation = () => {
   };
 
   /**
-   * Set CSS inline styles to this animation's elements
-   * after the animation ends.
+   * Set CSS inline styles to the animation's
+   * elements after the animation ends.
    */
   const afterStyles = (styles: { [property: string]: any } = {}) => {
     afterStylesValue = styles;
@@ -207,8 +236,8 @@ export const createAnimation = () => {
   };
 
   /**
-   * Clear CSS inline styles from this animation's elements
-   * after the animation ends.
+   * Clear CSS inline styles from the animation's
+   * elements after the animation ends.
    */
   const afterClearStyles = (propertyNames: string[] = []) => {
     for (const property of propertyNames) {
@@ -218,6 +247,9 @@ export const createAnimation = () => {
     return ani;
   };
 
+  /**
+   * Returns the animation's fill mode.
+   */
   const getFill = () => {
     if (_fill !== undefined) { return _fill; }
     if (parentAnimation) { return parentAnimation.getFill(); }
@@ -225,6 +257,9 @@ export const createAnimation = () => {
     return undefined;
   };
 
+  /**
+   * Returns the animation's direction.
+   */
   const getDirection = () => {
     if (shouldForceReverseDirection) { return 'reverse'; }
     if (_direction !== undefined) { return _direction; }
@@ -234,6 +269,9 @@ export const createAnimation = () => {
 
   };
 
+  /**
+   * Returns the animation's easing.
+   */
   const getEasing = () => {
     if (shouldForceLinearEasing) { return 'linear'; }
     if (_easing !== undefined) { return _easing; }
@@ -242,6 +280,9 @@ export const createAnimation = () => {
     return undefined;
   };
 
+  /**
+   * Gets the animation's duration in milliseconds.
+   */
   const getDuration = () => {
     if (shouldForceSyncPlayback) { return 0; }
     if (_duration !== undefined) { return _duration; }
@@ -250,6 +291,9 @@ export const createAnimation = () => {
     return undefined;
   };
 
+  /**
+   * Gets the number of iterations the animation will run.
+   */
   const getIterations = () => {
     if (_iterations !== undefined) { return _iterations; }
     if (parentAnimation) { return parentAnimation.getIterations(); }
@@ -257,6 +301,9 @@ export const createAnimation = () => {
     return undefined;
   };
 
+  /**
+   * Gets the animation's delay in milliseconds.
+   */
   const getDelay = () => {
     if (_delay !== undefined) { return _delay; }
     if (parentAnimation) { return parentAnimation.getDelay(); }
@@ -264,22 +311,27 @@ export const createAnimation = () => {
     return undefined;
   };
 
+  /**
+   * Get an array of keyframes for the animation.
+   */
   const getKeyframes = () => {
     return _keyframes;
   };
 
-  const name = (animationName: string) => {
-    _name = animationName;
-
-    return ani;
-  };
-
+  /**
+   * Sets whether the animation should play forwards,
+   * backwards, or alternating back and forth.
+   */
   const direction = (animationDirection: AnimationDirection) => {
     _direction = animationDirection;
 
     return ani;
   };
 
+  /**
+   * Sets how the animation applies styles to its
+   * elements before and after the animation's execution.
+   */
   const fill = (animationFill: AnimationFill) => {
     _fill = animationFill;
 
@@ -287,36 +339,57 @@ export const createAnimation = () => {
 
   };
 
+  /**
+   * Sets when an animation starts (in milliseconds).
+   */
   const delay = (animationDelay: number) => {
     _delay = animationDelay;
 
     return ani;
   };
 
+  /**
+   * Sets how the animation progresses through the
+   * duration of each cycle.
+   */
   const easing = (animationEasing: string) => {
     _easing = animationEasing;
 
     return ani;
   };
 
+  /**
+   * Sets the length of time the animation takes
+   * to complete one cycle.
+   */
   const duration = (animationDuration: number) => {
     _duration = animationDuration;
 
     return ani;
   };
 
+  /**
+   * Sets the number of times the animation cycle
+   * should be played before stopping.
+   */
   const iterations = (animationIterations: number) => {
     _iterations = animationIterations;
 
     return ani;
   };
 
+  /**
+   * Sets the parent animation.
+   */
   const parent = (animation: Animation) => {
     parentAnimation = animation;
 
     return ani;
   };
 
+  /**
+   * Add one or more elements to the animation
+   */
   const addElement = (el: Element | Element[] | Node | Node[] | NodeList | undefined | null) => {
     if (el != null) {
 
@@ -334,6 +407,9 @@ export const createAnimation = () => {
     return ani;
   };
 
+  /**
+   * Group one or more animations together to be controlled by a parent animation.
+   */
   const addAnimation = (animationToAdd: Animation | Animation[] | undefined | null) => {
     if (animationToAdd != null) {
       const parentAnim = ani;
@@ -352,24 +428,36 @@ export const createAnimation = () => {
     return ani;
   };
 
+  /**
+   * Set the keyframes for the animation.
+   */
   const keyframes = (keyframeValues: any[]) => {
     _keyframes = keyframeValues;
 
     return ani;
   };
 
+  /**
+   * Runs all before read callbacks
+   */
   const runBeforeRead = () => {
     _beforeAddReadFunctions.forEach(callback => {
       callback();
     });
   };
 
+  /**
+   * Runs all before write callbacks
+   */
   const runBeforeWrite = () => {
     _beforeAddWriteFunctions.forEach(callback => {
       callback();
     });
   };
 
+  /**
+   * Updates styles and classes before animation runs
+   */
   const runBeforeStyles = () => {
     const addClasses = beforeAddClasses;
     const removeClasses = beforeRemoveClasses;
@@ -389,24 +477,36 @@ export const createAnimation = () => {
     });
   };
 
+  /**
+   * Run all "before" animation hooks.
+   */
   const beforeAnimation = () => {
     runBeforeRead();
     runBeforeWrite();
     runBeforeStyles();
   };
 
+  /**
+   * Runs all after read callbacks
+   */
   const runAfterRead = () => {
     _afterAddReadFunctions.forEach(callback => {
       callback();
     });
   };
 
+  /**
+   * Runs all after write callbacks
+   */
   const runAfterWrite = () => {
     _afterAddWriteFunctions.forEach(callback => {
       callback();
     });
   };
 
+  /**
+   * Updates styles and classes before animation ends
+   */
   const runAfterStyles = () => {
     const addClasses = afterAddClasses;
     const removeClasses = afterRemoveClasses;
@@ -426,6 +526,9 @@ export const createAnimation = () => {
     });
   };
 
+  /**
+   * Run all "after" animation hooks.
+   */
   const afterAnimation = () => {
     runAfterRead();
     runAfterWrite();
@@ -455,9 +558,9 @@ export const createAnimation = () => {
   const initializeCSSAnimation = () => {
 
     elements.forEach(element => {
-      if (_keyframes.length > 0) {
+      if (getKeyframes().length > 0) {
 
-        const stylesheet = createKeyframeStylesheet(_name, generateKeyframeString(_name, _keyframes), element);
+        const stylesheet = createKeyframeStylesheet(_name, generateKeyframeString(_name, getKeyframes()), element);
         if (stylesheet) {
           stylesheets.push(stylesheet);
         }
@@ -513,6 +616,7 @@ export const createAnimation = () => {
     beforeAnimation();
 
     numAnimationsRunning = childAnimations.length + 1;
+    
     if (getKeyframes().length === 0) {
       animationFinish();
     } else {
@@ -539,7 +643,7 @@ export const createAnimation = () => {
         const animationDuration = `-${getDuration()! * step}ms`;
 
         elements.forEach(element => {
-          if (_keyframes.length > 0) {
+          if (getKeyframes().length > 0) {
             element.style.setProperty('animation-delay', animationDuration);
             element.style.setProperty('animation-play-state', 'paused');
           }
@@ -627,6 +731,9 @@ export const createAnimation = () => {
     return ani;
   };
 
+  /**
+   * Pause the animation.
+   */
   const pause = () => {
     if (initialized) {
       if (supportsWebAnimations) {
@@ -635,7 +742,7 @@ export const createAnimation = () => {
         });
       } else {
         elements.forEach(element => {
-          (element as HTMLElement).style.animationPlayState = 'paused';
+          element.style.setProperty('animation-play-state', 'paused');
         });
       }
     }
@@ -647,6 +754,11 @@ export const createAnimation = () => {
     return ani;
   };
 
+  /**
+   * Play the animation asynchronously.
+   * This returns a promise that resolves
+   * when the animation has ended.
+   */
   const playAsync = () => {
     return new Promise(resolve => {
       onFinish(resolve);
@@ -656,6 +768,11 @@ export const createAnimation = () => {
     });
   };
 
+  /**
+   * Play the animation synchronously. This
+   * is the equivalent of running the animation
+   * with a duration of 0ms.
+   */
   const playSync = () => {
     shouldForceSyncPlayback = true;
 
@@ -665,6 +782,9 @@ export const createAnimation = () => {
     return ani;
   };
 
+  /**
+   * Play the animation
+   */
   const play = () => {
     if (!initialized) {
       initializeAnimation();
@@ -676,8 +796,9 @@ export const createAnimation = () => {
       });
     } else {
       elements.forEach(element => {
-        if (_keyframes.length > 0) {
-        (element as HTMLElement).style.animationPlayState = 'running'; }
+        if (getKeyframes().length > 0) {
+          element.style.setProperty('animation-play-state', 'running');
+        }
       });
     }
 
@@ -688,6 +809,10 @@ export const createAnimation = () => {
     return ani;
   };
 
+  /**
+   * Stop the animation and reset
+   * all elements to their initial state
+   */
   const stop = () => {
     if (initialized) {
       cleanUp();
@@ -749,9 +874,6 @@ export const createAnimation = () => {
     return from(property, fromValue).to(property, toValue);
   };
 
-  name(`ion-animation-${counter}`);
-  counter++;
-
   return ani = {
     parentAnimation,
     elements,
@@ -778,7 +900,6 @@ export const createAnimation = () => {
     duration,
     easing,
     delay,
-    name,
     getKeyframes,
     getFill,
     getDirection,
