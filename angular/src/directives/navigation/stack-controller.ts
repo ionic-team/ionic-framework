@@ -44,7 +44,11 @@ export class StackController {
 
   getExistingView(activatedRoute: ActivatedRoute): RouteView | undefined {
     const activatedUrlKey = getUrl(this.router, activatedRoute);
-    return this.views.find(vw => vw.url === activatedUrlKey);
+    const view = this.views.find(vw => vw.url === activatedUrlKey);
+    if (view) {
+      view.ref.changeDetectorRef.reattach();
+    }
+    return view;
   }
 
   setActive(enteringView: RouteView): Promise<StackEvent> {
@@ -55,6 +59,7 @@ export class StackController {
       direction = 'back';
       animation = undefined;
     }
+
     const viewsSnapshot = this.views.slice();
 
     let currentNavigation;
@@ -208,13 +213,18 @@ export class StackController {
       this.skipTransition = false;
       return Promise.resolve(false);
     }
-    if (enteringView) {
-      enteringView.ref.changeDetectorRef.reattach();
+    if (leavingView === enteringView) {
+      return Promise.resolve(false);
     }
+
     // disconnect leaving page from change detection to
     // reduce jank during the page transition
     if (leavingView) {
       leavingView.ref.changeDetectorRef.detach();
+    }
+    // In case the enteringView is the same as the leavingPage we need to reattach()
+    if (enteringView) {
+      enteringView.ref.changeDetectorRef.reattach();
     }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
@@ -225,13 +235,15 @@ export class StackController {
         containerEl.appendChild(enteringEl);
       }
 
-      return containerEl.commit(enteringEl, leavingEl, {
-        deepWait: true,
-        duration: direction === undefined ? 0 : undefined,
-        direction,
-        showGoBack,
-        progressAnimation
-      });
+      if ((containerEl as any).commit) {
+        return containerEl.commit(enteringEl, leavingEl, {
+          deepWait: true,
+          duration: direction === undefined ? 0 : undefined,
+          direction,
+          showGoBack,
+          progressAnimation
+        });
+      }
     }
     return Promise.resolve(false);
   }
@@ -246,16 +258,19 @@ export class StackController {
   }
 }
 
-function cleanupAsync(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
-  return new Promise(resolve => {
-    requestAnimationFrame(() => {
-      cleanup(activeRoute, views, viewsSnapshot, location);
-      resolve();
+const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
+  if (typeof (requestAnimationFrame as any) === 'function') {
+    return new Promise<any>(resolve => {
+      requestAnimationFrame(() => {
+        cleanup(activeRoute, views, viewsSnapshot, location);
+        resolve();
+      });
     });
-  });
-}
+  }
+  return Promise.resolve();
+};
 
-function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
+const cleanup = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
   viewsSnapshot
     .filter(view => !views.includes(view))
     .forEach(destroyView);
@@ -280,4 +295,4 @@ function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: Rout
       view.ref.changeDetectorRef.detach();
     }
   });
-}
+};

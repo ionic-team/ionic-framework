@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "files": [
+    "src/ionic-server-module.ts"
+  ],
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit" : true,
+    "flatModuleOutFile": "./index.js",
+    "flatModuleId": "@ionic/angular-server",
+    "skipTemplateCodegen": true,
+    "fullTemplateTypeCheck": false
+  }
+}

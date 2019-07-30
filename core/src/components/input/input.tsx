@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
@@ -335,20 +335,8 @@ export class Input implements ComponentInterface {
     return this.getValue().length > 0;
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      'aria-disabled': this.disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(this.color),
-        [mode]: true,
-        'has-value': this.hasValue(),
-        'has-focus': this.hasFocus
-      }
-    };
-  }
-
   render() {
+    const mode = getIonMode(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
@@ -356,46 +344,56 @@ export class Input implements ComponentInterface {
       label.id = labelId;
     }
 
-    return [
-      <input
-        class="native-input"
-        ref={input => this.nativeInput = input}
-        aria-labelledby={labelId}
-        disabled={this.disabled}
-        accept={this.accept}
-        autoCapitalize={this.autocapitalize}
-        autoComplete={this.autocomplete}
-        autoCorrect={this.autocorrect}
-        autoFocus={this.autofocus}
-        inputMode={this.inputmode}
-        min={this.min}
-        max={this.max}
-        minLength={this.minlength}
-        maxLength={this.maxlength}
-        multiple={this.multiple}
-        name={this.name}
-        pattern={this.pattern}
-        placeholder={this.placeholder || ''}
-        readOnly={this.readonly}
-        required={this.required}
-        spellCheck={this.spellcheck}
-        step={this.step}
-        size={this.size}
-        type={this.type}
-        value={value}
-        onInput={this.onInput}
-        onBlur={this.onBlur}
-        onFocus={this.onFocus}
-        onKeyDown={this.onKeydown}
-      />,
-      (this.clearInput && !this.readonly && !this.disabled) && <button
-        type="button"
-        class="input-clear-icon"
-        tabindex="-1"
-        onTouchStart={this.clearTextInput}
-        onMouseDown={this.clearTextInput}
-      />
-    ];
+    return (
+      <Host
+        aria-disabled={this.disabled ? 'true' : null}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'has-value': this.hasValue(),
+          'has-focus': this.hasFocus
+        }}
+      >
+        <input
+          class="native-input"
+          ref={input => this.nativeInput = input}
+          aria-labelledby={labelId}
+          disabled={this.disabled}
+          accept={this.accept}
+          autoCapitalize={this.autocapitalize}
+          autoComplete={this.autocomplete}
+          autoCorrect={this.autocorrect}
+          autoFocus={this.autofocus}
+          inputMode={this.inputmode}
+          min={this.min}
+          max={this.max}
+          minLength={this.minlength}
+          maxLength={this.maxlength}
+          multiple={this.multiple}
+          name={this.name}
+          pattern={this.pattern}
+          placeholder={this.placeholder || ''}
+          readOnly={this.readonly}
+          required={this.required}
+          spellCheck={this.spellcheck}
+          step={this.step}
+          size={this.size}
+          type={this.type}
+          value={value}
+          onInput={this.onInput}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
+          onKeyDown={this.onKeydown}
+        />
+        {(this.clearInput && !this.readonly && !this.disabled) && <button
+          type="button"
+          class="input-clear-icon"
+          tabindex="-1"
+          onTouchStart={this.clearTextInput}
+          onMouseDown={this.clearTextInput}
+        />}
+      </Host>
+    );
   }
 }
 

@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -148,19 +148,21 @@ export class SplitPane implements ComponentInterface {
     }
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
 
-    return {
-      class: {
-        [mode]: true,
+          // Used internally for styling
+          [`split-pane-${mode}`]: true,
 
-        // Used internally for styling
-        [`split-pane-${mode}`]: true,
-
-        'split-pane-visible': this.visible
-      }
-    };
+          'split-pane-visible': this.visible
+        }}
+      >
+      </Host>
+    );
   }
 }
 

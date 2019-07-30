@@ -77,7 +77,6 @@ export class ToastExample {
 ```javascript
 async function presentToast() {
   const toastController = document.querySelector('ion-toast-controller');
-  await toastController.componentOnReady();
 
   const toast = await toastController.create({
     message: 'Your settings have been saved.',
@@ -88,7 +87,6 @@ async function presentToast() {
 
 async function presentToastWithOptions() {
   const toastController = document.querySelector('ion-toast-controller');
-  await toastController.componentOnReady();
 
   const toast = await toastController.create({
     header: 'Toast header',
@@ -186,7 +184,7 @@ export const ToastExample: React.FunctionComponent = () => {
 | `mode`            | `mode`              | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                                                        | `undefined` |
 | `position`        | `position`          | The position of the toast on the screen.                                                                                                                                                                                                                               | `"bottom" \| "middle" \| "top"`                                                        | `'bottom'`  |
 | `showCloseButton` | `show-close-button` | If `true`, the close button will be displayed.                                                                                                                                                                                                                         | `boolean`                                                                              | `false`     |
-| `translucent`     | `translucent`       | If `true`, the toast will be translucent.                                                                                                                                                                                                                              | `boolean`                                                                              | `false`     |
+| `translucent`     | `translucent`       | If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                   | `boolean`                                                                              | `false`     |
 
 
 ## Events
