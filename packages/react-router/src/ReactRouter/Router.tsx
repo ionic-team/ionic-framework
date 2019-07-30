@@ -315,7 +315,7 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
 const RouteManagerWithRouter = withRouter(RouteManager);
 RouteManagerWithRouter.displayName = 'RouteManager';
 
-export class Router extends React.Component<BrowserRouterProps> {
+export class IonReactRouter extends React.Component<BrowserRouterProps> {
   render() {
     const { children, ...props } = this.props;
     return (

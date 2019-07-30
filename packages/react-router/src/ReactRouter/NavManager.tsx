@@ -1,6 +1,6 @@
 import { RouterDirection } from '@ionic/core';
 import { NavContext, NavContextState } from '@ionic/react-core';
-import { Location as HistoryLocation } from 'history';
+import { Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { ViewManager } from './ViewManager';
@@ -13,6 +13,8 @@ interface NavManagerState extends NavContextState {};
 
 export class NavManager extends React.Component<NavManagerProps, NavManagerState> {
 
+  listenUnregisterCallback: UnregisterCallback;
+
   constructor(props: NavManagerProps) {
     super(props);
     this.state ={
@@ -22,10 +24,23 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
       getLocation: this.getLocation.bind(this),
       navigate: this.navigate.bind(this),
       getViewManager: this.getViewManager.bind(this),
+      currentPath: this.props.location.pathname
+    }
+
+    this.listenUnregisterCallback = this.props.history.listen((location: HistoryLocation) => {
+      this.setState({
+        currentPath: location.pathname
+      })
+    });
+  }
+
+  componentWillUnmount() {
+    if(this.listenUnregisterCallback) {
+      this.listenUnregisterCallback();
     }
   }
 
-  goBack = (defaultHref?: string) => {
+  goBack(defaultHref?: string) {
     const { view: leavingView } = this.props.findViewInfoByLocation(this.props.location);
     if (leavingView) {
       const { view: enteringView } = this.props.findViewInfoById(leavingView.prevId);
@@ -39,11 +54,11 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
     }
   }
 
-  getHistory = () => {
+  getHistory() {
     return this.props.history;
   }
 
-  getLocation = () => {
+  getLocation() {
     return this.props.location;
   }
 
@@ -51,7 +66,7 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
     this.props.history.push(path, { direction });
   }
 
-  getViewManager = () => {
+  getViewManager() {
     return ViewManager;
   }
 

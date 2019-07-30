@@ -103,7 +103,7 @@ export const IonTabBar: React.FC<LocalJSX.IonTabBar> = (props) => {
       navigate={(path: string) => {
         context.navigate(path);
       }}
-      currentPath={context.getLocation().pathname}>
+      currentPath={context.currentPath}>
       {props.children}
     </IonTabBarUnwrapped>
   )

@@ -1,7 +1,3 @@
-import { Router } from './Router';
-import { ViewManager } from './ViewManager';
+export * from './Router';
+export * from './ViewManager';
 
-export const IonReactRouter = {
-  Router,
-  ViewManager: ViewManager
-};

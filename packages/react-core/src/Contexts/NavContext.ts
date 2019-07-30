@@ -8,6 +8,7 @@ export interface NavContextState {
   goBack: (defaultHref?: string) => void;
   navigate: (path: string, direction?: RouterDirection) => void;
   hasIonicRouter: () => boolean;
+  currentPath: string;
 }
 
 export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
@@ -22,5 +23,6 @@ export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
     }
   },
   navigate: (path: string) => { window.location.pathname = path },
-  hasIonicRouter: () => false
+  hasIonicRouter: () => false,
+  currentPath: undefined
 });

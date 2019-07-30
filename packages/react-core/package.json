@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-core",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "React Core lib for @ionic/react",
   "keywords": [
     "ionic",
@@ -42,7 +42,7 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
-    "@ionic/core": "^4.6.0",
+    "@ionic/core": "^4.7.0",
     "@types/react": "^16.8.19",
     "@types/react-dom": "^16.8.4",
     "np": "^5.0.1",

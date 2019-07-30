@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -39,16 +39,16 @@
     "tslib": "^1.10.0"
   },
   "peerDependencies": {
-    "@ionic/core": "^4.6.0",
-    "@ionic/react-core": "0.0.8",
+    "@ionic/core": "^4.7.0",
+    "@ionic/react-core": "0.0.9",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
-    "@ionic/core": "^4.6.0",
-    "@ionic/react-core": "0.0.8-1",
+    "@ionic/core": "^4.7.0",
+    "@ionic/react-core": "0.0.9",
     "@trust/webcrypto": "^0.9.2",
     "@types/jest": "^23.3.9",
     "@types/node": "10.12.9",
