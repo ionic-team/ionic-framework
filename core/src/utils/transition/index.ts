@@ -6,6 +6,8 @@ import { Animation, AnimationBuilder, IonicAnimation, NavDirection, NavOptions }
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
 
+export type IonicAnimationInterface = (navEl: HTMLElement, opts: TransitionOptions) => IonicAnimation;
+
 export const transition = (opts: TransitionOptions): Promise<TransitionResult> => {
   return new Promise((resolve, reject) => {
     writeTask(() => {
@@ -60,7 +62,7 @@ const afterTransition = (opts: TransitionOptions) => {
   }
 };
 
-const getAnimationBuilder = async (opts: TransitionOptions): Promise<IonicAnimation | AnimationBuilder | undefined> => {
+const getAnimationBuilder = async (opts: TransitionOptions): Promise<IonicAnimationInterface | AnimationBuilder | undefined> => {
   if (!opts.leavingEl || !opts.animated || opts.duration === 0) {
     return undefined;
   }
@@ -73,29 +75,25 @@ const getAnimationBuilder = async (opts: TransitionOptions): Promise<IonicAnimat
     ? (await iosTransitionAnimation()).iosTransitionAnimation
     : (await mdTransitionAnimation()).mdTransitionAnimation;
 
-  // TODO: make this work without typecast
-  return getAnimation as any;
+  return getAnimation;
 };
 
-const animation = async (animationBuilder: IonicAnimation | AnimationBuilder, opts: TransitionOptions): Promise<TransitionResult> => {
+const animation = async (animationBuilder: IonicAnimationInterface | AnimationBuilder, opts: TransitionOptions): Promise<TransitionResult> => {
   await waitForReady(opts, true);
 
-  /**
-   * TODO: Remove AnimationBuilder
-   */
-  let trans;
+  let trans: Animation | IonicAnimation;
+
   try {
-    trans = await import('../animation/old-animation').then(mod => mod.create(animationBuilder as any, opts.baseEl, opts));
+    trans = await import('../animation/old-animation').then(mod => mod.create(animationBuilder as AnimationBuilder, opts.baseEl, opts));
   } catch (err) {
-    // @ts-ignore
-    // TODO: Fix this type error
-    trans = animationBuilder(opts.baseEl, opts);
+    trans = (animationBuilder as IonicAnimationInterface)(opts.baseEl, opts);
   }
 
   fireWillEvents(opts.enteringEl, opts.leavingEl);
 
   const didComplete = await playTransition(trans, opts);
 
+  // TODO: Remove AnimationBuilder
   (trans as any).hasCompleted = didComplete;
 
   if (opts.progressCallback) {
@@ -146,21 +144,18 @@ const notifyViewReady = async (viewIsReady: undefined | ((enteringEl: HTMLElemen
   }
 };
 
-const playTransition = async (trans: any, opts: TransitionOptions): Promise<boolean> => {
+const playTransition = (trans: IonicAnimation | Animation, opts: TransitionOptions): Promise<Animation | boolean> => {
   const progressCallback = opts.progressCallback;
-  const promise = new Promise<boolean>(resolve => {
-    trans.onFinish((didComplete: boolean, _: any) => {
-      resolve(didComplete);
-    });
-  });
+
+  // TODO: Remove AnimationBuilder
+  const promise = new Promise<Animation | boolean>(resolve => trans.onFinish(resolve));
 
   // cool, let's do this, start the transition
   if (progressCallback) {
     // this is a swipe to go back, just get the transition progress ready
     // kick off the swipe animation start
     trans.progressStart(true);
-
-    progressCallback(trans as any);
+    progressCallback(trans);
 
   } else {
     // only the top level transition should actually start "play"
@@ -239,7 +234,7 @@ const setZIndex = (
 };
 
 export interface TransitionOptions extends NavOptions {
-  progressCallback?: ((ani: Animation | undefined) => void);
+  progressCallback?: ((ani: IonicAnimation | Animation | undefined) => void);
   baseEl: any;
   enteringEl: HTMLElement;
   leavingEl: HTMLElement | undefined;

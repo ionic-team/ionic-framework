@@ -6,7 +6,7 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
   return el.shadowRoot || el;
 };
 
-export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptions): Promise<IonicAnimation> => {
+export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptions): IonicAnimation => {
   try {
     const DURATION = 540;
     const EASING = 'cubic-bezier(0.32,0.72,0,1)';
@@ -276,7 +276,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       });
     }
 
-    return rootAnimation as any;
+    return rootAnimation;
   } catch (err) {
     throw err;
   }
