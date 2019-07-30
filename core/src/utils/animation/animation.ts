@@ -38,7 +38,7 @@ export const createAnimation = () => {
   let ani: Animation;
 
   /**
-   * Destroy this animation and all child animations.
+   * Destroy the animation and all child animations.
    */
   const destroy = () => {
     cleanUp();
