@@ -14,7 +14,7 @@ module.exports = {
   },
   target: 'node',
   resolve: {
-    mainFields: ['node:main', 'module', 'main'],
+    mainFields: ['module', 'main'],
     extensions: ['.ts', '.js']
   },
   optimization: {

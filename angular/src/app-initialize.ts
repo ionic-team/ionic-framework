@@ -1,9 +1,11 @@
 import { NgZone } from '@angular/core';
 import { applyPolyfills, defineCustomElements } from '@ionic/core/loader';
 
+import './hack';
 import { Config } from './providers/config';
 import { IonicWindow } from './types/interfaces';
 import { raf } from './util/util';
+
 
 export function appInitialize(config: Config, doc: Document, zone: NgZone) {
   return (): any => {
