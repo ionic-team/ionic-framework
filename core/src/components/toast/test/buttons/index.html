@@ -20,10 +20,6 @@
     </ion-header>
 
     <ion-content class="ion-padding" id="content">
-      <!-- Old way using close button properties -->
-      <ion-button id="closeProp" expand="block" onclick="presentClosePropToast()">
-        Close Button Property
-      </ion-button>
 
       <!-- New way using array of buttons -->
       <ion-button id="closeArray" expand="block" onclick="presentCloseArrayToast()">
@@ -51,18 +47,6 @@
     window.addEventListener('ionToastDidDismiss', function (e) { console.log('didDismiss', e) })
     window.addEventListener('ionToastWillDismiss', function (e) { console.log('willDismiss', e) })
 
-    // Deprecated properties, use buttons array instead
-    async function presentClosePropToast() {
-      const opts = {
-        message: 'Are you sure you want to delete this?',
-        showCloseButton: true,
-        closeButtonText: 'Delete'
-      };
-
-      return await presentToastWithOptions(opts);
-    }
-
-    // New way to do the above in presentClosePropToast()
     async function presentCloseArrayToast() {
       const opts = {
         message: 'Are you sure you want to delete this?',
