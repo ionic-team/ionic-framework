@@ -12,6 +12,11 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <script type="module">
+    const forceCSSAnimations = new URLSearchParams(window.location.search).get('ionic:_forceCSSAnimations');
+    if (forceCSSAnimations) {
+      window.Animation = null;
+    }
+    
     import { createAnimation } from '../../../../dist/index.mjs';
 
     const squareA = document.querySelector('.square-a');

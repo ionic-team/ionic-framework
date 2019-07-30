@@ -3,11 +3,6 @@ import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyfra
 
 let counter = 0;
 
-/**
- * HACKY
- */
-const _forceCSSAnimations = new URLSearchParams(window.location.search).get('ionic:_forceCSSAnimations');
-
 export const createAnimation = () => {
   const elements: HTMLElement[] = [];
   const childAnimations: Animation[] = [];
@@ -17,7 +12,7 @@ export const createAnimation = () => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const onFinishCallbacks: any[] = [];
-  const supportsWebAnimations = !!(window as any).Animation && _forceCSSAnimations === null;
+  const supportsWebAnimations = !!(window as any).Animation;
   const _name = `ion-animation-${counter++}`;
   let _delay: number | undefined;
   let _duration: number | undefined;
