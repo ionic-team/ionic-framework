@@ -14,7 +14,7 @@ import { menuRevealAnimation } from './animations/reveal';
 export class MenuController implements MenuControllerI {
 
   private menus: MenuI[] = [];
-  private menuAnimations = new Map<string, IonicAnimation | AnimationBuilder>();
+  private menuAnimations = new Map<string, ((menu: MenuI) => IonicAnimation) | AnimationBuilder>();
 
   constructor() {
     this.registerAnimation('reveal', menuRevealAnimation);
@@ -226,7 +226,7 @@ export class MenuController implements MenuControllerI {
    * @param animation The animation function to register.
    */
   @Method()
-  async registerAnimation(name: string, animation: IonicAnimation | AnimationBuilder) {
+  async registerAnimation(name: string, animation: ((menu: MenuI) => IonicAnimation) | AnimationBuilder) {
     this.menuAnimations.set(name, animation);
   }
 
