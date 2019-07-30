@@ -104,7 +104,7 @@ export class Searchbar implements ComponentInterface {
    * Setting to `"always"` shows the cancel button regardless
    * of focus state.
    */
-  @Prop() showCancelButton = 'never';
+  @Prop() showCancelButton: 'never' | 'focus' | 'always' = 'never';
 
   /**
    * If `true`, enable spellcheck on the input.
