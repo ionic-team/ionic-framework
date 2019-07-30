@@ -663,7 +663,7 @@ ion-menu-controller,method,isAnimating,isAnimating() => Promise<boolean>
 ion-menu-controller,method,isEnabled,isEnabled(menu?: string | null | undefined) => Promise<boolean>
 ion-menu-controller,method,isOpen,isOpen(menu?: string | null | undefined) => Promise<boolean>
 ion-menu-controller,method,open,open(menu?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,registerAnimation,registerAnimation(name: string, animation: AnimationBuilder) => Promise<void>
+ion-menu-controller,method,registerAnimation,registerAnimation(name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => Promise<void>
 ion-menu-controller,method,swipeGesture,swipeGesture(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
 ion-menu-controller,method,toggle,toggle(menu?: string | null | undefined) => Promise<boolean>
 
