@@ -112,9 +112,8 @@
                     toast() {
                         this.$ionic.toastController.create({
                             message: 'Here\'s to IonicVue!',
-                            showCloseButton: true,
+                            buttons: ['Done'],
                             position: 'top',
-                            closeButtonText: 'Done'
                         })
                         .then(t => t.present())
                     },
