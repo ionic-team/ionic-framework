@@ -87,16 +87,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
 
   /**
-   * If `true`, the close button will be displayed.
-   */
-  @Prop() showCloseButton = false;
-
-  /**
-   * Text to display in the close button.
-   */
-  @Prop() closeButtonText?: string;
-
-  /**
    * An array of buttons for the toast.
    */
   @Prop() buttons?: (ToastButton | string)[];
@@ -186,13 +176,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
           : b;
       })
       : [];
-
-    if (this.showCloseButton) {
-      buttons.push({
-        text: this.closeButtonText || 'Close',
-        handler: () => this.dismiss(undefined, 'cancel')
-      });
-    }
 
     return buttons;
   }

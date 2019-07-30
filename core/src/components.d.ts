@@ -2685,10 +2685,6 @@ export namespace Components {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * Text to display in the close button.
-    */
-    'closeButtonText'?: string;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -2747,10 +2743,6 @@ export namespace Components {
     * Present the toast overlay after it has been created.
     */
     'present': () => Promise<void>;
-    /**
-    * If `true`, the close button will be displayed.
-    */
-    'showCloseButton': boolean;
     /**
     * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
@@ -5976,10 +5968,6 @@ declare namespace LocalJSX {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * Text to display in the close button.
-    */
-    'closeButtonText'?: string;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -6035,10 +6023,6 @@ declare namespace LocalJSX {
     * The position of the toast on the screen.
     */
     'position'?: 'top' | 'bottom' | 'middle';
-    /**
-    * If `true`, the close button will be displayed.
-    */
-    'showCloseButton'?: boolean;
     /**
     * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
