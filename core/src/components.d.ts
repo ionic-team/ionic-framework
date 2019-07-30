@@ -2200,7 +2200,7 @@ export namespace Components {
     /**
     * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
     */
-    'showCancelButton': boolean | string;
+    'showCancelButton': string;
     /**
     * If `true`, enable spellcheck on the input.
     */
@@ -5478,7 +5478,7 @@ declare namespace LocalJSX {
     /**
     * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
     */
-    'showCancelButton'?: boolean | string;
+    'showCancelButton'?: string;
     /**
     * If `true`, enable spellcheck on the input.
     */
