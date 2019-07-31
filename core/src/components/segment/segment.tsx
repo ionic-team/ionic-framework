@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
@@ -94,15 +94,18 @@ export class Segment implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [mode]: true,
-        'segment-disabled': this.disabled,
-        'segment-scrollable': this.scrollable
-      }
-    };
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'segment-disabled': this.disabled,
+          'segment-scrollable': this.scrollable
+        }}
+      >
+      </Host>
+    );
   }
 }

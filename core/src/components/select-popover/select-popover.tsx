@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { SelectPopoverOption } from '../../interface';
@@ -34,43 +34,36 @@ export class SelectPopover implements ComponentInterface {
     }
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true,
-      }
-    };
-  }
-
   render() {
     return (
-      <ion-list>
-        {this.header !== undefined && <ion-list-header>{this.header}</ion-list-header>}
-        { (this.subHeader !== undefined || this.message !== undefined) &&
-          <ion-item>
-            <ion-label text-wrap>
-              {this.subHeader !== undefined && <h3>{this.subHeader}</h3>}
-              {this.message !== undefined && <p>{this.message}</p>}
-            </ion-label>
-          </ion-item>
-        }
-        <ion-radio-group>
-          {this.options.map(option =>
+      <Host class={getIonMode(this)}>
+        <ion-list>
+          {this.header !== undefined && <ion-list-header>{this.header}</ion-list-header>}
+          { (this.subHeader !== undefined || this.message !== undefined) &&
             <ion-item>
-              <ion-label>
-                {option.text}
+              <ion-label text-wrap>
+                {this.subHeader !== undefined && <h3>{this.subHeader}</h3>}
+                {this.message !== undefined && <p>{this.message}</p>}
               </ion-label>
-              <ion-radio
-                checked={option.checked}
-                value={option.value}
-                disabled={option.disabled}
-              >
-              </ion-radio>
             </ion-item>
-          )}
-        </ion-radio-group>
-      </ion-list>
+          }
+          <ion-radio-group>
+            {this.options.map(option =>
+              <ion-item>
+                <ion-label>
+                  {option.text}
+                </ion-label>
+                <ion-radio
+                  checked={option.checked}
+                  value={option.value}
+                  disabled={option.disabled}
+                >
+                </ion-radio>
+              </ion-item>
+            )}
+          </ion-radio-group>
+        </ion-list>
+      </Host>
     );
   }
 }

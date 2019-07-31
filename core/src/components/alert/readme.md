@@ -289,7 +289,6 @@ export class AlertExample {
 ```javascript
 async function presentAlert() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Alert',
@@ -302,7 +301,6 @@ async function presentAlert() {
 
 async function presentAlertMultipleButtons() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Alert',
@@ -315,7 +313,6 @@ async function presentAlertMultipleButtons() {
 
 async function presentAlertConfirm() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Confirm!',
@@ -341,7 +338,6 @@ async function presentAlertConfirm() {
 
 async function presentAlertPrompt() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Prompt!',
@@ -405,7 +401,6 @@ async function presentAlertPrompt() {
 
 async function presentAlertRadio() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Radio',
@@ -463,7 +458,6 @@ async function presentAlertRadio() {
 
 async function presentAlertCheckbox() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Checkbox',

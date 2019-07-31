@@ -27,7 +27,6 @@ customElements.define('modal-page', class extends HTMLElement {
 async function presentModal() {
   // initialize controller
   const modalController = document.querySelector('ion-modal-controller');
-  await modalController.componentOnReady();
 
   // create the modal with the `modal-page` component
   const modalElement = await modalController.create({

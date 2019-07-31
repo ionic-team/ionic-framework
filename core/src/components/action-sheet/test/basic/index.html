@@ -60,7 +60,6 @@
       const mode = Ionic.mode;
 
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
         header: "Albums",
         buttons: [{
@@ -103,13 +102,11 @@
 
     async function presentAlert() {
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
         buttons: [{
           text: 'Open Alert',
           handler: async () => {
             const alertController = document.querySelector('ion-alert-controller');
-            await alertController.componentOnReady();
             const alert = await alertController.create({
               header: 'Alert from Action Sheet',
               subHeader: 'Subtitle',
@@ -138,7 +135,6 @@
 
     async function presentCancelOnly() {
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
         buttons: [
           {
@@ -155,7 +151,6 @@
 
     async function presentWithCssClass() {
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
         header: "Custom Css Class",
         cssClass: "my-color-class my-custom-class",
@@ -206,7 +201,6 @@
       const mode = Ionic.mode;
 
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
         header: "Albums",
         buttons: [{
@@ -249,7 +243,6 @@
 
     async function presentNoBackdropDismiss() {
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
         backdropDismiss: false,
         buttons: [{
@@ -276,7 +269,6 @@
 
     async function presentScroll() {
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
         buttons: [
           {
@@ -370,7 +362,6 @@
 
     async function presentScrollNoCancel() {
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
         buttons: [
           {

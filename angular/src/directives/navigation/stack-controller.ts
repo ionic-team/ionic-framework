@@ -44,7 +44,11 @@ export class StackController {
 
   getExistingView(activatedRoute: ActivatedRoute): RouteView | undefined {
     const activatedUrlKey = getUrl(this.router, activatedRoute);
-    return this.views.find(vw => vw.url === activatedUrlKey);
+    const view = this.views.find(vw => vw.url === activatedUrlKey);
+    if (view) {
+      view.ref.changeDetectorRef.reattach();
+    }
+    return view;
   }
 
   setActive(enteringView: RouteView): Promise<StackEvent> {
@@ -55,6 +59,7 @@ export class StackController {
       direction = 'back';
       animation = undefined;
     }
+
     const viewsSnapshot = this.views.slice();
 
     let currentNavigation;
@@ -208,13 +213,18 @@ export class StackController {
       this.skipTransition = false;
       return Promise.resolve(false);
     }
-    if (enteringView) {
-      enteringView.ref.changeDetectorRef.reattach();
+    if (leavingView === enteringView) {
+      return Promise.resolve(false);
     }
+
     // disconnect leaving page from change detection to
     // reduce jank during the page transition
     if (leavingView) {
       leavingView.ref.changeDetectorRef.detach();
+    }
+    // In case the enteringView is the same as the leavingPage we need to reattach()
+    if (enteringView) {
+      enteringView.ref.changeDetectorRef.reattach();
     }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;

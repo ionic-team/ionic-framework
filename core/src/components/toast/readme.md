@@ -77,7 +77,6 @@ export class ToastExample {
 ```javascript
 async function presentToast() {
   const toastController = document.querySelector('ion-toast-controller');
-  await toastController.componentOnReady();
 
   const toast = await toastController.create({
     message: 'Your settings have been saved.',
@@ -88,7 +87,6 @@ async function presentToast() {
 
 async function presentToastWithOptions() {
   const toastController = document.querySelector('ion-toast-controller');
-  await toastController.componentOnReady();
 
   const toast = await toastController.create({
     header: 'Toast header',

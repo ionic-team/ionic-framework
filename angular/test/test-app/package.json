@@ -1,6 +1,7 @@
 {
-  "name": "test-app",
+  "name": "ionic-angular-test-app",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "npm run sync && ng serve",
@@ -16,7 +17,6 @@
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
     "build:client-and-server-bundles": "npm run build && ng run test-app:server:production"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~8.1.2",
     "@angular/common": "~8.1.2",
@@ -27,7 +27,7 @@
     "@angular/platform-browser-dynamic": "~8.1.2",
     "@angular/platform-server": "~8.1.2",
     "@angular/router": "~8.1.2",
-    "@ionic/angular": "^4.6.2",
+    "@ionic/angular": "^4.7.0",
     "@nguniversal/express-engine": "~8.1.1",
     "@nguniversal/module-map-ngfactory-loader": "~8.1.1",
     "core-js": "^2.6.2",
@@ -37,14 +37,13 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.800.5",
-    "@angular/cli": "~8.1.1",
-    "@angular/compiler-cli": "~8.1.1",
-    "@angular/language-service": "~8.1.1",
+    "@angular-devkit/build-angular": "^0.801.2",
+    "@angular/cli": "~8.1.2",
+    "@angular/compiler-cli": "~8.1.2",
+    "@angular/language-service": "~8.1.2",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
-    "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.1.4",
