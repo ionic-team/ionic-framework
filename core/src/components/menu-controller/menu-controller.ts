@@ -226,7 +226,7 @@ export class MenuController implements MenuControllerI {
    * @param animation The animation function to register.
    */
   @Method()
-  async registerAnimation(name: string, animation: ((menu: MenuI) => IonicAnimation) | AnimationBuilder) {
+  async registerAnimation(name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) {
     this.menuAnimations.set(name, animation);
   }
 
