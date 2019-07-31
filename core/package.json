@@ -41,7 +41,7 @@
     "@types/puppeteer": "1.12.4",
     "@types/swiper": "4.4.1",
     "aws-sdk": "^2.320.0",
-    "chromedriver": "^76.0.0",
+    "chromedriver": "^76.0.3809.68",
     "clean-css-cli": "^4.1.11",
     "domino": "^2.1.3",
     "fs-extra": "^8.0.1",
