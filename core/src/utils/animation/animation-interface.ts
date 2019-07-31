@@ -30,6 +30,7 @@ export interface Animation {
   easing(easing: string): Animation;
   delay(delay: number): Animation;
   parent(animation: Animation): Animation;
+  update(deep: boolean): Animation;
 
   getKeyframes(): any[];
   getDirection(): AnimationDirection | undefined;

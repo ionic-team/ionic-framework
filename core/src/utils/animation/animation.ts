@@ -35,6 +35,7 @@ export const createAnimation = () => {
   let shouldForceSyncPlayback = false;
   let shouldForceReverseDirection = false;
   let willComplete = true;
+  let shouldCalculateNumAnimations = true;
   let ani: Animation;
 
   /**
@@ -534,6 +535,8 @@ export const createAnimation = () => {
     onFinishCallbacks.forEach(callback => {
       callback(didComplete, ani);
     });
+
+    shouldCalculateNumAnimations = true;
   };
 
   const animationFinish = () => {
@@ -605,12 +608,11 @@ export const createAnimation = () => {
         animationFinish();
       };
     }
+
   };
 
   const initializeAnimation = () => {
     beforeAnimation();
-
-    numAnimationsRunning = childAnimations.length + 1;
 
     if (getKeyframes().length > 0) {
       if (supportsWebAnimations) {
@@ -682,12 +684,23 @@ export const createAnimation = () => {
     });
   };
 
-  const updateAnimation = () => {
+  /**
+   * Updates any existing animations.
+   */
+  const update = (deep = false) => {
+    if (deep) {
+      childAnimations.forEach(animation => {
+        animation.update(deep);
+      });
+    }
+
     if (supportsWebAnimations) {
       updateWebAnimation();
     } else {
       updateCSSAnimation();
     }
+
+    return ani;
   };
 
   const progressStart = (forceLinearEasing = false) => {
@@ -713,7 +726,7 @@ export const createAnimation = () => {
     if (!shouldComplete) {
       shouldForceReverseDirection = true;
       onFinish(() => { willComplete = true; shouldForceReverseDirection = false; });
-      updateAnimation();
+      update();
       progressStep(1 - step);
     }
 
@@ -781,6 +794,11 @@ export const createAnimation = () => {
   const play = () => {
     if (!initialized) {
       initializeAnimation();
+    }
+
+    if (shouldCalculateNumAnimations) {
+      numAnimationsRunning = childAnimations.length + 1;
+      shouldCalculateNumAnimations = false;
     }
 
     childAnimations.forEach(animation => {
@@ -890,6 +908,7 @@ export const createAnimation = () => {
     keyframes,
     addAnimation,
     addElement,
+    update,
     fill,
     direction,
     iterations,

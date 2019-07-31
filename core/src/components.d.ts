@@ -1427,7 +1427,7 @@ export namespace Components {
     * @param name The name of the animation to register.
     * @param animation The animation function to register.
     */
-    'registerAnimation': (name: string, animation: ((menu: MenuI) => IonicAnimation) | AnimationBuilder) => Promise<void>;
+    'registerAnimation': (name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => Promise<void>;
     /**
     * Enable or disable the ability to swipe open the menu.
     * @param enable If `true`, the menu swipe gesture should be enabled.
