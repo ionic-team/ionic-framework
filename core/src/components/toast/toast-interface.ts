@@ -24,6 +24,7 @@ export interface ToastOptions {
 export interface ToastButton {
   text?: string;
   icon?: string;
+  iconSrc?: string;
   side?: 'start' | 'end';
   role?: 'cancel' | string;
   cssClass?: string | string[];
