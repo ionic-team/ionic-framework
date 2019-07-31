@@ -46,9 +46,9 @@ export class Platform {
     zone.run(() => {
       this.win = doc.defaultView;
       this.backButton.subscribeWithPriority = function(priority, callback) {
-        return this.subscribe(ev => {
-          ev.register(priority, callback);
-        });
+        return this.subscribe(ev => (
+          ev.register(priority, () => zone.run(callback))
+        ));
       };
 
       proxyEvent(this.pause, doc, 'pause');
