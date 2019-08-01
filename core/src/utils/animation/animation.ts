@@ -570,11 +570,9 @@ export const createAnimation = () => {
       if (getKeyframes().length > 0) {
 
         const stylesheet = createKeyframeStylesheet(_name, generateKeyframeString(_name, getKeyframes()), element);
-        if (stylesheet) {
-          stylesheets.push(stylesheet);
-        }
+        stylesheets.push(stylesheet);
 
-        element.style.setProperty('animation-name', _name || null);
+        element.style.setProperty('animation-name', stylesheet.id || null);
         element.style.setProperty('animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
         element.style.setProperty('animation-timing-function', getEasing() || null);
         element.style.setProperty('animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
