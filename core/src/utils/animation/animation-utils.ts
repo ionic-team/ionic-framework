@@ -61,7 +61,7 @@ const getExistingStylesheet = (keyframeString: string, element: HTMLElement): HT
    * If animations have the same keyframes, no point in
    * creating a new stylesheet. Just reuse the same one
    */
-  for (const stylesheet of allStylesheets.values()) {
+  for (const stylesheet of allStylesheets) {
     if (stylesheet != null && stylesheet.innerText != null) {
       const textToCompare = stylesheet.innerText.split(/{(.+)/)[1];
       const newText = keyframeString.split(/{(.+)/)[1];
