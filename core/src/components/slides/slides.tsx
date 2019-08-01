@@ -144,6 +144,7 @@ export class Slides implements ComponentInterface {
     });
     rIC(() => this.initSwiper());
   }
+
   async disconnectedCallback() {
     if (this.mutationO) {
       this.mutationO.disconnect();
@@ -151,6 +152,7 @@ export class Slides implements ComponentInterface {
     }
     const swiper = await this.getSwiper();
     swiper.destroy(true, true);
+    this.swiper = new Promise(resolve => { this.readySwiper = resolve; });
     this.swiperReady = false;
   }
 
