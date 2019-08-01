@@ -129,4 +129,3 @@ export class RadioGroup implements ComponentInterface {
 }
 
 let radioGroupIds = 0;
-

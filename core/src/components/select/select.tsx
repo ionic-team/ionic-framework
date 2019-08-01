@@ -346,7 +346,6 @@ export class Select implements ComponentInterface {
         {
           text: this.okText,
           handler: (selectedValues: any) => {
-            debugger;
             this.value = selectedValues;
           }
         }
