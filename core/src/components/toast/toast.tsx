@@ -255,6 +255,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       </div>
     );
   }
+
   render() {
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter(b => b.side === 'start');
