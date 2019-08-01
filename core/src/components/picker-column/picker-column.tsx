@@ -61,14 +61,6 @@ export class PickerColumnCmp implements ComponentInterface {
     this.rotateFactor = pickerRotateFactor;
     this.scaleFactor = pickerScaleFactor;
 
-    // get the height of one option
-    const colEl = this.optsEl;
-    if (colEl) {
-      this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
-    }
-
-    this.refresh();
-
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'picker-swipe',
@@ -79,11 +71,20 @@ export class PickerColumnCmp implements ComponentInterface {
       onEnd: ev => this.onEnd(ev),
     });
     this.gesture.setDisabled(false);
-
     this.tmrId = setTimeout(() => {
       this.noAnimate = false;
       this.refresh(true);
     }, 250);
+  }
+
+  componentDidLoad() {
+    // get the height of one option
+    const colEl = this.optsEl;
+    if (colEl) {
+      this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
+    }
+
+    this.refresh();
   }
 
   disconnectedCallback() {
