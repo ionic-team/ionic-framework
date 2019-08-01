@@ -39,6 +39,7 @@ export interface Animation {
   getIterations(): number | undefined;
   getEasing(): string | undefined;
   getDuration(): number | undefined;
+  getWebAnimations(): any[];
 
   afterAddRead(readFn: () => void): Animation;
   afterAddWrite(writeFn: () => void): Animation;

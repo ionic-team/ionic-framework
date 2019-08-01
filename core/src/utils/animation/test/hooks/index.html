@@ -27,6 +27,18 @@
       .addElement(squareA)
       .duration(1000)
       .easing('linear')
+      .beforeAddClass(['test-class'])
+      .beforeRemoveClass(['hello-world'])
+      .beforeStyles({ 'color': 'purple' })
+      .beforeClearStyles(['padding-bottom'])
+      .beforeAddRead(() => {
+        const ev = new CustomEvent('beforeRead');
+        squareA.dispatchEvent(ev); 
+      })
+      .beforeAddWrite(() => {
+        const ev = new CustomEvent('beforeWrite');
+        squareA.dispatchEvent(ev); 
+      })
       .keyframes([
         { background: 'rgba(255, 0, 0, 0.5)', offset: 0 },
         { background: 'rgba(0, 255, 0, 0.5)', offset: 0.33 },
@@ -85,7 +97,7 @@
         <ion-button class="stop">Stop</ion-button>
         <ion-button class="destroy">Destroy</ion-button>
         
-        <div class="square square-a">
+        <div class="square square-a hello-world" style="padding-bottom: 20px">
           Hello
         </div>
       </div>

@@ -37,6 +37,17 @@ export const createAnimation = () => {
   let willComplete = true;
   let shouldCalculateNumAnimations = true;
   let ani: Animation;
+  
+  /**
+   * Returns the raw Web Animations object
+   * for all elements in an Animation.
+   * This will return an empty array on
+   * browsers that do not support
+   * the Web Animations API.
+   */
+  const getWebAnimations = () => {
+    return webAnimations;
+  }
 
   /**
    * Destroy the animation and all child animations.
@@ -85,7 +96,7 @@ export const createAnimation = () => {
    */
   const cleanUpElements = () => {
     if (supportsWebAnimations) {
-      webAnimations.forEach(animation => {
+      getWebAnimations().forEach(animation => {
         animation.cancel();
       });
 
@@ -603,7 +614,7 @@ export const createAnimation = () => {
       webAnimations.push(animation);
     });
 
-    if (webAnimations.length > 0) {
+    if (getWebAnimations().length > 0) {
       webAnimations[0].onfinish = () => {
         animationFinish();
       };
@@ -634,7 +645,7 @@ export const createAnimation = () => {
 
     if (getDuration() !== undefined) {
       if (supportsWebAnimations) {
-        webAnimations.forEach(animation => {
+        getWebAnimations().forEach(animation => {
           animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration()! * step);
           animation.pause();
         });
@@ -654,7 +665,7 @@ export const createAnimation = () => {
   };
 
   const updateWebAnimation = () => {
-    webAnimations.forEach(animation => {
+    getWebAnimations().forEach(animation => {
       animation.effect.updateTiming({
         delay: getDelay(),
         duration: getDuration(),
@@ -747,7 +758,7 @@ export const createAnimation = () => {
 
     if (initialized) {
       if (supportsWebAnimations) {
-        webAnimations.forEach(animation => {
+        getWebAnimations().forEach(animation => {
           animation.pause();
         });
       } else {
@@ -806,7 +817,7 @@ export const createAnimation = () => {
     });
 
     if (supportsWebAnimations) {
-      webAnimations.forEach(animation => {
+      getWebAnimations().forEach(animation => {
         animation.play();
       });
     } else {
@@ -915,6 +926,7 @@ export const createAnimation = () => {
     duration,
     easing,
     delay,
+    getWebAnimations,
     getKeyframes,
     getFill,
     getDirection,
