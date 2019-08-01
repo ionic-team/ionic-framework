@@ -171,6 +171,7 @@ export class VirtualScroll implements ComponentInterface {
   disconnectedCallback() {
     this.scrollEl = undefined;
   }
+
   @Listen('resize', { target: 'window' })
   onResize() {
     this.calcCells();

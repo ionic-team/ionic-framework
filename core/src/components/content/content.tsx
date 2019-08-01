@@ -103,12 +103,12 @@ export class Content implements ComponentInterface {
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
 
-  componentDidLoad() {
-    this.resize();
-  }
-
   disconnectedCallback() {
     this.onScrollEnd();
+  }
+
+  componentDidLoad() {
+    this.resize();
   }
 
   @Listen('click', { capture: true })

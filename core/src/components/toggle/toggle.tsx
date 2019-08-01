@@ -96,10 +96,6 @@ export class Toggle implements ComponentInterface {
     }
   }
 
-  componentWillLoad() {
-    this.emitStyle();
-  }
-
   async connectedCallback() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -119,6 +115,10 @@ export class Toggle implements ComponentInterface {
       this.gesture.destroy();
       this.gesture = undefined;
     }
+  }
+
+  componentWillLoad() {
+    this.emitStyle();
   }
 
   private emitStyle() {

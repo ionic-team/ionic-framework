@@ -169,10 +169,6 @@ export class Textarea implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<void>;
 
-  componentDidLoad() {
-    this.runAutoGrow();
-  }
-
   connectedCallback() {
     this.emitStyle();
     this.debounceChanged();
@@ -185,6 +181,10 @@ export class Textarea implements ComponentInterface {
     document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
       detail: this.el
     }));
+  }
+
+  componentDidLoad() {
+    this.runAutoGrow();
   }
 
   // TODO: performance hit, this cause layout thrashing

@@ -78,9 +78,10 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   componentDidLoad() {
-    // get the height of one option
     const colEl = this.optsEl;
     if (colEl) {
+      // DOM READ
+      // We perfom a DOM read over a rendered item, this needs to happen after the first render
       this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
     }
 

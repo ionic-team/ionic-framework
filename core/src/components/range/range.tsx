@@ -169,6 +169,18 @@ export class Range implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
+  connectedCallback() {
+    this.updateRatio();
+    this.debounceChanged();
+    this.emitStyle();
+  }
+
+  disconnectedCallback() {
+    if (this.gesture) {
+      this.gesture.setDisabled(true);
+    }
+  }
+
   async componentDidLoad() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.rangeSlider!,
@@ -180,18 +192,6 @@ export class Range implements ComponentInterface {
       onEnd: ev => this.onEnd(ev),
     });
     this.gesture.setDisabled(this.disabled);
-  }
-
-  connectedCallback() {
-    this.updateRatio();
-    this.debounceChanged();
-    this.emitStyle();
-  }
-
-  disconnectedCallback() {
-    if (this.gesture) {
-      this.gesture.setDisabled(true);
-    }
   }
 
   private handleKeyboard = (knob: KnobName, isIncrease: boolean) => {
