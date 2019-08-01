@@ -639,7 +639,7 @@ export const createAnimation = () => {
       animation.progressStep(step);
     });
 
-    step = Math.min(Math.max(step, 0), 1);
+    step = Math.min(Math.max(step, 0), 0.99);
 
     if (getDuration() !== undefined) {
       if (supportsWebAnimations) {
