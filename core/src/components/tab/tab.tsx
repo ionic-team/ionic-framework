@@ -31,7 +31,6 @@ export class Tab implements ComponentInterface {
   @Prop() component?: ComponentRef;
 
   componentWillLoad() {
-
     if (Build.isDev) {
       if (this.component !== undefined && this.el.childElementCount > 0) {
         console.error('You can not use a lazy-loaded component in a tab and inlined content at the same time.' +

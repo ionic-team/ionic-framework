@@ -40,17 +40,17 @@ export class Tabs implements NavOutlet {
    */
   @Event({ bubbles: false }) ionTabsDidChange!: EventEmitter<{tab: string}>;
 
-  componentWillLoad() {
+  async componentWillLoad() {
     if (!this.useRouter) {
       this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
-    this.initSelect().then(() => {
-      this.ionNavWillLoad.emit();
-      this.componentWillUpdate();
-    });
+    const tabs = this.tabs;
+    await this.select(tabs[0]);
+
+    this.ionNavWillLoad.emit();
   }
 
-  componentWillUpdate() {
+  componentWillRender() {
     const tabBar = this.el.querySelector('ion-tab-bar');
     if (tabBar) {
       const tab = this.selectedTab ? this.selectedTab.tab : undefined;
@@ -124,18 +124,6 @@ export class Tabs implements NavOutlet {
     return tabId !== undefined ? { id: tabId, element: this.selectedTab } : undefined;
   }
 
-  private async initSelect(): Promise<void> {
-    if (this.useRouter) {
-      return;
-    }
-    const tabs = this.tabs;
-
-    // wait for all tabs to be ready
-    await Promise.all(tabs.map(tab => tab.componentOnReady()));
-
-    await this.select(tabs[0]);
-  }
-
   private setActive(selectedTab: HTMLIonTabElement): Promise<void> {
     if (this.transitioning) {
       return Promise.reject('transitioning already happening');
@@ -181,20 +169,19 @@ export class Tabs implements NavOutlet {
     return selectedTab !== undefined && selectedTab !== leavingTab && !this.transitioning;
   }
 
-  get tabs() {
+  private get tabs() {
     return Array.from(this.el.querySelectorAll('ion-tab'));
   }
 
   private onTabClicked = (ev: CustomEvent<TabButtonClickEventDetail>) => {
     const { href, tab } = ev.detail;
-    const selectedTab = this.tabs.find(t => t.tab === tab);
     if (this.useRouter && href !== undefined) {
       const router = document.querySelector('ion-router');
       if (router) {
         router.push(href);
       }
-    } else if (selectedTab) {
-      this.select(selectedTab);
+    } else {
+      this.select(tab);
     }
   }
 
