@@ -241,7 +241,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
         {buttons.map(b =>
           <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)}>
             <div class="toast-button-inner">
-              {this.generateIconButton(b.text, b.icon, b.iconSrc)}
+              {b.icon &&
+                <ion-icon
+                  icon={b.icon}
+                  slot={b.text === undefined ? 'icon-only' : undefined}
+                  class="toast-icon"
+                />}
               {b.text}
             </div>
             {mode === 'md' && <ion-ripple-effect type={b.icon !== undefined && b.text === undefined ? 'unbounded' : 'bounded'}></ion-ripple-effect>}
@@ -250,25 +255,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
       </div>
     );
   }
-
-  generateIconButton(text?: string, icon?: string, iconSrc?: string) {
-    if (icon === undefined && iconSrc === undefined) {
-      return undefined;
-    } else if (typeof iconSrc === 'string') {
-      return (<ion-icon
-        src={iconSrc}
-        slot={text === undefined ? 'icon-only' : undefined}
-        class="toast-icon"
-      />);
-    } else if (typeof icon === 'string') {
-      return (<ion-icon
-        name={icon}
-        slot={text === undefined ? 'icon-only' : undefined}
-        class="toast-icon"
-      />);
-    }
-  }
-
   render() {
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter(b => b.side === 'start');
