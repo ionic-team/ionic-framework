@@ -27,14 +27,14 @@ test(`animation:web: hooks`, async () => {
             await page.waitForSelector('.play');
 
             // Test beforeRemoveClass and beforeAddClass
-            const classListAgain = await getClassList(square);
-            expect(classListAgain.includes('hello-world')).toEqual(false);
-            expect(classListAgain.includes('test-class')).toEqual(true);
+            const webClassListAgain = await getClassList(square);
+            expect(webClassListAgain.includes('hello-world')).toEqual(false);
+            expect(webClassListAgain.includes('test-class')).toEqual(true);
 
             // Test beforeStyles and beforeClearStyles
-            const stylesAgain = await getStyles(page, '.square-a');
-            expect(stylesAgain.paddingBottom).toEqual('0px');
-            expect(stylesAgain.color).toEqual('rgb(128, 0, 128)');
+            const webStylesAgain = await getStyles(page, '.square-a');
+            expect(webStylesAgain.paddingBottom).toEqual('0px');
+            expect(webStylesAgain.color).toEqual('rgb(128, 0, 128)');
           });
         });
       });
@@ -79,14 +79,14 @@ test(`animation:css: hooks`, async () => {
             await page.waitForSelector('.play');
 
             // Test beforeRemoveClass and beforeAddClass
-            const classListAgain = await getClassList(square);
-            expect(classListAgain.includes('hello-world')).toEqual(false);
-            expect(classListAgain.includes('test-class')).toEqual(true);
+            const cssClassListAgain = await getClassList(square);
+            expect(cssClassListAgain.includes('hello-world')).toEqual(false);
+            expect(cssClassListAgain.includes('test-class')).toEqual(true);
 
             // Test beforeStyles and beforeClearStyles
-            const stylesAgain = await getStyles(page, '.square-a');
-            expect(stylesAgain.paddingBottom).toEqual('0px');
-            expect(stylesAgain.color).toEqual('rgb(128, 0, 128)');
+            const cssStylesAgain = await getStyles(page, '.square-a');
+            expect(cssStylesAgain.paddingBottom).toEqual('0px');
+            expect(cssStylesAgain.color).toEqual('rgb(128, 0, 128)');
           });
         });
       });
