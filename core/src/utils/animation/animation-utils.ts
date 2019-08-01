@@ -51,7 +51,7 @@ export const generateKeyframeString = (name: string | undefined, keyframes: any[
   return keyframeString.join(' ');
 };
 
-const getExistingStylesheet = (keyframeString: string, element: HTMLElement): HTMLElement | undefined => {
+/*const getExistingStylesheet = (keyframeString: string, element: HTMLElement): HTMLElement | undefined => {
   const rootNode = (element.getRootNode() as any);
   const styleContainer = (rootNode.head || rootNode);
 
@@ -60,7 +60,7 @@ const getExistingStylesheet = (keyframeString: string, element: HTMLElement): HT
   /**
    * If animations have the same keyframes, no point in
    * creating a new stylesheet. Just reuse the same one
-   */
+  /*
   for (const stylesheet of allStylesheets) {
     if (stylesheet != null && stylesheet.innerText != null) {
       const textToCompare = stylesheet.innerText.split(/{(.+)/)[1];
@@ -73,13 +73,16 @@ const getExistingStylesheet = (keyframeString: string, element: HTMLElement): HT
   }
 
   return;
-};
+};*/
 
 export const createKeyframeStylesheet = (name: string, keyframeString: string, element: HTMLElement): HTMLElement => {
+/*
+  TODO: Disabled for now. This is causing an incomplete swipe to go back to never resolve.
   const existingStylesheet = getExistingStylesheet(keyframeString, element);
   if (existingStylesheet) {
     return existingStylesheet;
   }
+*/
 
   const stylesheet = document.createElement('style');
   stylesheet.id = name;
