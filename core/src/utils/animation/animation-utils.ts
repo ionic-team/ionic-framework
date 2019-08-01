@@ -62,11 +62,13 @@ const getExistingStylesheet = (keyframeString: string, element: HTMLElement): HT
    * creating a new stylesheet. Just reuse the same one
    */
   for (const stylesheet of allStylesheets.values()) {
-    const textToCompare = stylesheet.innerText.split(/{(.+)/)[1];
-    const newText = keyframeString.split(/{(.+)/)[1];
+    if (stylesheet != null && stylesheet.innerText != null) {
+      const textToCompare = stylesheet.innerText.split(/{(.+)/)[1];
+      const newText = keyframeString.split(/{(.+)/)[1];
 
-    if (textToCompare === newText) {
-      return stylesheet;
+      if (textToCompare === newText) {
+        return stylesheet;
+      }
     }
   }
 
