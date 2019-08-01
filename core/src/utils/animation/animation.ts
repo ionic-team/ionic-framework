@@ -37,7 +37,7 @@ export const createAnimation = () => {
   let willComplete = true;
   let shouldCalculateNumAnimations = true;
   let ani: Animation;
-  
+
   /**
    * Returns the raw Web Animations object
    * for all elements in an Animation.
@@ -47,7 +47,7 @@ export const createAnimation = () => {
    */
   const getWebAnimations = () => {
     return webAnimations;
-  }
+  };
 
   /**
    * Destroy the animation and all child animations.

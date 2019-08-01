@@ -53,32 +53,32 @@ export const generateKeyframeString = (name: string | undefined, keyframes: any[
 
 const getExistingStylesheet = (keyframeString: string, element: HTMLElement): HTMLElement | undefined => {
   const rootNode = (element.getRootNode() as any);
-  const styleContainer = (rootNode.head || rootNode); 
-  
+  const styleContainer = (rootNode.head || rootNode);
+
   const allStylesheets = styleContainer.querySelectorAll('style[ion-keyframes]');
-  
+
   /**
    * If animations have the same keyframes, no point in
    * creating a new stylesheet. Just reuse the same one
    */
-  for (let stylesheet of allStylesheets.values()) {
+  for (const stylesheet of allStylesheets.values()) {
     const textToCompare = stylesheet.innerText.split(/{(.+)/)[1];
     const newText = keyframeString.split(/{(.+)/)[1];
-      
+
     if (textToCompare === newText) {
       return stylesheet;
     }
   }
-  
+
   return;
-}
+};
 
 export const createKeyframeStylesheet = (name: string, keyframeString: string, element: HTMLElement): HTMLElement => {
   const existingStylesheet = getExistingStylesheet(keyframeString, element);
   if (existingStylesheet) {
     return existingStylesheet;
   }
-  
+
   const stylesheet = document.createElement('style');
   stylesheet.id = name;
   stylesheet.setAttribute('ion-keyframes', '');

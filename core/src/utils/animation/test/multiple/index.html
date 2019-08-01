@@ -38,8 +38,8 @@
     
     animationA
       .addElement(squareA)
-      .duration(500)
-      .delay(3500)
+      .duration(250)
+      .delay(1750)
       .easing('linear')
       .iterations(1)
       .keyframes([
@@ -60,8 +60,8 @@
       
     animationB
       .addElement(squareB)
-      .duration(500)
-      .delay(1000)
+      .duration(250)
+      .delay(500)
       .easing('ease-in-out')
       .iterations(1)
       .keyframes([
@@ -82,8 +82,8 @@
   
     animationC
       .addElement(squareC)
-      .duration(1000)
-      .delay(500)
+      .duration(500)
+      .delay(250)
       .easing('ease-in-out')
       .iterations(1)
       .keyframes([
@@ -104,8 +104,8 @@
       
     animationCSubA
       .addElement(squareCText)
-      .duration(500)
-      .delay(2000)
+      .duration(250)
+      .delay(1000)
       .fromTo('color', 'red', 'blue')
       .onFinish(() => {
         const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationCSubAFinished' });

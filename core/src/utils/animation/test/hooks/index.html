@@ -39,6 +39,18 @@
         const ev = new CustomEvent('beforeWrite');
         squareA.dispatchEvent(ev); 
       })
+      .afterAddRead(() => {
+        const ev = new CustomEvent('afterRead');
+        squareA.dispatchEvent(ev); 
+      })
+      .afterAddWrite(() => {
+        const ev = new CustomEvent('afterWrite');
+        squareA.dispatchEvent(ev); 
+      })
+      .afterAddClass(['hello-world'])
+      .afterRemoveClass(['test-class'])
+      .afterStyles({ 'padding-bottom': '20px' })
+      .afterClearStyles(['color'])
       .keyframes([
         { background: 'rgba(255, 0, 0, 0.5)', offset: 0 },
         { background: 'rgba(0, 255, 0, 0.5)', offset: 0.33 },
