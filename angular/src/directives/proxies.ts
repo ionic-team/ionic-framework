@@ -150,6 +150,7 @@ export class IonCarousel {
     proxyOutputs(this, this.el, ['ionCarouselDrag']);
   }
 }
+proxyMethods(IonCarousel, ['getSelectedIndex']);
 proxyInputs(IonCarousel, ['indicator']);
 
 export declare interface IonCheckbox extends Components.IonCheckbox {}

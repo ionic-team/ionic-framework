@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
 
 import { clamp } from '../../utils/helpers';
 
@@ -11,9 +11,7 @@ export class Carousel implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-
-  @Prop() indicator?: 'progress' | 'bullets' = 'bullets';
+  @Prop() indicator: 'bullets' | 'none' = 'bullets';
 
   @State() progress = 0;
   @Watch('progress')
@@ -23,45 +21,66 @@ export class Carousel implements ComponentInterface {
     });
   }
 
-  @Event() ionCarouselDrag!: EventEmitter;
+  @Event() ionCarouselDrag!: EventEmitter<{
+    progress: number
+  }>;
 
-  private onScroll = (ev: Event) => {
-    const el = ev.target as HTMLElement;
-    this.queue.read(() => {
-      this.progress = clamp(0, el.scrollLeft / (el.scrollWidth - el.offsetWidth), 1);
-    });
+  @Method()
+  async getSelectedIndex() {
+    return this.selected();
   }
 
   private length() {
     return this.el.childElementCount;
   }
 
-  private renderBullets() {
+  private selected() {
     const length = this.length();
-    const selected = Math.round(this.progress * (length - 1));
-    return (
-      <div class="bullets-bar">
-        { Array.from({ length }, (_, i) => (
-          <span
-            class={{
-              'bullet': true,
-              'active': i === selected,
-            }}
-          >
-          </span>
-        ))}
-      </div>
-    );
+    return Math.round(this.progress * (length - 1));
+  }
+
+  private onScroll = (ev: Event) => {
+    const el = ev.target as HTMLElement;
+    readTask(() => {
+      this.progress = clamp(0, el.scrollLeft / (el.scrollWidth - el.offsetWidth), 1);
+    });
+  }
+
+  private onBulletClick = (ev: Event) => {
+    const index = parseInt((ev.target as any).getAttribute('data-index'), 10);
+    const slide = this.el.children[index] as Element | undefined;
+    if (slide) {
+      slide.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   render() {
     const indicator = this.indicator;
-    return [
-      indicator === 'progress' && <ion-progress-bar value={this.progress}></ion-progress-bar>,
-      indicator === 'bullets' && this.renderBullets(),
-      <div class="inner-scroll" onScroll={this.onScroll}>
-        <slot></slot>
-      </div>
-    ];
+    return (
+      <Host>
+        <div class="inner-scroll" onScroll={this.onScroll}>
+          <slot></slot>
+        </div>
+      {indicator === 'bullets' && renderBullets(this.length(), this.selected(), this.onBulletClick)}
+      </Host>
+    );
   }
 }
+
+const renderBullets = (nuBullets: number, selectedIndex: number, handler: (ev: Event) => void) => {
+  return (
+    <div class="bullets-bar">
+      { Array.from({ length: nuBullets }, (_, i) => (
+        <button
+          onClick={handler}
+          data-index={i}
+          class={{
+            'bullet': true,
+            'active': i === selectedIndex,
+          }}
+        >
+        </button>
+      ))}
+    </div>
+  );
+};

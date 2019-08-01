@@ -39,14 +39,6 @@
       background: blue;
       color: white;
     }
-    .red {
-      background: red;
-      color: white;
-    }
-    .black {
-      background: black;
-      color: white;
-    }
   </style>
 </head>
 
@@ -58,21 +50,47 @@
       </ion-toolbar>
     </ion-header>
     <ion-content id="content" scroll-y="false">
-      <ion-carousel bullets process-bar>
+      <ion-carousel>
         <section class="slide white">
           <h1>Slide 1</h1>
         </section>
-        <section class="slide blue">
-          <h1>Slide 2</h1>
+        <section class="slide">
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Ionic Page 1</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <h1>This is the first page</h1>
+            <div f class="green"></div>
+            <div f class="green"></div>
+            <div f class="green"></div>
+            <div f class="green"></div>
+            <div f class="green"></div>
+            <div f class="green"></div>
+            <div f class="green"></div>
+            <div f class="green"></div>
+            <div f class="green"></div>
+          </ion-content>
         </section>
-        <section class="slide green">
-          <h1>Slide 3</h1>
-        </section>
-        <section class="slide red">
-          <h1>Slide 4</h1>
-        </section>
-        <section class="slide black">
-          <h1>Slide 5</h1>
+        <section class="slide">
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Ionic Page</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <h1>This is an ionic page!</h1>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+            <div f></div>
+          </ion-content>
         </section>
       </ion-carousel>
     </ion-content>

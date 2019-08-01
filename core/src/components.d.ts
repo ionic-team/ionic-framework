@@ -472,7 +472,8 @@ export namespace Components {
     'mode'?: "ios" | "md";
   }
   interface IonCarousel {
-    'indicator'?: 'progress' | 'bullets';
+    'getSelectedIndex': () => Promise<number>;
+    'indicator': 'bullets' | 'none';
   }
   interface IonCheckbox {
     /**
@@ -3948,8 +3949,10 @@ declare namespace LocalJSX {
     'mode'?: "ios" | "md";
   }
   interface IonCarousel extends JSXBase.HTMLAttributes<HTMLIonCarouselElement> {
-    'indicator'?: 'progress' | 'bullets';
-    'onIonCarouselDrag'?: (event: CustomEvent<any>) => void;
+    'indicator'?: 'bullets' | 'none';
+    'onIonCarouselDrag'?: (event: CustomEvent<{
+      progress: number
+    }>) => void;
   }
   interface IonCheckbox extends JSXBase.HTMLAttributes<HTMLIonCheckboxElement> {
     /**
