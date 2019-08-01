@@ -150,6 +150,7 @@ export class Select implements ComponentInterface {
     }
     this.updateOptions();
     this.updateOverlayOptions();
+    this.emitStyle();
 
     this.mutationO = watchForOptions<HTMLIonSelectOptionElement>(this.el, 'ion-select-option', async () => {
       this.updateOptions();
