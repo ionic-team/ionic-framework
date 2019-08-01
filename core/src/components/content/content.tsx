@@ -24,6 +24,7 @@ export class Content implements ComponentInterface {
   private cTop = -1;
   private cBottom = -1;
   private scrollEl!: HTMLElement;
+  private mode = getIonMode(this);
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
   // V8 will be able to inline any read/write to it since it's a monomorphic class.
@@ -102,18 +103,11 @@ export class Content implements ComponentInterface {
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
 
-  componentWillLoad() {
-    if (this.forceOverscroll === undefined) {
-      const mode = getIonMode(this);
-      this.forceOverscroll = mode === 'ios' && isPlatform(window, 'mobile');
-    }
-  }
-
   componentDidLoad() {
     this.resize();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.onScrollEnd();
   }
 
@@ -123,6 +117,13 @@ export class Content implements ComponentInterface {
       ev.preventDefault();
       ev.stopPropagation();
     }
+  }
+
+  private shouldForceOverscroll() {
+    const { forceOverscroll, mode } = this;
+    return forceOverscroll === undefined
+      ? mode === 'ios' && isPlatform(window, 'mobile')
+      : forceOverscroll;
   }
 
   private resize() {
@@ -299,9 +300,9 @@ export class Content implements ComponentInterface {
   }
 
   render() {
+    const { scrollX, scrollY } = this;
     const mode = getIonMode(this);
-    const { scrollX, scrollY, forceOverscroll } = this;
-
+    const forceOverscroll = this.shouldForceOverscroll();
     const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', false));
 
     this.resize();
@@ -312,7 +313,7 @@ export class Content implements ComponentInterface {
           ...createColorClasses(this.color),
           [mode]: true,
           'content-sizing': hostContext('ion-popover', this.el),
-          'overscroll': !!this.forceOverscroll,
+          'overscroll': forceOverscroll,
         }}
         style={{
           '--offset-top': `${this.cTop}px`,
@@ -324,7 +325,7 @@ export class Content implements ComponentInterface {
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
-            'overscroll': (scrollX || scrollY) && !!forceOverscroll
+            'overscroll': (scrollX || scrollY) && forceOverscroll
           }}
           ref={el => this.scrollEl = el!}
           onScroll={ev => this.onScroll(ev)}

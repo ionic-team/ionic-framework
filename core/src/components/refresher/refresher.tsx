@@ -97,7 +97,7 @@ export class Refresher implements ComponentInterface {
    */
   @Event() ionStart!: EventEmitter<void>;
 
-  async componentDidLoad() {
+  async connectedCallback() {
     if (this.el.getAttribute('slot') !== 'fixed') {
       console.error('Make sure you use: <ion-refresher slot="fixed">');
       return;
@@ -125,7 +125,7 @@ export class Refresher implements ComponentInterface {
     this.disabledChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.scrollEl = undefined;
     if (this.gesture) {
       this.gesture.destroy();

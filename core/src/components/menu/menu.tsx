@@ -137,7 +137,7 @@ export class Menu implements ComponentInterface, MenuI {
    */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
-  async componentWillLoad() {
+  async connectedCallback() {
     if (this.type === undefined) {
       this.type = config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
     }
@@ -170,6 +170,8 @@ export class Menu implements ComponentInterface, MenuI {
     // register this menu with the app's menu controller
     menuCtrl!._register(this);
 
+    this.updateState();
+
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: document,
       gestureName: 'menu-swipe',
@@ -181,14 +183,13 @@ export class Menu implements ComponentInterface, MenuI {
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
-    this.updateState();
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     this.ionMenuChange.emit({ disabled: this.disabled, open: this._isOpen });
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.blocker.destroy();
     this.menuCtrl!._unregister(this);
     if (this.animation) {

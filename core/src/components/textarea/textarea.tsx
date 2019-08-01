@@ -169,28 +169,22 @@ export class Textarea implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<void>;
 
-  /**
-   * Emitted when the input has been created.
-   * @internal
-   */
-  @Event() ionInputDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has been removed.
-   * @internal
-   */
-  @Event() ionInputDidUnload!: EventEmitter<void>;
-
-  componentWillLoad() {
-    this.emitStyle();
+  componentDidLoad() {
+    this.runAutoGrow();
   }
 
-  componentDidLoad() {
+  connectedCallback() {
+    this.emitStyle();
     this.debounceChanged();
+    document.dispatchEvent(new CustomEvent('ionInputDidLoad', {
+      detail: this.el
+    }));
+  }
 
-    this.runAutoGrow();
-
-    this.ionInputDidLoad.emit();
+  disconnectedCallback() {
+    document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
+      detail: this.el
+    }));
   }
 
   // TODO: performance hit, this cause layout thrashing
@@ -202,10 +196,6 @@ export class Textarea implements ComponentInterface {
         nativeInput.style.height = nativeInput.scrollHeight + 'px';
       });
     }
-  }
-
-  componentDidUnload() {
-    this.ionInputDidUnload.emit();
   }
 
   /**

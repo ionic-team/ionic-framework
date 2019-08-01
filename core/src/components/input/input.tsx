@@ -66,7 +66,7 @@ export class Input implements ComponentInterface {
   /**
    * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
-  @Prop({ mutable: true }) clearOnEdit?: boolean;
+  @Prop() clearOnEdit?: boolean;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
@@ -217,22 +217,18 @@ export class Input implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
-  componentWillLoad() {
-    // By default, password inputs clear after focus when they have content
-    if (this.clearOnEdit === undefined && this.type === 'password') {
-      this.clearOnEdit = true;
-    }
+  connectedCallback() {
     this.emitStyle();
-  }
-
-  componentDidLoad() {
     this.debounceChanged();
-
-    this.ionInputDidLoad.emit();
+    document.dispatchEvent(new CustomEvent('ionInputDidLoad', {
+      detail: this.el
+    }));
   }
 
-  componentDidUnload() {
-    this.ionInputDidUnload.emit();
+  disconnectedCallback() {
+    document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
+      detail: this.el
+    }));
   }
 
   /**
@@ -252,6 +248,13 @@ export class Input implements ComponentInterface {
   @Method()
   getInputElement(): Promise<HTMLInputElement> {
     return Promise.resolve(this.nativeInput!);
+  }
+
+  private shouldClearOnEdit() {
+    const { type, clearOnEdit } = this;
+    return (clearOnEdit === undefined)
+      ? type === 'password'
+      : clearOnEdit;
   }
 
   private getValue(): string {
@@ -294,7 +297,7 @@ export class Input implements ComponentInterface {
   }
 
   private onKeydown = () => {
-    if (this.clearOnEdit) {
+    if (this.shouldClearOnEdit()) {
       // Did the input value change after it was blurred and edited?
       if (this.didBlurAfterEdit && this.hasValue()) {
         // Clear the input
@@ -326,7 +329,7 @@ export class Input implements ComponentInterface {
 
   private focusChanged() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
+    if (this.shouldClearOnEdit() && !this.hasFocus && this.hasValue()) {
       this.didBlurAfterEdit = true;
     }
   }

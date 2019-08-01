@@ -58,11 +58,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   /** @internal */
   @Event({ bubbles: false }) ionNavDidChange!: EventEmitter<void>;
 
-  componentWillLoad() {
-    this.ionNavWillLoad.emit();
-  }
-
-  async componentDidLoad() {
+  async connectedCallback() {
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
       () => !!this.swipeHandler && this.swipeHandler.canStart(),
@@ -80,8 +76,11 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     this.swipeHandlerChanged();
   }
 
-  componentDidUnload() {
-    this.activeEl = this.activeComponent = undefined;
+  componentWillLoad() {
+    this.ionNavWillLoad.emit();
+  }
+
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;

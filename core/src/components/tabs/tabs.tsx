@@ -19,7 +19,6 @@ export class Tabs implements NavOutlet {
 
   @Element() el!: HTMLIonTabsElement;
 
-  @State() tabs: HTMLIonTabElement[] = [];
   @State() selectedTab?: HTMLIonTabElement;
 
   /** @internal */
@@ -45,16 +44,10 @@ export class Tabs implements NavOutlet {
     if (!this.useRouter) {
       this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
-    this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
     this.initSelect().then(() => {
       this.ionNavWillLoad.emit();
       this.componentWillUpdate();
     });
-  }
-
-  componentDidUnload() {
-    this.tabs.length = 0;
-    this.selectedTab = this.leavingTab = undefined;
   }
 
   componentWillUpdate() {
@@ -135,10 +128,12 @@ export class Tabs implements NavOutlet {
     if (this.useRouter) {
       return;
     }
-    // wait for all tabs to be ready
-    await Promise.all(this.tabs.map(tab => tab.componentOnReady()));
+    const tabs = this.tabs;
 
-    await this.select(this.tabs[0]);
+    // wait for all tabs to be ready
+    await Promise.all(tabs.map(tab => tab.componentOnReady()));
+
+    await this.select(tabs[0]);
   }
 
   private setActive(selectedTab: HTMLIonTabElement): Promise<void> {
@@ -184,6 +179,10 @@ export class Tabs implements NavOutlet {
   private shouldSwitch(selectedTab: HTMLIonTabElement | undefined): selectedTab is HTMLIonTabElement {
     const leavingTab = this.selectedTab;
     return selectedTab !== undefined && selectedTab !== leavingTab && !this.transitioning;
+  }
+
+  get tabs() {
+    return Array.from(this.el.querySelectorAll('ion-tab'));
   }
 
   private onTabClicked = (ev: CustomEvent<TabButtonClickEventDetail>) => {

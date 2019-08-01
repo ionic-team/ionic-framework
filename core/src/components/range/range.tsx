@@ -169,12 +169,6 @@ export class Range implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  componentWillLoad() {
-    this.updateRatio();
-    this.debounceChanged();
-    this.emitStyle();
-  }
-
   async componentDidLoad() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.rangeSlider!,
@@ -188,10 +182,15 @@ export class Range implements ComponentInterface {
     this.gesture.setDisabled(this.disabled);
   }
 
-  componentDidUnload() {
+  connectedCallback() {
+    this.updateRatio();
+    this.debounceChanged();
+    this.emitStyle();
+  }
+
+  disconnectedCallback() {
     if (this.gesture) {
-      this.gesture.destroy();
-      this.gesture = undefined;
+      this.gesture.setDisabled(true);
     }
   }
 

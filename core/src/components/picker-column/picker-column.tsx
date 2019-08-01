@@ -47,7 +47,7 @@ export class PickerColumnCmp implements ComponentInterface {
     this.refresh();
   }
 
-  componentWillLoad() {
+  async connectedCallback() {
     let pickerRotateFactor = 0;
     let pickerScaleFactor = 0.81;
 
@@ -60,9 +60,7 @@ export class PickerColumnCmp implements ComponentInterface {
 
     this.rotateFactor = pickerRotateFactor;
     this.scaleFactor = pickerScaleFactor;
-  }
 
-  async componentDidLoad() {
     // get the height of one option
     const colEl = this.optsEl;
     if (colEl) {
@@ -88,7 +86,7 @@ export class PickerColumnCmp implements ComponentInterface {
     }, 250);
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     cancelAnimationFrame(this.rafId);
     clearTimeout(this.tmrId);
     if (this.gesture) {

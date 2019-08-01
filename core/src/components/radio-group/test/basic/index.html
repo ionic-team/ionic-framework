@@ -22,7 +22,7 @@
     <ion-content class="outer-content">
       <ion-radio-group id="dynamicDisabled" disabled name="tannen" id="group" value="biff">
         <ion-list-header>
-          <ion-label>Luckiest Man On Earth</ion-label>
+          <ion-label>Luckiest Man On Earth <span id="group-value"></span></ion-label>
         </ion-list-header>
 
         <ion-item>
@@ -53,7 +53,10 @@
 
       </ion-radio-group>
 
-      <ion-button onClick="toggleDisabled()">Toggle Disabled</ion-button>
+      <ion-button onClick="addSelect()">Add Select</ion-button>
+      <ion-button onClick="addCheckedSelect()">Add Checked Select</ion-button>
+      <ion-button onClick="removeSelect()">Remove Select</ion-button>
+
     </ion-content>
 
     <style>
@@ -61,12 +64,39 @@
         --background: #f2f2f2;
       }
     </style>
-
     <script>
-      var dynamicDisabled = document.getElementById('dynamicDisabled');
+      let count = 0;
+      const valueEl = document.querySelector('#group-value');
+      const group = document.querySelector('ion-radio-group');
+      group.addEventListener('ionChange', (ev) => {
+        valueEl.textContent = group.value;
+      });
+      customElements.whenDefined('ion-radio-group')
+       .then(() => group.componentOnReady())
+       .then(() => {
+         valueEl.textContent = group.value;
+        });
 
-      function toggleDisabled() {
-        dynamicDisabled.disabled = !dynamicDisabled.disabled;
+      function addSelect() {
+        const item = document.createElement('ion-item');
+        item.innerHTML = `
+          <ion-label>Item ${count}</ion-label>
+          <ion-radio value="item-${count}" slot="start"></ion-radio>
+        `;
+        group.appendChild(item);
+        count++;
+      }
+      function addCheckedSelect() {
+        const item = document.createElement('ion-item');
+        item.innerHTML = `
+          <ion-label>Item ${count}</ion-label>
+          <ion-radio value="item-${count}" slot="start" checked></ion-radio>
+        `;
+        group.appendChild(item);
+        count++;
+      }
+      function removeSelect() {
+        group.children[group.children.length - 1].remove();
       }
     </script>
   </ion-app>

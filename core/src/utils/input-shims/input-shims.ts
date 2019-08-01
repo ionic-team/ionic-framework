@@ -75,11 +75,13 @@ export const startInputShims = (config: Config) => {
     registerInput(input);
   }
 
-  doc.body.addEventListener('ionInputDidLoad', event => {
-    registerInput(event.target as any);
-  });
+  doc.addEventListener('ionInputDidLoad', ((ev: InputEvent) => {
+    registerInput(ev.detail.inputEl);
+  }) as any);
 
-  doc.body.addEventListener('ionInputDidUnload', event => {
-    unregisterInput(event.target as any);
-  });
+  doc.addEventListener('ionInputDidUnload', ((ev: InputEvent) => {
+    unregisterInput(ev.detail.inputEl);
+  }) as any);
 };
+
+type InputEvent = CustomEvent<{inputEl: HTMLElement}>;

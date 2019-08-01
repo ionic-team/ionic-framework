@@ -152,16 +152,14 @@ export class VirtualScroll implements ComponentInterface {
     this.updateVirtualScroll();
   }
 
-  async componentDidLoad() {
+  async connectedCallback() {
     const contentEl = this.el.closest('ion-content');
     if (!contentEl) {
       console.error('virtual-scroll must be used inside ion-content');
       return;
     }
-    await contentEl.componentOnReady();
-
-    this.contentEl = contentEl;
     this.scrollEl = await contentEl.getScrollElement();
+    this.contentEl = contentEl;
     this.calcCells();
     this.updateState();
   }
@@ -170,10 +168,9 @@ export class VirtualScroll implements ComponentInterface {
     this.updateState();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.scrollEl = undefined;
   }
-
   @Listen('resize', { target: 'window' })
   onResize() {
     this.calcCells();
