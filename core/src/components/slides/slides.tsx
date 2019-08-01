@@ -162,7 +162,10 @@ export class Slides implements ComponentInterface {
    */
   @Method()
   async update() {
-    const swiper = await this.getSwiper();
+    const [swiper] = await Promise.all([
+      this.getSwiper(),
+      waitForSlides(this.el)
+    ]);
     swiper.update();
   }
 
@@ -323,6 +326,7 @@ export class Slides implements ComponentInterface {
     // init swiper core
     // @ts-ignore
     const { Swiper } = await import('./swiper/swiper.bundle.js');
+    await waitForSlides(this.el);
     const swiper = new Swiper(this.el, finalOptions);
     this.swiperReady = true;
     this.readySwiper(swiper);
@@ -493,3 +497,9 @@ export class Slides implements ComponentInterface {
     );
   }
 }
+
+const waitForSlides = (el: HTMLElement) => {
+  return Promise.all(
+    Array.from(el.querySelectorAll('ion-slide')).map(s => s.componentOnReady())
+  );
+};
