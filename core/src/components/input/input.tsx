@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, Build } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
@@ -220,15 +220,19 @@ export class Input implements ComponentInterface {
   connectedCallback() {
     this.emitStyle();
     this.debounceChanged();
-    document.dispatchEvent(new CustomEvent('ionInputDidLoad', {
-      detail: this.el
-    }));
+    if (Build.isBrowser) {
+      this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
+        detail: this.el
+      }));
+    }
   }
 
   disconnectedCallback() {
-    document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
-      detail: this.el
-    }));
+    if (Build.isBrowser) {
+      document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
+        detail: this.el
+      }));
+    }
   }
 
   /**
