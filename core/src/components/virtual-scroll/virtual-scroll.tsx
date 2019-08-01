@@ -155,7 +155,7 @@ export class VirtualScroll implements ComponentInterface {
   async connectedCallback() {
     const contentEl = this.el.closest('ion-content');
     if (!contentEl) {
-      console.error('virtual-scroll must be used inside ion-content');
+      console.error('<ion-virtual-scroll> must be used inside an <ion-content>');
       return;
     }
     this.scrollEl = await contentEl.getScrollElement();

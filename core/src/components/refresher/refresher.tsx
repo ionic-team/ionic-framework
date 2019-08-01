@@ -103,14 +103,13 @@ export class Refresher implements ComponentInterface {
       return;
     }
     const contentEl = this.el.closest('ion-content');
-    if (contentEl) {
-      this.scrollEl = await contentEl.getScrollElement();
-    } else {
-      console.error('ion-refresher did not attach, make sure the parent is an ion-content.');
+    if (!contentEl) {
+      console.error('<ion-refresher> must be used inside an <ion-content>');
+      return;
     }
-
+    this.scrollEl = await contentEl.getScrollElement();
     this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.el.closest('ion-content') as any,
+      el: contentEl,
       gestureName: 'refresher',
       gesturePriority: 10,
       direction: 'y',

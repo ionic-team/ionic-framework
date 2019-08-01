@@ -78,9 +78,11 @@ export class InfiniteScroll implements ComponentInterface {
 
   async connectedCallback() {
     const contentEl = this.el.closest('ion-content');
-    if (contentEl) {
-      this.scrollEl = await contentEl.getScrollElement();
+    if (!contentEl) {
+      console.error('<ion-infinite-scroll> must be used inside an <ion-content>');
+      return;
     }
+    this.scrollEl = await contentEl.getScrollElement();
     this.thresholdChanged();
     this.disabledChanged();
     if (this.position === 'top') {
