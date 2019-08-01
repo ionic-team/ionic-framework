@@ -252,17 +252,21 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   generateIconButton(text?: string, icon?: string, iconSrc?: string) {
-    if(!icon && !iconSrc) return undefined;
-    else if(iconSrc) return (<ion-icon
-      src={iconSrc}
-      slot={text === undefined ? 'icon-only' : undefined}
-      class="toast-icon"
-    />)
-    else if(icon) return (<ion-icon
-      name={icon}
-      slot={text === undefined ? 'icon-only' : undefined}
-      class="toast-icon"
-    />)
+    if (icon === undefined && iconSrc === undefined) {
+      return undefined;
+    } else if (typeof iconSrc === 'string') {
+      return (<ion-icon
+        src={iconSrc}
+        slot={text === undefined ? 'icon-only' : undefined}
+        class="toast-icon"
+      />);
+    } else if (typeof icon === 'string') {
+      return (<ion-icon
+        name={icon}
+        slot={text === undefined ? 'icon-only' : undefined}
+        class="toast-icon"
+      />);
+    }
   }
 
   render() {
