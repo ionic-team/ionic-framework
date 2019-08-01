@@ -266,14 +266,14 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [ion-ripple-effect](../ripple-effect)
 - ion-icon
+- [ion-ripple-effect](../ripple-effect)
 
 ### Graph
 ```mermaid
 graph TD;
-  ion-toast --> ion-ripple-effect
   ion-toast --> ion-icon
+  ion-toast --> ion-ripple-effect
   style ion-toast fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
