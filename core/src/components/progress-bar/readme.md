@@ -90,19 +90,6 @@ export const ProgressbarExample: React.FunctionComponent = () => (
 | `--progress-background` | Color of the progress bar                                                                                                             |
 
 
-## Dependencies
-
-### Used by
-
- - [ion-carousel](../carousel)
-
-### Graph
-```mermaid
-graph TD;
-  ion-carousel --> ion-progress-bar
-  style ion-progress-bar fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

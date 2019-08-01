@@ -7,30 +7,30 @@
 
 ## Properties
 
-| Property    | Attribute   | Description | Type                                   | Default     |
-| ----------- | ----------- | ----------- | -------------------------------------- | ----------- |
-| `indicator` | `indicator` |             | `"bullets" \| "progress" \| undefined` | `'bullets'` |
+| Property    | Attribute   | Description | Type                  | Default     |
+| ----------- | ----------- | ----------- | --------------------- | ----------- |
+| `indicator` | `indicator` |             | `"bullets" \| "none"` | `'bullets'` |
 
 
 ## Events
 
-| Event             | Description | Type               |
-| ----------------- | ----------- | ------------------ |
-| `ionCarouselDrag` |             | `CustomEvent<any>` |
+| Event             | Description | Type                                 |
+| ----------------- | ----------- | ------------------------------------ |
+| `ionCarouselDrag` |             | `CustomEvent<{ progress: number; }>` |
 
 
-## Dependencies
+## Methods
 
-### Depends on
+### `getSelectedIndex() => Promise<number>`
 
-- [ion-progress-bar](../progress-bar)
 
-### Graph
-```mermaid
-graph TD;
-  ion-carousel --> ion-progress-bar
-  style ion-carousel fill:#f9f,stroke:#333,stroke-width:4px
-```
+
+#### Returns
+
+Type: `Promise<number>`
+
+
+
 
 ----------------------------------------------
 

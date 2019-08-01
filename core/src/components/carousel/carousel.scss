@@ -28,6 +28,7 @@
   scroll-snap-stop: always;
 
   touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
 }
 
 .inner-scroll::-webkit-scrollbar {
@@ -49,10 +50,11 @@
   @include position(null, 0, 10px, 0);
 
   display: flex;
-  position: fixed;
+  position: absolute;
 
   justify-content: center;
 
+  touch-action: none;
   z-index: 1000;
 }
 
@@ -75,9 +77,3 @@
   background: var(--bullet-background-active);
 }
 
-ion-progress-bar {
-  @include position(0, 0, null, 0);
-  position: absolute;
-
-  z-index: 1000;
-}
