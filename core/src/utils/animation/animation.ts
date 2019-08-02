@@ -565,6 +565,10 @@ export const createAnimation = () => {
     }
   };
 
+  const setStyleProperty = (element: HTMLElement, propertyName: string, value: string | null) => {
+    element.style.setProperty(propertyName, value);
+  };
+
   const initializeCSSAnimation = () => {
 
     elements.forEach(element => {
@@ -573,20 +577,20 @@ export const createAnimation = () => {
         const stylesheet = createKeyframeStylesheet(_name, generateKeyframeString(_name, getKeyframes()), element);
         stylesheets.push(stylesheet);
 
-        element.style.setProperty('animation-name', stylesheet.id || null);
-        element.style.setProperty('animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
-        element.style.setProperty('animation-timing-function', getEasing() || null);
-        element.style.setProperty('animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
-        element.style.setProperty('animation-fill-mode', getFill() || null);
-        element.style.setProperty('animation-direction', getDirection() || null);
+        setStyleProperty(element, 'animation-name', stylesheet.id || null);
+        setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
+        setStyleProperty(element, 'animation-timing-function', getEasing() || null);
+        setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
+        setStyleProperty(element, 'animation-fill-mode', getFill() || null);
+        setStyleProperty(element, 'animation-direction', getDirection() || null);
 
         let iterationsCount = null;
         if (getIterations() !== undefined) {
           iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
         }
 
-        element.style.setProperty('animation-iteration-count', iterationsCount);
-        element.style.setProperty('animation-play-state', 'paused');
+        setStyleProperty(element, 'animation-iteration-count', iterationsCount);
+        setStyleProperty(element, 'animation-play-state', 'paused');
       }
     });
 
@@ -653,8 +657,8 @@ export const createAnimation = () => {
 
         elements.forEach(element => {
           if (getKeyframes().length > 0) {
-            element.style.setProperty('animation-delay', animationDuration);
-            element.style.setProperty('animation-play-state', 'paused');
+            setStyleProperty(element, 'animation-delay', animationDuration);
+            setStyleProperty(element, 'animation-play-state', 'paused');
           }
         });
       }
@@ -678,19 +682,19 @@ export const createAnimation = () => {
 
   const updateCSSAnimation = () => {
     elements.forEach(element => {
-      element.style.setProperty('animation-name', _name || null);
-      element.style.setProperty('animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
-      element.style.setProperty('animation-timing-function', getEasing() || null);
-      element.style.setProperty('animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
-      element.style.setProperty('animation-fill-mode', getFill() || null);
-      element.style.setProperty('animation-direction', getDirection() || null);
+      setStyleProperty(element, 'animation-name', _name || null);
+      setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
+      setStyleProperty(element, 'animation-timing-function', getEasing() || null);
+      setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
+      setStyleProperty(element, 'animation-fill-mode', getFill() || null);
+      setStyleProperty(element, 'animation-direction', getDirection() || null);
 
-      let iterationsCount = null;
-      if (getIterations() !== undefined) {
-        iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
-      }
+      const iterationsCount =
+        (getIterations() !== undefined) ?
+        (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString()
+        : null;
 
-      element.style.setProperty('animation-iteration-countion', iterationsCount);
+      setStyleProperty(element, 'animation-iteration-countion', iterationsCount);
     });
   };
 
@@ -762,7 +766,7 @@ export const createAnimation = () => {
         });
       } else {
         elements.forEach(element => {
-          element.style.setProperty('animation-play-state', 'paused');
+          setStyleProperty(element, 'animation-play-state', 'paused');
         });
       }
     }
@@ -822,7 +826,7 @@ export const createAnimation = () => {
     } else {
       elements.forEach(element => {
         if (getKeyframes().length > 0) {
-          element.style.setProperty('animation-play-state', 'running');
+          setStyleProperty(element, 'animation-play-state', 'running');
         }
       });
     }
