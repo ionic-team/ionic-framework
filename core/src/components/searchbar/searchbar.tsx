@@ -82,6 +82,12 @@ export class Searchbar implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * A hint to the browser for which keyboard to display.
+   * This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+   */
+  @Prop() inputmode = 'search';
+
+  /**
    * Set the input's placeholder.
    * `placeholder` can accept either plaintext or HTML as a string.
    * To display characters normally reserved for HTML, they
@@ -442,6 +448,7 @@ export class Searchbar implements ComponentInterface {
             disabled={this.disabled}
             ref={el => this.nativeInput = el}
             class="searchbar-input"
+            inputMode={this.inputmode}
             onInput={this.onInput}
             onBlur={this.onBlur}
             onFocus={this.onFocus}
