@@ -62,7 +62,6 @@
 
   white-space: nowrap;
 
-  overflow: hidden;
   font-kerning: none;
 }
 
@@ -125,15 +124,9 @@
 // --------------------------------------------------
 
 .segment-button-indicator {
-  align-self: flex-end;
-
   width: 100%;
 
-  height: 2px;
-
   background-color: var(--indicator-color);
-
-  opacity: 1;
 }
 
 

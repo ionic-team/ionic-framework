@@ -24,6 +24,8 @@
   line-height: $segment-button-md-line-height;
 
   text-transform: uppercase;
+
+  overflow: hidden;
 }
 
 // Segment Button: Checked
@@ -109,4 +111,13 @@
   :host(:hover) {
     background: var(--background-hover);
   }
+}
+
+// Segment Button: Indicator
+// --------------------------------------------------
+
+.segment-button-indicator {
+  align-self: flex-end;
+
+  height: 2px;
 }

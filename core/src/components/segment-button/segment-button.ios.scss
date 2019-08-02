@@ -5,10 +5,14 @@
 // --------------------------------------------------
 
 :host {
+  --indicator-color-checked: var(--background-checked);
+
   --border-radius: #{$segment-button-ios-border-radius};
   --border-width: #{$segment-button-ios-border-width};
   --border-style: solid;
   --transition: #{$segment-button-ios-transition};
+
+  position: relative;
 
   font-weight: 450;
   margin: 2px;
@@ -35,7 +39,18 @@
 // --------------------------------------------------
 
 .segment-button-indicator {
-  display: none;
+  @include border-radius(var(--border-radius));
+  @include position(0, 0,0, 0);
+
+  position: absolute;
+
+  height: 100%;
+
+  z-index: -1;
+}
+
+:host(.segment-button-checked) .segment-button-indicator {
+  box-shadow: 0 0 5px rgba(0,0,0,0.16);
 }
 
 
@@ -84,8 +99,6 @@
 
 :host(.segment-button-checked) {
   font-weight: 500;
-
-  box-shadow: 0 0 5px rgba(0,0,0,0.16);
 }
 
 // :host(.segment-button-checked.activated) {
