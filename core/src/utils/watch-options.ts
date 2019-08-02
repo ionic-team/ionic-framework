@@ -20,11 +20,13 @@ const getSelectedOption = <T extends HTMLElement>(mutationList: MutationRecord[]
   return newOption;
 };
 
-const findCheckedOption = (el: any, tagName: string) => {
+export const findCheckedOption = (el: any, tagName: string) => {
   if (el.nodeType !== 1) {
     return undefined;
-  } else if (el.tagName !== tagName.toUpperCase()) {
-    el = el.querySelector(tagName);
   }
-  return el && el.checked ? el : undefined;
+  const options = (el.tagName === tagName.toUpperCase())
+    ? [el]
+    : Array.from(el.querySelectorAll(tagName));
+
+  return options.find((o: any) => o.checked === true);
 };

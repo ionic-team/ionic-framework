@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { RadioGroupChangeEventDetail } from '../../interface';
-import { watchForOptions } from '../../utils/watch-options';
+import { findCheckedOption, watchForOptions } from '../../utils/watch-options';
 
 @Component({
   tag: 'ion-radio-group'
@@ -41,7 +41,7 @@ export class RadioGroup implements ComponentInterface {
    */
   @Event() ionChange!: EventEmitter<RadioGroupChangeEventDetail>;
 
-  connectedCallback() {
+  async connectedCallback() {
     // Get the list header if it exists and set the id
     // this is used to set aria-labelledby
     const el = this.el;
@@ -53,9 +53,21 @@ export class RadioGroup implements ComponentInterface {
       }
     }
 
+    if (this.value === undefined) {
+      const radio = findCheckedOption(el, 'ion-radio') as HTMLIonRadioElement | undefined;
+      if (radio !== undefined) {
+        await radio.componentOnReady();
+        if (this.value === undefined) {
+          this.value = radio.value;
+        }
+      }
+    }
+
     this.mutationO = watchForOptions<HTMLIonRadioElement>(el, 'ion-radio', newOption => {
       if (newOption !== undefined) {
-        this.value = newOption.value;
+        newOption.componentOnReady().then(() => {
+          this.value = newOption.value;
+        });
       } else {
         this.updateRadios();
       }
@@ -70,12 +82,13 @@ export class RadioGroup implements ComponentInterface {
     }
   }
 
-  private updateRadios() {
-    const { value, radios } = this;
+  private async updateRadios() {
+    const { value } = this;
+    const radios = await this.getRadios();
     let hasChecked = false;
 
     // Walk the DOM in reverse order, since the last selected one wins!
-    for (const radio of radios.reverse()) {
+    for (const radio of radios) {
       if (!hasChecked && radio.value === value) {
         // correct value for this radio
         // but this radio isn't checked yet
@@ -95,8 +108,12 @@ export class RadioGroup implements ComponentInterface {
     }
   }
 
-  private get radios() {
-    return Array.from(this.el.querySelectorAll('ion-radio'));
+  private getRadios() {
+    return Promise.all(
+      Array
+        .from(this.el.querySelectorAll('ion-radio'))
+        .map(r => r.componentOnReady())
+    );
   }
 
   private onSelect = (ev: Event) => {
