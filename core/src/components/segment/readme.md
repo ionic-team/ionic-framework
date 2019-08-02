@@ -231,7 +231,7 @@ for (let i = 0; i < segments.length; i++) {
 import React from 'react';
 import { IonSegment, IonSegmentButton, IonLabel, IonIcon, IonToolbar, IonContent } from '@ionic/react';
 
-export const SegmentExample: React.FunctionComponent = () => (
+export const SegmentExample: React.FC = () => (
   <IonContent>
     {/*-- Default Segment --*/}
     <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)}>

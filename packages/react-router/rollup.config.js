@@ -1,3 +1,4 @@
+import sourcemaps from 'rollup-plugin-sourcemaps';
 import resolve from 'rollup-plugin-node-resolve';
 
 export default {
@@ -5,27 +6,18 @@ export default {
   output: [
     {
       file: 'dist/index.esm.js',
-      format: 'es'
+      format: 'es',
+      sourcemap: true
     },
     {
       file: 'dist/index.js',
-      format: 'commonjs'
+      format: 'commonjs',
+      sourcemap: true
     }
   ],
-  external: [
-    '@ionic/core',
-    '@ionic/core/loader',
-    "@ionic/react-core",
-    'ionicons',
-    'ionicons/icons',
-    'react',
-    'tslib',
-    'react-dom',
-    'react-router',
-    'react-router-dom',
-    'react-testing-library',
-  ],
+  external: (id) => !/^(\.|\/)/.test(id),
   plugins: [
-    resolve()
+    resolve(),
+    sourcemaps(),
   ]
 };

@@ -94,7 +94,7 @@ See the [tabs documentation](../tabs) for more details on configuring tabs.
 import React from 'react';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonContent } from '@ionic/react';
 
-export const TabButtonExample: React.FunctionComponent = () => (
+export const TabButtonExample: React.FC = () => (
   <IonContent>
     <IonTabs>
       <IonTabBar slot="bottom">

@@ -1,36 +1,36 @@
 import React from 'react';
 
 export interface IonLifeCycleContextInterface {
-  onIonViewWillEnter: (callback?: Function) => void;
+  onIonViewWillEnter: (callback: () => void) => void;
   ionViewWillEnter: () => void;
-  onIonViewDidEnter: (callback?: Function) => void;
+  onIonViewDidEnter: (callback: () => void) => void;
   ionViewDidEnter: () => void;
-  onIonViewWillLeave: (callback?: Function) => void;
+  onIonViewWillLeave: (callback: () => void) => void;
   ionViewWillLeave: () => void;
-  onIonViewDidLeave: (callback?: Function) => void;
+  onIonViewDidLeave: (callback: () => void) => void;
   ionViewDidLeave: () => void;
 }
 
 export const IonLifeCycleContext = React.createContext<IonLifeCycleContextInterface>({
-  onIonViewWillEnter: () => {},
-  ionViewWillEnter: () => {},
-  onIonViewDidEnter: () => {},
-  ionViewDidEnter: () => {},
-  onIonViewWillLeave: () => {},
-  ionViewWillLeave: () => {},
-  onIonViewDidLeave: () => {},
-  ionViewDidLeave: () => {}
+  onIonViewWillEnter: () => { return; },
+  ionViewWillEnter: () => { return; },
+  onIonViewDidEnter: () => { return; },
+  ionViewDidEnter: () => { return; },
+  onIonViewWillLeave: () => { return; },
+  ionViewWillLeave: () => { return; },
+  onIonViewDidLeave: () => { return; },
+  ionViewDidLeave: () => { return; },
 });
 
-export class DefaultIonLifeCycleContext implements IonLifeCycleContextInterface {
+export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextInterface {
 
-  ionViewWillEnterCallback: Function;
-  ionViewDidEnterCallback: Function;
-  ionViewWillLeaveCallback: Function;
-  ionViewDidLeaveCallback: Function;
-  componentCanBeDestroyedCallback: Function;
+  ionViewWillEnterCallback?: () => void;
+  ionViewDidEnterCallback?: () => void;
+  ionViewWillLeaveCallback?: () => void;
+  ionViewDidLeaveCallback?: () => void;
+  componentCanBeDestroyedCallback?: () => void;
 
-  onIonViewWillEnter(callback: Function) {
+  onIonViewWillEnter(callback: () => void) {
     this.ionViewWillEnterCallback = callback;
   }
 
@@ -40,7 +40,7 @@ export class DefaultIonLifeCycleContext implements IonLifeCycleContextInterface 
     }
   }
 
-  onIonViewDidEnter(callback: Function) {
+  onIonViewDidEnter(callback: () => void) {
     this.ionViewDidEnterCallback = callback;
   }
 
@@ -50,7 +50,7 @@ export class DefaultIonLifeCycleContext implements IonLifeCycleContextInterface 
     }
   }
 
-  onIonViewWillLeave(callback: Function) {
+  onIonViewWillLeave(callback: () => void) {
     this.ionViewWillLeaveCallback = callback;
   }
 
@@ -60,7 +60,7 @@ export class DefaultIonLifeCycleContext implements IonLifeCycleContextInterface 
     }
   }
 
-  onIonViewDidLeave(callback: Function) {
+  onIonViewDidLeave(callback: () => void) {
     this.ionViewDidLeaveCallback = callback;
   }
 
@@ -71,7 +71,7 @@ export class DefaultIonLifeCycleContext implements IonLifeCycleContextInterface 
     this.componentCanBeDestroyed();
   }
 
-  onComponentCanBeDestroyed(callback: Function) {
+  onComponentCanBeDestroyed(callback: () => void) {
     this.componentCanBeDestroyedCallback = callback;
   }
 
@@ -80,4 +80,4 @@ export class DefaultIonLifeCycleContext implements IonLifeCycleContextInterface 
       this.componentCanBeDestroyedCallback();
     }
   }
-}
+};

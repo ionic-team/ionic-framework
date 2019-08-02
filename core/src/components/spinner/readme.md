@@ -46,7 +46,7 @@ The default spinner to use is based on the platform. The default spinner for `io
 import React from 'react';
 import { IonSpinner, IonContent } from '@ionic/react';
 
-export const SpinnerExample: React.FunctionComponent = () => (
+export const SpinnerExample: React.FC = () => (
   <IonContent>
     {/*-- Default Spinner --*/}
     <IonSpinner />

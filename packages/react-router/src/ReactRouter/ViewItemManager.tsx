@@ -1,6 +1,5 @@
 import React from 'react';
-import { IonLifeCycleContext } from '@ionic/react-core';
-import { DefaultIonLifeCycleContext } from '@ionic/react-core';
+import { IonLifeCycleContext, DefaultIonLifeCycleContext } from '@ionic/react';
 import { RouteManagerContext } from './RouteManagerContext';
 
 interface StackItemManagerProps {
@@ -52,6 +51,8 @@ export class ViewItemManager extends React.Component<StackItemManagerProps, Stac
       </IonLifeCycleContext.Provider>
     )
   }
+
+  static get contextType() {
+    return RouteManagerContext;
+  }
 }
-// TODO: treeshake
-ViewItemManager.contextType = RouteManagerContext;

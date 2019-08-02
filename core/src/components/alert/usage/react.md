@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { IonAlert, IonButton, IonContent } from '@ionic/react';
 
-export const AlertExample: React.FunctionComponent = () => {
+export const AlertExample: React.FC = () => {
 
   const [showAlert1, setShowAlert1] = useState(false);
   const [showAlert2, setShowAlert2] = useState(false);

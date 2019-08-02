@@ -1,4 +1,3 @@
 
-export { withIonLifeCycle} from './IonLifeCycleHOC';
-// export { IonLifeCycleContext, IonLifeCycleContextInterface } from './IonLifeCycleContext';
+export { withIonLifeCycle } from './IonLifeCycleHOC';
 export { useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from './hooks';

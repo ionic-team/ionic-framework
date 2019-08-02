@@ -1,9 +1,4 @@
-import React from 'react';
-import { render, waitForElement, wait } from 'react-testing-library';
-import * as utils from '../utils';
-import { createControllerUtils } from '../utils/controller-test-utils';
 import 'jest-dom/extend-expect';
-import {IonLoading} from '../IonLoading';
 
 describe.skip('createControllerComponent - events', () => {
   it('skip', () => {});

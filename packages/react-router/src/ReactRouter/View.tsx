@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonLifeCycleContext } from '@ionic/react-core';
+import { IonLifeCycleContext } from '@ionic/react';
 
 type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 
@@ -75,8 +75,11 @@ class ViewInternal extends React.Component<InternalProps, StackViewState> {
         </div>
     )
   }
+
+  static get contextType() {
+    return IonLifeCycleContext;
+  }
 }
-ViewInternal.contextType = IonLifeCycleContext;
 
 function forwardRef(props: InternalProps, ref: React.RefObject<HTMLElement>) {
   return <ViewInternal forwardedRef={ref} {...props} />;

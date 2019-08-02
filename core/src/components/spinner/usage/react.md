@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonSpinner, IonContent } from '@ionic/react';
 
-export const SpinnerExample: React.FunctionComponent = () => (
+export const SpinnerExample: React.FC = () => (
   <IonContent>
     {/*-- Default Spinner --*/}
     <IonSpinner />

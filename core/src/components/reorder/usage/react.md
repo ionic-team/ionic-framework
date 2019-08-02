@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonIcon, IonItem, IonLabel, IonReorder, IonContent } from '@ionic/react';
 
-export const ReorderExample: React.FunctionComponent = () => (
+export const ReorderExample: React.FC = () => (
   <IonContent>
     {/*-- Default reorder icon, end aligned items --*/}
     <IonItem>

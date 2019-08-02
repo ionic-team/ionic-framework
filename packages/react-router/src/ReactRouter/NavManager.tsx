@@ -1,5 +1,5 @@
 import { RouterDirection } from '@ionic/core';
-import { NavContext, NavContextState } from '@ionic/react-core';
+import { NavContext, NavContextState } from '@ionic/react';
 import { Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
@@ -17,7 +17,7 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
 
   constructor(props: NavManagerProps) {
     super(props);
-    this.state ={
+    this.state = {
       goBack: this.goBack.bind(this),
       hasIonicRouter: () => true,
       getHistory: this.getHistory.bind(this),

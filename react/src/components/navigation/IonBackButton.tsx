@@ -1,21 +1,25 @@
 import { JSX as LocalJSX } from '@ionic/core';
 import React from 'react';
-import { NavContext } from '@ionic/react-core';
+
+import { NavContext } from '../../Contexts/NavContext';
 import { IonBackButtonInner } from '../inner-proxies';
 
-type BackButtonProps = LocalJSX.IonBackButton & {
-
+type Props = LocalJSX.IonBackButton & {
+  ref?: React.RefObject<HTMLIonBackButtonElement>;
 };
 
-export class IonBackButton extends React.Component<BackButtonProps> {
+export const IonBackButton = class extends React.Component<Props> {
   context!: React.ContextType<typeof NavContext>;
 
   clickButton = (e: MouseEvent) => {
-    if(this.context.hasIonicRouter()) {
-      e.stopPropagation();
-      this.context.goBack(this.props.defaultHref);
-    } else {
-      window.location.href = this.props.defaultHref;
+    const defaultHref = this.props.defaultHref;
+    if (defaultHref !== undefined) {
+      if (this.context.hasIonicRouter()) {
+        e.stopPropagation();
+        this.context.goBack(defaultHref);
+      } else {
+        window.location.href = defaultHref;
+      }
     }
   }
 
@@ -24,6 +28,12 @@ export class IonBackButton extends React.Component<BackButtonProps> {
       <IonBackButtonInner onClick={this.clickButton} {...this.props}></IonBackButtonInner>
     );
   }
-}
 
-IonBackButton.contextType = NavContext;
+  static get displayName() {
+    return 'IonBackButton';
+  }
+
+  static get contextType() {
+    return NavContext;
+  }
+};

@@ -1,10 +1,9 @@
-import { JSX, popoverController } from '@ionic/core';
-import { createOverlayComponent } from './createOverlayComponent';
-import { Omit } from '../types';
-import { ReactProps } from './ReactProps';
+import { PopoverOptions, popoverController } from '@ionic/core';
 
-export type PopoverOptions = Omit<JSX.IonPopover, 'component' | 'componentProps'> & {
+import { createOverlayComponent } from './createOverlayComponent';
+
+export type ReactPopoverOptions = Omit<PopoverOptions, 'component' | 'componentProps'> & {
   children: React.ReactNode;
 };
 
-export const IonPopover = /*@__PURE__*/createOverlayComponent<PopoverOptions & ReactProps, HTMLIonPopoverElement>('IonPopover', popoverController);
+export const IonPopover = /*@__PURE__*/createOverlayComponent<ReactPopoverOptions, HTMLIonPopoverElement>('IonPopover', popoverController);

@@ -121,7 +121,7 @@ To change what is displayed in the back button, use the `text` and `icon` proper
 import React from 'react';
 import { IonBackButton, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonContent } from '@ionic/react';
 
-export const BackButtonExample: React.FunctionComponent = () => (
+export const BackButtonExample: React.FC = () => (
   <IonContent>
     {/*-- Default back button --*/}
     <IonHeader>

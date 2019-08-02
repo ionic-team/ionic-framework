@@ -8,7 +8,7 @@ type Item = {
 };
 const items: Item[] = [{ src: 'http://placekitten.com/g/200/300', text: 'a picture of a cat' }];
 
-export const ImgExample: React.FunctionComponent = () => (
+export const ImgExample: React.FC = () => (
   <IonContent>
     <IonList>
       {items.map((image, i) => (

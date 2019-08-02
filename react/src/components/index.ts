@@ -1,7 +1,9 @@
 
 import { defineCustomElements } from '@ionic/core/loader';
+import { addIcons } from 'ionicons';
+import { arrowBack, arrowDown, arrowForward, close, closeCircle, menu, reorder, search } from 'ionicons/icons';
 export { AlertButton, AlertInput } from '@ionic/core';
-export { IonApp } from './IonApp'
+export { IonApp } from './IonApp';
 export * from './proxies';
 
 // createControllerComponent
@@ -19,17 +21,6 @@ export { IonPage } from './IonPage';
 export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
 export { IonBackButton } from './navigation/IonBackButton';
-
-
-// Ionic Context
-export { IonicContext } from './utils/IonicContext';
-export { useIonicConfig } from './utils/utilHooks';
-
-// Icons
-import { addIcons } from 'ionicons';
-import { close, reorder, menu, arrowDown, arrowForward, arrowBack, search, closeCircle } from 'ionicons/icons';
-
-defineCustomElements(window);
 
 // Icons that are used by internal components
 addIcons({
@@ -50,3 +41,7 @@ addIcons({
   'ios-close-circle': closeCircle.ios,
   'md-close-circle': closeCircle.md,
 });
+
+// TODO: defineCustomElements() is asyncronous
+// We need to use the promise
+defineCustomElements(window);

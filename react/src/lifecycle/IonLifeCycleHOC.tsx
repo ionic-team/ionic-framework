@@ -1,5 +1,6 @@
 import React from 'react';
-import { IonLifeCycleContext } from '@ionic/react-core';
+
+import { IonLifeCycleContext } from '../Contexts/IonLifeCycleContext';
 
 export const withIonLifeCycle = (WrappedComponent: React.ComponentType<any>) => {
   return class IonLifeCycle extends React.Component<any, any> {
@@ -43,13 +44,10 @@ export const withIonLifeCycle = (WrappedComponent: React.ComponentType<any>) => 
             this.context = context;
             return (
               <WrappedComponent ref={this.componentRef} {...this.props} />
-            )
-          }
-          }
+            );
+          }}
         </IonLifeCycleContext.Consumer>
       );
     }
-  }
+  };
 };
-
-

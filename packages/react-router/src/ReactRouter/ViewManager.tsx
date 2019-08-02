@@ -68,5 +68,8 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
       </ion-router-outlet>
     );
   }
+
+  static get contextType() {
+    return RouteManagerContext;
+  }
 }
-ViewManager.contextType = RouteManagerContext;

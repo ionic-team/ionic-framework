@@ -14,7 +14,7 @@ import {
   IonContent
 } from '@ionic/react';
 
-export const ToolbarExample: React.FunctionComponent = () => (
+export const ToolbarExample: React.FC = () => (
   <IonButton>
     <IonToolbar>
       <IonTitle>Title Only</IonTitle>

@@ -1,13 +1,13 @@
 import React from 'react';
-import { NavContext } from '@ionic/react-core'
+
+import { NavContext } from '../../Contexts/NavContext';
 import { IonRouterOutlet } from '../proxies';
+
 import { IonTabBar } from './IonTabBar';
 
-type Props = {
+interface Props {
   children: React.ReactNode;
 }
-
-type State = {}
 
 const hostStyles: React.CSSProperties = {
   display: 'flex',
@@ -28,17 +28,17 @@ const tabsInner: React.CSSProperties = {
   contain: 'layout size style'
 };
 
-export class IonTabs extends React.Component<Props, State> {
+export const IonTabs = class extends React.Component<Props> {
   context!: React.ContextType<typeof NavContext>;
-  routerOutletRef: React.RefObject<HTMLIonRouterOutletElement> = React.createRef();
+  routerOutletRef: React.Ref<HTMLIonRouterOutletElement> = React.createRef();
 
   constructor(props: Props) {
     super(props);
   }
 
   render() {
-    let outlet: React.ReactElement<{}>;
-    let tabBar: React.ReactElement<{ slot: 'bottom' | 'top' }>;
+    let outlet: React.ReactElement<{}> | undefined;
+    let tabBar: React.ReactElement<{ slot: 'bottom' | 'top' }> | undefined;
 
     React.Children.forEach(this.props.children, (child: any) => {
       if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
@@ -52,8 +52,12 @@ export class IonTabs extends React.Component<Props, State> {
       }
     });
 
-    if(!outlet) {
+    if (!outlet) {
       throw new Error('IonTabs must contain an IonRouterOutlet');
+    }
+    if (!tabBar) {
+      // TODO, this is not required
+      throw new Error('IonTabs needs a IonTabBar');
     }
 
     const NavManager = this.context.getViewManager();
@@ -74,5 +78,12 @@ export class IonTabs extends React.Component<Props, State> {
       </div>
     );
   }
-}
-IonTabs.contextType = NavContext;
+
+  static get displayName() {
+    return 'IonTabs';
+  }
+
+  static get contextType() {
+    return NavContext;
+  }
+};

@@ -1,22 +1,23 @@
 import { useContext } from 'react';
-import { IonLifeCycleContext } from '@ionic/react-core';
 
-export const useIonViewWillEnter = (callback: Function) => {
+import { IonLifeCycleContext } from '../Contexts/IonLifeCycleContext';
+
+export const useIonViewWillEnter = (callback: () => void) => {
   const value = useContext(IonLifeCycleContext);
   value.onIonViewWillEnter(callback);
-}
+};
 
-export const useIonViewDidEnter = (callback: Function) => {
+export const useIonViewDidEnter = (callback: () => void) => {
   const value = useContext(IonLifeCycleContext);
   value.onIonViewDidEnter(callback);
-}
+};
 
-export const useIonViewWillLeave = (callback: Function) => {
+export const useIonViewWillLeave = (callback: () => void) => {
   const value = useContext(IonLifeCycleContext);
   value.onIonViewWillLeave(callback);
-}
+};
 
-export const useIonViewDidLeave = (callback: Function) => {
+export const useIonViewDidLeave = (callback: () => void) => {
   const value = useContext(IonLifeCycleContext);
   value.onIonViewDidLeave(callback);
-}
+};

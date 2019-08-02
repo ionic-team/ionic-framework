@@ -1,3 +1,4 @@
-export * from './components';
-export * from './types';
 export * from './lifecycle';
+export * from './contexts/NavContext';
+export * from './contexts/IonLifeCycleContext';
+export * from './components';

@@ -9,22 +9,11 @@ export default {
     },
     {
       file: 'dist/index.js',
-      format: 'commonjs'
+      format: 'commonjs',
+      preferConst: true
     }
   ],
-  external: [
-    '@ionic/core',
-    '@ionic/core/loader',
-    '@ionic/react-core',
-    'ionicons',
-    'ionicons/icons',
-    'react',
-    'tslib',
-    'react-dom',
-    'react-router',
-    'react-router-dom',
-    'react-testing-library',
-  ],
+  external: (id) => !/^(\.|\/)/.test(id),
   plugins: [
     resolve()
   ]

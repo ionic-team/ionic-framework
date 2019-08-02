@@ -1,26 +1,28 @@
-import React, { useContext } from 'react';
-import { IonTabBarInner } from '../inner-proxies';
 import { JSX as LocalJSX } from '@ionic/core';
+import React, { useContext } from 'react';
+
+import { NavContext } from '../../Contexts/NavContext';
+import { IonTabBarInner } from '../inner-proxies';
 import { IonTabButton } from '../proxies';
-import { NavContext } from '@ionic/react-core'
 
 type Props = LocalJSX.IonTabBar & {
+  ref?: React.RefObject<HTMLIonTabBarElement>;
   navigate: (path: string) => void;
   currentPath: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+};
+
+interface Tab {
+  originalHref: string;
+  currentHref: string;
 }
 
-type Tab = {
-  originalHref: string,
-  currentHref: string
+interface State {
+  activeTab: string | undefined;
+  tabs: { [key: string]: Tab };
 }
 
-type State = {
-  activeTab: string | null,
-  tabs: { [key: string]: Tab }
-}
-
-class IonTabBarUnwrapped extends React.Component<Props, State> {
+const IonTabBarUnwrapped = class extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -37,19 +39,19 @@ class IonTabBarUnwrapped extends React.Component<Props, State> {
     });
 
     this.state = {
-      activeTab: null,
+      activeTab: undefined,
       tabs: tabActiveUrls
-    }
+    };
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {
     const activeTab = Object.keys(state.tabs)
       .find(key => {
         const href = state.tabs[key].originalHref;
-        return props.currentPath.startsWith(href)
+        return props.currentPath.startsWith(href);
       });
 
-    if (!activeTab || (activeTab === state.activeTab && state.tabs[activeTab].currentHref === props.currentPath)) {
+    if (activeTab === undefined || (activeTab === state.activeTab && state.tabs[activeTab].currentHref === props.currentPath)) {
       return null;
     }
 
@@ -62,20 +64,19 @@ class IonTabBarUnwrapped extends React.Component<Props, State> {
           currentHref: props.currentPath
         }
       }
-    }
+    };
   }
 
-
-  onTabButtonClick = (e: CustomEvent<{ href: string, selected: boolean, tab: string }>) => {
+  private onTabButtonClick = (e: CustomEvent<{ href: string, selected: boolean, tab: string }>) => {
     const targetUrl = (this.state.activeTab === e.detail.tab) ?
       this.state.tabs[e.detail.tab].originalHref :
       this.state.tabs[e.detail.tab].currentHref;
     this.props.navigate(targetUrl);
   }
 
-  renderChild = (activeTab: string) => (child: React.ReactElement<LocalJSX.IonTabButton & { onIonTabButtonClick: (e: CustomEvent) => void }>) => {
-    if (child != null && typeof child === 'object' && child.props && child.type === IonTabButton) {
-      const href = (child.props.tab === activeTab) ? this.props.currentPath : (this.state.tabs[child.props.tab].currentHref);
+  private renderChild = (activeTab: string | null | undefined) => (child: (React.ReactElement<LocalJSX.IonTabButton & { onIonTabButtonClick: (e: CustomEvent) => void }>) | null | undefined) => {
+    if (child != null && child.props && child.type === IonTabButton) {
+      const href = (child.props.tab === activeTab) ? this.props.currentPath : (this.state.tabs[child.props.tab!].currentHref);
 
       return React.cloneElement(child, {
         href,
@@ -88,14 +89,13 @@ class IonTabBarUnwrapped extends React.Component<Props, State> {
   render() {
     return (
       <IonTabBarInner {...this.props} selectedTab={this.state.activeTab}>
-        {React.Children.map(this.props.children, this.renderChild(this.state.activeTab))}
+        {React.Children.map(this.props.children as any, this.renderChild(this.state.activeTab))}
       </IonTabBarInner>
     );
   }
-}
+};
 
-
-export const IonTabBar: React.FC<LocalJSX.IonTabBar> = (props) => {
+export const IonTabBar: React.FC<LocalJSX.IonTabBar> = props => {
   const context = useContext(NavContext);
   return (
     <IonTabBarUnwrapped
@@ -103,8 +103,9 @@ export const IonTabBar: React.FC<LocalJSX.IonTabBar> = (props) => {
       navigate={(path: string) => {
         context.navigate(path);
       }}
-      currentPath={context.currentPath}>
+      currentPath={context.currentPath}
+    >
       {props.children}
     </IonTabBarUnwrapped>
-  )
-}
+  );
+};
