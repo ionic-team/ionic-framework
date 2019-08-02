@@ -83,14 +83,14 @@ export const createKeyframeStylesheet = (name: string, keyframeString: string, e
     return existingStylesheet;
   }
 */
-
-  const stylesheet = document.createElement('style');
-  stylesheet.id = name;
-  stylesheet.setAttribute('ion-keyframes', '');
-  stylesheet.appendChild(document.createTextNode(keyframeString));
-
+  const doc = (element.ownerDocument || document);
+  const stylesheet = doc.createElement('style');
   const rootNode = (element.getRootNode() as any);
   const styleContainer = (rootNode.head || rootNode);
+
+  stylesheet.id = name;
+  stylesheet.setAttribute('ion-keyframes', '');
+  stylesheet.appendChild(doc.createTextNode(keyframeString));
 
   styleContainer.appendChild(stylesheet);
 

@@ -4,16 +4,6 @@ import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyfra
 let counter = 0;
 
 export const createAnimation = () => {
-  const elements: HTMLElement[] = [];
-  const childAnimations: Animation[] = [];
-  const _beforeAddReadFunctions: any[] = [];
-  const _beforeAddWriteFunctions: any[] = [];
-  const _afterAddReadFunctions: any[] = [];
-  const _afterAddWriteFunctions: any[] = [];
-  const webAnimations: any[] = [];
-  const onFinishCallbacks: any[] = [];
-  const supportsWebAnimations = !!(window as any).Animation;
-  const _name = `ion-animation-${counter++}`;
   let _delay: number | undefined;
   let _duration: number | undefined;
   let _easing: string | undefined;
@@ -21,11 +11,10 @@ export const createAnimation = () => {
   let _fill: AnimationFill | undefined;
   let _direction: AnimationDirection | undefined;
   let _keyframes: any[] = [];
-  let initialized = false;
-  let stylesheets: HTMLElement[] = [];
-  let parentAnimation: Animation | undefined;
   let beforeAddClasses: string[] = [];
   let beforeRemoveClasses: string[] = [];
+  let initialized = false;
+  let parentAnimation: Animation | undefined;
   let beforeStylesValue: { [property: string]: any } = {};
   let afterAddClasses: string[] = [];
   let afterRemoveClasses: string[] = [];
@@ -37,6 +26,18 @@ export const createAnimation = () => {
   let willComplete = true;
   let shouldCalculateNumAnimations = true;
   let ani: Animation;
+
+  const elements: HTMLElement[] = [];
+  const childAnimations: Animation[] = [];
+  const stylesheets: HTMLElement[] = [];
+  const _beforeAddReadFunctions: any[] = [];
+  const _beforeAddWriteFunctions: any[] = [];
+  const _afterAddReadFunctions: any[] = [];
+  const _afterAddWriteFunctions: any[] = [];
+  const webAnimations: any[] = [];
+  const onFinishCallbacks: any[] = [];
+  const supportsWebAnimations = !!(window as any).Animation;
+  const _name = `ion-animation-${counter++}`;
 
   /**
    * Returns the raw Web Animations object
@@ -124,7 +125,7 @@ export const createAnimation = () => {
       stylesheet.parentNode!.removeChild(stylesheet);
     });
 
-    stylesheets = [];
+    stylesheets.length = 0;
   };
 
   /**
