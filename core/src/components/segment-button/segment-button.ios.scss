@@ -10,11 +10,24 @@
   --border-style: solid;
   --transition: #{$segment-button-ios-transition};
 
+  font-weight: 450;
+  margin: 2px;
+  min-width: 45px;
+  padding: 0 13px;
+
   min-height: #{$segment-button-ios-height};
 
   font-size: #{$segment-button-ios-font-size};
 
   line-height: #{$segment-button-ios-line-height};
+}
+
+
+// Segment Button: Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled) {
+  opacity: $segment-button-ios-opacity-disabled;
 }
 
 
@@ -69,7 +82,13 @@
 // Segment: Checked & Activated
 // --------------------------------------------------
 
-:host(.segment-button-checked.activated) {
-  background: var(--background-checked);
-  color: var(--color-checked);
+:host(.segment-button-checked) {
+  font-weight: 500;
+
+  box-shadow: 0 0 5px rgba(0,0,0,0.16);
 }
+
+// :host(.segment-button-checked.activated) {
+//   background: var(--background-checked);
+//   color: var(--color-checked);
+// }
