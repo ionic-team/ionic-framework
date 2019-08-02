@@ -243,7 +243,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
             <div class="toast-button-inner">
               {b.icon &&
                 <ion-icon
-                  name={b.icon}
+                  icon={b.icon}
                   slot={b.text === undefined ? 'icon-only' : undefined}
                   class="toast-icon"
                 />}
