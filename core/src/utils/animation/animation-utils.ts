@@ -1,3 +1,12 @@
+
+export const setStyleProperty = (element: HTMLElement, propertyName: string, value: string | null) => {
+  element.style.setProperty(propertyName, value);
+};
+
+export const removeStyleProperty = (element: HTMLElement, propertyName: string) => {
+  element.style.removeProperty(propertyName);
+};
+
 export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
   let unRegTrans: (() => void) | undefined;
   const opts: any = { passive: true };
@@ -28,12 +37,8 @@ export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionE
   return unregister;
 };
 
-export const generateKeyframeString = (name: string | undefined, keyframes: any[] = []): string => {
-  if (name === undefined) { console.warn('A name is required to generate keyframes'); }
-
-  const keyframeString = [`@keyframes ${name} {`];
-
-  keyframes.forEach(keyframe => {
+export const generateKeyframeRules = (keyframes: any[] = []) => {
+  return keyframes.map(keyframe => {
     const offset = keyframe.offset;
 
     const frameString = [];
@@ -43,54 +48,42 @@ export const generateKeyframeString = (name: string | undefined, keyframes: any[
       }
     }
 
-    keyframeString.push(`${offset * 100}% { ${frameString.join(' ')} }`);
-  });
-
-  keyframeString.push('}');
-
-  return keyframeString.join(' ');
+    return `${offset * 100}% { ${frameString.join(' ')} }`;
+  }).join(' ');
 };
 
-/*const getExistingStylesheet = (keyframeString: string, element: HTMLElement): HTMLElement | undefined => {
-  const rootNode = (element.getRootNode() as any);
-  const styleContainer = (rootNode.head || rootNode);
+const keyframeIds: string[] = [];
 
-  const allStylesheets = styleContainer.querySelectorAll('style[ion-keyframes]');
-
-  /**
-   * If animations have the same keyframes, no point in
-   * creating a new stylesheet. Just reuse the same one
-  /*
-  for (const stylesheet of allStylesheets) {
-    if (stylesheet != null && stylesheet.innerText != null) {
-      const textToCompare = stylesheet.innerText.split(/{(.+)/)[1];
-      const newText = keyframeString.split(/{(.+)/)[1];
-
-      if (textToCompare === newText) {
-        return stylesheet;
-      }
-    }
+export const generateKeyframeName = (keyframeRules: string) => {
+  let index = keyframeIds.indexOf(keyframeRules);
+  if (index < 0) {
+    index = (keyframeIds.push(keyframeRules) - 1);
   }
+  return `ion-animation-${index}`;
+};
 
-  return;
-};*/
+export const generateKeyframeString = (keyframeName: string | undefined, keyframeRules: string) => {
+  if (keyframeName === undefined) { console.warn('A name is required to generate keyframes'); }
 
-export const createKeyframeStylesheet = (name: string, keyframeString: string, element: HTMLElement): HTMLElement => {
-/*
-  TODO: Disabled for now. This is causing an incomplete swipe to go back to never resolve.
-  const existingStylesheet = getExistingStylesheet(keyframeString, element);
+  return `@keyframes ${keyframeName} { ${keyframeRules} }`;
+};
+
+export const getStyleContainer = (element: HTMLElement) => {
+  const rootNode = (element.getRootNode() as any);
+  return (rootNode.head || rootNode);
+};
+
+export const createKeyframeStylesheet = (keyframeName: string, keyframeRules: string, element: HTMLElement): HTMLElement => {
+  const styleContainer = getStyleContainer(element);
+
+  const existingStylesheet = styleContainer.querySelector('#' + keyframeName);
   if (existingStylesheet) {
     return existingStylesheet;
   }
-*/
-  const doc = (element.ownerDocument || document);
-  const stylesheet = doc.createElement('style');
-  const rootNode = (element.getRootNode() as any);
-  const styleContainer = (rootNode.head || rootNode);
 
-  stylesheet.id = name;
-  stylesheet.setAttribute('ion-keyframes', '');
-  stylesheet.appendChild(doc.createTextNode(keyframeString));
+  const stylesheet = (element.ownerDocument || document).createElement('style');
+  stylesheet.id = keyframeName;
+  stylesheet.innerHTML = generateKeyframeString(keyframeName, keyframeRules);
 
   styleContainer.appendChild(stylesheet);
 

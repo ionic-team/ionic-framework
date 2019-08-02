@@ -1,7 +1,6 @@
 import { Animation, AnimationDirection, AnimationFill } from './animation-interface';
-import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeString } from './animation-utils';
+import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
-let counter = 0;
 
 export const createAnimation = () => {
   let _delay: number | undefined;
@@ -25,6 +24,7 @@ export const createAnimation = () => {
   let shouldForceReverseDirection = false;
   let willComplete = true;
   let shouldCalculateNumAnimations = true;
+  let keyframeName: string;
   let ani: Animation;
 
   const elements: HTMLElement[] = [];
@@ -36,8 +36,7 @@ export const createAnimation = () => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const onFinishCallbacks: any[] = [];
-  const supportsWebAnimations = !!(window as any).Animation;
-  const _name = `ion-animation-${counter++}`;
+  const supportsWebAnimations = (typeof (Animation as any) === 'function');
 
   /**
    * Returns the raw Web Animations object
@@ -104,14 +103,14 @@ export const createAnimation = () => {
       webAnimations.length = 0;
     } else {
       elements.forEach(element => {
-        element.style.removeProperty('animation-name');
-        element.style.removeProperty('animation-duration');
-        element.style.removeProperty('animation-timing-function');
-        element.style.removeProperty('animation-iteration-count');
-        element.style.removeProperty('animation-delay');
-        element.style.removeProperty('animation-play-state');
-        element.style.removeProperty('animation-fill-mode');
-        element.style.removeProperty('animation-direction');
+        removeStyleProperty(element, 'animation-name');
+        removeStyleProperty(element, 'animation-duration');
+        removeStyleProperty(element, 'animation-timing-function');
+        removeStyleProperty(element, 'animation-iteration-count');
+        removeStyleProperty(element, 'animation-delay');
+        removeStyleProperty(element, 'animation-play-state');
+        removeStyleProperty(element, 'animation-fill-mode');
+        removeStyleProperty(element, 'animation-direction');
       });
     }
   };
@@ -479,7 +478,7 @@ export const createAnimation = () => {
 
       for (const property in styles) {
         if (styles.hasOwnProperty(property)) {
-          el.style.setProperty(property, styles[property]);
+          setStyleProperty(el, property, styles[property]);
         }
       }
     });
@@ -528,7 +527,7 @@ export const createAnimation = () => {
 
       for (const property in styles) {
         if (styles.hasOwnProperty(property)) {
-          el.style.setProperty(property, styles[property]);
+          setStyleProperty(el, property, styles[property]);
         }
       }
     });
@@ -565,16 +564,14 @@ export const createAnimation = () => {
     }
   };
 
-  const setStyleProperty = (element: HTMLElement, propertyName: string, value: string | null) => {
-    element.style.setProperty(propertyName, value);
-  };
-
   const initializeCSSAnimation = () => {
+    cleanUpStyleSheets();
 
     elements.forEach(element => {
-      if (getKeyframes().length > 0) {
-
-        const stylesheet = createKeyframeStylesheet(_name, generateKeyframeString(_name, getKeyframes()), element);
+      if (_keyframes.length > 0) {
+        const keyframeRules = generateKeyframeRules(_keyframes);
+        keyframeName = generateKeyframeName(keyframeRules);
+        const stylesheet = createKeyframeStylesheet(keyframeName, keyframeRules, element);
         stylesheets.push(stylesheet);
 
         setStyleProperty(element, 'animation-name', stylesheet.id || null);
@@ -584,10 +581,10 @@ export const createAnimation = () => {
         setStyleProperty(element, 'animation-fill-mode', getFill() || null);
         setStyleProperty(element, 'animation-direction', getDirection() || null);
 
-        let iterationsCount = null;
-        if (getIterations() !== undefined) {
-          iterationsCount = (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString();
-        }
+        const iterationsCount =
+          (getIterations() !== undefined) ?
+          (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString()
+          : null;
 
         setStyleProperty(element, 'animation-iteration-count', iterationsCount);
         setStyleProperty(element, 'animation-play-state', 'paused');
@@ -603,7 +600,7 @@ export const createAnimation = () => {
 
   const initializeWebAnimation = () => {
     elements.forEach(element => {
-      const animation = element.animate(getKeyframes(), {
+      const animation = element.animate(_keyframes, {
         delay: getDelay(),
         duration: getDuration(),
         easing: getEasing(),
@@ -628,7 +625,7 @@ export const createAnimation = () => {
   const initializeAnimation = () => {
     beforeAnimation();
 
-    if (getKeyframes().length > 0) {
+    if (_keyframes.length > 0) {
       if (supportsWebAnimations) {
         initializeWebAnimation();
       } else {
@@ -656,7 +653,7 @@ export const createAnimation = () => {
         const animationDuration = `-${getDuration()! * step}ms`;
 
         elements.forEach(element => {
-          if (getKeyframes().length > 0) {
+          if (_keyframes.length > 0) {
             setStyleProperty(element, 'animation-delay', animationDuration);
             setStyleProperty(element, 'animation-play-state', 'paused');
           }
@@ -682,7 +679,7 @@ export const createAnimation = () => {
 
   const updateCSSAnimation = () => {
     elements.forEach(element => {
-      setStyleProperty(element, 'animation-name', _name || null);
+      setStyleProperty(element, 'animation-name', keyframeName || null);
       setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
       setStyleProperty(element, 'animation-timing-function', getEasing() || null);
       setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
@@ -825,13 +822,13 @@ export const createAnimation = () => {
       });
     } else {
       elements.forEach(element => {
-        if (getKeyframes().length > 0) {
+        if (_keyframes.length > 0) {
           setStyleProperty(element, 'animation-play-state', 'running');
         }
       });
     }
 
-    if (getKeyframes().length === 0 || elements.length === 0) {
+    if (_keyframes.length === 0 || elements.length === 0) {
       animationFinish();
     }
 
@@ -856,8 +853,7 @@ export const createAnimation = () => {
   };
 
   const from = (property: string, value: any) => {
-    const keyframeValues = getKeyframes();
-    const firstFrame = keyframeValues[0];
+    const firstFrame = _keyframes[0];
 
     if (firstFrame != null && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
       firstFrame[property] = value;
@@ -877,9 +873,7 @@ export const createAnimation = () => {
   };
 
   const to = (property: string, value: any) => {
-
-    const keyframeValues = getKeyframes();
-    const lastFrame = keyframeValues[keyframeValues.length - 1];
+    const lastFrame = _keyframes[_keyframes.length - 1];
 
     if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
         lastFrame[property] = value;
