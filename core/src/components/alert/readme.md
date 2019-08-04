@@ -136,6 +136,7 @@ export class AlertExample {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
+          id: 'cancel-id',
           handler: () => {
             console.log('Confirm Cancel');
           }
