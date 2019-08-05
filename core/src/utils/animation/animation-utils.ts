@@ -62,12 +62,6 @@ export const generateKeyframeName = (keyframeRules: string) => {
   return `ion-animation-${index}`;
 };
 
-export const generateKeyframeString = (keyframeName: string | undefined, keyframeRules: string) => {
-  if (keyframeName === undefined) { console.warn('A name is required to generate keyframes'); }
-
-  return `@keyframes ${keyframeName} { ${keyframeRules} }`;
-};
-
 export const getStyleContainer = (element: HTMLElement) => {
   const rootNode = (element.getRootNode() as any);
   return (rootNode.head || rootNode);
@@ -83,7 +77,7 @@ export const createKeyframeStylesheet = (keyframeName: string, keyframeRules: st
 
   const stylesheet = (element.ownerDocument || document).createElement('style');
   stylesheet.id = keyframeName;
-  stylesheet.innerHTML = generateKeyframeString(keyframeName, keyframeRules);
+  stylesheet.innerHTML = `@keyframes ${keyframeName} { ${keyframeRules} }`;
 
   styleContainer.appendChild(stylesheet);
 
