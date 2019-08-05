@@ -4,6 +4,9 @@ import React from 'react';
 import { IonAppInner } from './inner-proxies';
 
 interface IonAppProps {
+  /**
+   * TODO
+   */
   initialConfig?: IonicConfig;
 }
 

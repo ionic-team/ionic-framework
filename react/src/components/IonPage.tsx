@@ -22,4 +22,4 @@ const IonPageInternal: React.FC<InternalProps> = ({ children, forwardedRef, clas
   </div>
 );
 
-export const IonPage = createForwardRef<ExternalProps, HTMLDivElement>(IonPageInternal, 'IonPage');
+export const IonPage = /*@__PURE__*/createForwardRef<ExternalProps, HTMLDivElement>(IonPageInternal, 'IonPage');
