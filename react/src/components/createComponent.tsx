@@ -1,9 +1,8 @@
 import { RouterDirection } from '@ionic/core';
 import React from 'react';
 import ReactDom from 'react-dom';
-
 import { NavContext } from '../contexts/NavContext';
-
+import { ReactProps } from './ReactProps';
 import { attachEventProps, createForwardRef, dashToPascalCase } from './utils';
 
 interface IonicReactInternalProps<ElementType> {
@@ -90,5 +89,5 @@ export const createReactComponent = <PropType, ElementType> (
       return NavContext;
     }
   };
-  return createForwardRef<PropType, ElementType>(ReactComponent, displayName);
+  return createForwardRef<PropType & ReactProps, ElementType>(ReactComponent, displayName);
 };

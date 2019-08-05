@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { NavContext } from '../../Contexts/NavContext';
+import { NavContext } from '../../contexts/NavContext';
 import { IonRouterOutlet } from '../proxies';
 
 import { IonTabBar } from './IonTabBar';

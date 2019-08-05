@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { IonLifeCycleContext } from '../Contexts/IonLifeCycleContext';
+import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
 
 export const useIonViewWillEnter = (callback: () => void) => {
   const value = useContext(IonLifeCycleContext);

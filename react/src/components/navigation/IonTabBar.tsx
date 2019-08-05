@@ -1,7 +1,7 @@
 import { JSX as LocalJSX } from '@ionic/core';
 import React, { useContext } from 'react';
 
-import { NavContext } from '../../Contexts/NavContext';
+import { NavContext } from '../../contexts/NavContext';
 import { IonTabBarInner } from '../inner-proxies';
 import { IonTabButton } from '../proxies';
 
