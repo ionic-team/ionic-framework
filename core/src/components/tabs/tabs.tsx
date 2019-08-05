@@ -44,9 +44,10 @@ export class Tabs implements NavOutlet {
     if (!this.useRouter) {
       this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
-    const tabs = this.tabs;
-    await this.select(tabs[0]);
-
+    if (!this.useRouter) {
+      const tabs = this.tabs;
+      await this.select(tabs[0]);
+    }
     this.ionNavWillLoad.emit();
   }
 
