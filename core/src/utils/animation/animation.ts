@@ -1,7 +1,6 @@
 import { Animation, AnimationDirection, AnimationFill } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
-
 export const createAnimation = () => {
   let _delay: number | undefined;
   let _duration: number | undefined;
@@ -557,7 +556,6 @@ export const createAnimation = () => {
 
     if (numAnimationsRunning === 0) {
       afterAnimation();
-
       if (parentAnimation) {
         parentAnimation.animationFinish();
       }
@@ -820,16 +818,21 @@ export const createAnimation = () => {
       getWebAnimations().forEach(animation => {
         animation.play();
       });
+
+      if (_keyframes.length === 0 || elements.length === 0) {
+        animationFinish();
+      }
     } else {
       elements.forEach(element => {
         if (_keyframes.length > 0) {
           setStyleProperty(element, 'animation-play-state', 'running');
         }
       });
-    }
 
-    if (_keyframes.length === 0 || elements.length === 0) {
-      animationFinish();
+      const visibleElements = elements.filter(element => element.offsetParent !== null);
+      if (visibleElements.length === 0 || _keyframes.length === 0 || elements.length === 0) {
+        animationFinish();
+      }
     }
 
     return ani;

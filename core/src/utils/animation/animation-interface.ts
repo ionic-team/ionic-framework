@@ -4,7 +4,6 @@ export interface Animation {
   childAnimations: Animation[];
 
   animationFinish(): void;
-
   play(): Animation;
   playAsync(): Promise<Animation>;
   playSync(): Animation;
