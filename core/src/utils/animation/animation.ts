@@ -829,6 +829,12 @@ export const createAnimation = () => {
         }
       });
 
+      /**
+       * CSS Animations will not fire an `animationend` event
+       * for elements with `display: none`. The Web Animations API
+       * accounts for this, but using raw CSS Animations requires
+       * this workaround.
+       */
       const visibleElements = elements.filter(element => element.offsetParent !== null);
       if (visibleElements.length === 0 || _keyframes.length === 0 || elements.length === 0) {
         animationFinish();
