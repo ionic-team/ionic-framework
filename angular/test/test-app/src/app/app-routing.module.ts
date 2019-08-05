@@ -47,7 +47,7 @@ const routes: Routes = [
   },
   {
     path: 'tabs',
-    loadChildren: './tabs/tabs.module#TabsPageModule'
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'nested-outlet',
@@ -66,7 +66,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { initialNavigation: 'enabled' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
