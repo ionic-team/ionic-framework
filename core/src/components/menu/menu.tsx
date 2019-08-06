@@ -319,8 +319,6 @@ export class Menu implements ComponentInterface, MenuI {
       .direction((isReversed) ? 'reverse' : 'normal')
       .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)')
       .update(true);
-      
-      
 
     if (animated) {
       await ani.playAsync();

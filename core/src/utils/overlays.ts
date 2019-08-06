@@ -217,7 +217,7 @@ const overlayAnimation = async (
   /**
    * TODO: Remove AnimationBuilder
    */
-  const hasCompleted = (typeof animationResult === 'boolean') ? animationResult : (animation as any).hasCompleted;
+  const hasCompleted = (typeof animationResult as any === 'boolean') ? animationResult : (animation as any).hasCompleted;
   if (isAnimationBuilder) {
     animation.destroy();
   }

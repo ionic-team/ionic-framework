@@ -677,15 +677,17 @@ export const createAnimation = () => {
     });
   };
 
-  const updateCSSAnimation = (restart: boolean = false) => {
+  const updateCSSAnimation = (restart = false) => {
     elements.forEach(element => {
-            
+
       if (restart) {
+/*
         element.style.setProperty('animation', 'none');
         void element.offsetHeight;
         element.style.removeProperty('animation');
+*/
       }
-      
+
       setStyleProperty(element, 'animation-name', keyframeName || null);
       setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
       setStyleProperty(element, 'animation-timing-function', getEasing() || null);
@@ -730,7 +732,7 @@ export const createAnimation = () => {
     } else {
       updateCSSAnimation();
     }
-    
+
     return ani;
   };
 
