@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, IonicAnimation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
+import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
@@ -16,7 +16,7 @@ import { assert, isEndSide as isEnd } from '../../utils/helpers';
 })
 export class Menu implements ComponentInterface, MenuI {
 
-  private animation?: Animation | IonicAnimation;
+  private animation?: any;
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
@@ -309,16 +309,18 @@ export class Menu implements ComponentInterface, MenuI {
     }
     // Create new animation
     this.animation = await this.menuCtrl!._createAnimation(this.type!, this);
+    this.animation.fill('both');
   }
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const isReversed = !shouldOpen;
 
-    const ani = this.animation!
-      .fill('both')
+    const ani = (this.animation as IonicAnimation)!
       .direction((isReversed) ? 'reverse' : 'normal')
       .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)')
       .update(true);
+      
+      
 
     if (animated) {
       await ani.playAsync();
@@ -365,7 +367,7 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     // the cloned animation should not use an easing curve during seek
-    this.animation
+    (this.animation as IonicAnimation)
       .direction('reverse')
       .progressStart(true);
   }
@@ -501,7 +503,7 @@ export class Menu implements ComponentInterface, MenuI {
     assert(this._isOpen, 'menu cannot be closed');
 
     this.isAnimating = true;
-    const ani = this.animation!.direction('reverse');
+    const ani = (this.animation as IonicAnimation)!.direction('reverse');
     ani.playSync();
     this.afterAnimation(false);
   }

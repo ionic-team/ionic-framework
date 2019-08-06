@@ -926,7 +926,7 @@ describe('NavController', () => {
   const MockView5 = 'mock-view5';
   
   const mockWebAnimation = (el: HTMLElement) => {
-    window.Animation = true;
+    window.Animation = () => {};
     
     el.animate = () => {
       const animation = {

@@ -35,7 +35,7 @@ export const createAnimation = () => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const onFinishCallbacks: any[] = [];
-  const supportsWebAnimations = (typeof (Animation as any) === 'function');
+  const supportsWebAnimations = (typeof (window as any).Animation === 'function');
 
   /**
    * Returns the raw Web Animations object
@@ -677,8 +677,15 @@ export const createAnimation = () => {
     });
   };
 
-  const updateCSSAnimation = () => {
+  const updateCSSAnimation = (restart: boolean = false) => {
     elements.forEach(element => {
+            
+      if (restart) {
+        element.style.setProperty('animation', 'none');
+        void element.offsetHeight;
+        element.style.removeProperty('animation');
+      }
+      
       setStyleProperty(element, 'animation-name', keyframeName || null);
       setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
       setStyleProperty(element, 'animation-timing-function', getEasing() || null);
@@ -704,6 +711,7 @@ export const createAnimation = () => {
       removeStyleProperty(element, 'animation-fill-mode');
       removeStyleProperty(element, 'animation-direction');
       removeStyleProperty(element, 'animation-iteration-countion');
+      removeStyleProperty(element, 'animation-play-state');
     });
   };
 
@@ -722,7 +730,7 @@ export const createAnimation = () => {
     } else {
       updateCSSAnimation();
     }
-
+    
     return ani;
   };
 
@@ -824,6 +832,8 @@ export const createAnimation = () => {
   const play = () => {
     if (!initialized) {
       initializeAnimation();
+    } else {
+      updateCSSAnimation(true);
     }
 
     if (shouldCalculateNumAnimations) {

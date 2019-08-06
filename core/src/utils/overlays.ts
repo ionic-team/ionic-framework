@@ -1,5 +1,8 @@
 import { config } from '../global/config';
-import { ActionSheetOptions, AlertOptions, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicAnimationInterface, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import { ActionSheetOptions, AlertOptions, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicAnimation, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+
+// TODO: Remove when removing AnimationBuilder
+export type IonicAnimationInterface = (baseEl: any, opts: any) => IonicAnimation;
 
 let lastId = 0;
 
@@ -190,11 +193,11 @@ const overlayAnimation = async (
   let animation;
   let isAnimationBuilder = false;
   try {
-    animation = await import('./animation/old-animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
+    animation = await import('./animation/old-animation').then(mod => mod.create(animationBuilder as AnimationBuilder, aniRoot, opts));
 
     isAnimationBuilder = true;
   } catch (err) {
-    animation = animationBuilder(aniRoot, opts).fill('both');
+    animation = (animationBuilder(aniRoot, opts) as IonicAnimation).fill('both');
   }
 
   overlay.animation = animation;
@@ -214,7 +217,7 @@ const overlayAnimation = async (
   /**
    * TODO: Remove AnimationBuilder
    */
-  const hasCompleted = (typeof animationResult === 'boolean') ? animationResult : animation.hasCompleted;
+  const hasCompleted = (typeof animationResult === 'boolean') ? animationResult : (animation as any).hasCompleted;
   if (isAnimationBuilder) {
     animation.destroy();
   }

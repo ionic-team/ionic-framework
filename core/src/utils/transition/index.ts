@@ -1,10 +1,13 @@
 import { writeTask } from '@stencil/core';
 
 import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../../components/nav/constants';
-import { Animation, AnimationBuilder, IonicAnimation, IonicAnimationInterface, NavDirection, NavOptions } from '../../interface';
+import { Animation, AnimationBuilder, IonicAnimation, NavDirection, NavOptions } from '../../interface';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
+
+// TODO: Remove when removing AnimationBuilder
+export type IonicAnimationInterface = (navEl: HTMLElement, opts: TransitionOptions) => IonicAnimation;
 
 export const transition = (opts: TransitionOptions): Promise<TransitionResult> => {
   return new Promise((resolve, reject) => {
