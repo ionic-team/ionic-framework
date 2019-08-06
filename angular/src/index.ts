@@ -14,6 +14,7 @@ export { IonVirtualScroll } from './directives/virtual-scroll/virtual-scroll';
 export { VirtualItem } from './directives/virtual-scroll/virtual-item';
 export { VirtualHeader } from './directives/virtual-scroll/virtual-header';
 export { VirtualFooter } from './directives/virtual-scroll/virtual-footer';
+export { CssUtilsDeprecations } from './directives/css-utils-deprecations';
 export * from './directives/proxies';
 
 // PROVIDERS
