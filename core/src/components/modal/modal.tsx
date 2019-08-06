@@ -202,7 +202,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         onIonModalWillDismiss={this.onLifecycle}
         onIonModalDidDismiss={this.onLifecycle}
       >
-        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>,
+        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>
         <div
           role="dialog"
           class={{
