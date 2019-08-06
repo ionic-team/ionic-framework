@@ -333,7 +333,7 @@ export class Input implements ComponentInterface {
 
   private focusChanged() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.shouldClearOnEdit() && !this.hasFocus && this.hasValue()) {
+    if (!this.hasFocus && this.shouldClearOnEdit() && this.hasValue()) {
       this.didBlurAfterEdit = true;
     }
   }

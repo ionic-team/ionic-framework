@@ -170,7 +170,6 @@ export class Menu implements ComponentInterface, MenuI {
     // register this menu with the app's menu controller
     menuCtrl!._register(this);
 
-    this.updateState();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: document,
@@ -183,10 +182,12 @@ export class Menu implements ComponentInterface, MenuI {
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
+    this.updateState();
   }
 
   async componentDidLoad() {
     this.ionMenuChange.emit({ disabled: this.disabled, open: this._isOpen });
+    this.updateState();
   }
 
   disconnectedCallback() {
