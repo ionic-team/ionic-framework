@@ -28,7 +28,7 @@
     "@angular/platform-server": "~8.2.0",
     "@angular/router": "~8.2.0",
     "@ionic/angular": "^4.7.0",
-    "@ionic/angular-server": "0.0.1",
+    "@ionic/angular-server": "^0.0.2",
     "@nguniversal/express-engine": "~8.1.1",
     "@nguniversal/module-map-ngfactory-loader": "~8.1.1",
     "core-js": "^2.6.2",

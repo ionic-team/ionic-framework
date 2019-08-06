@@ -100,7 +100,7 @@
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
   },
-  "homepage": "https://github.com/ionic-team/ionic#readme",
+  "homepage": "https://ionicframework.com/",
   "jest": {
     "preset": "@stencil/core/testing"
   }
