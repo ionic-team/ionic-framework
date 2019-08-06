@@ -700,7 +700,7 @@ export const createAnimation = () => {
         (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString()
         : null;
 
-      setStyleProperty(element, 'animation-iteration-countion', iterationsCount);
+      setStyleProperty(element, 'animation-iteration-count', iterationsCount);
     });
   };
 
@@ -834,8 +834,6 @@ export const createAnimation = () => {
   const play = () => {
     if (!initialized) {
       initializeAnimation();
-    } else {
-      updateCSSAnimation(true);
     }
 
     if (shouldCalculateNumAnimations) {
