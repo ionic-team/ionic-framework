@@ -547,6 +547,8 @@ export const createAnimation = () => {
     });
 
     shouldCalculateNumAnimations = true;
+
+    removeCSSAnimation();
   };
 
   const animationFinish = () => {
