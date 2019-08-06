@@ -43,7 +43,7 @@
 
   transition: background-color $toggle-ios-transition-duration;
 
-  background-color: $toggle-ios-background-color-off;
+  background: var(--background);
 
   overflow: hidden;
   pointer-events: none;
