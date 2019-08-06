@@ -1,3 +1,5 @@
+import { TransitionOptions } from '../../interface';
+
 export interface Animation {
   parentAnimation: Animation | undefined;
   elements: HTMLElement[];
@@ -59,3 +61,6 @@ export interface Animation {
 
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationFill = 'auto' | 'none' | 'forwards' | 'backwards' | 'both';
+
+// TODO: Remove when removing AnimationBuilder
+export type IonicAnimationInterface = (navEl: HTMLElement, opts: TransitionOptions) => Animation;
