@@ -16,18 +16,22 @@ export class ValueAccessor implements ControlValueAccessor {
     setIonicClasses(this.el);
   }
 
-  handleChangeEvent(value: any) {
-    if (value !== this.lastValue) {
-      this.lastValue = value;
-      this.onChange(value);
+  handleChangeEvent(el: HTMLElement, value: any) {
+    if (el === this.el.nativeElement) {
+      if (value !== this.lastValue) {
+        this.lastValue = value;
+        this.onChange(value);
+      }
+      setIonicClasses(this.el);
     }
-    setIonicClasses(this.el);
   }
 
-  @HostListener('ionBlur')
-  _handleBlurEvent() {
-    this.onTouched();
-    setIonicClasses(this.el);
+  @HostListener('ionBlur', ['$event.target'])
+  _handleBlurEvent(el: any) {
+    if (el === this.el.nativeElement) {
+      this.onTouched();
+      setIonicClasses(this.el);
+    }
   }
 
   registerOnChange(fn: (value: any) => void) {
