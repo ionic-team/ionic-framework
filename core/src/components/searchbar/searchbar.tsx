@@ -83,9 +83,9 @@ export class Searchbar implements ComponentInterface {
 
   /**
    * A hint to the browser for which keyboard to display.
-   * This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+   * Possible values are: `"none"` | `"text"` | `"tel"` | `"url"` | `"email"` | `"numeric"` | `"decimal"` | `"search"`.
    */
-  @Prop() inputmode = 'search';
+  @Prop() inputmode: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search' = 'search';
 
   /**
    * Set the input's placeholder.
