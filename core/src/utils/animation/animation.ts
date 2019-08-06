@@ -26,6 +26,8 @@ export const createAnimation = () => {
   let keyframeName: string;
   let ani: Animation;
 
+  let cssAnimationsTimerFallback: any;
+
   const elements: HTMLElement[] = [];
   const childAnimations: Animation[] = [];
   const stylesheets: HTMLElement[] = [];
@@ -36,6 +38,7 @@ export const createAnimation = () => {
   const webAnimations: any[] = [];
   const onFinishCallbacks: any[] = [];
   const supportsWebAnimations = (typeof (window as any).Animation === 'function');
+  const ANIMATION_END_FALLBACK_PADDING_MS = 400;
 
   /**
    * Returns the raw Web Animations object
@@ -536,6 +539,7 @@ export const createAnimation = () => {
    * Run all "after" animation hooks.
    */
   const afterAnimation = () => {
+    clearCSSAnimationsTimeout();
     runAfterRead();
     runAfterWrite();
     runAfterStyles();
@@ -547,8 +551,6 @@ export const createAnimation = () => {
     });
 
     shouldCalculateNumAnimations = true;
-
-    removeCSSAnimation();
   };
 
   const animationFinish = () => {
@@ -593,6 +595,7 @@ export const createAnimation = () => {
 
     if (elements.length > 0) {
       animationEnd(elements[0], () => {
+        clearCSSAnimationsTimeout();
         animationFinish();
       });
     }
@@ -679,17 +682,8 @@ export const createAnimation = () => {
     });
   };
 
-  const updateCSSAnimation = (restart = false) => {
+  const updateCSSAnimation = () => {
     elements.forEach(element => {
-
-      if (restart) {
-/*
-        element.style.setProperty('animation', 'none');
-        void element.offsetHeight;
-        element.style.removeProperty('animation');
-*/
-      }
-
       setStyleProperty(element, 'animation-name', keyframeName || null);
       setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
       setStyleProperty(element, 'animation-timing-function', getEasing() || null);
@@ -830,6 +824,57 @@ export const createAnimation = () => {
     return ani;
   };
 
+  const onAnimationEndFallback = () => {
+    cssAnimationsTimerFallback = undefined;
+    animationFinish();
+  };
+
+  const clearCSSAnimationsTimeout = () => {
+    if (cssAnimationsTimerFallback) {
+      clearTimeout(cssAnimationsTimerFallback);
+    }
+  };
+
+  const playCSSAnimations = () => {
+    clearCSSAnimationsTimeout();
+
+    elements.forEach(element => {
+      if (_keyframes.length > 0) {
+        setStyleProperty(element, 'animation-play-state', 'running');
+      }
+    });
+
+    const animationDelay = getDelay() || 0;
+    const animationDuration = getDuration() || 0;
+    const visibleElements = elements.filter(element => element.offsetParent !== null);
+    if (visibleElements.length === 0 || _keyframes.length === 0 || elements.length === 0) {
+      /**
+       * CSS Animations will not fire an `animationend` event
+       * for elements with `display: none`. The Web Animations API
+       * accounts for this, but using raw CSS Animations requires
+       * this workaround.
+       */
+      animationFinish();
+    } else if (_keyframes.length > 0 && elements.length > 0) {
+      /**
+       * This is a catchall in the event that a CSS Animation did not finish.
+       * The Web Animations API has mechanisms in place for preventing this.
+       */
+
+      cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + animationDuration + ANIMATION_END_FALLBACK_PADDING_MS);
+    }
+  };
+
+  const playWebAnimations = () => {
+    getWebAnimations().forEach(animation => {
+      animation.play();
+    });
+
+    if (_keyframes.length === 0 || elements.length === 0) {
+      animationFinish();
+    }
+  };
+
   /**
    * Play the animation
    */
@@ -848,30 +893,9 @@ export const createAnimation = () => {
     });
 
     if (supportsWebAnimations) {
-      getWebAnimations().forEach(animation => {
-        animation.play();
-      });
-
-      if (_keyframes.length === 0 || elements.length === 0) {
-        animationFinish();
-      }
+      playWebAnimations();
     } else {
-      elements.forEach(element => {
-        if (_keyframes.length > 0) {
-          setStyleProperty(element, 'animation-play-state', 'running');
-        }
-      });
-
-      /**
-       * CSS Animations will not fire an `animationend` event
-       * for elements with `display: none`. The Web Animations API
-       * accounts for this, but using raw CSS Animations requires
-       * this workaround.
-       */
-      const visibleElements = elements.filter(element => element.offsetParent !== null);
-      if (visibleElements.length === 0 || _keyframes.length === 0 || elements.length === 0) {
-        animationFinish();
-      }
+      playCSSAnimations();
     }
 
     return ani;
@@ -943,7 +967,6 @@ export const createAnimation = () => {
     parentAnimation,
     elements,
     childAnimations,
-
     animationFinish,
     from,
     to,
