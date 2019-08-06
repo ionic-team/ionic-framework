@@ -87,12 +87,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
 
   /**
-   * If `true`, the close button will be displayed.
+   * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
    */
   @Prop() showCloseButton = false;
 
   /**
-   * Text to display in the close button.
+   * @deprecated Use `buttons` instead. Text to display in the close button.
    */
   @Prop() closeButtonText?: string;
 
@@ -187,8 +187,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
       })
       : [];
 
+    // tslint:disable-next-line: deprecation
     if (this.showCloseButton) {
       buttons.push({
+        // tslint:disable-next-line: deprecation
         text: this.closeButtonText || 'Close',
         handler: () => this.dismiss(undefined, 'cancel')
       });

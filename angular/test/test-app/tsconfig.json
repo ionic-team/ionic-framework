@@ -8,12 +8,12 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noUnusedLocals": false,
-    "module": "esnext",
-    "noUnusedParameters": false,
-    "allowUnreachableCode": false,
-    "target": "es2015",
-    "lib": ["es2017", "dom"],
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ]
   }
 }
