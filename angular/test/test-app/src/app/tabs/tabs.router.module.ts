@@ -39,7 +39,7 @@ const routes: Routes = [
       },
       {
         path: 'lazy',
-        loadChildren: '../tabs-lazy/tabs-lazy.module#TabsLazyModule'
+        loadChildren: () => import('../tabs-lazy/tabs-lazy.module').then(m => m.TabsLazyModule)
       }
     ]
   }
