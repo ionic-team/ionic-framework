@@ -190,14 +190,11 @@ const overlayAnimation = async (
   /**
    * TODO: Remove AnimationBuilder
    */
-  let animation;
-  let isAnimationBuilder = false;
-  try {
-    animation = await import('./animation/old-animation').then(mod => mod.create(animationBuilder as AnimationBuilder, aniRoot, opts));
+  const animation = await import('./animation/old-animation').then(mod => mod.create(animationBuilder as AnimationBuilder, aniRoot, opts));
+  const isAnimationBuilder = (animation as any).fill === undefined;
 
-    isAnimationBuilder = true;
-  } catch (err) {
-    animation = (animationBuilder(aniRoot, opts) as IonicAnimation).fill('both');
+  if (!isAnimationBuilder) {
+    (animation as any).fill('both');
   }
 
   overlay.animation = animation;
