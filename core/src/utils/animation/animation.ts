@@ -647,8 +647,10 @@ export const createAnimation = () => {
           animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration()! * step);
           animation.pause();
         });
+
       } else {
-        const animationDuration = `-${getDuration()! * step}ms`;
+        const animationDelay = getDelay() || 0;
+        const animationDuration = `-${animationDelay + (getDuration()! * step)}ms`;
 
         elements.forEach(element => {
           if (_keyframes.length > 0) {
@@ -693,6 +695,18 @@ export const createAnimation = () => {
     });
   };
 
+  const removeCSSAnimation = () => {
+    elements.forEach(element => {
+      removeStyleProperty(element, 'animation-name');
+      removeStyleProperty(element, 'animation-duration');
+      removeStyleProperty(element, 'animation-timing-function');
+      removeStyleProperty(element, 'animation-delay');
+      removeStyleProperty(element, 'animation-fill-mode');
+      removeStyleProperty(element, 'animation-direction');
+      removeStyleProperty(element, 'animation-iteration-countion');
+    });
+  };
+
   /**
    * Updates any existing animations.
    */
@@ -729,12 +743,19 @@ export const createAnimation = () => {
       animation.progressEnd(shouldComplete, step);
     });
 
+    step = Math.min(Math.max(step, 0), 0.99);
+
     shouldForceLinearEasing = false;
     willComplete = shouldComplete;
 
     if (!shouldComplete) {
+      onFinish(() => {
+        willComplete = true;
+        shouldForceReverseDirection = false;
+        removeCSSAnimation();
+      });
+
       shouldForceReverseDirection = true;
-      onFinish(() => { willComplete = true; shouldForceReverseDirection = false; });
       update();
       progressStep(1 - step);
     }
