@@ -136,7 +136,7 @@
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component()
-  export default class SkeletonTextExample extends Vue {
+  export default class Example extends Vue {
     data: any;
 
     mounted() {

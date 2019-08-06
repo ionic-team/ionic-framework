@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tabs - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
+
+<body onload="selectTab()">
+  <ion-tabs>
+    <ion-tab tab="tab-one">
+      <div class="content-div div-one">
+        <h2>Tab One</h2>
+      </div>
+    </ion-tab>
+
+    <ion-tab tab="tab-two">
+      <div class="content-div div-two">
+        <h2>Tab Two</h2>
+      </div>
+    </ion-tab>
+
+    <ion-tab tab="tab-three">
+      <div class="content-div div-three">
+        <h2>Tab Three</h2>
+      </div>
+    </ion-tab>
+
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="tab-one">
+        <ion-label>Tab One</ion-label>
+        <ion-icon name="star"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab="tab-two">
+        <ion-label>Tab Two</ion-label>
+        <ion-icon name="globe"></ion-icon>
+      </ion-tab-button>
+
+      <ion-tab-button tab="tab-three">
+        <ion-label>Tab Three</ion-label>
+        <ion-icon name="call"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
+  <style>
+    .content-div {
+      height: 100%;
+      padding: 16px;
+      color: white;
+    }
+
+    .div-one {
+      background-color: #775b94;
+    }
+
+    .div-two {
+      background-color: #ac4f8b;
+    }
+
+    .div-three {
+      background-color: #4f6cac;
+    }
+  </style>
+
+  <script>
+    async function selectTab() {
+      const tabs = document.querySelector('ion-tabs');
+      await tabs.componentOnReady();
+      await tabs.select('tab-three');
+    }
+  </script>
+</body>
+
+</html>

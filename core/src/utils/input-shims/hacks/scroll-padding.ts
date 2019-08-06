@@ -1,14 +1,14 @@
 const PADDING_TIMER_KEY = '$ionPaddingTimer';
 
-export function enableScrollPadding(doc: Document, keyboardHeight: number) {
-  console.debug('Input: enableScrollPadding');
+export const enableScrollPadding = (keyboardHeight: number) => {
+  const doc = document;
 
-  function onFocusin(ev: any) {
+  const onFocusin = (ev: any) => {
     setScrollPadding(ev.target, keyboardHeight);
-  }
-  function onFocusout(ev: any) {
+  };
+  const onFocusout = (ev: any) => {
     setScrollPadding(ev.target, 0);
-  }
+  };
 
   doc.addEventListener('focusin', onFocusin);
   doc.addEventListener('focusout', onFocusout);
@@ -17,15 +17,23 @@ export function enableScrollPadding(doc: Document, keyboardHeight: number) {
     doc.removeEventListener('focusin', onFocusin);
     doc.removeEventListener('focusout', onFocusout);
   };
-}
+};
 
-function setScrollPadding(input: HTMLElement, keyboardHeight: number) {
+const setScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
   if (input.tagName !== 'INPUT') {
     return;
   }
   if (input.parentElement && input.parentElement.tagName === 'ION-INPUT') {
     return;
   }
+  if (
+    input.parentElement &&
+    input.parentElement.parentElement &&
+    input.parentElement.parentElement.tagName === 'ION-SEARCHBAR'
+  ) {
+    return;
+  }
+
   const el = input.closest('ion-content');
   if (el === null) {
     return;
@@ -42,4 +50,4 @@ function setScrollPadding(input: HTMLElement, keyboardHeight: number) {
       el.style.setProperty('--keyboard-offset', '0px');
     }, 120);
   }
-}
+};

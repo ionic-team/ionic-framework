@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -274,7 +274,7 @@
         </ion-item>
       </ion-list>
 
-      <div text-center>
+      <div class="ion-text-center">
         <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
           Toggle Disabled
         </ion-button>
@@ -313,13 +313,13 @@
 
       let objectSelectElement = document.getElementById('objectSelectCompareWith');
       objectSelectElement.compareWith = compareWithFn; // 'id';
-      
+
       objectOptions.forEach((option, i) => {
         let selectOption = document.createElement('ion-select-option');
         selectOption.value = option;
         selectOption.textContent = option.first + ' ' + option.last;
         selectOption.selected = (i === 0);
-        
+
         objectSelectElement.appendChild(selectOption)
       });
 
@@ -330,7 +330,7 @@
           last: 'Smith',
         };
       }, 3000);
-      
+
       var pets = document.getElementById('pets');
       pets.value = ['bird', 'dog'];
 

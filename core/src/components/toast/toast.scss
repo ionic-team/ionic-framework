@@ -24,6 +24,9 @@
    * @prop --max-height: Maximum height of the toast
    *
    * @prop --button-color: Color of the button text
+   *
+   * @prop --start: Position from the left if direction is left-to-right, and from the right if direction is right-to-left
+   * @prop --end: Position from the right if direction is left-to-right, and from the left if direction is right-to-left
    */
   --border-width: 0;
   --border-style: none;
@@ -68,6 +71,7 @@
 
 .toast-wrapper {
   @include border-radius(var(--border-radius));
+  @include position-horizontal(var(--start), var(--end));
 
   width: var(--width);
   min-width: var(--min-width);
@@ -95,12 +99,51 @@
   contain: content;
 }
 
-.toast-button {
-  color: var(--button-color);
+.toast-content {
+  display: flex;
+
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
 }
+
 
 .toast-message {
   flex: 1;
 
   white-space: pre-wrap;
+}
+
+.toast-button-group {
+  display: flex;
+}
+
+.toast-button {
+  border: 0;
+
+  outline: none;
+
+  color: var(--button-color);
+
+  z-index: 0;
+}
+
+.toast-icon {
+  font-size: 1.4em;
+}
+
+.toast-button-inner {
+  display: flex;
+
+  align-items: center;
+}
+
+
+// Toast Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  .toast-button:hover {
+    cursor: pointer;
+  }
 }

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import {
-  Platform, Config, ModalController, AlertController, ActionSheetController,
-  PopoverController, ToastController,  Events, PickerController, MenuController,
-  LoadingController, NavController, DomController
+  Platform, ModalController, AlertController, ActionSheetController,
+  PopoverController, ToastController, Events, PickerController, MenuController,
+  LoadingController, NavController, DomController, Config
 } from '@ionic/angular';
 
 @Component({
@@ -14,6 +14,9 @@ export class ProvidersComponent {
   isLoaded = false;
   isReady = false;
   isEvent = false;
+  isResumed = false;
+  isPaused = false;
+  isResized = false;
   isTesting: boolean = undefined;
   isDesktop: boolean = undefined;
   isMobile: boolean = undefined;
@@ -32,7 +35,8 @@ export class ProvidersComponent {
     toastCtrl: ToastController,
     navCtrl: NavController,
     domCtrl: DomController,
-    config: Config
+    config: Config,
+    zone: NgZone
   ) {
     // test all providers load
     if (
@@ -44,15 +48,31 @@ export class ProvidersComponent {
 
     // test platform ready()
     platform.ready().then(() => {
+      NgZone.assertInAngularZone();
       this.isReady = true;
     });
-
+    platform.resume.subscribe(() => {
+      console.log('platform:resume');
+      NgZone.assertInAngularZone();
+      this.isResumed = true;
+    });
+    platform.pause.subscribe(() => {
+      console.log('platform:pause');
+      NgZone.assertInAngularZone();
+      this.isPaused = true;
+    });
+    platform.resize.subscribe(() => {
+      console.log('platform:resize');
+      NgZone.assertInAngularZone();
+      this.isResized = true;
+    });
     this.isDesktop = platform.is('desktop');
     this.isMobile = platform.is('mobile');
 
     // test events
     events.subscribe('topic', () => {
       this.isEvent = true;
+      NgZone.assertInAngularZone();
     });
     events.publish('topic');
 
@@ -60,5 +80,11 @@ export class ProvidersComponent {
     this.isTesting = config.getBoolean('_testing');
     config.set('keyboardHeight', 12345);
     this.keyboardHeight = config.getNumber('keyboardHeight');
+
+    zone.runOutsideAngular(() => {
+      document.dispatchEvent(new CustomEvent('pause'));
+      document.dispatchEvent(new CustomEvent('resume'));
+      window.dispatchEvent(new CustomEvent('resize'));
+    });
   }
 }

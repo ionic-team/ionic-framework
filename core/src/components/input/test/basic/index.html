@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -103,7 +103,7 @@
         </ion-item>
       </ion-list>
 
-      <div text-center>
+      <div class="ion-text-center">
         <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
           Toggle Disabled
         </ion-button>
@@ -118,14 +118,19 @@
         <ion-input clear-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
       </ion-item>
 
+      <ion-item>
+        <ion-label>Clear On Edit</ion-label>
+        <ion-input clear-on-edit value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
+      </ion-item>
+
       <ion-item style="max-width: 250px">
         <ion-input value="Narrow input"></ion-input>
-        <ion-label text-right>Left</ion-label>
+        <ion-label class="ion-text-right">Left</ion-label>
       </ion-item>
 
       <ion-item style="max-width: 250px">
         <ion-label>Right</ion-label>
-        <ion-input text-right value="Narrow input"></ion-input>
+        <ion-input class="ion-text-right" value="Narrow input"></ion-input>
       </ion-item>
 
     </ion-content>

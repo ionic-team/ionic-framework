@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Action Sheet Enter Animation
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const iosEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
   const baseAnimation = new AnimationC();
 
   const backdropAnimation = new AnimationC();
@@ -24,4 +24,4 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): P
     .add(wrapperAnimation);
 
   return Promise.resolve(ani);
-}
+};

@@ -1,43 +1,39 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { cleanScreenshotName, generateE2EUrl } from '../../../utils/test/utils';
+import { generateE2EUrl } from '../../../utils/test/utils';
 
-export async function testFab(
+export const testFab = async (
   type: string,
   selector: string,
-  rtl = false,
-  screenshotName: string = cleanScreenshotName(selector)
-) {
+  rtl = false
+) => {
   try {
     const pageUrl = generateE2EUrl('fab', type, rtl);
-    if (rtl) {
-      screenshotName = `${screenshotName} rtl`;
-    }
 
     const page = await newE2EPage({
       url: pageUrl
     });
 
     const screenshotCompares = [];
-    screenshotCompares.push(await page.compareScreenshot(`${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot());
 
     const fab = await getFabComponent(page, selector);
     await fab.click();
 
-    await page.waitFor(150);
+    await page.waitFor(250);
 
     await ensureFabState(fab, 'active');
 
-    screenshotCompares.push(await page.compareScreenshot(`${screenshotName} open`));
+    screenshotCompares.push(await page.compareScreenshot('open'));
 
     const fabButton = await getFabButton(fab);
     await fabButton.click();
 
-    await page.waitFor(150);
+    await page.waitFor(250);
 
     await ensureFabState(fab, 'inactive');
 
-    screenshotCompares.push(await page.compareScreenshot(`${screenshotName} close`));
+    screenshotCompares.push(await page.compareScreenshot('close'));
 
     for (const screenshotCompare of screenshotCompares) {
       expect(screenshotCompare).toMatchScreenshot();
@@ -45,33 +41,29 @@ export async function testFab(
   } catch (err) {
     throw err;
   }
-}
+};
 
-export async function testDisabledFab(
+export const testDisabledFab = async (
   type: string,
   selector: string,
-  rtl = false,
-  screenshotName: string = cleanScreenshotName(selector)
-) {
+  rtl = false
+) => {
   try {
     const pageUrl = generateE2EUrl('fab', type, rtl);
-    if (rtl) {
-      screenshotName = `${screenshotName} rtl`;
-    }
 
     const page = await newE2EPage({
       url: pageUrl
     });
 
     const screenshotCompares = [];
-    screenshotCompares.push(await page.compareScreenshot(`disabled ${screenshotName}`));
+    screenshotCompares.push(await page.compareScreenshot('disabled'));
 
     const fab = await getFabComponent(page, selector);
     await fab.click();
 
     await ensureFabState(fab, 'inactive');
 
-    screenshotCompares.push(await page.compareScreenshot(`disabled ${screenshotName} attempt open`));
+    screenshotCompares.push(await page.compareScreenshot('disabled, attempt open'));
 
     for (const screenshotCompare of screenshotCompares) {
       expect(screenshotCompare).toMatchScreenshot();
@@ -79,23 +71,23 @@ export async function testDisabledFab(
   } catch (err) {
     throw err;
   }
-}
+};
 
-async function getFabComponent(page: any, selector: string) {
+const getFabComponent = async (page: any, selector: string) => {
   return page.find(selector);
-}
+};
 
-async function getFabButton(fabComponent: any) {
+const getFabButton = async (fabComponent: any) => {
   return fabComponent.find('ion-fab-button');
-}
+};
 
-async function getFabList(fabComponent: any) {
+const getFabList = async (fabComponent: any) => {
   return fabComponent.find('ion-fab-list');
-}
+};
 
-async function ensureFabState(fab: any, state: string) {
+const ensureFabState = async (fab: any, state: string) => {
   const active = (state === 'active') ? true : false;
 
   const fabList = await getFabList(fab);
   expect(fabList.classList.contains('fab-list-active')).toBe(active);
-}
+};

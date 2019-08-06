@@ -1,5 +1,6 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, h } from '@stencil/core';
 
+import { getIonMode } from '../../global/ionic-global';
 import { matchBreakpoint } from '../../utils/media';
 
 const win = window as any;
@@ -12,9 +13,8 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true
 })
 export class Col implements ComponentInterface {
-  @Prop({ context: 'window' }) win!: Window;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonColElement;
 
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
@@ -156,7 +156,7 @@ export class Col implements ComponentInterface {
    */
   @Prop() sizeXl?: string;
 
-  @Listen('window:resize')
+  @Listen('resize', { target: 'window' })
   onResize() {
     this.el.forceUpdate();
   }
@@ -167,7 +167,7 @@ export class Col implements ComponentInterface {
     let matched;
 
     for (const breakpoint of BREAKPOINTS) {
-      const matches = matchBreakpoint(this.win, breakpoint);
+      const matches = matchBreakpoint(breakpoint);
 
       // Grab the value of the property, if it exists and our
       // media query matches we return the value
@@ -244,19 +244,23 @@ export class Col implements ComponentInterface {
     return this.calculatePosition('push', isRTL ? 'right' : 'left');
   }
 
-  hostData() {
-    const isRTL = this.win.document.dir === 'rtl';
-    return {
-      style: {
-        ...this.calculateOffset(isRTL),
-        ...this.calculatePull(isRTL),
-        ...this.calculatePush(isRTL),
-        ...this.calculateSize(),
-      }
-    };
-  }
-
   render() {
-    return <slot></slot>;
+    const isRTL = document.dir === 'rtl';
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true
+        }}
+        style={{
+          ...this.calculateOffset(isRTL),
+          ...this.calculatePull(isRTL),
+          ...this.calculatePush(isRTL),
+          ...this.calculateSize(),
+        }}
+      >
+        <slot></slot>
+      </Host>
+    );
   }
 }

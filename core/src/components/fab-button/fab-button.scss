@@ -4,25 +4,16 @@
 // --------------------------------------------------
 
 :host {
-  --transition: background-color, opacity 100ms linear;
-  --ripple-color: currentColor;
-  --border-radius: #{$fab-border-radius};
-  --border-width: 0;
-  --border-style: none;
-  --border-color: initial;
-  --padding-top: 0;
-  --padding-end: 0;
-  --padding-bottom: 0;
-  --padding-start: 0;
-
   /**
    * @prop --background: Background of the button
-   * @prop --background-activated: Background of the button when activated
-   * @prop --background-focused: Background of the button when focused
+   * @prop --background-activated: Background of the button when pressed
+   * @prop --background-focused: Background of the button when focused with the tab key
+   * @prop --background-hover: Background of the button on hover
    *
    * @prop --color: Text color of the button
-   * @prop --color-activated: Text color of the button when activated
-   * @prop --color-focused: Text color of the button when focused
+   * @prop --color-activated: Text color of the button when pressed
+   * @prop --color-focused: Text color of the button when focused with the tab key
+   * @prop --color-hover: Text color of the button on hover
    *
    * @prop --transition: Transition of the button
    *
@@ -35,11 +26,24 @@
    *
    * @prop --box-shadow: Box shadow of the button
    *
-   * @prop --padding-top: Padding top of the button
-   * @prop --padding-end: Padding end of the button
-   * @prop --padding-bottom: Padding bottom of the button
-   * @prop --padding-start: Padding start of the button
+   * @prop --padding-top: Top padding of the button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
+   * @prop --padding-bottom: Bottom padding of the button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    */
+  --color-hover: #{var(--color)};
+  --background-hover: #{ion-color(primary, tint)};
+  --transition: background-color, opacity 100ms linear;
+  --ripple-color: currentColor;
+  --border-radius: #{$fab-border-radius};
+  --border-width: 0;
+  --border-style: none;
+  --border-color: initial;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+
   @include margin(0);
   display: block;
 
@@ -56,22 +60,6 @@
   font-kerning: none;
 }
 
-
-// FAB with Color
-// --------------------------------------------------
-
-// Default Button with Color
-:host(.ion-color) .button-native {
-  background: #{current-color(base)};
-  color: #{current-color(contrast)};
-}
-
-// Focused/Activated Button with Color
-:host(.ion-color.ion-focused) .button-native,
-:host(.ion-color.activated) .button-native {
-  background: #{current-color(shade)};
-  color: #{current-color(contrast)};
-}
 
 .button-native {
   @include border-radius(var(--border-radius));
@@ -131,31 +119,72 @@
 }
 
 
-// FAB States
+// FAB Button: Color
 // --------------------------------------------------
 
-// Activated / Pressed Button
-:host(.activated) .button-native {
-  background: var(--background-activated);
-  color: var(--color-activated);
+:host(.ion-color) .button-native {
+  background: #{current-color(base)};
+  color: #{current-color(contrast)};
 }
 
-// Focused Button
-:host(.ion-focused) .button-native {
-  background: var(--background-focused);
-  color: var(--color-focused);
-}
 
-// Disabled Button
+// FAB Button: Disabled
+// --------------------------------------------------
+
 :host(.fab-button-disabled) {
+  opacity: .5;
+
   pointer-events: none;
 }
 
 :host(.fab-button-disabled) .button-native {
   cursor: default;
-  opacity: .5;
   pointer-events: none;
 }
+
+
+// FAB Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) .button-native {
+    background: var(--background-hover);
+    color: var(--color-hover);
+  }
+
+  :host(.ion-color:hover) .button-native {
+    background: #{current-color(tint)};
+    color: #{current-color(contrast)};
+  }
+}
+
+// FAB Button: Focused
+// --------------------------------------------------
+
+:host(.ion-focused) .button-native {
+  background: var(--background-focused);
+  color: var(--color-focused);
+}
+
+:host(.ion-color.ion-focused) .button-native {
+  background: #{current-color(shade)};
+}
+
+// FAB Button: Activated
+// --------------------------------------------------
+
+:host(.activated) .button-native {
+  background: var(--background-activated);
+  color: var(--color-activated);
+}
+
+// Focused/Activated Button with Color
+:host(.ion-color.ion-focused) .button-native,
+:host(.ion-color.activated) .button-native {
+  background: #{current-color(shade)};
+  color: #{current-color(contrast)};
+}
+
 
 // FAB Content
 // --------------------------------------------------
@@ -214,4 +243,13 @@
 
 ion-ripple-effect {
   color: var(--ripple-color);
+}
+
+// Translucent FAB button
+// --------------------------------------------------
+
+@supports (backdrop-filter: blur(0)) {
+  :host(.fab-button-translucent) .button-native {
+    backdrop-filter: var(--backdrop-filter);
+  }
 }

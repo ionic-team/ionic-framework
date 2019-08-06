@@ -1,9 +1,14 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
-import { Color, Config, Mode } from '../../interface';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import { Color } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-progress-bar',
   styleUrls: {
@@ -13,13 +18,6 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class ProgressBar implements ComponentInterface {
-
-  @Prop({ context: 'config' }) config!: Config;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The state of the progress bar, based on if the time the process takes is known or not.
@@ -52,38 +50,47 @@ export class ProgressBar implements ComponentInterface {
    */
   @Prop() color?: Color;
 
-  hostData() {
-    const { color, type, reversed, value } = this;
-    const paused = this.config.getBoolean('_testing');
-    return {
-      'role': 'progressbar',
-      'aria-valuenow': type === 'determinate' ? value : null,
-      'aria-valuemin': 0,
-      'aria-valuemax': 1,
-      class: {
-        ...createColorClasses(color),
-        [`progress-bar-${type}`]: true,
-        'progress-paused': paused,
-        'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
-      }
-    };
-  }
-
   render() {
-    if (this.type === 'indeterminate') {
-      return [
-        <div class="indeterminate-bar-primary"><span class="progress-indeterminate"></span></div>,
-        <div class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
-      ];
-    }
-
-    const value = clamp(0, this.value, 1);
-    const buffer = clamp(0, this.buffer, 1);
-
-    return [
-      <div class="progress" style={{ transform: `scaleX(${value})` }}></div>,
-      buffer !== 1 && <div class="buffer-circles"></div>,
-      <div class="progress-buffer-bar" style={{ transform: `scaleX(${buffer})` }}></div>,
-    ];
+    const { color, type, reversed, value, buffer } = this;
+    const paused = config.getBoolean('_testing');
+    const mode = getIonMode(this);
+    return (
+      <Host
+        role="progressbar"
+        aria-valuenow={type === 'determinate' ? value : null}
+        aria-valuemin="0"
+        aria-valuemax="1"
+        class={{
+          ...createColorClasses(color),
+          [mode]: true,
+          [`progress-bar-${type}`]: true,
+          'progress-paused': paused,
+          'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
+        }}
+      >
+        {type === 'indeterminate'
+          ? renderIndeterminate()
+          : renderProgress(value, buffer)
+        }
+      </Host>
+    );
   }
 }
+
+const renderIndeterminate = () => {
+  return [
+    <div class="indeterminate-bar-primary"><span class="progress-indeterminate"></span></div>,
+    <div class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
+  ];
+};
+
+const renderProgress = (value: number, buffer: number) => {
+  const finalValue = clamp(0, value, 1);
+  const finalBuffer = clamp(0, buffer, 1);
+
+  return [
+    <div class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
+    finalBuffer !== 1 && <div class="buffer-circles"></div>,
+    <div class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
+  ];
+};

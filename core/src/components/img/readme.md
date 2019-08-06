@@ -26,30 +26,29 @@ Img is a tag that will lazily load an image when ever the tag is in the viewport
 
 ```tsx
 import React from 'react';
-
-import { IonList, IonItem, IonThumbnail, IonImg, IonLabel } from '@ionic/react';
+import { IonList, IonItem, IonThumbnail, IonImg, IonLabel, IonContent } from '@ionic/react';
 
 type Item = {
   src: string;
-  text: string
+  text: string;
 };
-const items: Item[] = [];
+const items: Item[] = [{ src: 'http://placekitten.com/g/200/300', text: 'a picture of a cat' }];
 
-const Example: React.SFC<{}> = () => (
-
-  <IonList>
-    {items.map(({src, text}) =>
-      <IonItem>
-        <IonThumbnail slot="start">
-          <IonImg src={src}></IonImg>
-        </IonThumbnail>
-        <IonLabel>{text}}</IonLabel>
-      </IonItem>
-    )}
-  </IonList>
+export const ImgExample: React.FunctionComponent = () => (
+  <IonContent>
+    <IonList>
+      {items.map((image, i) => (
+        <IonItem key={i}>
+          <IonThumbnail slot="start">
+            <IonImg src={image.src} />
+          </IonThumbnail>
+          <IonLabel>{image.text}</IonLabel>
+        </IonItem>
+      ))}
+    </IonList>
+  </IonContent>
 );
-
-export default Example
+```
 
 
 ### Vue
@@ -79,9 +78,11 @@ export default Example
 
 ## Events
 
-| Event           | Description                        | Type                |
-| --------------- | ---------------------------------- | ------------------- |
-| `ionImgDidLoad` | Emitted when the img src is loaded | `CustomEvent<void>` |
+| Event            | Description                                 | Type                |
+| ---------------- | ------------------------------------------- | ------------------- |
+| `ionError`       | Emitted when the img fails to load          | `CustomEvent<void>` |
+| `ionImgDidLoad`  | Emitted when the image has finished loading | `CustomEvent<void>` |
+| `ionImgWillLoad` | Emitted when the img src has been set       | `CustomEvent<void>` |
 
 
 ----------------------------------------------

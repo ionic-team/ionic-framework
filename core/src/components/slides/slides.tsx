@@ -1,11 +1,13 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 import { rIC } from '../../utils/helpers.js';
-import { createThemedClasses } from '../../utils/theme.js';
 
 import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-slides',
   styleUrls: {
@@ -23,12 +25,7 @@ export class Slides implements ComponentInterface {
   private readySwiper!: (swiper: SwiperInterface) => void;
   private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
 
-  @Element() el!: HTMLStencilElement;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
+  @Element() el!: HTMLIonSlidesElement;
 
   /**
    * Options to pass to the swiper instance.
@@ -162,7 +159,10 @@ export class Slides implements ComponentInterface {
   }
 
   /**
-   * Force swiper to update its height (when autoHeight enabled) for the duration equal to 'speed' parameter
+   * Force swiper to update its height (when autoHeight is enabled) for the duration
+   * equal to 'speed' parameter.
+   *
+   * @param speed The transition duration (in ms).
    */
   @Method()
   async updateAutoHeight(speed?: number) {
@@ -172,6 +172,10 @@ export class Slides implements ComponentInterface {
 
   /**
    * Transition to the specified slide.
+   *
+   * @param index The index of the slide to transition to.
+   * @param speed The transition duration (in ms).
+   * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
    */
   @Method()
   async slideTo(index: number, speed?: number, runCallbacks?: boolean) {
@@ -181,6 +185,9 @@ export class Slides implements ComponentInterface {
 
   /**
    * Transition to the next slide.
+   *
+   * @param speed The transition duration (in ms).
+   * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
    */
   @Method()
   async slideNext(speed?: number, runCallbacks?: boolean) {
@@ -190,6 +197,9 @@ export class Slides implements ComponentInterface {
 
   /**
    * Transition to the previous slide.
+   *
+   * @param speed The transition duration (in ms).
+   * @param runCallbacks If true, the transition will produce the [Transition/SlideChange][Start/End] transition events.
    */
   @Method()
   async slidePrev(speed?: number, runCallbacks?: boolean) {
@@ -226,7 +236,6 @@ export class Slides implements ComponentInterface {
 
   /**
    * Get whether or not the current slide is the last slide.
-   *
    */
   @Method()
   async isEnd(): Promise<boolean> {
@@ -266,32 +275,38 @@ export class Slides implements ComponentInterface {
   }
 
   /**
-   * Lock or unlock the ability to slide to the next slides.
+   * Lock or unlock the ability to slide to the next slide.
+   *
+   * @param lock If `true`, disable swiping to the next slide.
    */
   @Method()
-  async lockSwipeToNext(shouldLockSwipeToNext: boolean) {
+  async lockSwipeToNext(lock: boolean) {
     const swiper = await this.getSwiper();
-    swiper.allowSlideNext = !shouldLockSwipeToNext;
+    swiper.allowSlideNext = !lock;
   }
 
   /**
-   * Lock or unlock the ability to slide to the previous slides.
+   * Lock or unlock the ability to slide to the previous slide.
+   *
+   * @param lock If `true`, disable swiping to the previous slide.
    */
   @Method()
-  async lockSwipeToPrev(shouldLockSwipeToPrev: boolean) {
+  async lockSwipeToPrev(lock: boolean) {
     const swiper = await this.getSwiper();
-    swiper.allowSlidePrev = !shouldLockSwipeToPrev;
+    swiper.allowSlidePrev = !lock;
   }
 
   /**
-   * Lock or unlock the ability to slide to change slides.
+   * Lock or unlock the ability to slide to the next or previous slide.
+   *
+   * @param lock If `true`, disable swiping to the next and previous slide.
    */
   @Method()
-  async lockSwipes(shouldLockSwipes: boolean) {
+  async lockSwipes(lock: boolean) {
     const swiper = await this.getSwiper();
-    swiper.allowSlideNext = !shouldLockSwipes;
-    swiper.allowSlidePrev = !shouldLockSwipes;
-    swiper.allowTouchMove = !shouldLockSwipes;
+    swiper.allowSlideNext = !lock;
+    swiper.allowSlidePrev = !lock;
+    swiper.allowTouchMove = !lock;
   }
 
   private async initSwiper() {
@@ -313,7 +328,7 @@ export class Slides implements ComponentInterface {
     // Base options, can be changed
     // TODO Add interface SwiperOptions
     const swiperOptions: SwiperOptions = {
-      effect: 'slide',
+      effect: undefined,
       direction: 'horizontal',
       initialSlide: 0,
       loop: false,
@@ -342,11 +357,12 @@ export class Slides implements ComponentInterface {
       zoom: {
         maxRatio: 3,
         minRatio: 1,
-        toggle: true,
+        toggle: false,
       },
       touchRatio: 1,
       touchAngle: 45,
       simulateTouch: true,
+      touchStartPreventDefault: false,
       shortSwipes: true,
       longSwipes: true,
       longSwipesRatio: 0.5,
@@ -438,26 +454,34 @@ export class Slides implements ComponentInterface {
       }
     };
 
-    // Merge the base, user options, and events together then pas to swiper
-    return { ...swiperOptions, ...this.options, ...eventOptions };
-  }
+    const customEvents = (!!this.options && !!this.options.on) ? this.options.on : {};
 
-  hostData() {
-    return {
-      class: {
-        ...createThemedClasses(this.mode, 'slides'),
-        'swiper-container': true
-      }
-    };
+    // merge "on" event listeners, while giving our event listeners priority
+    const mergedEventOptions = { on: { ...customEvents, ...eventOptions.on } };
+
+    // Merge the base, user options, and events together then pas to swiper
+    return { ...swiperOptions, ...this.options, ...mergedEventOptions };
   }
 
   render() {
-    return [
-      <div class="swiper-wrapper">
-        <slot></slot>
-      </div>,
-      this.pager && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>,
-      this.scrollbar && <div class="swiper-scrollbar" ref={el => this.scrollbarEl = el}></div>
-    ];
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [`${mode}`]: true,
+
+          // Used internally for styling
+          [`slides-${mode}`]: true,
+
+          'swiper-container': true
+        }}
+      >
+        <div class="swiper-wrapper">
+          <slot></slot>
+        </div>
+        {this.pager && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>}
+        {this.scrollbar && <div class="swiper-scrollbar" ref={el => this.scrollbarEl = el}></div>}
+      </Host>
+    );
   }
 }

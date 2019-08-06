@@ -1,4 +1,4 @@
-import { DatetimeData, daysInMonth, getDateValue, getLocalDateTime } from '../datetime-util';
+import { DatetimeData, daysInMonth, getDateValue, getLocalDateTime, renderDatetime } from '../datetime-util';
 
 describe('Datetime', () => {
   describe('getDateValue()', () => {
@@ -9,9 +9,9 @@ describe('Datetime', () => {
       const monthvalue = getDateValue({}, 'MM');
       const yearValue = getDateValue({}, 'YYYY');
 
-      expect(dayValue).toEqual(today.getDate());
-      expect(monthvalue).toEqual(today.getMonth() + 1);
-      expect(yearValue).toEqual(today.getFullYear());
+      expect(dayValue).toEqual(today.getUTCDate());
+      expect(monthvalue).toEqual(today.getUTCMonth() + 1);
+      expect(yearValue).toEqual(today.getUTCFullYear());
     });
 
     it('it should return the date value for a given day', () => {
@@ -51,6 +51,34 @@ describe('Datetime', () => {
 
         expect(convertToLocal.toISOString()).toEqual(expectedDateString);
       });
+    });
+
+    it('should format a date string and not get affected by the timezone offset', () => {
+
+      const dateStringTests = [
+        { input: '2019-03-20', expectedOutput: '2019-03-20' },
+        { input: '1994-04-15', expectedOutput: '1994-04-15' },
+        { input: '2008-09-02', expectedOutput: '2008-09-02' },
+        { input: '1995-02', expectedOutput: '1995-02' },
+        { input: '1994-03-14', expectedOutput: '1994-03-14' },
+        { input: '9 01:47', expectedOutput: '09-01T01:47' }
+      ];
+
+      dateStringTests.forEach(test => {
+        const convertToLocal = getLocalDateTime(test.input);
+        expect(convertToLocal.toISOString()).toContain(test.expectedOutput);
+      });
+    });
+
+    it('should default to today for null and undefined cases', () => {
+      const today = new Date();
+      const todayString = renderDatetime('YYYY-MM-DD', { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() } )
+
+      const convertToLocalUndefined = getLocalDateTime(undefined);
+      expect(convertToLocalUndefined.toISOString()).toContain(todayString);
+
+      const convertToLocalNull = getLocalDateTime(null);
+      expect(convertToLocalNull.toISOString()).toContain(todayString);
     });
   });
 

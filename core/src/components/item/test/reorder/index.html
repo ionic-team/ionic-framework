@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -44,12 +44,10 @@
     .item {
       background-color: inherit;
     }
-
   </style>
 
   <script>
     var isReordering = false;
-
     var groups = [
       {
         id: 'reorderGroup',
@@ -64,68 +62,52 @@
         side: 'end'
       }
     ];
-
     for (var i = 0; i < groups.length; i++) {
       initGroup(groups[i]);
     }
-
     function clickedButton(number) {
       console.log('clicked', number);
     }
-
     function toggle() {
       isReordering = !isReordering;
-
       for (var i = 0; i < groups.length; i++) {
         var groupEl = document.getElementById(groups[i].id);
         groupEl.disabled = !isReordering;
       }
     }
-
-    // Reorder the items for a given list
-    function reorder(list, items, indexes) {
-      items = reorderArray(items, indexes);
-      renderGroup(list, items);
-    }
-
     function initGroup(group) {
       var groupEl = document.getElementById(group.id);
-
       groupEl.addEventListener('ionItemReorder', function (ev) {
-        reorder(groupEl, groupItems, indexes);
+        ev.detail.complete();
       });
-
       var groupItems = [];
       for (var i = 0; i < 5; i++) {
         groupItems.push(i);
       }
-
       if (group.sliding) {
         groupEl.side = group.side;
         renderSlidingGroup(group, groupEl, groupItems);
       } else {
-        renderGroup(group, groupEl, groupItems);
+        renderGroup(groupEl, groupItems);
       }
     }
-
-    function renderGroup(group, groupEl, items) {
-      groupEl.innerHTML = '';
-
+    function renderGroup(groupEl, items) {
+      let innerHTML = '';
       for (var i = 0; i < items.length; i++) {
-        groupEl.innerHTML += `
-          <ion-item onClick="clickedButton(${i})"
-            style="min-height: ${i * 2 + 35}px; --background: rgb(${255 - i * 4}, ${255 - i * 4}, ${255 - i * 4})">
-            ${i}
+        const index = items[i];
+        innerHTML += `
+          <ion-item onClick="clickedButton(${index})"
+            style="min-height: ${index * 2 + 35}px; --background: rgb(${255 - index * 4}, ${255 - index * 4}, ${255 - index * 4})">
+            ${index}
             <ion-reorder slot="end"></ion-reorder>
           </ion-item>`;
       }
+      groupEl.innerHTML = innerHTML;
     }
-
     function renderSlidingGroup(group, groupEl, items) {
-      groupEl.innerHTML = '';
-
+      let innerHTML = '';
       for (var i = 0; i < items.length; i++) {
-        groupEl.innerHTML += `
+        innerHTML += `
           <ion-item-sliding>
             <ion-item onclick="clickedButton(${i})">
               <ion-reorder slot="${group.side}"></ion-reorder>
@@ -142,6 +124,7 @@
             </ion-item-options>
           </ion-item-sliding>`;
       }
+      groupEl.innerHTML = innerHTML;
     }
   </script>
 

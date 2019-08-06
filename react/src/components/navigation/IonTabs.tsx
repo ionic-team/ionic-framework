@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { IonTabBar, IonRouterOutlet } from '../index';
+import React from 'react';
+import { IonTabBar } from './IonTabBar';
+import { IonRouterOutlet } from './routing/IonRouterOutlet';
 
 type Props = {
   children: React.ReactNode;
@@ -24,14 +25,13 @@ const tabsInner: React.CSSProperties = {
   contain: 'layout size style'
 };
 
-
-export default class IonTabs extends Component<Props> {
+export class IonTabs extends React.Component<Props> {
 
   render() {
     let outlet: React.ReactElement<{}>;
     let tabBar: React.ReactElement<{ slot: 'bottom' | 'top' }>;
 
-    React.Children.forEach(this.props.children, child => {
+    React.Children.forEach(this.props.children, (child: any) => {
       if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
         return;
       }

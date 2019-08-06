@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body onload="listenForEvent()">
   <ion-app>
@@ -85,7 +85,7 @@
     </ion-header>
 
     <ion-content>
-      <div padding>
+      <div class="ion-padding">
         <ion-segment>
           <ion-segment-button><ion-label>Seg 1</ion-label></ion-segment-button>
           <ion-segment-button><ion-label>Seg 2</ion-label></ion-segment-button>
@@ -109,6 +109,21 @@
             <ion-icon name="at"></ion-icon>
           </ion-segment-button>
         </ion-segment>
+
+        <ion-segment>
+          <ion-segment-button value="330">
+            <ion-label>330ml</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="440">
+            <ion-label>440ml</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="500">
+            <ion-label>500ml</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="custom">
+            <ion-icon name="create"></ion-icon>
+          </ion-segment-button>
+    </ion-segment>
 
         <ion-segment name="dynamicPropDisable" disabled color="danger">
           <ion-segment-button value="Bookmarks">
@@ -150,10 +165,10 @@
         <ion-segment id="dynamicButtons" color="dark"></ion-segment>
       </div>
 
-      <div padding-horizontal>
+      <div class="ion-padding-horizontal">
         <ion-button expand="block" onClick="toggleDisabled()">Toggle Disabled</ion-button>
       </div>
-      <div padding>
+      <div class="ion-padding">
         <ion-button expand="block" color="secondary" onClick="toggleValue()">Toggle Value</ion-button>
       </div>
 

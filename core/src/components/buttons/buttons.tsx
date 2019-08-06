@@ -1,4 +1,6 @@
-import { Component, ComponentInterface } from '@stencil/core';
+import { Component, ComponentInterface, Host, h } from '@stencil/core';
+
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-buttons',
@@ -8,4 +10,12 @@ import { Component, ComponentInterface } from '@stencil/core';
   },
   scoped: true,
 })
-export class Buttons implements ComponentInterface {}
+export class Buttons implements ComponentInterface {
+
+  render() {
+    return (
+      <Host class={getIonMode(this)}>
+      </Host>
+    );
+  }
+}

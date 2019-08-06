@@ -207,10 +207,9 @@ function openCustom() {
 
 ```tsx
 import React from 'react';
-
 import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonRouterOutlet } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+export const MenuExample: React.FunctionComponent = () => (
   <>
     <IonMenu side="start" menuId="first">
       <IonHeader>
@@ -265,8 +264,6 @@ const Example: React.SFC<{}> = () => (
     <IonRouterOutlet></IonRouterOutlet>
   </>
 );
-
-export default Example;
 ```
 
 
@@ -337,7 +334,7 @@ export default Example;
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component()
-  export default class MenuExample extends Vue {
+  export default class Example extends Vue {
 
     openFirst() {
       this.menu.enable(true, 'first');
@@ -388,12 +385,6 @@ export default Example;
 Closes the menu. If the menu is already closed or it can't be closed,
 it returns `false`.
 
-#### Parameters
-
-| Name       | Type      | Description |
-| ---------- | --------- | ----------- |
-| `animated` | `boolean` |             |
-
 #### Returns
 
 Type: `Promise<boolean>`
@@ -428,12 +419,6 @@ Type: `Promise<boolean>`
 Opens the menu. If the menu is already open or it can't be opened,
 it returns `false`.
 
-#### Parameters
-
-| Name       | Type      | Description |
-| ---------- | --------- | ----------- |
-| `animated` | `boolean` |             |
-
 #### Returns
 
 Type: `Promise<boolean>`
@@ -445,13 +430,6 @@ Type: `Promise<boolean>`
 Opens or closes the button.
 If the operation can't be completed successfully, it returns `false`.
 
-#### Parameters
-
-| Name         | Type      | Description |
-| ------------ | --------- | ----------- |
-| `shouldOpen` | `boolean` |             |
-| `animated`   | `boolean` |             |
-
 #### Returns
 
 Type: `Promise<boolean>`
@@ -462,12 +440,6 @@ Type: `Promise<boolean>`
 
 Toggles the menu. If the menu is already open, it will try to close, otherwise it will try to open it.
 If the operation can't be completed successfully, it returns `false`.
-
-#### Parameters
-
-| Name       | Type      | Description |
-| ---------- | --------- | ----------- |
-| `animated` | `boolean` |             |
 
 #### Returns
 
@@ -488,6 +460,21 @@ Type: `Promise<boolean>`
 | `--min-width`  | Minimum width of the menu  |
 | `--width`      | Width of the menu          |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+- [ion-menu-controller](../menu-controller)
+
+### Graph
+```mermaid
+graph TD;
+  ion-menu --> ion-backdrop
+  ion-menu --> ion-menu-controller
+  style ion-menu fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

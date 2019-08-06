@@ -8,8 +8,8 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <button id="basic-loading" onclick="presentLoading()">Show Loading</button>
@@ -37,7 +37,6 @@
   <script>
     async function presentLoading() {
       const loadingController = document.querySelector('ion-loading-controller');
-      await loadingController.componentOnReady();
       const loadingElement = await loadingController.create({
         message: 'Hellooo',
         duration: 5000
@@ -47,7 +46,6 @@
 
     async function presentLoadingWithOptions(opts) {
       const loadingController = document.querySelector('ion-loading-controller');
-      await loadingController.componentOnReady();
       const loadingElement = await loadingController.create(opts);
       return await loadingElement.present();
     }

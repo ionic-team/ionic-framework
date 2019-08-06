@@ -6,8 +6,8 @@
   <title>Tab Bar - Custom</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-  <link rel="stylesheet" href="../../../../../css/ionic.bundle.css">
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <link rel="stylesheet" href="../../../../../css/ionic.bundle.css">
   <link rel="stylesheet" href="../../../../../scripts/testing/styles.css">
 </head>
 
@@ -16,6 +16,12 @@
     <ion-content>
       <!-- Default -->
       <ion-tab-bar selected-tab="1">
+      
+        <ion-tab-button tab="1" disabled>
+          <ion-icon name="clock"></ion-icon>
+          <ion-label>Recents</ion-label>
+        </ion-tab-button>
+      
         <ion-tab-button tab="1">
           <ion-icon name="clock"></ion-icon>
           <ion-label>Recents</ion-label>

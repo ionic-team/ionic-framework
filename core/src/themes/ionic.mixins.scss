@@ -1,3 +1,4 @@
+
 @mixin input-cover() {
   @include position(0, null, null, 0);
   @include margin(0);
@@ -134,25 +135,19 @@
 
 
 // Text Direction - ltr / rtl
-// $app-direction: multi | rtl | ltr | null (default)
-// multi: Both [dir=ltr] and [dir=rtl] are applied to css selectors.
-// rtl: Always assumes rtl and only includes rtl css. No [dir] selectors.
-// ltr: Always assumes ltr and only includes ltr css. No [dir] selectors.
-// null: CSS defaults to use the ltr css, and adds [dir=rtl] selectors to override ltr defaults.
+//
+// CSS defaults to use the ltr css, and adds [dir=rtl] selectors
+// to override ltr defaults.
 // ----------------------------------------------------------
 
 @mixin multi-dir() {
   @content;
 
-  // @if $app-direction == multi {
-  //   $root: #{&};
-  //   @at-root [dir] {
-  //     #{$root} {
-  //       @content;
-  //     }
+  // $root: #{&};
+  // @at-root [dir] {
+  //   #{$root} {
+  //     @content;
   //   }
-  // } @else {
-  //   @content;
   // }
 }
 
@@ -210,18 +205,22 @@
     #{$prop}-left: $start;
     #{$prop}-right: $end;
 
-    @at-root @supports((margin-inline-start: 0) or (-webkit-margin-start: 0)) {
-      @if $start != null {
-        #{$prop}-left: unset;
-      }
-      @if $end != null {
-        #{$prop}-right: unset;
-      }
+    @at-root {
+      @supports ((margin-inline-start: 0) or (-webkit-margin-start: 0)) {
+        & {
+          @if $start != null {
+            #{$prop}-left: unset;
+          }
+          @if $end != null {
+            #{$prop}-right: unset;
+          }
 
-      -webkit-#{$prop}-start: $start;
-      #{$prop}-inline-start: $start;
-      -webkit-#{$prop}-end: $end;
-      #{$prop}-inline-end: $end;
+          -webkit-#{$prop}-start: $start;
+          #{$prop}-inline-start: $start;
+          -webkit-#{$prop}-end: $end;
+          #{$prop}-inline-end: $end;
+        }
+      }
     }
   }
 }
@@ -292,6 +291,9 @@
       right: $end;
     }
     @include rtl() {
+      left: unset;
+      right: unset;
+
       left: $end;
       right: $start;
     }

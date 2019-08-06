@@ -1,6 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { Animation, Config, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Mode, Side } from '../../interface';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
@@ -19,7 +21,7 @@ export class Menu implements ComponentInterface, MenuI {
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
 
-  mode!: Mode;
+  private mode = getIonMode(this);
 
   isAnimating = false;
   width!: number; // TODO
@@ -35,13 +37,7 @@ export class Menu implements ComponentInterface, MenuI {
   @State() isPaneVisible = false;
   @State() isEndSide = false;
 
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'isServer' }) isServer!: boolean;
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
-  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
-  @Prop({ context: 'window' }) win!: Window;
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
 
   /**
    * The content's id the menu should use.
@@ -98,7 +94,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   @Watch('side')
   protected sideChanged() {
-    this.isEndSide = isEnd(this.win, this.side);
+    this.isEndSide = isEnd(this.side);
   }
 
   /**
@@ -143,10 +139,10 @@ export class Menu implements ComponentInterface, MenuI {
 
   async componentWillLoad() {
     if (this.type === undefined) {
-      this.type = this.config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
+      this.type = config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
     }
 
-    if (this.isServer) {
+    if (!Build.isBrowser) {
       this.disabled = true;
       return;
     }
@@ -155,7 +151,7 @@ export class Menu implements ComponentInterface, MenuI {
     const el = this.el;
     const parent = el.parentNode as any;
     const content = this.contentId !== undefined
-      ? this.doc.getElementById(this.contentId)
+      ? document.getElementById(this.contentId)
       : parent && parent.querySelector && parent.querySelector('[main]');
 
     if (!content || !content.tagName) {
@@ -175,8 +171,7 @@ export class Menu implements ComponentInterface, MenuI {
     menuCtrl!._register(this);
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.doc,
-      queue: this.queue,
+      el: document,
       gestureName: 'menu-swipe',
       gesturePriority: 30,
       threshold: 10,
@@ -208,15 +203,15 @@ export class Menu implements ComponentInterface, MenuI {
     this.contentEl = this.backdropEl = this.menuInnerEl = undefined;
   }
 
-  @Listen('body:ionSplitPaneVisible')
+  @Listen('ionSplitPaneVisible', { target: 'body' })
   onSplitPaneChanged(ev: CustomEvent) {
     this.isPaneVisible = ev.detail.isPane(this.el);
     this.updateState();
   }
 
-  @Listen('click', { enabled: false, capture: true })
+  @Listen('click', { capture: true })
   onBackdropClick(ev: any) {
-    if (this.lastOnEnd < ev.timeStamp - 100) {
+    if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
       const shouldClose = (ev.composedPath)
         ? !ev.composedPath().includes(this.menuInnerEl)
         : false;
@@ -344,7 +339,7 @@ export class Menu implements ComponentInterface, MenuI {
       return false;
     }
     return checkEdgeSide(
-      this.win,
+      window,
       detail.currentX,
       this.isEndSide,
       this.maxEdgeStart
@@ -452,9 +447,6 @@ export class Menu implements ComponentInterface, MenuI {
       this.blocker.unblock();
     }
 
-    // add/remove backdrop click listeners
-    this.enableListener(this, 'click', isOpen);
-
     if (isOpen) {
       // add css class
       if (this.contentEl) {
@@ -505,59 +497,59 @@ export class Menu implements ComponentInterface, MenuI {
     this.afterAnimation(false);
   }
 
-  hostData() {
-    const { isEndSide, type, disabled, isPaneVisible } = this;
-    return {
-      role: 'complementary',
-      class: {
-        [`menu-type-${type}`]: true,
-        'menu-enabled': !disabled,
-        'menu-side-end': isEndSide,
-        'menu-side-start': !isEndSide,
-        'menu-pane-visible': isPaneVisible
-      }
-    };
-  }
-
   render() {
-    return [
-      <div
-        class="menu-inner"
-        ref={el => this.menuInnerEl = el}
-      >
-        <slot></slot>
-      </div>,
+    const { isEndSide, type, disabled, mode, isPaneVisible } = this;
 
-      <ion-backdrop
-        ref={el => this.backdropEl = el}
-        class="menu-backdrop"
-        tappable={false}
-        stopPropagation={false}
-      />
-    ];
+    return (
+      <Host
+        role="navigation"
+        class={{
+          [mode]: true,
+          [`menu-type-${type}`]: true,
+          'menu-enabled': !disabled,
+          'menu-side-end': isEndSide,
+          'menu-side-start': !isEndSide,
+          'menu-pane-visible': isPaneVisible
+        }}
+      >
+        <div
+          class="menu-inner"
+          ref={el => this.menuInnerEl = el}
+        >
+          <slot></slot>
+        </div>
+
+        <ion-backdrop
+          ref={el => this.backdropEl = el}
+          class="menu-backdrop"
+          tappable={false}
+          stopPropagation={false}
+        />
+      </Host>
+    );
   }
 }
 
-function computeDelta(
+const computeDelta = (
   deltaX: number,
   isOpen: boolean,
   isEndSide: boolean
-): number {
+): number => {
   return Math.max(0, isOpen !== isEndSide ? -deltaX : deltaX);
-}
+};
 
-function checkEdgeSide(
+const checkEdgeSide = (
   win: Window,
   posX: number,
   isEndSide: boolean,
   maxEdgeStart: number
-): boolean {
+): boolean => {
   if (isEndSide) {
     return posX >= win.innerWidth - maxEdgeStart;
   } else {
     return posX <= maxEdgeStart;
   }
-}
+};
 
 const SHOW_MENU = 'show-menu';
 const SHOW_BACKDROP = 'show-backdrop';

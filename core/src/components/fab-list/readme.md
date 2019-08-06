@@ -31,28 +31,37 @@ The `ion-fab-list` element is a container for multiple fab buttons. This collect
 
 ```tsx
 import React from 'react';
+import { IonFab, IonFabButton, IonFabList, IonContent, IonIcon } from '@ionic/react';
 
-import { IonFab, IonFabButton, IonFabList } from '@ionic/react';
+export const FabListExample: React.FunctionComponent = () => (
+  <IonContent>
+    <IonFab vertical="bottom" horizontal="end">
+      <IonFabButton>
+        <IonIcon icon="share" />
+      </IonFabButton>
 
-const Example: React.SFC<{}> = () => (
+      <IonFabList side="top">
+        <IonFabButton color="primary">
+          <IonIcon icon="logo-facebook" />
+        </IonFabButton>
+        <IonFabButton color="primary">
+          <IonIcon icon="logo-twitter" />
+        </IonFabButton>
+        <IonFabButton color="primary">
+          <IonIcon icon="logo-youtube" />
+        </IonFabButton>
+      </IonFabList>
 
-  <IonFab vertical="bottom" horizontal="end">
-    <IonFabButton>Share</IonFabButton>
-
-    <IonFabList side="top">
-      <IonFabButton>Facebook</IonFabButton>
-      <IonFabButton>Twitter</IonFabButton>
-      <IonFabButton>Youtube</IonFabButton>
-    </IonFabList>
-
-    <IonFabList side="start">
-      <IonFabButton>Vimeo</IonFabButton>
-    </IonFabList>
-
-  </IonFab>
+      <IonFabList side="start">
+        <IonFabButton color="primary">
+          <IonIcon icon="logo-vimeo" />
+        </IonFabButton>
+      </IonFabList>
+    </IonFab>
+  </IonContent>
 );
 
-export default Example
+```
 
 
 ### Vue
@@ -82,7 +91,7 @@ export default Example
 
 | Property    | Attribute   | Description                                                         | Type                                    | Default    |
 | ----------- | ----------- | ------------------------------------------------------------------- | --------------------------------------- | ---------- |
-| `activated` | `activated` | If `true`, the fab list will be show all fab buttons in the list.   | `boolean`                               | `false`    |
+| `activated` | `activated` | If `true`, the fab list will show all fab buttons in the list.      | `boolean`                               | `false`    |
 | `side`      | `side`      | The side the fab list will show on relative to the main fab button. | `"bottom" \| "end" \| "start" \| "top"` | `'bottom'` |
 
 

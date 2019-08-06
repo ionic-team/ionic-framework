@@ -1,6 +1,8 @@
 import { ElementRef, HostListener } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 
+import { raf } from '../../util/util';
+
 export class ValueAccessor implements ControlValueAccessor {
 
   private onChange: (value: any) => void = () => {/**/};
@@ -14,18 +16,22 @@ export class ValueAccessor implements ControlValueAccessor {
     setIonicClasses(this.el);
   }
 
-  handleChangeEvent(value: any) {
-    if (value !== this.lastValue) {
-      this.lastValue = value;
-      this.onChange(value);
+  handleChangeEvent(el: HTMLElement, value: any) {
+    if (el === this.el.nativeElement) {
+      if (value !== this.lastValue) {
+        this.lastValue = value;
+        this.onChange(value);
+      }
+      setIonicClasses(this.el);
     }
-    setIonicClasses(this.el);
   }
 
-  @HostListener('ionBlur')
-  _handleBlurEvent() {
-    this.onTouched();
-    setIonicClasses(this.el);
+  @HostListener('ionBlur', ['$event.target'])
+  _handleBlurEvent(el: any) {
+    if (el === this.el.nativeElement) {
+      this.onTouched();
+      setIonicClasses(this.el);
+    }
   }
 
   registerOnChange(fn: (value: any) => void) {
@@ -41,8 +47,8 @@ export class ValueAccessor implements ControlValueAccessor {
   }
 }
 
-export function setIonicClasses(element: ElementRef) {
-  requestAnimationFrame(() => {
+export const setIonicClasses = (element: ElementRef) => {
+  raf(() => {
     const input = element.nativeElement as HTMLElement;
     const classes = getClasses(input);
     setClasses(input, classes);
@@ -52,9 +58,9 @@ export function setIonicClasses(element: ElementRef) {
       setClasses(item, classes);
     }
   });
-}
+};
 
-function getClasses(element: HTMLElement) {
+const getClasses = (element: HTMLElement) => {
   const classList = element.classList;
   const classes = [];
   for (let i = 0; i < classList.length; i++) {
@@ -64,9 +70,9 @@ function getClasses(element: HTMLElement) {
     }
   }
   return classes;
-}
+};
 
-function setClasses(element: HTMLElement, classes: string[]) {
+const setClasses = (element: HTMLElement, classes: string[]) => {
   const classList = element.classList;
 
   classList.remove(
@@ -78,8 +84,8 @@ function setClasses(element: HTMLElement, classes: string[]) {
     'ion-pristine'
   );
   classList.add(...classes);
-}
+};
 
-function startsWith(input: string, search: string): boolean {
+const startsWith = (input: string, search: string): boolean => {
   return input.substr(0, search.length) === search;
-}
+};

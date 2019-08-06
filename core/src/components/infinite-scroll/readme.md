@@ -12,6 +12,10 @@ The `ion-infinite-scroll` component has the infinite scroll logic. It requires a
 
 Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` components allows developers to create their own content components, if desired. This content can contain anything, from an SVG element to elements with unique CSS animations.
 
+## React
+
+The Infinite Scroll component is not supported in React.
+
 <!-- Auto Generated Below -->
 
 
@@ -74,7 +78,7 @@ export class InfiniteScrollExample {
 
 ```html
 <ion-content>
-  <ion-button onclick="toggleInfiniteScroll()" expand="block">
+  <ion-button onClick="toggleInfiniteScroll()" expand="block">
     Toggle Infinite Scroll
   </ion-button>
 
@@ -111,69 +115,6 @@ function toggleInfiniteScroll() {
 ```
 
 
-### React
-
-```tsx
-import React from 'react';
-
-import { IonAvatar } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-
-  <IonContent>
-    <IonButton onClick="toggleInfiniteScroll()" expand="block">
-      Toggle Infinite Scroll
-    </IonButton>
-
-    <IonList></IonList>
-
-    <IonInfinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-      <IonInfinite-scrollContent
-        loadingSpinner="bubbles"
-        loadingText="Loading more data...">
-      </IonInfinite-scrollContent>
-    </IonInfinite-scroll>
-  </IonContent>
-
-
-
-  import { Component, ViewChild } from '@angular/core';
-  import { IonInfiniteScroll } from '@ionic/angular';
-
-  @Component({
-    selector: 'infinite-scroll-example',
-    templateUrl: 'infinite-scroll-example.html',
-    styleUrls: ['./infinite-scroll-example.css']
-  })
-  export class InfiniteScrollExample {
-    @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-
-    constructor() {}
-
-    loadData(event) {
-      setTimeout(() => {
-        console.log('Done');
-        event.target.complete();
-
-        // App logic to determine if all data is loaded
-        // and disable the infinite scroll
-        if (data.length == 1000) {
-          event.target.disabled = true;
-        }
-      }, 500);
-    }
-
-    toggleInfiniteScroll() {
-      this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
-    }
-  }
-
-
-);
-
-export default Example
-
-
 
 ## Properties
 
@@ -193,7 +134,7 @@ export default Example
 
 ## Methods
 
-### `complete() => void`
+### `complete() => Promise<void>`
 
 Call `complete()` within the `ionInfinite` output event handler when
 your async operation has completed. For example, the `loading`
@@ -206,7 +147,7 @@ to `enabled`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

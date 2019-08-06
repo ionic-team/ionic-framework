@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -25,7 +25,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" padding>
+    <ion-content class="ion-padding" id="content">
       <ion-button id="basic-popover" expand="block" onclick="presentPopover({ component: 'profile-page', event: event })">Show Popover</ion-button>
       <ion-button id="translucent-popover" expand="block" onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">Show Translucent Popover</ion-button>
       <ion-button id="long-list-popover" expand="block" color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</ion-button>
@@ -61,7 +61,6 @@
   <script>
     async function presentPopover(opts) {
       const popoverController = document.querySelector('ion-popover-controller');
-      await popoverController.componentOnReady();
       const popoverElement = await popoverController.create(opts);
       return await popoverElement.present();
     }
@@ -119,7 +118,7 @@
 
       connectedCallback() {
         this.innerHTML = `
-          <div padding>
+          <div class="ion-padding">
             <h1>Translucent Popover</h1>
           </div>
         `;

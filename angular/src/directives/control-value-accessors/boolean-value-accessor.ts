@@ -25,8 +25,8 @@ export class BooleanValueAccessor extends ValueAccessor {
     setIonicClasses(this.el);
   }
 
-  @HostListener('ionChange', ['$event.target.checked'])
-  _handleIonChange(value: any) {
-    this.handleChangeEvent(value);
+  @HostListener('ionChange', ['$event.target'])
+  _handleIonChange(el: any) {
+    this.handleChangeEvent(el, el.checked);
   }
 }

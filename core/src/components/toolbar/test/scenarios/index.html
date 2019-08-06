@@ -8,13 +8,13 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
     <ion-content id="content">
-      <ion-toolbar no-padding>
+      <ion-toolbar class="ion-no-padding">
         <ion-title>This should have no padding</ion-title>
       </ion-toolbar>
 
@@ -177,62 +177,12 @@
         <ion-title>Text Only</ion-title>
       </ion-toolbar>
 
-      <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-menu-button auto-hide="false"></ion-menu-button>
-        </ion-buttons>
-        <ion-buttons slot="secondary">
-          <ion-button>
-            <ion-icon slot="icon-only" name="star"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-title>Left side menu toggle</ion-title>
-      </ion-toolbar>
-
-      <ion-toolbar>
-        <ion-buttons slot="primary">
-          <ion-button onclick="buttonClick()">
-            <ion-icon slot="icon-only" name="star"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-title>Right side menu toggle</ion-title>
-        <ion-buttons slot="end">
-          <ion-menu-button auto-hide="false"></ion-menu-button>
-        </ion-buttons>
-      </ion-toolbar>
-
-      <ion-toolbar>
-        <ion-buttons slot="primary">
-          <ion-button onclick="buttonClick()">
-            <ion-icon slot="icon-only" name="search"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-segment color="secondary">
-          <ion-segment-button value="something">
-            Something
-          </ion-segment-button>
-          <ion-segment-button value="else">
-            Else
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
-
-      <ion-toolbar>
-        <ion-segment>
-          <ion-segment-button value="light">
-            Light
-          </ion-segment-button>
-          <ion-segment-button value="toolbar">
-            Toolbar
-          </ion-segment-button>
-          <ion-segment-button value="default">
-            Default Segment
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
+      <!-- iOS Toolbar -->
       <ion-toolbar mode="ios">
         <ion-title>This is an iOS toolbar</ion-title>
       </ion-toolbar>
+
+      <!-- Material Design Toolbar -->
       <ion-toolbar mode="md">
         <ion-title>This is an MD toolbar</ion-title>
       </ion-toolbar>

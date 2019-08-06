@@ -1,7 +1,6 @@
-import { Components } from '@ionic/core';
+import { JSX, loadingController } from '@ionic/core';
 import { createControllerComponent } from './createControllerComponent';
 
-export type LoadingOptions = Components.IonLoadingAttributes;
+export type LoadingOptions = JSX.IonLoading;
 
-const IonLoading = createControllerComponent<LoadingOptions, HTMLIonLoadingElement, HTMLIonLoadingControllerElement>('ion-loading', 'ion-loading-controller')
-export default IonLoading;
+export const IonLoading = /*@__PURE__*/createControllerComponent<LoadingOptions, HTMLIonLoadingElement>('IonLoading', loadingController)

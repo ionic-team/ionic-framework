@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, FunctionalComponent, Host, Listen, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
-import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
@@ -24,14 +24,11 @@ export class VirtualScroll implements ComponentInterface {
   private currentScrollTop = 0;
   private indexDirty = 0;
   private lastItemLen = 0;
+  private rmEvent: (() => void) | undefined;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonVirtualScrollElement;
 
   @State() totalHeight = 0;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * It is important to provide this
@@ -108,6 +105,16 @@ export class VirtualScroll implements ComponentInterface {
   @Prop() itemHeight?: ItemHeightFn;
 
   /**
+   * An optional function that maps each item header within their height.
+   */
+  @Prop() headerHeight?: HeaderHeightFn;
+
+  /**
+   * An optional function that maps each item footer within their height.
+   */
+  @Prop() footerHeight?: FooterHeightFn;
+
+  /**
    * NOTE: only JSX API for stencil.
    *
    * Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
@@ -137,6 +144,8 @@ export class VirtualScroll implements ComponentInterface {
   @Prop() domRender?: DomRenderFn;
 
   @Watch('itemHeight')
+  @Watch('headerHeight')
+  @Watch('footerHeight')
   @Watch('items')
   itemsChanged() {
     this.calcCells();
@@ -165,13 +174,9 @@ export class VirtualScroll implements ComponentInterface {
     this.scrollEl = undefined;
   }
 
-  @Listen('scroll', { enabled: false, passive: false })
-  onScroll() {
-    this.updateVirtualScroll();
-  }
-
-  @Listen('window:resize')
+  @Listen('resize', { target: 'window' })
   onResize() {
+    this.calcCells();
     this.updateVirtualScroll();
   }
 
@@ -190,7 +195,7 @@ export class VirtualScroll implements ComponentInterface {
    * The subset of items to be updated can are specifing by an offset and a length.
    */
   @Method()
-  checkRange(offset: number, len = -1) {
+  async checkRange(offset: number, len = -1) {
     // TODO: kind of hacky how we do in-place updated of the cells
     // array. this part needs a complete refactor
     if (!this.items) {
@@ -204,6 +209,8 @@ export class VirtualScroll implements ComponentInterface {
     const cells = calcCells(
       this.items,
       this.itemHeight,
+      this.headerHeight,
+      this.footerHeight,
       this.headerFn,
       this.footerFn,
       this.approxHeaderHeight,
@@ -211,7 +218,6 @@ export class VirtualScroll implements ComponentInterface {
       this.approxItemHeight,
       cellIndex, offset, length
     );
-    console.debug('[virtual] cells recalculated', cells.length);
     this.cells = inplaceUpdate(this.cells, cells, cellIndex);
     this.lastItemLen = this.items.length;
     this.indexDirty = Math.max(offset - 1, 0);
@@ -229,10 +235,14 @@ export class VirtualScroll implements ComponentInterface {
    * ```
    */
   @Method()
-  checkEnd() {
+  async checkEnd() {
     if (this.items) {
       this.checkRange(this.lastItemLen);
     }
+  }
+
+  private onScroll = () => {
+    this.updateVirtualScroll();
   }
 
   private updateVirtualScroll() {
@@ -248,8 +258,8 @@ export class VirtualScroll implements ComponentInterface {
     }
 
     // schedule DOM operations into the stencil queue
-    this.queue.read(this.readVS.bind(this));
-    this.queue.write(this.writeVS.bind(this));
+    readTask(this.readVS.bind(this));
+    writeTask(this.writeVS.bind(this));
   }
 
   private readVS() {
@@ -309,7 +319,7 @@ export class VirtualScroll implements ComponentInterface {
   private updateCellHeight(cell: Cell, node: any) {
     const update = () => {
       if ((node as any)['$ionCell'] === cell) {
-        const style = this.win.getComputedStyle(node);
+        const style = window.getComputedStyle(node);
         const height = node.offsetHeight + parseFloat(style.getPropertyValue('margin-bottom'));
         this.setCellHeight(cell, height);
       }
@@ -327,9 +337,8 @@ export class VirtualScroll implements ComponentInterface {
     if (cell !== this.cells[index]) {
       return;
     }
-    cell.visible = true;
-    if (cell.height !== height) {
-      console.debug(`[virtual] cell height changed ${cell.height}px -> ${height}px`);
+    if (cell.height !== height || cell.visible !== true) {
+      cell.visible = true;
       cell.height = height;
       this.indexDirty = Math.min(this.indexDirty, index);
       this.scheduleUpdate();
@@ -362,6 +371,8 @@ export class VirtualScroll implements ComponentInterface {
     this.cells = calcCells(
       this.items,
       this.itemHeight,
+      this.headerHeight,
+      this.footerHeight,
       this.headerFn,
       this.footerFn,
       this.approxHeaderHeight,
@@ -369,7 +380,6 @@ export class VirtualScroll implements ComponentInterface {
       this.approxItemHeight,
       0, 0, this.lastItemLen
     );
-    console.debug('[virtual] cells recalculated', this.cells.length);
     this.indexDirty = 0;
   }
 
@@ -385,14 +395,22 @@ export class VirtualScroll implements ComponentInterface {
     this.heightIndex = resizeBuffer(this.heightIndex, this.cells.length);
     this.totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
 
-    console.debug('[virtual] height index recalculated', this.heightIndex.length - index);
     this.indexDirty = Infinity;
   }
 
   private enableScrollEvents(shouldListen: boolean) {
-    if (this.scrollEl) {
+    if (this.rmEvent) {
+      this.rmEvent();
+      this.rmEvent = undefined;
+    }
+
+    const scrollEl = this.scrollEl;
+    if (scrollEl) {
       this.isEnabled = shouldListen;
-      this.enableListener(this, 'scroll', shouldListen, this.scrollEl);
+      scrollEl.addEventListener('scroll', this.onScroll);
+      this.rmEvent = () => {
+        scrollEl.removeEventListener('scroll', this.onScroll);
+      };
     }
   }
 
@@ -405,23 +423,20 @@ export class VirtualScroll implements ComponentInterface {
     }
   }
 
-  hostData() {
-    return {
-      style: {
-        height: `${this.totalHeight}px`
-      }
-    };
-  }
-
   render() {
-    if (this.renderItem) {
-      return (
-        <VirtualProxy dom={this.virtualDom}>
-          {this.virtualDom.map(node => this.renderVirtualNode(node))}
-        </VirtualProxy>
-      );
-    }
-    return undefined;
+    return (
+      <Host
+        style={{
+          height: `${this.totalHeight}px`
+        }}
+      >
+        {this.renderItem && (
+          <VirtualProxy dom={this.virtualDom}>
+            {this.virtualDom.map(node => this.renderVirtualNode(node))}
+          </VirtualProxy>
+        )}
+      </Host>
+    );
   }
 }
 

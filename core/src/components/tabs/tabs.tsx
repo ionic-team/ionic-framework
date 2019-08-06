@@ -1,6 +1,6 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Host, Method, Prop, State, h } from '@stencil/core';
 
-import { Config, NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
+import { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
 
 /**
  * @slot - Content is placed between the named slots if provided without a slot.
@@ -17,13 +17,10 @@ export class Tabs implements NavOutlet {
   private transitioning = false;
   private leavingTab?: HTMLIonTabElement;
 
-  @Element() el!: HTMLStencilElement;
+  @Element() el!: HTMLIonTabsElement;
 
   @State() tabs: HTMLIonTabElement[] = [];
   @State() selectedTab?: HTMLIonTabElement;
-
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'document' }) doc!: Document;
 
   /** @internal */
   @Prop({ mutable: true }) useRouter = false;
@@ -44,17 +41,15 @@ export class Tabs implements NavOutlet {
    */
   @Event({ bubbles: false }) ionTabsDidChange!: EventEmitter<{tab: string}>;
 
-  async componentWillLoad() {
+  componentWillLoad() {
     if (!this.useRouter) {
-      this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
+      this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
     this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
-    this.ionNavWillLoad.emit();
-    this.componentWillUpdate();
-  }
-
-  componentDidLoad() {
-    this.initSelect();
+    this.initSelect().then(() => {
+      this.ionNavWillLoad.emit();
+      this.componentWillUpdate();
+    });
   }
 
   componentDidUnload() {
@@ -70,22 +65,10 @@ export class Tabs implements NavOutlet {
     }
   }
 
-  @Listen('ionTabButtonClick')
-  protected onTabClicked(ev: CustomEvent<TabButtonClickEventDetail>) {
-    const { href, tab } = ev.detail;
-    const selectedTab = this.tabs.find(t => t.tab === tab);
-    if (this.useRouter && href !== undefined) {
-      const router = this.doc.querySelector('ion-router');
-      if (router) {
-        router.push(href);
-      }
-    } else if (selectedTab) {
-      this.select(selectedTab);
-    }
-  }
-
   /**
-   * Index or the Tab instance, of the tab to select.
+   * Select a tab by the value of its `tab` property or an element reference.
+   *
+   * @param tab The tab instance to select. If passed a string, it should be the value of the tab's `tab` property.
    */
   @Method()
   async select(tab: string | HTMLIonTabElement): Promise<boolean> {
@@ -101,7 +84,9 @@ export class Tabs implements NavOutlet {
   }
 
   /**
-   * Get the tab element given the tab name
+   * Get a specific tab by the value of its `tab` property or an element reference.
+   *
+   * @param tab The tab instance to select. If passed a string, it should be the value of the tab's `tab` property.
    */
   @Method()
   async getTab(tab: string | HTMLIonTabElement): Promise<HTMLIonTabElement | undefined> {
@@ -116,7 +101,7 @@ export class Tabs implements NavOutlet {
   }
 
   /**
-   * Get the currently selected tab
+   * Get the currently selected tab.
    */
   @Method()
   getSelected(): Promise<string | undefined> {
@@ -152,6 +137,7 @@ export class Tabs implements NavOutlet {
     }
     // wait for all tabs to be ready
     await Promise.all(this.tabs.map(tab => tab.componentOnReady()));
+
     await this.select(this.tabs[0]);
   }
 
@@ -187,7 +173,7 @@ export class Tabs implements NavOutlet {
 
   private notifyRouter() {
     if (this.useRouter) {
-      const router = this.doc.querySelector('ion-router');
+      const router = document.querySelector('ion-router');
       if (router) {
         return router.navChanged('forward');
       }
@@ -200,13 +186,30 @@ export class Tabs implements NavOutlet {
     return selectedTab !== undefined && selectedTab !== leavingTab && !this.transitioning;
   }
 
+  private onTabClicked = (ev: CustomEvent<TabButtonClickEventDetail>) => {
+    const { href, tab } = ev.detail;
+    const selectedTab = this.tabs.find(t => t.tab === tab);
+    if (this.useRouter && href !== undefined) {
+      const router = document.querySelector('ion-router');
+      if (router) {
+        router.push(href);
+      }
+    } else if (selectedTab) {
+      this.select(selectedTab);
+    }
+  }
+
   render() {
-    return [
-      <slot name="top"></slot>,
-      <div class="tabs-inner">
-        <slot></slot>
-      </div>,
-      <slot name="bottom"></slot>
-    ];
+    return (
+      <Host
+        onIonTabButtonClick={this.onTabClicked}
+      >
+        <slot name="top"></slot>
+        <div class="tabs-inner">
+          <slot></slot>
+        </div>
+        <slot name="bottom"></slot>
+      </Host>
+    );
   }
 }

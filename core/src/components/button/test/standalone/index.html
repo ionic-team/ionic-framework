@@ -8,8 +8,8 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <h3>Default</h3>
@@ -22,6 +22,13 @@
     <ion-button fill="clear">Clear</ion-button>
     <ion-button fill="outline" expand="full">Full Outline Full Outline Full Outline Full Outline Full Outline Full Outline Full Outline</ion-button>
     <ion-button fill="clear" expand="block">Block Clear</ion-button>
+  </p>
+
+  <h3>Round button combinations</h3>
+  <p>
+    <ion-button shape="round" size="small">Round & Small</ion-button>
+    <ion-button shape="round" size="large">Round & Large</ion-button>
+    <ion-button shape="round" fill="outline">Round & Outline</ion-button>
   </p>
 
   <h3>Colors</h3>
@@ -46,8 +53,10 @@
 
   <!-- Custom Colors -->
   <ion-button class="custom">custom</ion-button>
+  <ion-button class="custom activated ion-focused">custom.focused</ion-button>
   <ion-button class="custom activated">custom.activated</ion-button>
   <ion-button color="secondary" class="custom">custom w/ secondary</ion-button>
+  <ion-button fill="clear" class="medium">custom medium</ion-button>
 
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -92,10 +101,16 @@
 
     .custom {
       --background: lightpink;
+      --background-hover: rgba(255, 182, 193, 0.5);
       --background-activated: green;
       --color: #222;
       --color-activated: white;
       --opacity: 1;
+    }
+
+    .medium {
+      --color: #989aa2;
+      --background-hover: rgba(152, 154, 162, 0.4);
     }
   </style>
 </body>

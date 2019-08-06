@@ -7,9 +7,11 @@ interface HandlerRegister {
   handler: Handler;
 }
 
-export function startHardwareBackButton(win: Window) {
+export const startHardwareBackButton = () => {
+  const doc = document;
+
   let busy = false;
-  win.document.addEventListener('backbutton', () => {
+  doc.addEventListener('backbutton', () => {
     if (busy) {
       return;
     }
@@ -23,7 +25,7 @@ export function startHardwareBackButton(win: Window) {
         }
       }
     });
-    win.document.dispatchEvent(ev);
+    doc.dispatchEvent(ev);
 
     if (handlers.length > 0) {
       let selectedPriority = Number.MIN_SAFE_INTEGER;
@@ -39,9 +41,9 @@ export function startHardwareBackButton(win: Window) {
       executeAction(selectedHandler).then(() => busy = false);
     }
   });
-}
+};
 
-async function executeAction(handler: Handler | undefined) {
+const executeAction = async (handler: Handler | undefined) => {
   try {
     if (handler) {
       const result = handler();
@@ -52,4 +54,4 @@ async function executeAction(handler: Handler | undefined) {
   } catch (e) {
     console.error(e);
   }
-}
+};

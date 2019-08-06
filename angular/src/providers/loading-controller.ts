@@ -1,6 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
-import { LoadingOptions } from '@ionic/core';
+import { Injectable } from '@angular/core';
+import { LoadingOptions, loadingController } from '@ionic/core';
 
 import { OverlayBaseController } from '../util/overlay';
 
@@ -8,7 +7,7 @@ import { OverlayBaseController } from '../util/overlay';
   providedIn: 'root',
 })
 export class LoadingController extends OverlayBaseController<LoadingOptions, HTMLIonLoadingElement> {
-  constructor(@Inject(DOCUMENT) doc: any) {
-    super('ion-loading-controller', doc);
+  constructor() {
+    super(loadingController);
   }
 }

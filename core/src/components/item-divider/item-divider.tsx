@@ -1,9 +1,12 @@
-import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the divider text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the divider text in LTR, and to the left in RTL.
@@ -28,11 +31,6 @@ export class ItemDivider implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
-
-  /**
    * When it's set to `true`, the item-divider will stay visible when it reaches the top
    * of the viewport until the next `ion-item-divider` replaces it.
    *
@@ -41,35 +39,25 @@ export class ItemDivider implements ComponentInterface {
    */
   @Prop() sticky = false;
 
-  componentDidLoad() {
-    // Change the button size to small for each ion-button in the item
-    // unless the size is explicitly set
-    Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
-      if (button.size === undefined) {
-        button.size = 'small';
-      }
-    });
-  }
-
-  hostData() {
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        'item-divider-sticky': this.sticky,
-        'item': true,
-      }
-    };
-  }
-
   render() {
-    return [
-      <slot name="start"></slot>,
-      <div class="item-divider-inner">
-        <div class="item-divider-wrapper">
-          <slot></slot>
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'item-divider-sticky': this.sticky,
+          'item': true,
+        }}
+      >
+        <slot name="start"></slot>
+        <div class="item-divider-inner">
+          <div class="item-divider-wrapper">
+            <slot></slot>
+          </div>
+          <slot name="end"></slot>
         </div>
-        <slot name="end"></slot>
-      </div>
-    ];
+      </Host>
+    );
   }
 }

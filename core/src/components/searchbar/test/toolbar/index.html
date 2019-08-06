@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -24,64 +24,64 @@
       </ion-header>
 
       <ion-content id="content" fullscreen>
-        <h5 padding-start padding-top> Search - Transparent Toolbar </h5>
+        <h5 class="ion-padding-start ion-padding-top"> Search - Transparent Toolbar </h5>
         <ion-toolbar transparent>
-          <ion-searchbar show-cancel-button></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus"></ion-searchbar>
         </ion-toolbar>
 
-        <h5 padding-start padding-top> Search - Default Toolbar </h5>
+        <h5 class="ion-padding-start ion-padding-top"> Search - Default Toolbar </h5>
         <ion-toolbar>
-          <ion-searchbar show-cancel-button></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus"></ion-searchbar>
         </ion-toolbar>
 
-        <h5 padding-start padding-top> Search - Primary Toolbar </h5>
+        <h5 class="ion-padding-start ion-padding-top"> Search - Primary Toolbar </h5>
         <ion-toolbar color="primary">
-          <ion-searchbar show-cancel-button></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus"></ion-searchbar>
         </ion-toolbar>
 
-        <h5 padding-start padding-top> Search - Secondary Toolbar </h5>
+        <h5 class="ion-padding-start ion-padding-top"> Search - Secondary Toolbar </h5>
         <ion-toolbar color="secondary">
-          <ion-searchbar show-cancel-button></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus"></ion-searchbar>
         </ion-toolbar>
 
-        <h5 padding-start padding-top> Search - Tertiary Toolbar </h5>
+        <h5 class="ion-padding-start ion-padding-top"> Search - Tertiary Toolbar </h5>
         <ion-toolbar color="tertiary">
-          <ion-searchbar show-cancel-button></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus"></ion-searchbar>
         </ion-toolbar>
 
-        <h5 padding-start padding-top> Search - Success Toolbar </h5>
+        <h5 class="ion-padding-start ion-padding-top"> Search - Success Toolbar </h5>
         <ion-toolbar color="success">
-          <ion-searchbar show-cancel-button></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus"></ion-searchbar>
         </ion-toolbar>
 
-        <h5 padding-start padding-top> Search - Warning Toolbar </h5>
+        <h5 class="ion-padding-start ion-padding-top"> Search - Warning Toolbar </h5>
         <ion-toolbar color="warning">
-          <ion-searchbar show-cancel-button></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus"></ion-searchbar>
         </ion-toolbar>
 
-        <h5 padding-start padding-top> Search - Danger Toolbar </h5>
+        <h5 class="ion-padding-start ion-padding-top"> Search - Danger Toolbar </h5>
         <ion-toolbar color="danger">
-          <ion-searchbar show-cancel-button></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus"></ion-searchbar>
         </ion-toolbar>
 
-        <h5 padding-start padding-top> Search - Light Toolbar </h5>
+        <h5 class="ion-padding-start ion-padding-top"> Search - Light Toolbar </h5>
         <ion-toolbar color="light">
-          <ion-searchbar show-cancel-button></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus"></ion-searchbar>
         </ion-toolbar>
 
-        <h5 padding-start padding-top> Search - Medium Toolbar </h5>
+        <h5 class="ion-padding-start ion-padding-top"> Search - Medium Toolbar </h5>
         <ion-toolbar color="medium">
-          <ion-searchbar show-cancel-button></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus"></ion-searchbar>
         </ion-toolbar>
 
-        <h5 padding-start padding-top> Search - Dark Toolbar </h5>
+        <h5 class="ion-padding-start ion-padding-top"> Search - Dark Toolbar </h5>
         <ion-toolbar color="dark">
-          <ion-searchbar show-cancel-button placeholder="Filter Schedules"></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus" placeholder="Filter Schedules"></ion-searchbar>
         </ion-toolbar>
-        
-        <h5 padding-start padding-top> Search - Dark Toolbar, Primary Search </h5>
+
+        <h5 class="ion-padding-start ion-padding-top"> Search - Dark Toolbar, Primary Search </h5>
         <ion-toolbar color="dark">
-          <ion-searchbar show-cancel-button color="primary" placeholder="Filter Schedules"></ion-searchbar>
+          <ion-searchbar show-cancel-button="focus" color="primary" placeholder="Filter Schedules"></ion-searchbar>
         </ion-toolbar>
 
         <ion-grid>
