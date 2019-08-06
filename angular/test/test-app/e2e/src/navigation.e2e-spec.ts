@@ -13,7 +13,7 @@ describe('navigation', () => {
     await element(by.css('#routerLink')).click();
     await waitTime(500);
     await swipeLeft(5);
-    await waitTime(500);
+    await waitTime(1000);
 
     const pageHidden = element(by.css('app-router-link'));
     expect(await pageHidden.getAttribute('aria-hidden')).toEqual('true');
@@ -31,7 +31,7 @@ describe('navigation', () => {
     await waitTime(500);
     await testStack('ion-router-outlet', ['app-router-link', 'app-router-link-page']);
 
-    await swipeLeft(300);
+    await swipeLeft(1000);
 
     await waitTime(500);
     await testStack('ion-router-outlet', ['app-router-link']);
