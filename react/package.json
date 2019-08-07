@@ -20,20 +20,22 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "build": "npm run clean && npm run compile",
+    "build": "npm run clean && npm run copy && npm run compile",
     "clean": "rm -rf dist && rm -rf dist-transpiled",
     "compile": "npm run tsc && rollup -c",
-    "release": "np --any-branch --no-cleanup",
+    "release": "np --any-branch --yolo",
     "lint": "tslint --project .",
     "lint.fix": "tslint --project . --fix",
     "tsc": "tsc -p .",
+    "copy": "node scripts/copy.js",
     "test": "jest"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "css/"
   ],
   "dependencies": {
     "@ionic/core": "^4.7.0",
@@ -49,6 +51,7 @@
     "@types/node": "10.12.9",
     "@types/react": "^16.8.24",
     "@types/react-dom": "^16.8.5",
+    "fs-extra": "^8.1.0",
     "jest": "^24.8.0",
     "jest-dom": "^3.4.0",
     "np": "^5.0.1",
