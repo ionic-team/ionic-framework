@@ -1,5 +1,6 @@
 ## [4.7.3](https://github.com/ionic-team/ionic/compare/v4.7.2...v4.7.3) (2019-08-07)
 
+* **core:** fix an issue with production builds of `@ionic/core`
 
 
 ## [4.7.2](https://github.com/ionic-team/ionic/compare/v4.7.1...v4.7.2) (2019-08-07)
