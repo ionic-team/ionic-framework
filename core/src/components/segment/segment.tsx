@@ -133,7 +133,7 @@ export class Segment implements ComponentInterface {
     writeTask(() => {
       const indicatorStyle = indicator.style;
 
-      indicatorStyle.width = `${width}`;
+      indicatorStyle.width = width;
       indicatorStyle.transform = `translate3d(${left}, 0, 0)`;
       indicatorStyle.display = `block`;
     });
