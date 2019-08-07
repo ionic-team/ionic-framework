@@ -38,6 +38,7 @@ export const createAnimation = () => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const onFinishCallbacks: any[] = [];
+  // const supportsWebAnimations = false;
   const supportsWebAnimations = (typeof (window as any).Animation === 'function');
   const ANIMATION_END_FALLBACK_PADDING_MS = 400;
 
@@ -881,10 +882,6 @@ export const createAnimation = () => {
     }
   };
 
-  const resetWebAnimations = () => {
-    setAnimationStep(0);
-  };
-
   const resetCSSAnimations = () => {
     elements.forEach(element => {
       setStyleProperty(element, 'animation-name', '');
@@ -895,11 +892,11 @@ export const createAnimation = () => {
   };
 
   const resetAnimation = () => {
-    if (supportsWebAnimations) {
-      resetWebAnimations();
-    } else {
+    if (!supportsWebAnimations) {
       resetCSSAnimations();
     }
+
+    setAnimationStep(0);
   };
 
   /**
