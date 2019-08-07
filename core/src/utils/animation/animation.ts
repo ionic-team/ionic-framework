@@ -22,6 +22,7 @@ export const createAnimation = () => {
   let shouldForceSyncPlayback = false;
   let shouldForceReverseDirection = false;
   let willComplete = true;
+  let finished = false;
   let shouldCalculateNumAnimations = true;
   let keyframeName: string;
   let ani: Animation;
@@ -551,6 +552,7 @@ export const createAnimation = () => {
     });
 
     shouldCalculateNumAnimations = true;
+    finished = true;
   };
 
   const animationFinish = () => {
@@ -639,6 +641,26 @@ export const createAnimation = () => {
     initialized = true;
   };
 
+  const setAnimationStep = (step: number) => {
+    if (supportsWebAnimations) {
+      getWebAnimations().forEach(animation => {
+        animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration()! * step);
+        animation.pause();
+      });
+
+    } else {
+      const animationDelay = getDelay() || 0;
+      const animationDuration = `-${animationDelay + (getDuration()! * step)}ms`;
+
+      elements.forEach(element => {
+        if (_keyframes.length > 0) {
+          setStyleProperty(element, 'animation-delay', animationDuration);
+          setStyleProperty(element, 'animation-play-state', 'paused');
+        }
+      });
+    }
+  };
+
   const progressStep = (step: number) => {
     childAnimations.forEach(animation => {
       animation.progressStep(step);
@@ -647,23 +669,7 @@ export const createAnimation = () => {
     step = Math.min(Math.max(step, 0), 0.99);
 
     if (getDuration() !== undefined) {
-      if (supportsWebAnimations) {
-        getWebAnimations().forEach(animation => {
-          animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration()! * step);
-          animation.pause();
-        });
-
-      } else {
-        const animationDelay = getDelay() || 0;
-        const animationDuration = `-${animationDelay + (getDuration()! * step)}ms`;
-
-        elements.forEach(element => {
-          if (_keyframes.length > 0) {
-            setStyleProperty(element, 'animation-delay', animationDuration);
-            setStyleProperty(element, 'animation-play-state', 'paused');
-          }
-        });
-      }
+      setAnimationStep(step);
     }
 
     return ani;
@@ -875,12 +881,38 @@ export const createAnimation = () => {
     }
   };
 
+  const resetWebAnimations = () => {
+    setAnimationStep(0);
+  };
+
+  const resetCSSAnimations = () => {
+    elements.forEach(element => {
+      setStyleProperty(element, 'animation-name', '');
+      requestAnimationFrame(() => {
+        setStyleProperty(element, 'animation-name', keyframeName || null);
+      });
+    });
+  };
+
+  const resetAnimation = () => {
+    if (supportsWebAnimations) {
+      resetWebAnimations();
+    } else {
+      resetCSSAnimations();
+    }
+  };
+
   /**
    * Play the animation
    */
   const play = () => {
     if (!initialized) {
       initializeAnimation();
+    }
+
+    if (finished) {
+      resetAnimation();
+      finished = false;
     }
 
     if (shouldCalculateNumAnimations) {
