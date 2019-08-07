@@ -16,19 +16,25 @@
   --indicator-color: transparent;
   --indicator-transition: #{$segment-button-ios-transition-animated};
 
+  @include border-radius(8px);
+
   display: inline-flex;
 
-  border-radius: 8px;
+  position: relative;
 
   background: #{$segment-ios-background-color};
-
-  position: relative;
 
   overflow: hidden;
 }
 
 :host(.segment-disabled) {
   opacity: $segment-button-ios-opacity-disabled;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    --indicator-transition: none;
+  }
 }
 
 
@@ -117,14 +123,13 @@
 // --------------------------------------------------
 
 .segment-checked-indicator {
+  // TODO this should match the margin of the button
+  @include padding(2px);
   @include position(0, 0, 0, 0);
-
-  position: absolute;
 
   display: none;
 
-  // TODO this should match the margin of the button
-  padding: 2px;
+  position: absolute;
 }
 
 .segment-checked-indicator-background {

@@ -108,16 +108,14 @@ export class Segment implements ComponentInterface {
     const buttons = this.getButtons();
     const index = buttons.findIndex(button => button.value === selectedButton.value);
 
-    const indicator = await this.el.querySelector('.segment-checked-indicator') as HTMLElement;
+    const indicator = this.el.querySelector('.segment-checked-indicator') as HTMLElement;
 
     const left = `${(index * 100)}%`;
     const width = `calc(${1 / buttons.length * 100}%)`;
 
-    if (indicator) {
-      indicator.style.width = `${width}`;
-      indicator.style.transform = `translate3d(${left}, 0, 0)`;
-      indicator.style.display = `block`;
-    }
+    indicator.style.width = `${width}`;
+    indicator.style.transform = `translate3d(${left}, 0, 0)`;
+    indicator.style.display = `block`;
 
     // After the indicator is set for the first time
     // we can animate it between the segment buttons

@@ -11,15 +11,14 @@
   --border-style: solid;
   --transition: #{$segment-button-ios-transition};
 
+  @include margin(2px);
+  @include padding(0, 13px);
+
   position: relative;
 
   min-width: 45px;
 
   min-height: #{$segment-button-ios-height};
-
-  margin: 2px;
-
-  padding: 0 13px;
 
   font-size: #{$segment-button-ios-font-size};
 
