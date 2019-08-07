@@ -314,11 +314,11 @@ export class Menu implements ComponentInterface, MenuI {
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const isReversed = !shouldOpen;
-
     const ani = (this.animation as IonicAnimation)!
       .direction((isReversed) ? 'reverse' : 'normal')
       .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)')
-      .update(true);
+      .update(true)
+      .progressStep(0);
 
     if (animated) {
       await ani.playAsync();
