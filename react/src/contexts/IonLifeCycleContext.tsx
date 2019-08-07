@@ -11,7 +11,7 @@ export interface IonLifeCycleContextInterface {
   ionViewDidLeave: () => void;
 }
 
-export const IonLifeCycleContext = React.createContext<IonLifeCycleContextInterface>({
+export const IonLifeCycleContext = /*@__PURE__*/React.createContext<IonLifeCycleContextInterface>({
   onIonViewWillEnter: () => { return; },
   ionViewWillEnter: () => { return; },
   onIonViewDidEnter: () => { return; },

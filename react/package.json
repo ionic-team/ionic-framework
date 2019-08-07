@@ -28,7 +28,7 @@
     "lint.fix": "tslint --project . --fix",
     "tsc": "tsc -p .",
     "copy": "node scripts/copy.js",
-    "test": "jest"
+    "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -60,6 +60,7 @@
     "react-testing-library": "^7.0.0",
     "rollup": "^1.18.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-virtual": "^1.0.1",
     "ts-jest": "^24.0.2",
     "tslint": "^5.18.0",
     "tslint-ionic-rules": "0.0.21",

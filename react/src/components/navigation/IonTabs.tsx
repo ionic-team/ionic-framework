@@ -28,7 +28,7 @@ const tabsInner: React.CSSProperties = {
   contain: 'layout size style'
 };
 
-export const IonTabs = class extends React.Component<Props> {
+export const IonTabs = /*@__PURE__*/(() => class extends React.Component<Props> {
   context!: React.ContextType<typeof NavContext>;
   routerOutletRef: React.Ref<HTMLIonRouterOutletElement> = React.createRef();
 
@@ -86,4 +86,4 @@ export const IonTabs = class extends React.Component<Props> {
   static get contextType() {
     return NavContext;
   }
-};
+})();

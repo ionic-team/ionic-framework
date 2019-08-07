@@ -8,7 +8,7 @@ type Props = LocalJSX.IonBackButton & {
   ref?: React.RefObject<HTMLIonBackButtonElement>;
 };
 
-export const IonBackButton = class extends React.Component<Props> {
+export const IonBackButton = /*@__PURE__*/(() => class extends React.Component<Props> {
   context!: React.ContextType<typeof NavContext>;
 
   clickButton = (e: MouseEvent) => {
@@ -36,4 +36,4 @@ export const IonBackButton = class extends React.Component<Props> {
   static get contextType() {
     return NavContext;
   }
-};
+})();

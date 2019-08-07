@@ -22,7 +22,7 @@ interface State {
   tabs: { [key: string]: Tab };
 }
 
-const IonTabBarUnwrapped = class extends React.Component<Props, State> {
+const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -93,7 +93,7 @@ const IonTabBarUnwrapped = class extends React.Component<Props, State> {
       </IonTabBarInner>
     );
   }
-};
+})();
 
 export const IonTabBar: React.FC<LocalJSX.IonTabBar> = props => {
   const context = useContext(NavContext);
