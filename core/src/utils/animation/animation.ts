@@ -92,6 +92,15 @@ export const createAnimation = () => {
     return ani;
   };
 
+   /**
+   * Clears all callbacks
+   */
+  const clearOnFinish = () => {
+    onFinishCallbacks.length = 0;
+
+    return ani;
+  };
+
   /**
    * Cancels any Web Animations and removes
    * any animation properties from the
@@ -741,17 +750,12 @@ export const createAnimation = () => {
       animation.progressStart(forceLinearEasing);
     });
 
-    if (finished) {
-      resetAnimation();
-      finished = false;
-    }
-
     shouldForceLinearEasing = forceLinearEasing;
 
     if (!initialized) {
       initializeAnimation();
     } else {
-      update(true);
+
     }
 
     return ani;
@@ -778,6 +782,7 @@ export const createAnimation = () => {
 
     step = Math.min(Math.max(step, 0), 0.99);
 
+    finished = false;
     shouldForceLinearEasing = false;
     willComplete = shouldComplete;
 
@@ -1059,6 +1064,7 @@ export const createAnimation = () => {
     beforeRemoveClass,
     beforeAddClass,
     onFinish,
+    clearOnFinish,
 
     progressStart,
     progressStep,

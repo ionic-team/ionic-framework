@@ -55,6 +55,7 @@ export interface Animation {
   beforeAddClass(className: string | string[] | undefined): Animation;
 
   onFinish(callback: any): Animation;
+  clearOnFinish(): Animation;
 }
 
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
