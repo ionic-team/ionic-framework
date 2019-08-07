@@ -1,13 +1,13 @@
 import { JSX } from '@ionic/core';
 import { JSX as IoniconsJSX } from 'ionicons';
 
-import { /*@__PURE__*/ createReactComponent } from './createComponent';
+import { createReactComponent } from './createComponent';
 
 // ionicons
 export const IonIcon = /*@__PURE__*/createReactComponent<IoniconsJSX.IonIcon, HTMLIonIconElement>('ion-icon');
 
-// /*@__PURE__*/createReactComponent
-
+// ionic/core
+export const IonApp = /*@__PURE__*/createReactComponent<JSX.IonApp, HTMLIonAppElement>('ion-app');
 export const IonTab = /*@__PURE__*/createReactComponent<JSX.IonTab, HTMLIonTabElement>('ion-tab');
 export const IonTabButton = /*@__PURE__*/createReactComponent<JSX.IonTabButton, HTMLIonTabButtonElement>('ion-tab-button');
 export const IonRouterLink = /*@__PURE__*/createReactComponent<JSX.IonRouterLink, HTMLIonRouterLinkElement>('ion-router-link', true);

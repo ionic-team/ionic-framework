@@ -3,7 +3,6 @@ import { defineCustomElements } from '@ionic/core/loader';
 import { addIcons } from 'ionicons';
 import { arrowBack, arrowDown, arrowForward, close, closeCircle, menu, reorder, search } from 'ionicons/icons';
 export { AlertButton, AlertInput } from '@ionic/core';
-export { IonApp } from './IonApp';
 export * from './proxies';
 
 // createControllerComponent
