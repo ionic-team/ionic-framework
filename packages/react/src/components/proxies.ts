@@ -34,6 +34,7 @@ export const IonGrid = /*@__PURE__*/createReactComponent<JSX.IonGrid, HTMLIonGri
 export const IonHeader = /*@__PURE__*/createReactComponent<JSX.IonHeader, HTMLIonHeaderElement>('ion-header');
 export const IonImg = /*@__PURE__*/createReactComponent<JSX.IonImg, HTMLIonImgElement>('ion-img');
 export const IonInfiniteScroll = /*@__PURE__*/createReactComponent<JSX.IonInfiniteScroll, HTMLIonInfiniteScrollElement>('ion-infinite-scroll');
+export const IonInfiniteScrollContent = /*@__PURE__*/createReactComponent<JSX.IonInfiniteScrollContent, HTMLIonInfiniteScrollContentElement>('ion-infinite-scroll-content');
 export const IonInput = /*@__PURE__*/createReactComponent<JSX.IonInput, HTMLIonInputElement>('ion-input');
 export const IonItem = /*@__PURE__*/createReactComponent<JSX.IonItem, HTMLIonItemElement>('ion-item', true);
 export const IonItemDivider = /*@__PURE__*/createReactComponent<JSX.IonItemDivider, HTMLIonItemDividerElement>('ion-item-divider');

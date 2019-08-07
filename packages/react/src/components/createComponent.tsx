@@ -1,7 +1,9 @@
 import { RouterDirection } from '@ionic/core';
 import React from 'react';
 import ReactDom from 'react-dom';
+
 import { NavContext } from '../contexts/NavContext';
+
 import { ReactProps } from './ReactProps';
 import { attachEventProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
 
@@ -56,7 +58,7 @@ export const createReactComponent = <PropType, ElementType>(
             (acc as any)[name] = (cProps as any)[name];
           }
         }
-        return acc
+        return acc;
       }, {});
 
       const newProps: any = {
