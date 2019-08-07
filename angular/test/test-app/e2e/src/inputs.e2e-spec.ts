@@ -60,4 +60,10 @@ describe('inputs', () => {
     expect(await element(by.css('#select-note')).getText()).toEqual('playstation');
     expect(await element(by.css('#range-note')).getText()).toEqual('20');
   });
+
+  it('nested components should not interfere with NgModel', async () => {
+    expect(await element(by.css('#range-note')).getText()).toEqual('10');
+    await element(by.css('#nested-toggle')).click();
+    expect(await element(by.css('#range-note')).getText()).toEqual('10');
+  });
 });

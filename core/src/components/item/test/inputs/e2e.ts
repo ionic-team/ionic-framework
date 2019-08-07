@@ -7,7 +7,7 @@ test('item: inputs', async () => {
 
   // check form
   await page.click('#submit');
-  await checkFormResult(page, '{"date":"","select":"n64","toggle":"","input":"","input2":"","checkbox":""}');
+  await checkFormResult(page, '{"date":"","select":"n64","toggle":"","input":"","input2":"","checkbox":"","range":"10"}');
   await page.waitFor(100);
 
   // Default case, enabled and no value
@@ -36,7 +36,7 @@ test('item: inputs', async () => {
 
   // check form
   await page.click('#submit');
-  await checkFormResult(page, '{"date":"2016-12-09","select":"nes","toggle":"on","input":"Some text","input2":"Some text","checkbox":"on"}');
+  await checkFormResult(page, '{"date":"2016-12-09","select":"nes","toggle":"on","input":"Some text","input2":"Some text","checkbox":"on","range":"20"}');
   await page.waitFor(100);
 
   compare = await page.compareScreenshot('should reenable and set value');

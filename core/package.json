@@ -34,7 +34,7 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@stencil/core": "1.2.1",
+    "@stencil/core": "1.2.3",
     "@stencil/sass": "1.0.0",
     "@types/jest": "24.0.13",
     "@types/node": "10.12.18",
@@ -62,13 +62,14 @@
     "tslint-react": "^3.6.0"
   },
   "scripts": {
-    "build": "npm run clean && npm run build.css && npm run build.vendor && stencil build --docs",
+    "build": "npm run clean && npm run build.css && npm run build.vendor && stencil build --docs && npm run cdnloader",
     "build.vendor": "rollup --config ./scripts/swiper.rollup.config.js",
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "clean": "node scripts/clean.js",
+    "cdnloader": "node scripts/copy-cdn-loader.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
     "css.sass": "sass src/css:./css",
     "lint": "npm run lint.ts && npm run lint.sass",
@@ -99,7 +100,7 @@
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
   },
-  "homepage": "https://github.com/ionic-team/ionic#readme",
+  "homepage": "https://ionicframework.com/",
   "jest": {
     "preset": "@stencil/core/testing"
   }

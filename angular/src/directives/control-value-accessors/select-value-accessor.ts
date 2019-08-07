@@ -20,8 +20,8 @@ export class SelectValueAccessor extends ValueAccessor {
     super(el);
   }
 
-  @HostListener('ionChange', ['$event.target.value'])
-  _handleChangeEvent(value: any) {
-    this.handleChangeEvent(value);
+  @HostListener('ionChange', ['$event.target'])
+  _handleChangeEvent(el: any) {
+    this.handleChangeEvent(el, el.value);
   }
 }
