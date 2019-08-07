@@ -985,7 +985,6 @@ ion-searchbar,css-prop,--placeholder-font-weight
 ion-searchbar,css-prop,--placeholder-opacity
 
 ion-segment,scoped
-ion-segment,prop,animated,boolean,true,false,false
 ion-segment,prop,color,string | undefined,undefined,false,false
 ion-segment,prop,disabled,boolean,false,false,false
 ion-segment,prop,mode,"ios" | "md",undefined,false,false

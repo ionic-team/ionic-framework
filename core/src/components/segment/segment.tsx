@@ -20,16 +20,9 @@ export class Segment implements ComponentInterface {
 
   private didInit = false;
 
-  private canAnimate = false;
+  private animated = false;
 
   @Element() el!: HTMLIonSegmentElement;
-
-  /**
-   * If `true`, the segment button indicator will animate between
-   * checked segment buttons.
-   * Defaults to `true`.
-   */
-  @Prop() animated = true;
 
   /**
    * The color to use from your application's color palette.
@@ -95,37 +88,17 @@ export class Segment implements ComponentInterface {
 
   componentDidRender() {
     this.calculateIndicatorPosition();
-
-    if (this.canAnimate && this.animated) {
-      this.animateIndicator();
-    }
-  }
-
-  private animateIndicator() {
-    const indicator = this.indicatorEl;
-
-    if (!indicator) {
-      return;
-    }
-
-    const transition = getComputedStyle(indicator).getPropertyValue('--indicator-transition');
-
-    writeTask(() => {
-      const indicatorStyle = indicator.style;
-
-      indicatorStyle.transition = transition;
-    });
   }
 
   private calculateIndicatorPosition() {
     const indicator = this.indicatorEl;
 
-    if (!indicator) {
-      return;
-    }
-
     const buttons = this.getButtons();
     const index = buttons.findIndex(button => button.value === this.value);
+
+    if (!indicator || index === -1) {
+      return;
+    }
 
     const left = `${(index * 100)}%`;
     const width = `calc(${1 / buttons.length * 100}%)`;
@@ -140,7 +113,7 @@ export class Segment implements ComponentInterface {
 
     // After the indicator is set for the first time
     // we can animate it between the segment buttons
-    this.canAnimate = true;
+    this.animated = true;
   }
 
   private emitStyle() {
@@ -171,7 +144,13 @@ export class Segment implements ComponentInterface {
           'segment-scrollable': this.scrollable
         }}
       >
-        <div class="segment-checked-indicator" ref={el => this.indicatorEl = el}>
+        <div
+          class={{
+            'segment-checked-indicator': true,
+            'segment-checked-indicator-animated': this.animated
+          }}
+          ref={el => this.indicatorEl = el}
+        >
           <div class="segment-checked-indicator-background"></div>
         </div>
       </Host>

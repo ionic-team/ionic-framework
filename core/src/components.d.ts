@@ -2243,10 +2243,6 @@ export namespace Components {
   }
   interface IonSegment {
     /**
-    * If `true`, the segment button indicator will animate between checked segment buttons. Defaults to `true`.
-    */
-    'animated': boolean;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -5558,10 +5554,6 @@ declare namespace LocalJSX {
     'value'?: string | null;
   }
   interface IonSegment extends JSXBase.HTMLAttributes<HTMLIonSegmentElement> {
-    /**
-    * If `true`, the segment button indicator will animate between checked segment buttons. Defaults to `true`.
-    */
-    'animated'?: boolean;
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
