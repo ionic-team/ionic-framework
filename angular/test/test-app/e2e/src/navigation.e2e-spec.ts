@@ -7,7 +7,8 @@ describe('navigation', () => {
     return handleErrorMessages();
   });
 
-  it ('should swipe and abort', async () => {
+  // TODO: Fix flaky tests
+  xit ('should swipe and abort', async () => {
     await browser.get('/router-link?ionic:mode=ios');
     await waitTime(500);
     await element(by.css('#routerLink')).click();
@@ -24,7 +25,7 @@ describe('navigation', () => {
     expect(await pageVisible.getAttribute('class')).toEqual('ion-page can-go-back');
   });
 
-  it ('should swipe and go back', async () => {
+  xit ('should swipe and go back', async () => {
     await browser.get('/router-link?ionic:mode=ios');
     await waitTime(500);
     await element(by.css('#routerLink')).click();
