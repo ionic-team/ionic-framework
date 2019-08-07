@@ -130,18 +130,6 @@
 }
 
 
-// Segment Button: Checked
-// --------------------------------------------------
-
-:host(.segment-button-checked) {
-  background: var(--background-checked);
-  color: var(--color-checked);
-}
-
-:host(.segment-button-checked) .segment-button-indicator {
-  background-color: var(--indicator-color-checked, var(--color-checked));
-}
-
 // Segment Button: Activated
 // --------------------------------------------------
 

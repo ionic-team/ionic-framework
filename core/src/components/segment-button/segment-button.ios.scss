@@ -5,8 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --indicator-color-checked: var(--background-checked);
-
+  --background-checked: #{$segment-button-ios-background-color-checked};
   --border-radius: #{$segment-button-ios-border-radius};
   --border-width: #{$segment-button-ios-border-width};
   --border-style: solid;
@@ -14,16 +13,21 @@
 
   position: relative;
 
-  font-weight: 450;
-  margin: 2px;
   min-width: 45px;
-  padding: 0 13px;
 
   min-height: #{$segment-button-ios-height};
 
+  margin: 2px;
+
+  padding: 0 13px;
+
   font-size: #{$segment-button-ios-font-size};
 
+  font-weight: 450;
+
   line-height: #{$segment-button-ios-line-height};
+
+  z-index: 2;
 }
 
 
@@ -39,18 +43,7 @@
 // --------------------------------------------------
 
 .segment-button-indicator {
-  @include border-radius(var(--border-radius));
-  @include position(0, 0,0, 0);
-
-  position: absolute;
-
-  height: 100%;
-
-  z-index: -1;
-}
-
-:host(.segment-button-checked) .segment-button-indicator {
-  box-shadow: 0 0 5px rgba(0,0,0,0.16);
+  display: none;
 }
 
 
@@ -99,6 +92,9 @@
 
 :host(.segment-button-checked) {
   font-weight: 500;
+
+  // TODO remove testing only
+  color: red;
 }
 
 // :host(.segment-button-checked.activated) {

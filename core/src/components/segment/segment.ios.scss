@@ -6,7 +6,7 @@
 
 :host {
   --background: transparent;
-  --background-checked: #ffffff;
+  --background-checked: #{$segment-button-ios-background-color-checked};
   // --background-hover: #{$segment-button-ios-background-color-hover};
   // --background-activated: #{$segment-button-ios-background-color-activated};
   // --background-checked: #{$segment-button-ios-background-color-checked};
@@ -14,11 +14,15 @@
   // --color-checked: #{$segment-button-ios-text-color-checked};
   // --border-color: #{$segment-button-ios-border-color};
   --indicator-color: transparent;
+  --indicator-transition: #{$segment-button-ios-transition-animated};
 
   display: inline-flex;
 
-  background: #{$segment-ios-background-color};
   border-radius: 8px;
+
+  background: #{$segment-ios-background-color};
+
+  position: relative;
 
   overflow: hidden;
 }
@@ -100,10 +104,36 @@
 }
 
 :host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(ion-segment-button) {
-  --color: #{current-color(contrast)};
+  // --color: #{current-color(contrast)};
   // --color-checked: #{current-color(base)};
   // --background-hover: #{current-color(contrast, $segment-button-ios-opacity-hover)};
   // --background-activated: #{current-color(contrast, $segment-button-ios-opacity-activated)};
-  --background-checked: #{current-color(contrast, 0.275)};
+  // --background-checked: #{current-color(contrast, 0.275)};
   // --border-color: #{current-color(contrast)};
+}
+
+
+// Segment: Checked Indicator
+// --------------------------------------------------
+
+.segment-checked-indicator {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+
+  display: none;
+
+  // TODO this should match the margin of the button
+  padding: 2px;
+}
+
+.segment-checked-indicator-background {
+  @include border-radius($segment-button-ios-border-radius);
+
+  width: 100%;
+  height: 100%;
+
+  background: var(--background-checked);
+
+  box-shadow: $segment-button-ios-box-shadow-checked;
 }
