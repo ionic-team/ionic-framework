@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, Watch, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
@@ -16,12 +16,13 @@ import { createColorClasses } from '../../utils/theme';
   scoped: true
 })
 export class Segment implements ComponentInterface {
+  private indicatorEl!: HTMLDivElement | undefined;
 
   private didInit = false;
 
-  @Element() el!: HTMLIonSegmentElement;
+  private canAnimate = false;
 
-  @State() canAnimate = false;
+  @Element() el!: HTMLIonSegmentElement;
 
   /**
    * If `true`, the segment button indicator will animate between
@@ -75,10 +76,6 @@ export class Segment implements ComponentInterface {
   segmentClick(ev: CustomEvent) {
     const button = ev.target as HTMLIonSegmentButtonElement;
     this.value = button.value;
-    if (this.canAnimate && this.animated) {
-      this.animateIndicator();
-    }
-    this.calculateIndicatorPosition(button);
   }
 
   connectedCallback() {
@@ -96,26 +93,50 @@ export class Segment implements ComponentInterface {
     this.didInit = true;
   }
 
-  private animateIndicator() {
-    const indicator = this.el.querySelector('.segment-checked-indicator') as HTMLElement;
-    const transition = getComputedStyle(indicator).getPropertyValue('--indicator-transition');
-    indicator.style.transition = transition;
+  componentDidRender() {
+    this.calculateIndicatorPosition();
+
+    if (this.canAnimate && this.animated) {
+      this.animateIndicator();
+    }
   }
 
-  private async calculateIndicatorPosition(selectedButton: HTMLIonSegmentButtonElement) {
-    await this.el.componentOnReady();
+  private animateIndicator() {
+    const indicator = this.indicatorEl;
+
+    if (!indicator) {
+      return;
+    }
+
+    const transition = getComputedStyle(indicator).getPropertyValue('--indicator-transition');
+
+    writeTask(() => {
+      const indicatorStyle = indicator.style;
+
+      indicatorStyle.transition = transition;
+    });
+  }
+
+  private calculateIndicatorPosition() {
+    const indicator = this.indicatorEl;
+
+    if (!indicator) {
+      return;
+    }
 
     const buttons = this.getButtons();
-    const index = buttons.findIndex(button => button.value === selectedButton.value);
-
-    const indicator = this.el.querySelector('.segment-checked-indicator') as HTMLElement;
+    const index = buttons.findIndex(button => button.value === this.value);
 
     const left = `${(index * 100)}%`;
     const width = `calc(${1 / buttons.length * 100}%)`;
 
-    indicator.style.width = `${width}`;
-    indicator.style.transform = `translate3d(${left}, 0, 0)`;
-    indicator.style.display = `block`;
+    writeTask(() => {
+      const indicatorStyle = indicator.style;
+
+      indicatorStyle.width = `${width}`;
+      indicatorStyle.transform = `translate3d(${left}, 0, 0)`;
+      indicatorStyle.display = `block`;
+    });
 
     // After the indicator is set for the first time
     // we can animate it between the segment buttons
@@ -131,11 +152,7 @@ export class Segment implements ComponentInterface {
   private updateButtons() {
     const value = this.value;
     for (const button of this.getButtons()) {
-      const checked = (button.value === value);
-      button.checked = checked;
-      if (checked) {
-        this.calculateIndicatorPosition(button);
-      }
+      button.checked = (button.value === value);
     }
   }
 
@@ -154,7 +171,7 @@ export class Segment implements ComponentInterface {
           'segment-scrollable': this.scrollable
         }}
       >
-        <div class="segment-checked-indicator">
+        <div class="segment-checked-indicator" ref={el => this.indicatorEl = el}>
           <div class="segment-checked-indicator-background"></div>
         </div>
       </Host>
