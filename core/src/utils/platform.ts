@@ -1,15 +1,29 @@
 
 export type Platforms = keyof typeof PLATFORMS_MAP;
 
-export const getPlatforms = (win: any) => setupPlatforms(win);
+export const getPlatforms = (win?: any) => setupPlatforms(win);
 
-export const isPlatform = (win: Window, platform: Platforms) =>
-  getPlatforms(win).indexOf(platform) > -1;
+export const isPlatform: IsPlatformSignature = (winOrPlatform: Window | Platforms, platform?: Platforms) => {
+  if (typeof winOrPlatform === 'string') {
+    platform = winOrPlatform;
+  }
+  return getPlatforms().indexOf(platform!) > -1;
+};
 
-export const setupPlatforms = (win: any) => {
+interface IsPlatformSignature {
+  (plt: Platforms): boolean;
+  (win: Window, plt: Platforms): boolean;
+}
+
+// both valid
+isPlatform('android');
+isPlatform(window, 'android');
+
+export const setupPlatforms = (win?: any) => {
+  win = win || window;
   win.Ionic = win.Ionic || {};
 
-  let platforms: string[] | undefined | null = win.Ionic.platforms;
+  let platforms: Platforms[] | undefined | null = win.Ionic.platforms;
   if (platforms == null) {
     platforms = win.Ionic.platforms = detectPlatforms(win);
     platforms.forEach(p => win.document.documentElement.classList.add(`plt-${p}`));
@@ -17,11 +31,11 @@ export const setupPlatforms = (win: any) => {
   return platforms;
 };
 
+const detectPlatforms = (win: Window) =>
+  (Object.keys(PLATFORMS_MAP) as Platforms[]).filter(p => PLATFORMS_MAP[p](win));
+
 const isMobileWeb = (win: Window): boolean =>
   isMobile(win) && !isHybrid(win);
-
-const detectPlatforms = (win: Window): string[] =>
-  Object.keys(PLATFORMS_MAP).filter(p => (PLATFORMS_MAP as any)[p](win));
 
 const isIpad = (win: Window) =>
   testUserAgent(win, /iPad/i);
