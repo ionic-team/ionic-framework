@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -24,18 +24,22 @@ export class Header implements ComponentInterface {
    */
   @Prop() translucent = false;
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true,
+    return (
+      <Host
+        role="banner"
+        class={{
+          [mode]: true,
 
-        // Used internally for styling
-        [`header-${mode}`]: true,
+          // Used internally for styling
+          [`header-${mode}`]: true,
 
-        [`header-translucent`]: this.translucent,
-        [`header-translucent-${mode}`]: this.translucent,
-      }
-    };
+          [`header-translucent`]: this.translucent,
+          [`header-translucent-${mode}`]: this.translucent,
+        }}
+      >
+      </Host>
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Host, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
@@ -73,16 +73,18 @@ export class Backdrop implements ComponentInterface {
     }
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-
-    return {
-      tabindex: '-1',
-      class: {
-        [mode]: true,
-        'backdrop-hide': !this.visible,
-        'backdrop-no-tappable': !this.tappable,
-      }
-    };
+    return (
+      <Host
+        tabindex="-1"
+        class={{
+          [mode]: true,
+          'backdrop-hide': !this.visible,
+          'backdrop-no-tappable': !this.tappable,
+        }}
+      >
+      </Host>
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -41,19 +41,23 @@ export class List implements ComponentInterface {
     return false;
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true,
+    const { lines, inset } = this;
+    return (
+      <Host
+        class={{
+          [mode]: true,
 
-        // Used internally for styling
-        [`list-${mode}`]: true,
+          // Used internally for styling
+          [`list-${mode}`]: true,
 
-        'list-inset': this.inset,
-        [`list-lines-${this.lines}`]: this.lines !== undefined,
-        [`list-${mode}-lines-${this.lines}`]: this.lines !== undefined
-      }
-    };
+          'list-inset': inset,
+          [`list-lines-${lines}`]: lines !== undefined,
+          [`list-${mode}-lines-${lines}`]: lines !== undefined
+        }}
+      >
+      </Host>
+    );
   }
 }

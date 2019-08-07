@@ -307,7 +307,6 @@ class IonNavManager extends React.Component<IonReactRouterProps, IonReactRouterS
   }
 
   private async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction: NavDirection) {
-    await ionRouterOuter.componentOnReady();
     await ionRouterOuter.commit(enteringEl, leavingEl, {
       deepWait: true,
       duration: direction === undefined ? 0 : undefined,

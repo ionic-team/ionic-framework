@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
@@ -43,8 +43,6 @@ export class ReorderGroup implements ComponentInterface {
     if (this.gesture) {
       this.gesture.setDisabled(this.disabled);
     }
-    const a = { a: 2 };
-    delete a.a;
   }
 
   /**
@@ -57,7 +55,6 @@ export class ReorderGroup implements ComponentInterface {
   async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');
     if (contentEl) {
-      await contentEl.componentOnReady();
       this.scrollEl = await contentEl.getScrollElement();
     }
 
@@ -192,18 +189,20 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   private onEnd() {
-    const selectedItem = this.selectedItemEl;
+    const selectedItemEl = this.selectedItemEl;
     this.state = ReorderGroupState.Complete;
-    if (!selectedItem) {
+    if (!selectedItemEl) {
       this.state = ReorderGroupState.Idle;
       return;
     }
 
     const toIndex = this.lastToIndex;
-    const fromIndex = indexForItem(selectedItem);
+    const fromIndex = indexForItem(selectedItemEl);
 
     if (toIndex === fromIndex) {
-      selectedItem.style.transition = 'transform 200ms ease-in-out';
+      selectedItemEl.style.transition = 'transform 200ms ease-in-out';
+      selectedItemEl.style.transform = '';
+      selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
       setTimeout(() => this.completeSync(), 200);
     } else {
       this.ionItemReorder.emit({
@@ -224,7 +223,7 @@ export class ReorderGroup implements ComponentInterface {
       const toIndex = this.lastToIndex;
       const fromIndex = indexForItem(selectedItemEl);
 
-      if (!listOrReorder || listOrReorder === true) {
+      if (toIndex !== fromIndex && (!listOrReorder || listOrReorder === true)) {
         const ref = (fromIndex < toIndex)
           ? children[toIndex + 1]
           : children[toIndex];
@@ -296,16 +295,19 @@ export class ReorderGroup implements ComponentInterface {
     return this.scrollEl.scrollTop - this.scrollElInitial;
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'reorder-enabled': !this.disabled,
+          'reorder-list-active': this.state !== ReorderGroupState.Idle,
+        }}
+      >
 
-    return {
-      class: {
-        [mode]: true,
-        'reorder-enabled': !this.disabled,
-        'reorder-list-active': this.state !== ReorderGroupState.Idle,
-      }
-    };
+      </Host>
+    );
   }
 }
 

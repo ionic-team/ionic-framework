@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, FunctionalComponent, Listen, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, FunctionalComponent, Host, Listen, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
@@ -423,23 +423,20 @@ export class VirtualScroll implements ComponentInterface {
     }
   }
 
-  hostData() {
-    return {
-      style: {
-        height: `${this.totalHeight}px`
-      }
-    };
-  }
-
   render() {
-    if (this.renderItem) {
-      return (
-        <VirtualProxy dom={this.virtualDom}>
-          {this.virtualDom.map(node => this.renderVirtualNode(node))}
-        </VirtualProxy>
-      );
-    }
-    return undefined;
+    return (
+      <Host
+        style={{
+          height: `${this.totalHeight}px`
+        }}
+      >
+        {this.renderItem && (
+          <VirtualProxy dom={this.virtualDom}>
+            {this.virtualDom.map(node => this.renderVirtualNode(node))}
+          </VirtualProxy>
+        )}
+      </Host>
+    );
   }
 }
 
