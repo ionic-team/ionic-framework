@@ -662,20 +662,6 @@ export const createAnimation = () => {
     }
   };
 
-  const progressStep = (step: number) => {
-    childAnimations.forEach(animation => {
-      animation.progressStep(step);
-    });
-
-    step = Math.min(Math.max(step, 0), 0.99);
-
-    if (getDuration() !== undefined) {
-      setAnimationStep(step);
-    }
-
-    return ani;
-  };
-
   const updateWebAnimation = () => {
     getWebAnimations().forEach(animation => {
       animation.effect.updateTiming({
@@ -744,9 +730,24 @@ export const createAnimation = () => {
       animation.progressStart(forceLinearEasing);
     });
 
+    finished = false;
     shouldForceLinearEasing = forceLinearEasing;
 
     initializeAnimation();
+
+    return ani;
+  };
+
+  const progressStep = (step: number) => {
+    childAnimations.forEach(animation => {
+      animation.progressStep(step);
+    });
+
+    step = Math.min(Math.max(step, 0), 0.99);
+
+    if (getDuration() !== undefined) {
+      setAnimationStep(step);
+    }
 
     return ani;
   };
@@ -770,6 +771,7 @@ export const createAnimation = () => {
 
       shouldForceReverseDirection = true;
       update();
+
       progressStep(1 - step);
     }
 

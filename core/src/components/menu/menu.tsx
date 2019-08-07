@@ -378,6 +378,7 @@ export class Menu implements ComponentInterface, MenuI {
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
     this.animation.progressStep(stepValue);
+    console.log(stepValue);
   }
 
   private onEnd(detail: GestureDetail) {
