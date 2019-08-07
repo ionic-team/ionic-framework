@@ -92,7 +92,7 @@ export const createAnimation = () => {
     return ani;
   };
 
-   /**
+  /**
    * Clears all callbacks
    */
   const clearOnFinish = () => {
@@ -754,8 +754,6 @@ export const createAnimation = () => {
 
     if (!initialized) {
       initializeAnimation();
-    } else {
-
     }
 
     return ani;
