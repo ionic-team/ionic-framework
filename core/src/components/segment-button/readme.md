@@ -652,8 +652,6 @@ export const SegmentButtonExample: React.FC = () => (
 | `--color`                   | Color of the segment button                                                                                       |
 | `--color-activated`         | Color of the segment button when pressed                                                                          |
 | `--color-checked`           | Color of the checked segment button                                                                               |
-| `--color-checked-disabled`  | Color of the checked & disabled segment button                                                                    |
-| `--color-disabled`          | Color of the disabled segment button                                                                              |
 | `--indicator-color`         | Color of the indicator (highlight) under the segment button                                                       |
 | `--indicator-color-checked` | Color of the indicator (highlight) under the checked segment button                                               |
 | `--margin-bottom`           | Bottom margin of the segment button                                                                               |
