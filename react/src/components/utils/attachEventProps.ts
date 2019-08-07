@@ -1,5 +1,5 @@
 export const attachEventProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
-  // TODO: why this here?
+  // add any classes in className to the class list
   const className = getClassName(node.classList, newProps, oldProps);
   if (className !== '') {
     node.className = className;

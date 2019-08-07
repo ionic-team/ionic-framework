@@ -3,24 +3,25 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { NavContext } from '../contexts/NavContext';
 import { ReactProps } from './ReactProps';
-import { attachEventProps, createForwardRef, dashToPascalCase } from './utils';
+import { attachEventProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
 
 interface IonicReactInternalProps<ElementType> {
   forwardedRef?: React.Ref<ElementType>;
   children?: React.ReactNode;
   href?: string;
   target?: string;
+  style?: string;
+  ref?: React.Ref<any>;
   routerDirection?: RouterDirection;
+  className?: string;
 }
 
-export const createReactComponent = <PropType, ElementType> (
+export const createReactComponent = <PropType, ElementType>(
   tagName: string,
-  attributeValues: string[] = [],
   hrefComponent = false
 ) => {
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<ElementType>> {
-
     context!: React.ContextType<typeof NavContext>;
 
     constructor(props: IonicReactInternalProps<ElementType>) {
@@ -46,18 +47,23 @@ export const createReactComponent = <PropType, ElementType> (
     }
 
     render() {
-      const { children, forwardedRef, ...cProps } = this.props;
+      const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
 
-      const propsWithoutAttributeValues = Object.keys(cProps).reduce((oldValue, key) => {
-        if (attributeValues.indexOf(key) === -1) {
-          (oldValue as any)[key] = (cProps as any)[key];
+      const props = Object.keys(cProps).reduce((acc, name) => {
+        if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
+          const eventName = name.substring(2).toLowerCase();
+          if (isCoveredByReact(eventName)) {
+            (acc as any)[name] = (cProps as any)[name];
+          }
         }
-        return oldValue;
+        return acc
       }, {});
 
       const newProps: any = {
-        ...propsWithoutAttributeValues,
-        ref: forwardedRef
+        ...props,
+        ref: forwardedRef,
+        style,
+        className
       };
 
       if (hrefComponent) {

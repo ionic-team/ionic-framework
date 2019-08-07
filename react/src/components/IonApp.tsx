@@ -10,22 +10,13 @@ interface IonAppProps {
   initialConfig?: IonicConfig;
 }
 
-export const IonApp = class extends React.Component<IonAppProps> {
+export const IonApp: React.FC<IonAppProps> = ({ children, initialConfig }) => {
 
-  constructor(props: IonAppProps) {
-    super(props);
-    if (props.initialConfig) {
-      setupConfig(props.initialConfig);
-    }
+  if (initialConfig) {
+    setupConfig(initialConfig);
   }
 
-  render() {
-    return (
-      <IonAppInner>{this.props.children}</IonAppInner>
-    );
-  }
-
-  static get displayName() {
-    return 'IonApp';
-  }
+  return (
+    <IonAppInner>{children}</IonAppInner>
+  );
 };
