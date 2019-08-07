@@ -10,7 +10,9 @@
 
   @include font-smoothing();
 
-  display: flex;
+  display: inline-flex;
+
+  position: relative;
 
   align-items: stretch;
   justify-content: center;
@@ -20,6 +22,16 @@
   font-family: $font-family-base;
 
   text-align: center;
+}
+
+
+// Segment: Reduced Motion
+// --------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    --indicator-transition: none;
+  }
 }
 
 

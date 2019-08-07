@@ -18,10 +18,6 @@
 
   @include border-radius(8px);
 
-  display: inline-flex;
-
-  position: relative;
-
   background: #{$segment-ios-background-color};
 
   overflow: hidden;
@@ -29,12 +25,6 @@
 
 :host(.segment-disabled) {
   opacity: $segment-button-ios-opacity-disabled;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :host {
-    --indicator-transition: none;
-  }
 }
 
 
@@ -141,4 +131,8 @@
   background: var(--background-checked);
 
   box-shadow: $segment-button-ios-box-shadow-checked;
+}
+
+.segment-checked-indicator-animated {
+  transition: var(--indicator-transition);
 }

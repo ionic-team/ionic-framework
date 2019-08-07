@@ -14,8 +14,6 @@
   @include margin(2px);
   @include padding(0, 13px);
 
-  position: relative;
-
   min-width: 45px;
 
   min-height: #{$segment-button-ios-height};

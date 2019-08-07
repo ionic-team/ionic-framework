@@ -145,6 +145,7 @@ export class Segment implements ComponentInterface {
         }}
       >
         <div
+          part="indicator"
           class={{
             'segment-checked-indicator': true,
             'segment-checked-indicator-animated': this.animated
