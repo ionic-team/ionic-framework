@@ -38,7 +38,6 @@ export const createAnimation = () => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const onFinishCallbacks: any[] = [];
-  // const supportsWebAnimations = false;
   const supportsWebAnimations = (typeof (window as any).Animation === 'function');
   const ANIMATION_END_FALLBACK_PADDING_MS = 400;
 
@@ -336,6 +335,8 @@ export const createAnimation = () => {
   const direction = (animationDirection: AnimationDirection) => {
     _direction = animationDirection;
 
+    update(true);
+
     return ani;
   };
 
@@ -345,6 +346,8 @@ export const createAnimation = () => {
    */
   const fill = (animationFill: AnimationFill) => {
     _fill = animationFill;
+
+    update(true);
 
     return ani;
 
@@ -356,6 +359,8 @@ export const createAnimation = () => {
   const delay = (animationDelay: number) => {
     _delay = animationDelay;
 
+    update(true);
+
     return ani;
   };
 
@@ -365,6 +370,8 @@ export const createAnimation = () => {
    */
   const easing = (animationEasing: string) => {
     _easing = animationEasing;
+
+    update(true);
 
     return ani;
   };
@@ -376,6 +383,8 @@ export const createAnimation = () => {
   const duration = (animationDuration: number) => {
     _duration = animationDuration;
 
+    update(true);
+
     return ani;
   };
 
@@ -385,6 +394,8 @@ export const createAnimation = () => {
    */
   const iterations = (animationIterations: number) => {
     _iterations = animationIterations;
+
+    update(true);
 
     return ani;
   };
@@ -730,10 +741,18 @@ export const createAnimation = () => {
       animation.progressStart(forceLinearEasing);
     });
 
-    finished = false;
+    if (finished) {
+      resetAnimation();
+      finished = false;
+    }
+
     shouldForceLinearEasing = forceLinearEasing;
 
-    initializeAnimation();
+    if (!initialized) {
+      initializeAnimation();
+    } else {
+      update(true);
+    }
 
     return ani;
   };

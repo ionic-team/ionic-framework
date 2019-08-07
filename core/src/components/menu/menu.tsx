@@ -316,8 +316,7 @@ export class Menu implements ComponentInterface, MenuI {
     const isReversed = !shouldOpen;
     const ani = (this.animation as IonicAnimation)!
       .direction((isReversed) ? 'reverse' : 'normal')
-      .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)')
-      .update(true);
+      .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)');
 
     if (animated) {
       await ani.playAsync();
@@ -378,8 +377,7 @@ export class Menu implements ComponentInterface, MenuI {
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
     this.animation.progressStep(stepValue);
-    console.log(stepValue);
-  }
+}
 
   private onEnd(detail: GestureDetail) {
     if (!this.isAnimating || !this.animation) {
