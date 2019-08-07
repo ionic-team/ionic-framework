@@ -1,34 +1,16 @@
-import React, { ReactElement } from 'react';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history'
-import { IonTabs, IonTab, IonTabBar, IonTabButton, IonLabel, IonIcon} from '../index';
+import React from 'react';
+import { IonTabs, IonTabButton, IonLabel, IonIcon, IonTabBar} from '../index';
 import { render, cleanup } from 'react-testing-library';
+import { IonRouterOutlet } from '../proxies';
 
 afterEach(cleanup)
 
-function renderWithRouter(
-  ui: ReactElement<any>,
-  {
-    route = '/',
-    history = createMemoryHistory({ initialEntries: [route] }),
-  } = {}
-) {
-  return {
-    ...render(<Router history={history}>{ui}</Router>),
-    history
-  }
-}
-
 describe('IonTabs', () => {
   test('should render happy path', () => {
-    const { container } = renderWithRouter(
+    const { container } = render(
       <IonTabs>
-        <IonTab tab="schedule">Schedule Content</IonTab>
-        <IonTab tab="speakers">Speakers Content</IonTab>
-        <IonTab tab="map">Map Content</IonTab>
-        <IonTab tab="about">About Content</IonTab>
-
-        <IonTabBar slot="bottom">
+        <IonRouterOutlet></IonRouterOutlet>
+        <IonTabBar slot="bottom" currentPath={'/'} navigate={() => {}}>
           <IonTabButton tab="schedule">
             <IonLabel>Schedule</IonLabel>
             <IonIcon name="schedule"></IonIcon>
@@ -59,16 +41,10 @@ describe('IonTabs', () => {
   });
 
   test('should allow for conditional children', () => {
-    const { container } = renderWithRouter(
+    const { container } = render(
       <IonTabs>
-        {false &&
-          <IonTab tab="schedule">Schedule Content</IonTab>
-        }
-        <IonTab tab="speakers">Speakers Content</IonTab>
-        <IonTab tab="map">Map Content</IonTab>
-        <IonTab tab="about">About Content</IonTab>
-
-        <IonTabBar slot="bottom">
+        <IonRouterOutlet></IonRouterOutlet>
+        <IonTabBar slot="bottom" currentPath={'/'} navigate={() => {}}>
           {false &&
           <IonTabButton tab="schedule">
             <IonLabel>Schedule</IonLabel>

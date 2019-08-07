@@ -76,7 +76,8 @@
     "testPathIgnorePatterns": [
       "node_modules",
       "dist-transpiled",
-      "dist"
+      "dist",
+      "test-app"
     ],
     "modulePaths": [
       "<rootDir>"

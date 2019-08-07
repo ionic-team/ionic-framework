@@ -1,7 +1,7 @@
 import { OverlayEventDetail } from '@ionic/core';
 import React from 'react';
 
-import { attachEventProps, generateUniqueId } from './utils';
+import { attachEventProps } from './utils';
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;
@@ -23,11 +23,9 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
 
   return class extends React.Component<OptionsType & ReactControllerProps> {
     overlay?: OverlayType;
-    id: string;
 
     constructor(props: Props) {
       super(props);
-      this.id = generateUniqueId();
     }
 
     static get displayName() {

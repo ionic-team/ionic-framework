@@ -95,15 +95,15 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
   }
 })();
 
-export const IonTabBar: React.FC<LocalJSX.IonTabBar> = props => {
+export const IonTabBar: React.FC<LocalJSX.IonTabBar & { currentPath?: string, navigate?: (path: string) => void; }> = props => {
   const context = useContext(NavContext);
   return (
     <IonTabBarUnwrapped
       {...props as any}
-      navigate={(path: string) => {
+      navigate={props.navigate || ((path: string) => {
         context.navigate(path);
-      }}
-      currentPath={context.currentPath}
+      })}
+      currentPath={props.currentPath || context.currentPath}
     >
       {props.children}
     </IonTabBarUnwrapped>

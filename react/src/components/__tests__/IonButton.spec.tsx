@@ -13,7 +13,7 @@ describe('IonButton', () => {
   afterEach(cleanup);
 
   it('should render a button', () => {
-    const { baseElement, getByText, } = render(<IonButton>my button</IonButton>);
+    const { getByText, } = render(<IonButton>my button</IonButton>);
     const button = getByText('my button');
     expect(button).toBeDefined();
   });

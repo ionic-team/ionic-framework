@@ -2,15 +2,6 @@ export const dashToPascalCase = (str: string) => str.toLowerCase().split('-').ma
 import { getPlatforms as getPlatformsCore, isPlatform as isPlatformCore, Platforms } from '@ionic/core';
 import React from 'react';
 
-export const generateUniqueId = () => {
-  const charPool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const charArray: string[] = [];
-  for(let i = 0; i < 10; i++) {
-    charArray.push(charPool[Math.floor(Math.random() * charPool.length)]);
-  }
-  return charArray.join('');
-};
-
 export type IonicReactExternalProps<PropType, ElementType> = PropType & {
   ref?: React.RefObject<ElementType>;
   children?: React.ReactNode;
@@ -35,4 +26,3 @@ export const isPlatform = (platform: Platforms) => {
 export const getPlatforms = () => {
   return getPlatformsCore(window);
 };
-
