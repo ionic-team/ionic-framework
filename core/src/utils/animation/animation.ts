@@ -39,7 +39,6 @@ export const createAnimation = () => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const supportsWebAnimations = (typeof (window as any).Animation === 'function');
-  console.log(`Using ${(supportsWebAnimations) ? 'Web Animations' : 'CSS Animations'}`);
   const ANIMATION_END_FALLBACK_PADDING_MS = 400;
 
   /**
@@ -665,6 +664,7 @@ export const createAnimation = () => {
   };
 
   const setAnimationStep = (step: number) => {
+    step = Math.min(Math.max(step, 0), 0.999);
     if (supportsWebAnimations) {
       getWebAnimations().forEach(animation => {
         animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration()! * step);
@@ -715,19 +715,6 @@ export const createAnimation = () => {
     });
   };
 
-  const removeCSSAnimation = () => {
-    elements.forEach(element => {
-      removeStyleProperty(element, 'animation-name');
-      removeStyleProperty(element, 'animation-duration');
-      removeStyleProperty(element, 'animation-timing-function');
-      removeStyleProperty(element, 'animation-delay');
-      removeStyleProperty(element, 'animation-fill-mode');
-      removeStyleProperty(element, 'animation-direction');
-      removeStyleProperty(element, 'animation-iteration-countion');
-      removeStyleProperty(element, 'animation-play-state');
-    });
-  };
-
   /**
    * Updates any existing animations.
    */
@@ -752,6 +739,8 @@ export const createAnimation = () => {
       animation.progressStart(forceLinearEasing);
     });
 
+    resetCSSAnimations();
+
     shouldForceLinearEasing = forceLinearEasing;
 
     if (!initialized) {
@@ -766,8 +755,6 @@ export const createAnimation = () => {
       animation.progressStep(step);
     });
 
-    step = Math.min(Math.max(step, 0), 0.99);
-
     if (getDuration() !== undefined) {
       setAnimationStep(step);
     }
@@ -780,8 +767,6 @@ export const createAnimation = () => {
       animation.progressEnd(shouldComplete, step);
     });
 
-    step = Math.min(Math.max(step, 0), 0.99);
-
     finished = false;
     shouldForceLinearEasing = false;
     willComplete = shouldComplete;
@@ -790,7 +775,10 @@ export const createAnimation = () => {
       onFinish(() => {
         willComplete = true;
         forceDirectionValue = undefined;
-        removeCSSAnimation();
+
+        progressStep(1);
+        resetCSSAnimations();
+
       }, {
         oneTime: true
       });
@@ -799,6 +787,14 @@ export const createAnimation = () => {
       update();
 
       progressStep(1 - step);
+
+    } else {
+      onFinish(() => {
+        progressStep(1);
+        resetCSSAnimations();
+      }, {
+        oneTime: true
+      });
     }
 
     if (!parentAnimation) {
@@ -889,20 +885,20 @@ export const createAnimation = () => {
        * accounts for this, but using raw CSS Animations requires
        * this workaround.
        */
-      animationFinish();
+      setTimeout(animationFinish, animationDelay + animationDuration);
     } else if (_keyframes.length > 0 && elements.length > 0) {
       /**
        * This is a catchall in the event that a CSS Animation did not finish.
        * The Web Animations API has mechanisms in place for preventing this.
        */
        cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + animationDuration + ANIMATION_END_FALLBACK_PADDING_MS);
-    }
 
-    animationEnd(elements[0], () => {
-      clearCSSAnimationsTimeout();
-      pause();
-      animationFinish();
-    });
+       animationEnd(elements[0], () => {
+        clearCSSAnimationsTimeout();
+        pause();
+        animationFinish();
+      });
+    }
   };
 
   const playWebAnimations = () => {
@@ -917,7 +913,6 @@ export const createAnimation = () => {
 
   const resetCSSAnimations = () => {
     elements.forEach(element => {
-
       setStyleProperty(element, 'animation-name', 'none');
       requestAnimationFrame(() => {
         // tslint:disable-next-line
