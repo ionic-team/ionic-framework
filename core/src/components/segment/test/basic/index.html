@@ -4,12 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Segment - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
 
 <body onload="listenForEvent()">
   <ion-app>
@@ -87,15 +89,27 @@
     <ion-content>
       <div class="ion-padding">
         <ion-segment>
-          <ion-segment-button><ion-label>Seg 1</ion-label></ion-segment-button>
-          <ion-segment-button><ion-label>Seg 2</ion-label></ion-segment-button>
-          <ion-segment-button><ion-label>Seg 3</ion-label></ion-segment-button>
+          <ion-segment-button>
+            <ion-label>Seg 1</ion-label>
+          </ion-segment-button>
+          <ion-segment-button>
+            <ion-label>Seg 2</ion-label>
+          </ion-segment-button>
+          <ion-segment-button>
+            <ion-label>Seg 3</ion-label>
+          </ion-segment-button>
         </ion-segment>
 
         <ion-segment style="--indicator-transition: none;">
-          <ion-segment-button><ion-label>Animate</ion-label></ion-segment-button>
-          <ion-segment-button checked><ion-label>Is</ion-label></ion-segment-button>
-          <ion-segment-button><ion-label>False</ion-label></ion-segment-button>
+          <ion-segment-button>
+            <ion-label>Animate</ion-label>
+          </ion-segment-button>
+          <ion-segment-button checked>
+            <ion-label>Is</ion-label>
+          </ion-segment-button>
+          <ion-segment-button>
+            <ion-label>False</ion-label>
+          </ion-segment-button>
         </ion-segment>
 
         <ion-segment color="dark" value="Reading List">
@@ -123,7 +137,7 @@
           <ion-segment-button value="custom">
             <ion-icon name="create"></ion-icon>
           </ion-segment-button>
-    </ion-segment>
+        </ion-segment>
 
         <ion-segment name="dynamicPropDisable" disabled color="danger">
           <ion-segment-button value="Bookmarks">
@@ -162,7 +176,7 @@
         </ion-segment>
 
         <!-- Dynamic Buttons -->
-        <ion-segment id="dynamicButtons" color="dark"></ion-segment>
+        <ion-segment id="dynamicButtons"></ion-segment>
       </div>
 
       <div class="ion-padding-horizontal">
@@ -218,13 +232,15 @@
         }, 4000);
 
         function updateSegmentButtons(length) {
-          dynamicButtons.innerHTML = '';
+          const buttonsLength = dynamicButtons.children.length;
+          const begin = buttonsLength === 0 ? 0 : buttonsLength - 1;
 
-          for (var i = 0; i < length; i++) {
-            dynamicButtons.innerHTML += `
-                <ion-segment-button value="segment-${i}">
-                  <ion-label>Btn ${i}</ion-label>
-                </ion-segment-button>`;
+          for (var i = begin; i < length; i++) {
+            const button = document.createElement('ion-segment-button');
+            button.value = `segment-${i}`;
+            button.innerHTML = `<ion-label>Btn ${i}</ion-label>`;
+
+            dynamicButtons.appendChild(button);
           }
         }
 
