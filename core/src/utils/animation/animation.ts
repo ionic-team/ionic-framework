@@ -38,8 +38,7 @@ export const createAnimation = () => {
   const _afterAddReadFunctions: any[] = [];
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
-  const supportsWebAnimations = false;
-  // const supportsWebAnimations = (typeof (window as any).Animation === 'function');
+  const supportsWebAnimations = (typeof (window as any).Animation === 'function');
   const ANIMATION_END_FALLBACK_PADDING_MS = 400;
 
   /**
@@ -899,10 +898,10 @@ export const createAnimation = () => {
     }
 
     animationEnd(elements[0], () => {
-        clearCSSAnimationsTimeout();
-        pause();
-        animationFinish();
-      });
+      clearCSSAnimationsTimeout();
+      pause();
+      animationFinish();
+    });
   };
 
   const playWebAnimations = () => {
