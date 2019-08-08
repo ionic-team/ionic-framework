@@ -1,4 +1,4 @@
-import { Animation, AnimationDirection, AnimationFill } from './animation-interface';
+import { Animation, AnimationDirection, AnimationFill, AnimationOnFinishCallback, AnimationOnFinishOptions } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
 export const createAnimation = () => {
@@ -20,12 +20,17 @@ export const createAnimation = () => {
   let numAnimationsRunning = 0;
   let shouldForceLinearEasing = false;
   let shouldForceSyncPlayback = false;
-  let shouldForceReverseDirection = false;
+
+  let forceDirectionValue: AnimationDirection | undefined;
+
   let willComplete = true;
   let finished = false;
   let shouldCalculateNumAnimations = true;
   let keyframeName: string;
   let ani: Animation;
+
+  const onFinishCallbacks: AnimationOnFinishCallback[] = [];
+  const onFinishOneTimeCallbacks: AnimationOnFinishCallback[] = [];
 
   let cssAnimationsTimerFallback: any;
 
@@ -37,7 +42,6 @@ export const createAnimation = () => {
   const _afterAddReadFunctions: any[] = [];
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
-  const onFinishCallbacks: any[] = [];
   const supportsWebAnimations = (typeof (window as any).Animation === 'function');
   const ANIMATION_END_FALLBACK_PADDING_MS = 400;
 
@@ -60,7 +64,7 @@ export const createAnimation = () => {
 
     elements.length = 0;
     childAnimations.length = 0;
-    onFinishCallbacks.length = 0;
+    clearOnFinish();
 
     initialized = false;
 
@@ -86,8 +90,9 @@ export const createAnimation = () => {
    * Add a callback to be run
    * upon the animation ending
    */
-  const onFinish = (callback: any) => {
-    onFinishCallbacks.push(callback);
+  const onFinish = (callback: any, opts: AnimationOnFinishOptions) => {
+    const callbacks = (opts.oneTime) ? onFinishOneTimeCallbacks : onFinishCallbacks;
+    callbacks.push({ callback, opts } as AnimationOnFinishCallback);
 
     return ani;
   };
@@ -97,6 +102,7 @@ export const createAnimation = () => {
    */
   const clearOnFinish = () => {
     onFinishCallbacks.length = 0;
+    onFinishOneTimeCallbacks.length = 0;
 
     return ani;
   };
@@ -280,7 +286,7 @@ export const createAnimation = () => {
    * Returns the animation's direction.
    */
   const getDirection = () => {
-    if (shouldForceReverseDirection) { return 'reverse'; }
+    if (forceDirectionValue !== undefined) { console.log('forcing', forceDirectionValue); return forceDirectionValue; }
     if (_direction !== undefined) { return _direction; }
     if (parentAnimation) { return parentAnimation.getDirection(); }
 
@@ -568,9 +574,15 @@ export const createAnimation = () => {
 
     const didComplete = willComplete;
 
-    onFinishCallbacks.forEach(callback => {
-      callback(didComplete, ani);
+    onFinishCallbacks.forEach(onFinishCallback => {
+      onFinishCallback.callback(didComplete, ani);
     });
+
+    onFinishOneTimeCallbacks.forEach(onFinishCallback => {
+      onFinishCallback.callback(didComplete, ani);
+    });
+
+    onFinishOneTimeCallbacks.length = 0;
 
     shouldCalculateNumAnimations = true;
     finished = true;
@@ -787,11 +799,13 @@ export const createAnimation = () => {
     if (!shouldComplete) {
       onFinish(() => {
         willComplete = true;
-        shouldForceReverseDirection = false;
+        forceDirectionValue = undefined;
         removeCSSAnimation();
+      }, {
+        oneTime: true
       });
 
-      shouldForceReverseDirection = true;
+      forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
       update();
 
       progressStep(1 - step);
@@ -834,7 +848,7 @@ export const createAnimation = () => {
    */
   const playAsync = () => {
     return new Promise(resolve => {
-      onFinish(resolve);
+      onFinish(resolve, { oneTime: true });
       play();
 
       return ani;
@@ -849,7 +863,7 @@ export const createAnimation = () => {
   const playSync = () => {
     shouldForceSyncPlayback = true;
 
-    onFinish(() => shouldForceSyncPlayback = false);
+    onFinish(() => shouldForceSyncPlayback = false, { oneTime: true });
     play();
 
     return ani;

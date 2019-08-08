@@ -58,5 +58,14 @@ export interface Animation {
   clearOnFinish(): Animation;
 }
 
+export interface AnimationOnFinishCallback {
+  callback: (didComplete: boolean, animation: Animation) => void;
+  opts: AnimationOnFinishOptions;
+}
+
+export interface AnimationOnFinishOptions {
+  oneTime: boolean;
+}
+
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationFill = 'auto' | 'none' | 'forwards' | 'backwards' | 'both';
