@@ -740,6 +740,7 @@ export const createAnimation = () => {
     });
 
     resetCSSAnimations();
+    pause();
 
     shouldForceLinearEasing = forceLinearEasing;
 
