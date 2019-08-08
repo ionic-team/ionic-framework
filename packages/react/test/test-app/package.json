@@ -15,8 +15,13 @@
   },
   "scripts": {
     "start": "npm run sync && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build": "npm run sync && react-scripts build",
+
+    "test": "start-server-and-test test:serve http://localhost:5000 test:open",
+    "test:open": "cypress open",
+    "test:run": "cypress run",
+    "test:serve": "npm run build && npm run serve",
+    "serve": "serve -s build",
     "sync": "sh scripts/sync.sh"
   },
   "eslintConfig": {
@@ -33,5 +38,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cypress": "^3.4.1",
+    "start-server-and-test": "^1.9.2"
   }
 }
