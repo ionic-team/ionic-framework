@@ -607,15 +607,7 @@ export const createAnimation = () => {
         const stylesheet = createKeyframeStylesheet(keyframeName, keyframeRules, element);
         stylesheets.push(stylesheet);
 
-        /**
-         * Render the alt animation first so there
-         * is no flicker when switching to it
-         */
-        setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
-        requestAnimationFrame(() => {
-          setStyleProperty(element, 'animation-name', stylesheet.id || null);
-        });
-
+        setStyleProperty(element, 'animation-name', stylesheet.id || null);
         setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
         setStyleProperty(element, 'animation-timing-function', getEasing() || null);
         setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
