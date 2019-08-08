@@ -1,6 +1,6 @@
 import { SpinnerConfigs } from './spinner-interface';
 
-const spinners = {
+export const SPINNERS: SpinnerConfigs = {
 
   'lines': {
     dur: 1000,
@@ -96,8 +96,25 @@ const spinners = {
         }
       };
     }
+  },
+
+  'circular': {
+    dur: 1400,
+    elmDuration: true,
+    circles: 1,
+    fn: () => {
+      return {
+        r: 20,
+        cx: 44,
+        cy: 44,
+        fill: 'none',
+        viewBox: '22 22 44 44',
+        transform: 'translate(0,0)',
+        style: {}
+      };
+    }
   }
+
 };
 
-export const SPINNERS: SpinnerConfigs = spinners;
-export type SpinnerTypes = keyof typeof spinners;
+export type SpinnerTypes = keyof typeof SPINNERS;
