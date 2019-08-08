@@ -1,6 +1,11 @@
 
 export type Platforms = keyof typeof PLATFORMS_MAP;
 
+interface IsPlatformSignature {
+  (plt: Platforms): boolean;
+  (win: Window, plt: Platforms): boolean;
+}
+
 export const getPlatforms = (win?: any) => setupPlatforms(win);
 
 export const isPlatform: IsPlatformSignature = (winOrPlatform: Window | Platforms, platform?: Platforms) => {
@@ -9,15 +14,6 @@ export const isPlatform: IsPlatformSignature = (winOrPlatform: Window | Platform
   }
   return getPlatforms().indexOf(platform!) > -1;
 };
-
-interface IsPlatformSignature {
-  (plt: Platforms): boolean;
-  (win: Window, plt: Platforms): boolean;
-}
-
-// both valid
-isPlatform('android');
-isPlatform(window, 'android');
 
 export const setupPlatforms = (win?: any) => {
   win = win || window;
