@@ -91,7 +91,7 @@ export const createAnimation = () => {
    * upon the animation ending
    */
   const onFinish = (callback: any, opts: AnimationOnFinishOptions) => {
-    const callbacks = (opts.oneTime) ? onFinishOneTimeCallbacks : onFinishCallbacks;
+    const callbacks = (opts && opts.oneTime) ? onFinishOneTimeCallbacks : onFinishCallbacks;
     callbacks.push({ callback, opts } as AnimationOnFinishCallback);
 
     return ani;
