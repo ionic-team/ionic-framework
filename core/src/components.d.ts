@@ -2182,6 +2182,10 @@ export namespace Components {
     */
     'getInputElement': () => Promise<HTMLInputElement>;
     /**
+    * A hint to the browser for which keyboard to display. Possible values are: `"none"` | `"text"` | `"tel"` | `"url"` | `"email"` | `"numeric"` | `"decimal"` | `"search"`.
+    */
+    'inputmode': 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
@@ -5439,6 +5443,10 @@ declare namespace LocalJSX {
     * If `true`, the user cannot interact with the input.
     */
     'disabled'?: boolean;
+    /**
+    * A hint to the browser for which keyboard to display. Possible values are: `"none"` | `"text"` | `"tel"` | `"url"` | `"email"` | `"numeric"` | `"decimal"` | `"search"`.
+    */
+    'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**
     * The mode determines which platform styles to use.
     */
