@@ -2,41 +2,6 @@ import { SpinnerConfigs } from './spinner-interface';
 
 const spinners = {
 
-  'lines': {
-    dur: 1000,
-    lines: 12,
-    fn: (dur: number, index: number, total: number) => {
-      const transform = `rotate(${ 30 * index + (index < 6 ? 180 : -180) }deg)`;
-      const animationDelay = `${ (dur * index / total) - dur }ms`;
-
-      return {
-        y1: 17,
-        y2: 29,
-        style: {
-          'transform': transform,
-          'animation-delay': animationDelay,
-        }
-      };
-    }
-  },
-
-  'lines-small': {
-    dur: 1000,
-    lines: 12,
-    fn: (dur: number, index: number, total: number) => {
-      const transform = `rotate(${30 * index + (index < 6 ? 180 : -180)}deg)`;
-      const animationDelay = `${ (dur * index / total) - dur }ms`;
-      return {
-        y1: 12,
-        y2: 20,
-        style: {
-          'transform': transform,
-          'animation-delay': animationDelay,
-        }
-      };
-    }
-  },
-
   'bubbles': {
     dur: 1000,
     circles: 9,
@@ -72,6 +37,23 @@ const spinners = {
     }
   },
 
+  'circular': {
+    dur: 1400,
+    elmDuration: true,
+    circles: 1,
+    fn: () => {
+      return {
+        r: 20,
+        cx: 44,
+        cy: 44,
+        fill: 'none',
+        viewBox: '22 22 44 44',
+        transform: 'translate(0,0)',
+        style: {}
+      };
+    }
+  },
+
   'crescent': {
     dur: 750,
     circles: 1,
@@ -96,7 +78,43 @@ const spinners = {
         }
       };
     }
+  },
+
+  'lines': {
+    dur: 1000,
+    lines: 12,
+    fn: (dur: number, index: number, total: number) => {
+      const transform = `rotate(${ 30 * index + (index < 6 ? 180 : -180) }deg)`;
+      const animationDelay = `${ (dur * index / total) - dur }ms`;
+
+      return {
+        y1: 17,
+        y2: 29,
+        style: {
+          'transform': transform,
+          'animation-delay': animationDelay,
+        }
+      };
+    }
+  },
+
+  'lines-small': {
+    dur: 1000,
+    lines: 12,
+    fn: (dur: number, index: number, total: number) => {
+      const transform = `rotate(${30 * index + (index < 6 ? 180 : -180)}deg)`;
+      const animationDelay = `${ (dur * index / total) - dur }ms`;
+      return {
+        y1: 12,
+        y2: 20,
+        style: {
+          'transform': transform,
+          'animation-delay': animationDelay,
+        }
+      };
+    }
   }
+
 };
 
 export const SPINNERS: SpinnerConfigs = spinners;
