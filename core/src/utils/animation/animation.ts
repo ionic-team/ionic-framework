@@ -25,7 +25,7 @@ export const createAnimation = () => {
   let willComplete = true;
   let finished = false;
   let shouldCalculateNumAnimations = true;
-  let keyframeName: string;
+  let keyframeName: string | undefined;
   let ani: Animation;
 
   const onFinishCallbacks: AnimationOnFinishCallback[] = [];
@@ -607,7 +607,15 @@ export const createAnimation = () => {
         const stylesheet = createKeyframeStylesheet(keyframeName, keyframeRules, element);
         stylesheets.push(stylesheet);
 
-        setStyleProperty(element, 'animation-name', stylesheet.id || null);
+        /**
+         * Render the alt animation first so there
+         * is no flicker when switching to it
+         */
+        setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
+        requestAnimationFrame(() => {
+          setStyleProperty(element, 'animation-name', stylesheet.id || null);
+        });
+
         setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
         setStyleProperty(element, 'animation-timing-function', getEasing() || null);
         setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
@@ -913,12 +921,8 @@ export const createAnimation = () => {
 
   const resetCSSAnimations = () => {
     elements.forEach(element => {
-      setStyleProperty(element, 'animation-name', 'none');
-      requestAnimationFrame(() => {
-        // tslint:disable-next-line
-        element.offsetHeight;
-        setStyleProperty(element, 'animation-name', keyframeName || null);
-      });
+      const newKeyframeName = (keyframeName !== undefined) ? `${keyframeName}-alt` : null;
+      setStyleProperty(element, 'animation-name', newKeyframeName);
     });
   };
 
