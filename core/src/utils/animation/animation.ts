@@ -885,7 +885,7 @@ export const createAnimation = () => {
        * accounts for this, but using raw CSS Animations requires
        * this workaround.
        */
-      setTimeout(animationFinish, animationDelay + animationDuration);
+       animationFinish();
     } else if (_keyframes.length > 0 && elements.length > 0) {
       /**
        * This is a catchall in the event that a CSS Animation did not finish.
@@ -895,7 +895,6 @@ export const createAnimation = () => {
 
        animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();
-        pause();
         animationFinish();
       });
     }
