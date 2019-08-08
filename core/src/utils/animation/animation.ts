@@ -39,6 +39,7 @@ export const createAnimation = () => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const supportsWebAnimations = (typeof (window as any).Animation === 'function');
+  console.log(`Using ${(supportsWebAnimations) ? 'Web Animations' : 'CSS Animations'}`);
   const ANIMATION_END_FALLBACK_PADDING_MS = 400;
 
   /**
@@ -927,7 +928,9 @@ export const createAnimation = () => {
   };
 
   const resetAnimation = () => {
-    if (!supportsWebAnimations) {
+    if (supportsWebAnimations) {
+      setAnimationStep(0);
+    } else {
       resetCSSAnimations();
     }
   };
