@@ -44,7 +44,11 @@ export class StackController {
 
   getExistingView(activatedRoute: ActivatedRoute): RouteView | undefined {
     const activatedUrlKey = getUrl(this.router, activatedRoute);
-    return this.views.find(vw => vw.url === activatedUrlKey);
+    const view = this.views.find(vw => vw.url === activatedUrlKey);
+    if (view) {
+      view.ref.changeDetectorRef.reattach();
+    }
+    return view;
   }
 
   setActive(enteringView: RouteView): Promise<StackEvent> {
@@ -55,6 +59,7 @@ export class StackController {
       direction = 'back';
       animation = undefined;
     }
+
     const viewsSnapshot = this.views.slice();
 
     let currentNavigation;
@@ -103,6 +108,14 @@ export class StackController {
     // Wait until previous transitions finish
     return this.zone.runOutsideAngular(() => {
       return this.wait(() => {
+        // disconnect leaving page from change detection to
+        // reduce jank during the page transition
+        if (leavingView) {
+          leavingView.ref.changeDetectorRef.detach();
+        }
+        // In case the enteringView is the same as the leavingPage we need to reattach()
+        enteringView.ref.changeDetectorRef.reattach();
+
         return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false)
           .then(() => cleanupAsync(enteringView, views, viewsSnapshot, this.location))
           .then(() => ({
@@ -156,7 +169,7 @@ export class StackController {
           enteringView, // entering view
           leavingView, // leaving view
           'back',
-          true,
+          this.canGoBack(2),
           true
         );
       });
@@ -168,6 +181,8 @@ export class StackController {
     if (shouldComplete) {
       this.skipTransition = true;
       this.pop(1);
+    } else if (this.activeView) {
+      cleanup(this.activeView, this.views, this.views, this.location);
     }
   }
 
@@ -208,13 +223,8 @@ export class StackController {
       this.skipTransition = false;
       return Promise.resolve(false);
     }
-    if (enteringView) {
-      enteringView.ref.changeDetectorRef.reattach();
-    }
-    // disconnect leaving page from change detection to
-    // reduce jank during the page transition
-    if (leavingView) {
-      leavingView.ref.changeDetectorRef.detach();
+    if (leavingView === enteringView) {
+      return Promise.resolve(false);
     }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;

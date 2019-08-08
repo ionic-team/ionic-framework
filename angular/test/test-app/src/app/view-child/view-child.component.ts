@@ -7,11 +7,11 @@ import { IonTabs, IonButton, IonSlides, IonSlide } from '@ionic/angular';
 })
 export class ViewChildComponent implements AfterViewInit {
 
-  @ViewChild(IonSlides) slides: IonSlides;
-  @ViewChild(IonButton) button: IonButton;
-  @ViewChild(IonTabs) tabs: IonTabs;
-  @ViewChild('div') div: ElementRef;
-  @ViewChild('slide') slide: IonSlide;
+  @ViewChild(IonSlides, { static: true }) slides: IonSlides;
+  @ViewChild(IonButton, { static: true }) button: IonButton;
+  @ViewChild(IonTabs, { static: true }) tabs: IonTabs;
+  @ViewChild('div', { static: true }) div: ElementRef;
+  @ViewChild('slide', { static: true }) slide: IonSlide;
 
   ngAfterViewInit() {
     const loaded = !!(this.slides && this.button && this.tabs && this.div && this.slide);

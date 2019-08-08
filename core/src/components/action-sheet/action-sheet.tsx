@@ -211,7 +211,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         onIonActionSheetWillDismiss={this.dispatchCancelHandler}
         onIonBackdropTap={this.onBackdropTap}
       >
-        <ion-backdrop tappable={this.backdropDismiss}/>,
+        <ion-backdrop tappable={this.backdropDismiss}/>
         <div class="action-sheet-wrapper" role="dialog">
           <div class="action-sheet-container">
             <div class="action-sheet-group">
