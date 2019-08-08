@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -23,7 +23,7 @@
     "build": "npm run clean && npm run copy && npm run compile",
     "clean": "rm -rf dist && rm -rf dist-transpiled",
     "compile": "npm run tsc && rollup -c",
-    "release": "np --any-branch --yolo",
+    "release": "np --any-branch --yolo --no-release-draft",
     "lint": "tslint --project .",
     "lint.fix": "tslint --project . --fix",
     "tsc": "tsc -p .",
