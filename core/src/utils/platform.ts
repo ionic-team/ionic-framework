@@ -93,7 +93,7 @@ const isCapacitorNative = (win: any): boolean => {
 };
 
 const isElectron = (win: Window): boolean =>
-  testUserAgent(win, /electron/);
+  testUserAgent(win, /electron/i);
 
 const isPWA = (win: Window): boolean =>
   (win as any).matchMedia ? (win.matchMedia('(display-mode: standalone)').matches || (win.navigator as any).standalone) : false;
