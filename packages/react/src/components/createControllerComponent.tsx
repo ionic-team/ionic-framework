@@ -10,7 +10,7 @@ interface OverlayBase extends HTMLElement {
 
 export interface ReactControllerProps {
   isOpen: boolean;
-  onDidDismiss: (event: CustomEvent<OverlayEventDetail>) => void;
+  onDidDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
 }
 
 export const createControllerComponent = <OptionsType extends object, OverlayType extends OverlayBase>(
@@ -21,7 +21,7 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
 
   type Props = OptionsType & ReactControllerProps;
 
-  return class extends React.Component<OptionsType & ReactControllerProps> {
+  return class extends React.Component<Props> {
     overlay?: OverlayType;
 
     constructor(props: Props) {

@@ -72,7 +72,7 @@ export const syncEvent = (node: Element, eventName: string, newEventHandler: (e:
 
   // Bind new listener.
   node.addEventListener(eventName, eventStore[eventName] = function handler(e: Event) {
-    newEventHandler.call(this, e);
+    if (newEventHandler) { newEventHandler.call(this, e); }
   });
 };
 
