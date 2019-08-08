@@ -12,27 +12,28 @@ export const withIonLifeCycle = (WrappedComponent: React.ComponentType<any>) => 
     }
 
     componentDidMount() {
+      const element = this.componentRef.current;
       this.context.onIonViewWillEnter(() => {
-        if (this.componentRef.current.ionViewWillEnter) {
-          this.componentRef.current.ionViewWillEnter();
+        if (element && element.ionViewWillEnter) {
+          element.ionViewWillEnter();
         }
       });
 
       this.context.onIonViewDidEnter(() => {
-        if (this.componentRef.current.ionViewDidEnter) {
-          this.componentRef.current.ionViewDidEnter();
+        if (element && element.ionViewDidEnter) {
+          element.ionViewDidEnter();
         }
       });
 
       this.context.onIonViewWillLeave(() => {
-        if (this.componentRef.current.ionViewWillLeave) {
-          this.componentRef.current.ionViewWillLeave();
+        if (element && element.ionViewWillLeave) {
+          element.ionViewWillLeave();
         }
       });
 
       this.context.onIonViewDidLeave(() => {
-        if (this.componentRef.current.ionViewDidLeave) {
-          this.componentRef.current.ionViewDidLeave();
+        if (element && element.ionViewDidLeave) {
+          element.ionViewDidLeave();
         }
       });
     }

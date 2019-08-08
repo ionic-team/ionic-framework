@@ -12,12 +12,12 @@ interface RouterManagerProps extends RouteComponentProps { }
 interface RouteManagerState extends RouteManagerContextState { }
 
 interface IonRouteData {
-  match: match<{ tab: string }>;
+  match: match<{ tab: string }> | null;
   childProps: RouteProps;
 }
 
 class RouteManager extends React.Component<RouterManagerProps, RouteManagerState> {
-  listenUnregisterCallback: UnregisterCallback;
+  listenUnregisterCallback: UnregisterCallback | undefined;
   activeViewId?: string;
   prevViewId?: string;
 
@@ -54,9 +54,9 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
   }
 
   findViewInfoByLocation(location: HistoryLocation, viewStacks: ViewStacks) {
-    let view: ViewItem<IonRouteData>;
-    let match: IonRouteData["match"];
-    let viewStack: ViewStack;
+    let view: ViewItem<IonRouteData> | undefined;
+    let match: IonRouteData["match"] | null | undefined;
+    let viewStack: ViewStack | undefined;
     const keys = Object.keys(viewStacks);
     keys.some(key => {
       const vs = viewStacks[key];
@@ -81,8 +81,8 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
   }
 
   findViewInfoById(id: string, viewStacks: ViewStacks) {
-    let view: ViewItem<IonRouteData>;
-    let viewStack: ViewStack;
+    let view: ViewItem<IonRouteData> | undefined;
+    let viewStack: ViewStack | undefined;
     const keys = Object.keys(viewStacks);
     keys.some(key => {
       const vs = viewStacks[key];
@@ -106,9 +106,9 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
       return;
     }
 
-    const { view: leavingView } = this.findViewInfoById(this.activeViewId, viewStacks);
+    const { view: leavingView } = this.findViewInfoById(this.activeViewId!, viewStacks);
 
-    if (leavingView && leavingView.routeData.match.url === location.pathname) {
+    if (leavingView && leavingView.routeData.match!.url === location.pathname) {
       return;
     }
 
@@ -123,13 +123,13 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
 
       enteringView.show = true;
       enteringView.mount = true;
-      enteringView.routeData.match = match;
+      enteringView.routeData.match = match!;
       enteringViewStack.activeId = enteringView.id;
       this.activeViewId = enteringView.id;
 
       if (leavingView) {
         this.prevViewId = leavingView.id
-        if (leavingView.routeData.match.params.tab === enteringView.routeData.match.params.tab) {
+        if (leavingView.routeData.match!.params.tab === enteringView.routeData.match.params.tab) {
           if (action === 'PUSH') {
             direction = direction || 'forward';
           } else {
@@ -140,6 +140,12 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
         /**
          * If the leaving view is a Redirect, take it out of the rendering phase.
          */
+        if(leavingView.element.type === Redirect) {
+          leavingView.mount = false;
+          leavingView.show = false;
+        }
+
+
         if (leavingView.element.type === Route && leavingView.element.props.render) {
           if (leavingView.element.props.render().type === Redirect) {
             leavingView.mount = false;
@@ -157,31 +163,30 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
         const enteringEl = enteringView.ref && enteringView.ref.current ? enteringView.ref.current : undefined;
         const leavingEl = leavingView && leavingView.ref && leavingView.ref.current ? leavingView.ref.current : undefined;
         this.transitionView(
-          enteringEl,
-          leavingEl,
+          enteringEl!,
+          leavingEl!,
           enteringViewStack.routerOutlet,
-          leavingEl && leavingEl.innerHTML !== '' ? direction : undefined) // Don't animate from an empty view
+          leavingEl && leavingEl.innerHTML !== '' ? direction : undefined!) // Don't animate from an empty view
       });
     }
   }
 
   componentWillUnmount() {
-    this.listenUnregisterCallback();
+    this.listenUnregisterCallback && this.listenUnregisterCallback();
   }
 
   setupIonRouter(id: string, children: any, routerOutlet: HTMLIonRouterOutletElement) {
     const views: ViewItem[] = [];
-    let activeId: string;
+    let activeId: string | undefined;
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
 
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
-      views.push(createViewItem.call(this, child));
+      views.push(createViewItem(child, this.props.history.location));
     });
 
     this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);
 
-    function createViewItem(child: React.ReactElement<any>) {
-      const location = this.props.history.location;
+    function createViewItem(child: React.ReactElement<any>, location: HistoryLocation) {
       const viewId = generateUniqueId();
       const key = generateUniqueId();
       const element = child;
@@ -210,7 +215,7 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
     }
   }
 
-  registerViewStack(stack: string, activeId: string, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, location: HistoryLocation) {
+  registerViewStack(stack: string, activeId: string | undefined, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, location: HistoryLocation) {
     this.setState((prevState) => {
       const prevViewStacks = Object.assign({}, prevState.viewStacks);
       prevViewStacks[stack] = {
@@ -222,16 +227,16 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
         viewStacks: prevViewStacks
       };
     }, () => {
-      const { view: activeView } = this.findViewInfoById(activeId, this.state.viewStacks);
+      const { view: activeView } = this.findViewInfoById(activeId!, this.state.viewStacks);
 
       if (activeView) {
         this.prevViewId = this.activeViewId;
         this.activeViewId = activeView.id;
         const direction = location.state && location.state.direction;
-        const { view: prevView } = this.findViewInfoById(this.prevViewId, this.state.viewStacks);
+        const { view: prevView } = this.findViewInfoById(this.prevViewId!, this.state.viewStacks);
         this.transitionView(
-          activeView.ref.current,
-          prevView && prevView.ref.current || undefined,
+          activeView.ref!.current!,
+          prevView && prevView.ref!.current || undefined!,
           routerOutlet,
           direction);
       }

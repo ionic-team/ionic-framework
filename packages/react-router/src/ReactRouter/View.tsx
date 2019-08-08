@@ -86,4 +86,4 @@ function forwardRef(props: InternalProps, ref: React.RefObject<HTMLElement>) {
 }
 forwardRef.displayName = 'View';
 
-export const View = /*@__PURE__*/React.forwardRef<HTMLElement, ExternalProps>(forwardRef);
+export const View = /*@__PURE__*/React.forwardRef<HTMLElement, ExternalProps>(forwardRef as any);

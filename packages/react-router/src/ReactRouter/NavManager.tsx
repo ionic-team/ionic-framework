@@ -47,19 +47,19 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
       if (enteringView) {
         this.props.history.replace(enteringView.routeData.match.url, { direction: 'back' });
       } else {
-        this.props.history.replace(defaultHref, { direction: 'back' });
+        defaultHref && this.props.history.replace(defaultHref, { direction: 'back' });
       }
     } else {
-      this.props.history.replace(defaultHref, { direction: 'back' });
+      defaultHref && this.props.history.replace(defaultHref, { direction: 'back' });
     }
   }
 
   getHistory() {
-    return this.props.history;
+    return this.props.history as any;
   }
 
   getLocation() {
-    return this.props.location;
+    return this.props.location as any;
   }
 
   navigate(path: string, direction?: RouterDirection) {

@@ -29,7 +29,7 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
   }
 
   componentDidMount() {
-    this.context.setupIonRouter(this.id, this.props.children, this.containerEl.current);
+    this.context.setupIonRouter(this.id, this.props.children, this.containerEl.current!);
   }
 
   componentWillUnmount() {
