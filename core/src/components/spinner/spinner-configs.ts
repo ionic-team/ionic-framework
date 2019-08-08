@@ -1,41 +1,6 @@
 import { SpinnerConfigs } from './spinner-interface';
 
-export const SPINNERS: SpinnerConfigs = {
-
-  'lines': {
-    dur: 1000,
-    lines: 12,
-    fn: (dur: number, index: number, total: number) => {
-      const transform = `rotate(${ 30 * index + (index < 6 ? 180 : -180) }deg)`;
-      const animationDelay = `${ (dur * index / total) - dur }ms`;
-
-      return {
-        y1: 17,
-        y2: 29,
-        style: {
-          'transform': transform,
-          'animation-delay': animationDelay,
-        }
-      };
-    }
-  },
-
-  'lines-small': {
-    dur: 1000,
-    lines: 12,
-    fn: (dur: number, index: number, total: number) => {
-      const transform = `rotate(${30 * index + (index < 6 ? 180 : -180)}deg)`;
-      const animationDelay = `${ (dur * index / total) - dur }ms`;
-      return {
-        y1: 12,
-        y2: 20,
-        style: {
-          'transform': transform,
-          'animation-delay': animationDelay,
-        }
-      };
-    }
-  },
+const spinners = {
 
   'bubbles': {
     dur: 1000,
@@ -72,6 +37,23 @@ export const SPINNERS: SpinnerConfigs = {
     }
   },
 
+  'circular': {
+    dur: 1400,
+    elmDuration: true,
+    circles: 1,
+    fn: () => {
+      return {
+        r: 20,
+        cx: 44,
+        cy: 44,
+        fill: 'none',
+        viewBox: '22 22 44 44',
+        transform: 'translate(0,0)',
+        style: {}
+      };
+    }
+  },
+
   'crescent': {
     dur: 750,
     circles: 1,
@@ -98,23 +80,42 @@ export const SPINNERS: SpinnerConfigs = {
     }
   },
 
-  'circular': {
-    dur: 1400,
-    elmDuration: true,
-    circles: 1,
-    fn: () => {
+  'lines': {
+    dur: 1000,
+    lines: 12,
+    fn: (dur: number, index: number, total: number) => {
+      const transform = `rotate(${ 30 * index + (index < 6 ? 180 : -180) }deg)`;
+      const animationDelay = `${ (dur * index / total) - dur }ms`;
+
       return {
-        r: 20,
-        cx: 44,
-        cy: 44,
-        fill: 'none',
-        viewBox: '22 22 44 44',
-        transform: 'translate(0,0)',
-        style: {}
+        y1: 17,
+        y2: 29,
+        style: {
+          'transform': transform,
+          'animation-delay': animationDelay,
+        }
+      };
+    }
+  },
+
+  'lines-small': {
+    dur: 1000,
+    lines: 12,
+    fn: (dur: number, index: number, total: number) => {
+      const transform = `rotate(${30 * index + (index < 6 ? 180 : -180)}deg)`;
+      const animationDelay = `${ (dur * index / total) - dur }ms`;
+      return {
+        y1: 12,
+        y2: 20,
+        style: {
+          'transform': transform,
+          'animation-delay': animationDelay,
+        }
       };
     }
   }
 
 };
 
-export type SpinnerTypes = keyof typeof SPINNERS;
+export const SPINNERS: SpinnerConfigs = spinners;
+export type SpinnerTypes = keyof typeof spinners;
