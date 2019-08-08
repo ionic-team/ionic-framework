@@ -15,7 +15,7 @@
     "compile:server": "webpack --config webpack.server.config.js --progress --colors",
     "serve:ssr": "node dist/server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
-    "build:client-and-server-bundles": "npm run build && ng run test-app:server:production"
+    "build:client-and-server-bundles": "npm run build && ng run test-app:server:production --bundleDependencies all"
   },
   "dependencies": {
     "@angular/animations": "~8.2.0",
