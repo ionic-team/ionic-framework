@@ -8,15 +8,15 @@ interface IsPlatformSignature {
 
 export const getPlatforms = (win?: any) => setupPlatforms(win);
 
-export const isPlatform: IsPlatformSignature = (winOrPlatform: Window | Platforms, platform?: Platforms) => {
+export const isPlatform: IsPlatformSignature = (winOrPlatform: Window | Platforms | undefined, platform?: Platforms) => {
   if (typeof winOrPlatform === 'string') {
     platform = winOrPlatform;
+    winOrPlatform = undefined;
   }
-  return getPlatforms().indexOf(platform!) > -1;
+  return getPlatforms(winOrPlatform).includes(platform!);
 };
 
-export const setupPlatforms = (win?: any) => {
-  win = win || window;
+export const setupPlatforms = (win: any = window) => {
   win.Ionic = win.Ionic || {};
 
   let platforms: Platforms[] | undefined | null = win.Ionic.platforms;
