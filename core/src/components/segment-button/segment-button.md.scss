@@ -13,7 +13,7 @@
 
   min-width: $segment-button-md-min-width;
 
-  max-width: $segment-button-md-max-width;
+  // max-width: $segment-button-md-max-width;
   min-height: $segment-button-md-min-height;
 
   font-size: $segment-button-md-font-size;
@@ -35,10 +35,6 @@
 :host(.segment-button-checked) {
   background: var(--background-checked);
   color: var(--color-checked);
-}
-
-:host(.segment-button-checked) .segment-button-indicator {
-  background-color: var(--indicator-color-checked, var(--color-checked));
 }
 
 :host(.activated),
@@ -122,13 +118,4 @@
   :host(:hover) {
     background: var(--background-hover);
   }
-}
-
-// Segment Button: Indicator
-// --------------------------------------------------
-
-.segment-button-indicator {
-  align-self: flex-end;
-
-  height: 2px;
 }

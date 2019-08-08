@@ -10,7 +10,7 @@
 
   @include font-smoothing();
 
-  display: inline-flex;
+  display: flex;
 
   position: relative;
 
@@ -57,4 +57,23 @@
 
 :host(.segment-scrollable::-webkit-scrollbar) {
   display: none;
+}
+
+
+// Segment: Checked Indicator
+// --------------------------------------------------
+
+.segment-checked-indicator {
+  display: none;
+
+  position: absolute;
+}
+
+.segment-checked-indicator-background {
+  width: 100%;
+  height: 100%;
+}
+
+.segment-checked-indicator-animated {
+  transition: var(--indicator-transition);
 }

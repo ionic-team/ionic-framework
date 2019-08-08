@@ -71,7 +71,7 @@
 // --------------------------------------------------
 
 :host-context(ion-toolbar) {
-  width: auto;
+  // width: auto;
 }
 
 // :host-context(ion-toolbar)::slotted(ion-segment-button) {
@@ -113,26 +113,14 @@
 // --------------------------------------------------
 
 .segment-checked-indicator {
-  // TODO this should match the margin of the button
-  @include padding(2px);
+  @include padding($segment-button-ios-margin);
   @include position(0, 0, 0, 0);
-
-  display: none;
-
-  position: absolute;
 }
 
 .segment-checked-indicator-background {
   @include border-radius($segment-button-ios-border-radius);
 
-  width: 100%;
-  height: 100%;
-
   background: var(--background-checked);
 
   box-shadow: $segment-button-ios-box-shadow-checked;
-}
-
-.segment-checked-indicator-animated {
-  transition: var(--indicator-transition);
 }

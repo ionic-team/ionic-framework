@@ -9,6 +9,9 @@ $segment-button-ios-background-color:                 transparent !default;
 /// @prop - Background of the checked segment button
 $segment-button-ios-background-color-checked:         $background-color !default;
 
+/// @prop - Margin of the segment button
+$segment-button-ios-margin:                           2px !default;
+
 /// @prop - Opacity of the segment button on hover
 $segment-button-ios-opacity-hover:                    .1 !default;
 

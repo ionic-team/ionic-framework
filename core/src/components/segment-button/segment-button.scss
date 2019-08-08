@@ -44,7 +44,7 @@
 
   display: flex;
 
-  flex: 1 0 auto;
+  flex: 1 0 0;
   flex-direction: column;
 
   height: auto;
@@ -117,16 +117,6 @@
 
   contain: content;
   cursor: pointer;
-}
-
-
-// Segment Button: Indicator
-// --------------------------------------------------
-
-.segment-button-indicator {
-  width: 100%;
-
-  background-color: var(--indicator-color);
 }
 
 

@@ -11,7 +11,7 @@
   --border-style: solid;
   --transition: #{$segment-button-ios-transition};
 
-  @include margin(2px);
+  @include margin($segment-button-ios-margin);
   @include padding(0, 13px);
 
   min-width: 45px;
@@ -33,14 +33,6 @@
 
 :host(.segment-button-disabled) {
   opacity: $segment-button-ios-opacity-disabled;
-}
-
-
-// Segment Button: Indicator
-// --------------------------------------------------
-
-.segment-button-indicator {
-  display: none;
 }
 
 
