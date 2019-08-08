@@ -35,5 +35,9 @@ export const menuPushAnimation = (menu: MenuI): IonicAnimation => {
     .addElement(menu.backdropEl)
     .fromTo('opacity', 0.01, 0.32);
 
-  return baseAnimation().addAnimation([menuAnimation, backdropAnimation, contentAnimation]);
+  const base = baseAnimation();
+  base.onFinish(() => {
+    console.log('BASE ANIM DONE');
+  });
+  return base.addAnimation([menuAnimation, backdropAnimation, contentAnimation]);
 };

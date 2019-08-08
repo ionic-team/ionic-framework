@@ -20,9 +20,8 @@ export const createAnimation = () => {
   let numAnimationsRunning = 0;
   let shouldForceLinearEasing = false;
   let shouldForceSyncPlayback = false;
-
+  let cssAnimationsTimerFallback: any;
   let forceDirectionValue: AnimationDirection | undefined;
-
   let willComplete = true;
   let finished = false;
   let shouldCalculateNumAnimations = true;
@@ -31,9 +30,6 @@ export const createAnimation = () => {
 
   const onFinishCallbacks: AnimationOnFinishCallback[] = [];
   const onFinishOneTimeCallbacks: AnimationOnFinishCallback[] = [];
-
-  let cssAnimationsTimerFallback: any;
-
   const elements: HTMLElement[] = [];
   const childAnimations: Animation[] = [];
   const stylesheets: HTMLElement[] = [];
@@ -42,7 +38,8 @@ export const createAnimation = () => {
   const _afterAddReadFunctions: any[] = [];
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
-  const supportsWebAnimations = (typeof (window as any).Animation === 'function');
+  const supportsWebAnimations = false;
+  // const supportsWebAnimations = (typeof (window as any).Animation === 'function');
   const ANIMATION_END_FALLBACK_PADDING_MS = 400;
 
   /**
@@ -90,7 +87,7 @@ export const createAnimation = () => {
    * Add a callback to be run
    * upon the animation ending
    */
-  const onFinish = (callback: any, opts: AnimationOnFinishOptions) => {
+  const onFinish = (callback: any, opts?: AnimationOnFinishOptions) => {
     const callbacks = (opts && opts.oneTime) ? onFinishOneTimeCallbacks : onFinishCallbacks;
     callbacks.push({ callback, opts } as AnimationOnFinishCallback);
 
@@ -286,7 +283,7 @@ export const createAnimation = () => {
    * Returns the animation's direction.
    */
   const getDirection = () => {
-    if (forceDirectionValue !== undefined) { console.log('forcing', forceDirectionValue); return forceDirectionValue; }
+    if (forceDirectionValue !== undefined) { return forceDirectionValue; }
     if (_direction !== undefined) { return _direction; }
     if (parentAnimation) { return parentAnimation.getDirection(); }
 
@@ -627,13 +624,6 @@ export const createAnimation = () => {
         setStyleProperty(element, 'animation-play-state', 'paused');
       }
     });
-
-    if (elements.length > 0) {
-      animationEnd(elements[0], () => {
-        clearCSSAnimationsTimeout();
-        animationFinish();
-      });
-    }
   };
 
   const initializeWebAnimation = () => {
@@ -905,9 +895,14 @@ export const createAnimation = () => {
        * This is a catchall in the event that a CSS Animation did not finish.
        * The Web Animations API has mechanisms in place for preventing this.
        */
-
-      cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + animationDuration + ANIMATION_END_FALLBACK_PADDING_MS);
+       cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + animationDuration + ANIMATION_END_FALLBACK_PADDING_MS);
     }
+
+    animationEnd(elements[0], () => {
+        clearCSSAnimationsTimeout();
+        pause();
+        animationFinish();
+      });
   };
 
   const playWebAnimations = () => {
@@ -922,8 +917,11 @@ export const createAnimation = () => {
 
   const resetCSSAnimations = () => {
     elements.forEach(element => {
-      setStyleProperty(element, 'animation-name', '');
+
+      setStyleProperty(element, 'animation-name', 'none');
       requestAnimationFrame(() => {
+        // tslint:disable-next-line
+        element.offsetHeight;
         setStyleProperty(element, 'animation-name', keyframeName || null);
       });
     });
@@ -933,8 +931,6 @@ export const createAnimation = () => {
     if (!supportsWebAnimations) {
       resetCSSAnimations();
     }
-
-    setAnimationStep(0);
   };
 
   /**
