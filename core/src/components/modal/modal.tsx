@@ -33,8 +33,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   // Reference to the user's provided modal content
   private usersElement?: HTMLElement;
 
-  // The element that presented this modal. Used for scale card effects
-  private presentingEl?: HTMLElement;
   // Reference to the wrapper element
   private wrapperEl?: HTMLDivElement;
   // Reference to the backdrop element
@@ -103,6 +101,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * does not use this type of interaction.
    */
   @Prop() swipeToClose = false;
+
+  /**
+   * The element that presented the modal. This is used for card presentation effects
+   * and for stacking multiple modals on top of each other.
+   */
+  @Prop() presentingEl?: HTMLElement;
 
   /**
    * The style of presentation to use. `fullscreen` is the classic option that has the modal
@@ -187,19 +191,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Present the modal overlay after it has been created.
    */
   @Method()
-  async present(presentingEl?: HTMLElement): Promise<void> {
+  async present(): Promise<void> {
     if (this.presented) {
       return;
     }
 
-    this.presentingEl = presentingEl;
-
-    if (this.swipeToClose && presentingEl && this.gesture) {
-      this.gesture!.setPresentingEl(presentingEl);
+    if (this.swipeToClose && this.presentingEl && this.gesture) {
+      this.gesture!.setPresentingEl(this.presentingEl);
     }
 
-    const iosAnim = this.buildIOSEnterAnimation(presentingEl);
-    const mdAnim = this.buildMDEnterAnimation(presentingEl);
+    const iosAnim = this.buildIOSEnterAnimation(this.presentingEl);
+    const mdAnim = this.buildMDEnterAnimation(this.presentingEl);
 
     const container = this.el.querySelector(`.modal-wrapper`);
     if (!container) {

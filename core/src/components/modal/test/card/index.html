@@ -55,7 +55,7 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-button id="card-modal" onclick="presentModal()"><ion-icon name="add"></ion-icon></ion-button>
+            <ion-button id="card-modal" onclick="presentModal(document.querySelectorAll('.ion-page')[1])"><ion-icon name="add"></ion-icon></ion-button>
           </ion-buttons>
           <ion-title>Favorites</ion-title>
         </ion-toolbar>
@@ -448,7 +448,7 @@
       modalController.dismiss(email);
     }
 
-    async function createModal() {
+    async function createModal(presentingEl) {
       // initialize controller
       const modalController = document.querySelector('ion-modal-controller');
       await modalController.componentOnReady();
@@ -486,6 +486,10 @@
         <ion-note>Choose a contact to add to Favorites</ion-note>
         <ion-toolbar>
           <ion-title>Contacts</ion-title>
+          <ion-buttons slot="end">
+            <ion-button class="add">
+              <ion-icon name="add"></ion-icon>
+            </ion-button>
         </ion-toolbar>
       </ion-header>
       <ion-content>
@@ -505,13 +509,19 @@
       `;
 
       // listen for close event
-      const button = element.querySelector('ion-button');
+      const button = element.querySelector('ion-button.dismiss');
       button.addEventListener('click', () => {
         modalController.dismiss();
       });
 
+      const create = element.querySelector('ion-button.add');
+      create.addEventListener('click', () => {
+        presentModal();
+      });
+
       // present the modal
       const modalElement = await modalController.create({
+        presentingEl: presentingEl,
         component: element,
         swipeToClose: true,
         presentationStyle: 'card'
@@ -519,10 +529,9 @@
       return modalElement;
     }
 
-    async function presentModal() {
-      const presentingEl = document.querySelectorAll('.ion-page')[1];
-      const modal = await createModal();
-      await modal.present(presentingEl);
+    async function presentModal(presentingEl) {
+      const modal = await createModal(presentingEl);
+      await modal.present();
       const data = await modal.onWillDismiss();
       const person = allContacts.find(c => c.email === data.data);
       person && addFavorite(person);

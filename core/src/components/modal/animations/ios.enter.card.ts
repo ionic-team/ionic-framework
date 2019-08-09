@@ -5,12 +5,12 @@ import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
  * iOS Modal Enter Animation for the Card presentation style
  */
 export function iosEnterCardAnimation(
-  AnimationC: Animation,
-  baseEl: HTMLElement,
-  presentingEl?: HTMLElement,
-  toY = SwipeToCloseDefaults.MIN_Y_CARD,
-  toBackdropOpacity = SwipeToCloseDefaults.MIN_BACKDROP_OPACITY,
-  toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE
+    AnimationC: Animation,
+    baseEl: HTMLElement,
+    presentingEl?: HTMLElement,
+    toY = SwipeToCloseDefaults.MIN_Y_CARD,
+    toBackdropOpacity = SwipeToCloseDefaults.MIN_BACKDROP_OPACITY,
+    toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE
   ): Promise<Animation> {
   // The top translate Y for the presenting element
   const presentingToY = SwipeToCloseDefaults.MIN_PRESENTING_Y;

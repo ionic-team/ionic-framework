@@ -1,12 +1,14 @@
 import { Component, ComponentInterface, Method } from '@stencil/core';
 
 import { ComponentRef, ModalOptions, OverlayController } from '../../interface';
-import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
+import { createOverlay, dismissOverlay, getOverlay, getOverlays } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-modal-controller'
 })
 export class ModalController implements ComponentInterface, OverlayController {
+  modals: HTMLIonModalElement[] = [];
+
   /**
    * Create a modal overlay with modal options.
    *
@@ -14,7 +16,12 @@ export class ModalController implements ComponentInterface, OverlayController {
    */
   @Method()
   async create<T extends ComponentRef>(options: ModalOptions<T>): Promise<HTMLIonModalElement> {
-    return createOverlay<HTMLIonModalElement>('ion-modal', options);
+    console.log('Creating modal', options);
+    const modal = await createOverlay<HTMLIonModalElement>('ion-modal', options);
+
+    console.log(getOverlays(document, 'ion-modal'));
+    this.modals.push(modal);
+    return modal;
   }
 
   /**

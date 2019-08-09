@@ -1464,11 +1464,15 @@ export namespace Components {
     /**
     * Present the modal overlay after it has been created.
     */
-    'present': (presentingEl?: HTMLElement | undefined) => Promise<void>;
+    'present': () => Promise<void>;
     /**
     * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available for iOS only that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is the new default modal presentation style starting with iOS 13. Android does not use this type of modal so this option does not effect Android.
     */
     'presentationStyle': ModalPresentationStyle;
+    /**
+    * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other.
+    */
+    'presentingEl'?: HTMLElement;
     /**
     * If `true`, a backdrop will be displayed behind the modal.
     */
@@ -4768,6 +4772,10 @@ declare namespace LocalJSX {
     * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available for iOS only that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is the new default modal presentation style starting with iOS 13. Android does not use this type of modal so this option does not effect Android.
     */
     'presentationStyle'?: ModalPresentationStyle;
+    /**
+    * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other.
+    */
+    'presentingEl'?: HTMLElement;
     /**
     * If `true`, a backdrop will be displayed behind the modal.
     */
