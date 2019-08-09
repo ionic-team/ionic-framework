@@ -135,14 +135,14 @@ export class SwipeToCloseGesture implements ModalGesture {
   private disableTransition() {
     this.el.classList.remove('modal-animation-reset');
     if (this.presentingEl) {
-      this.presentingEl.classList.remove('presenting-view-card-reset');
+      this.presentingEl.classList.remove('ion-page-card-reset');
     }
   }
 
   private enableTransition() {
     this.el.classList.add('modal-animation-reset');
     if (this.presentingEl) {
-      this.presentingEl.classList.add('presenting-view-card-reset');
+      this.presentingEl.classList.add('ion-page-card-reset');
     }
   }
 

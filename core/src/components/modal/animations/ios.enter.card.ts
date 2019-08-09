@@ -38,7 +38,7 @@ export function iosEnterCardAnimation(
       .beforeStyles({
         'transform': 'translateY(0)'
       })
-      .beforeAddClass('presenting-view-card')
+      .beforeAddClass('ion-page-card')
       .addElement(presentingEl)
       .duration(500)
       .fromTo('translateY', '0px', `${presentingToY}px`)

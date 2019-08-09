@@ -73,6 +73,14 @@ body.backdrop-no-scroll {
   z-index: $z-index-page-container;
 }
 
+.ion-page-card {
+  @include border-radius(10px, 10px, 0, 0);
+}
+
+.ion-page-card-reset {
+  transition: 500ms transform cubic-bezier(0.32, 0.72, 0, 1);
+}
+
 ion-route,
 ion-route-redirect,
 ion-router,
@@ -126,13 +134,4 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
     --ion-safe-area-left: env(safe-area-inset-left);
     --ion-safe-area-right: env(safe-area-inset-right);
   }
-}
-
-
-.presenting-view-card {
-  @include border-radius(10px, 10px, 0, 0);
-}
-
-.presenting-view-card-reset {
-  transition: 500ms transform cubic-bezier(0.32, 0.72, 0, 1);
 }
