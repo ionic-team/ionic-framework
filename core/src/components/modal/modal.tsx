@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, present, getOverlays } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -37,6 +37,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private wrapperEl?: HTMLDivElement;
   // Reference to the backdrop element
   private backdropEl?: HTMLIonBackdropElement;
+
+  private isFirstModal?: boolean;
 
   presented = false;
   animation: Animation | undefined;
@@ -196,11 +198,18 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
+    // Check whether this modal is the first/only modal open. If not,
+    // we changed the presentation and dismiss behavior when using
+    // the card presentation style
+    const openModals = getOverlays(document, 'ion-modal');
+    const secondTolastModal = openModals[openModals.length - 2];
+    this.isFirstModal = !!!secondTolastModal;
+
     if (this.swipeToClose && this.presentingEl && this.gesture) {
       this.gesture!.setPresentingEl(this.presentingEl);
     }
 
-    const iosAnim = this.buildIOSEnterAnimation(this.presentingEl);
+    const iosAnim = this.buildIOSEnterAnimation(this.isFirstModal ? this.presentingEl : undefined);
     const mdAnim = this.buildMDEnterAnimation(this.presentingEl);
 
     const container = this.el.querySelector(`.modal-wrapper`);
@@ -227,6 +236,40 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private buildMDEnterAnimation(_presentingEl?: HTMLElement) {
     return mdEnterAnimation;
+  }
+
+  /**
+   * Dismiss the modal overlay after it has been presented.
+   *
+   * @param data Any data to emit in the dismiss events.
+   * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
+   */
+  @Method()
+  async dismiss(data?: any, role?: string): Promise<boolean> {
+    const iosAnim = this.buildIOSLeaveAnimation(this.isFirstModal ? this.presentingEl : undefined);
+    const mdAnim = this.buildMDLeaveAnimation(this.presentingEl);
+
+    const dismissed = await dismiss(this, data, role, 'modalLeave', iosAnim, mdAnim);
+    if (dismissed) {
+      await detachComponent(this.delegate, this.usersElement);
+    }
+    return dismissed;
+  }
+
+  /**
+   * Returns a promise that resolves when the modal did dismiss.
+   */
+  @Method()
+  onDidDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionModalDidDismiss');
+  }
+
+  /**
+   * Returns a promise that resolves when the modal will dismiss.
+   */
+  @Method()
+  onWillDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionModalWillDismiss');
   }
 
   private buildIOSLeaveAnimation(presentingEl?: HTMLElement) {
@@ -263,39 +306,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   }
 
-  /**
-   * Dismiss the modal overlay after it has been presented.
-   *
-   * @param data Any data to emit in the dismiss events.
-   * @param role The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'.
-   */
-  @Method()
-  async dismiss(data?: any, role?: string): Promise<boolean> {
-    const iosAnim = this.buildIOSLeaveAnimation(this.presentingEl);
-    const mdAnim = this.buildMDLeaveAnimation(this.presentingEl);
-
-    const dismissed = await dismiss(this, data, role, 'modalLeave', iosAnim, mdAnim);
-    if (dismissed) {
-      await detachComponent(this.delegate, this.usersElement);
-    }
-    return dismissed;
-  }
-
-  /**
-   * Returns a promise that resolves when the modal did dismiss.
-   */
-  @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionModalDidDismiss');
-  }
-
-  /**
-   * Returns a promise that resolves when the modal will dismiss.
-   */
-  @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionModalWillDismiss');
-  }
 
   private async swipeDismiss(velocityY: number) {
     const leaveAnim = this.buildSwipeLeaveAnimation(velocityY);

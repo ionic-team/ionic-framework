@@ -31,11 +31,11 @@ export function iosLeaveCardAnimation(
 
   const bodyEl = document.body;
   const bodyAnimation = new AnimationC();
-  bodyAnimation
-    .addElement(bodyEl)
-    .afterStyles({ 'background-color': '' });
 
   if (presentingEl) {
+    bodyAnimation
+      .addElement(bodyEl)
+      .afterStyles({ 'background-color': '' });
     presentingAnimation
       .addElement(presentingEl)
       .duration(duration)
