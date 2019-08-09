@@ -34,6 +34,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       .addElement(enteringEl)
       .duration(opts.duration || DURATION)
       .easing(opts.easing || EASING)
+      .fill('both')
       .beforeRemoveClass('ion-page-invisible');
 
     if (leavingEl && navEl) {
