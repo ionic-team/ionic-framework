@@ -33,7 +33,9 @@ export const menuPushAnimation = (AnimationC: Animation, _: HTMLElement, menu: M
     .addElement(menu.backdropEl)
     .fromTo('opacity', 0.01, 0.32);
 
-  return baseAnimation(AnimationC).then(animation => {
+  const isIos = menu.mode === 'ios';
+
+  return baseAnimation(AnimationC, isIos).then(animation => {
     return animation.add(menuAnimation)
       .add(backdropAnimation)
       .add(contentAnimation);

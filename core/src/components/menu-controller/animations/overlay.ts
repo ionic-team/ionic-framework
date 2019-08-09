@@ -2,7 +2,6 @@ import { Animation, MenuI } from '../../../interface';
 
 import { baseAnimation } from './base';
 
-const BOX_SHADOW_WIDTH = 8;
 /**
  * Menu Overlay Type
  * The menu slides over the content. The content
@@ -11,7 +10,7 @@ const BOX_SHADOW_WIDTH = 8;
 export const menuOverlayAnimation = (AnimationC: Animation, _: HTMLElement, menu: MenuI): Promise<Animation> => {
   let closedX: string;
   let openedX: string;
-  const width = menu.width + BOX_SHADOW_WIDTH;
+  const width = menu.width + 8;
   if (menu.isEndSide) {
     // right side
     closedX = width + 'px';
@@ -27,11 +26,14 @@ export const menuOverlayAnimation = (AnimationC: Animation, _: HTMLElement, menu
     .addElement(menu.menuInnerEl)
     .fromTo('translateX', closedX, openedX);
 
+  const isIos = menu.mode === 'ios';
+  const opacity = isIos ? 0.2 : 0.25;
+
   const backdropAnimation = new AnimationC()
     .addElement(menu.backdropEl)
-    .fromTo('opacity', 0.01, 0.32);
+    .fromTo('opacity', 0.01, opacity);
 
-  return baseAnimation(AnimationC).then(animation => {
+  return baseAnimation(AnimationC, isIos).then(animation => {
     return animation.add(menuAnimation)
       .add(backdropAnimation);
   });

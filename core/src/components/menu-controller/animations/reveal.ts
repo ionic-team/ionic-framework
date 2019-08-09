@@ -14,7 +14,9 @@ export const menuRevealAnimation = (AnimationC: Animation, _: HTMLElement, menu:
     .addElement(menu.contentEl)
     .fromTo('translateX', '0px', openedX);
 
-  return baseAnimation(AnimationC).then(animation => {
+  const isIos = menu.mode === 'ios';
+
+  return baseAnimation(AnimationC, isIos).then(animation => {
     return animation.add(contentOpen);
   });
 };

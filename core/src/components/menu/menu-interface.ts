@@ -1,8 +1,8 @@
 import { Animation, Side } from '../../interface';
 
 export interface MenuI {
-
   el: HTMLIonMenuElement;
+  mode: string;
   side: Side;
   menuId?: string;
   disabled: boolean;
