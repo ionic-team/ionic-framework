@@ -96,13 +96,18 @@ export class Segment implements ComponentInterface {
     const buttons = this.getButtons();
     const index = buttons.findIndex(button => button.value === this.value);
 
+    // If there is no indicator rendered or there is no checked button
+    // then don't move the indicator's position
     if (!indicator || index === -1) {
       return;
     }
 
+    // Transform the indicator based on the index of the button
     const left = `${(index * 100)}%`;
     const width = `calc(${1 / buttons.length * 100}%)`;
 
+    // TODO if the button is already checked we
+    // need to transform the scale on press
     writeTask(() => {
       const indicatorStyle = indicator.style;
 

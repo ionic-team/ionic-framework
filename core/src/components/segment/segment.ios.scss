@@ -5,13 +5,13 @@
 // --------------------------------------------------
 
 :host {
-  --background: transparent;
+  --background: #{$segment-button-ios-background-color};
   --background-checked: #{$segment-button-ios-background-color-checked};
-  // --background-hover: #{$segment-button-ios-background-color-hover};
-  // --background-activated: #{$segment-button-ios-background-color-activated};
-  // --background-checked: #{$segment-button-ios-background-color-checked};
-  // --color: #{$segment-button-ios-text-color};
-  // --color-checked: #{$segment-button-ios-text-color-checked};
+  --background-hover: #{$segment-button-ios-background-color-hover};
+  --background-activated: #{$segment-button-ios-background-color-activated};
+  --background-checked: #{$segment-button-ios-background-color-checked};
+  --color: initial;
+  --color-checked: initial;
   // --border-color: #{$segment-button-ios-border-color};
   --indicator-color: transparent;
   --indicator-transition: #{$segment-button-ios-transition-animated};
@@ -86,11 +86,11 @@
   background: #{var(--ion-toolbar-color-unchecked, $segment-ios-background-color)};
 }
 
-// :host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(.segment-button-checked) {
-//   background: #{var(--ion-toolbar-color-checked, var(--background-checked))};
+:host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(.segment-button-checked) {
+  // background: #{var(--ion-toolbar-color-checked, var(--background-checked))};
 
-//   color: #{var(--ion-toolbar-background, var(--color-checked))};
-// }
+  color: #{var(--ion-toolbar-background, var(--color-checked))};
+}
 
 // Segment: Color Toolbar
 // --------------------------------------------------
@@ -99,7 +99,8 @@
   background: #{current-color(contrast, 0.11)};
 }
 
-:host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(ion-segment-button) {
+:host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(.segment-button-checked) {
+  color: #000;
   // --color: #{current-color(contrast)};
   // --color-checked: #{current-color(base)};
   // --background-hover: #{current-color(contrast, $segment-button-ios-opacity-hover)};

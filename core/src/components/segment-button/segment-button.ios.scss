@@ -5,7 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  --background-checked: #{$segment-button-ios-background-color-checked};
   --border-radius: #{$segment-button-ios-border-radius};
   --border-width: #{$segment-button-ios-border-width};
   --border-style: solid;
@@ -62,8 +61,10 @@
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  :host(:hover:not(.segment-button-checked)) {
-    background: var(--background-hover);
+  :host(:hover) {
+    opacity: 0.5;
+
+    // background: var(--background-hover);
   }
 }
 
@@ -71,7 +72,9 @@
 // Segment Button: Activated
 // --------------------------------------------------
 
-:host(.activated) {
+:host(.activated:not(.segment-button-checked)) {
+  opacity: 0.3;
+
   background: var(--background-activated);
 }
 
@@ -81,12 +84,9 @@
 
 :host(.segment-button-checked) {
   font-weight: 500;
-
-  // TODO remove testing only
-  // color: red;
 }
 
-// :host(.segment-button-checked.activated) {
-//   background: var(--background-checked);
-//   color: var(--color-checked);
-// }
+:host(.segment-button-checked.activated) {
+  // TODO transform the background checked
+  // color: var(--color-checked);
+}

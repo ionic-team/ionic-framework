@@ -14,7 +14,7 @@
   --color-checked-disabled: var(--color-checked);
   --indicator-color: transparent;
   --indicator-color-checked: var(--color-checked);
-  --indicator-transition: transform .25s cubic-bezier(.4, 0, .2, 1);
+  --indicator-transition: #{$segment-button-md-transition-animated};
 }
 
 :host(.segment-disabled) {
