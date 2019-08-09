@@ -22,6 +22,7 @@ export const createAnimation = () => {
   let shouldForceSyncPlayback = false;
   let cssAnimationsTimerFallback: any;
   let forceDirectionValue: AnimationDirection | undefined;
+  let forceDurationValue: number | undefined;
   let willComplete = true;
   let finished = false;
   let shouldCalculateNumAnimations = true;
@@ -307,6 +308,7 @@ export const createAnimation = () => {
    */
   const getDuration = () => {
     if (shouldForceSyncPlayback) { return 0; }
+    if (forceDurationValue !== undefined) { return forceDurationValue; }
     if (_duration !== undefined) { return _duration; }
     if (parentAnimation) { return parentAnimation.getDuration(); }
 
@@ -764,10 +766,14 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const progressEnd = (shouldComplete: boolean, step: number) => {
+  const progressEnd = (shouldComplete: boolean, step: number, dur: number | undefined) => {
     childAnimations.forEach(animation => {
-      animation.progressEnd(shouldComplete, step);
+      animation.progressEnd(shouldComplete, step, dur);
     });
+
+    if (dur !== undefined) {
+      forceDurationValue = dur;
+    }
 
     finished = false;
     shouldForceLinearEasing = false;
@@ -776,6 +782,7 @@ export const createAnimation = () => {
     if (!shouldComplete) {
       onFinish(() => {
         willComplete = true;
+        forceDurationValue = undefined;
         forceDirectionValue = undefined;
 
         progressStep(1);
@@ -792,11 +799,15 @@ export const createAnimation = () => {
 
     } else {
       onFinish(() => {
+        forceDurationValue = undefined;
         progressStep(1);
         resetCSSAnimations();
       }, {
         oneTime: true
       });
+
+      update();
+      progressStep(step);
     }
 
     if (!parentAnimation) {
