@@ -781,13 +781,11 @@ export const createAnimation = () => {
 
     if (!shouldComplete) {
       onFinish(() => {
+        progressStep(1);
+        resetCSSAnimations();
         willComplete = true;
         forceDurationValue = undefined;
         forceDirectionValue = undefined;
-
-        progressStep(1);
-        resetCSSAnimations();
-
       }, {
         oneTime: true
       });
