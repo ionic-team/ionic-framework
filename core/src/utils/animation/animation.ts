@@ -781,7 +781,8 @@ export const createAnimation = () => {
 
     if (!shouldComplete) {
       onFinish(() => {
-        progressStep(1);
+        setAnimationStep(1);
+
         resetCSSAnimations();
         willComplete = true;
         forceDurationValue = undefined;
@@ -798,14 +799,15 @@ export const createAnimation = () => {
     } else {
       onFinish(() => {
         forceDurationValue = undefined;
-        progressStep(1);
+        setAnimationStep(1);
+
         resetCSSAnimations();
       }, {
         oneTime: true
       });
 
       update();
-      progressStep(step);
+      setAnimationStep(step);
     }
 
     if (!parentAnimation) {
