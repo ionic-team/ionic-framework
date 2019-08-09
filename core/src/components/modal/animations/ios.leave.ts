@@ -11,7 +11,7 @@ export function iosLeaveAnimation(
   currentBackdropOpacity = SwipeToCloseDefaults.MIN_BACKDROP_OPACITY,
   velocityY?: number
   ): Promise<Animation> {
-  const duration = velocityY ? 250 - Math.min(100, velocityY * 75) : 250;
+  const duration = typeof velocityY !== 'undefined' ? 250 - Math.min(100, velocityY * 75) : 250;
 
   const baseAnimation = new AnimationC();
 

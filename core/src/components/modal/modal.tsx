@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Me
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { BACKDROP, dismiss, eventMethod, present, getOverlays } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, getOverlays, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -202,8 +202,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // we changed the presentation and dismiss behavior when using
     // the card presentation style
     const openModals = getOverlays(document, 'ion-modal');
-    const secondTolastModal = openModals[openModals.length - 2];
-    this.isFirstModal = !!!secondTolastModal;
+    this.isFirstModal = openModals.length - 2 < 0;
 
     if (this.swipeToClose && this.presentingEl && this.gesture) {
       this.gesture!.setPresentingEl(this.presentingEl);
@@ -305,7 +304,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
                                 velocityY);
     }
   }
-
 
   private async swipeDismiss(velocityY: number) {
     const leaveAnim = this.buildSwipeLeaveAnimation(velocityY);

@@ -16,7 +16,7 @@ export function iosLeaveCardAnimation(
   // The top translate Y for the presenting element
   const presentingFromY = SwipeToCloseDefaults.MIN_PRESENTING_Y;
 
-  const duration = velocityY ? 500 - Math.min(400, velocityY * 200) : 500;
+  const duration = typeof velocityY !== 'undefined' ? 500 - Math.min(400, velocityY * 200) : 500;
 
   const baseAnimation = new AnimationC();
 

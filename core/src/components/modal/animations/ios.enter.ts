@@ -12,7 +12,6 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): P
   const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.modal-wrapper'));
 
-
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
                   .fromTo('translateY', '100%', '0%');
 

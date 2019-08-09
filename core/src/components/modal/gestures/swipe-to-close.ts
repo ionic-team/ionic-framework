@@ -2,8 +2,6 @@ import { writeTask } from '@stencil/core';
 
 import { GestureDetail } from '../../../utils/gesture';
 
-import { ModalGesture } from './index';
-
 // Defaults for the card swipe animation
 export const SwipeToCloseDefaults = {
   MIN_BACKDROP_OPACITY: 0.4,
@@ -13,7 +11,7 @@ export const SwipeToCloseDefaults = {
   MIN_PRESENTING_Y: 1
 };
 
-export class SwipeToCloseGesture implements ModalGesture {
+export class SwipeToCloseGesture {
   // The current opacity of the backdrop element
   private minBackdropOpacity = SwipeToCloseDefaults.MIN_BACKDROP_OPACITY;
   private backdropOpacity = 0;
@@ -80,13 +78,14 @@ export class SwipeToCloseGesture implements ModalGesture {
   private canStart(detail: GestureDetail) {
     const target = detail.event.target;
 
-    if (!target || !(target as HTMLElement).closest) {
+    if (target === null ||
+       !(target as any).closest) {
       return true;
     }
 
-    const content = (target as HTMLElement).closest('ion-content') as HTMLIonContentElement;
+    const content = (target as HTMLElement).closest('ion-content') as HTMLIonContentElement | null;
 
-    if (!content) {
+    if (content === null) {
       return true;
     }
 
