@@ -63,6 +63,7 @@ export const createAnimation = () => {
     clearOnFinish();
 
     initialized = false;
+    shouldCalculateNumAnimations = true;
 
     childAnimations.forEach(childAnimation => {
       childAnimation.destroy();
