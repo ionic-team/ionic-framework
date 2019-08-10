@@ -715,6 +715,10 @@ export const createAnimation = () => {
         : null;
 
       setStyleProperty(element, 'animation-iteration-count', iterationsCount);
+
+      requestAnimationFrame(() => {
+        setStyleProperty(element, 'animation-name', keyframeName || null);
+      });
     });
   };
 
