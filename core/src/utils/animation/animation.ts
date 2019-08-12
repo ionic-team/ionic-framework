@@ -805,9 +805,15 @@ export const createAnimation = () => {
           forceDelayValue = undefined;
           progressStep(1);
         } else {
+
+          /**
+           * Parent animations at this point may not have finished
+           */
           forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
           forceDelayValue = 0;
           update();
+
+          forceDirectionValue = undefined;
         }
       }, {
         oneTime: true
@@ -824,6 +830,8 @@ export const createAnimation = () => {
       }
     } else {
       onFinish(() => {
+        pause(false);
+
         forceDurationValue = undefined;
         forceDelayValue = undefined;
 
