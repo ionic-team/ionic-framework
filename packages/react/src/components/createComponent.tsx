@@ -31,12 +31,12 @@ export const createReactComponent = <PropType, ElementType>(
     }
 
     componentDidMount() {
-      this.componentWillReceiveProps(this.props);
+      this.componentDidUpdate(this.props);
     }
 
-    componentWillReceiveProps(props: IonicReactInternalProps<ElementType>) {
+    componentDidUpdate(prevProps: IonicReactInternalProps<ElementType>) {
       const node = ReactDom.findDOMNode(this) as HTMLElement;
-      attachEventProps(node, props, this.props);
+      attachEventProps(node, this.props, prevProps);
     }
 
     private handleClick = (e: MouseEvent) => {
@@ -51,7 +51,7 @@ export const createReactComponent = <PropType, ElementType>(
     render() {
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
 
-      const props = Object.keys(cProps).reduce((acc, name) => {
+      const propsToPass = Object.keys(cProps).reduce((acc, name) => {
         if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
           const eventName = name.substring(2).toLowerCase();
           if (isCoveredByReact(eventName)) {
@@ -62,7 +62,7 @@ export const createReactComponent = <PropType, ElementType>(
       }, {});
 
       const newProps: any = {
-        ...props,
+        ...propsToPass,
         ref: forwardedRef,
         style,
         className

@@ -23,6 +23,7 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
 
   constructor(props: RouterManagerProps) {
     super(props);
+    this.listenUnregisterCallback = this.props.history.listen(this.historyChange.bind(this));
     this.state = {
       viewStacks: {},
       hideView: this.hideView.bind(this),
@@ -31,10 +32,6 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
       renderChild: this.renderChild.bind(this),
       transitionView: this.transitionView.bind(this)
     };
-  }
-
-  componentWillMount() {
-    this.listenUnregisterCallback = this.props.history.listen(this.historyChange.bind(this));
   }
 
   hideView(viewId: string) {
