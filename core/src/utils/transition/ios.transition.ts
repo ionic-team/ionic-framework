@@ -384,8 +384,7 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         .duration(DURATION)
         .keyframes([
           { offset: 0, opacity: 0.99, transform: 'translate(0, 49px) scale(1)' },
-          { offset: 0.7, opacity: 0.1 },
-          { offset: 0.8, opacity: 0 },
+          { offset: 0.6, opacity: 0 },
           { offset: 1, opacity: 0, transform: 'translate(18px, 0px) scale(0.5)' }
         ]);
 
@@ -460,8 +459,7 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         .duration(DURATION)
         .keyframes([
           { offset: 0, opacity: 0, transform: 'translate(18px, 0px) scale(0.49)' },
-          { offset: 0.2, opacity: 0 },
-          { offset: 0.3, opacity: 0.1 },
+          { offset: 0.4, opacity: 0.1 },
           { offset: 1, opacity: 1, transform: 'translate(0, 49px) scale(1)' }
         ]);
 

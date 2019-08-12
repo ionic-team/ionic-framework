@@ -30,6 +30,15 @@
     .create ion-icon {
       transform: scale(0.9);
     }
+    
+    .main-header ion-toolbar {
+      --background: #f6f8f8;
+      --border-color: #dfe1e0;
+    }
+    
+    .main-content {
+      //--background: #f1f2f6;
+    }
   </style>
 </head>
 <!--<ion-button slot="icon-only" class="more">
@@ -110,19 +119,16 @@
       connectedCallback() {
   
         this.innerHTML = `
-          <ion-header>
+          <ion-header class="main-header">
             <ion-toolbar>      
-              <ion-title>Messages</ion-title>
-              
-             
+              <ion-title>Settings</ion-title>              
             </ion-toolbar>
           </ion-header>
         
-          <ion-content id="content">
+          <ion-content id="content" class="main-content">
             <ion-header collapse>
               <ion-toolbar>      
-                <ion-title size="large">Messages</ion-title>
-                
+                <ion-title size="large">Settings</ion-title>
               </ion-toolbar>
               
               <ion-toolbar>
@@ -142,7 +148,7 @@
           <ion-header>
             <ion-toolbar>
               <ion-buttons slot="start">
-                <ion-back-button text="Messages"></ion-back-button>
+                <ion-back-button text="Settings"></ion-back-button>
               </ion-buttons>
               <ion-title>Page Two</ion-title>
             </ion-toolbar>

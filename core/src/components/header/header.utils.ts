@@ -2,12 +2,6 @@ import { readTask, writeTask } from '@stencil/core';
 
 const TRANSITION = 'all 0.2s ease-in-out';
 
-export const setToolbarBorderColor = (toolbar: any, color: string) => {
-  if (!toolbar) { return; }
-
-  toolbar.el.style.setProperty('--border-color', color);
-};
-
 export const createHeaderIndex = (headerEl: any): any | undefined => {
   if (!headerEl) { return; }
 
@@ -62,9 +56,6 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
  */
 export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollHeaderIndex: any) => {
   writeTask(() => {
-    const mainHeaderToolbars = mainHeaderIndex.toolbars;
-    const lastMainHeaderToolbar = mainHeaderToolbars[mainHeaderToolbars.length - 1];
-
     /**
      * If element does not have an offsetParent,
      * then the page where this header exists
@@ -75,13 +66,9 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
     if (ev[0].isIntersecting) {
       makeHeaderInactive(mainHeaderIndex, true, true);
       makeHeaderActive(scrollHeaderIndex, false);
-
-      setToolbarBorderColor(lastMainHeaderToolbar, 'rgba(0, 0, 0, 0)');
     } else {
       makeHeaderActive(mainHeaderIndex, true, true);
       makeHeaderInactive(scrollHeaderIndex, true);
-
-      setToolbarBorderColor(lastMainHeaderToolbar, 'rgba(0, 0, 0, 0.2)');
     }
   });
 };

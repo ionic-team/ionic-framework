@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h, readTask } from 
 
 import { getIonMode } from '../../global/ionic-global';
 
-import { createHeaderIndex, handleContentScroll, handleToolbarIntersection, makeHeaderInactive, setToolbarBorderColor } from './header.utils';
+import { createHeaderIndex, handleContentScroll, handleToolbarIntersection, makeHeaderInactive, setElOpacity } from './header.utils';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
@@ -107,8 +107,7 @@ export class Header implements ComponentInterface {
       /**
        * Set the initial state of the collapsable header
        */
-      const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
-      setToolbarBorderColor(lastMainToolbar, 'rgba(0, 0, 0, 0)');
+      setElOpacity(mainHeaderIndex.el, 0);
     });
   }
 
