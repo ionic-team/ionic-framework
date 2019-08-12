@@ -2,11 +2,43 @@ import { IonicAnimation } from '../../interface';
 import { createAnimation } from '../animation/animation';
 import { TransitionOptions } from '../transition';
 
+/**
+ * If a view has the iOS Large Header in use,
+ * we do not always want to interfere with the styles
+ * of the title in the main header as they can change
+ * depending on whether or not the large header is collapsed.
+ */
+const hasCollapsableHeader = (el: any): boolean => {
+  return el && el.classList.contains('collapse-header-title-hidden');
+};
+
+const cloneElement = async (el: any, deep = false, elementToAppendTo?: any, hidden = false): Promise<any> => {
+  try {
+    const clone = el.cloneNode(deep);
+
+    if (hidden) {
+      clone.style.setProperty('display', 'none');
+    }
+
+    if (elementToAppendTo) {
+      elementToAppendTo.appendChild(clone);
+
+      if (clone.componentOnReady) {
+        await clone.componentOnReady();
+      }
+    }
+
+    return clone;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
   return el.shadowRoot || el;
 };
 
-export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptions): IonicAnimation => {
+export const iosTransitionAnimation = async (navEl: HTMLElement, opts: TransitionOptions): Promise<IonicAnimation> => {
   try {
     const DURATION = 540;
     const EASING = 'cubic-bezier(0.32,0.72,0,1)';
@@ -29,6 +61,9 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
     const rootAnimation = createAnimation();
     const enteringContentAnimation = createAnimation();
+
+    let leavingLargeTitleEl: any;
+    let enteringBackButtonEl: any;
 
     rootAnimation
       .addElement(enteringEl)
@@ -100,7 +135,8 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       rootAnimation.addAnimation(enteringToolBar);
 
       const enteringTitle = createAnimation();
-      enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title'));
+      const enteringTitleEl = enteringToolBarEl.querySelector('ion-title');
+      enteringTitle.addElement(enteringTitleEl);
 
       const enteringToolBarButtons = createAnimation();
       enteringToolBarButtons.addElement(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
@@ -114,12 +150,10 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       const enteringBackButton = createAnimation();
       const backButtonEl = enteringToolBarEl.querySelector('ion-back-button');
 
-      if (backButtonEl) {
-        enteringBackButton.addElement(backButtonEl);
-      }
-
       enteringToolBar.addAnimation([enteringTitle, enteringToolBarButtons, enteringToolBarItems, enteringToolBarBg, enteringBackButton]);
-      enteringTitle.fromTo(OPACITY, 0.01, 1);
+      if (!hasCollapsableHeader(enteringTitleEl)) {
+        enteringTitle.fromTo(OPACITY, 0.01, 1);
+      }
       enteringToolBarButtons.fromTo(OPACITY, 0.01, 1);
       enteringToolBarItems.fromTo(OPACITY, 0.01, 1);
 
@@ -144,12 +178,16 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         enteringBackButton.fromTo(OPACITY, 0.01, 1);
 
         if (backButtonEl) {
-          const enteringBackBtnText = createAnimation();
-          enteringBackBtnText
-            .addElement(shadow(backButtonEl).querySelector('.button-text'))
-            .fromTo(`transform`, (isRTL ? 'translateX(-100px)' : 'translateX(100px)'), 'translateX(0px)');
+          if (!enteringBackButtonEl) {
+            enteringBackButtonEl = backButtonEl;
+          } else {
+            const enteringBackBtnText = createAnimation();
+            enteringBackBtnText
+              .addElement(shadow(backButtonEl).querySelector('.button-text'))
+              .fromTo(`transform`, (isRTL ? 'translateX(-100px)' : 'translateX(100px)'), 'translateX(0px)');
 
-          enteringToolBar.addAnimation(enteringBackBtnText);
+            enteringToolBar.addAnimation(enteringBackBtnText);
+          }
         }
       }
     });
@@ -214,7 +252,8 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         leavingToolBar.addElement(leavingToolBarEl);
 
         const leavingTitle = createAnimation();
-        leavingTitle.addElement(leavingToolBarEl.querySelector('ion-title'));
+        const leavingTitleEl = leavingToolBarEl.querySelector('ion-title');
+        leavingTitle.addElement(leavingTitleEl);
 
         const leavingToolBarButtons = createAnimation();
         leavingToolBarButtons.addElement(leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
@@ -239,7 +278,17 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
         // fade out leaving toolbar items
         leavingBackButton.fromTo(OPACITY, 0.99, 0);
-        leavingTitle.fromTo(OPACITY, 0.99, 0);
+
+        if (!hasCollapsableHeader(leavingTitleEl)) {
+          leavingTitle.fromTo(OPACITY, 0.99, 0);
+        } else {
+          const largeTitleEl = leavingEl.querySelector('ion-title.title-ios-large') as HTMLElement;
+
+          if (largeTitleEl && !leavingLargeTitleEl) {
+            leavingLargeTitleEl = largeTitleEl;
+          }
+        }
+
         leavingToolBarButtons.fromTo(OPACITY, 0.99, 0);
         leavingToolBarItems.fromTo(OPACITY, 0.99, 0);
 
@@ -271,10 +320,95 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
             .afterClearStyles([TRANSFORM, OPACITY]);
 
           leavingBackButton.afterClearStyles([OPACITY]);
-          leavingTitle.afterClearStyles([OPACITY]);
+
+          if (!hasCollapsableHeader(leavingTitleEl)) {
+            leavingTitle.afterClearStyles([OPACITY]);
+          }
+
           leavingToolBarButtons.afterClearStyles([OPACITY]);
         }
       });
+    }
+
+    /**
+     * Setup large iOS title navigation
+     */
+    if (leavingLargeTitleEl && enteringBackButtonEl) {
+      /**
+       * Set up leaving large title
+       */
+      const clonedTitleEl = await cloneElement(leavingLargeTitleEl, true, document.body, true);
+      const clonedLargeTitleAnimation = createAnimation();
+      clonedLargeTitleAnimation.addElement(clonedTitleEl);
+
+      clonedLargeTitleAnimation
+        .beforeStyles({
+          'transform-origin': 'left center',
+          'transform': 'scale(1, 1) translate(0, 49px)',
+          'height': 'auto',
+          'position': 'relative',
+          'transition-property': 'opacity, transform',
+          'display': 'block'
+        })
+        .beforeAddWrite(() => {
+          leavingLargeTitleEl.style.setProperty('display', 'none');
+        })
+        .afterAddWrite(() => {
+          leavingLargeTitleEl.style.setProperty('display', '');
+          clonedTitleEl.style.setProperty('display', 'none');
+        })
+        .duration(DURATION)
+        .keyframes([
+          { offset: 0, opacity: 0.99, transform: 'translate(0, 49px) scale(1)' },
+          { offset: 0.7, opacity: 0 },
+          { offset: 1, opacity: 0, transform: 'translate(18px, 0px) scale(0.5)' }
+        ]);
+
+      rootAnimation.addAnimation(clonedLargeTitleAnimation);
+
+      /**
+       * Setup entering back button
+       */
+      const enteringBackButtonTextAnimation = createAnimation();
+      const enteringBackButtonIconAnimation = createAnimation();
+
+      const clonedBackButtonEl = await cloneElement(enteringBackButtonEl, false, document.body);
+
+      clonedBackButtonEl.style.display = 'block';
+      clonedBackButtonEl.style.position = 'fixed';
+
+      const backButtonTextEl = clonedBackButtonEl.querySelector('.button-text');
+      const backButtonIconEl = clonedBackButtonEl.querySelector('ion-icon');
+
+      enteringBackButtonIconAnimation.addElement(backButtonIconEl);
+      enteringBackButtonTextAnimation.addElement(backButtonTextEl);
+
+      enteringBackButtonTextAnimation
+        .beforeStyles({
+          'transform-origin': 'left center'
+        })
+        .beforeAddWrite(() => {
+          enteringBackButtonEl.style.setProperty('display', 'none');
+        })
+        .afterAddWrite(() => {
+          enteringBackButtonEl.style.setProperty('display', 'inherit');
+          clonedBackButtonEl.style.setProperty('display', 'none');
+        })
+        .keyframes([
+          { offset: 0, opacity: 0, transform: 'translate(-7px, 8px) scale(2.1)' },
+          { offset: 1, opacity: 1, transform: 'translate(4px, -40px) scale(1)' }
+        ]);
+
+      enteringBackButtonIconAnimation
+        .beforeStyles({
+          'transform-origin': 'right center'
+        })
+        .keyframes([
+          { offset: 0, opacity: 0, transform: 'translate(4px, -40px) scale(0.6)' },
+          { offset: 1, opacity: 1, transform: 'translate(4px, -40px) scale(1)' }
+        ]);
+
+      rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation]);
     }
 
     return rootAnimation;
