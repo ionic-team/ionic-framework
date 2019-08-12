@@ -363,7 +363,9 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     // the cloned animation should not use an easing curve during seek
-    (this.animation as IonicAnimation).progressStart(true);
+    (this.animation as IonicAnimation)
+      .direction((this._isOpen) ? 'reverse' : 'normal')
+      .progressStart(true);
   }
 
   private onMove(detail: GestureDetail) {
@@ -376,7 +378,7 @@ export class Menu implements ComponentInterface, MenuI {
     const stepValue = delta / this.width;
 
     this.animation
-      .direction((this._isOpen) ? 'reverse' : 'normal')
+
       .progressStep(stepValue);
   }
 

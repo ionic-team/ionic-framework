@@ -23,6 +23,7 @@ export const createAnimation = () => {
   let cssAnimationsTimerFallback: any;
   let forceDirectionValue: AnimationDirection | undefined;
   let forceDurationValue: number | undefined;
+  let forceDelayValue: number | undefined;
   let willComplete = true;
   let finished = false;
   let shouldCalculateNumAnimations = true;
@@ -329,6 +330,7 @@ export const createAnimation = () => {
    * Gets the animation's delay in milliseconds.
    */
   const getDelay = () => {
+    if (forceDelayValue !== undefined) { return forceDelayValue; }
     if (_delay !== undefined) { return _delay; }
     if (parentAnimation) { return parentAnimation.getDelay(); }
 
@@ -700,7 +702,7 @@ export const createAnimation = () => {
     });
   };
 
-  const updateCSSAnimation = () => {
+  const updateCSSAnimation = (toggleAnimationName = true) => {
     elements.forEach(element => {
       setStyleProperty(element, 'animation-name', keyframeName || null);
       setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
@@ -716,6 +718,10 @@ export const createAnimation = () => {
 
       setStyleProperty(element, 'animation-iteration-count', iterationsCount);
 
+      if (toggleAnimationName) {
+        setStyleProperty(element, 'animation-name', `${keyframeName}-alt`);
+      }
+
       requestAnimationFrame(() => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
       });
@@ -725,7 +731,7 @@ export const createAnimation = () => {
   /**
    * Updates any existing animations.
    */
-  const update = (deep = false) => {
+  const update = (deep = false, toggleAnimationName = true) => {
     if (deep) {
       childAnimations.forEach(animation => {
         animation.update(deep);
@@ -735,7 +741,7 @@ export const createAnimation = () => {
     if (supportsWebAnimations) {
       updateWebAnimation();
     } else {
-      updateCSSAnimation();
+      updateCSSAnimation(toggleAnimationName);
     }
 
     return ani;
@@ -746,13 +752,13 @@ export const createAnimation = () => {
       animation.progressStart(forceLinearEasing);
     });
 
-    resetCSSAnimations();
-    pause();
-
+    pause(false);
     shouldForceLinearEasing = forceLinearEasing;
 
     if (!initialized) {
       initializeAnimation();
+    } else {
+      updateCSSAnimation();
     }
 
     return ani;
@@ -785,33 +791,36 @@ export const createAnimation = () => {
 
     if (!shouldComplete) {
       onFinish(() => {
-        setAnimationStep(1);
+        pause(false);
 
-        resetCSSAnimations();
         willComplete = true;
         forceDurationValue = undefined;
         forceDirectionValue = undefined;
+        forceDelayValue = 0;
+
+        // TODO: Hacky
+        requestAnimationFrame(() => {
+          update(false, false);
+          resetCSSAnimations();
+        });
       }, {
         oneTime: true
       });
 
       forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
-      update();
+      forceDelayValue = ((1 - step) * getDuration()!) * -1;
 
-      progressStep(1 - step);
-
+      update(false, false);
     } else {
       onFinish(() => {
         forceDurationValue = undefined;
-        setAnimationStep(1);
-
-        resetCSSAnimations();
+        forceDelayValue = undefined;
       }, {
         oneTime: true
       });
 
-      update();
-      setAnimationStep(step);
+      forceDelayValue = (step * getDuration()!) * -1;
+      update(false, false);
     }
 
     if (!parentAnimation) {
@@ -824,10 +833,12 @@ export const createAnimation = () => {
   /**
    * Pause the animation.
    */
-  const pause = () => {
-    childAnimations.forEach(animation => {
-      animation.pause();
-    });
+  const pause = (deep = true) => {
+    if (deep) {
+      childAnimations.forEach(animation => {
+        animation.pause();
+      });
+    }
 
     if (initialized) {
       if (supportsWebAnimations) {
