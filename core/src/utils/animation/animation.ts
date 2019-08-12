@@ -758,7 +758,8 @@ export const createAnimation = () => {
     if (!initialized) {
       initializeAnimation();
     } else {
-      updateCSSAnimation();
+      update();
+      setAnimationStep(0);
     }
 
     return ani;
@@ -799,28 +800,41 @@ export const createAnimation = () => {
         forceDelayValue = 0;
 
         // TODO: Hacky
-        requestAnimationFrame(() => {
-          update(false, false);
-          resetCSSAnimations();
-        });
+        if (!supportsWebAnimations) {
+          requestAnimationFrame(() => {
+            update(false, false);
+            resetCSSAnimations();
+          });
+        }
       }, {
         oneTime: true
       });
 
       forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
-      forceDelayValue = ((1 - step) * getDuration()!) * -1;
 
-      update(false, false);
+      if (supportsWebAnimations) {
+        update();
+        progressStep(1 - step);
+      } else {
+        forceDelayValue = ((1 - step) * getDuration()!) * -1;
+        update(false, false);
+      }
     } else {
       onFinish(() => {
         forceDurationValue = undefined;
         forceDelayValue = undefined;
+
+        if (supportsWebAnimations) {
+          progressStep(1);
+        }
       }, {
         oneTime: true
       });
 
-      forceDelayValue = (step * getDuration()!) * -1;
-      update(false, false);
+      if (!supportsWebAnimations) {
+        forceDelayValue = (step * getDuration()!) * -1;
+        update(false, false);
+      }
     }
 
     if (!parentAnimation) {
