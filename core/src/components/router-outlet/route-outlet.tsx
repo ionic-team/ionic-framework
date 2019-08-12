@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, IonicAnimation, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { transition } from '../../utils/transition';
 
@@ -17,9 +17,14 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private activeComponent: any;
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
-  private ani?: Animation;
+  private ani?: IonicAnimation | Animation;
 
   @Element() el!: HTMLElement;
+
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop({ mutable: true }) mode = getIonMode(this);
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -147,8 +152,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     // emit nav will change event
     this.ionNavWillChange.emit();
 
-    const mode = getIonMode(this);
-    const { el } = this;
+    const { el, mode } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const animationBuilder = this.animation || opts.animationBuilder || config.get('navAnimation');
 

@@ -1,5 +1,8 @@
 import { config } from '../global/config';
-import { ActionSheetOptions, AlertOptions, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import { ActionSheetOptions, AlertOptions, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicAnimation, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+
+// TODO: Remove when removing AnimationBuilder
+export type IonicAnimationInterface = (baseEl: any, opts: any) => IonicAnimation;
 
 let lastId = 0;
 
@@ -111,8 +114,8 @@ export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTM
 export const present = async (
   overlay: OverlayInterface,
   name: keyof IonicConfig,
-  iosEnterAnimation: AnimationBuilder,
-  mdEnterAnimation: AnimationBuilder,
+  iosEnterAnimation: AnimationBuilder | IonicAnimationInterface,
+  mdEnterAnimation: AnimationBuilder | IonicAnimationInterface,
   opts?: any
 ) => {
   if (overlay.presented) {
@@ -137,8 +140,8 @@ export const dismiss = async (
   data: any | undefined,
   role: string | undefined,
   name: keyof IonicConfig,
-  iosLeaveAnimation: AnimationBuilder,
-  mdLeaveAnimation: AnimationBuilder,
+  iosLeaveAnimation: AnimationBuilder | IonicAnimationInterface,
+  mdLeaveAnimation: AnimationBuilder | IonicAnimationInterface,
   opts?: any
 ): Promise<boolean> => {
   if (!overlay.presented) {
@@ -170,7 +173,7 @@ const getAppRoot = (doc: Document) => {
 
 const overlayAnimation = async (
   overlay: OverlayInterface,
-  animationBuilder: AnimationBuilder,
+  animationBuilder: AnimationBuilder | IonicAnimationInterface,
   baseEl: any,
   opts: any
 ): Promise<boolean> => {
@@ -183,7 +186,17 @@ const overlayAnimation = async (
   baseEl.classList.remove('overlay-hidden');
 
   const aniRoot = baseEl.shadowRoot || overlay.el;
-  const animation = await import('./animation').then(mod => mod.create(animationBuilder, aniRoot, opts));
+
+  /**
+   * TODO: Remove AnimationBuilder
+   */
+  const animation = await import('./animation/old-animation').then(mod => mod.create(animationBuilder as AnimationBuilder, aniRoot, opts));
+  const isAnimationBuilder = (animation as any).fill === undefined;
+
+  if (!isAnimationBuilder) {
+    (animation as any).fill('both');
+  }
+
   overlay.animation = animation;
   if (!overlay.animated || !config.getBoolean('animated', true)) {
     animation.duration(0);
@@ -196,21 +209,18 @@ const overlayAnimation = async (
       }
     });
   }
-  await animation.playAsync();
-  const hasCompleted = animation.hasCompleted;
-  animation.destroy();
+  const animationResult = await animation.playAsync();
+
+  /**
+   * TODO: Remove AnimationBuilder
+   */
+  const hasCompleted = (typeof animationResult as any === 'boolean') ? animationResult : (animation as any).hasCompleted;
+  if (isAnimationBuilder) {
+    animation.destroy();
+  }
+
   overlay.animation = undefined;
   return hasCompleted;
-};
-
-export const autoFocus = (containerEl: HTMLElement): HTMLElement | undefined => {
-  const focusableEls = containerEl.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
-  if (focusableEls.length > 0) {
-    const el = focusableEls[0] as HTMLInputElement;
-    el.focus();
-    return el;
-  }
-  return undefined;
 };
 
 export const eventMethod = <T>(element: HTMLElement, eventName: string): Promise<T> => {
@@ -242,6 +252,22 @@ const isDescendant = (parent: HTMLElement, child: HTMLElement | null) => {
     child = child.parentElement;
   }
   return false;
+};
+
+const defaultGate = (h: any) => h();
+
+export const safeCall = (handler: any, arg?: any) => {
+  if (typeof handler === 'function') {
+    const jmp = config.get('_zoneGate', defaultGate);
+    return jmp(() => {
+      try {
+        return handler(arg);
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  }
+  return undefined;
 };
 
 export const BACKDROP = 'backdrop';

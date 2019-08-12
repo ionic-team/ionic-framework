@@ -1,9 +1,10 @@
-import { Animation } from '../../../interface';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Popover Enter Animation
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
+export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimation => {
   let originY = 'top';
   let originX = 'left';
 
@@ -97,21 +98,23 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
 
   contentEl.style.transformOrigin = originY + ' ' + originX;
 
-  const baseAnimation = new AnimationC();
+  const baseAnimation = createAnimation();
+  const backdropAnimation = createAnimation();
+  const wrapperAnimation = createAnimation();
 
-  const backdropAnimation = new AnimationC();
-  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
-  backdropAnimation.fromTo('opacity', 0.01, 0.08);
+  backdropAnimation
+    .addElement(baseEl.querySelector('ion-backdrop'))
+    .fromTo('opacity', 0.01, 0.08);
 
-  const wrapperAnimation = new AnimationC();
-  wrapperAnimation.addElement(baseEl.querySelector('.popover-wrapper'));
-  wrapperAnimation.fromTo('opacity', 0.01, 1);
+  wrapperAnimation
+    .addElement(baseEl.querySelector('.popover-wrapper'))
+    .fromTo('opacity', 0.01, 1);
 
-  return Promise.resolve(baseAnimation
+  return baseAnimation
     .addElement(baseEl)
     .easing('ease')
     .duration(100)
-    .add(backdropAnimation)
-    .add(wrapperAnimation));
-}
+    .addAnimation([backdropAnimation, wrapperAnimation]);
+};
+
 const POPOVER_IOS_BODY_PADDING = 5;

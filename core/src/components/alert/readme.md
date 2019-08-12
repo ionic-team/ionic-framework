@@ -289,7 +289,6 @@ export class AlertExample {
 ```javascript
 async function presentAlert() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Alert',
@@ -302,7 +301,6 @@ async function presentAlert() {
 
 async function presentAlertMultipleButtons() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Alert',
@@ -315,7 +313,6 @@ async function presentAlertMultipleButtons() {
 
 async function presentAlertConfirm() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Confirm!',
@@ -341,7 +338,6 @@ async function presentAlertConfirm() {
 
 async function presentAlertPrompt() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Prompt!',
@@ -405,7 +401,6 @@ async function presentAlertPrompt() {
 
 async function presentAlertRadio() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Radio',
@@ -463,7 +458,6 @@ async function presentAlertRadio() {
 
 async function presentAlertCheckbox() {
   const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
 
   const alert = await alertController.create({
     header: 'Checkbox',
@@ -1052,7 +1046,7 @@ export default {
 | `message`         | `message`          | The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string \| undefined`                                                                  | `undefined` |
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                  | `"ios" \| "md"`                                                                        | `undefined` |
 | `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                                                                                                                                                                                                                                               | `string \| undefined`                                                                  | `undefined` |
-| `translucent`     | `translucent`      | If `true`, the alert will be translucent.                                                                                                                                                                                                                                                                                          | `boolean`                                                                              | `false`     |
+| `translucent`     | `translucent`      | If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                                                                               | `boolean`                                                                              | `false`     |
 
 
 ## Events

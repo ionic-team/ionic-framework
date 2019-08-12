@@ -1,20 +1,20 @@
-import { Animation } from '../../../interface';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * MD Toast Enter Animation
  */
-export function mdEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> {
-  const baseAnimation = new AnimationC();
-
-  const wrapperAnimation = new AnimationC();
+export const mdEnterAnimation = (baseEl: ShadowRoot, position: string): IonicAnimation => {
+  const baseAnimation = createAnimation();
+  const wrapperAnimation = createAnimation();
 
   const hostEl = baseEl.host || baseEl;
   const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
 
-  wrapperAnimation.addElement(wrapperEl);
-
   const bottom = `calc(8px + var(--ion-safe-area-bottom, 0px))`;
   const top = `calc(8px + var(--ion-safe-area-top, 0px))`;
+
+  wrapperAnimation.addElement(wrapperEl);
 
   switch (position) {
     case 'top':
@@ -33,9 +33,9 @@ export function mdEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, posi
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
   }
-  return Promise.resolve(baseAnimation
+  return baseAnimation
     .addElement(hostEl)
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(400)
-    .add(wrapperAnimation));
-}
+    .addAnimation(wrapperAnimation);
+};

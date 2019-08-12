@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -25,9 +25,11 @@ export class SkeletonText implements ComponentInterface {
 
   calculateWidth() {
     // If width was passed in to the property use that first
+    // tslint:disable-next-line: deprecation
     if (this.width !== undefined) {
       return {
         style: {
+          // tslint:disable-next-line: deprecation
           width: this.width
         }
       };
@@ -37,23 +39,21 @@ export class SkeletonText implements ComponentInterface {
   }
 
   render() {
-    return (
-      <span>&nbsp;</span>
-    );
-  }
-
-  hostData() {
     const animated = this.animated && config.getBoolean('animated', true);
     const inMedia = hostContext('ion-avatar', this.el) || hostContext('ion-thumbnail', this.el);
     const mode = getIonMode(this);
 
-    return {
-      class: {
-        [mode]: true,
-        'skeleton-text-animated': animated,
-        'in-media': inMedia
-      },
-      ...this.calculateWidth()
-    };
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'skeleton-text-animated': animated,
+          'in-media': inMedia
+        }}
+        {...this.calculateWidth()}
+      >
+        <span>&nbsp;</span>
+      </Host>
+    );
   }
 }

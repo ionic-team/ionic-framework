@@ -1,11 +1,11 @@
 const cloneMap = new WeakMap<HTMLElement, HTMLElement>();
 
-export function relocateInput(
+export const relocateInput = (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
   shouldRelocate: boolean,
   inputRelativeY = 0
-) {
+) => {
   if (cloneMap.has(componentEl) === shouldRelocate) {
     return;
   }
@@ -15,13 +15,13 @@ export function relocateInput(
   } else {
     removeClone(componentEl, inputEl);
   }
-}
+};
 
-export function isFocused(input: HTMLInputElement | HTMLTextAreaElement): boolean {
+export const isFocused = (input: HTMLInputElement | HTMLTextAreaElement): boolean => {
   return input === (input as any).getRootNode().activeElement;
-}
+};
 
-function addClone(componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLTextAreaElement, inputRelativeY: number) {
+const addClone = (componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLTextAreaElement, inputRelativeY: number) => {
   // this allows for the actual input to receive the focus from
   // the user's touch event, but before it receives focus, it
   // moves the actual input to a location that will not screw
@@ -44,9 +44,9 @@ function addClone(componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLText
   const tx = doc.dir === 'rtl' ? 9999 : -9999;
   componentEl.style.pointerEvents = 'none';
   inputEl.style.transform = `translate3d(${tx}px,${inputRelativeY}px,0) scale(0)`;
-}
+};
 
-function removeClone(componentEl: HTMLElement, inputEl: HTMLElement) {
+const removeClone = (componentEl: HTMLElement, inputEl: HTMLElement) => {
   const clone = cloneMap.get(componentEl);
   if (clone) {
     cloneMap.delete(componentEl);
@@ -54,4 +54,4 @@ function removeClone(componentEl: HTMLElement, inputEl: HTMLElement) {
   }
   componentEl.style.pointerEvents = '';
   inputEl.style.transform = '';
-}
+};

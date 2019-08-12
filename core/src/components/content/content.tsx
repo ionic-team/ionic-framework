@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, h, readTask } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
@@ -301,6 +302,8 @@ export class Content implements ComponentInterface {
     const mode = getIonMode(this);
     const { scrollX, scrollY, forceOverscroll } = this;
 
+    const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', true));
+
     this.resize();
 
     return (
@@ -316,7 +319,7 @@ export class Content implements ComponentInterface {
           '--offset-bottom': `${this.cBottom}px`,
         }}
       >
-        <div
+        <main
           class={{
             'inner-scroll': true,
             'scroll-x': scrollX,
@@ -327,14 +330,22 @@ export class Content implements ComponentInterface {
           onScroll={ev => this.onScroll(ev)}
         >
           <slot></slot>
-        </div>
+        </main>
+
+        {transitionShadow ? (
+          <div class="transition-effect">
+            <div class="transition-cover"></div>
+            <div class="transition-shadow"></div>
+          </div>
+        ) : null}
+
         <slot name="fixed"></slot>
       </Host>
     );
   }
 }
 
-function getParentElement(el: any) {
+const getParentElement = (el: any) => {
   if (el.parentElement) {
     // normal element with a parent element
     return el.parentElement;
@@ -344,9 +355,9 @@ function getParentElement(el: any) {
     return el.parentNode.host;
   }
   return null;
-}
+};
 
-function getPageElement(el: HTMLElement) {
+const getPageElement = (el: HTMLElement) => {
   const tabs = el.closest('ion-tabs');
   if (tabs) {
     return tabs;
@@ -356,20 +367,22 @@ function getPageElement(el: HTMLElement) {
     return page;
   }
   return getParentElement(el);
-}
+};
 
 // ******** DOM READ ****************
-function updateScrollDetail(
+const updateScrollDetail = (
   detail: ScrollDetail,
   el: Element,
   timestamp: number,
   shouldStart: boolean
-) {
+) => {
   const prevX = detail.currentX;
   const prevY = detail.currentY;
   const prevT = detail.timeStamp;
   const currentX = el.scrollLeft;
   const currentY = el.scrollTop;
+  const timeDelta = timestamp - prevT;
+
   if (shouldStart) {
     // remember the start positions
     detail.startTimeStamp = timestamp;
@@ -383,11 +396,10 @@ function updateScrollDetail(
   detail.deltaX = currentX - detail.startX;
   detail.deltaY = currentY - detail.startY;
 
-  const timeDelta = timestamp - prevT;
   if (timeDelta > 0 && timeDelta < 100) {
     const velocityX = (currentX - prevX) / timeDelta;
     const velocityY = (currentY - prevY) / timeDelta;
     detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
     detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
   }
-}
+};

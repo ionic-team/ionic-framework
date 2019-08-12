@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
@@ -28,24 +28,21 @@ export class Chip implements ComponentInterface {
    */
   @Prop() outline = false;
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [mode]: true,
-        'chip-outline': this.outline,
-        'ion-activatable': true,
-      }
-    };
-  }
-
   render() {
     const mode = getIonMode(this);
 
-    return [
-      <slot></slot>,
-      mode === 'md' ? <ion-ripple-effect></ion-ripple-effect> : null
-    ];
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'chip-outline': this.outline,
+          'ion-activatable': true,
+        }}
+      >
+        <slot></slot>
+        {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+      </Host>
+    );
   }
 }

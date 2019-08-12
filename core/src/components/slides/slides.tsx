@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { rIC } from '../../utils/helpers.js';
@@ -463,28 +463,25 @@ export class Slides implements ComponentInterface {
     return { ...swiperOptions, ...this.options, ...mergedEventOptions };
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-
-    return {
-      class: {
-        [`${mode}`]: true,
-
-        // Used internally for styling
-        [`slides-${mode}`]: true,
-
-        'swiper-container': true
-      }
-    };
-  }
-
   render() {
-    return [
-      <div class="swiper-wrapper">
-        <slot></slot>
-      </div>,
-      this.pager && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>,
-      this.scrollbar && <div class="swiper-scrollbar" ref={el => this.scrollbarEl = el}></div>
-    ];
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [`${mode}`]: true,
+
+          // Used internally for styling
+          [`slides-${mode}`]: true,
+
+          'swiper-container': true
+        }}
+      >
+        <div class="swiper-wrapper">
+          <slot></slot>
+        </div>
+        {this.pager && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>}
+        {this.scrollbar && <div class="swiper-scrollbar" ref={el => this.scrollbarEl = el}></div>}
+      </Host>
+    );
   }
 }

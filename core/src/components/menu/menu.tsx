@@ -1,8 +1,8 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
+import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
@@ -16,7 +16,7 @@ import { assert, isEndSide as isEnd } from '../../utils/helpers';
 })
 export class Menu implements ComponentInterface, MenuI {
 
-  private animation?: Animation;
+  private animation?: any;
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
@@ -309,10 +309,15 @@ export class Menu implements ComponentInterface, MenuI {
     }
     // Create new animation
     this.animation = await this.menuCtrl!._createAnimation(this.type!, this);
+    this.animation.fill('both');
   }
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
-    const ani = this.animation!.reverse(!shouldOpen);
+    const isReversed = !shouldOpen;
+    const ani = (this.animation as IonicAnimation)!
+      .direction((isReversed) ? 'reverse' : 'normal')
+      .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)');
+
     if (animated) {
       await ani.playAsync();
     } else {
@@ -358,7 +363,9 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     // the cloned animation should not use an easing curve during seek
-    this.animation.reverse(this._isOpen).progressStart();
+    (this.animation as IonicAnimation)
+      .direction((this._isOpen) ? 'reverse' : 'normal')
+      .progressStart(true);
   }
 
   private onMove(detail: GestureDetail) {
@@ -369,7 +376,10 @@ export class Menu implements ComponentInterface, MenuI {
 
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
-    this.animation.progressStep(stepValue);
+
+    this.animation
+
+      .progressStep(stepValue);
   }
 
   private onEnd(detail: GestureDetail) {
@@ -410,8 +420,7 @@ export class Menu implements ComponentInterface, MenuI {
     this.lastOnEnd = detail.timeStamp;
     this.animation
       .onFinish(() => this.afterAnimation(shouldOpen), {
-        clearExistingCallbacks: true,
-        oneTimeCallback: true
+        oneTime: true
       })
       .progressEnd(shouldComplete, stepValue, realDur);
   }
@@ -492,65 +501,64 @@ export class Menu implements ComponentInterface, MenuI {
     assert(this._isOpen, 'menu cannot be closed');
 
     this.isAnimating = true;
-    const ani = this.animation!.reverse(true);
+    const ani = (this.animation as IonicAnimation)!.direction('reverse');
     ani.playSync();
     this.afterAnimation(false);
   }
 
-  hostData() {
-    const { isEndSide, type, disabled, isPaneVisible } = this;
-    return {
-      role: 'navigation',
-      class: {
-        [`${this.mode}`]: true,
-        [`menu-type-${type}`]: true,
-        'menu-enabled': !disabled,
-        'menu-side-end': isEndSide,
-        'menu-side-start': !isEndSide,
-        'menu-pane-visible': isPaneVisible
-      }
-    };
-  }
-
   render() {
-    return [
-      <div
-        class="menu-inner"
-        ref={el => this.menuInnerEl = el}
-      >
-        <slot></slot>
-      </div>,
+    const { isEndSide, type, disabled, mode, isPaneVisible } = this;
 
-      <ion-backdrop
-        ref={el => this.backdropEl = el}
-        class="menu-backdrop"
-        tappable={false}
-        stopPropagation={false}
-      />
-    ];
+    return (
+      <Host
+        role="navigation"
+        class={{
+          [mode]: true,
+          [`menu-type-${type}`]: true,
+          'menu-enabled': !disabled,
+          'menu-side-end': isEndSide,
+          'menu-side-start': !isEndSide,
+          'menu-pane-visible': isPaneVisible
+        }}
+      >
+        <div
+          class="menu-inner"
+          ref={el => this.menuInnerEl = el}
+        >
+          <slot></slot>
+        </div>
+
+        <ion-backdrop
+          ref={el => this.backdropEl = el}
+          class="menu-backdrop"
+          tappable={false}
+          stopPropagation={false}
+        />
+      </Host>
+    );
   }
 }
 
-function computeDelta(
+const computeDelta = (
   deltaX: number,
   isOpen: boolean,
   isEndSide: boolean
-): number {
+): number => {
   return Math.max(0, isOpen !== isEndSide ? -deltaX : deltaX);
-}
+};
 
-function checkEdgeSide(
+const checkEdgeSide = (
   win: Window,
   posX: number,
   isEndSide: boolean,
   maxEdgeStart: number
-): boolean {
+): boolean => {
   if (isEndSide) {
     return posX >= win.innerWidth - maxEdgeStart;
   } else {
     return posX <= maxEdgeStart;
   }
-}
+};
 
 const SHOW_MENU = 'show-menu';
 const SHOW_BACKDROP = 'show-backdrop';

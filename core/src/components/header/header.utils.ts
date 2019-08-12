@@ -45,12 +45,12 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
     const scale = clampValue(1 + (-scrollTop / 500), 1.1, 1);
 
     const borderOpacity = clampValue((scrollTop - remainingHeight) / lastMainToolbar.el.clientHeight, 1, 0);
-    const maxOpacity = 0.2;
+    const maxOpacity = 1;
     const scaledOpacity = borderOpacity * maxOpacity;
 
     writeTask(() => {
       scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
-      setToolbarBorderColor(lastMainToolbar, `rgba(0, 0, 0, ${scaledOpacity})`);
+      setElOpacity(mainHeaderIndex.el, scaledOpacity);
     });
   });
 };

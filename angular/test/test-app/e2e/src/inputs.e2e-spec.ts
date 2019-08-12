@@ -8,7 +8,7 @@ describe('inputs', () => {
     await waitTime(30);
   });
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should have default value', async () => {
@@ -59,5 +59,11 @@ describe('inputs', () => {
     expect(await element(by.css('#datetime-note')).getText()).toEqual('1996-03-15');
     expect(await element(by.css('#select-note')).getText()).toEqual('playstation');
     expect(await element(by.css('#range-note')).getText()).toEqual('20');
+  });
+
+  it('nested components should not interfere with NgModel', async () => {
+    expect(await element(by.css('#range-note')).getText()).toEqual('10');
+    await element(by.css('#nested-toggle')).click();
+    expect(await element(by.css('#range-note')).getText()).toEqual('10');
   });
 });

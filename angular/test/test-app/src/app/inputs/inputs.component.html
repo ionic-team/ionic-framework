@@ -6,6 +6,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <p>Change Detections: <span id="counter">{{counter()}}</span></p>
   <ion-list>
 
     <ion-item>
@@ -89,10 +90,12 @@
       <ion-range [(ngModel)]="range"></ion-range>
       <ion-note slot="end" id="range-note">{{range}}</ion-note>
     </ion-item>
-    
+
     <ion-item color="dark">
       <ion-label>Range Mirror</ion-label>
-      <ion-range [(ngModel)]="range"></ion-range>
+      <ion-range [(ngModel)]="range">
+        <ion-toggle slot="start" id="nested-toggle" [(ngModel)]="toggle"></ion-toggle>
+      </ion-range>
       <ion-note slot="end">{{range}}</ion-note>
     </ion-item>
 

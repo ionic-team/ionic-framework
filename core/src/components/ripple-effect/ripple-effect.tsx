@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Method, Prop, readTask, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Method, Prop, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -77,24 +77,27 @@ export class RippleEffect implements ComponentInterface {
     return this.type === 'unbounded';
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-    return {
-      role: 'presentation',
-      class: {
-        [mode]: true,
-        'unbounded': this.unbounded
-      }
-    };
+    return (
+      <Host
+        role="presentation"
+        class={{
+          [mode]: true,
+          'unbounded': this.unbounded
+        }}
+      >
+      </Host>
+    );
   }
 }
 
-function removeRipple(ripple: HTMLElement) {
+const removeRipple = (ripple: HTMLElement) => {
   ripple.classList.add('fade-out');
   setTimeout(() => {
     ripple.remove();
   }, 200);
-}
+};
 
 const PADDING = 10;
 const INITIAL_ORIGIN_SCALE = 0.5;

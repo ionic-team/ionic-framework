@@ -25,9 +25,6 @@ export class IonicRouteStrategy implements RouteReuseStrategy {
     if (future.routeConfig !== curr.routeConfig) {
       return false;
     }
-    if (future.component !== curr.component) {
-      return false;
-    }
 
     // checking router params
     const futureParams = future.params;
