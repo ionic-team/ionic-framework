@@ -797,10 +797,14 @@ export const createAnimation = () => {
 
         willComplete = true;
         forceDurationValue = undefined;
-        forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
-        forceDelayValue = 0;
 
-        if (!supportsWebAnimations) {
+        if (supportsWebAnimations) {
+          forceDirectionValue = undefined;
+          forceDelayValue = undefined;
+          progressStep(1);
+        } else {
+          forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
+          forceDelayValue = 0;
           update();
         }
       }, {

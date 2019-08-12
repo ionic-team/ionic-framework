@@ -18,7 +18,3 @@ export const baseAnimation = (): IonicAnimation => {
       .easing('cubic-bezier(0.0, 0.0, 0.2, 1)') // Deceleration curve (Entering the screen)
       .duration(300);
 };
-
-// cubic-bezier(0.0, 0.0, 0.2, 1)'//entering
-
-// 'cubic-bezier(0.4, 0.0, 0.6, 1)'//leaving
