@@ -802,8 +802,7 @@ export const createAnimation = () => {
         // TODO: Hacky
         if (!supportsWebAnimations) {
           requestAnimationFrame(() => {
-            update(false, false);
-            resetCSSAnimations();
+            update();
           });
         }
       }, {
