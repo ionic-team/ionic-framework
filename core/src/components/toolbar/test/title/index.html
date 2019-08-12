@@ -108,16 +108,13 @@
       }
       
       connectedCallback() {
+  
         this.innerHTML = `
           <ion-header>
             <ion-toolbar>      
               <ion-title>Messages</ion-title>
               
-              <ion-buttons slot="end" collapse="true">
-                <ion-button slot="icon-only">
-                  <ion-icon name="star"></ion-icon>
-                </ion-button>
-              </ion-buttons>
+             
             </ion-toolbar>
           </ion-header>
         
@@ -126,11 +123,6 @@
               <ion-toolbar>      
                 <ion-title size="large">Messages</ion-title>
                 
-                <ion-buttons slot="end" collapse="true">
-                  <ion-button slot="icon-only">
-                    <ion-icon name="star"></ion-icon>
-                  </ion-button>
-                </ion-buttons>
               </ion-toolbar>
               
               <ion-toolbar>
@@ -155,17 +147,9 @@
               <ion-title>Page Two</ion-title>
             </ion-toolbar>
             <ion-toolbar>
-              <ion-buttons slot="start">
-                <ion-button>
-                  <ion-icon slot="icon-only" name="star"></ion-icon>
-                </ion-button>
-              </ion-buttons>
+              
               <ion-searchbar></ion-searchbar>
-              <ion-buttons slot="end">
-                <ion-button>
-                  <ion-icon slot="icon-only" name="star"></ion-icon>
-                </ion-button>
-              </ion-buttons>
+             
             </ion-toolbar>
           </ion-header>
           <ion-content class="ion-padding">
