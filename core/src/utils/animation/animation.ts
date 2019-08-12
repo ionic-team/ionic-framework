@@ -777,6 +777,7 @@ export const createAnimation = () => {
     return ani;
   };
 
+  // TODO: Need to clean this up
   const progressEnd = (shouldComplete: boolean, step: number, dur: number | undefined) => {
     childAnimations.forEach(animation => {
       animation.progressEnd(shouldComplete, step, dur);
@@ -796,14 +797,11 @@ export const createAnimation = () => {
 
         willComplete = true;
         forceDurationValue = undefined;
-        forceDirectionValue = undefined;
+        forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
         forceDelayValue = 0;
 
-        // TODO: Hacky
         if (!supportsWebAnimations) {
-          requestAnimationFrame(() => {
-            update();
-          });
+          update();
         }
       }, {
         oneTime: true
