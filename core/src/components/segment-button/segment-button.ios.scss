@@ -39,9 +39,9 @@
 // --------------------------------------------------
 
 :host::before {
-  flex: 1;
+  @include margin(5px, 0);
 
-  margin: 5px 0;
+  flex: 1;
 
   transition: 160ms opacity ease-in-out;
 

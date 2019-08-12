@@ -16,6 +16,10 @@
   // max-width: $segment-button-md-max-width;
   min-height: $segment-button-md-min-height;
 
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
   font-size: $segment-button-md-font-size;
   font-weight: $segment-button-md-font-weight;
 
@@ -26,10 +30,6 @@
   text-transform: uppercase;
 
   overflow: hidden;
-
-  border-width: var(--border-width);
-  border-style: var(--border-style);
-  border-color: var(--border-color);
 }
 
 

@@ -70,9 +70,9 @@
 // --------------------------------------------------
 
 :host-context(ion-toolbar) {
-  width: auto;
+  @include margin(0, auto);
 
-  margin: 0 auto;
+  width: auto;
 }
 
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
@@ -90,9 +90,8 @@
 // --------------------------------------------------
 
 :host-context(ion-toolbar.ion-color):not(.ion-color) {
-  background: #{current-color(contrast, 0.11)};
-
   --background-checked: #{current-color(base)};
+  background: #{current-color(contrast, 0.11)};
 }
 
 :host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(.segment-button-checked) {
