@@ -49,10 +49,6 @@
 
   height: auto;
 
-  border-width: var(--border-width);
-  border-style: var(--border-style);
-  border-color: var(--border-color);
-
   background: var(--background);
 
   color: var(--color);
@@ -65,27 +61,9 @@
   font-kerning: none;
 }
 
-:host(:first-of-type) {
-  // TODO Add border
-}
-
-:host(:not(:first-of-type)) {
-  // TODO update border
-
-  @include rtl() {
-    border-right-width: 0;
-    border-left-width: var(--border-width);
-  }
-
-  border-left-width: 0;
-}
-
-:host(:last-of-type) {
-  // TODO Add border
-}
 
 .button-native {
-  @include border-radius(inherit);
+  @include border-radius(0);
   @include text-inherit();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));

@@ -26,6 +26,10 @@
   text-transform: uppercase;
 
   overflow: hidden;
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
 }
 
 

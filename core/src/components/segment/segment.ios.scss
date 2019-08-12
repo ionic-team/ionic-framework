@@ -12,11 +12,10 @@
   --background-checked: #{$segment-button-ios-background-color-checked};
   --color: initial;
   --color-checked: initial;
-  // --border-color: #{$segment-button-ios-border-color};
   --indicator-color: transparent;
   --indicator-transition: #{$segment-button-ios-transition-animated};
 
-  @include border-radius(8px);
+  @include border-radius($segment-ios-border-radius);
 
   background: #{$segment-ios-background-color};
 
@@ -71,16 +70,10 @@
 // --------------------------------------------------
 
 :host-context(ion-toolbar) {
-  // width: auto;
+  width: auto;
+
+  margin: 0 auto;
 }
-
-// :host-context(ion-toolbar)::slotted(ion-segment-button) {
-//   max-width: $segment-button-ios-toolbar-button-max-width;
-
-//   font-size: $segment-button-ios-toolbar-font-size;
-
-//   line-height: $segment-button-ios-toolbar-line-height;
-// }
 
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
   background: #{var(--ion-toolbar-color-unchecked, $segment-ios-background-color)};
@@ -92,20 +85,19 @@
   color: #{var(--ion-toolbar-background, var(--color-checked))};
 }
 
+
 // Segment: Color Toolbar
 // --------------------------------------------------
 
 :host-context(ion-toolbar.ion-color):not(.ion-color) {
   background: #{current-color(contrast, 0.11)};
+
+  --background-checked: #{current-color(base)};
 }
 
 :host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(.segment-button-checked) {
-  color: #000;
   // --color: #{current-color(contrast)};
   // --color-checked: #{current-color(base)};
-  // --background-hover: #{current-color(contrast, $segment-button-ios-opacity-hover)};
-  // --background-activated: #{current-color(contrast, $segment-button-ios-opacity-activated)};
-  // --background-checked: #{current-color(contrast, 0.275)};
   // --border-color: #{current-color(contrast)};
 }
 
@@ -124,4 +116,13 @@
   background: var(--background-checked);
 
   box-shadow: $segment-button-ios-box-shadow-checked;
+}
+
+
+// Segment: Checked Borders
+// --------------------------------------------------
+
+::slotted(.segment-button-checked)::before,
+::slotted(.segment-button-checked) + ion-segment-button::before {
+  opacity: 0;
 }

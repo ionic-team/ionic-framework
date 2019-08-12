@@ -7,15 +7,23 @@
 :host {
   --border-radius: #{$segment-button-ios-border-radius};
   --border-width: #{$segment-button-ios-border-width};
+  --border-color: #{$segment-button-ios-border-color};
   --border-style: solid;
   --transition: #{$segment-button-ios-transition};
+  --padding-top: 0;
+  --padding-end: 13px;
+  --padding-bottom: 0;
+  --padding-start: 13px;
 
   @include margin($segment-button-ios-margin);
-  @include padding(0, 13px);
 
-  min-width: 45px;
+  position: relative;
 
-  min-height: #{$segment-button-ios-height};
+  flex-direction: row;
+
+  min-width: #{$segment-button-ios-min-width};
+
+  min-height: #{$segment-button-ios-min-height};
 
   font-size: #{$segment-button-ios-font-size};
 
@@ -27,10 +35,33 @@
 }
 
 
+// Segment Button: Borders
+// --------------------------------------------------
+
+:host::before {
+  flex: 1;
+
+  margin: 5px 0;
+
+  transition: 160ms opacity ease-in-out;
+
+  transition-delay: 100ms;
+
+  border-left: var(--border-width) var(--border-style) var(--border-color);
+
+  content: "";
+  opacity: 1;
+}
+
+:host(:first-of-type)::before {
+  border-left-color: transparent;
+}
+
+
 // Segment Button: Disabled
 // --------------------------------------------------
 
-:host(.segment-button-disabled) {
+:host(.segment-button-disabled) .button-native {
   opacity: $segment-button-ios-opacity-disabled;
 }
 
@@ -61,10 +92,8 @@
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  :host(:hover) {
-    opacity: 0.5;
-
-    // background: var(--background-hover);
+  :host(:hover) .button-native {
+    opacity: $segment-button-ios-opacity-hover;
   }
 }
 
@@ -72,10 +101,8 @@
 // Segment Button: Activated
 // --------------------------------------------------
 
-:host(.activated:not(.segment-button-checked)) {
-  opacity: 0.3;
-
-  background: var(--background-activated);
+:host(.activated:not(.segment-button-checked)) .button-native {
+  opacity: $segment-button-ios-opacity-activated;
 }
 
 
@@ -88,5 +115,4 @@
 
 :host(.segment-button-checked.activated) {
   // TODO transform the background checked
-  // color: var(--color-checked);
 }
