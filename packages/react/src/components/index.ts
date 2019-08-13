@@ -21,6 +21,9 @@ export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
 export { IonBackButton } from './navigation/IonBackButton';
 
+// Utils
+export { isPlatform, getPlatforms } from './utils';
+
 // Icons that are used by internal components
 addIcons({
   'ios-close': close.ios,
