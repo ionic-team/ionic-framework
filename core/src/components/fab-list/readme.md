@@ -33,7 +33,7 @@ The `ion-fab-list` element is a container for multiple fab buttons. This collect
 import React from 'react';
 import { IonFab, IonFabButton, IonFabList, IonContent, IonIcon } from '@ionic/react';
 
-export const FabListExample: React.FunctionComponent = () => (
+export const FabListExample: React.FC = () => (
   <IonContent>
     <IonFab vertical="bottom" horizontal="end">
       <IonFabButton>

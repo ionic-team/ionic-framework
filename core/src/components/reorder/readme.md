@@ -87,7 +87,7 @@ Reorder is a component that allows an item in a group of items to be dragged to 
 import React from 'react';
 import { IonIcon, IonItem, IonLabel, IonReorder, IonContent } from '@ionic/react';
 
-export const ReorderExample: React.FunctionComponent = () => (
+export const ReorderExample: React.FC = () => (
   <IonContent>
     {/*-- Default reorder icon, end aligned items --*/}
     <IonItem>

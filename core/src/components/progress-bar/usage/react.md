@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonProgressBar, IonContent } from '@ionic/react';
 
-export const ProgressbarExample: React.FunctionComponent = () => (
+export const ProgressbarExample: React.FC = () => (
   <IonContent>
     {/*-- Default Progressbar --*/}
     <IonProgressBar></IonProgressBar><br />

@@ -57,6 +57,7 @@ prerender-static.html
 
 # stencil
 angular/css/
+packages/react/css/
 core/css/
 core/hydrate/
 core/loader/

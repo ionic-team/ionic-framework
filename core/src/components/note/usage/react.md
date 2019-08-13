@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonNote, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-export const NoteExample: React.FunctionComponent = () => (
+export const NoteExample: React.FC = () => (
   <IonContent>
     {/*-- Default Note --*/}
     <IonNote>Default Note</IonNote><br />

@@ -201,7 +201,7 @@ See [Grid Layout](/docs/layout/grid) for more information.
 import React from 'react';
 import { IonGrid, IonRow, IonCol, IonContent } from '@ionic/react';
 
-export const GridExample: React.FunctionComponent = () => (
+export const GridExample: React.FC = () => (
   <IonContent>
     <IonGrid>
       <IonRow>

@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
 
-export const ActionSheetExample: React.FunctionComponent = () => {
+export const ActionSheetExample: React.FC = () => {
 
   const [showActionSheet, setShowActionSheet] = useState(false);
 

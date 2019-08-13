@@ -179,7 +179,7 @@ will match the following tab:
 import React from 'react';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/react';
 
-export const TabsExample: React.FunctionComponent = () => (
+export const TabsExample: React.FC = () => (
   <IonTabs>
     <IonTabBar slot="bottom">
       <IonTabButton tab="schedule">

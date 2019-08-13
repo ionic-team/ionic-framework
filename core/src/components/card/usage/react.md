@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonIcon, IonItem, IonLabel } from '@ionic/react';
 
-export const CardExample: React.FunctionComponent = () => (
+export const CardExample: React.FC = () => (
   <IonContent>
     <IonCard>
       <IonCardHeader>

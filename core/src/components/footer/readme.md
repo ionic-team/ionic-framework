@@ -27,7 +27,7 @@ Footer can be a wrapper for ion-toolbar to make sure the content area is sized c
 import React from 'react';
 import { IonContent, IonFooter, IonToolbar, IonTitle } from '@ionic/react';
 
-export const FooterExample: React.FunctionComponent = () => (
+export const FooterExample: React.FC = () => (
   <>
     <IonContent />
 

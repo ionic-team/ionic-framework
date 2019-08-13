@@ -57,7 +57,7 @@ Item Dividers are block elements that can be used to separate items in a list. T
 import React from 'react';
 import { IonItemDivider, IonLabel, IonList, IonItem, IonContent } from '@ionic/react';
 
-export const ItemDividerExample: React.FunctionComponent = () => (
+export const ItemDividerExample: React.FC = () => (
   <IonContent>
     <IonItemDivider>
       <IonLabel>

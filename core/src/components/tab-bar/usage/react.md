@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonContent } from '@ionic/react';
 
-export const TabBarExample: React.FunctionComponent = () => (
+export const TabBarExample: React.FC = () => (
   <IonContent>
     <IonTabs>
       {/*-- Tab bar --*/}

@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonBadge, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-export const BadgeExample: React.FunctionComponent = () => (
+export const BadgeExample: React.FC = () => (
   <IonContent>
     {/*-- Default --*/}
     <IonBadge>99</IonBadge>
