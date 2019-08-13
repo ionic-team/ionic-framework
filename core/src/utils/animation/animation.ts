@@ -925,35 +925,27 @@ export const createAnimation = () => {
 
     const animationDelay = getDelay() || 0;
     const animationDuration = getDuration() || 0;
+    const visibleElements = elements.filter(element => element.offsetParent !== null);
+    if (visibleElements.length === 0 || _keyframes.length === 0 || elements.length === 0) {
+      /**
+       * CSS Animations will not fire an `animationend` event
+       * for elements with `display: none`. The Web Animations API
+       * accounts for this, but using raw CSS Animations requires
+       * this workaround.
+       */
+       animationFinish();
+    } else if (_keyframes.length > 0 && elements.length > 0) {
+      /**
+       * This is a catchall in the event that a CSS Animation did not finish.
+       * The Web Animations API has mechanisms in place for preventing this.
+       */
+       cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + animationDuration + ANIMATION_END_FALLBACK_PADDING_MS);
 
-    /**
-     * offsetParent is going to cause a reflow
-     * So we need to wrap this in an raf otherwise
-     * performance will be slow
-     */
-    requestAnimationFrame(() => {
-      const visibleElements = elements.filter(element => element.offsetParent !== null);
-      if (visibleElements.length === 0 || _keyframes.length === 0 || elements.length === 0) {
-        /**
-         * CSS Animations will not fire an `animationend` event
-         * for elements with `display: none`. The Web Animations API
-         * accounts for this, but using raw CSS Animations requires
-         * this workaround.
-         */
-         animationFinish();
-      } else if (_keyframes.length > 0 && elements.length > 0) {
-        /**
-         * This is a catchall in the event that a CSS Animation did not finish.
-         * The Web Animations API has mechanisms in place for preventing this.
-         */
-         cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + animationDuration + ANIMATION_END_FALLBACK_PADDING_MS);
-
-         animationEnd(elements[0], () => {
-          clearCSSAnimationsTimeout();
-          animationFinish();
-        });
-      }
-    });
+       animationEnd(elements[0], () => {
+        clearCSSAnimationsTimeout();
+        animationFinish();
+      });
+    }
   };
 
   const playWebAnimations = () => {
