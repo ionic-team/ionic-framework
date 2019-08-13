@@ -1,45 +1,72 @@
 ```html
 <template>
   <!-- Default Input -->
-  <ion-input></ion-input>
+  <IonInputVue></IonInputVue>
 
   <!-- Input with value -->
-  <ion-input value="custom"></ion-input>
+  <IonInputVue value="custom"></IonInputVue>
 
   <!-- Input with placeholder -->
-  <ion-input placeholder="Enter Input"></ion-input>
+  <IonInputVue placeholder="Enter Input"></IonInputVue>
 
   <!-- Input with clear button when there is a value -->
-  <ion-input clearInput value="clear me"></ion-input>
+  <IonInputVue clearInput value="clear me"></IonInputVue>
 
   <!-- Number type input -->
-  <ion-input type="number" value="333"></ion-input>
+  <IonInputVue type="number" value="333"></IonInputVue>
 
   <!-- Disabled input -->
-  <ion-input value="Disabled" disabled></ion-input>
+  <IonInputVue value="Disabled" disabled></IonInputVue>
 
   <!-- Readonly input -->
-  <ion-input value="Readonly" readonly></ion-input>
+  <IonInputVue value="Readonly" readonly></IonInputVue>
 
   <!-- Inputs with labels -->
   <ion-item>
     <ion-label>Default Label</ion-label>
-    <ion-input></ion-input>
+    <IonInputVue></IonInputVue>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Floating Label</ion-label>
-    <ion-input></ion-input>
+    <IonInputVue></IonInputVue>
   </ion-item>
 
   <ion-item>
     <ion-label position="fixed">Fixed Label</ion-label>
-    <ion-input></ion-input>
+    <IonInputVue></IonInputVue>
   </ion-item>
 
   <ion-item>
     <ion-label position="stacked">Stacked Label</ion-label>
-    <ion-input></ion-input>
+    <IonInputVue></IonInputVue>
   </ion-item>
+
+  <!-- v-model binding -->
+  <IonInputVue v-model="foo"></IonInputVue>
+
+  <!-- Event listeners -->
+  <IonInputVue @ionChange="listener"></IonInputVue>
+
+  <!-- Call Ionic methods -->
+  <IonInputVue ref="myInput"></IonInputVue>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      foo: 'default input value',
+    }
+  },
+  methods: {
+    listener(value) {
+      console.log(value);
+    },
+    focus() {
+      this.$refs.myInput.setFocus();
+    }
+  },
+}
+</script>
 ```
