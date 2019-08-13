@@ -98,7 +98,7 @@ Fabs are container elements that contain one or more fab buttons. They should be
 import React from 'react';
 import { IonContent, IonFab, IonFabButton, IonIcon, IonFabList } from '@ionic/react';
 
-export const FabExample: React.FunctionComponent = () => (
+export const FabExample: React.FC = () => (
   <IonContent>
     {/*-- fab placed to the top end --*/}
     <IonFab vertical="top" horizontal="end" slot="fixed">

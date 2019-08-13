@@ -59,7 +59,7 @@ The tab bar is a UI component that contains a set of [tab buttons](../tab-button
 import React from 'react';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonContent } from '@ionic/react';
 
-export const TabBarExample: React.FunctionComponent = () => (
+export const TabBarExample: React.FC = () => (
   <IonContent>
     <IonTabs>
       {/*-- Tab bar --*/}

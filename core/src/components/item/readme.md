@@ -714,7 +714,7 @@ import React from 'react';
 
 import { IonItem, IonLabel, IonList, IonText, IonAvatar, IonThumbnail, IonButton, IonIcon, IonSelect, IonSelectOption, IonDatetime, IonToggle, IonInput, IonCheckbox, IonRange } from '@ionic/react';
 
-const Example: React.FunctionComponent<{}> = () => (
+const Example: React.FC<{}> = () => (
   <>
     {/*-- Default Item --*/}
     <IonItem>

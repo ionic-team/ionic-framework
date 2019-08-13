@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonBackdrop, IonContent } from '@ionic/react';
 
-export const BackdropExample: React.FunctionComponent = () => (
+export const BackdropExample: React.FC = () => (
   <IonContent>
     {/*-- Default backdrop --*/}
     <IonBackdrop />

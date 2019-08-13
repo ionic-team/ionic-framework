@@ -110,7 +110,7 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 import React from 'react';
 import { IonInput, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-export const InputExample: React.FunctionComponent = () => (
+export const InputExample: React.FC = () => (
   <IonContent>
     {/*-- Default Input --*/}
     <IonInput></IonInput>

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { IonToast, IonContent, IonButton } from '@ionic/react';
 
-export const ToastExample: React.FunctionComponent = () => {
+export const ToastExample: React.FC = () => {
   const [showToast1, setShowToast1] = useState(false);
   const [showToast2, setShowToast2] = useState(false);
 

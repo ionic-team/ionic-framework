@@ -72,7 +72,7 @@ Label is a wrapper element that can be used in combination with `ion-item`, `ion
 import React from 'react';
 import { IonLabel, IonItem, IonInput, IonToggle, IonCheckbox, IonContent } from '@ionic/react';
 
-export const LabelExample: React.FunctionComponent = () => (
+export const LabelExample: React.FC = () => (
   <IonContent>
     {/*-- Default Label --*/}
     <IonLabel>Label</IonLabel><br />
