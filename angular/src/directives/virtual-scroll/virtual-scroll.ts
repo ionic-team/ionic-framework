@@ -133,11 +133,11 @@ export class IonVirtualScroll {
 
   private differ?: IterableDiffer<any>;
   private el: HTMLIonVirtualScrollElement;
-  private refMap = new WeakMap<HTMLElement, EmbeddedViewRef<VirtualContext>> ();
+  private refMap = new WeakMap<HTMLElement, EmbeddedViewRef<VirtualContext>>();
 
-  @ContentChild(VirtualItem) itmTmp!: VirtualItem;
-  @ContentChild(VirtualHeader) hdrTmp!: VirtualHeader;
-  @ContentChild(VirtualFooter) ftrTmp!: VirtualFooter;
+  @ContentChild(VirtualItem, { static: false }) itmTmp!: VirtualItem;
+  @ContentChild(VirtualHeader, { static: false }) hdrTmp!: VirtualHeader;
+  @ContentChild(VirtualFooter, { static: false }) ftrTmp!: VirtualFooter;
 
   constructor(
     private z: NgZone,
