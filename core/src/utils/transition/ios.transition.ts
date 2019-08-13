@@ -12,6 +12,10 @@ const hasCollapsableHeader = (el: any): boolean => {
   return el && el.classList.contains('collapse-header-title-hidden');
 };
 
+const addSafeArea = (val: number, side = 'top'): string => {
+  return `calc(${val}px + var(--ion-safe-area-${side}))`;
+};
+
 const cloneElement = async (el: any, deep = false, elementToAppendTo?: any, hidden = false): Promise<any> => {
   try {
     const fetchCachedElement = elementToAppendTo.querySelector(`${el.tagName.toLowerCase()}.ion-cloned-element`);
@@ -383,9 +387,9 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         })
         .duration(DURATION)
         .keyframes([
-          { offset: 0, opacity: 0.99, transform: 'translate(0, 49px) scale(1)' },
+          { offset: 0, opacity: 0.99, transform: `translate(0, ${addSafeArea(49)}) scale(1)` },
           { offset: 0.6, opacity: 0 },
-          { offset: 1, opacity: 0, transform: 'translate(18px, 0px) scale(0.5)' }
+          { offset: 1, opacity: 0, transform: `translate(18px, ${addSafeArea(0)}) scale(0.5)` }
         ]);
 
       rootAnimation.addAnimation(clonedLargeTitleAnimation);
@@ -419,8 +423,8 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
           clonedBackButtonEl.style.setProperty('display', 'none');
         })
         .keyframes([
-          { offset: 0, opacity: 0, transform: 'translate(-7px, 8px) scale(2.1)' },
-          { offset: 1, opacity: 1, transform: 'translate(4px, -40px) scale(1)' }
+          { offset: 0, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` },
+          { offset: 1, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` }
         ]);
 
       enteringBackButtonIconAnimation
@@ -428,9 +432,9 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
           'transform-origin': 'right center'
         })
         .keyframes([
-          { offset: 0, opacity: 0, transform: 'translate(4px, -35px) scale(0.6)' },
-          { offset: 0.9, opacity: 0, transform: 'translate(4px, -35px) scale(0.6)' },
-          { offset: 1, opacity: 1, transform: 'translate(4px, -40px) scale(1)' }
+          { offset: 0, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` },
+          { offset: 0.9, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` },
+          { offset: 1, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` }
         ]);
 
       rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation]);
@@ -456,11 +460,10 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
           enteringLargeTitleEl.style.setProperty('display', '');
           clonedTitleEl.style.setProperty('display', 'none');
         })
-        .duration(DURATION)
         .keyframes([
-          { offset: 0, opacity: 0, transform: 'translate(18px, 0px) scale(0.49)' },
-          { offset: 0.4, opacity: 0.1 },
-          { offset: 1, opacity: 1, transform: 'translate(0, 49px) scale(1)' }
+          { offset: 0, opacity: 0, transform: `translate(18px, ${addSafeArea(0)}) scale(0.49)` },
+          { offset: 0.1, opacity: 0 },
+          { offset: 1, opacity: 1, transform: `translate(0, ${addSafeArea(49)}) scale(1)` }
         ]);
 
       rootAnimation.addAnimation(clonedLargeTitleAnimation);
@@ -494,9 +497,9 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
           clonedBackButtonEl.style.setProperty('display', 'none');
         })
         .keyframes([
-          { offset: 0, opacity: 1, transform: 'translate(4px, -40px) scale(1)' },
+          { offset: 0, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` },
           { offset: 0.6, opacity: 0 },
-          { offset: 1, opacity: 0, transform: 'translate(-7px, 8px) scale(2.1)' }
+          { offset: 1, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` }
         ]);
 
       leavingBackButtonIconAnimation
@@ -504,9 +507,9 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
           'transform-origin': 'right center'
         })
         .keyframes([
-          { offset: 0, opacity: 1, transform: 'translate(4px, -40px) scale(1)' },
-          { offset: 0.1, opacity: 0, transform: 'translate(4px, -35px) scale(0.6)' },
-          { offset: 1, opacity: 0, transform: 'translate(4px, -35px) scale(0.6)' }
+          { offset: 0, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` },
+          { offset: 0.1, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` },
+          { offset: 1, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` }
         ]);
 
       rootAnimation.addAnimation([leavingBackButtonTextAnimation, leavingBackButtonIconAnimation]);
