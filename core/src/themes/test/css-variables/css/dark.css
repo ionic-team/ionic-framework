@@ -100,8 +100,7 @@
   --ion-item-background: #1c1c1c;
   --ion-item-background-activated: #313131;
 
-  /* --ion-toolbar-color-unchecked: limegreen;
-  --ion-toolbar-color-checked: limegreen; */
+  --ion-toolbar-background: #000;
 }
 
 .md {
@@ -134,6 +133,4 @@
   --ion-color-step-950: #f3f3f3;
 
   --ion-item-background: #1A1B1E;
-  /* --ion-toolbar-color-unchecked: rgba(255, 255, 255, .6);
-  --ion-toolbar-color-checked: #fff; */
 }

@@ -32,38 +32,12 @@
 
 :host(.ion-color) {
   background: #{current-color(base, 0.065)};
-  // color: #{current-color(base)};
 }
-
-:host(.ion-color)::slotted(ion-segment-button) {
-  // --border-color: #{current-color(base)};
-
-  // color: #{current-color(base)};
-}
-
-// :host(.ion-color)::slotted(.activated) {
-//   background: #{current-color(base, .16)};
-//   color: #{current-color(base)};
-// }
 
 // :host(.ion-color)::slotted(.segment-button-checked.activated),
 :host(.ion-color)::slotted(.segment-button-checked) {
-  // color: #{current-color(base)};
+  color: #000;
 }
-
-// :host(.ion-color)::slotted(.segment-button-disabled) {
-//   color: #{current-color(base, $segment-ios-opacity-disabled)};
-// }
-
-// :host(.ion-color)::slotted(.segment-button-checked.segment-button-disabled) {
-//   color: #{current-color(contrast, $segment-ios-opacity-disabled)};
-// }
-
-// @media (any-hover: hover) {
-//   :host(.ion-color)::slotted(ion-segment-button:hover:not(.segment-button-checked)) {
-//     background: #{current-color(base, .1)};
-//   }
-// }
 
 
 // Segment: Default Toolbar
@@ -75,14 +49,18 @@
   width: auto;
 }
 
+// TODO reevaluate the global variables needed
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
-  background: #{var(--ion-toolbar-color-unchecked, $segment-ios-background-color)};
+  color: #{var(--ion-toolbar-color-unchecked, var(--color))};
+  background: #{var(--ion-toolbar-background-unchecked, $segment-ios-background-color)};
+}
+
+:host-context(ion-toolbar:not(.ion-color)):not(.ion-color) .segment-checked-indicator-background {
+  background: #{var(--ion-toolbar-background-checked, var(--background-checked))};
 }
 
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(.segment-button-checked) {
-  // background: #{var(--ion-toolbar-color-checked, var(--background-checked))};
-
-  color: #{var(--ion-toolbar-background, var(--color-checked))};
+  color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 }
 
 
@@ -90,14 +68,11 @@
 // --------------------------------------------------
 
 :host-context(ion-toolbar.ion-color):not(.ion-color) {
-  --background-checked: #{current-color(base)};
   background: #{current-color(contrast, 0.11)};
 }
 
 :host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(.segment-button-checked) {
-  // --color: #{current-color(contrast)};
-  // --color-checked: #{current-color(base)};
-  // --border-color: #{current-color(contrast)};
+  color: #{current-color(base)};
 }
 
 

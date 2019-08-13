@@ -78,4 +78,18 @@
   --ion-item-background: #fff;
   --ion-item-border-color: #5bff76;
   --ion-item-background-activated: #5bff76;
+
+}
+
+.ios {
+  --ion-toolbar-background-unchecked: var(--ion-color-danger);
+  --ion-toolbar-color-unchecked: var(--ion-color-danger-contrast);
+
+  --ion-toolbar-background-checked: var(--ion-color-danger-contrast);
+  --ion-toolbar-color-checked: var(--ion-color-danger);
+}
+
+.md {
+  --ion-toolbar-color-unchecked: rgba(var(--ion-color-danger-rgb), .6);
+  --ion-toolbar-color-checked: var(--ion-color-danger);
 }
