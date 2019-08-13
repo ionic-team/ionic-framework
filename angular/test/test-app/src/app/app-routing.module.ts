@@ -47,7 +47,7 @@ const routes: Routes = [
   },
   {
     path: 'tabs',
-    loadChildren: './tabs/tabs.module#TabsPageModule'
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'nested-outlet',

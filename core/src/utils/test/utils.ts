@@ -35,7 +35,7 @@ export const listenForEvent = async (page: any, eventType: string, element: any,
   try {
       return await page.evaluate((scopeEventType: string, scopeElement: any, scopeCallbackName: string) => {
         scopeElement.addEventListener(scopeEventType, (e: any) => {
-          (window as any)[scopeCallbackName](e);
+          (window as any)[scopeCallbackName]({ detail: e.detail });
         });
       }, eventType, element, callbackName);
   } catch (err) {

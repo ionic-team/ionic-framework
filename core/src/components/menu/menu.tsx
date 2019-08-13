@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
+import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
@@ -16,7 +16,7 @@ import { assert, isEndSide as isEnd } from '../../utils/helpers';
 })
 export class Menu implements ComponentInterface, MenuI {
 
-  private animation?: Animation;
+  private animation?: any;
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
@@ -311,10 +311,15 @@ export class Menu implements ComponentInterface, MenuI {
     }
     // Create new animation
     this.animation = await this.menuCtrl!._createAnimation(this.type!, this);
+    this.animation.fill('both');
   }
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
-    const ani = this.animation!.reverse(!shouldOpen);
+    const isReversed = !shouldOpen;
+    const ani = (this.animation as IonicAnimation)!
+      .direction((isReversed) ? 'reverse' : 'normal')
+      .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)');
+
     if (animated) {
       await ani.playAsync();
     } else {
@@ -360,7 +365,9 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     // the cloned animation should not use an easing curve during seek
-    this.animation.reverse(this._isOpen).progressStart();
+    (this.animation as IonicAnimation)
+      .direction((this._isOpen) ? 'reverse' : 'normal')
+      .progressStart(true);
   }
 
   private onMove(detail: GestureDetail) {
@@ -371,7 +378,10 @@ export class Menu implements ComponentInterface, MenuI {
 
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
-    this.animation.progressStep(stepValue);
+
+    this.animation
+
+      .progressStep(stepValue);
   }
 
   private onEnd(detail: GestureDetail) {
@@ -412,8 +422,7 @@ export class Menu implements ComponentInterface, MenuI {
     this.lastOnEnd = detail.timeStamp;
     this.animation
       .onFinish(() => this.afterAnimation(shouldOpen), {
-        clearExistingCallbacks: true,
-        oneTimeCallback: true
+        oneTime: true
       })
       .progressEnd(shouldComplete, stepValue, realDur);
   }
@@ -494,7 +503,7 @@ export class Menu implements ComponentInterface, MenuI {
     assert(this._isOpen, 'menu cannot be closed');
 
     this.isAnimating = true;
-    const ani = this.animation!.reverse(true);
+    const ani = (this.animation as IonicAnimation)!.direction('reverse');
     ani.playSync();
     this.afterAnimation(false);
   }

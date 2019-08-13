@@ -303,7 +303,7 @@ export class Content implements ComponentInterface {
     const { scrollX, scrollY } = this;
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
-    const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', false));
+    const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', true));
 
     this.resize();
 

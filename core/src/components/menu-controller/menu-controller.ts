@@ -1,7 +1,7 @@
 import { Build, Component, Method } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { Animation, AnimationBuilder, MenuControllerI, MenuI } from '../../interface';
+import { AnimationBuilder, IonicAnimation, MenuControllerI, MenuI } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
@@ -14,7 +14,7 @@ import { menuRevealAnimation } from './animations/reveal';
 export class MenuController implements MenuControllerI {
 
   private menus: MenuI[] = [];
-  private menuAnimations = new Map<string, AnimationBuilder>();
+  private menuAnimations = new Map<string, ((menu: MenuI) => IonicAnimation) | AnimationBuilder>();
 
   constructor() {
     this.registerAnimation('reveal', menuRevealAnimation);
@@ -226,7 +226,7 @@ export class MenuController implements MenuControllerI {
    * @param animation The animation function to register.
    */
   @Method()
-  async registerAnimation(name: string, animation: AnimationBuilder) {
+  async registerAnimation(name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) {
     this.menuAnimations.set(name, animation);
   }
 
@@ -278,13 +278,14 @@ export class MenuController implements MenuControllerI {
     return menu._setOpen(shouldOpen, animated);
   }
 
-  async _createAnimation(type: string, menuCmp: MenuI): Promise<Animation> {
-    const animationBuilder = this.menuAnimations.get(type);
+  async _createAnimation(type: string, menuCmp: MenuI): Promise<any> {
+    const animationBuilder = this.menuAnimations.get(type) as any;
     if (!animationBuilder) {
       throw new Error('animation not registered');
     }
-    const animation = await import('../../utils/animation')
-      .then(mod => mod.create(animationBuilder, null, menuCmp));
+
+    const animation = animationBuilder(menuCmp);
+
     if (!config.getBoolean('animated', true)) {
       animation.duration(0);
     }
