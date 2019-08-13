@@ -8,7 +8,7 @@ describe('Connectors', () => {
 
   it('.each() - iterate over an array of elements', () => {
     // https://on.cypress.io/each
-    cy.get('.connectors-each-ul>li')
+    cy.get('ion-item')
       .each(($el, index, $list) => {
         console.log($el, index, $list)
       })

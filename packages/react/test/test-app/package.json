@@ -10,13 +10,13 @@
     "@types/react-dom": "16.8.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
+    "react-scripts": "^3.1.0",
+    "serve": "^11.1.0",
     "typescript": "3.5.3"
   },
   "scripts": {
     "start": "npm run sync && react-scripts start",
     "build": "npm run sync && react-scripts build",
-
     "test": "start-server-and-test test:serve http://localhost:5000 test:open",
     "test:open": "cypress open",
     "test:run": "cypress run",
