@@ -25,6 +25,9 @@ export const SearchbarExample: React.FC = () => (
     {/*-- Searchbar with telephone type --*/}
     <IonSearchbar type="tel"></IonSearchbar>
 
+    {/*-- Searchbar with numeric inputmode --*/}
+    <IonSearchbar inputmode="numeric"></IonSearchbar>
+
     {/*-- Searchbar disabled  --*/}
     <IonSearchbar disabled={true}></IonSearchbar>
 
