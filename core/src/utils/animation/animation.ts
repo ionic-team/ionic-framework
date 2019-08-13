@@ -822,7 +822,7 @@ export const createAnimation = () => {
 
       if (supportsWebAnimations) {
         update();
-        progressStep(1 - step);
+        setAnimationStep(1 - step);
       } else {
         forceDelayValue = ((1 - step) * getDuration()!) * -1;
         update(false, false);
@@ -833,10 +833,6 @@ export const createAnimation = () => {
 
         forceDurationValue = undefined;
         forceDelayValue = undefined;
-
-        if (supportsWebAnimations) {
-          progressStep(1);
-        }
       }, {
         oneTime: true
       });
