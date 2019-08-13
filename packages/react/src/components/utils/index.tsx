@@ -1,6 +1,6 @@
-export const dashToPascalCase = (str: string) => str.toLowerCase().split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');
-import { getPlatforms as getPlatformsCore, isPlatform as isPlatformCore, Platforms } from '@ionic/core';
+import { Platforms, getPlatforms as getPlatformsCore, isPlatform as isPlatformCore } from '@ionic/core';
 import React from 'react';
+export const dashToPascalCase = (str: string) => str.toLowerCase().split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');
 
 export type IonicReactExternalProps<PropType, ElementType> = PropType & {
   ref?: React.RefObject<ElementType>;
@@ -17,7 +17,6 @@ export const createForwardRef = <PropType, ElementType>(ReactComponent: any, dis
 };
 
 export * from './attachEventProps';
-export { setupConfig } from '@ionic/core';
 
 export const isPlatform = (platform: Platforms) => {
   return isPlatformCore(window, platform);
