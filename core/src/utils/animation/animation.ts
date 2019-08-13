@@ -803,7 +803,6 @@ export const createAnimation = () => {
         if (supportsWebAnimations) {
           forceDirectionValue = undefined;
           forceDelayValue = undefined;
-          progressStep(1);
         } else {
 
           /**
@@ -834,10 +833,6 @@ export const createAnimation = () => {
 
         forceDurationValue = undefined;
         forceDelayValue = undefined;
-
-        if (supportsWebAnimations) {
-          progressStep(1);
-        }
       }, {
         oneTime: true
       });
