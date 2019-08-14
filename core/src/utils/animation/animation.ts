@@ -798,17 +798,6 @@ export const createAnimation = () => {
     willComplete = shouldComplete;
 
     if (!shouldComplete) {
-      onFinish(() => {
-        pause(false);
-
-        willComplete = true;
-        forceDurationValue = undefined;
-        forceDirectionValue = undefined;
-        forceDelayValue = undefined;
-      }, {
-        oneTime: true
-      });
-
       forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
 
       if (supportsWebAnimations) {
@@ -819,20 +808,20 @@ export const createAnimation = () => {
         update(false, false);
       }
     } else {
-      onFinish(() => {
-        pause(false);
-
-        forceDurationValue = undefined;
-        forceDelayValue = undefined;
-      }, {
-        oneTime: true
-      });
-
       if (!supportsWebAnimations) {
         forceDelayValue = (step * getDuration()!) * -1;
         update(false, false);
       }
     }
+
+    onFinish(() => {
+      willComplete = true;
+      forceDurationValue = undefined;
+      forceDirectionValue = undefined;
+      forceDelayValue = undefined;
+    }, {
+      oneTime: true
+    });
 
     if (!parentAnimation) {
       play();
