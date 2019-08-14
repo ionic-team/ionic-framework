@@ -628,7 +628,7 @@ export const createAnimation = () => {
         setStyleProperty(element, 'animation-iteration-count', iterationsCount);
         setStyleProperty(element, 'animation-play-state', 'paused');
 
-        setStyleProperty(element, 'animation-name', (!!stylesheet.id) ? `${stylesheet.id}-alt` : null);
+        setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
         requestAnimationFrame(() => {
           setStyleProperty(element, 'animation-name', stylesheet.id || null);
         });
