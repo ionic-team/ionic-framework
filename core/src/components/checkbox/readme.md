@@ -203,7 +203,9 @@ export const CheckboxExample: React.FC = () => (
 | ----------- | ---------------------------------------------- | ---------------------------------------- |
 | `ionBlur`   | Emitted when the toggle loses focus.           | `CustomEvent<void>`                      |
 | `ionChange` | Emitted when the checked property has changed. | `CustomEvent<CheckboxChangeEventDetail>` |
+| `ionCheck`  | Emitted when the checkbox is being checked.    | `CustomEvent<void>` |
 | `ionFocus`  | Emitted when the toggle has focus.             | `CustomEvent<void>`                      |
+| `ionUncheck`| Emitted when the checkbox is being unchecked.  | `CustomEvent<void>` |
 
 
 ## CSS Custom Properties
