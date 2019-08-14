@@ -64,14 +64,13 @@ export class Checkbox implements ComponentInterface {
    */
   @Event() ionChange!: EventEmitter<CheckboxChangeEventDetail>;
 
-    /**
+  /**
    * Emitted when the checkbox is checked.
    */
   @Event() ionCheck!: EventEmitter<void>;
 
   /**
    * Emitted when the checkbox is unchecked.
-   * @internal
    */
   @Event() ionUncheck!: EventEmitter<void>;
 
