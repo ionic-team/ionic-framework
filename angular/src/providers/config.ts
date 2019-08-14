@@ -8,6 +8,11 @@ import { IonicWindow } from '../types/interfaces';
 })
 export class Config {
 
+  constructor() {
+    console.warn(`[DEPRECATION][Config]: The Config provider is deprecated and it will be removed in the next major release.
+  - Use "getMode()" to get the ionic's mode.`);
+  }
+
   get(key: keyof IonicConfig, fallback?: any): any {
     const c = getConfig();
     if (c) {
