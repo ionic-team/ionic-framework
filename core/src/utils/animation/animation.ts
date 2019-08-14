@@ -614,7 +614,6 @@ export const createAnimation = () => {
         const stylesheet = createKeyframeStylesheet(keyframeName, keyframeRules, element);
         stylesheets.push(stylesheet);
 
-        setStyleProperty(element, 'animation-name', stylesheet.id || null);
         setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
         setStyleProperty(element, 'animation-timing-function', getEasing() || null);
         setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
@@ -628,6 +627,11 @@ export const createAnimation = () => {
 
         setStyleProperty(element, 'animation-iteration-count', iterationsCount);
         setStyleProperty(element, 'animation-play-state', 'paused');
+
+        setStyleProperty(element, 'animation-name', (stylesheet.id) ? `${stylesheet.id}-alt` : null);
+        requestAnimationFrame(() => {
+          setStyleProperty(element, 'animation-name', stylesheet.id || null);
+        });
       }
     });
   };
@@ -799,21 +803,8 @@ export const createAnimation = () => {
 
         willComplete = true;
         forceDurationValue = undefined;
-
-        if (supportsWebAnimations) {
-          forceDirectionValue = undefined;
-          forceDelayValue = undefined;
-        } else {
-
-          /**
-           * Parent animations at this point may not have finished
-           */
-          forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
-          forceDelayValue = 0;
-          update();
-
-          forceDirectionValue = undefined;
-        }
+        forceDirectionValue = undefined;
+        forceDelayValue = undefined;
       }, {
         oneTime: true
       });
