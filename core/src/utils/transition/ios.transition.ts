@@ -379,10 +379,10 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
           'position': 'relative'
         })
         .beforeAddWrite(() => {
-          leavingLargeTitleEl.style.setProperty('display', 'none');
+          leavingLargeTitleEl.style.setProperty('visibility', 'hidden');
         })
         .afterAddWrite(() => {
-          leavingLargeTitleEl.style.setProperty('display', '');
+          leavingLargeTitleEl.style.setProperty('visibility', '');
           clonedTitleEl.style.setProperty('display', 'none');
         })
         .duration(DURATION)
@@ -416,10 +416,10 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
           'transform-origin': 'left center'
         })
         .beforeAddWrite(() => {
-          enteringBackButtonEl.style.setProperty('display', 'none');
+          enteringBackButtonEl.style.setProperty('visibility', 'hidden');
         })
         .afterAddWrite(() => {
-          enteringBackButtonEl.style.setProperty('display', '');
+          enteringBackButtonEl.style.setProperty('visibility', '');
           clonedBackButtonEl.style.setProperty('display', 'none');
         })
         .keyframes([
@@ -431,10 +431,11 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         .beforeStyles({
           'transform-origin': 'right center'
         })
+        .delay(DURATION * 0.4)
+        .duration(DURATION * 0.5)
         .keyframes([
-          { offset: 0, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` },
-          { offset: 0.9, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` },
-          { offset: 1, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` }
+          { offset: 0, opacity: 0, transform: `translate3d(4px, ${addSafeArea(-35)}, 0) scale(0.6)` },
+          { offset: 1, opacity: 1, transform: `translate3d(4px, ${addSafeArea(-40)}, 0) scale(1)` }
         ]);
 
       rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation]);
@@ -454,10 +455,10 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
           'position': 'relative'
         })
         .beforeAddWrite(() => {
-          enteringLargeTitleEl.style.setProperty('display', 'none');
+          enteringLargeTitleEl.style.setProperty('visibility', 'hidden');
         })
         .afterAddWrite(() => {
-          enteringLargeTitleEl.style.setProperty('display', '');
+          enteringLargeTitleEl.style.setProperty('visibility', '');
           clonedTitleEl.style.setProperty('display', 'none');
         })
         .keyframes([
@@ -490,10 +491,10 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
           'transform-origin': 'left center'
         })
         .beforeAddWrite(() => {
-          leavingBackButtonEl.style.setProperty('display', 'none');
+          leavingBackButtonEl.style.setProperty('visibility', 'hidden');
         })
         .afterAddWrite(() => {
-          leavingBackButtonEl.style.setProperty('display', 'inherit');
+          leavingBackButtonEl.style.setProperty('visibility', '');
           clonedBackButtonEl.style.setProperty('display', 'none');
         })
         .keyframes([
