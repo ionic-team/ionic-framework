@@ -120,8 +120,14 @@
   
         this.innerHTML = `
           <ion-header class="main-header">
-            <ion-toolbar>      
-              <ion-title>Settings</ion-title>              
+            <ion-toolbar>    
+              <ion-buttons collapse>
+                <ion-back-button default-href="/"></ion-back-button>
+              </ion-buttons>  
+              <ion-title>Settings</ion-title>  
+              <ion-buttons slot="end" collapse>
+                <ion-button>Hello World</ion-button>
+              </ion-buttons>              
             </ion-toolbar>
           </ion-header>
         

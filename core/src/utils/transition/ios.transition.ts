@@ -380,9 +380,11 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         })
         .beforeAddWrite(() => {
           leavingLargeTitleEl.style.setProperty('visibility', 'hidden');
+          leavingLargeTitleEl.style.setProperty('pointer-events', 'none');
         })
         .afterAddWrite(() => {
           leavingLargeTitleEl.style.setProperty('visibility', '');
+          leavingLargeTitleEl.style.setProperty('pointer-events', '');
           clonedTitleEl.style.setProperty('display', 'none');
         })
         .duration(DURATION)
@@ -417,9 +419,11 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         })
         .beforeAddWrite(() => {
           enteringBackButtonEl.style.setProperty('visibility', 'hidden');
+          enteringBackButtonEl.style.setProperty('pointer-events', 'none');
         })
         .afterAddWrite(() => {
           enteringBackButtonEl.style.setProperty('visibility', '');
+          enteringBackButtonEl.style.setProperty('pointer-events', '');
           clonedBackButtonEl.style.setProperty('display', 'none');
         })
         .keyframes([
@@ -456,9 +460,11 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         })
         .beforeAddWrite(() => {
           enteringLargeTitleEl.style.setProperty('visibility', 'hidden');
+          enteringLargeTitleEl.style.setProperty('pointer-events', 'none');
         })
         .afterAddWrite(() => {
           enteringLargeTitleEl.style.setProperty('visibility', '');
+          enteringLargeTitleEl.style.setProperty('pointer-events', '');
           clonedTitleEl.style.setProperty('display', 'none');
         })
         .keyframes([
@@ -492,9 +498,11 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         })
         .beforeAddWrite(() => {
           leavingBackButtonEl.style.setProperty('visibility', 'hidden');
+          leavingBackButtonEl.style.setProperty('pointer-events', 'none');
         })
         .afterAddWrite(() => {
           leavingBackButtonEl.style.setProperty('visibility', '');
+          leavingBackButtonEl.style.setProperty('pointer-events', '');
           clonedBackButtonEl.style.setProperty('display', 'none');
         })
         .keyframes([
