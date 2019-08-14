@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, Watch, h, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
+import { Gesture, GestureDetail } from '../../utils/gesture';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -16,13 +17,17 @@ import { createColorClasses } from '../../utils/theme';
   scoped: true
 })
 export class Segment implements ComponentInterface {
+  private gesture?: Gesture;
   private indicatorEl!: HTMLDivElement | undefined;
 
   private didInit = false;
 
   private animated = false;
+  // private lastDrag = 0;
 
   @Element() el!: HTMLIonSegmentElement;
+
+  @State() activated = false;
 
   /**
    * The color to use from your application's color palette.
@@ -46,14 +51,6 @@ export class Segment implements ComponentInterface {
    */
   @Prop({ mutable: true }) value?: string | null;
 
-  @Watch('value')
-  protected valueChanged(value: string | undefined) {
-    if (this.didInit) {
-      this.updateButtons();
-      this.ionChange.emit({ value });
-    }
-  }
-
   /**
    * Emitted when the value property has changed.
    */
@@ -64,6 +61,21 @@ export class Segment implements ComponentInterface {
    * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  @Watch('value')
+  valueChanged(value: string | undefined) {
+    if (this.didInit) {
+      this.updateButtons();
+      this.ionChange.emit({ value });
+    }
+  }
+
+  @Watch('disabled')
+  disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
+    }
+  }
 
   @Listen('ionSelect')
   segmentClick(ev: CustomEvent) {
@@ -81,8 +93,25 @@ export class Segment implements ComponentInterface {
     this.emitStyle();
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
+    this.emitStyle();
+  }
+
+  async componentDidLoad() {
     this.updateButtons();
+
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+      el: this.el,
+      gestureName: 'segment',
+      gesturePriority: 100,
+      threshold: 0,
+      passive: false,
+      onStart: ev => this.onStart(ev),
+      onMove: ev => this.onMove(ev),
+      onEnd: ev => this.onEnd(ev),
+    });
+    this.disabledChanged();
+
     this.didInit = true;
   }
 
@@ -90,9 +119,51 @@ export class Segment implements ComponentInterface {
     this.calculateIndicatorPosition();
   }
 
+  onStart(detail: GestureDetail) {
+    console.log('onStart', detail);
+
+    this.activate(detail);
+
+    // touch-action does not work in iOS
+    // this.setFocus();
+  }
+
+  onMove(detail: GestureDetail) {
+    console.log('onMove', detail);
+
+  }
+
+  onEnd(detail: GestureDetail) {
+    const clicked = detail.event.target as HTMLIonSegmentButtonElement;
+
+    console.log('onEnd', detail);
+    clicked.checked = true;
+
+    this.activated = false;
+
+    // this.lastDrag = Date.now();
+    detail.event.preventDefault();
+    detail.event.stopImmediatePropagation();
+  }
+
+  private activate(detail: GestureDetail) {
+    const clicked = detail.event.target as HTMLIonSegmentButtonElement;
+
+    // If the clicked element does not exist return
+    if (!clicked) {
+      return;
+    }
+
+    // If the gesture began on the clicked button with an indicator
+    // then we should activate the indicator
+    if (clicked.checked) {
+      this.activated = true;
+    }
+  }
+
   private calculateIndicatorPosition() {
     const indicator = this.indicatorEl;
-
+    const activated = this.activated;
     const buttons = this.getButtons();
     const index = buttons.findIndex(button => button.value === this.value);
 
@@ -106,13 +177,15 @@ export class Segment implements ComponentInterface {
     const left = `${(index * 100)}%`;
     const width = `calc(${1 / buttons.length * 100}%)`;
 
-    // TODO if the button is already checked we
-    // need to transform the scale on press
+    const transform = activated
+      ? `translate3d(${left}, 0, 0) scale(0.95)`
+      : `translate3d(${left}, 0, 0)`;
+
     writeTask(() => {
       const indicatorStyle = indicator.style;
 
       indicatorStyle.width = width;
-      indicatorStyle.transform = `translate3d(${left}, 0, 0)`;
+      indicatorStyle.transform = transform;
       indicatorStyle.display = `block`;
     });
 
