@@ -203,8 +203,11 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         enteringBackButton.fromTo(OPACITY, 0.01, 1);
 
         if (backButtonEl) {
-          if (!enteringBackButtonEl) {
-            enteringBackButtonEl = backButtonEl;
+          const isCollapsed = (backButtonEl.closest('ion-buttons[collapse]') as HTMLElement);
+          if (!enteringBackButtonEl && isCollapsed) {
+            if (isCollapsed.style.opacity !== '0') {
+              enteringBackButtonEl = backButtonEl;
+            }
           } else {
             const enteringBackBtnText = createAnimation();
             enteringBackBtnText
@@ -329,8 +332,11 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
             .fromTo(OPACITY, 1, 0.01);
 
           if (backButtonEl) {
-            if (!leavingBackButtonEl) {
-              leavingBackButtonEl = backButtonEl;
+            const isCollapsed = backButtonEl.closest('ion-buttons[collapse]') as HTMLElement;
+            if (!leavingBackButtonEl && isCollapsed) {
+              if (isCollapsed.style.opacity !== '0') {
+                leavingBackButtonEl = backButtonEl;
+              }
             } else {
               const leavingBackBtnText = createAnimation();
               leavingBackBtnText

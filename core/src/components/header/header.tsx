@@ -77,8 +77,6 @@ export class Header implements ComponentInterface {
         remainingHeight += scrollHeaderIndex.toolbars[i].el.clientHeight;
       }
 
-      makeHeaderInactive(mainHeaderIndex, false);
-
       // TODO: Find a better way to do this
       let zIndex = scrollHeaderIndex.toolbars.length - 1;
       scrollHeaderIndex.toolbars.forEach((toolbar: any) => {
@@ -108,6 +106,7 @@ export class Header implements ComponentInterface {
        * Set the initial state of the collapsable header
        */
       setElOpacity(mainHeaderIndex.el, 0);
+      makeHeaderInactive(mainHeaderIndex, false);
     });
   }
 
