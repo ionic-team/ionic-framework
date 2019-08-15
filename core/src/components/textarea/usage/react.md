@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonTextarea, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-export const TextAreaExample: React.FunctionComponent = () => (
+export const TextAreaExample: React.FC = () => (
   <IonContent>
     {/*-- Default textarea --*/}
     <IonTextarea></IonTextarea>

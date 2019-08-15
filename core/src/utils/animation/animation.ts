@@ -614,7 +614,6 @@ export const createAnimation = () => {
         const stylesheet = createKeyframeStylesheet(keyframeName, keyframeRules, element);
         stylesheets.push(stylesheet);
 
-        setStyleProperty(element, 'animation-name', stylesheet.id || null);
         setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
         setStyleProperty(element, 'animation-timing-function', getEasing() || null);
         setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
@@ -628,6 +627,11 @@ export const createAnimation = () => {
 
         setStyleProperty(element, 'animation-iteration-count', iterationsCount);
         setStyleProperty(element, 'animation-play-state', 'paused');
+
+        setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
+        requestAnimationFrame(() => {
+          setStyleProperty(element, 'animation-name', stylesheet.id || null);
+        });
       }
     });
   };
@@ -794,30 +798,6 @@ export const createAnimation = () => {
     willComplete = shouldComplete;
 
     if (!shouldComplete) {
-      onFinish(() => {
-        pause(false);
-
-        willComplete = true;
-        forceDurationValue = undefined;
-
-        if (supportsWebAnimations) {
-          forceDirectionValue = undefined;
-          forceDelayValue = undefined;
-        } else {
-
-          /**
-           * Parent animations at this point may not have finished
-           */
-          forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
-          forceDelayValue = 0;
-          update();
-
-          forceDirectionValue = undefined;
-        }
-      }, {
-        oneTime: true
-      });
-
       forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
 
       if (supportsWebAnimations) {
@@ -828,20 +808,20 @@ export const createAnimation = () => {
         update(false, false);
       }
     } else {
-      onFinish(() => {
-        pause(false);
-
-        forceDurationValue = undefined;
-        forceDelayValue = undefined;
-      }, {
-        oneTime: true
-      });
-
       if (!supportsWebAnimations) {
         forceDelayValue = (step * getDuration()!) * -1;
         update(false, false);
       }
     }
+
+    onFinish(() => {
+      willComplete = true;
+      forceDurationValue = undefined;
+      forceDirectionValue = undefined;
+      forceDelayValue = undefined;
+    }, {
+      oneTime: true
+    });
 
     if (!parentAnimation) {
       play();

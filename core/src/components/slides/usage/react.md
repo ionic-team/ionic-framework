@@ -8,7 +8,7 @@ const slideOpts = {
   speed: 400
 };
 
-export const SlidesExample: React.FunctionComponent = () => (
+export const SlidesExample: React.FC = () => (
   <IonContent>
     <IonSlides pager={true} options={slideOpts}>
       <IonSlide>

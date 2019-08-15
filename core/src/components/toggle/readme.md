@@ -93,7 +93,7 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 import React from 'react';
 import { IonToggle, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-export const ToggleExample: React.FunctionComponent = () => (
+export const ToggleExample: React.FC = () => (
   <IonContent>
     {/*-- Default Toggle --*/}
     <IonToggle />

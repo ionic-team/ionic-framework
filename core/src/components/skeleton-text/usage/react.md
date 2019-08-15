@@ -13,7 +13,7 @@ import {
 } from '@ionic/react';
 import './SkeletonTextExample.css';
 
-export const SkeletonTextExample: React.FunctionComponent = () => {
+export const SkeletonTextExample: React.FC = () => {
   const [data, setData] = useState();
 
   setTimeout(() => {

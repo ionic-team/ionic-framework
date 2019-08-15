@@ -65,7 +65,7 @@ async function presentPopover(ev) {
 import React, { useState } from 'react';
 import { IonPopover, IonButton } from '@ionic/react';
 
-export const PopoverExample: React.FunctionComponent = () => {
+export const PopoverExample: React.FC = () => {
   const [showPopover, setShowPopover] = useState(false);
 
   return (
