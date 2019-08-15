@@ -1,18 +1,15 @@
 ```javascript
 async function presentToast() {
-  const toastController = document.querySelector('ion-toast-controller');
-
-  const toast = await toastController.create({
+  const toast = Object.assing(document.createElement('ion-toast'), {
     message: 'Your settings have been saved.',
     duration: 2000
   });
-  return await toast.present();
+  document.body.appendChild(toast);
+  return toast.present();
 }
 
 async function presentToastWithOptions() {
-  const toastController = document.querySelector('ion-toast-controller');
-
-  const toast = await toastController.create({
+  const toast = Object.assing(document.createElement('ion-toast'), {
     header: 'Toast header',
     message: 'Click to Close',
     position: 'top',
@@ -33,7 +30,7 @@ async function presentToastWithOptions() {
       }
     ]
   });
-
-  return await toast.present();
+  document.body.appendChild(toast);
+  return toast.present();
 }
 ```

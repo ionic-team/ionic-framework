@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Method } from '@stencil/core';
+import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 
 import { LoadingOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -7,6 +7,14 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
   tag: 'ion-loading-controller'
 })
 export class LoadingController implements ComponentInterface, OverlayController {
+
+  constructor() {
+    if (Build.isDev) {
+      console.warn(`[DEPRECATED][ion-loading-controller] Use the loadingController export from @ionic/core:
+  import { loadingController } from '@ionic/core';
+  const modal = await loadingController.create({...});`);
+    }
+  }
 
   /**
    * Create a loading overlay with loading options.

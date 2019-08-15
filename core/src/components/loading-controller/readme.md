@@ -14,14 +14,13 @@ Loading controllers programmatically control the loading component. Loadings can
 
 ```javascript
 async function presentLoading() {
-  const loadingController = document.querySelector('ion-loading-controller');
-
-  const loadingElement = await loadingController.create({
+  const loading = Object.assing(document.createElement('ion-loading'), {
     message: 'Please wait...',
     spinner: 'crescent',
     duration: 2000
   });
-  return await loadingElement.present();
+  document.body.appendChild(loading);
+  return loadingElement.present();
 }
 ```
 

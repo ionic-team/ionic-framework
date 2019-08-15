@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Method } from '@stencil/core';
+import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 
 import { AlertOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -7,6 +7,14 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
   tag: 'ion-alert-controller'
 })
 export class AlertController implements ComponentInterface, OverlayController {
+
+  constructor() {
+    if (Build.isDev) {
+      console.warn(`[DEPRECATED][ion-alert-controller] Use the alertController export from @ionic/core:
+  import { alertController } from '@ionic/core';
+  const alert = await alertController.create({...});`);
+    }
+  }
 
   /**
    * Create an alert overlay with alert options.

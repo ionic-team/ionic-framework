@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -31,7 +31,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   animation: Animation | undefined;
   mode = getIonMode(this);
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonModalElement;
 
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -104,6 +104,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Emitted after the modal has dismissed.
    */
   @Event({ eventName: 'ionModalDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+
+  constructor() {
+    prepareOverlay(this.el);
+  }
 
   /**
    * Present the modal overlay after it has been created.

@@ -28,21 +28,25 @@ export const pickerController = /*@__PURE__*/createController<PickerOptions, HTM
 export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
 export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
+export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
+  const doc = document;
+  connectListeners(doc);
+  const overlayIndex = lastId++;
+  el.overlayIndex = overlayIndex;
+  if (!el.hasAttribute('id')) {
+    el.id = `ion-overlay-${overlayIndex}`;
+  }
+};
+
 export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined): Promise<T> => {
   return customElements.whenDefined(tagName).then(() => {
     const doc = document;
     const element = doc.createElement(tagName) as HTMLIonOverlayElement;
-    connectListeners(doc);
+    element.classList.add('overlay-hidden');
 
     // convert the passed in overlay options into props
     // that get passed down into the new overlay
     Object.assign(element, opts);
-    element.classList.add('overlay-hidden');
-    const overlayIndex = lastId++;
-    element.overlayIndex = overlayIndex;
-    if (!element.hasAttribute('id')) {
-      element.id = `ion-overlay-${overlayIndex}`;
-    }
 
     // append the overlay element to the document body
     getAppRoot(doc).appendChild(element);

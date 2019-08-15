@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { BACKDROP, dismiss, eventMethod, isCancel, present, safeCall } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -27,7 +27,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   animation?: any;
   mode = getIonMode(this);
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonActionSheetElement;
 
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -111,6 +111,10 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   @Method()
   present(): Promise<void> {
     return present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
+  }
+
+  constructor() {
+    prepareOverlay(this.el);
   }
 
   /**

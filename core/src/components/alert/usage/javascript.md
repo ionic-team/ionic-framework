@@ -1,32 +1,28 @@
 ```javascript
-async function presentAlert() {
-  const alertController = document.querySelector('ion-alert-controller');
-
-  const alert = await alertController.create({
+function presentAlert() {
+  const alert = Object.assign(document.createElement('ion-alert'), {
     header: 'Alert',
     subHeader: 'Subtitle',
     message: 'This is an alert message.',
     buttons: ['OK']
   });
-  return await alert.present();
+  document.body.appendChild(alert);
+  return alert.present();
 }
 
-async function presentAlertMultipleButtons() {
-  const alertController = document.querySelector('ion-alert-controller');
-
-  const alert = await alertController.create({
+function presentAlertMultipleButtons() {
+  const alert = Object.assign(document.createElement('ion-alert'), {
     header: 'Alert',
     subHeader: 'Subtitle',
     message: 'This is an alert message.',
     buttons: ['Cancel', 'Open Modal', 'Delete']
   });
-  return await alert.present();
+  document.body.appendChild(alert);
+  return alert.present();
 }
 
-async function presentAlertConfirm() {
-  const alertController = document.querySelector('ion-alert-controller');
-
-  const alert = await alertController.create({
+function presentAlertConfirm() {
+  const alert = Object.assign(document.createElement('ion-alert'), {
     header: 'Confirm!',
     message: 'Message <strong>text</strong>!!!',
     buttons: [
@@ -45,13 +41,12 @@ async function presentAlertConfirm() {
       }
     ]
   });
-  return await alert.present();
+  document.body.appendChild(alert);
+  return alert.present();
 }
 
-async function presentAlertPrompt() {
-  const alertController = document.querySelector('ion-alert-controller');
-
-  const alert = await alertController.create({
+function presentAlertPrompt() {
+  const alert = Object.assign(document.createElement('ion-alert'), {
     header: 'Prompt!',
     inputs: [
       {
@@ -108,13 +103,12 @@ async function presentAlertPrompt() {
       }
     ]
   });
-  return await alert.present();
+  document.body.appendChild(alert);
+  return alert.present();
 }
 
-async function presentAlertRadio() {
-  const alertController = document.querySelector('ion-alert-controller');
-
-  const alert = await alertController.create({
+function presentAlertRadio() {
+  const alert = Object.assign(document.createElement('ion-alert'), {
     header: 'Radio',
     inputs: [
       {
@@ -165,13 +159,12 @@ async function presentAlertRadio() {
       }
     ]
   });
-  return await alert.present();
+  document.body.appendChild(alert);
+  return alert.present();
 }
 
-async function presentAlertCheckbox() {
-  const alertController = document.querySelector('ion-alert-controller');
-
-  const alert = await alertController.create({
+function presentAlertCheckbox() {
+  const alert = Object.assign(document.createElement('ion-alert'), {
     header: 'Checkbox',
     inputs: [
       {
@@ -227,6 +220,7 @@ async function presentAlertCheckbox() {
       }
     ]
   });
-  return await alert.present();
+  document.body.appendChild(alert);
+  return alert.present();
 }
 ```

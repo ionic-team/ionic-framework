@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { AlertButton, AlertInput, Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { BACKDROP, dismiss, eventMethod, isCancel, present, safeCall } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
@@ -161,6 +161,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
       min: i.min,
       max: i.max
     }) as AlertInput);
+  }
+
+  constructor() {
+    prepareOverlay(this.el);
   }
 
   componentWillLoad() {

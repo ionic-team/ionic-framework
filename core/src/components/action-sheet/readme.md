@@ -79,9 +79,8 @@ export class ActionSheetExample {
 
 ```javascript
 async function presentActionSheet() {
-  const actionSheetController = document.querySelector('ion-action-sheet-controller');
 
-  const actionSheet = await actionSheetController.create({
+  const actionSheet = Object.assing(document.createElement('ion-action-sheet'), {
     header: "Albums",
     buttons: [{
       text: 'Delete',
@@ -117,7 +116,8 @@ async function presentActionSheet() {
       }
     }]
   });
-  await actionSheet.present();
+  document.body.appendChild(actionSheet);
+  return actionSheet.present();
 }
 ```
 
