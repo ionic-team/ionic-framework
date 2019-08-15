@@ -45,7 +45,7 @@ export class Header implements ComponentInterface {
     const contentEl = tabs ? tabs.querySelector('ion-content') : page!.querySelector('ion-content');
 
     if (canCollapse) {
-      await this.setupCollapsableHeader(contentEl);
+      await this.setupCollapsableHeader(contentEl, (tabs) ? tabs : page!);
     }
   }
 
@@ -55,7 +55,7 @@ export class Header implements ComponentInterface {
     }
   }
 
-  private async setupCollapsableHeader(contentEl: any) {
+  private async setupCollapsableHeader(contentEl: any, pageEl: any) {
     if (!contentEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); }
 
     await contentEl.componentOnReady();
@@ -63,8 +63,8 @@ export class Header implements ComponentInterface {
     this.scrollEl = await contentEl.getScrollElement();
 
     readTask(() => {
-      const headers = document.querySelectorAll('ion-header');
-      const mainHeader = Array.from(headers).find(header => !header.collapse);
+      const headers = pageEl.querySelectorAll('ion-header');
+      const mainHeader = Array.from(headers).find((header: any) => !header.collapse);
 
       const mainHeaderIndex = createHeaderIndex(mainHeader);
       const scrollHeaderIndex = createHeaderIndex(this.el);

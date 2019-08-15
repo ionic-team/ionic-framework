@@ -95,7 +95,7 @@
 */
     
     
-    class PageOne extends HTMLElement {
+    class PageTwo extends HTMLElement {
       generateList() {
         let html = '';
         for (let i = 0; i < 100; i++) {
@@ -144,7 +144,7 @@
       }
     }
     
-    class PageTwo extends HTMLElement {
+    class PageOne extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
           <ion-header>
@@ -152,18 +152,48 @@
               <ion-buttons slot="start">
                 <ion-back-button text="Settings"></ion-back-button>
               </ion-buttons>
-              <ion-title>Page Two</ion-title>
+              <ion-title>Page main</ion-title>
             </ion-toolbar>
          
           </ion-header>
           <ion-content class="ion-padding">
             <h1>Page Two</h1>
+            
+            <ion-nav-push component="page-two">
+              <ion-item button>
+                <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
+                <ion-label>
+                  <p>Go to Page Two</p>
+                </ion-label>
+      
+              </ion-item>
+            </ion-nav-push>
+          </ion-content>
+        `;
+      }
+    }
+    
+    class PageThree extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button text="Settings"></ion-back-button>
+              </ion-buttons>
+              <ion-title>Page Three</ion-title>
+            </ion-toolbar>
+         
+          </ion-header>
+          <ion-content class="ion-padding">
+            <h1>Page Three</h1>
           </ion-content>
         `;
       }
     }
     customElements.define('page-one', PageOne);
     customElements.define('page-two', PageTwo);
+    customElements.define('page-three', PageThree);
   </script>
 </body>
 
