@@ -61,9 +61,20 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
      * then the page where this header exists
      * is not the active page
      */
-
+     
     if (!mainHeaderIndex.el.offsetParent) { return; }
-    if (ev[0].isIntersecting) {
+    
+    const event = ev[0];
+    /**
+     * Do nothing if the element is moving left, right, or down out of view
+     */
+    if (
+      event.intersectionRect.left !== event.boundingClientRect.left ||
+      event.intersectionRect.right !== event.boundingClientRect.right ||
+      event.intersectionRect.bottom !== event.boundingClientRect.bottom
+    ) { return }
+    
+    if (event.isIntersecting) {
       makeHeaderInactive(mainHeaderIndex, true, true);
       makeHeaderActive(scrollHeaderIndex, false);
     } else {
