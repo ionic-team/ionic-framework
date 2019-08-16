@@ -98,7 +98,7 @@ const isElectron = (win: Window): boolean =>
 const isPWA = (win: Window): boolean =>
   !!(win.matchMedia('(display-mode: standalone)').matches || (win.navigator as any).standalone);
 
-const testUserAgent = (win: Window, expr: RegExp) =>
+export const testUserAgent = (win: Window, expr: RegExp) =>
   expr.test(win.navigator.userAgent);
 
 const matchMedia = (win: Window, query: string): boolean =>
