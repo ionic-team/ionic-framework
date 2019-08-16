@@ -25,6 +25,9 @@
 
   min-height: #{$segment-button-ios-min-height};
 
+  // Necessary for the z-index to work properly
+  transform: translate3d(0, 0, 0);
+
   font-size: #{$segment-button-ios-font-size};
 
   font-weight: 450;
