@@ -24,6 +24,7 @@ export class Segment implements ComponentInterface {
 
   private animated = false;
   // private lastDrag = 0;
+  private lastIndex!: number;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -120,8 +121,6 @@ export class Segment implements ComponentInterface {
   }
 
   onStart(detail: GestureDetail) {
-    console.log('onStart', detail);
-
     this.activate(detail);
 
     // touch-action does not work in iOS
@@ -129,15 +128,55 @@ export class Segment implements ComponentInterface {
   }
 
   onMove(detail: GestureDetail) {
-    console.log('onMove', detail);
+    const buttons = this.getButtons();
+    const index = buttons.findIndex(button => button.checked === true);
 
+    const activated = this.activated;
+    const startEl = buttons[index];
+
+    const currentX = detail.currentX;
+
+    // Get the element that the touch event started on in case
+    // it was the checked button, then we will move the indicator
+    const rect = startEl.getBoundingClientRect();
+    const left = rect.left;
+    const width = rect.width;
+
+    // If the indicator is currently activated then we have started the gesture
+    // on top of the checked button so we need to slide the indicator
+    // by checking the button next to it as we move
+
+    // TODO check for disabled and skip over those
+    if (activated) {
+      if (currentX < left) {
+        const nextIndex = index - 1;
+
+        if (nextIndex >= 0) {
+          buttons[nextIndex].checked = true;
+        }
+      } else if (currentX > (left + width)) {
+        const nextIndex = index + 1;
+
+        if (nextIndex < buttons.length) {
+          buttons[nextIndex].checked = true;
+        }
+      }
+    } else {
+      this.lastIndex = index;
+
+      console.log('last index is', this.lastIndex);
+      // if the indicator is not activated we need to follow the index the user
+      // moves around by to figure out where they left off
+      // TODO
+    }
   }
 
   onEnd(detail: GestureDetail) {
-    const clicked = detail.event.target as HTMLIonSegmentButtonElement;
-
-    console.log('onEnd', detail);
-    clicked.checked = true;
+    // If the indicator is not activated then we will just set the indicator
+    // where the gesture ended
+    if (!this.activated) {
+      console.log('not activated set the current button to checked if it is not disabled');
+    }
 
     this.activated = false;
 
@@ -148,13 +187,20 @@ export class Segment implements ComponentInterface {
 
   private activate(detail: GestureDetail) {
     const clicked = detail.event.target as HTMLIonSegmentButtonElement;
+    const buttons = this.getButtons();
+    const checked = buttons.find(button => button.checked === true);
 
-    // If the clicked element does not exist return
+    // If the clicked element does not exist, there is no indicator to activate
     if (!clicked) {
       return;
     }
 
-    // If the gesture began on the clicked button with an indicator
+    // If there are no checked buttons, set the current button to checked
+    if (!checked) {
+      clicked.checked = true;
+    }
+
+    // If the gesture began on the clicked button with the indicator
     // then we should activate the indicator
     if (clicked.checked) {
       this.activated = true;

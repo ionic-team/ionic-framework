@@ -126,6 +126,8 @@
 
 ::slotted(ion-icon) {
   order: -1;
+
+  pointer-events: none;
 }
 
 
@@ -144,6 +146,8 @@
   white-space: nowrap;
 
   box-sizing: border-box;
+
+  pointer-events: none;
 }
 
 
