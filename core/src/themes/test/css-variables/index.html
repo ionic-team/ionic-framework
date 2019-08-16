@@ -963,7 +963,6 @@
     customElements.define('profile-page', ProfilePage);
 
     async function presentToast() {
-      const toastController = document.querySelector('ion-toast-controller');
       const toast = Object.assign(document.createElement('ion-toast'), {
         message: 'Your settings have been saved.',
         duration: 2000

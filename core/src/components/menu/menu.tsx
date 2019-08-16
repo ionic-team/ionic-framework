@@ -306,6 +306,9 @@ export class Menu implements ComponentInterface, MenuI {
     }
     // Create new animation
     this.animation = await menuController._createAnimation(this.type!, this);
+    if (!config.getBoolean('animated', true)) {
+      this.animation.duration(0);
+    }
     this.animation.fill('both');
   }
 

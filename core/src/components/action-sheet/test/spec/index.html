@@ -32,8 +32,7 @@
     async function presentSpec() {
       const mode = Ionic.mode;
 
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         header: "Open in",
         buttons: [{
           text: 'Item 1',
@@ -67,6 +66,7 @@
           }
         }]
       });
+      document.body.appendChild(actionSheetElement);
       await actionSheetElement.present();
     }
   </script>

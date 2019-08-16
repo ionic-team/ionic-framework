@@ -1,6 +1,3 @@
-import { Build } from '@stencil/core';
-
-import { config } from '../../global/config';
 import { AnimationBuilder, IonicAnimation, MenuI } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
@@ -70,16 +67,6 @@ const createMenuController = () => {
   };
 
   const get = async (menu?: string | null): Promise<HTMLIonMenuElement | undefined> => {
-    if (Build.isDev) {
-      if (menu === 'left') {
-        console.error('menu.side=left is deprecated, use "start" instead');
-        return undefined;
-      }
-      if (menu === 'right') {
-        console.error('menu.side=right is deprecated, use "end" instead');
-        return undefined;
-      }
-    }
     await waitUntilReady();
 
     if (menu === 'start' || menu === 'end') {
@@ -185,10 +172,6 @@ const createMenuController = () => {
     }
 
     const animation = animationBuilder(menuCmp);
-
-    if (!config.getBoolean('animated', true)) {
-      animation.duration(0);
-    }
     return animation;
   };
 

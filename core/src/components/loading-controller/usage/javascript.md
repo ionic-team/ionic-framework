@@ -6,6 +6,6 @@ async function presentLoading() {
     duration: 2000
   });
   document.body.appendChild(loading);
-  return loadingElement.present();
+  return loading.present();
 }
 ```

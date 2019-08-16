@@ -1,4 +1,4 @@
-import { Component, Method, Build } from '@stencil/core';
+import { Build, Component, Method } from '@stencil/core';
 
 import { AnimationBuilder, IonicAnimation, MenuI } from '../../interface';
 import { menuController } from '../../utils/menu-controller';

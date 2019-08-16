@@ -114,6 +114,7 @@
                 }
               }]
             });
+            document.body.appendChild(alert);
             await alert.present();
             return false;
           }
@@ -146,8 +147,7 @@
     }
 
     async function presentWithCssClass() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         header: "Custom Css Class",
         cssClass: "my-color-class my-custom-class",
         buttons: [
