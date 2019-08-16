@@ -51,8 +51,8 @@
 
 // TODO reevaluate the global variables needed
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
-  color: #{var(--ion-toolbar-color-unchecked, var(--color))};
   background: #{var(--ion-toolbar-background-unchecked, $segment-ios-background-color)};
+  color: #{var(--ion-toolbar-color-unchecked, var(--color))};
 }
 
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color) .segment-checked-indicator-background {

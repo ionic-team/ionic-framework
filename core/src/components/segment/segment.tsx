@@ -168,8 +168,7 @@ export class Segment implements ComponentInterface {
 
     const currentX = detail.currentX;
 
-    // Get the element that the touch event started on in case
-    // it was the checked button, then we will move the indicator
+    // Get the element that the touch event started on
     const rect = startEl.getBoundingClientRect();
     const left = rect.left;
     const width = rect.width;
@@ -206,11 +205,6 @@ export class Segment implements ComponentInterface {
     const clicked = detail.event.target as HTMLIonSegmentButtonElement;
     const buttons = this.getButtons();
     const checked = buttons.find(button => button.checked === true);
-
-    // If the clicked element does not exist, there is no indicator to activate
-    if (!clicked) {
-      return;
-    }
 
     // If there are no checked buttons, set the current button to checked
     if (!checked) {
