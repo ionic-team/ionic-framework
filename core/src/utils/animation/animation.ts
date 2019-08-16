@@ -924,7 +924,6 @@ export const createAnimation = () => {
        cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + animationDuration + ANIMATION_END_FALLBACK_PADDING_MS);
 
        animationEnd(elements[0], () => {
-        pause(false);
         clearCSSAnimationsTimeout();
         clearCSSAnimationPlayState();
         animationFinish();
