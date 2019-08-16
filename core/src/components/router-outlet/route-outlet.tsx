@@ -18,7 +18,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
   private ani?: IonicAnimation | Animation;
-  private enableAnimation = false;
+  private enableAnimation = true;
 
   @Element() el!: HTMLElement;
 
