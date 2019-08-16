@@ -828,7 +828,7 @@ export const createAnimation = () => {
 
     return ani;
   };
-  
+
   const pauseAnimation = () => {
     if (initialized) {
       if (supportsWebAnimations) {
@@ -841,7 +841,7 @@ export const createAnimation = () => {
         });
       }
     }
-  }
+  };
 
   /**
    * Pause the animation.
@@ -922,9 +922,20 @@ export const createAnimation = () => {
 
        animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();
+        clearCSSAnimationPlayState();
         animationFinish();
       });
     }
+  };
+
+  const clearCSSAnimationPlayState = () => {
+    elements.forEach(element => {
+      requestAnimationFrame(() => {
+        removeStyleProperty(element, 'animation-duration');
+        removeStyleProperty(element, 'animation-delay');
+        removeStyleProperty(element, 'animation-play-state');
+      });
+    });
   };
 
   const playWebAnimations = () => {
