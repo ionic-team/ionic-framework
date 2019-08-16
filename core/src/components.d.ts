@@ -31,7 +31,6 @@ import {
   ItemReorderEventDetail,
   LoadingOptions,
   MenuChangeEventDetail,
-  MenuControllerI,
   MenuI,
   ModalOptions,
   NavComponent,
@@ -1378,7 +1377,6 @@ export namespace Components {
     'type': 'submit' | 'reset' | 'button';
   }
   interface IonMenuController {
-    '_getInstance': () => Promise<MenuControllerI>;
     /**
     * Close the menu. If a menu is specified, it will close that menu. If no menu is specified, then it will close any menu that is open. If it does not find any open menus, it will return `false`.
     * @param menu The menuId or side of the menu to close.

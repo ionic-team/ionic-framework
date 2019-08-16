@@ -1,5 +1,5 @@
 import { IonicAnimation } from '../../../interface';
-import { createAnimation } from '../../../utils/animation/animation';
+import { createAnimation } from '../../animation/animation';
 
 /**
  * baseAnimation
