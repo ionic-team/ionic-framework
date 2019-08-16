@@ -18,7 +18,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
   private ani?: IonicAnimation | Animation;
-  private enableAnimation = true;
+  private animationEnabled = true;
 
   @Element() el!: HTMLElement;
 
@@ -66,14 +66,14 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   async componentDidLoad() {
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
-      () => !!this.swipeHandler && this.swipeHandler.canStart(),
+      () => !!this.swipeHandler && this.swipeHandler.canStart() && this.animationEnabled,
       () => this.swipeHandler && this.swipeHandler.onStart(),
-      step => { if (this.ani && this.enableAnimation) { this.ani.progressStep(step); } },
+      step => this.ani && this.ani.progressStep(step),
       (shouldComplete, step, dur) => {
-        if (this.ani && this.enableAnimation) {
-          this.enableAnimation = false;
+        if (this.ani) {
+          this.animationEnabled = false;
           this.ani.onFinish(() => {
-            this.enableAnimation = true;
+            this.animationEnabled = true;
           }, { oneTimeCallback: true });
 
           this.ani.progressEnd(shouldComplete, step, dur);
