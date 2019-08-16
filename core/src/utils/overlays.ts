@@ -99,13 +99,12 @@ export const dismissOverlay = (doc: Document, data: any, role: string | undefine
   return overlay.dismiss(data, role);
 };
 
-export const getOverlays = (doc: Document, overlayTag?: string): HTMLIonOverlayElement[] => {
-  const overlays = (Array.from(getAppRoot(doc).children) as HTMLIonOverlayElement[]).filter(c => c.overlayIndex > 0);
-  if (overlayTag === undefined) {
-    return overlays;
+export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayElement[] => {
+  if (selector === undefined) {
+    selector = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker,ion-popover,ion-toast';
   }
-  overlayTag = overlayTag.toUpperCase();
-  return overlays.filter(c => c.tagName === overlayTag);
+  return (Array.from(doc.querySelectorAll(selector)) as HTMLIonOverlayElement[])
+    .filter(c => c.overlayIndex > 0);
 };
 
 export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
