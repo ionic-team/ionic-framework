@@ -18,6 +18,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
   private ani?: IonicAnimation | Animation;
+  private enableAnimation = false;
 
   @Element() el!: HTMLElement;
 
@@ -67,10 +68,16 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       this.el,
       () => !!this.swipeHandler && this.swipeHandler.canStart(),
       () => this.swipeHandler && this.swipeHandler.onStart(),
-      step => this.ani && this.ani.progressStep(step),
+      step => { if (this.ani && this.enableAnimation) { this.ani.progressStep(step); } },
       (shouldComplete, step, dur) => {
-        if (this.ani) {
+        if (this.ani && this.enableAnimation) {
+          this.enableAnimation = false;
+          this.ani.onFinish(() => {
+            this.enableAnimation = true;
+          }, { oneTimeCallback: true });
+
           this.ani.progressEnd(shouldComplete, step, dur);
+
         }
         if (this.swipeHandler) {
           this.swipeHandler.onEnd(shouldComplete);

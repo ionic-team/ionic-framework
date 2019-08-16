@@ -18,6 +18,7 @@ export class Nav implements NavOutlet {
 
   private transInstr: TransitionInstruction[] = [];
   private sbAni?: Animation | IonicAnimation;
+  private enableAnimation = false;
   private useRouter = false;
   private isTransitioning = false;
   private destroyed = false;
@@ -953,13 +954,18 @@ export class Nav implements NavOutlet {
   }
 
   private onMove(stepValue: number) {
-    if (this.sbAni) {
+    if (this.sbAni && this.enableAnimation) {
       this.sbAni.progressStep(stepValue);
     }
   }
 
   private onEnd(shouldComplete: boolean, stepValue: number, dur: number) {
-    if (this.sbAni) {
+    if (this.sbAni && this.enableAnimation) {
+      this.enableAnimation = false;
+      this.sbAni.onFinish(() => {
+        this.enableAnimation = true;
+      }, { oneTimeCallback: true });
+
       this.sbAni.progressEnd(shouldComplete, stepValue, dur);
     }
   }
