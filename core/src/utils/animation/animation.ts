@@ -604,7 +604,7 @@ export const createAnimation = () => {
     }
   };
 
-  const initializeCSSAnimation = () => {
+  const initializeCSSAnimation = (toggleAnimationName = true) => {
     cleanUpStyleSheets();
 
     elements.forEach(element => {
@@ -628,7 +628,10 @@ export const createAnimation = () => {
         setStyleProperty(element, 'animation-iteration-count', iterationsCount);
         setStyleProperty(element, 'animation-play-state', 'paused');
 
-        setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
+        if (toggleAnimationName) {
+          setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
+        }
+
         requestAnimationFrame(() => {
           setStyleProperty(element, 'animation-name', stylesheet.id || null);
         });
@@ -660,14 +663,14 @@ export const createAnimation = () => {
 
   };
 
-  const initializeAnimation = () => {
+  const initializeAnimation = (toggleAnimationName = true) => {
     beforeAnimation();
 
     if (_keyframes.length > 0) {
       if (supportsWebAnimations) {
         initializeWebAnimation();
       } else {
-        initializeCSSAnimation();
+        initializeCSSAnimation(toggleAnimationName);
       }
     }
 
@@ -968,7 +971,7 @@ export const createAnimation = () => {
    */
   const play = () => {
     if (!initialized) {
-      initializeAnimation();
+      initializeAnimation(false);
     }
 
     if (finished) {
