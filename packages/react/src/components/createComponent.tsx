@@ -64,8 +64,7 @@ export const createReactComponent = <PropType, ElementType>(
       const newProps: any = {
         ...propsToPass,
         ref: forwardedRef,
-        style,
-        className
+        style
       };
 
       if (hrefComponent) {
