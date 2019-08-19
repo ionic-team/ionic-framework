@@ -809,6 +809,7 @@ export const createAnimation = () => {
         setAnimationStep(1 - step);
       } else {
         forceDelayValue = ((1 - step) * getDuration()!) * -1;
+        console.log(forceDelayValue, getDuration(), step, 1 - step);
         update(false, false);
       }
     } else {
