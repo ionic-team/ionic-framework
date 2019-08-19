@@ -3,6 +3,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
+import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
@@ -418,11 +419,26 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     this.lastOnEnd = detail.timeStamp;
+
+    // Account for rounding errors in JS
+    let newStepValue = (shouldComplete) ? 0.001 : -0.001;
+
+    /**
+     * Animation will be reversed here, so need to
+     * reverse the easing curve as well
+     *
+     * Additionally, we need to account for the time relative
+     * to the new easing curve, as `stepValue` is going to be given
+     * in terms of a linear curve.
+     */
+    newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.4, 0), new Point(0.6, 1), new Point(1, 1), stepValue);
+
     this.animation
+      .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
       .onFinish(() => this.afterAnimation(shouldOpen), {
         oneTimeCallback: true
       })
-      .progressEnd(shouldComplete, stepValue, realDur);
+      .progressEnd(shouldComplete, newStepValue, realDur);
   }
 
   private beforeAnimation(shouldOpen: boolean) {
