@@ -2691,13 +2691,6 @@ export namespace Components {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-<<<<<<< HEAD
-=======
-    * @deprecated Use `buttons` instead. Text to display in the close button.
-    */
-    'closeButtonText'?: string;
-    /**
->>>>>>> origin/next
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -2757,13 +2750,6 @@ export namespace Components {
     */
     'present': () => Promise<void>;
     /**
-<<<<<<< HEAD
-=======
-    * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
-    */
-    'showCloseButton': boolean;
-    /**
->>>>>>> origin/next
     * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
@@ -5992,13 +5978,6 @@ declare namespace LocalJSX {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-<<<<<<< HEAD
-=======
-    * @deprecated Use `buttons` instead. Text to display in the close button.
-    */
-    'closeButtonText'?: string;
-    /**
->>>>>>> origin/next
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -6055,13 +6034,6 @@ declare namespace LocalJSX {
     */
     'position'?: 'top' | 'bottom' | 'middle';
     /**
-<<<<<<< HEAD
-=======
-    * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
-    */
-    'showCloseButton'?: boolean;
-    /**
->>>>>>> origin/next
     * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent'?: boolean;
