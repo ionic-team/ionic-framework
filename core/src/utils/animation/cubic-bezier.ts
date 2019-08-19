@@ -2,7 +2,7 @@
  * Based on:
  * https://stackoverflow.com/questions/7348009/y-coordinate-for-a-given-x-cubic-bezier
  * https://math.stackexchange.com/questions/26846/is-there-an-explicit-form-for-cubic-b%C3%A9zier-curves
- * TODO: Increase precision
+ * TODO: Reduce rounding error
  */
 
 export class Point {
@@ -20,13 +20,13 @@ export class Point {
  */
 export const getTimeGivenProgression = (p0: Point, p1: Point, p2: Point, p3: Point, progression: number) => {
   const tValues = solveCubicBezier(p0.y, p1.y, p2.y, p3.y, progression);
-  return solveCubicBezierParametricEquation(p0.x, p1.x, p2.x, p3.x, tValues[0]); // TODO: Add better strategy for dealing with multiple solutions
+  return solveCubicParametricEquation(p0.x, p1.x, p2.x, p3.x, tValues[0]); // TODO: Add better strategy for dealing with multiple solutions
 };
 
 /**
- * Solve the parametric form of a cubic bezier for x(t) or y(t)
+ * Solve a cubic equation in one dimension (time)
  */
-const solveCubicBezierParametricEquation = (p0: number, p1: number, p2: number, p3: number, t: number) => {
+const solveCubicParametricEquation = (p0: number, p1: number, p2: number, p3: number, t: number) => {
   const partA = (3 * p1) * Math.pow(t - 1, 2);
   const partB = (-3 * p2 * t) + (3 * p2) + (p3 * t);
   const partC = p0 * Math.pow(t - 1, 3);
@@ -34,6 +34,9 @@ const solveCubicBezierParametricEquation = (p0: number, p1: number, p2: number, 
   return t * (partA + (t * partB)) - partC;
 };
 
+/**
+ * Find the `t` value for a cubic bezier using Cardano's formula
+ */
 const solveCubicBezier = (p0: number, p1: number, p2: number, p3: number, refPoint: number): number[] => {
   p0 -= refPoint;
   p1 -= refPoint;

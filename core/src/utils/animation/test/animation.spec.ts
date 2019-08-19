@@ -246,7 +246,7 @@ describe('Animation Class', () => {
   })
 });
 
-describe.only('cubic-bezier conversion', () => {
+describe('cubic-bezier conversion', () => {
   describe('should properly get a time value (x value) given a progression value (y value)', () => {
     it('cubic-bezier(0.32, 0.72, 0, 1)', () => {
       const equation = [
