@@ -1,4 +1,5 @@
-import { Animation, MenuI } from '../../../interface';
+import { IonicAnimation, MenuI } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 import { baseAnimation } from './base';
 
@@ -7,10 +8,10 @@ import { baseAnimation } from './base';
  * The content slides over to reveal the menu underneath.
  * The menu itself also slides over to reveal its bad self.
  */
-export const menuPushAnimation = (AnimationC: Animation, _: HTMLElement, menu: MenuI): Promise<Animation> => {
-
+export const menuPushAnimation = (menu: MenuI): IonicAnimation => {
   let contentOpenedX: string;
   let menuClosedX: string;
+
   const width = menu.width;
 
   if (menu.isEndSide) {
@@ -21,21 +22,18 @@ export const menuPushAnimation = (AnimationC: Animation, _: HTMLElement, menu: M
     contentOpenedX = width + 'px';
     menuClosedX = -width + 'px';
   }
-  const menuAnimation = new AnimationC()
+
+  const menuAnimation = createAnimation()
     .addElement(menu.menuInnerEl)
-    .fromTo('translateX', menuClosedX, '0px');
+    .fromTo('transform', `translateX(${menuClosedX})`, 'translateX(0px)');
 
-  const contentAnimation = new AnimationC()
+  const contentAnimation = createAnimation()
     .addElement(menu.contentEl)
-    .fromTo('translateX', '0px', contentOpenedX);
+    .fromTo('transform', 'translateX(0px)', `translateX(${contentOpenedX})`);
 
-  const backdropAnimation = new AnimationC()
+  const backdropAnimation = createAnimation()
     .addElement(menu.backdropEl)
     .fromTo('opacity', 0.01, 0.32);
 
-  return baseAnimation(AnimationC).then(animation => {
-    return animation.add(menuAnimation)
-      .add(backdropAnimation)
-      .add(contentAnimation);
-  });
+  return baseAnimation().addAnimation([menuAnimation, backdropAnimation, contentAnimation]);
 };

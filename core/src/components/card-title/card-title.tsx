@@ -34,7 +34,7 @@ export class CardTitle implements ComponentInterface {
           [mode]: true
         }}
       >
-        <slot></slot>;
+        <slot></slot>
       </Host>
     );
   }

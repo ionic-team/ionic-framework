@@ -69,7 +69,7 @@
     const items = [];
     for (var i = 0; i < 1000; i++) {
       items.push({
-        content: lorem.substring(0, (Math.random() * (lorem.length - 100)) + 100)
+        content: lorem.substring(0, lorem.length * ((i % 4)+1) / 5)
       });
     }
     virtual.items = items;
