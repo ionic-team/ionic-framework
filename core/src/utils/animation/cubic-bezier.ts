@@ -77,26 +77,23 @@ const solveCubicEquation = (a: number, b: number, c: number, d: number) => {
     return [Math.pow(-q, 1 / 3)];
   } else if (q === 0) {
     return [Math.sqrt(-p), -Math.sqrt(-p)];
-  } else {
-    const discriminant = Math.pow(q / 2, 2) + Math.pow(p / 3, 3);
-
-    if (discriminant === 0) {
-
-      return [Math.pow(q / 2, 1 / 2) - b / 3];
-    } else if (discriminant > 0) {
-
-      return [Math.pow(-(q / 2) + Math.sqrt(discriminant), 1 / 3) - Math.pow((q / 2) + Math.sqrt(discriminant), 1 / 3) - b / 3];
-    } else {
-      const r = Math.sqrt(Math.pow(-(p / 3), 3));
-      const phi = Math.acos(-(q / (2 * Math.sqrt(Math.pow(-(p / 3), 3)))));
-
-      const s = 2 * Math.pow(r, 1 / 3);
-
-      return [
-        s * Math.cos(phi / 3) - b / 3,
-        s * Math.cos((phi + 2 * Math.PI) / 3) - b / 3,
-        s * Math.cos((phi + 4 * Math.PI) / 3) - b / 3
-      ];
-    }
   }
+
+  const discriminant = Math.pow(q / 2, 2) + Math.pow(p / 3, 3);
+
+  if (discriminant === 0) {
+    return [Math.pow(q / 2, 1 / 2) - b / 3];
+  } else if (discriminant > 0) {
+    return [Math.pow(-(q / 2) + Math.sqrt(discriminant), 1 / 3) - Math.pow((q / 2) + Math.sqrt(discriminant), 1 / 3) - b / 3];
+  }
+
+  const r = Math.sqrt(Math.pow(-(p / 3), 3));
+  const phi = Math.acos(-(q / (2 * Math.sqrt(Math.pow(-(p / 3), 3)))));
+  const s = 2 * Math.pow(r, 1 / 3);
+
+  return [
+    s * Math.cos(phi / 3) - b / 3,
+    s * Math.cos((phi + 2 * Math.PI) / 3) - b / 3,
+    s * Math.cos((phi + 4 * Math.PI) / 3) - b / 3
+  ];
 };
