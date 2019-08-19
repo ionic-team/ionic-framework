@@ -787,6 +787,8 @@ export const createAnimation = () => {
   };
 
   const progressEnd = (shouldComplete: boolean, step: number, dur: number | undefined) => {
+    shouldForceLinearEasing = false;
+
     childAnimations.forEach(animation => {
       animation.progressEnd(shouldComplete, step, dur);
     });
@@ -796,7 +798,7 @@ export const createAnimation = () => {
     }
 
     finished = false;
-    shouldForceLinearEasing = false;
+
     willComplete = shouldComplete;
 
     if (!shouldComplete) {
