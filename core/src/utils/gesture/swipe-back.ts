@@ -1,4 +1,3 @@
-
 import { Gesture, GestureDetail, createGesture } from './index';
 
 export const createSwipeBackGesture = (
@@ -37,6 +36,7 @@ export const createSwipeBackGesture = (
       const dur = missingDistance / Math.abs(velocity);
       realDur = Math.min(dur, 300);
     }
+
     onEndHandler(shouldComplete, stepValue, realDur);
   };
 

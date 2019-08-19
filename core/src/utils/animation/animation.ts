@@ -92,7 +92,7 @@ export const createAnimation = () => {
    * upon the animation ending
    */
   const onFinish = (callback: any, opts?: AnimationOnFinishOptions) => {
-    const callbacks = (opts && opts.oneTime) ? onFinishOneTimeCallbacks : onFinishCallbacks;
+    const callbacks = (opts && opts.oneTimeCallback) ? onFinishOneTimeCallbacks : onFinishCallbacks;
     callbacks.push({ callback, opts } as AnimationOnFinishCallback);
 
     return ani;
@@ -604,7 +604,7 @@ export const createAnimation = () => {
     }
   };
 
-  const initializeCSSAnimation = () => {
+  const initializeCSSAnimation = (toggleAnimationName = true) => {
     cleanUpStyleSheets();
 
     elements.forEach(element => {
@@ -628,7 +628,10 @@ export const createAnimation = () => {
         setStyleProperty(element, 'animation-iteration-count', iterationsCount);
         setStyleProperty(element, 'animation-play-state', 'paused');
 
-        setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
+        if (toggleAnimationName) {
+          setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
+        }
+
         requestAnimationFrame(() => {
           setStyleProperty(element, 'animation-name', stylesheet.id || null);
         });
@@ -660,14 +663,14 @@ export const createAnimation = () => {
 
   };
 
-  const initializeAnimation = () => {
+  const initializeAnimation = (toggleAnimationName = true) => {
     beforeAnimation();
 
     if (_keyframes.length > 0) {
       if (supportsWebAnimations) {
         initializeWebAnimation();
       } else {
-        initializeCSSAnimation();
+        initializeCSSAnimation(toggleAnimationName);
       }
     }
 
@@ -758,7 +761,7 @@ export const createAnimation = () => {
       animation.progressStart(forceLinearEasing);
     });
 
-    pause(false);
+    pauseAnimation();
     shouldForceLinearEasing = forceLinearEasing;
 
     if (!initialized) {
@@ -783,8 +786,9 @@ export const createAnimation = () => {
     return ani;
   };
 
-  // TODO: Need to clean this up
   const progressEnd = (shouldComplete: boolean, step: number, dur: number | undefined) => {
+    shouldForceLinearEasing = false;
+
     childAnimations.forEach(animation => {
       animation.progressEnd(shouldComplete, step, dur);
     });
@@ -794,7 +798,7 @@ export const createAnimation = () => {
     }
 
     finished = false;
-    shouldForceLinearEasing = false;
+
     willComplete = shouldComplete;
 
     if (!shouldComplete) {
@@ -820,7 +824,7 @@ export const createAnimation = () => {
       forceDirectionValue = undefined;
       forceDelayValue = undefined;
     }, {
-      oneTime: true
+      oneTimeCallback: true
     });
 
     if (!parentAnimation) {
@@ -830,16 +834,7 @@ export const createAnimation = () => {
     return ani;
   };
 
-  /**
-   * Pause the animation.
-   */
-  const pause = (deep = true) => {
-    if (deep) {
-      childAnimations.forEach(animation => {
-        animation.pause();
-      });
-    }
-
+  const pauseAnimation = () => {
     if (initialized) {
       if (supportsWebAnimations) {
         getWebAnimations().forEach(animation => {
@@ -851,6 +846,17 @@ export const createAnimation = () => {
         });
       }
     }
+  };
+
+  /**
+   * Pause the animation.
+   */
+  const pause = () => {
+    childAnimations.forEach(animation => {
+      animation.pause();
+    });
+
+    pauseAnimation();
 
     return ani;
   };
@@ -862,7 +868,7 @@ export const createAnimation = () => {
    */
   const playAsync = () => {
     return new Promise(resolve => {
-      onFinish(resolve, { oneTime: true });
+      onFinish(resolve, { oneTimeCallback: true });
       play();
 
       return ani;
@@ -877,7 +883,7 @@ export const createAnimation = () => {
   const playSync = () => {
     shouldForceSyncPlayback = true;
 
-    onFinish(() => shouldForceSyncPlayback = false, { oneTime: true });
+    onFinish(() => shouldForceSyncPlayback = false, { oneTimeCallback: true });
     play();
 
     return ani;
@@ -921,9 +927,20 @@ export const createAnimation = () => {
 
        animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();
+        clearCSSAnimationPlayState();
         animationFinish();
       });
     }
+  };
+
+  const clearCSSAnimationPlayState = () => {
+    elements.forEach(element => {
+      requestAnimationFrame(() => {
+        removeStyleProperty(element, 'animation-duration');
+        removeStyleProperty(element, 'animation-delay');
+        removeStyleProperty(element, 'animation-play-state');
+      });
+    });
   };
 
   const playWebAnimations = () => {
@@ -956,7 +973,7 @@ export const createAnimation = () => {
    */
   const play = () => {
     if (!initialized) {
-      initializeAnimation();
+      initializeAnimation(false);
     }
 
     if (finished) {
