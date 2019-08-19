@@ -19,7 +19,7 @@ import { createColorClasses } from '../../utils/theme';
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
   private indicatorEl!: HTMLDivElement | undefined;
-  private nextIndex!: number;
+  private nextIndex?: number;
 
   private didInit = false;
 
