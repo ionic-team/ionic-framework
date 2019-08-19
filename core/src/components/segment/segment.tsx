@@ -19,6 +19,7 @@ import { createColorClasses } from '../../utils/theme';
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
   private indicatorEl!: HTMLDivElement | undefined;
+  private nextIndex!: number;
 
   private didInit = false;
 
@@ -123,77 +124,11 @@ export class Segment implements ComponentInterface {
   }
 
   onMove(detail: GestureDetail) {
-    const buttons = this.getButtons();
-    const index = buttons.findIndex(button => button.checked === true);
-
-    const activated = this.activated;
-    const startEl = buttons[index];
-
-    const currentX = detail.currentX;
-
-    // Get the element that the touch event started on in case
-    // it was the checked button, then we will move the indicator
-    const rect = startEl.getBoundingClientRect();
-    const left = rect.left;
-    const width = rect.width;
-
-    // TODO check for disabled and skip over those
-
-    // If the indicator is currently activated then we have started the gesture
-    // on top of the checked button so we need to slide the indicator
-    // by checking the button next to it as we move
-    if (activated) {
-      if (currentX < left) {
-        const nextIndex = index - 1;
-
-        if (nextIndex >= 0) {
-          buttons[nextIndex].checked = true;
-        }
-      } else if (currentX > (left + width)) {
-        const nextIndex = index + 1;
-
-        if (nextIndex < buttons.length) {
-          buttons[nextIndex].checked = true;
-        }
-      }
-    }
+    this.setNextIndex(detail, false);
   }
 
   onEnd(detail: GestureDetail) {
-    const buttons = this.getButtons();
-    const index = buttons.findIndex(button => button.checked === true);
-
-    const activated = this.activated;
-    const startEl = buttons[index];
-
-    const currentX = detail.currentX;
-
-    // Get the element that the touch event started on
-    const rect = startEl.getBoundingClientRect();
-    const left = rect.left;
-    const width = rect.width;
-
-    // TODO width is off for the very left and very right of buttons
-
-    // If the indicator is not activated then we will just set the indicator
-    // where the gesture ended
-    if (!activated) {
-      if (currentX < left) {
-        const diff = Math.ceil((left - currentX) / width);
-        const nextIndex = index - diff;
-
-        if (nextIndex >= 0) {
-          buttons[nextIndex].checked = true;
-        }
-      } else if (currentX > (left + width)) {
-        const diff = Math.floor((currentX - left) / width);
-        const nextIndex = index + diff;
-
-        if (nextIndex < buttons.length) {
-          buttons[nextIndex].checked = true;
-        }
-      }
-    }
+    this.setNextIndex(detail, true);
 
     this.activated = false;
 
@@ -203,8 +138,15 @@ export class Segment implements ComponentInterface {
 
   private activate(detail: GestureDetail) {
     const clicked = detail.event.target as HTMLIonSegmentButtonElement;
+    const tagName = clicked.tagName;
     const buttons = this.getButtons();
     const checked = buttons.find(button => button.checked === true);
+
+    // Make sure we are only checking for activation on a segment button
+    // since disabled buttons will get the click on the segment
+    if (tagName !== 'ION-SEGMENT-BUTTON') {
+      return;
+    }
 
     // If there are no checked buttons, set the current button to checked
     if (!checked) {
@@ -249,6 +191,69 @@ export class Segment implements ComponentInterface {
     // After the indicator is set for the first time
     // we can animate it between the segment buttons
     this.animated = true;
+  }
+
+  // TODO width is off for the very left and very right of buttons
+  private setNextIndex(detail: GestureDetail, isEnd: boolean) {
+    const activated = this.activated;
+    const buttons = this.getButtons();
+    const index = this.nextIndex ? this.nextIndex : buttons.findIndex(button => button.checked === true);
+    const startEl = buttons[index];
+
+    if (index === -1) {
+      return;
+    }
+
+    const currentX = detail.currentX;
+
+    // Get the element that the touch event started on in case
+    // it was the checked button, then we will move the indicator
+    const rect = startEl.getBoundingClientRect();
+    const left = rect.left;
+    const width = rect.width;
+
+    // If the indicator is currently activated then we have started the gesture
+    // on top of the checked button so we need to slide the indicator
+    // by checking the button next to it as we move
+    if (activated && !isEnd) {
+      if (currentX < left) {
+        const newIndex = index - 1;
+
+        if (newIndex >= 0) {
+          this.nextIndex = newIndex;
+        }
+      } else if (currentX > (left + width)) {
+        const newIndex = index + 1;
+
+        if (newIndex < buttons.length) {
+          this.nextIndex = newIndex;
+        }
+      }
+    }
+
+    // If the indicator is not activated then we will just set the indicator
+    // where the gesture ended
+    if (!activated && isEnd) {
+      if (currentX < left) {
+        const diff = Math.ceil((left - currentX) / width);
+        const newIndex = index - diff;
+
+        if (newIndex >= 0) {
+          this.nextIndex = newIndex;
+        }
+      } else if (currentX > (left + width)) {
+        const diff = Math.floor((currentX - left) / width);
+        const newIndex = index + diff;
+
+        if (newIndex < buttons.length) {
+          this.nextIndex = newIndex;
+        }
+      }
+    }
+
+    if (this.nextIndex !== undefined && !buttons[this.nextIndex].disabled) {
+      buttons[this.nextIndex].checked = true;
+    }
   }
 
   private emitStyle() {
