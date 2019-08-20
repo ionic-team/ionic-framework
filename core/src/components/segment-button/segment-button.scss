@@ -98,6 +98,14 @@
 }
 
 
+// Segment Button: Checked
+// --------------------------------------------------
+
+:host(.segment-button-checked) {
+  color: var(--color-checked);
+}
+
+
 // Segment Button: Activated
 // --------------------------------------------------
 
