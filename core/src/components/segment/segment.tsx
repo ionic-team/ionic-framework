@@ -17,13 +17,11 @@ import { createColorClasses } from '../../utils/theme';
   scoped: true
 })
 export class Segment implements ComponentInterface {
+  private animated = false;
   private gesture?: Gesture;
   private indicatorEl!: HTMLDivElement | undefined;
   private nextIndex?: number;
-
   private didInit = false;
-
-  private animated = false;
 
   @Element() el!: HTMLIonSegmentElement;
 
