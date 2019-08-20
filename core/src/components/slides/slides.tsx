@@ -309,6 +309,15 @@ export class Slides implements ComponentInterface {
     swiper.allowTouchMove = !lock;
   }
 
+  /**
+   * Get the raw Swiper instance.
+   * Use this to access the full Swiper API.
+   */
+  @Method()
+  async getSwiper(): Promise<SwiperInterface> {
+    return this.swiper;
+  }
+
   private async initSwiper() {
     const finalOptions = this.normalizeOptions();
 
@@ -318,10 +327,6 @@ export class Slides implements ComponentInterface {
     const swiper = new Swiper(this.el, finalOptions);
     this.didInit = true;
     this.readySwiper(swiper);
-  }
-
-  private getSwiper() {
-    return this.swiper;
   }
 
   private normalizeOptions(): SwiperOptions {

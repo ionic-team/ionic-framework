@@ -614,6 +614,17 @@ Type: `Promise<number>`
 
 
 
+### `getSwiper() => Promise<SwiperInterface>`
+
+Get the raw Swiper instance.
+Use this to access the full Swiper API.
+
+#### Returns
+
+Type: `Promise<Swiper>`
+
+
+
 ### `isBeginning() => Promise<boolean>`
 
 Get whether or not the current slide is the first slide.

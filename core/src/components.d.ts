@@ -78,6 +78,9 @@ import {
 import {
   SelectCompareFn,
 } from './components/select/select-interface';
+import {
+  SwiperInterface,
+} from './components/slides/swiper/swiper-interface';
 
 export namespace Components {
   interface IonActionSheet {
@@ -2375,6 +2378,10 @@ export namespace Components {
     * Get the index of the previous slide.
     */
     'getPreviousIndex': () => Promise<number>;
+    /**
+    * Get the raw Swiper instance. Use this to access the full Swiper API.
+    */
+    'getSwiper': () => Promise<SwiperInterface>;
     /**
     * Get whether or not the current slide is the first slide.
     */
