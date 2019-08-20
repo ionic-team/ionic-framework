@@ -410,14 +410,6 @@ export class Menu implements ComponentInterface, MenuI {
       shouldOpen = true;
     }
 
-    const missing = shouldComplete ? 1 - stepValue : stepValue;
-    const missingDistance = missing * width;
-    let realDur = 0;
-    if (missingDistance > 5) {
-      const dur = missingDistance / Math.abs(velocity);
-      realDur = Math.max(dur, 300);
-    }
-
     this.lastOnEnd = detail.timeStamp;
 
     // Account for rounding errors in JS
@@ -438,7 +430,7 @@ export class Menu implements ComponentInterface, MenuI {
       .onFinish(() => this.afterAnimation(shouldOpen), {
         oneTimeCallback: true
       })
-      .progressEnd(shouldComplete, newStepValue, realDur);
+      .progressEnd(shouldComplete, newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {
