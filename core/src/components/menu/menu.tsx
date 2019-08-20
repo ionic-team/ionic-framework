@@ -415,7 +415,7 @@ export class Menu implements ComponentInterface, MenuI {
     let realDur = 0;
     if (missingDistance > 5) {
       const dur = missingDistance / Math.abs(velocity);
-      realDur = Math.min(dur, 300);
+      realDur = Math.max(dur, 300);
     }
 
     this.lastOnEnd = detail.timeStamp;
