@@ -1213,7 +1213,6 @@ ion-title,css-prop,--color
 ion-toast,shadow
 ion-toast,prop,animated,boolean,true,false,false
 ion-toast,prop,buttons,(string | ToastButton)[] | undefined,undefined,false,false
-ion-toast,prop,closeButtonText,string | undefined,undefined,false,false
 ion-toast,prop,color,string | undefined,undefined,false,false
 ion-toast,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-toast,prop,duration,number,0,false,false
@@ -1224,7 +1223,6 @@ ion-toast,prop,leaveAnimation,((Animation: Animation, baseEl: any, opts?: any) =
 ion-toast,prop,message,string | undefined,undefined,false,false
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
-ion-toast,prop,showCloseButton,boolean,false,false,false
 ion-toast,prop,translucent,boolean,false,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-toast,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
