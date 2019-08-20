@@ -713,26 +713,28 @@ export const createAnimation = () => {
 
   const updateCSSAnimation = (toggleAnimationName = true) => {
     elements.forEach(element => {
-      setStyleProperty(element, 'animation-name', keyframeName || null);
-      setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
-      setStyleProperty(element, 'animation-timing-function', getEasing() || null);
-      setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
-      setStyleProperty(element, 'animation-fill-mode', getFill() || null);
-      setStyleProperty(element, 'animation-direction', getDirection() || null);
-
-      const iterationsCount =
-        (getIterations() !== undefined) ?
-        (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString()
-        : null;
-
-      setStyleProperty(element, 'animation-iteration-count', iterationsCount);
-
-      if (toggleAnimationName) {
-        setStyleProperty(element, 'animation-name', `${keyframeName}-alt`);
-      }
-
       requestAnimationFrame(() => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
+        setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
+        setStyleProperty(element, 'animation-timing-function', getEasing() || null);
+        setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
+        setStyleProperty(element, 'animation-fill-mode', getFill() || null);
+        setStyleProperty(element, 'animation-direction', getDirection() || null);
+
+        const iterationsCount =
+          (getIterations() !== undefined) ?
+          (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString()
+          : null;
+
+        setStyleProperty(element, 'animation-iteration-count', iterationsCount);
+
+        if (toggleAnimationName) {
+          setStyleProperty(element, 'animation-name', `${keyframeName}-alt`);
+        }
+
+        requestAnimationFrame(() => {
+          setStyleProperty(element, 'animation-name', keyframeName || null);
+        });
       });
     });
   };
@@ -955,18 +957,11 @@ export const createAnimation = () => {
     }
   };
 
-  const resetCSSAnimations = () => {
-    elements.forEach(element => {
-      const newKeyframeName = (keyframeName !== undefined) ? `${keyframeName}-alt` : null;
-      setStyleProperty(element, 'animation-name', newKeyframeName);
-    });
-  };
-
   const resetAnimation = () => {
     if (supportsWebAnimations) {
       setAnimationStep(0);
     } else {
-      resetCSSAnimations();
+      updateCSSAnimation();
     }
   };
 
