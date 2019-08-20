@@ -1092,7 +1092,7 @@ openLoading() {
 ```javascript
 async openLoading() {
   let loading = this.loadingCtrl.create({
-    content: 'Loading...'
+    message: 'Loading...'
   });
 
   await loading.present();

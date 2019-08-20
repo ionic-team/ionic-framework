@@ -64,7 +64,7 @@ export interface AnimationOnFinishCallback {
 }
 
 export interface AnimationOnFinishOptions {
-  oneTime: boolean;
+  oneTimeCallback: boolean;
 }
 
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
