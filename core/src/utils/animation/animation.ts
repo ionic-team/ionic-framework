@@ -43,7 +43,7 @@ export const createAnimation = () => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const supportsWebAnimations = (typeof (window as any).Animation === 'function');
-  const ANIMATION_END_FALLBACK_PADDING_MS = 400;
+  const ANIMATION_END_FALLBACK_PADDING_MS = 100;
 
   /**
    * Returns the raw Web Animations object
@@ -905,7 +905,9 @@ export const createAnimation = () => {
 
     elements.forEach(element => {
       if (_keyframes.length > 0) {
-        setStyleProperty(element, 'animation-play-state', 'running');
+        requestAnimationFrame(() => {
+          setStyleProperty(element, 'animation-play-state', 'running');
+        });
       }
     });
 
@@ -973,7 +975,7 @@ export const createAnimation = () => {
    */
   const play = () => {
     if (!initialized) {
-      initializeAnimation(false);
+      initializeAnimation();
     }
 
     if (finished) {
