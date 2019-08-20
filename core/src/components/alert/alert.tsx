@@ -303,7 +303,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
             disabled={i.disabled}
             tabIndex={0}
             role="checkbox"
-            class="alert-tappable alert-checkbox alert-checkbox-button ion-focusable"
+            class={{
+              'alert-tappable': true,
+              'alert-checkbox': true,
+              'alert-checkbox-button': true,
+              'ion-focusable': true,
+              'alert-checkbox-button-disabled': i.disabled || false
+            }}
           >
             <div class="alert-button-inner">
               <div class="alert-checkbox-icon">
@@ -335,7 +341,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
             disabled={i.disabled}
             id={i.id}
             tabIndex={0}
-            class="alert-radio-button alert-tappable alert-radio ion-focusable"
+            class={{
+              'alert-radio-button': true,
+              'alert-tappable': true,
+              'alert-radio': true,
+              'ion-focusable': true,
+              'alert-radio-button-disabled': i.disabled || false
+            }}
             role="radio"
           >
             <div class="alert-button-inner">
@@ -369,7 +381,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
               id={i.id}
               disabled={i.disabled}
               tabIndex={0}
-              class="alert-input"
+              class={{
+                'alert-input': true,
+                'alert-input-disabled': i.disabled || false
+              }}
             />
           </div>
         ))}
