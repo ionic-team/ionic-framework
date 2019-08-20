@@ -891,15 +891,33 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const onAnimationEndFallback = () => {
-    cssAnimationsTimerFallback = undefined;
-    animationFinish();
-  };
-
   const clearCSSAnimationsTimeout = () => {
     if (cssAnimationsTimerFallback) {
       clearTimeout(cssAnimationsTimerFallback);
+      cssAnimationsTimerFallback = undefined;
     }
+  };
+
+  const cssAnimationFinish = () => {
+    clearCSSAnimationsTimeout();
+
+    /**
+     * Ensure that clean up
+     * is always done a frame
+     * before the onFinish handlers
+     * are fired. Otherwise, there
+     * may be flickering if a new
+     * animation is started on the same
+     * element too quickly
+     *
+     * TODO: Is there a cleaner way to do this?
+     */
+    requestAnimationFrame(() => {
+      clearCSSAnimationPlayState();
+      requestAnimationFrame(() => {
+        animationFinish();
+      });
+    });
   };
 
   const playCSSAnimations = () => {
@@ -914,7 +932,7 @@ export const createAnimation = () => {
     });
 
     if (_keyframes.length === 0 || elements.length === 0) {
-       animationFinish();
+       cssAnimationFinish();
     } else {
       /**
        * This is a catchall in the event that a CSS Animation did not finish.
@@ -927,28 +945,10 @@ export const createAnimation = () => {
        const animationDelay = getDelay() || 0;
        const animationDuration = getDuration() || 0;
 
-       cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + animationDuration + ANIMATION_END_FALLBACK_PADDING_MS);
+       cssAnimationsTimerFallback = setTimeout(cssAnimationFinish, animationDelay + animationDuration + ANIMATION_END_FALLBACK_PADDING_MS);
 
        animationEnd(elements[0], () => {
-        clearCSSAnimationsTimeout();
-
-        /**
-         * Ensure that clean up
-         * is always done a frame
-         * before the onFinish handlers
-         * are fired. Otherwise, there
-         * may be flickering if a new
-         * animation is started on the same
-         * element too quickly
-         *
-         * TODO: Is there a cleaner way to do this?
-         */
-        requestAnimationFrame(() => {
-          clearCSSAnimationPlayState();
-          requestAnimationFrame(() => {
-              animationFinish();
-            });
-          });
+        cssAnimationFinish();
       });
     }
   };
