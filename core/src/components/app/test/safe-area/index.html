@@ -57,11 +57,13 @@
     }
 
     async function showToast() {
-      const toast = Object.assign(document.createElement('ion-toast'), {
-        message: 'Hello world!',
-        showCloseButton: true
-      });
-      document.body.appendChild(toast);
+      const toast = await document.querySelector('ion-toast-controller')
+        .create({
+          message: 'Hello world!',
+          buttons: [
+            { text: 'Close', role: 'close' }
+          ]
+        });
       await toast.present();
     }
   </script>
