@@ -43,7 +43,7 @@ export const createAnimation = () => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const supportsWebAnimations = (typeof (window as any).Animation === 'function');
-  const ANIMATION_END_FALLBACK_PADDING_MS = 400;
+  const ANIMATION_END_FALLBACK_PADDING_MS = 100;
 
   /**
    * Returns the raw Web Animations object
@@ -713,26 +713,28 @@ export const createAnimation = () => {
 
   const updateCSSAnimation = (toggleAnimationName = true) => {
     elements.forEach(element => {
-      setStyleProperty(element, 'animation-name', keyframeName || null);
-      setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
-      setStyleProperty(element, 'animation-timing-function', getEasing() || null);
-      setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
-      setStyleProperty(element, 'animation-fill-mode', getFill() || null);
-      setStyleProperty(element, 'animation-direction', getDirection() || null);
-
-      const iterationsCount =
-        (getIterations() !== undefined) ?
-        (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString()
-        : null;
-
-      setStyleProperty(element, 'animation-iteration-count', iterationsCount);
-
-      if (toggleAnimationName) {
-        setStyleProperty(element, 'animation-name', `${keyframeName}-alt`);
-      }
-
       requestAnimationFrame(() => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
+        setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
+        setStyleProperty(element, 'animation-timing-function', getEasing() || null);
+        setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
+        setStyleProperty(element, 'animation-fill-mode', getFill() || null);
+        setStyleProperty(element, 'animation-direction', getDirection() || null);
+
+        const iterationsCount =
+          (getIterations() !== undefined) ?
+          (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString()
+          : null;
+
+        setStyleProperty(element, 'animation-iteration-count', iterationsCount);
+
+        if (toggleAnimationName) {
+          setStyleProperty(element, 'animation-name', `${keyframeName}-alt`);
+        }
+
+        requestAnimationFrame(() => {
+          setStyleProperty(element, 'animation-name', keyframeName || null);
+        });
       });
     });
   };
@@ -905,7 +907,9 @@ export const createAnimation = () => {
 
     elements.forEach(element => {
       if (_keyframes.length > 0) {
-        setStyleProperty(element, 'animation-play-state', 'running');
+        requestAnimationFrame(() => {
+          setStyleProperty(element, 'animation-play-state', 'running');
+        });
       }
     });
 
@@ -927,19 +931,33 @@ export const createAnimation = () => {
 
        animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();
-        clearCSSAnimationPlayState();
-        animationFinish();
+
+        /**
+         * Ensure that clean up
+         * is always done a frame
+         * before the onFinish handlers
+         * are fired. Otherwise, there
+         * may be flickering if a new
+         * animation is started on the same
+         * element too quickly
+         *
+         * TODO: Is there a cleaner way to do this?
+         */
+        requestAnimationFrame(() => {
+          clearCSSAnimationPlayState();
+          requestAnimationFrame(() => {
+              animationFinish();
+            });
+          });
       });
     }
   };
 
   const clearCSSAnimationPlayState = () => {
     elements.forEach(element => {
-      requestAnimationFrame(() => {
-        removeStyleProperty(element, 'animation-duration');
-        removeStyleProperty(element, 'animation-delay');
-        removeStyleProperty(element, 'animation-play-state');
-      });
+      removeStyleProperty(element, 'animation-duration');
+      removeStyleProperty(element, 'animation-delay');
+      removeStyleProperty(element, 'animation-play-state');
     });
   };
 
@@ -953,18 +971,11 @@ export const createAnimation = () => {
     }
   };
 
-  const resetCSSAnimations = () => {
-    elements.forEach(element => {
-      const newKeyframeName = (keyframeName !== undefined) ? `${keyframeName}-alt` : null;
-      setStyleProperty(element, 'animation-name', newKeyframeName);
-    });
-  };
-
   const resetAnimation = () => {
     if (supportsWebAnimations) {
       setAnimationStep(0);
     } else {
-      resetCSSAnimations();
+      updateCSSAnimation();
     }
   };
 
@@ -973,7 +984,7 @@ export const createAnimation = () => {
    */
   const play = () => {
     if (!initialized) {
-      initializeAnimation(false);
+      initializeAnimation();
     }
 
     if (finished) {
