@@ -931,19 +931,33 @@ export const createAnimation = () => {
 
        animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();
-        clearCSSAnimationPlayState();
-        animationFinish();
+
+        /**
+         * Ensure that clean up
+         * is always done a frame
+         * before the onFinish handlers
+         * are fired. Otherwise, there
+         * may be flickering if a new
+         * animation is started on the same
+         * element too quickly
+         *
+         * TODO: Is there a cleaner way to do this?
+         */
+        requestAnimationFrame(() => {
+          clearCSSAnimationPlayState();
+          requestAnimationFrame(() => {
+              animationFinish();
+            });
+          });
       });
     }
   };
 
   const clearCSSAnimationPlayState = () => {
     elements.forEach(element => {
-      requestAnimationFrame(() => {
-        removeStyleProperty(element, 'animation-duration');
-        removeStyleProperty(element, 'animation-delay');
-        removeStyleProperty(element, 'animation-play-state');
-      });
+      removeStyleProperty(element, 'animation-duration');
+      removeStyleProperty(element, 'animation-delay');
+      removeStyleProperty(element, 'animation-play-state');
     });
   };
 
