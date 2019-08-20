@@ -138,13 +138,12 @@ export class Segment implements ComponentInterface {
 
   private activate(detail: GestureDetail) {
     const clicked = detail.event.target as HTMLIonSegmentButtonElement;
-    const tagName = clicked.tagName;
     const buttons = this.getButtons();
     const checked = buttons.find(button => button.checked === true);
 
     // Make sure we are only checking for activation on a segment button
     // since disabled buttons will get the click on the segment
-    if (tagName !== 'ION-SEGMENT-BUTTON') {
+    if (clicked.tagName !== 'ION-SEGMENT-BUTTON') {
       return;
     }
 
@@ -217,6 +216,8 @@ export class Segment implements ComponentInterface {
     const left = rect.left;
     const width = rect.width;
 
+    let nextIndex = this.nextIndex;
+
     // If the indicator is currently activated then we have started the gesture
     // on top of the checked button so we need to slide the indicator
     // by checking the button next to it as we move
@@ -225,13 +226,13 @@ export class Segment implements ComponentInterface {
         const newIndex = index - 1;
 
         if (newIndex >= 0) {
-          this.nextIndex = newIndex;
+          nextIndex = newIndex;
         }
       } else if (currentX > (left + width)) {
         const newIndex = index + 1;
 
         if (newIndex < buttons.length) {
-          this.nextIndex = newIndex;
+          nextIndex = newIndex;
         }
       }
     }
@@ -244,21 +245,22 @@ export class Segment implements ComponentInterface {
         const newIndex = index - diff;
 
         if (newIndex >= 0) {
-          this.nextIndex = newIndex;
+          nextIndex = newIndex;
         }
       } else if (currentX > (left + width)) {
         const diff = Math.floor((currentX - left) / width);
         const newIndex = index + diff;
 
         if (newIndex < buttons.length) {
-          this.nextIndex = newIndex;
+          nextIndex = newIndex;
         }
       }
     }
 
-    if (this.nextIndex !== undefined && !buttons[this.nextIndex].disabled) {
-      buttons[this.nextIndex].checked = true;
+    if (nextIndex !== undefined && !buttons[nextIndex].disabled) {
+      buttons[nextIndex].checked = true;
     }
+    this.nextIndex = nextIndex;
   }
 
   private emitStyle() {
