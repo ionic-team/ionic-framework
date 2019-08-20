@@ -25,16 +25,6 @@
 }
 
 
-// Segment: Reduced Motion
-// --------------------------------------------------
-
-@media (prefers-reduced-motion: reduce) {
-  :host {
-    --indicator-transition: none;
-  }
-}
-
-
 // Segment: Disabled
 // --------------------------------------------------
 
@@ -76,4 +66,14 @@
 
 .segment-checked-indicator-animated {
   transition: var(--indicator-transition);
+}
+
+
+// Segment: Reduced Motion
+// --------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  .segment-checked-indicator-animated {
+    transition: none;
+  }
 }

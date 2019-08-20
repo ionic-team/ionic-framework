@@ -177,7 +177,11 @@ export class Segment implements ComponentInterface {
     const left = `${(index * 100)}%`;
     const width = `calc(${1 / buttons.length * 100}%)`;
 
-    const transform = activated && mode === 'ios'
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Scale the indicator smaller if the gesture started on it, the mode is
+    // ios, and the user does not have reduced motion on
+    const transform = activated && mode === 'ios' && !reduceMotion
       ? `translate3d(${left}, 0, 0) scale(0.95)`
       : `translate3d(${left}, 0, 0)`;
 
