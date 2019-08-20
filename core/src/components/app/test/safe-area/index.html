@@ -60,7 +60,9 @@
       const toast = await document.querySelector('ion-toast-controller')
         .create({
           message: 'Hello world!',
-          showCloseButton: true
+          buttons: [
+            { text: 'Close', role: 'close' }
+          ]
         });
       await toast.present();
     }
