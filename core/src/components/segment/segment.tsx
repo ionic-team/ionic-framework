@@ -197,7 +197,7 @@ export class Segment implements ComponentInterface {
   private setNextIndex(detail: GestureDetail, isEnd: boolean) {
     const activated = this.activated;
     const buttons = this.getButtons();
-    const index = this.nextIndex ? this.nextIndex : buttons.findIndex(button => button.checked === true);
+    const index = this.nextIndex !== undefined ? this.nextIndex : buttons.findIndex(button => button.checked === true);
     const startEl = buttons[index];
 
     if (index === -1) {
