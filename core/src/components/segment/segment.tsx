@@ -161,6 +161,7 @@ export class Segment implements ComponentInterface {
   }
 
   private calculateIndicatorPosition() {
+    const mode = getIonMode(this);
     const indicator = this.indicatorEl;
     const activated = this.activated;
     const buttons = this.getButtons();
@@ -176,7 +177,7 @@ export class Segment implements ComponentInterface {
     const left = `${(index * 100)}%`;
     const width = `calc(${1 / buttons.length * 100}%)`;
 
-    const transform = activated
+    const transform = activated && mode === 'ios'
       ? `translate3d(${left}, 0, 0) scale(0.95)`
       : `translate3d(${left}, 0, 0)`;
 
