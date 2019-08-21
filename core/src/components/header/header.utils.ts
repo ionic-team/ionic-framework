@@ -98,6 +98,10 @@ export const makeHeaderInactive = (headerIndex: any, transition = false, isMainH
     setElOpacity(ionTitleEl, 0, transition);
     hideCollapsableButtons(toolbar.ionButtonsEl, transition);
 
+    if (ionTitleEl.size === 'large') {
+      ionTitleEl.classList.add('large-ion-title-hidden');
+    }
+    
     if (isMainHeader) {
       ionTitleEl.classList.add('collapse-header-title-hidden');
     }
@@ -115,7 +119,11 @@ export const makeHeaderActive = (headerIndex: any, transition = false, isMainHea
 
     setElOpacity(ionTitleEl, 1, transition);
     showCollapsableButtons(toolbar.ionButtonsEl, transition);
-
+    
+    if (ionTitleEl.size === 'large') {
+      ionTitleEl.classList.remove('large-ion-title-hidden');
+    }
+    
     if (isMainHeader) {
       ionTitleEl.classList.remove('collapse-header-title-hidden');
     }
@@ -133,6 +141,7 @@ export const hideCollapsableButtons = (buttons: any[] = [], transition = false) 
   buttons.forEach((button: any) => {
     if (!button.collapse) { return; }
 
+    button.classList.remove('ion-buttons-collapsed');
     setElOpacity(button, 0, transition);
   });
 };
@@ -140,7 +149,8 @@ export const hideCollapsableButtons = (buttons: any[] = [], transition = false) 
 const showCollapsableButtons = (buttons: any[] = [], transition = false) => {
   buttons.forEach((button: any) => {
     if (!button.collapse) { return; }
-
+    
+    button.classList.add('ion-buttons-collapsed');
     setElOpacity(button, 1, transition);
   });
 };

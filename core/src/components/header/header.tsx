@@ -105,8 +105,10 @@ export class Header implements ComponentInterface {
       /**
        * Set the initial state of the collapsable header
        */
-      setElOpacity(mainHeaderIndex.el, 0);
-      makeHeaderInactive(mainHeaderIndex, false);
+      setElOpacity;
+      makeHeaderInactive;
+      //setElOpacity(mainHeaderIndex.el, 0);
+      //makeHeaderInactive(mainHeaderIndex, false);
     });
   }
 

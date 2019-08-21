@@ -68,39 +68,12 @@
   </style>
 
   <script>
-/*
-    let items = [];
-    for (var i = 0; i < 50; i++) {
-      items.push(i + 1);
-    }
-    const list = document.getElementById('dynamicList');
-
-    let html = '';
-    for (let item of items) {
-      html += `
-        <ion-nav-push component="page-two">
-          <ion-item button>
-            <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
-            <ion-label>
-              <h2>Heading ${item}</h2>
-              <h3>Smaller heading ${item}</h2>
-              <p>Paragraph ${item}</p>
-            </ion-label>
-  
-          </ion-item>
-        </ion-nav-push>
-      `;
-    }
-    list.innerHTML = html;
-*/
-    
-    
     class PageTwo extends HTMLElement {
       generateList() {
         let html = '';
         for (let i = 0; i < 100; i++) {
           html += `
-            <ion-nav-push component="page-two">
+            <ion-nav-push component="page-three">
               <ion-item button>
                 <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
                 <ion-label>
@@ -124,7 +97,7 @@
               <ion-buttons collapse>
                 <ion-back-button default-href="/"></ion-back-button>
               </ion-buttons>  
-              <ion-title>Settings</ion-title>  
+              <ion-title>Page Two</ion-title>  
               <ion-buttons slot="end" collapse>
                 <ion-button>Hello World</ion-button>
               </ion-buttons>              
@@ -134,7 +107,7 @@
           <ion-content id="content" class="main-content">
             <ion-header collapse>              
               <ion-toolbar>      
-                <ion-title size="large">Settings</ion-title>
+                <ion-title size="large">Page Two</ion-title>
               </ion-toolbar>
             </ion-header>
           
@@ -157,15 +130,11 @@
          
           </ion-header>
           <ion-content class="ion-padding">
-            <h1>Page Two</h1>
+            <h1>Page One</h1>
             
             <ion-nav-push component="page-two">
               <ion-item button>
-                <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
-                <ion-label>
-                  <p>Go to Page Two</p>
-                </ion-label>
-      
+                <ion-label>Go to Page Two</ion-label>
               </ion-item>
             </ion-nav-push>
           </ion-content>
@@ -174,19 +143,48 @@
     }
     
     class PageThree extends HTMLElement {
+      generateList() {
+        let html = '';
+        for (let i = 0; i < 100; i++) {
+          html += `
+            <ion-nav-push component="page-two">
+              <ion-item button>
+                <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
+                <ion-label>
+                  <h2>Heading ${i}</h2>
+                  <h3>Smaller heading ${i}</h2>
+                  <p>Paragraph ${i}</p>
+                </ion-label>
+      
+              </ion-item>
+            </ion-nav-push>
+          `;
+        }
+        return html;
+      }
+
       connectedCallback() {
         this.innerHTML = `
-          <ion-header>
-            <ion-toolbar>
-              <ion-buttons slot="start">
-                <ion-back-button text="Settings"></ion-back-button>
-              </ion-buttons>
-              <ion-title>Page Three</ion-title>
+          <ion-header class="three-header">
+            <ion-toolbar>    
+              <ion-buttons>
+                <ion-back-button default-href="/"></ion-back-button>
+              </ion-buttons>  
+              <ion-title>Page Three</ion-title>  
+              <ion-buttons slot="end" collapse>
+                <ion-button>Hello World</ion-button>
+              </ion-buttons>              
             </ion-toolbar>
-         
           </ion-header>
-          <ion-content class="ion-padding">
-            <h1>Page Three</h1>
+        
+          <ion-content id="content" class="three-content">
+            <ion-header collapse>              
+              <ion-toolbar>      
+                <ion-title size="large">Page Three</ion-title>
+              </ion-toolbar>
+            </ion-header>
+          
+            <ion-list id="dynamicList">${this.generateList()}</ion-list>
           </ion-content>
         `;
       }
