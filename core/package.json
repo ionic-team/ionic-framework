@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "4.7.4",
+  "version": "4.8.0",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -38,7 +38,7 @@
     "@stencil/sass": "1.0.1",
     "@types/jest": "24.0.17",
     "@types/node": "12.7.1",
-    "@types/puppeteer": "1.12.4",
+    "@types/puppeteer": "1.19.1",
     "@types/swiper": "4.4.4",
     "aws-sdk": "^2.497.0",
     "clean-css-cli": "^4.1.11",
