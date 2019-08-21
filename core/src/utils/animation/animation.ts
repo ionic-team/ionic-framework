@@ -1047,29 +1047,68 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const to = (property: string, value: any) => {
+  const to = (property: string, value: any, clearAfterAnimation?: boolean) => {
     const lastFrame = _keyframes[_keyframes.length - 1];
 
-    if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
+    if (lastFrame != null && !lastFrame.clear && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
         lastFrame[property] = value;
     } else {
 
-      const object: any = {
-        offset: 1
-      };
-      object[property] = value;
+      /**
+       * If adding to a clear frame,
+       * add the value to the one right before
+       */
+      if (lastFrame.clear) {
+        const secondToLastFrame = _keyframes[_keyframes.length - 2];
+        secondToLastFrame[property] = value;
 
-      _keyframes = [
-        ..._keyframes,
-        object
-      ];
+      /**
+       * If not adding to a clear frame,
+       * just add as usual
+       */
+      } else {
+        _keyframes = [
+          ..._keyframes,
+          { offset: 1, [property]: value }
+        ];
+      }
+    }
+
+    if (clearAfterAnimation) {
+      const lastFrame = _keyframes[_keyframes.length - 1];
+      if (lastFrame != null && lastFrame.offset !== undefined) {
+
+        /**
+         * If we are on the clear frame, just set the property
+         */
+        if (lastFrame.clear) {
+          lastFrame[property] = '';
+        } else {
+
+          /**
+           * If the last frame is not the clear frame
+           * and has an offset of 1, we need to move it
+           * back by a frame to account for the clear frame
+           */
+          if (lastFrame.offset === 1) {
+            lastFrame.offset = 0.99;
+          }
+
+          /**
+           * Add a clear frame that runs immediately after
+           * the last frame that the user has set. This will
+           * allow users to clear certain properties from elements
+           */
+          _keyframes.push({ offset: lastFrame.offset + 0.01, [property]: '', clear: true });
+        }
+      }
     }
 
     return ani;
   };
 
-  const fromTo = (property: string, fromValue: any, toValue: any) => {
-    return from(property, fromValue).to(property, toValue);
+  const fromTo = (property: string, fromValue: any, toValue: any, clearAfterAnimation?: boolean) => {
+    return from(property, fromValue).to(property, toValue, clearAfterAnimation);
   };
 
   return ani = {

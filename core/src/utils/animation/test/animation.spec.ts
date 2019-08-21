@@ -81,6 +81,37 @@ describe('Animation Class', () => {
       
       expect(animation.getKeyframes().length).toEqual(3);
     });
+    
+    it('should clear properties at the end of an animation', () => {
+      animation
+        .fromTo('opacity', 0, 1, true)
+        .fromTo('background', 'red', 'blue')
+        .fromTo('color', 'purple', 'green', true);
+        
+      const keyframes = animation.getKeyframes();
+
+      expect(keyframes.length).toEqual(3);
+      expect(keyframes[0]).toEqual({
+        opacity: 0,
+        color: 'purple',
+        background: 'red',
+        offset: 0
+      });
+      
+      expect(keyframes[1]).toEqual({
+        opacity: 1,
+        color: 'green',
+        offset: 0.99,
+        background: 'blue'
+      });
+      
+      expect(keyframes[2]).toEqual({
+        clear: true,
+        opacity: '',
+        color: '',
+        offset: 1
+      })
+    });
   });
   
   describe('Animation Config Methods', () => {
