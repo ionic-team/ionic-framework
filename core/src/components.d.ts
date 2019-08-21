@@ -25,12 +25,14 @@ import {
   HeaderFn,
   HeaderHeightFn,
   InputChangeEventDetail,
+  IonicAnimation,
   ItemHeightFn,
   ItemRenderFn,
   ItemReorderEventDetail,
   LoadingOptions,
   MenuChangeEventDetail,
   MenuControllerI,
+  MenuI,
   ModalOptions,
   NavComponent,
   NavOptions,
@@ -1425,7 +1427,7 @@ export namespace Components {
     * @param name The name of the animation to register.
     * @param animation The animation function to register.
     */
-    'registerAnimation': (name: string, animation: AnimationBuilder) => Promise<void>;
+    'registerAnimation': (name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => Promise<void>;
     /**
     * Enable or disable the ability to swipe open the menu.
     * @param enable If `true`, the menu swipe gesture should be enabled.
@@ -2181,6 +2183,10 @@ export namespace Components {
     * Returns the native `<input>` element used under the hood.
     */
     'getInputElement': () => Promise<HTMLInputElement>;
+    /**
+    * A hint to the browser for which keyboard to display. Possible values are: `"none"` | `"text"` | `"tel"` | `"url"` | `"email"` | `"numeric"` | `"decimal"` | `"search"`.
+    */
+    'inputmode': 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**
     * The mode determines which platform styles to use.
     */
@@ -5439,6 +5445,10 @@ declare namespace LocalJSX {
     * If `true`, the user cannot interact with the input.
     */
     'disabled'?: boolean;
+    /**
+    * A hint to the browser for which keyboard to display. Possible values are: `"none"` | `"text"` | `"tel"` | `"url"` | `"email"` | `"numeric"` | `"decimal"` | `"search"`.
+    */
+    'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**
     * The mode determines which platform styles to use.
     */

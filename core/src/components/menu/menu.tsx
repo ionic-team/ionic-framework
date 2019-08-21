@@ -2,7 +2,8 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
+import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
+import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
@@ -16,7 +17,7 @@ import { assert, isEndSide as isEnd } from '../../utils/helpers';
 })
 export class Menu implements ComponentInterface, MenuI {
 
-  private animation?: Animation;
+  private animation?: any;
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
@@ -309,10 +310,15 @@ export class Menu implements ComponentInterface, MenuI {
     }
     // Create new animation
     this.animation = await this.menuCtrl!._createAnimation(this.type!, this);
+    this.animation.fill('both');
   }
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
-    const ani = this.animation!.reverse(!shouldOpen);
+    const isReversed = !shouldOpen;
+    const ani = (this.animation as IonicAnimation)!
+      .direction((isReversed) ? 'reverse' : 'normal')
+      .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)');
+
     if (animated) {
       await ani.playAsync();
     } else {
@@ -358,7 +364,9 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     // the cloned animation should not use an easing curve during seek
-    this.animation.reverse(this._isOpen).progressStart();
+    (this.animation as IonicAnimation)
+      .direction((this._isOpen) ? 'reverse' : 'normal')
+      .progressStart(true);
   }
 
   private onMove(detail: GestureDetail) {
@@ -369,7 +377,10 @@ export class Menu implements ComponentInterface, MenuI {
 
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
-    this.animation.progressStep(stepValue);
+
+    this.animation
+
+      .progressStep(stepValue);
   }
 
   private onEnd(detail: GestureDetail) {
@@ -399,21 +410,27 @@ export class Menu implements ComponentInterface, MenuI {
       shouldOpen = true;
     }
 
-    const missing = shouldComplete ? 1 - stepValue : stepValue;
-    const missingDistance = missing * width;
-    let realDur = 0;
-    if (missingDistance > 5) {
-      const dur = missingDistance / Math.abs(velocity);
-      realDur = Math.min(dur, 300);
-    }
-
     this.lastOnEnd = detail.timeStamp;
+
+    // Account for rounding errors in JS
+    let newStepValue = (shouldComplete) ? 0.001 : -0.001;
+
+    /**
+     * Animation will be reversed here, so need to
+     * reverse the easing curve as well
+     *
+     * Additionally, we need to account for the time relative
+     * to the new easing curve, as `stepValue` is going to be given
+     * in terms of a linear curve.
+     */
+    newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.4, 0), new Point(0.6, 1), new Point(1, 1), stepValue);
+
     this.animation
+      .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
       .onFinish(() => this.afterAnimation(shouldOpen), {
-        clearExistingCallbacks: true,
         oneTimeCallback: true
       })
-      .progressEnd(shouldComplete, stepValue, realDur);
+      .progressEnd(shouldComplete, newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {
@@ -492,7 +509,7 @@ export class Menu implements ComponentInterface, MenuI {
     assert(this._isOpen, 'menu cannot be closed');
 
     this.isAnimating = true;
-    const ani = this.animation!.reverse(true);
+    const ani = (this.animation as IonicAnimation)!.direction('reverse');
     ani.playSync();
     this.afterAnimation(false);
   }

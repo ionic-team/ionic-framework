@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { ActionSheetButton, Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { ActionSheetButton, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -24,7 +24,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   presented = false;
-  animation?: Animation;
+  animation?: any;
   mode = getIonMode(this);
 
   @Element() el!: HTMLElement;

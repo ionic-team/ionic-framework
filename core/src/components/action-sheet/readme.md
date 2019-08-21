@@ -4,7 +4,7 @@ An Action Sheet is a dialog that displays a set of options. It appears on top of
 
 ### Creating
 
-An action sheet can be created by the [Action Sheet Controller](../action-sheet-controller) from an array of `buttons`, with each button including properties for its `text`, and optionally a `handler` and `role`. If a handler returns `false` then the action sheet will not be dismissed. An action sheet can also optionally have a `title`, `subTitle` and an `icon`.
+An action sheet can be created by the [Action Sheet Controller](../action-sheet-controller) from an array of `buttons`, with each button including properties for its `text`, and optionally a `handler` and `role`. If a handler returns `false` then the action sheet will not be dismissed. An action sheet can also optionally have a `header` and a `subHeader`.
 
 ### Buttons
 
@@ -128,7 +128,7 @@ async function presentActionSheet() {
 import React, { useState } from 'react'
 import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
 
-export const ActionSheetExample: React.FunctionComponent = () => {
+export const ActionSheetExample: React.FC = () => {
 
   const [showActionSheet, setShowActionSheet] = useState(false);
 
