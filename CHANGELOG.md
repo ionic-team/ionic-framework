@@ -1,3 +1,23 @@
+# [4.8.0 Oxygen](https://github.com/ionic-team/ionic/compare/v4.7.4...v4.8.0) (2019-08-21)
+
+
+### Bug Fixes
+
+* **alert:** apply styling to disabled items ([#18545](https://github.com/ionic-team/ionic/issues/18545)) ([67ed89d](https://github.com/ionic-team/ionic/commit/67ed89d))
+* **platform:** properly detect Electron platform ([#19044](https://github.com/ionic-team/ionic/issues/19044)) ([e8cdda0](https://github.com/ionic-team/ionic/commit/e8cdda0)), closes [#19043](https://github.com/ionic-team/ionic/issues/19043)
+* **toggle:** change background to use CSS variable ([#19012](https://github.com/ionic-team/ionic/issues/19012)) ([94e525c](https://github.com/ionic-team/ionic/commit/94e525c)), closes [#18940](https://github.com/ionic-team/ionic/issues/18940)
+* **transition:** enable iOS transition shadow by default ([#19051](https://github.com/ionic-team/ionic/issues/19051)) ([a5d3c6b](https://github.com/ionic-team/ionic/commit/a5d3c6b))
+
+
+### Features
+
+* **animation:** add animation utility (experimental) ([#18918](https://github.com/ionic-team/ionic/issues/18918)) ([30ca46a](https://github.com/ionic-team/ionic/commit/30ca46a))
+* **gesture:** add gesture utility (experimental) ([#18918](https://github.com/ionic-team/ionic/issues/18918)) ([30ca46a](https://github.com/ionic-team/ionic/commit/30ca46a))
+* **searchbar:** add `inputmode` property ([#18980](https://github.com/ionic-team/ionic/issues/18980)) ([1187dc2](https://github.com/ionic-team/ionic/commit/1187dc2))
+* **spinner:** add circular spinner for MD default ([#19052](https://github.com/ionic-team/ionic/issues/19052)) ([e33cf85](https://github.com/ionic-team/ionic/commit/e33cf85))
+
+
+
 ## [4.7.4](https://github.com/ionic-team/ionic/compare/v4.7.3...v4.7.4) (2019-08-07)
 
 
