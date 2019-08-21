@@ -639,30 +639,29 @@ export const SegmentButtonExample: React.FC = () => (
 
 ## CSS Custom Properties
 
-| Name                        | Description                                                                                                       |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `--background`              | Background of the segment button                                                                                  |
-| `--background-activated`    | Background of the segment button when pressed                                                                     |
-| `--background-checked`      | Background of the checked segment button                                                                          |
-| `--background-hover`        | Background of the segment button on hover                                                                         |
-| `--border-color`            | Color of the segment button border                                                                                |
-| `--border-radius`           | Radius of the segment button border                                                                               |
-| `--border-style`            | Style of the segment button border                                                                                |
-| `--border-width`            | Width of the segment button border                                                                                |
-| `--color`                   | Color of the segment button                                                                                       |
-| `--color-activated`         | Color of the segment button when pressed                                                                          |
-| `--color-checked`           | Color of the checked segment button                                                                               |
-| `--indicator-color`         | Color of the indicator (highlight) under the segment button                                                       |
-| `--indicator-color-checked` | Color of the indicator (highlight) under the checked segment button                                               |
-| `--margin-bottom`           | Bottom margin of the segment button                                                                               |
-| `--margin-end`              | Right margin if direction is left-to-right, and left margin if direction is right-to-left of the segment button   |
-| `--margin-start`            | Left margin if direction is left-to-right, and right margin if direction is right-to-left of the segment button   |
-| `--margin-top`              | Top margin of the segment button                                                                                  |
-| `--padding-bottom`          | Bottom padding of the segment button                                                                              |
-| `--padding-end`             | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the segment button |
-| `--padding-start`           | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the segment button |
-| `--padding-top`             | Top padding of the segment button                                                                                 |
-| `--transition`              | Transition of the segment button                                                                                  |
+| Name                     | Description                                                                                                       |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `--background`           | Background of the segment button                                                                                  |
+| `--background-activated` | Background of the segment button when pressed                                                                     |
+| `--background-checked`   | Background of the checked segment button                                                                          |
+| `--background-hover`     | Background of the segment button on hover                                                                         |
+| `--border-color`         | Color of the segment button border                                                                                |
+| `--border-radius`        | Radius of the segment button border                                                                               |
+| `--border-style`         | Style of the segment button border                                                                                |
+| `--border-width`         | Width of the segment button border                                                                                |
+| `--color`                | Color of the segment button                                                                                       |
+| `--color-activated`      | Color of the segment button when pressed                                                                          |
+| `--color-checked`        | Color of the checked segment button                                                                               |
+| `--indicator-color`      | Color of the indicator (highlight) for the checked segment button                                                 |
+| `--margin-bottom`        | Bottom margin of the segment button                                                                               |
+| `--margin-end`           | Right margin if direction is left-to-right, and left margin if direction is right-to-left of the segment button   |
+| `--margin-start`         | Left margin if direction is left-to-right, and right margin if direction is right-to-left of the segment button   |
+| `--margin-top`           | Top margin of the segment button                                                                                  |
+| `--padding-bottom`       | Bottom padding of the segment button                                                                              |
+| `--padding-end`          | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the segment button |
+| `--padding-start`        | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the segment button |
+| `--padding-top`          | Top padding of the segment button                                                                                 |
+| `--transition`           | Transition of the segment button                                                                                  |
 
 
 ## Dependencies

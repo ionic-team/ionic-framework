@@ -1012,7 +1012,6 @@ ion-segment-button,css-prop,--color
 ion-segment-button,css-prop,--color-activated
 ion-segment-button,css-prop,--color-checked
 ion-segment-button,css-prop,--indicator-color
-ion-segment-button,css-prop,--indicator-color-checked
 ion-segment-button,css-prop,--margin-bottom
 ion-segment-button,css-prop,--margin-end
 ion-segment-button,css-prop,--margin-start

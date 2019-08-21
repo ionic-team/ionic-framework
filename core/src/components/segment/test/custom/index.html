@@ -11,11 +11,25 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
-<body>
+<body onLoad="onLoad()">
   <ion-app>
     <ion-header>
       <ion-toolbar>
         <ion-segment value="Free">
+          <ion-segment-button value="Paid">
+            <ion-label>Paid</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Free">
+            <ion-label>Free</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Top">
+            <ion-label>Top</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-segment value="Free" class="custom-checked">
           <ion-segment-button value="Paid">
             <ion-label>Paid</ion-label>
           </ion-segment-button>
@@ -63,9 +77,9 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content class="ion-padding-top">
 
-      <ion-segment class="custom" value="active">
+      <ion-segment class="custom-active" value="active">
         <ion-segment-button value="active">
           <ion-label>Active</ion-label>
         </ion-segment-button>
@@ -77,7 +91,7 @@
         </ion-segment-button>
       </ion-segment>
 
-      <ion-segment class="custom-icon" value="instagram">
+      <ion-segment class="custom-icon" value="slack">
         <ion-segment-button class="segment-facebook" value="facebook">
           <ion-label>Facebook</ion-label>
           <ion-icon name="logo-facebook"></ion-icon>
@@ -107,34 +121,6 @@
         </ion-segment-button>
       </ion-segment>
 
-      <h2>Activated</h2>
-
-      <ion-segment>
-        <ion-segment-button class="activated" value="Paid">
-          <ion-label>Paid</ion-label>
-        </ion-segment-button>
-        <ion-segment-button class="activated" value="Free">
-          <ion-label>Free</ion-label>
-        </ion-segment-button>
-        <ion-segment-button class="activated" value="Top">
-          <ion-label>Top</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-
-      <ion-segment class="custom-icon">
-        <ion-segment-button class="activated segment-facebook" value="facebook">
-          <ion-label>Facebook</ion-label>
-          <ion-icon name="logo-facebook"></ion-icon>
-        </ion-segment-button>
-        <ion-segment-button class="activated segment-instagram" value="instagram">
-          <ion-label>Instagram</ion-label>
-          <ion-icon name="logo-instagram"></ion-icon>
-        </ion-segment-button>
-        <ion-segment-button class="activated segment-slack" value="slack">
-          <ion-label>Slack</ion-label>
-          <ion-icon name="logo-slack"></ion-icon>
-        </ion-segment-button>
-      </ion-segment>
     </ion-content>
   </ion-app>
 
@@ -153,99 +139,111 @@
     margin-bottom: 0;
   }
 
-  pre {
-    border: 1px solid #e6e9ee;
-    background: white;
-    margin: 10px;
-    padding: 4px;
-    line-height: 24px;
+  /*
+   * Custom Checked Segment (Paid, Free, Top)
+   */
+  .ios .custom-checked {
+    --indicator-color: purple;
+    --color-checked: white;
   }
 
-  code {
-    display: block;
-    padding: 0.5em;
-    background: #ffffff;
-    word-wrap: normal;
-    white-space: pre;
-    color: #314361;
+  .md .custom-checked {
+    --indicator-color: purple;
+    --color-checked: purple;
   }
 
+  /*
+   * Custom Themed Segment (Themed to Primary)
+   */
   .themed {
     --ion-toolbar-background: #3880ff;
+    --ion-toolbar-background-checked: #fff;
     --ion-toolbar-color: #fff;
     --ion-toolbar-color-activated: #fff;
     --ion-toolbar-color-unchecked: rgba(255, 255, 255, .6);
-    --ion-toolbar-color-checked: #fff;
+    --ion-toolbar-color-checked: #3880ff;
   }
 
-  .custom {
-    --background: papayawhip;
-    --background-checked: navy;
+  /*
+   * Custom Active Segment (Active, Inactive, Disabled)
+   */
+  .custom-active {
+    /* TODO background needs to be set on the segment so color will override it */
+    background: papayawhip;
 
-    --border-color: navy;
-    --border-color-checked: navy;
-    --border-color-disabled: navy;
-
-    --color: navy;
+    --color: purple;
     --color-activated: purple;
-    --color-checked: papayawhip;
     --color-disabled: rgba(0, 0, 0, 0.3);
   }
 
-  /* Custom Icon Segment MD */
-  .md .custom-icon {
-    --indicator-color: lightgray;
+  .ios .custom-active {
+    --color-checked: papayawhip;
+    --indicator-color: navy;
   }
 
-  .md .segment-facebook {
-    --background-hover: rgba(59, 89, 153, .04);
-    --color-activated: #3b5999;
-    --color-checked: #3b5999;
+  .md .custom-active {
+    --color-checked: navy;
+    --indicator-color: navy;
   }
 
-  .md .segment-instagram {
-    --background-hover: rgba(228, 64, 95, .04);
-    --color-activated: #e4405f;
+  /*
+   * Custom Icon Segment (Facebook, Instagram, Slack)
+   */
+  .custom-icon ion-icon {
+    font-size: 44px;
+  }
+
+  /*
+   * MD Custom Icon Segment (Facebook, Instagram, Slack)
+   */
+  .md .segment-facebook-checked {
+    --color-checked: #3a3d46;
+    --indicator-color: #3a3d46;
+  }
+
+  .md .segment-instagram-checked {
     --color-checked: #e4405f;
+    --indicator-color: #e4405f;
   }
 
-  .md .segment-slack {
-    --background-hover: rgba(58, 175, 133, .04);
-    --color-activated: #3aaf85;
+  .md .segment-slack-checked {
     --color-checked: #3aaf85;
+    --indicator-color: #3aaf85;
   }
 
-  /* Custom Icon Segment iOS */
-  .ios .custom-icon ion-segment-button {
-    --border-width: 0;
+  /*
+   * iOS Custom Icon Segment (Facebook, Instagram, Slack)
+   */
+  .ios .custom-icon {
+    --indicator-color: transparent;
+    --indicator-transition: none;
+  }
+
+  .ios .segment-facebook-checked {
+    --background-checked: #3a3d46;
+    --color-checked: #ffffff;
+  }
+
+  .ios .segment-instagram-checked {
+    --background-checked: #e4405f;
+    --color-checked: #ffffff;
+  }
+
+  .ios .segment-slack-checked {
+    --background-checked: #3aaf85;
+    --color-checked: #ffffff;
   }
 
   .ios .segment-facebook {
-    --color: #3b5999;
-    --color-checked: #ffffff;
-    --background-hover: rgba(59, 89, 153, .1);
-    --background-activated: rgba(59, 89, 153, .16);
-    --background-checked: #3b5999;
+    --color: #3a3d46;
   }
 
   .ios .segment-instagram {
     --color: #e4405f;
-    --color-checked: #ffffff;
-    --background-hover: rgba(228, 64, 95, .1);
-    --background-activated: rgba(228, 64, 95, .16);
-    --background-checked: #e4405f;
   }
 
   .ios .segment-slack {
     --color: #3aaf85;
-    --color-checked: #ffffff;
-    --background-hover: rgba(58, 175, 133, .1);
-    --background-activated: rgba(58, 175, 133, .16);
-    --background-checked: #3aaf85;
-  }
-
-  .custom-icon ion-icon {
-    font-size: 44px;
   }
 
   /* This CSS should not apply */
@@ -255,5 +253,30 @@
   }
 
 </style>
+
+<script>
+  async function onLoad() {
+    const customIconSegments = document.querySelectorAll('.custom-icon');
+
+    for (var i = 0; i < customIconSegments.length; i++) {
+      const customIconSegment = customIconSegments[i];
+
+      await customIconSegment.componentOnReady();
+      addIconClass(customIconSegment, customIconSegment.value);
+
+      customIconSegment.addEventListener('ionChange', function(ev) {
+        addIconClass(customIconSegment, ev.detail.value);
+      });
+    }
+  }
+
+  function addIconClass(el, value) {
+    console.log('adding class to', el, value);
+    if (value) {
+      el.classList.remove('segment-facebook-checked', 'segment-instagram-checked', 'segment-slack-checked');
+      el.classList.add(`segment-${value}-checked`);
+    }
+  }
+</script>
 
 </html>

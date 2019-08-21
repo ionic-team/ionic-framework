@@ -11,8 +11,7 @@
   --background-activated: #{$segment-button-md-background-activated};
   --color: #{$segment-button-md-text-color};
   --color-checked: #{$segment-button-md-text-color-checked};
-  --indicator-color: transparent;
-  --indicator-color-checked: var(--color-checked);
+  --indicator-color: var(--color-checked);
   --indicator-transition: #{$segment-button-md-transition-animated};
 }
 
@@ -24,7 +23,7 @@
 // --------------------------------------------------
 
 :host(.ion-color) {
-  --indicator-color-checked: #{current-color(base)};
+  --indicator-color: #{current-color(base)};
 }
 
 :host(.ion-color)::slotted(ion-segment-button) {
@@ -53,14 +52,16 @@
 // --------------------------------------------------
 
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
-  --indicator-color-checked: #{var(--ion-toolbar-color-checked, var(--color-checked))};
+  --indicator-color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 }
 
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(ion-segment-button) {
+  background: #{var(--ion-toolbar-background-unchecked, var(--background))};
   color: #{var(--ion-toolbar-color-unchecked, var(--color))};
 }
 
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(.segment-button-checked) {
+  background: #{var(--ion-toolbar-background-checked, var(--background-checked))};
   color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 }
 
@@ -69,7 +70,7 @@
 // --------------------------------------------------
 
 :host-context(ion-toolbar.ion-color):not(.ion-color) {
-  --indicator-color-checked: #{current-color(contrast)};
+  --indicator-color: #{current-color(contrast)};
 }
 
 :host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(ion-segment-button) {
@@ -89,5 +90,5 @@
 .segment-checked-indicator-background {
   height: 2px;
 
-  background: var(--indicator-color-checked);
+  background: var(--indicator-color);
 }

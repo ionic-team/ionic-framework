@@ -31,8 +31,7 @@
    *
    * @prop --transition: Transition of the segment button
    *
-   * @prop --indicator-color: Color of the indicator (highlight) under the segment button
-   * @prop --indicator-color-checked: Color of the indicator (highlight) under the checked segment button
+   * @prop --indicator-color: Color of the indicator (highlight) for the checked segment button
    *
    */
   --padding-start: 0;
@@ -102,6 +101,7 @@
 // --------------------------------------------------
 
 :host(.segment-button-checked) {
+  background: var(--background-checked);
   color: var(--color-checked);
 }
 
@@ -154,6 +154,11 @@
 
 // Segment Button Layout
 // --------------------------------------------------
+
+// Layout: icon top
+:host(.segment-button-layout-icon-top) .button-native {
+  flex-direction: column;
+}
 
 // Layout: icon start
 :host(.segment-button-layout-icon-start) .button-native {
