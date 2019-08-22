@@ -106,7 +106,6 @@ describe('Animation Class', () => {
         .to('color', 'purple');
         
       const keyframes = animation.getKeyframes();
-
       expect(keyframes.length).toEqual(1);
       expect(keyframes[0]).toEqual({
         opacity: 0,

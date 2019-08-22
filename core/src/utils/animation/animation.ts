@@ -1050,68 +1050,73 @@ export const createAnimation = () => {
   const to = (property: string, value: any, clearAfterAnimation?: boolean) => {
     const lastFrame = _keyframes[_keyframes.length - 1];
 
-    if (lastFrame != null && !lastFrame.clear && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
-        lastFrame[property] = value;
-    } else {
+    if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
 
       /**
-       * If adding to a clear frame,
-       * add the value to the one right before
+       * If last frame is not the clear frame
+       * set the value as usual
        */
-      if (lastFrame != null && lastFrame.clear) {
+      if (!lastFrame.clear) {
+        lastFrame[property] = value;
+      } else {
+        /**
+         * If last frame is the keyframe then we need to
+         * set the value on the previous frame
+         */
         const secondToLastFrame = _keyframes[_keyframes.length - 2];
         secondToLastFrame[property] = value;
-
-      /**
-       * If not adding to a clear frame,
-       * just add as usual
-       */
-      } else {
-        _keyframes = [
-          ..._keyframes,
-          { offset: 1, [property]: value }
-        ];
       }
+
+    /**
+     * If not on the last possible keyframe, add
+     * the last keyframe
+     */
+    } else {
+      _keyframes = [
+        ..._keyframes,
+        { offset: 1, [property]: value }
+      ];
     }
 
     if (clearAfterAnimation) {
       const lastFrame = _keyframes[_keyframes.length - 1];
-      if (lastFrame != null && lastFrame.offset !== undefined) {
+      if (lastFrame != null) {
 
         /**
          * If we are on the clear frame, just set the property
          */
         if (lastFrame.clear) {
           lastFrame[property] = '';
-        } else {
-
-          /**
-           * If we are already setup for a clear frame, just mark it
-           * as such and set the property
-           */
-          const secondToLastFrame = _keyframes[_keyframes.length - 2];
-          if (lastFrame.offset === 1 && secondToLastFrame.offset === 0.99) {
-            lastFrame.clear = true;
-            lastFrame[property] = '';
-            secondToLastFrame[property] = value;
-          } else {
-            /**
-             * If the last frame is not the clear frame
-             * and has an offset of 1, we need to move it
-             * back by a frame to account for the clear frame
-             */
-            if (lastFrame.offset === 1 && secondToLastFrame.offset !== 0.99) {
-              lastFrame.offset = 0.99;
-            }
-
-            /**
-             * Add a clear frame that runs immediately after
-             * the last frame that the user has set. This will
-             * allow users to clear certain properties from elements
-             */
-            _keyframes.push({ offset: lastFrame.offset + 0.01, [property]: '', clear: true });
-          }
+          return ani;
         }
+
+        /**
+         * If we are already setup for a clear frame, just mark it
+         * as such and set the property
+         */
+        const secondToLastFrame = _keyframes[_keyframes.length - 2];
+        if (lastFrame.offset === 1 && secondToLastFrame.offset === 0.99) {
+          lastFrame.clear = true;
+          lastFrame[property] = '';
+          secondToLastFrame[property] = value;
+          return ani;
+        }
+
+        /**
+         * If the last frame is not the clear frame
+         * and has an offset of 1, we need to move it
+         * back by a frame to account for the clear frame
+         */
+        if (lastFrame.offset === 1 && secondToLastFrame.offset !== 0.99) {
+          lastFrame.offset = 0.99;
+        }
+
+        /**
+         * Add a clear frame that runs immediately after
+         * the last frame that the user has set. This will
+         * allow users to clear certain properties from elements
+         */
+        _keyframes.push({ offset: lastFrame.offset + 0.01, [property]: '', clear: true });
       }
     }
 
