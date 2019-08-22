@@ -81,6 +81,101 @@ describe('Animation Class', () => {
       
       expect(animation.getKeyframes().length).toEqual(3);
     });
+    
+    it('should set the from keyframe properly', () => {
+      animation
+        .from('opacity', 0)
+        .from('background', 'red')
+        .from('color', 'purple');
+        
+      const keyframes = animation.getKeyframes();
+
+      expect(keyframes.length).toEqual(1);
+      expect(keyframes[0]).toEqual({
+        opacity: 0,
+        color: 'purple',
+        background: 'red',
+        offset: 0
+      });
+    });
+    
+    it('should set the to keyframe properly', () => {
+      animation
+        .to('opacity', 0)
+        .to('background', 'red')
+        .to('color', 'purple');
+        
+      const keyframes = animation.getKeyframes();
+      expect(keyframes.length).toEqual(1);
+      expect(keyframes[0]).toEqual({
+        opacity: 0,
+        color: 'purple',
+        background: 'red',
+        offset: 1
+      });
+    });
+        
+    it('should clear properties at the end of an animation', () => {
+      animation
+        .fromTo('opacity', 0, 1, true)
+        .fromTo('background', 'red', 'blue')
+        .fromTo('color', 'purple', 'green', true);
+        
+      const keyframes = animation.getKeyframes();
+
+      expect(keyframes.length).toEqual(3);
+      expect(keyframes[0]).toEqual({
+        opacity: 0,
+        color: 'purple',
+        background: 'red',
+        offset: 0
+      });
+      
+      expect(keyframes[1]).toEqual({
+        opacity: 1,
+        color: 'green',
+        offset: 0.99,
+        background: 'blue'
+      });
+      
+      expect(keyframes[2]).toEqual({
+        clear: true,
+        opacity: '',
+        color: '',
+        offset: 1
+      })
+    });
+    
+    it('should mix keyframes and fromTo properly', () => {
+      animation
+        .keyframes([
+          { offset: 0, background: 'red' },
+          { offset: 0.99, background: 'blue' },
+          { offset: 1, background: 'green' }
+        ])
+        .fromTo('opacity', 0, 1, true)
+        
+      const keyframes = animation.getKeyframes();
+      expect(keyframes.length).toEqual(3);
+      expect(keyframes[0]).toEqual({
+        opacity: 0,
+        background: 'red',
+        offset: 0
+      });
+      
+      expect(keyframes[1]).toEqual({
+        opacity: 1,
+        background: 'blue',
+        offset: 0.99
+      });
+      
+      expect(keyframes[2]).toEqual({
+        opacity: '',
+        background: 'green',
+        offset: 1,
+        clear: true
+      });
+    });
   });
   
   describe('Animation Config Methods', () => {
