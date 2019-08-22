@@ -43,7 +43,7 @@ export const generateKeyframeRules = (keyframes: any[] = []) => {
 
     const frameString = [];
     for (const property in keyframe) {
-      if (keyframe.hasOwnProperty(property) && property !== 'offset') {
+      if (keyframe.hasOwnProperty(property) && property !== 'offset' && property !== 'clear') {
         frameString.push(`${property}: ${keyframe[property]};`);
       }
     }
