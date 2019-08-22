@@ -138,7 +138,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
         enteringToolBarBg
           .beforeClearStyles([OPACITY])
-          .fromTo(OPACITY, 0.01, 1);
+          .fromTo(OPACITY, 0.01, 1, true);
 
         // forward direction, entering page has a back button
         enteringBackButton.fromTo(OPACITY, 0.01, 1);
