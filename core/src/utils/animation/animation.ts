@@ -1058,7 +1058,7 @@ export const createAnimation = () => {
        * If adding to a clear frame,
        * add the value to the one right before
        */
-      if (lastFrame.clear) {
+      if (lastFrame != null && lastFrame.clear) {
         const secondToLastFrame = _keyframes[_keyframes.length - 2];
         secondToLastFrame[property] = value;
 
@@ -1086,20 +1086,31 @@ export const createAnimation = () => {
         } else {
 
           /**
-           * If the last frame is not the clear frame
-           * and has an offset of 1, we need to move it
-           * back by a frame to account for the clear frame
+           * If we are already setup for a clear frame, just mark it
+           * as such and set the property
            */
-          if (lastFrame.offset === 1) {
-            lastFrame.offset = 0.99;
-          }
+          const secondToLastFrame = _keyframes[_keyframes.length - 2];
+          if (lastFrame.offset === 1 && secondToLastFrame.offset === 0.99) {
+            lastFrame.clear = true;
+            lastFrame[property] = '';
+            secondToLastFrame[property] = value;
+          } else {
+            /**
+             * If the last frame is not the clear frame
+             * and has an offset of 1, we need to move it
+             * back by a frame to account for the clear frame
+             */
+            if (lastFrame.offset === 1 && secondToLastFrame.offset !== 0.99) {
+              lastFrame.offset = 0.99;
+            }
 
-          /**
-           * Add a clear frame that runs immediately after
-           * the last frame that the user has set. This will
-           * allow users to clear certain properties from elements
-           */
-          _keyframes.push({ offset: lastFrame.offset + 0.01, [property]: '', clear: true });
+            /**
+             * Add a clear frame that runs immediately after
+             * the last frame that the user has set. This will
+             * allow users to clear certain properties from elements
+             */
+            _keyframes.push({ offset: lastFrame.offset + 0.01, [property]: '', clear: true });
+          }
         }
       }
     }
