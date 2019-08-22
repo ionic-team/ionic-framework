@@ -129,7 +129,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         enteringToolBarItems.fromTo('transform', `translateX(${OFF_LEFT})`, `translateX(${CENTER})`);
 
         // back direction, entering page has a back button
-        enteringBackButton.fromTo(OPACITY, 0.01, 1, true);
+        enteringBackButton.fromTo(OPACITY, 0.01, 1);
       } else {
         // entering toolbar, forward direction
         enteringTitle.fromTo('transform', `translateX(${OFF_RIGHT})`, `translateX(${CENTER})`);
