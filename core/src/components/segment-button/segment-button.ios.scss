@@ -19,7 +19,7 @@
   --padding-bottom: 0;
   --padding-start: 13px;
 
-  @include margin($segment-button-ios-margin);
+  @include margin($segment-button-ios-margin, null, $segment-button-ios-margin, null);
 
   position: relative;
 
@@ -47,8 +47,6 @@
 
 :host::before {
   @include margin(5px, 0);
-
-  flex: 1;
 
   transition: 160ms opacity ease-in-out;
 

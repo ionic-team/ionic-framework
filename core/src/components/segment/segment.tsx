@@ -195,7 +195,6 @@ export class Segment implements ComponentInterface {
     this.animated = true;
   }
 
-  // TODO width is off for the very left and very right of buttons
   private setNextIndex(detail: GestureDetail, isEnd: boolean) {
     const activated = this.activated;
     const buttons = this.getButtons();
