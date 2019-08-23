@@ -6,6 +6,8 @@ Dependencies upgraded to work with Ionic Core 4.8
 
 ## Bug Fixes
 
+Attributes applied to Ionic Components now show up in the DOM and are visible in devtools
+
 `IonBackButton` now preserves the query string parameters from the referring page: https://github.com/ionic-team/ionic/pull/19150/commits/2e2068ee5ea467636b4454e1106df1d8f05230d2
 
 Supporting class attributes as well as className attributes for Ionic React components: https://github.com/ionic-team/ionic/pull/19150/commits/bef7bc8b1b190bf704fd6960711672bfd7aedfa6, closes [#19107](https://github.com/ionic-team/ionic/issues/19107)
