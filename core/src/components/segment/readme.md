@@ -454,6 +454,13 @@ export const SegmentExample: React.FC = () => (
 | `ionChange` | Emitted when the value property has changed. | `CustomEvent<SegmentChangeEventDetail>` |
 
 
+## CSS Custom Properties
+
+| Name           | Description                      |
+| -------------- | -------------------------------- |
+| `--background` | Background of the segment button |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
