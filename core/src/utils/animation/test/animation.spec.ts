@@ -139,7 +139,6 @@ describe('Animation Class', () => {
       });
       
       expect(keyframes[2]).toEqual({
-        clear: true,
         opacity: '',
         color: '',
         offset: 1
@@ -172,8 +171,7 @@ describe('Animation Class', () => {
       expect(keyframes[2]).toEqual({
         opacity: '',
         background: 'green',
-        offset: 1,
-        clear: true
+        offset: 1
       });
     });
   });
