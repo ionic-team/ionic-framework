@@ -20,7 +20,6 @@ export { IonPage } from './IonPage';
 export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
 export { IonBackButton } from './navigation/IonBackButton';
-export { IonRouterOutlet } from './IonRouterOutlet';
 
 // Utils
 export { isPlatform, getPlatforms } from './utils';

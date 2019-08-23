@@ -3,6 +3,7 @@ import { generateUniqueId } from '../utils';
 import { View } from './View';
 import { ViewItemManager } from './ViewItemManager';
 import { RouteManagerContext } from './RouteManagerContext';
+import { ViewItem } from './ViewItem';
 
 declare global {
   namespace JSX {
@@ -36,37 +37,77 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
     this.context.removeViewStack(this.id);
   }
 
+  renderChild(item: ViewItem) {
+    const component = React.cloneElement(item.element, {
+      computedMatch: item.routeData.match
+    });
+    return component;
+  }
+
   render() {
     const context = this.context;
     const viewStack = context.viewStacks[this.id];
     const activeId = viewStack ? viewStack.activeId : '';
     const views = (viewStack || { views: [] }).views.filter(x => x.show);
+    const ionRouterOutlet = React.Children.only(this.props.children) as React.ReactElement;
+
+    const childElements = views.map((view) => {
+      let props: any = {};
+      if (view.id === activeId) {
+        props = {
+          'className': ' ion-page ion-page-invisible'
+        };
+      }
+      return (
+        <ViewItemManager
+          id={view.id}
+          key={view.key}
+          mount={view.mount}
+        >
+          <View
+            ref={view.ref}
+            {...props}
+          >
+            {this.renderChild(view)}
+          </View>
+        </ViewItemManager>
+      );
+    });
+
     return (
-      <ion-router-outlet data-id={this.id} ref={this.containerEl}>
-        {views.map((item) => {
-          let props: any = {};
-          if (item.id === activeId) {
-            props = {
-              'className': ' ion-page-invisible'
-            };
-          }
-          return (
-            <ViewItemManager
-              id={item.id}
-              key={item.key}
-              mount={item.mount}
-            >
-              <View
-                ref={item.ref}
-                {...props}
-              >
-                {this.context.renderChild(item)}
-              </View>
-            </ViewItemManager>
-          );
-        })}
-      </ion-router-outlet>
+      React.cloneElement(ionRouterOutlet, {
+        ref: this.containerEl,
+        "data-view-id": this.id
+      }, childElements)
     );
+
+
+    // return (
+    //   <ion-router-outlet data-id={this.id} ref={this.containerEl}>
+    //     {views.map((view) => {
+    //       let props: any = {};
+    //       if (view.id === activeId) {
+    //         props = {
+    //           'className': ' ion-page-invisible'
+    //         };
+    //       }
+    //       return (
+    //         <ViewItemManager
+    //           id={view.id}
+    //           key={view.key}
+    //           mount={view.mount}
+    //         >
+    //           <View
+    //             ref={view.ref}
+    //             {...props}
+    //           >
+    //             {this.renderChild(view)}
+    //           </View>
+    //         </ViewItemManager>
+    //       );
+    //     })}
+    //   </ion-router-outlet>
+    // );
   }
 
   static get contextType() {

@@ -29,7 +29,7 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
       hideView: this.hideView.bind(this),
       setupIonRouter: this.setupIonRouter.bind(this),
       removeViewStack: this.removeViewStack.bind(this),
-      renderChild: this.renderChild.bind(this),
+      // renderChild: this.renderChild.bind(this),
       transitionView: this.transitionView.bind(this)
     };
   }
@@ -181,7 +181,7 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
       views.push(createViewItem(child, this.props.history.location));
     });
 
-    this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);
+    this.registerViewStack(id, activeId, views, ionRouterOutlet, routerOutlet, this.props.location);
 
     function createViewItem(child: React.ReactElement<any>, location: HistoryLocation) {
       const viewId = generateUniqueId();
@@ -212,12 +212,13 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
     }
   }
 
-  registerViewStack(stack: string, activeId: string | undefined, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, location: HistoryLocation) {
+  registerViewStack(stack: string, activeId: string | undefined, stackItems: ViewItem[], ionRouterOutlet: React.ReactElement, routerOutlet: HTMLIonRouterOutletElement, location: HistoryLocation) {
     this.setState((prevState) => {
       const prevViewStacks = Object.assign({}, prevState.viewStacks);
       prevViewStacks[stack] = {
         activeId: activeId,
         views: stackItems,
+        ionRouterOutlet,
         routerOutlet
       };
       return {
@@ -248,12 +249,12 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
     });
   }
 
-  renderChild(item: ViewItem<IonRouteData>) {
-    const component = React.cloneElement(item.element, {
-      computedMatch: item.routeData.match
-    });
-    return component;
-  }
+  // renderChild(item: ViewItem<IonRouteData>) {
+  //   const component = React.cloneElement(item.element, {
+  //     computedMatch: item.routeData.match
+  //   });
+  //   return component;
+  // }
 
   findActiveView(views: ViewItem[]) {
     let view: ViewItem<IonRouteData> | undefined;

@@ -1,3 +1,9 @@
+# [4.8.0-rc2]
+
+## Bug Fixes
+
+Insert ion-page classes via framework instead of ion-app tag - fixes [#19146](https://github.com/ionic-team/ionic/issues/19146)
+
 # [4.8.0-rc1]
 
 ## Features

@@ -3,6 +3,7 @@ import { NavDirection } from '@ionic/core';
 import { ViewItem } from './ViewItem';
 
 export interface ViewStack {
+  ionRouterOutlet: React.ReactElement;
   routerOutlet: HTMLIonRouterOutletElement;
   activeId?: string,
   views: ViewItem[]
@@ -17,7 +18,7 @@ export interface RouteManagerContextState {
   viewStacks: ViewStacks;
   setupIonRouter: (id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) => void;
   removeViewStack: (stack: string) => void;
-  renderChild: (item: ViewItem) => void;
+  // renderChild: (item: ViewItem) => void;
   transitionView: (enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction: NavDirection) => void;
 }
 
@@ -26,7 +27,7 @@ export const RouteManagerContext = /*@__PURE__*/React.createContext<RouteManager
   hideView: () => { navContextNotFoundError(); },
   setupIonRouter: () => { navContextNotFoundError() },
   removeViewStack: () => { navContextNotFoundError(); },
-  renderChild: () => { navContextNotFoundError(); },
+  // renderChild: () => { navContextNotFoundError(); },
   transitionView: () => { navContextNotFoundError(); }
 });
 
