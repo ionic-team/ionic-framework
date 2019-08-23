@@ -55,7 +55,7 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
       let props: any = {};
       if (view.id === activeId) {
         props = {
-          'className': ' ion-page ion-page-invisible'
+          'className': 'ion-page-invisible'
         };
       }
       return (
