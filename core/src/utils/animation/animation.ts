@@ -1045,8 +1045,7 @@ export const createAnimation = () => {
   };
 
   const to = (property: string, value: any) => {
-    const lastFrameIndex = _keyframes.length - 1;
-    const lastFrame = _keyframes[lastFrameIndex];
+    const lastFrame = _keyframes[_keyframes.length - 1];
 
     if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
       lastFrame[property] = value;
