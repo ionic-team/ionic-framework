@@ -93,6 +93,6 @@
 // --------------------------------------------------
 
 ::slotted(.segment-button-checked)::before,
-::slotted(.segment-button-checked) + ion-segment-button::before {
+::slotted(.segment-button-after-checked)::before {
   opacity: 0;
 }

@@ -222,7 +222,7 @@
 
         function updateSegmentButtons(length) {
           const buttonsLength = dynamicButtons.children.length;
-          const begin = buttonsLength === 0 ? 0 : buttonsLength - 1;
+          const begin = buttonsLength === 0 ? 0 : buttonsLength;
 
           for (var i = begin; i < length; i++) {
             const button = document.createElement('ion-segment-button');
