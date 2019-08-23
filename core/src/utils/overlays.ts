@@ -193,7 +193,8 @@ const overlayAnimation = async (
   let animation;
   let isAnimationBuilder = true;
   try {
-    animation = await import('./animation/old-animation').then(mod => mod.create(animationBuilder as AnimationBuilder, aniRoot, opts));
+    const mod = await import('./animation/old-animation');
+    animation = await mod.create(animationBuilder as AnimationBuilder, aniRoot, opts);
   } catch (err) {
     animation = (animationBuilder as IonicAnimationInterface)(aniRoot, opts);
     animation.fill('both');
