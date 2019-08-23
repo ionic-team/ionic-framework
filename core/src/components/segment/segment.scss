@@ -4,9 +4,16 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background: Background of the segment button
+   */
   --indicator-color: initial;
   --ripple-color: currentColor;
-  --color-activated: initial;
+  --color: initial;
+  --color-hover: var(--color);
+  --color-activated: var(--color);
+  --color-checked: var(--color);
+  --color-disabled: var(--color);
 
   @include font-smoothing();
 
@@ -18,6 +25,8 @@
   justify-content: center;
 
   width: 100%;
+
+  background: var(--background);
 
   font-family: $font-family-base;
 

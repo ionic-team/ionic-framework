@@ -5,6 +5,10 @@
 // --------------------------------------------------
 
 :host {
+  --background: #{$segment-button-md-background};
+  --background-checked: #{$segment-button-md-background-checked};
+  --background-hover: #{$segment-button-md-background-hover};
+  --background-activated: #{$segment-button-md-background-activated};
   --padding-top: #{$segment-button-md-padding-top};
   --padding-end: #{$segment-button-md-padding-end};
   --padding-bottom: #{$segment-button-md-padding-bottom};
@@ -99,22 +103,4 @@
 // Layout: label only
 :host(.segment-button-has-label-only) ::slotted(ion-label) {
   @include margin(12px, null, 12px, null);
-}
-
-
-// Segment: Checked & Activated
-// --------------------------------------------------
-
-:host(.segment-button-checked.activated) {
-  color: var(--color-checked);
-}
-
-
-// Segment Button: Hover
-// --------------------------------------------------
-
-@media (any-hover: hover) {
-  :host(:hover) {
-    background: var(--background-hover);
-  }
 }

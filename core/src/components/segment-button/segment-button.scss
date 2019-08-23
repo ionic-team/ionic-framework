@@ -6,13 +6,16 @@
 :host {
   /**
    * @prop --background: Background of the segment button
-   * @prop --background-hover: Background of the segment button on hover
    * @prop --background-activated: Background of the segment button when pressed
    * @prop --background-checked: Background of the checked segment button
+   * @prop --background-disabled: Background of the disabled segment button
+   * @prop --background-hover: Background of the segment button on hover
    *
    * @prop --color: Color of the segment button
    * @prop --color-activated: Color of the segment button when pressed
    * @prop --color-checked: Color of the checked segment button
+   * @prop --color-disabled: Color of the disabled segment button
+   * @prop --color-hover: Color of the segment button on hover
    *
    * @prop --border-radius: Radius of the segment button border
    * @prop --border-color: Color of the segment button border
@@ -32,7 +35,7 @@
    * @prop --transition: Transition of the segment button
    *
    * @prop --indicator-color: Color of the indicator (highlight) for the checked segment button
-   *
+   * @prop --indicator-transition: Transition of the indicator (highlight) for the checked segment button
    */
   --padding-start: 0;
   --padding-end: 0;
@@ -110,16 +113,29 @@
 // --------------------------------------------------
 
 :host(.activated) {
-  color: var(--color-activated, var(--color));
+  background: var(--background-activated);
+  color: var(--color-activated);
 }
 
 
 // Segment Button: Disabled
 // --------------------------------------------------
 
-// :host(.segment-button-disabled) {
-//   color: var(--color-disabled);
-// }
+:host(.segment-button-disabled) {
+  background: var(--background-disabled);
+  color: var(--color-disabled);
+}
+
+
+// Segment Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    background: var(--background-hover);
+    color: var(--color-hover);
+  }
+}
 
 
 // Segment Button Icon

@@ -5,6 +5,10 @@
 // --------------------------------------------------
 
 :host {
+  --background: #{$segment-button-ios-background-color};
+  --background-checked: #{$segment-button-ios-background-color-checked};
+  --background-hover: #{$segment-button-ios-background-color-hover};
+  --background-activated: #{$segment-button-ios-background-color-activated};
   --border-radius: #{$segment-button-ios-border-radius};
   --border-width: #{$segment-button-ios-border-width};
   --border-color: #{$segment-button-ios-border-color};

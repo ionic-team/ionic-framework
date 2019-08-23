@@ -5,18 +5,11 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$segment-button-ios-background-color};
-  --background-checked: #{$segment-button-ios-background-color-checked};
-  --background-hover: #{$segment-button-ios-background-color-hover};
-  --background-activated: #{$segment-button-ios-background-color-activated};
-  --color: initial;
-  --color-checked: initial;
+  --background: #{$segment-ios-background-color};
   --indicator-color: #{$segment-button-ios-indicator-color};;
   --indicator-transition: #{$segment-button-ios-transition-animated};
 
   @include border-radius($segment-ios-border-radius);
-
-  background: #{$segment-ios-background-color};
 
   overflow: hidden;
 }
@@ -30,12 +23,9 @@
 // --------------------------------------------------
 
 :host(.ion-color) {
-  --background: transparent;
-  --color: inherit;
   background: #{current-color(base, 0.065)};
 }
 
-// :host(.ion-color)::slotted(.segment-button-checked.activated),
 :host(.ion-color)::slotted(.segment-button-checked) {
   color: #000;
 }
@@ -51,22 +41,22 @@
 }
 
 // TODO reevaluate the global variables needed
-:host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
-  background: #{var(--ion-toolbar-background-unchecked, $segment-ios-background-color)};
-  color: #{var(--ion-toolbar-color-unchecked, var(--color))};
-}
+// :host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
+  // --background: #{var(--ion-toolbar-background-unchecked, $segment-ios-background-color)};
+  // --color: #{var(--ion-toolbar-color-unchecked, var(--color))};
+// }
 
-:host-context(ion-toolbar:not(.ion-color)):not(.ion-color) .segment-checked-indicator-background {
-  background: #{var(--ion-toolbar-background-checked, var(--indicator-color))};
-}
+// :host-context(ion-toolbar:not(.ion-color)):not(.ion-color) .segment-checked-indicator-background {
+//   background: #{var(--ion-toolbar-background-checked, var(--indicator-color))};
+// }
 
-:host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(ion-segment-button) {
-  color: #{var(--ion-toolbar-color-unchecked, var(--color))};
-}
+// :host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(ion-segment-button) {
+//   color: #{var(--ion-toolbar-color-unchecked, var(--color))};
+// }
 
-:host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(.segment-button-checked) {
-  color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
-}
+// :host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(.segment-button-checked) {
+//   color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
+// }
 
 // TODO the indicator color can't be globally themed
 

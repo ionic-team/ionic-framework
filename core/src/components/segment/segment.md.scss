@@ -5,10 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$segment-button-md-background};
-  --background-checked: #{$segment-button-md-background-checked};
-  --background-hover: #{$segment-button-md-background-hover};
-  --background-activated: #{$segment-button-md-background-activated};
+  --background: transparent;
   --color: #{$segment-button-md-text-color};
   --color-checked: #{$segment-button-md-text-color-checked};
   --indicator-color: var(--color-checked);

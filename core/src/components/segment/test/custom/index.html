@@ -44,15 +44,15 @@
 
       <ion-toolbar>
         <ion-segment class="custom-icon" value="instagram">
-          <ion-segment-button class="segment-facebook" value="facebook">
+          <ion-segment-button class="segment-button-facebook" value="facebook">
             <ion-label>Facebook</ion-label>
             <ion-icon name="logo-facebook"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button class="segment-instagram" value="instagram">
+          <ion-segment-button class="segment-button-instagram" value="instagram">
             <ion-label>Instagram</ion-label>
             <ion-icon name="logo-instagram"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button class="segment-slack" value="slack">
+          <ion-segment-button class="segment-button-slack" value="slack">
             <ion-label>Slack</ion-label>
             <ion-icon name="logo-slack"></ion-icon>
           </ion-segment-button>
@@ -75,6 +75,40 @@
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-segment class="custom-states-color" value="checked">
+          <ion-segment-button value="activated" class="activated">
+            <ion-label>Activated</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="checked">
+            <ion-label>Checked</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="inactive">
+            <ion-label>Inactive</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="disabled" disabled>
+            <ion-label>Disabled</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+
+    <ion-toolbar>
+        <ion-segment class="custom-states-background" value="checked">
+          <ion-segment-button value="activated" class="activated">
+            <ion-label>Activated</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="checked">
+            <ion-label>Checked</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="inactive">
+            <ion-label>Inactive</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="disabled" disabled>
+            <ion-label>Disabled</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
     </ion-header>
 
     <ion-content class="ion-padding-top">
@@ -92,15 +126,15 @@
       </ion-segment>
 
       <ion-segment class="custom-icon" value="slack">
-        <ion-segment-button class="segment-facebook" value="facebook">
+        <ion-segment-button class="segment-button-facebook" value="facebook">
           <ion-label>Facebook</ion-label>
           <ion-icon name="logo-facebook"></ion-icon>
         </ion-segment-button>
-        <ion-segment-button class="segment-instagram" value="instagram">
+        <ion-segment-button class="segment-button-instagram" value="instagram">
           <ion-label>Instagram</ion-label>
           <ion-icon name="logo-instagram"></ion-icon>
         </ion-segment-button>
-        <ion-segment-button class="segment-slack" value="slack">
+        <ion-segment-button class="segment-button-slack" value="slack">
           <ion-label>Slack</ion-label>
           <ion-icon name="logo-slack"></ion-icon>
         </ion-segment-button>
@@ -118,6 +152,36 @@
         <ion-segment-button value="entertainment">
           <ion-label>Entertainment</ion-label>
           <ion-icon name="radio"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-segment class="custom-states-color" value="checked">
+        <ion-segment-button value="activated" class="activated">
+          <ion-label>Activated</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="checked">
+          <ion-label>Checked</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="inactive">
+          <ion-label>Inactive</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="disabled" disabled>
+          <ion-label>Disabled</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-segment class="custom-states-background" value="checked">
+        <ion-segment-button value="activated" class="activated">
+          <ion-label>Activated</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="checked">
+          <ion-label>Checked</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="inactive">
+          <ion-label>Inactive</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="disabled" disabled>
+          <ion-label>Disabled</ion-label>
         </ion-segment-button>
       </ion-segment>
 
@@ -168,8 +232,7 @@
    * Custom Active Segment (Active, Inactive, Disabled)
    */
   .custom-active {
-    /* TODO background needs to be set on the segment so color will override it */
-    background: papayawhip;
+    --background: papayawhip;
 
     --color: purple;
     --color-activated: purple;
@@ -196,17 +259,17 @@
   /*
    * MD Custom Icon Segment (Facebook, Instagram, Slack)
    */
-  .md .segment-facebook-checked {
+  .md .segment-facebook-checked .segment-button-facebook {
     --color-checked: #3a3d46;
     --indicator-color: #3a3d46;
   }
 
-  .md .segment-instagram-checked {
+  .md .segment-instagram-checked .segment-button-instagram {
     --color-checked: #e4405f;
     --indicator-color: #e4405f;
   }
 
-  .md .segment-slack-checked {
+  .md .segment-slack-checked .segment-button-slack {
     --color-checked: #3aaf85;
     --indicator-color: #3aaf85;
   }
@@ -219,30 +282,30 @@
     --indicator-transition: none;
   }
 
-  .ios .segment-facebook-checked {
+  .ios .segment-facebook-checked .segment-button-facebook {
     --background-checked: #3a3d46;
     --color-checked: #ffffff;
   }
 
-  .ios .segment-instagram-checked {
+  .ios .segment-instagram-checked .segment-button-instagram {
     --background-checked: #e4405f;
     --color-checked: #ffffff;
   }
 
-  .ios .segment-slack-checked {
+  .ios .segment-slack-checked .segment-button-slack {
     --background-checked: #3aaf85;
     --color-checked: #ffffff;
   }
 
-  .ios .segment-facebook {
+  .ios .segment-button-facebook {
     --color: #3a3d46;
   }
 
-  .ios .segment-instagram {
+  .ios .segment-button-instagram {
     --color: #e4405f;
   }
 
-  .ios .segment-slack {
+  .ios .segment-button-slack {
     --color: #3aaf85;
   }
 
@@ -252,6 +315,23 @@
     --color: blue;
   }
 
+  .custom-states-color {
+    --color: red;
+    --color-activated: green;
+    --color-disabled: blue;
+    --color-checked: indigo;
+    --color-hover: orange;
+  }
+
+  .custom-states-background ion-segment-button {
+    --color: white;
+
+    --background: red;
+    --background-activated: green;
+    --background-disabled: blue;
+    --background-checked: indigo;
+    --background-hover: orange;
+  }
 </style>
 
 <script>
