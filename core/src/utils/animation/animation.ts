@@ -31,7 +31,6 @@ export const createAnimation = () => {
   let shouldCalculateNumAnimations = true;
   let keyframeName: string | undefined;
   let ani: Animation;
-  let clearKeyframeIndex = -1;
 
   const onFinishCallbacks: AnimationOnFinishCallback[] = [];
   const onFinishOneTimeCallbacks: AnimationOnFinishCallback[] = [];
@@ -66,7 +65,6 @@ export const createAnimation = () => {
     elements.length = 0;
     childAnimations.length = 0;
     _keyframes.length = 0;
-    clearKeyframeIndex = -1;
 
     clearOnFinish();
 
@@ -1037,13 +1035,8 @@ export const createAnimation = () => {
     if (firstFrame != null && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
       firstFrame[property] = value;
     } else {
-      const object: any = {
-        offset: 0
-      };
-      object[property] = value;
-
       _keyframes = [
-        object,
+        { offset: 0, [property]: value },
         ..._keyframes
       ];
     }
@@ -1051,88 +1044,23 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const to = (property: string, value: any, clearAfterAnimation?: boolean) => {
+  const to = (property: string, value: any) => {
     const lastFrameIndex = _keyframes.length - 1;
     const lastFrame = _keyframes[lastFrameIndex];
 
     if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
-
-      /**
-       * If last frame is not the clear frame
-       * set the value as usual
-       */
-      if (lastFrameIndex !== clearKeyframeIndex) {
-        lastFrame[property] = value;
-      } else {
-        /**
-         * If last frame is the keyframe then we need to
-         * set the value on the previous frame
-         */
-        const secondToLastFrame = _keyframes[_keyframes.length - 2];
-        secondToLastFrame[property] = value;
-      }
-
-    /**
-     * If not on the last possible keyframe, add
-     * the last keyframe
-     */
+      lastFrame[property] = value;
     } else {
       _keyframes = [
         ..._keyframes,
         { offset: 1, [property]: value }
       ];
     }
-
-    if (clearAfterAnimation) {
-      const lastFrameIndex = _keyframes.length - 1;
-      const lastFrame = _keyframes[lastFrameIndex];
-      if (lastFrame != null) {
-
-        /**
-         * If we are on the clear frame, just set the property
-         */
-        if (lastFrameIndex === clearKeyframeIndex) {
-          lastFrame[property] = '';
-          return ani;
-        }
-
-        /**
-         * If we are already setup for a clear frame, just mark it
-         * as such and set the property
-         */
-        const secondToLastFrameIndex = _keyframes.length - 2;
-        const secondToLastFrame = _keyframes[secondToLastFrameIndex];
-        if (lastFrame.offset === 1 && secondToLastFrame.offset === 0.99) {
-          lastFrame[property] = '';
-          secondToLastFrame[property] = value;
-          clearKeyframeIndex = secondToLastFrameIndex;
-          return ani;
-        }
-
-        /**
-         * If the last frame is not the clear frame
-         * and has an offset of 1, we need to move it
-         * back by a frame to account for the clear frame
-         */
-        if (lastFrame.offset === 1 && secondToLastFrame.offset !== 0.99) {
-          lastFrame.offset = 0.99;
-        }
-
-        /**
-         * Add a clear frame that runs immediately after
-         * the last frame that the user has set. This will
-         * allow users to clear certain properties from elements
-         */
-        _keyframes.push({ offset: lastFrame.offset + 0.01, [property]: '' });
-        clearKeyframeIndex = _keyframes.length - 1;
-      }
-    }
-
     return ani;
   };
 
-  const fromTo = (property: string, fromValue: any, toValue: any, clearAfterAnimation?: boolean) => {
-    return from(property, fromValue).to(property, toValue, clearAfterAnimation);
+  const fromTo = (property: string, fromValue: any, toValue: any) => {
+    return from(property, fromValue).to(property, toValue);
   };
 
   return ani = {

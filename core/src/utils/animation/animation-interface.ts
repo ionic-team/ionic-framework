@@ -16,8 +16,8 @@ export interface Animation {
   progressEnd(shouldComplete: boolean, step: number, dur: number | undefined): Animation;
 
   from(property: string, value: any): Animation;
-  to(property: string, value: any, clearAfterAnimation?: boolean): Animation;
-  fromTo(property: string, fromValue: any, toValue: any, clearAfterAnimation?: boolean): Animation;
+  to(property: string, value: any): Animation;
+  fromTo(property: string, fromValue: any, toValue: any): Animation;
   keyframes(keyframes: any[]): Animation;
 
   addAnimation(animationToADd: Animation | Animation[] | undefined | null): Animation;
