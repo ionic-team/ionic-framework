@@ -1,5 +1,4 @@
-
-import { defineCustomElements } from '@ionic/core/loader';
+import { applyPolyfills, defineCustomElements } from '@ionic/core/loader';
 import { addIcons } from 'ionicons';
 import { arrowBack, arrowDown, arrowForward, close, closeCircle, menu, reorder, search } from 'ionicons/icons';
 export { AlertButton, AlertInput, setupConfig } from '@ionic/core';
@@ -44,6 +43,4 @@ addIcons({
   'md-close-circle': closeCircle.md,
 });
 
-// TODO: defineCustomElements() is asyncronous
-// We need to use the promise
-defineCustomElements(window);
+applyPolyfills().then(() => defineCustomElements(window));
