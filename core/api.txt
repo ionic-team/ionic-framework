@@ -417,7 +417,7 @@ ion-infinite-scroll,method,complete,complete() => Promise<void>
 ion-infinite-scroll,event,ionInfinite,void,true
 
 ion-infinite-scroll-content,none
-ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
+ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
 ion-infinite-scroll-content,prop,loadingText,string | undefined,undefined,false,false
 
 ion-input,scoped
@@ -585,7 +585,7 @@ ion-loading,prop,leaveAnimation,((Animation: Animation, baseEl: any, opts?: any)
 ion-loading,prop,message,string | undefined,undefined,false,false
 ion-loading,prop,mode,"ios" | "md",undefined,false,false
 ion-loading,prop,showBackdrop,boolean,true,false,false
-ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
+ion-loading,prop,spinner,"bubbles" | "circles" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
 ion-loading,prop,translucent,boolean,false,false,false
 ion-loading,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-loading,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
@@ -744,6 +744,8 @@ ion-note,prop,color,string | undefined,undefined,false,false
 ion-note,prop,mode,"ios" | "md",undefined,false,false
 ion-note,css-prop,--color
 
+ion-page,none
+
 ion-picker,scoped
 ion-picker,prop,animated,boolean,true,false,false
 ion-picker,prop,backdropDismiss,boolean,true,false,false
@@ -892,7 +894,7 @@ ion-refresher,event,ionStart,void,true
 ion-refresher-content,none
 ion-refresher-content,prop,pullingIcon,null | string | undefined,undefined,false,false
 ion-refresher-content,prop,pullingText,string | undefined,undefined,false,false
-ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
+ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
 ion-refresher-content,prop,refreshingText,string | undefined,undefined,false,false
 
 ion-reorder,shadow
