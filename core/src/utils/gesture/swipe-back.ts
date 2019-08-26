@@ -36,7 +36,7 @@ export const createSwipeBackGesture = (
       const dur = missingDistance / Math.abs(velocity);
       realDur = Math.min(dur, 540);
     }
-    
+
     /**
      * TODO: stepValue can sometimes return a negative
      * value, but you can't have a negative time value
