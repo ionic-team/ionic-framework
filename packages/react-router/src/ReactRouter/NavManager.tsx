@@ -4,16 +4,21 @@ import { Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { ViewManager } from './ViewManager';
+import { generateUniqueId } from '../utils';
+import { LocationHistory } from '../utils/LocationHistory'
+import { ViewItem } from './ViewItem';
+import { ViewStack } from './RouteManagerContext';
 
 interface NavManagerProps extends RouteComponentProps {
-  findViewInfoByLocation: (location: HistoryLocation) => any;
-  findViewInfoById: (id: string) => any;
+  findViewInfoByLocation: (location: HistoryLocation) => {view?: ViewItem, viewStack?: ViewStack };
+  findViewInfoById: (id: string) => {view?: ViewItem, viewStack?: ViewStack };
 };
 interface NavManagerState extends NavContextState {};
 
 export class NavManager extends React.Component<NavManagerProps, NavManagerState> {
 
   listenUnregisterCallback: UnregisterCallback;
+  locationHistory: LocationHistory = new LocationHistory();
 
   constructor(props: NavManagerProps) {
     super(props);
@@ -31,6 +36,15 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
       this.setState({
         currentPath: location.pathname
       })
+      this.locationHistory.add(location);
+    });
+
+    this.locationHistory.add({
+      hash: window.location.hash,
+      key: generateUniqueId(6),
+      pathname: window.location.pathname,
+      search: window.location.search,
+      state: {}
     });
   }
 
@@ -43,9 +57,14 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
   goBack(defaultHref?: string) {
     const { view: leavingView } = this.props.findViewInfoByLocation(this.props.location);
     if (leavingView) {
-      const { view: enteringView } = this.props.findViewInfoById(leavingView.prevId);
+      const { view: enteringView } = this.props.findViewInfoById(leavingView.prevId!);
       if (enteringView) {
-        this.props.history.replace(enteringView.routeData.match.url, { direction: 'back' });
+        const lastLocation = this.locationHistory.findLastLocation(enteringView.routeData.match.url);
+        if (lastLocation) {
+          this.props.history.replace(lastLocation.pathname + lastLocation.search, { direction: 'back' });
+        } else {
+          this.props.history.replace(enteringView.routeData.match.url, { direction: 'back' });
+        }
       } else {
         defaultHref && this.props.history.replace(defaultHref, { direction: 'back' });
       }

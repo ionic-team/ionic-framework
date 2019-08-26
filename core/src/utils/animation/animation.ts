@@ -43,7 +43,7 @@ export const createAnimation = () => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const supportsWebAnimations = (typeof (window as any).Animation === 'function');
-  const ANIMATION_END_FALLBACK_PADDING_MS = 400;
+  const ANIMATION_END_FALLBACK_PADDING_MS = 100;
 
   /**
    * Returns the raw Web Animations object
@@ -64,6 +64,8 @@ export const createAnimation = () => {
 
     elements.length = 0;
     childAnimations.length = 0;
+    _keyframes.length = 0;
+
     clearOnFinish();
 
     initialized = false;
@@ -92,7 +94,7 @@ export const createAnimation = () => {
    * upon the animation ending
    */
   const onFinish = (callback: any, opts?: AnimationOnFinishOptions) => {
-    const callbacks = (opts && opts.oneTime) ? onFinishOneTimeCallbacks : onFinishCallbacks;
+    const callbacks = (opts && opts.oneTimeCallback) ? onFinishOneTimeCallbacks : onFinishCallbacks;
     callbacks.push({ callback, opts } as AnimationOnFinishCallback);
 
     return ani;
@@ -604,7 +606,7 @@ export const createAnimation = () => {
     }
   };
 
-  const initializeCSSAnimation = () => {
+  const initializeCSSAnimation = (toggleAnimationName = true) => {
     cleanUpStyleSheets();
 
     elements.forEach(element => {
@@ -614,7 +616,6 @@ export const createAnimation = () => {
         const stylesheet = createKeyframeStylesheet(keyframeName, keyframeRules, element);
         stylesheets.push(stylesheet);
 
-        setStyleProperty(element, 'animation-name', stylesheet.id || null);
         setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
         setStyleProperty(element, 'animation-timing-function', getEasing() || null);
         setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
@@ -628,6 +629,14 @@ export const createAnimation = () => {
 
         setStyleProperty(element, 'animation-iteration-count', iterationsCount);
         setStyleProperty(element, 'animation-play-state', 'paused');
+
+        if (toggleAnimationName) {
+          setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
+        }
+
+        requestAnimationFrame(() => {
+          setStyleProperty(element, 'animation-name', stylesheet.id || null);
+        });
       }
     });
   };
@@ -656,14 +665,14 @@ export const createAnimation = () => {
 
   };
 
-  const initializeAnimation = () => {
+  const initializeAnimation = (toggleAnimationName = true) => {
     beforeAnimation();
 
     if (_keyframes.length > 0) {
       if (supportsWebAnimations) {
         initializeWebAnimation();
       } else {
-        initializeCSSAnimation();
+        initializeCSSAnimation(toggleAnimationName);
       }
     }
 
@@ -706,26 +715,28 @@ export const createAnimation = () => {
 
   const updateCSSAnimation = (toggleAnimationName = true) => {
     elements.forEach(element => {
-      setStyleProperty(element, 'animation-name', keyframeName || null);
-      setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
-      setStyleProperty(element, 'animation-timing-function', getEasing() || null);
-      setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
-      setStyleProperty(element, 'animation-fill-mode', getFill() || null);
-      setStyleProperty(element, 'animation-direction', getDirection() || null);
-
-      const iterationsCount =
-        (getIterations() !== undefined) ?
-        (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString()
-        : null;
-
-      setStyleProperty(element, 'animation-iteration-count', iterationsCount);
-
-      if (toggleAnimationName) {
-        setStyleProperty(element, 'animation-name', `${keyframeName}-alt`);
-      }
-
       requestAnimationFrame(() => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
+        setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
+        setStyleProperty(element, 'animation-timing-function', getEasing() || null);
+        setStyleProperty(element, 'animation-delay', (getDelay() !== undefined) ? `${getDelay()}ms` : null);
+        setStyleProperty(element, 'animation-fill-mode', getFill() || null);
+        setStyleProperty(element, 'animation-direction', getDirection() || null);
+
+        const iterationsCount =
+          (getIterations() !== undefined) ?
+          (getIterations() === Infinity) ? 'infinite' : getIterations()!.toString()
+          : null;
+
+        setStyleProperty(element, 'animation-iteration-count', iterationsCount);
+
+        if (toggleAnimationName) {
+          setStyleProperty(element, 'animation-name', `${keyframeName}-alt`);
+        }
+
+        requestAnimationFrame(() => {
+          setStyleProperty(element, 'animation-name', keyframeName || null);
+        });
       });
     });
   };
@@ -754,7 +765,7 @@ export const createAnimation = () => {
       animation.progressStart(forceLinearEasing);
     });
 
-    pause(false);
+    pauseAnimation();
     shouldForceLinearEasing = forceLinearEasing;
 
     if (!initialized) {
@@ -779,8 +790,9 @@ export const createAnimation = () => {
     return ani;
   };
 
-  // TODO: Need to clean this up
   const progressEnd = (shouldComplete: boolean, step: number, dur: number | undefined) => {
+    shouldForceLinearEasing = false;
+
     childAnimations.forEach(animation => {
       animation.progressEnd(shouldComplete, step, dur);
     });
@@ -790,34 +802,10 @@ export const createAnimation = () => {
     }
 
     finished = false;
-    shouldForceLinearEasing = false;
+
     willComplete = shouldComplete;
 
     if (!shouldComplete) {
-      onFinish(() => {
-        pause(false);
-
-        willComplete = true;
-        forceDurationValue = undefined;
-
-        if (supportsWebAnimations) {
-          forceDirectionValue = undefined;
-          forceDelayValue = undefined;
-        } else {
-
-          /**
-           * Parent animations at this point may not have finished
-           */
-          forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
-          forceDelayValue = 0;
-          update();
-
-          forceDirectionValue = undefined;
-        }
-      }, {
-        oneTime: true
-      });
-
       forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
 
       if (supportsWebAnimations) {
@@ -828,20 +816,20 @@ export const createAnimation = () => {
         update(false, false);
       }
     } else {
-      onFinish(() => {
-        pause(false);
-
-        forceDurationValue = undefined;
-        forceDelayValue = undefined;
-      }, {
-        oneTime: true
-      });
-
       if (!supportsWebAnimations) {
         forceDelayValue = (step * getDuration()!) * -1;
         update(false, false);
       }
     }
+
+    onFinish(() => {
+      willComplete = true;
+      forceDurationValue = undefined;
+      forceDirectionValue = undefined;
+      forceDelayValue = undefined;
+    }, {
+      oneTimeCallback: true
+    });
 
     if (!parentAnimation) {
       play();
@@ -850,16 +838,7 @@ export const createAnimation = () => {
     return ani;
   };
 
-  /**
-   * Pause the animation.
-   */
-  const pause = (deep = true) => {
-    if (deep) {
-      childAnimations.forEach(animation => {
-        animation.pause();
-      });
-    }
-
+  const pauseAnimation = () => {
     if (initialized) {
       if (supportsWebAnimations) {
         getWebAnimations().forEach(animation => {
@@ -871,6 +850,17 @@ export const createAnimation = () => {
         });
       }
     }
+  };
+
+  /**
+   * Pause the animation.
+   */
+  const pause = () => {
+    childAnimations.forEach(animation => {
+      animation.pause();
+    });
+
+    pauseAnimation();
 
     return ani;
   };
@@ -882,7 +872,7 @@ export const createAnimation = () => {
    */
   const playAsync = () => {
     return new Promise(resolve => {
-      onFinish(resolve, { oneTime: true });
+      onFinish(resolve, { oneTimeCallback: true });
       play();
 
       return ani;
@@ -897,7 +887,7 @@ export const createAnimation = () => {
   const playSync = () => {
     shouldForceSyncPlayback = true;
 
-    onFinish(() => shouldForceSyncPlayback = false, { oneTime: true });
+    onFinish(() => shouldForceSyncPlayback = false, { oneTimeCallback: true });
     play();
 
     return ani;
@@ -919,7 +909,9 @@ export const createAnimation = () => {
 
     elements.forEach(element => {
       if (_keyframes.length > 0) {
-        setStyleProperty(element, 'animation-play-state', 'running');
+        requestAnimationFrame(() => {
+          setStyleProperty(element, 'animation-play-state', 'running');
+        });
       }
     });
 
@@ -941,9 +933,34 @@ export const createAnimation = () => {
 
        animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();
-        animationFinish();
+
+        /**
+         * Ensure that clean up
+         * is always done a frame
+         * before the onFinish handlers
+         * are fired. Otherwise, there
+         * may be flickering if a new
+         * animation is started on the same
+         * element too quickly
+         *
+         * TODO: Is there a cleaner way to do this?
+         */
+        requestAnimationFrame(() => {
+          clearCSSAnimationPlayState();
+          requestAnimationFrame(() => {
+              animationFinish();
+            });
+          });
       });
     }
+  };
+
+  const clearCSSAnimationPlayState = () => {
+    elements.forEach(element => {
+      removeStyleProperty(element, 'animation-duration');
+      removeStyleProperty(element, 'animation-delay');
+      removeStyleProperty(element, 'animation-play-state');
+    });
   };
 
   const playWebAnimations = () => {
@@ -956,18 +973,11 @@ export const createAnimation = () => {
     }
   };
 
-  const resetCSSAnimations = () => {
-    elements.forEach(element => {
-      const newKeyframeName = (keyframeName !== undefined) ? `${keyframeName}-alt` : null;
-      setStyleProperty(element, 'animation-name', newKeyframeName);
-    });
-  };
-
   const resetAnimation = () => {
     if (supportsWebAnimations) {
       setAnimationStep(0);
     } else {
-      resetCSSAnimations();
+      updateCSSAnimation();
     }
   };
 
@@ -1025,13 +1035,8 @@ export const createAnimation = () => {
     if (firstFrame != null && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
       firstFrame[property] = value;
     } else {
-      const object: any = {
-        offset: 0
-      };
-      object[property] = value;
-
       _keyframes = [
-        object,
+        { offset: 0, [property]: value },
         ..._keyframes
       ];
     }
@@ -1043,20 +1048,13 @@ export const createAnimation = () => {
     const lastFrame = _keyframes[_keyframes.length - 1];
 
     if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
-        lastFrame[property] = value;
+      lastFrame[property] = value;
     } else {
-
-      const object: any = {
-        offset: 1
-      };
-      object[property] = value;
-
       _keyframes = [
         ..._keyframes,
-        object
+        { offset: 1, [property]: value }
       ];
     }
-
     return ani;
   };
 
