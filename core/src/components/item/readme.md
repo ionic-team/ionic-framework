@@ -131,14 +131,14 @@ List Items
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
     Multiline text that should wrap when it is too long
     to fit on one line in the item.
     </ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
       <ion-text color="primary">
         <h3>H3 Primary Title</h3>
       </ion-text>
@@ -455,14 +455,14 @@ List Items
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
     Multiline text that should wrap when it is too long
     to fit on one line in the item.
     </ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
       <ion-text color="primary">
         <h3>H3 Primary Title</h3>
       </ion-text>
@@ -778,14 +778,14 @@ const Example: React.FC<{}> = () => (
       </IonItem>
 
       <IonItem>
-        <IonLabel text-wrap>
+        <IonLabel class="ion-text-wrap">
         Multiline text that should wrap when it is too long
         to fit on one line in the item.
         </IonLabel>
       </IonItem>
 
       <IonItem>
-        <IonLabel text-wrap>
+        <IonLabel class="ion-text-wrap">
           <IonText color="primary">
             <h3>H3 Primary Title</h3>
           </IonText>
@@ -1098,14 +1098,14 @@ List Items
     </ion-item>
 
     <ion-item>
-      <ion-label text-wrap>
+      <ion-label class="ion-text-wrap">
       Multiline text that should wrap when it is too long
       to fit on one line in the item.
       </ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label text-wrap>
+      <ion-label class="ion-text-wrap">
         <ion-text color="primary">
           <h3>H3 Primary Title</h3>
         </ion-text>
