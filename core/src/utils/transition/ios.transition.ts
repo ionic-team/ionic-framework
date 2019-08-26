@@ -337,7 +337,12 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
 
         enteringToolBarBg
           .beforeClearStyles([OPACITY])
-          .fromTo(OPACITY, 0.01, 1);
+          .keyframes([
+            { offset: 0, opacity: 0.01 },
+            { offset: 0.99, opacity: 1 },
+            { offset: 1, opacity: 'var(--opacity)' }
+            // TODO: Find a way to support clearing properties from Web Animations
+          ]);
 
         // forward direction, entering page has a back button
         if (!forward) {

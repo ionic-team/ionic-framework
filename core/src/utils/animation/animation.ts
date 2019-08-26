@@ -64,6 +64,8 @@ export const createAnimation = () => {
 
     elements.length = 0;
     childAnimations.length = 0;
+    _keyframes.length = 0;
+
     clearOnFinish();
 
     initialized = false;
@@ -1033,13 +1035,8 @@ export const createAnimation = () => {
     if (firstFrame != null && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
       firstFrame[property] = value;
     } else {
-      const object: any = {
-        offset: 0
-      };
-      object[property] = value;
-
       _keyframes = [
-        object,
+        { offset: 0, [property]: value },
         ..._keyframes
       ];
     }
@@ -1051,20 +1048,13 @@ export const createAnimation = () => {
     const lastFrame = _keyframes[_keyframes.length - 1];
 
     if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
-        lastFrame[property] = value;
+      lastFrame[property] = value;
     } else {
-
-      const object: any = {
-        offset: 1
-      };
-      object[property] = value;
-
       _keyframes = [
         ..._keyframes,
-        object
+        { offset: 1, [property]: value }
       ];
     }
-
     return ani;
   };
 
