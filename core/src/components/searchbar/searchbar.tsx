@@ -83,7 +83,8 @@ export class Searchbar implements ComponentInterface {
 
   /**
    * A hint to the browser for which keyboard to display.
-   * Possible values are: `"none"` | `"text"` | `"tel"` | `"url"` | `"email"` | `"numeric"` | `"decimal"` | `"search"`.
+   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
+   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
    */
   @Prop() inputmode: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search' = 'search';
 
