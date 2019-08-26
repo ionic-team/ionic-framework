@@ -2,7 +2,7 @@ import { IonicAnimation } from '../../interface';
 import { createAnimation } from '../animation/animation';
 import { TransitionOptions } from '../transition';
 
-const DURATION = 540;
+const DURATION = 540 * 3;
 const addSafeArea = (val: number, side = 'top'): string => {
   return `calc(${val}px + var(--ion-safe-area-${side}))`;
 };
@@ -47,12 +47,12 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
 
 const getLargeTitle = (refEl: any) => {
   return refEl.querySelector('ion-title[size=large]:not(.large-ion-title-hidden)');
-}
+};
 
 const getBackButton = (refEl: any) => {
   const buttonsList = refEl.querySelectorAll('ion-buttons');
-  
-  for (let buttons of buttonsList) {
+
+  for (const buttons of buttonsList) {
     const backButton = buttons.querySelector('ion-back-button');
 
     if (backButton !== null) {
@@ -64,44 +64,44 @@ const getBackButton = (refEl: any) => {
       }
     }
   }
-  
+
   return null;
-}
+};
 
 const createLargeTitleTransition = async (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, enteringEl: any, leavingEl: any) => {
-  rootAnimation;
+  console.log(rootAnimation);
   const enteringBackButton = getBackButton(enteringEl);
   const leavingLargeTitle = getLargeTitle(leavingEl);
-  
+
   const enteringLargeTitle = getLargeTitle(enteringEl);
-  const leavingBackButton = getBackButton(leavingEl); 
-  
-  const shouldAnimationForward = enteringBackButton !== null && leavingLargeTitle !== null && !backDirection;  
+  const leavingBackButton = getBackButton(leavingEl);
+
+  const shouldAnimationForward = enteringBackButton !== null && leavingLargeTitle !== null && !backDirection;
   const shouldAnimationBackward = enteringLargeTitle !== null && leavingBackButton !== null && backDirection;
-        
+
   if (shouldAnimationForward) {
     await Promise.all([
       animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle),
       animationBackButton(rootAnimation, rtl, backDirection, enteringBackButton)
-    ])
-    console.log('swiping forward. found an entering back button and a leaving large title',rootAnimation.childAnimations);
+    ]);
+    console.log('swiping forward. found an entering back button and a leaving large title', rootAnimation.childAnimations);
   } else if (shouldAnimationBackward) {
     await Promise.all([
       animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle),
       animationBackButton(rootAnimation, rtl, backDirection, leavingBackButton)
-    ])
+    ]);
     console.log('swiping backward. found entering large title and a leaving back button');
-  } 
-  
+  }
+
   return {
-    forward: shouldAnimationBackward,
+    forward: shouldAnimationForward,
     backward: shouldAnimationBackward
-  } 
-}
+  };
+};
 
 const animationBackButton = async (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
-  rtl;
-  
+  console.log(rtl);
+
   const enteringBackButtonTextAnimation = createAnimation();
   const enteringBackButtonIconAnimation = createAnimation();
 
@@ -119,14 +119,14 @@ const animationBackButton = async (rootAnimation: IonicAnimation, rtl: boolean, 
   const FORWARD_TEXT_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` },
     { offset: 1, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` }
-  ]
+  ];
   const BACKWARD_TEXT_KEYFRAMES = [
     { offset: 0, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
     { offset: 1, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` }
   ];
   const TEXT_KEYFRAMES = (backDirection) ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
-  
+
   enteringBackButtonTextAnimation
     .beforeStyles({
       'transform-origin': 'left center'
@@ -143,42 +143,42 @@ const animationBackButton = async (rootAnimation: IonicAnimation, rtl: boolean, 
   const FORWARD_ICON_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate3d(4px, ${addSafeArea(-35)}, 0) scale(0.6)` },
     { offset: 1, opacity: 1, transform: `translate3d(4px, ${addSafeArea(-40)}, 0) scale(1)` }
-  ]
+  ];
   const BACKWARD_ICON_KEYFRAMES = [
     { offset: 0, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` },
     { offset: 0.1, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` },
     { offset: 1, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` }
-  ]
+  ];
   const ICON_KEYFRAMES = (backDirection) ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
   enteringBackButtonIconAnimation
     .beforeStyles({
       'transform-origin': 'right center'
     })
     .keyframes(ICON_KEYFRAMES);
-    
-    if (backDirection) {
+
+  if (backDirection) {
       enteringBackButtonIconAnimation.delay(DURATION * 0.4).duration(DURATION * 0.5);
     }
-    
+
   rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation]);
-}
+};
 
 const animateLargeTitle = async (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
   const clonedTitleEl = await cloneElement(largeTitleEl, true, document.body, true);
   const clonedLargeTitleAnimation = createAnimation();
   clonedLargeTitleAnimation.addElement(clonedTitleEl);
-  
+
   const TRANSLATE = (rtl) ? '-18px' : '18px';
   const BACKWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate(${TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
     { offset: 0.1, opacity: 0 },
     { offset: 1, opacity: 1, transform: `translate(0, ${addSafeArea(49)}) scale(1)` }
-  ]
+  ];
   const FORWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0.99, transform: `translate(0, ${addSafeArea(49)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
     { offset: 1, opacity: 0, transform: `translate(${TRANSLATE}, ${addSafeArea(0)}) scale(0.5)` }
-  ]
+  ];
   const KEYFRAMES = (backDirection) ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
 
   clonedLargeTitleAnimation
@@ -198,13 +198,14 @@ const animateLargeTitle = async (rootAnimation: IonicAnimation, rtl: boolean, ba
     .keyframes(KEYFRAMES);
 
   rootAnimation.addAnimation(clonedLargeTitleAnimation);
-}
+};
 
 export const iosTransitionAnimation = async (navEl: HTMLElement, opts: TransitionOptions): Promise<IonicAnimation> => {
   try {
     const EASING = 'cubic-bezier(0.32,0.72,0,1)';
     const OPACITY = 'opacity';
     const TRANSFORM = 'transform';
+    console.log(TRANSFORM);
     const CENTER = '0%';
     const OFF_OPACITY = 0.8;
 
@@ -285,18 +286,21 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         enteringTransitionEffect.addAnimation([enteringTransitionCover, enteringTransitionShadow]);
         enteringContentAnimation.addAnimation([enteringTransitionEffect]);
       }
-    };
-    
-    const { forward, backward } = await createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
+    }
 
+    const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-ios');
+    const isEnteringLargeTitleCollapsed = (!!enteringContentHasLargeTitle) ? enteringContentHasLargeTitle.classList.contains('large-ion-title-hidden') : false;
+    console.log('entering has large', enteringContentHasLargeTitle, 'is collapsed', isEnteringLargeTitleCollapsed);
+
+    const { forward, backward } = await createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
+    console.log('Fwd', forward, 'Backwd', backward);
     enteringToolBarEls.forEach(enteringToolBarEl => {
       const enteringToolBar = createAnimation();
       enteringToolBar.addElement(enteringToolBarEl);
       rootAnimation.addAnimation(enteringToolBar);
 
       const enteringTitle = createAnimation();
-      const enteringTitleEl = enteringToolBarEl.querySelector('ion-title');
-      enteringTitle.addElement(enteringTitleEl);
+      enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title'));
 
       const enteringToolBarButtons = createAnimation();
       enteringToolBarButtons.addElement(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
@@ -311,18 +315,17 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
       const backButtonEl = enteringToolBarEl.querySelector('ion-back-button');
 
       enteringToolBar.addAnimation([enteringTitle, enteringToolBarButtons, enteringToolBarItems, enteringToolBarBg, enteringBackButton]);
-      
-      if (!backward) {
-        enteringTitle.fromTo(OPACITY, 0.01, 1);
-      } 
 
       enteringToolBarButtons.fromTo(OPACITY, 0.01, 1);
       enteringToolBarItems.fromTo(OPACITY, 0.01, 1);
 
       if (backDirection) {
-        
-        if (!backward) {
-          enteringTitle.fromTo('transform', `translateX(${OFF_LEFT})`, `translateX(${CENTER})`);
+
+        if (!backward && !enteringContentHasLargeTitle) {
+          console.log('anim entering title back');
+          enteringTitle
+            .fromTo('transform', `translateX(${OFF_LEFT})`, `translateX(${CENTER})`)
+            .fromTo(OPACITY, 0.01, 1);
         }
 
         enteringToolBarItems.fromTo('transform', `translateX(${OFF_LEFT})`, `translateX(${CENTER})`);
@@ -331,7 +334,11 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         enteringBackButton.fromTo(OPACITY, 0.01, 1);
       } else {
         // entering toolbar, forward direction
-        enteringTitle.fromTo('transform', `translateX(${OFF_RIGHT})`, `translateX(${CENTER})`);
+        if (!forward && !enteringContentHasLargeTitle) {
+          enteringTitle
+            .fromTo('transform', `translateX(${OFF_RIGHT})`, `translateX(${CENTER})`)
+            .fromTo(OPACITY, 0.01, 1);
+        }
 
         enteringToolBarItems.fromTo('transform', `translateX(${OFF_RIGHT})`, `translateX(${CENTER})`);
 
@@ -414,14 +421,19 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         }
       }
 
+      const leavingContentHasLargeTitle = leavingEl.querySelector('ion-header.header-collapse-ios');
+      const isLeavingLargeTitleCollapsed = (!!leavingContentHasLargeTitle) ? leavingContentHasLargeTitle.classList.contains('large-ion-title-hidden') : false;
+
+      const canAnimateTitle = !leavingContentHasLargeTitle || (leavingContentHasLargeTitle && isLeavingLargeTitleCollapsed);
+      const shouldAnimateTitle = (backDirection) ? !backward && canAnimateTitle : !forward && canAnimateTitle;
+      console.log('should animatie leaving title', shouldAnimateTitle, 'can animate title', canAnimateTitle);
       const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
       leavingToolBarEls.forEach(leavingToolBarEl => {
         const leavingToolBar = createAnimation();
         leavingToolBar.addElement(leavingToolBarEl);
 
         const leavingTitle = createAnimation();
-        const leavingTitleEl = leavingToolBarEl.querySelector('ion-title');
-        leavingTitle.addElement(leavingTitleEl);
+        leavingTitle.addElement(leavingToolBarEl.querySelector('ion-title'));
 
         const leavingToolBarButtons = createAnimation();
         leavingToolBarButtons.addElement(leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
@@ -447,16 +459,18 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         // fade out leaving toolbar items
         leavingBackButton.fromTo(OPACITY, 0.99, 0);
 
-        if (!forward) {
-          leavingTitle.fromTo(OPACITY, 0.99, 0);
-        }
-
         leavingToolBarButtons.fromTo(OPACITY, 0.99, 0);
         leavingToolBarItems.fromTo(OPACITY, 0.99, 0);
 
         if (backDirection) {
-          // leaving toolbar, back direction
-          leavingTitle.fromTo('transform', `translateX(${CENTER})`, (isRTL ? 'translateX(-100%)' : 'translateX(100%)'));
+
+          if (shouldAnimateTitle) {
+            // leaving toolbar, back direction
+            leavingTitle
+              .fromTo('transform', `translateX(${CENTER})`, (isRTL ? 'translateX(-100%)' : 'translateX(100%)'))
+              .fromTo(OPACITY, 0.99, 0);
+          }
+
           leavingToolBarItems.fromTo('transform', `translateX(${CENTER})`, (isRTL ? 'translateX(-100%)' : 'translateX(100%)'));
 
           // leaving toolbar, back direction, and there's no entering toolbar
@@ -475,12 +489,13 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
 
         } else {
           // leaving toolbar, forward direction
-          if (!forward) {
+          if (shouldAnimateTitle) {
             leavingTitle
               .fromTo('transform', `translateX(${CENTER})`, `translateX(${OFF_LEFT})`)
+              .fromTo(OPACITY, 0.99, 0)
               .afterClearStyles([TRANSFORM, OPACITY]);
           }
-          
+
           leavingToolBarItems
             .fromTo('transform', `translateX(${CENTER})`, `translateX(${OFF_LEFT})`)
             .afterClearStyles([TRANSFORM, OPACITY]);
@@ -491,7 +506,7 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         }
       });
     }
-        
+
     return rootAnimation;
   } catch (err) {
     throw err;

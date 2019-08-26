@@ -28,6 +28,16 @@
   padding-bottom: 13px;
 }
 
+ion-toolbar.in-toolbar ion-title,
+ion-toolbar.in-toolbar ion-buttons {
+  transition: all 0.2s ease-in-out;
+}
+
+.header-collapse-ios-inactive ion-toolbar.in-toolbar ion-title,
+.header-collapse-ios-inactive ion-toolbar.in-toolbar ion-buttons[collapse] {
+  opacity: 0;
+}
+
 @supports (backdrop-filter: blur(0)) {
   .header-translucent-ios {
     backdrop-filter: $header-ios-translucent-filter;

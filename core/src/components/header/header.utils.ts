@@ -13,6 +13,7 @@ export const createHeaderIndex = (headerEl: any): any | undefined => {
       const ionTitleEl = toolbar.querySelector('ion-title');
       return {
         el: toolbar,
+        background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
         ionTitleEl,
         innerTitleEl: (ionTitleEl) ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
         ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons'))
@@ -44,9 +45,13 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
 
     writeTask(() => {
       scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
-      setElOpacity(mainHeaderIndex.el, scaledOpacity);
+      setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], scaledOpacity);
     });
   });
+};
+
+const setToolbarBackgroundOpacity = (toolbar: any, opacity = 1) => {
+  toolbar.background.style.setProperty('--opacity', opacity);
 };
 
 /**
@@ -75,84 +80,28 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
     ) { return; }
 
     if (event.isIntersecting) {
-      makeHeaderInactive(mainHeaderIndex, true, true);
-      makeHeaderActive(scrollHeaderIndex, false);
+      makeHeaderInactive(mainHeaderIndex);
+      makeHeaderActive(scrollHeaderIndex);
     } else {
-      makeHeaderActive(mainHeaderIndex, true, true);
-      makeHeaderInactive(scrollHeaderIndex, true);
+      makeHeaderActive(mainHeaderIndex);
+      makeHeaderInactive(scrollHeaderIndex);
     }
   });
 };
 
-export const makeHeaderInactive = (headerIndex: any, transition = false, isMainHeader = false) => {
-  headerIndex.el.classList.add('no-translucent');
-
-  if (headerIndex.toolbars.length === 0) {
-    return;
-  }
-
-  headerIndex.toolbars.forEach((toolbar: any) => {
-    const ionTitleEl = toolbar.ionTitleEl;
-    if (!ionTitleEl) { return; }
-
-    setElOpacity(ionTitleEl, 0, transition);
-    hideCollapsableButtons(toolbar.ionButtonsEl, transition);
-
-    if (ionTitleEl.size === 'large') {
-      ionTitleEl.classList.add('large-ion-title-hidden');
-    }
-    
-    if (isMainHeader) {
-      ionTitleEl.classList.add('collapse-header-title-hidden');
-    }
-  });
+export const makeHeaderInactive = (headerIndex: any) => {
+  headerIndex.el.classList.add('header-collapse-ios-inactive');
+  setToolbarBackgroundOpacity(headerIndex.toolbars[0], 0);
 };
 
-export const makeHeaderActive = (headerIndex: any, transition = false, isMainHeader = false) => {
-  if (headerIndex.toolbars.length === 0) {
-    return;
-  }
-
-  headerIndex.toolbars.forEach((toolbar: any) => {
-    const ionTitleEl = toolbar.ionTitleEl;
-    if (!ionTitleEl) { return; }
-
-    setElOpacity(ionTitleEl, 1, transition);
-    showCollapsableButtons(toolbar.ionButtonsEl, transition);
-    
-    if (ionTitleEl.size === 'large') {
-      ionTitleEl.classList.remove('large-ion-title-hidden');
-    }
-    
-    if (isMainHeader) {
-      ionTitleEl.classList.remove('collapse-header-title-hidden');
-    }
-  });
-
-  headerIndex.el.classList.remove('no-translucent');
+export const makeHeaderActive = (headerIndex: any) => {
+  headerIndex.el.classList.remove('header-collapse-ios-inactive');
+  setToolbarBackgroundOpacity(headerIndex.toolbars[0], 1);
 };
 
 export const setElOpacity = (el: HTMLElement, opacity = 1, transition = false) => {
-  el.style.transition = (transition) ? TRANSITION : '';
-  el.style.opacity = `${opacity}`;
-};
-
-export const hideCollapsableButtons = (buttons: any[] = [], transition = false) => {
-  buttons.forEach((button: any) => {
-    if (!button.collapse) { return; }
-
-    button.classList.remove('ion-buttons-collapsed');
-    setElOpacity(button, 0, transition);
-  });
-};
-
-const showCollapsableButtons = (buttons: any[] = [], transition = false) => {
-  buttons.forEach((button: any) => {
-    if (!button.collapse) { return; }
-    
-    button.classList.add('ion-buttons-collapsed');
-    setElOpacity(button, 1, transition);
-  });
+  el.style.setProperty('transition', (transition) ? TRANSITION : '');
+  el.style.setProperty('opacity', `${opacity}`);
 };
 
 export const scaleLargeTitles = (toolbars: any[] = [], scale = 1, transition = false) => {
