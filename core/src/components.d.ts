@@ -1641,15 +1641,15 @@ export namespace Components {
   }
   interface IonNavLink {
     /**
-    * Component to navigate to. Only used if the `routerDirection` is `forward` or `root`.
+    * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
     */
     'component'?: NavComponent;
     /**
-    * Data you want to pass to the component as props. Only used if the `routerDirection` is `forward` or `root`.
+    * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
     */
     'componentProps'?: ComponentProps;
     /**
-    * It specifies the transition direction when navigating to another page.
+    * The transition direction when navigating to another page.
     */
     'routerDirection': RouterDirection;
   }
@@ -4954,15 +4954,15 @@ declare namespace LocalJSX {
   }
   interface IonNavLink extends JSXBase.HTMLAttributes<HTMLIonNavLinkElement> {
     /**
-    * Component to navigate to. Only used if the `routerDirection` is `forward` or `root`.
+    * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
     */
     'component'?: NavComponent;
     /**
-    * Data you want to pass to the component as props. Only used if the `routerDirection` is `forward` or `root`.
+    * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
     */
     'componentProps'?: ComponentProps;
     /**
-    * It specifies the transition direction when navigating to another page.
+    * The transition direction when navigating to another page.
     */
     'routerDirection'?: RouterDirection;
   }

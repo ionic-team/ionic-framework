@@ -11,17 +11,17 @@ export class NavLink implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * Component to navigate to. Only used if the `routerDirection` is `forward` or `root`.
+   * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
    */
   @Prop() component?: NavComponent;
 
   /**
-   * Data you want to pass to the component as props. Only used if the `routerDirection` is `forward` or `root`.
+   * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
    */
   @Prop() componentProps?: ComponentProps;
 
   /**
-   * It specifies the transition direction when navigating to another page.
+   * The transition direction when navigating to another page.
    */
   @Prop() routerDirection: RouterDirection = 'forward';
 
