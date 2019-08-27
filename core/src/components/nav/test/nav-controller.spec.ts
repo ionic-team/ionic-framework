@@ -119,8 +119,9 @@ describe('NavController', () => {
       mockViews(nav, [view1]);
 
       const view2 = mockView(MockView2);
+      
       await nav.push(view2, null, null, trnsDone);
-
+      
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
@@ -923,6 +924,27 @@ describe('NavController', () => {
   const MockView3 = 'mock-view3';
   const MockView4 = 'mock-view4';
   const MockView5 = 'mock-view5';
+  
+  const mockWebAnimation = (el: HTMLElement) => {
+    window.Animation = () => {};
+    
+    el.animate = () => {
+      const animation = {
+        stop: () => {},
+        pause: () => {},
+        cancel: () => {},
+        onfinish: undefined
+      }
+      
+      animation.play = () => {
+        if (animation.onfinish) {
+          animation.onfinish();
+        }
+      }
+      
+      return animation;
+    }
+  }
 
   function mockView(component?: any, params?: ComponentProps) {
     if (!component) {
@@ -931,6 +953,9 @@ describe('NavController', () => {
 
     const view = new ViewController(component, params);
     view.element = document.createElement(component) as HTMLElement;
+    
+    mockWebAnimation(view.element);
+    
     return view;
   }
 

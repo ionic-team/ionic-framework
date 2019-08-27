@@ -91,6 +91,23 @@ jobs:
           paths:
             - "*"
 
+  build-angular-server:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm install
+          working_directory: /tmp/workspace/packages/angular-server
+      - run:
+          command: npm run build.prod
+          working_directory: /tmp/workspace/packages/angular-server
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - "*"
+
   test-core-clean-build:
     <<: *defaults
     steps:
@@ -208,7 +225,11 @@ workflows:
 
       - build-angular:
           requires: [build-core]
+      - build-angular-server:
+          requires: [build-angular]
       - test-angular-lint:
           requires: [build-angular]
       - test-angular-e2e:
-          requires: [build-angular]
+          requires:
+            - build-angular
+            - build-angular-server

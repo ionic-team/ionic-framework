@@ -76,41 +76,38 @@ export class ToastExample {
 
 ```javascript
 async function presentToast() {
-  const toastController = document.querySelector('ion-toast-controller');
+  const toast = document.createElement('ion-toast');
+  toast.message = 'Your settings have been saved.';
+  toast.duration = 2000;
 
-  const toast = await toastController.create({
-    message: 'Your settings have been saved.',
-    duration: 2000
-  });
-  return await toast.present();
+  document.body.appendChild(toast);
+  return toast.present();
 }
 
 async function presentToastWithOptions() {
-  const toastController = document.querySelector('ion-toast-controller');
-
-  const toast = await toastController.create({
-    header: 'Toast header',
-    message: 'Click to Close',
-    position: 'top',
-    buttons: [
-      {
-        side: 'start',
-        icon: 'star',
-        text: 'Favorite',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Done',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
+  const toast = document.createElement('ion-toast');
+  toast.header = 'Toast header';
+  toast.message = 'Click to Close';
+  toast.position = 'top';
+  toast.buttons = [
+    {
+      side: 'start',
+      icon: 'star',
+      text: 'Favorite',
+      handler: () => {
+        console.log('Favorite clicked');
       }
-    ]
-  });
+    }, {
+      text: 'Done',
+      role: 'cancel',
+      handler: () => {
+        console.log('Cancel clicked');
+      }
+    }
+  ];
 
-  return await toast.present();
+  document.body.appendChild(toast);
+  return toast.present();
 }
 ```
 
@@ -121,7 +118,7 @@ async function presentToastWithOptions() {
 import React, { useState } from 'react';
 import { IonToast, IonContent, IonButton } from '@ionic/react';
 
-export const ToastExample: React.FunctionComponent = () => {
+export const ToastExample: React.FC = () => {
   const [showToast1, setShowToast1] = useState(false);
   const [showToast2, setShowToast2] = useState(false);
 

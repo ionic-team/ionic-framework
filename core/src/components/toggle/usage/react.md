@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonToggle, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-export const ToggleExample: React.FunctionComponent = () => (
+export const ToggleExample: React.FC = () => (
   <IonContent>
     {/*-- Default Toggle --*/}
     <IonToggle />

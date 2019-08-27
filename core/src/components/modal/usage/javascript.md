@@ -1,8 +1,3 @@
-```html
-<body>
-  <ion-modal-controller></ion-modal-controller>
-</body>
-```
 
 ```javascript
 customElements.define('modal-page', class extends HTMLElement {
@@ -24,17 +19,14 @@ customElements.define('modal-page', class extends HTMLElement {
   }
 });
 
-async function presentModal() {
-  // initialize controller
-  const modalController = document.querySelector('ion-modal-controller');
-
+function presentModal() {
   // create the modal with the `modal-page` component
-  const modalElement = await modalController.create({
-    component: 'modal-page'
-  });
+  const modalElement = document.createElement('ion-modal');
+  modalElement.component = 'modal-page';
 
   // present the modal
-  await modalElement.present();
+  document.body.appendChild(modalElement);
+  return modalElement.present();
 }
 ```
 
@@ -43,14 +35,13 @@ async function presentModal() {
 During creation of a modal, data can be passed in through the `componentProps`. The previous example can be written to include data:
 
 ```javascript
-const modalElement = await modalController.create({
-  component: 'modal-page',
-  componentProps: {
-    'firstName': 'Douglas',
-    'lastName': 'Adams',
-    'middleInitial': 'N'
-  }
-});
+const modalElement = document.createElement('ion-modal');
+modalElement.component = 'modal-page';
+modalElement.componentProps = {
+  'firstName': 'Douglas',
+  'lastName': 'Adams',
+  'middleInitial': 'N'
+};
 ```
 
 To get the data passed into the `componentProps`, query for the modal in the `modal-page`:
@@ -73,7 +64,7 @@ A modal can be dismissed by calling the dismiss method on the modal controller a
 
 ```javascript
 async function dismissModal() {
-  await modalController.dismiss({
+  await modal.dismiss({
     'dismissed': true
   });
 }

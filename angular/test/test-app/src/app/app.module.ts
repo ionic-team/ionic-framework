@@ -59,7 +59,7 @@ import { AlertComponent } from './alert/alert.component';
     AlertComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
