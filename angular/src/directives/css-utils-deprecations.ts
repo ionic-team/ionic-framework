@@ -11,7 +11,7 @@ export class CssUtilsDeprecations {
       .filter(n => DEPRECATED_ATTRIBUTES.includes(n));
 
     if (attributes.length > 0) {
-      console.warn(`Ionic CSS attributes are deprecated.
+      console.warn(`[DEPRECATED][CSS] Ionic CSS attributes are deprecated.
 Replace:
 '<${el.tagName.toLowerCase()} ${attributes.map(n => `${n}`).join(' ')}>'
 
