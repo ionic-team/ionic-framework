@@ -69,10 +69,3 @@ export class Anchor implements ComponentInterface {
     );
   }
 }
-
-const a: unknown;
-if (typeof a === 'object' && a !== null) {
-  if (a.hola) {
-    a.hola;
-  }
-}
