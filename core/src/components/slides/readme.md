@@ -614,14 +614,15 @@ Type: `Promise<number>`
 
 
 
-### `getSwiper() => Promise<SwiperInterface>`
+### `getSwiper() => Promise<any>`
 
-Get the raw Swiper instance.
+Get the Swiper instance.
 Use this to access the full Swiper API.
+See https://idangero.us/swiper/api/ for all API options.
 
 #### Returns
 
-Type: `Promise<Swiper>`
+Type: `Promise<any>`
 
 
 
