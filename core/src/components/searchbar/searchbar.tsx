@@ -82,6 +82,13 @@ export class Searchbar implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * A hint to the browser for which keyboard to display.
+   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
+   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+   */
+  @Prop() inputmode: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search' = 'search';
+
+  /**
    * Set the input's placeholder.
    * `placeholder` can accept either plaintext or HTML as a string.
    * To display characters normally reserved for HTML, they
@@ -170,6 +177,14 @@ export class Searchbar implements ComponentInterface {
   }
 
   componentDidLoad() {
+    if (this.showCancelButton === 'false' || this.showCancelButton === false) {
+      console.warn('The boolean values of showCancelButton are deprecated. Please use "never" instead of "false".');
+    }
+
+    if (this.showCancelButton === '' || this.showCancelButton === 'true' || this.showCancelButton === true) {
+      console.warn('The boolean values of showCancelButton are deprecated. Please use "focus" instead of "true".');
+    }
+
     this.positionElements();
     this.debounceChanged();
 
@@ -434,6 +449,7 @@ export class Searchbar implements ComponentInterface {
             disabled={this.disabled}
             ref={el => this.nativeInput = el}
             class="searchbar-input"
+            inputMode={this.inputmode}
             onInput={this.onInput}
             onBlur={this.onBlur}
             onFocus={this.onFocus}

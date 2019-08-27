@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { AlertButton, AlertInput, Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { BACKDROP, dismiss, eventMethod, isCancel, present, safeCall } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
@@ -163,6 +163,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
     }) as AlertInput);
   }
 
+  constructor() {
+    prepareOverlay(this.el);
+  }
+
   componentWillLoad() {
     this.inputsChanged();
     this.buttonsChanged();
@@ -303,7 +307,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
             disabled={i.disabled}
             tabIndex={0}
             role="checkbox"
-            class="alert-tappable alert-checkbox alert-checkbox-button ion-focusable"
+            class={{
+              'alert-tappable': true,
+              'alert-checkbox': true,
+              'alert-checkbox-button': true,
+              'ion-focusable': true,
+              'alert-checkbox-button-disabled': i.disabled || false
+            }}
           >
             <div class="alert-button-inner">
               <div class="alert-checkbox-icon">
@@ -335,7 +345,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
             disabled={i.disabled}
             id={i.id}
             tabIndex={0}
-            class="alert-radio-button alert-tappable alert-radio ion-focusable"
+            class={{
+              'alert-radio-button': true,
+              'alert-tappable': true,
+              'alert-radio': true,
+              'ion-focusable': true,
+              'alert-radio-button-disabled': i.disabled || false
+            }}
             role="radio"
           >
             <div class="alert-button-inner">
@@ -369,7 +385,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
               id={i.id}
               disabled={i.disabled}
               tabIndex={0}
-              class="alert-input"
+              class={{
+                'alert-input': true,
+                'alert-input-disabled': i.disabled || false
+              }}
             />
           </div>
         ))}

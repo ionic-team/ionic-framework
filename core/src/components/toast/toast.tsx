@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
-import { dismiss, eventMethod, isCancel, present, safeCall } from '../../utils/overlays';
+import { dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
@@ -30,7 +30,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   animation?: Animation;
   mode = getIonMode(this);
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonToastElement;
 
   /**
    * @internal
@@ -87,12 +87,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
 
   /**
-   * If `true`, the close button will be displayed.
+   * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
    */
   @Prop() showCloseButton = false;
 
   /**
-   * Text to display in the close button.
+   * @deprecated Use `buttons` instead. Text to display in the close button.
    */
   @Prop() closeButtonText?: string;
 
@@ -132,6 +132,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Emitted after the toast has dismissed.
    */
   @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+
+  constructor() {
+    prepareOverlay(this.el);
+  }
 
   /**
    * Present the toast overlay after it has been created.
@@ -187,8 +191,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
       })
       : [];
 
+    // tslint:disable-next-line: deprecation
     if (this.showCloseButton) {
       buttons.push({
+        // tslint:disable-next-line: deprecation
         text: this.closeButtonText || 'Close',
         handler: () => this.dismiss(undefined, 'cancel')
       });
@@ -243,7 +249,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
             <div class="toast-button-inner">
               {b.icon &&
                 <ion-icon
-                  name={b.icon}
+                  icon={b.icon}
                   slot={b.text === undefined ? 'icon-only' : undefined}
                   class="toast-icon"
                 />}

@@ -168,91 +168,94 @@
     </style>
 
     <script>
-      let selects = document.querySelectorAll('ion-select');
-      selects.forEach(function (select) {
-        select.addEventListener("ionChange", function () {
-          setResults(select);
+      customElements.whenDefined('ion-select-option').then(() => {
+        let selects = document.querySelectorAll('ion-select');
+        selects.forEach(function (select) {
+          select.addEventListener("ionChange", function () {
+            setResults(select);
+          });
         });
-      });
 
-      function setResults(select) {
-        if (select.id) {
-          var resultsEl = document.getElementById(select.id + 'Result');
-          if (resultsEl) {
-            var value = typeof select.value === 'object' ? JSON.stringify(select.value) : select.value;
-            resultsEl.innerHTML = value;
+        function setResults(select) {
+          debugger;
+          if (select.id) {
+            var resultsEl = document.getElementById(select.id + 'Result');
+            if (resultsEl) {
+              var value = typeof select.value === 'object' ? JSON.stringify(select.value) : select.value;
+              resultsEl.innerHTML = value;
+            }
           }
         }
-      }
 
-      var os = document.getElementById('os');
-      os.value = 'win3.1';
-      setResults(os);
+        var os = document.getElementById('os');
+        os.value = 'win3.1';
+        debugger;
+        setResults(os);
 
-      var month = document.getElementById('month');
-      month.value = '12';
-      setResults(month);
+        var month = document.getElementById('month');
+        month.value = '12';
+        setResults(month);
 
-      var year = document.getElementById('year');
+        var year = document.getElementById('year');
 
-      var years = [1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999];
+        var years = [1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999];
 
-      for (var i = 0; i < years.length; i++) {
-        var option = document.createElement('ion-select-option');
-        option.value = option.innerHTML = years[i];
+        for (var i = 0; i < years.length; i++) {
+          var option = document.createElement('ion-select-option');
+          option.value = option.innerHTML = years[i];
 
-        year.appendChild(option);
-      }
-
-      year.componentOnReady().then(() => {
-        year.value = 1994;
-      });
-
-      setResults(year);
-
-      var currencies = [
-        {
-          symbol: '$',
-          code: 'USD',
-          name: 'US Dollar'
-        },
-        {
-          symbol: '€',
-          code: 'EUR',
-          name: 'Euro'
-        },
-        {
-          symbol: '£',
-          code: 'FKP',
-          name: 'Falkland Islands Pound'
-        },
-        {
-          symbol: '¢',
-          code: 'GHS',
-          name: 'Ghana Cedi'
+          year.appendChild(option);
         }
-      ];
-      var currency = document.getElementById('currency');
 
-      for (var i = 0; i < currencies.length; i++) {
-        var option = document.createElement('ion-select-option');
-        option.value = currencies[i];
-        option.innerHTML = `${currencies[i].symbol} (${currencies[i].code}) ${currencies[i].name}`;
+        year.componentOnReady().then(() => {
+          year.value = 1994;
+        });
 
-        currency.appendChild(option);
-      }
-      currency.value = currencies[0];
-      currency.selectedText = getCurrencySelectedText();
-      setResults(currency);
+        setResults(year);
 
-      currency.addEventListener('ionChange', function (ev) {
+        var currencies = [
+          {
+            symbol: '$',
+            code: 'USD',
+            name: 'US Dollar'
+          },
+          {
+            symbol: '€',
+            code: 'EUR',
+            name: 'Euro'
+          },
+          {
+            symbol: '£',
+            code: 'FKP',
+            name: 'Falkland Islands Pound'
+          },
+          {
+            symbol: '¢',
+            code: 'GHS',
+            name: 'Ghana Cedi'
+          }
+        ];
+        var currency = document.getElementById('currency');
+
+        for (var i = 0; i < currencies.length; i++) {
+          var option = document.createElement('ion-select-option');
+          option.value = currencies[i];
+          option.innerHTML = `${currencies[i].symbol} (${currencies[i].code}) ${currencies[i].name}`;
+
+          currency.appendChild(option);
+        }
+        currency.value = currencies[0];
         currency.selectedText = getCurrencySelectedText();
+        setResults(currency);
+
+        currency.addEventListener('ionChange', function (ev) {
+          currency.selectedText = getCurrencySelectedText();
+        });
+
+        function getCurrencySelectedText() {
+          return currency.value.symbol;
+        }
       });
-
-      function getCurrencySelectedText() {
-        return currency.value.symbol;
-      }
-
       function resetGender() {
         var gender = document.getElementById('gender');
         gender.value = null;

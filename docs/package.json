@@ -1,6 +1,6 @@
 {
   "name": "@ionic/docs",
-  "version": "4.7.1",
+  "version": "4.8.0",
   "description": "Pre-packaged API documentation for the Ionic docs.",
   "main": "core.json",
   "files": [
@@ -15,5 +15,5 @@
   "bugs": {
     "url": "https://github.com/ionic-team/ionic-docs/issues"
   },
-  "homepage": "https://github.com/ionic-team/ionic-docs#readme"
+  "homepage": "https://ionicframework.com/docs"
 }

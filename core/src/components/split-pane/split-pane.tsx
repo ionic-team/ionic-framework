@@ -57,12 +57,12 @@ export class SplitPane implements ComponentInterface {
     this.ionSplitPaneVisible.emit(detail);
   }
 
-  componentDidLoad() {
+  connectedCallback() {
     this.styleChildren();
     this.updateState();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.rmL) {
       this.rmL();
       this.rmL = undefined;

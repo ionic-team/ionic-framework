@@ -20,8 +20,8 @@ export class RadioValueAccessor extends ValueAccessor {
     super(el);
   }
 
-  @HostListener('ionSelect', ['$event.target.checked'])
-  _handleIonSelect(value: any) {
-    this.handleChangeEvent(value);
+  @HostListener('ionSelect', ['$event.target'])
+  _handleIonSelect(el: any) {
+    this.handleChangeEvent(el, el.checked);
   }
 }

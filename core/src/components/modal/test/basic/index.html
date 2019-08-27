@@ -40,7 +40,6 @@
         <ion-button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal2()">Present and close modal (crash)</ion-button>
       </p>
     </ion-content>
-    <ion-modal-controller></ion-modal-controller>
 
   </ion-app>
 
@@ -48,10 +47,7 @@
     window.addEventListener("ionModalDidDismiss", function (e) { console.log('DidDismiss', e) })
     window.addEventListener("ionModalWillDismiss", function (e) { console.log('WillDismiss', e) })
 
-    async function createModal() {
-      // initialize controller
-      const modalController = document.querySelector('ion-modal-controller');
-
+    function createModal() {
       // create component to open
       const element = document.createElement('div');
       element.innerHTML = `
@@ -67,31 +63,31 @@
       </ion-content>
       `;
 
+      // present the modal
+      const modalElement = Object.assign(document.createElement('ion-modal'), {
+        component: element
+      });
       // listen for close event
       const button = element.querySelector('ion-button');
       button.addEventListener('click', () => {
-        modalController.dismiss();
+        modalElement.dismiss();
       });
-
-      // present the modal
-      const modalElement = await modalController.create({
-        component: element
-      });
+      document.body.appendChild(modalElement);
       return modalElement;
     }
 
     async function presentModal() {
-      const modal = await createModal();
+      const modal = createModal();
       await modal.present();
     }
     async function presentCloseModal() {
-      const modal = await createModal();
+      const modal = createModal();
       await modal.present();
       await modal.dismiss();
     }
 
     async function presentCloseModal2() {
-      const modal = await createModal();
+      const modal = createModal();
       modal.present();
       setTimeout(() => {
         modal.dismiss();
