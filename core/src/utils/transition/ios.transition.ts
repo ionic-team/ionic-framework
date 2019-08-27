@@ -46,22 +46,19 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
 };
 
 const getLargeTitle = (refEl: any) => {
-  return refEl.querySelector('ion-title[size=large]:not(.large-ion-title-hidden)');
+  return refEl.querySelector('ion-header:not(.header-collapse-ios-inactive) ion-title[size=large]');
 };
 
 const getBackButton = (refEl: any) => {
   const buttonsList = refEl.querySelectorAll('ion-buttons');
 
   for (const buttons of buttonsList) {
+    const parentHeader = buttons.closest('ion-header');
+    const activeHeader = parentHeader && !parentHeader.classList.contains('header-collapse-ios-inactive');
     const backButton = buttons.querySelector('ion-back-button');
 
-    if (backButton !== null) {
-      if (
-        !buttons.collapse ||
-        (buttons.collapse && buttons.classList.contains('ion-buttons-collapsed'))
-      ) {
-        return backButton;
-      }
+    if (backButton !== null && ((buttons.collapse && activeHeader) || !buttons.collapse)) {
+      return backButton;
     }
   }
 
@@ -297,17 +294,19 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
       enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title'));
 
       const enteringToolBarButtons = createAnimation();
-      const buttons = enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]');
+      const buttons = Array.from(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
+
+      const parentHeader = enteringToolBarEl.closest('ion-header');
+      const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-ios-inactive');
 
       let buttonsToAnimate;
       if (backDirection) {
-        const inactiveParentHeader = enteringToolBarEl.closest('ion-header.header-collapse-ios-inactive');
-        buttonsToAnimate = Array.from(buttons).filter(button => {
+        buttonsToAnimate = buttons.filter(button => {
           const isCollapseButton = (button as any).collapse;
-          return (isCollapseButton && !inactiveParentHeader) || !isCollapseButton;
+          return (isCollapseButton && !inactiveHeader) || !isCollapseButton;
         });
       } else {
-        buttonsToAnimate = Array.from(buttons).filter(button => !(button as any).collapse);
+        buttonsToAnimate = buttons.filter(button => !(button as any).collapse);
       }
 
       enteringToolBarButtons.addElement(buttonsToAnimate);
@@ -332,7 +331,7 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
 
       if (backDirection) {
 
-        if (!backward && !enteringContentHasLargeTitle) {
+        if (!inactiveHeader) {
           enteringTitle
             .fromTo('transform', `translateX(${OFF_LEFT})`, `translateX(${CENTER})`)
             .fromTo(OPACITY, 0.01, 1);
@@ -431,12 +430,6 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         }
       }
 
-      const leavingContentHasLargeTitle = leavingEl.querySelector('ion-header.header-collapse-ios');
-      const isLeavingLargeTitleCollapsed = (!!leavingContentHasLargeTitle) ? leavingContentHasLargeTitle.classList.contains('large-ion-title-hidden') : false;
-
-      const canAnimateTitle = !leavingContentHasLargeTitle || (leavingContentHasLargeTitle && isLeavingLargeTitleCollapsed);
-      const shouldAnimateTitle = (backDirection) ? !backward && canAnimateTitle : !forward && canAnimateTitle;
-
       const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
       leavingToolBarEls.forEach(leavingToolBarEl => {
         const leavingToolBar = createAnimation();
@@ -447,7 +440,9 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
 
         const leavingToolBarButtons = createAnimation();
         const buttons = leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]');
-        const inactiveHeader = leavingToolBarEl.closest('ion-header.header-collapse-ios-inactive');
+
+        const parentHeader = leavingToolBarEl.closest('ion-header');
+        const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-ios-inactive');
 
         const buttonsToAnimate = Array.from(buttons).filter(button => {
           const isCollapseButton = (button as any).collapse;
@@ -482,7 +477,7 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
 
         if (backDirection) {
 
-          if (shouldAnimateTitle) {
+          if (!inactiveHeader) {
             // leaving toolbar, back direction
             leavingTitle
               .fromTo('transform', `translateX(${CENTER})`, (isRTL ? 'translateX(-100%)' : 'translateX(100%)'))
@@ -507,7 +502,7 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
 
         } else {
           // leaving toolbar, forward direction
-          if (shouldAnimateTitle) {
+          if (!inactiveHeader) {
             leavingTitle
               .fromTo('transform', `translateX(${CENTER})`, `translateX(${OFF_LEFT})`)
               .fromTo(OPACITY, 0.99, 0)
