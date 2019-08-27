@@ -39,14 +39,14 @@ export class Backdrop implements ComponentInterface {
    */
   @Event() ionBackdropTap!: EventEmitter<void>;
 
-  componentDidLoad() {
+  connectedCallback() {
     if (this.stopPropagation) {
       this.blocker.block();
     }
   }
 
-  componentDidUnload() {
-    this.blocker.destroy();
+  disconnectedCallback() {
+    this.blocker.unblock();
   }
 
   @Listen('touchstart', { passive: false, capture: true })

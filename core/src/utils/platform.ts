@@ -6,7 +6,7 @@ interface IsPlatformSignature {
   (win: Window, plt: Platforms): boolean;
 }
 
-export const getPlatforms = (win?: any) => setupPlatforms(win);
+export const getPlatforms = (win: any) => setupPlatforms(win);
 
 export const isPlatform: IsPlatformSignature = (winOrPlatform: Window | Platforms | undefined, platform?: Platforms) => {
   if (typeof winOrPlatform === 'string') {
@@ -96,15 +96,15 @@ const isElectron = (win: Window): boolean =>
   testUserAgent(win, /electron/i);
 
 const isPWA = (win: Window): boolean =>
-  (win as any).matchMedia ? (win.matchMedia('(display-mode: standalone)').matches || (win.navigator as any).standalone) : false;
+  !!(win.matchMedia('(display-mode: standalone)').matches || (win.navigator as any).standalone);
 
 export const testUserAgent = (win: Window, expr: RegExp) =>
-  (win as any).navigator && (win.navigator as any).userAgent ? expr.test(win.navigator.userAgent) : false;
+  expr.test(win.navigator.userAgent);
 
-const matchMedia = (win: any, query: string): boolean =>
-  (win as any).matchMedia ? win.matchMedia(query).matches : false;
+const matchMedia = (win: Window, query: string): boolean =>
+  win.matchMedia(query).matches;
 
-export const PLATFORMS_MAP = {
+const PLATFORMS_MAP = {
   'ipad': isIpad,
   'iphone': isIphone,
   'ios': isIOS,

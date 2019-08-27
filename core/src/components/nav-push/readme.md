@@ -7,6 +7,8 @@ It is the element form of `NavController.push()`
 <!-- Auto Generated Below -->
 
 
+> **[DEPRECATED]** Use `<ion-nav-link component="MyComponent">` instead.
+
 ## Properties
 
 | Property         | Attribute   | Description                                     | Type                                                                       | Default     |

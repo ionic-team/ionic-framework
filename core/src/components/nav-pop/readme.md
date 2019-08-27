@@ -6,6 +6,8 @@
 <!-- Auto Generated Below -->
 
 
+> **[DEPRECATED]** Use `<ion-nav-link routerDirection="back">` instead.
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
