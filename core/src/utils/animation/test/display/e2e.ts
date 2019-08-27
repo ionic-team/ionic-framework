@@ -33,5 +33,5 @@ const runTest = async (page: any) => {
     return payload.animationStatus.join(', ') === ['AnimationBFinished', 'AnimationAFinished', 'AnimationRootFinished'].join(', ');
 
   }, { animationStatus });
-  screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot('end animation'));
 };

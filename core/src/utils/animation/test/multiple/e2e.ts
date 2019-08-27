@@ -24,7 +24,7 @@ test(`animation:web: multiple`, async () => {
     return payload.animationStatus.join(', ') === ['AnimationCSubBFinished', 'AnimationBFinished', 'AnimationCSubAFinished', 'AnimationCFinished', 'AnimationAFinished', 'AnimationRootFinished'].join(', ');
 
   }, { animationStatus });
-  screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot('end animation'));
 });
 
 test(`animation:css: multiple`, async () => {
@@ -49,5 +49,5 @@ test(`animation:css: multiple`, async () => {
     return payload.animationStatus.join(', ') === ['AnimationCSubBFinished', 'AnimationBFinished', 'AnimationCSubAFinished', 'AnimationCFinished', 'AnimationAFinished', 'AnimationRootFinished'].join(', ');
 
   }, { animationStatus });
-  screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot('end animation'));
 });

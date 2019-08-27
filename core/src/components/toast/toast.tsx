@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
-import { dismiss, eventMethod, isCancel, present, safeCall } from '../../utils/overlays';
+import { dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
@@ -30,7 +30,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   animation?: Animation;
   mode = getIonMode(this);
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonToastElement;
 
   /**
    * @internal
@@ -122,6 +122,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Emitted after the toast has dismissed.
    */
   @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+
+  constructor() {
+    prepareOverlay(this.el);
+  }
 
   /**
    * Present the toast overlay after it has been created.

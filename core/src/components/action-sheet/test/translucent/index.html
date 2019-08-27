@@ -14,37 +14,35 @@
 <body>
   <ion-app>
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Action Sheet - Translucent</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Action Sheet - Translucent</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-content class="ion-padding">
-        <ion-action-sheet-controller></ion-action-sheet-controller>
+    <ion-content class="ion-padding">
+      <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
+      <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
+      <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
+      <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
+      <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
+      <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
 
-        <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
-        <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
-        <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
-        <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
-        <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
-        <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
-
-        <ion-grid>
-          <ion-row>
-            <ion-col size="4"><f class="red"></f></ion-col>
-            <ion-col size="4"><f class="green"></f></ion-col>
-            <ion-col size="4"><f class="blue"></f></ion-col>
-            <ion-col size="4"><f class="yellow"></f></ion-col>
-            <ion-col size="4"><f class="pink"></f></ion-col>
-            <ion-col size="4"><f class="purple"></f></ion-col>
-            <ion-col size="4"><f class="black"></f></ion-col>
-            <ion-col size="4"><f class="fuchsia"></f></ion-col>
-            <ion-col size="4"><f class="orange"></f></ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-content>
-
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4"><f class="red"></f></ion-col>
+          <ion-col size="4"><f class="green"></f></ion-col>
+          <ion-col size="4"><f class="blue"></f></ion-col>
+          <ion-col size="4"><f class="yellow"></f></ion-col>
+          <ion-col size="4"><f class="pink"></f></ion-col>
+          <ion-col size="4"><f class="purple"></f></ion-col>
+          <ion-col size="4"><f class="black"></f></ion-col>
+          <ion-col size="4"><f class="fuchsia"></f></ion-col>
+          <ion-col size="4"><f class="orange"></f></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-content>
+    <ion-action-sheet-controller></ion-action-sheet-controller>
   </ion-app>
 
   <script>
