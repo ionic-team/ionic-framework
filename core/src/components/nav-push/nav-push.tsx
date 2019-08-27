@@ -20,7 +20,7 @@ export class NavPush implements ComponentInterface {
   @Prop() componentProps?: ComponentProps;
 
   componentDidLoad() {
-    console.warn('`<ion-nav-push component="MyComponent">` is deprecated. Use `<ion-nav-link component="MyComponent">` instead.');
+    console.warn('[DEPRECATED][ion-nav-push] `<ion-nav-push component="MyComponent">` is deprecated. Use `<ion-nav-link component="MyComponent">` instead.');
   }
 
   private push = () => {

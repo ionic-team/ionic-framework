@@ -40,7 +40,7 @@ export class Anchor implements ComponentInterface {
   @Prop() routerDirection: RouterDirection = 'forward';
 
   componentDidLoad() {
-    console.warn('The <ion-anchor> component has been deprecated. Please use an <ion-router-link> if you are using a vanilla JS or Stencil project or an <a> with the Angular router.');
+    console.warn('[DEPRECATED][ion-anchor] The <ion-anchor> component has been deprecated. Please use an <ion-router-link> if you are using a vanilla JS or Stencil project or an <a> with the Angular router.');
   }
 
   private onClick = (ev: Event) => {
@@ -67,5 +67,12 @@ export class Anchor implements ComponentInterface {
         </a>
       </Host>
     );
+  }
+}
+
+const a: unknown;
+if (typeof a === 'object' && a !== null) {
+  if (a.hola) {
+    a.hola;
   }
 }
