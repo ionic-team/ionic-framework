@@ -181,7 +181,7 @@ export class Segment implements ComponentInterface {
 
     // Transform the indicator based on the index of the button
     const left = `${(index * 100)}%`;
-    const width = `calc(${1 / buttons.length * 100}%)`;
+    const width = `calc(${100 / buttons.length}%)`;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
