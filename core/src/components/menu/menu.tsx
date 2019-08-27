@@ -136,7 +136,7 @@ export class Menu implements ComponentInterface, MenuI {
    */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
-  async componentWillLoad() {
+  async connectedCallback() {
     if (this.type === undefined) {
       this.type = config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
     }
@@ -182,11 +182,12 @@ export class Menu implements ComponentInterface, MenuI {
     this.updateState();
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     this.ionMenuChange.emit({ disabled: this.disabled, open: this._isOpen });
+    this.updateState();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.blocker.destroy();
     menuController._unregister(this);
     if (this.animation) {
