@@ -3,6 +3,9 @@ import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 import { ComponentRef, ModalOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
+/**
+ * @deprecated Use the `modalController` exported from core.
+ */
 @Component({
   tag: 'ion-modal-controller'
 })

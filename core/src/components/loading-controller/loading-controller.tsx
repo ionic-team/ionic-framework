@@ -3,6 +3,9 @@ import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 import { LoadingOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
+/**
+ * @deprecated Use the `loadingController` exported from core.
+ */
 @Component({
   tag: 'ion-loading-controller'
 })
