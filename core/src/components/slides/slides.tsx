@@ -310,11 +310,12 @@ export class Slides implements ComponentInterface {
   }
 
   /**
-   * Get the raw Swiper instance.
+   * Get the Swiper instance.
    * Use this to access the full Swiper API.
+   * See https://idangero.us/swiper/api/ for all API options.
    */
   @Method()
-  async getSwiper(): Promise<SwiperInterface> {
+  async getSwiper(): Promise<any> {
     return this.swiper;
   }
 
