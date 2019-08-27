@@ -2388,6 +2388,10 @@ export namespace Components {
     */
     'getPreviousIndex': () => Promise<number>;
     /**
+    * Get the Swiper instance. Use this to access the full Swiper API. See https://idangero.us/swiper/api/ for all API options.
+    */
+    'getSwiper': () => Promise<any>;
+    /**
     * Get whether or not the current slide is the first slide.
     */
     'isBeginning': () => Promise<boolean>;
