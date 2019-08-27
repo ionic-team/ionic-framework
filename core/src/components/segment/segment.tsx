@@ -162,7 +162,8 @@ export class Segment implements ComponentInterface {
     const indicator = this.indicatorEl;
     const activated = this.activated;
     const buttons = this.getButtons();
-    const index = buttons.findIndex(button => button.value === this.value);
+    const value = this.value;
+    const index = buttons.findIndex(button => button.value ===value);
 
     // If there is no indicator rendered or there is no checked button
     // then don't move the indicator's position
