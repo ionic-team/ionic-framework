@@ -6,6 +6,8 @@ Alert controllers programmatically control the alert component. Alerts can be cr
 <!-- Auto Generated Below -->
 
 
+> **[DEPRECATED]** Use the `alertController` export from `
+
 ## Methods
 
 ### `create(options: AlertOptions) => Promise<HTMLIonAlertElement>`

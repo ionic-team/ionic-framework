@@ -8,6 +8,8 @@ Loading controllers programmatically control the loading component. Loadings can
 <!-- Auto Generated Below -->
 
 
+> **[DEPRECATED]** Use the `loadingController` export from `
+
 ## Methods
 
 ### `create(options?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>`

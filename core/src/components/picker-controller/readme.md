@@ -5,6 +5,8 @@
 <!-- Auto Generated Below -->
 
 
+> **[DEPRECATED]** Use the `pickerController` export from `
+
 ## Methods
 
 ### `create(options: PickerOptions) => Promise<HTMLIonPickerElement>`

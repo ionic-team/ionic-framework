@@ -5,6 +5,8 @@ Action Sheet controllers programmatically control the action sheet component. Ac
 <!-- Auto Generated Below -->
 
 
+> **[DEPRECATED]** Use the `actionSheetController` export from `
+
 ## Methods
 
 ### `create(options: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>`
