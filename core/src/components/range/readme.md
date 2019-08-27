@@ -97,7 +97,7 @@ left or right of the range.
 import React from 'react';
 import { IonList, IonItem, IonRange, IonLabel, IonIcon, IonContent } from '@ionic/react';
 
-export const RangeExample: React.FunctionComponent = () => (
+export const RangeExample: React.FC = () => (
   <IonContent>
     <IonList>
       <IonItem>

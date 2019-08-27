@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Method } from '@stencil/core';
+import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 
 import { ComponentRef, OverlayController, PopoverOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -7,6 +7,14 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
   tag: 'ion-popover-controller',
 })
 export class PopoverController implements ComponentInterface, OverlayController {
+
+  constructor() {
+    if (Build.isDev) {
+      console.warn(`[DEPRECATED][ion-popover-controller] Use the popoverController export from @ionic/core:
+  import { popoverController } from '@ionic/core';
+  const popover = await popoverController.create({...});`);
+    }
+  }
 
   /**
    * Create a popover overlay with popover options.

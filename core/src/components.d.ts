@@ -31,7 +31,6 @@ import {
   ItemReorderEventDetail,
   LoadingOptions,
   MenuChangeEventDetail,
-  MenuControllerI,
   MenuI,
   ModalOptions,
   NavComponent,
@@ -959,9 +958,9 @@ export namespace Components {
     */
     'getInputElement': () => Promise<HTMLInputElement>;
     /**
-    * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
     */
-    'inputmode'?: string;
+    'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**
     * The maximum value, which must not be less than its minimum (min attribute) value.
     */
@@ -1378,7 +1377,6 @@ export namespace Components {
     'type': 'submit' | 'reset' | 'button';
   }
   interface IonMenuController {
-    '_getInstance': () => Promise<MenuControllerI>;
     /**
     * Close the menu. If a menu is specified, it will close that menu. If no menu is specified, then it will close any menu that is open. If it does not find any open menus, it will return `false`.
     * @param menu The menuId or side of the menu to close.
@@ -2184,7 +2182,7 @@ export namespace Components {
     */
     'getInputElement': () => Promise<HTMLInputElement>;
     /**
-    * A hint to the browser for which keyboard to display. Possible values are: `"none"` | `"text"` | `"tel"` | `"url"` | `"email"` | `"numeric"` | `"decimal"` | `"search"`.
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
     */
     'inputmode': 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**
@@ -4449,9 +4447,9 @@ declare namespace LocalJSX {
     */
     'disabled'?: boolean;
     /**
-    * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
     */
-    'inputmode'?: string;
+    'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**
     * The maximum value, which must not be less than its minimum (min attribute) value.
     */
@@ -5446,7 +5444,7 @@ declare namespace LocalJSX {
     */
     'disabled'?: boolean;
     /**
-    * A hint to the browser for which keyboard to display. Possible values are: `"none"` | `"text"` | `"tel"` | `"url"` | `"email"` | `"numeric"` | `"decimal"` | `"search"`.
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
     */
     'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**

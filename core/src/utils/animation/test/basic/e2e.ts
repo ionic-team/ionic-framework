@@ -24,7 +24,7 @@ test(`animation:web: basic`, async () => {
     return payload.animationFinishedCount.count === 1;
   }, { animationFinishedCount });
 
-  screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot('end animation'));
 });
 
 test(`animation:css: basic`, async () => {
@@ -49,5 +49,5 @@ test(`animation:css: basic`, async () => {
     return payload.animationFinishedCount.count === 1;
   }, { animationFinishedCount });
 
-  screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot('end animation'));
 });

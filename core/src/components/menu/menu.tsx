@@ -2,9 +2,11 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
+import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuI, Side } from '../../interface';
+import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
+import { menuController } from '../../utils/menu-controller';
 
 @Component({
   tag: 'ion-menu',
@@ -30,14 +32,11 @@ export class Menu implements ComponentInterface, MenuI {
   backdropEl?: HTMLElement;
   menuInnerEl?: HTMLElement;
   contentEl?: HTMLElement;
-  menuCtrl?: MenuControllerI;
 
   @Element() el!: HTMLIonMenuElement;
 
   @State() isPaneVisible = false;
   @State() isEndSide = false;
-
-  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
 
   /**
    * The content's id the menu should use.
@@ -147,7 +146,6 @@ export class Menu implements ComponentInterface, MenuI {
       return;
     }
 
-    const menuCtrl = this.menuCtrl = await this.lazyMenuCtrl.componentOnReady().then(p => p._getInstance());
     const el = this.el;
     const parent = el.parentNode as any;
     const content = this.contentId !== undefined
@@ -168,7 +166,7 @@ export class Menu implements ComponentInterface, MenuI {
     this.sideChanged();
 
     // register this menu with the app's menu controller
-    menuCtrl!._register(this);
+    menuController._register(this);
 
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -192,7 +190,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   disconnectedCallback() {
     this.blocker.destroy();
-    this.menuCtrl!._unregister(this);
+    menuController._unregister(this);
     if (this.animation) {
       this.animation.destroy();
     }
@@ -278,7 +276,7 @@ export class Menu implements ComponentInterface, MenuI {
    */
   @Method()
   setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
-    return this.menuCtrl!._setOpen(this, shouldOpen, animated);
+    return menuController._setOpen(this, shouldOpen, animated);
   }
 
   async _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
@@ -310,7 +308,10 @@ export class Menu implements ComponentInterface, MenuI {
       this.animation = undefined;
     }
     // Create new animation
-    this.animation = await this.menuCtrl!._createAnimation(this.type!, this);
+    this.animation = await menuController._createAnimation(this.type!, this);
+    if (!config.getBoolean('animated', true)) {
+      this.animation.duration(0);
+    }
     this.animation.fill('both');
   }
 
@@ -342,7 +343,7 @@ export class Menu implements ComponentInterface, MenuI {
     if (this._isOpen) {
       return true;
     // TODO error
-    } else if (this.menuCtrl!.getOpenSync()) {
+    } else if (menuController._getOpenSync()) {
       return false;
     }
     return checkEdgeSide(
@@ -411,20 +412,27 @@ export class Menu implements ComponentInterface, MenuI {
       shouldOpen = true;
     }
 
-    const missing = shouldComplete ? 1 - stepValue : stepValue;
-    const missingDistance = missing * width;
-    let realDur = 0;
-    if (missingDistance > 5) {
-      const dur = missingDistance / Math.abs(velocity);
-      realDur = Math.min(dur, 300);
-    }
-
     this.lastOnEnd = detail.timeStamp;
+
+    // Account for rounding errors in JS
+    let newStepValue = (shouldComplete) ? 0.001 : -0.001;
+
+    /**
+     * Animation will be reversed here, so need to
+     * reverse the easing curve as well
+     *
+     * Additionally, we need to account for the time relative
+     * to the new easing curve, as `stepValue` is going to be given
+     * in terms of a linear curve.
+     */
+    newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.4, 0), new Point(0.6, 1), new Point(1, 1), stepValue);
+
     this.animation
+      .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
       .onFinish(() => this.afterAnimation(shouldOpen), {
-        oneTime: true
+        oneTimeCallback: true
       })
-      .progressEnd(shouldComplete, stepValue, realDur);
+      .progressEnd(shouldComplete, newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {
@@ -493,8 +501,8 @@ export class Menu implements ComponentInterface, MenuI {
       this.forceClosing();
     }
 
-    if (!this.disabled && this.menuCtrl) {
-      this.menuCtrl._setActiveMenu(this);
+    if (!this.disabled) {
+      menuController._setActiveMenu(this);
     }
     assert(!this.isAnimating, 'can not be animating');
   }

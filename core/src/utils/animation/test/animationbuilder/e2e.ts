@@ -1,9 +1,4 @@
-import { newE2EPage } from '@stencil/core/testing';
-
-import { listenForEvent, waitForFunctionTestContext } from '../../../test/utils';
-
-const navChanged = () => new Promise(resolve => window.addEventListener('ionRouteDidChange', resolve));
-const ROUTE_CHANGED = 'onRouteChanged';
+import { E2EPage, newE2EPage } from '@stencil/core/testing';
 
 test('animation:backwards-compatibility animationbuilder', async () => {
   const page = await newE2EPage({ url: '/src/utils/animation/test/animationbuilder?_forceAnimationBuilder=true' });
@@ -25,41 +20,28 @@ test('animation:ios-transition css', async () => {
   await testNavigation(page);
 });
 
-const testNavigation = async page => {
+const testNavigation = async (page: E2EPage) => {
   const screenshotCompares = [];
-  const body = await page.$('body');
-  await listenForEvent(page, 'ionRouteDidChange', body, ROUTE_CHANGED);
-  const routeChangedCount: any = { count: 0 };
-  await page.exposeFunction(ROUTE_CHANGED, () => {
-    routeChangedCount.count += 1;
-  });
+  const ionRouteDidChange = await page.spyOnEvent('ionRouteDidChange');
 
   screenshotCompares.push(await page.compareScreenshot());
 
-  page.click('page-root ion-button.next');
-  await waitForNavChange(page, routeChangedCount);
+  await page.click('page-root ion-button.next');
+  await ionRouteDidChange.next();
   page.click('page-one ion-button.next');
-  await waitForNavChange(page, routeChangedCount);
+  await ionRouteDidChange.next();
   page.click('page-two ion-button.next');
-  await waitForNavChange(page, routeChangedCount);
+  await ionRouteDidChange.next();
   page.click('page-three ion-back-button');
-  await waitForNavChange(page, routeChangedCount);
+  await ionRouteDidChange.next();
   page.click('page-two ion-back-button');
-  await waitForNavChange(page, routeChangedCount);
+  await ionRouteDidChange.next();
   page.click('page-one ion-back-button');
-  await waitForNavChange(page, routeChangedCount);
+  await ionRouteDidChange.next();
 
-  screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot('end navigation'));
 
   for (const screenshotCompare of screenshotCompares) {
     expect(screenshotCompare).toMatchScreenshot();
   }
-};
-
-const waitForNavChange = async (page, routeChangedCount) => {
-  await waitForFunctionTestContext((payload: any) => {
-    return payload.routeChangedCount.count === 1;
-  }, { routeChangedCount });
-
-  routeChangedCount.count = 0;
 };
