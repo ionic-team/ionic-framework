@@ -6,7 +6,7 @@ Popover controllers programmatically control the popover component. Popovers can
 <!-- Auto Generated Below -->
 
 
-> **[DEPRECATED]** Use the `popoverController` export from `
+> **[DEPRECATED]** Use the `popoverController` exported from core
 
 ## Usage
 

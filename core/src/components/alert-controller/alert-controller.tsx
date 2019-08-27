@@ -4,7 +4,7 @@ import { AlertOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 /**
- * @deprecated Use the `alertController` export from `@ionic/core`
+ * @deprecated Use the `alertController` exported from core
  */
 @Component({
   tag: 'ion-alert-controller'

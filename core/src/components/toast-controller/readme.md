@@ -6,7 +6,7 @@ ToastController is a component used to create Toast components. Please see the d
 <!-- Auto Generated Below -->
 
 
-> **[DEPRECATED]** Use the `toastController` export from `
+> **[DEPRECATED]** Use the `toastController` exported from core
 
 ## Methods
 

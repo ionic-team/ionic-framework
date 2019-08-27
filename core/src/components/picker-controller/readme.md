@@ -5,7 +5,7 @@
 <!-- Auto Generated Below -->
 
 
-> **[DEPRECATED]** Use the `pickerController` export from `
+> **[DEPRECATED]** Use the `pickerController` exported from core
 
 ## Methods
 

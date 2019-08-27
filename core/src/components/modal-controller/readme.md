@@ -6,7 +6,7 @@ Modal controllers programmatically control the modal component. Modals can be cr
 <!-- Auto Generated Below -->
 
 
-> **[DEPRECATED]** Use the `modalController` export from `
+> **[DEPRECATED]** Use the `modalController` exported from core
 
 ## Methods
 

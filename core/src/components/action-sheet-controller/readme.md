@@ -5,7 +5,7 @@ Action Sheet controllers programmatically control the action sheet component. Ac
 <!-- Auto Generated Below -->
 
 
-> **[DEPRECATED]** Use the `actionSheetController` export from `
+> **[DEPRECATED]** Use the `actionSheetController` exported from core
 
 ## Methods
 

@@ -4,7 +4,7 @@ import { OverlayController, ToastOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 /**
- * @deprecated Use the `toastController` export from `@ionic/core`
+ * @deprecated Use the `toastController` exported from core
  */
 @Component({
   tag: 'ion-toast-controller'
