@@ -46,7 +46,7 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 import React from 'react';
 import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonContent } from '@ionic/react';
 
-export const RadioExample: React.FunctionComponent = () => (
+export const RadioExample: React.FC = () => (
   <IonContent>
     <IonList>
       <IonRadioGroup>

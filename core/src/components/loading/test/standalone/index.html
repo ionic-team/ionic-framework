@@ -18,8 +18,6 @@
   <button id="translucent-loading" onclick="presentLoadingWithOptions({duration: 5000, content: 'Loading Please Wait...', translucent: true})">Show Loading with translucent</button>
   <button id="custom-class-loading" onclick="presentLoadingWithOptions({duration: 5000, content: 'Loading Please Wait...', translucent: true, cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</button>
 
-  <ion-loading-controller></ion-loading-controller>
-
   <style>
     body > button {
       display: block;
@@ -36,18 +34,18 @@
 
   <script>
     async function presentLoading() {
-      const loadingController = document.querySelector('ion-loading-controller');
-      const loadingElement = await loadingController.create({
+      const loadingElement = Object.assign(document.createElement('ion-loading'), {
         message: 'Hellooo',
         duration: 5000
       });
-      return await loadingElement.present();
+      document.body.appendChild(loadingElement);
+      return loadingElement.present();
     }
 
-    async function presentLoadingWithOptions(opts) {
-      const loadingController = document.querySelector('ion-loading-controller');
-      const loadingElement = await loadingController.create(opts);
-      return await loadingElement.present();
+    function presentLoadingWithOptions(opts) {
+      const loadingElement = Object.assign(document.createElement('ion-loading'), opts);
+      document.body.appendChild(loadingElement);
+      return loadingElement.present();
     }
   </script>
 </body>

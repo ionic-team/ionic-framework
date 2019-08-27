@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "4.7.1",
+  "version": "4.8.0",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -19,6 +19,10 @@
     "type": "git",
     "url": "https://github.com/ionic-team/ionic.git"
   },
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "homepage": "https://ionicframework.com/",
   "scripts": {
     "build": "npm run clean && npm run build.core && npm run build.ng && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
@@ -38,14 +42,14 @@
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "module": "dist/fesm5.js",
-  "main": "dist/fesm5.js",
+  "main": "dist/fesm5.cjs.js",
   "types": "dist/core.d.ts",
   "files": [
     "dist/",
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "4.7.1",
+    "@ionic/core": "4.8.0",
     "tslib": "^1.9.3"
   },
   "peerDependencies": {
@@ -82,8 +86,8 @@
     "tsickle": "^0.34.0",
     "tslint": "^5.12.1",
     "tslint-ionic-rules": "0.0.21",
-    "typescript": "3.2.4",
-    "zone.js": "^0.8.28"
+    "typescript": "~3.2.2",
+    "zone.js": "~0.8.26"
   },
   "schematics": "./dist/schematics/collection.json"
 }
