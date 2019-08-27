@@ -3,6 +3,9 @@ import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/
 import { ComponentProps, NavComponent } from '../../interface';
 import { navLink } from '../nav-link/nav-link-utils';
 
+/**
+ * @deprecated Use `<ion-nav-link component="MyComponent" routerDirection="root">` instead.
+ */
 @Component({
   tag: 'ion-nav-set-root'
 })
