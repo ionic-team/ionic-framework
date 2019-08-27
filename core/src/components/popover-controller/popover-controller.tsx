@@ -4,7 +4,7 @@ import { ComponentRef, OverlayController, PopoverOptions } from '../../interface
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 /**
- * @deprecated Use the `popoverController` exported from core
+ * @deprecated Use the `popoverController` exported from core.
  */
 @Component({
   tag: 'ion-popover-controller',

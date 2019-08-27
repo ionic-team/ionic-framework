@@ -6,7 +6,7 @@ Alert controllers programmatically control the alert component. Alerts can be cr
 <!-- Auto Generated Below -->
 
 
-> **[DEPRECATED]** Use the `alertController` exported from core
+> **[DEPRECATED]** Use the `alertController` exported from core.
 
 ## Methods
 

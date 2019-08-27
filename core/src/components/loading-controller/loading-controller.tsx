@@ -4,7 +4,7 @@ import { LoadingOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 /**
- * @deprecated Use the `loadingController` exported from core
+ * @deprecated Use the `loadingController` exported from core.
  */
 @Component({
   tag: 'ion-loading-controller'

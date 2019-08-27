@@ -4,7 +4,7 @@ import { OverlayController, PickerOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 /**
- * @deprecated Use the `pickerController` exported from core
+ * @deprecated Use the `pickerController` exported from core.
  */
 @Component({
   tag: 'ion-picker-controller'

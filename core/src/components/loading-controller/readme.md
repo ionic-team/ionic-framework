@@ -8,7 +8,7 @@ Loading controllers programmatically control the loading component. Loadings can
 <!-- Auto Generated Below -->
 
 
-> **[DEPRECATED]** Use the `loadingController` exported from core
+> **[DEPRECATED]** Use the `loadingController` exported from core.
 
 ## Methods
 
