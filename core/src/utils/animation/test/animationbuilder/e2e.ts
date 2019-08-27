@@ -39,7 +39,7 @@ const testNavigation = async (page: E2EPage) => {
   page.click('page-one ion-back-button');
   await ionRouteDidChange.next();
 
-  screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot('end navigation'));
 
   for (const screenshotCompare of screenshotCompares) {
     expect(screenshotCompare).toMatchScreenshot();
