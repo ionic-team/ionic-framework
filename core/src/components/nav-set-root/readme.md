@@ -7,6 +7,8 @@ It is the component form of calling `NavController.setRoot()`
 <!-- Auto Generated Below -->
 
 
+> **[DEPRECATED]** Use `<ion-nav-link component="MyComponent" routerDirection="root">` instead.
+
 ## Properties
 
 | Property         | Attribute   | Description                                              | Type                                                                       | Default     |

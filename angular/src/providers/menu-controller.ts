@@ -53,10 +53,10 @@ export class MenuController {
    * @param shouldEnable  True if it should be swipe-able, false if not.
    * @param [menuId]  Optionally get the menu by its id, or side.
    * @return Returns the instance of the menu, which is useful for chaining.
-   * @deprecated Use swipeGesture() instead
+   * @deprecated Use swipeGesture() instead.
    */
   swipeEnable(shouldEnable: boolean, menuId?: string) {
-    console.warn('MenuController.swipeEnable is deprecated. Use MenuController.swipeGesture() instead');
+    console.warn('[DEPRECATED][ion-menu-controller] swipeEnable() is deprecated. Use MenuController.swipeGesture() instead');
     return this.swipeGesture(shouldEnable, menuId);
   }
 

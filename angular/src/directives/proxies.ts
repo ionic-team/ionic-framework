@@ -505,6 +505,17 @@ export class IonNav {
 proxyMethods(IonNav, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']);
 proxyInputs(IonNav, ['animated', 'animation', 'root', 'rootParams', 'swipeGesture']);
 
+export declare interface IonNavLink extends Components.IonNavLink {}
+@Component({ selector: 'ion-nav-link', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['component', 'componentProps', 'routerDirection'] })
+export class IonNavLink {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonNavLink, ['component', 'componentProps', 'routerDirection']);
+
 export declare interface IonNavPop extends Components.IonNavPop {}
 @Component({ selector: 'ion-nav-pop', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
 export class IonNavPop {

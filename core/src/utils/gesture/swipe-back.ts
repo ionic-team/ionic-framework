@@ -37,7 +37,13 @@ export const createSwipeBackGesture = (
       realDur = Math.min(dur, 540);
     }
 
-    onEndHandler(shouldComplete, stepValue, realDur);
+    /**
+     * TODO: stepValue can sometimes return a negative
+     * value, but you can't have a negative time value
+     * for the cubic bezier curve (at least with web animations)
+     * Not sure if the negative step value is an error or not
+     */
+    onEndHandler(shouldComplete, (stepValue <= 0) ? 0.01 : stepValue, realDur);
   };
 
   return createGesture({
