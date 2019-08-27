@@ -1639,6 +1639,20 @@ export namespace Components {
     */
     'swipeGesture'?: boolean;
   }
+  interface IonNavLink {
+    /**
+    * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
+    */
+    'component'?: NavComponent;
+    /**
+    * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
+    */
+    'componentProps'?: ComponentProps;
+    /**
+    * The transition direction when navigating to another page.
+    */
+    'routerDirection': RouterDirection;
+  }
   interface IonNavPop {}
   interface IonNavPush {
     /**
@@ -3186,6 +3200,12 @@ declare global {
     new (): HTMLIonNavElement;
   };
 
+  interface HTMLIonNavLinkElement extends Components.IonNavLink, HTMLStencilElement {}
+  var HTMLIonNavLinkElement: {
+    prototype: HTMLIonNavLinkElement;
+    new (): HTMLIonNavLinkElement;
+  };
+
   interface HTMLIonNavPopElement extends Components.IonNavPop, HTMLStencilElement {}
   var HTMLIonNavPopElement: {
     prototype: HTMLIonNavPopElement;
@@ -3524,6 +3544,7 @@ declare global {
     'ion-modal': HTMLIonModalElement;
     'ion-modal-controller': HTMLIonModalControllerElement;
     'ion-nav': HTMLIonNavElement;
+    'ion-nav-link': HTMLIonNavLinkElement;
     'ion-nav-pop': HTMLIonNavPopElement;
     'ion-nav-push': HTMLIonNavPushElement;
     'ion-nav-set-root': HTMLIonNavSetRootElement;
@@ -4931,6 +4952,20 @@ declare namespace LocalJSX {
     */
     'swipeGesture'?: boolean;
   }
+  interface IonNavLink extends JSXBase.HTMLAttributes<HTMLIonNavLinkElement> {
+    /**
+    * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
+    */
+    'component'?: NavComponent;
+    /**
+    * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
+    */
+    'componentProps'?: ComponentProps;
+    /**
+    * The transition direction when navigating to another page.
+    */
+    'routerDirection'?: RouterDirection;
+  }
   interface IonNavPop extends JSXBase.HTMLAttributes<HTMLIonNavPopElement> {}
   interface IonNavPush extends JSXBase.HTMLAttributes<HTMLIonNavPushElement> {
     /**
@@ -6207,6 +6242,7 @@ declare namespace LocalJSX {
     'ion-modal': IonModal;
     'ion-modal-controller': IonModalController;
     'ion-nav': IonNav;
+    'ion-nav-link': IonNavLink;
     'ion-nav-pop': IonNavPop;
     'ion-nav-push': IonNavPush;
     'ion-nav-set-root': IonNavSetRoot;

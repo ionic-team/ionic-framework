@@ -3,6 +3,9 @@ import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 import { ActionSheetOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
+/**
+ * @deprecated Use the `actionSheetController` exported from core.
+ */
 @Component({
   tag: 'ion-action-sheet-controller'
 })

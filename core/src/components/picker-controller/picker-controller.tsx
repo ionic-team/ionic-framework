@@ -3,6 +3,9 @@ import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 import { OverlayController, PickerOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
+/**
+ * @deprecated Use the `pickerController` exported from core.
+ */
 @Component({
   tag: 'ion-picker-controller'
 })

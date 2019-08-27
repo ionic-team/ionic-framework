@@ -3,6 +3,9 @@ import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 import { OverlayController, ToastOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
+/**
+ * @deprecated Use the `toastController` exported from core.
+ */
 @Component({
   tag: 'ion-toast-controller'
 })
