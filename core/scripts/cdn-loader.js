@@ -1,24 +1,30 @@
-module.exports.applyPolyfills = function() { return Promise.resolve() };
-module.exports.defineCustomElements = function(_, opts = {}) {
-  return new Promise((resolve, reject) => {
-    const doc = document;
-    const mod = doc.createElement('script');
-    mod.setAttribute('type', 'module');
-    mod['data-opts'] = opts;
-    mod.src = '__CDN_LOADER_URL__/dist/ionic/ionic.esm.js';
 
-    const legacy = doc.createElement('script');
-    legacy.setAttribute('nomodule', '');
-    legacy['data-opts'] = opts;
-    legacy.src = '__CDN_LOADER_URL__/dist/ionic/ionic.js';
+exports.applyPolyfills = function() { return Promise.resolve() };
 
-    mod.onload = resolve;
-    mod.onerror = reject;
+exports.defineCustomElements = function(_, opts) {
+  return new Promise(function(resolve, reject) {
+    if (typeof document !== 'undefined') {
+      opts = opts || {};
+      var mod = document.createElement('script');
+      mod.setAttribute('type', 'module');
+      mod['data-opts'] = opts;
+      mod.src = '__CDN_LOADER_URL__/dist/ionic/ionic.esm.js';
 
-    legacy.onload = resolve;
-    legacy.onerror = reject;
+      var legacy = document.createElement('script');
+      legacy.setAttribute('nomodule', '');
+      legacy['data-opts'] = opts;
+      legacy.src = '__CDN_LOADER_URL__/dist/ionic/ionic.js';
 
-    doc.head.appendChild(mod);
-    doc.head.appendChild(legacy);
+      mod.onload = resolve;
+      mod.onerror = reject;
+
+      legacy.onload = resolve;
+      legacy.onerror = reject;
+
+      document.head.appendChild(mod);
+      document.head.appendChild(legacy);
+    } else {
+      resolve();
+    }
   });
 }

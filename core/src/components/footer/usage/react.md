@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonContent, IonFooter, IonToolbar, IonTitle } from '@ionic/react';
 
-export const FooterExample: React.FunctionComponent = () => (
+export const FooterExample: React.FC = () => (
   <>
     <IonContent />
 

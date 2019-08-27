@@ -65,7 +65,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
   }
 }
 
-export function attachView(
+export const attachView = (
   zone: NgZone,
   resolver: ComponentFactoryResolver,
   injector: Injector,
@@ -74,7 +74,7 @@ export function attachView(
   elRefMap: WeakMap<HTMLElement, any>,
   elEventsMap: WeakMap<HTMLElement, () => void>,
   container: any, component: any, params: any, cssClasses: string[] | undefined
-) {
+) => {
   const factory = resolver.resolveComponentFactory(component);
   const childInjector = Injector.create({
     providers: getProviders(params),
@@ -104,7 +104,7 @@ export function attachView(
   elRefMap.set(hostElement, componentRef);
   elEventsMap.set(hostElement, unbindEvents);
   return hostElement;
-}
+};
 
 const LIFECYCLES = [
   LIFECYCLE_WILL_ENTER,
@@ -114,7 +114,7 @@ const LIFECYCLES = [
   LIFECYCLE_WILL_UNLOAD
 ];
 
-export function bindLifecycleEvents(zone: NgZone, instance: any, element: HTMLElement) {
+export const bindLifecycleEvents = (zone: NgZone, instance: any, element: HTMLElement) => {
   return zone.run(() => {
     const unregisters = LIFECYCLES
       .filter(eventName => typeof instance[eventName] === 'function')
@@ -125,11 +125,11 @@ export function bindLifecycleEvents(zone: NgZone, instance: any, element: HTMLEl
       });
     return () => unregisters.forEach(fn => fn());
   });
-}
+};
 
 const NavParamsToken = new InjectionToken<any>('NavParamsToken');
 
-function getProviders(params: {[key: string]: any}) {
+const getProviders = (params: {[key: string]: any}) => {
   return [
     {
       provide: NavParamsToken, useValue: params
@@ -138,8 +138,8 @@ function getProviders(params: {[key: string]: any}) {
       provide: NavParams, useFactory: provideNavParamsInjectable, deps: [NavParamsToken]
     }
   ];
-}
+};
 
-function provideNavParamsInjectable(params: {[key: string]: any}) {
+const provideNavParamsInjectable = (params: {[key: string]: any}) => {
   return new NavParams(params);
-}
+};

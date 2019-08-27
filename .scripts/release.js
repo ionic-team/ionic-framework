@@ -5,6 +5,7 @@
 const tc = require('turbocolor');
 const execa = require('execa');
 const Listr = require('listr');
+const path = require('path');
 const octokit = require('@octokit/rest')()
 const common = require('./common');
 const fs = require('fs-extra');
@@ -15,6 +16,8 @@ async function main() {
     if (!process.env.GH_TOKEN) {
       throw new Error('env.GH_TOKEN is undefined');
     }
+
+    checkProductionRelease();
 
     const tasks = [];
     const { version } = common.readPkg('core');
@@ -39,6 +42,15 @@ async function main() {
   }
 }
 
+function checkProductionRelease() {
+  const corePath = common.projectPath('core');
+  const hasEsm = fs.existsSync(path.join(corePath, 'dist', 'esm'));
+  const hasEsmEs5 = fs.existsSync(path.join(corePath, 'dist', 'esm-es5'));
+  const hasCjs = fs.existsSync(path.join(corePath, 'dist', 'cjs'));
+  if (!hasEsm || !hasEsmEs5 || !hasCjs) {
+    throw new Error('core build is not a production build');
+  }
+}
 
 function publishGit(tasks, version, changelog) {
   const tag = `v${version}`;
@@ -54,7 +66,7 @@ function publishGit(tasks, version, changelog) {
     },
     {
       title: 'Push tags to remove',
-      task: () => execa('git', ['push', '--tags'], { cwd: common.rootDir })
+      task: () => execa('git', ['push', '--follow-tags'], { cwd: common.rootDir })
     },
     {
       title: 'Publish Github release',

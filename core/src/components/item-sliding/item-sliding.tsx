@@ -64,7 +64,7 @@ export class ItemSliding implements ComponentInterface {
    */
   @Event() ionDrag!: EventEmitter;
 
-  async componentDidLoad() {
+  async connectedCallback() {
     this.item = this.el.querySelector('ion-item');
     await this.updateOptions();
 
@@ -81,7 +81,7 @@ export class ItemSliding implements ComponentInterface {
     this.disabledChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
