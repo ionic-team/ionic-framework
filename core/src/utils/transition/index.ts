@@ -85,7 +85,8 @@ const animation = async (animationBuilder: IonicAnimationInterface | AnimationBu
   let trans: Animation | IonicAnimation;
 
   try {
-    trans = await import('../animation/old-animation').then(mod => mod.create(animationBuilder as AnimationBuilder, opts.baseEl, opts));
+    const mod = await import('../animation/old-animation');
+    trans = await mod.create(animationBuilder as AnimationBuilder, opts.baseEl, opts);
   } catch (err) {
     trans = (animationBuilder as IonicAnimationInterface)(opts.baseEl, opts);
   }
