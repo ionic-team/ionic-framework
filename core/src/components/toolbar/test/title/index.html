@@ -31,14 +31,16 @@
       transform: scale(0.9);
     }
     
+/*
     .main-header ion-toolbar {
       --background: red;
       --border-color: #dfe1e0;
     }
     
     .main-content {
-      #--background: #f1f2f6;
+      --background: #f1f2f6;
     }
+*/
   </style>
 </head>
 <!--<ion-button slot="icon-only" class="more">
@@ -73,7 +75,7 @@
         let html = '';
         for (let i = 0; i < 100; i++) {
           html += `
-            <ion-nav-push component="page-three">
+            <ion-nav-link component="page-three">
               <ion-item button>
                 <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
                 <ion-label>
@@ -83,7 +85,7 @@
                 </ion-label>
       
               </ion-item>
-            </ion-nav-push>
+            </ion-nav-link>
           `;
         }
         return html;
@@ -132,11 +134,11 @@
           <ion-content class="ion-padding">
             <h1>Page One</h1>
             
-            <ion-nav-push component="page-two">
+            <ion-nav-link component="page-two">
               <ion-item button>
                 <ion-label>Go to Page Two</ion-label>
               </ion-item>
-            </ion-nav-push>
+            </ion-nav-link>
           </ion-content>
         `;
       }
@@ -147,7 +149,7 @@
         let html = '';
         for (let i = 0; i < 100; i++) {
           html += `
-            <ion-nav-push component="page-two">
+            <ion-nav-link component="page-two">
               <ion-item button>
                 <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
                 <ion-label>
@@ -157,7 +159,7 @@
                 </ion-label>
       
               </ion-item>
-            </ion-nav-push>
+            </ion-nav-link>
           `;
         }
         return html;

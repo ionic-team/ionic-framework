@@ -71,6 +71,8 @@ export class Header implements ComponentInterface {
 
       if (!mainHeaderIndex || !scrollHeaderIndex) { return; }
 
+      makeHeaderInactive(mainHeaderIndex);
+
       // TODO: Find a better way to do this
       let remainingHeight = 0;
       for (let i = 1; i <= scrollHeaderIndex.toolbars.length - 1; i++) {
@@ -102,10 +104,6 @@ export class Header implements ComponentInterface {
       this.contentScrollCallback = () => { handleContentScroll(this.scrollEl, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
       this.scrollEl.addEventListener('scroll', this.contentScrollCallback);
 
-      /**
-       * Set the initial state of the collapsable header
-       */
-      makeHeaderInactive(mainHeaderIndex);
     });
   }
 

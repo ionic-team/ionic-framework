@@ -70,15 +70,19 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
     if (!mainHeaderIndex.el.offsetParent) { return; }
 
     const event = ev[0];
+    const intersectionArea = event.intersectionRect.width * event.intersectionRect.height;
+
     /**
      * Do nothing if the element is moving left, right, or down out of view
      */
     if (
-      event.intersectionRect.left !== event.boundingClientRect.left ||
+      intersectionArea > 0 &&
+      (event.intersectionRect.left !== event.boundingClientRect.left ||
       event.intersectionRect.right !== event.boundingClientRect.right ||
-      event.intersectionRect.bottom !== event.boundingClientRect.bottom
+      event.intersectionRect.bottom !== event.boundingClientRect.bottom)
     ) { return; }
 
+    console.log(event.isIntersecting);
     if (event.isIntersecting) {
       makeHeaderInactive(mainHeaderIndex);
       makeHeaderActive(scrollHeaderIndex);

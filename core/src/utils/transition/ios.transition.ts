@@ -2,7 +2,7 @@ import { IonicAnimation } from '../../interface';
 import { createAnimation } from '../animation/animation';
 import { TransitionOptions } from '../transition';
 
-const DURATION = 540 * 3;
+const DURATION = 540;
 const addSafeArea = (val: number, side = 'top'): string => {
   return `calc(${val}px + var(--ion-safe-area-${side}))`;
 };
@@ -69,7 +69,6 @@ const getBackButton = (refEl: any) => {
 };
 
 const createLargeTitleTransition = async (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, enteringEl: any, leavingEl: any) => {
-  console.log(rootAnimation);
   const enteringBackButton = getBackButton(enteringEl);
   const leavingLargeTitle = getLargeTitle(leavingEl);
 
@@ -82,15 +81,13 @@ const createLargeTitleTransition = async (rootAnimation: IonicAnimation, rtl: bo
   if (shouldAnimationForward) {
     await Promise.all([
       animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle),
-      animationBackButton(rootAnimation, rtl, backDirection, enteringBackButton)
+      animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton)
     ]);
-    console.log('swiping forward. found an entering back button and a leaving large title', rootAnimation.childAnimations);
   } else if (shouldAnimationBackward) {
     await Promise.all([
       animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle),
-      animationBackButton(rootAnimation, rtl, backDirection, leavingBackButton)
+      animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton)
     ]);
-    console.log('swiping backward. found entering large title and a leaving back button');
   }
 
   return {
@@ -99,7 +96,7 @@ const createLargeTitleTransition = async (rootAnimation: IonicAnimation, rtl: bo
   };
 };
 
-const animationBackButton = async (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
+const animateBackButton = async (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
   console.log(rtl);
 
   const enteringBackButtonTextAnimation = createAnimation();
@@ -205,7 +202,6 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
     const EASING = 'cubic-bezier(0.32,0.72,0,1)';
     const OPACITY = 'opacity';
     const TRANSFORM = 'transform';
-    console.log(TRANSFORM);
     const CENTER = '0%';
     const OFF_OPACITY = 0.8;
 
@@ -289,11 +285,9 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
     }
 
     const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-ios');
-    const isEnteringLargeTitleCollapsed = (!!enteringContentHasLargeTitle) ? enteringContentHasLargeTitle.classList.contains('large-ion-title-hidden') : false;
-    console.log('entering has large', enteringContentHasLargeTitle, 'is collapsed', isEnteringLargeTitleCollapsed);
 
     const { forward, backward } = await createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
-    console.log('Fwd', forward, 'Backwd', backward);
+
     enteringToolBarEls.forEach(enteringToolBarEl => {
       const enteringToolBar = createAnimation();
       enteringToolBar.addElement(enteringToolBarEl);
@@ -303,7 +297,20 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
       enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title'));
 
       const enteringToolBarButtons = createAnimation();
-      enteringToolBarButtons.addElement(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
+      const buttons = enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]');
+
+      let buttonsToAnimate;
+      if (backDirection) {
+        const inactiveParentHeader = enteringToolBarEl.closest('ion-header.header-collapse-ios-inactive');
+        buttonsToAnimate = Array.from(buttons).filter(button => {
+          const isCollapseButton = (button as any).collapse;
+          return (isCollapseButton && !inactiveParentHeader) || !isCollapseButton;
+        });
+      } else {
+        buttonsToAnimate = Array.from(buttons).filter(button => !(button as any).collapse);
+      }
+
+      enteringToolBarButtons.addElement(buttonsToAnimate);
 
       const enteringToolBarItems = createAnimation();
       enteringToolBarItems.addElement(enteringToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])'));
@@ -314,6 +321,10 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
       const enteringBackButton = createAnimation();
       const backButtonEl = enteringToolBarEl.querySelector('ion-back-button');
 
+      if (backButtonEl) {
+        enteringBackButton.addElement(backButtonEl);
+      }
+
       enteringToolBar.addAnimation([enteringTitle, enteringToolBarButtons, enteringToolBarItems, enteringToolBarBg, enteringBackButton]);
 
       enteringToolBarButtons.fromTo(OPACITY, 0.01, 1);
@@ -322,7 +333,6 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
       if (backDirection) {
 
         if (!backward && !enteringContentHasLargeTitle) {
-          console.log('anim entering title back');
           enteringTitle
             .fromTo('transform', `translateX(${OFF_LEFT})`, `translateX(${CENTER})`)
             .fromTo(OPACITY, 0.01, 1);
@@ -426,7 +436,7 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
 
       const canAnimateTitle = !leavingContentHasLargeTitle || (leavingContentHasLargeTitle && isLeavingLargeTitleCollapsed);
       const shouldAnimateTitle = (backDirection) ? !backward && canAnimateTitle : !forward && canAnimateTitle;
-      console.log('should animatie leaving title', shouldAnimateTitle, 'can animate title', canAnimateTitle);
+
       const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
       leavingToolBarEls.forEach(leavingToolBarEl => {
         const leavingToolBar = createAnimation();
@@ -436,7 +446,15 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
         leavingTitle.addElement(leavingToolBarEl.querySelector('ion-title'));
 
         const leavingToolBarButtons = createAnimation();
-        leavingToolBarButtons.addElement(leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
+        const buttons = leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]');
+        const inactiveHeader = leavingToolBarEl.closest('ion-header.header-collapse-ios-inactive');
+
+        const buttonsToAnimate = Array.from(buttons).filter(button => {
+          const isCollapseButton = (button as any).collapse;
+          return (isCollapseButton && !inactiveHeader) || !isCollapseButton;
+        });
+
+        leavingToolBarButtons.addElement(buttonsToAnimate);
 
         const leavingToolBarItems = createAnimation();
         const leavingToolBarItemEls = leavingToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])');
