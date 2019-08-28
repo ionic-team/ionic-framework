@@ -25,17 +25,10 @@
 
 ## Properties
 
-| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                               | Default      |
-| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | ------------ |
-| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`              | `undefined`  |
-| `size`   | `size`    | The size of the toolbar title. Only applies in `ios` mode.                                                                                                                                                                                                             | `"large" \| "small" \| "standard"` | `'standard'` |
-
-
-## Events
-
-| Event      | Description                     | Type                            |
-| ---------- | ------------------------------- | ------------------------------- |
-| `ionStyle` | Emitted when the styles change. | `CustomEvent<StyleEventDetail>` |
+| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                              | Default     |
+| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ----------- |
+| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`             | `undefined` |
+| `size`   | `size`    | The size of the toolbar title. Only applies in `ios` mode.                                                                                                                                                                                                             | `"default" \| "large" \| "small"` | `'default'` |
 
 
 ## CSS Custom Properties

@@ -41,6 +41,13 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 </ion-toolbar>
 
 <ion-toolbar>
+  <ion-title size="small">Small Title above a Default Title</ion-title>
+</ion-toolbar>
+<ion-toolbar>
+  <ion-title>Default Title</ion-title>
+</ion-toolbar>
+
+<ion-toolbar>
   <ion-buttons slot="secondary">
     <ion-button>
       <ion-icon slot="icon-only" name="contact"></ion-icon>
@@ -197,6 +204,13 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
     <ion-back-button></ion-back-button>
   </ion-buttons>
   <ion-title>Back Button</ion-title>
+</ion-toolbar>
+
+<ion-toolbar>
+  <ion-title size="small">Small Title above a Default Title</ion-title>
+</ion-toolbar>
+<ion-toolbar>
+  <ion-title>Default Title</ion-title>
 </ion-toolbar>
 
 <ion-toolbar>
@@ -374,6 +388,13 @@ export const ToolbarExample: React.FC = () => (
     </IonToolbar>
 
     <IonToolbar>
+      <IonTitle size="small">Small Title above a Default Title</IonTitle>
+    </IonToolbar>
+    <IonToolbar>
+      <IonTitle>Default Title</IonTitle>
+    </IonToolbar>
+
+    <IonToolbar>
       <IonButtons slot="secondary">
         <IonButton>
           <IonIcon slot="icon-only" name="contact" />
@@ -525,6 +546,13 @@ export const ToolbarExample: React.FC = () => (
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Back Button</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-title size="small">Small Title above a Default Title</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>Default Title</ion-title>
   </ion-toolbar>
 
   <ion-toolbar>

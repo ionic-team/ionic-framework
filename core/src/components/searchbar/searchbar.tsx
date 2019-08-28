@@ -160,6 +160,7 @@ export class Searchbar implements ComponentInterface {
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 

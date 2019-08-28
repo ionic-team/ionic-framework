@@ -28,6 +28,13 @@ export const ToolbarExample: React.FC = () => (
     </IonToolbar>
 
     <IonToolbar>
+      <IonTitle size="small">Small Title above a Default Title</IonTitle>
+    </IonToolbar>
+    <IonToolbar>
+      <IonTitle>Default Title</IonTitle>
+    </IonToolbar>
+
+    <IonToolbar>
       <IonButtons slot="secondary">
         <IonButton>
           <IonIcon slot="icon-only" name="contact" />
