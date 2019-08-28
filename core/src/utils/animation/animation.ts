@@ -42,7 +42,7 @@ export const createAnimation = () => {
   const _afterAddReadFunctions: any[] = [];
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
-  const supportsWebAnimations = (typeof (window as any).Animation === 'function');
+  const supportsWebAnimations = (typeof (Element as any).prototype!.animate === 'function');
   const ANIMATION_END_FALLBACK_PADDING_MS = 100;
 
   /**
