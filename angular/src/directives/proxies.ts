@@ -695,11 +695,12 @@ export class IonSearchbar {
   ionClear!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;
+  ionStyle!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
+    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus', 'ionStyle']);
   }
 }
 proxyMethods(IonSearchbar, ['setFocus', 'getInputElement']);
@@ -895,15 +896,17 @@ export class IonThumbnail {
 }
 
 export declare interface IonTitle extends Components.IonTitle {}
-@Component({ selector: 'ion-title', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color'] })
+@Component({ selector: 'ion-title', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'size'] })
 export class IonTitle {
+  ionStyle!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionStyle']);
   }
 }
-proxyInputs(IonTitle, ['color']);
+proxyInputs(IonTitle, ['color', 'size']);
 
 export declare interface IonToggle extends Components.IonToggle {}
 @Component({ selector: 'ion-toggle', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value'] })

@@ -19,7 +19,7 @@
   color: var(--color);
 }
 
-:host(.title-ios) {
+:host(.title-ios-default) {
   @include position(0, null, null, 0);
   @include padding(0, 90px, 0);
 
@@ -32,8 +32,6 @@
 
   font-size: 17px;
   font-weight: 600;
-
-  letter-spacing: -.03em;
 
   text-align: center;
   box-sizing: border-box;
@@ -64,4 +62,22 @@
 
   overflow: hidden;
   pointer-events: auto;
+}
+
+// iOS Small Title
+// --------------------------------------------------
+
+:host(.title-ios-small) {
+  @include padding(6px, 9px, 16px, 9px);
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 13px;
+
+  text-align: center;
+}
+
+:host(.title-ios-small) .toolbar-title {
+  white-space: normal;
 }
