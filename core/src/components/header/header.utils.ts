@@ -51,7 +51,9 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
 };
 
 const setToolbarBackgroundOpacity = (toolbar: any, opacity = 1) => {
-  toolbar.background.style.setProperty('--opacity', opacity);
+  console.log(toolbar, opacity);
+  // disabled temp until I can figure out how to make this place nicely with animations
+  // toolbar.background.style.setProperty('--opacity', opacity);
 };
 
 /**
@@ -61,28 +63,17 @@ const setToolbarBackgroundOpacity = (toolbar: any, opacity = 1) => {
  */
 export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollHeaderIndex: any) => {
   writeTask(() => {
-    /**
-     * If element does not have an offsetParent,
-     * then the page where this header exists
-     * is not the active page
-     */
-
-    if (!mainHeaderIndex.el.offsetParent) { return; }
-
     const event = ev[0];
     const intersectionArea = event.intersectionRect.width * event.intersectionRect.height;
 
-    /**
-     * Do nothing if the element is moving left, right, or down out of view
-     */
     if (
       intersectionArea > 0 &&
-      (event.intersectionRect.left !== event.boundingClientRect.left ||
-      event.intersectionRect.right !== event.boundingClientRect.right ||
-      event.intersectionRect.bottom !== event.boundingClientRect.bottom)
-    ) { return; }
+      (event.intersectionRect.left !== event.rootBounds.left ||
+      event.intersectionRect.right !== event.rootBounds.right)
+    ) {
+      return;
+    }
 
-    console.log(event.isIntersecting);
     if (event.isIntersecting) {
       makeHeaderInactive(mainHeaderIndex);
       makeHeaderActive(scrollHeaderIndex);

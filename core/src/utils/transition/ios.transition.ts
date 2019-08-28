@@ -325,16 +325,14 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
       }
 
       enteringToolBar.addAnimation([enteringTitle, enteringToolBarButtons, enteringToolBarItems, enteringToolBarBg, enteringBackButton]);
-
+      enteringTitle.fromTo(OPACITY, 0.01, 1);
       enteringToolBarButtons.fromTo(OPACITY, 0.01, 1);
       enteringToolBarItems.fromTo(OPACITY, 0.01, 1);
 
       if (backDirection) {
 
         if (!inactiveHeader) {
-          enteringTitle
-            .fromTo('transform', `translateX(${OFF_LEFT})`, `translateX(${CENTER})`)
-            .fromTo(OPACITY, 0.01, 1);
+          enteringTitle.fromTo('transform', `translateX(${OFF_LEFT})`, `translateX(${CENTER})`);
         }
 
         enteringToolBarItems.fromTo('transform', `translateX(${OFF_LEFT})`, `translateX(${CENTER})`);
@@ -344,9 +342,7 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
       } else {
         // entering toolbar, forward direction
         if (!forward && !enteringContentHasLargeTitle) {
-          enteringTitle
-            .fromTo('transform', `translateX(${OFF_RIGHT})`, `translateX(${CENTER})`)
-            .fromTo(OPACITY, 0.01, 1);
+          enteringTitle.fromTo('transform', `translateX(${OFF_RIGHT})`, `translateX(${CENTER})`);
         }
 
         enteringToolBarItems.fromTo('transform', `translateX(${OFF_RIGHT})`, `translateX(${CENTER})`);
@@ -514,7 +510,7 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
             .afterClearStyles([TRANSFORM, OPACITY]);
 
           leavingBackButton.afterClearStyles([OPACITY]);
-
+          leavingTitle.afterClearStyles([OPACITY]);
           leavingToolBarButtons.afterClearStyles([OPACITY]);
         }
       });
