@@ -11,9 +11,12 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-  <script type="module">
-    window.Animation = null;
-    
+  <script type="module">   
+    const forceCSSAnimations = new URLSearchParams(window.location.search).get('ionic:_forceCSSAnimations');
+    if (forceCSSAnimations) {
+      Element.prototype.animate = null;
+    } 
+
     import { createAnimation } from '../../../../dist/index.mjs';
 
     createAnimation()
