@@ -144,6 +144,11 @@ export const createAnimation = () => {
    */
   const cleanUpStyleSheets = () => {
     stylesheets.forEach(stylesheet => {
+      /**
+       * When sharing stylesheets, it's possible
+       * for another animation to have already
+       * cleaned up a particular stylesheet
+       */
       if (stylesheet && stylesheet.parentNode) {
         stylesheet.parentNode.removeChild(stylesheet);
       }
