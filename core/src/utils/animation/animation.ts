@@ -124,14 +124,16 @@ export const createAnimation = () => {
       webAnimations.length = 0;
     } else {
       elements.forEach(element => {
-        removeStyleProperty(element, 'animation-name');
-        removeStyleProperty(element, 'animation-duration');
-        removeStyleProperty(element, 'animation-timing-function');
-        removeStyleProperty(element, 'animation-iteration-count');
-        removeStyleProperty(element, 'animation-delay');
-        removeStyleProperty(element, 'animation-play-state');
-        removeStyleProperty(element, 'animation-fill-mode');
-        removeStyleProperty(element, 'animation-direction');
+        requestAnimationFrame(() => {
+          removeStyleProperty(element, 'animation-name');
+          removeStyleProperty(element, 'animation-duration');
+          removeStyleProperty(element, 'animation-timing-function');
+          removeStyleProperty(element, 'animation-iteration-count');
+          removeStyleProperty(element, 'animation-delay');
+          removeStyleProperty(element, 'animation-play-state');
+          removeStyleProperty(element, 'animation-fill-mode');
+          removeStyleProperty(element, 'animation-direction');
+        });
       });
     }
   };
