@@ -44,7 +44,7 @@ export const createAnimation = () => {
   const webAnimations: any[] = [];
   const supportsWebAnimations = (typeof (Element as any) === 'function') && (typeof (Element as any).prototype!.animate === 'function');
   const ANIMATION_END_FALLBACK_PADDING_MS = 100;
-console.log(supportsWebAnimations)
+
   /**
    * Returns the raw Web Animations object
    * for all elements in an Animation.
