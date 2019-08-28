@@ -60,6 +60,10 @@ export const createAnimation = () => {
    * Destroy the animation and all child animations.
    */
   const destroy = () => {
+    childAnimations.forEach(childAnimation => {
+      childAnimation.destroy();
+    });
+
     cleanUp();
 
     elements.length = 0;
@@ -70,10 +74,6 @@ export const createAnimation = () => {
 
     initialized = false;
     shouldCalculateNumAnimations = true;
-
-    childAnimations.forEach(childAnimation => {
-      childAnimation.destroy();
-    });
 
     return ani;
   };
@@ -142,7 +142,9 @@ export const createAnimation = () => {
    */
   const cleanUpStyleSheets = () => {
     stylesheets.forEach(stylesheet => {
-      stylesheet.parentNode!.removeChild(stylesheet);
+      if (stylesheet && stylesheet.parentNode) {
+        stylesheet.parentNode.removeChild(stylesheet);
+      }
     });
 
     stylesheets.length = 0;
