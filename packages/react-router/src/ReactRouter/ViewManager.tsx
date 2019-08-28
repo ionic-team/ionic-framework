@@ -27,18 +27,53 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
   constructor(props: ViewManagerProps) {
     super(props);
     this.id = this.props.id || generateUniqueId();
+    this.handleViewSync = this.handleViewSync.bind(this);
   }
 
   componentDidMount() {
-    this.context.setupIonRouter(this.id, this.props.children, this.containerEl.current!);
+    this.context.setupIonRouter(this.id, this.props.children, this.containerEl.current!)
+      .then(() => transitionFirstView());
+
+    let retryCount = 0;
+    const transitionFirstView = () => {
+      const viewStack = this.context.viewStacks[this.id];
+      const activeView = viewStack.views.find(x => x.id === viewStack.activeId);
+      if (activeView && activeView.ionPageElement) {
+        this.context.transitionView(activeView.ionPageElement, undefined!, this.containerEl.current!, undefined!);
+      } else {
+        if (retryCount >= 100) {
+          // throw new Error('IonPage component not found, does your page have an IonPage component as it\'s root component?');
+          console.error('IonPage component not found, does your page have an IonPage component as it\'s root component?');
+        } else {
+          retryCount += 1;
+          console.log(retryCount);
+          setTimeout(() => {
+            transitionFirstView();
+          }, 25);
+        }
+      }
+    }
   }
+
+
 
   componentWillUnmount() {
     this.context.removeViewStack(this.id);
   }
 
+  handleViewSync(page: HTMLIonPageElement, viewId: string) {
+    page.setAttribute('data-view-id', viewId);
+    page.classList.add('ion-page-invisible');
+    this.context.syncView(page, viewId);
+    // const viewStack = this.context.viewStacks[this.id];
+    // // const direction = location.state && location.state.direction;
+    // if (viewStack.activeId !== viewId) {
+    //   page.classList.add('ion-page-invisible');
+    // }
+  }
+
   renderChild(item: ViewItem) {
-    const component = React.cloneElement(item.element, {
+    const component = React.cloneElement(item.route, {
       computedMatch: item.routeData.match
     });
     return component;
@@ -47,17 +82,11 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
   render() {
     const context = this.context;
     const viewStack = context.viewStacks[this.id];
-    const activeId = viewStack ? viewStack.activeId : '';
+    // const activeId = viewStack ? viewStack.activeId : '';
     const views = (viewStack || { views: [] }).views.filter(x => x.show);
     const ionRouterOutlet = React.Children.only(this.props.children) as React.ReactElement;
 
     const childElements = views.map((view) => {
-      let props: any = {};
-      if (view.id === activeId) {
-        props = {
-          'className': 'ion-page-invisible'
-        };
-      }
       return (
         <ViewItemManager
           id={view.id}
@@ -65,8 +94,8 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
           mount={view.mount}
         >
           <View
-            ref={view.ref}
-            {...props}
+            onViewSync={this.handleViewSync}
+            view={view}
           >
             {this.renderChild(view)}
           </View>
@@ -77,7 +106,7 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
     return (
       React.cloneElement(ionRouterOutlet, {
         ref: this.containerEl,
-        "data-view-id": this.id
+        "data-stack-id": this.id
       }, childElements)
     );
 

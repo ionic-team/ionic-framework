@@ -1,4 +1,4 @@
-import { camelToDashCase } from '../utils';
+import { camelToDashCase } from './case';
 
 export const attachEventProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
   // add any classes in className to the class list

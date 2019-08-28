@@ -1,25 +1,35 @@
+import { JSX as LocalJSX } from '@ionic/core';
 import React from 'react';
 
-import { createForwardRef } from './utils';
+import { NavContext } from '..';
 
-type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+import { ReactProps } from './ReactProps';
+import { IonPageInner } from './inner-proxies';
 
-type InternalProps = Props & {
-  forwardedRef?: React.Ref<HTMLDivElement>
-};
+export const IonPage = /*@__PURE__*/(() => class IonPageInternal extends React.Component<LocalJSX.IonPage & ReactProps> {
+  context!: React.ContextType<typeof NavContext>;
+  ref = React.createRef<HTMLIonPageElement>();
 
-type ExternalProps = Props & {
-  ref?: React.Ref<HTMLDivElement>
-};
+  componentDidMount() {
+    if (this.context && this.ref.current) {
+      this.context.registerIonPage(this.ref.current);
+    }
+  }
 
-const IonPageInternal: React.FC<InternalProps> = ({ children, forwardedRef, className, ...props }) => (
-  <div
-    className={className !== undefined ? `ion-page ${className}` : 'ion-page'}
-    ref={forwardedRef}
-    {...props}
-  >
-    {children}
-  </div>
-);
+  render() {
+    const { children } = this.props;
+    return (
+      <IonPageInner ref={this.ref}>
+        {this.ref && children}
+      </IonPageInner>
+    );
+  }
 
-export const IonPage = /*@__PURE__*/createForwardRef<ExternalProps, HTMLDivElement>(IonPageInternal, 'IonPage');
+  static get displayName() {
+    return 'IonPage';
+  }
+
+  static get contextType() {
+    return NavContext;
+  }
+})();
