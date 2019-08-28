@@ -749,6 +749,8 @@ ion-note,prop,color,string | undefined,undefined,false,false
 ion-note,prop,mode,"ios" | "md",undefined,false,false
 ion-note,css-prop,--color
 
+ion-page,none
+
 ion-picker,scoped
 ion-picker,prop,animated,boolean,true,false,false
 ion-picker,prop,backdropDismiss,boolean,true,false,false

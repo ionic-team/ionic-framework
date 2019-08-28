@@ -1684,6 +1684,7 @@ export namespace Components {
     */
     'mode'?: "ios" | "md";
   }
+  interface IonPage {}
   interface IonPicker {
     /**
     * If `true`, the picker will animate.
@@ -3234,6 +3235,12 @@ declare global {
     new (): HTMLIonNoteElement;
   };
 
+  interface HTMLIonPageElement extends Components.IonPage, HTMLStencilElement {}
+  var HTMLIonPageElement: {
+    prototype: HTMLIonPageElement;
+    new (): HTMLIonPageElement;
+  };
+
   interface HTMLIonPickerElement extends Components.IonPicker, HTMLStencilElement {}
   var HTMLIonPickerElement: {
     prototype: HTMLIonPickerElement;
@@ -3553,6 +3560,7 @@ declare global {
     'ion-nav-push': HTMLIonNavPushElement;
     'ion-nav-set-root': HTMLIonNavSetRootElement;
     'ion-note': HTMLIonNoteElement;
+    'ion-page': HTMLIonPageElement;
     'ion-picker': HTMLIonPickerElement;
     'ion-picker-column': HTMLIonPickerColumnElement;
     'ion-picker-controller': HTMLIonPickerControllerElement;
@@ -5001,6 +5009,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
   }
+  interface IonPage extends JSXBase.HTMLAttributes<HTMLIonPageElement> {}
   interface IonPicker extends JSXBase.HTMLAttributes<HTMLIonPickerElement> {
     /**
     * If `true`, the picker will animate.
@@ -6251,6 +6260,7 @@ declare namespace LocalJSX {
     'ion-nav-push': IonNavPush;
     'ion-nav-set-root': IonNavSetRoot;
     'ion-note': IonNote;
+    'ion-page': IonPage;
     'ion-picker': IonPicker;
     'ion-picker-column': IonPickerColumn;
     'ion-picker-controller': IonPickerController;
