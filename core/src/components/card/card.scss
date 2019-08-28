@@ -35,6 +35,7 @@
 :host(.ion-color)::slotted(*) ion-card-header,
 :host(.ion-color)::slotted(*) ion-card-title,
 :host(.ion-color)::slotted(*) ion-card-subtitle {
+  background: current-color(base);
   color: current-color(contrast);
 }
 
