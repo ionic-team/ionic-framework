@@ -10,7 +10,7 @@ export class Events {
   constructor() {
     console.warn(`[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
   - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
-  - Use "Redux" for advanced state management: https://github.com/angular-redux/platform/tree/master/packages/store`);
+  - Use "Redux" for advanced state management: https://ngrx.io`);
   }
   /**
    * Subscribe to an event topic. Events that get posted to that topic will trigger the provided handler.
