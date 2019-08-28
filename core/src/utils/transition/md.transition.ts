@@ -16,6 +16,7 @@ export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): 
 
   rootTransition
     .addElement(ionPageElement)
+    .fill('both')
     .beforeRemoveClass('ion-page-invisible');
 
   // animate the component itself
