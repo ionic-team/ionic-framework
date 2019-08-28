@@ -30,8 +30,32 @@
           </ion-card-header>
 
           <ion-card-content>
-            This is content, without any paragraph or header tags, within an
-            ion-card-content element.
+            This card has set the color attribute to the color danger. The whole
+            card should be red.
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-header color="danger">
+            <ion-card-subtitle>Subtitle</ion-card-subtitle>
+            <ion-card-title>Title</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            This card has set the color attribute for the header. Only the
+            header should be red (danger color).
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card color="light">
+          <ion-card-header color="primary">
+            <ion-card-subtitle>Subtitle</ion-card-subtitle>
+            <ion-card-title>Title</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            The card and the header has different colors. The card should be
+            light and the header blue. It looks like the content is light.
           </ion-card-content>
         </ion-card>
       </ion-content>
