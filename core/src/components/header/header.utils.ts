@@ -51,7 +51,8 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
 };
 
 const setToolbarBackgroundOpacity = (toolbar: any, opacity = 1) => {
-  toolbar; opacity; // tslint:disable-next-line
+  // tslint:disable-next-line
+  toolbar; opacity; 
   // disabled temp until I can figure out how to make this place nicely with animations
   // toolbar.background.style.setProperty('--opacity', opacity);
 };
