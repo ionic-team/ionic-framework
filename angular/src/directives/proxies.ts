@@ -548,16 +548,6 @@ export class IonNote {
 }
 proxyInputs(IonNote, ['color', 'mode']);
 
-export declare interface IonPage extends Components.IonPage {}
-@Component({ selector: 'ion-page', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
-export class IonPage {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
 export declare interface IonProgressBar extends Components.IonProgressBar {}
 @Component({ selector: 'ion-progress-bar', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['buffer', 'color', 'mode', 'reversed', 'type', 'value'] })
 export class IonProgressBar {

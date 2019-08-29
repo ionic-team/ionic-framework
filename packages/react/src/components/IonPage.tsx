@@ -1,14 +1,12 @@
-import { JSX as LocalJSX } from '@ionic/core';
 import React from 'react';
 
-import { NavContext } from '..';
+import { NavContext } from '../contexts/NavContext';
 
 import { ReactProps } from './ReactProps';
-import { IonPageInner } from './inner-proxies';
 
-export const IonPage = /*@__PURE__*/(() => class IonPageInternal extends React.Component<LocalJSX.IonPage & ReactProps> {
+export const IonPage = /*@__PURE__*/(() => class IonPageInternal extends React.Component<React.HTMLAttributes<HTMLElement> & ReactProps> {
   context!: React.ContextType<typeof NavContext>;
-  ref = React.createRef<HTMLIonPageElement>();
+  ref = React.createRef<HTMLDivElement>();
 
   componentDidMount() {
     if (this.context && this.ref.current) {
@@ -17,11 +15,11 @@ export const IonPage = /*@__PURE__*/(() => class IonPageInternal extends React.C
   }
 
   render() {
-    const { children } = this.props;
+    const { className, children, ...props } = this.props;
     return (
-      <IonPageInner ref={this.ref}>
-        {this.ref && children}
-      </IonPageInner>
+      <div className={className ? `ion-page ${className}` : 'ion-page'} ref={this.ref} {...props}>
+        {children}
+      </div>
     );
   }
 

@@ -1,3 +1,3 @@
-export * from './Router';
-export * from './ViewManager';
 
+export * from './Router';
+export { ViewManager } from './ViewManager';

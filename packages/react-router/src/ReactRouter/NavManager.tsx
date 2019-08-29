@@ -90,7 +90,7 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
     return ViewManager;
   }
 
-  registerIonPage(page: HTMLIonPageElement) {
+  registerIonPage(page: HTMLElement) {
     console.log(page);
   }
 

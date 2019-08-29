@@ -261,7 +261,7 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
     });
   }
 
-  syncView(page: HTMLIonPageElement, viewId: string) {
+  syncView(page: HTMLElement, viewId: string) {
     const { viewStack, view } = this.findViewInfoById(viewId, this.state.viewStacks);
 
     if (!viewStack || !view) {

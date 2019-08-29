@@ -38,7 +38,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "/Users/elylucas/Documents/projects/ionic/ionic/core/ionic-core-4.8.0.tgz",
+    "@ionic/core": "^4.8.1",
     "tslib": "*"
   },
   "peerDependencies": {

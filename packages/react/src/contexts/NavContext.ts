@@ -8,7 +8,7 @@ export interface NavContextState {
   goBack: (defaultHref?: string) => void;
   navigate: (path: string, direction?: RouterDirection) => void;
   hasIonicRouter: () => boolean;
-  registerIonPage: (page: HTMLIonPageElement) => void;
+  registerIonPage: (page: HTMLElement) => void;
   currentPath: string | undefined;
 }
 

@@ -15,7 +15,7 @@ export interface ViewStacks {
 }
 
 export interface RouteManagerContextState {
-  syncView: (page: HTMLIonPageElement, viewId: string) => void;
+  syncView: (page: HTMLElement, viewId: string) => void;
   hideView: (viewId: string) => void;
   viewStacks: ViewStacks;
   setupIonRouter: (id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) => Promise<void>;

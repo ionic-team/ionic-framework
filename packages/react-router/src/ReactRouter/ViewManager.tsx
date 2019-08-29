@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { generateUniqueId } from '../utils';
 import { View } from './View';
 import { ViewItemManager } from './ViewItemManager';
@@ -37,39 +37,39 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
     let retryCount = 0;
     const transitionFirstView = () => {
       const viewStack = this.context.viewStacks[this.id];
-      const activeView = viewStack.views.find(x => x.id === viewStack.activeId);
-      if (activeView && activeView.ionPageElement) {
-        this.context.transitionView(activeView.ionPageElement, undefined!, this.containerEl.current!, undefined!);
+      if (!viewStack) {
+        setTimeout(() => {
+          transitionFirstView();
+        }, 25);
       } else {
-        if (retryCount >= 100) {
-          // throw new Error('IonPage component not found, does your page have an IonPage component as it\'s root component?');
-          console.error('IonPage component not found, does your page have an IonPage component as it\'s root component?');
+        const activeView = viewStack.views.find(x => x.id === viewStack.activeId);
+        if(!activeView) {
+          return;
+        } else if (activeView.ionPageElement) {
+          this.context.transitionView(activeView.ionPageElement, undefined!, this.containerEl.current!, undefined!);
         } else {
-          retryCount += 1;
-          console.log(retryCount);
-          setTimeout(() => {
-            transitionFirstView();
-          }, 25);
+          if (retryCount >= 100) {
+            console.error('IonPage component not found, does your page have an IonPage component as it\'s root component?');
+          } else {
+            retryCount += 1;
+            console.log(retryCount);
+            setTimeout(() => {
+              transitionFirstView();
+            }, 25);
+          }
         }
       }
     }
   }
 
-
-
   componentWillUnmount() {
     this.context.removeViewStack(this.id);
   }
 
-  handleViewSync(page: HTMLIonPageElement, viewId: string) {
+  handleViewSync(page: HTMLElement, viewId: string) {
     page.setAttribute('data-view-id', viewId);
     page.classList.add('ion-page-invisible');
     this.context.syncView(page, viewId);
-    // const viewStack = this.context.viewStacks[this.id];
-    // // const direction = location.state && location.state.direction;
-    // if (viewStack.activeId !== viewId) {
-    //   page.classList.add('ion-page-invisible');
-    // }
   }
 
   renderChild(item: ViewItem) {
@@ -82,7 +82,6 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
   render() {
     const context = this.context;
     const viewStack = context.viewStacks[this.id];
-    // const activeId = viewStack ? viewStack.activeId : '';
     const views = (viewStack || { views: [] }).views.filter(x => x.show);
     const ionRouterOutlet = React.Children.only(this.props.children) as React.ReactElement;
 
@@ -110,33 +109,6 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
       }, childElements)
     );
 
-
-    // return (
-    //   <ion-router-outlet data-id={this.id} ref={this.containerEl}>
-    //     {views.map((view) => {
-    //       let props: any = {};
-    //       if (view.id === activeId) {
-    //         props = {
-    //           'className': ' ion-page-invisible'
-    //         };
-    //       }
-    //       return (
-    //         <ViewItemManager
-    //           id={view.id}
-    //           key={view.key}
-    //           mount={view.mount}
-    //         >
-    //           <View
-    //             ref={view.ref}
-    //             {...props}
-    //           >
-    //             {this.renderChild(view)}
-    //           </View>
-    //         </ViewItemManager>
-    //       );
-    //     })}
-    //   </ion-router-outlet>
-    // );
   }
 
   static get contextType() {

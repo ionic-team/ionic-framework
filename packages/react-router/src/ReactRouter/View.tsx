@@ -6,13 +6,13 @@ import { ViewItem } from './ViewItem';
 type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 
 interface InternalProps extends React.HTMLAttributes<HTMLElement> {
-  onViewSync: (page: HTMLIonPageElement, viewId: string) => void;
+  onViewSync: (page: HTMLElement, viewId: string) => void;
   view: ViewItem;
   forwardedRef?: React.RefObject<HTMLElement>,
 };
 
 type ExternalProps = Props & {
-  onViewSync: (page: HTMLIonPageElement, viewId: string) => void;
+  onViewSync: (page: HTMLElement, viewId: string) => void;
   view: ViewItem;
   ref?: React.RefObject<HTMLElement>
 };
@@ -23,24 +23,12 @@ interface StackViewState {
 
 class ViewInternal extends React.Component<InternalProps, StackViewState> {
   context!: React.ContextType<typeof IonLifeCycleContext>;
-  ionPage?: HTMLIonPageElement;
+  ionPage?: HTMLElement;
 
   constructor(props: InternalProps) {
     super(props);
     this.state = {
       ref: null
-    }
-  }
-
-  componentDidMount() {
-    // const { forwardedRef } = this.props;
-    // this.setState({ ref: forwardedRef });
-    // if (forwardedRef && forwardedRef.current) {
-    if(this.ionPage) {
-      this.ionPage.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
-      this.ionPage.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
-      this.ionPage.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
-      this.ionPage.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
     }
   }
 
@@ -70,8 +58,12 @@ class ViewInternal extends React.Component<InternalProps, StackViewState> {
     this.context.ionViewDidLeave();
   }
 
-  registerIonPage(page: HTMLIonPageElement) {
+  registerIonPage(page: HTMLElement) {
     this.ionPage = page;
+    this.ionPage.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
+    this.ionPage.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
+    this.ionPage.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
+    this.ionPage.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
     this.props.onViewSync(page, this.props.view.id);
   }
 
@@ -83,10 +75,10 @@ class ViewInternal extends React.Component<InternalProps, StackViewState> {
             ...value,
             registerIonPage: this.registerIonPage.bind(this)
           }
-          return(
-          <NavContext.Provider value={newProvider}>
-            {this.props.children}
-          </NavContext.Provider>
+          return (
+            <NavContext.Provider value={newProvider}>
+              {this.props.children}
+            </NavContext.Provider>
           );
 
         }}
