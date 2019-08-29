@@ -112,6 +112,9 @@
               <ion-toolbar>      
                 <ion-title size="large">Page Two</ion-title>
               </ion-toolbar>
+              <ion-toolbar>
+                <ion-searchbar></ion-searchbar>
+              </ion-toolbar>
             </ion-header>
           
             <ion-list id="dynamicList">${this.generateList()}</ion-list>
@@ -171,7 +174,7 @@
           <ion-header class="three-header">
             <ion-toolbar>    
               <ion-buttons>
-                <ion-back-button default-href="/"></ion-back-button>
+                <ion-back-button default-href="/" text="Page Two"></ion-back-button>
               </ion-buttons>  
               <ion-title>Page Three</ion-title>  
               <ion-buttons slot="end" collapse>

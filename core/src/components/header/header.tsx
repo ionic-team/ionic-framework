@@ -1,8 +1,8 @@
-import { Component, ComponentInterface, Element, Host, Prop, h, readTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
-import { createHeaderIndex, handleContentScroll, handleToolbarIntersection, makeHeaderInactive } from './header.utils';
+import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarIntersection, setHeaderActive } from './header.utils';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
@@ -71,7 +71,7 @@ export class Header implements ComponentInterface {
 
       if (!mainHeaderIndex || !scrollHeaderIndex) { return; }
 
-      makeHeaderInactive(mainHeaderIndex);
+      setHeaderActive(mainHeaderIndex, false);
 
       // TODO: Find a better way to do this
       let remainingHeight = 0;
@@ -79,22 +79,17 @@ export class Header implements ComponentInterface {
         remainingHeight += scrollHeaderIndex.toolbars[i].el.clientHeight;
       }
 
-      // TODO: Find a better way to do this
-      let zIndex = scrollHeaderIndex.toolbars.length - 1;
-      scrollHeaderIndex.toolbars.forEach((toolbar: any) => {
-        toolbar.el.style.zIndex = zIndex.toString();
-        zIndex -= 1;
-      });
-
       /**
        * Handle interaction between toolbar collapse and
        * showing/hiding content in the primary ion-header
        */
       const toolbarIntersection = (ev: any) => { handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex); };
 
-      const mainHeaderHeight = mainHeaderIndex.el.clientHeight;
-      const intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: 0.25, rootMargin: `-${mainHeaderHeight}px 0px 0px 0px` });
-      intersectionObserver.observe(scrollHeaderIndex.toolbars[0].el);
+      readTask(() => {
+        const mainHeaderHeight = mainHeaderIndex.el.clientHeight;
+        const intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: 0.25, rootMargin: `-${mainHeaderHeight}px 0px 0px 0px` });
+        intersectionObserver.observe(scrollHeaderIndex.toolbars[0].el);
+      });
 
       /**
        * Handle scaling of large iOS titles and
@@ -104,6 +99,10 @@ export class Header implements ComponentInterface {
       this.contentScrollCallback = () => { handleContentScroll(this.scrollEl, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
       this.scrollEl.addEventListener('scroll', this.contentScrollCallback);
 
+      writeTask(() => {
+        cloneElement('ion-title');
+        cloneElement('ion-back-button');
+      });
     });
   }
 

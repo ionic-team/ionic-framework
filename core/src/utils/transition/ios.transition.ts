@@ -7,38 +7,8 @@ const addSafeArea = (val: number, side = 'top'): string => {
   return `calc(${val}px + var(--ion-safe-area-${side}))`;
 };
 
-const cloneElement = async (el: any, deep = false, elementToAppendTo?: any, hidden = false): Promise<any> => {
-  try {
-    const fetchCachedElement = elementToAppendTo.querySelector(`${el.tagName.toLowerCase()}.ion-cloned-element`);
-
-    if (fetchCachedElement) {
-      if (fetchCachedElement.componentOnReady) {
-        await fetchCachedElement.componentOnReady();
-      }
-
-      return fetchCachedElement;
-    }
-
-    const clone = el.cloneNode(deep);
-
-    if (hidden) {
-      clone.style.setProperty('display', 'none');
-    }
-
-    clone.classList.add('ion-cloned-element');
-
-    if (elementToAppendTo) {
-      elementToAppendTo.appendChild(clone);
-
-      if (clone.componentOnReady) {
-        await clone.componentOnReady();
-      }
-    }
-
-    return clone;
-  } catch (err) {
-    throw err;
-  }
+const getClonedElement = (tagName: string): any => {
+  return document.querySelector(`${tagName}.ion-cloned-element`) as any ;
 };
 
 export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
@@ -65,7 +35,7 @@ const getBackButton = (refEl: any, backDirection: boolean) => {
   return null;
 };
 
-const createLargeTitleTransition = async (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, enteringEl: any, leavingEl: any) => {
+const createLargeTitleTransition = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, enteringEl: any, leavingEl: any) => {
   const enteringBackButton = getBackButton(enteringEl, backDirection);
   const leavingLargeTitle = getLargeTitle(leavingEl);
 
@@ -76,15 +46,11 @@ const createLargeTitleTransition = async (rootAnimation: IonicAnimation, rtl: bo
   const shouldAnimationBackward = enteringLargeTitle !== null && leavingBackButton !== null && backDirection;
 
   if (shouldAnimationForward) {
-    await Promise.all([
-      animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle),
-      animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton)
-    ]);
+    animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle);
+    animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton);
   } else if (shouldAnimationBackward) {
-    await Promise.all([
-      animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle),
-      animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton)
-    ]);
+    animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle);
+    animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton);
   }
 
   return {
@@ -93,13 +59,19 @@ const createLargeTitleTransition = async (rootAnimation: IonicAnimation, rtl: bo
   };
 };
 
-const animateBackButton = async (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
+const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
   console.log(rtl);
 
   const enteringBackButtonTextAnimation = createAnimation();
   const enteringBackButtonIconAnimation = createAnimation();
 
-  const clonedBackButtonEl = await cloneElement(backButtonEl, false, document.body);
+  const clonedBackButtonEl = getClonedElement('ion-back-button');
+
+  clonedBackButtonEl.text = backButtonEl.text;
+  clonedBackButtonEl.mode = backButtonEl.mode;
+  clonedBackButtonEl.icon = backButtonEl.icon;
+  clonedBackButtonEl.color = backButtonEl.color;
+  clonedBackButtonEl.disabled = backButtonEl.disabled;
 
   clonedBackButtonEl.style.setProperty('display', 'block');
   clonedBackButtonEl.style.setProperty('position', 'fixed');
@@ -153,8 +125,13 @@ const animateBackButton = async (rootAnimation: IonicAnimation, rtl: boolean, ba
   rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation]);
 };
 
-const animateLargeTitle = async (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
-  const clonedTitleEl = await cloneElement(largeTitleEl, true, document.body, true);
+const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
+  const clonedTitleEl = getClonedElement('ion-title');
+
+  clonedTitleEl.innerText = largeTitleEl.innerText;
+  clonedTitleEl.size = largeTitleEl.size;
+  clonedTitleEl.color = largeTitleEl.color;
+
   const clonedLargeTitleAnimation = createAnimation();
   clonedLargeTitleAnimation.addElement(clonedTitleEl);
 
@@ -279,7 +256,7 @@ export const iosTransitionAnimation = async (navEl: HTMLElement, opts: Transitio
 
     const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-ios');
 
-    const { forward, backward } = await createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
+    const { forward, backward } = createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
 
     enteringToolBarEls.forEach(enteringToolBarEl => {
       const enteringToolBar = createAnimation();

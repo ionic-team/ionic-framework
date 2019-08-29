@@ -19,6 +19,12 @@
 
 .header-collapse-ios ion-toolbar:first-child {
   padding-top: 7px;
+
+  z-index: 1;
+}
+
+.header-collapse-ios ion-toolbar {
+  z-index: 0;
 }
 
 .header-collapse-ios ion-toolbar ion-searchbar {

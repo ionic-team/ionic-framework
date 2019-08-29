@@ -2,6 +2,18 @@ import { readTask, writeTask } from '@stencil/core';
 
 const TRANSITION = 'all 0.2s ease-in-out';
 
+export const cloneElement = (tagName: string) => {
+  const getCachedEl = document.querySelector(`${tagName}.ion-cloned-element`);
+  if (getCachedEl !== null) { return getCachedEl; }
+
+  const clonedEl = document.createElement(tagName);
+  clonedEl.classList.add('ion-cloned-element');
+  clonedEl.style.setProperty('display', 'none');
+  document.body.appendChild(clonedEl);
+
+  return clonedEl;
+};
+
 export const createHeaderIndex = (headerEl: any): any | undefined => {
   if (!headerEl) { return; }
 
@@ -23,13 +35,7 @@ export const createHeaderIndex = (headerEl: any): any | undefined => {
 };
 
 const clampValue = (value: number, max: number, min: number): number => {
-  if (value > max) {
-    return max;
-  } else if (value < min) {
-    return min;
-  }
-
-  return value;
+  return Math.min(Math.max(value, min), max);
 };
 
 export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollHeaderIndex: any, remainingHeight = 0) => {
@@ -76,28 +82,22 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
     }
 
     if (event.isIntersecting) {
-      makeHeaderInactive(mainHeaderIndex);
-      makeHeaderActive(scrollHeaderIndex);
+      setHeaderActive(mainHeaderIndex, false);
+      setHeaderActive(scrollHeaderIndex);
     } else {
-      makeHeaderActive(mainHeaderIndex);
-      makeHeaderInactive(scrollHeaderIndex);
+      setHeaderActive(mainHeaderIndex);
+      setHeaderActive(scrollHeaderIndex, false);
     }
   });
 };
 
-export const makeHeaderInactive = (headerIndex: any) => {
-  headerIndex.el.classList.add('header-collapse-ios-inactive');
-  setToolbarBackgroundOpacity(headerIndex.toolbars[0], 0);
-};
-
-export const makeHeaderActive = (headerIndex: any) => {
-  headerIndex.el.classList.remove('header-collapse-ios-inactive');
-  setToolbarBackgroundOpacity(headerIndex.toolbars[0], 1);
-};
-
-export const setElOpacity = (el: HTMLElement, opacity = 1, transition = false) => {
-  el.style.setProperty('transition', (transition) ? TRANSITION : '');
-  el.style.setProperty('opacity', `${opacity}`);
+export const setHeaderActive = (headerIndex: any, active = true) => {
+  if (active) {
+    headerIndex.el.classList.remove('header-collapse-ios-inactive');
+  } else {
+    headerIndex.el.classList.add('header-collapse-ios-inactive');
+  }
+  setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? 1 : 0);
 };
 
 export const scaleLargeTitles = (toolbars: any[] = [], scale = 1, transition = false) => {
