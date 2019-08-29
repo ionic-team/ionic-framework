@@ -98,11 +98,11 @@ export class Header implements ComponentInterface {
        */
       this.contentScrollCallback = () => { handleContentScroll(this.scrollEl, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
       this.scrollEl.addEventListener('scroll', this.contentScrollCallback);
+    });
 
-      writeTask(() => {
-        cloneElement('ion-title');
-        cloneElement('ion-back-button');
-      });
+    writeTask(() => {
+      cloneElement('ion-title');
+      cloneElement('ion-back-button');
     });
   }
 

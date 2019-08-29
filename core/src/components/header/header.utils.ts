@@ -57,10 +57,7 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
 };
 
 const setToolbarBackgroundOpacity = (toolbar: any, opacity = 1) => {
-  // tslint:disable-next-line
-  toolbar; opacity; 
-  // disabled temp until I can figure out how to make this place nicely with animations
-  // toolbar.background.style.setProperty('--opacity', opacity);
+  toolbar.background.style.setProperty('--opacity', opacity);
 };
 
 /**
@@ -92,12 +89,14 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
 };
 
 export const setHeaderActive = (headerIndex: any, active = true) => {
-  if (active) {
-    headerIndex.el.classList.remove('header-collapse-ios-inactive');
-  } else {
-    headerIndex.el.classList.add('header-collapse-ios-inactive');
-  }
-  setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? 1 : 0);
+  writeTask(() => {
+    if (active) {
+      headerIndex.el.classList.remove('header-collapse-ios-inactive');
+    } else {
+      headerIndex.el.classList.add('header-collapse-ios-inactive');
+    }
+    setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? 1 : 0);
+  });
 };
 
 export const scaleLargeTitles = (toolbars: any[] = [], scale = 1, transition = false) => {
