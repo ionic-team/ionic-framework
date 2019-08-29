@@ -36,7 +36,17 @@
 
 ion-toolbar.in-toolbar ion-title,
 ion-toolbar.in-toolbar ion-buttons {
-  //transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+/**
+ * There is a bug in Safari where animating the opacity
+ * on an element in a scrollable container while scrolling
+ * causes the scroll position to jump to the top
+ */
+.header-collapse-ios ion-toolbar ion-title,
+.header-collapse-ios ion-toolbar ion-buttons {
+  transition: none;
 }
 
 .header-collapse-ios-inactive ion-toolbar.in-toolbar ion-title,

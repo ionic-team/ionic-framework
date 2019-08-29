@@ -83,13 +83,13 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
   enteringBackButtonTextAnimation.addElement(backButtonTextEl);
 
   const FORWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` },
+    { offset: 0, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(1.9)` },
     { offset: 1, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` }
   ];
   const BACKWARD_TEXT_KEYFRAMES = [
     { offset: 0, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` }
+    { offset: 1, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(1.9)` }
   ];
   const TEXT_KEYFRAMES = (backDirection) ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
 
