@@ -51,7 +51,7 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
 };
 
 const setToolbarBackgroundOpacity = (toolbar: any, opacity = 1) => {
-  console.log(toolbar, opacity);
+  toolbar; opacity; // tslint:disable-next-line
   // disabled temp until I can figure out how to make this place nicely with animations
   // toolbar.background.style.setProperty('--opacity', opacity);
 };
@@ -65,12 +65,12 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
   writeTask(() => {
     const event = ev[0];
     const intersectionArea = event.intersectionRect.width * event.intersectionRect.height;
+    const rootArea = event.rootBounds.width * event.rootBounds.height;
 
-    if (
-      intersectionArea > 0 &&
-      (event.intersectionRect.left !== event.rootBounds.left ||
-      event.intersectionRect.right !== event.rootBounds.right)
-    ) {
+    const isPageHidden = intersectionArea === 0 && rootArea === 0;
+    const isPageTransitioning = intersectionArea > 0 && (event.intersectionRect.left !== event.rootBounds.left || event.intersectionRect.right !== event.rootBounds.right);
+
+    if (isPageHidden || isPageTransitioning) {
       return;
     }
 
