@@ -5,6 +5,8 @@ test('virtual-scroll: basic', async () => {
     url: '/src/components/virtual-scroll/test/basic?ionic:_testing=true'
   });
 
+  await page.waitFor(300);
+
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });
