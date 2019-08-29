@@ -6,6 +6,8 @@ Modal controllers programmatically control the modal component. Modals can be cr
 <!-- Auto Generated Below -->
 
 
+> **[DEPRECATED]** Use the `modalController` exported from core.
+
 ## Methods
 
 ### `create<T extends ComponentRef>(options: ModalOptions<T>) => Promise<HTMLIonModalElement>`

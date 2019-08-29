@@ -5,7 +5,7 @@ import { Config } from './providers/config';
 import { IonicWindow } from './types/interfaces';
 import { raf } from './util/util';
 
-export function appInitialize(config: Config, doc: Document, zone: NgZone) {
+export const appInitialize = (config: Config, doc: Document, zone: NgZone) => {
   return (): any => {
     const win: IonicWindow | undefined = doc.defaultView as any;
     if (win) {
@@ -36,4 +36,4 @@ export function appInitialize(config: Config, doc: Document, zone: NgZone) {
       });
     }
   };
-}
+};

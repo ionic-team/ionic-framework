@@ -25,12 +25,13 @@ import {
   HeaderFn,
   HeaderHeightFn,
   InputChangeEventDetail,
+  IonicAnimation,
   ItemHeightFn,
   ItemRenderFn,
   ItemReorderEventDetail,
   LoadingOptions,
   MenuChangeEventDetail,
-  MenuControllerI,
+  MenuI,
   ModalOptions,
   NavComponent,
   NavOptions,
@@ -879,7 +880,7 @@ export namespace Components {
     */
     'alt'?: string;
     /**
-    * The image URL. This attribute is mandatory for the <img> element.
+    * The image URL. This attribute is mandatory for the `<img>` element.
     */
     'src'?: string;
   }
@@ -957,9 +958,9 @@ export namespace Components {
     */
     'getInputElement': () => Promise<HTMLInputElement>;
     /**
-    * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
     */
-    'inputmode'?: string;
+    'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**
     * The maximum value, which must not be less than its minimum (min attribute) value.
     */
@@ -1376,7 +1377,6 @@ export namespace Components {
     'type': 'submit' | 'reset' | 'button';
   }
   interface IonMenuController {
-    '_getInstance': () => Promise<MenuControllerI>;
     /**
     * Close the menu. If a menu is specified, it will close that menu. If no menu is specified, then it will close any menu that is open. If it does not find any open menus, it will return `false`.
     * @param menu The menuId or side of the menu to close.
@@ -1425,7 +1425,7 @@ export namespace Components {
     * @param name The name of the animation to register.
     * @param animation The animation function to register.
     */
-    'registerAnimation': (name: string, animation: AnimationBuilder) => Promise<void>;
+    'registerAnimation': (name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => Promise<void>;
     /**
     * Enable or disable the ability to swipe open the menu.
     * @param enable If `true`, the menu swipe gesture should be enabled.
@@ -1638,6 +1638,20 @@ export namespace Components {
     * If the nav component should allow for swipe-to-go-back.
     */
     'swipeGesture'?: boolean;
+  }
+  interface IonNavLink {
+    /**
+    * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
+    */
+    'component'?: NavComponent;
+    /**
+    * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
+    */
+    'componentProps'?: ComponentProps;
+    /**
+    * The transition direction when navigating to another page.
+    */
+    'routerDirection': RouterDirection;
   }
   interface IonNavPop {}
   interface IonNavPush {
@@ -2182,6 +2196,10 @@ export namespace Components {
     */
     'getInputElement': () => Promise<HTMLInputElement>;
     /**
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+    */
+    'inputmode': 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
@@ -2373,6 +2391,10 @@ export namespace Components {
     * Get the index of the previous slide.
     */
     'getPreviousIndex': () => Promise<number>;
+    /**
+    * Get the Swiper instance. Use this to access the full Swiper API. See https://idangero.us/swiper/api/ for all API options.
+    */
+    'getSwiper': () => Promise<any>;
     /**
     * Get whether or not the current slide is the first slide.
     */
@@ -2689,7 +2711,7 @@ export namespace Components {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * Text to display in the close button.
+    * @deprecated Use `buttons` instead. Text to display in the close button.
     */
     'closeButtonText'?: string;
     /**
@@ -2752,7 +2774,7 @@ export namespace Components {
     */
     'present': () => Promise<void>;
     /**
-    * If `true`, the close button will be displayed.
+    * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
     */
     'showCloseButton': boolean;
     /**
@@ -3186,6 +3208,12 @@ declare global {
     new (): HTMLIonNavElement;
   };
 
+  interface HTMLIonNavLinkElement extends Components.IonNavLink, HTMLStencilElement {}
+  var HTMLIonNavLinkElement: {
+    prototype: HTMLIonNavLinkElement;
+    new (): HTMLIonNavLinkElement;
+  };
+
   interface HTMLIonNavPopElement extends Components.IonNavPop, HTMLStencilElement {}
   var HTMLIonNavPopElement: {
     prototype: HTMLIonNavPopElement;
@@ -3524,6 +3552,7 @@ declare global {
     'ion-modal': HTMLIonModalElement;
     'ion-modal-controller': HTMLIonModalControllerElement;
     'ion-nav': HTMLIonNavElement;
+    'ion-nav-link': HTMLIonNavLinkElement;
     'ion-nav-pop': HTMLIonNavPopElement;
     'ion-nav-push': HTMLIonNavPushElement;
     'ion-nav-set-root': HTMLIonNavSetRootElement;
@@ -4373,7 +4402,7 @@ declare namespace LocalJSX {
     */
     'onIonImgWillLoad'?: (event: CustomEvent<void>) => void;
     /**
-    * The image URL. This attribute is mandatory for the <img> element.
+    * The image URL. This attribute is mandatory for the `<img>` element.
     */
     'src'?: string;
   }
@@ -4447,9 +4476,9 @@ declare namespace LocalJSX {
     */
     'disabled'?: boolean;
     /**
-    * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
     */
-    'inputmode'?: string;
+    'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**
     * The maximum value, which must not be less than its minimum (min attribute) value.
     */
@@ -4930,6 +4959,20 @@ declare namespace LocalJSX {
     * If the nav component should allow for swipe-to-go-back.
     */
     'swipeGesture'?: boolean;
+  }
+  interface IonNavLink extends JSXBase.HTMLAttributes<HTMLIonNavLinkElement> {
+    /**
+    * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
+    */
+    'component'?: NavComponent;
+    /**
+    * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
+    */
+    'componentProps'?: ComponentProps;
+    /**
+    * The transition direction when navigating to another page.
+    */
+    'routerDirection'?: RouterDirection;
   }
   interface IonNavPop extends JSXBase.HTMLAttributes<HTMLIonNavPopElement> {}
   interface IonNavPush extends JSXBase.HTMLAttributes<HTMLIonNavPushElement> {
@@ -5443,6 +5486,10 @@ declare namespace LocalJSX {
     * If `true`, the user cannot interact with the input.
     */
     'disabled'?: boolean;
+    /**
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+    */
+    'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**
     * The mode determines which platform styles to use.
     */
@@ -5984,7 +6031,7 @@ declare namespace LocalJSX {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * Text to display in the close button.
+    * @deprecated Use `buttons` instead. Text to display in the close button.
     */
     'closeButtonText'?: string;
     /**
@@ -6044,7 +6091,7 @@ declare namespace LocalJSX {
     */
     'position'?: 'top' | 'bottom' | 'middle';
     /**
-    * If `true`, the close button will be displayed.
+    * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
     */
     'showCloseButton'?: boolean;
     /**
@@ -6207,6 +6254,7 @@ declare namespace LocalJSX {
     'ion-modal': IonModal;
     'ion-modal-controller': IonModalController;
     'ion-nav': IonNav;
+    'ion-nav-link': IonNavLink;
     'ion-nav-pop': IonNavPop;
     'ion-nav-push': IonNavPush;
     'ion-nav-set-root': IonNavSetRoot;

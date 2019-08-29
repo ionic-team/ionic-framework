@@ -1,5 +1,3 @@
-import { writeTask } from '@stencil/core';
-
 import { GESTURE_CONTROLLER } from './gesture-controller';
 import { createPointerEvents } from './pointer-events';
 import { createPanRecognizer } from './recognizers';
@@ -92,7 +90,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
       if (!isMoveQueued && hasFiredStart) {
         isMoveQueued = true;
         calcGestureData(detail, ev);
-        writeTask(fireOnMove);
+        requestAnimationFrame(fireOnMove);
       }
       return;
     }

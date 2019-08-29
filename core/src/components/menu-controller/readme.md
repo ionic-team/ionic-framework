@@ -116,7 +116,7 @@ Type: `Promise<boolean>`
 
 
 
-### `registerAnimation(name: string, animation: AnimationBuilder) => Promise<void>`
+### `registerAnimation(name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => Promise<void>`
 
 Registers a new animation that can be used with any `ion-menu` by
 passing the name of the animation in its `type` property.
@@ -149,19 +149,6 @@ Type: `Promise<boolean>`
 
 
 
-
-## Dependencies
-
-### Used by
-
- - [ion-menu](../menu)
-
-### Graph
-```mermaid
-graph TD;
-  ion-menu --> ion-menu-controller
-  style ion-menu-controller fill:#f9f,stroke:#333,stroke-width:4px
-```
 
 ----------------------------------------------
 

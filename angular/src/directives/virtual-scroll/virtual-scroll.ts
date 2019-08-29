@@ -206,7 +206,7 @@ export class IonVirtualScroll {
   }
 }
 
-function getElement(view: EmbeddedViewRef<VirtualContext>): HTMLElement {
+const getElement = (view: EmbeddedViewRef<VirtualContext>): HTMLElement => {
   const rootNodes = view.rootNodes;
   for (let i = 0; i < rootNodes.length; i++) {
     if (rootNodes[i].nodeType === 1) {
@@ -214,7 +214,7 @@ function getElement(view: EmbeddedViewRef<VirtualContext>): HTMLElement {
     }
   }
   throw new Error('virtual element was not created');
-}
+};
 
 proxyInputs(IonVirtualScroll, [
   'approxItemHeight',

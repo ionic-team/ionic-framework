@@ -25,7 +25,7 @@ export class Img implements ComponentInterface {
   @Prop() alt?: string;
 
   /**
-   * The image URL. This attribute is mandatory for the <img> element.
+   * The image URL. This attribute is mandatory for the `<img>` element.
    */
   @Prop() src?: string;
   @Watch('src')

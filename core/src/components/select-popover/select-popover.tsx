@@ -41,7 +41,7 @@ export class SelectPopover implements ComponentInterface {
           {this.header !== undefined && <ion-list-header>{this.header}</ion-list-header>}
           { (this.subHeader !== undefined || this.message !== undefined) &&
             <ion-item>
-              <ion-label text-wrap>
+              <ion-label class="ion-text-wrap">
                 {this.subHeader !== undefined && <h3>{this.subHeader}</h3>}
                 {this.message !== undefined && <p>{this.message}</p>}
               </ion-label>

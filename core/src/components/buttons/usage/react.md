@@ -11,7 +11,7 @@ import {
   IonContent
 } from '@ionic/react';
 
-export const ButtonsExample: React.FunctionComponent = () => (
+export const ButtonsExample: React.FC = () => (
   <IonContent>
     <IonToolbar>
       <IonButtons slot="start">
