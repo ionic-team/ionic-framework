@@ -27,7 +27,7 @@ export class SelectOption implements ComponentInterface {
    * The text value of the option.
    */
   @Prop() value?: any | null;
-  
+
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
