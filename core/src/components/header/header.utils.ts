@@ -68,11 +68,12 @@ const setToolbarBackgroundOpacity = (toolbar: any, opacity = 1) => {
 export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollHeaderIndex: any) => {
   writeTask(() => {
     const event = ev[0];
-    const intersectionArea = event.intersectionRect.width * event.intersectionRect.height;
+    const intersection = event.intersectionRect;
+    const intersectionArea = intersection.width * intersection.height;
     const rootArea = event.rootBounds.width * event.rootBounds.height;
 
     const isPageHidden = intersectionArea === 0 && rootArea === 0;
-    const isPageTransitioning = intersectionArea > 0 && (event.intersectionRect.left !== event.rootBounds.left || event.intersectionRect.right !== event.rootBounds.right);
+    const isPageTransitioning = intersectionArea > 0 && (intersection.left !== event.rootBounds.left || intersection.right !== event.rootBounds.right);
 
     if (isPageHidden || isPageTransitioning) {
       return;
@@ -81,17 +82,21 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
     if (event.isIntersecting) {
       setHeaderActive(mainHeaderIndex, false);
       setHeaderActive(scrollHeaderIndex);
+    } else {
+      /**
+       * There is a bug with IntersectionObserver on Safari
+       * where `event.isIntersecting === false` when cancelling
+       * a swipe to go back gesture. Checking `intersectionArea`
+       * provides a workaround. This bug does not happen when
+       * using Safari + Web Animations, only Safari + CSS Animations
+       */
 
-    /**
-     * There is a bug with IntersectionObserver on Safari
-     * where `event.isIntersecting === false` when cancelling
-     * a swipe to go back gesture. Checking `intersectionArea`
-     * provides a workaround. This bug does not happen when
-     * using Safari + Web Animations, only Safari + CSS Animations
-     */
-    } else if (!event.isIntersecting && intersectionArea > 0) {
-      setHeaderActive(mainHeaderIndex);
-      setHeaderActive(scrollHeaderIndex, false);
+      const hasValidIntersection = (intersection.x === 0 && intersection.y === 0) || (intersection.width !== 0 && intersection.height !== 0);
+
+      if (hasValidIntersection) {
+        setHeaderActive(mainHeaderIndex);
+        setHeaderActive(scrollHeaderIndex, false);
+      }
     }
   });
 };
