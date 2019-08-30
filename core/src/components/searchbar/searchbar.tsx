@@ -182,7 +182,7 @@ export class Searchbar implements ComponentInterface {
     });
   }
 
-  componentWillLoad() {
+  connectedCallback() {
     this.emitStyle();
   }
 
