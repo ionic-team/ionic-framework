@@ -64,6 +64,8 @@ class ViewInternal extends React.Component<InternalProps, StackViewState> {
     this.ionPage.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
     this.ionPage.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
     this.ionPage.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
+    this.ionPage.classList.add('ion-page-invisible');
+    this.ionPage.setAttribute('data-view-id', this.props.view.id);
     this.props.onViewSync(page, this.props.view.id);
   }
 
@@ -84,25 +86,6 @@ class ViewInternal extends React.Component<InternalProps, StackViewState> {
         }}
       </NavContext.Consumer>
     );
-    // const { className, children, forwardedRef, ...rest } = this.props;
-    // const route = React.Children.only(this.props.children) as React.ReactElement;
-
-    // const component = route.props.component || route.props.render;
-
-    // return React.cloneElement(component, {
-    //   ref: forwardRef
-    // });
-
-    // const { ref } = this.state;
-    // return (
-    //     <div
-    //       className={className ? `ion-page ${className}` : 'ion-page'}
-    //       ref={forwardedRef as any}
-    //       {...rest}
-    //     >
-    //       {ref && children}
-    //     </div>
-    // )
   }
 
   static get contextType() {

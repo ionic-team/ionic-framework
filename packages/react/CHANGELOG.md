@@ -1,4 +1,9 @@
-# [4.8.0-rc3]
+
+# [4.8.0-rc2]
+
+## Bug Fixes
+
+IonPage should be root page for Ionic Pages - fixes [#19146](https://github.com/ionic-team/ionic/issues/19146)
 
 ## Breaking Changes
 
@@ -10,11 +15,25 @@ To clear up this confusion, we decided to stop adding the `IonPage` component in
 
 Apps migrating from a previous version to RC3 will need to make sure `IonPage` is used as the root component for every Ionic page. Ionic Pages typically have `IonHeader` and `IonContent` tags and are the components rendered by the routes. The starters used a React Fragment before, and this fragment needs to be changed to `IonPage`. Any other uses of `IonPage` should probably be removed.
 
-# [4.8.0-rc2]
+Example:
 
-## Bug Fixes
+An Ionic Page before RC2 most likely has a React fragment as its root:
 
-Insert ion-page classes via framework instead of ion-app tag - fixes [#19146](https://github.com/ionic-team/ionic/issues/19146)
+``` jsx
+<>
+  <IonHeader>/* header stuff */</IonHeader>
+  <IonContent>/* content stuff */</IonContent>
+</>
+```
+
+In RC3 and greater, the fragment should be updated to an IonPage component:
+
+``` jsx
+<IonPage>
+  <IonHeader>/* header stuff */</IonHeader>
+  <IonContent>/* content stuff */</IonContent>
+</IonPage>
+```
 
 # [4.8.0-rc1]
 

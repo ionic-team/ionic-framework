@@ -4,7 +4,6 @@ import { ViewItem } from './ViewItem';
 
 export interface ViewStack {
   id: string;
-  ionRouterOutlet: React.ReactElement;
   routerOutlet: HTMLIonRouterOutletElement;
   activeId?: string,
   views: ViewItem[]

@@ -10,7 +10,9 @@ export const IonPage = /*@__PURE__*/(() => class IonPageInternal extends React.C
 
   componentDidMount() {
     if (this.context && this.ref.current) {
-      this.context.registerIonPage(this.ref.current);
+      if (this.context.hasIonicRouter()) {
+        this.context.registerIonPage(this.ref.current);
+      }
     }
   }
 
