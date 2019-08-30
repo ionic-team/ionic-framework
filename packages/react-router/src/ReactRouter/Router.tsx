@@ -91,7 +91,6 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
           leavingView.show = false;
         }
 
-
         if (leavingView.route.type === Route && leavingView.route.props.render) {
           if (leavingView.route.props.render().type === Redirect) {
             leavingView.mount = false;
@@ -207,19 +206,6 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
       this.transitionView(view.ionPageElement, undefined!, viewStack.routerOutlet, undefined!);
     }
 
-  }
-
-  findActiveView(views: ViewItem[]) {
-    let view: ViewItem<IonRouteData> | undefined;
-    views.some(x => {
-      const match = matchPath(this.props.location.pathname, x.routeData.childProps)
-      if (match) {
-        view = x;
-        return true;
-      }
-      return false;
-    });
-    return view;
   }
 
   transitionView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOutlet: HTMLIonRouterOutletElement, direction: NavDirection) {
