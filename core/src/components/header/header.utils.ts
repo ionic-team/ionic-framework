@@ -51,13 +51,17 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
 
     writeTask(() => {
       scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
-      setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], scaledOpacity);
+      setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scaledOpacity === 1) ? undefined : scaledOpacity);
     });
   });
 };
 
-const setToolbarBackgroundOpacity = (toolbar: any, opacity: string | number | undefined = '') => {
-  toolbar.background.style.setProperty('--opacity', opacity);
+const setToolbarBackgroundOpacity = (toolbar: any, opacity: number | undefined) => {
+  if (opacity === undefined) {
+    toolbar.background.style.removeProperty('--opacity');
+  } else {
+    toolbar.background.style.setProperty('--opacity', opacity);
+  }
 };
 
 /**
@@ -109,7 +113,7 @@ export const setHeaderActive = (headerIndex: any, active = true) => {
     } else {
       headerIndex.el.classList.add('header-collapse-ios-inactive');
     }
-    setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? '' : 0);
+    setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? undefined : 0);
   });
 };
 

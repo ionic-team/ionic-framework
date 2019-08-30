@@ -154,7 +154,7 @@
         for (let i = 0; i < 100; i++) {
           html += `
             <ion-nav-link component="page-two">
-              <ion-item button>
+              <ion-item button color="dark">
                 <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
                 <ion-label>
                   <h2>Heading ${i}</h2>
@@ -171,8 +171,8 @@
 
       connectedCallback() {
         this.innerHTML = `
-          <ion-header class="three-header">
-            <ion-toolbar>    
+          <ion-header class="three-header" color="dark" translucent>
+            <ion-toolbar color="dark">    
               <ion-buttons>
                 <ion-back-button default-href="/" text="Page Two"></ion-back-button>
               </ion-buttons>  
@@ -183,9 +183,9 @@
             </ion-toolbar>
           </ion-header>
         
-          <ion-content id="content" class="three-content">
-            <ion-header collapse>              
-              <ion-toolbar>      
+          <ion-content id="content" class="three-content" fullscreen color="dark">
+            <ion-header collapse color="dark">              
+              <ion-toolbar color="dark">      
                 <ion-title size="large">Page Three</ion-title>
               </ion-toolbar>
             </ion-header>
