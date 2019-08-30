@@ -25,6 +25,10 @@
 
 // iOS Header - Collapse
 // --------------------------------------------------
+.header-collapse-ios {
+  z-index: 9;
+}
+
 .header-collapse-ios ion-toolbar {
   position: sticky;
   top: 0;
