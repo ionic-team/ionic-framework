@@ -22,7 +22,6 @@ export class ToolbarTitle implements ComponentInterface {
 
   /**
    * The size of the toolbar title.
-   * Only applies in `ios` mode.
    */
   @Prop() size?: 'large' | 'small';
 
@@ -64,7 +63,7 @@ export class ToolbarTitle implements ComponentInterface {
         class={{
           [mode]: true,
           [`title-${mode}`]: true,
-          [`title-${mode}-${size}`]: true,
+          [`title-${size}`]: true,
 
           ...createColorClasses(this.color),
         }}

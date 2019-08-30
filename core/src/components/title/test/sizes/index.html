@@ -34,16 +34,18 @@
     </ion-header>
 
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar class="hide-md">
         <ion-title size="small">Choose a contact to add to Favorites</ion-title>
       </ion-toolbar>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button>Groups</ion-button>
+          <ion-back-button default-href="#"></ion-back-button>
         </ion-buttons>
-        <ion-title>Contacts</ion-title>
+        <ion-title>Title</ion-title>
+        <ion-title class="hide-ios" size="small">Subtitle</ion-title>
         <ion-buttons slot="end">
-          <ion-button>Cancel</ion-button>
+          <ion-button><ion-icon slot="icon-only" name="search"></ion-icon></ion-button>
+          <ion-button><ion-icon slot="icon-only" name="menu"></ion-icon></ion-button>
         </ion-buttons>
       </ion-toolbar>
       <ion-toolbar>
@@ -57,6 +59,9 @@
       </ion-toolbar>
       <ion-toolbar>
         <ion-title>Contacts</ion-title>
+        <ion-buttons slot="end">
+          <ion-button>Cancel</ion-button>
+        </ion-buttons>
       </ion-toolbar>
       <ion-toolbar>
         <ion-searchbar></ion-searchbar>
@@ -90,41 +95,12 @@
   </ion-app>
 
   <style>
-    f {
-      display: block;
-      height: 200px;
+    .md .hide-md {
+      display: none;
     }
 
-    .red {
-      background-color: #ea445a;
-    }
-
-    .green {
-      background-color: #76d672;
-    }
-
-    .blue {
-      background-color: #3478f6;
-    }
-
-    .yellow {
-      background-color: #ffff80;
-    }
-
-    .pink {
-      background-color: #ff6b86;
-    }
-
-    .purple {
-      background-color: #7e34f6;
-    }
-
-    .black {
-      background-color: #000;
-    }
-
-    .orange {
-      background-color: #f69234;
+    .ios .hide-ios {
+      display: none;
     }
 
     /* testing purposes only

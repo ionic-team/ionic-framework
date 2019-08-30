@@ -2697,7 +2697,7 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The size of the toolbar title. Only applies in `ios` mode.
+    * The size of the toolbar title.
     */
     'size'?: 'large' | 'small';
   }
@@ -6005,7 +6005,7 @@ declare namespace LocalJSX {
     */
     'color'?: Color;
     /**
-    * The size of the toolbar title. Only applies in `ios` mode.
+    * The size of the toolbar title.
     */
     'size'?: 'large' | 'small';
   }

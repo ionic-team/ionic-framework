@@ -64,10 +64,17 @@
   pointer-events: auto;
 }
 
+// Small Title
+// --------------------------------------------------
+
+:host(.title-small) .toolbar-title {
+  white-space: normal;
+}
+
 // iOS Small Title
 // --------------------------------------------------
 
-:host(.title-ios-small) {
+:host(.title-ios.title-small) {
   @include padding(6px, 9px, 16px, 9px);
 
   width: 100%;
@@ -78,6 +85,15 @@
   text-align: center;
 }
 
-:host(.title-ios-small) .toolbar-title {
-  white-space: normal;
+
+// Material Design Small Title
+// --------------------------------------------------
+
+:host(.title-md.title-small) {
+  width: 100%;
+  height: 100%;
+
+  font-size: 15px;
+
+  font-weight: normal;
 }
