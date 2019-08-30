@@ -56,7 +56,7 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
   });
 };
 
-const setToolbarBackgroundOpacity = (toolbar: any, opacity = 1) => {
+const setToolbarBackgroundOpacity = (toolbar: any, opacity: string | number | undefined = '') => {
   toolbar.background.style.setProperty('--opacity', opacity);
 };
 
@@ -109,7 +109,7 @@ export const setHeaderActive = (headerIndex: any, active = true) => {
     } else {
       headerIndex.el.classList.add('header-collapse-ios-inactive');
     }
-    setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? 1 : 0);
+    setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? '' : 0);
   });
 };
 
