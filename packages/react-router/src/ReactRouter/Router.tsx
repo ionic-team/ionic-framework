@@ -1,20 +1,17 @@
 import { NavDirection } from '@ionic/core';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
-import { BrowserRouter, BrowserRouterProps, match, matchPath, Redirect, Route, RouteComponentProps, RouteProps, withRouter } from 'react-router-dom';
+import { BrowserRouter, BrowserRouterProps, matchPath, Redirect, Route, RouteComponentProps, withRouter } from 'react-router-dom';
 import { generateUniqueId } from '../utils';
+import { IonRouteData } from './IonRouteData';
 import { NavManager } from './NavManager';
-import { RouteManagerContext, RouteManagerContextState, ViewStack, ViewStacks } from './RouteManagerContext';
+import { RouteManagerContext, RouteManagerContextState } from './RouteManagerContext';
 import { ViewItem } from './ViewItem';
+import { ViewStacks } from './ViewStacks';
 
 interface RouterManagerProps extends RouteComponentProps { }
 
 interface RouteManagerState extends RouteManagerContextState { }
-
-interface IonRouteData {
-  match: match<{ tab: string }> | null;
-  childProps: RouteProps;
-}
 
 class RouteManager extends React.Component<RouterManagerProps, RouteManagerState> {
   listenUnregisterCallback: UnregisterCallback | undefined;
@@ -23,7 +20,7 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
     super(props);
     this.listenUnregisterCallback = this.props.history.listen(this.historyChange.bind(this));
     this.state = {
-      viewStacks: {},
+      viewStacks: new ViewStacks(),
       hideView: this.hideView.bind(this),
       setupIonRouter: this.setupIonRouter.bind(this),
       removeViewStack: this.removeViewStack.bind(this),
@@ -33,8 +30,8 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
   }
 
   hideView(viewId: string) {
-    const viewStacks = Object.assign({}, this.state.viewStacks);
-    const { view } = this.findViewInfoById(viewId, viewStacks);
+    const viewStacks = Object.assign(new ViewStacks(), this.state.viewStacks);
+    const { view } = viewStacks.findViewInfoById(viewId);
     if (view) {
       view.show = false;
       view.key = generateUniqueId();
@@ -48,60 +45,16 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
     this.setActiveView(location, action);
   }
 
-  findViewInfoByLocation(location: HistoryLocation, viewStacks: ViewStacks) {
-    let view: ViewItem<IonRouteData> | undefined;
-    let match: IonRouteData["match"] | null | undefined;
-    let viewStack: ViewStack | undefined;
-    const keys = Object.keys(viewStacks);
-    keys.some(key => {
-      const vs = viewStacks[key];
-      return vs.views.some(x => {
-        const matchProps = {
-          exact: x.routeData.childProps.exact,
-          path: x.routeData.childProps.path || x.routeData.childProps.from,
-          component: x.routeData.childProps.component
-        };
-        match = matchPath(location.pathname, matchProps)
-        if (match) {
-          view = x;
-          viewStack = vs;
-          return true;
-        }
-        return false;
-      });
-    })
-
-    const result = { view, viewStack, match };
-    return result;
-  }
-
-  findViewInfoById(id: string, viewStacks: ViewStacks) {
-    let view: ViewItem<IonRouteData> | undefined;
-    let viewStack: ViewStack | undefined;
-    const keys = Object.keys(viewStacks);
-    keys.some(key => {
-      const vs = viewStacks[key];
-      view = vs.views.find(x => x.id === id);
-      if (view) {
-        viewStack = vs;
-        return true;
-      } else {
-        return false;
-      }
-    });
-    return { view, viewStack };
-  }
-
   setActiveView(location: HistoryLocation, action: HistoryAction) {
-    const viewStacks = Object.assign({}, this.state.viewStacks);
-    const { view: enteringView, viewStack: enteringViewStack, match } = this.findViewInfoByLocation(location, viewStacks);
+    const viewStacks = Object.assign(new ViewStacks(), this.state.viewStacks);
+    const { view: enteringView, viewStack: enteringViewStack, match } = viewStacks.findViewInfoByLocation(location);
     let direction: NavDirection = location.state && location.state.direction;
 
     if (!enteringViewStack) {
       return;
     }
 
-    const { view: leavingView } = this.findViewInfoById(enteringViewStack.activeId!, viewStacks);
+    const { view: leavingView } = viewStacks.findViewInfoById(enteringViewStack.activeId!);
 
     if (leavingView && leavingView.routeData.match!.url === location.pathname) {
       return;
@@ -216,14 +169,14 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
 
     return new Promise((resolve) => {
       this.setState((prevState) => {
-        const prevViewStacks = Object.assign({}, prevState.viewStacks);
-        prevViewStacks[stack] = {
+        const prevViewStacks = Object.assign(new ViewStacks, prevState.viewStacks);
+        const newStack = {
           id: stack,
           activeId: activeId,
           views: stackItems,
-          // ionRouterOutlet,
-          routerOutlet
+          routerOutlet,
         };
+        prevViewStacks.set(stack, newStack);
         return {
           viewStacks: prevViewStacks
         };
@@ -234,15 +187,15 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
   };
 
   removeViewStack(stack: string) {
-    const viewStacks = Object.assign({}, this.state.viewStacks);
-    delete viewStacks[stack];
+    const viewStacks = Object.assign(new ViewStacks(), this.state.viewStacks);
+    viewStacks.delete(stack);
     this.setState({
       viewStacks
     });
   }
 
   syncView(page: HTMLElement, viewId: string) {
-    const { viewStack, view } = this.findViewInfoById(viewId, this.state.viewStacks);
+    const { viewStack, view } = this.state.viewStacks.findViewInfoById(viewId);
 
     if (!viewStack || !view) {
       return;
@@ -305,8 +258,8 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
     return (
       <RouteManagerContext.Provider value={this.state}>
         <NavManager {...this.props}
-          findViewInfoById={(id: string) => this.findViewInfoById(id, this.state.viewStacks)}
-          findViewInfoByLocation={(location: HistoryLocation) => this.findViewInfoByLocation(location, this.state.viewStacks)}
+          findViewInfoById={(id: string) => this.state.viewStacks.findViewInfoById(id)}
+          findViewInfoByLocation={(location: HistoryLocation) => this.state.viewStacks.findViewInfoByLocation(location)}
         >
           {this.props.children}
         </NavManager>

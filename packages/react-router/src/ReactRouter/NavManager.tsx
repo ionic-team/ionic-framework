@@ -7,7 +7,7 @@ import { ViewManager } from './ViewManager';
 import { generateUniqueId } from '../utils';
 import { LocationHistory } from '../utils/LocationHistory'
 import { ViewItem } from './ViewItem';
-import { ViewStack } from './RouteManagerContext';
+import { ViewStack } from './ViewStacks';
 
 interface NavManagerProps extends RouteComponentProps {
   findViewInfoByLocation: (location: HistoryLocation) => {view?: ViewItem, viewStack?: ViewStack };

@@ -1,17 +1,6 @@
 import React, { ReactNode } from 'react';
 import { NavDirection } from '@ionic/core';
-import { ViewItem } from './ViewItem';
-
-export interface ViewStack {
-  id: string;
-  routerOutlet: HTMLIonRouterOutletElement;
-  activeId?: string,
-  views: ViewItem[]
-}
-
-export interface ViewStacks {
-  [key: string]: ViewStack;
-}
+import { ViewStacks } from './ViewStacks';
 
 export interface RouteManagerContextState {
   syncView: (page: HTMLElement, viewId: string) => void;
@@ -23,7 +12,7 @@ export interface RouteManagerContextState {
 }
 
 export const RouteManagerContext = /*@__PURE__*/React.createContext<RouteManagerContextState>({
-  viewStacks: {},
+  viewStacks: new ViewStacks(),
   syncView: () => { navContextNotFoundError(); },
   hideView: () => { navContextNotFoundError(); },
   setupIonRouter: () => { return Promise.reject(navContextNotFoundError()) },

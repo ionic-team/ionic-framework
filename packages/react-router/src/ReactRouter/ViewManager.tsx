@@ -5,14 +5,6 @@ import { ViewItemManager } from './ViewItemManager';
 import { RouteManagerContext } from './RouteManagerContext';
 import { ViewItem } from './ViewItem';
 
-// declare global {
-//   namespace JSX {
-//     interface IntrinsicElements {
-//       'ion-router-outlet': any;
-//     }
-//   }
-// }
-
 type ViewManagerProps = {
   id?: string;
 };
@@ -51,7 +43,7 @@ export class ViewManager extends React.Component<ViewManagerProps, ViewManagerSt
 
   render() {
     const context = this.context;
-    const viewStack = context.viewStacks[this.id];
+    const viewStack = context.viewStacks.get(this.id);
     const views = (viewStack || { views: [] }).views.filter(x => x.show);
     const ionRouterOutlet = React.Children.only(this.props.children) as React.ReactElement;
 
