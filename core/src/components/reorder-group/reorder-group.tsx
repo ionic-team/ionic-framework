@@ -54,11 +54,9 @@ export class ReorderGroup implements ComponentInterface {
 
   async connectedCallback() {
     const contentEl = this.el.closest('ion-content');
-    if (!contentEl) {
-      console.error('<ion-reorder-group> must be used inside an <ion-content>');
-      return;
+    if (contentEl) {
+      this.scrollEl = await contentEl.getScrollElement();
     }
-    this.scrollEl = await contentEl.getScrollElement();
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'reorder',
@@ -201,10 +199,7 @@ export class ReorderGroup implements ComponentInterface {
     const fromIndex = indexForItem(selectedItemEl);
 
     if (toIndex === fromIndex) {
-      selectedItemEl.style.transition = 'transform 200ms ease-in-out';
-      selectedItemEl.style.transform = '';
-      selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
-      setTimeout(() => this.completeSync(), 200);
+      this.completeSync();
     } else {
       this.ionItemReorder.emit({
         from: fromIndex,
