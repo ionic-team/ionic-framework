@@ -57,7 +57,7 @@ export class ToolbarTitle implements ComponentInterface {
 
   render() {
     const mode = this.getMode();
-    const size = this.size ? this.size : 'default';
+    const size = this.size !== undefined ? this.size : 'default';
 
     return (
       <Host
