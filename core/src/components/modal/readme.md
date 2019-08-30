@@ -267,7 +267,7 @@ export const ModalExample: React.FC = () => {
         <ion-title>{{ title }}</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content padding>
+    <ion-content class="ion-padding">
       {{ content }}
     </ion-content>
   </div>
