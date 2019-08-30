@@ -12,6 +12,19 @@
   --border-width: 0;
 }
 
+@supports (backdrop-filter: blur(0)) {
+  .header-translucent-ios {
+    backdrop-filter: $header-ios-translucent-filter;
+  }
+  
+  .header-translucent-ios ion-toolbar {
+    --opacity: .8;
+    --backdrop-filter: #{$header-ios-translucent-filter};
+  }
+}
+
+// iOS Header - Collapse
+// --------------------------------------------------
 .header-collapse-ios ion-toolbar {
   position: sticky;
   top: 0;
@@ -53,15 +66,4 @@ ion-toolbar.in-toolbar ion-buttons {
 .header-collapse-ios-inactive ion-toolbar.in-toolbar ion-buttons[collapse] {
   opacity: 0;
   pointer-events: none;
-}
-
-@supports (backdrop-filter: blur(0)) {
-  .header-translucent-ios {
-    backdrop-filter: $header-ios-translucent-filter;
-  }
-  
-  .header-translucent-ios ion-toolbar {
-    --opacity: .8;
-    --backdrop-filter: #{$header-ios-translucent-filter};
-  }
 }
