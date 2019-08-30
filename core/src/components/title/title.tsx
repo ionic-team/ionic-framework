@@ -24,7 +24,7 @@ export class ToolbarTitle implements ComponentInterface {
    * The size of the toolbar title.
    * Only applies in `ios` mode.
    */
-  @Prop() size: 'large' | 'default' | 'small' = 'default';
+  @Prop() size?: 'large' | 'small';
 
   /**
    * Emitted when the styles change.
@@ -37,9 +37,15 @@ export class ToolbarTitle implements ComponentInterface {
     this.emitStyle();
   }
 
+  connectedCallback() {
+    this.emitStyle();
+  }
+
   private emitStyle() {
+    const size = this.size;
+
     this.ionStyle.emit({
-      [`title-${this.size}`]: true
+      [`title-${size}`]: size !== undefined
     });
   }
 
@@ -51,12 +57,14 @@ export class ToolbarTitle implements ComponentInterface {
 
   render() {
     const mode = this.getMode();
+    const size = this.size ? this.size : 'default';
+
     return (
       <Host
         class={{
           [mode]: true,
           [`title-${mode}`]: true,
-          [`title-${mode}-${this.size}`]: true,
+          [`title-${mode}-${size}`]: true,
 
           ...createColorClasses(this.color),
         }}
