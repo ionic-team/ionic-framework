@@ -56,7 +56,7 @@ export class MenuController {
    * @deprecated Use swipeGesture() instead.
    */
   swipeEnable(shouldEnable: boolean, menuId?: string) {
-    console.warn('MenuController.swipeEnable is deprecated. Use MenuController.swipeGesture() instead');
+    console.warn('[DEPRECATED][ion-menu-controller] swipeEnable() is deprecated. Use MenuController.swipeGesture() instead');
     return this.swipeGesture(shouldEnable, menuId);
   }
 
