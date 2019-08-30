@@ -64,7 +64,9 @@ export const config: Config = {
     ]},
   ],
   plugins: [
-    sass()
+    sass({
+      injectGlobalPaths: ['src/themes/ionic.skip-warns.scss']
+    })
   ],
   outputTargets: [
     {
