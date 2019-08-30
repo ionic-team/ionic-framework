@@ -81,7 +81,15 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
     if (event.isIntersecting) {
       setHeaderActive(mainHeaderIndex, false);
       setHeaderActive(scrollHeaderIndex);
-    } else {
+
+    /**
+     * There is a bug with IntersectionObserver on Safari
+     * where `event.isIntersecting === false` when cancelling
+     * a swipe to go back gesture. Checking `intersectionArea`
+     * provides a workaround. This bug does not happen when
+     * using Safari + Web Animations, only Safari + CSS Animations
+     */
+    } else if (!event.isIntersecting && intersectionArea > 0) {
       setHeaderActive(mainHeaderIndex);
       setHeaderActive(scrollHeaderIndex, false);
     }
