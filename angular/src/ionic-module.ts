@@ -8,7 +8,6 @@ import { NumericValueAccessor } from './directives/control-value-accessors/numer
 import { RadioValueAccessor } from './directives/control-value-accessors/radio-value-accessor';
 import { SelectValueAccessor } from './directives/control-value-accessors/select-value-accessor';
 import { TextValueAccessor } from './directives/control-value-accessors/text-value-accessor';
-import { CssUtilsDeprecations } from './directives/css-utils-deprecations';
 import { IonBackButtonDelegate } from './directives/navigation/ion-back-button';
 import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
@@ -120,10 +119,7 @@ const DECLARATIONS = [
   VirtualFooter,
   VirtualHeader,
   VirtualItem,
-  IonVirtualScroll,
-
-  // Deprecations
-  CssUtilsDeprecations
+  IonVirtualScroll
 ];
 
 @NgModule({
