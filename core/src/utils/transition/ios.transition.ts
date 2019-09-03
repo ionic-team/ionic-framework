@@ -167,7 +167,7 @@ const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDire
   rootAnimation.addAnimation(clonedLargeTitleAnimation);
 };
 
-export const iosTransitionAnimation = async (navEl: HTMLElement, opts: TransitionOptions): Promise<IonicAnimation> => {
+export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptions): IonicAnimation => {
   try {
     const EASING = 'cubic-bezier(0.32,0.72,0,1)';
     const OPACITY = 'opacity';

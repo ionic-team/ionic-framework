@@ -88,7 +88,7 @@ const animation = async (animationBuilder: IonicAnimationInterface | AnimationBu
     const mod = await import('../animation/old-animation');
     trans = await mod.create(animationBuilder as AnimationBuilder, opts.baseEl, opts);
   } catch (err) {
-    trans = await (animationBuilder as IonicAnimationInterface)(opts.baseEl, opts);
+    trans = (animationBuilder as IonicAnimationInterface)(opts.baseEl, opts);
   }
 
   fireWillEvents(opts.enteringEl, opts.leavingEl);
