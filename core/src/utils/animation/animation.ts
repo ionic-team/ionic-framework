@@ -1031,7 +1031,7 @@ export const createAnimation = () => {
     });
 
     if (initialized) {
-      cleanUp();
+      cleanUpElements();
       initialized = false;
     }
 

@@ -379,9 +379,7 @@ export class Menu implements ComponentInterface, MenuI {
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
 
-    this.animation
-
-      .progressStep(stepValue);
+    this.animation.progressStep(stepValue);
   }
 
   private onEnd(detail: GestureDetail) {
@@ -489,6 +487,10 @@ export class Menu implements ComponentInterface, MenuI {
       }
       if (this.backdropEl) {
         this.backdropEl.classList.remove(SHOW_BACKDROP);
+      }
+
+      if (this.animation) {
+        this.animation.stop();
       }
 
       // emit close event
