@@ -1,3 +1,3 @@
 
 export * from './Router';
-export { ViewManager } from './ViewManager';
+export { PageManager as ViewManager } from './PageManager';

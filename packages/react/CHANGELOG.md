@@ -13,7 +13,7 @@ IonPage should be root page for Ionic Pages - fixes [#19146](https://github.com/
 
 To clear up this confusion, we decided to stop adding the `IonPage` component in the framework and offer guidance that devs should use `IonPage` as the base component in their Ionic Pages.
 
-Apps migrating from a previous version to RC3 will need to make sure `IonPage` is used as the root component for every Ionic page. Ionic Pages typically have `IonHeader` and `IonContent` tags and are the components rendered by the routes. The starters used a React Fragment before, and this fragment needs to be changed to `IonPage`. Any other uses of `IonPage` should probably be removed.
+Apps migrating from a previous version to RC2 will need to make sure `IonPage` is used as the root component for every Ionic page. Ionic Pages typically have `IonHeader` and `IonContent` tags and are the components rendered by the routes. The starters used a React Fragment before, and this fragment needs to be changed to `IonPage`. Any other uses of `IonPage` should probably be removed.
 
 Example:
 
@@ -26,7 +26,7 @@ An Ionic Page before RC2 most likely has a React fragment as its root:
 </>
 ```
 
-In RC3 and greater, the fragment should be updated to an IonPage component:
+In RC2 and greater, the fragment should be updated to an IonPage component:
 
 ``` jsx
 <IonPage>

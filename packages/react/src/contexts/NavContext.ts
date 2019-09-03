@@ -4,7 +4,7 @@ import React from 'react';
 export interface NavContextState {
   getHistory: () => History;
   getLocation: () => Location;
-  getViewManager: () => any;
+  getPageManager: () => any;
   goBack: (defaultHref?: string) => void;
   navigate: (path: string, direction?: RouterDirection) => void;
   hasIonicRouter: () => boolean;
@@ -15,7 +15,7 @@ export interface NavContextState {
 export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
   getHistory: () => window.history,
   getLocation: () => window.location,
-  getViewManager: () => undefined,
+  getPageManager: () => undefined,
   goBack: (defaultHref?: string) => {
     if (defaultHref !== undefined) {
       window.location.pathname = defaultHref;

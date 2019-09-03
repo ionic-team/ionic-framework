@@ -3,7 +3,7 @@ import { NavContext, NavContextState } from '@ionic/react';
 import { Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { ViewManager } from './ViewManager';
+import { PageManager } from './PageManager';
 import { generateUniqueId } from '../utils';
 import { LocationHistory } from '../utils/LocationHistory'
 import { ViewItem } from './ViewItem';
@@ -28,7 +28,7 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
       getHistory: this.getHistory.bind(this),
       getLocation: this.getLocation.bind(this),
       navigate: this.navigate.bind(this),
-      getViewManager: this.getViewManager.bind(this),
+      getPageManager: this.getPageManager.bind(this),
       currentPath: this.props.location.pathname,
       registerIonPage: this.registerIonPage.bind(this)
     }
@@ -86,8 +86,8 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
     this.props.history.push(path, { direction });
   }
 
-  getViewManager() {
-    return ViewManager;
+  getPageManager() {
+    return PageManager;
   }
 
   registerIonPage(page: HTMLElement) {

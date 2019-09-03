@@ -1,7 +1,7 @@
 import { NavDirection } from '@ionic/core';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
-import { BrowserRouter, BrowserRouterProps, matchPath, Redirect, Route, RouteComponentProps, withRouter } from 'react-router-dom';
+import { BrowserRouter, BrowserRouterProps, matchPath, Redirect, Route, RouteComponentProps, withRouter, Switch } from 'react-router-dom';
 import { generateUniqueId } from '../utils';
 import { IonRouteData } from './IonRouteData';
 import { NavManager } from './NavManager';
@@ -131,7 +131,16 @@ class RouteManager extends React.Component<RouterManagerProps, RouteManagerState
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
 
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
-      views.push(createViewItem(child, this.props.history.location));
+      /**
+      * If the first child is a Switch, loop through its children to build the viewStack
+      */
+      if (child.type === Switch) {
+        React.Children.forEach(child.props.children, (grandChild: React.ReactElement) => {
+          views.push(createViewItem(grandChild, this.props.history.location));
+        });
+      } else {
+        views.push(createViewItem(child, this.props.history.location));
+      }
     });
 
     await this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);

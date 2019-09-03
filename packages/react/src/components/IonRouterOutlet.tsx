@@ -20,10 +20,21 @@ const IonRouterOutletContainer = /*@__PURE__*/(() => class extends React.Compone
   context!: React.ContextType<typeof NavContext>;
 
   render() {
+
+    const ViewManager = this.context.getPageManager();
+
     return (
-      <IonRouterOutletInner ref={this.props.forwardedRef} {...this.props}>
-        {this.props.children}
-      </IonRouterOutletInner>
+      this.context.hasIonicRouter() ? (
+        <ViewManager>
+          <IonRouterOutletInner ref={this.props.forwardedRef} {...this.props}>
+            {this.props.children}
+          </IonRouterOutletInner>
+        </ViewManager>
+      ) : (
+          <IonRouterOutletInner ref={this.props.forwardedRef} {...this.props}>
+            {this.props.children}
+          </IonRouterOutletInner>
+        )
     );
   }
 
