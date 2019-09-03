@@ -898,12 +898,10 @@ export class IonThumbnail {
 export declare interface IonTitle extends Components.IonTitle {}
 @Component({ selector: 'ion-title', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'size'] })
 export class IonTitle {
-  ionStyle!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionStyle']);
   }
 }
 proxyInputs(IonTitle, ['color', 'size']);

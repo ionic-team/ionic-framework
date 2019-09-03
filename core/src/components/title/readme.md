@@ -31,13 +31,6 @@
 | `size`   | `size`    | The size of the toolbar title. Only applies in `ios` mode.                                                                                                                                                                                                             | `string`              | `'standard'` |
 
 
-## Events
-
-| Event      | Description                     | Type                            |
-| ---------- | ------------------------------- | ------------------------------- |
-| `ionStyle` | Emitted when the styles change. | `CustomEvent<StyleEventDetail>` |
-
-
 ## CSS Custom Properties
 
 | Name      | Description             |
