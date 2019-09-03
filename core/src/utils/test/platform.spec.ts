@@ -42,13 +42,6 @@ describe('Platform Tests', () => {
       const win = configureBrowser(PlatformConfiguration.Capacitor);
       expect(getPlatforms(win)).toContain('capacitor');
     })
-    
-    it('should contain "mobile", "ipad", and "ios" platform', () => {
-      const win = configureBrowser(PlatformConfiguration.iPadOS);
-      expect(getPlatforms(win)).toContain('mobile');
-      expect(getPlatforms(win)).toContain('ipad');
-      expect(getPlatforms(win)).toContain('ios');
-    })
   });
 
   describe('isPlatform()', () => {
@@ -128,6 +121,15 @@ describe('Platform Tests', () => {
       const win = configureBrowser(PlatformConfiguration.PWA);
       expect(isPlatform(win, 'pwa')).toEqual(true);
       expect(isPlatform(win, 'cordova')).toEqual(false);
+    });
+    
+    it('should return true for "ios", "ipad", and "tablet" and false for "iphone" and "android"', () => {
+      const win = configureBrowser(PlatformConfiguration.iPadOS);
+      expect(isPlatform(win, 'ios')).toEqual(true);
+      expect(isPlatform(win, 'ipad')).toEqual(true);
+      expect(isPlatform(win, 'tablet')).toEqual(true);
+      expect(isPlatform(win, 'iphone')).toEqual(false);
+      expect(isPlatform(win, 'android')).toEqual(false);
     });
   })
 });
