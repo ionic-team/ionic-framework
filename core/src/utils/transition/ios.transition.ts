@@ -61,27 +61,6 @@ const createLargeTitleTransition = (rootAnimation: IonicAnimation, rtl: boolean,
 
 const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
   console.log(rtl);
-
-  const enteringBackButtonTextAnimation = createAnimation();
-  const enteringBackButtonIconAnimation = createAnimation();
-
-  const clonedBackButtonEl = getClonedElement('ion-back-button');
-
-  clonedBackButtonEl.text = backButtonEl.text;
-  clonedBackButtonEl.mode = backButtonEl.mode;
-  clonedBackButtonEl.icon = backButtonEl.icon;
-  clonedBackButtonEl.color = backButtonEl.color;
-  clonedBackButtonEl.disabled = backButtonEl.disabled;
-
-  clonedBackButtonEl.style.setProperty('display', 'block');
-  clonedBackButtonEl.style.setProperty('position', 'fixed');
-
-  const backButtonTextEl = clonedBackButtonEl.querySelector('.button-text');
-  const backButtonIconEl = clonedBackButtonEl.querySelector('ion-icon');
-
-  enteringBackButtonIconAnimation.addElement(backButtonIconEl);
-  enteringBackButtonTextAnimation.addElement(backButtonTextEl);
-
   const FORWARD_TEXT_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` },
     { offset: 1, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` }
@@ -92,6 +71,37 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
     { offset: 1, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` }
   ];
   const TEXT_KEYFRAMES = (backDirection) ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
+
+  const FORWARD_ICON_KEYFRAMES = [
+    { offset: 0, opacity: 0, transform: `translate3d(4px, ${addSafeArea(-35)}, 0) scale(0.6)` },
+    { offset: 1, opacity: 1, transform: `translate3d(4px, ${addSafeArea(-40)}, 0) scale(1)` }
+  ];
+  const BACKWARD_ICON_KEYFRAMES = [
+    { offset: 0, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` },
+    { offset: 0.2, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` },
+    { offset: 1, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` }
+  ];
+  const ICON_KEYFRAMES = (backDirection) ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
+
+  const enteringBackButtonTextAnimation = createAnimation();
+  const enteringBackButtonIconAnimation = createAnimation();
+
+  const clonedBackButtonEl = getClonedElement('ion-back-button');
+
+  const backButtonTextEl = clonedBackButtonEl.querySelector('.button-text');
+  const backButtonIconEl = clonedBackButtonEl.querySelector('ion-icon');
+
+  clonedBackButtonEl.text = backButtonEl.text;
+  clonedBackButtonEl.mode = backButtonEl.mode;
+  clonedBackButtonEl.icon = backButtonEl.icon;
+  clonedBackButtonEl.color = backButtonEl.color;
+  clonedBackButtonEl.disabled = backButtonEl.disabled;
+
+  clonedBackButtonEl.style.setProperty('display', 'block');
+  clonedBackButtonEl.style.setProperty('position', 'fixed');
+
+  enteringBackButtonIconAnimation.addElement(backButtonIconEl);
+  enteringBackButtonTextAnimation.addElement(backButtonTextEl);
 
   enteringBackButtonTextAnimation
     .beforeStyles({
@@ -106,16 +116,6 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
     })
     .keyframes(TEXT_KEYFRAMES);
 
-  const FORWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate3d(4px, ${addSafeArea(-35)}, 0) scale(0.6)` },
-    { offset: 1, opacity: 1, transform: `translate3d(4px, ${addSafeArea(-40)}, 0) scale(1)` }
-  ];
-  const BACKWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` },
-    { offset: 0.2, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` },
-    { offset: 1, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` }
-  ];
-  const ICON_KEYFRAMES = (backDirection) ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
   enteringBackButtonIconAnimation
     .beforeStyles({
       'transform-origin': 'right center'
@@ -126,15 +126,6 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
 };
 
 const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
-  const clonedTitleEl = getClonedElement('ion-title');
-
-  clonedTitleEl.innerText = largeTitleEl.innerText;
-  clonedTitleEl.size = largeTitleEl.size;
-  clonedTitleEl.color = largeTitleEl.color;
-
-  const clonedLargeTitleAnimation = createAnimation();
-  clonedLargeTitleAnimation.addElement(clonedTitleEl);
-
   const TRANSLATE = (rtl) ? '-18px' : '18px';
   const BACKWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate(${TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
@@ -147,6 +138,15 @@ const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDire
     { offset: 1, opacity: 0, transform: `translate(${TRANSLATE}, ${addSafeArea(0)}) scale(0.5)` }
   ];
   const KEYFRAMES = (backDirection) ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
+
+  const clonedTitleEl = getClonedElement('ion-title');
+  const clonedLargeTitleAnimation = createAnimation();
+
+  clonedTitleEl.innerText = largeTitleEl.innerText;
+  clonedTitleEl.size = largeTitleEl.size;
+  clonedTitleEl.color = largeTitleEl.color;
+
+  clonedLargeTitleAnimation.addElement(clonedTitleEl);
 
   clonedLargeTitleAnimation
     .beforeStyles({

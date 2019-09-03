@@ -6035,10 +6035,6 @@ declare namespace LocalJSX {
     */
     'color'?: Color;
     /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
-    /**
     * The size of the toolbar title. Only applies in `ios` mode.
     */
     'size'?: string;

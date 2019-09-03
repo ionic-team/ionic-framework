@@ -15,7 +15,7 @@ import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarInte
 })
 export class Header implements ComponentInterface {
 
-  private scrollEl?: any;
+  private scrollEl?: HTMLElement;
   private contentScrollCallback?: any;
 
   @Element() el!: HTMLElement;
@@ -50,15 +50,13 @@ export class Header implements ComponentInterface {
   }
 
   componentDidUnload() {
-    if (this.contentScrollCallback) {
+    if (this.scrollEl && this.contentScrollCallback) {
       this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
     }
   }
 
   private async setupCollapsableHeader(contentEl: any, pageEl: any) {
     if (!contentEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); }
-
-    await contentEl.componentOnReady();
 
     this.scrollEl = await contentEl.getScrollElement();
 
@@ -97,7 +95,10 @@ export class Header implements ComponentInterface {
        * in primary header
        */
       this.contentScrollCallback = () => { handleContentScroll(this.scrollEl, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
-      this.scrollEl.addEventListener('scroll', this.contentScrollCallback);
+
+      if (this.scrollEl) {
+        this.scrollEl.addEventListener('scroll', this.contentScrollCallback);
+      }
     });
 
     writeTask(() => {

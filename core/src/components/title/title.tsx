@@ -28,11 +28,16 @@ export class ToolbarTitle implements ComponentInterface {
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('size')
   protected sizeChanged() {
+    this.emitStyle();
+  }
+
+  connectedCallback() {
     this.emitStyle();
   }
 

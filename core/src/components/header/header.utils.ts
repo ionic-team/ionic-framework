@@ -1,5 +1,7 @@
 import { readTask, writeTask } from '@stencil/core';
 
+import { clamp } from '../../utils/helpers';
+
 const TRANSITION = 'all 0.2s ease-in-out';
 
 export const cloneElement = (tagName: string) => {
@@ -34,18 +36,14 @@ export const createHeaderIndex = (headerEl: any): any | undefined => {
   };
 };
 
-const clampValue = (value: number, max: number, min: number): number => {
-  return Math.min(Math.max(value, min), max);
-};
-
 export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollHeaderIndex: any, remainingHeight = 0) => {
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
 
     const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
-    const scale = clampValue(1 + (-scrollTop / 500), 1.1, 1);
+    const scale = clamp(1, 1 + (-scrollTop / 500), 1.1);
 
-    const borderOpacity = clampValue((scrollTop - remainingHeight) / lastMainToolbar.el.clientHeight, 1, 0);
+    const borderOpacity = clamp(0, (scrollTop - remainingHeight) / lastMainToolbar.el.clientHeight, 1);
     const maxOpacity = 1;
     const scaledOpacity = borderOpacity * maxOpacity;
 
