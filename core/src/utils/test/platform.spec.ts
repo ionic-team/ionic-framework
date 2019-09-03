@@ -42,6 +42,13 @@ describe('Platform Tests', () => {
       const win = configureBrowser(PlatformConfiguration.Capacitor);
       expect(getPlatforms(win)).toContain('capacitor');
     })
+    
+    it('should contain "mobile", "ipad", and "ios" platform', () => {
+      const win = configureBrowser(PlatformConfiguration.iPadOS);
+      expect(getPlatforms(win)).toContain('mobile');
+      expect(getPlatforms(win)).toContain('ipad');
+      expect(getPlatforms(win)).toContain('ios');
+    })
   });
 
   describe('isPlatform()', () => {
@@ -63,9 +70,10 @@ describe('Platform Tests', () => {
       expect(isPlatform(win, 'desktop')).toEqual(true);
     });
 
-    it('should return true for "android" and "tablet" on an android tablet', () => {
+    it('should return true for "android" and "tablet" and false for "ios" on an android tablet', () => {
       const win = configureBrowser(PlatformConfiguration.AndroidTablet);
       expect(isPlatform(win, 'android')).toEqual(true);
+      expect(isPlatform(win, 'ios')).toEqual(false);
       expect(isPlatform(win, 'tablet')).toEqual(true);
     });
 
@@ -95,10 +103,11 @@ describe('Platform Tests', () => {
       expect(isPlatform(win, 'desktop')).toEqual(false);
     });
 
-    it('should return false for "android" and "tablet" on desktop Safari', () => {
+    it('should return false for "android", "tablet", and "ipad" on desktop Safari', () => {
       const win = configureBrowser(PlatformConfiguration.DesktopSafari);
       expect(isPlatform(win, 'android')).toEqual(false);
       expect(isPlatform(win, 'tablet')).toEqual(false);
+      expect(isPlatform(win, 'ipad')).toEqual(false);
     });
 
     it('should return false for "android" and "tablet" and false for "desktop" on iPhone', () => {
