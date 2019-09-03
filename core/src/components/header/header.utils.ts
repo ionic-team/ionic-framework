@@ -4,6 +4,19 @@ import { clamp } from '../../utils/helpers';
 
 const TRANSITION = 'all 0.2s ease-in-out';
 
+interface HeaderIndex {
+  el: HTMLElement;
+  toolbars: ToolbarIndex[] | [];
+}
+
+interface ToolbarIndex {
+  el: HTMLElement;
+  background: HTMLElement;
+  ionTitleEl: HTMLIonTitleElement;
+  innerTitleEl: HTMLElement;
+  ionButtonsEl: HTMLElement[] | [];
+}
+
 export const cloneElement = (tagName: string) => {
   const getCachedEl = document.querySelector(`${tagName}.ion-cloned-element`);
   if (getCachedEl !== null) { return getCachedEl; }
@@ -16,7 +29,7 @@ export const cloneElement = (tagName: string) => {
   return clonedEl;
 };
 
-export const createHeaderIndex = (headerEl: any): any | undefined => {
+export const createHeaderIndex = (headerEl: HTMLElement): HeaderIndex | undefined => {
   if (!headerEl) { return; }
 
   const toolbars = headerEl.querySelectorAll('ion-toolbar');
@@ -30,17 +43,19 @@ export const createHeaderIndex = (headerEl: any): any | undefined => {
         background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
         ionTitleEl,
         innerTitleEl: (ionTitleEl) ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
-        ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons'))
-      };
-    })
-  };
+        ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')) || []
+      } as ToolbarIndex;
+    }) || [[]]
+  } as HeaderIndex;
 };
 
-export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollHeaderIndex: any, remainingHeight = 0) => {
+export const handleContentScroll = (scrollEl: HTMLElement, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex, remainingHeight = 0) => {
+  const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
+  if (!lastMainToolbar) { return; }
+
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
 
-    const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
     const scale = clamp(1, 1 + (-scrollTop / 500), 1.1);
 
     const borderOpacity = clamp(0, (scrollTop - remainingHeight) / lastMainToolbar.el.clientHeight, 1);
@@ -54,11 +69,11 @@ export const handleContentScroll = (scrollEl: any, mainHeaderIndex: any, scrollH
   });
 };
 
-const setToolbarBackgroundOpacity = (toolbar: any, opacity: number | undefined) => {
+const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | undefined) => {
   if (opacity === undefined) {
     toolbar.background.style.removeProperty('--opacity');
   } else {
-    toolbar.background.style.setProperty('--opacity', opacity);
+    toolbar.background.style.setProperty('--opacity', opacity.toString());
   }
 };
 
@@ -67,7 +82,8 @@ const setToolbarBackgroundOpacity = (toolbar: any, opacity: number | undefined) 
  * and show the primary toolbar content. If the toolbars are not intersecting,
  * hide the primary toolbar content and show the scrollable toolbar content
  */
-export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollHeaderIndex: any) => {
+export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex) => {
+  console.log(ev);
   writeTask(() => {
     const event = ev[0];
     const intersection = event.intersectionRect;
@@ -104,7 +120,7 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: any, scrollH
   });
 };
 
-export const setHeaderActive = (headerIndex: any, active = true) => {
+export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
   writeTask(() => {
     if (active) {
       headerIndex.el.classList.remove('header-collapse-ios-inactive');
@@ -115,7 +131,7 @@ export const setHeaderActive = (headerIndex: any, active = true) => {
   });
 };
 
-export const scaleLargeTitles = (toolbars: any[] = [], scale = 1, transition = false) => {
+export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, transition = false) => {
   toolbars.forEach(toolbar => {
 
     const ionTitle = toolbar.ionTitleEl;

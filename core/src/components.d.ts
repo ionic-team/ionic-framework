@@ -2708,7 +2708,7 @@ export namespace Components {
     /**
     * The size of the toolbar title. Only applies in `ios` mode.
     */
-    'size': string;
+    'size'?: 'large' | undefined;
   }
   interface IonToast {
     /**
@@ -6037,7 +6037,7 @@ declare namespace LocalJSX {
     /**
     * The size of the toolbar title. Only applies in `ios` mode.
     */
-    'size'?: string;
+    'size'?: 'large' | undefined;
   }
   interface IonToast extends JSXBase.HTMLAttributes<HTMLIonToastElement> {
     /**

@@ -62,7 +62,9 @@ export class Header implements ComponentInterface {
 
     readTask(() => {
       const headers = pageEl.querySelectorAll('ion-header');
-      const mainHeader = Array.from(headers).find((header: any) => !header.collapse);
+      const mainHeader = Array.from(headers).find((header: any) => !header.collapse) as HTMLElement | undefined;
+
+      if (!mainHeader || !this.scrollEl) { return; }
 
       const mainHeaderIndex = createHeaderIndex(mainHeader);
       const scrollHeaderIndex = createHeaderIndex(this.el);
@@ -74,7 +76,11 @@ export class Header implements ComponentInterface {
       // TODO: Find a better way to do this
       let remainingHeight = 0;
       for (let i = 1; i <= scrollHeaderIndex.toolbars.length - 1; i++) {
-        remainingHeight += scrollHeaderIndex.toolbars[i].el.clientHeight;
+        const toolbarEl = scrollHeaderIndex.toolbars[i].el;
+
+        if (toolbarEl !== undefined) {
+          remainingHeight += toolbarEl.clientHeight;
+        }
       }
 
       /**
@@ -94,7 +100,7 @@ export class Header implements ComponentInterface {
        * showing/hiding border on last toolbar
        * in primary header
        */
-      this.contentScrollCallback = () => { handleContentScroll(this.scrollEl, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
+      this.contentScrollCallback = () => { handleContentScroll(this.scrollEl!, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
 
       if (this.scrollEl) {
         this.scrollEl.addEventListener('scroll', this.contentScrollCallback);
