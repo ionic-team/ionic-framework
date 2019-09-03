@@ -55,7 +55,7 @@ export class Header implements ComponentInterface {
     }
   }
 
-  private async setupCollapsableHeader(contentEl: any, pageEl: any) {
+  private async setupCollapsableHeader(contentEl: HTMLElement, pageEl: HTMLElement) {
     if (!contentEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); }
 
     this.scrollEl = await contentEl.getScrollElement();
