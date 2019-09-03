@@ -66,8 +66,8 @@ describe('Platform Tests', () => {
     it('should return true for "android" and "tablet" and false for "ios" on an android tablet', () => {
       const win = configureBrowser(PlatformConfiguration.AndroidTablet);
       expect(isPlatform(win, 'android')).toEqual(true);
-      expect(isPlatform(win, 'ios')).toEqual(false);
       expect(isPlatform(win, 'tablet')).toEqual(true);
+      expect(isPlatform(win, 'ios')).toEqual(false);
     });
 
     it('should return true for "cordova" and "hybrid" in a Cordova app', () => {
