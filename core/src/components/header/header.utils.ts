@@ -12,7 +12,7 @@ interface HeaderIndex {
 interface ToolbarIndex {
   el: HTMLElement;
   background: HTMLElement;
-  ionTitleEl: HTMLIonTitleElement;
+  ionTitleEl: HTMLIonTitleElement | undefined;
   innerTitleEl: HTMLElement;
   ionButtonsEl: HTMLElement[] | [];
 }
@@ -29,7 +29,7 @@ export const cloneElement = (tagName: string) => {
   return clonedEl;
 };
 
-export const createHeaderIndex = (headerEl: HTMLElement): HeaderIndex | undefined => {
+export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderIndex | undefined => {
   if (!headerEl) { return; }
 
   const toolbars = headerEl.querySelectorAll('ion-toolbar');
@@ -50,11 +50,9 @@ export const createHeaderIndex = (headerEl: HTMLElement): HeaderIndex | undefine
 };
 
 export const handleContentScroll = (scrollEl: HTMLElement, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex, remainingHeight = 0) => {
-  const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
-  if (!lastMainToolbar) { return; }
-
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
+    const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
 
     const scale = clamp(1, 1 + (-scrollTop / 500), 1.1);
 
@@ -133,12 +131,9 @@ export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
 
 export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, transition = false) => {
   toolbars.forEach(toolbar => {
-
     const ionTitle = toolbar.ionTitleEl;
-    if (!ionTitle || ionTitle.size !== 'large') { return; }
-
     const titleDiv = toolbar.innerTitleEl;
-    if (titleDiv === null) { return; }
+    if (!ionTitle || ionTitle.size !== 'large') { return; }
 
     titleDiv.style.transformOrigin = 'left center';
     titleDiv.style.transition = (transition) ? TRANSITION : '';
