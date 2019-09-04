@@ -33,8 +33,6 @@
   font-size: 17px;
   font-weight: 600;
 
-  letter-spacing: -.03em;
-
   text-align: center;
   box-sizing: border-box;
   pointer-events: none;
@@ -64,4 +62,25 @@
 
   overflow: hidden;
   pointer-events: auto;
+}
+
+
+// Title: Large
+// --------------------------------------------------
+
+:host(.title-ios-large) {
+  @include padding(0, 16px);
+
+  bottom: 0;
+
+  align-items: flex-end;
+
+  min-width: 100%;
+
+  padding-bottom: 6px;
+  
+  font-size: 34px;
+  font-weight: 700;
+
+  text-align: left;
 }

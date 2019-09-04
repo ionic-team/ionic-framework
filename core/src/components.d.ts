@@ -389,7 +389,12 @@ export namespace Components {
     */
     'type': 'submit' | 'reset' | 'button';
   }
-  interface IonButtons {}
+  interface IonButtons {
+    /**
+    * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`
+    */
+    'collapse': boolean;
+  }
   interface IonCard {
     /**
     * If `true`, a button tag will be rendered and the card will be tappable.
@@ -865,6 +870,10 @@ export namespace Components {
     'fixed': boolean;
   }
   interface IonHeader {
+    /**
+    * If `true`, the header will collapse on scroll of the content. Only applies in `ios` mode.
+    */
+    'collapse': boolean;
     /**
     * The mode determines which platform styles to use.
     */
@@ -2696,6 +2705,10 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * The size of the toolbar title. Only applies in `ios` mode.
+    */
+    'size'?: 'large' | undefined;
   }
   interface IonToast {
     /**
@@ -3883,7 +3896,12 @@ declare namespace LocalJSX {
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
-  interface IonButtons extends JSXBase.HTMLAttributes<HTMLIonButtonsElement> {}
+  interface IonButtons extends JSXBase.HTMLAttributes<HTMLIonButtonsElement> {
+    /**
+    * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`
+    */
+    'collapse'?: boolean;
+  }
   interface IonCard extends JSXBase.HTMLAttributes<HTMLIonCardElement> {
     /**
     * If `true`, a button tag will be rendered and the card will be tappable.
@@ -4371,6 +4389,10 @@ declare namespace LocalJSX {
     'fixed'?: boolean;
   }
   interface IonHeader extends JSXBase.HTMLAttributes<HTMLIonHeaderElement> {
+    /**
+    * If `true`, the header will collapse on scroll of the content. Only applies in `ios` mode.
+    */
+    'collapse'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */
@@ -6012,6 +6034,10 @@ declare namespace LocalJSX {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * The size of the toolbar title. Only applies in `ios` mode.
+    */
+    'size'?: 'large' | undefined;
   }
   interface IonToast extends JSXBase.HTMLAttributes<HTMLIonToastElement> {
     /**

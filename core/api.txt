@@ -178,6 +178,7 @@ ion-button,css-prop,--ripple-color
 ion-button,css-prop,--transition
 
 ion-buttons,scoped
+ion-buttons,prop,collapse,boolean,false,false,false
 
 ion-card,scoped
 ion-card,prop,button,boolean,false,false,false
@@ -399,6 +400,7 @@ ion-grid,css-prop,--ion-grid-width-xl
 ion-grid,css-prop,--ion-grid-width-xs
 
 ion-header,none
+ion-header,prop,collapse,boolean,false,false,false
 ion-header,prop,mode,"ios" | "md",undefined,false,false
 ion-header,prop,translucent,boolean,false,false,false
 
@@ -1204,6 +1206,7 @@ ion-thumbnail,css-prop,--size
 
 ion-title,shadow
 ion-title,prop,color,string | undefined,undefined,false,false
+ion-title,prop,size,"large" | undefined,undefined,false,false
 ion-title,css-prop,--color
 
 ion-toast,shadow
