@@ -431,7 +431,7 @@ ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
 ion-input,prop,color,string | undefined,undefined,false,false
 ion-input,prop,debounce,number,0,false,false
 ion-input,prop,disabled,boolean,false,false,false
-ion-input,prop,inputmode,string | undefined,undefined,false,false
+ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-input,prop,max,string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
 ion-input,prop,min,string | undefined,undefined,false,false
@@ -728,6 +728,11 @@ ion-nav,method,setPages,setPages(views: any[], opts?: NavOptions | null | undefi
 ion-nav,method,setRoot,setRoot<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,event,ionNavDidChange,void,false
 ion-nav,event,ionNavWillChange,void,false
+
+ion-nav-link,none
+ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
+ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 
 ion-nav-pop,none
 
@@ -1063,6 +1068,7 @@ ion-slides,prop,pager,boolean,false,false,false
 ion-slides,prop,scrollbar,boolean,false,false,false
 ion-slides,method,getActiveIndex,getActiveIndex() => Promise<number>
 ion-slides,method,getPreviousIndex,getPreviousIndex() => Promise<number>
+ion-slides,method,getSwiper,getSwiper() => Promise<any>
 ion-slides,method,isBeginning,isBeginning() => Promise<boolean>
 ion-slides,method,isEnd,isEnd() => Promise<boolean>
 ion-slides,method,length,length() => Promise<number>

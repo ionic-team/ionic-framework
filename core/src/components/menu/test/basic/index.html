@@ -96,18 +96,18 @@
   <script>
     const menuCtrl = document.querySelector('ion-menu-controller');
 
-    function openFirst() {
-      menuCtrl.enable(true, 'first');
-      menuCtrl.open('first');
+    async function openFirst() {
+      await menuCtrl.enable(true, 'first');
+      await menuCtrl.open('first');
     }
 
-    function openEnd() {
-      menuCtrl.open('end');
+    async  function openEnd() {
+      awaitmenuCtrl.open('end');
     }
 
-    function openCustom() {
-      menuCtrl.enable(true, 'custom');
-      menuCtrl.open('custom');
+    async function openCustom() {
+      await menuCtrl.enable(true, 'custom');
+      await menuCtrl.open('custom');
     }
   </script>
 </body>

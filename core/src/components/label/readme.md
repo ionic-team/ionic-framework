@@ -27,7 +27,7 @@ Label is a wrapper element that can be used in combination with `ion-item`, `ion
 </ion-item>
 
 <ion-item>
-  <ion-label text-wrap>
+  <ion-label class="ion-text-wrap">
     Multi-line text that should wrap when it is too long
     to fit on one line in the item.
   </ion-label>
@@ -90,7 +90,7 @@ export const LabelExample: React.FC = () => (
     </IonItem>
 
     <IonItem>
-      <IonLabel text-wrap>
+      <IonLabel class="ion-text-wrap">
         Multi-line text that should wrap when it is too long
         to fit on one line in the item.
       </IonLabel>
@@ -151,7 +151,7 @@ export const LabelExample: React.FC = () => (
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
       Multi-line text that should wrap when it is too long
       to fit on one line in the item.
     </ion-label>

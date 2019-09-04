@@ -4,8 +4,9 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
+import { menuController } from '../../utils/menu-controller';
 import { createColorClasses } from '../../utils/theme';
-import { toggleMenu, updateVisibility } from '../menu-toggle/menu-toggle-util';
+import { updateVisibility } from '../menu-toggle/menu-toggle-util';
 
 @Component({
   tag: 'ion-menu-button',
@@ -46,22 +47,18 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-  async componentDidLoad() {
-    await this.setVisibility();
+  componentDidLoad() {
+    this.visibilityChanged();
   }
 
   @Listen('ionMenuChange', { target: 'body' })
   @Listen('ionSplitPaneVisible', { target: 'body' })
   async visibilityChanged() {
-    await this.setVisibility();
-  }
-
-  private setVisibility = async () => {
     this.visible = await updateVisibility(this.menu);
   }
 
   private onClick = async () => {
-    await toggleMenu(this.menu);
+    return menuController.toggle(this.menu);
   }
 
   render() {
@@ -93,7 +90,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
       >
         <button
           {...attrs}
-          disabled={this.disabled}
+          disabled={disabled}
           class="button-native"
         >
           <slot>

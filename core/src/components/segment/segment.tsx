@@ -17,6 +17,8 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class Segment implements ComponentInterface {
 
+  private didInit = false;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -43,8 +45,10 @@ export class Segment implements ComponentInterface {
 
   @Watch('value')
   protected valueChanged(value: string | undefined) {
-    this.updateButtons();
-    this.ionChange.emit({ value });
+    if (this.didInit) {
+      this.updateButtons();
+      this.ionChange.emit({ value });
+    }
   }
 
   /**
@@ -63,18 +67,19 @@ export class Segment implements ComponentInterface {
     this.value = selectedButton.value;
   }
 
-  componentWillLoad() {
-    this.emitStyle();
-  }
-
-  componentDidLoad() {
-    if (this.value == null) {
+  connectedCallback() {
+    if (this.value === undefined) {
       const checked = this.getButtons().find(b => b.checked);
       if (checked) {
         this.value = checked.value;
       }
     }
+    this.emitStyle();
+  }
+
+  componentDidLoad() {
     this.updateButtons();
+    this.didInit = true;
   }
 
   private emitStyle() {

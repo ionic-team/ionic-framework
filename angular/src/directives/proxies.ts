@@ -505,6 +505,17 @@ export class IonNav {
 proxyMethods(IonNav, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']);
 proxyInputs(IonNav, ['animated', 'animation', 'root', 'rootParams', 'swipeGesture']);
 
+export declare interface IonNavLink extends Components.IonNavLink {}
+@Component({ selector: 'ion-nav-link', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['component', 'componentProps', 'routerDirection'] })
+export class IonNavLink {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+proxyInputs(IonNavLink, ['component', 'componentProps', 'routerDirection']);
+
 export declare interface IonNavPop extends Components.IonNavPop {}
 @Component({ selector: 'ion-nav-pop', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
 export class IonNavPop {
@@ -796,7 +807,7 @@ export class IonSlides {
     proxyOutputs(this, this.el, ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
   }
 }
-proxyMethods(IonSlides, ['update', 'updateAutoHeight', 'slideTo', 'slideNext', 'slidePrev', 'getActiveIndex', 'getPreviousIndex', 'length', 'isEnd', 'isBeginning', 'startAutoplay', 'stopAutoplay', 'lockSwipeToNext', 'lockSwipeToPrev', 'lockSwipes']);
+proxyMethods(IonSlides, ['update', 'updateAutoHeight', 'slideTo', 'slideNext', 'slidePrev', 'getActiveIndex', 'getPreviousIndex', 'length', 'isEnd', 'isBeginning', 'startAutoplay', 'stopAutoplay', 'lockSwipeToNext', 'lockSwipeToPrev', 'lockSwipes', 'getSwiper']);
 proxyInputs(IonSlides, ['mode', 'options', 'pager', 'scrollbar']);
 
 export declare interface IonSpinner extends Components.IonSpinner {}
