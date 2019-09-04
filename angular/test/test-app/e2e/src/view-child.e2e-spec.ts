@@ -8,7 +8,7 @@ describe('view-child', () => {
     await waitTime(30);
   });
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should get a reference to all children', async () => {

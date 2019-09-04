@@ -8,7 +8,7 @@ describe('slides', () => {
     await waitTime(30);
   });
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should change index on slide change', async () => {

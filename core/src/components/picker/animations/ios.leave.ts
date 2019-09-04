@@ -1,25 +1,25 @@
-import { Animation } from '../../../interface';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Picker Leave Animation
  */
-export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new AnimationC();
+export const iosLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
+  const baseAnimation = createAnimation();
+  const backdropAnimation = createAnimation();
+  const wrapperAnimation = createAnimation();
 
-  const backdropAnimation = new AnimationC();
-  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
+  backdropAnimation
+    .addElement(baseEl.querySelector('ion-backdrop'))
+    .fromTo('opacity', 0.26, 0.01);
 
-  const wrapperAnimation = new AnimationC();
-  wrapperAnimation.addElement(baseEl.querySelector('.picker-wrapper'));
+  wrapperAnimation
+    .addElement(baseEl.querySelector('.picker-wrapper'))
+    .fromTo('transform', 'translateY(0%)', 'translateY(100%)');
 
-  backdropAnimation.fromTo('opacity', 0.26, 0.01);
-
-  wrapperAnimation.fromTo('translateY', '0%', '100%');
-
-  return Promise.resolve(baseAnimation
+  return baseAnimation
     .addElement(baseEl)
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(400)
-    .add(backdropAnimation)
-    .add(wrapperAnimation));
-}
+    .addAnimation([backdropAnimation, wrapperAnimation]);
+};

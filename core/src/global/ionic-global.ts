@@ -9,11 +9,11 @@ declare const Context: any;
 
 let mode: Mode;
 
-export function getIonMode(ref?: any): Mode {
+export const getIonMode = (ref?: any): Mode => {
   return (ref && getMode(ref)) || mode;
-}
+};
 
-export default function() {
+export default () => {
   const doc = document;
   const win = window;
   Context.config = config;
@@ -52,5 +52,4 @@ export default function() {
   setMode(
     (elm: any) => (elm as any).mode = (elm as any).mode || elm.getAttribute('mode') || mode
   );
-
-}
+};

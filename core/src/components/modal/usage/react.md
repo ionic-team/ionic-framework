@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { IonModal, IonButton, IonContent } from '@ionic/react';
 
-export const ModalExample: React.FunctionComponent = () => {
+export const ModalExample: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (

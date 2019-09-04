@@ -42,7 +42,7 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 import React from 'react';
 import { IonContent, IonFab, IonFabButton } from '@ionic/react';
 
-export const FabButtonExample: React.FunctionComponent = () => (
+export const FabButtonExample: React.FC = () => (
   <IonContent>
     {/*-- Fixed Floating Action Button that does not scroll with the content --*/}
     <IonFab>
@@ -111,7 +111,7 @@ export const FabButtonExample: React.FunctionComponent = () => (
 | `show`            | `show`             | If `true`, the fab button will show when in a fab-list.                                                                                                                                                                                                                                   | `boolean`                         | `false`     |
 | `size`            | `size`             | The size of the button. Set this to `small` in order to have a mini fab.                                                                                                                                                                                                                  | `"small" \| undefined`            | `undefined` |
 | `target`          | `target`           | Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.                                                                                                                                       | `string \| undefined`             | `undefined` |
-| `translucent`     | `translucent`      | If `true`, the fab button will be translucent. Only applies to `ios` mode on devices that support [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                                            | `boolean`                         | `false`     |
+| `translucent`     | `translucent`      | If `true`, the fab button will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                                 | `boolean`                         | `false`     |
 | `type`            | `type`             | The type of the button.                                                                                                                                                                                                                                                                   | `"button" \| "reset" \| "submit"` | `'button'`  |
 
 

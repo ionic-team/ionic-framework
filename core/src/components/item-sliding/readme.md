@@ -331,7 +331,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
 import React from 'react';
 import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonNote } from '@ionic/react';
 
-export const ItemSlidingExample: React.FunctionComponent = () => (
+export const ItemSlidingExample: React.FC = () => (
 <IonList>
   {/* Sliding item with text options on both sides */}
   <IonItemSliding>

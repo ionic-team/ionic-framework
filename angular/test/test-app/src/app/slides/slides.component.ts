@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 
 @Component({
@@ -6,7 +6,7 @@ import { IonSlides } from '@ionic/angular';
   templateUrl: './slides.component.html',
 })
 export class SlidesComponent implements AfterViewInit {
-  @ViewChild(IonSlides) slides: IonSlides;
+  @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
   slideIndex = 0;
   slideIndex2 = 0;

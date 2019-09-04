@@ -1,9 +1,9 @@
 # ion-anchor
 
-> [DEPRECATED]. Use [ion-router-link](../router-link) instead.
-
 <!-- Auto Generated Below -->
 
+
+> **[DEPRECATED]** Use `ion-router-link` instead.
 
 ## Properties
 

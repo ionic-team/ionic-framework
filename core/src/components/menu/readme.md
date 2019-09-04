@@ -167,7 +167,7 @@ constructor(private menu: MenuController) { }
         <ion-title>Menu - Basic</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content padding>
+    <ion-content class="ion-padding">
       <ion-button expand="block" onclick="openFirst()">Open Start Menu</ion-button>
       <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
       <ion-button expand="block" onclick="openCustom()">Open Custom Menu</ion-button>
@@ -209,7 +209,7 @@ function openCustom() {
 import React from 'react';
 import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonRouterOutlet } from '@ionic/react';
 
-export const MenuExample: React.FunctionComponent = () => (
+export const MenuExample: React.FC = () => (
   <>
     <IonMenu side="start" menuId="first">
       <IonHeader>
@@ -466,13 +466,11 @@ Type: `Promise<boolean>`
 ### Depends on
 
 - [ion-backdrop](../backdrop)
-- [ion-menu-controller](../menu-controller)
 
 ### Graph
 ```mermaid
 graph TD;
   ion-menu --> ion-backdrop
-  ion-menu --> ion-menu-controller
   style ion-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

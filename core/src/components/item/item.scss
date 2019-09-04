@@ -149,7 +149,7 @@
 // Item: Disabled
 // --------------------------------------------------
 
-:host(.item-interactive-disabled) {
+:host(.item-interactive-disabled:not(.item-multiple-inputs)) {
   cursor: default;
   pointer-events: none;
 }
@@ -397,7 +397,9 @@ button, a {
 // Multiple inputs in an item should have the input
 // cover relative to themselves instead of the item
 
+:host(.item-multiple-inputs) ::slotted(ion-checkbox),
 :host(.item-multiple-inputs) ::slotted(ion-datetime),
+:host(.item-multiple-inputs) ::slotted(ion-radio),
 :host(.item-multiple-inputs) ::slotted(ion-select) {
   position: relative;
 }

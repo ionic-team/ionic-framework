@@ -17,10 +17,7 @@ $toggle-ios-border-width:              2px !default;
 $toggle-ios-border-radius:             $toggle-ios-height / 2 !default;
 
 /// @prop - Background color of the unchecked toggle
-$toggle-ios-background-color-off:      $item-ios-background !default;
-
-/// @prop - Border color of the unchecked toggle
-$toggle-ios-border-color-off:          $background-color-step-50 !default;
+$toggle-ios-background-color-off:      rgba($text-color-rgb, .088) !default;
 
 /// @prop - Background color of the checked toggle
 $toggle-ios-background-color-on:       ion-color(primary, base) !default;
@@ -38,7 +35,7 @@ $toggle-ios-handle-border-radius:      $toggle-ios-handle-height / 2 !default;
 $toggle-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, .16), 0 3px 1px rgba(0, 0, 0, .1) !default;
 
 /// @prop - Background color of the toggle handle
-$toggle-ios-handle-background-color:   $toggle-ios-background-color-off !default;
+$toggle-ios-handle-background-color:   #ffffff !default;
 
 /// @prop - Margin of the toggle handle
 $toggle-ios-media-margin:              0 !default;

@@ -1,9 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { BACKDROP, dismiss, eventMethod, getOverlays, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -139,34 +139,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionModalDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    this.dismiss(undefined, BACKDROP);
-  }
-
-  @Listen('ionModalDidPresent')
-  @Listen('ionModalWillPresent')
-  @Listen('ionModalWillDismiss')
-  @Listen('ionModalDidDismiss')
-  protected lifecycle(modalEvent: CustomEvent) {
-    const el = this.usersElement;
-    const name = LIFECYCLE_MAP[modalEvent.type];
-    if (el && name) {
-      const ev = new CustomEvent(name, {
-        bubbles: false,
-        cancelable: false,
-        detail: modalEvent.detail
-      });
-      el.dispatchEvent(ev);
-    }
+  constructor() {
+    prepareOverlay(this.el);
   }
 
   async componentDidLoad() {
@@ -271,76 +245,107 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return eventMethod(this.el, 'ionModalWillDismiss');
   }
 
-  private buildIOSLeaveAnimation(presentingEl?: HTMLElement) {
-    switch (this.presentationStyle) {
-      case 'fullscreen':
-        return iosLeaveAnimation;
-      case 'card':
-        return (animation: Animation, baseEl: HTMLElement) => iosLeaveCardAnimation(animation, baseEl, presentingEl);
+  private onBackdropTap = () => {
+    this.dismiss(undefined, BACKDROP);
+  }
+
+  private onDismiss = (ev: UIEvent) => {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
+
+private buildIOSLeaveAnimation(presentingEl?: HTMLElement) {
+switch (this.presentationStyle) {
+case 'fullscreen':
+return iosLeaveAnimation;
+case 'card':
+return (animation: Animation, baseEl: HTMLElement) => iosLeaveCardAnimation(animation, baseEl, presentingEl);
+}
+}
+
+private buildMDLeaveAnimation(_presentingEl?: HTMLElement) {
+return mdLeaveAnimation;
+}
+
+private buildSwipeLeaveAnimation(velocityY: number) {
+switch (this.presentationStyle) {
+case 'fullscreen':
+return (animation: Animation, baseEl: HTMLElement) =>
+iosLeaveAnimation(animation,
+baseEl,
+this.gesture!.getY(),
+this.gesture!.getBackdropOpacity(),
+velocityY);
+case 'card':
+return (animation: Animation, baseEl: HTMLElement) =>
+iosLeaveCardAnimation(animation,
+baseEl,
+this.presentingEl,
+this.gesture!.getY(),
+this.gesture!.getBackdropOpacity(),
+this.gesture!.getPresentingScale(),
+velocityY);
+}
+}
+
+private async swipeDismiss(velocityY: number) {
+const leaveAnim = this.buildSwipeLeaveAnimation(velocityY);
+const dismissed = await dismiss(this, null, undefined, 'modalLeave', leaveAnim, leaveAnim);
+if (dismissed) {
+await detachComponent(this.delegate, this.usersElement);
+}
+return dismissed;
+}
+
+  private onLifecycle = (modalEvent: CustomEvent) => {
+    const el = this.usersElement;
+    const name = LIFECYCLE_MAP[modalEvent.type];
+    if (el && name) {
+      const ev = new CustomEvent(name, {
+        bubbles: false,
+        cancelable: false,
+        detail: modalEvent.detail
+      });
+      el.dispatchEvent(ev);
     }
-  }
-
-  private buildMDLeaveAnimation(_presentingEl?: HTMLElement) {
-    return mdLeaveAnimation;
-  }
-
-  private buildSwipeLeaveAnimation(velocityY: number) {
-    switch (this.presentationStyle) {
-      case 'fullscreen':
-        return (animation: Animation, baseEl: HTMLElement) =>
-                 iosLeaveAnimation(animation,
-                                   baseEl,
-                                   this.gesture!.getY(),
-                                   this.gesture!.getBackdropOpacity(),
-                                   velocityY);
-      case 'card':
-        return (animation: Animation, baseEl: HTMLElement) =>
-                 iosLeaveCardAnimation(animation,
-                                baseEl,
-                                this.presentingEl,
-                                this.gesture!.getY(),
-                                this.gesture!.getBackdropOpacity(),
-                                this.gesture!.getPresentingScale(),
-                                velocityY);
-    }
-  }
-
-  private async swipeDismiss(velocityY: number) {
-    const leaveAnim = this.buildSwipeLeaveAnimation(velocityY);
-    const dismissed = await dismiss(this, null, undefined, 'modalLeave', leaveAnim, leaveAnim);
-    if (dismissed) {
-      await detachComponent(this.delegate, this.usersElement);
-    }
-    return dismissed;
-  }
-
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      'no-router': true,
-      'aria-modal': 'true',
-      class: {
-        [mode]: true,
-        ...getClassMap(this.cssClass)
-      },
-      style: {
-        zIndex: 20000 + this.overlayIndex,
-      }
-    };
   }
 
   render() {
     const mode = getIonMode(this);
-    const dialogClasses = {
-      [`modal-wrapper`]: true,
-      [`modal-card`]: this.presentationStyle === 'card',
-      [mode]: true,
-    };
 
-    return [
-      <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>,
-      <div role="dialog" class={dialogClasses}></div>
-    ];
+    return (
+      <Host
+        no-router
+        aria-modal="true"
+        class={{
+          [mode]: true,
+          ...getClassMap(this.cssClass)
+        }}
+        style={{
+          zIndex: `${20000 + this.overlayIndex}`,
+        }}
+        onIonBackdropTap={this.onBackdropTap}
+        onIonDismiss={this.onDismiss}
+        onIonModalDidPresent={this.onLifecycle}
+        onIonModalWillPresent={this.onLifecycle}
+        onIonModalWillDismiss={this.onLifecycle}
+        onIonModalDidDismiss={this.onLifecycle}
+      >
+        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>
+        <div
+          role="dialog"
+class={{
+[`modal-wrapper`]: true,
+[`modal-card`]: this.presentationStyle === 'card',
+[mode]: true,
+}}
+        >
+        </div>
+      </Host>
+    );
   }
 }
 

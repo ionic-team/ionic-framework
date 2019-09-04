@@ -2,11 +2,11 @@ import { newE2EPage } from '@stencil/core/testing';
 
 import { dragElementBy, generateE2EUrl, listenForEvent, waitForFunctionTestContext } from '../../../utils/test/utils';
 
-export async function testPickerColumn(
+export const testPickerColumn = async (
   type: string,
   selector: string,
   rtl = false
-) {
+) => {
   try {
     const pageUrl = generateE2EUrl('picker-column', type, rtl);
 
@@ -53,4 +53,4 @@ export async function testPickerColumn(
   } catch (err) {
     throw err;
   }
-}
+};

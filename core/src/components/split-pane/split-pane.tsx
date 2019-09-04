@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -57,12 +57,12 @@ export class SplitPane implements ComponentInterface {
     this.ionSplitPaneVisible.emit(detail);
   }
 
-  componentDidLoad() {
+  connectedCallback() {
     this.styleChildren();
     this.updateState();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.rmL) {
       this.rmL();
       this.rmL = undefined;
@@ -148,23 +148,25 @@ export class SplitPane implements ComponentInterface {
     }
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
 
-    return {
-      class: {
-        [mode]: true,
+          // Used internally for styling
+          [`split-pane-${mode}`]: true,
 
-        // Used internally for styling
-        [`split-pane-${mode}`]: true,
-
-        'split-pane-visible': this.visible
-      }
-    };
+          'split-pane-visible': this.visible
+        }}
+      >
+      </Host>
+    );
   }
 }
 
-function setPaneClass(el: HTMLElement, isMain: boolean) {
+const setPaneClass = (el: HTMLElement, isMain: boolean) => {
   let toAdd;
   let toRemove;
   if (isMain) {
@@ -177,4 +179,4 @@ function setPaneClass(el: HTMLElement, isMain: boolean) {
   const classList = el.classList;
   classList.add(toAdd);
   classList.remove(toRemove);
-}
+};

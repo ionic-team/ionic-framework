@@ -31,7 +31,7 @@ Unlike ItemDivider, ListHeaders are styled to be stand-out from the rest of the 
 import React from 'react';
 import { IonList, IonItem, IonLabel, IonContent, IonListHeader } from '@ionic/react';
 
-export const ListHeaderExample: React.FunctionComponent = () => (
+export const ListHeaderExample: React.FC = () => (
   <IonContent>
     <IonList>
       <IonListHeader>

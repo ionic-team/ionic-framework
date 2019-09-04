@@ -321,7 +321,7 @@ for (let i = 0; i < segmentButtons.length; i++) {
 import React from 'react';
 import { IonSegment, IonSegmentButton, IonLabel, IonIcon, IonContent } from '@ionic/react';
 
-export const SegmentButtonExample: React.FunctionComponent = () => (
+export const SegmentButtonExample: React.FC = () => (
   <IonContent>
     {/*-- Segment buttons with text and click listeners --*/}
     <IonSegment>

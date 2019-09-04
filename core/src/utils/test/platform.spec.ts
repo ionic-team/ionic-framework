@@ -51,6 +51,12 @@ describe('Platform Tests', () => {
       expect(isPlatform(win, 'hybrid')).toEqual(true);
     });
 
+    it('should work without win parameter', () => {
+      (global as any).window = configureBrowser(PlatformConfiguration.DesktopSafari);
+      expect(isPlatform('capacitor')).toEqual(false);
+      expect(isPlatform('desktop')).toEqual(true);
+    });
+
     it('should return false for "capacitor" and true for "desktop" on desktop safari', () => {
       const win = configureBrowser(PlatformConfiguration.DesktopSafari);
       expect(isPlatform(win, 'capacitor')).toEqual(false);

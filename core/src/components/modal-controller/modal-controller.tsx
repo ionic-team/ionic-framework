@@ -1,13 +1,24 @@
-import { Component, ComponentInterface, Method } from '@stencil/core';
+import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 
 import { ComponentRef, ModalOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay, getOverlays } from '../../utils/overlays';
 
+/**
+ * @deprecated Use the `modalController` exported from core.
+ */
 @Component({
   tag: 'ion-modal-controller'
 })
 export class ModalController implements ComponentInterface, OverlayController {
   modals: HTMLIonModalElement[] = [];
+
+  constructor() {
+    if (Build.isDev) {
+      console.warn(`[DEPRECATED][ion-modal-controller] Use the modalController export from @ionic/core:
+  import { modalController } from '@ionic/core';
+  const modal = await modalController.create({...});`);
+    }
+  }
 
   /**
    * Create a modal overlay with modal options.
