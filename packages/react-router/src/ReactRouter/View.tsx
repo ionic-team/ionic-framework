@@ -1,17 +1,20 @@
 import React from 'react';
 import { IonLifeCycleContext, NavContext } from '@ionic/react';
 import { ViewItem } from './ViewItem';
+import { Route, Redirect } from 'react-router-dom';
 // import { Route } from 'react-router-dom';
 
 type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 
 interface InternalProps extends React.HTMLAttributes<HTMLElement> {
   onViewSync: (page: HTMLElement, viewId: string) => void;
+  onHideView: (viewId: string) => void;
   view: ViewItem;
   forwardedRef?: React.RefObject<HTMLElement>,
 };
 
 type ExternalProps = Props & {
+  onHideView: (viewId: string) => void;
   onViewSync: (page: HTMLElement, viewId: string) => void;
   view: ViewItem;
   ref?: React.RefObject<HTMLElement>
@@ -32,8 +35,21 @@ class ViewInternal extends React.Component<InternalProps, StackViewState> {
     }
   }
 
+  componentDidMount() {
+    /**
+     * If we can tell if view is a redirect, hide it so it will work again in future
+     */
+    const { view } = this.props;
+    if (view.route.type === Redirect) {
+      this.props.onHideView(view.id);
+    } else if (view.route.type === Route && view.route.props.render) {
+      if (view.route.props.render().type === Redirect) {
+        this.props.onHideView(view.id);
+      }
+    }
+  }
+
   componentWillUnmount() {
-    // const { forwardedRef } = this.props;
     if (this.ionPage) {
       this.ionPage.removeEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
       this.ionPage.removeEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));

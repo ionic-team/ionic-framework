@@ -18,10 +18,18 @@ export const IonPage = /*@__PURE__*/(() => class IonPageInternal extends React.C
 
   render() {
     const { className, children, ...props } = this.props;
+    const PageManager = this.context.getPageManager();
+
+    const ionPageContent = <div className={className ? `ion-page ${className}` : 'ion-page'} ref={this.ref} {...props}>
+      {children}
+    </div>;
+
     return (
-      <div className={className ? `ion-page ${className}` : 'ion-page'} ref={this.ref} {...props}>
-        {children}
-      </div>
+      this.context.hasIonicRouter() ? (
+        <PageManager>
+          {ionPageContent}
+        </PageManager>
+      ) : ionPageContent
     );
   }
 

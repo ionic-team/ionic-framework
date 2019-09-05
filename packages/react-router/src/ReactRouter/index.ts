@@ -1,3 +1,3 @@
 
-export * from './Router';
-export { PageManager as ViewManager } from './PageManager';
+export { IonReactRouter } from './Router';
+export { ViewManager } from './ViewManager';

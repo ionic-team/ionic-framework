@@ -1,25 +1,26 @@
 import React from 'react';
 import { generateUniqueId } from '../utils';
 import { View } from './View';
-import { ViewItemManager } from './ViewItemManager';
+import { ViewTransitionManager } from './ViewTransitionManager';
 import { RouteManagerContext } from './RouteManagerContext';
 import { ViewItem } from './ViewItem';
 
-type PageManagerProps = {
+type StackManagerProps = {
   id?: string;
 };
 
-type PageManagerState = {}
+type StackManagerState = {}
 
-export class PageManager extends React.Component<PageManagerProps, PageManagerState> {
+export class StackManager extends React.Component<StackManagerProps, StackManagerState> {
   routerOutletEl: React.RefObject<HTMLIonRouterOutletElement> = React.createRef();
   context!: React.ContextType<typeof RouteManagerContext>;
   id: string;
 
-  constructor(props: PageManagerProps) {
+  constructor(props: StackManagerProps) {
     super(props);
     this.id = this.props.id || generateUniqueId();
     this.handleViewSync = this.handleViewSync.bind(this);
+    this.handleHideView = this.handleHideView.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +33,10 @@ export class PageManager extends React.Component<PageManagerProps, PageManagerSt
 
   handleViewSync(page: HTMLElement, viewId: string) {
     this.context.syncView(page, viewId);
+  }
+
+  handleHideView(viewId: string) {
+    this.context.hideView(viewId);
   }
 
   renderChild(item: ViewItem) {
@@ -49,28 +54,29 @@ export class PageManager extends React.Component<PageManagerProps, PageManagerSt
 
     const childElements = views.map((view) => {
       return (
-        <ViewItemManager
+        <ViewTransitionManager
           id={view.id}
           key={view.key}
           mount={view.mount}
         >
           <View
             onViewSync={this.handleViewSync}
+            onHideView={this.handleHideView}
             view={view}
           >
             {this.renderChild(view)}
           </View>
-        </ViewItemManager>
+        </ViewTransitionManager>
       );
     });
 
-    return (
-      React.cloneElement(ionRouterOutlet, {
-        ref: this.routerOutletEl,
-        "data-stack-id": this.id
-      }, childElements)
-    );
+    const routerOutletChild = React.cloneElement(ionRouterOutlet, {
+      ref: this.routerOutletEl,
+      "data-stack-id": this.id
+    }, childElements);
 
+
+    return routerOutletChild;
   }
 
   static get contextType() {

@@ -6,55 +6,78 @@ import { matchPath } from 'react-router-dom';
 export interface ViewStack {
   id: string;
   routerOutlet: HTMLIonRouterOutletElement;
-  activeId?: string,
-  views: ViewItem[]
+  views: ViewItem[],
+  switchComponent?: React.ReactElement;
 }
 
 export class ViewStacks {
-  private viewStacks: {[key: string]: ViewStack} = {};
+  private viewStacks: { [key: string]: ViewStack } = {};
+  activeIonPageId?: string;
 
   get(key: string) {
     return this.viewStacks[key];
   }
+
   set(key: string, viewStack: ViewStack) {
     this.viewStacks[key] = viewStack;
+  }
+
+  getActiveIonPage() {
+    if (!this.activeIonPageId) {
+      return { activeIonPage: undefined, viewStack: undefined };
+    }
+    const { view, viewStack } = this.findViewInfoById(this.activeIonPageId);
+    return { activeIonPage: view, viewStack };
+  }
+
+  getKeys() {
+    return Object.keys(this.viewStacks);
   }
 
   delete(key: string) {
     delete this.viewStacks[key];
   }
 
-  findViewInfoByLocation(location: HistoryLocation) {
+  findViewInfoByLocation(location: HistoryLocation, key?: string) {
     let view: ViewItem<IonRouteData> | undefined;
     let match: IonRouteData["match"] | null | undefined;
     let viewStack: ViewStack | undefined;
-    const keys = Object.keys(this.viewStacks);
-    keys.some(key => {
-      const vs = this.viewStacks[key];
-      return vs.views.some(x => {
-        const matchProps = {
-          exact: x.routeData.childProps.exact,
-          path: x.routeData.childProps.path || x.routeData.childProps.from,
-          component: x.routeData.childProps.component
-        };
-        match = matchPath(location.pathname, matchProps)
-        if (match) {
-          view = x;
-          viewStack = vs;
-          return true;
-        }
-        return false;
+    if (key) {
+      viewStack = this.viewStacks[key];
+      if (viewStack) {
+        viewStack.views.some(matchView);
+      }
+    } else {
+      const keys = this.getKeys();
+      keys.some(key => {
+        viewStack = this.viewStacks[key];
+        return viewStack.views.some(matchView);
       });
-    })
+    }
 
     const result = { view, viewStack, match };
     return result;
+
+    function matchView(v: ViewItem) {
+      const matchProps = {
+        exact: v.routeData.childProps.exact,
+        path: v.routeData.childProps.path || v.routeData.childProps.from,
+        component: v.routeData.childProps.component
+      };
+      match = matchPath(location.pathname, matchProps)
+      if (match) {
+        view = v;
+        return true;
+      }
+      return false;
+    }
+
   }
 
   findViewInfoById(id: string) {
     let view: ViewItem<IonRouteData> | undefined;
     let viewStack: ViewStack | undefined;
-    const keys = Object.keys(this.viewStacks);
+    const keys = this.getKeys();
     keys.some(key => {
       const vs = this.viewStacks[key];
       view = vs.views.find(x => x.id === id);
@@ -66,6 +89,19 @@ export class ViewStacks {
       }
     });
     return { view, viewStack };
+  }
+
+  setHiddenViews() {
+    const keys = this.getKeys();
+    keys.forEach(key => {
+      const viewStack = this.viewStacks[key];
+      viewStack.views.forEach(view => {
+        if(!view.routeData.match && !view.isIonRoute) {
+          view.show = false;
+          view.mount = false;
+        }
+      })
+    })
   }
 }
 
