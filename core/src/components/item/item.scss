@@ -79,20 +79,20 @@
 
   position: relative;
 
+  align-items: center;
+  justify-content: space-between;
+
   outline: none;
 
   color: var(--color);
 
   font-family: $font-family-base;
 
-  align-items: center;
-  justify-content: space-between;
-
   text-align: initial;
   text-decoration: none;
-  box-sizing: border-box;
 
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 
