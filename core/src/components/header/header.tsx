@@ -15,8 +15,10 @@ import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarInte
 })
 export class Header implements ComponentInterface {
 
+  private collapsableHeaderInitialized = false;
   private scrollEl?: HTMLElement;
   private contentScrollCallback?: any;
+  private intersectionObserver?: any;
 
   @Element() el!: HTMLElement;
 
@@ -37,28 +39,51 @@ export class Header implements ComponentInterface {
   @Prop() translucent = false;
 
   async componentDidLoad() {
-    // Determine if the header can collapse
-    const canCollapse = (this.collapse && getIonMode(this) === 'ios') ? this.collapse : false;
+    await this.checkCollapsableHeader();
+  }
 
-    const tabs = this.el.closest('ion-tabs');
-    const page = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-    const contentEl = tabs ? tabs.querySelector('ion-content') : page!.querySelector('ion-content');
-
-    if (canCollapse) {
-      await this.setupCollapsableHeader(contentEl, (tabs) ? tabs : page!);
-    }
+  async componentDidUpdate() {
+    await this.checkCollapsableHeader();
   }
 
   componentDidUnload() {
-    if (this.scrollEl && this.contentScrollCallback) {
-      this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
+    this.destroyCollapsableHeader();
+  }
+
+  private async checkCollapsableHeader() {
+
+    // Determine if the header can collapse
+    const canCollapse = (this.collapse && getIonMode(this) === 'ios') ? this.collapse : false;
+
+    if (!canCollapse && this.collapsableHeaderInitialized) {
+      this.destroyCollapsableHeader();
+    } else if (canCollapse && !this.collapsableHeaderInitialized) {
+      const tabs = this.el.closest('ion-tabs');
+      const page = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
+
+      const pageEl = (tabs) ? tabs : (page) ? page : null;
+      const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
+
+      await this.setupCollapsableHeader(contentEl, pageEl);
     }
   }
 
-  private async setupCollapsableHeader(contentEl: HTMLIonContentElement | null, pageEl: Element) {
-    if (!contentEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); }
+  private destroyCollapsableHeader() {
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect();
+      this.intersectionObserver = undefined;
+    }
 
-    this.scrollEl = await contentEl!.getScrollElement();
+    if (this.scrollEl && this.contentScrollCallback) {
+      this.scrollEl.removeEventListener('scroll', this.contentScrollCallback);
+      this.contentScrollCallback = undefined;
+    }
+  }
+
+  private async setupCollapsableHeader(contentEl: HTMLIonContentElement | null, pageEl: Element | null) {
+    if (!contentEl || !pageEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); return; }
+
+    this.scrollEl = await contentEl.getScrollElement();
 
     readTask(() => {
       const headers = pageEl.querySelectorAll('ion-header');
@@ -87,8 +112,8 @@ export class Header implements ComponentInterface {
 
       readTask(() => {
         const mainHeaderHeight = mainHeaderIndex.el.clientHeight;
-        const intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: 0.25, rootMargin: `-${mainHeaderHeight}px 0px 0px 0px` });
-        intersectionObserver.observe(scrollHeaderIndex.toolbars[0].el);
+        this.intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: 0.25, rootMargin: `-${mainHeaderHeight}px 0px 0px 0px` });
+        this.intersectionObserver.observe(scrollHeaderIndex.toolbars[0].el);
       });
 
       /**
@@ -104,6 +129,8 @@ export class Header implements ComponentInterface {
       cloneElement('ion-title');
       cloneElement('ion-back-button');
     });
+
+    this.collapsableHeaderInitialized = true;
   }
 
   render() {
