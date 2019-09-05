@@ -68,16 +68,58 @@ In this example, notice that we have added two sets of `ion-buttons` both with `
 
 ## Usage
 
-### Javascript
+### Angular / javascript
 
 ```html
-<ion-header>
+<!-- Default title -->
+<ion-toolbar>
+  <ion-title>Default Title</ion-title>
+</ion-toolbar>
 
+<!-- Large title -->
+<ion-toolbar>
+  <ion-title size="large">Large Title</ion-title>
+</ion-toolbar>
+```
+
+
+### React
+
+```tsx
+import React from 'react';
+import {
+  IonToolbar,
+  IonTitle
+} from '@ionic/react';
+
+export const ToolbarExample: React.FC = () => (
+  {/*-- Default title --*/}
+  <IonToolbar>
+    <IonTitle>Default Title</IonTitle>
+  </IonToolbar>
+  
+  {/*-- Large title --*/}
+  <IonToolbar>
+    <IonTitle size="large">Large Title</IonTitle>
+  </IonToolbar>
+);
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default title -->
   <ion-toolbar>
-    <ion-title>Settings</ion-title>
+    <ion-title>Default Title</ion-title>
   </ion-toolbar>
-
-</ion-header>
+  
+  <!-- Large title -->
+  <ion-toolbar>
+    <ion-title size="large">Large Title</ion-title>
+  </ion-toolbar>
+</template>
 ```
 
 

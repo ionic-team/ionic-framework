@@ -10,7 +10,7 @@ It's important to note that ion-header needs to be the one of the three root ele
 
 ## Usage
 
-### Javascript
+### Angular / javascript
 
 ```html
 <ion-header>
@@ -26,7 +26,13 @@ It's important to note that ion-header needs to be the one of the three root ele
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-header collapse="true">
+    <ion-toolbar>
+      <ion-title size="large">My Navigation Bar</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content>
 ```
 
 
@@ -41,19 +47,53 @@ export const HeaderExample: React.FC = () => (
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton defaultHref="/" />
+          <IonBackButton></IonBackButton>
         </IonButtons>
         <IonTitle>My Navigation Bar</IonTitle>
       </IonToolbar>
-
+    
       <IonToolbar>
         <IonTitle>Subheader</IonTitle>
       </IonToolbar>
     </IonHeader>
-
-    <IonContent />
+    
+    <IonContent>
+      <IonHeader collapse="true">
+        <IonToolbar>
+          <IonTitle size="large">My Navigation Bar</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+    </IonContent>
   </>
 );
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>My Navigation Bar</ion-title>
+    </ion-toolbar>
+  
+    <ion-toolbar>
+      <ion-title>Subheader</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-header collapse="true">
+      <ion-toolbar>
+        <ion-title size="large">My Navigation Bar</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-content>
+</template>
 ```
 
 

@@ -55,6 +55,15 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
     <ion-menu-button autoHide="false"></ion-menu-button>
   </ion-buttons>
 </ion-toolbar>
+
+<ion-toolbar>
+  <ion-buttons collapse="true">
+    <ion-button>
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Collapsable Buttons</ion-title>
+</ion-toolbar>
 ```
 
 
@@ -99,6 +108,15 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
       </ion-button>
     </ion-menu-toggle>
   </ion-buttons>
+</ion-toolbar>
+
+<ion-toolbar>
+  <ion-buttons collapse="true">
+    <ion-button>
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Collapsable Buttons</ion-title>
 </ion-toolbar>
 ```
 
@@ -155,6 +173,15 @@ export const ButtonsExample: React.FC = () => (
         <IonMenuButton autoHide={false} />
       </IonButtons>
     </IonToolbar>
+    
+    <IonToolbar>
+      <IonButtons collapse="true">
+        <IonButton>
+          <IonIcon slot="icon-only" name="star" />
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Collapsable Buttons</IonTitle>
+    </IonToolbar>
   </IonContent>
 );
 ```
@@ -198,6 +225,15 @@ export const ButtonsExample: React.FC = () => (
     <ion-buttons slot="end">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
+  </ion-toolbar>
+  
+  <ion-toolbar>
+    <ion-buttons collapse="true">
+      <ion-button>
+        <ion-icon slot="icon-only" name="star"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Collapsable Buttons</ion-title>
   </ion-toolbar>
 </template>
 ```

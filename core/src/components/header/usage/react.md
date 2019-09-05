@@ -7,17 +7,23 @@ export const HeaderExample: React.FC = () => (
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton defaultHref="/" />
+          <IonBackButton></IonBackButton>
         </IonButtons>
         <IonTitle>My Navigation Bar</IonTitle>
       </IonToolbar>
-
+    
       <IonToolbar>
         <IonTitle>Subheader</IonTitle>
       </IonToolbar>
     </IonHeader>
-
-    <IonContent />
+    
+    <IonContent>
+      <IonHeader collapse="true">
+        <IonToolbar>
+          <IonTitle size="large">My Navigation Bar</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+    </IonContent>
   </>
 );
 ```
