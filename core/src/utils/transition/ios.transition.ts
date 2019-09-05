@@ -138,14 +138,14 @@ const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDire
   const TRANSFORM_ORIGIN_X = (rtl) ? 'right' : 'left';
 
   const BACKWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
-    { offset: 0.1, opacity: 1 },
+    { offset: 0, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
+    { offset: 0.1, opacity: 0 },
     { offset: 1, opacity: 1, transform: `translate(${END_TRANSLATE}, ${addSafeArea(49)}) scale(1)` }
   ];
   const FORWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0.99, transform: `translate(${END_TRANSLATE}, ${addSafeArea(49)}) scale(1)` },
-    { offset: 0.6, opacity: 1 },
-    { offset: 1, opacity: 1, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.5)` }
+    { offset: 0.6, opacity: 0 },
+    { offset: 1, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.5)` }
   ];
   const KEYFRAMES = (backDirection) ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
 
