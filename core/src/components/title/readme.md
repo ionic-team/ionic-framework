@@ -25,9 +25,10 @@
 
 ## Properties
 
-| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
-| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
+| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                   | Default     |
+| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
+| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`  | `undefined` |
+| `size`   | `size`    | The size of the toolbar title. Only applies in `ios` mode.                                                                                                                                                                                                             | `"large" \| undefined` | `undefined` |
 
 
 ## CSS Custom Properties

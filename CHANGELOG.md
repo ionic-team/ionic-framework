@@ -1,3 +1,21 @@
+# [4.9.0 Fluorine](https://github.com/ionic-team/ionic/compare/v4.8.1...v4.9.0) (2019-09-04)
+
+
+### Bug Fixes
+
+* **all:** allow elements to be reused once removed from the DOM ([#18963](https://github.com/ionic-team/ionic/pull/18963)) ([48a2763](https://github.com/ionic-team/ionic/commit/48a2763)), closes [#18843](https://github.com/ionic-team/ionic/issues/18843) [#17344](https://github.com/ionic-team/ionic/issues/17344) [#16453](https://github.com/ionic-team/ionic/issues/16453) [#15879](https://github.com/ionic-team/ionic/issues/15879) [#15788](https://github.com/ionic-team/ionic/issues/15788) [#15484](https://github.com/ionic-team/ionic/issues/15484) [#17890](https://github.com/ionic-team/ionic/issues/17890) [#16364](https://github.com/ionic-team/ionic/issues/16364)
+* **animation:** add correct `onFinish` interface parameters ([#19199](https://github.com/ionic-team/ionic/issues/19199)) ([a81653b](https://github.com/ionic-team/ionic/commit/a81653b))
+* **animation:** improve Web Animation feature detection accuracy ([#19212](https://github.com/ionic-team/ionic/issues/19212)) ([6eca5b0](https://github.com/ionic-team/ionic/commit/6eca5b0)), closes [#19205](https://github.com/ionic-team/ionic/issues/19205)
+* **animation:** properly clean up elements when using `destroy` ([#19210](https://github.com/ionic-team/ionic/issues/19210)) ([93f2064](https://github.com/ionic-team/ionic/commit/93f2064))
+* **segment:** do not emit ionChange until didLoad ([#19218](https://github.com/ionic-team/ionic/issues/19218)) ([9751f14](https://github.com/ionic-team/ionic/commit/9751f14)), closes [#19204](https://github.com/ionic-team/ionic/issues/19204)
+
+### Features
+
+* **nav-link:** add `nav-link` and deprecate `nav-push`, `nav-pop`, and `nav-set-root` ([#18909](https://github.com/ionic-team/ionic/issues/18909)) ([c3044f5](https://github.com/ionic-team/ionic/commit/c3044f5))
+* **slides:** expose full Swiper API ([#19137](https://github.com/ionic-team/ionic/issues/19137)) ([e1fa461](https://github.com/ionic-team/ionic/commit/e1fa461))
+
+
+
 ## [4.8.1](https://github.com/ionic-team/ionic/compare/v4.8.0...v4.8.1) (2019-08-27)
 
 
