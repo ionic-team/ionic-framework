@@ -1,20 +1,17 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface, IonicAnimation } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
-import { iosEnterCardAnimation } from './animations/ios.enter.card';
 import { iosLeaveAnimation } from './animations/ios.leave';
-import { iosLeaveCardAnimation } from './animations/ios.leave.card';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import { SwipeToCloseGesture } from './gestures/swipe-to-close';
-import { ModalPresentationStyle } from './modal-interface';
+import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -28,20 +25,13 @@ import { ModalPresentationStyle } from './modal-interface';
   scoped: true
 })
 export class Modal implements ComponentInterface, OverlayInterface {
-  private gesture?: SwipeToCloseGesture;
+  private gesture?: Gesture;
 
   // Reference to the user's provided modal content
   private usersElement?: HTMLElement;
 
-  // Reference to the wrapper element
-  private wrapperEl?: HTMLDivElement;
-  // Reference to the backdrop element
-  private backdropEl?: HTMLIonBackdropElement;
-
-  private isFirstModal?: boolean;
-
   presented = false;
-  animation: Animation | undefined;
+  animation?: IonicAnimation;
   mode = getIonMode(this);
 
   @Element() el!: HTMLIonModalElement;
@@ -102,22 +92,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * If `true`, the modal will support a swipe and pan drag gesture to close. Only supported on iOS as Android
    * does not use this type of interaction.
    */
-  @Prop() swipeToClose = false;
+  @Prop() swipeGesture = false;
 
   /**
    * The element that presented the modal. This is used for card presentation effects
    * and for stacking multiple modals on top of each other.
    */
-  @Prop() presentingEl?: HTMLElement;
-
-  /**
-   * The style of presentation to use. `fullscreen` is the classic option that has the modal
-   * take up the full screen on mobile displays. A newer option, `card` is available for iOS only that displays
-   * the modal in a stacked fashion while also zooming the previous page out slightly underneath. The
-   * `card` style is the new default modal presentation style starting with iOS 13. Android does not use
-   * this type of modal so this option does not effect Android.
-   */
-  @Prop() presentationStyle: ModalPresentationStyle = 'fullscreen';
+  @Prop() presentingElement?: HTMLElement;
 
   /**
    * Emitted after the modal has presented.
@@ -143,26 +124,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     prepareOverlay(this.el);
   }
 
-  async componentDidLoad() {
-    this.wrapperEl = this.el.querySelector('.modal-wrapper') as HTMLDivElement || undefined;
-    this.backdropEl = this.el.querySelector('ion-backdrop') as HTMLIonBackdropElement || undefined;
-
-    const mode = getIonMode(this);
-
-    if (this.swipeToClose && mode === 'ios') {
-      // All of the elements needed for the swipe gesture
-      // should be in the DOM and referenced by now, except
-      // for the presenting el
-      this.gesture = new SwipeToCloseGesture(
-        this.el,
-        this.backdropEl,
-        this.wrapperEl,
-        undefined,
-        (velocityY: number) => this.swipeDismiss(velocityY)
-      );
-    }
-  }
-
   /**
    * Present the modal overlay after it has been created.
    */
@@ -171,20 +132,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.presented) {
       return;
     }
-
-    // Check whether this modal is the first/only modal open. If not,
-    // we changed the presentation and dismiss behavior when using
-    // the card presentation style
-    const openModals = getOverlays(document, 'ion-modal');
-    this.isFirstModal = openModals.length - 2 < 0;
-
-    if (this.swipeToClose && this.presentingEl && this.gesture) {
-      this.gesture!.setPresentingEl(this.presentingEl);
-    }
-
-    const iosAnim = this.buildIOSEnterAnimation(this.isFirstModal ? this.presentingEl : undefined);
-    const mdAnim = this.buildMDEnterAnimation(this.presentingEl);
-
     const container = this.el.querySelector(`.modal-wrapper`);
     if (!container) {
       throw new Error('container is undefined');
@@ -195,20 +142,21 @@ export class Modal implements ComponentInterface, OverlayInterface {
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], componentProps);
     await deepReady(this.usersElement);
-    return present(this, 'modalEnter', iosAnim, mdAnim);
-  }
+    await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
-  private buildIOSEnterAnimation(presentingEl?: HTMLElement) {
-    switch (this.presentationStyle) {
-      case 'fullscreen':
-        return iosEnterAnimation;
-      case 'card':
-        return (animation: Animation, baseEl: HTMLElement) => iosEnterCardAnimation(animation, baseEl, presentingEl);
+    const mode = getIonMode(this);
+    if (this.swipeGesture && mode === 'ios') {
+      // All of the elements needed for the swipe gesture
+      // should be in the DOM and referenced by now, except
+      // for the presenting el
+      const ani = this.animation = iosLeaveAnimation(this.el, this.presentingElement);
+      this.gesture = createSwipeToCloseGesture(
+        this.el,
+        ani,
+        () => this.dismiss()
+      );
+      this.gesture.setDisabled(false);
     }
-  }
-
-  private buildMDEnterAnimation(_presentingEl?: HTMLElement) {
-    return mdEnterAnimation;
   }
 
   /**
@@ -219,10 +167,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    const iosAnim = this.buildIOSLeaveAnimation(this.isFirstModal ? this.presentingEl : undefined);
-    const mdAnim = this.buildMDLeaveAnimation(this.presentingEl);
-
-    const dismissed = await dismiss(this, data, role, 'modalLeave', iosAnim, mdAnim);
+    const iosAni = this.animation ? this.animation : iosLeaveAnimation;
+    const dismissed = await dismiss(this, data, role, 'modalLeave', iosAni, mdLeaveAnimation, this.presentingElement);
+    this.animation = undefined;
     if (dismissed) {
       await detachComponent(this.delegate, this.usersElement);
     }
@@ -256,50 +203,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.dismiss();
   }
 
-
-private buildIOSLeaveAnimation(presentingEl?: HTMLElement) {
-switch (this.presentationStyle) {
-case 'fullscreen':
-return iosLeaveAnimation;
-case 'card':
-return (animation: Animation, baseEl: HTMLElement) => iosLeaveCardAnimation(animation, baseEl, presentingEl);
-}
-}
-
-private buildMDLeaveAnimation(_presentingEl?: HTMLElement) {
-return mdLeaveAnimation;
-}
-
-private buildSwipeLeaveAnimation(velocityY: number) {
-switch (this.presentationStyle) {
-case 'fullscreen':
-return (animation: Animation, baseEl: HTMLElement) =>
-iosLeaveAnimation(animation,
-baseEl,
-this.gesture!.getY(),
-this.gesture!.getBackdropOpacity(),
-velocityY);
-case 'card':
-return (animation: Animation, baseEl: HTMLElement) =>
-iosLeaveCardAnimation(animation,
-baseEl,
-this.presentingEl,
-this.gesture!.getY(),
-this.gesture!.getBackdropOpacity(),
-this.gesture!.getPresentingScale(),
-velocityY);
-}
-}
-
-private async swipeDismiss(velocityY: number) {
-const leaveAnim = this.buildSwipeLeaveAnimation(velocityY);
-const dismissed = await dismiss(this, null, undefined, 'modalLeave', leaveAnim, leaveAnim);
-if (dismissed) {
-await detachComponent(this.delegate, this.usersElement);
-}
-return dismissed;
-}
-
   private onLifecycle = (modalEvent: CustomEvent) => {
     const el = this.usersElement;
     const name = LIFECYCLE_MAP[modalEvent.type];
@@ -322,6 +225,7 @@ return dismissed;
         aria-modal="true"
         class={{
           [mode]: true,
+          [`modal-card`]: this.presentingElement !== undefined,
           ...getClassMap(this.cssClass)
         }}
         style={{
@@ -337,11 +241,7 @@ return dismissed;
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>
         <div
           role="dialog"
-class={{
-[`modal-wrapper`]: true,
-[`modal-card`]: this.presentationStyle === 'card',
-[mode]: true,
-}}
+          class="modal-wrapper"
         >
         </div>
       </Host>

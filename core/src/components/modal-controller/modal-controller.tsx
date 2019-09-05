@@ -1,7 +1,7 @@
 import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 
 import { ComponentRef, ModalOptions, OverlayController } from '../../interface';
-import { createOverlay, dismissOverlay, getOverlay, getOverlays } from '../../utils/overlays';
+import { modalController } from '../../utils/overlays';
 
 /**
  * @deprecated Use the `modalController` exported from core.
@@ -26,13 +26,8 @@ export class ModalController implements ComponentInterface, OverlayController {
    * @param options The options to use to create the modal.
    */
   @Method()
-  async create<T extends ComponentRef>(options: ModalOptions<T>): Promise<HTMLIonModalElement> {
-    console.log('Creating modal', options);
-    const modal = await createOverlay<HTMLIonModalElement>('ion-modal', options);
-
-    console.log(getOverlays(document, 'ion-modal'));
-    this.modals.push(modal);
-    return modal;
+  async create<T extends ComponentRef>(options: ModalOptions<T>) {
+    return modalController.create(options);
   }
 
   /**
@@ -47,15 +42,15 @@ export class ModalController implements ComponentInterface, OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(document, data, role, 'ion-modal', id);
+    return modalController.dismiss(data, role, id);
   }
 
   /**
    * Get the most recently opened modal overlay.
    */
   @Method()
-  async getTop(): Promise<HTMLIonModalElement | undefined> {
-    return getOverlay(document, 'ion-modal') as HTMLIonModalElement;
+  async getTop() {
+    return modalController.getTop();
   }
 
 }

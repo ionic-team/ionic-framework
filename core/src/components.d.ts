@@ -75,9 +75,6 @@ import {
   ViewController,
 } from './interface';
 import {
-  ModalPresentationStyle,
-} from './components/modal/modal-interface';
-import {
   SelectCompareFn,
 } from './components/select/select-interface';
 
@@ -1509,13 +1506,9 @@ export namespace Components {
     */
     'present': () => Promise<void>;
     /**
-    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available for iOS only that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is the new default modal presentation style starting with iOS 13. Android does not use this type of modal so this option does not effect Android.
-    */
-    'presentationStyle': ModalPresentationStyle;
-    /**
     * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other.
     */
-    'presentingEl'?: HTMLElement;
+    'presentingElement'?: HTMLElement;
     /**
     * If `true`, a backdrop will be displayed behind the modal.
     */
@@ -1523,7 +1516,7 @@ export namespace Components {
     /**
     * If `true`, the modal will support a swipe and pan drag gesture to close. Only supported on iOS as Android does not use this type of interaction.
     */
-    'swipeToClose': boolean;
+    'swipeGesture': boolean;
   }
   interface IonModalController {
     /**
@@ -4936,13 +4929,9 @@ declare namespace LocalJSX {
     */
     'onIonModalWillPresent'?: (event: CustomEvent<void>) => void;
     /**
-    * The style of presentation to use. `fullscreen` is the classic option that has the modal take up the full screen on mobile displays. A newer option, `card` is available for iOS only that displays the modal in a stacked fashion while also zooming the previous page out slightly underneath. The `card` style is the new default modal presentation style starting with iOS 13. Android does not use this type of modal so this option does not effect Android.
-    */
-    'presentationStyle'?: ModalPresentationStyle;
-    /**
     * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other.
     */
-    'presentingEl'?: HTMLElement;
+    'presentingElement'?: HTMLElement;
     /**
     * If `true`, a backdrop will be displayed behind the modal.
     */
@@ -4950,7 +4939,7 @@ declare namespace LocalJSX {
     /**
     * If `true`, the modal will support a swipe and pan drag gesture to close. Only supported on iOS as Android does not use this type of interaction.
     */
-    'swipeToClose'?: boolean;
+    'swipeGesture'?: boolean;
   }
   interface IonModalController extends JSXBase.HTMLAttributes<HTMLIonModalControllerElement> {}
   interface IonNav extends JSXBase.HTMLAttributes<HTMLIonNavElement> {

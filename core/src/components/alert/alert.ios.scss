@@ -300,3 +300,7 @@
 .alert-button.activated {
   background-color: $alert-ios-button-background-color-activated;
 }
+
+ion-backdrop {
+  opacity: 0.3;
+}

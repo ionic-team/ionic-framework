@@ -521,9 +521,9 @@
 
       // present the modal
       const modalElement = await modalController.create({
-        presentingEl: presentingEl,
+        presentingElement: presentingEl,
         component: element,
-        swipeToClose: true,
+        swipeGesture: true,
         presentationStyle: 'card'
       });
       return modalElement;

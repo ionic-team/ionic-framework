@@ -1,38 +1,46 @@
-import { Animation } from '../../../interface';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
 /**
  * iOS Modal Leave Animation
  */
-export function iosLeaveAnimation(
-  AnimationC: Animation,
+export const iosLeaveAnimation = (
   baseEl: HTMLElement,
-  currentY = SwipeToCloseDefaults.MIN_Y_FULLSCREEN,
-  currentBackdropOpacity = SwipeToCloseDefaults.MIN_BACKDROP_OPACITY,
-  velocityY?: number
-  ): Promise<Animation> {
-  const duration = typeof velocityY !== 'undefined' ? 250 - Math.min(100, velocityY * 75) : 250;
+  presentingEl?: HTMLElement,
+  duration = 500
+  ): IonicAnimation => {
 
-  const baseAnimation = new AnimationC();
+  const backdropAnimation = createAnimation()
+    .addElement(baseEl.querySelector('ion-backdrop'))
+    .fromTo('opacity', 0.4, 0.0);
 
-  const backdropAnimation = new AnimationC();
-  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
+  const wrapperAnimation = createAnimation()
+    .addElement(baseEl.querySelector('.modal-wrapper'))
+    .beforeStyles({ 'opacity': 1 })
+    .fromTo('transform', `translateY(0%)`, 'translateY(100%)');
 
-  const wrapperAnimation = new AnimationC();
-  const wrapperEl = baseEl.querySelector('.modal-wrapper');
-  wrapperAnimation.addElement(wrapperEl);
-  // const wrapperElRect = wrapperEl!.getBoundingClientRect();
-
-  wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', `${currentY}px`, `100%`);
-                  // `${(baseEl.ownerDocument as any).defaultView.innerHeight - wrapperElRect.top}px`);
-
-  backdropAnimation.fromTo('opacity', `${currentBackdropOpacity}`, 0.0);
-
-  return Promise.resolve(baseAnimation
+  const baseAnimation = createAnimation()
     .addElement(baseEl)
-    .easing('ease-out')
+    .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(duration)
-    .add(backdropAnimation)
-    .add(wrapperAnimation));
-}
+    .addAnimation([backdropAnimation, wrapperAnimation]);
+
+  if (presentingEl) {
+    const currentPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
+    const presentingFromY = SwipeToCloseDefaults.MIN_PRESENTING_Y;
+    const bodyEl = document.body;
+    const bodyAnimation = createAnimation()
+      .addElement(bodyEl)
+      .afterClearStyles(['background-color']);
+
+    const presentingAnimation = createAnimation()
+      .addElement(presentingEl)
+      .beforeClearStyles(['transform'])
+      .duration(duration)
+      .fromTo('transform', `translateY(${presentingFromY}px) scale(${currentPresentingScale})`, 'translateY(0px) scale(1)')
+
+    baseAnimation.addAnimation([bodyAnimation, presentingAnimation]);
+  }
+  return baseAnimation;
+};

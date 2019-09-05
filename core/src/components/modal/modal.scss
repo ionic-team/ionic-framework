@@ -53,6 +53,8 @@
 .modal-wrapper {
   @include border-radius(var(--border-radius));
 
+  position: relative;
+
   width: var(--width);
   min-width: var(--min-width);
   max-width: var(--max-width);
