@@ -19,7 +19,8 @@
   color: var(--color);
 }
 
-:host(.title-ios.title-default) {
+:host(.title-ios.title-default),
+:host(.title-ios.title-large) {
   @include position(0, null, null, 0);
   @include padding(0, 90px, 0);
 
