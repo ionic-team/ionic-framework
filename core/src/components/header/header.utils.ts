@@ -81,7 +81,6 @@ const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | un
  * hide the primary toolbar content and show the scrollable toolbar content
  */
 export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex) => {
-  console.log(ev);
   writeTask(() => {
     const event = ev[0];
     const intersection = event.intersectionRect;

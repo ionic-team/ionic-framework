@@ -47,10 +47,10 @@ const createLargeTitleTransition = (rootAnimation: IonicAnimation, rtl: boolean,
 
   if (shouldAnimationForward) {
     animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle);
-    animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton);
+    animateBackButton(rootAnimation, backDirection, enteringBackButton);
   } else if (shouldAnimationBackward) {
     animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle);
-    animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton);
+    animateBackButton(rootAnimation, backDirection, leavingBackButton);
   }
 
   return {
@@ -59,8 +59,9 @@ const createLargeTitleTransition = (rootAnimation: IonicAnimation, rtl: boolean,
   };
 };
 
-const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
-  console.log(rtl);
+const animateBackButton = (rootAnimation: IonicAnimation, backDirection: boolean, backButtonEl: any) => {
+  // TODO: Add RTL support here
+
   const FORWARD_TEXT_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` },
     { offset: 1, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` }
