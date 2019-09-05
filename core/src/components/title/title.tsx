@@ -41,11 +41,15 @@ export class ToolbarTitle implements ComponentInterface {
   }
 
   private emitStyle() {
-    const size = this.size;
+    const size = this.getSize();
 
     this.ionStyle.emit({
-      [`title-${size}`]: size !== undefined
+      [`title-${size}`]: true
     });
+  }
+
+  private getSize() {
+    return (this.size !== undefined) ? this.size : 'default';
   }
 
   private getMode() {
@@ -56,7 +60,7 @@ export class ToolbarTitle implements ComponentInterface {
 
   render() {
     const mode = this.getMode();
-    const size = this.size !== undefined ? this.size : 'default';
+    const size = this.getSize();
 
     return (
       <Host
