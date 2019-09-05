@@ -47,10 +47,10 @@ const createLargeTitleTransition = (rootAnimation: IonicAnimation, rtl: boolean,
 
   if (shouldAnimationForward) {
     animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle);
-    animateBackButton(rootAnimation, backDirection, enteringBackButton);
+    animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton);
   } else if (shouldAnimationBackward) {
     animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle);
-    animateBackButton(rootAnimation, backDirection, leavingBackButton);
+    animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton);
   }
 
   return {
@@ -59,28 +59,34 @@ const createLargeTitleTransition = (rootAnimation: IonicAnimation, rtl: boolean,
   };
 };
 
-const animateBackButton = (rootAnimation: IonicAnimation, backDirection: boolean, backButtonEl: any) => {
-  // TODO: Add RTL support here
+const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
+  const START_TEXT_TRANSLATE = (rtl) ? '7px' : '-7px';
+  const END_TEXT_TRANSLATE = (rtl) ? '-4px' : '4px';
+
+  const START_ICON_TRANSLATE = (rtl) ? '-4px' : '4px';
+
+  const TEXT_TRANSFORM_ORIGIN_X = (rtl) ? 'right' : 'left';
+  const ICON_TRANSFORM_ORIGIN_X = (rtl) ? 'left' : 'right';
 
   const FORWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` },
-    { offset: 1, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` }
+    { offset: 0, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(8)}) scale(2.1)` },
+    { offset: 1, opacity: 1, transform: `translate(${END_TEXT_TRANSLATE}, ${addSafeArea(-40)}) scale(1)` }
   ];
   const BACKWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` },
+    { offset: 0, opacity: 1, transform: `translate(${END_TEXT_TRANSLATE}, ${addSafeArea(-40)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` }
+    { offset: 1, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(8)}) scale(2.1)` }
   ];
   const TEXT_KEYFRAMES = (backDirection) ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
 
   const FORWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate3d(4px, ${addSafeArea(-35)}, 0) scale(0.6)` },
-    { offset: 1, opacity: 1, transform: `translate3d(4px, ${addSafeArea(-40)}, 0) scale(1)` }
+    { offset: 0, opacity: 0, transform: `translate3d(${START_ICON_TRANSLATE}, ${addSafeArea(-35)}, 0) scale(0.6)` },
+    { offset: 1, opacity: 1, transform: `translate3d(${START_ICON_TRANSLATE}, ${addSafeArea(-40)}, 0) scale(1)` }
   ];
   const BACKWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` },
-    { offset: 0.2, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` },
-    { offset: 1, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` }
+    { offset: 0, opacity: 1, transform: `translate(${START_ICON_TRANSLATE}, ${addSafeArea(-40)}) scale(1)` },
+    { offset: 0.2, opacity: 0, transform: `translate(${START_ICON_TRANSLATE}, ${addSafeArea(-35)}) scale(0.6)` },
+    { offset: 1, opacity: 0, transform: `translate(${START_ICON_TRANSLATE}, ${addSafeArea(-35)}) scale(0.6)` }
   ];
   const ICON_KEYFRAMES = (backDirection) ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
 
@@ -106,7 +112,7 @@ const animateBackButton = (rootAnimation: IonicAnimation, backDirection: boolean
 
   enteringBackButtonTextAnimation
     .beforeStyles({
-      'transform-origin': 'left center'
+      'transform-origin': `${TEXT_TRANSFORM_ORIGIN_X} center`
     })
     .beforeAddWrite(() => {
       backButtonEl.style.setProperty('display', 'none');
@@ -119,7 +125,7 @@ const animateBackButton = (rootAnimation: IonicAnimation, backDirection: boolean
 
   enteringBackButtonIconAnimation
     .beforeStyles({
-      'transform-origin': 'right center'
+      'transform-origin': `${ICON_TRANSFORM_ORIGIN_X} center`
     })
     .keyframes(ICON_KEYFRAMES);
 
@@ -127,16 +133,19 @@ const animateBackButton = (rootAnimation: IonicAnimation, backDirection: boolean
 };
 
 const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
-  const TRANSLATE = (rtl) ? '-18px' : '18px';
+  const START_TRANSLATE = (rtl) ? '-18px' : '18px';
+  const END_TRANSLATE = (rtl) ? '0px' : '0px';
+  const TRANSFORM_ORIGIN_X = (rtl) ? 'right' : 'left';
+
   const BACKWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate(${TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
-    { offset: 0.1, opacity: 0 },
-    { offset: 1, opacity: 1, transform: `translate(0, ${addSafeArea(49)}) scale(1)` }
+    { offset: 0, opacity: 1, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
+    { offset: 0.1, opacity: 1 },
+    { offset: 1, opacity: 1, transform: `translate(${END_TRANSLATE}, ${addSafeArea(49)}) scale(1)` }
   ];
   const FORWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0.99, transform: `translate(0, ${addSafeArea(49)}) scale(1)` },
-    { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate(${TRANSLATE}, ${addSafeArea(0)}) scale(0.5)` }
+    { offset: 0, opacity: 0.99, transform: `translate(${END_TRANSLATE}, ${addSafeArea(49)}) scale(1)` },
+    { offset: 0.6, opacity: 1 },
+    { offset: 1, opacity: 1, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.5)` }
   ];
   const KEYFRAMES = (backDirection) ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
 
@@ -151,7 +160,7 @@ const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDire
 
   clonedLargeTitleAnimation
     .beforeStyles({
-      'transform-origin': 'left center',
+      'transform-origin': `${TRANSFORM_ORIGIN_X} center`,
       'height': '46px',
       'display': '',
       'position': 'relative'
