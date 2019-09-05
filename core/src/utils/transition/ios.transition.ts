@@ -63,7 +63,7 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
   const START_TEXT_TRANSLATE = (rtl) ? '7px' : '-7px';
   const END_TEXT_TRANSLATE = (rtl) ? '-4px' : '4px';
 
-  const START_ICON_TRANSLATE = (rtl) ? '-4px' : '4px';
+  const ICON_TRANSLATE = (rtl) ? '-4px' : '4px';
 
   const TEXT_TRANSFORM_ORIGIN_X = (rtl) ? 'right' : 'left';
   const ICON_TRANSFORM_ORIGIN_X = (rtl) ? 'left' : 'right';
@@ -80,13 +80,13 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
   const TEXT_KEYFRAMES = (backDirection) ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
 
   const FORWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate3d(${START_ICON_TRANSLATE}, ${addSafeArea(-35)}, 0) scale(0.6)` },
-    { offset: 1, opacity: 1, transform: `translate3d(${START_ICON_TRANSLATE}, ${addSafeArea(-40)}, 0) scale(1)` }
+    { offset: 0, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${addSafeArea(-35)}, 0) scale(0.6)` },
+    { offset: 1, opacity: 1, transform: `translate3d(${ICON_TRANSLATE}, ${addSafeArea(-40)}, 0) scale(1)` }
   ];
   const BACKWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate(${START_ICON_TRANSLATE}, ${addSafeArea(-40)}) scale(1)` },
-    { offset: 0.2, opacity: 0, transform: `translate(${START_ICON_TRANSLATE}, ${addSafeArea(-35)}) scale(0.6)` },
-    { offset: 1, opacity: 0, transform: `translate(${START_ICON_TRANSLATE}, ${addSafeArea(-35)}) scale(0.6)` }
+    { offset: 0, opacity: 1, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(-40)}) scale(1)` },
+    { offset: 0.2, opacity: 0, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(-35)}) scale(0.6)` },
+    { offset: 1, opacity: 0, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(-35)}) scale(0.6)` }
   ];
   const ICON_KEYFRAMES = (backDirection) ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
 
@@ -134,16 +134,15 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
 
 const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
   const START_TRANSLATE = (rtl) ? '-18px' : '18px';
-  const END_TRANSLATE = (rtl) ? '0px' : '0px';
   const TRANSFORM_ORIGIN_X = (rtl) ? 'right' : 'left';
 
   const BACKWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
     { offset: 0.1, opacity: 0 },
-    { offset: 1, opacity: 1, transform: `translate(${END_TRANSLATE}, ${addSafeArea(49)}) scale(1)` }
+    { offset: 1, opacity: 1, transform: `translate(0, ${addSafeArea(49)}) scale(1)` }
   ];
   const FORWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0.99, transform: `translate(${END_TRANSLATE}, ${addSafeArea(49)}) scale(1)` },
+    { offset: 0, opacity: 0.99, transform: `translate(0, ${addSafeArea(49)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
     { offset: 1, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.5)` }
   ];

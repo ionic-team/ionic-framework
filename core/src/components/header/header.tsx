@@ -25,6 +25,8 @@ export class Header implements ComponentInterface {
   /**
    * If `true`, the header will collapse on scroll of the content.
    * Only applies in `ios` mode.
+   *
+   * Typically used for [Collapsable Large Titles](https://ionicframework.com/docs/api/title#collapsable-large-titles)
    */
   @Prop() collapse = false;
 

@@ -391,7 +391,7 @@ export namespace Components {
   }
   interface IonButtons {
     /**
-    * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`
+    * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`  Typically used for [Collapsable Large Titles](https://ionicframework.com/docs/api/title#collapsable-large-titles)
     */
     'collapse': boolean;
   }
@@ -871,7 +871,7 @@ export namespace Components {
   }
   interface IonHeader {
     /**
-    * If `true`, the header will collapse on scroll of the content. Only applies in `ios` mode.
+    * If `true`, the header will collapse on scroll of the content. Only applies in `ios` mode.  Typically used for [Collapsable Large Titles](https://ionicframework.com/docs/api/title#collapsable-large-titles)
     */
     'collapse': boolean;
     /**
@@ -3898,7 +3898,7 @@ declare namespace LocalJSX {
   }
   interface IonButtons extends JSXBase.HTMLAttributes<HTMLIonButtonsElement> {
     /**
-    * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`
+    * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`  Typically used for [Collapsable Large Titles](https://ionicframework.com/docs/api/title#collapsable-large-titles)
     */
     'collapse'?: boolean;
   }
@@ -4390,7 +4390,7 @@ declare namespace LocalJSX {
   }
   interface IonHeader extends JSXBase.HTMLAttributes<HTMLIonHeaderElement> {
     /**
-    * If `true`, the header will collapse on scroll of the content. Only applies in `ios` mode.
+    * If `true`, the header will collapse on scroll of the content. Only applies in `ios` mode.  Typically used for [Collapsable Large Titles](https://ionicframework.com/docs/api/title#collapsable-large-titles)
     */
     'collapse'?: boolean;
     /**

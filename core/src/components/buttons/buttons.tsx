@@ -21,6 +21,8 @@ export class Buttons implements ComponentInterface {
    *
    * Only applies in `ios` mode with `collapse` set to
    * `true` on `ion-header`
+   *
+   * Typically used for [Collapsable Large Titles](https://ionicframework.com/docs/api/title#collapsable-large-titles)
    */
   @Prop() collapse = false;
 
