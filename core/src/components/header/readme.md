@@ -47,7 +47,7 @@ export const HeaderExample: React.FC = () => (
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton defaultHref="/"></IonBackButton>
+          <IonBackButton defaultHref="/" />
         </IonButtons>
         <IonTitle>My Navigation Bar</IonTitle>
       </IonToolbar>
