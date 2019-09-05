@@ -85,6 +85,9 @@
 
   font-family: $font-family-base;
 
+  align-items: center;
+  justify-content: space-between;
+
   text-align: initial;
   text-decoration: none;
   box-sizing: border-box;
@@ -178,8 +181,8 @@
   display: flex;
   position: relative;
 
-  align-items: center;
-  justify-content: space-between;
+  align-items: inherit;
+  justify-content: inherit;
 
   width: 100%;
   min-height: var(--min-height);
@@ -299,8 +302,8 @@ button, a {
   box-sizing: border-box;
 }
 
-:host(.item-label-stacked) .item-native,
-:host(.item-label-floating) .item-native {
+:host(.item-label-stacked),
+:host(.item-label-floating) {
   align-items: start;
 }
 
