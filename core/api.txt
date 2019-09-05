@@ -1205,7 +1205,7 @@ ion-thumbnail,css-prop,--size
 
 ion-title,shadow
 ion-title,prop,color,string | undefined,undefined,false,false
-ion-title,prop,size,"large" | undefined,undefined,false,false
+ion-title,prop,size,"large" | "small" | undefined,undefined,false,false
 ion-title,css-prop,--color
 
 ion-toast,shadow
