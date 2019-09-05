@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, SearchbarChangeEventDetail } from '../../interface';
+import { Color, SearchbarChangeEventDetail, StyleEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses } from '../../utils/theme';
@@ -158,6 +158,12 @@ export class Searchbar implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<void>;
 
+  /**
+   * Emitted when the styles change.
+   * @internal
+   */
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
   @Watch('value')
   protected valueChanged() {
     const inputEl = this.nativeInput;
@@ -176,6 +182,10 @@ export class Searchbar implements ComponentInterface {
     });
   }
 
+  connectedCallback() {
+    this.emitStyle();
+  }
+
   componentDidLoad() {
     if (this.showCancelButton === 'false' || this.showCancelButton === false) {
       console.warn('The boolean values of showCancelButton are deprecated. Please use "never" instead of "false".');
@@ -191,6 +201,12 @@ export class Searchbar implements ComponentInterface {
     setTimeout(() => {
       this.noAnimate = false;
     }, 300);
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'searchbar': true
+    });
   }
 
   /**

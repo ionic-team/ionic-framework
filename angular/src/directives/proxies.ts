@@ -710,12 +710,11 @@ export declare interface IonSegment extends Components.IonSegment {}
 @Component({ selector: 'ion-segment', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'disabled', 'mode', 'scrollable', 'value'] })
 export class IonSegment {
   ionChange!: EventEmitter<CustomEvent>;
-  ionStyle!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionStyle']);
+    proxyOutputs(this, this.el, ['ionChange']);
   }
 }
 proxyInputs(IonSegment, ['color', 'disabled', 'mode', 'scrollable', 'value']);
