@@ -17,3 +17,91 @@ export const ToolbarExample: React.FC = () => (
   </IonToolbar>
 );
 ```
+
+### Collapsible Large Titles
+
+Ionic provides a way to create the collapsible titles that exist on stock iOS apps. Getting this setup requires configuring your `IonTitle`, `IonHeader`, and (optionally) `IonButtons` elements.
+
+```tsx
+import React from 'react';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonSearchbar
+} from '@ionic/react';
+
+export const LargeTitleExample: React.FC = () => (
+  <>
+    <IonHeader>
+      <IonToolbar>    
+        <IonTitle>Settings</IonTitle>               
+      </IonToolbar>
+    </IonHeader>
+    
+    <IonContent>
+      <IonHeader collapse="true">              
+        <IonToolbar>      
+          <IonTitle size="large">Settings</IonTitle>
+        </IonToolbar>
+        <IonToolbar>
+          <IonSearchbar></IonSearchbar>
+        </IonToolbar>
+      </IonHeader>
+      
+      ...
+      
+    </IonContent>
+  </>
+);
+```
+
+In the example above, notice there are two `IonHeader` elements. The first `IonHeader` represents the "collapsed" state of your collapsible header, and the second `IonHeader` represents the "expanded" state of your collapsible header. Notice that the second `IonHeader` must have `collapse="true"` and must exist within `IonContent`. Additionally, in order to get the large title styling, `IonTitle` must have `size="large"`.
+
+```tsx
+import React from 'react';
+import {
+  IonButton,
+  IonButtons,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonSearchbar
+} from '@ionic/react';
+
+export const LargeTitleExample: React.FC = () => (
+  <>
+    <IonHeader>
+      <IonToolbar>   
+        <IonButtons collapse="true">
+          <IonButton>Click Me</IonButton>
+        </IonButtons> 
+        <IonTitle>Settings</IonTitle>               
+      </IonToolbar>
+    </IonHeader>
+    
+    <IonContent>
+      <IonHeader collapse="true">              
+        <IonToolbar>      
+          <IonButtons collapse="true">
+            <IonButton>Click Me</IonButton>
+          </IonButtons>
+          <IonTitle size="large">Settings</IonTitle>
+        </IonToolbar>
+        <IonToolbar>
+          <IonSearchbar></IonSearchbar>
+        </IonToolbar>
+      </IonHeader>
+      
+      ...
+      
+    </IonContent>
+  </>
+);
+```
+
+In this example, notice that we have added two sets of `IonButtons` both with `collapse="true"`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `IonTitle` element.
+
+`IonButtons` elements that do not have `collapse` set will always be visible, regardless of collapsed state.
