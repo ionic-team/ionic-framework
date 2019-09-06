@@ -42,7 +42,8 @@ export const createAnimation = () => {
   const _afterAddReadFunctions: any[] = [];
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
-  const supportsWebAnimations = (typeof (Element as any) === 'function') && (typeof (Element as any).prototype!.animate === 'function');
+  const supportsAnimationEffect = (typeof (AnimationEffect as any) === 'function' || typeof (window as any).AnimationEffect === 'function');
+  const supportsWebAnimations = (typeof (Element as any) === 'function') && (typeof (Element as any).prototype!.animate === 'function') && supportsAnimationEffect;
   const ANIMATION_END_FALLBACK_PADDING_MS = 100;
 
   /**
