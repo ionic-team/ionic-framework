@@ -10,6 +10,9 @@ export interface ViewStack {
   switchComponent?: React.ReactElement;
 }
 
+/**
+ * The holistic view of all the Routes configured for an application inside of an IonRouterOutlet.
+ */
 export class ViewStacks {
   private viewStacks: { [key: string]: ViewStack } = {};
   activeIonPageId?: string;

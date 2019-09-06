@@ -8,7 +8,6 @@ import { NavManager } from './NavManager';
 import { RouteManagerContext, RouteManagerContextState } from './RouteManagerContext';
 import { ViewItem } from './ViewItem';
 import { ViewStacks, ViewStack } from './ViewStacks';
-// import { IonRoute } from './IonRoute';
 
 interface RouteManagerProps extends RouteComponentProps { }
 
@@ -183,8 +182,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
         route: route,
         mount: true,
         show: !!match,
-        isIonRoute: false //initial set to false
-        // isIonRoute: route.type === IonRoute
+        isIonRoute: false
       };
       if (!!match && view.isIonRoute) {
         activeId = viewId;
@@ -264,9 +262,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
     });
 
     if (leavingEl && (enteringEl !== leavingEl)) {
-      /**
-       *  add hidden attributes
-      */
+      /** add hidden attributes */
       leavingEl.classList.add('ion-page-hidden');
       leavingEl.setAttribute('aria-hidden', 'true');
     }

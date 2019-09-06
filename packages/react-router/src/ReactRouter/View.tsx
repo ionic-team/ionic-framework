@@ -2,38 +2,21 @@ import React from 'react';
 import { IonLifeCycleContext, NavContext } from '@ionic/react';
 import { ViewItem } from './ViewItem';
 import { Route, Redirect } from 'react-router-dom';
-// import { Route } from 'react-router-dom';
 
-type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-
-interface InternalProps extends React.HTMLAttributes<HTMLElement> {
+interface ViewProps extends React.HTMLAttributes<HTMLElement> {
   onViewSync: (page: HTMLElement, viewId: string) => void;
   onHideView: (viewId: string) => void;
   view: ViewItem;
-  forwardedRef?: React.RefObject<HTMLElement>,
 };
 
-type ExternalProps = Props & {
-  onHideView: (viewId: string) => void;
-  onViewSync: (page: HTMLElement, viewId: string) => void;
-  view: ViewItem;
-  ref?: React.RefObject<HTMLElement>
-};
+interface StackViewState { }
 
-interface StackViewState {
-  ref: any;
-}
-
-class ViewInternal extends React.Component<InternalProps, StackViewState> {
+/**
+ * The View component helps manage the IonPage's lifecycle and registration
+ */
+export class View extends React.Component<ViewProps, StackViewState> {
   context!: React.ContextType<typeof IonLifeCycleContext>;
   ionPage?: HTMLElement;
-
-  constructor(props: InternalProps) {
-    super(props);
-    this.state = {
-      ref: null
-    }
-  }
 
   componentDidMount() {
     /**
@@ -108,10 +91,3 @@ class ViewInternal extends React.Component<InternalProps, StackViewState> {
     return IonLifeCycleContext;
   }
 }
-
-function forwardRef(props: InternalProps, ref: React.RefObject<HTMLElement>) {
-  return <ViewInternal forwardedRef={ref} {...props} />;
-}
-forwardRef.displayName = 'View';
-
-export const View = /*@__PURE__*/React.forwardRef<HTMLElement, ExternalProps>(forwardRef as any);

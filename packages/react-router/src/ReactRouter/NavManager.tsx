@@ -30,9 +30,9 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
       getLocation: this.getLocation.bind(this),
       navigate: this.navigate.bind(this),
       getStackManager: this.getStackManager.bind(this),
-      getPageManager: () => this.getPageManager.bind(this),
+      getPageManager: this.getPageManager.bind(this),
       currentPath: this.props.location.pathname,
-      registerIonPage: this.registerIonPage.bind(this)
+      registerIonPage: () => {} //overridden in View for each IonPage
     }
 
     this.listenUnregisterCallback = this.props.history.listen((location: HistoryLocation) => {
@@ -94,10 +94,6 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
 
   getStackManager() {
     return StackManager;
-  }
-
-  registerIonPage(page: HTMLElement) {
-    console.log(page);
   }
 
   render() {

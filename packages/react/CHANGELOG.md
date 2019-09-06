@@ -35,6 +35,12 @@ In RC2 and greater, the fragment should be updated to an IonPage component:
 </IonPage>
 ```
 
+### ViewManager
+
+The `<ViewManager />` component is no longer needed and can be removed. The views inside of an `<IonRouterOutlet>` are now managed by an internal stack manager and don't need the explicit ViewManager anymore.
+
+`ViewManager` is now a noop component and shows a warning message. It will be removed in the final release of @ionic/react.
+
 # [4.8.0-rc1]
 
 ## Features

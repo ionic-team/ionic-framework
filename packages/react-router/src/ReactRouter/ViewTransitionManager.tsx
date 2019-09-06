@@ -11,6 +11,9 @@ interface ViewTransitionManagerState {
   show: boolean;
 }
 
+/**
+ * Manages the View's DOM lifetime by keeping it around long enough to complete page transitions before removing it.
+ */
 export class ViewTransitionManager extends React.Component<ViewTransitionManagerProps, ViewTransitionManagerState> {
   ionLifeCycleContext = new DefaultIonLifeCycleContext();
   _isMounted = false;
