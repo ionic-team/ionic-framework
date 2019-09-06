@@ -57,7 +57,7 @@
         cursor.style.transform = `translateX(${ev.currentX - 10}px)`;
       },
       onEnd: (ev) => {
-        rootAnimation.progressEnd(true, 0);
+        rootAnimation.progressEnd('end', 0);
         rootAnimation.pause();
         cursor.style.transform = `translateX(${0}px)`;
       }

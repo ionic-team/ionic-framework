@@ -13,7 +13,7 @@ export interface Animation {
 
   progressStart(forceLinearEasing: boolean): Animation;
   progressStep(step: number): Animation;
-  progressEnd(shouldComplete: boolean, step: number, dur: number | undefined): Animation;
+  progressEnd(playTo: 'start' | 'end' | undefined, step: number, dur: number | undefined): Animation;
 
   from(property: string, value: any): Animation;
   to(property: string, value: any): Animation;
