@@ -437,7 +437,7 @@ export class Menu implements ComponentInterface, MenuI {
       .onFinish(() => this.afterAnimation(shouldOpen), {
         oneTimeCallback: true
       })
-      .progressEnd(shouldComplete, newStepValue, 300);
+      .progressEnd((shouldComplete) ? 'end' : 'start', newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {

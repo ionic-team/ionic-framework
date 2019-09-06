@@ -799,11 +799,11 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const progressEnd = (shouldComplete: boolean, step: number, dur: number | undefined) => {
+  const progressEnd = (playTo: 'start' | 'end' | undefined, step: number, dur: number | undefined) => {
     shouldForceLinearEasing = false;
 
     childAnimations.forEach(animation => {
-      animation.progressEnd(shouldComplete, step, dur);
+      animation.progressEnd(playTo, step, dur);
     });
 
     if (dur !== undefined) {
@@ -812,9 +812,9 @@ export const createAnimation = () => {
 
     finished = false;
 
-    willComplete = shouldComplete;
+    willComplete = playTo === 'end';
 
-    if (!shouldComplete) {
+    if (playTo === 'start') {
       forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
 
       if (supportsWebAnimations) {
@@ -824,24 +824,26 @@ export const createAnimation = () => {
         forceDelayValue = ((1 - step) * getDuration()!) * -1;
         update(false, false);
       }
-    } else {
+    } else if (playTo === 'end') {
       if (!supportsWebAnimations) {
         forceDelayValue = (step * getDuration()!) * -1;
         update(false, false);
       }
     }
 
-    onFinish(() => {
-      willComplete = true;
-      forceDurationValue = undefined;
-      forceDirectionValue = undefined;
-      forceDelayValue = undefined;
-    }, {
-      oneTimeCallback: true
-    });
+    if (playTo !== undefined) {
+      onFinish(() => {
+        willComplete = true;
+        forceDurationValue = undefined;
+        forceDirectionValue = undefined;
+        forceDelayValue = undefined;
+      }, {
+        oneTimeCallback: true
+      });
 
-    if (!parentAnimation) {
-      play();
+      if (!parentAnimation) {
+        play();
+      }
     }
 
     return ani;

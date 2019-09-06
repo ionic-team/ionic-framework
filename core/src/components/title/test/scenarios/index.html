@@ -79,7 +79,7 @@
     const titles = document.querySelectorAll('ion-title[size]');
     function toggle() {
       for (title of titles) {
-        const size = title.size === 'large' ? 'standard' : 'large';
+        const size = title.size === 'large' ? undefined : 'large';
         title.size = size;
       }
     }
