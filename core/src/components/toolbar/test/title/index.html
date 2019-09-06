@@ -30,27 +30,9 @@
     .create ion-icon {
       transform: scale(0.9);
     }
-    
-/*
-    ion-toolbar {
-      --background: red;
-      --border-color: #dfe1e0;
-    }
-    
-    .main-content {
-      --background: #f1f2f6;
-    }
-*/
-
   </style>
 </head>
-<!--<ion-button slot="icon-only" class="more">
-            <ion-icon name="ios-more"></ion-icon>
-          </ion-button>
-          
-          <ion-button slot="icon-only" class="create">
-            <ion-icon name="ios-create"></ion-icon>
-          </ion-button>-->
+
 <body>
   <ion-app>
     <ion-nav root="page-one"></ion-nav>
@@ -71,7 +53,7 @@
   </style>
 
   <script>
-    class PageTwo extends HTMLElement {
+    class PageOne extends HTMLElement {
       generateList() {
         let html = '';
         for (let i = 0; i < 100; i++) {
@@ -122,32 +104,7 @@
         `;
       }
     }
-    
-    class PageOne extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
-          <ion-header>
-            <ion-toolbar>
-              <ion-buttons slot="start">
-                <ion-back-button text="Settings"></ion-back-button>
-              </ion-buttons>
-              <ion-title>Page main</ion-title>
-            </ion-toolbar>
-         
-          </ion-header>
-          <ion-content class="ion-padding">
-            <h1>Page One</h1>
-            
-            <ion-nav-link component="page-two">
-              <ion-item button>
-                <ion-label>Go to Page Two</ion-label>
-              </ion-item>
-            </ion-nav-link>
-          </ion-content>
-        `;
-      }
-    }
-    
+        
     class PageThree extends HTMLElement {
       generateList() {
         let html = '';
@@ -196,7 +153,6 @@
       }
     }
     customElements.define('page-one', PageOne);
-    customElements.define('page-two', PageTwo);
     customElements.define('page-three', PageThree);
   </script>
 </body>

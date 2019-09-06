@@ -34,4 +34,13 @@
     <ion-menu-button autoHide="false"></ion-menu-button>
   </ion-buttons>
 </ion-toolbar>
+
+<ion-toolbar>
+  <ion-buttons collapse="true">
+    <ion-button>
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Collapsible Buttons</ion-title>
+</ion-toolbar>
 ```
