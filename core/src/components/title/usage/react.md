@@ -1,8 +1,8 @@
 ```tsx
 import React from 'react';
 import {
-  IonToolbar,
-  IonTitle
+  IonTitle,
+  IonToolbar
 } from '@ionic/react';
 
 export const ToolbarExample: React.FC = () => (
@@ -25,11 +25,11 @@ Ionic provides a way to create the collapsible titles that exist on stock iOS ap
 ```tsx
 import React from 'react';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
-  IonSearchbar
+  IonHeader,
+  IonSearchbar,
+  IonTitle,
+  IonToolbar
 } from '@ionic/react';
 
 export const LargeTitleExample: React.FC = () => (
@@ -64,11 +64,11 @@ import React from 'react';
 import {
   IonButton,
   IonButtons,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
-  IonSearchbar
+  IonHeader,
+  IonSearchbar,
+  IonTitle,
+  IonToolbar  
 } from '@ionic/react';
 
 export const LargeTitleExample: React.FC = () => (
