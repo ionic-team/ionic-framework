@@ -13,7 +13,7 @@ export interface Animation {
 
   progressStart(forceLinearEasing: boolean): Animation;
   progressStep(step: number): Animation;
-  progressEnd(playTo: 'start' | 'end' | undefined, step: number, dur: number | undefined): Animation;
+  progressEnd(playTo: AnimationPlayTo, step: number, dur: number | undefined): Animation;
 
   from(property: string, value: any): Animation;
   to(property: string, value: any): Animation;
@@ -67,5 +67,6 @@ export interface AnimationOnFinishOptions {
   oneTimeCallback: boolean;
 }
 
+export type AnimationPlayTo = 'start' | 'end' | undefined;
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationFill = 'auto' | 'none' | 'forwards' | 'backwards' | 'both';

@@ -1,6 +1,6 @@
 // TODO: Add more tests. until then, be sure to manually test menu and swipe to go back/routing transitions
 
-import { Animation, AnimationDirection, AnimationFill, AnimationOnFinishCallback, AnimationOnFinishOptions } from './animation-interface';
+import { Animation, AnimationDirection, AnimationFill, AnimationOnFinishCallback, AnimationOnFinishOptions, AnimationPlayTo } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
 export const createAnimation = () => {
@@ -799,7 +799,7 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const progressEnd = (playTo: 'start' | 'end' | undefined, step: number, dur: number | undefined) => {
+  const progressEnd = (playTo: AnimationPlayTo, step: number, dur: number | undefined) => {
     shouldForceLinearEasing = false;
 
     childAnimations.forEach(animation => {
