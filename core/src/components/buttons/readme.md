@@ -62,7 +62,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
       <ion-icon slot="icon-only" name="star"></ion-icon>
     </ion-button>
   </ion-buttons>
-  <ion-title>Collapsable Buttons</ion-title>
+  <ion-title>Collapsible Buttons</ion-title>
 </ion-toolbar>
 ```
 
@@ -116,7 +116,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
       <ion-icon slot="icon-only" name="star"></ion-icon>
     </ion-button>
   </ion-buttons>
-  <ion-title>Collapsable Buttons</ion-title>
+  <ion-title>Collapsible Buttons</ion-title>
 </ion-toolbar>
 ```
 
@@ -180,7 +180,7 @@ export const ButtonsExample: React.FC = () => (
           <IonIcon slot="icon-only" name="star" />
         </IonButton>
       </IonButtons>
-      <IonTitle>Collapsable Buttons</IonTitle>
+      <IonTitle>Collapsible Buttons</IonTitle>
     </IonToolbar>
   </IonContent>
 );
@@ -233,7 +233,7 @@ export const ButtonsExample: React.FC = () => (
         <ion-icon slot="icon-only" name="star"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Collapsable Buttons</ion-title>
+    <ion-title>Collapsible Buttons</ion-title>
   </ion-toolbar>
 </template>
 ```
@@ -242,9 +242,9 @@ export const ButtonsExample: React.FC = () => (
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                      | Type      | Default |
-| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ------- |
-| `collapse` | `collapse` | If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`  Typically used for [Collapsable Large Titles](https://ionicframework.com/docs/api/title#collapsable-large-titles) | `boolean` | `false` |
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                       | Type      | Default |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| `collapse` | `collapse` | If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles) | `boolean` | `false` |
 
 
 ----------------------------------------------

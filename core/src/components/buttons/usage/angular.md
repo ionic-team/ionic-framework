@@ -41,6 +41,6 @@
       <ion-icon slot="icon-only" name="star"></ion-icon>
     </ion-button>
   </ion-buttons>
-  <ion-title>Collapsable Buttons</ion-title>
+  <ion-title>Collapsible Buttons</ion-title>
 </ion-toolbar>
 ```

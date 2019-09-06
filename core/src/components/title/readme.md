@@ -2,9 +2,9 @@
 
 `ion-title` is a component that sets the title of the `Toolbar`.
 
-### Collapsable Large Titles
+### Collapsible Large Titles
 
-Ionic provides a way to create the collapsable titles that exist on stock iOS apps. Getting this setup requires configuring your `ion-title`, `ion-header`, and (optionally) `ion-buttons` elements.
+Ionic provides a way to create the collapsible titles that exist on stock iOS apps. Getting this setup requires configuring your `ion-title`, `ion-header`, and (optionally) `ion-buttons` elements.
 
 ```html
 <ion-header>
@@ -28,7 +28,7 @@ Ionic provides a way to create the collapsable titles that exist on stock iOS ap
 </ion-content>
 ```
 
-In the example above, notice there are two `ion-header` elements. The first `ion-header` represents the "collapsed" state of your collapsable header, and the second `ion-header` represents the "expanded" state of your collapsable header. Notice that the second `ion-header` must have `collapse="true"` and must exist within `ion-content`. Additionally, in order to get the large title styling, `ion-title` must have `size="large"`.
+In the example above, notice there are two `ion-header` elements. The first `ion-header` represents the "collapsed" state of your collapsible header, and the second `ion-header` represents the "expanded" state of your collapsible header. Notice that the second `ion-header` must have `collapse="true"` and must exist within `ion-content`. Additionally, in order to get the large title styling, `ion-title` must have `size="large"`.
 
 ```html
 <ion-header>

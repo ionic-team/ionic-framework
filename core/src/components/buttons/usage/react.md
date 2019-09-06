@@ -55,7 +55,7 @@ export const ButtonsExample: React.FC = () => (
           <IonIcon slot="icon-only" name="star" />
         </IonButton>
       </IonButtons>
-      <IonTitle>Collapsable Buttons</IonTitle>
+      <IonTitle>Collapsible Buttons</IonTitle>
     </IonToolbar>
   </IonContent>
 );
