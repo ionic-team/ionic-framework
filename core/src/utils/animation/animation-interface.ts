@@ -13,14 +13,14 @@ export interface Animation {
 
   progressStart(forceLinearEasing: boolean): Animation;
   progressStep(step: number): Animation;
-  progressEnd(playTo: 'start' | 'end' | undefined, step: number, dur: number | undefined): Animation;
+  progressEnd(playTo: AnimationPlayTo | undefined, step: number, dur: number | undefined): Animation;
 
   from(property: string, value: any): Animation;
   to(property: string, value: any): Animation;
   fromTo(property: string, fromValue: any, toValue: any): Animation;
   keyframes(keyframes: any[]): Animation;
 
-  addAnimation(animationToADd: Animation | Animation[] | undefined | null): Animation;
+  addAnimation(animationToAdd: Animation | Animation[] | undefined | null): Animation;
   addElement(el: Element | Element[] | Node | Node[] | NodeList | undefined | null): Animation;
   iterations(iterations: number): Animation;
   fill(fill: AnimationFill | undefined): Animation;
@@ -67,5 +67,6 @@ export interface AnimationOnFinishOptions {
   oneTimeCallback: boolean;
 }
 
+export type AnimationPlayTo = 'start' | 'end';
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationFill = 'auto' | 'none' | 'forwards' | 'backwards' | 'both';
