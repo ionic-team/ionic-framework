@@ -5,8 +5,6 @@ test('segment: custom', async () => {
     url: '/src/components/segment/test/custom?ionic:_testing=true'
   });
 
-  await page.waitFor(250);
-
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });

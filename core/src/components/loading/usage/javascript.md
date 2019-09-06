@@ -1,12 +1,10 @@
 ```javascript
 async function presentLoading() {
-  const loadingController = document.querySelector('ion-loading-controller');
+  const loading = document.createElement('ion-loading');
+  loading.message: 'Hellooo',
+  loading.duration: 2000;
 
-  const loading = await loadingController.create({
-    message: 'Hellooo',
-    duration: 2000
-  });
-
+  document.body.appendChild(loading);
   await loading.present();
 
   const { role, data } = await loading.onDidDismiss();
@@ -14,16 +12,15 @@ async function presentLoading() {
   console.log('Loading dismissed!');
 }
 
-async function presentLoadingWithOptions() {
-  const loadingController = document.querySelector('ion-loading-controller');
+function presentLoadingWithOptions() {
+  const loading = document.createElement('ion-loading');
+  loading.spinner = null;
+  loading.duration = 5000;
+  loading.message = 'Please wait...';
+  loading.translucent = true;
+  loading.cssClass = 'custom-class custom-loading';
 
-  const loading = await loadingController.create({
-    spinner: null,
-    duration: 5000,
-    message: 'Please wait...',
-    translucent: true,
-    cssClass: 'custom-class custom-loading'
-  });
-  return await loading.present();
+  document.body.appendChild(loading);
+  return loading.present();
 }
 ```

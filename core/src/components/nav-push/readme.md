@@ -1,11 +1,14 @@
 # ion-nav-push
 
-`NavPush` is a component used to navigate to the specified component.
-It is the element form of `NavController.push()`
+Nav Push is a component used to navigate to the specified component.
+
+It is the component form of `NavController.push()`
 
 
 <!-- Auto Generated Below -->
 
+
+> **[DEPRECATED]** Use `<ion-nav-link component="MyComponent">` instead.
 
 ## Properties
 

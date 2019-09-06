@@ -66,19 +66,15 @@ export const testActionSheetAlert = async (
   page: any,
   screenshotCompares: any
 ) => {
-  try {
-    const openAlertBtn = await page.find({ text: 'Open Alert' });
-    await openAlertBtn.click();
+  const openAlertBtn = await page.find({ text: 'Open Alert' });
+  await openAlertBtn.click();
 
-    const alert = await page.find('ion-alert');
-    await alert.waitForVisible();
-    await page.waitFor(250);
+  const alert = await page.find('ion-alert');
+  await alert.waitForVisible();
+  await page.waitFor(250);
 
-    screenshotCompares.push(await page.compareScreenshot(`alert open`));
+  screenshotCompares.push(await page.compareScreenshot(`alert open`));
 
-    const alertOkayBtn = await page.find({ contains: 'Okay' });
-    await alertOkayBtn.click();
-  } catch (err) {
-    throw err;
-  }
+  const alertOkayBtn = await page.find({ contains: 'Okay' });
+  await alertOkayBtn.click();
 };

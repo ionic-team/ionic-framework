@@ -10,17 +10,17 @@ test.skip('nav: routing', async () => {
 
   expect(await page.compareScreenshot()).toMatchScreenshot();
 
-  page.click('page-root ion-button.next');
+  await page.click('page-root ion-button.next');
   await page.waitFor(navChanged);
-  page.click('page-one ion-button.next');
+  await page.click('page-one ion-button.next');
   await page.waitFor(navChanged);
-  page.click('page-two ion-button.next');
+  await page.click('page-two ion-button.next');
   await page.waitFor(navChanged);
-  page.click('page-three ion-back-button');
+  await page.click('page-three ion-back-button');
   await page.waitFor(navChanged);
-  page.click('page-two ion-back-button');
+  await page.click('page-two ion-back-button');
   await page.waitFor(navChanged);
-  page.click('page-one ion-back-button');
+  await page.click('page-one ion-back-button');
   await page.waitFor(navChanged);
 
   expect(await page.compareScreenshot('stack traversal')).toMatchScreenshot();

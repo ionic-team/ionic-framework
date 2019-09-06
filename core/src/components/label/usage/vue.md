@@ -16,7 +16,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
       Multi-line text that should wrap when it is too long
       to fit on one line in the item.
     </ion-label>

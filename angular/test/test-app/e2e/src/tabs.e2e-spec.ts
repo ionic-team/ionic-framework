@@ -17,6 +17,15 @@ describe('tabs', () => {
       await testState(1, 'account');
     });
 
+    it('should navigate between tabs and ionChange events should be dispatched ', async () => {
+      let tab = await testTabTitle('Tab 1 - Page 1');
+      expect(await tab.$('.segment-changed').getText()).toEqual('false');
+
+      await element(by.css('#tab-button-contact')).click();
+      tab = await testTabTitle('Tab 2 - Page 1');
+      expect(await tab.$('.segment-changed').getText()).toEqual('false');
+    });
+
     it('should simulate stack + double tab click', async () => {
       let tab = await getSelectedTab() as ElementFinder;
       await tab.$('#goto-tab1-page2').click();

@@ -2,10 +2,11 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
+import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuI, Side } from '../../interface';
 import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
+import { menuController } from '../../utils/menu-controller';
 
 @Component({
   tag: 'ion-menu',
@@ -31,14 +32,11 @@ export class Menu implements ComponentInterface, MenuI {
   backdropEl?: HTMLElement;
   menuInnerEl?: HTMLElement;
   contentEl?: HTMLElement;
-  menuCtrl?: MenuControllerI;
 
   @Element() el!: HTMLIonMenuElement;
 
   @State() isPaneVisible = false;
   @State() isEndSide = false;
-
-  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
 
   /**
    * The content's id the menu should use.
@@ -138,7 +136,7 @@ export class Menu implements ComponentInterface, MenuI {
    */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
-  async componentWillLoad() {
+  async connectedCallback() {
     if (this.type === undefined) {
       this.type = config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
     }
@@ -148,7 +146,6 @@ export class Menu implements ComponentInterface, MenuI {
       return;
     }
 
-    const menuCtrl = this.menuCtrl = await this.lazyMenuCtrl.componentOnReady().then(p => p._getInstance());
     const el = this.el;
     const parent = el.parentNode as any;
     const content = this.contentId !== undefined
@@ -169,7 +166,7 @@ export class Menu implements ComponentInterface, MenuI {
     this.sideChanged();
 
     // register this menu with the app's menu controller
-    menuCtrl!._register(this);
+    menuController._register(this);
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: document,
@@ -185,13 +182,14 @@ export class Menu implements ComponentInterface, MenuI {
     this.updateState();
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     this.ionMenuChange.emit({ disabled: this.disabled, open: this._isOpen });
+    this.updateState();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.blocker.destroy();
-    this.menuCtrl!._unregister(this);
+    menuController._unregister(this);
     if (this.animation) {
       this.animation.destroy();
     }
@@ -277,7 +275,7 @@ export class Menu implements ComponentInterface, MenuI {
    */
   @Method()
   setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
-    return this.menuCtrl!._setOpen(this, shouldOpen, animated);
+    return menuController._setOpen(this, shouldOpen, animated);
   }
 
   async _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
@@ -309,7 +307,10 @@ export class Menu implements ComponentInterface, MenuI {
       this.animation = undefined;
     }
     // Create new animation
-    this.animation = await this.menuCtrl!._createAnimation(this.type!, this);
+    this.animation = await menuController._createAnimation(this.type!, this);
+    if (!config.getBoolean('animated', true)) {
+      this.animation.duration(0);
+    }
     this.animation.fill('both');
   }
 
@@ -341,7 +342,7 @@ export class Menu implements ComponentInterface, MenuI {
     if (this._isOpen) {
       return true;
     // TODO error
-    } else if (this.menuCtrl!.getOpenSync()) {
+    } else if (menuController._getOpenSync()) {
       return false;
     }
     return checkEdgeSide(
@@ -378,9 +379,7 @@ export class Menu implements ComponentInterface, MenuI {
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
 
-    this.animation
-
-      .progressStep(stepValue);
+    this.animation.progressStep(stepValue);
   }
 
   private onEnd(detail: GestureDetail) {
@@ -490,6 +489,10 @@ export class Menu implements ComponentInterface, MenuI {
         this.backdropEl.classList.remove(SHOW_BACKDROP);
       }
 
+      if (this.animation) {
+        this.animation.stop();
+      }
+
       // emit close event
       this.ionDidClose.emit();
     }
@@ -507,8 +510,8 @@ export class Menu implements ComponentInterface, MenuI {
       this.forceClosing();
     }
 
-    if (!this.disabled && this.menuCtrl) {
-      this.menuCtrl._setActiveMenu(this);
+    if (!this.disabled) {
+      menuController._setActiveMenu(this);
     }
     assert(!this.isAnimating, 'can not be animating');
   }
