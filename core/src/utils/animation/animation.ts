@@ -799,7 +799,7 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const progressEnd = (playTo: AnimationPlayTo, step: number, dur: number | undefined) => {
+  const progressEnd = (playTo: AnimationPlayTo | undefined, step: number, dur: number | undefined) => {
     shouldForceLinearEasing = false;
 
     childAnimations.forEach(animation => {
