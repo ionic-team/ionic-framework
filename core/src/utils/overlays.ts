@@ -28,21 +28,25 @@ export const pickerController = /*@__PURE__*/createController<PickerOptions, HTM
 export const popoverController = /*@__PURE__*/createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
 export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
+export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
+  const doc = document;
+  connectListeners(doc);
+  const overlayIndex = lastId++;
+  el.overlayIndex = overlayIndex;
+  if (!el.hasAttribute('id')) {
+    el.id = `ion-overlay-${overlayIndex}`;
+  }
+};
+
 export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined): Promise<T> => {
   return customElements.whenDefined(tagName).then(() => {
     const doc = document;
     const element = doc.createElement(tagName) as HTMLIonOverlayElement;
-    connectListeners(doc);
+    element.classList.add('overlay-hidden');
 
     // convert the passed in overlay options into props
     // that get passed down into the new overlay
     Object.assign(element, opts);
-    element.classList.add('overlay-hidden');
-    const overlayIndex = lastId++;
-    element.overlayIndex = overlayIndex;
-    if (!element.hasAttribute('id')) {
-      element.id = `ion-overlay-${overlayIndex}`;
-    }
 
     // append the overlay element to the document body
     getAppRoot(doc).appendChild(element);
@@ -95,13 +99,12 @@ export const dismissOverlay = (doc: Document, data: any, role: string | undefine
   return overlay.dismiss(data, role);
 };
 
-export const getOverlays = (doc: Document, overlayTag?: string): HTMLIonOverlayElement[] => {
-  const overlays = (Array.from(getAppRoot(doc).children) as HTMLIonOverlayElement[]).filter(c => c.overlayIndex > 0);
-  if (overlayTag === undefined) {
-    return overlays;
+export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayElement[] => {
+  if (selector === undefined) {
+    selector = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker,ion-popover,ion-toast';
   }
-  overlayTag = overlayTag.toUpperCase();
-  return overlays.filter(c => c.tagName === overlayTag);
+  return (Array.from(doc.querySelectorAll(selector)) as HTMLIonOverlayElement[])
+    .filter(c => c.overlayIndex > 0);
 };
 
 export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
@@ -190,11 +193,15 @@ const overlayAnimation = async (
   /**
    * TODO: Remove AnimationBuilder
    */
-  const animation = await import('./animation/old-animation').then(mod => mod.create(animationBuilder as AnimationBuilder, aniRoot, opts));
-  const isAnimationBuilder = (animation as any).fill === undefined;
-
-  if (!isAnimationBuilder) {
-    (animation as any).fill('both');
+  let animation;
+  let isAnimationBuilder = true;
+  try {
+    const mod = await import('./animation/old-animation');
+    animation = await mod.create(animationBuilder as AnimationBuilder, aniRoot, opts);
+  } catch (err) {
+    animation = (animationBuilder as IonicAnimationInterface)(aniRoot, opts);
+    animation.fill('both');
+    isAnimationBuilder = false;
   }
 
   overlay.animation = animation;

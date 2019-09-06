@@ -169,29 +169,32 @@ export class Range implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  componentWillLoad() {
+  connectedCallback() {
     this.updateRatio();
     this.debounceChanged();
-    this.emitStyle();
+    this.disabledChanged();
   }
 
-  async componentDidLoad() {
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.rangeSlider!,
-      gestureName: 'range',
-      gesturePriority: 100,
-      threshold: 0,
-      onStart: ev => this.onStart(ev),
-      onMove: ev => this.onMove(ev),
-      onEnd: ev => this.onEnd(ev),
-    });
-    this.gesture.setDisabled(this.disabled);
-  }
-
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
+    }
+  }
+
+  async componentDidLoad() {
+    const rangeSlider = this.rangeSlider;
+    if (rangeSlider) {
+      this.gesture = (await import('../../utils/gesture')).createGesture({
+        el: rangeSlider,
+        gestureName: 'range',
+        gesturePriority: 100,
+        threshold: 0,
+        onStart: ev => this.onStart(ev),
+        onMove: ev => this.onMove(ev),
+        onEnd: ev => this.onEnd(ev),
+      });
+      this.gesture.setDisabled(this.disabled);
     }
   }
 

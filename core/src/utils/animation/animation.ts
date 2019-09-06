@@ -42,7 +42,7 @@ export const createAnimation = () => {
   const _afterAddReadFunctions: any[] = [];
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
-  const supportsWebAnimations = (typeof (window as any).Animation === 'function');
+  const supportsWebAnimations = (typeof (Element as any) === 'function') && (typeof (Element as any).prototype!.animate === 'function');
   const ANIMATION_END_FALLBACK_PADDING_MS = 100;
 
   /**
@@ -60,18 +60,20 @@ export const createAnimation = () => {
    * Destroy the animation and all child animations.
    */
   const destroy = () => {
+    childAnimations.forEach(childAnimation => {
+      childAnimation.destroy();
+    });
+
     cleanUp();
 
     elements.length = 0;
     childAnimations.length = 0;
+    _keyframes.length = 0;
+
     clearOnFinish();
 
     initialized = false;
     shouldCalculateNumAnimations = true;
-
-    childAnimations.forEach(childAnimation => {
-      childAnimation.destroy();
-    });
 
     return ani;
   };
@@ -122,14 +124,16 @@ export const createAnimation = () => {
       webAnimations.length = 0;
     } else {
       elements.forEach(element => {
-        removeStyleProperty(element, 'animation-name');
-        removeStyleProperty(element, 'animation-duration');
-        removeStyleProperty(element, 'animation-timing-function');
-        removeStyleProperty(element, 'animation-iteration-count');
-        removeStyleProperty(element, 'animation-delay');
-        removeStyleProperty(element, 'animation-play-state');
-        removeStyleProperty(element, 'animation-fill-mode');
-        removeStyleProperty(element, 'animation-direction');
+        requestAnimationFrame(() => {
+          removeStyleProperty(element, 'animation-name');
+          removeStyleProperty(element, 'animation-duration');
+          removeStyleProperty(element, 'animation-timing-function');
+          removeStyleProperty(element, 'animation-iteration-count');
+          removeStyleProperty(element, 'animation-delay');
+          removeStyleProperty(element, 'animation-play-state');
+          removeStyleProperty(element, 'animation-fill-mode');
+          removeStyleProperty(element, 'animation-direction');
+        });
       });
     }
   };
@@ -140,7 +144,14 @@ export const createAnimation = () => {
    */
   const cleanUpStyleSheets = () => {
     stylesheets.forEach(stylesheet => {
-      stylesheet.parentNode!.removeChild(stylesheet);
+      /**
+       * When sharing stylesheets, it's possible
+       * for another animation to have already
+       * cleaned up a particular stylesheet
+       */
+      if (stylesheet && stylesheet.parentNode) {
+        stylesheet.parentNode.removeChild(stylesheet);
+      }
     });
 
     stylesheets.length = 0;
@@ -1020,7 +1031,7 @@ export const createAnimation = () => {
     });
 
     if (initialized) {
-      cleanUp();
+      cleanUpElements();
       initialized = false;
     }
 
@@ -1033,13 +1044,8 @@ export const createAnimation = () => {
     if (firstFrame != null && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
       firstFrame[property] = value;
     } else {
-      const object: any = {
-        offset: 0
-      };
-      object[property] = value;
-
       _keyframes = [
-        object,
+        { offset: 0, [property]: value },
         ..._keyframes
       ];
     }
@@ -1051,20 +1057,13 @@ export const createAnimation = () => {
     const lastFrame = _keyframes[_keyframes.length - 1];
 
     if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
-        lastFrame[property] = value;
+      lastFrame[property] = value;
     } else {
-
-      const object: any = {
-        offset: 1
-      };
-      object[property] = value;
-
       _keyframes = [
         ..._keyframes,
-        object
+        { offset: 1, [property]: value }
       ];
     }
-
     return ani;
   };
 

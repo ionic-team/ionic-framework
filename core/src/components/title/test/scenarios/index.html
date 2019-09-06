@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toolbar - Title</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script src="../../../../../dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button text="Mailboxes" default-href="/"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            Edit
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Inbox</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button text="Mailboxes" default-href="/"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            Edit
+          </ion-button>
+        </ion-buttons>
+        <ion-title size="large">Inbox</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button text="Mailboxes" default-href="/"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            Edit
+          </ion-button>
+        </ion-buttons>
+        <ion-title size="large">Inbox</ion-title>
+      </ion-toolbar>
+      <ion-toolbar>
+        <ion-searchbar></ion-searchbar>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Title</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title size="large">Title</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content></ion-content>
+
+    <ion-footer>
+      <ion-button expand="full" onClick="toggle()" class="ion-no-margin">Toggle Size</ion-button>
+    </ion-footer>
+  </ion-app>
+
+  <script>
+    const titles = document.querySelectorAll('ion-title[size]');
+    function toggle() {
+      for (title of titles) {
+        const size = title.size === 'large' ? undefined : 'large';
+        title.size = size;
+      }
+    }
+  </script>
+</body>
+
+</html>
