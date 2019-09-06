@@ -291,7 +291,7 @@ export const createAnimation = () => {
     if (_fill !== undefined) { return _fill; }
     if (parentAnimation) { return parentAnimation.getFill(); }
 
-    return undefined;
+    return 'both';
   };
 
   /**
@@ -302,7 +302,7 @@ export const createAnimation = () => {
     if (_direction !== undefined) { return _direction; }
     if (parentAnimation) { return parentAnimation.getDirection(); }
 
-    return undefined;
+    return 'normal';
 
   };
 
@@ -314,7 +314,7 @@ export const createAnimation = () => {
     if (_easing !== undefined) { return _easing; }
     if (parentAnimation) { return parentAnimation.getEasing(); }
 
-    return undefined;
+    return 'linear';
   };
 
   /**
