@@ -67,14 +67,17 @@ export const createSwipeToCloseGesture = (
       newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.32, 0.72), new Point(0, 1), new Point(1, 1), step);
     }
 
-    animation.progressEnd((shouldComplete) ? 'end' : 'start', newStepValue, (shouldComplete) ? 100 : 200);
-
-    animation.onFinish(() => {
-      if (shouldComplete) {
-        onDismiss(0);
-      }
-    })
-  };
+    animation
+      .progressEnd((shouldComplete) ? 'end' : 'start', newStepValue, (shouldComplete) ? 100 : 200)
+      .onFinish(() => {
+        // TODO this is a bit hacky, need to figure this out
+        if (shouldComplete) {
+          onDismiss(0);
+        } else {
+          animation.pause().easing('cubic-bezier(0.32, 0.72, 0, 1)');
+        }
+      });
+    };
 
   return createGesture({
     el,

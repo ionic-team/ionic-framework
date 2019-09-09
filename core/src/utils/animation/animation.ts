@@ -987,6 +987,7 @@ export const createAnimation = () => {
   const resetAnimation = () => {
     if (supportsWebAnimations) {
       setAnimationStep(0);
+      updateWebAnimation();
     } else {
       updateCSSAnimation();
     }
