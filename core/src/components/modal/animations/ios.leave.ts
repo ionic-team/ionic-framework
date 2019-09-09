@@ -29,18 +29,14 @@ export const iosLeaveAnimation = (
   if (presentingEl) {
     const currentPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const presentingFromY = SwipeToCloseDefaults.MIN_PRESENTING_Y;
-    const bodyEl = document.body;
-    const bodyAnimation = createAnimation()
-      .addElement(bodyEl)
-      .afterClearStyles(['background-color']);
-
     const presentingAnimation = createAnimation()
       .addElement(presentingEl)
       .beforeClearStyles(['transform'])
+      .afterClearStyles(['border-radius'])
       .duration(duration)
       .fromTo('transform', `translateY(${presentingFromY}px) scale(${currentPresentingScale})`, 'translateY(0px) scale(1)')
 
-    baseAnimation.addAnimation([bodyAnimation, presentingAnimation]);
+    baseAnimation.addAnimation(presentingAnimation);
   }
   return baseAnimation;
 };

@@ -135,7 +135,6 @@ export const present = async (
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
-    overlay.el.classList.add('overlay-presented');
     overlay.didPresent.emit();
   }
 };
@@ -188,10 +187,6 @@ const overlayAnimation = async (
     runningAnimations.delete(runningAnimation);
     return false;
   }
-  // Make overlay visible in case it's hidden
-  baseEl.classList.remove('overlay-hidden');
-  baseEl.classList.remove('overlay-presented');
-
   const aniRoot = baseEl.shadowRoot || overlay.el;
 
   /**
@@ -221,6 +216,9 @@ const overlayAnimation = async (
       }
     });
   }
+  // Make overlay visible in case it's hidden
+  animation.beforeRemoveClass('overlay-hidden');
+
   const animationResult = await animation.playAsync();
 
   /**

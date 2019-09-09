@@ -74,14 +74,6 @@ body.backdrop-no-scroll {
   z-index: $z-index-page-container;
 }
 
-.ion-page-card {
-  @include border-radius(10px, 10px, 0, 0);
-}
-
-.ion-page-card-reset {
-  transition: 500ms transform cubic-bezier(0.32, 0.72, 0, 1);
-}
-
 ion-route,
 ion-route-redirect,
 ion-router,

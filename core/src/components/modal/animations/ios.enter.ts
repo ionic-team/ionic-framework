@@ -33,9 +33,9 @@ export const iosEnterAnimation = (
     const finalTransform = `translateY(${presentingToY}%) scale(${toPresentingScale})`;
     const presentingAnimation = createAnimation()
       .beforeStyles({
-        'transform': 'translateY(0)'
+        'transform': 'translateY(0)',
+        'border-radius': '10px 10px 0 0'
       })
-      .beforeAddClass('ion-page-card')
       .afterStyles({
         'transform': finalTransform
       })
