@@ -34,7 +34,7 @@ export const iosLeaveAnimation = (
       .beforeClearStyles(['transform'])
       .afterClearStyles(['border-radius'])
       .duration(duration)
-      .fromTo('transform', `translateY(${presentingFromY}px) scale(${currentPresentingScale})`, 'translateY(0px) scale(1)')
+      .fromTo('transform', `translateY(${presentingFromY}px) scale(${currentPresentingScale})`, 'translateY(0px) scale(1)');
 
     baseAnimation.addAnimation(presentingAnimation);
   }

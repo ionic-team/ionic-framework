@@ -1,6 +1,6 @@
 // TODO: Add more tests. until then, be sure to manually test menu and swipe to go back/routing transitions
 
-import { Animation, AnimationDirection, AnimationFill, AnimationOnFinishCallback, AnimationOnFinishOptions } from './animation-interface';
+import { Animation, AnimationDirection, AnimationFill, AnimationOnFinishCallback, AnimationOnFinishOptions, AnimationPlayTo } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
 export const createAnimation = () => {
@@ -291,7 +291,7 @@ export const createAnimation = () => {
     if (_fill !== undefined) { return _fill; }
     if (parentAnimation) { return parentAnimation.getFill(); }
 
-    return undefined;
+    return 'both';
   };
 
   /**
@@ -302,7 +302,7 @@ export const createAnimation = () => {
     if (_direction !== undefined) { return _direction; }
     if (parentAnimation) { return parentAnimation.getDirection(); }
 
-    return undefined;
+    return 'normal';
 
   };
 
@@ -314,7 +314,7 @@ export const createAnimation = () => {
     if (_easing !== undefined) { return _easing; }
     if (parentAnimation) { return parentAnimation.getEasing(); }
 
-    return undefined;
+    return 'linear';
   };
 
   /**
@@ -799,11 +799,11 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const progressEnd = (shouldComplete: boolean, step: number, dur: number | undefined) => {
+  const progressEnd = (playTo: AnimationPlayTo | undefined, step: number, dur: number | undefined) => {
     shouldForceLinearEasing = false;
 
     childAnimations.forEach(animation => {
-      animation.progressEnd(shouldComplete, step, dur);
+      animation.progressEnd(playTo, step, dur);
     });
 
     if (dur !== undefined) {
@@ -812,9 +812,9 @@ export const createAnimation = () => {
 
     finished = false;
 
-    willComplete = shouldComplete;
+    willComplete = playTo === 'end';
 
-    if (!shouldComplete) {
+    if (playTo === 'start') {
       forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
 
       if (supportsWebAnimations) {
@@ -824,24 +824,26 @@ export const createAnimation = () => {
         forceDelayValue = ((1 - step) * getDuration()!) * -1;
         update(false, false);
       }
-    } else {
+    } else if (playTo === 'end') {
       if (!supportsWebAnimations) {
         forceDelayValue = (step * getDuration()!) * -1;
         update(false, false);
       }
     }
 
-    onFinish(() => {
-      willComplete = true;
-      forceDurationValue = undefined;
-      forceDirectionValue = undefined;
-      forceDelayValue = undefined;
-    }, {
-      oneTimeCallback: true
-    });
+    if (playTo !== undefined) {
+      onFinish(() => {
+        willComplete = true;
+        forceDurationValue = undefined;
+        forceDirectionValue = undefined;
+        forceDelayValue = undefined;
+      }, {
+        oneTimeCallback: true
+      });
 
-    if (!parentAnimation) {
-      play();
+      if (!parentAnimation) {
+        play();
+      }
     }
 
     return ani;
@@ -985,6 +987,7 @@ export const createAnimation = () => {
   const resetAnimation = () => {
     if (supportsWebAnimations) {
       setAnimationStep(0);
+      updateWebAnimation();
     } else {
       updateCSSAnimation();
     }
