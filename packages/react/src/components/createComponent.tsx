@@ -1,20 +1,21 @@
-import { RouterDirection } from '@ionic/core';
+import { NavDirection } from '@ionic/core';
 import React from 'react';
 import ReactDom from 'react-dom';
 
 import { NavContext } from '../contexts/NavContext';
 
 import { ReactProps } from './ReactProps';
+import { HrefProps } from './proxies';
 import { attachEventProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
 
-interface IonicReactInternalProps<ElementType> {
+interface IonicReactInternalProps<ElementType> extends HrefProps {
   forwardedRef?: React.Ref<ElementType>;
   children?: React.ReactNode;
   href?: string;
   target?: string;
   style?: string;
   ref?: React.Ref<any>;
-  routerDirection?: RouterDirection;
+  routerDirection?: NavDirection;
   className?: string;
 }
 
@@ -41,10 +42,10 @@ export const createReactComponent = <PropType, ElementType>(
 
     private handleClick = (e: MouseEvent) => {
       // TODO: review target usage
-      const { href, routerDirection } = this.props;
+      const { disableTransition, href, routerDirection: routerDirection } = this.props;
       if (href !== undefined && this.context.hasIonicRouter()) {
         e.preventDefault();
-        this.context.navigate(href, routerDirection);
+        this.context.navigate(href, disableTransition ? 'none' : routerDirection);
       }
     }
 

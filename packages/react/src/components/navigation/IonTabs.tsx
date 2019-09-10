@@ -60,19 +60,11 @@ export const IonTabs = /*@__PURE__*/(() => class extends React.Component<Props> 
       throw new Error('IonTabs needs a IonTabBar');
     }
 
-    // const PageManager = this.context.getPageManager();
-
     return (
       <div style={hostStyles}>
         {tabBar.props.slot === 'top' ? tabBar : null}
         <div style={tabsInner} className="tabs-inner">
-          {/* {this.context.hasIonicRouter() ? (
-            <PageManager>
-              {outlet}
-            </PageManager>
-          ) : ( */}
           {outlet}
-          {/* )} */}
         </div>
         {tabBar.props.slot === 'bottom' ? tabBar : null}
       </div>

@@ -15,7 +15,6 @@ export interface ViewStack {
  */
 export class ViewStacks {
   private viewStacks: { [key: string]: ViewStack } = {};
-  activeIonPageId?: string;
 
   get(key: string) {
     return this.viewStacks[key];
@@ -23,14 +22,6 @@ export class ViewStacks {
 
   set(key: string, viewStack: ViewStack) {
     this.viewStacks[key] = viewStack;
-  }
-
-  getActiveIonPage() {
-    if (!this.activeIonPageId) {
-      return { activeIonPage: undefined, viewStack: undefined };
-    }
-    const { view, viewStack } = this.findViewInfoById(this.activeIonPageId);
-    return { activeIonPage: view, viewStack };
   }
 
   getKeys() {
@@ -77,7 +68,7 @@ export class ViewStacks {
 
   }
 
-  findViewInfoById(id: string) {
+  findViewInfoById(id: string = '') {
     let view: ViewItem<IonRouteData> | undefined;
     let viewStack: ViewStack | undefined;
     const keys = this.getKeys();

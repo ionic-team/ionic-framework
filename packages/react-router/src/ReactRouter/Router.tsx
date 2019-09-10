@@ -18,6 +18,7 @@ interface RouteManagerState extends RouteManagerContextState {
 
 class RouteManager extends React.Component<RouteManagerProps, RouteManagerState> {
   listenUnregisterCallback: UnregisterCallback | undefined;
+  activeIonPageId?: string;
 
   constructor(props: RouteManagerProps) {
     super(props);
@@ -44,6 +45,8 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
     const { view } = viewStacks.findViewInfoById(viewId);
     if (view) {
       view.show = false;
+      view.ionPageElement = undefined;
+      view.isIonRoute = false;
       view.key = generateUniqueId();
       this.setState({
         viewStacks
@@ -60,7 +63,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
 
   setActiveView(location: HistoryLocation, action: HistoryAction) {
     const viewStacks = Object.assign(new ViewStacks(), this.state.viewStacks);
-    let direction: NavDirection = location.state && location.state.direction;
+    let direction: NavDirection | 'none' = location.state && location.state.direction || 'forward';
     let leavingView: ViewItem | undefined;
     const viewStackKeys = viewStacks.getKeys();
 
@@ -69,7 +72,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
       if (!enteringView || !enteringViewStack) {
         return;
       }
-      leavingView = viewStacks.getActiveIonPage().activeIonPage;
+      leavingView = viewStacks.findViewInfoById(this.activeIonPageId).view;
 
       if (leavingView && leavingView.routeData.match!.url === location.pathname) {
         return;
@@ -82,17 +85,16 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
           enteringView.mount = true;
           enteringView.routeData.match = match!;
 
-          viewStacks.activeIonPageId = enteringView.id;
+          this.activeIonPageId = enteringView.id;
 
           if (leavingView) {
-            if (leavingView.routeData.match.params.tab === enteringView.routeData.match.params.tab) {
+            if (direction === 'forward') {
               if (action === 'PUSH') {
-                direction = direction || 'forward';
                 /**
                 * If the page is being pushed into the stack by another view,
                 * record the view that originally directed to the new view for back button purposes.
                 */
-                enteringView.prevId = leavingView && leavingView.id;
+                enteringView.prevId = leavingView.id;
               } else {
                 direction = direction || 'back';
                 leavingView.mount = false;
@@ -119,16 +121,19 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
     this.setState({
       viewStacks
     }, () => {
-      const { activeIonPage, viewStack } = this.state.viewStacks.getActiveIonPage();
-      if (activeIonPage && viewStack) {
-        const enteringEl = activeIonPage.ionPageElement ? activeIonPage.ionPageElement : undefined;
+      const { view: enteringView, viewStack } = this.state.viewStacks.findViewInfoById(this.activeIonPageId)
+      if (enteringView && viewStack) {
+        const enteringEl = enteringView.ionPageElement ? enteringView.ionPageElement : undefined;
         const leavingEl = leavingView && leavingView.ionPageElement ? leavingView.ionPageElement : undefined;
+
         if (enteringEl) {
-          this.transitionView(
-            enteringEl!,
-            leavingEl!,
-            viewStack.routerOutlet,
-            leavingEl && leavingEl.innerHTML !== '' ? direction : undefined!) // Don't animate from an empty view
+            // Don't animate from an empty view
+            const navDirection = leavingEl && leavingEl.innerHTML === '' ? undefined : direction === 'none' ? undefined : direction;
+            this.transitionView(
+              enteringEl!,
+              leavingEl!,
+              viewStack.routerOutlet,
+              navDirection)
         } else if (leavingEl) {
           leavingEl.classList.add('ion-page-hidden');
           leavingEl.setAttribute('aria-hidden', 'true');
@@ -202,7 +207,9 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
           routerOutlet,
           switchComponent
         };
-        prevViewStacks.activeIonPageId = activeId;
+        if (activeId) {
+          this.activeIonPageId = activeId;
+        }
         prevViewStacks.set(stack, newStack);
         return {
           viewStacks: prevViewStacks
@@ -222,23 +229,24 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
   }
 
   syncView(page: HTMLElement, viewId: string) {
-    const viewStacks = Object.assign(new ViewStacks(), this.state.viewStacks);
-    const { viewStack, view } = viewStacks.findViewInfoById(viewId);
-    if (!viewStack || !view) {
-      return;
-    }
+    this.setState((state) => {
 
-    view.ionPageElement = page;
-    view.isIonRoute = true;
+      const viewStacks = Object.assign(new ViewStacks(), state.viewStacks);
+      const { view } = viewStacks.findViewInfoById(viewId);
 
-    this.setState({
-      viewStacks
+      view!.ionPageElement = page;
+      view!.isIonRoute = true;
+
+      return {
+        viewStacks
+      }
+
     }, () => {
       this.setActiveView(this.state.location || this.props.location, this.state.action!);
-    });
+    })
   }
 
-  transitionView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOutlet: HTMLIonRouterOutletElement, direction: NavDirection) {
+  transitionView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOutlet: HTMLIonRouterOutletElement, direction?: NavDirection) {
     /**
      * Super hacky workaround to make sure ionRouterOutlet is available
      * since transitionView might be called before IonRouterOutlet is fully mounted
@@ -252,7 +260,12 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
     }
   }
 
-  private async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction: NavDirection) {
+  private async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction?: NavDirection) {
+
+    if(enteringEl === leavingEl) {
+      return;
+    }
+
     await ionRouterOuter.commit(enteringEl, leavingEl, {
       deepWait: true,
       duration: direction === undefined ? 0 : undefined,
@@ -274,7 +287,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
         <NavManager {...this.props}
           findViewInfoById={(id: string) => this.state.viewStacks.findViewInfoById(id)}
           findViewInfoByLocation={(location: HistoryLocation) => this.state.viewStacks.findViewInfoByLocation(location)}
-          getActiveIonPage={() => this.state.viewStacks.getActiveIonPage()}
+          getActiveIonPage={() => this.state.viewStacks.findViewInfoById(this.activeIonPageId)}
         >
           {this.props.children}
         </NavManager>

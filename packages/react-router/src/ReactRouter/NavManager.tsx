@@ -12,7 +12,7 @@ import { ViewStack } from './ViewStacks';
 interface NavManagerProps extends RouteComponentProps {
   findViewInfoByLocation: (location: HistoryLocation) => {view?: ViewItem, viewStack?: ViewStack };
   findViewInfoById: (id: string) => {view?: ViewItem, viewStack?: ViewStack };
-  getActiveIonPage: () => {activeIonPage?: ViewItem, viewStack?: ViewStack };
+  getActiveIonPage: () => {view?: ViewItem, viewStack?: ViewStack };
 };
 interface NavManagerState extends NavContextState {};
 
@@ -58,7 +58,7 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
   }
 
   goBack(defaultHref?: string) {
-    const { activeIonPage } = this.props.getActiveIonPage();
+    const { view: activeIonPage } = this.props.getActiveIonPage();
     if (activeIonPage) {
       const { view: enteringView } = this.props.findViewInfoById(activeIonPage.prevId!);
       if (enteringView) {
@@ -84,7 +84,7 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
     return this.props.location as any;
   }
 
-  navigate(path: string, direction?: RouterDirection) {
+  navigate(path: string, direction?: RouterDirection | 'none') {
     this.props.history.push(path, { direction });
   }
 
