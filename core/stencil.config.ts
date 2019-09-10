@@ -70,6 +70,11 @@ export const config: Config = {
   ],
   outputTargets: [
     {
+      type: 'docs-vscode',
+      file: 'dist/html.html-data.json',
+      sourceCodeBaseUrl: 'https://github.com/ionic-team/ionic/tree/master/core/',
+    },
+    {
       type: 'dist',
       esmLoaderPath: '../loader',
       copy: [
