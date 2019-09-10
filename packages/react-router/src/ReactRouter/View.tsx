@@ -2,6 +2,7 @@ import React from 'react';
 import { IonLifeCycleContext, NavContext } from '@ionic/react';
 import { ViewItem } from './ViewItem';
 import { Route, Redirect } from 'react-router-dom';
+import { isDevMode } from '../utils';
 
 interface ViewProps extends React.HTMLAttributes<HTMLElement> {
   onViewSync: (page: HTMLElement, viewId: string) => void;
@@ -64,7 +65,9 @@ export class View extends React.Component<ViewProps, StackViewState> {
     this.ionPage.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
     this.ionPage.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
     this.ionPage.classList.add('ion-page-invisible');
-    this.ionPage.setAttribute('data-view-id', this.props.view.id);
+    if(isDevMode()) {
+      this.ionPage.setAttribute('data-view-id', this.props.view.id);
+    }
     this.props.onViewSync(page, this.props.view.id);
   }
 

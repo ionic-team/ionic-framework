@@ -1,5 +1,5 @@
 import React from 'react';
-import { generateUniqueId } from '../utils';
+import { generateUniqueId, isDevMode } from '../utils';
 import { View } from './View';
 import { ViewTransitionManager } from './ViewTransitionManager';
 import { RouteManagerContext } from './RouteManagerContext';
@@ -70,10 +70,15 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
       );
     });
 
-    const routerOutletChild = React.cloneElement(ionRouterOutlet, {
-      ref: this.routerOutletEl,
-      "data-stack-id": this.id
-    }, childElements);
+    const elementProps: any = {
+      ref: this.routerOutletEl
+    }
+
+    if(isDevMode()) {
+      elementProps['data-stack-id'] = this.id
+    }
+
+    const routerOutletChild = React.cloneElement(ionRouterOutlet, elementProps, childElements);
 
 
     return routerOutletChild;
