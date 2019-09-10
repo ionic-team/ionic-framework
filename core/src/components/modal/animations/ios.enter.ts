@@ -26,6 +26,17 @@ export const iosEnterAnimation = (
     .beforeAddClass('show-modal')
     .addAnimation([backdropAnimation, wrapperAnimation]);
 
+  // BEFORE 0->1 AFTER
+  // BEFORE 1->0 AFTER
+
+  // onstart(0.5) 0.5 -> 1 onFinish(1)
+  // onstart(0.5) 0.5 -> 0 onFinish(0)
+    // onstart(false) START 0->1 END onFInish(true)
+  // onstart(true) END 1->0 START onFinish(false)
+
+  // onstart(false) START 0->1 END onFInish(true)
+  // onstart(true) END 1->0 START onFinish(false)
+
   if (presentingEl) {
     const bodyEl = document.body;
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;

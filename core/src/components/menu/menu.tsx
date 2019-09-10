@@ -18,7 +18,7 @@ import { menuController } from '../../utils/menu-controller';
 })
 export class Menu implements ComponentInterface, MenuI {
 
-  private animation?: any;
+  private animation?: IonicAnimation;
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
@@ -174,7 +174,6 @@ export class Menu implements ComponentInterface, MenuI {
       gesturePriority: 30,
       threshold: 10,
       canStart: ev => this.canStart(ev),
-      onWillStart: () => this.onWillStart(),
       onStart: () => this.onStart(),
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
@@ -285,14 +284,14 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     this.beforeAnimation(shouldOpen);
-    await this.loadAnimation();
+    this.loadAnimation();
     await this.startAnimation(shouldOpen, animated);
     this.afterAnimation(shouldOpen);
 
     return true;
   }
 
-  private async loadAnimation(): Promise<void> {
+  private loadAnimation() {
     // Menu swipe animation takes the menu's inner width as parameter,
     // If `offsetWidth` changes, we need to create a new animation.
     const width = this.menuInnerEl!.offsetWidth;
@@ -307,7 +306,7 @@ export class Menu implements ComponentInterface, MenuI {
       this.animation = undefined;
     }
     // Create new animation
-    this.animation = await menuController._createAnimation(this.type!, this);
+    this.animation = menuController._createAnimation(this.type!, this);
     if (!config.getBoolean('animated', true)) {
       this.animation.duration(0);
     }
@@ -353,16 +352,9 @@ export class Menu implements ComponentInterface, MenuI {
     );
   }
 
-  private onWillStart(): Promise<void> {
-    this.beforeAnimation(!this._isOpen);
-    return this.loadAnimation();
-  }
-
   private onStart() {
-    if (!this.isAnimating || !this.animation) {
-      assert(false, 'isAnimating has to be true');
-      return;
-    }
+    this.beforeAnimation(!this._isOpen);
+    this.loadAnimation();
 
     // the cloned animation should not use an easing curve during seek
     (this.animation as IonicAnimation)
@@ -437,7 +429,7 @@ export class Menu implements ComponentInterface, MenuI {
       .onFinish(() => this.afterAnimation(shouldOpen), {
         oneTimeCallback: true
       })
-      .progressEnd((shouldComplete) ? 'end' : 'start', newStepValue, 300);
+      .progressEnd(shouldComplete ? 1 : 0, newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {

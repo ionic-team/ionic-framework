@@ -13,7 +13,7 @@ export interface Animation {
 
   progressStart(forceLinearEasing: boolean): Animation;
   progressStep(step: number): Animation;
-  progressEnd(playTo: AnimationPlayTo | undefined, step: number, dur: number | undefined): Animation;
+  progressEnd(playTo: 0 | 1 | undefined, step: number, dur: number | undefined): Animation;
 
   from(property: string, value: any): Animation;
   to(property: string, value: any): Animation;
@@ -54,13 +54,15 @@ export interface Animation {
   beforeRemoveClass(className: string | string[] | undefined): Animation;
   beforeAddClass(className: string | string[] | undefined): Animation;
 
-  onFinish(callback: (didComplete: boolean, animation: Animation) => void, opts?: AnimationOnFinishOptions): Animation;
+  onFinish(callback: AnimationLifecycle, opts?: AnimationOnFinishOptions): Animation;
   clearOnFinish(): Animation;
 }
 
+export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;
+
 export interface AnimationOnFinishCallback {
-  callback: (didComplete: boolean, animation: Animation) => void;
-  opts: AnimationOnFinishOptions;
+  callback: AnimationLifecycle;
+  opts?: AnimationOnFinishOptions;
 }
 
 export interface AnimationOnFinishOptions {

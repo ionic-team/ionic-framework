@@ -32,7 +32,11 @@ export const iosLeaveAnimation = (
     const presentingAnimation = createAnimation()
       .addElement(presentingEl)
       .beforeClearStyles(['transform'])
-      .afterClearStyles(['border-radius'])
+      .onFinish(currentStep => {
+        if (currentStep === 1) {
+          presentingEl.style.removeProperty('border-radius');
+        }
+      })
       .duration(duration)
       .fromTo('transform', `translateY(${presentingFromY}px) scale(${currentPresentingScale})`, 'translateY(0px) scale(1)');
 

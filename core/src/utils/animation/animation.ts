@@ -1,6 +1,6 @@
 // TODO: Add more tests. until then, be sure to manually test menu and swipe to go back/routing transitions
 
-import { Animation, AnimationDirection, AnimationFill, AnimationOnFinishCallback, AnimationOnFinishOptions, AnimationPlayTo } from './animation-interface';
+import { Animation, AnimationDirection, AnimationFill, AnimationLifecycle, AnimationOnFinishCallback, AnimationOnFinishOptions } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
 export const createAnimation = () => {
@@ -93,9 +93,9 @@ export const createAnimation = () => {
    * Add a callback to be run
    * upon the animation ending
    */
-  const onFinish = (callback: any, opts?: AnimationOnFinishOptions) => {
+  const onFinish = (callback: AnimationLifecycle, opts?: AnimationOnFinishOptions) => {
     const callbacks = (opts && opts.oneTimeCallback) ? onFinishOneTimeCallbacks : onFinishCallbacks;
-    callbacks.push({ callback, opts } as AnimationOnFinishCallback);
+    callbacks.push({ callback, opts });
 
     return ani;
   };
@@ -463,19 +463,16 @@ export const createAnimation = () => {
    */
   const addAnimation = (animationToAdd: Animation | Animation[] | undefined | null) => {
     if (animationToAdd != null) {
-      const parentAnim = ani;
-      const animationsToAdd = animationToAdd as Animation[];
-      if (animationsToAdd.length >= 0) {
-        for (const animation of animationsToAdd) {
-          animation.parent(parentAnim);
+      if (Array.isArray(animationToAdd)) {
+        for (const animation of animationToAdd) {
+          animation.parent(ani);
           childAnimations.push(animation);
         }
       } else {
-        (animationToAdd as Animation).parent(parentAnim);
-        childAnimations.push(animationToAdd as Animation);
+        animationToAdd.parent(ani);
+        childAnimations.push(animationToAdd);
       }
     }
-
     return ani;
   };
 
@@ -586,20 +583,22 @@ export const createAnimation = () => {
     runAfterWrite();
     runAfterStyles();
 
-    const didComplete = willComplete;
+    const currentStep = willComplete ? 1 : 0;
 
     onFinishCallbacks.forEach(onFinishCallback => {
-      onFinishCallback.callback(didComplete, ani);
+      onFinishCallback.callback(currentStep, ani);
     });
 
     onFinishOneTimeCallbacks.forEach(onFinishCallback => {
-      onFinishCallback.callback(didComplete, ani);
+      onFinishCallback.callback(currentStep, ani);
     });
 
     onFinishOneTimeCallbacks.length = 0;
 
     shouldCalculateNumAnimations = true;
-    finished = true;
+    if (currentStep === 1) {
+      finished = true;
+    }
   };
 
   const animationFinish = () => {
@@ -799,7 +798,7 @@ export const createAnimation = () => {
     return ani;
   };
 
-  const progressEnd = (playTo: AnimationPlayTo | undefined, step: number, dur: number | undefined) => {
+  const progressEnd = (playTo: 0 | 1 | undefined, step: number, dur: number | undefined) => {
     shouldForceLinearEasing = false;
 
     childAnimations.forEach(animation => {
@@ -812,9 +811,9 @@ export const createAnimation = () => {
 
     finished = false;
 
-    willComplete = playTo === 'end';
+    willComplete = playTo === 1;
 
-    if (playTo === 'start') {
+    if (playTo === 0) {
       forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
 
       if (supportsWebAnimations) {
@@ -824,7 +823,7 @@ export const createAnimation = () => {
         forceDelayValue = ((1 - step) * getDuration()!) * -1;
         update(false, false);
       }
-    } else if (playTo === 'end') {
+    } else if (playTo === 1) {
       if (!supportsWebAnimations) {
         forceDelayValue = (step * getDuration()!) * -1;
         update(false, false);
@@ -999,6 +998,8 @@ export const createAnimation = () => {
   const play = () => {
     if (!initialized) {
       initializeAnimation();
+    } else {
+      update();
     }
 
     if (finished) {
