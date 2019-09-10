@@ -410,6 +410,15 @@ export const createAnimation = () => {
    * to complete one cycle.
    */
   const duration = (animationDuration: number) => {
+    /**
+     * CSS Animation Durations of 0ms work fine on Chrome
+     * but do not run on Safari, so force it to 1ms to
+     * get it to run on both platforms.
+     */
+    if (!supportsWebAnimations && animationDuration === 0) {
+      animationDuration = 1;
+    }
+
     _duration = animationDuration;
 
     update(true);
