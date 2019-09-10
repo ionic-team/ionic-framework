@@ -13,7 +13,7 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="home"></ion-back-button>
+        <ion-back-button default-href="home"></ion-back-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
