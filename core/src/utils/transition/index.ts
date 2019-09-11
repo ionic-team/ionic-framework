@@ -96,7 +96,7 @@ const animation = async (animationBuilder: IonicAnimationInterface | AnimationBu
   const didComplete = await playTransition(trans, opts);
 
   // TODO: Remove AnimationBuilder
-  (trans as any).hasCompleted = didComplete;
+  (trans as any).hasCompleted = Boolean(didComplete);
 
   if (opts.progressCallback) {
     opts.progressCallback(undefined);
