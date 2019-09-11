@@ -55,7 +55,9 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-button id="card-modal" onclick="presentModal(document.querySelectorAll('.ion-page')[1])"><ion-icon name="add"></ion-icon></ion-button>
+            <ion-button id="card-modal" onclick="presentModal(document.querySelectorAll('.ion-page')[1])">
+              <ion-icon name="add" slot="icon-only"></ion-icon>
+            </ion-button>
           </ion-buttons>
           <ion-title>Favorites</ion-title>
         </ion-toolbar>
@@ -488,8 +490,9 @@
           <ion-title>Contacts</ion-title>
           <ion-buttons slot="end">
             <ion-button class="add">
-              <ion-icon name="add"></ion-icon>
+              <ion-icon name="add" slot="icon-only"></ion-icon>
             </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
