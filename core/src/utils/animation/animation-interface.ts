@@ -42,7 +42,7 @@ export interface Animation {
    * Set the keyframes for the animation.
    * TODO: proper types
    */
-  keyframes(keyframes: any[]): Animation;
+  keyframes(keyframes: AnimationKeyFrame[]): Animation;
 
   /**
    * Group one or more animations together to be controlled by a parent animation.
@@ -246,6 +246,19 @@ export interface AnimationOnFinishCallback {
 
 export interface AnimationOnFinishOptions {
   oneTimeCallback: boolean;
+}
+
+export interface AnimationKeyFrame {
+  offset: number;
+  opacity?: number;
+  transform?: string;
+  top?: string;
+  left?: string;
+  bottom?: string;
+  right?: string;
+  background?: string;
+
+  [key: string]: any;
 }
 
 export interface AnimationPlayOptions {

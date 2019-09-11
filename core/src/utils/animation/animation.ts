@@ -1,6 +1,6 @@
 // TODO: Add more tests. until then, be sure to manually test menu and swipe to go back/routing transitions
 
-import { Animation, AnimationDirection, AnimationFill, AnimationLifecycle, AnimationOnFinishCallback, AnimationOnFinishOptions, AnimationPlayOptions } from './animation-interface';
+import { Animation, AnimationDirection, AnimationFill, AnimationLifecycle, AnimationOnFinishCallback, AnimationOnFinishOptions, AnimationPlayOptions, AnimationKeyFrame } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
 export const createAnimation = (): Animation => {
@@ -10,7 +10,7 @@ export const createAnimation = (): Animation => {
   let _iterations: number | undefined;
   let _fill: AnimationFill | undefined;
   let _direction: AnimationDirection | undefined;
-  let _keyframes: any[] = [];
+  let _keyframes: AnimationKeyFrame[] = [];
   let beforeAddClasses: string[] = [];
   let beforeRemoveClasses: string[] = [];
   let initialized = false;
@@ -376,7 +376,7 @@ export const createAnimation = (): Animation => {
     return ani;
   };
 
-  const keyframes = (keyframeValues: any[]) => {
+  const keyframes = (keyframeValues: AnimationKeyFrame[]) => {
     _keyframes = keyframeValues;
 
     return ani;
