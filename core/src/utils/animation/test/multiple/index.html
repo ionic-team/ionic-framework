@@ -123,6 +123,7 @@
     
     rootAnimation
       .addAnimation([animationA, animationB, animationC])
+      .fill('none')
       .onFinish(() => {
         const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationRootFinished' });
         squareA.dispatchEvent(ev);
