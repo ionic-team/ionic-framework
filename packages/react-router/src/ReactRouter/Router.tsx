@@ -1,13 +1,15 @@
 import { NavDirection } from '@ionic/core';
+import { RouterDirection } from '@ionic/react';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
-import { BrowserRouter, BrowserRouterProps, matchPath, RouteComponentProps, withRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, BrowserRouterProps, matchPath, RouteComponentProps, withRouter } from 'react-router-dom';
 import { generateUniqueId } from '../utils';
 import { IonRouteData } from './IonRouteData';
 import { NavManager } from './NavManager';
 import { RouteManagerContext, RouteManagerContextState } from './RouteManagerContext';
 import { ViewItem } from './ViewItem';
 import { ViewStacks, ViewStack } from './ViewStacks';
+
 
 interface RouteManagerProps extends RouteComponentProps { }
 
@@ -63,7 +65,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
 
   setActiveView(location: HistoryLocation, action: HistoryAction) {
     const viewStacks = Object.assign(new ViewStacks(), this.state.viewStacks);
-    let direction: NavDirection | 'none' = location.state && location.state.direction || 'forward';
+    let direction: RouterDirection = location.state && location.state.direction || 'forward';
     let leavingView: ViewItem | undefined;
     const viewStackKeys = viewStacks.getKeys();
 
@@ -127,13 +129,13 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
         const leavingEl = leavingView && leavingView.ionPageElement ? leavingView.ionPageElement : undefined;
 
         if (enteringEl) {
-            // Don't animate from an empty view
-            const navDirection = leavingEl && leavingEl.innerHTML === '' ? undefined : direction === 'none' ? undefined : direction;
-            this.transitionView(
-              enteringEl!,
-              leavingEl!,
-              viewStack.routerOutlet,
-              navDirection)
+          // Don't animate from an empty view
+          const navDirection = leavingEl && leavingEl.innerHTML === '' ? undefined : direction === 'none' ? undefined : direction;
+          this.transitionView(
+            enteringEl!,
+            leavingEl!,
+            viewStack.routerOutlet,
+            navDirection)
         } else if (leavingEl) {
           leavingEl.classList.add('ion-page-hidden');
           leavingEl.setAttribute('aria-hidden', 'true');
@@ -150,22 +152,11 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
     const views: ViewItem[] = [];
     let activeId: string | undefined;
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
-    let switchComponent: React.ReactElement | undefined = undefined;
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
-      /**
-      * If the first child is a Switch, loop through its children to build the viewStack
-      */
-      if (child.type === Switch) {
-        switchComponent = child;
-        React.Children.forEach(child.props.children, (grandChild: React.ReactElement) => {
-          views.push(createViewItem(grandChild, this.props.history.location));
-        });
-      } else {
-        views.push(createViewItem(child, this.props.history.location));
-      }
+      views.push(createViewItem(child, this.props.history.location));
     });
 
-    await this.registerViewStack(id, activeId, views, routerOutlet, this.props.location, switchComponent);
+    await this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);
 
     function createViewItem(child: React.ReactElement<any>, location: HistoryLocation) {
       const viewId = generateUniqueId();
@@ -196,7 +187,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
     }
   }
 
-  async registerViewStack(stack: string, activeId: string | undefined, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, _location: HistoryLocation, switchComponent?: React.ReactElement) {
+  async registerViewStack(stack: string, activeId: string | undefined, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, _location: HistoryLocation) {
 
     return new Promise((resolve) => {
       this.setState((prevState) => {
@@ -204,8 +195,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
         const newStack: ViewStack = {
           id: stack,
           views: stackItems,
-          routerOutlet,
-          switchComponent
+          routerOutlet
         };
         if (activeId) {
           this.activeIonPageId = activeId;
@@ -262,7 +252,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
 
   private async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction?: NavDirection) {
 
-    if(enteringEl === leavingEl) {
+    if (enteringEl === leavingEl) {
       return;
     }
 

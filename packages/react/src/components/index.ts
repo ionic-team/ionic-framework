@@ -24,6 +24,7 @@ export { IonRouterOutlet } from './IonRouterOutlet';
 
 // Utils
 export { isPlatform, getPlatforms } from './utils';
+export { RouterDirection } from './hrefprops';
 
 // Icons that are used by internal components
 addIcons({

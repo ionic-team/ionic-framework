@@ -1,6 +1,10 @@
 
 # [4.8.0-rc2]
 
+## Features
+
+Dependencies upgraded to work with Ionic Core 4.9
+
 ## Bug Fixes
 
 IonPage should be root page for Ionic Pages - fixes [#19146](https://github.com/ionic-team/ionic/issues/19146)
@@ -39,7 +43,19 @@ In RC2 and greater, the fragment should be updated to an IonPage component:
 
 The `<ViewManager />` component is no longer needed and can be removed. The views inside of an `<IonRouterOutlet>` are now managed by an internal stack manager and don't need the explicit ViewManager anymore.
 
-`ViewManager` is now a noop component and shows a warning message. It will be removed in the final release of @ionic/react.
+`ViewManager` is now a noop component and shows a warning message while in development. `ViewManager` will be removed in the final release of @ionic/react.
+
+## Other Changes
+
+### Tab Route Setup
+
+Prior to RC2, tabs had to specify a tab name in their routes which helped with the page transitions. This was set up in the form of a regex named parameter like so:
+
+`<Route path="/:tab(tab1)" component={Tab1} exact={true} />`
+
+This is no longer a requirement. Routes setup this way will continue to work, but the complexity in the path can be removed and updated to:
+
+`<Route path="/tab1" component={Tab1} exact={true} />`
 
 # [4.8.0-rc1]
 

@@ -6,8 +6,7 @@ import { matchPath } from 'react-router-dom';
 export interface ViewStack {
   id: string;
   routerOutlet: HTMLIonRouterOutletElement;
-  views: ViewItem[],
-  switchComponent?: React.ReactElement;
+  views: ViewItem[]
 }
 
 /**
