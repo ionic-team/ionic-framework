@@ -51,7 +51,6 @@ export const iosEnterAnimation = (
         'transform': finalTransform
       })
       .addElement(presentingEl)
-      .duration(500)
       .fromTo('transform', 'translateY(0px) scale(1)', finalTransform);
 
     // Wrap around animation code

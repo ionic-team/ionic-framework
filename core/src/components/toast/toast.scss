@@ -56,7 +56,8 @@
 }
 
 :host(.overlay-hidden) {
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 :host(.ion-color) {

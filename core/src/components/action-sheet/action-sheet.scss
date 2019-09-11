@@ -41,7 +41,8 @@
 }
 
 :host(.overlay-hidden) {
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .action-sheet-wrapper {

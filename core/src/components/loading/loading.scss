@@ -40,7 +40,8 @@
 }
 
 :host(.overlay-hidden) {
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .loading-wrapper {

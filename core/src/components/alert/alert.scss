@@ -39,7 +39,8 @@
 }
 
 :host(.overlay-hidden) {
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 :host(.alert-top) {
