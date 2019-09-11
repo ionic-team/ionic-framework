@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "4.8.0-rc.2-2",
+  "version": "4.9.0-rc.2",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
