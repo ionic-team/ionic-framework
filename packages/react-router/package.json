@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@ionic/core": "^4.9.0",
-    "@ionic/react": "4.9.0-rc.2.tgz",
+    "@ionic/react": "4.9.0-rc.2",
     "@types/jest": "^23.3.9",
     "@types/node": "12.6.9",
     "@types/react": "^16.9.2",
