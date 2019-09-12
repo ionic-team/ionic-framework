@@ -3,8 +3,6 @@ export interface Animation {
   elements: HTMLElement[];
   childAnimations: Animation[];
 
-  animationFinish(): void;
-
   /**
    * Play the animation
    *
@@ -52,7 +50,7 @@ export interface Animation {
   /**
    * Add one or more elements to the animation
    */
-  addElement(el: Element | Element[] | Node | Node[] | NodeList | undefined | null): Animation;
+  addElement(el: Element | Element[] | Node | Node[] | NodeList): Animation;
 
   /**
    * Sets the number of times the animation cycle
@@ -90,20 +88,9 @@ export interface Animation {
   delay(delay: number | undefined): Animation;
 
   /**
-   * Sets the parent animation.
-   * @internal
-   */
-  parent(animation: Animation): Animation;
-
-  /**
-   * Updates any existing animations.
-   */
-  update(deep: boolean): Animation;
-
-  /**
    * Get an array of keyframes for the animation.
    */
-  getKeyframes(): any[];
+  getKeyframes(): AnimationKeyFrame[];
 
   /**
    * Returns the animation's direction.
@@ -239,17 +226,12 @@ export interface Animation {
 
 export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;
 
-export interface AnimationOnFinishCallback {
-  callback: AnimationLifecycle;
-  opts?: AnimationOnFinishOptions;
-}
-
 export interface AnimationOnFinishOptions {
   oneTimeCallback: boolean;
 }
 
 export interface AnimationKeyFrame {
-  offset: number;
+  offset?: number;
   opacity?: number;
   transform?: string;
   top?: string;

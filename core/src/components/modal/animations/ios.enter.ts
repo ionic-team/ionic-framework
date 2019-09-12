@@ -11,11 +11,11 @@ export const iosEnterAnimation = (
   ): IonicAnimation => {
   // The top translate Y for the presenting element
   const backdropAnimation = createAnimation()
-    .addElement(baseEl.querySelector('ion-backdrop'))
+    .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 0.4);
 
   const wrapperAnimation = createAnimation()
-    .addElement(baseEl.querySelector('.modal-wrapper'))
+    .addElement(baseEl.querySelector('.modal-wrapper')!)
     .beforeStyles({ 'opacity': 1 })
     .fromTo('transform', 'translateY(100%)', 'translateY(0%)');
 

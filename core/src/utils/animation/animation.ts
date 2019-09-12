@@ -1,7 +1,26 @@
 // TODO: Add more tests. until then, be sure to manually test menu and swipe to go back/routing transitions
 
-import { Animation, AnimationDirection, AnimationFill, AnimationLifecycle, AnimationOnFinishCallback, AnimationOnFinishOptions, AnimationPlayOptions, AnimationKeyFrame } from './animation-interface';
+import { Animation, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationLifecycle, AnimationOnFinishOptions, AnimationPlayOptions } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
+
+interface AnimationOnFinishCallback {
+  c: AnimationLifecycle;
+  o?: AnimationOnFinishOptions;
+}
+
+interface AnimationInternal extends Animation {
+  /**
+   * Sets the parent animation.
+   */
+  parent(animation: Animation): Animation;
+
+  /**
+   * Updates any existing animations.
+   */
+  update(deep: boolean): Animation;
+
+  animationFinish(): void;
+}
 
 export const createAnimation = (): Animation => {
   let _delay: number | undefined;
@@ -14,7 +33,7 @@ export const createAnimation = (): Animation => {
   let beforeAddClasses: string[] = [];
   let beforeRemoveClasses: string[] = [];
   let initialized = false;
-  let parentAnimation: Animation | undefined;
+  let parentAnimation: AnimationInternal | undefined;
   let beforeStylesValue: { [property: string]: any } = {};
   let afterAddClasses: string[] = [];
   let afterRemoveClasses: string[] = [];
@@ -30,12 +49,12 @@ export const createAnimation = (): Animation => {
   let finished = false;
   let shouldCalculateNumAnimations = true;
   let keyframeName: string | undefined;
-  let ani: Animation;
+  let ani: AnimationInternal;
 
   const onFinishCallbacks: AnimationOnFinishCallback[] = [];
   const onFinishOneTimeCallbacks: AnimationOnFinishCallback[] = [];
   const elements: HTMLElement[] = [];
-  const childAnimations: Animation[] = [];
+  const childAnimations: AnimationInternal[] = [];
   const stylesheets: HTMLElement[] = [];
   const _beforeAddReadFunctions: any[] = [];
   const _beforeAddWriteFunctions: any[] = [];
@@ -82,7 +101,7 @@ export const createAnimation = (): Animation => {
 
   const onFinish = (callback: AnimationLifecycle, opts?: AnimationOnFinishOptions) => {
     const callbacks = (opts && opts.oneTimeCallback) ? onFinishOneTimeCallbacks : onFinishCallbacks;
-    callbacks.push({ callback, opts });
+    callbacks.push({ c: callback, o: opts });
 
     return ani;
   };
@@ -159,7 +178,6 @@ export const createAnimation = (): Animation => {
     return ani;
   };
 
-
   const afterAddWrite = (writeFn: () => void) => {
     _afterAddWriteFunctions.push(writeFn);
 
@@ -172,10 +190,6 @@ export const createAnimation = (): Animation => {
     return ani;
   };
 
-  /**
-   * Remove a class from the animation's
-   * elements before the animation starts
-   */
   const beforeRemoveClass = (className: string | string[] | undefined) => {
     beforeRemoveClasses = addClassToArray(beforeRemoveClasses, className);
 
@@ -338,7 +352,7 @@ export const createAnimation = (): Animation => {
     return ani;
   };
 
-  const parent = (animation: Animation) => {
+  const parent = (animation: AnimationInternal) => {
     parentAnimation = animation;
 
     return ani;
@@ -361,8 +375,8 @@ export const createAnimation = (): Animation => {
     return ani;
   };
 
-  const addAnimation = (animationToAdd: Animation | Animation[] | undefined | null) => {
-    if (animationToAdd != null) {
+  const addAnimation = (animationToAdd: AnimationInternal | AnimationInternal[]) => {
+    if ((animationToAdd as any) != null) {
       if (Array.isArray(animationToAdd)) {
         for (const animation of animationToAdd) {
           animation.parent(ani);
@@ -443,11 +457,11 @@ export const createAnimation = (): Animation => {
     });
 
     onFinishCallbacks.forEach(onFinishCallback => {
-      onFinishCallback.callback(currentStep, ani);
+      return onFinishCallback.c(currentStep, ani);
     });
 
     onFinishOneTimeCallbacks.forEach(onFinishCallback => {
-      onFinishCallback.callback(currentStep, ani);
+      return onFinishCallback.c(currentStep, ani);
     });
 
     onFinishOneTimeCallbacks.length = 0;
@@ -498,9 +512,9 @@ export const createAnimation = (): Animation => {
           setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
         }
 
-        requestAnimationFrame(() => {
-          setStyleProperty(element, 'animation-name', stylesheet.id || null);
-        });
+        requestAnimationFrame(() => (
+          setStyleProperty(element, 'animation-name', stylesheet.id || null)
+        ));
       }
     });
   };
@@ -868,9 +882,9 @@ export const createAnimation = (): Animation => {
   };
 
   const from = (property: string, value: any) => {
-    const firstFrame = _keyframes[0];
+    const firstFrame = _keyframes[0] as AnimationKeyFrame | undefined;
 
-    if (firstFrame != null && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
+    if (firstFrame !== undefined && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
       firstFrame[property] = value;
     } else {
       _keyframes = [
@@ -883,9 +897,9 @@ export const createAnimation = (): Animation => {
   };
 
   const to = (property: string, value: any) => {
-    const lastFrame = _keyframes[_keyframes.length - 1];
+    const lastFrame = _keyframes[_keyframes.length - 1] as AnimationKeyFrame | undefined;
 
-    if (lastFrame != null && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
+    if (lastFrame !== undefined && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
       lastFrame[property] = value;
     } else {
       _keyframes = [

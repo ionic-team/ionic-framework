@@ -49,7 +49,7 @@ export const createSwipeToCloseGesture = (
   const onEnd = (detail: GestureDetail) => {
     const velocity = detail.velocityY;
     const step = Math.max(0, (detail.deltaY / height));
-    const threehold = (detail.deltaY + velocity * 1000) / height;
+    const threshold = (detail.deltaY + velocity * 1000) / height;
 
     // if (!shouldComplete) {
     //   animation.easing('cubic-bezier(1, 0, 0.68, 0.28)');
@@ -57,7 +57,7 @@ export const createSwipeToCloseGesture = (
     // } else {
     //   newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.32, 0.72), new Point(0, 1), new Point(1, 1), step);
     // }
-    if (threehold >= 0.5) {
+    if (threshold >= 0.5) {
       const duration = computeDuration(step * height, velocity);
       onDismiss(duration);
     } else {

@@ -12,11 +12,11 @@ export const iosLeaveAnimation = (
   ): IonicAnimation => {
 
   const backdropAnimation = createAnimation()
-    .addElement(baseEl.querySelector('ion-backdrop'))
+    .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.4, 0.0);
 
   const wrapperAnimation = createAnimation()
-    .addElement(baseEl.querySelector('.modal-wrapper'))
+    .addElement(baseEl.querySelector('.modal-wrapper')!)
     .beforeStyles({ 'opacity': 1 })
     .fromTo('transform', `translateY(0%)`, 'translateY(100%)');
 

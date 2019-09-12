@@ -29,11 +29,11 @@ export const menuOverlayAnimation = (menu: MenuI): IonicAnimation => {
   }
 
   menuAnimation
-    .addElement(menu.menuInnerEl)
+    .addElement(menu.menuInnerEl!)
     .fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
 
   backdropAnimation
-    .addElement(menu.backdropEl)
+    .addElement(menu.backdropEl!)
     .fromTo('opacity', 0.01, 0.32);
 
   return baseAnimation().addAnimation([menuAnimation, backdropAnimation]);
