@@ -74,9 +74,9 @@ export class Select implements ComponentInterface {
 
   /**
    * Any additional options that the `alert`, `action-sheet` or `popover` interface
-   * can take. See the [AlertController API docs](../../alert/AlertController/#create), the
-   * [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the
-   * [PopoverController API docs](../../popover/PopoverController/#create) for the
+   * can take. See the [AlertController API docs](../alert-controller), the
+   * [ActionSheetController API docs](../action-sheet-controller) and the
+   * [PopoverController API docs](../popover-controller) for the
    * create options for each interface.
    */
   @Prop() interfaceOptions: any = {};
