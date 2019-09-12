@@ -33,14 +33,25 @@ const detectPlatforms = (win: Window) =>
 const isMobileWeb = (win: Window): boolean =>
   isMobile(win) && !isHybrid(win);
 
-const isIpad = (win: Window) =>
-  testUserAgent(win, /iPad/i);
+const isIpad = (win: Window) => {
+  // iOS 12 and below
+  if (testUserAgent(win, /iPad/i)) {
+    return true;
+  }
+
+  // iOS 13+
+  if (testUserAgent(win, /Macintosh/i) && isMobile(win)) {
+    return true;
+  }
+
+  return false;
+};
 
 const isIphone = (win: Window) =>
   testUserAgent(win, /iPhone/i);
 
 const isIOS = (win: Window) =>
-  testUserAgent(win, /iPad|iPhone|iPod/i);
+  testUserAgent(win, /iPhone|iPod/i) || isIpad(win);
 
 const isAndroid = (win: Window) =>
   testUserAgent(win, /android|sink/i);
