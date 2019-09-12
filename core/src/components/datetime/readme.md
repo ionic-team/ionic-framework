@@ -89,9 +89,8 @@ experience.
 
 Ionic uses the [ISO 8601 datetime format](https://www.w3.org/TR/NOTE-datetime)
 for its value. The value is simply a string, rather than using JavaScript's
-`Date` object. Additionally, when using the ISO datetime format, it makes it
-easier to serialize and pass within JSON objects, and sending databases a
-standardized format which can be easily parsed if need be.
+`Date` object. Using the ISO datetime format makes it easy to serialize
+and parse within JSON objects and databases.
 
 An ISO format can be used as a simple year, or just the hour and minute, or get
 more detailed down to the millisecond and timezone. Any of the ISO formats below
