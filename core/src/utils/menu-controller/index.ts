@@ -1,11 +1,11 @@
-import { IonicAnimation, MenuI } from '../../interface';
+import { AnimationBuilder, IonicAnimation, MenuI } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
 import { menuRevealAnimation } from './animations/reveal';
 
 const createMenuController = () => {
-  const menuAnimations = new Map<string, (menu: MenuI) => IonicAnimation>();
+  const menuAnimations = new Map<string, ((menu: MenuI) => IonicAnimation) | AnimationBuilder>();
   const menus: MenuI[] = [];
 
   const open = async (menu?: string | null): Promise<boolean> => {
@@ -122,7 +122,7 @@ const createMenuController = () => {
     return isAnimatingSync();
   };
 
-  const registerAnimation = (name: string, animation: (menu: MenuI) => IonicAnimation) => {
+  const registerAnimation = (name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => {
     menuAnimations.set(name, animation);
   };
 
@@ -165,13 +165,14 @@ const createMenuController = () => {
     return menu._setOpen(shouldOpen, animated);
   };
 
-  const _createAnimation = (type: string, menuCmp: MenuI): IonicAnimation => {
-    const animationBuilder = menuAnimations.get(type);
+  const _createAnimation = (type: string, menuCmp: MenuI) => {
+    const animationBuilder = menuAnimations.get(type) as any;
     if (!animationBuilder) {
       throw new Error('animation not registered');
     }
 
-    return animationBuilder(menuCmp);
+    const animation = animationBuilder(menuCmp);
+    return animation;
   };
 
   const _getOpenSync = (): HTMLIonMenuElement | undefined => {
