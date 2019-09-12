@@ -10,11 +10,11 @@ export const mdEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop'))
+    .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 0.32);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.action-sheet-wrapper'))
+    .addElement(baseEl.querySelector('.action-sheet-wrapper')!)
     .fromTo('transform', 'translateY(100%)', 'translateY(0%)');
 
   return baseAnimation
