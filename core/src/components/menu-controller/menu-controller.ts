@@ -150,6 +150,7 @@ export class MenuController {
    */
   @Method()
   async registerAnimation(name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) {
-    return menuController.registerAnimation(name, animation);
+    // TODO
+    return menuController.registerAnimation(name, animation as any);
   }
 }
