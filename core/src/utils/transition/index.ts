@@ -146,11 +146,11 @@ const notifyViewReady = async (viewIsReady: undefined | ((enteringEl: HTMLElemen
   }
 };
 
-const playTransition = (trans: IonicAnimation | Animation, opts: TransitionOptions): Promise<Animation | boolean> => {
+const playTransition = (trans: IonicAnimation | Animation, opts: TransitionOptions): Promise<Animation | number> => {
   const progressCallback = opts.progressCallback;
 
   // TODO: Remove AnimationBuilder
-  const promise = new Promise<Animation | boolean>(resolve => trans.onFinish(resolve));
+  const promise = new Promise<Animation | number>(resolve => trans.onFinish(resolve));
 
   // cool, let's do this, start the transition
   if (progressCallback) {
