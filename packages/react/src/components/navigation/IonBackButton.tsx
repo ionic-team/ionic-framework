@@ -2,9 +2,10 @@ import { JSX as LocalJSX } from '@ionic/core';
 import React from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
+import { ReactProps } from '../ReactProps';
 import { IonBackButtonInner } from '../inner-proxies';
 
-type Props = LocalJSX.IonBackButton & {
+type Props = LocalJSX.IonBackButton & ReactProps & {
   ref?: React.RefObject<HTMLIonBackButtonElement>;
 };
 
@@ -13,13 +14,11 @@ export const IonBackButton = /*@__PURE__*/(() => class extends React.Component<P
 
   clickButton = (e: MouseEvent) => {
     const defaultHref = this.props.defaultHref;
-    if (defaultHref !== undefined) {
-      if (this.context.hasIonicRouter()) {
-        e.stopPropagation();
-        this.context.goBack(defaultHref);
-      } else {
-        window.location.href = defaultHref;
-      }
+    if (this.context.hasIonicRouter()) {
+      e.stopPropagation();
+      this.context.goBack(defaultHref);
+    } else if (defaultHref !== undefined) {
+      window.location.href = defaultHref;
     }
   }
 
