@@ -89,3 +89,10 @@
 
   background: var(--indicator-color);
 }
+
+// Segment: Scrollable
+// --------------------------------------------------
+
+:host(.segment-scrollable) ::slotted(ion-segment-button) {
+  min-width: $segment-button-md-min-width;
+}
