@@ -41,33 +41,32 @@
 }
 
 // TODO reevaluate the global variables needed
-// :host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
-  // --background: #{var(--ion-toolbar-background-unchecked, $segment-ios-background-color)};
-  // --color: #{var(--ion-toolbar-color-unchecked, var(--color))};
-// }
+:host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) {
+  --background: #{var(--ion-toolbar-background-unchecked, $segment-ios-background-color)};
+  --color: #{var(--ion-toolbar-color-unchecked, var(--color))};
+}
 
-// :host-context(ion-toolbar:not(.ion-color)):not(.ion-color) .segment-checked-indicator-background {
-//   background: #{var(--ion-toolbar-background-checked, var(--indicator-color))};
-// }
+:host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) .segment-checked-indicator-background {
+  background: #{var(--ion-toolbar-background-checked, var(--indicator-color))};
+}
 
-// :host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(ion-segment-button) {
-//   color: #{var(--ion-toolbar-color-unchecked, var(--color))};
-// }
+:host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
+  color: #{var(--ion-toolbar-color-unchecked, var(--color))};
+}
 
-// :host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(.segment-button-checked) {
-//   color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
-// }
-
+:host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(.segment-button-checked) {
+  color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
+}
 // TODO the indicator color can't be globally themed
 
 // Segment: Color Toolbar
 // --------------------------------------------------
 
-:host-context(ion-toolbar.ion-color):not(.ion-color) {
+:host-context(ion-toolbar.ion-color):host(:not(.ion-color)) {
   background: #{current-color(contrast, 0.11)};
 }
 
-:host-context(ion-toolbar.ion-color):not(.ion-color)::slotted(.segment-button-checked) {
+:host-context(ion-toolbar.ion-color):host(:not(.ion-color)) ::slotted(.segment-button-checked) {
   color: #{current-color(base)};
 }
 

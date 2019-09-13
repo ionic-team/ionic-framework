@@ -142,6 +142,8 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
+  flex: 1 0 auto;
+
   order: -1;
 
   pointer-events: none;

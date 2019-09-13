@@ -2103,7 +2103,7 @@ export namespace Components {
     /**
     * Go back to previous page in the window.history.
     */
-    'back': () => Promise<void>;
+    'back': () => Promise<void | undefined>;
     'navChanged': (direction: RouterDirection) => Promise<boolean>;
     'printDebug': () => Promise<void>;
     /**
