@@ -1,3 +1,12 @@
+## [4.9.1](https://github.com/ionic-team/ionic/compare/v4.9.0...v4.9.1) (2019-09-16)
+
+
+### Bug Fixes
+
+* **platform:** properly detect iPads running iPadOS ([#19258](https://github.com/ionic-team/ionic/issues/19258)) ([4a90096](https://github.com/ionic-team/ionic/commit/4a90096))
+
+
+
 # [4.9.0 Fluorine](https://github.com/ionic-team/ionic/compare/v4.8.1...v4.9.0) (2019-09-04)
 
 
