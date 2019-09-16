@@ -6,7 +6,10 @@ import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-title',
-  styleUrl: 'title.scss',
+  styleUrls: {
+    'ios': 'title.ios.scss',
+    'md': 'title.md.scss'
+  },
   shadow: true
 })
 export class ToolbarTitle implements ComponentInterface {
@@ -52,21 +55,14 @@ export class ToolbarTitle implements ComponentInterface {
     return (this.size !== undefined) ? this.size : 'default';
   }
 
-  private getMode() {
-    const mode = getIonMode(this);
-    const toolbar = this.el.closest('ion-toolbar');
-    return (toolbar && toolbar.mode) || mode;
-  }
-
   render() {
-    const mode = this.getMode();
+    const mode = getIonMode(this);
     const size = this.getSize();
 
     return (
       <Host
         class={{
           [mode]: true,
-          [`title-${mode}`]: true,
           [`title-${size}`]: true,
 
           ...createColorClasses(this.color),

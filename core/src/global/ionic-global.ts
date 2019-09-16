@@ -7,10 +7,10 @@ import { config, configFromSession, configFromURL, saveConfig } from './config';
 
 declare const Context: any;
 
-let mode: Mode;
+let defaultMode: Mode;
 
 export const getIonMode = (ref?: any): Mode => {
-  return (ref && getMode(ref)) || mode;
+  return (ref && getMode(ref)) || defaultMode;
 };
 
 export default () => {
@@ -37,19 +37,28 @@ export default () => {
   }
 
   // first see if the mode was set as an attribute on <html>
-  // which could have been set by the user, or by prerendering
+  // which could have been set by the user, or by pre-rendering
   // otherwise get the mode via config settings, and fallback to md
   Ionic.config = config;
-  Ionic.mode = mode = config.get('mode', (doc.documentElement.getAttribute('mode')) || (isPlatform(win, 'ios') ? 'ios' : 'md'));
-  config.set('mode', mode);
-  doc.documentElement.setAttribute('mode', mode);
-  doc.documentElement.classList.add(mode);
+  Ionic.mode = defaultMode = config.get('mode', (doc.documentElement.getAttribute('mode')) || (isPlatform(win, 'ios') ? 'ios' : 'md'));
+  config.set('mode', defaultMode);
+  doc.documentElement.setAttribute('mode', defaultMode);
+  doc.documentElement.classList.add(defaultMode);
 
   if (config.getBoolean('_testing')) {
     config.set('animated', false);
   }
 
-  setMode(
-    (elm: any) => (elm as any).mode = (elm as any).mode || elm.getAttribute('mode') || mode
-  );
+  setMode((elm: any) => {
+    while (elm) {
+      const elmMode = (elm as any).mode || elm.getAttribute('mode');
+
+      if (elmMode) {
+        return elmMode;
+      }
+
+      elm = elm.parentNode;
+    }
+    return defaultMode;
+  });
 };
