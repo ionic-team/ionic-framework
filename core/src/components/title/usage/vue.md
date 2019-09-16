@@ -33,7 +33,7 @@ Ionic provides a way to create the collapsible titles that exist on stock iOS ap
   </ion-header>
   
   <ion-content>
-    <ion-header collapse="true">              
+    <ion-header effect="collapse">              
       <ion-toolbar>      
         <ion-title size="large">Settings</ion-title>
       </ion-toolbar>
@@ -48,7 +48,7 @@ Ionic provides a way to create the collapsible titles that exist on stock iOS ap
 </template>
 ```
 
-In the example above, notice there are two `ion-header` elements. The first `ion-header` represents the "collapsed" state of your collapsible header, and the second `ion-header` represents the "expanded" state of your collapsible header. Notice that the second `ion-header` must have `collapse="true"` and must exist within `ion-content`. Additionally, in order to get the large title styling, `ion-title` must have `size="large"`.
+In the example above, notice there are two `ion-header` elements. The first `ion-header` represents the "collapsed" state of your collapsible header, and the second `ion-header` represents the "expanded" state of your collapsible header. Notice that the second `ion-header` must have `effect="collapse"` and must exist within `ion-content`. Additionally, in order to get the large title styling, `ion-title` must have `size="large"`.
 
 ```html
 <template>
@@ -62,7 +62,7 @@ In the example above, notice there are two `ion-header` elements. The first `ion
   </ion-header>
   
   <ion-content>
-    <ion-header collapse="true">              
+    <ion-header effect="collapse">              
       <ion-toolbar>      
         <ion-buttons collapse="true">
           <ion-button>Click Me</ion-button>

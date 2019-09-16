@@ -23,12 +23,12 @@ export class Header implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * If `true`, the header will collapse on scroll of the content.
-   * Only applies in `ios` mode.
+   * Describes the scroll effect that will be applied to the header
+   * `collapse` only applies in iOS mode.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
    */
-  @Prop() collapse = false;
+  @Prop() effect?: 'collapse';
 
   /**
    * If `true`, the header will be translucent.
@@ -55,7 +55,8 @@ export class Header implements ComponentInterface {
   private async checkCollapsibleHeader() {
 
     // Determine if the header can collapse
-    const canCollapse = (this.collapse && getIonMode(this) === 'ios') ? this.collapse : false;
+    const hasCollapse = this.effect === 'collapse';
+    const canCollapse = (hasCollapse && getIonMode(this) === 'ios') ? hasCollapse : false;
 
     if (!canCollapse && this.collapsibleHeaderInitialized) {
       this.destroyCollapsibleHeader();
@@ -137,6 +138,7 @@ export class Header implements ComponentInterface {
 
   render() {
     const mode = getIonMode(this);
+    const effect = this.effect || 'default';
     return (
       <Host
         role="banner"
@@ -147,7 +149,7 @@ export class Header implements ComponentInterface {
           [`header-${mode}`]: true,
 
           [`header-translucent`]: this.translucent,
-          [`header-collapse-${mode}`]: this.collapse,
+          [`header-${effect}-${mode}`]: true,
           [`header-translucent-${mode}`]: this.translucent,
         }}
       >

@@ -90,7 +90,7 @@
           </ion-header>
         
           <ion-content id="content" class="main-content">
-            <ion-header collapse>              
+            <ion-header effect="collapse">              
               <ion-toolbar>      
                 <ion-title size="large">Page Two</ion-title>
               </ion-toolbar>
@@ -110,17 +110,15 @@
         let html = '';
         for (let i = 0; i < 100; i++) {
           html += `
-            <ion-nav-link component="page-two">
-              <ion-item button color="dark">
-                <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
-                <ion-label>
-                  <h2>Heading ${i}</h2>
-                  <h3>Smaller heading ${i}</h2>
-                  <p>Paragraph ${i}</p>
-                </ion-label>
-      
-              </ion-item>
-            </ion-nav-link>
+            <ion-item button color="dark">
+              <ion-badge slot="start" class="item-badge ion-align-self-start">&nbsp;</ion-badge>
+              <ion-label>
+                <h2>Heading ${i}</h2>
+                <h3>Smaller heading ${i}</h2>
+                <p>Paragraph ${i}</p>
+              </ion-label>
+    
+            </ion-item>
           `;
         }
         return html;
@@ -141,7 +139,7 @@
           </ion-header>
         
           <ion-content id="content" class="three-content" fullscreen color="dark">
-            <ion-header collapse color="dark">              
+            <ion-header effect="collapse" color="dark">              
               <ion-toolbar color="dark">      
                 <ion-title size="large">Page Three</ion-title>
               </ion-toolbar>

@@ -871,9 +871,9 @@ export namespace Components {
   }
   interface IonHeader {
     /**
-    * If `true`, the header will collapse on scroll of the content. Only applies in `ios` mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+    * Describes the scroll effect that will be applied to the header `collapse` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
     */
-    'collapse': boolean;
+    'effect'?: 'collapse';
     /**
     * The mode determines which platform styles to use.
     */
@@ -4390,9 +4390,9 @@ declare namespace LocalJSX {
   }
   interface IonHeader extends JSXBase.HTMLAttributes<HTMLIonHeaderElement> {
     /**
-    * If `true`, the header will collapse on scroll of the content. Only applies in `ios` mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+    * Describes the scroll effect that will be applied to the header `collapse` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
     */
-    'collapse'?: boolean;
+    'effect'?: 'collapse';
     /**
     * The mode determines which platform styles to use.
     */
