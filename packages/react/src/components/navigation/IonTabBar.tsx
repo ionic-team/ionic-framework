@@ -7,7 +7,7 @@ import { IonTabButton } from '../proxies';
 
 type Props = LocalJSX.IonTabBar & {
   ref?: React.RefObject<HTMLIonTabBarElement>;
-  navigate: (path: string) => void;
+  navigate: (path: string, direction: 'back' | 'none') => void;
   currentPath: string;
   children?: React.ReactNode;
 };
@@ -68,10 +68,11 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
   }
 
   private onTabButtonClick = (e: CustomEvent<{ href: string, selected: boolean, tab: string }>) => {
-    const targetUrl = (this.state.activeTab === e.detail.tab) ?
-      this.state.tabs[e.detail.tab].originalHref :
-      this.state.tabs[e.detail.tab].currentHref;
-    this.props.navigate(targetUrl);
+    if (this.state.activeTab === e.detail.tab) {
+      this.props.navigate(this.state.tabs[e.detail.tab].originalHref, 'back');
+    } else {
+      this.props.navigate(this.state.tabs[e.detail.tab].currentHref, 'none');
+    }
   }
 
   private renderChild = (activeTab: string | null | undefined) => (child: (React.ReactElement<LocalJSX.IonTabButton & { onIonTabButtonClick: (e: CustomEvent) => void }>) | null | undefined) => {
@@ -100,8 +101,8 @@ export const IonTabBar: React.FC<LocalJSX.IonTabBar & { currentPath?: string, na
   return (
     <IonTabBarUnwrapped
       {...props as any}
-      navigate={props.navigate || ((path: string) => {
-        context.navigate(path);
+      navigate={props.navigate || ((path: string, direction: 'back' | 'none') => {
+        context.navigate(path, direction);
       })}
       currentPath={props.currentPath || context.currentPath}
     >

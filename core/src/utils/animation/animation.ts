@@ -42,7 +42,8 @@ export const createAnimation = () => {
   const _afterAddReadFunctions: any[] = [];
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
-  const supportsWebAnimations = (typeof (Element as any) === 'function') && (typeof (Element as any).prototype!.animate === 'function');
+  const supportsAnimationEffect = (typeof (AnimationEffect as any) === 'function' || typeof (window as any).AnimationEffect === 'function');
+  const supportsWebAnimations = (typeof (Element as any) === 'function') && (typeof (Element as any).prototype!.animate === 'function') && supportsAnimationEffect;
   const ANIMATION_END_FALLBACK_PADDING_MS = 100;
 
   /**
@@ -291,7 +292,7 @@ export const createAnimation = () => {
     if (_fill !== undefined) { return _fill; }
     if (parentAnimation) { return parentAnimation.getFill(); }
 
-    return undefined;
+    return 'both';
   };
 
   /**
@@ -302,7 +303,7 @@ export const createAnimation = () => {
     if (_direction !== undefined) { return _direction; }
     if (parentAnimation) { return parentAnimation.getDirection(); }
 
-    return undefined;
+    return 'normal';
 
   };
 
@@ -314,7 +315,7 @@ export const createAnimation = () => {
     if (_easing !== undefined) { return _easing; }
     if (parentAnimation) { return parentAnimation.getEasing(); }
 
-    return undefined;
+    return 'linear';
   };
 
   /**
@@ -326,7 +327,7 @@ export const createAnimation = () => {
     if (_duration !== undefined) { return _duration; }
     if (parentAnimation) { return parentAnimation.getDuration(); }
 
-    return undefined;
+    return 0;
   };
 
   /**
@@ -336,7 +337,7 @@ export const createAnimation = () => {
     if (_iterations !== undefined) { return _iterations; }
     if (parentAnimation) { return parentAnimation.getIterations(); }
 
-    return undefined;
+    return 1;
   };
 
   /**
@@ -347,7 +348,7 @@ export const createAnimation = () => {
     if (_delay !== undefined) { return _delay; }
     if (parentAnimation) { return parentAnimation.getDelay(); }
 
-    return undefined;
+    return 0;
   };
 
   /**
@@ -410,6 +411,15 @@ export const createAnimation = () => {
    * to complete one cycle.
    */
   const duration = (animationDuration: number) => {
+    /**
+     * CSS Animation Durations of 0ms work fine on Chrome
+     * but do not run on Safari, so force it to 1ms to
+     * get it to run on both platforms.
+     */
+    if (!supportsWebAnimations && animationDuration === 0) {
+      animationDuration = 1;
+    }
+
     _duration = animationDuration;
 
     update(true);

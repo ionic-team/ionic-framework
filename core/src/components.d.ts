@@ -2706,9 +2706,9 @@ export namespace Components {
     */
     'color'?: Color;
     /**
-    * The size of the toolbar title. Only applies in `ios` mode.
+    * The size of the toolbar title.
     */
-    'size'?: 'large' | undefined;
+    'size'?: 'large' | 'small';
   }
   interface IonToast {
     /**
@@ -5579,10 +5579,6 @@ declare namespace LocalJSX {
     */
     'onIonChange'?: (event: CustomEvent<SegmentChangeEventDetail>) => void;
     /**
-    * Emitted when the styles change.
-    */
-    'onIonStyle'?: (event: CustomEvent<StyleEventDetail>) => void;
-    /**
     * If `true`, the segment buttons will overflow and the user can swipe to see them.
     */
     'scrollable'?: boolean;
@@ -6035,9 +6031,9 @@ declare namespace LocalJSX {
     */
     'color'?: Color;
     /**
-    * The size of the toolbar title. Only applies in `ios` mode.
+    * The size of the toolbar title.
     */
-    'size'?: 'large' | undefined;
+    'size'?: 'large' | 'small';
   }
   interface IonToast extends JSXBase.HTMLAttributes<HTMLIonToastElement> {
     /**

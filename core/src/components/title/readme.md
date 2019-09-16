@@ -15,6 +15,14 @@
   <ion-title>Default Title</ion-title>
 </ion-toolbar>
 
+<!-- Small title above a default title -->
+<ion-toolbar>
+  <ion-title size="small">Small Title above a Default Title</ion-title>
+</ion-toolbar>
+<ion-toolbar>
+  <ion-title>Default Title</ion-title>
+</ion-toolbar>
+
 <!-- Large title -->
 <ion-toolbar>
   <ion-title size="large">Large Title</ion-title>
@@ -93,6 +101,14 @@ import {
 
 export const ToolbarExample: React.FC = () => (
   {/*-- Default title --*/}
+  <IonToolbar>
+    <IonTitle>Default Title</IonTitle>
+  </IonToolbar>
+  
+  {/*-- Small title --*/}
+  <IonToolbar>
+    <IonTitle size="small">Small Title above a Default Title</IonTitle>
+  </IonToolbar>
   <IonToolbar>
     <IonTitle>Default Title</IonTitle>
   </IonToolbar>
@@ -202,6 +218,14 @@ In this example, notice that we have added two sets of `IonButtons` both with `c
     <ion-title>Default Title</ion-title>
   </ion-toolbar>
   
+  <!-- Small title -->
+  <ion-toolbar>
+    <ion-title size="small">Small Title above a Default Title</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>Default Title</ion-title>
+  </ion-toolbar>
+  
   <!-- Large title -->
   <ion-toolbar>
     <ion-title size="large">Large Title</ion-title>
@@ -277,10 +301,10 @@ In this example, notice that we have added two sets of `ion-buttons` both with `
 
 ## Properties
 
-| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                   | Default     |
-| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
-| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`  | `undefined` |
-| `size`   | `size`    | The size of the toolbar title. Only applies in `ios` mode.                                                                                                                                                                                                             | `"large" \| undefined` | `undefined` |
+| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type                              | Default     |
+| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ----------- |
+| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`             | `undefined` |
+| `size`   | `size`    | The size of the toolbar title.                                                                                                                                                                                                                                         | `"large" \| "small" \| undefined` | `undefined` |
 
 
 ## CSS Custom Properties
