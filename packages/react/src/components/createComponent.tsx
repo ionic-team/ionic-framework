@@ -44,6 +44,10 @@ export const createReactComponent = <PropType, ElementType>(
       const { href, routerDirection } = this.props;
       if (href !== undefined && this.context.hasIonicRouter()) {
         e.preventDefault();
+        if (href.startsWith("http:") || href.startsWith("https:") || href.startsWith("//")) {
+          window.location.href = href;
+          return;
+        }
         this.context.navigate(href, routerDirection);
       }
     }
