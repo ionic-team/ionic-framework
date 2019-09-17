@@ -174,7 +174,7 @@ export class Textarea implements ComponentInterface {
     this.debounceChanged();
     if (Build.isBrowser) {
       this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
-        detail: this.el
+        detail: this.nativeInput
       }));
     }
   }
@@ -182,7 +182,7 @@ export class Textarea implements ComponentInterface {
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
-        detail: this.el
+        detail: this.nativeInput
       }));
     }
   }
@@ -311,7 +311,7 @@ export class Textarea implements ComponentInterface {
         }}
       >
         <textarea
-          class="native-textarea"
+          class="native-textarea ion-input"
           ref={el => this.nativeInput = el}
           autoCapitalize={this.autocapitalize}
           autoFocus={this.autofocus}

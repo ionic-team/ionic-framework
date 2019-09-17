@@ -8,13 +8,12 @@ export interface ScrollData {
   inputSafeY: number;
 }
 
-export const getScrollData = (componentEl: HTMLElement, contentEl: HTMLElement, keyboardHeight: number): ScrollData => {
-  const itemEl = componentEl.closest('ion-item,[ion-item]') as HTMLElement || componentEl;
+export const getScrollData = (itemEl: HTMLElement, contentEl: HTMLElement, keyboardHeight: number): ScrollData => {
   return calcScrollData(
     itemEl.getBoundingClientRect(),
     contentEl.getBoundingClientRect(),
     keyboardHeight,
-    (componentEl as any).ownerDocument.defaultView.innerHeight
+    (itemEl as any).ownerDocument.defaultView.innerHeight
   );
 };
 

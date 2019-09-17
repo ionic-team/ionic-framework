@@ -223,7 +223,7 @@ export class Input implements ComponentInterface {
     this.debounceChanged();
     if (Build.isBrowser) {
       this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
-        detail: this.el
+        detail: this.nativeInput
       }));
     }
   }
@@ -231,7 +231,7 @@ export class Input implements ComponentInterface {
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
-        detail: this.el
+        detail: this.nativeInput
       }));
     }
   }
@@ -363,7 +363,7 @@ export class Input implements ComponentInterface {
         }}
       >
         <input
-          class="native-input"
+          class="native-input ion-input"
           ref={input => this.nativeInput = input}
           aria-labelledby={labelId}
           disabled={this.disabled}

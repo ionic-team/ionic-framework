@@ -18,27 +18,21 @@ export const startInputShims = (config: Config) => {
   const hideCaret = config.getBoolean('hideCaretOnScroll', true);
   const inputBlurring = config.getBoolean('inputBlurring', true);
   const scrollPadding = config.getBoolean('scrollPadding', true);
-  const inputs = Array.from(doc.querySelectorAll('ion-input, ion-textarea')) as HTMLElement[];
+  const inputs = Array.from(doc.querySelectorAll('input.ion-input,textarea.ion-input')) as (HTMLInputElement | HTMLTextAreaElement)[];
 
   const hideCaretMap = new WeakMap<HTMLElement, () => void>();
   const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
 
-  const registerInput = (componentEl: HTMLElement) => {
-    const inputEl = (componentEl.shadowRoot || componentEl).querySelector('input') || (componentEl.shadowRoot || componentEl).querySelector('textarea');
-    const scrollEl = componentEl.closest('ion-content');
-
-    if (!inputEl) {
-      return;
+  const registerInput = (inputEl: HTMLInputElement | HTMLTextAreaElement) => {
+    const scrollEl = inputEl.closest('ion-content');
+    if (HIDE_CARET && !!scrollEl && hideCaret && !hideCaretMap.has(inputEl)) {
+      const rmFn = enableHideCaretOnScroll(inputEl, scrollEl);
+      hideCaretMap.set(inputEl, rmFn);
     }
 
-    if (HIDE_CARET && !!scrollEl && hideCaret && !hideCaretMap.has(componentEl)) {
-      const rmFn = enableHideCaretOnScroll(componentEl, inputEl, scrollEl);
-      hideCaretMap.set(componentEl, rmFn);
-    }
-
-    if (SCROLL_ASSIST && !!scrollEl && scrollAssist && !scrollAssistMap.has(componentEl)) {
-      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, keyboardHeight);
-      scrollAssistMap.set(componentEl, rmFn);
+    if (SCROLL_ASSIST && !!scrollEl && scrollAssist && !scrollAssistMap.has(inputEl)) {
+      const rmFn = enableScrollAssist(inputEl, scrollEl, keyboardHeight);
+      scrollAssistMap.set(inputEl, rmFn);
     }
   };
 
@@ -84,4 +78,4 @@ export const startInputShims = (config: Config) => {
   }) as any);
 };
 
-type InputEvent = CustomEvent<HTMLElement>;
+type InputEvent = CustomEvent<HTMLInputElement | HTMLTextAreaElement>;

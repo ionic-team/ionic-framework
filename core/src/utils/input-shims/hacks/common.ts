@@ -1,19 +1,18 @@
 const cloneMap = new WeakMap<HTMLElement, HTMLElement>();
 
 export const relocateInput = (
-  componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
   shouldRelocate: boolean,
   inputRelativeY = 0
 ) => {
-  if (cloneMap.has(componentEl) === shouldRelocate) {
+  if (cloneMap.has(inputEl) === shouldRelocate) {
     return;
   }
 
   if (shouldRelocate) {
-    addClone(componentEl, inputEl, inputRelativeY);
+    addClone(inputEl, inputRelativeY);
   } else {
-    removeClone(componentEl, inputEl);
+    removeClone(inputEl);
   }
 };
 
@@ -21,7 +20,7 @@ export const isFocused = (input: HTMLInputElement | HTMLTextAreaElement): boolea
   return input === (input as any).getRootNode().activeElement;
 };
 
-const addClone = (componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLTextAreaElement, inputRelativeY: number) => {
+const addClone = (inputEl: HTMLInputElement | HTMLTextAreaElement, inputRelativeY: number) => {
   // this allows for the actual input to receive the focus from
   // the user's touch event, but before it receives focus, it
   // moves the actual input to a location that will not screw
@@ -38,20 +37,20 @@ const addClone = (componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLText
   clonedEl.classList.add('cloned-input');
   clonedEl.tabIndex = -1;
   parentEl.appendChild(clonedEl);
-  cloneMap.set(componentEl, clonedEl);
+  cloneMap.set(inputEl, clonedEl);
 
-  const doc = componentEl.ownerDocument!;
+  const doc = inputEl.ownerDocument!;
   const tx = doc.dir === 'rtl' ? 9999 : -9999;
-  componentEl.style.pointerEvents = 'none';
+  inputEl.style.pointerEvents = 'none';
   inputEl.style.transform = `translate3d(${tx}px,${inputRelativeY}px,0) scale(0)`;
 };
 
-const removeClone = (componentEl: HTMLElement, inputEl: HTMLElement) => {
-  const clone = cloneMap.get(componentEl);
+const removeClone = (inputEl: HTMLElement) => {
+  const clone = cloneMap.get(inputEl);
   if (clone) {
-    cloneMap.delete(componentEl);
+    cloneMap.delete(inputEl);
     clone.remove();
   }
-  componentEl.style.pointerEvents = '';
+  inputEl.style.pointerEvents = '';
   inputEl.style.transform = '';
 };

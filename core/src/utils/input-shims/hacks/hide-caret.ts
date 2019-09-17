@@ -1,17 +1,20 @@
 import { isFocused, relocateInput } from './common';
 
-export const enableHideCaretOnScroll = (componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLTextAreaElement | undefined, scrollEl: HTMLIonContentElement | undefined) => {
+export const enableHideCaretOnScroll = (
+  inputEl: HTMLInputElement | HTMLTextAreaElement | undefined,
+  scrollEl: HTMLIonContentElement | undefined
+) => {
   if (!scrollEl || !inputEl) {
     return () => { return; };
   }
 
   const scrollHideCaret = (shouldHideCaret: boolean) => {
     if (isFocused(inputEl)) {
-      relocateInput(componentEl, inputEl, shouldHideCaret);
+      relocateInput(inputEl, shouldHideCaret);
     }
   };
 
-  const onBlur = () => relocateInput(componentEl, inputEl, false);
+  const onBlur = () => relocateInput(inputEl, false);
   const hideCaret = () => scrollHideCaret(true);
   const showCaret = () => scrollHideCaret(false);
 
