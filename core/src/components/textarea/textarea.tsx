@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
@@ -172,19 +172,6 @@ export class Textarea implements ComponentInterface {
   connectedCallback() {
     this.emitStyle();
     this.debounceChanged();
-    if (Build.isBrowser) {
-      this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
-        detail: this.nativeInput
-      }));
-    }
-  }
-
-  disconnectedCallback() {
-    if (Build.isBrowser) {
-      document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
-        detail: this.nativeInput
-      }));
-    }
   }
 
   componentDidLoad() {

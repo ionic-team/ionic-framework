@@ -18,9 +18,9 @@ export const enableHideCaretOnScroll = (
   const hideCaret = () => scrollHideCaret(true);
   const showCaret = () => scrollHideCaret(false);
 
-  scrollEl.addEventListener('ionScrollStart', hideCaret);
-  scrollEl.addEventListener('ionScrollEnd', showCaret);
-  inputEl.addEventListener('blur', onBlur);
+  // scrollEl.addEventListener('ionScrollStart', hideCaret);
+  // scrollEl.addEventListener('ionScrollEnd', showCaret);
+  // inputEl.addEventListener('blur', onBlur);
 
   return () => {
     scrollEl.removeEventListener('ionScrollStart', hideCaret);

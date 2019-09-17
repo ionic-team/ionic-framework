@@ -21,7 +21,7 @@
     </ion-header>
 
     <ion-content id="content">
-      <ion-list>
+      <ion-list id="item-list">
         <ion-item>
           <ion-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
         </ion-item>
@@ -103,14 +103,15 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="fixed">Ionic hacks</ion-label>
-          <div type="number" value="333" class="input input-md hydrated">
-            <!---->
-            <input aria-disabled="false" autocapitalize="none" autocomplete="off" autocorrect="off" autofocus="false" class="ion-input native-input native-input-md"
-              spellcheck="false" type="number">
-            <button type="button" class="input-clear-icon" hidden=""></button>
-          </div>
-        </ion-item>
+            <ion-label position="fixed">Ionic hacks</ion-label>
+            <div type="number" value="333" class="input input-md hydrated">
+              <!---->
+              <input aria-disabled="false" autocapitalize="none" autocomplete="off" autocorrect="off" autofocus="false" class="ion-input native-input native-input-md"
+                spellcheck="false" type="number">
+              <button type="button" class="input-clear-icon" hidden=""></button>
+            </div>
+          </ion-item>
+
       </ion-list>
 
       <div class="ion-text-center">
@@ -146,6 +147,18 @@
     </ion-content>
 
     <script>
+      setTimeout(() => {
+        const item = document.createElement('ion-item');
+        item.innerHTML = `
+          <ion-label position="fixed">Ionic hacks</ion-label>
+          <div type="number" value="333" class="input input-md hydrated">
+            <!---->
+            <input aria-disabled="false" autocapitalize="none" autocomplete="off" autocorrect="off" autofocus="false" class="ion-input native-input native-input-md"
+              spellcheck="false" type="number">
+            <button type="button" class="input-clear-icon" hidden=""></button>
+          </div>`;
+        document.querySelector('#item-list').appendChild(item);
+      }, 4000);
       function toggleBoolean(id, prop) {
         var el = document.getElementById(id);
 

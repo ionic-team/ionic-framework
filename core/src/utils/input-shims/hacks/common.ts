@@ -34,23 +34,30 @@ const addClone = (inputEl: HTMLInputElement | HTMLTextAreaElement, inputRelative
 
   // DOM WRITES
   const clonedEl = inputEl.cloneNode(false) as HTMLElement;
-  clonedEl.classList.add('cloned-input');
+  clonedEl.classList.remove('ion-input');
+  clonedEl.style.pointerEvents = 'none';
   clonedEl.tabIndex = -1;
-  parentEl.appendChild(clonedEl);
+  parentEl.insertBefore(clonedEl, inputEl);
   cloneMap.set(inputEl, clonedEl);
 
   const doc = inputEl.ownerDocument!;
   const tx = doc.dir === 'rtl' ? 9999 : -9999;
   inputEl.style.pointerEvents = 'none';
+  inputEl.style.position = 'absolute';
+  inputEl.style.top = '0';
+  inputEl.style.left = '0';
   inputEl.style.transform = `translate3d(${tx}px,${inputRelativeY}px,0) scale(0)`;
 };
 
 const removeClone = (inputEl: HTMLElement) => {
-  const clone = cloneMap.get(inputEl);
-  if (clone) {
+  const clonedEl = cloneMap.get(inputEl);
+  if (clonedEl) {
     cloneMap.delete(inputEl);
-    clone.remove();
+    clonedEl.remove();
   }
-  inputEl.style.pointerEvents = '';
-  inputEl.style.transform = '';
+  inputEl.style.removeProperty('position');
+  inputEl.style.removeProperty('top');
+  inputEl.style.removeProperty('left');
+  inputEl.style.removeProperty('pointer-events');
+  inputEl.style.removeProperty('transform');
 };

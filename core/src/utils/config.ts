@@ -180,6 +180,7 @@ export interface IonicConfig {
 
   // INTERNAL configs
   persistConfig?: boolean;
+  scrollAssistSelector?: string;
   _forceStatusbarPadding?: boolean;
   _testing?: boolean;
   _zoneGate?: (h: () => any) => any;
