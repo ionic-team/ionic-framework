@@ -7,12 +7,13 @@ import { createAnimation } from '../../../utils/animation/animation';
 export const iosEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
+  const wrapperAnimation = createAnimation()
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 0.4);
 
-  const wrapperAnimation = createAnimation()
+  wrapperAnimation
     .addElement(baseEl.querySelector('.modal-wrapper')!)
     .beforeStyles({ 'opacity': 1 })
     .fromTo('transform', 'translateY(100%)', 'translateY(0%)');

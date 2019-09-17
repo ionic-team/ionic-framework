@@ -40,7 +40,7 @@ export interface Animation {
    * Set the keyframes for the animation.
    * TODO: proper types
    */
-  keyframes(keyframes: AnimationKeyFrame[]): Animation;
+  keyframes(keyframes: AnimationKeyFrames): Animation;
 
   /**
    * Group one or more animations together to be controlled by a parent animation.
@@ -90,7 +90,7 @@ export interface Animation {
   /**
    * Get an array of keyframes for the animation.
    */
-  getKeyframes(): AnimationKeyFrame[];
+  getKeyframes(): AnimationKeyFrames;
 
   /**
    * Returns the animation's direction.
@@ -213,11 +213,6 @@ export interface Animation {
    */
   onFinish(callback: AnimationLifecycle, opts?: AnimationOnFinishOptions): Animation;
 
-  /**
-   * Clears all callbacks
-   */
-  clearOnFinish(): Animation;
-
   /** @deprecated */
   playAsync(): Promise<void>;
   /** @deprecated */
@@ -230,18 +225,17 @@ export interface AnimationOnFinishOptions {
   oneTimeCallback: boolean;
 }
 
-export interface AnimationKeyFrame {
-  offset?: number;
-  opacity?: number;
-  transform?: string;
-  top?: string;
-  left?: string;
-  bottom?: string;
-  right?: string;
-  background?: string;
+export type AnimationKeyFrames = [AnimationKeyFrameEdge, AnimationKeyFrameEdge] | AnimationKeyFrame[];
 
-  [key: string]: any;
+export interface AnimationKeyFrame extends AnimationStyles {
+  offset: number;
 }
+
+export interface AnimationKeyFrameEdge extends AnimationStyles {
+  offset?: number;
+}
+
+export type AnimationStyles = Omit< Record<string, string>, 'offset'>;
 
 export interface AnimationPlayOptions {
   sync: boolean;
