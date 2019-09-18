@@ -37,14 +37,16 @@ export const createOverlayComponent = <T extends object, OverlayType extends Ove
     }
 
     componentDidMount() {
-      // TODO
       if (this.props.isOpen as boolean) {
         this.present();
       }
     }
 
-    async componentDidUpdate(prevProps: Props) {
+    componentWillUnmount() {
+      if (this.overlay) { this.overlay.dismiss(); }
+    }
 
+    async componentDidUpdate(prevProps: Props) {
       if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === true) {
         this.present(prevProps);
       }
