@@ -340,7 +340,9 @@ export class Content implements ComponentInterface {
           </div>
         ) : null}
 
-        <slot name="fixed"></slot>
+        <div class="fixed-slot-position">
+          <slot name="fixed"></slot>
+        </div>
       </Host>
     );
   }
