@@ -61,7 +61,7 @@ export class Segment implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('value')
-  valueChanged(value: string | undefined) {
+  protected valueChanged(value: string | undefined) {
     if (this.didInit) {
       this.updateButtons();
       this.ionChange.emit({ value });
