@@ -49,6 +49,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
       view.show = false;
       view.ionPageElement = undefined;
       view.isIonRoute = false;
+      view.prevId = undefined;
       view.key = generateId();
       this.setState({
         viewStacks
@@ -96,7 +97,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
                 * If the page is being pushed into the stack by another view,
                 * record the view that originally directed to the new view for back button purposes.
                 */
-                enteringView.prevId = leavingView.id;
+                enteringView.prevId = enteringView.prevId || leavingView.id;
               } else {
                 direction = direction || 'back';
                 leavingView.mount = false;
