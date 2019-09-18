@@ -1,5 +1,11 @@
+# [4.9.0-rc3]
 
-# [4.8.0-rc2]
+## Bug fixes
+
+Dismiss overlay component on unmount, fixes [#19377](https://github.com/ionic-team/ionic/issues/19377)
+
+
+# [4.9.0-rc2]
 
 ## Features
 
