@@ -13,7 +13,7 @@ const HIDE_CARET = true;
 
 export const startInputShims = (config: Config) => {
   const doc = document;
-  const keyboardHeight = config.getNumber('keyboardHeight', 290);
+  const keyboardHeight = config.getNumber('keyboardHeight', 300);
   const scrollAssist = config.getBoolean('scrollAssist', true);
   const hideCaret = config.getBoolean('hideCaretOnScroll', true);
   const inputBlurring = config.getBoolean('inputBlurring', true);

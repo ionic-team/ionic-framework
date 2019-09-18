@@ -30,12 +30,17 @@ const addClone = (inputEl: HTMLInputElement | HTMLTextAreaElement, inputRelative
   // while the native input fakes out the browser by relocating itself
   // before it receives the actual focus event
   // We hide the focused input (with the visible caret) invisible by making it scale(0),
-  const parentEl = inputEl.parentNode!;
+  const parentEl = inputEl.parentElement!;
+  parentEl.style.position = 'relative';
 
   // DOM WRITES
   const clonedEl = inputEl.cloneNode(false) as HTMLElement;
   clonedEl.classList.remove('ion-input');
   clonedEl.style.pointerEvents = 'none';
+  clonedEl.style.position = 'absolute';
+  clonedEl.style.top = '0';
+  clonedEl.style.left = '0';
+
   clonedEl.tabIndex = -1;
   parentEl.insertBefore(clonedEl, inputEl);
   cloneMap.set(inputEl, clonedEl);
@@ -43,9 +48,6 @@ const addClone = (inputEl: HTMLInputElement | HTMLTextAreaElement, inputRelative
   const doc = inputEl.ownerDocument!;
   const tx = doc.dir === 'rtl' ? 9999 : -9999;
   inputEl.style.pointerEvents = 'none';
-  inputEl.style.position = 'absolute';
-  inputEl.style.top = '0';
-  inputEl.style.left = '0';
   inputEl.style.transform = `translate3d(${tx}px,${inputRelativeY}px,0) scale(0)`;
 };
 
@@ -55,9 +57,6 @@ const removeClone = (inputEl: HTMLElement) => {
     cloneMap.delete(inputEl);
     clonedEl.remove();
   }
-  inputEl.style.removeProperty('position');
-  inputEl.style.removeProperty('top');
-  inputEl.style.removeProperty('left');
   inputEl.style.removeProperty('pointer-events');
   inputEl.style.removeProperty('transform');
 };

@@ -46,7 +46,7 @@ const jsSetFocus = (
   keyboardHeight: number
 ) => {
   const scrollData = getScrollData(inputEl, contentEl, keyboardHeight);
-  if (Math.abs(scrollData.scrollAmount) < 4) {
+  if (scrollData.inputSafeY === 0) {
     // the text input is in a safe position that doesn't
     // require it to be scrolled into view, just set focus now
     inputEl.focus();
