@@ -2,7 +2,7 @@
 
 ## Bug fixes
 
-Dismiss overlay component on unmount, fixes [#19377](https://github.com/ionic-team/ionic/issues/19377)
+Dismiss overlay component on unmount, [3c2694](https://github.com/ionic-team/ionic/commit/3c26946d47b37d42dfaa3294cfb6bf8f0ef11aa4), fixes [#19377](https://github.com/ionic-team/ionic/issues/19377)
 
 
 # [4.9.0-rc2]
