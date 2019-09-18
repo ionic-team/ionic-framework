@@ -12,7 +12,7 @@ export const appInitialize = (config: Config, doc: Document, zone: NgZone) => {
     const win: IonicWindow | undefined = doc.defaultView as any;
     if (win) {
       if (didInitialize) {
-        console.warn('Ionic Angular was already initialized. Make sure IonicModule.forRoot() is jus called once per app.');
+        console.warn('Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.');
       }
       didInitialize = true;
       const Ionic = win.Ionic = win.Ionic || {};
