@@ -10,6 +10,7 @@ export { NavDelegate } from './directives/navigation/nav-delegate';
 export { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 export { RouterLinkDelegate } from './directives/navigation/router-link-delegate';
 export { NavParams } from './directives/navigation/nav-params';
+export { ViewLifecycles } from './directives/navigation/view-lifecycles';
 export { IonVirtualScroll } from './directives/virtual-scroll/virtual-scroll';
 export { VirtualItem } from './directives/virtual-scroll/virtual-item';
 export { VirtualHeader } from './directives/virtual-scroll/virtual-header';

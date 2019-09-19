@@ -9,6 +9,7 @@ import { NavController } from '../../providers/nav-controller';
 
 import { StackController } from './stack-controller';
 import { RouteView, getUrl } from './stack-utils';
+import { ViewLifecycles } from './view-lifecycles';
 
 @Directive({
   selector: 'ion-router-outlet',
@@ -171,7 +172,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
     this._activatedRoute = activatedRoute;
 
-    let cmpRef: any;
+    let cmpRef: ComponentRef<any>;
     let enteringView = this.stackCtrl.getExistingView(activatedRoute);
     if (enteringView) {
       cmpRef = this.activated = enteringView.ref;
@@ -195,8 +196,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       // over its lifecycle in the stack.
       const component$ = new BehaviorSubject<any>(null);
       const activatedRouteProxy = this.createActivatedRouteProxy(component$, activatedRoute);
-
-      const injector = new OutletInjector(activatedRouteProxy, childContexts, this.location.injector);
+      const viewLifecycles = new ViewLifecycles();
+      const injector = new OutletInjector(viewLifecycles, activatedRouteProxy, childContexts, this.location.injector)
       cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
 
       // Once the component is created we can push it to our local subject supplied to the proxy
@@ -205,6 +206,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
       enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
+      viewLifecycles.bind(enteringView.element);
 
       // Store references to the proxy by component
       this.proxyMap.set(cmpRef.instance, activatedRouteProxy);
@@ -311,12 +313,16 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
 class OutletInjector implements Injector {
   constructor(
+    private viewLifecycles: ViewLifecycles,
     private route: ActivatedRoute,
     private childContexts: ChildrenOutletContexts,
     private parent: Injector
   ) {}
 
   get(token: any, notFoundValue?: any): any {
+    if (token === ViewLifecycles) {
+      return this.viewLifecycles;
+    }
     if (token === ActivatedRoute) {
       return this.route;
     }
