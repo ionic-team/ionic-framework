@@ -1,4 +1,4 @@
-# [4.9.0-rc3]
+# [4.10.0-rc3]
 
 ## Bug fixes
 
@@ -6,6 +6,10 @@ Pages should maintain their original previous page id [2afcb6](https://github.co
 
 Dismiss overlay component on unmount, [3c2694](https://github.com/ionic-team/ionic/commit/3c26946d47b37d42dfaa3294cfb6bf8f0ef11aa4), fixes [#19377](https://github.com/ionic-team/ionic/issues/19377)
 
+## Breaking Changes
+
+### Components with href attributes and the new routerLink prop
+As of RC3, components that use the href prop (`IonButton`, `IonItem`, etc..), no longer run these links through the router. As a result, page transitions are no longer applied to these links. To maintain page transitions, use the new `routerLink` prop instead. The href prop should be used when you want to enforce a full browser transition on the page, or when you need to link to an external resource.
 
 # [4.9.0-rc2]
 
