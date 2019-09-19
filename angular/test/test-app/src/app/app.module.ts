@@ -30,11 +30,11 @@ import { NavigationPage1Component } from './navigation-page1/navigation-page1.co
 import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
 import { NavigationPage3Component } from './navigation-page3/navigation-page3.component';
 import { AlertComponent } from './alert/alert.component';
+import { AppCommonModule } from './common.module';
 import { LifecyclesLoggerComponent } from './lifecycles-logger/lifecycles-logger.component';
 
 @NgModule({
   declarations: [
-    LifecyclesLoggerComponent,
     AppComponent,
     InputsComponent,
     ModalComponent,
@@ -58,12 +58,13 @@ import { LifecyclesLoggerComponent } from './lifecycles-logger/lifecycles-logger
     NavigationPage1Component,
     NavigationPage2Component,
     NavigationPage3Component,
-    AlertComponent
+    AlertComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     FormsModule,
+    AppCommonModule,
     ReactiveFormsModule,
     IonicModule.forRoot(),
   ],

@@ -1,5 +1,5 @@
 import { browser, element, by, ElementFinder } from 'protractor';
-import { waitTime, testStack, handleErrorMessages } from './utils';
+import { waitTime, testStack, handleErrorMessages, testLifeCycle } from './utils';
 
 describe('tabs', () => {
   afterEach(() => {
@@ -15,6 +15,12 @@ describe('tabs', () => {
       await testTabTitle('Tab 1 - Page 1');
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab1']);
       await testState(1, 'account');
+      await testLifeCycle('app-tabs-tab1', {
+        ionViewWillEnter: 1,
+        ionViewDidEnter: 1,
+        ionViewWillLeave: 0,
+        ionViewDidLeave: 0,
+      });
     });
 
     it('should navigate between tabs and ionChange events should be dispatched ', async () => {
@@ -96,6 +102,12 @@ describe('tabs', () => {
         'app-tabs-tab1',
         'app-tabs-tab2'
       ]);
+      await testLifeCycle('app-tabs-tab1', {
+        ionViewWillEnter: 2,
+        ionViewDidEnter: 2,
+        ionViewWillLeave: 1,
+        ionViewDidLeave: 1,
+      });
     });
 
     it('should switch tabs and go back', async () => {

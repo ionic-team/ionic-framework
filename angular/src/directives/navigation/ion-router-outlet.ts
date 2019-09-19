@@ -197,7 +197,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const component$ = new BehaviorSubject<any>(null);
       const activatedRouteProxy = this.createActivatedRouteProxy(component$, activatedRoute);
       const viewLifecycles = new ViewLifecycles();
-      const injector = new OutletInjector(viewLifecycles, activatedRouteProxy, childContexts, this.location.injector)
+      const injector = new OutletInjector(viewLifecycles, activatedRouteProxy, childContexts, this.location.injector);
       cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
 
       // Once the component is created we can push it to our local subject supplied to the proxy

@@ -1,8 +1,8 @@
 import { ApplicationRef, ComponentFactoryResolver, Injectable, Injector, NgZone, ViewContainerRef } from '@angular/core';
 import { FrameworkDelegate, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE, LIFECYCLE_WILL_UNLOAD } from '@ionic/core';
-import { ViewLifecycles } from 'src/directives/navigation/view-lifecycles';
 
 import { NavParams } from '../directives/navigation/nav-params';
+import { ViewLifecycles } from '../directives/navigation/view-lifecycles';
 
 @Injectable()
 export class AngularDelegate {
@@ -81,8 +81,8 @@ export const attachView = (
   const navParams = new NavParams(params);
   const childInjector = Injector.create({
     providers: [
-      { provide: ViewLifecycles, useExisting: viewLifecycles },
-      { provide: NavParams, useExisting: navParams }
+      { provide: ViewLifecycles, useValue: viewLifecycles },
+      { provide: NavParams, useValue: navParams }
     ],
     parent: injector
   });

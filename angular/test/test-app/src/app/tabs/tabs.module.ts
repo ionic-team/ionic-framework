@@ -8,6 +8,7 @@ import { TabsComponent } from './tabs.component';
 import { TabsTab1Component } from '../tabs-tab1/tabs-tab1.component';
 import { TabsTab2Component } from '../tabs-tab2/tabs-tab2.component';
 import { TabsTab1NestedComponent } from '../tabs-tab1-nested/tabs-tab1-nested.component';
+import { AppCommonModule } from '../common.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { TabsTab1NestedComponent } from '../tabs-tab1-nested/tabs-tab1-nested.co
     IonicModule,
     CommonModule,
     FormsModule,
-    TabsPageRoutingModule
+    TabsPageRoutingModule,
+    AppCommonModule
   ],
   declarations: [
     TabsComponent,

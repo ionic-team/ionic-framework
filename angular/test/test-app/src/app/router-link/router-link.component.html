@@ -7,14 +7,12 @@
 </ion-header>
 <ion-content class="ion-padding">
   <p>ngOnInit: <span id="ngOnInit">{{onInit}}</span></p>
-
   <p>ionViewWillEnter: <span id="ionViewWillEnter">{{willEnter}}</span></p>
   <p>ionViewDidEnter: <span id="ionViewDidEnter">{{didEnter}}</span></p>
   <p>ionViewWillLeave: <span id="ionViewWillLeave">{{willLeave}}</span></p>
   <p>ionViewDidLeave: <span id="ionViewDidLeave">{{didLeave}}</span></p>
   <p>Change Detections: <span id="counter">{{counter()}}</span></p>
 
-  <app-lifecycles-logger></app-lifecycles-logger>
   <p>
     <ion-button routerLink="/router-link-page" expand="block" color="dark" id="routerLink">ion-button[routerLink]</ion-button>
     <ion-button routerLink="/router-link-page" routerDirection="root" expand="block" color="dark" id="routerLink-root">ion-button[routerLink] (direction:root)</ion-button>
