@@ -2,40 +2,35 @@ import { Observable, Subscriber } from 'rxjs';
 
 export class ViewLifecycles {
 
+  private targetResolve: (target: HTMLElement) => void;
+
   readonly ionViewWillEnter$: Observable<Event>;
   readonly ionViewDidEnter$: Observable<Event>;
   readonly ionViewWillLeave$: Observable<Event>;
   readonly ionViewDidLeave$: Observable<Event>;
-
-  private targetResolve: (target: HTMLElement) => void;
 
   constructor() {
     const targetPromise = new Promise<HTMLElement>(resolve => {
       this.targetResolve = resolve;
     });
     this.ionViewWillEnter$ = new Observable(o => {
-      targetPromise.then(target => {
-        bindEvent(target, 'ionViewWillEnter', o);
-      });
+      targetPromise.then(target => bindEvent(target, 'ionViewWillEnter', o));
     });
     this.ionViewDidEnter$ = new Observable(o => {
-      targetPromise.then(target => {
-        bindEvent(target, 'ionViewDidEnter', o);
-      });
+      targetPromise.then(target => bindEvent(target, 'ionViewDidEnter', o));
     });
     this.ionViewWillLeave$ = new Observable(o => {
-      targetPromise.then(target => {
-        bindEvent(target, 'ionViewWillLeave', o);
-      });
+      targetPromise.then(target => bindEvent(target, 'ionViewWillLeave', o));
     });
     this.ionViewDidLeave$ = new Observable(o => {
-      targetPromise.then(target => {
-        bindEvent(target, 'ionViewDidLeave', o);
-      });
+      targetPromise.then(target => bindEvent(target, 'ionViewDidLeave', o));
     });
   }
 
-  bind(target: HTMLElement) {
+  /**
+   * @internal
+   */
+  _bind(target: HTMLElement) {
     this.targetResolve(target);
   }
 }

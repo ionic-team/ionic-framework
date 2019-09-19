@@ -1,5 +1,6 @@
-import { ApplicationRef, ComponentFactoryResolver, Injectable, InjectionToken, Injector, NgZone, ViewContainerRef } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, Injectable, Injector, NgZone, ViewContainerRef } from '@angular/core';
 import { FrameworkDelegate, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE, LIFECYCLE_WILL_UNLOAD } from '@ionic/core';
+import { ViewLifecycles } from 'src/directives/navigation/view-lifecycles';
 
 import { NavParams } from '../directives/navigation/nav-params';
 
@@ -76,8 +77,13 @@ export const attachView = (
   container: any, component: any, params: any, cssClasses: string[] | undefined
 ) => {
   const factory = resolver.resolveComponentFactory(component);
+  const viewLifecycles = new ViewLifecycles();
+  const navParams = new NavParams(params);
   const childInjector = Injector.create({
-    providers: getProviders(params),
+    providers: [
+      { provide: ViewLifecycles, useExisting: viewLifecycles },
+      { provide: NavParams, useExisting: navParams }
+    ],
     parent: injector
   });
   const componentRef = (location)
@@ -86,6 +92,7 @@ export const attachView = (
 
   const instance = componentRef.instance;
   const hostElement = componentRef.location.nativeElement;
+  viewLifecycles._bind(hostElement);
   if (params) {
     Object.assign(instance, params);
   }
@@ -125,21 +132,4 @@ export const bindLifecycleEvents = (zone: NgZone, instance: any, element: HTMLEl
       });
     return () => unregisters.forEach(fn => fn());
   });
-};
-
-const NavParamsToken = new InjectionToken<any>('NavParamsToken');
-
-const getProviders = (params: {[key: string]: any}) => {
-  return [
-    {
-      provide: NavParamsToken, useValue: params
-    },
-    {
-      provide: NavParams, useFactory: provideNavParamsInjectable, deps: [NavParamsToken]
-    }
-  ];
-};
-
-const provideNavParamsInjectable = (params: {[key: string]: any}) => {
-  return new NavParams(params);
 };
