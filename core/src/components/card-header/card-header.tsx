@@ -40,7 +40,7 @@ export class CardHeader implements ComponentInterface {
         class={{
           ...createColorClasses(this.color),
           'card-header-translucent': this.translucent,
-          'in-card-ion-color': hostContext('ion-card[color]', this.el),
+          'in-card-color': hostContext('ion-card[color]', this.el),
           [mode]: true
         }}
       >

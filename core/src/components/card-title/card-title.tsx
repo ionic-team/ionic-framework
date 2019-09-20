@@ -34,7 +34,7 @@ export class CardTitle implements ComponentInterface {
         aria-level="2"
         class={{
           ...createColorClasses(this.color),
-          'in-card-ion-color': hostContext('ion-card[color]', this.el),
+          'in-card-color': hostContext('ion-card[color],ion-card-header[color]', this.el),
           [mode]: true
         }}
       >
