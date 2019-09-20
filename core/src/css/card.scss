@@ -1,0 +1,28 @@
+@import "../themes/ionic.globals";
+
+// Card Colors
+// ---------------------------------------------
+
+ion-card.ion-color {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+ion-card.ion-color ion-card-header,
+ion-card.ion-color ion-card-title,
+ion-card.ion-color ion-card-subtitle {
+  color: current-color(contrast);
+}
+
+// Slotted Content
+// ---------------------------------------------
+
+ion-card img {
+  display: block;
+
+  width: 100%;
+}
+
+ion-card ion-list {
+  @include margin(0);
+}
