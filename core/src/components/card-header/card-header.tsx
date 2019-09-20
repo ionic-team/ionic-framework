@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
@@ -16,9 +16,6 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class CardHeader implements ComponentInterface {
-
-  @Element() el!: HTMLElement;
-
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
