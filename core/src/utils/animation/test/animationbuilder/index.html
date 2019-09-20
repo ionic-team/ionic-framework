@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Animation - Animation Builder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <script>
+    const forceCSSAnimations = new URLSearchParams(window.location.search).get('ionic:_forceCSSAnimations');
+    if (forceCSSAnimations) {
+      Element.prototype.animate = null;
+    }
+    
+    class PageRoot extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button></ion-back-button>
+              </ion-buttons>
+              <ion-title>Root</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <h1>Root</h1>
+            <div>
+              <ion-nav-push component="page-one">
+                <ion-button class="next">Go to Page One</ion-button>
+              </ion-nav-push>
+            </div>
+          </ion-content>
+        `;
+      }
+    }
+    class PageOne extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button></ion-back-button>
+              </ion-buttons>
+              <ion-title>Page One</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <h1>Page One</h1>
+            <ion-nav-push component="page-two">
+              <ion-button class="next">Go to Page Two</ion-button>
+            </ion-nav-push>
+          </ion-content>
+        `;
+      }
+    }
+    class PageTwo extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button></ion-back-button>
+              </ion-buttons>
+              <ion-title>Page Two</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <h1>Page Two</h1>
+            <div>
+              <ion-nav-push component="page-three">
+                <ion-button class="next">Go to Page Three</ion-button>
+              </ion-nav-push>
+            </div>
+          </ion-content>
+        `;
+      }
+    }
+    class PageThree extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button></ion-back-button>
+              </ion-buttons>
+              <ion-title>Page Three</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <h1>Page Three</h1>
+          </ion-content>
+        `;
+      }
+    }
+    customElements.define('page-root', PageRoot);
+    customElements.define('page-one', PageOne);
+    customElements.define('page-two', PageTwo);
+    customElements.define('page-three', PageThree);
+    
+    const forceAnimationBuilder = new URLSearchParams(window.location.search).get('ionic:_forceAnimationBuilder');
+    if (forceAnimationBuilder) {
+      window.Ionic.config.navAnimation = (AnimationC, navEl, opts) => {
+        const TRANSLATEY = 'translateY';
+        const OFF_BOTTOM = '40px';
+        const CENTER = '0px';
+      
+        const backDirection = (opts.direction === 'back');
+        const enteringEl = opts.enteringEl;
+        const leavingEl = opts.leavingEl;
+        const ionPageElement = getIonPageElement(enteringEl);
+        const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
+        const rootTransition = new AnimationC();
+      
+        rootTransition
+          .addElement(ionPageElement)
+          .beforeRemoveClass('ion-page-invisible');
+      
+        // animate the component itself
+        if (backDirection) {
+          rootTransition
+            .duration(opts.duration || 200)
+            .easing('cubic-bezier(0.47,0,0.745,0.715)');
+      
+        } else {
+          rootTransition
+            .duration(opts.duration || 280)
+            .easing('cubic-bezier(0.36,0.66,0.04,1)')
+            .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER, true)
+            .fromTo('opacity', 0.01, 1, true);
+        }
+      
+        // Animate toolbar if it's there
+        if (enteringToolbarEle) {
+          const enteringToolBar = new AnimationC();
+          enteringToolBar.addElement(enteringToolbarEle);
+          rootTransition.add(enteringToolBar);
+        }
+      
+        // setup leaving view
+        if (leavingEl && backDirection) {
+          // leaving content
+          rootTransition
+            .duration(opts.duration || 200)
+            .easing('cubic-bezier(0.47,0,0.745,0.715)');
+      
+          const leavingPage = new AnimationC();
+          leavingPage
+            .addElement(getIonPageElement(leavingEl))
+            .fromTo(TRANSLATEY, CENTER, OFF_BOTTOM)
+            .fromTo('opacity', 1, 0);
+      
+          rootTransition.add(leavingPage);
+        }
+      
+        return Promise.resolve(rootTransition);
+      };
+    }
+    
+    const getIonPageElement = (element) => {
+      if (element.classList.contains('ion-page')) {
+        return element;
+      }
+    
+      const ionPage = element.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs');
+      if (ionPage) {
+        return ionPage;
+      }
+      // idk, return the original element so at least something animates and we don't have a null pointer
+      return element;
+    };
+  </script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-router>
+      <ion-route url="/" component="page-root"></ion-route>
+      <ion-route url="/page-one" component="page-one"></ion-route>
+      <ion-route url="/page-two" component="page-two"></ion-route>
+      <ion-route url="/page-three" component="page-three"></ion-route>
+    </ion-router>
+    <ion-nav></ion-nav>
+  </ion-app>
+</body>
+
+</html>

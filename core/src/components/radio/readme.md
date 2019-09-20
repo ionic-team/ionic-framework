@@ -44,36 +44,35 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 ```tsx
 import React from 'react';
+import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonContent } from '@ionic/react';
 
-import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio } from '@ionic/react';
+export const RadioExample: React.FC = () => (
+  <IonContent>
+    <IonList>
+      <IonRadioGroup>
+        <IonListHeader>
+          <IonLabel>Name</IonLabel>
+        </IonListHeader>
 
-const Example: React.SFC<{}> = () => (
+        <IonItem>
+          <IonLabel>Biff</IonLabel>
+          <IonRadio slot="start" value="biff" checked />
+        </IonItem>
 
-  <IonList>
-    <IonRadioGroup>
-      <IonListHeader>
-        <IonLabel>Name</IonLabel>
-      </IonListHeader>
+        <IonItem>
+          <IonLabel>Griff</IonLabel>
+          <IonRadio slot="start" value="griff" />
+        </IonItem>
 
-      <IonItem>
-        <IonLabel>Biff</IonLabel>
-        <IonRadio slot="start" value="biff" checked></IonRadio>
-      </IonItem>
-
-      <IonItem>
-        <IonLabel>Griff</IonLabel>
-        <IonRadio slot="start" value="griff"></IonRadio>
-      </IonItem>
-
-      <IonItem>
-        <IonLabel>Buford</IonLabel>
-        <IonRadio slot="start" value="buford"></IonRadio>
-      </IonItem>
-    </IonRadioGroup>
-  </IonList>
+        <IonItem>
+          <IonLabel>Buford</IonLabel>
+          <IonRadio slot="start" value="buford" />
+        </IonItem>
+      </IonRadioGroup>
+    </IonList>
+  </IonContent>
 );
-
-export default Example
+```
 
 
 ### Vue
@@ -135,6 +134,19 @@ export default Example
 | `--color`         | Color of the radio         |
 | `--color-checked` | Color of the checked radio |
 
+
+## Dependencies
+
+### Used by
+
+ - ion-select-popover
+
+### Graph
+```mermaid
+graph TD;
+  ion-select-popover --> ion-radio
+  style ion-radio fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

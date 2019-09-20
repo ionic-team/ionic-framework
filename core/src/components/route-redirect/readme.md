@@ -2,7 +2,7 @@
 
 A route redirect can only be used with an `ion-router` as a direct child of it.
 
-> Note: this element should only be used with a vanilla JavaScript project. For Angular projects, use `ion-router-outlet` and the Angular router.
+> Note: this component should only be used with vanilla and Stencil JavaScript projects. For Angular projects, use [`ion-router-outlet`](../router-outlet) and the Angular router.
 
 The route redirect has two configurable properties:
  - `from`
@@ -90,9 +90,9 @@ routeRedirect.setAttribute('to', isLoggedIn ? undefined : '/login');
 
 ## Events
 
-| Event                     | Description                                                                                                                                                                                                               | Type                |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `ionRouteRedirectChanged` | Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules. | `CustomEvent<void>` |
+| Event                     | Description                                                                                                                                                                                                               | Type               |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `ionRouteRedirectChanged` | Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules. | `CustomEvent<any>` |
 
 
 ----------------------------------------------

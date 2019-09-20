@@ -8,20 +8,20 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-searchbar
     value="test"
     type="tel"
-    show-cancel-button
+    show-cancel-button="focus"
     debounce="500">
   </ion-searchbar>
 
   <ion-searchbar
     animated="true"
-    show-cancel-button
+    show-cancel-button="focus"
     debounce="500">
   </ion-searchbar>
 
@@ -29,7 +29,7 @@
     id="dynamicProp"
     value="33"
     autocorrect="on"
-    show-cancel-button="true"
+    show-cancel-button="focus"
     autocomplete="on"
     spellcheck="false"
     type="number"
@@ -42,11 +42,11 @@
     autocomplete="off"
     spellcheck="true"
     type="text"
-    show-cancel-button="false">
+    show-cancel-button="never">
   </ion-searchbar>
 
   <ion-searchbar
-    show-cancel-button
+    show-cancel-button="focus"
     cancel-button-text="Really Long Cancel"
     color="danger">
   </ion-searchbar>
@@ -55,26 +55,26 @@
     value="mysearch"
     cancel-button-text="Really Long Cancel"
     color="dark"
-    show-cancel-button>
+    show-cancel-button="focus">
   </ion-searchbar>
 
   <ion-searchbar
     mode="ios"
     animated="true"
-    show-cancel-button
+    show-cancel-button="focus"
     placeholder="Search">
   </ion-searchbar>
 
   <ion-searchbar
     mode="md"
     animated="true"
-    show-cancel-button
+    show-cancel-button="focus"
     placeholder="Search">
   </ion-searchbar>
 
   <ion-searchbar
     autocorrect="on"
-    show-cancel-button="true"
+    show-cancel-button="focus"
     autocomplete="on"
     spellcheck="true"
     type="text"
@@ -86,10 +86,13 @@
     id="dynamicAttr"
     placeholder="Search"
     animated="true"
-    show-cancel-button="false">
+    show-cancel-button="never">
   </ion-searchbar>
 
-  <ion-searchbar class="custom" show-cancel-button="true"></ion-searchbar>
+  <ion-searchbar
+    class="custom"
+    show-cancel-button="focus">
+  </ion-searchbar>
 
     <style>
     .custom {

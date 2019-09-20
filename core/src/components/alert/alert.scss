@@ -150,6 +150,17 @@
   height: 100%;
 }
 
+
+// Alert Button: Disabled
+// --------------------------------------------------
+.alert-input-disabled,
+.alert-checkbox-button-disabled .alert-button-inner,
+.alert-radio-button-disabled .alert-button-inner {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+
 .alert-tappable {
   @include margin(0);
   @include padding(0);

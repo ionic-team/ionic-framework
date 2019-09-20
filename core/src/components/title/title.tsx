@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -9,8 +10,6 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class ToolbarTitle implements ComponentInterface {
-
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -21,29 +20,62 @@ export class ToolbarTitle implements ComponentInterface {
    */
   @Prop() color?: Color;
 
-  private getMode() {
-    const toolbar = this.el.closest('ion-toolbar');
-    return (toolbar && toolbar.mode) || this.mode;
+  /**
+   * The size of the toolbar title.
+   */
+  @Prop() size?: 'large' | 'small';
+
+  /**
+   * Emitted when the styles change.
+   * @internal
+   */
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  @Watch('size')
+  protected sizeChanged() {
+    this.emitStyle();
   }
 
-  hostData() {
-    const mode = this.getMode();
+  connectedCallback() {
+    this.emitStyle();
+  }
 
-    return {
-      class: {
-        [`${mode}`]: true,
-        [`title-${mode}`]: true,
+  private emitStyle() {
+    const size = this.getSize();
 
-        ...createColorClasses(this.color),
-      }
-    };
+    this.ionStyle.emit({
+      [`title-${size}`]: true
+    });
+  }
+
+  private getSize() {
+    return (this.size !== undefined) ? this.size : 'default';
+  }
+
+  private getMode() {
+    const mode = getIonMode(this);
+    const toolbar = this.el.closest('ion-toolbar');
+    return (toolbar && toolbar.mode) || mode;
   }
 
   render() {
-    return [
-      <div class="toolbar-title">
-        <slot></slot>
-      </div>
-    ];
+    const mode = this.getMode();
+    const size = this.getSize();
+
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          [`title-${mode}`]: true,
+          [`title-${size}`]: true,
+
+          ...createColorClasses(this.color),
+        }}
+      >
+        <div class="toolbar-title">
+          <slot></slot>
+        </div>
+      </Host>
+    );
   }
 }

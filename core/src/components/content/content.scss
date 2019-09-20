@@ -5,15 +5,19 @@
 
 :host {
   /**
-   * @prop --background: Background of the Content
-   * @prop --color: Color of the Content
-   * @prop --padding-top: Padding top of the Content
-   * @prop --padding-bottom: Padding bottom of the Content
-   * @prop --padding-start: Padding start of the Content
-   * @prop --padding-end: Padding end of the Content
-   * @prop --keyboard-offset: Keyboard offset of the Content
-   * @prop --offset-top: Offset top of the Content
-   * @prop --offset-bottom: Offset bottom of the Content
+   * @prop --background: Background of the content
+   *
+   * @prop --color: Color of the content
+   *
+   * @prop --padding-top: Top padding of the content
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the content
+   * @prop --padding-bottom: Bottom padding of the content
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the content
+   *
+   * @prop --keyboard-offset: Keyboard offset of the content
+   *
+   * @prop --offset-top: Offset top of the content
+   * @prop --offset-bottom: Offset bottom of the content
    */
   --background: #{$background-color};
   --color: #{$text-color};
@@ -113,4 +117,48 @@
 }
 :host(.content-sizing) .inner-scroll {
   position: relative;
+}
+
+.transition-effect {
+  position: absolute;
+
+  /* stylelint-disable property-blacklist */
+  left: -100%;
+  /* stylelint-enable property-blacklist */
+
+  width: 100%;
+  height: 100%;
+
+  opacity: 0;
+}
+
+.transition-cover {
+  position: absolute;
+
+  /* stylelint-disable property-blacklist */
+  right: 0;
+  /* stylelint-enable property-blacklist */
+
+  width: 100%;
+  height: 100%;
+
+  background: black;
+
+  opacity: 0.1;
+}
+
+.transition-shadow {
+  display: block;
+  position: absolute;
+
+  /* stylelint-disable property-blacklist */
+  right: 0;
+  /* stylelint-enable property-blacklist */
+
+  width: 10px;
+  height: 100%;
+
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAgCAYAAAAIXrg4AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTE3MDgzRkQ5QTkyMTFFOUEwNzQ5MkJFREE1NUY2MjQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTE3MDgzRkU5QTkyMTFFOUEwNzQ5MkJFREE1NUY2MjQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxMTcwODNGQjlBOTIxMUU5QTA3NDkyQkVEQTU1RjYyNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxMTcwODNGQzlBOTIxMUU5QTA3NDkyQkVEQTU1RjYyNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PmePEuQAAABNSURBVHjaYvz//z8DIxAwMDAwATGMhmFmPDQuOSZks0AMmoJBaQHjkPfB0Lfg/2gQjVow+HPy/yHvg9GiYjQfjMbBqAWjFgy/4hogwADYqwdzxy5BuwAAAABJRU5ErkJggg==);
+  background-repeat: repeat-y;
+  background-size: 10px 16px;
 }

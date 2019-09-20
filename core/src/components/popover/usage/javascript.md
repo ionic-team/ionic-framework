@@ -1,13 +1,11 @@
 ```javascript
-async function presentPopover(ev) {
-  const popoverController = document.querySelector('ion-popover-controller');
-  await popoverController.componentOnReady();
-
-  const popover = await popoverController.create({
+function presentPopover(ev) {
+  const popover = Object.assing(document.createElement('ion-popover'), {
     component: 'popover-example-page',
     event: ev,
     translucent: true
   });
-  return await popover.present();
+  document.body.appendChild(popover);
+  return popover.present();
 }
 ```

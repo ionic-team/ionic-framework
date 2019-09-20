@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html dir="ltr" class="safe-area">
 
 <head>
   <meta charset="UTF-8">
@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-  <style>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <style>
     .safe-area {
       --ion-safe-area-top: 40px;
       --ion-safe-area-right: 40px;
@@ -19,15 +19,15 @@
   </style>
   <script>
     async function showActionSheet() {
-      const actionSheet = await document.querySelector('ion-action-sheet-controller')
-        .create({
-          header: 'Action Sheet',
-          buttons: [
-            'First',
-            'Second',
-            'Third'
-          ]
-        });
+      const actionSheet = Object.assign(document.createElement('ion-action-sheet'), {
+        header: 'Action Sheet',
+        buttons: [
+          'First',
+          'Second',
+          'Third'
+        ]
+      });
+      document.body.appendChild(actionSheet);
       await actionSheet.present();
     }
 
@@ -37,38 +37,38 @@
     }
 
     async function showPicker() {
-      const picker = await document.querySelector('ion-picker-controller')
-        .create({
-          columns: [
-            {
-              name: 'Picker',
-              selectedIndex: 2,
-              options: [
-                { text: 'First' },
-                { text: 'Second' },
-                { text: 'Third' },
-                { text: 'Fourth' },
-                { text: 'Fifth' },
-              ]
-            }
-          ]
-        });
+      const picker = Object.assign(document.createElement('ion-picker'), {
+        columns: [
+          {
+            name: 'Picker',
+            selectedIndex: 2,
+            options: [
+              { text: 'First' },
+              { text: 'Second' },
+              { text: 'Third' },
+              { text: 'Fourth' },
+              { text: 'Fifth' },
+            ]
+          }
+        ]
+      });
+      document.body.appendChild(picker);
       await picker.present();
     }
 
     async function showToast() {
-      const toast = await document.querySelector('ion-toast-controller')
-        .create({
-          message: 'Hello world!',
-          showCloseButton: true
-        });
+      const toast = Object.assign(document.createElement('ion-toast'), {
+        message: 'Hello world!',
+        showCloseButton: true
+      });
+      document.body.appendChild(toast);
       await toast.present();
     }
   </script>
 </head>
 
 <body>
-  <ion-app class="safe-area">
+  <ion-app>
     <ion-menu>
       <ion-header>
         <ion-toolbar>
@@ -142,7 +142,6 @@
       </ion-toolbar>
     </ion-footer>
 
-    <ion-action-sheet-controller></ion-action-sheet-controller>
     <ion-picker-controller></ion-picker-controller>
     <ion-toast-controller></ion-toast-controller>
   </ion-app>

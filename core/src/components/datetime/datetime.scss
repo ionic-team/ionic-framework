@@ -5,10 +5,10 @@
 
 :host {
   /**
-   * @prop --padding-top: Padding top of the datetime
-   * @prop --padding-end: Padding end of the datetime
-   * @prop --padding-bottom: Padding bottom of the datetime
-   * @prop --padding-start: Padding start of the datetime
+   * @prop --padding-top: Top padding of the datetime
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the datetime
+   * @prop --padding-bottom: Bottom padding of the datetime
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the datetime
    *
    * @prop --placeholder-color: Color of the datetime placeholder
    */

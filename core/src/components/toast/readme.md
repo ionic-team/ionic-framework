@@ -76,43 +76,38 @@ export class ToastExample {
 
 ```javascript
 async function presentToast() {
-  const toastController = document.querySelector('ion-toast-controller');
-  await toastController.componentOnReady();
+  const toast = document.createElement('ion-toast');
+  toast.message = 'Your settings have been saved.';
+  toast.duration = 2000;
 
-  const toast = await toastController.create({
-    message: 'Your settings have been saved.',
-    duration: 2000
-  });
-  return await toast.present();
+  document.body.appendChild(toast);
+  return toast.present();
 }
 
 async function presentToastWithOptions() {
-  const toastController = document.querySelector('ion-toast-controller');
-  await toastController.componentOnReady();
-
-  const toast = await toastController.create({
-    header: 'Toast header',
-    message: 'Click to Close',
-    position: 'top',
-    buttons: [
-      {
-        side: 'start',
-        icon: 'star',
-        text: 'Favorite',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Done',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
+  const toast = document.createElement('ion-toast');
+  toast.header = 'Toast header';
+  toast.message = 'Click to Close';
+  toast.position = 'top';
+  toast.buttons = [
+    {
+      side: 'start',
+      icon: 'star',
+      text: 'Favorite',
+      handler: () => {
+        console.log('Favorite clicked');
       }
-    ]
-  });
+    }, {
+      text: 'Done',
+      role: 'cancel',
+      handler: () => {
+        console.log('Cancel clicked');
+      }
+    }
+  ];
 
-  return await toast.present();
+  document.body.appendChild(toast);
+  return toast.present();
 }
 ```
 
@@ -120,59 +115,50 @@ async function presentToastWithOptions() {
 ### React
 
 ```tsx
-import React, { Component } from 'react'
-import { IonToast } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonToast, IonContent, IonButton } from '@ionic/react';
 
-type Props = {}
-type State = {
-  showToast1: boolean
-  showToast2: boolean
-}
+export const ToastExample: React.FC = () => {
+  const [showToast1, setShowToast1] = useState(false);
+  const [showToast2, setShowToast2] = useState(false);
 
-export class Toast extends Component<Props, State> {
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showToast1: false
-      showToast2: false
-    };
-  }
-
-  render() {
-    return (
+  return (
+    <IonContent>
+      <IonButton onClick={() => setShowToast1(true)} expand="block">Show Toast 1</IonButton>
+      <IonButton onClick={() => setShowToast2(true)} expand="block">Show Toast 2</IonButton>
       <IonToast
-        isOpen={this.state.showToast1}
-        onDidDismiss={() => this.setState(() => ({ showToast1: false }))}
-        message='Your settings have been saved.'
+        isOpen={showToast1}
+        onDidDismiss={() => setShowToast1(false)}
+        message="Your settings have been saved."
         duration={200}
-      >
-      </IonToast>
+      />
 
       <IonToast
-        isOpen={this.state.showToast2}
-        onDidDismiss={() => this.setState(() => ({ showToast2: false }))}
-        message='Click to Close'
-        position='top'
-        buttons={[{
-          side: 'start',
-          icon: 'star',
-          text: 'Favorite',
-          handler: () => {
-            console.log('Favorite clicked');
+        isOpen={showToast2}
+        onDidDismiss={() => setShowToast2(false)}
+        message="Click to Close"
+        position="top"
+        buttons={[
+          {
+            side: 'start',
+            icon: 'star',
+            text: 'Favorite',
+            handler: () => {
+              console.log('Favorite clicked');
+            }
+          },
+          {
+            text: 'Done',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
           }
-        }, {
-          text: 'Done',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }]}
-      >
-      </IonToast>
-    );
-  }
-}
+        ]}
+      />
+    </IonContent>
+  );
+};
 ```
 
 
@@ -183,7 +169,7 @@ export class Toast extends Component<Props, State> {
 | ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
 | `animated`        | `animated`          | If `true`, the toast will animate.                                                                                                                                                                                                                                     | `boolean`                                                                              | `true`      |
 | `buttons`         | --                  | An array of buttons for the toast.                                                                                                                                                                                                                                     | `(string \| ToastButton)[] \| undefined`                                               | `undefined` |
-| `closeButtonText` | `close-button-text` | Text to display in the close button.                                                                                                                                                                                                                                   | `string \| undefined`                                                                  | `undefined` |
+| `closeButtonText` | `close-button-text` | <span style="color:red">**[DEPRECATED]**</span> Use `buttons` instead. Text to display in the close button.<br/><br/>                                                                                                                                                  | `string \| undefined`                                                                  | `undefined` |
 | `color`           | `color`             | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                                  | `undefined` |
 | `cssClass`        | `css-class`         | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                                                       | `string \| string[] \| undefined`                                                      | `undefined` |
 | `duration`        | `duration`          | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.                                                                                                                                                           | `number`                                                                               | `0`         |
@@ -194,18 +180,18 @@ export class Toast extends Component<Props, State> {
 | `message`         | `message`           | Message to be shown in the toast.                                                                                                                                                                                                                                      | `string \| undefined`                                                                  | `undefined` |
 | `mode`            | `mode`              | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                                                        | `undefined` |
 | `position`        | `position`          | The position of the toast on the screen.                                                                                                                                                                                                                               | `"bottom" \| "middle" \| "top"`                                                        | `'bottom'`  |
-| `showCloseButton` | `show-close-button` | If `true`, the close button will be displayed.                                                                                                                                                                                                                         | `boolean`                                                                              | `false`     |
-| `translucent`     | `translucent`       | If `true`, the toast will be translucent.                                                                                                                                                                                                                              | `boolean`                                                                              | `false`     |
+| `showCloseButton` | `show-close-button` | <span style="color:red">**[DEPRECATED]**</span> Use `buttons` instead. If `true`, the close button will be displayed.<br/><br/>                                                                                                                                        | `boolean`                                                                              | `false`     |
+| `translucent`     | `translucent`       | If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                   | `boolean`                                                                              | `false`     |
 
 
 ## Events
 
-| Event                 | Description                             | Type                              |
-| --------------------- | --------------------------------------- | --------------------------------- |
-| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<void>`               |
-| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<void>`               |
+| Event                 | Description                             | Type                                   |
+| --------------------- | --------------------------------------- | -------------------------------------- |
+| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionToastDidPresent`  | Emitted after the toast has presented.  | `CustomEvent<void>`                    |
+| `ionToastWillDismiss` | Emitted before the toast has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionToastWillPresent` | Emitted before the toast has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -213,13 +199,6 @@ export class Toast extends Component<Props, State> {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the toast overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                                                                                                                                                                     |
-| ------ | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                         |
-| `role` | `string \| undefined` | The role of the element that is dismissing the toast. This can be useful in a button handler for determining which button was clicked to dismiss the toast. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 
@@ -260,25 +239,40 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name              | Description                 |
-| ----------------- | --------------------------- |
-| `--background`    | Background of the toast     |
-| `--border-color`  | Border color of the toast   |
-| `--border-radius` | Border radius of the toast  |
-| `--border-style`  | Border style of the toast   |
-| `--border-width`  | Border width of the toast   |
-| `--box-shadow`    | Box shadow of the toast     |
-| `--button-color`  | Color of the button text    |
-| `--color`         | Color of the toast text     |
-| `--end`           | Position from the end       |
-| `--height`        | Height of the toast         |
-| `--max-height`    | Maximum height of the toast |
-| `--max-width`     | Maximum width of the toast  |
-| `--min-height`    | Minimum height of the toast |
-| `--min-width`     | Minimum width of the toast  |
-| `--start`         | Position from the start     |
-| `--width`         | Width of the toast          |
+| Name              | Description                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------------ |
+| `--background`    | Background of the toast                                                                                |
+| `--border-color`  | Border color of the toast                                                                              |
+| `--border-radius` | Border radius of the toast                                                                             |
+| `--border-style`  | Border style of the toast                                                                              |
+| `--border-width`  | Border width of the toast                                                                              |
+| `--box-shadow`    | Box shadow of the toast                                                                                |
+| `--button-color`  | Color of the button text                                                                               |
+| `--color`         | Color of the toast text                                                                                |
+| `--end`           | Position from the right if direction is left-to-right, and from the left if direction is right-to-left |
+| `--height`        | Height of the toast                                                                                    |
+| `--max-height`    | Maximum height of the toast                                                                            |
+| `--max-width`     | Maximum width of the toast                                                                             |
+| `--min-height`    | Minimum height of the toast                                                                            |
+| `--min-width`     | Minimum width of the toast                                                                             |
+| `--start`         | Position from the left if direction is left-to-right, and from the right if direction is right-to-left |
+| `--width`         | Width of the toast                                                                                     |
 
+
+## Dependencies
+
+### Depends on
+
+- ion-icon
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-toast --> ion-icon
+  ion-toast --> ion-ripple-effect
+  style ion-toast fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

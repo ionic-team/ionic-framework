@@ -62,33 +62,28 @@ export class LoadingExample {
 
 ```javascript
 async function presentLoading() {
-  const loadingController = document.querySelector('ion-loading-controller');
-  await loadingController.componentOnReady();
+  const loading = document.createElement('ion-loading');
+  loading.message: 'Hellooo',
+  loading.duration: 2000;
 
-  const loading = await loadingController.create({
-    message: 'Hellooo',
-    duration: 2000
-  });
-  
+  document.body.appendChild(loading);
   await loading.present();
-    
+
   const { role, data } = await loading.onDidDismiss();
-  
+
   console.log('Loading dismissed!');
 }
 
-async function presentLoadingWithOptions() {
-  const loadingController = document.querySelector('ion-loading-controller');
-  await loadingController.componentOnReady();
+function presentLoadingWithOptions() {
+  const loading = document.createElement('ion-loading');
+  loading.spinner = null;
+  loading.duration = 5000;
+  loading.message = 'Please wait...';
+  loading.translucent = true;
+  loading.cssClass = 'custom-class custom-loading';
 
-  const loading = await loadingController.create({
-    spinner: null,
-    duration: 5000,
-    message: 'Please wait...',
-    translucent: true,
-    cssClass: 'custom-class custom-loading'
-  });
-  return await loading.present();
+  document.body.appendChild(loading);
+  return loading.present();
 }
 ```
 
@@ -96,48 +91,28 @@ async function presentLoadingWithOptions() {
 ### React
 
 ```tsx
-import React, { Component } from 'react'
-import { IonLoading } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonLoading, IonButton, IonContent } from '@ionic/react';
 
-type Props = {}
-type State = {
-  showLoading1: boolean
-  showLoading2: boolean
-}
+export const LoadingExample: React.FC = () => {
+  const [showLoading, setShowLoading] = useState(true);
 
-export class LoadingExample extends Component<Props, State> {
+  setTimeout(() => {
+    setShowLoading(false);
+  }, 2000);
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showLoading1: false
-      showLoading2: false
-    };
-  }
-
-  render() {
-    return (
+  return (
+    <IonContent>
+      <IonButton onClick={() => setShowLoading(true)}>Show Loading</IonButton>
       <IonLoading
-        isOpen={this.state.showLoading1}
-        onDidDismiss={() => this.setState(() => ({ showLoading1: false }))}
-        message={'Hellooo'}
-        duration={200}
-      >
-      </IonLoading>
-
-      <IonLoading
-        isOpen={this.state.showLoading2}
-        onDidDismiss={() => this.setState(() => ({ showLoading2: false }))}
-        spinner={null}
+        isOpen={showLoading}
+        onDidDismiss={() => setShowLoading(false)}
+        message={'Loading...'}
         duration={5000}
-        message='Please wait...'}
-        translucent={true}
-        cssClass='custom-class custom-loading'
-      >
-      </IonLoading>
-    );
-  }
-}
+      />
+    </IonContent>
+  );
+};
 ```
 
 
@@ -196,30 +171,30 @@ export default {
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                                                      | Type                                                                                              | Default     |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----------- |
-| `animated`        | `animated`         | If `true`, the loading indicator will animate.                                                                   | `boolean`                                                                                         | `true`      |
-| `backdropDismiss` | `backdrop-dismiss` | If `true`, the loading indicator will be dismissed when the backdrop is clicked.                                 | `boolean`                                                                                         | `false`     |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                                                                 | `undefined` |
-| `duration`        | `duration`         | Number of milliseconds to wait before dismissing the loading indicator.                                          | `number`                                                                                          | `0`         |
-| `enterAnimation`  | --                 | Animation to use when the loading indicator is presented.                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined`            | `undefined` |
-| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                                         | `true`      |
-| `leaveAnimation`  | --                 | Animation to use when the loading indicator is dismissed.                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined`            | `undefined` |
-| `message`         | `message`          | Optional text content to display in the loading indicator.                                                       | `string \| undefined`                                                                             | `undefined` |
-| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                                   | `undefined` |
-| `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the loading indicator.                                            | `boolean`                                                                                         | `true`      |
-| `spinner`         | `spinner`          | The name of the spinner to display.                                                                              | `"bubbles" \| "circles" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| null \| undefined` | `undefined` |
-| `translucent`     | `translucent`      | If `true`, the loading indicator will be translucent.                                                            | `boolean`                                                                                         | `false`     |
+| Property          | Attribute          | Description                                                                                                                                                                                                                      | Type                                                                                                            | Default     |
+| ----------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ----------- |
+| `animated`        | `animated`         | If `true`, the loading indicator will animate.                                                                                                                                                                                   | `boolean`                                                                                                       | `true`      |
+| `backdropDismiss` | `backdrop-dismiss` | If `true`, the loading indicator will be dismissed when the backdrop is clicked.                                                                                                                                                 | `boolean`                                                                                                       | `false`     |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                 | `string \| string[] \| undefined`                                                                               | `undefined` |
+| `duration`        | `duration`         | Number of milliseconds to wait before dismissing the loading indicator.                                                                                                                                                          | `number`                                                                                                        | `0`         |
+| `enterAnimation`  | --                 | Animation to use when the loading indicator is presented.                                                                                                                                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined`                          | `undefined` |
+| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                           | `boolean`                                                                                                       | `true`      |
+| `leaveAnimation`  | --                 | Animation to use when the loading indicator is dismissed.                                                                                                                                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined`                          | `undefined` |
+| `message`         | `message`          | Optional text content to display in the loading indicator.                                                                                                                                                                       | `string \| undefined`                                                                                           | `undefined` |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                | `"ios" \| "md"`                                                                                                 | `undefined` |
+| `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the loading indicator.                                                                                                                                                            | `boolean`                                                                                                       | `true`      |
+| `spinner`         | `spinner`          | The name of the spinner to display.                                                                                                                                                                                              | `"bubbles" \| "circles" \| "circular" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| null \| undefined` | `undefined` |
+| `translucent`     | `translucent`      | If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility). | `boolean`                                                                                                       | `false`     |
 
 
 ## Events
 
-| Event                   | Description                               | Type                              |
-| ----------------------- | ----------------------------------------- | --------------------------------- |
-| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<void>`               |
-| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<void>`               |
+| Event                   | Description                               | Type                                   |
+| ----------------------- | ----------------------------------------- | -------------------------------------- |
+| `ionLoadingDidDismiss`  | Emitted after the loading has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionLoadingDidPresent`  | Emitted after the loading has presented.  | `CustomEvent<void>`                    |
+| `ionLoadingWillDismiss` | Emitted before the loading has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionLoadingWillPresent` | Emitted before the loading has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -227,13 +202,6 @@ export default {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the loading overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                                                                                                                                                                         |
-| ------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                                                                                                                                                                             |
-| `role` | `string \| undefined` | The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`. |
 
 #### Returns
 
@@ -285,6 +253,21 @@ Type: `Promise<void>`
 | `--spinner-color` | Color of the loading spinner         |
 | `--width`         | Width of the loading dialog          |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+- [ion-spinner](../spinner)
+
+### Graph
+```mermaid
+graph TD;
+  ion-loading --> ion-backdrop
+  ion-loading --> ion-spinner
+  style ion-loading fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

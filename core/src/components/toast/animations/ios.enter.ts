@@ -1,24 +1,24 @@
-import { Animation } from '../../../interface';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Toast Enter Animation
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, position: string): Promise<Animation> {
-  const baseAnimation = new AnimationC();
-
-  const wrapperAnimation = new AnimationC();
+export const iosEnterAnimation = (baseEl: ShadowRoot, position: string): IonicAnimation => {
+  const baseAnimation = createAnimation();
+  const wrapperAnimation = createAnimation();
 
   const hostEl = baseEl.host || baseEl;
   const wrapperEl = baseEl.querySelector('.toast-wrapper') as HTMLElement;
 
-  wrapperAnimation.addElement(wrapperEl);
-
   const bottom = `calc(-10px - var(--ion-safe-area-bottom, 0px))`;
   const top = `calc(10px + var(--ion-safe-area-top, 0px))`;
 
+  wrapperAnimation.addElement(wrapperEl);
+
   switch (position) {
     case 'top':
-      wrapperAnimation.fromTo('translateY', '-100%', top);
+      wrapperAnimation.fromTo('transform', 'translateY(-100%)', `translateY(${top})`);
       break;
     case 'middle':
       const topPosition = Math.floor(
@@ -28,12 +28,12 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: ShadowRoot, pos
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
     default:
-      wrapperAnimation.fromTo('translateY', '100%', bottom);
+      wrapperAnimation.fromTo('transform', 'translateY(100%)', `translateY(${bottom})`);
       break;
   }
-  return Promise.resolve(baseAnimation
+  return baseAnimation
     .addElement(hostEl)
     .easing('cubic-bezier(.155,1.105,.295,1.12)')
     .duration(400)
-    .add(wrapperAnimation));
-}
+    .addAnimation(wrapperAnimation);
+};

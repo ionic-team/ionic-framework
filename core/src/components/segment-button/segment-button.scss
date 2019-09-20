@@ -7,11 +7,11 @@
   /**
    * @prop --background: Background of the segment button
    * @prop --background-hover: Background of the segment button on hover
-   * @prop --background-activated: Background of the activated (pressed) segment button
+   * @prop --background-activated: Background of the segment button when pressed
    * @prop --background-checked: Background of the checked segment button
    *
    * @prop --color: Color of the segment button
-   * @prop --color-activated: Color of the activated segment button
+   * @prop --color-activated: Color of the segment button when pressed
    * @prop --color-checked: Color of the checked segment button
    * @prop --color-disabled: Color of the disabled segment button
    * @prop --color-checked-disabled: Color of the checked & disabled segment button
@@ -22,14 +22,14 @@
    * @prop --border-width: Width of the segment button border
    *
    * @prop --margin-top: Top margin of the segment button
-   * @prop --margin-end: End margin of the segment button
+   * @prop --margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the segment button
    * @prop --margin-bottom: Bottom margin of the segment button
-   * @prop --margin-start: Start margin of the segment button
+   * @prop --margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the segment button
    *
    * @prop --padding-top: Top padding of the segment button
-   * @prop --padding-end: End padding of the segment button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the segment button
    * @prop --padding-bottom: Bottom padding of the segment button
-   * @prop --padding-start: Start padding of the segment button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the segment button
    *
    * @prop --transition: Transition of the segment button
    *

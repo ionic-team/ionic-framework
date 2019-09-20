@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonItem, IonLabel, IonList, IonText, IonAvatar, IonThumbnail, IonButton, IonIcon, IonSelect, IonSelectOption, IonDatetime, IonToggle, IonInput, IonCheckbox, IonRange } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FC<{}> = () => (
   <>
     {/*-- Default Item --*/}
     <IonItem>
@@ -67,14 +67,14 @@ const Example: React.SFC<{}> = () => (
       </IonItem>
 
       <IonItem>
-        <IonLabel text-wrap>
+        <IonLabel class="ion-text-wrap">
         Multiline text that should wrap when it is too long
         to fit on one line in the item.
         </IonLabel>
       </IonItem>
 
       <IonItem>
-        <IonLabel text-wrap>
+        <IonLabel class="ion-text-wrap">
           <IonText color="primary">
             <h3>H3 Primary Title</h3>
           </IonText>

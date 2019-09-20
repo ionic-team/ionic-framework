@@ -6,11 +6,11 @@
 :host {
  /**
    * @prop --background: Background of the button
-   * @prop --background-focused: Background of the button when focused
+   * @prop --background-focused: Background of the button when focused with the tab key
    * @prop --background-hover: Background of the button when hover
    *
    * @prop --color: Text color of the button
-   * @prop --color-focused: Text color of the button when focused
+   * @prop --color-focused: Text color of the button when focused with the tab key
    * @prop --color-hover: Text color of the button when hover
    *
    * @prop --min-width: Minimum width of the button
@@ -24,25 +24,25 @@
    *
    * @prop --opacity: Opacity of the button
    *
-   * @prop --margin-top: Margin top of the button
-   * @prop --margin-end: Margin end of the button
-   * @prop --margin-bottom: Margin bottom of the button
-   * @prop --margin-start: Margin start of the button
+   * @prop --margin-top: Top margin of the button
+   * @prop --margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the button
+   * @prop --margin-bottom: Bottom margin of the button
+   * @prop --margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the button
    *
-   * @prop --padding-top: Padding top of the button
-   * @prop --padding-end: Padding end of the button
-   * @prop --padding-bottom: Padding bottom of the button
-   * @prop --padding-start: Padding start of the button
+   * @prop --padding-top: Top padding of the button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
+   * @prop --padding-bottom: Bottom padding of the button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    *
-   * @prop --icon-margin-top: Margin top of the button icon
-   * @prop --icon-margin-end: Margin end of the button icon
-   * @prop --icon-margin-bottom: Margin bottom of the button icon
-   * @prop --icon-margin-start: Margin start of the button icon
+   * @prop --icon-margin-top: Top margin of the button icon
+   * @prop --icon-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the button icon
+   * @prop --icon-margin-bottom: Bottom margin of the button icon
+   * @prop --icon-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the button icon
    *
-   * @prop --icon-padding-top: Padding top of the button icon
-   * @prop --icon-padding-end: Padding end of the button icon
-   * @prop --icon-padding-bottom: Padding bottom of the button icon
-   * @prop --icon-padding-start: Padding start of the button icon
+   * @prop --icon-padding-top: Top padding of the button icon
+   * @prop --icon-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button icon
+   * @prop --icon-padding-bottom: Bottom padding of the button icon
+   * @prop --icon-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button icon
    *
    * @prop --icon-font-size: Font size of the button icon
    * @prop --icon-font-weight: Font weight of the button icon
@@ -107,6 +107,11 @@
   display: block;
 }
 
+:host(.back-button-disabled) {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
 
 // Native Back Button
 // --------------------------------------------------

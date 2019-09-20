@@ -6,8 +6,9 @@
 :host {
   /**
    * @prop --background: Background of the action sheet group
-   * @prop --background-activated: Background of the activated action sheet button
+   * @prop --background-activated: Background of the action sheet button when pressed
    * @prop --background-selected: Background of the selected action sheet button
+   *
    * @prop --color: Color of the action sheet text
    *
    * @prop --min-width: Minimum width of the action sheet
@@ -64,6 +65,8 @@
 }
 
 .action-sheet-button {
+  display: block;
+
   width: 100%;
 
   border: 0;

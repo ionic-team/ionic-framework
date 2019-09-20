@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, NgZone } from '@angular/core';
 import { BackButtonEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
 import { Subject, Subscription } from 'rxjs';
 
@@ -42,29 +42,30 @@ export class Platform {
    */
   resize = new Subject<void>();
 
-  constructor(@Inject(DOCUMENT) private doc: any) {
-    this.win = doc.defaultView;
+  constructor(@Inject(DOCUMENT) private doc: any, zone: NgZone) {
+    zone.run(() => {
+      this.win = doc.defaultView;
+      this.backButton.subscribeWithPriority = function(priority, callback) {
+        return this.subscribe(ev => (
+          ev.register(priority, () => zone.run(callback))
+        ));
+      };
 
-    this.backButton.subscribeWithPriority = function(priority, callback) {
-      return this.subscribe(ev => {
-        ev.register(priority, callback);
-      });
-    };
+      proxyEvent(this.pause, doc, 'pause');
+      proxyEvent(this.resume, doc, 'resume');
+      proxyEvent(this.backButton, doc, 'ionBackButton');
+      proxyEvent(this.resize, this.win, 'resize');
 
-    proxyEvent(this.pause, doc, 'pause');
-    proxyEvent(this.resume, doc, 'resume');
-    proxyEvent(this.backButton, doc, 'ionBackButton');
-    proxyEvent(this.resize, this.win, 'resize');
-
-    let readyResolve: (value: string) => void;
-    this._readyPromise = new Promise(res => { readyResolve = res; });
-    if (this.win && this.win['cordova']) {
-      doc.addEventListener('deviceready', () => {
-        readyResolve('cordova');
-      }, { once: true });
-    } else {
-      readyResolve!('dom');
-    }
+      let readyResolve: (value: string) => void;
+      this._readyPromise = new Promise(res => { readyResolve = res; });
+      if (this.win && this.win['cordova']) {
+        doc.addEventListener('deviceready', () => {
+          readyResolve('cordova');
+        }, { once: true });
+      } else {
+        readyResolve!('dom');
+      }
+    });
   }
 
   /**

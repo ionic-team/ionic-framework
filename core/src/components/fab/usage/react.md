@@ -1,10 +1,8 @@
 ```tsx
 import React from 'react';
-
 import { IonContent, IonFab, IonFabButton, IonIcon, IonFabList } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
-
+export const FabExample: React.FC = () => (
   <IonContent>
     {/*-- fab placed to the top end --*/}
     <IonFab vertical="top" horizontal="end" slot="fixed">
@@ -85,6 +83,4 @@ const Example: React.SFC<{}> = () => (
     </IonFab>
   </IonContent>
 );
-
-export default Example;
 ```

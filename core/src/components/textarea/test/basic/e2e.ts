@@ -9,7 +9,7 @@ test('textarea: basic', async () => {
 
   compares.push(await page.compareScreenshot());
 
-  page.waitFor(2000);
+  await page.waitFor(250);
   compares.push(await page.compareScreenshot('value changed'));
 
   for (const compare of compares) {

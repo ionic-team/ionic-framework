@@ -124,7 +124,7 @@ import React from 'react';
 
 import { IonItemGroup, IonItemDivider, IonLabel, IonItem, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FC<{}> = () => (
   <>
     <IonItemGroup>
       <IonItemDivider>

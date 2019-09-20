@@ -1,9 +1,8 @@
 ```tsx
 import React from 'react';
-
 import { IonContent } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const ContentExample: React.FC = () => (
   <IonContent
     scrollEvents={true}
     onIonScrollStart={() => {}}
@@ -11,6 +10,4 @@ const Example: React.SFC<{}> = () => (
     onIonScrollEnd={() => {}}>
   </IonContent>
 );
-
-export default Example;
 ```

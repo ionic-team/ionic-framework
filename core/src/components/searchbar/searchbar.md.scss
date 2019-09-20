@@ -105,11 +105,13 @@
   display: block;
 }
 
-:host(.searchbar-has-focus) .searchbar-cancel-button {
+:host(.searchbar-has-focus) .searchbar-cancel-button,
+:host(.searchbar-should-show-cancel) .searchbar-cancel-button {
   display: block;
 }
 
-:host(.searchbar-has-focus) .searchbar-cancel-button + .searchbar-search-icon {
+:host(.searchbar-has-focus) .searchbar-cancel-button + .searchbar-search-icon,
+:host(.searchbar-should-show-cancel) .searchbar-cancel-button + .searchbar-search-icon {
   display: none;
 }
 

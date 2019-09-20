@@ -46,16 +46,14 @@ export class PopoverExample {
 ### Javascript
 
 ```javascript
-async function presentPopover(ev) {
-  const popoverController = document.querySelector('ion-popover-controller');
-  await popoverController.componentOnReady();
-
-  const popover = await popoverController.create({
+function presentPopover(ev) {
+  const popover = Object.assing(document.createElement('ion-popover'), {
     component: 'popover-example-page',
     event: ev,
     translucent: true
   });
-  return await popover.present();
+  document.body.appendChild(popover);
+  return popover.present();
 }
 ```
 
@@ -63,64 +61,54 @@ async function presentPopover(ev) {
 ### React
 
 ```tsx
-import React, { Component } from 'react'
-import { IonPopover } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonPopover, IonButton } from '@ionic/react';
 
-type Props = {}
-type State = {
-  showPopover: boolean
-}
+export const PopoverExample: React.FC = () => {
+  const [showPopover, setShowPopover] = useState(false);
 
-export class PopoverExample extends Component<Props, State> {
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showPopover: false
-    };
-  }
-
-  render() {
-    return (
+  return (
+    <>
       <IonPopover
-        isOpen={this.state.showPopover}
-        onDidDismiss={() => this.setState(() => ({ showPopover: false }))}
+        isOpen={showPopover}
+        onDidDismiss={e => setShowPopover(false)}
       >
         <p>This is popover content</p>
       </IonPopover>
-    );
-  }
-}
+      <IonButton onClick={() => setShowPopover(true)}>Show Popover</IonButton>
+    </>
+  );
+};
 ```
 
 
 
 ## Properties
 
-| Property                 | Attribute          | Description                                                                                                      | Type                                                                                   | Default     |
-| ------------------------ | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
-| `animated`               | `animated`         | If `true`, the popover will animate.                                                                             | `boolean`                                                                              | `true`      |
-| `backdropDismiss`        | `backdrop-dismiss` | If `true`, the popover will be dismissed when the backdrop is clicked.                                           | `boolean`                                                                              | `true`      |
-| `component` _(required)_ | `component`        | The component to display inside of the popover.                                                                  | `Function \| HTMLElement \| null \| string`                                            | `undefined` |
-| `componentProps`         | --                 | The data to pass to the popover component.                                                                       | `undefined \| { [key: string]: any; }`                                                 | `undefined` |
-| `cssClass`               | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                                                      | `undefined` |
-| `enterAnimation`         | --                 | Animation to use when the popover is presented.                                                                  | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `event`                  | `event`            | The event to pass to the popover animation.                                                                      | `any`                                                                                  | `undefined` |
-| `keyboardClose`          | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                              | `true`      |
-| `leaveAnimation`         | --                 | Animation to use when the popover is dismissed.                                                                  | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `mode`                   | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                        | `undefined` |
-| `showBackdrop`           | `show-backdrop`    | If `true`, a backdrop will be displayed behind the popover.                                                      | `boolean`                                                                              | `true`      |
-| `translucent`            | `translucent`      | If `true`, the popover will be translucent.                                                                      | `boolean`                                                                              | `false`     |
+| Property                 | Attribute          | Description                                                                                                                                                                                                            | Type                                                                                   | Default     |
+| ------------------------ | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
+| `animated`               | `animated`         | If `true`, the popover will animate.                                                                                                                                                                                   | `boolean`                                                                              | `true`      |
+| `backdropDismiss`        | `backdrop-dismiss` | If `true`, the popover will be dismissed when the backdrop is clicked.                                                                                                                                                 | `boolean`                                                                              | `true`      |
+| `component` _(required)_ | `component`        | The component to display inside of the popover.                                                                                                                                                                        | `Function \| HTMLElement \| null \| string`                                            | `undefined` |
+| `componentProps`         | --                 | The data to pass to the popover component.                                                                                                                                                                             | `undefined \| { [key: string]: any; }`                                                 | `undefined` |
+| `cssClass`               | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                       | `string \| string[] \| undefined`                                                      | `undefined` |
+| `enterAnimation`         | --                 | Animation to use when the popover is presented.                                                                                                                                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
+| `event`                  | `event`            | The event to pass to the popover animation.                                                                                                                                                                            | `any`                                                                                  | `undefined` |
+| `keyboardClose`          | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                 | `boolean`                                                                              | `true`      |
+| `leaveAnimation`         | --                 | Animation to use when the popover is dismissed.                                                                                                                                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
+| `mode`                   | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                      | `"ios" \| "md"`                                                                        | `undefined` |
+| `showBackdrop`           | `show-backdrop`    | If `true`, a backdrop will be displayed behind the popover.                                                                                                                                                            | `boolean`                                                                              | `true`      |
+| `translucent`            | `translucent`      | If `true`, the popover will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility). | `boolean`                                                                              | `false`     |
 
 
 ## Events
 
-| Event                   | Description                               | Type                              |
-| ----------------------- | ----------------------------------------- | --------------------------------- |
-| `ionPopoverDidDismiss`  | Emitted after the popover has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionPopoverDidPresent`  | Emitted after the popover has presented.  | `CustomEvent<void>`               |
-| `ionPopoverWillDismiss` | Emitted before the popover has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionPopoverWillPresent` | Emitted before the popover has presented. | `CustomEvent<void>`               |
+| Event                   | Description                               | Type                                   |
+| ----------------------- | ----------------------------------------- | -------------------------------------- |
+| `ionPopoverDidDismiss`  | Emitted after the popover has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionPopoverDidPresent`  | Emitted after the popover has presented.  | `CustomEvent<void>`                    |
+| `ionPopoverWillDismiss` | Emitted before the popover has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionPopoverWillPresent` | Emitted before the popover has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -128,13 +116,6 @@ export class PopoverExample extends Component<Props, State> {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the popover overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                  |
-| ------ | --------------------- | -------------------------------------------------------------------------------------------- |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                      |
-| `role` | `string \| undefined` | The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'. |
 
 #### Returns
 
@@ -186,6 +167,19 @@ Type: `Promise<void>`
 | `--min-width`  | Minimum width of the popover  |
 | `--width`      | Width of the popover          |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+
+### Graph
+```mermaid
+graph TD;
+  ion-popover --> ion-backdrop
+  style ion-popover fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

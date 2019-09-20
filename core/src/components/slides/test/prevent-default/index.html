@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../dist/ionic.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
   <style>
     .blueBackground {
       --background: blue;
@@ -37,11 +38,11 @@
   <script>
     const contentWithBackground = document.getElementById('contentWithBackground');
     const changeBackgroundButton = document.getElementById('changeBackgroundButton');
-    
+
     function scrollDown(event) {
       changeBackgroundButton.scrollIntoView();
     }
-    
+
     function changeBackground(event) {
       contentWithBackground.classList.add('blueBackground');
     };

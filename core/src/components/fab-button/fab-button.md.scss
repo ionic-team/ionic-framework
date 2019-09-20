@@ -41,6 +41,7 @@
   --background: #{$fab-md-list-button-background-color};
   --background-activated: #{$fab-md-list-button-background-color-activated};
   --background-focused: var(--background-activated);
+  --background-hover: #{$fab-md-list-button-background-color-hover};
 }
 
 :host(.fab-button-in-list) ::slotted(ion-icon) {

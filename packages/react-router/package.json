@@ -1,0 +1,84 @@
+{
+  "name": "@ionic/react-router",
+  "version": "4.9.0-rc.2",
+  "description": "React Router wrapper for @ionic/react",
+  "keywords": [
+    "ionic",
+    "framework",
+    "react",
+    "mobile",
+    "app",
+    "hybrid",
+    "webapp",
+    "cordova",
+    "progressive web app",
+    "pwa"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ionic-team/ionic.git"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf dist dist-transpiled",
+    "compile": "npm run tsc && rollup -c",
+    "release": "np --any-branch --no-cleanup",
+    "tsc": "tsc -p .",
+    "test": "jest"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "dependencies": {
+    "tslib": "*"
+  },
+  "peerDependencies": {
+    "@ionic/core": "^4.9.0",
+    "@ionic/react": "4.9.0-rc.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1"
+  },
+  "devDependencies": {
+    "@ionic/core": "^4.9.0",
+    "@ionic/react": "4.9.0-rc.2",
+    "@types/jest": "^23.3.9",
+    "@types/node": "12.6.9",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-router": "^5.0.3",
+    "@types/react-router-dom": "^4.3.1",
+    "jest": "^24.8.0",
+    "jest-dom": "^3.4.0",
+    "np": "^5.0.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "react-testing-library": "^7.0.0",
+    "rollup": "^1.18.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "ts-jest": "^24.0.2",
+    "typescript": "3.5.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "dist-transpiled",
+      "dist"
+    ],
+    "modulePaths": [
+      "<rootDir>"
+    ]
+  }
+}

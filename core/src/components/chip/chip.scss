@@ -5,8 +5,8 @@
    * @prop --background: Background of the chip
    * @prop --color: Color of the chip
    */
-  --background: rgba(0, 0, 0, .12);
-  --color: rgba(0, 0, 0, .87);
+  --background: #{rgba($text-color-rgb, .12)};
+  --color: #{rgba($text-color-rgb, .87)};
 
   @include border-radius(16px);
   @include font-smoothing();
@@ -128,7 +128,7 @@
 }
 
 :host(:focus) {
-  --background: rgba(0, 0, 0, .16);
+  --background: #{rgba($text-color-rgb, .16)};
 }
 
 
@@ -136,7 +136,7 @@
 // ---------------------------------------------
 
 :host(.activated) {
-  --background: rgba(0, 0, 0, .20);
+  --background: #{rgba($text-color-rgb, .20)};
 }
 
 
@@ -145,7 +145,7 @@
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --background: rgba(0, 0, 0, .16);
+    --background: #{rgba($text-color-rgb, .16)};
   }
 
   :host(.ion-color:hover) {
@@ -153,6 +153,6 @@
   }
 
   :host(.chip-outline:not(.ion-color):hover) {
-    background: rgba(0, 0, 0, .04);
+    background: rgba($text-color-rgb, .04);
   }
 }

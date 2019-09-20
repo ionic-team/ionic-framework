@@ -1,10 +1,10 @@
-import { mockWindow } from '@stencil/core/mock-doc';
+import { newSpecPage, mockWindow } from '@stencil/core/testing';
 
-import { Config } from '../../../global/config';
 import { ComponentProps } from '../../../interface';
 import { Nav } from '../nav';
 import { NavOptions } from '../nav-interface';
-import { ViewController, VIEW_STATE_ATTACHED } from '../view-controller';
+import { ViewController } from '../view-controller';
+import { Config } from '../../../global/config';
 
 describe('NavController', () => {
 
@@ -119,8 +119,9 @@ describe('NavController', () => {
       mockViews(nav, [view1]);
 
       const view2 = mockView(MockView2);
+      
       await nav.push(view2, null, null, trnsDone);
-
+      
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
@@ -901,12 +902,20 @@ describe('NavController', () => {
 
   let trnsDone: jest.Mock;
   let nav: Nav;
-  let win: Window;
 
   beforeEach(async () => {
     trnsDone = jest.fn();
-    win = mockWindow();
-    nav = mockNavController();
+    const config = new Config();
+    config.reset({ animated: false });
+    const page = await newSpecPage({
+      components: [Nav],
+      html: `<ion-nav></ion-nav>`,
+      autoApplyChanges: true,
+      context: {
+        config
+      }
+    });
+    nav = page.rootInstance;
   });
 
   const MockView = 'mock-view';
@@ -915,6 +924,27 @@ describe('NavController', () => {
   const MockView3 = 'mock-view3';
   const MockView4 = 'mock-view4';
   const MockView5 = 'mock-view5';
+  
+  const mockWebAnimation = (el: HTMLElement) => {
+    Element.prototype.animate = () => {};
+    
+    el.animate = () => {
+      const animation = {
+        stop: () => {},
+        pause: () => {},
+        cancel: () => {},
+        onfinish: undefined
+      }
+      
+      animation.play = () => {
+        if (animation.onfinish) {
+          animation.onfinish();
+        }
+      }
+      
+      return animation;
+    }
+  }
 
   function mockView(component?: any, params?: ComponentProps) {
     if (!component) {
@@ -922,7 +952,10 @@ describe('NavController', () => {
     }
 
     const view = new ViewController(component, params);
-    view.element = win.document.createElement(component) as HTMLElement;
+    view.element = document.createElement(component) as HTMLElement;
+    
+    mockWebAnimation(view.element);
+    
     return view;
   }
 
@@ -933,24 +966,23 @@ describe('NavController', () => {
     });
   }
 
-  function mockNavController(): Nav {
-    const navI = new Nav() as any;
-    navI.animated = false;
-    navI.el = win.document.createElement('ion-nav');
-    navI.win = win;
-    navI.queue = { write: (fn: any) => fn(), read: (fn: any) => fn() };
-    navI.ionNavDidChange = { emit() { return; } };
-    navI.ionNavWillChange = { emit() { return; } };
+  // function mockNavController(): Promise<Nav> {
+  //   const navI = new Nav() as any;
+  //   navI.animated = false;
+  //   navI.el = win.document.createElement('ion-nav');
+  //   navI.win = win;
+  //   navI.queue = { write: (fn: any) => fn(), read: (fn: any) => fn() };
 
-    navI.config = new Config({ animated: false });
-    navI._viewInit = (enteringView: ViewController) => {
-      if (!enteringView.element) {
-        enteringView.element = (typeof enteringView.component === 'string')
-          ? win.document.createElement(enteringView.component)
-          : enteringView.element = enteringView.component as HTMLElement;
-      }
-      enteringView.state = VIEW_STATE_ATTACHED;
-    };
-    return navI;
-  }
+  //   navI.config = new Config();
+  //   navI.config.reset({ animated: false });
+  //   navI._viewInit = (enteringView: ViewController) => {
+  //     if (!enteringView.element) {
+  //       enteringView.element = (typeof enteringView.component === 'string')
+  //         ? win.document.createElement(enteringView.component)
+  //         : enteringView.element = enteringView.component as HTMLElement;
+  //     }
+  //     enteringView.state = VIEW_STATE_ATTACHED;
+  //   };
+  //   return navI;
+  // }
 });

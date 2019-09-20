@@ -1150,31 +1150,31 @@ class SwiperClass {
 
 function updateSize () {
   const swiper = this;
-  let width$$1;
-  let height$$1;
+  let width;
+  let height;
   const $el = swiper.$el;
   if (typeof swiper.params.width !== 'undefined') {
-    width$$1 = swiper.params.width;
+    width = swiper.params.width;
   } else {
-    width$$1 = $el[0].clientWidth;
+    width = $el[0].clientWidth;
   }
   if (typeof swiper.params.height !== 'undefined') {
-    height$$1 = swiper.params.height;
+    height = swiper.params.height;
   } else {
-    height$$1 = $el[0].clientHeight;
+    height = $el[0].clientHeight;
   }
-  if ((width$$1 === 0 && swiper.isHorizontal()) || (height$$1 === 0 && swiper.isVertical())) {
+  if ((width === 0 && swiper.isHorizontal()) || (height === 0 && swiper.isVertical())) {
     return;
   }
 
   // Subtract paddings
-  width$$1 = width$$1 - parseInt($el.css('padding-left'), 10) - parseInt($el.css('padding-right'), 10);
-  height$$1 = height$$1 - parseInt($el.css('padding-top'), 10) - parseInt($el.css('padding-bottom'), 10);
+  width = width - parseInt($el.css('padding-left'), 10) - parseInt($el.css('padding-right'), 10);
+  height = height - parseInt($el.css('padding-top'), 10) - parseInt($el.css('padding-bottom'), 10);
 
   Utils.extend(swiper, {
-    width: width$$1,
-    height: height$$1,
-    size: swiper.isHorizontal() ? width$$1 : height$$1,
+    width,
+    height,
+    size: swiper.isHorizontal() ? width : height,
   });
 }
 
@@ -1298,28 +1298,28 @@ function updateSlides () {
       } else {
         // eslint-disable-next-line
         if (swiper.isHorizontal()) {
-          const width$$1 = parseFloat(slideStyles.getPropertyValue('width'));
+          const width = parseFloat(slideStyles.getPropertyValue('width'));
           const paddingLeft = parseFloat(slideStyles.getPropertyValue('padding-left'));
           const paddingRight = parseFloat(slideStyles.getPropertyValue('padding-right'));
           const marginLeft = parseFloat(slideStyles.getPropertyValue('margin-left'));
           const marginRight = parseFloat(slideStyles.getPropertyValue('margin-right'));
           const boxSizing = slideStyles.getPropertyValue('box-sizing');
           if (boxSizing && boxSizing === 'border-box') {
-            slideSize = width$$1 + marginLeft + marginRight;
+            slideSize = width + marginLeft + marginRight;
           } else {
-            slideSize = width$$1 + paddingLeft + paddingRight + marginLeft + marginRight;
+            slideSize = width + paddingLeft + paddingRight + marginLeft + marginRight;
           }
         } else {
-          const height$$1 = parseFloat(slideStyles.getPropertyValue('height'));
+          const height = parseFloat(slideStyles.getPropertyValue('height'));
           const paddingTop = parseFloat(slideStyles.getPropertyValue('padding-top'));
           const paddingBottom = parseFloat(slideStyles.getPropertyValue('padding-bottom'));
           const marginTop = parseFloat(slideStyles.getPropertyValue('margin-top'));
           const marginBottom = parseFloat(slideStyles.getPropertyValue('margin-bottom'));
           const boxSizing = slideStyles.getPropertyValue('box-sizing');
           if (boxSizing && boxSizing === 'border-box') {
-            slideSize = height$$1 + marginTop + marginBottom;
+            slideSize = height + marginTop + marginBottom;
           } else {
-            slideSize = height$$1 + paddingTop + paddingBottom + marginTop + marginBottom;
+            slideSize = height + paddingTop + paddingBottom + marginTop + marginBottom;
           }
         }
       }
@@ -1485,8 +1485,8 @@ function updateAutoHeight (speed) {
   // Find new height from highest slide in view
   for (i = 0; i < activeSlides.length; i += 1) {
     if (typeof activeSlides[i] !== 'undefined') {
-      const height$$1 = activeSlides[i].offsetHeight;
-      newHeight = height$$1 > newHeight ? height$$1 : newHeight;
+      const height = activeSlides[i].offsetHeight;
+      newHeight = height > newHeight ? height : newHeight;
     }
   }
 
@@ -2030,13 +2030,13 @@ function slidePrev (speed = this.params.speed, runCallbacks = true, internal) {
     swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
   }
   const translate = rtlTranslate ? swiper.translate : -swiper.translate;
-  function normalize(val$$1) {
-    if (val$$1 < 0) return -Math.floor(Math.abs(val$$1));
-    return Math.floor(val$$1);
+  function normalize(val) {
+    if (val < 0) return -Math.floor(Math.abs(val));
+    return Math.floor(val);
   }
   const normalizedTranslate = normalize(translate);
-  const normalizedSnapGrid = snapGrid.map(val$$1 => normalize(val$$1));
-  const normalizedSlidesGrid = slidesGrid.map(val$$1 => normalize(val$$1));
+  const normalizedSnapGrid = snapGrid.map(val => normalize(val));
+  const normalizedSlidesGrid = slidesGrid.map(val => normalize(val));
 
   const currentSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate)];
   const prevSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate) - 1];

@@ -1,3 +1,5 @@
+@import "./ionic.deprecation";
+
 @mixin input-cover() {
   @include position(0, null, null, 0);
   @include margin(0);
@@ -204,18 +206,22 @@
     #{$prop}-left: $start;
     #{$prop}-right: $end;
 
-    @at-root @supports((margin-inline-start: 0) or (-webkit-margin-start: 0)) {
-      @if $start != null {
-        #{$prop}-left: unset;
-      }
-      @if $end != null {
-        #{$prop}-right: unset;
-      }
+    @at-root {
+      @supports ((margin-inline-start: 0) or (-webkit-margin-start: 0)) {
+        & {
+          @if $start != null {
+            #{$prop}-left: unset;
+          }
+          @if $end != null {
+            #{$prop}-right: unset;
+          }
 
-      -webkit-#{$prop}-start: $start;
-      #{$prop}-inline-start: $start;
-      -webkit-#{$prop}-end: $end;
-      #{$prop}-inline-end: $end;
+          -webkit-#{$prop}-start: $start;
+          #{$prop}-inline-start: $start;
+          -webkit-#{$prop}-end: $end;
+          #{$prop}-inline-end: $end;
+        }
+      }
     }
   }
 }

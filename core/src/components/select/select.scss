@@ -6,9 +6,9 @@
 :host {
   /**
    * @prop --padding-top: Top padding of the select
-   * @prop --padding-end: End padding of the select
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select
    * @prop --padding-bottom: Bottom padding of the select
-   * @prop --padding-start: Start padding of the select
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the select
    */
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 

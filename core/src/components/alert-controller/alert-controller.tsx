@@ -1,14 +1,23 @@
-import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
+import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 
 import { AlertOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
+/**
+ * @deprecated Use the `alertController` exported from core.
+ */
 @Component({
   tag: 'ion-alert-controller'
 })
 export class AlertController implements ComponentInterface, OverlayController {
 
-  @Prop({ context: 'document' }) doc!: Document;
+  constructor() {
+    if (Build.isDev) {
+      console.warn(`[DEPRECATED][ion-alert-controller] Use the alertController export from @ionic/core:
+  import { alertController } from '@ionic/core';
+  const alert = await alertController.create({...});`);
+    }
+  }
 
   /**
    * Create an alert overlay with alert options.
@@ -17,7 +26,7 @@ export class AlertController implements ComponentInterface, OverlayController {
    */
   @Method()
   create(options: AlertOptions): Promise<HTMLIonAlertElement> {
-    return createOverlay(this.doc.createElement('ion-alert'), options);
+    return createOverlay('ion-alert', options);
   }
 
   /**
@@ -32,7 +41,7 @@ export class AlertController implements ComponentInterface, OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(this.doc, data, role, 'ion-alert', id);
+    return dismissOverlay(document, data, role, 'ion-alert', id);
   }
 
   /**
@@ -40,6 +49,6 @@ export class AlertController implements ComponentInterface, OverlayController {
    */
   @Method()
   async getTop(): Promise<HTMLIonAlertElement | undefined> {
-    return getOverlay(this.doc, 'ion-alert') as HTMLIonAlertElement;
+    return getOverlay(document, 'ion-alert') as HTMLIonAlertElement;
   }
 }

@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Host, h } from '@stencil/core';
 
-import { Config, Mode } from '../../interface';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
 import { rIC } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
@@ -9,77 +10,47 @@ import { isPlatform } from '../../utils/platform';
   styleUrl: 'app.scss'
 })
 export class App implements ComponentInterface {
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' }) win!: Window;
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-
   componentDidLoad() {
-    rIC(() => {
-      const { win, config, queue } = this;
-
-      if (!config.getBoolean('_testing')) {
-        importTapClick(win, config);
-      }
-
-      importInputShims(win, config);
-      importStatusTap(win, config, queue);
-      importHardwareBackButton(win, config);
-      importFocusVisible(win);
-      importKeyboardAssist(win, config);
-    });
+    if (Build.isBrowser) {
+      rIC(() => {
+        const isHybrid = isPlatform(window, 'hybrid');
+        if (!config.getBoolean('_testing')) {
+          import('../../utils/tap-click').then(module => module.startTapClick(config));
+        }
+        if (config.getBoolean('statusTap', isHybrid)) {
+          import('../../utils/status-tap').then(module => module.startStatusTap());
+        }
+        if (config.getBoolean('inputShims', needInputShims())) {
+          import('../../utils/input-shims/input-shims').then(module => module.startInputShims(config));
+        }
+        if (config.getBoolean('hardwareBackButton', isHybrid)) {
+          import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton());
+        }
+        
+        import('../../utils/keyboard').then(module => module(window))
+        import('../../utils/focus-visible').then(module => module.startFocusVisible());
+      });
+    }  
   }
 
-  hostData() {
-    return {
-      class: {
-        [`${this.mode}`]: true,
-        'ion-page': true,
-        'force-statusbar-padding': this.config.getBoolean('_forceStatusbarPadding')
-      }
-    };
-  }
-}
-
-function importHardwareBackButton(win: Window, config: Config) {
-  const hardwareBackConfig = config.getBoolean('hardwareBackButton', isPlatform(win, 'hybrid'));
-  if (hardwareBackConfig) {
-    import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton(win));
-  }
-}
-
-function importStatusTap(win: Window, config: Config, queue: QueueApi) {
-  const statusTap = config.getBoolean('statusTap', isPlatform(win, 'hybrid'));
-  if (statusTap) {
-    import('../../utils/status-tap').then(module => module.startStatusTap(win, queue));
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'ion-page': true,
+          'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding')
+        }}
+      >
+      </Host>
+    );
   }
 }
 
-function importFocusVisible(win: Window) {
-  import('../../utils/focus-visible').then(module => module.startFocusVisible(win.document));
-}
-
-function importTapClick(win: Window, config: Config) {
-  import('../../utils/tap-click').then(module => module.startTapClick(win.document, config));
-}
-
-function importInputShims(win: Window, config: Config) {
-  const inputShims = config.getBoolean('inputShims', needInputShims(win));
-  if (inputShims) {
-    import('../../utils/input-shims/input-shims').then(module => module.startInputShims(win.document, config));
-  }
-}
-
-function importKeyboardAssist(win: Window, config: Config) {
-  const keyboardAssist = config.getBoolean('experimentalKeyboardAssist', false);
-  if (keyboardAssist) {
-    import('../../utils/keyboard').then(module => module.startKeyboardAssist(win));
-  }
-}
-
-function needInputShims(win: Window) {
-  return isPlatform(win, 'ios') && isPlatform(win, 'mobile');
-}
+const needInputShims = () => {
+  return isPlatform(window, 'ios') && isPlatform(window, 'mobile');
+};

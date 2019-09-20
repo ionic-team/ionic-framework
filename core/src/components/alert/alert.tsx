@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
 
-import { AlertButton, AlertInput, Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { getIonMode } from '../../global/ionic-global';
+import { AlertButton, AlertInput, Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
@@ -10,6 +11,9 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-alert',
   styleUrls: {
@@ -27,18 +31,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation?: Animation;
+  mode = getIonMode(this);
 
-  @Element() el!: HTMLStencilElement;
-
-  @Prop({ context: 'config' }) config!: Config;
+  @Element() el!: HTMLIonAlertElement;
 
   /** @internal */
   @Prop() overlayIndex!: number;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -99,6 +97,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, the alert will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 
@@ -163,23 +163,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
     }) as AlertInput);
   }
 
+  constructor() {
+    prepareOverlay(this.el);
+  }
+
   componentWillLoad() {
     this.inputsChanged();
     this.buttonsChanged();
-  }
-
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    this.dismiss(undefined, BACKDROP);
-  }
-
-  @Listen('ionAlertWillDismiss')
-  protected dispatchCancelHandler(ev: CustomEvent) {
-    const role = ev.detail.role;
-    if (isCancel(role)) {
-      const cancelButton = this.processedButtons.find(b => b.role === 'cancel');
-      this.callButtonHandler(cancelButton);
-    }
   }
 
   /**
@@ -225,17 +215,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
       input.checked = input === selectedInput;
     }
     this.activeId = selectedInput.id;
-    if (selectedInput.handler) {
-      selectedInput.handler(selectedInput);
-    }
+    safeCall(selectedInput.handler, selectedInput);
     this.el.forceUpdate();
   }
 
   private cbClick(selectedInput: AlertInput) {
     selectedInput.checked = !selectedInput.checked;
-    if (selectedInput.handler) {
-      selectedInput.handler(selectedInput);
-    }
+    safeCall(selectedInput.handler, selectedInput);
     this.el.forceUpdate();
   }
 
@@ -256,7 +242,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     if (button && button.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
-      const returnData = button.handler(data);
+      const returnData = safeCall(button.handler, data);
       if (returnData === false) {
         // if the return value of the handler is false then do not dismiss
         return false;
@@ -306,6 +292,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private renderCheckbox(labelledby: string | undefined) {
     const inputs = this.processedInputs;
+    const mode = getIonMode(this);
     if (inputs.length === 0) {
       return null;
     }
@@ -320,7 +307,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
             disabled={i.disabled}
             tabIndex={0}
             role="checkbox"
-            class="alert-tappable alert-checkbox alert-checkbox-button ion-focusable"
+            class={{
+              'alert-tappable': true,
+              'alert-checkbox': true,
+              'alert-checkbox-button': true,
+              'ion-focusable': true,
+              'alert-checkbox-button-disabled': i.disabled || false
+            }}
           >
             <div class="alert-button-inner">
               <div class="alert-checkbox-icon">
@@ -330,7 +323,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 {i.label}
               </div>
             </div>
-            {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         ))}
       </div>
@@ -352,7 +345,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
             disabled={i.disabled}
             id={i.id}
             tabIndex={0}
-            class="alert-radio-button alert-tappable alert-radio ion-focusable"
+            class={{
+              'alert-radio-button': true,
+              'alert-tappable': true,
+              'alert-radio': true,
+              'ion-focusable': true,
+              'alert-radio-button-disabled': i.disabled || false
+            }}
             role="radio"
           >
             <div class="alert-button-inner">
@@ -386,7 +385,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
               id={i.id}
               disabled={i.disabled}
               tabIndex={0}
-              class="alert-input"
+              class={{
+                'alert-input': true,
+                'alert-input-disabled': i.disabled || false
+              }}
             />
           </div>
         ))}
@@ -394,23 +396,21 @@ export class Alert implements ComponentInterface, OverlayInterface {
     );
   }
 
-  hostData() {
-    return {
-      'role': 'dialog',
-      'aria-modal': 'true',
-      style: {
-        zIndex: 20000 + this.overlayIndex,
-      },
-      class: {
-        ...getClassMap(this.cssClass),
-        [`${this.mode}`]: true,
-        'alert-translucent': this.translucent
-      }
-    };
+  private onBackdropTap = () => {
+    this.dismiss(undefined, BACKDROP);
+  }
+
+  private dispatchCancelHandler = (ev: CustomEvent) => {
+    const role = ev.detail.role;
+    if (isCancel(role)) {
+      const cancelButton = this.processedButtons.find(b => b.role === 'cancel');
+      this.callButtonHandler(cancelButton);
+    }
   }
 
   private renderAlertButtons() {
     const buttons = this.processedButtons;
+    const mode = getIonMode(this);
     const alertButtonGroupClass = {
       'alert-button-group': true,
       'alert-button-group-vertical': buttons.length > 2
@@ -422,7 +422,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             <span class="alert-button-inner">
               {button.text}
             </span>
-            {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </button>
         )}
       </div>
@@ -430,42 +430,60 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const hdrId = `alert-${this.overlayIndex}-hdr`;
-    const subHdrId = `alert-${this.overlayIndex}-sub-hdr`;
-    const msgId = `alert-${this.overlayIndex}-msg`;
+    const { overlayIndex, header, subHeader } = this;
+    const mode = getIonMode(this);
+    const hdrId = `alert-${overlayIndex}-hdr`;
+    const subHdrId = `alert-${overlayIndex}-sub-hdr`;
+    const msgId = `alert-${overlayIndex}-msg`;
 
     let labelledById: string | undefined;
-    if (this.header !== undefined) {
+    if (header !== undefined) {
       labelledById = hdrId;
-    } else if (this.subHeader !== undefined) {
+    } else if (subHeader !== undefined) {
       labelledById = subHdrId;
     }
 
-    return [
-      <ion-backdrop tappable={this.backdropDismiss}/>,
+    return (
+      <Host
+        role="dialog"
+        aria-modal="true"
+        style={{
+          zIndex: `${20000 + overlayIndex}`,
+        }}
+        class={{
+          ...getClassMap(this.cssClass),
+          [mode]: true,
+          'alert-translucent': this.translucent
+        }}
+        onIonAlertWillDismiss={this.dispatchCancelHandler}
+        onIonBackdropTap={this.onBackdropTap}
+      >
 
-      <div class="alert-wrapper">
+        <ion-backdrop tappable={this.backdropDismiss}/>
 
-        <div class="alert-head">
-          {this.header && <h2 id={hdrId} class="alert-title">{this.header}</h2>}
-          {this.subHeader && <h2 id={subHdrId} class="alert-sub-title">{this.subHeader}</h2>}
+        <div class="alert-wrapper">
+
+          <div class="alert-head">
+            {header && <h2 id={hdrId} class="alert-title">{header}</h2>}
+            {subHeader && <h2 id={subHdrId} class="alert-sub-title">{subHeader}</h2>}
+          </div>
+
+          <div id={msgId} class="alert-message" innerHTML={sanitizeDOMString(this.message)}></div>
+
+          {this.renderAlertInputs(labelledById)}
+          {this.renderAlertButtons()}
+
         </div>
-
-        <div id={msgId} class="alert-message" innerHTML={sanitizeDOMString(this.message)}></div>
-
-        {this.renderAlertInputs(labelledById)}
-        {this.renderAlertButtons()}
-
-      </div>
-    ];
+      </Host>
+    );
   }
 }
 
-function buttonClass(button: AlertButton): CssClassMap {
+const buttonClass = (button: AlertButton): CssClassMap => {
   return {
     'alert-button': true,
     'ion-focusable': true,
     'ion-activatable': true,
     ...getClassMap(button.cssClass)
   };
-}
+};

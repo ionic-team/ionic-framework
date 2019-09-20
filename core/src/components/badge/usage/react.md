@@ -1,10 +1,9 @@
 ```tsx
 import React from 'react';
+import { IonBadge, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonBadge, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const BadgeExample: React.FC = () => (
+  <IonContent>
     {/*-- Default --*/}
     <IonBadge>99</IonBadge>
 
@@ -25,8 +24,6 @@ const Example: React.SFC<{}> = () => (
       <IonLabel>My Item</IonLabel>
       <IonBadge slot="end">22</IonBadge>
     </IonItem>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```

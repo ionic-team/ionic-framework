@@ -107,14 +107,22 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
 
 ```tsx
 import React from 'react';
+import {
+  IonButtons,
+  IonToolbar,
+  IonBackButton,
+  IonTitle,
+  IonButton,
+  IonIcon,
+  IonMenuButton,
+  IonContent
+} from '@ionic/react';
 
-import { IonButtons, IonToolbar, IonBackButton, IonTitle, IonButton, IonIcon, IonMenuButton } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const ButtonsExample: React.FC = () => (
+  <IonContent>
     <IonToolbar>
       <IonButtons slot="start">
-        <IonBackButton goBack={() => {}} />
+        <IonBackButton defaultHref="/" />
       </IonButtons>
       <IonTitle>Back Button</IonTitle>
     </IonToolbar>
@@ -124,13 +132,13 @@ const Example: React.SFC<{}> = () => (
         <IonButton>
           <IonIcon slot="icon-only" name="contact" />
         </IonButton>
-        <IonButton> />
+        <IonButton>
           <IonIcon slot="icon-only" name="search" />
         </IonButton>
       </IonButtons>
       <IonTitle>Default Buttons</IonTitle>
       <IonButtons slot="primary">
-        <IonButton color="secondary"> />
+        <IonButton color="secondary">
           <IonIcon slot="icon-only" name="more" />
         </IonButton>
       </IonButtons>
@@ -147,10 +155,9 @@ const Example: React.SFC<{}> = () => (
         <IonMenuButton autoHide={false} />
       </IonButtons>
     </IonToolbar>
-  </>
+  </IonContent>
 );
-
-export default Example;
+```
 
 
 ### Vue
@@ -195,6 +202,13 @@ export default Example;
 </template>
 ```
 
+
+
+## Properties
+
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                                                                                   | Type      | Default |
+| ---------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| `collapse` | `collapse` | If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header` | `boolean` | `false` |
 
 
 ----------------------------------------------

@@ -1,10 +1,14 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-toggle',
   styleUrls: {
@@ -22,16 +26,7 @@ export class Toggle implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-
-  @Prop({ context: 'document' }) doc!: Document;
-
   @State() activated = false;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.
@@ -101,14 +96,9 @@ export class Toggle implements ComponentInterface {
     }
   }
 
-  componentWillLoad() {
-    this.emitStyle();
-  }
-
-  async componentDidLoad() {
+  async connectedCallback() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
-      queue: this.queue,
       gestureName: 'toggle',
       gesturePriority: 100,
       threshold: 5,
@@ -120,18 +110,15 @@ export class Toggle implements ComponentInterface {
     this.disabledChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
     }
   }
 
-  @Listen('click')
-  onClick() {
-    if (this.lastDrag + 300 < Date.now()) {
-      this.checked = !this.checked;
-    }
+  componentWillLoad() {
+    this.emitStyle();
   }
 
   private emitStyle() {
@@ -148,7 +135,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private onMove(detail: GestureDetail) {
-    if (shouldToggle(this.doc, this.checked, detail.deltaX, -10)) {
+    if (shouldToggle(document, this.checked, detail.deltaX, -10)) {
       this.checked = !this.checked;
       hapticSelection();
     }
@@ -171,6 +158,12 @@ export class Toggle implements ComponentInterface {
     }
   }
 
+  private onClick = () => {
+    if (this.lastDrag + 300 < Date.now()) {
+      this.checked = !this.checked;
+    }
+  }
+
   private onFocus = () => {
     this.ionFocus.emit();
   }
@@ -179,53 +172,51 @@ export class Toggle implements ComponentInterface {
     this.ionBlur.emit();
   }
 
-  hostData() {
+  render() {
     const { inputId, disabled, checked, activated, color, el } = this;
+    const mode = getIonMode(this);
     const labelId = inputId + '-lbl';
     const label = findItemLabel(el);
+    const value = this.getValue();
     if (label) {
       label.id = labelId;
     }
+    renderHiddenInput(true, el, this.name, (checked ? value : ''), disabled);
 
-    return {
-      'role': 'checkbox',
-      'aria-disabled': disabled ? 'true' : null,
-      'aria-checked': `${checked}`,
-      'aria-labelledby': labelId,
-
-      class: {
-        ...createColorClasses(color),
-        [`${this.mode}`]: true,
-        'in-item': hostContext('ion-item', el),
-        'toggle-activated': activated,
-        'toggle-checked': checked,
-        'toggle-disabled': disabled,
-        'interactive': true
-      }
-    };
-  }
-
-  render() {
-    const value = this.getValue();
-    renderHiddenInput(true, this.el, this.name, (this.checked ? value : ''), this.disabled);
-
-    return [
-      <div class="toggle-icon">
-        <div class="toggle-inner"/>
-      </div>,
-      <button
-        type="button"
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-        disabled={this.disabled}
-        ref={el => this.buttonEl = el}
+    return (
+      <Host
+        onClick={this.onClick}
+        role="checkbox"
+        aria-disabled={disabled ? 'true' : null}
+        aria-checked={`${checked}`}
+        aria-labelledby={labelId}
+        class={{
+          ...createColorClasses(color),
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'toggle-activated': activated,
+          'toggle-checked': checked,
+          'toggle-disabled': disabled,
+          'interactive': true
+        }}
       >
-      </button>
-    ];
+        <div class="toggle-icon">
+          <div class="toggle-inner"/>
+        </div>
+        <button
+          type="button"
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          disabled={disabled}
+          ref={btnEl => this.buttonEl = btnEl}
+        >
+        </button>
+      </Host>
+    );
   }
 }
 
-function shouldToggle(doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean {
+const shouldToggle = (doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean => {
   const isRTL = doc.dir === 'rtl';
 
   if (checked) {
@@ -235,6 +226,6 @@ function shouldToggle(doc: HTMLDocument, checked: boolean, deltaX: number, margi
     return (!isRTL && (- margin < deltaX)) ||
       (isRTL && (margin > deltaX));
   }
-}
+};
 
 let toggleIds = 0;

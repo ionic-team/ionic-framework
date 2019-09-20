@@ -90,7 +90,7 @@ export class ModalPage {
 
   constructor(navParams: NavParams) {
     // componentProps can also be accessed at construction time using NavParams
-    console.log(navParams.get('firstName');
+    console.log(navParams.get('firstName'));
   }
 
 }
@@ -156,12 +156,6 @@ export class CalendarComponentModule {}
 
 ### Javascript
 
-```html
-<body>
-  <ion-modal-controller></ion-modal-controller>
-</body>
-```
-
 ```javascript
 customElements.define('modal-page', class extends HTMLElement {
   connectedCallback() {
@@ -182,18 +176,14 @@ customElements.define('modal-page', class extends HTMLElement {
   }
 });
 
-async function presentModal() {
-  // initialize controller
-  const modalController = document.querySelector('ion-modal-controller');
-  await modalController.componentOnReady();
-
+function presentModal() {
   // create the modal with the `modal-page` component
-  const modalElement = await modalController.create({
-    component: 'modal-page'
-  });
+  const modalElement = document.createElement('ion-modal');
+  modalElement.component = 'modal-page';
 
   // present the modal
-  await modalElement.present();
+  document.body.appendChild(modalElement);
+  return modalElement.present();
 }
 ```
 
@@ -202,14 +192,13 @@ async function presentModal() {
 During creation of a modal, data can be passed in through the `componentProps`. The previous example can be written to include data:
 
 ```javascript
-const modalElement = await modalController.create({
-  component: 'modal-page',
-  componentProps: {
-    'firstName': 'Douglas',
-    'lastName': 'Adams',
-    'middleInitial': 'N'
-  }
-});
+const modalElement = document.createElement('ion-modal');
+modalElement.component = 'modal-page';
+modalElement.componentProps = {
+  'firstName': 'Douglas',
+  'lastName': 'Adams',
+  'middleInitial': 'N'
+};
 ```
 
 To get the data passed into the `componentProps`, query for the modal in the `modal-page`:
@@ -232,7 +221,7 @@ A modal can be dismissed by calling the dismiss method on the modal controller a
 
 ```javascript
 async function dismissModal() {
-  await modalController.dismiss({
+  await modal.dismiss({
     'dismissed': true
   });
 }
@@ -249,37 +238,22 @@ console.log(data);
 ### React
 
 ```tsx
-import React, { Component } from 'react'
-import { IonModal } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonModal, IonButton, IonContent } from '@ionic/react';
 
-type Props = {}
-type State = {
-  showModal: boolean
-}
+export const ModalExample: React.FC = () => {
+  const [showModal, setShowModal] = useState(false);
 
-export class ModalExample extends Component<Props, State> {
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showModal: false
-    };
-  }
-
-  render() {
-    return (
-      <IonModal
-        isOpen={this.state.showModal}
-        onDidDismiss={() => this.setState(() => ({ showModal: false }))}
-      >
+  return (
+    <IonContent>
+      <IonModal isOpen={showModal}>
         <p>This is modal content</p>
-        <IonButton onClick={() => this.setState(() => ({ showModal: false }))}>
-          Close Modal
-        </IonButton>
+        <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
       </IonModal>
-    );
-  }
-}
+      <IonButton onClick={() => setShowModal(true)}>Show Modal</IonButton>
+    </IonContent>
+  );
+};
 ```
 
 
@@ -293,7 +267,7 @@ export class ModalExample extends Component<Props, State> {
         <ion-title>{{ title }}</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content padding>
+    <ion-content class="ion-padding">
       {{ content }}
     </ion-content>
   </div>
@@ -368,12 +342,12 @@ export default {
 
 ## Events
 
-| Event                 | Description                             | Type                              |
-| --------------------- | --------------------------------------- | --------------------------------- |
-| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  | `CustomEvent<OverlayEventDetail>` |
-| `ionModalDidPresent`  | Emitted after the modal has presented.  | `CustomEvent<void>`               |
-| `ionModalWillDismiss` | Emitted before the modal has dismissed. | `CustomEvent<OverlayEventDetail>` |
-| `ionModalWillPresent` | Emitted before the modal has presented. | `CustomEvent<void>`               |
+| Event                 | Description                             | Type                                   |
+| --------------------- | --------------------------------------- | -------------------------------------- |
+| `ionModalDidDismiss`  | Emitted after the modal has dismissed.  | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionModalDidPresent`  | Emitted after the modal has presented.  | `CustomEvent<void>`                    |
+| `ionModalWillDismiss` | Emitted before the modal has dismissed. | `CustomEvent<OverlayEventDetail<any>>` |
+| `ionModalWillPresent` | Emitted before the modal has presented. | `CustomEvent<void>`                    |
 
 
 ## Methods
@@ -381,13 +355,6 @@ export default {
 ### `dismiss(data?: any, role?: string | undefined) => Promise<boolean>`
 
 Dismiss the modal overlay after it has been presented.
-
-#### Parameters
-
-| Name   | Type                  | Description                                                                                |
-| ------ | --------------------- | ------------------------------------------------------------------------------------------ |
-| `data` | `any`                 | Any data to emit in the dismiss events.                                                    |
-| `role` | `string \| undefined` | The role of the element that is dismissing the modal. For example, 'cancel' or 'backdrop'. |
 
 #### Returns
 
@@ -442,6 +409,19 @@ Type: `Promise<void>`
 | `--min-width`     | Minimum width of the modal         |
 | `--width`         | Width of the modal                 |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-backdrop](../backdrop)
+
+### Graph
+```mermaid
+graph TD;
+  ion-modal --> ion-backdrop
+  style ion-modal fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

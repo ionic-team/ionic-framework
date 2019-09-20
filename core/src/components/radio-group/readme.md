@@ -55,46 +55,43 @@ radio button within the same group.
 
 ```tsx
 import React from 'react';
+import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonRadio, IonItem, IonContent } from '@ionic/react';
 
-import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonRadio, IonItem } from '@ionic/react';
+export const RadioGroupExample: React.FC = () => (
+  <IonContent>
+    <IonList>
+      <IonRadioGroup>
+        <IonListHeader>Auto Manufacturers</IonListHeader>
 
-const Example: React.SFC<{}> = () => (
+        <IonItem>
+          <IonLabel>Cord</IonLabel>
+          <IonRadio value="cord" />
+        </IonItem>
 
-  <IonList>
-    <IonRadioGroup>
-      <IonListHeader>
-        Auto Manufacturers
-      </IonListHeader>
+        <IonItem>
+          <IonLabel>Duesenberg</IonLabel>
+          <IonRadio value="duesenberg" />
+        </IonItem>
 
-      <IonItem>
-        <IonLabel>Cord</IonLabel>
-        <IonRadio value="cord"></IonRadio>
-      </IonItem>
+        <IonItem>
+          <IonLabel>Hudson</IonLabel>
+          <IonRadio value="hudson" />
+        </IonItem>
 
-      <IonItem>
-        <IonLabel>Duesenberg</IonLabel>
-        <IonRadio value="duesenberg"></IonRadio>
-      </IonItem>
+        <IonItem>
+          <IonLabel>Packard</IonLabel>
+          <IonRadio value="packard" />
+        </IonItem>
 
-      <IonItem>
-        <IonLabel>Hudson</IonLabel>
-        <IonRadio value="hudson"></IonRadio>
-      </IonItem>
-
-      <IonItem>
-        <IonLabel>Packard</IonLabel>
-        <IonRadio value="packard"></IonRadio>
-      </IonItem>
-
-      <IonItem>
-        <IonLabel>Studebaker</IonLabel>
-        <IonRadio value="studebaker"></IonRadio>
-      </IonItem>
-    </IonRadioGroup>
-  </IonList>
+        <IonItem>
+          <IonLabel>Studebaker</IonLabel>
+          <IonRadio value="studebaker" />
+        </IonItem>
+      </IonRadioGroup>
+    </IonList>
+  </IonContent>
 );
-
-export default Example
+```
 
 
 ### Vue
@@ -153,6 +150,19 @@ export default Example
 | ----------- | ----------------------------------- | ------------------------------------------ |
 | `ionChange` | Emitted when the value has changed. | `CustomEvent<RadioGroupChangeEventDetail>` |
 
+
+## Dependencies
+
+### Used by
+
+ - ion-select-popover
+
+### Graph
+```mermaid
+graph TD;
+  ion-select-popover --> ion-radio-group
+  style ion-radio-group fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

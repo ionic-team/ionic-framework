@@ -57,11 +57,10 @@ Chips represent complex entities in small blocks, such as a contact. A chip can 
 
 ```tsx
 import React from 'react';
+import { IonChip, IonLabel, IonIcon, IonAvatar, IonContent } from '@ionic/react';
 
-import { IonChip, IonLabel, IonIcon, IonAvatar } from '@ionic/react';
-
-const ChipExample: React.SFC<{}> = () => (
-  <>
+export const ChipExample: React.FC = () => (
+  <IonContent>
     <IonChip>
       <IonLabel>Default</IonLabel>
     </IonChip>
@@ -102,10 +101,9 @@ const ChipExample: React.SFC<{}> = () => (
       <IonLabel>Avatar Chip</IonLabel>
       <IonIcon name="close-circle" />
     </IonChip>
-  </>
+  </IonContent>
 );
-
-export default ChipExample;
+```
 
 
 ### Vue
@@ -173,6 +171,19 @@ export default ChipExample;
 | `--background` | Background of the chip |
 | `--color`      | Color of the chip      |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-chip --> ion-ripple-effect
+  style ion-chip fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

@@ -8,10 +8,10 @@
    * @prop --background: Background of the badge
    * @prop --color: Text color of the badge
    *
-   * @prop --padding-top: Padding top of the badge
-   * @prop --padding-end: Padding end of the badge
-   * @prop --padding-bottom: Padding bottom of the badge
-   * @prop --padding-start: Padding start of the badge
+   * @prop --padding-top: Top padding of the badge
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the badge
+   * @prop --padding-bottom: Bottom padding of the badge
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the badge
    */
   --background: #{ion-color(primary, base)};
   --color: #{ion-color(primary, contrast)};

@@ -8,8 +8,8 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <button id="basic-loading" onclick="presentLoading()">Show Loading</button>
@@ -17,8 +17,6 @@
   <button id="no-spinner-loading" onclick="presentLoadingWithOptions({duration: 2000, content: 'Loading Please Wait...', spinner: null})">Show Loading with no spinner</button>
   <button id="translucent-loading" onclick="presentLoadingWithOptions({duration: 5000, content: 'Loading Please Wait...', translucent: true})">Show Loading with translucent</button>
   <button id="custom-class-loading" onclick="presentLoadingWithOptions({duration: 5000, content: 'Loading Please Wait...', translucent: true, cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</button>
-
-  <ion-loading-controller></ion-loading-controller>
 
   <style>
     body > button {
@@ -36,20 +34,18 @@
 
   <script>
     async function presentLoading() {
-      const loadingController = document.querySelector('ion-loading-controller');
-      await loadingController.componentOnReady();
-      const loadingElement = await loadingController.create({
+      const loadingElement = Object.assign(document.createElement('ion-loading'), {
         message: 'Hellooo',
         duration: 5000
       });
-      return await loadingElement.present();
+      document.body.appendChild(loadingElement);
+      return loadingElement.present();
     }
 
-    async function presentLoadingWithOptions(opts) {
-      const loadingController = document.querySelector('ion-loading-controller');
-      await loadingController.componentOnReady();
-      const loadingElement = await loadingController.create(opts);
-      return await loadingElement.present();
+    function presentLoadingWithOptions(opts) {
+      const loadingElement = Object.assign(document.createElement('ion-loading'), opts);
+      document.body.appendChild(loadingElement);
+      return loadingElement.present();
     }
   </script>
 </body>

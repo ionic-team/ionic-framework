@@ -9,6 +9,7 @@ test('datetime: basic', async () => {
   expect(compare).toMatchScreenshot();
 
   const datetime = await page.find('#customPickerOptions');
+  await datetime.waitForVisible();
   await datetime.click();
 
   const picker = await page.find('ion-picker');

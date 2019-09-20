@@ -13,41 +13,26 @@ $toolbar-order-ios: (
   slot-primary: 5,
   slot-end: 6,
   menu-toggle-end: 7,
+  title-large: 8,
 );
+
+/// @prop - Minimum height of the toolbar
+$toolbar-ios-min-height:                            44px !default;
+
+/// @prop - Padding top of the toolbar
+$toolbar-ios-padding-top:                           3px !default;
+
+/// @prop - Padding end of the toolbar
+$toolbar-ios-padding-end:                           4px !default;
+
+/// @prop - Padding bottom of the toolbar
+$toolbar-ios-padding-bottom:                        $toolbar-ios-padding-top !default;
+
+/// @prop - Padding start of the toolbar
+$toolbar-ios-padding-start:                         $toolbar-ios-padding-end !default;
 
 /// @prop - Font size of the toolbar button
 $toolbar-ios-button-font-size:                      17px !default;
 
-/// @prop - Text color of the toolbar button
-$toolbar-ios-button-color:                          ion-color(primary, base) !default;
-
-/// @prop - Background color of the toolbar button
-$toolbar-ios-button-background-color:               $toolbar-ios-background !default;
-
-/// @prop - Background color of the toolbar button when activated
-$toolbar-ios-button-background-color-activated:     $toolbar-ios-color-activated !default;
-
 /// @prop - Border radius of the toolbar button
 $toolbar-ios-button-border-radius:                  4px !default;
-
-/// @prop - Font weight of the strong toolbar button
-$toolbar-ios-button-strong-font-weight:             600 !default;
-
-/// @prop - Fill color of the toolbar button icon
-$toolbar-ios-button-icon-fill-color:                currentColor !default;
-
-
-// iOS Title
-// --------------------------------------------------
-
-/// @prop - Font size of the toolbar title
-$toolbar-ios-title-font-size:               17px !default;
-
-/// @prop - Font weight of the toolbar title
-$toolbar-ios-title-font-weight:             600 !default;
-
-/// @prop - Text alignment of the toolbar title
-$toolbar-ios-title-text-align:              center !default;
-
-/// @prop - Text color of the toolbar title
-$toolbar-ios-title-text-color:              $toolbar-ios-color !default;

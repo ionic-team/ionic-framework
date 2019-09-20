@@ -57,8 +57,10 @@
 // Translucent Popover
 // -----------------------------------------
 
-:host(.popover-translucent) .popover-content,
-:host(.popover-translucent) .popover-arrow::after {
-  background: $popover-ios-translucent-background-color;
-  backdrop-filter: $popover-ios-translucent-filter;
+@supports (backdrop-filter: blur(0)) {
+  :host(.popover-translucent) .popover-content,
+  :host(.popover-translucent) .popover-arrow::after {
+    background: $popover-ios-translucent-background-color;
+    backdrop-filter: $popover-ios-translucent-filter;
+  }
 }

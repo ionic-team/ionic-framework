@@ -60,7 +60,7 @@ jobs:
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core
       - run:
-          command: npm run build -- --max-workers 1
+          command: npm run build -- --ci
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core-stencil
       - persist_to_workspace:
@@ -86,6 +86,23 @@ jobs:
       - run:
           command: npm run build
           working_directory: /tmp/workspace/angular
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - "*"
+
+  build-angular-server:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm install
+          working_directory: /tmp/workspace/packages/angular-server
+      - run:
+          command: npm run build.prod
+          working_directory: /tmp/workspace/packages/angular-server
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
@@ -119,7 +136,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm run test.spec
+          command: npm run test.spec --ci
           working_directory: /tmp/workspace/core
 
   test-core-treeshake:
@@ -129,7 +146,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm run test.treeshake
+          command: npm run test.treeshake --ci
           working_directory: /tmp/workspace/core
 
   test-core-screenshot:
@@ -174,6 +191,9 @@ jobs:
           command: npm install
           working_directory: /tmp/workspace/angular/test/test-app
       - run:
+          command: npm run sync
+          working_directory: /tmp/workspace/angular/test/test-app
+      - run:
           command: npm test
           working_directory: /tmp/workspace/angular/test/test-app
 
@@ -205,7 +225,11 @@ workflows:
 
       - build-angular:
           requires: [build-core]
+      - build-angular-server:
+          requires: [build-angular]
       - test-angular-lint:
           requires: [build-angular]
       - test-angular-e2e:
-          requires: [build-angular]
+          requires:
+            - build-angular
+            - build-angular-server

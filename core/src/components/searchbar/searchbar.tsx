@@ -1,10 +1,15 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { Color, Config, Mode, SearchbarChangeEventDetail } from '../../interface';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, SearchbarChangeEventDetail, StyleEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-searchbar',
   styleUrls: {
@@ -19,10 +24,7 @@ export class Searchbar implements ComponentInterface {
   private isCancelVisible = false;
   private shouldAlignLeft = true;
 
-  @Element() el!: HTMLElement;
-
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'document' }) doc!: Document;
+  @Element() el!: HTMLIonSearchbarElement;
 
   @State() focused = false;
   @State() noAnimate = true;
@@ -33,11 +35,6 @@ export class Searchbar implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, enable searchbar animation.
@@ -85,6 +82,13 @@ export class Searchbar implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * A hint to the browser for which keyboard to display.
+   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
+   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+   */
+  @Prop() inputmode: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search' = 'search';
+
+  /**
    * Set the input's placeholder.
    * `placeholder` can accept either plaintext or HTML as a string.
    * To display characters normally reserved for HTML, they
@@ -101,9 +105,13 @@ export class Searchbar implements ComponentInterface {
   @Prop() searchIcon = 'search';
 
   /**
-   * If `true`, show the cancel button.
+   * Sets the behavior for the cancel button. Defaults to `"never"`.
+   * Setting to `"focus"` shows the cancel button on focus.
+   * Setting to `"never"` hides the cancel button.
+   * Setting to `"always"` shows the cancel button regardless
+   * of focus state.
    */
-  @Prop() showCancelButton = false;
+  @Prop() showCancelButton: boolean | string = 'never';
 
   /**
    * If `true`, enable spellcheck on the input.
@@ -150,6 +158,12 @@ export class Searchbar implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<void>;
 
+  /**
+   * Emitted when the styles change.
+   * @internal
+   */
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
   @Watch('value')
   protected valueChanged() {
     const inputEl = this.nativeInput;
@@ -160,7 +174,27 @@ export class Searchbar implements ComponentInterface {
     this.ionChange.emit({ value });
   }
 
+  @Watch('showCancelButton')
+  protected showCancelButtonChanged() {
+    requestAnimationFrame(() => {
+      this.positionElements();
+      this.el.forceUpdate();
+    });
+  }
+
+  connectedCallback() {
+    this.emitStyle();
+  }
+
   componentDidLoad() {
+    if (this.showCancelButton === 'false' || this.showCancelButton === false) {
+      console.warn('The boolean values of showCancelButton are deprecated. Please use "never" instead of "false".');
+    }
+
+    if (this.showCancelButton === '' || this.showCancelButton === 'true' || this.showCancelButton === true) {
+      console.warn('The boolean values of showCancelButton are deprecated. Please use "focus" instead of "true".');
+    }
+
     this.positionElements();
     this.debounceChanged();
 
@@ -169,12 +203,18 @@ export class Searchbar implements ComponentInterface {
     }, 300);
   }
 
+  private emitStyle() {
+    this.ionStyle.emit({
+      'searchbar': true
+    });
+  }
+
   /**
    * Sets focus on the specified `ion-searchbar`. Use this method instead of the global
    * `input.focus()`.
    */
   @Method()
-  setFocus() {
+  async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
@@ -265,10 +305,11 @@ export class Searchbar implements ComponentInterface {
   private positionElements() {
     const value = this.getValue();
     const prevAlignLeft = this.shouldAlignLeft;
+    const mode = getIonMode(this);
     const shouldAlignLeft = (!this.animated || value.trim() !== '' || !!this.focused);
     this.shouldAlignLeft = shouldAlignLeft;
 
-    if (this.mode !== 'ios') {
+    if (mode !== 'ios') {
       return;
     }
 
@@ -289,7 +330,7 @@ export class Searchbar implements ComponentInterface {
     if (!inputEl) {
       return;
     }
-    const isRTL = this.doc.dir === 'rtl';
+    const isRTL = document.dir === 'rtl';
     const iconEl = (this.el.shadowRoot || this.el).querySelector('.searchbar-search-icon') as HTMLElement;
 
     if (this.shouldAlignLeft) {
@@ -298,7 +339,7 @@ export class Searchbar implements ComponentInterface {
 
     } else {
       // Create a dummy span to get the placeholder width
-      const doc = this.doc;
+      const doc = document;
       const tempSpan = doc.createElement('span');
       tempSpan.innerHTML = sanitizeDOMString(this.placeholder) || '';
       doc.body.appendChild(tempSpan);
@@ -328,9 +369,9 @@ export class Searchbar implements ComponentInterface {
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
   private positionCancelButton() {
-    const isRTL = this.doc.dir === 'rtl';
+    const isRTL = document.dir === 'rtl';
     const cancelButton = (this.el.shadowRoot || this.el).querySelector('.searchbar-cancel-button') as HTMLElement;
-    const shouldShowCancel = this.focused;
+    const shouldShowCancel = this.shouldShowCancelButton();
 
     if (cancelButton && shouldShowCancel !== this.isCancelVisible) {
       const cancelStyle = cancelButton.style;
@@ -362,77 +403,126 @@ export class Searchbar implements ComponentInterface {
     return this.getValue() !== '';
   }
 
-  hostData() {
-    const animated = this.animated && this.config.getBoolean('animated', true);
+  /**
+   * Determines whether or not the cancel button should be visible onscreen.
+   * Cancel button should be shown if one of two conditions applies:
+   * 1. `showCancelButton` is set to `always`.
+   * 2. `showCancelButton` is set to `focus`, and the searchbar has been focused.
+   */
+  private shouldShowCancelButton(): boolean {
+    if (
+      isCancelButtonSetToNever(this.showCancelButton) ||
+      (isCancelButtonSetToFocus(this.showCancelButton) && !this.focused)
+    ) { return false; }
 
-    return {
-      'aria-disabled': this.disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
-        'searchbar-animated': animated,
-        'searchbar-disabled': this.disabled,
-        'searchbar-no-animate': animated && this.noAnimate,
-        'searchbar-has-value': this.hasValue(),
-        'searchbar-left-aligned': this.shouldAlignLeft,
-        'searchbar-has-focus': this.focused
-      }
-    };
+    return true;
   }
 
   render() {
-    const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
+    const animated = this.animated && config.getBoolean('animated', true);
+    const mode = getIonMode(this);
+    const clearIcon = this.clearIcon || (mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
 
-    const cancelButton = this.showCancelButton && (
+    const cancelButton = !isCancelButtonSetToNever(this.showCancelButton) && (
       <button
+        aria-label="cancel"
         type="button"
-        tabIndex={this.mode === 'ios' && !this.focused ? -1 : undefined}
+        tabIndex={mode === 'ios' && !this.shouldShowCancelButton() ? -1 : undefined}
         onMouseDown={this.onCancelSearchbar}
         onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"
       >
         <div>
-          { this.mode === 'md'
-            ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+          { mode === 'md'
+            ? <ion-icon aria-hidden="true" mode={mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
             : this.cancelButtonText
           }
         </div>
       </button>
     );
 
-    return [
-      <div class="searchbar-input-container">
-        <input
-          disabled={this.disabled}
-          ref={el => this.nativeInput = el}
-          class="searchbar-input"
-          onInput={this.onInput}
-          onBlur={this.onBlur}
-          onFocus={this.onFocus}
-          placeholder={this.placeholder}
-          type={this.type}
-          value={this.getValue()}
-          autoComplete={this.autocomplete}
-          autoCorrect={this.autocorrect}
-          spellCheck={this.spellcheck}
-        />
+    return (
+      <Host
+        role="search"
+        aria-disabled={this.disabled ? 'true' : null}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'searchbar-animated': animated,
+          'searchbar-disabled': this.disabled,
+          'searchbar-no-animate': animated && this.noAnimate,
+          'searchbar-has-value': this.hasValue(),
+          'searchbar-left-aligned': this.shouldAlignLeft,
+          'searchbar-has-focus': this.focused,
+          'searchbar-should-show-cancel': this.shouldShowCancelButton()
+        }}
+      >
 
-        {this.mode === 'md' && cancelButton}
+        <div class="searchbar-input-container">
+          <input
+            aria-label="search text"
+            disabled={this.disabled}
+            ref={el => this.nativeInput = el}
+            class="searchbar-input"
+            inputMode={this.inputmode}
+            onInput={this.onInput}
+            onBlur={this.onBlur}
+            onFocus={this.onFocus}
+            placeholder={this.placeholder}
+            type={this.type}
+            value={this.getValue()}
+            autoComplete={this.autocomplete}
+            autoCorrect={this.autocorrect}
+            spellCheck={this.spellcheck}
+          />
 
-        <ion-icon mode={this.mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
+          {mode === 'md' && cancelButton}
 
-        <button
-          type="button"
-          no-blur
-          class="searchbar-clear-button"
-          onMouseDown={this.onClearInput}
-          onTouchStart={this.onClearInput}
-        >
-          <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
-        </button>
-      </div>,
-      this.mode === 'ios' && cancelButton
-    ];
+          <ion-icon mode={mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
+
+          <button
+            aria-label="reset"
+            type="button"
+            no-blur
+            class="searchbar-clear-button"
+            onMouseDown={this.onClearInput}
+            onTouchStart={this.onClearInput}
+          >
+            <ion-icon aria-hidden="true" mode={mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
+          </button>
+        </div>
+        {mode === 'ios' && cancelButton}
+      </Host>
+    );
   }
 }
+
+/**
+ * Check if the cancel button should never be shown.
+ *
+ * TODO: Remove this when the `true` and `false`
+ * options are removed.
+ */
+const isCancelButtonSetToNever = (showCancelButton: boolean | string): boolean => {
+  return (
+    showCancelButton === 'never' ||
+    showCancelButton === 'false' ||
+    showCancelButton === false
+  );
+};
+
+/**
+ * Check if the cancel button should be shown on focus.
+ *
+ * TODO: Remove this when the `true` and `false`
+ * options are removed.
+ */
+const isCancelButtonSetToFocus = (showCancelButton: boolean | string): boolean => {
+  return (
+    showCancelButton === 'focus' ||
+    showCancelButton === 'true' ||
+    showCancelButton === true ||
+    showCancelButton === ''
+  );
+};

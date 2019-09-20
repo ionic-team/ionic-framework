@@ -91,48 +91,45 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 
 ```tsx
 import React from 'react';
+import { IonToggle, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonToggle, IonList, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const ToggleExample: React.FC = () => (
+  <IonContent>
     {/*-- Default Toggle --*/}
-    <IonToggle></IonToggle>
+    <IonToggle />
 
     {/*-- Disabled Toggle --*/}
-    <IonToggle disabled></IonToggle>
+    <IonToggle disabled />
 
     {/*-- Checked Toggle --*/}
-    <IonToggle checked></IonToggle>
+    <IonToggle checked />
 
     {/*-- Toggle Colors --*/}
-    <IonToggle color="primary"></IonToggle>
-    <IonToggle color="secondary"></IonToggle>
-    <IonToggle color="danger"></IonToggle>
-    <IonToggle color="light"></IonToggle>
-    <IonToggle color="dark"></IonToggle>
+    <IonToggle color="primary" />
+    <IonToggle color="secondary" />
+    <IonToggle color="danger" />
+    <IonToggle color="light" />
+    <IonToggle color="dark" />
 
     {/*-- Toggles in a List --*/}
     <IonList>
       <IonItem>
         <IonLabel>Pepperoni</IonLabel>
-        <IonToggle value="pepperoni" onChange={() => {}}></IonToggle>
+        <IonToggle value="pepperoni" onChange={() => {}} />
       </IonItem>
 
       <IonItem>
         <IonLabel>Sausage</IonLabel>
-        <IonToggle value="sausage" onChange={() => {}} disabled={true}></IonToggle>
+        <IonToggle value="sausage" onChange={() => {}} disabled={true} />
       </IonItem>
 
       <IonItem>
         <IonLabel>Mushrooms</IonLabel>
-        <IonToggle value="mushrooms" onChange={() => {}}></IonToggle>
+        <IonToggle value="mushrooms" onChange={() => {}} />
       </IonItem>
     </IonList>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
