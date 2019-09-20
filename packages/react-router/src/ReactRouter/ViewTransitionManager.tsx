@@ -2,21 +2,24 @@ import React from 'react';
 import { IonLifeCycleContext, DefaultIonLifeCycleContext } from '@ionic/react';
 import { RouteManagerContext } from './RouteManagerContext';
 
-interface StackItemManagerProps {
+interface ViewTransitionManagerProps {
   id: string;
   mount: boolean;
 }
 
-interface StackItemManagerState {
+interface ViewTransitionManagerState {
   show: boolean;
 }
 
-export class ViewItemManager extends React.Component<StackItemManagerProps, StackItemManagerState> {
+/**
+ * Manages the View's DOM lifetime by keeping it around long enough to complete page transitions before removing it.
+ */
+export class ViewTransitionManager extends React.Component<ViewTransitionManagerProps, ViewTransitionManagerState> {
   ionLifeCycleContext = new DefaultIonLifeCycleContext();
   _isMounted = false;
   context!: React.ContextType<typeof RouteManagerContext>;
 
-  constructor(props: StackItemManagerProps) {
+  constructor(props: ViewTransitionManagerProps) {
     super(props)
     this.state = {
       show: true
