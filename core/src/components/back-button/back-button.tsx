@@ -15,7 +15,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
     ios: 'back-button.ios.scss',
     md: 'back-button.md.scss'
   },
-  scoped: true
+  shadow: true
 })
 export class BackButton implements ComponentInterface, ButtonInterface {
 
