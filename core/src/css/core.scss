@@ -128,3 +128,12 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
     --ion-safe-area-right: env(safe-area-inset-right);
   }
 }
+
+
+// Global Card Styles
+// --------------------------------------------------
+
+ion-card.ion-color .ion-inherit-color,
+ion-card-header.ion-color .ion-inherit-color {
+  color: inherit;
+}

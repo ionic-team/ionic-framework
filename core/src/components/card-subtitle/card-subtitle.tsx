@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -34,8 +34,8 @@ export class CardSubtitle implements ComponentInterface {
         aria-level="3"
         class={{
           ...createColorClasses(this.color),
-          'in-card-color': hostContext('ion-card[color],ion-card-header[color]', this.el),
-          [mode]: true,
+          'ion-inherit-color': true,
+          [mode]: true
         }}
       >
         <slot></slot>
