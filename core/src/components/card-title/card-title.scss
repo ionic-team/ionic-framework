@@ -18,3 +18,7 @@
 :host(.ion-color) {
   color: #{current-color(base)};
 }
+
+:host(.in-card-ion-color) {
+  color: current-color(contrast);
+}

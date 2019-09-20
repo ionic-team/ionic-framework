@@ -16,7 +16,6 @@
   color: current-color(contrast);
 }
 
-:host(.ion-color) ::slotted(ion-card-title),
-:host(.ion-color) ::slotted(ion-card-subtitle) {
-  color: currentColor;
+:host(.in-card-ion-color) {
+  color: current-color(contrast);
 }

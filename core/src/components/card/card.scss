@@ -24,6 +24,7 @@
   overflow: hidden;
 }
 
+
 // Card Colors
 // ---------------------------------------------
 
@@ -32,11 +33,6 @@
   color: current-color(contrast);
 }
 
-:host(.ion-color)::slotted(*) ion-card-header,
-:host(.ion-color)::slotted(*) ion-card-title,
-:host(.ion-color)::slotted(*) ion-card-subtitle {
-  color: current-color(contrast);
-}
 
 // Slotted Content
 // ---------------------------------------------
