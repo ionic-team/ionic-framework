@@ -77,10 +77,6 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
       }
       leavingView = viewStacks.findViewInfoById(this.activeIonPageId).view;
 
-      if (leavingView && leavingView.routeData.match!.url === location.pathname) {
-        return;
-      }
-
       if (enteringView) {
 
         if (enteringView.isIonRoute) {
