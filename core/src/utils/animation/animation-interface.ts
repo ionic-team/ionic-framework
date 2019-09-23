@@ -235,7 +235,7 @@ export interface AnimationKeyFrameEdge extends AnimationStyles {
   offset?: number;
 }
 
-export type AnimationStyles = Omit< Record<string, string>, 'offset'>;
+export type AnimationStyles = Record<string, any>;
 
 export interface AnimationPlayOptions {
   sync: boolean;

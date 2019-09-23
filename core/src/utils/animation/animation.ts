@@ -1,6 +1,6 @@
 // TODO: Add more tests. until then, be sure to manually test menu and swipe to go back/routing transitions
 
-import { Animation, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrames, AnimationLifecycle, AnimationOnFinishOptions, AnimationPlayOptions } from './animation-interface';
+import { Animation, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrames, AnimationLifecycle, AnimationOnFinishOptions, AnimationPlayOptions, AnimationKeyFrameEdge } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
 interface AnimationOnFinishCallback {
@@ -297,33 +297,21 @@ export const createAnimation = (): Animation => {
 
   const direction = (animationDirection: AnimationDirection) => {
     _direction = animationDirection;
-
-    update(true);
-
     return ani;
   };
 
   const fill = (animationFill: AnimationFill) => {
     _fill = animationFill;
-
-    update(true);
-
     return ani;
   };
 
   const delay = (animationDelay: number) => {
     _delay = animationDelay;
-
-    update(true);
-
     return ani;
   };
 
   const easing = (animationEasing: string) => {
     _easing = animationEasing;
-
-    update(true);
-
     return ani;
   };
 
@@ -338,17 +326,11 @@ export const createAnimation = (): Animation => {
     }
 
     _duration = animationDuration;
-
-    update(true);
-
     return ani;
   };
 
   const iterations = (animationIterations: number) => {
     _iterations = animationIterations;
-
-    update(true);
-
     return ani;
   };
 
@@ -411,7 +393,7 @@ export const createAnimation = (): Animation => {
     const removeClasses = beforeRemoveClasses;
     const styles = beforeStylesValue;
 
-    elements.forEach((el: HTMLElement) => {
+    elements.forEach(el => {
       const elementClassList = el.classList;
 
       elementClassList.add(...addClasses);
@@ -467,9 +449,10 @@ export const createAnimation = (): Animation => {
     onFinishOneTimeCallbacks.length = 0;
 
     shouldCalculateNumAnimations = true;
-    if (currentStep === 1) {
+    if (willComplete) {
       finished = true;
     }
+    willComplete = true;
   };
 
   const animationFinish = () => {
@@ -645,7 +628,7 @@ export const createAnimation = (): Animation => {
     if (!initialized) {
       initializeAnimation();
     } else {
-      update();
+      update(true);
       setAnimationStep(0);
     }
 
@@ -673,11 +656,14 @@ export const createAnimation = (): Animation => {
 
     finished = false;
 
-    willComplete = playTo === 1;
-
+    // tslint:disable-next-line: strict-boolean-conditions
+    willComplete = true; // playTo === 1
     if (playTo === 0) {
       forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
 
+      if (forceDirectionValue === 'reverse') {
+        willComplete = false;
+      }
       if (supportsWebAnimations) {
         update();
         setAnimationStep(1 - step);
@@ -694,7 +680,6 @@ export const createAnimation = (): Animation => {
 
     if (playTo !== undefined) {
       onFinish(() => {
-        willComplete = true;
         forceDurationValue = undefined;
         forceDirectionValue = undefined;
         forceDelayValue = undefined;
@@ -843,7 +828,7 @@ export const createAnimation = (): Animation => {
       if (!initialized) {
         initializeAnimation();
       } else {
-        update();
+        update(true);
       }
 
       if (finished) {
@@ -882,7 +867,7 @@ export const createAnimation = (): Animation => {
   };
 
   const from = (property: string, value: any) => {
-    const firstFrame = _keyframes[0] as AnimationKeyFrame | undefined;
+    const firstFrame = _keyframes[0] as AnimationKeyFrameEdge | undefined;
 
     if (firstFrame !== undefined && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
       firstFrame[property] = value;
@@ -890,14 +875,14 @@ export const createAnimation = (): Animation => {
       _keyframes = [
         { offset: 0, [property]: value },
         ..._keyframes
-      ];
+      ] as AnimationKeyFrame[];
     }
 
     return ani;
   };
 
   const to = (property: string, value: any) => {
-    const lastFrame = _keyframes[_keyframes.length - 1] as AnimationKeyFrame | undefined;
+    const lastFrame = _keyframes[_keyframes.length - 1] as AnimationKeyFrameEdge | undefined;
 
     if (lastFrame !== undefined && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
       lastFrame[property] = value;
@@ -905,7 +890,7 @@ export const createAnimation = (): Animation => {
       _keyframes = [
         ..._keyframes,
         { offset: 1, [property]: value }
-      ];
+      ] as AnimationKeyFrame[];
     }
     return ani;
   };

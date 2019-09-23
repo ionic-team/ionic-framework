@@ -284,6 +284,7 @@ export class Menu implements ComponentInterface, MenuI {
       return false;
     }
 
+    debugger;
     this.beforeAnimation(shouldOpen);
     await this.loadAnimation();
     await this.startAnimation(shouldOpen, animated);
@@ -432,12 +433,13 @@ export class Menu implements ComponentInterface, MenuI {
      */
     newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.4, 0), new Point(0.6, 1), new Point(1, 1), adjustedStepValue);
 
+    debugger;
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
-      .onFinish(() => this.afterAnimation(shouldOpen), {
-        oneTimeCallback: true
-      })
-      .progressEnd(shouldComplete, newStepValue, 300);
+      .onFinish(
+        () => this.afterAnimation(shouldOpen),
+        { oneTimeCallback: true })
+      .progressEnd(shouldComplete ? 1 : 0, newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {
