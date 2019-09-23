@@ -628,7 +628,7 @@ export const createAnimation = (): Animation => {
     if (!initialized) {
       initializeAnimation();
     } else {
-      update(true);
+      update();
       setAnimationStep(0);
     }
 
@@ -672,7 +672,9 @@ export const createAnimation = (): Animation => {
         update(false, false);
       }
     } else if (playTo === 1) {
-      if (!supportsWebAnimations) {
+      if (supportsWebAnimations) {
+        setAnimationStep(step);
+      } else {
         forceDelayValue = (step * getDuration()) * -1;
         update(false, false);
       }
@@ -828,7 +830,7 @@ export const createAnimation = (): Animation => {
       if (!initialized) {
         initializeAnimation();
       } else {
-        update(true);
+        update();
       }
 
       if (finished) {
