@@ -1,10 +1,10 @@
-import { RouterDirection } from '@ionic/core';
 import React from 'react';
 import ReactDom from 'react-dom';
 
 import { NavContext } from '../contexts/NavContext';
 
 import { ReactProps } from './ReactProps';
+import { RouterDirection } from './hrefprops';
 import { attachEventProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
 
 interface IonicReactInternalProps<ElementType> {

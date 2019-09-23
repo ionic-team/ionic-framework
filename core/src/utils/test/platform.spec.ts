@@ -63,10 +63,11 @@ describe('Platform Tests', () => {
       expect(isPlatform(win, 'desktop')).toEqual(true);
     });
 
-    it('should return true for "android" and "tablet" on an android tablet', () => {
+    it('should return true for "android" and "tablet" and false for "ios" on an android tablet', () => {
       const win = configureBrowser(PlatformConfiguration.AndroidTablet);
       expect(isPlatform(win, 'android')).toEqual(true);
       expect(isPlatform(win, 'tablet')).toEqual(true);
+      expect(isPlatform(win, 'ios')).toEqual(false);
     });
 
     it('should return true for "cordova" and "hybrid" in a Cordova app', () => {
@@ -95,10 +96,11 @@ describe('Platform Tests', () => {
       expect(isPlatform(win, 'desktop')).toEqual(false);
     });
 
-    it('should return false for "android" and "tablet" on desktop Safari', () => {
+    it('should return false for "android", "tablet", and "ipad" on desktop Safari', () => {
       const win = configureBrowser(PlatformConfiguration.DesktopSafari);
       expect(isPlatform(win, 'android')).toEqual(false);
       expect(isPlatform(win, 'tablet')).toEqual(false);
+      expect(isPlatform(win, 'ipad')).toEqual(false);
     });
 
     it('should return false for "android" and "tablet" and false for "desktop" on iPhone', () => {
@@ -119,6 +121,15 @@ describe('Platform Tests', () => {
       const win = configureBrowser(PlatformConfiguration.PWA);
       expect(isPlatform(win, 'pwa')).toEqual(true);
       expect(isPlatform(win, 'cordova')).toEqual(false);
+    });
+    
+    it('should return true for "ios", "ipad", and "tablet" and false for "iphone" and "android"', () => {
+      const win = configureBrowser(PlatformConfiguration.iPadOS);
+      expect(isPlatform(win, 'ios')).toEqual(true);
+      expect(isPlatform(win, 'ipad')).toEqual(true);
+      expect(isPlatform(win, 'tablet')).toEqual(true);
+      expect(isPlatform(win, 'iphone')).toEqual(false);
+      expect(isPlatform(win, 'android')).toEqual(false);
     });
   })
 });
