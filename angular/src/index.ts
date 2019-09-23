@@ -32,7 +32,6 @@ export { ToastController } from './providers/toast-controller';
 export { NavController } from './providers/nav-controller';
 export { DomController } from './providers/dom-controller';
 export { Config } from './providers/config';
-export { getMode } from '@ionic/core';
 
 // ROUTER STRATEGY
 export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';

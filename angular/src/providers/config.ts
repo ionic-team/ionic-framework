@@ -8,11 +8,6 @@ import { IonicWindow } from '../types/interfaces';
 })
 export class Config {
 
-  constructor() {
-    console.warn(`[DEPRECATION][Config]: The Config provider is deprecated and it will be removed in the next major release.
-  - Use "getMode()" to get the ionic's mode.`);
-  }
-
   get(key: keyof IonicConfig, fallback?: any): any {
     const c = getConfig();
     if (c) {
@@ -38,6 +33,7 @@ export class Config {
   }
 
   set(key: keyof IonicConfig, value?: any) {
+    console.warn(`[DEPRECATION][Config]: The Config.set() method is deprecated and it will be removed in the next major release.`);
     const c = getConfig();
     if (c) {
       c.set(key, value);
@@ -49,7 +45,7 @@ export const ConfigToken = new InjectionToken<any>('USERCONFIG');
 
 const getConfig = (): CoreConfig | null => {
   if (typeof (window as any) !== 'undefined') {
-    const Ionic = (window as IonicWindow).Ionic;
+    const Ionic = (window as any as IonicWindow).Ionic;
     if (Ionic && Ionic.config) {
       return Ionic.config;
     }
