@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "4.7.4",
+  "version": "4.9.1",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -30,15 +30,15 @@
     "loader/"
   ],
   "dependencies": {
-    "ionicons": "^4.6.2",
+    "ionicons": "^4.6.3",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@stencil/core": "1.2.5",
+    "@stencil/core": "1.4.0",
     "@stencil/sass": "1.0.1",
     "@types/jest": "24.0.17",
     "@types/node": "12.7.1",
-    "@types/puppeteer": "1.12.4",
+    "@types/puppeteer": "1.19.1",
     "@types/swiper": "4.4.4",
     "aws-sdk": "^2.497.0",
     "clean-css-cli": "^4.1.11",
@@ -55,7 +55,7 @@
     "sass": "^1.22.9",
     "stylelint": "10.1.0",
     "stylelint-order": "3.0.1",
-    "swiper": "4.5.0",
+    "swiper": "4.5.1",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.21",
     "tslint-react": "^3.6.0"

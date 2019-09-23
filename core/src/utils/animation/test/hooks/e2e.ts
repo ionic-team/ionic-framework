@@ -51,7 +51,7 @@ test(`animation:web: hooks`, async () => {
   expect(stylesAgain.paddingBottom).toEqual('20px');
   expect(stylesAgain.color).toEqual('rgb(0, 0, 0)');
 
-  screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot('end animation'));
 });
 
 test(`animation:css: hooks`, async () => {
@@ -103,7 +103,7 @@ test(`animation:css: hooks`, async () => {
   expect(stylesAgain.paddingBottom).toEqual('20px');
   expect(stylesAgain.color).toEqual('rgb(0, 0, 0)');
 
-  screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot('end animation'));
 });
 
 const waitForEventToBeCalled = (eventName: string, page: any, el: HTMLElement, fn: any, num = 1) => {

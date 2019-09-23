@@ -18,15 +18,15 @@
     "build:client-and-server-bundles": "npm run build && ng run test-app:server:production --bundleDependencies all"
   },
   "dependencies": {
-    "@angular/animations": "~8.2.0",
-    "@angular/common": "~8.2.0",
-    "@angular/compiler": "~8.2.0",
-    "@angular/core": "~8.2.0",
-    "@angular/forms": "~8.2.0",
-    "@angular/platform-browser": "~8.2.0",
-    "@angular/platform-browser-dynamic": "~8.2.0",
-    "@angular/platform-server": "~8.2.0",
-    "@angular/router": "~8.2.0",
+    "@angular/animations": "^8.2.3",
+    "@angular/common": "^8.2.3",
+    "@angular/compiler": "^8.2.3",
+    "@angular/core": "^8.2.3",
+    "@angular/forms": "^8.2.3",
+    "@angular/platform-browser": "^8.2.3",
+    "@angular/platform-browser-dynamic": "^8.2.3",
+    "@angular/platform-server": "^8.2.3",
+    "@angular/router": "^8.2.3",
     "@ionic/angular": "^4.7.0",
     "@ionic/angular-server": "^0.0.2",
     "@nguniversal/express-engine": "~8.1.1",
@@ -35,13 +35,13 @@
     "express": "^4.15.2",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
-    "zone.js": "~0.10.0"
+    "zone.js": "^0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.802.0",
-    "@angular/cli": "~8.2.0",
-    "@angular/compiler-cli": "~8.2.0",
-    "@angular/language-service": "~8.2.0",
+    "@angular-devkit/build-angular": "^0.802.2",
+    "@angular/cli": "^8.2.2",
+    "@angular/compiler-cli": "^8.2.3",
+    "@angular/language-service": "^8.2.3",
     "@types/jasmine": "~3.3.16",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~12.6.8",
@@ -58,6 +58,6 @@
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
     "typescript": "~3.5.3",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.3.7"
   }
 }

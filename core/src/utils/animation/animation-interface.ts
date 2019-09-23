@@ -54,7 +54,7 @@ export interface Animation {
   beforeRemoveClass(className: string | string[] | undefined): Animation;
   beforeAddClass(className: string | string[] | undefined): Animation;
 
-  onFinish(callback: any): Animation;
+  onFinish(callback: (didComplete: boolean, animation: Animation) => void, opts?: AnimationOnFinishOptions): Animation;
   clearOnFinish(): Animation;
 }
 
@@ -64,7 +64,7 @@ export interface AnimationOnFinishCallback {
 }
 
 export interface AnimationOnFinishOptions {
-  oneTime: boolean;
+  oneTimeCallback: boolean;
 }
 
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';

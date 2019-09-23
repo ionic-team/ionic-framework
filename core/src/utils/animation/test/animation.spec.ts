@@ -1,4 +1,5 @@
 import { createAnimation } from '../animation';
+import { getTimeGivenProgression, Point } from '../cubic-bezier';
 
 describe('Animation Class', () => {
   
@@ -80,6 +81,68 @@ describe('Animation Class', () => {
       
       expect(animation.getKeyframes().length).toEqual(3);
     });
+    
+    it('should set the from keyframe properly', () => {
+      animation
+        .from('opacity', 0)
+        .from('background', 'red')
+        .from('color', 'purple');
+        
+      const keyframes = animation.getKeyframes();
+
+      expect(keyframes.length).toEqual(1);
+      expect(keyframes[0]).toEqual({
+        opacity: 0,
+        color: 'purple',
+        background: 'red',
+        offset: 0
+      });
+    });
+    
+    it('should set the to keyframe properly', () => {
+      animation
+        .to('opacity', 0)
+        .to('background', 'red')
+        .to('color', 'purple');
+        
+      const keyframes = animation.getKeyframes();
+      expect(keyframes.length).toEqual(1);
+      expect(keyframes[0]).toEqual({
+        opacity: 0,
+        color: 'purple',
+        background: 'red',
+        offset: 1
+      });
+    });
+    
+    it('should mix keyframes and fromTo properly', () => {
+      animation
+        .keyframes([
+          { offset: 0, background: 'red' },
+          { offset: 0.99, background: 'blue' },
+          { offset: 1, background: 'green' }
+        ])
+        .fromTo('opacity', 0, 1)
+        
+      const keyframes = animation.getKeyframes();
+      expect(keyframes.length).toEqual(3);
+      expect(keyframes[0]).toEqual({
+        opacity: 0,
+        background: 'red',
+        offset: 0
+      });
+      
+      expect(keyframes[1]).toEqual({
+        background: 'blue',
+        offset: 0.99
+      });
+      
+      expect(keyframes[2]).toEqual({
+        opacity: 1,
+        background: 'green',
+        offset: 1
+      });
+    });
   });
   
   describe('Animation Config Methods', () => {
@@ -88,17 +151,17 @@ describe('Animation Class', () => {
       animation = createAnimation();
     });
     
-    it('should get undefined when easing not set', () => {
-      expect(animation.getEasing()).toEqual(undefined);
+    it('should get "linear" when easing not set', () => {
+      expect(animation.getEasing()).toEqual("linear");
     });
     
     it('should get parent easing when child easing is not set', () => {
       const childAnimation = createAnimation();
       animation
         .addAnimation(childAnimation)
-        .easing('linear');
+        .easing('ease-in-out');
       
-      expect(childAnimation.getEasing()).toEqual('linear');
+      expect(childAnimation.getEasing()).toEqual('ease-in-out');
     });
     
     it('should get prefer child easing over parent easing', () => {
@@ -122,8 +185,8 @@ describe('Animation Class', () => {
       expect(animation.getEasing()).toEqual('ease-in-out');
     });
     
-    it('should get undefined when duration not set', () => {
-      expect(animation.getDuration()).toEqual(undefined);
+    it('should get 0 when duration not set', () => {
+      expect(animation.getDuration()).toEqual(0);
     });
     
     it('should get parent duration when child duration is not set', () => {
@@ -146,8 +209,8 @@ describe('Animation Class', () => {
       expect(childAnimation.getDuration()).toEqual(500);
     });
     
-    it('should get undefined when delay not set', () => {
-      expect(animation.getDelay()).toEqual(undefined);
+    it('should get 0 when delay not set', () => {
+      expect(animation.getDelay()).toEqual(0);
     });
     
     it('should get parent delay when child delay is not set', () => {
@@ -170,8 +233,8 @@ describe('Animation Class', () => {
       expect(childAnimation.getDelay()).toEqual(500);
     });
     
-    it('should get undefined when iterations not set', () => {
-      expect(animation.getIterations()).toEqual(undefined);
+    it('should get 1 when iterations not set', () => {
+      expect(animation.getIterations()).toEqual(1);
     });
     
     it('should get parent iterations when child iterations is not set', () => {
@@ -194,17 +257,17 @@ describe('Animation Class', () => {
       expect(childAnimation.getIterations()).toEqual(2);
     });    
     
-    it('should get undefined when fill not set', () => {
-      expect(animation.getFill()).toEqual(undefined);
+    it('should get "both" when fill not set', () => {
+      expect(animation.getFill()).toEqual("both");
     });
     
     it('should get parent fill when child fill is not set', () => {
       const childAnimation = createAnimation();
       animation
         .addAnimation(childAnimation)
-        .fill('both');
+        .fill('forwards');
       
-      expect(childAnimation.getFill()).toEqual('both');
+      expect(childAnimation.getFill()).toEqual('forwards');
     });
     
     it('should get prefer child fill over parent fill', () => {
@@ -218,8 +281,8 @@ describe('Animation Class', () => {
       expect(childAnimation.getFill()).toEqual('none');
     });
     
-    it('should get undefined when direction not set', () => {
-      expect(animation.getDirection()).toEqual(undefined);
+    it('should get "normal" when direction not set', () => {
+      expect(animation.getDirection()).toEqual('normal');
     });
     
     it('should get parent direction when child direction is not set', () => {
@@ -244,3 +307,63 @@ describe('Animation Class', () => {
 
   })
 });
+
+describe('cubic-bezier conversion', () => {
+  describe('should properly get a time value (x value) given a progression value (y value)', () => {
+    it('cubic-bezier(0.32, 0.72, 0, 1)', () => {
+      const equation = [
+        new Point(0, 0),
+        new Point(0.32, 0.72),
+        new Point(0, 1),
+        new Point(1, 1)
+      ];
+      
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.5), 0.16);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.97), 0.56);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.33), 0.11);
+    });
+    
+    it('cubic-bezier(1, 0, 0.68, 0.28)', () => {
+      const equation = [
+        new Point(0, 0),
+        new Point(1, 0),
+        new Point(0.68, 0.28),
+        new Point(1, 1)
+      ];
+      
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.08), 0.60);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.50), 0.84);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.94), 0.98);
+    })
+    
+    it('cubic-bezier(0.4, 0, 0.6, 1)', () => {
+      const equation = [
+        new Point(0, 0),
+        new Point(0.4, 0),
+        new Point(0.6, 1),
+        new Point(1, 1)
+      ];
+            
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.39), 0.43);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.03), 0.11);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.89), 0.78);
+    })
+    
+    it('cubic-bezier(0, 0, 0.2, 1)', () => {
+      const equation = [
+        new Point(0, 0),
+        new Point(0, 0),
+        new Point(0.2, 1),
+        new Point(1, 1)
+      ];
+            
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.95), 0.71);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.1), 0.03);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.70), 0.35);
+    })
+  })
+});
+
+const shouldApproximatelyEqual = (givenValue: number, expectedValue: number): boolean => {
+  expect(Math.abs(expectedValue - givenValue)).toBeLessThanOrEqual(0.01);
+}

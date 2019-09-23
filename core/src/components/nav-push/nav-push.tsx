@@ -1,7 +1,11 @@
 import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { ComponentProps, NavComponent } from '../../interface';
+import { navLink } from '../nav-link/nav-link-utils';
 
+/**
+ * @deprecated Use `<ion-nav-link component="MyComponent">` instead.
+ */
 @Component({
   tag: 'ion-nav-push'
 })
@@ -18,12 +22,12 @@ export class NavPush implements ComponentInterface {
    */
   @Prop() componentProps?: ComponentProps;
 
+  componentDidLoad() {
+    console.warn('[DEPRECATED][ion-nav-push] `<ion-nav-push component="MyComponent">` is deprecated. Use `<ion-nav-link component="MyComponent">` instead.');
+  }
+
   private push = () => {
-    const nav = this.el.closest('ion-nav');
-    const toPush = this.component;
-    if (nav && toPush !== undefined) {
-      nav.push(toPush, this.componentProps, { skipIfBusy: true });
-    }
+    return navLink(this.el, 'forward', this.component, this.componentProps);
   }
 
   render() {

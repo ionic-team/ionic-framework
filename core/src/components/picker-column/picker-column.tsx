@@ -47,7 +47,7 @@ export class PickerColumnCmp implements ComponentInterface {
     this.refresh();
   }
 
-  componentWillLoad() {
+  async connectedCallback() {
     let pickerRotateFactor = 0;
     let pickerScaleFactor = 0.81;
 
@@ -60,16 +60,6 @@ export class PickerColumnCmp implements ComponentInterface {
 
     this.rotateFactor = pickerRotateFactor;
     this.scaleFactor = pickerScaleFactor;
-  }
-
-  async componentDidLoad() {
-    // get the height of one option
-    const colEl = this.optsEl;
-    if (colEl) {
-      this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
-    }
-
-    this.refresh();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -81,14 +71,24 @@ export class PickerColumnCmp implements ComponentInterface {
       onEnd: ev => this.onEnd(ev),
     });
     this.gesture.setDisabled(false);
-
     this.tmrId = setTimeout(() => {
       this.noAnimate = false;
       this.refresh(true);
     }, 250);
   }
 
-  componentDidUnload() {
+  componentDidLoad() {
+    const colEl = this.optsEl;
+    if (colEl) {
+      // DOM READ
+      // We perfom a DOM read over a rendered item, this needs to happen after the first render
+      this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
+    }
+
+    this.refresh();
+  }
+
+  disconnectedCallback() {
     cancelAnimationFrame(this.rafId);
     clearTimeout(this.tmrId);
     if (this.gesture) {

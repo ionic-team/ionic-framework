@@ -28,7 +28,7 @@ export const config: Config = {
     { components: ['ion-loading'] },
     { components: ['ion-menu', 'ion-menu-controller', 'ion-menu-toggle', 'ion-menu-button'] },
     { components: ['ion-modal'] },
-    { components: ['ion-nav', 'ion-nav-pop', 'ion-nav-push', 'ion-nav-set-root'] },
+    { components: ['ion-nav', 'ion-nav-link', 'ion-nav-pop', 'ion-nav-push', 'ion-nav-set-root'] },
     { components: ['ion-img'] },
     { components: ['ion-popover'] },
     { components: ['ion-progress-bar'] },
@@ -64,9 +64,16 @@ export const config: Config = {
     ]},
   ],
   plugins: [
-    sass()
+    sass({
+      injectGlobalPaths: ['src/themes/ionic.skip-warns.scss']
+    })
   ],
   outputTargets: [
+    {
+      type: 'docs-vscode',
+      file: 'dist/html.html-data.json',
+      sourceCodeBaseUrl: 'https://github.com/ionic-team/ionic/tree/master/core/',
+    },
     {
       type: 'dist',
       esmLoaderPath: '../loader',

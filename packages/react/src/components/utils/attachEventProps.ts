@@ -1,3 +1,5 @@
+import { camelToDashCase } from './case';
+
 export const attachEventProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
   // add any classes in className to the class list
   const className = getClassName(node.classList, newProps, oldProps);
@@ -6,7 +8,7 @@ export const attachEventProps = (node: HTMLElement, newProps: any, oldProps: any
   }
 
   Object.keys(newProps).forEach(name => {
-    if (name === 'children' || name === 'style' || name === 'ref' || name === 'className') {
+    if (name === 'children' || name === 'style' || name === 'ref' || name === 'class' || name === 'className' || name === 'forwardedRef') {
       return;
     }
     if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
@@ -17,16 +19,22 @@ export const attachEventProps = (node: HTMLElement, newProps: any, oldProps: any
         syncEvent(node, eventNameLc, newProps[name]);
       }
     } else {
-      (node as any)[name] = newProps[name];
+      if (typeof newProps[name] === 'object') {
+        (node as any)[name] = newProps[name];
+      } else {
+        node.setAttribute(camelToDashCase(name), newProps[name]);
+      }
     }
   });
 };
 
 export const getClassName = (classList: DOMTokenList, newProps: any, oldProps: any) => {
+  const newClassProp: string = newProps.className || newProps.class;
+  const oldClassProp: string = oldProps.className || oldProps.class;
   // map the classes to Maps for performance
   const currentClasses = arrayToMap(classList);
-  const incomingPropClasses = arrayToMap(newProps.className ? newProps.className.split(' ') : []);
-  const oldPropClasses = arrayToMap(oldProps.className ? oldProps.className.split(' ') : []);
+  const incomingPropClasses = arrayToMap(newClassProp ? newClassProp.split(' ') : []);
+  const oldPropClasses = arrayToMap(oldClassProp ? oldClassProp.split(' ') : []);
   const finalClassNames: string[] = [];
   // loop through each of the current classes on the component
   // to see if it should be a part of the classNames added

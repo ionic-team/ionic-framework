@@ -4,11 +4,11 @@ Items are elements that can contain text, icons, avatars, images, inputs, and an
 
 ## Clickable Items
 
-An item is considered "clickable" if it has an `href` or `button` property set. Clickable items have a few visual differences that indicate they can be interacted with. For example, a clickable item receives the ripple effect upon activation in `md` mode, has a highlight when activated in `ios` mode, and has a [detail arrow](/#detail-arrows) by default in `ios` mode.
+An item is considered "clickable" if it has an `href` or `button` property set. Clickable items have a few visual differences that indicate they can be interacted with. For example, a clickable item receives the ripple effect upon activation in `md` mode, has a highlight when activated in `ios` mode, and has a [detail arrow](#detail-arrows) by default in `ios` mode.
 
 ## Detail Arrows
 
-By default [clickable items](/#clickable-items) will display a right arrow icon on `ios` mode. To hide the right arrow icon on clickable elements, set the `detail` property to `false`. To show the right arrow icon on an item that doesn't display it naturally, set the `detail` property to `true`.
+By default [clickable items](#clickable-items) will display a right arrow icon on `ios` mode. To hide the right arrow icon on clickable elements, set the `detail` property to `false`. To show the right arrow icon on an item that doesn't display it naturally, set the `detail` property to `true`.
 
 <!--
 
@@ -131,14 +131,14 @@ List Items
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
     Multiline text that should wrap when it is too long
     to fit on one line in the item.
     </ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
       <ion-text color="primary">
         <h3>H3 Primary Title</h3>
       </ion-text>
@@ -455,14 +455,14 @@ List Items
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
     Multiline text that should wrap when it is too long
     to fit on one line in the item.
     </ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
       <ion-text color="primary">
         <h3>H3 Primary Title</h3>
       </ion-text>
@@ -778,14 +778,14 @@ const Example: React.FC<{}> = () => (
       </IonItem>
 
       <IonItem>
-        <IonLabel text-wrap>
+        <IonLabel class="ion-text-wrap">
         Multiline text that should wrap when it is too long
         to fit on one line in the item.
         </IonLabel>
       </IonItem>
 
       <IonItem>
-        <IonLabel text-wrap>
+        <IonLabel class="ion-text-wrap">
           <IonText color="primary">
             <h3>H3 Primary Title</h3>
           </IonText>
@@ -1098,14 +1098,14 @@ List Items
     </ion-item>
 
     <ion-item>
-      <ion-label text-wrap>
+      <ion-label class="ion-text-wrap">
       Multiline text that should wrap when it is too long
       to fit on one line in the item.
       </ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label text-wrap>
+      <ion-label class="ion-text-wrap">
         <ion-text color="primary">
           <h3>H3 Primary Title</h3>
         </ion-text>

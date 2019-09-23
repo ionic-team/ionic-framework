@@ -84,7 +84,7 @@ const sanitizeElement = (element: any) => {
   if (element.nodeType && element.nodeType !== 1) { return; }
 
   for (let i = element.attributes.length - 1; i >= 0; i--) {
-    const attribute = element.attributes[i];
+    const attribute = element.attributes.item(i);
     const attributeName = attribute.name;
 
     // remove non-allowed attribs

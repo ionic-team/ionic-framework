@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, IonicAnimation, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
+import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { transition } from '../../utils/transition';
 
@@ -18,6 +19,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
   private ani?: IonicAnimation | Animation;
+  private animationEnabled = true;
 
   @Element() el!: HTMLElement;
 
@@ -58,19 +60,39 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   /** @internal */
   @Event({ bubbles: false }) ionNavDidChange!: EventEmitter<void>;
 
-  componentWillLoad() {
-    this.ionNavWillLoad.emit();
-  }
-
-  async componentDidLoad() {
+  async connectedCallback() {
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
-      () => !!this.swipeHandler && this.swipeHandler.canStart(),
+      () => !!this.swipeHandler && this.swipeHandler.canStart() && this.animationEnabled,
       () => this.swipeHandler && this.swipeHandler.onStart(),
       step => this.ani && this.ani.progressStep(step),
       (shouldComplete, step, dur) => {
         if (this.ani) {
-          this.ani.progressEnd(shouldComplete, step, dur);
+          this.animationEnabled = false;
+          this.ani.onFinish(() => {
+            this.animationEnabled = true;
+          }, { oneTimeCallback: true });
+
+          // Account for rounding errors in JS
+          let newStepValue = (shouldComplete) ? -0.001 : 0.001;
+
+          /**
+           * Animation will be reversed here, so need to
+           * reverse the easing curve as well
+           *
+           * Additionally, we need to account for the time relative
+           * to the new easing curve, as `stepValue` is going to be given
+           * in terms of a linear curve.
+           */
+          if (!shouldComplete) {
+            this.ani.easing('cubic-bezier(1, 0, 0.68, 0.28)');
+            newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(1, 0), new Point(0.68, 0.28), new Point(1, 1), step);
+          } else {
+            newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.32, 0.72), new Point(0, 1), new Point(1, 1), step);
+          }
+
+          this.ani.progressEnd(shouldComplete, newStepValue, dur);
+
         }
         if (this.swipeHandler) {
           this.swipeHandler.onEnd(shouldComplete);
@@ -80,8 +102,11 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     this.swipeHandlerChanged();
   }
 
-  componentDidUnload() {
-    this.activeEl = this.activeComponent = undefined;
+  componentWillLoad() {
+    this.ionNavWillLoad.emit();
+  }
+
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;

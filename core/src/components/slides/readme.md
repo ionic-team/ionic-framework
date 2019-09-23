@@ -614,6 +614,18 @@ Type: `Promise<number>`
 
 
 
+### `getSwiper() => Promise<any>`
+
+Get the Swiper instance.
+Use this to access the full Swiper API.
+See https://idangero.us/swiper/api/ for all API options.
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
 ### `isBeginning() => Promise<boolean>`
 
 Get whether or not the current slide is the first slide.
