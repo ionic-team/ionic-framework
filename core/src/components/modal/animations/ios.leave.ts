@@ -1,28 +1,46 @@
 import { IonicAnimation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
+import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
 /**
  * iOS Modal Leave Animation
  */
-export const iosLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
-  const baseAnimation = createAnimation();
-  const backdropAnimation = createAnimation();
-  const wrapperAnimation = createAnimation();
-  const wrapperEl = baseEl.querySelector('.modal-wrapper');
-  const wrapperElRect = wrapperEl!.getBoundingClientRect();
+export const iosLeaveAnimation = (
+  baseEl: HTMLElement,
+  presentingEl?: HTMLElement,
+  duration = 500
+  ): IonicAnimation => {
 
-  backdropAnimation
+  const backdropAnimation = createAnimation()
     .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.4, 0.0);
 
-  wrapperAnimation
-    .addElement(wrapperEl!)
+  const wrapperAnimation = createAnimation()
+    .addElement(baseEl.querySelector('.modal-wrapper')!)
     .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', 'translateY(0%)', `translateY(${(baseEl.ownerDocument as any).defaultView.innerHeight - wrapperElRect.top}px)`);
+    .fromTo('transform', `translateY(0%)`, 'translateY(100%)');
 
-  return baseAnimation
+  const baseAnimation = createAnimation()
     .addElement(baseEl)
-    .easing('ease-out')
-    .duration(250)
+    .easing('cubic-bezier(0.32,0.72,0,1)')
+    .duration(duration)
     .addAnimation([backdropAnimation, wrapperAnimation]);
+
+  if (presentingEl) {
+    const currentPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
+    const presentingFromY = SwipeToCloseDefaults.MIN_PRESENTING_Y;
+    const presentingAnimation = createAnimation()
+      .addElement(presentingEl)
+      .beforeClearStyles(['transform'])
+      .onFinish(currentStep => {
+        if (currentStep === 1) {
+          presentingEl.style.removeProperty('border-radius');
+        }
+      })
+      .duration(duration)
+      .fromTo('transform', `translateY(${presentingFromY}px) scale(${currentPresentingScale})`, 'translateY(0px) scale(1)');
+
+    baseAnimation.addAnimation(presentingAnimation);
+  }
+  return baseAnimation;
 };

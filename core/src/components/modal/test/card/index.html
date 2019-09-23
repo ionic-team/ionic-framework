@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Modal - Card</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <style>
+  :root {
+    --ion-safe-area-top: 20px;
+    --ion-safe-area-bottom: 20px;
+  }
+
+  #modal-header {
+    padding-top: 5px !important;
+    height: 55px;
+  }
+  #modal-header ion-title {
+    padding-top: 5px;
+  }
+
+  #modal-header ion-note {
+    display: block;
+    width: 100%;
+    height: 15px;
+    text-align: center;
+    font-size: 11px;
+    color: #111;
+  }
+
+
+  /*
+  .note {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    font-size: 11px;
+    text-align: center;
+  }
+  */
+  </style>
+</head>
+
+<body>
+  <ion-app>
+
+    <div class="ion-page">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button id="card-modal" onclick="presentModal(document.querySelectorAll('.ion-page')[1])">
+              <ion-icon name="add" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Favorites</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list id="list"></ion-list>
+      </ion-content>
+    </div>
+    <ion-modal-controller></ion-modal-controller>
+
+  </ion-app>
+
+  <script>
+    window.addEventListener("ionModalDidDismiss", function (e) { console.log('DidDismiss', e) })
+    window.addEventListener("ionModalWillDismiss", function (e) { console.log('WillDismiss', e) })
+
+    const people = [
+      {
+          "name": "Miyah Myles",
+          "email": "miyah.myles@gmail.com",
+          "position": "Business Analyst",
+          "photo": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+      },
+      {
+          "name": "June Cha",
+          "email": "june.cha@gmail.com",
+          "position": "Data Entry Clerk",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
+      },
+      {
+          "name": "Iida Niskanen",
+          "email": "iida.niskanen@gmail.com",
+          "position": "Business Analyst",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/68.jpg"
+      },
+      {
+          "name": "Renee Sims",
+          "email": "renee.sims@gmail.com",
+          "position": "Lead Developer",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/65.jpg"
+      },
+      {
+          "name": "Jonathan Nu\u00f1ez",
+          "email": "jonathan.nu\u00f1ez@gmail.com",
+          "position": "Receptionist",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/43.jpg"
+      },
+      {
+          "name": "Sasha Ho",
+          "email": "sasha.ho@gmail.com",
+          "position": "Sales",
+          "photo": "https:\/\/images.pexels.com\/photos\/415829\/pexels-photo-415829.jpeg?h=350&auto=compress&cs=tinysrgb"
+      },
+      {
+          "name": "Abdullah Hadley",
+          "email": "abdullah.hadley@gmail.com",
+          "position": "Sales Manager",
+          "photo": "https:\/\/images.unsplash.com\/photo-1507003211169-0a1dd7228f2d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=a72ca28288878f8404a795f39642a46f"
+      },
+      {
+          "name": "Veeti Seppanen",
+          "email": "veeti.seppanen@gmail.com",
+          "position": "Marketing",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/97.jpg"
+      },
+      {
+          "name": "Thomas Stock",
+          "email": "thomas.stock@gmail.com",
+          "position": "Clerical",
+          "photo": "https:\/\/tinyfac.es\/data\/avatars\/B0298C36-9751-48EF-BE15-80FB9CD11143-500w.jpeg"
+      },
+      {
+          "name": "Bonnie Riley",
+          "email": "bonnie.riley@gmail.com",
+          "position": "Medical Assistant",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/26.jpg"
+      }
+    ];
+
+    const allContacts = [
+      {
+          "name": "Miyah Myles",
+          "email": "miyah.myles@gmail.com",
+          "position": "Office Assistant",
+          "photo": "https:\/\/images.unsplash.com\/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=707b9c33066bf8808c934c8ab394dff6"
+      },
+      {
+          "name": "June Cha",
+          "email": "june.cha@gmail.com",
+          "position": "Administrative Assistant",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg"
+      },
+      {
+          "name": "Iida Niskanen",
+          "email": "iida.niskanen@gmail.com",
+          "position": "Customer Service Representative",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/68.jpg"
+      },
+      {
+          "name": "Renee Sims",
+          "email": "renee.sims@gmail.com",
+          "position": "Customer Service Representative",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/65.jpg"
+      },
+      {
+          "name": "Jonathan Nu\u00f1ez",
+          "email": "jonathan.nu\u00f1ez@gmail.com",
+          "position": "Sales",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/43.jpg"
+      },
+      {
+          "name": "Sasha Ho",
+          "email": "sasha.ho@gmail.com",
+          "position": "Marketing",
+          "photo": "https:\/\/images.pexels.com\/photos\/415829\/pexels-photo-415829.jpeg?h=350&auto=compress&cs=tinysrgb"
+      },
+      {
+          "name": "Abdullah Hadley",
+          "email": "abdullah.hadley@gmail.com",
+          "position": "Marketing",
+          "photo": "https:\/\/images.unsplash.com\/photo-1507003211169-0a1dd7228f2d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=a72ca28288878f8404a795f39642a46f"
+      },
+      {
+          "name": "Veeti Seppanen",
+          "email": "veeti.seppanen@gmail.com",
+          "position": "Project Manager",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/97.jpg"
+      },
+      {
+          "name": "Thomas Stock",
+          "email": "thomas.stock@gmail.com",
+          "position": "Customer Service",
+          "photo": "https:\/\/tinyfac.es\/data\/avatars\/B0298C36-9751-48EF-BE15-80FB9CD11143-500w.jpeg"
+      },
+      {
+          "name": "Bonnie Riley",
+          "email": "bonnie.riley@gmail.com",
+          "position": "Executive Assistant",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/26.jpg"
+      },
+      {
+          "name": "Steve T. Scaife",
+          "email": "steve.t..scaife@gmail.com",
+          "position": "Receptionist",
+          "photo": "https:\/\/tinyfac.es\/data\/avatars\/7D3FA6C0-83C8-4834-B432-6C65ED4FD4C3-500w.jpeg"
+      },
+      {
+          "name": "Andreas Brixen",
+          "email": "andreas.brixen@gmail.com",
+          "position": "Director",
+          "photo": "http:\/\/pbs.twimg.com\/profile_images\/974736784906248192\/gPZwCbdS.jpg"
+      },
+      {
+          "name": "Lilja Peltola",
+          "email": "lilja.peltola@gmail.com",
+          "position": "Sales Manager",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/17.jpg"
+      },
+      {
+          "name": "Sean PJPGR Doran",
+          "email": "sean.pjpgr.doran@gmail.com",
+          "position": "Lead Developer",
+          "photo": "http:\/\/pbs.twimg.com\/profile_images\/1055263632861343745\/vIqzOHXj.jpg"
+      },
+      {
+          "name": "Elliana Palacios",
+          "email": "elliana.palacios@gmail.com",
+          "position": "Marketing",
+          "photo": "https:\/\/images.unsplash.com\/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+      },
+      {
+          "name": "Eduard Franz",
+          "email": "eduard.franz@gmail.com",
+          "position": "Manager",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/86.jpg"
+      },
+      {
+          "name": "Leah Stevens",
+          "email": "leah.stevens@gmail.com",
+          "position": "Attorney",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/47.jpg"
+      },
+      {
+          "name": "Britney Cooper",
+          "email": "britney.cooper@gmail.com",
+          "position": "Data Entry Clerk",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/63.jpg"
+      },
+      {
+          "name": "Chrishell Stause",
+          "email": "chrishell.stause@gmail.com",
+          "position": "Receptionist",
+          "photo": "https:\/\/images-na.ssl-images-amazon.com\/images\/M\/MV5BODFjZTkwMjItYzRhMS00OWYxLWI3YTUtNWIzOWQ4Yjg4NGZiXkEyXkFqcGdeQXVyMTQ0ODAxNzE@._V1_UX172_CR0,0,172,256_AL_.jpg"
+      },
+      {
+          "name": "Ana De Armas",
+          "email": "ana.de.armas@gmail.com",
+          "position": "Administrative Assistant",
+          "photo": "https:\/\/images-na.ssl-images-amazon.com\/images\/M\/MV5BMjA3NjYzMzE1MV5BMl5BanBnXkFtZTgwNTA4NDY4OTE@._V1_UX172_CR0,0,172,256_AL_.jpg"
+      },
+      {
+          "name": "Jennifer Fritz",
+          "email": "jennifer.fritz@gmail.com",
+          "position": "Graphic Designer",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/8.jpg"
+      },
+      {
+          "name": "Wyatt Morris",
+          "email": "wyatt.morris@gmail.com",
+          "position": "Executive Assistant",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/91.jpg"
+      },
+      {
+          "name": "Lourdes Browning",
+          "email": "lourdes.browning@gmail.com",
+          "position": "Sales",
+          "photo": "https:\/\/images.unsplash.com\/photo-1498529605908-f357a9af7bf5?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=047fade70e80ebb22ac8f09c04872c40"
+      },
+      {
+          "name": "Tim Schoch",
+          "email": "tim.schoch@gmail.com",
+          "position": "Product Designer",
+          "photo": "http:\/\/pbs.twimg.com\/profile_images\/1126358830445662208\/IPh6PTBx.jpg"
+      },
+      {
+          "name": "Nykyta Korotkevych",
+          "email": "nykyta.korotkevych@gmail.com",
+          "position": "Lead Developer",
+          "photo": "http:\/\/pbs.twimg.com\/profile_images\/974603248119222272\/N5PLzyan.jpg"
+      },
+      {
+          "name": "Carys Metz",
+          "email": "carys.metz@gmail.com",
+          "position": "Administrative Assistant",
+          "photo": "https:\/\/images.unsplash.com\/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+      },
+      {
+          "name": "Loki Bright",
+          "email": "loki.bright@gmail.com",
+          "position": "Data Entry",
+          "photo": "https:\/\/images.pexels.com\/photos\/220453\/pexels-photo-220453.jpeg?h=350&auto=compress&cs=tinysrgb"
+      },
+      {
+          "name": "Ferdinand Karl",
+          "email": "ferdinand.karl@gmail.com",
+          "position": "Medical Assistant",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/78.jpg"
+      },
+      {
+          "name": "Andrew Kumar",
+          "email": "andrew.kumar@gmail.com",
+          "position": "Accounting",
+          "photo": "http:\/\/pbs.twimg.com\/profile_images\/969073897189523456\/rSuiu_Hr.jpg"
+      },
+      {
+          "name": "Mario Palmer",
+          "email": "mario.palmer@gmail.com",
+          "position": "Attorney",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/33.jpg"
+      },
+      {
+          "name": "Zechariah Burrell",
+          "email": "zechariah.burrell@gmail.com",
+          "position": "Part Time",
+          "photo": "https:\/\/images.unsplash.com\/photo-1506085452766-c330853bea50?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=3e378252a934e660f231666b51bd269a"
+      },
+      {
+          "name": "Lucr\u00e9cia Caldeira",
+          "email": "lucr\u00e9cia.caldeira@gmail.com",
+          "position": "Human Resources",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/95.jpg"
+      },
+      {
+          "name": "Love Grayson",
+          "email": "love.grayson@gmail.com",
+          "position": "Office Assistant",
+          "photo": "https:\/\/images.pexels.com\/photos\/61100\/pexels-photo-61100.jpeg?h=350&auto=compress&cs=tinysrgb"
+      },
+      {
+          "name": "Elizabeth Olsen",
+          "email": "elizabeth.olsen@gmail.com",
+          "position": "Accounting",
+          "photo": "https:\/\/images-na.ssl-images-amazon.com\/images\/M\/MV5BMjEzMjA0ODk1OF5BMl5BanBnXkFtZTcwMTA4ODM3OQ@@._V1_UY256_CR5,0,172,256_AL_.jpg"
+      },
+      {
+          "name": "Layton Diament",
+          "email": "layton.diament@gmail.com",
+          "position": "Receptionist",
+          "photo": "http:\/\/pbs.twimg.com\/profile_images\/1099856449918943232\/hKv3Fddh.jpg"
+      },
+      {
+          "name": "Sophie French",
+          "email": "sophie.french@gmail.com",
+          "position": "Medical Assistant",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/76.jpg"
+      },
+      {
+          "name": "Mia Denys",
+          "email": "mia.denys@gmail.com",
+          "position": "Data Entry Clerk",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/2.jpg"
+      },
+      {
+          "name": "Christine M. Maldonado",
+          "email": "christine.m..maldonado@gmail.com",
+          "position": "Director",
+          "photo": "https:\/\/tinyfac.es\/data\/avatars\/8B510E03-96BA-43F0-A85A-F38BB3005AF1-500w.jpeg"
+      },
+      {
+          "name": "Line Rolland",
+          "email": "line.rolland@gmail.com",
+          "position": "Project Manager",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/79.jpg"
+      },
+      {
+          "name": "Micheal Murphy",
+          "email": "micheal.murphy@gmail.com",
+          "position": "Software Engineer",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/95.jpg"
+      },
+      {
+          "name": "Jacob Ginnish",
+          "email": "jacob.ginnish@gmail.com",
+          "position": "Sales",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/64.jpg"
+      },
+      {
+          "name": "Erwan Gauthier",
+          "email": "erwan.gauthier@gmail.com",
+          "position": "Marketing",
+          "photo": "https:\/\/tinyfac.es\/data\/avatars\/BA0CB1F2-8C79-4376-B13B-DD5FB8772537-200w.jpeg"
+      },
+      {
+          "name": "Derrick Wells",
+          "email": "derrick.wells@gmail.com",
+          "position": "Office Assistant",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/18.jpg"
+      },
+      {
+          "name": "Emre Topalo\u011flu",
+          "email": "emre.topalo\u011flu@gmail.com",
+          "position": "Project Manager",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/men\/47.jpg"
+      },
+      {
+          "name": "Lucy Walker",
+          "email": "lucy.walker@gmail.com",
+          "position": "Business Analyst",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/0.jpg"
+      },
+      {
+          "name": "Ece Akman",
+          "email": "ece.akman@gmail.com",
+          "position": "Accounting",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/49.jpg"
+      },
+      {
+          "name": "Sophie Louise Hart",
+          "email": "sophie.louise.hart@gmail.com",
+          "position": "Attorney",
+          "photo": "https:\/\/tinyfac.es\/data\/avatars\/03F55412-DE8A-4F83-AAA6-D67EE5CE48DA-200w.jpeg"
+      },
+      {
+          "name": "Carmen Velasco",
+          "email": "carmen.velasco@gmail.com",
+          "position": "Executive Assistant",
+          "photo": "https:\/\/randomuser.me\/api\/portraits\/women\/31.jpg"
+      }
+    ]
+
+    const list = document.querySelector('#list');
+
+    const addFavorite = (p) => {
+      const item = document.createElement('ion-item');
+      item.innerHTML = `
+        <ion-avatar slot="start"><img src="${p.photo}"></ion-avatar>
+        <ion-label>
+          <h2>${p.name}</h2>
+          <h3>${p.position}</h3>
+        </ion-label>
+      `;
+      list.appendChild(item);
+    }
+
+    people.forEach(p => addFavorite(p));
+
+    function handleAddFavorite (email) {
+      const modalController = document.querySelector('ion-modal-controller');
+      modalController.dismiss(email);
+    }
+
+    async function createModal(presentingEl) {
+      // initialize controller
+      const modalController = document.querySelector('ion-modal-controller');
+      await modalController.componentOnReady();
+
+      const contactGroups = allContacts
+      .sort((a, b) => {
+        const aSplit = a.name.split(' ');
+        const bSplit = b.name.split(' ');
+        return aSplit[1].localeCompare(bSplit[1]);
+      }).reduce((groups, contact) => {
+        const firstLast = contact.name.split(' ')[1].charAt(0);
+
+        if (!groups.hasOwnProperty(firstLast)) {
+          groups[firstLast] = [];
+        }
+        groups[firstLast].push(contact);
+        return groups;
+      }, {});
+
+      const sortedGroups = Object.keys(contactGroups)
+                                 .map(k => { return { letter: k, contacts: contactGroups[k] }})
+                                 .sort((a, b) => a.letter.localeCompare(b.letter))
+      console.log(sortedGroups);
+
+      const items = new Array(20).fill(0).map((item, i) => {
+        return {
+          title: `Person ${i}`
+        }
+      });
+
+      // create component to open
+      const element = document.createElement('div');
+      element.innerHTML = `
+      <ion-header id="modal-header">
+        <ion-note>Choose a contact to add to Favorites</ion-note>
+        <ion-toolbar>
+          <ion-title>Contacts</ion-title>
+          <ion-buttons slot="end">
+            <ion-button class="add">
+              <ion-icon name="add" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          ${sortedGroups.map(group => {
+            return `<ion-item-divider sticky="true">
+                      <ion-label>
+                        ${group.letter}
+                      </ion-label>
+                    </ion-item-divider>
+                    ${group.contacts.map(item => `<ion-item onclick="handleAddFavorite('${item.email}')"><ion-label>${item.name}</ion-label></ion-item>`).join('')}
+                    `;
+          }).join('')}
+        </ion-list>
+        <ion-button class="dismiss">Dismiss Modal</ion-button>
+      </ion-content>
+      `;
+
+      // listen for close event
+      const button = element.querySelector('ion-button.dismiss');
+      button.addEventListener('click', () => {
+        modalController.dismiss();
+      });
+
+      const create = element.querySelector('ion-button.add');
+      create.addEventListener('click', () => {
+        presentModal();
+      });
+
+      // present the modal
+      const modalElement = await modalController.create({
+        presentingElement: presentingEl,
+        component: element,
+        swipeGesture: true,
+        presentationStyle: 'card'
+      });
+      return modalElement;
+    }
+
+    async function presentModal(presentingEl) {
+      const modal = await createModal(presentingEl);
+      await modal.present();
+      const data = await modal.onWillDismiss();
+      const person = allContacts.find(c => c.email === data.data);
+      person && addFavorite(person);
+    }
+  </script>
+</body>
+
+</html>

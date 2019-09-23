@@ -1,29 +1,28 @@
-import { IonicAnimation } from '../../../interface';
-import { createAnimation } from '../../../utils/animation/animation';
+import { Animation } from '../../../interface';
 
 /**
  * Md Modal Enter Animation
  */
-export const mdEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
-  const baseAnimation = createAnimation();
-  const backdropAnimation = createAnimation();
-  const wrapperAnimation = createAnimation();
+export const mdEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement, _presentingEl?: HTMLElement): Promise<Animation> => {
+  const baseAnimation = new AnimationC();
 
-  backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 0.32);
+  const backdropAnimation = new AnimationC();
+  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
+
+  const wrapperAnimation = new AnimationC();
+  wrapperAnimation.addElement(baseEl.querySelector('.modal-wrapper'));
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.modal-wrapper')!)
-    .keyframes([
-      { offset: 0, opacity: 0.01, transform: 'translateY(40px)' },
-      { offset: 1, opacity: 1, transform: 'translateY(0px)' }
-    ]);
+    .fromTo('opacity', 0.01, 1)
+    .fromTo('translateY', '40px', '0px');
 
-  return baseAnimation
+  backdropAnimation.fromTo('opacity', 0.01, 0.32);
+
+  return Promise.resolve(baseAnimation
     .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(280)
     .beforeAddClass('show-modal')
-    .addAnimation([backdropAnimation, wrapperAnimation]);
+    .add(backdropAnimation)
+    .add(wrapperAnimation));
 };

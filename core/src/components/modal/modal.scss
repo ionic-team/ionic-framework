@@ -47,11 +47,14 @@
 }
 
 :host(.overlay-hidden) {
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .modal-wrapper {
   @include border-radius(var(--border-radius));
+
+  position: relative;
 
   width: var(--width);
   min-width: var(--min-width);
