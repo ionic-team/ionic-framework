@@ -20,35 +20,40 @@
     "url": "https://github.com/ionic-team/ionic/issues"
   },
   "homepage": "https://ionicframework.com/",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "ngc -p ./tsconfig.json",
+    "build": "ng-packagr -p package.json",
     "build.prod": "npm run clean && npm run build",
     "clean": "rm -rf ./dist"
   },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/ionic-server-module.ts"
+    }
+  },
   "peerDependencies": {
-    "@angular-devkit/core": "next",
-    "@angular/common": "next",
-    "@angular/core": "next",
-    "@angular/platform-server": "next",
+    "@angular-devkit/core": "9.0.0-next.5",
+    "@angular/common": "9.0.0-next.7",
+    "@angular/core": "9.0.0-next.7",
+    "@angular/platform-server": "9.0.0-next.7",
     "@ionic/core": "*",
     "rxjs": ">=6.2.0",
     "zone.js": ">=0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/core": "next",
+    "@angular-devkit/core": "9.0.0-next.5",
     "@angular/animations": "next",
-    "@angular/common": "next",
+    "@angular/common": "9.0.0-next.7",
     "@angular/compiler": "next",
     "@angular/compiler-cli": "next",
-    "@angular/core": "next",
-    "@angular/platform-browser": "next",
-    "@angular/platform-server": "next",
+    "@angular/core": "9.0.0-next.7",
+    "@angular/platform-browser": "9.0.0-next.7",
+    "@angular/platform-server": "9.0.0-next.7",
     "@angular/router": "next",
+    "@ionic/core": "*",
+    "ng-packagr": "5.5.1",
     "rxjs": "^6.4.0",
     "tsickle": "^0.34.0",
     "typescript": "~3.4.3",
