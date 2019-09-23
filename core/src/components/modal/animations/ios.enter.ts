@@ -7,7 +7,7 @@ import { createAnimation } from '../../../utils/animation/animation';
 export const iosEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
-  const wrapperAnimation = createAnimation()
+  const wrapperAnimation = createAnimation();
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop')!)
