@@ -159,6 +159,8 @@
 // --------------------------------------------------
 
 :host(.segment-button-disabled) {
+  pointer-events: none;
+
   color: var(--color-disabled);
 }
 

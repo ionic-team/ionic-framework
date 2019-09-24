@@ -26,8 +26,7 @@
 // Segment: Disabled
 // --------------------------------------------------
 
-:host(.segment-disabled),
-::slotted(.segment-button-disabled) {
+:host(.segment-disabled) {
   pointer-events: none;
 }
 

@@ -119,10 +119,8 @@ ion-icon {
 
 @media (any-hover: hover) {
   // :host(:hover) .button-native {
-  //   background: var(--background-hover);
   //   color: var(--color-hover);
   // }
-
   :host(:hover) .button-native::after {
     background: var(--background-hover);
 

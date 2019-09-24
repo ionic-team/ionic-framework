@@ -64,12 +64,8 @@
 }
 
 :host(.button-disabled) {
-  --opacity: .5;
-  pointer-events: none;
-}
-
-:host(.button-disabled) .button-native {
   cursor: default;
+  opacity: .5;
   pointer-events: none;
 }
 
@@ -302,7 +298,6 @@ ion-ripple-effect {
 
 @media (any-hover: hover) {
   // :host(:hover) .button-native {
-  //   background: var(--background-hover);
   //   color: var(--color-hover);
   // }
 
