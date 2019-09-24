@@ -1,25 +1,36 @@
 import React from 'react';
 
-import { createForwardRef } from './utils';
+import { NavContext } from '../contexts/NavContext';
 
-type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+import { ReactProps } from './ReactProps';
 
-type InternalProps = Props & {
-  forwardedRef?: React.Ref<HTMLDivElement>
-};
+export const IonPage = /*@__PURE__*/(() => class IonPageInternal extends React.Component<React.HTMLAttributes<HTMLElement> & ReactProps> {
+  context!: React.ContextType<typeof NavContext>;
+  ref = React.createRef<HTMLDivElement>();
 
-type ExternalProps = Props & {
-  ref?: React.Ref<HTMLDivElement>
-};
+  componentDidMount() {
+    if (this.context && this.ref.current) {
+      if (this.context.hasIonicRouter()) {
+        this.context.registerIonPage(this.ref.current);
+      }
+    }
+  }
 
-const IonPageInternal: React.FC<InternalProps> = ({ children, forwardedRef, className, ...props }) => (
-  <div
-    className={className !== undefined ? `ion-page ${className}` : 'ion-page'}
-    ref={forwardedRef}
-    {...props}
-  >
-    {children}
-  </div>
-);
+  render() {
+    const { className, children, ...props } = this.props;
 
-export const IonPage = /*@__PURE__*/createForwardRef<ExternalProps, HTMLDivElement>(IonPageInternal, 'IonPage');
+    return (
+      <div className={className ? `ion-page ${className}` : 'ion-page'} ref={this.ref} {...props}>
+        {children}
+      </div>
+    );
+  }
+
+  static get displayName() {
+    return 'IonPage';
+  }
+
+  static get contextType() {
+    return NavContext;
+  }
+})();

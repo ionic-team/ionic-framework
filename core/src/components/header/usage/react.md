@@ -11,13 +11,19 @@ export const HeaderExample: React.FC = () => (
         </IonButtons>
         <IonTitle>My Navigation Bar</IonTitle>
       </IonToolbar>
-
+    
       <IonToolbar>
         <IonTitle>Subheader</IonTitle>
       </IonToolbar>
     </IonHeader>
-
-    <IonContent />
+    
+    <IonContent>
+      <IonHeader collapse="condense">
+        <IonToolbar>
+          <IonTitle size="large">My Navigation Bar</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+    </IonContent>
   </>
 );
 ```

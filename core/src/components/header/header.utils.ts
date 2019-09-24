@@ -81,7 +81,6 @@ const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | un
  * hide the primary toolbar content and show the scrollable toolbar content
  */
 export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex) => {
-  console.log(ev);
   writeTask(() => {
     const event = ev[0];
     const intersection = event.intersectionRect;
@@ -121,9 +120,9 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
 export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
   writeTask(() => {
     if (active) {
-      headerIndex.el.classList.remove('header-collapse-ios-inactive');
+      headerIndex.el.classList.remove('header-collapse-condense-inactive');
     } else {
-      headerIndex.el.classList.add('header-collapse-ios-inactive');
+      headerIndex.el.classList.add('header-collapse-condense-inactive');
     }
     setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? undefined : 0);
   });
