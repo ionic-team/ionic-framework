@@ -871,9 +871,9 @@ export namespace Components {
   }
   interface IonHeader {
     /**
-    * Describes the scroll effect that will be applied to the header `sticky` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+    * Describes the scroll effect that will be applied to the header `condense` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
     */
-    'collapse'?: 'sticky';
+    'collapse'?: 'condense';
     /**
     * The mode determines which platform styles to use.
     */
@@ -4390,9 +4390,9 @@ declare namespace LocalJSX {
   }
   interface IonHeader extends JSXBase.HTMLAttributes<HTMLIonHeaderElement> {
     /**
-    * Describes the scroll effect that will be applied to the header `sticky` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+    * Describes the scroll effect that will be applied to the header `condense` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
     */
-    'collapse'?: 'sticky';
+    'collapse'?: 'condense';
     /**
     * The mode determines which platform styles to use.
     */

@@ -24,11 +24,11 @@ export class Header implements ComponentInterface {
 
   /**
    * Describes the scroll effect that will be applied to the header
-   * `sticky` only applies in iOS mode.
+   * `condense` only applies in iOS mode.
    *
    * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
    */
-  @Prop() collapse?: 'sticky';
+  @Prop() collapse?: 'condense';
 
   /**
    * If `true`, the header will be translucent.
@@ -55,7 +55,7 @@ export class Header implements ComponentInterface {
   private async checkCollapsibleHeader() {
 
     // Determine if the header can collapse
-    const hasCollapse = this.collapse === 'sticky';
+    const hasCollapse = this.collapse === 'condense';
     const canCollapse = (hasCollapse && getIonMode(this) === 'ios') ? hasCollapse : false;
 
     if (!canCollapse && this.collapsibleHeaderInitialized) {
@@ -90,7 +90,7 @@ export class Header implements ComponentInterface {
 
     readTask(() => {
       const headers = pageEl.querySelectorAll('ion-header');
-      const mainHeader = Array.from(headers).find((header: any) => header.collapse !== 'sticky') as HTMLElement | undefined;
+      const mainHeader = Array.from(headers).find((header: any) => header.collapse !== 'condense') as HTMLElement | undefined;
 
       if (!mainHeader || !this.scrollEl) { return; }
 

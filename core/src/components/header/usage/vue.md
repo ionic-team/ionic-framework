@@ -14,7 +14,7 @@
   </ion-header>
   
   <ion-content>
-    <ion-header collapse="sticky">
+    <ion-header collapse="condense">
       <ion-toolbar>
         <ion-title size="large">My Navigation Bar</ion-title>
       </ion-toolbar>

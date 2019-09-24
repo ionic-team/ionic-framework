@@ -49,7 +49,7 @@ export const LargeTitleExample: React.FC = () => (
     </IonHeader>
     
     <IonContent>
-      <IonHeader collapse="sticky">              
+      <IonHeader collapse="condense">              
         <IonToolbar>      
           <IonTitle size="large">Settings</IonTitle>
         </IonToolbar>
@@ -65,7 +65,7 @@ export const LargeTitleExample: React.FC = () => (
 );
 ```
 
-In the example above, notice there are two `IonHeader` elements. The first `IonHeader` represents the "collapsed" state of your collapsible header, and the second `IonHeader` represents the "expanded" state of your collapsible header. Notice that the second `IonHeader` must have `collapse="sticky"` and must exist within `IonContent`. Additionally, in order to get the large title styling, `IonTitle` must have `size="large"`.
+In the example above, notice there are two `IonHeader` elements. The first `IonHeader` represents the "collapsed" state of your collapsible header, and the second `IonHeader` represents the "expanded" state of your collapsible header. Notice that the second `IonHeader` must have `collapse="condense"` and must exist within `IonContent`. Additionally, in order to get the large title styling, `IonTitle` must have `size="large"`.
 
 ```tsx
 import React from 'react';
@@ -91,7 +91,7 @@ export const LargeTitleExample: React.FC = () => (
     </IonHeader>
     
     <IonContent>
-      <IonHeader collapse="sticky">              
+      <IonHeader collapse="condense">              
         <IonToolbar>      
           <IonButtons collapse="true">
             <IonButton>Click Me</IonButton>
