@@ -26,9 +26,8 @@ const getBackButton = (refEl: any, backDirection: boolean) => {
     const parentHeader = buttons.closest('ion-header');
     const activeHeader = parentHeader && !parentHeader.classList.contains('header-collapse-ios-inactive');
     const backButton = buttons.querySelector('ion-back-button');
-    const buttonsCollapse = buttons.classList.contains('buttons-collapse');
 
-    if (backButton !== null && ((buttonsCollapse && activeHeader && backDirection) || !buttonsCollapse)) {
+    if (backButton !== null && ((buttons.collapse && activeHeader && backDirection) || !buttons.collapse)) {
       return backButton;
     }
   }
@@ -285,11 +284,11 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       let buttonsToAnimate;
       if (backDirection) {
         buttonsToAnimate = buttons.filter(button => {
-          const isCollapseButton = button.classList.contains('buttons-collapse');
+          const isCollapseButton = (button as any).collapse;
           return (isCollapseButton && !inactiveHeader) || !isCollapseButton;
         });
       } else {
-        buttonsToAnimate = buttons.filter(button => !button.classList.contains('buttons-collapse'));
+        buttonsToAnimate = buttons.filter(button => !(button as any).collapse);
       }
 
       enteringToolBarButtons.addElement(buttonsToAnimate);
@@ -422,7 +421,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-ios-inactive');
 
         const buttonsToAnimate = Array.from(buttons).filter(button => {
-          const isCollapseButton = button.classList.contains('buttons-collapse');
+          const isCollapseButton = (button as any).collapse;
           return (isCollapseButton && !inactiveHeader) || !isCollapseButton;
         });
 

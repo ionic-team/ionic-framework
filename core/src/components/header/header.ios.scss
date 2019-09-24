@@ -67,7 +67,7 @@ ion-toolbar.in-toolbar ion-buttons {
 }
 
 .header-collapse-ios-inactive ion-toolbar.in-toolbar ion-title,
-.header-collapse-ios-inactive ion-toolbar.in-toolbar ion-buttons.buttons-collapse {
+.header-collapse-ios-inactive ion-toolbar.in-toolbar ion-buttons[collapse] {
   opacity: 0;
   pointer-events: none;
 }
