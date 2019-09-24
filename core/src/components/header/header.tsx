@@ -149,7 +149,7 @@ export class Header implements ComponentInterface {
           [`header-${mode}`]: true,
 
           [`header-translucent`]: this.translucent,
-          [`header-collapse-${collapse}-${mode}`]: true,
+          [`header-collapse-${collapse}`]: true,
           [`header-translucent-${mode}`]: this.translucent,
         }}
       >

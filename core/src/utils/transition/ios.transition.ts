@@ -16,7 +16,7 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
 };
 
 const getLargeTitle = (refEl: any) => {
-  return refEl.querySelector('ion-header:not(.header-collapse-sticky-ios-inactive) ion-title[size=large]');
+  return refEl.querySelector('ion-header:not(.header-collapse-sticky-inactive) ion-title[size=large]');
 };
 
 const getBackButton = (refEl: any, backDirection: boolean) => {
@@ -24,7 +24,7 @@ const getBackButton = (refEl: any, backDirection: boolean) => {
 
   for (const buttons of buttonsList) {
     const parentHeader = buttons.closest('ion-header');
-    const activeHeader = parentHeader && !parentHeader.classList.contains('header-collapse-sticky-ios-inactive');
+    const activeHeader = parentHeader && !parentHeader.classList.contains('header-collapse-sticky-inactive');
     const backButton = buttons.querySelector('ion-back-button');
     const buttonsCollapse = buttons.classList.contains('buttons-collapse');
 
@@ -264,7 +264,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       }
     }
 
-    const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-sticky-ios');
+    const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-sticky');
 
     const { forward, backward } = createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
 
@@ -280,7 +280,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       const buttons = Array.from(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
 
       const parentHeader = enteringToolBarEl.closest('ion-header');
-      const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-sticky-ios-inactive');
+      const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-sticky-inactive');
 
       let buttonsToAnimate;
       if (backDirection) {
@@ -419,7 +419,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         const buttons = leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]');
 
         const parentHeader = leavingToolBarEl.closest('ion-header');
-        const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-sticky-ios-inactive');
+        const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-sticky-inactive');
 
         const buttonsToAnimate = Array.from(buttons).filter(button => {
           const isCollapseButton = button.classList.contains('buttons-collapse');

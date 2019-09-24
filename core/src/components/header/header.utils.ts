@@ -120,9 +120,9 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
 export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
   writeTask(() => {
     if (active) {
-      headerIndex.el.classList.remove('header-collapse-sticky-ios-inactive');
+      headerIndex.el.classList.remove('header-collapse-sticky-inactive');
     } else {
-      headerIndex.el.classList.add('header-collapse-sticky-ios-inactive');
+      headerIndex.el.classList.add('header-collapse-sticky-inactive');
     }
     setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? undefined : 0);
   });
