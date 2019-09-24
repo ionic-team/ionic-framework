@@ -18,7 +18,7 @@ export const HeaderExample: React.FC = () => (
     </IonHeader>
     
     <IonContent>
-      <IonHeader collapse="true">
+      <IonHeader collapse="sticky">
         <IonToolbar>
           <IonTitle size="large">My Navigation Bar</IonTitle>
         </IonToolbar>

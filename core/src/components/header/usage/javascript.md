@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-header collapse="true">
+  <ion-header collapse="sticky">
     <ion-toolbar>
       <ion-title size="large">My Navigation Bar</ion-title>
     </ion-toolbar>
