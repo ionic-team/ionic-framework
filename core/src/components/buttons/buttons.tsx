@@ -27,8 +27,14 @@ export class Buttons implements ComponentInterface {
   @Prop() collapse = false;
 
   render() {
+    const mode = getIonMode(this);
     return (
-      <Host class={getIonMode(this)}>
+      <Host
+        class={{
+          [mode]: true,
+          ['buttons-collapse']: this.collapse
+        }}
+      >
       </Host>
     );
   }
