@@ -27,7 +27,7 @@ It's important to note that ion-header needs to be the one of the three root ele
 </ion-header>
 
 <ion-content>
-  <ion-header collapse="true">
+  <ion-header collapse="sticky">
     <ion-toolbar>
       <ion-title size="large">My Navigation Bar</ion-title>
     </ion-toolbar>
@@ -58,7 +58,7 @@ export const HeaderExample: React.FC = () => (
     </IonHeader>
     
     <IonContent>
-      <IonHeader collapse="true">
+      <IonHeader collapse="sticky">
         <IonToolbar>
           <IonTitle size="large">My Navigation Bar</IonTitle>
         </IonToolbar>
@@ -87,7 +87,7 @@ export const HeaderExample: React.FC = () => (
   </ion-header>
   
   <ion-content>
-    <ion-header collapse="true">
+    <ion-header collapse="sticky">
       <ion-toolbar>
         <ion-title size="large">My Navigation Bar</ion-title>
       </ion-toolbar>
@@ -100,11 +100,11 @@ export const HeaderExample: React.FC = () => (
 
 ## Properties
 
-| Property      | Attribute     | Description                                                                                                                                                                                                                                                                                                                           | Type                      | Default     |
-| ------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------- |
-| `effect`      | `effect`      | Describes the scroll effect that will be applied to the header `collapse` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)                                                                                                                | `"collapse" \| undefined` | `undefined` |
-| `mode`        | `mode`        | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                     | `"ios" \| "md"`           | `undefined` |
-| `translucent` | `translucent` | If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. | `boolean`                 | `false`     |
+| Property      | Attribute     | Description                                                                                                                                                                                                                                                                                                                           | Type                    | Default     |
+| ------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ----------- |
+| `collapse`    | `collapse`    | Describes the scroll effect that will be applied to the header `sticky` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)                                                                                                                  | `"sticky" \| undefined` | `undefined` |
+| `mode`        | `mode`        | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                     | `"ios" \| "md"`         | `undefined` |
+| `translucent` | `translucent` | If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. | `boolean`               | `false`     |
 
 
 ----------------------------------------------
