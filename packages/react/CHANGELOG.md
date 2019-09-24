@@ -6,6 +6,8 @@ Pages should maintain their original previous page id [2afcb6](https://github.co
 
 Dismiss overlay component on unmount, [3c2694](https://github.com/ionic-team/ionic/commit/3c26946d47b37d42dfaa3294cfb6bf8f0ef11aa4), fixes [#19377](https://github.com/ionic-team/ionic/issues/19377)
 
+Render first route even if url is same, fixes [#19392](https://github.com/ionic-team/ionic/issues/19392)
+
 ## Breaking Changes
 
 ### Components with href attributes and the new routerLink prop
