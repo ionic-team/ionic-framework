@@ -6,11 +6,13 @@ import { NavContext } from '../contexts/NavContext';
 import { ReactProps } from './ReactProps';
 import { RouterDirection } from './hrefprops';
 import { attachEventProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
+import { deprecationWarning } from './utils/dev';
 
 interface IonicReactInternalProps<ElementType> {
   forwardedRef?: React.Ref<ElementType>;
   children?: React.ReactNode;
   href?: string;
+  routerLink?: string;
   target?: string;
   style?: string;
   ref?: React.Ref<any>;
@@ -32,6 +34,11 @@ export const createReactComponent = <PropType, ElementType>(
 
     componentDidMount() {
       this.componentDidUpdate(this.props);
+      if (this.props.href) {
+        setTimeout(() => {
+          deprecationWarning('hrefchange', 'As of RC3, href links no longer go through the router, so transitions will not be applied to these links. To maintain transitions, use the new routerLink prop.');
+        }, 2000);
+      }
     }
 
     componentDidUpdate(prevProps: IonicReactInternalProps<ElementType>) {
@@ -40,11 +47,10 @@ export const createReactComponent = <PropType, ElementType>(
     }
 
     private handleClick = (e: MouseEvent) => {
-      // TODO: review target usage
-      const { href, routerDirection } = this.props;
-      if (href !== undefined && this.context.hasIonicRouter()) {
+      const { routerLink, routerDirection } = this.props;
+      if (routerLink !== undefined) {
         e.preventDefault();
-        this.context.navigate(href, routerDirection);
+        this.context.navigate(routerLink, routerDirection);
       }
     }
 
