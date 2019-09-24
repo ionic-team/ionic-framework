@@ -12,7 +12,7 @@ type Props = LocalJSX.IonBackButton & ReactProps & {
 export const IonBackButton = /*@__PURE__*/(() => class extends React.Component<Props> {
   context!: React.ContextType<typeof NavContext>;
 
-  clickButton = (e: MouseEvent) => {
+  clickButton = (e: React.MouseEvent) => {
     const defaultHref = this.props.defaultHref;
     if (this.context.hasIonicRouter()) {
       e.stopPropagation();

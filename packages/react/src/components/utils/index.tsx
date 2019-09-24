@@ -1,10 +1,7 @@
 import { Platforms, getPlatforms as getPlatformsCore, isPlatform as isPlatformCore } from '@ionic/core';
 import React from 'react';
 
-export type IonicReactExternalProps<PropType, ElementType> = PropType & {
-  ref?: React.RefObject<ElementType>;
-  children?: React.ReactNode;
-};
+export type IonicReactExternalProps<PropType, ElementType> = PropType & React.HTMLAttributes<ElementType>;
 
 export const createForwardRef = <PropType, ElementType>(ReactComponent: any, displayName: string) => {
   const forwardRef = (props: IonicReactExternalProps<PropType, ElementType>, ref: React.Ref<ElementType>) => {

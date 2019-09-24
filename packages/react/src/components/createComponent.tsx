@@ -7,15 +7,11 @@ import { ReactProps } from './ReactProps';
 import { RouterDirection } from './hrefprops';
 import { attachEventProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
 
-interface IonicReactInternalProps<ElementType> {
+interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.Ref<ElementType>;
-  children?: React.ReactNode;
   href?: string;
-  target?: string;
-  style?: string;
   ref?: React.Ref<any>;
   routerDirection?: RouterDirection;
-  className?: string;
 }
 
 export const createReactComponent = <PropType, ElementType>(
@@ -23,10 +19,10 @@ export const createReactComponent = <PropType, ElementType>(
   hrefComponent = false
 ) => {
   const displayName = dashToPascalCase(tagName);
-  const ReactComponent = class extends React.Component<IonicReactInternalProps<ElementType>> {
+  const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>> {
     context!: React.ContextType<typeof NavContext>;
 
-    constructor(props: IonicReactInternalProps<ElementType>) {
+    constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
     }
 
@@ -34,7 +30,7 @@ export const createReactComponent = <PropType, ElementType>(
       this.componentDidUpdate(this.props);
     }
 
-    componentDidUpdate(prevProps: IonicReactInternalProps<ElementType>) {
+    componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       const node = ReactDom.findDOMNode(this) as HTMLElement;
       attachEventProps(node, this.props, prevProps);
     }
