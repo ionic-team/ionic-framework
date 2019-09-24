@@ -7,7 +7,8 @@
 :host {
   --border-radius: 4px;
   --background-focused: rgba(66, 66, 66, 0.24);
-  --background-hover: rgba(66, 66, 66, 0.08);
+  --background-hover: #{$toolbar-md-color};
+  --background-hover-opacity: 0.04;
   --color: #{$back-button-md-color};
   --icon-margin-end: 0;
   --icon-margin-start: 0;
@@ -50,8 +51,8 @@ ion-icon {
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  :host(.ion-color:hover) .button-native {
-    background: #{current-color(base, .08)};
+  :host(.ion-color:hover) .button-native::after {
+    background: #{current-color(base)};
   }
 }
 

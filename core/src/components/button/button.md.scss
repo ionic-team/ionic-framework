@@ -30,6 +30,8 @@
 // --------------------------------------------------
 
 :host(.button-solid) {
+  --background-hover: #{ion-color(primary, contrast)};
+  --background-hover-opacity: .08;
   --background-activated: var(--background);
   --box-shadow: #{$button-md-box-shadow};
 }
@@ -47,7 +49,8 @@
   --box-shadow: none;
   --background-activated: transparent;
   --background-focused: #{ion-color(primary, base, .1)};
-  --background-hover: #{ion-color(primary, base, .04)};
+  --background-hover: #{ion-color(primary, base)};
+  --background-hover-opacity: .04;
   --color-activated: #{ion-color(primary, base)};
 }
 
@@ -62,7 +65,8 @@
 :host(.button-clear) {
   --background-activated: transparent;
   --background-focused: #{ion-color(primary, base, .1)};
-  --background-hover: #{ion-color(primary, base, .04)};
+  --background-hover: #{ion-color(primary, base)};
+  --background-hover-opacity: .04;
   --color-activated: #{ion-color(primary, base)};
   --color-focused: #{ion-color(primary, base)};
 }
@@ -122,12 +126,12 @@
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  :host(.button-solid.ion-color:hover) .button-native {
-    background: #{current-color(tint)};
+  :host(.button-solid.ion-color:hover) .button-native::after {
+    background: #{current-color(contrast)};
   }
 
-  :host(.button-clear.ion-color:hover) .button-native,
-  :host(.button-outline.ion-color:hover) .button-native {
-    background: #{current-color(base, .04)};
+  :host(.button-clear.ion-color:hover) .button-native::after,
+  :host(.button-outline.ion-color:hover) .button-native::after {
+    background: #{current-color(base)};
   }
 }

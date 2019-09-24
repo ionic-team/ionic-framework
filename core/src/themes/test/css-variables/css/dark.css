@@ -1,10 +1,4 @@
 :root {
-  /* Custom Toolbar CSS (optional) */
-  /* --ion-toolbar-background: #000;
-  --ion-toolbar-border-color: #333;
-  --ion-toolbar-color: limegreen;
-  --ion-toolbar-color-activated: rgb(35, 156, 35); */
-
   --ion-color-primary: #428CFF;
   --ion-color-primary-rgb: 66,140,255;
   --ion-color-primary-contrast: #ffffff;
@@ -133,7 +127,13 @@
   --ion-color-step-900: #e7e7e7;
   --ion-color-step-950: #f3f3f3;
 
-  --ion-item-background: #1A1B1E;
+  --ion-item-background: #1e1e1e;
+
+  /* Custom Toolbar CSS (optional) */
+  --ion-toolbar-background: #1f1f1f;
+  /*--ion-toolbar-border-color: #333;
+  --ion-toolbar-color: limegreen;
+  --ion-toolbar-color-activated: rgb(35, 156, 35); */
   /* --ion-toolbar-color-unchecked: rgba(255, 255, 255, .6);
   --ion-toolbar-color-checked: #fff; */
 }

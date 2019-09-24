@@ -12,6 +12,7 @@
   --padding-start: #{$button-ios-padding-start};
   --padding-end: #{$button-ios-padding-end};
   --transition: background-color, opacity 100ms linear;
+  --background-hover: transparent;
 
   @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
 
@@ -135,13 +136,13 @@
   // Since iOS changes the opacity on hover,
   // we want to keep the background if focused
   // or activated
-  :host(.ion-focused:hover) {
-    --background-hover: var(--background-focused);
-    --color-hover: var(--color-focused);
-  }
+  // :host(.ion-focused:hover) {
+  //   --background-hover: var(--background-focused);
+  //   --color-hover: var(--color-focused);
+  // }
 
-  :host(.activated:hover) {
-    --background-hover: var(--background-activated);
-    --color-hover: var(--color-activated);
-  }
+  // :host(.activated:hover) {
+  //   --background-hover: var(--background-activated);
+  //   --color-hover: var(--color-activated);
+  // }
 }

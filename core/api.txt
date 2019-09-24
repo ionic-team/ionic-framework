@@ -94,6 +94,7 @@ ion-back-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-back-button,css-prop,--background
 ion-back-button,css-prop,--background-focused
 ion-back-button,css-prop,--background-hover
+ion-back-button,css-prop,--background-hover-opacity
 ion-back-button,css-prop,--border-radius
 ion-back-button,css-prop,--color
 ion-back-button,css-prop,--color-focused
@@ -160,6 +161,7 @@ ion-button,css-prop,--background
 ion-button,css-prop,--background-activated
 ion-button,css-prop,--background-focused
 ion-button,css-prop,--background-hover
+ion-button,css-prop,--background-hover-opacity
 ion-button,css-prop,--border-color
 ion-button,css-prop,--border-radius
 ion-button,css-prop,--border-style
@@ -646,6 +648,7 @@ ion-menu-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-menu-button,css-prop,--background
 ion-menu-button,css-prop,--background-focused
 ion-menu-button,css-prop,--background-hover
+ion-menu-button,css-prop,--background-hover-opacity
 ion-menu-button,css-prop,--border-radius
 ion-menu-button,css-prop,--color
 ion-menu-button,css-prop,--color-focused

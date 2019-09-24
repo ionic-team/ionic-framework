@@ -7,11 +7,12 @@
  /**
    * @prop --background: Background of the button
    * @prop --background-focused: Background of the button when focused with the tab key
-   * @prop --background-hover: Background of the button when hover
+   * @prop --background-hover: Background of the button on hover
+   * @prop --background-hover-opacity: Opacity of the background on hover
    *
    * @prop --color: Text color of the button
    * @prop --color-focused: Text color of the button when focused with the tab key
-   * @prop --color-hover: Text color of the button when hover
+   * @prop --color-hover: Text color of the button on hover
    *
    * @prop --min-width: Minimum width of the button
    * @prop --min-height: Minimum height of the button
@@ -151,6 +152,7 @@
 
 .button-inner {
   display: flex;
+  position: relative;
 
   flex-flow: row nowrap;
   flex-shrink: 0;
@@ -159,6 +161,8 @@
 
   width: 100%;
   height: 100%;
+
+  z-index: 1;
 }
 
 
@@ -181,10 +185,20 @@ ion-icon {
 // Back Button: Hover
 // --------------------------------------------------
 
+.button-native::after {
+  @include button-state();
+}
+
 @media (any-hover: hover) {
-  :host(:hover) .button-native {
+  // :host(:hover) .button-native {
+  //   background: var(--background-hover);
+  //   color: var(--color-hover);
+  // }
+
+  :host(:hover) .button-native::after {
     background: var(--background-hover);
-    color: var(--color-hover);
+
+    opacity: var(--background-hover-opacity, 0);
   }
 }
 
