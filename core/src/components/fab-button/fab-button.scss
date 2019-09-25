@@ -9,6 +9,7 @@
    * @prop --background-activated: Background of the button when pressed
    * @prop --background-focused: Background of the button when focused with the tab key
    * @prop --background-hover: Background of the button on hover
+   * @prop --background-hover-opacity: Opacity of the button background on hover
    *
    * @prop --color: Text color of the button
    * @prop --color-activated: Text color of the button when pressed
@@ -167,6 +168,7 @@
 
   :host(.ion-color:hover) .button-native::after {
     background: #{current-color(contrast)};
+
     opacity: .08;
   }
 }

@@ -319,18 +319,20 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                     | Description                                        |
-| ------------------------ | -------------------------------------------------- |
-| `--background`           | Background of the action sheet group               |
-| `--background-activated` | Background of the action sheet button when pressed |
-| `--background-selected`  | Background of the selected action sheet button     |
-| `--color`                | Color of the action sheet text                     |
-| `--height`               | height of the action sheet                         |
-| `--max-height`           | Maximum height of the action sheet                 |
-| `--max-width`            | Maximum width of the action sheet                  |
-| `--min-height`           | Minimum height of the action sheet                 |
-| `--min-width`            | Minimum width of the action sheet                  |
-| `--width`                | Width of the action sheet                          |
+| Name                         | Description                                            |
+| ---------------------------- | ------------------------------------------------------ |
+| `--background`               | Background of the action sheet group                   |
+| `--background-activated`     | Background of the action sheet button when pressed     |
+| `--background-hover`         | Background of the action sheet button on hover         |
+| `--background-hover-opacity` | Opacity of the action sheet button background on hover |
+| `--background-selected`      | Background of the selected action sheet button         |
+| `--color`                    | Color of the action sheet text                         |
+| `--height`                   | height of the action sheet                             |
+| `--max-height`               | Maximum height of the action sheet                     |
+| `--max-width`                | Maximum width of the action sheet                      |
+| `--min-height`               | Minimum height of the action sheet                     |
+| `--min-width`                | Minimum width of the action sheet                      |
+| `--width`                    | Width of the action sheet                              |
 
 
 ## Dependencies
