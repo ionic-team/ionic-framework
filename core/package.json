@@ -34,7 +34,7 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@stencil/core": "1.4.0",
+    "@stencil/core": "1.5.1",
     "@stencil/sass": "1.0.1",
     "@types/jest": "24.0.17",
     "@types/node": "12.7.1",
@@ -48,7 +48,7 @@
     "jest-cli": "24.8.0",
     "np": "^5.0.3",
     "pixelmatch": "4.0.2",
-    "puppeteer": "1.19.0",
+    "puppeteer": "1.20.0",
     "rollup": "1.19.4",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-virtual": "^1.0.1",
