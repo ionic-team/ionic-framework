@@ -36,7 +36,7 @@
   --box-shadow: #{$button-md-box-shadow};
 }
 
-:host(.button-solid.activated) {
+:host(.button-solid.ion-activated) {
   --box-shadow: #{$button-md-box-shadow-activated};
 }
 
@@ -54,7 +54,7 @@
   --color-activated: #{ion-color(primary, base)};
 }
 
-:host(.button-outline.activated.ion-color) .button-native {
+:host(.button-outline.ion-activated.ion-color) .button-native {
   background: transparent;
 }
 
@@ -128,10 +128,12 @@
 @media (any-hover: hover) {
   :host(.button-solid.ion-color:hover) .button-native::after {
     background: #{current-color(contrast)};
+    opacity: .08;
   }
 
   :host(.button-clear.ion-color:hover) .button-native::after,
   :host(.button-outline.ion-color:hover) .button-native::after {
     background: #{current-color(base)};
+    opacity: .04;
   }
 }

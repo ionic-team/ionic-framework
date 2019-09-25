@@ -29,7 +29,7 @@
 // Segment Button: Checked
 // --------------------------------------------------
 
-:host(.activated),
+:host(.ion-activated),
 :host(.segment-button-checked) {
   --border-color: #{$segment-button-md-border-bottom-color-activated};
 
@@ -97,7 +97,7 @@
 // Segment: Checked & Activated
 // --------------------------------------------------
 
-:host(.segment-button-checked.activated) {
+:host(.segment-button-checked.ion-activated) {
   color: var(--color-checked);
 }
 

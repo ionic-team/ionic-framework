@@ -68,7 +68,7 @@
     backdrop-filter: $action-sheet-ios-button-translucent-filter;
   }
 
-  :host(.action-sheet-translucent) .action-sheet-button.activated {
+  :host(.action-sheet-translucent) .action-sheet-button.ion-activated {
     background-color: $action-sheet-ios-translucent-background-color-activated;
     background-image: none;
   }

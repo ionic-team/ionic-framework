@@ -168,14 +168,14 @@
 // FAB Button: Activated
 // --------------------------------------------------
 
-:host(.activated) .button-native {
+:host(.ion-activated) .button-native {
   background: var(--background-activated);
   color: var(--color-activated);
 }
 
 // Focused/Activated Button with Color
 :host(.ion-color.ion-focused) .button-native,
-:host(.ion-color.activated) .button-native {
+:host(.ion-color.ion-activated) .button-native {
   background: #{current-color(shade)};
   color: #{current-color(contrast)};
 }

@@ -142,7 +142,7 @@
 }
 
 // Activated Clear Button with Color
-:host(.button-clear.activated.ion-color) .button-native {
+:host(.button-clear.ion-activated.ion-color) .button-native {
   background: transparent;
 }
 
@@ -226,6 +226,8 @@
   opacity: var(--opacity);
   overflow: var(--overflow);
 
+  overflow: hidden;
+
   z-index: 0;
   box-sizing: border-box;
   appearance: none;
@@ -287,7 +289,7 @@ ion-ripple-effect {
   color: var(--color-focused);
 }
 
-:host(.activated) .button-native {
+:host(.ion-activated) .button-native {
   background: var(--background-activated);
   color: var(--color-activated);
 }
@@ -304,6 +306,6 @@ ion-ripple-effect {
   :host(:hover) .button-native::after {
     background: var(--background-hover);
 
-    opacity: var(--background-hover-opacity, 0);
+    opacity: var(--background-hover-opacity);
   }
 }

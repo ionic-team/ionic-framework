@@ -28,22 +28,22 @@
 // iOS Activated
 // --------------------------------------------------
 
-:host(.activated) {
+:host(.ion-activated) {
   --transition: none;
 }
 
-:host(.ion-color.activated) .item-native {
+:host(.ion-color.ion-activated) .item-native {
   background: current-color(shade);
   color: current-color(contrast);
 }
 
 @media (any-hover: hover) {
-  :host(.activated.ion-activatable:hover) .item-native {
+  :host(.ion-activated.ion-activatable:hover) .item-native {
     background: var(--background-activated);
     color: var(--color-activated);
   }
 
-  :host(.activated.ion-color.ion-activatable:hover) .item-native {
+  :host(.ion-activated.ion-color.ion-activatable:hover) .item-native {
     background: #{current-color(shade)};
     color: #{current-color(contrast)};
   }

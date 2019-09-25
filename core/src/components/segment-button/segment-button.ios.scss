@@ -61,7 +61,7 @@
 // Segment Button: Activated
 // --------------------------------------------------
 
-:host(.activated) {
+:host(.ion-activated) {
   background: var(--background-activated);
 }
 
@@ -69,7 +69,7 @@
 // Segment: Checked & Activated
 // --------------------------------------------------
 
-:host(.segment-button-checked.activated) {
+:host(.segment-button-checked.ion-activated) {
   background: var(--background-checked);
   color: var(--color-checked);
 }

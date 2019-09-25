@@ -15,7 +15,7 @@
   --transition: #{$fab-ios-transition};
 }
 
-:host(.activated) {
+:host(.ion-activated) {
   --box-shadow: #{$fab-ios-box-shadow-activated};
   --transform: #{$fab-ios-transform};
   --transition: #{$fab-ios-transition-activated};
@@ -79,7 +79,7 @@
   }
 
   :host(.ion-color.ion-focused.fab-button-translucent) .button-native,
-  :host(.ion-color.activated.fab-button-translucent) .button-native {
+  :host(.ion-color.ion-activated.fab-button-translucent) .button-native {
     background: #{current-color(base)};
   }
 }

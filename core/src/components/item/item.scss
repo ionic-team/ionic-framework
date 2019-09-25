@@ -140,7 +140,7 @@
 // Item: Activated
 // --------------------------------------------------
 
-:host(.activated) .item-native {
+:host(.ion-activated) .item-native {
   background: var(--background-activated);
   color: var(--color-activated);
 }

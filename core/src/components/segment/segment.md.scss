@@ -35,7 +35,7 @@
   color: #{current-color(base)};
 }
 
-:host(.ion-color)::slotted(.segment-button-checked.activated) {
+:host(.ion-color)::slotted(.segment-button-checked.ion-activated) {
   color: #{current-color(base)};
 }
 

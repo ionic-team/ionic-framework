@@ -21,7 +21,7 @@
   };
 }
 
-:host(.activated) {
+:host(.ion-activated) {
   --box-shadow: #{$fab-md-box-shadow-activated};
 }
 

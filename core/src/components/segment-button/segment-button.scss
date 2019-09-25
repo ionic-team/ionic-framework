@@ -150,7 +150,7 @@
 // Segment Button: Activated
 // --------------------------------------------------
 
-:host(.activated) {
+:host(.ion-activated) {
   color: var(--color-activated, var(--color));
 }
 

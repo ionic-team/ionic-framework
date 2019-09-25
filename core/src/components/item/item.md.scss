@@ -34,17 +34,17 @@
 // Material Design Item: Focused & Activated
 // --------------------------------------------------
 
-:host(.ion-focused.activated) .item-native {
+:host(.ion-focused.ion-activated) .item-native {
   background: var(--background-focused);
   color: var(--color-focused);
 }
 
-:host(.ion-color.activated) .item-native {
+:host(.ion-color.ion-activated) .item-native {
   background: current-color(base);
   color: current-color(contrast);
 }
 
-:host(.ion-color.ion-focused.activated) .item-native {
+:host(.ion-color.ion-focused.ion-activated) .item-native {
   background: current-color(shade);
   color: current-color(contrast);
 }

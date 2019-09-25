@@ -118,6 +118,8 @@ These styles should be set for the CSS to work properly:
   */
 
   position: relative;
+
+  overflow: hidden;
 }
 
 .button-native::after {
@@ -139,7 +141,7 @@ These styles should be set for the CSS to work properly:
   :host(:hover) .button-native::after {
     background: var(--background-hover);
 
-    opacity: var(--background-hover-opacity, 0);
+    opacity: var(--background-hover-opacity);
   }
 }
 ```
@@ -151,8 +153,6 @@ The `button-state()` mixin was created to automatically add the following styles
   @include position(0, 0, 0, 0);
 
   position: absolute;
-
-  border-radius: inherit;
 
   content: "";
 

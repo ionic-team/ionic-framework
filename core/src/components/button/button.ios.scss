@@ -6,6 +6,9 @@
 // --------------------------------------------------
 
 :host {
+  --background-hover-opacity: 1;
+  --background-hover: transparent;
+
   --border-radius: #{$button-ios-border-radius};
   --padding-top: #{$button-ios-padding-top};
   --padding-bottom: #{$button-ios-padding-bottom};
@@ -31,11 +34,11 @@
   --background-activated: #{ion-color(primary, shade)};
 }
 
-:host(.button-solid.activated) {
-  --opacity: #{$button-ios-opacity-activated};
+:host(.button-solid.ion-activated) {
+  opacity: #{$button-ios-opacity-activated};
 }
 
-:host(.button-solid.activated.ion-color) .button-native {
+:host(.button-solid.ion-activated.ion-color) .button-native {
   background: current-color(shade);
 }
 
@@ -51,7 +54,7 @@
   --color-activated: #{ion-color(primary, contrast)};
 }
 
-:host(.button-outline.activated.ion-color) .button-native {
+:host(.button-outline.ion-activated.ion-color) .button-native {
   background: current-color(base);
   color: current-color(contrast);
 }
@@ -60,8 +63,8 @@
 // iOS Clear Button
 // --------------------------------------------------
 
-:host(.button-clear.activated) {
-  --opacity: #{$button-ios-clear-opacity-activated};
+:host(.button-clear.ion-activated) {
+  opacity: #{$button-ios-clear-opacity-activated};
 }
 
 :host(.button-clear) {
@@ -125,12 +128,17 @@
 
 @media (any-hover: hover) {
   :host(.button-solid:hover) {
-    --opacity: #{$button-ios-opacity-hover};
+    opacity: #{$button-ios-opacity-hover};
   }
 
   :host(.button-clear:hover),
   :host(.button-outline:hover) {
-    --opacity: #{$button-ios-clear-opacity-hover};
+    opacity: #{$button-ios-clear-opacity-hover};
+  }
+
+  :host(.ion-color:hover) .button-native::after {
+    background: transparent;
+    opacity: 1;
   }
 
   // Since iOS changes the opacity on hover,
@@ -141,7 +149,7 @@
   //   --color-hover: var(--color-focused);
   // }
 
-  // :host(.activated:hover) {
+  // :host(.ion-activated:hover) {
   //   --background-hover: var(--background-activated);
   //   --color-hover: var(--color-activated);
   // }

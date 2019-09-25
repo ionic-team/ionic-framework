@@ -32,12 +32,12 @@
   color: #{current-color(base)};
 }
 
-:host(.ion-color)::slotted(.activated) {
+:host(.ion-color)::slotted(.ion-activated) {
   background: #{current-color(base, .16)};
   color: #{current-color(base)};
 }
 
-:host(.ion-color)::slotted(.segment-button-checked.activated),
+:host(.ion-color)::slotted(.segment-button-checked.ion-activated),
 :host(.ion-color)::slotted(.segment-button-checked) {
   background: #{current-color(base)};
   color: #{current-color(contrast)};
