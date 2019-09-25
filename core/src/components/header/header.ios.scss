@@ -25,26 +25,26 @@
 
 // iOS Header - Collapse
 // --------------------------------------------------
-.header-collapse-ios {
+.header-collapse-condense {
   z-index: 9;
 }
 
-.header-collapse-ios ion-toolbar {
+.header-collapse-condense ion-toolbar {
   position: sticky;
   top: 0;
 }
 
-.header-collapse-ios ion-toolbar:first-child {
+.header-collapse-condense ion-toolbar:first-child {
   padding-top: 7px;
 
   z-index: 1;
 }
 
-.header-collapse-ios ion-toolbar {
+.header-collapse-condense ion-toolbar {
   z-index: 0;
 }
 
-.header-collapse-ios ion-toolbar ion-searchbar {
+.header-collapse-condense ion-toolbar ion-searchbar {
   height: 48px;
 
   padding-top: 0px;
@@ -61,13 +61,13 @@ ion-toolbar.in-toolbar ion-buttons {
  * on an element in a scrollable container while scrolling
  * causes the scroll position to jump to the top
  */
-.header-collapse-ios ion-toolbar ion-title,
-.header-collapse-ios ion-toolbar ion-buttons {
+.header-collapse-condense ion-toolbar ion-title,
+.header-collapse-condense ion-toolbar ion-buttons {
   transition: none;
 }
 
-.header-collapse-ios-inactive ion-toolbar.in-toolbar ion-title,
-.header-collapse-ios-inactive ion-toolbar.in-toolbar ion-buttons[collapse] {
+.header-collapse-condense-inactive ion-toolbar.in-toolbar ion-title,
+.header-collapse-condense-inactive ion-toolbar.in-toolbar ion-buttons.buttons-collapse {
   opacity: 0;
   pointer-events: none;
 }

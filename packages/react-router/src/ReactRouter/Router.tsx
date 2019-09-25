@@ -3,7 +3,7 @@ import { RouterDirection } from '@ionic/react';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { BrowserRouter, BrowserRouterProps, matchPath, RouteComponentProps, withRouter } from 'react-router-dom';
-import { generateUniqueId } from '../utils';
+import { generateId } from '../utils';
 import { IonRouteData } from './IonRouteData';
 import { NavManager } from './NavManager';
 import { RouteManagerContext, RouteManagerContextState } from './RouteManagerContext';
@@ -49,7 +49,8 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
       view.show = false;
       view.ionPageElement = undefined;
       view.isIonRoute = false;
-      view.key = generateUniqueId();
+      view.prevId = undefined;
+      view.key = generateId();
       this.setState({
         viewStacks
       });
@@ -76,10 +77,6 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
       }
       leavingView = viewStacks.findViewInfoById(this.activeIonPageId).view;
 
-      if (leavingView && leavingView.routeData.match!.url === location.pathname) {
-        return;
-      }
-
       if (enteringView) {
 
         if (enteringView.isIonRoute) {
@@ -96,7 +93,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
                 * If the page is being pushed into the stack by another view,
                 * record the view that originally directed to the new view for back button purposes.
                 */
-                enteringView.prevId = leavingView.id;
+                enteringView.prevId = enteringView.prevId || leavingView.id;
               } else {
                 direction = direction || 'back';
                 leavingView.mount = false;
@@ -159,8 +156,8 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
     await this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);
 
     function createViewItem(child: React.ReactElement<any>, location: HistoryLocation) {
-      const viewId = generateUniqueId();
-      const key = generateUniqueId();
+      const viewId = generateId();
+      const key = generateId();
       const route = child;
       const matchProps = {
         exact: child.props.exact,
@@ -182,7 +179,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
       };
       if (!!match && view.isIonRoute) {
         activeId = viewId;
-      };
+      }
       return view;
     }
   }
