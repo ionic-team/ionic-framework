@@ -68,9 +68,10 @@ export class Segment implements ComponentInterface {
     this.value = selectedButton.value;
   }
 
-  connectedCallback() {
+  async connectedCallback() {
+    const buttons = await this.getButtons();
     if (this.value === undefined) {
-      const checked = this.getButtons().find(b => b.checked);
+      const checked = buttons.find(b => b.checked);
       if (checked) {
         this.value = checked.value;
       }
@@ -89,15 +90,19 @@ export class Segment implements ComponentInterface {
     });
   }
 
-  private updateButtons() {
+  async updateButtons() {
+    const buttons = await this.getButtons();
     const value = this.value;
-    for (const button of this.getButtons()) {
+    for (const button of buttons) {
       button.checked = (button.value === value);
     }
   }
 
   private getButtons() {
-    return Array.from(this.el.querySelectorAll('ion-segment-button'));
+    return Promise.all(
+      Array.from(this.el.querySelectorAll('ion-segment-button'))
+        .map(el => el.componentOnReady())
+    );
   }
 
   render() {
