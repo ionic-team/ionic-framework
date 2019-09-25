@@ -60,6 +60,8 @@
   appearance: none;
 
   box-sizing: border-box;
+
+  overflow: hidden;
 }
 
 .button-native:after {
@@ -69,6 +71,8 @@
 .button-inner {
   display: flex;
 
+  position: relative;
+
   flex-flow: column nowrap;
   flex-shrink: 0;
   align-items: center;
@@ -76,6 +80,8 @@
 
   width: 100%;
   height: 100%;
+
+  z-index: 1;
 }
 
 .horizontal-wrapper {
