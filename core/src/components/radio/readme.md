@@ -110,7 +110,6 @@ export const RadioExample: React.FC = () => (
 
 | Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                  | Default        |
 | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | -------------- |
-| `checked`  | `checked`  | If `true`, the radio is selected.                                                                                                                                                                                                                                      | `boolean`             | `false`        |
 | `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined`    |
 | `disabled` | `disabled` | If `true`, the user cannot interact with the radio.                                                                                                                                                                                                                    | `boolean`             | `false`        |
 | `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined`    |
@@ -120,11 +119,10 @@ export const RadioExample: React.FC = () => (
 
 ## Events
 
-| Event       | Description                                | Type                                  |
-| ----------- | ------------------------------------------ | ------------------------------------- |
-| `ionBlur`   | Emitted when the radio button loses focus. | `CustomEvent<void>`                   |
-| `ionFocus`  | Emitted when the radio button has focus.   | `CustomEvent<void>`                   |
-| `ionSelect` | Emitted when the radio button is selected. | `CustomEvent<RadioChangeEventDetail>` |
+| Event      | Description                                | Type                |
+| ---------- | ------------------------------------------ | ------------------- |
+| `ionBlur`  | Emitted when the radio button loses focus. | `CustomEvent<void>` |
+| `ionFocus` | Emitted when the radio button has focus.   | `CustomEvent<void>` |
 
 
 ## CSS Custom Properties

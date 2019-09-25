@@ -2,7 +2,8 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { RadioGroupChangeEventDetail } from '../../interface';
-import { findCheckedOption, watchForOptions } from '../../utils/watch-options';
+
+import { RadioChangeEventDetail } from './radio-group-interface';
 
 @Component({
   tag: 'ion-radio-group'
@@ -32,7 +33,6 @@ export class RadioGroup implements ComponentInterface {
 
   @Watch('value')
   valueChanged(value: any | undefined) {
-    this.updateRadios();
     this.ionChange.emit({ value });
   }
 
@@ -52,27 +52,6 @@ export class RadioGroup implements ComponentInterface {
         this.labelId = label.id = this.name + '-lbl';
       }
     }
-
-    if (this.value === undefined) {
-      const radio = findCheckedOption(el, 'ion-radio') as HTMLIonRadioElement | undefined;
-      if (radio !== undefined) {
-        await radio.componentOnReady();
-        if (this.value === undefined) {
-          this.value = radio.value;
-        }
-      }
-    }
-
-    this.mutationO = watchForOptions<HTMLIonRadioElement>(el, 'ion-radio', newOption => {
-      if (newOption !== undefined) {
-        newOption.componentOnReady().then(() => {
-          this.value = newOption.value;
-        });
-      } else {
-        this.updateRadios();
-      }
-    });
-    this.updateRadios();
   }
 
   disconnectedCallback() {
@@ -82,58 +61,15 @@ export class RadioGroup implements ComponentInterface {
     }
   }
 
-  private async updateRadios() {
-    /**
-     * Make sure we get all radios first
-     * so values are up to date prior
-     * to caching the radio group value
-     */
-    const radios = await this.getRadios();
-    const { value } = this;
-
-    let hasChecked = false;
-
-    // Walk the DOM in reverse order, since the last selected one wins!
-    for (const radio of radios) {
-      if (!hasChecked && radio.value === value) {
-        // correct value for this radio
-        // but this radio isn't checked yet
-        // and we haven't found a checked yet
-        hasChecked = true;
-        radio.checked = true;
-      } else {
-        // this radio doesn't have the correct value
-        // or the radio group has been already checked
-        radio.checked = false;
+  private onRadioChangedSelect = (ev: CustomEvent<RadioChangeEventDetail>) => {
+    const selectedRadio = ev.target as HTMLIonRadioElement | null;
+    if (selectedRadio) {
+      const detail = ev.detail;
+      if (detail.checked) {
+        this.value = detail.value;
+      } else if (this.allowEmptySelection && detail.value === this.value) {
+        this.value = undefined;
       }
-    }
-
-    // Reset value if
-    if (!hasChecked) {
-      this.value = undefined;
-    }
-  }
-
-  private getRadios() {
-    return Promise.all(
-      Array
-        .from(this.el.querySelectorAll('ion-radio'))
-        .map(r => r.componentOnReady())
-    );
-  }
-
-  private onSelect = (ev: Event) => {
-    const selectedRadio = ev.target as HTMLIonRadioElement | null;
-    if (selectedRadio) {
-      this.value = selectedRadio.value;
-    }
-  }
-
-  private onDeselect = (ev: Event) => {
-    const selectedRadio = ev.target as HTMLIonRadioElement | null;
-    if (selectedRadio) {
-      selectedRadio.checked = false;
-      this.value = undefined;
     }
   }
 
@@ -142,8 +78,7 @@ export class RadioGroup implements ComponentInterface {
       <Host
         role="radiogroup"
         aria-labelledby={this.labelId}
-        onIonSelect={this.onSelect}
-        onIonDeselect={this.allowEmptySelection ? this.onDeselect : undefined}
+        onIonRadioChanged={this.onRadioChangedSelect}
         class={getIonMode(this)}
       >
       </Host>

@@ -1903,10 +1903,6 @@ export namespace Components {
   }
   interface IonRadio {
     /**
-    * If `true`, the radio is selected.
-    */
-    'checked': boolean;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -5187,10 +5183,6 @@ declare namespace LocalJSX {
   }
   interface IonRadio {
     /**
-    * If `true`, the radio is selected.
-    */
-    'checked'?: boolean;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -5214,10 +5206,6 @@ declare namespace LocalJSX {
     * Emitted when the radio button has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the radio button is selected.
-    */
-    'onIonSelect'?: (event: CustomEvent<RadioChangeEventDetail>) => void;
     /**
     * the value of the radio.
     */

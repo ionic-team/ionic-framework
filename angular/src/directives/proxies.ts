@@ -572,19 +572,18 @@ export class IonProgressBar {
 proxyInputs(IonProgressBar, ['buffer', 'color', 'mode', 'reversed', 'type', 'value']);
 
 export declare interface IonRadio extends Components.IonRadio {}
-@Component({ selector: 'ion-radio', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value'] })
+@Component({ selector: 'ion-radio', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'disabled', 'mode', 'name', 'value'] })
 export class IonRadio {
-  ionSelect!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSelect', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
-proxyInputs(IonRadio, ['checked', 'color', 'disabled', 'mode', 'name', 'value']);
+proxyInputs(IonRadio, ['color', 'disabled', 'mode', 'name', 'value']);
 
 export declare interface IonRadioGroup extends Components.IonRadioGroup {}
 @Component({ selector: 'ion-radio-group', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['allowEmptySelection', 'name', 'value'] })
