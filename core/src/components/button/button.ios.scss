@@ -8,7 +8,6 @@
 :host {
   --background-hover-opacity: 1;
   --background-hover: transparent;
-
   --border-radius: #{$button-ios-border-radius};
   --padding-top: #{$button-ios-padding-top};
   --padding-bottom: #{$button-ios-padding-bottom};
@@ -138,6 +137,7 @@
 
   :host(.ion-color:hover) .button-native::after {
     background: transparent;
+
     opacity: 1;
   }
 

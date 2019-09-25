@@ -128,12 +128,14 @@
 @media (any-hover: hover) {
   :host(.button-solid.ion-color:hover) .button-native::after {
     background: #{current-color(contrast)};
+
     opacity: .08;
   }
 
   :host(.button-clear.ion-color:hover) .button-native::after,
   :host(.button-outline.ion-color:hover) .button-native::after {
     background: #{current-color(base)};
+
     opacity: .04;
   }
 }
