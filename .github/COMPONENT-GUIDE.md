@@ -1,4 +1,29 @@
-# Ionic Component Implementation
+# Ionic Component Implementation Guide
+
+- [Button States](#button-states)
+  * [Example Components](#example-components)
+  * [References](#references)
+  * [Activated](#activated)
+    + [JavaScript](#javascript)
+    + [CSS](#css)
+    + [User Customization](#user-customization)
+  * [Disabled](#disabled)
+    + [JavaScript](#javascript-1)
+    + [CSS](#css-1)
+    + [User Customization](#user-customization-1)
+  * [Focused](#focused)
+    + [JavaScript](#javascript-2)
+    + [CSS](#css-2)
+    + [User Customization](#user-customization-2)
+  * [Hover](#hover)
+    + [JavaScript](#javascript-3)
+    + [CSS](#css-3)
+    + [User Customization](#user-customization-3)
+  * [Ripple Effect](#ripple-effect)
+- [Rendering Anchor or Button](#rendering-anchor-or-button)
+  * [Example Components](#example-components-1)
+  * [JavaScript](#javascript-4)
+
 
 ## Button States
 
@@ -17,7 +42,45 @@ Any component that renders a button should have the following states: [`activate
 
 ### Activated
 
+The activated state should be enabled for elements with actions on "press". It usually changes the opacity or background of an element.
+
+#### JavaScript
+
+The `ion-activatable` class needs to be set on an element that can be activated:
+
+```jsx
+render() {
+  return (
+    <Host class='ion-activatable'>
+      <slot></slot>
+    </Host>
+  );
+}
+```
+
+Once that is done, the element will get the `ion-activated` class added on press.
+
+In addition to setting that class, `ion-activatable-instant` can be set in order to have an instant press with no delay:
+
+```jsx
+<Host class='ion-activatable ion-activatable-instant'>
+```
+
+#### CSS
+
+Style the `ion-activated` class based on the spec for that element:
+
+```css
+:host(.ion-activated) {
+  background: var(--background-activated);
+  color: var(--color-activated);
+}
+```
+
+#### User Customization
+
 TODO
+
 
 ### Disabled
 
@@ -75,7 +138,40 @@ TODO
 
 ### Focused
 
+The focused state should be enabled for elements with actions when tabbed to via the keyboard. This will only work inside of an `ion-app`. It usually changes the opacity or background of an element.
+
+#### JavaScript
+
+The `ion-focusable` class needs to be set on an element that can be focused:
+
+```jsx
+render() {
+  return (
+    <Host class='ion-focusable'>
+      <slot></slot>
+    </Host>
+  );
+}
+```
+
+Once that is done, the element will get the `ion-focused` class added on press.
+
+#### CSS
+
+Style the `ion-focused` class based on the spec for that element:
+
+```css
+:host(.ion-focused) {
+  background: var(--background-focused);
+  color: var(--color-focused);
+}
+```
+
+
+#### User Customization
+
 TODO
+
 
 ### Hover
 
@@ -172,7 +268,41 @@ ion-button {
 }
 ```
 
-## Rendered Anchor or Button
+
+### Ripple Effect
+
+The ripple effect should be added to elements for Material Design. It *requires* the `ion-activatable` class to be set on the parent element to work, and relative positioning on the parent.
+
+```jsx
+ render() {
+  const mode = getIonMode(this);
+
+return (
+  <Host
+    class={{
+      'ion-activatable': true,
+    }}
+  >
+    <button>
+      <slot></slot>
+      {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+    </button>
+  </Host>
+);
+```
+
+The ripple effect can also accept a different `type`. By default it is `"bounded"` which will expand the ripple effect from the click position outwards. To add a ripple effect that always starts in the center of the element and expands in a circle, set the type to `"unbounded"`. An unbounded ripple will exceed the container, so add `overflow: hidden` to the parent to prevent this.
+
+Make sure to style the ripple effect for that component to accept a color:
+
+```css
+ion-ripple-effect {
+  color: var(--ripple-color);
+}
+```
+
+
+## Rendering Anchor or Button
 
 Certain components can render an `<a>` or a `<button>` depending on the presence of an `href` attribute.
 
