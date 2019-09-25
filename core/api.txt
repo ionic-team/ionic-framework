@@ -548,6 +548,8 @@ ion-item-option,prop,rel,string | undefined,undefined,false,false
 ion-item-option,prop,target,string | undefined,undefined,false,false
 ion-item-option,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item-option,css-prop,--background
+ion-item-option,css-prop,--background-hover
+ion-item-option,css-prop,--background-hover-opacity
 ion-item-option,css-prop,--color
 
 ion-item-options,none

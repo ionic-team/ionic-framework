@@ -36,10 +36,12 @@ action for the item.
 
 ## CSS Custom Properties
 
-| Name           | Description                   |
-| -------------- | ----------------------------- |
-| `--background` | Background of the item option |
-| `--color`      | Color of the item option      |
+| Name                         | Description                               |
+| ---------------------------- | ----------------------------------------- |
+| `--background`               | Background of the item option             |
+| `--background-hover`         | Background of the button on hover         |
+| `--background-hover-opacity` | Opacity of the button background on hover |
+| `--color`                    | Color of the item option                  |
 
 
 ## Dependencies
