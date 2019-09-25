@@ -64,7 +64,7 @@
   overflow: hidden;
 }
 
-.button-native:after {
+.button-native::after {
   @include button-state();
 }
 
