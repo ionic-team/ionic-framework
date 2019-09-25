@@ -23,6 +23,11 @@
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
   * [Example Components](#example-components-1)
   * [JavaScript](#javascript-4)
+- [Converting Scoped to Shadow](#converting-scoped-to-shadow)
+  * [CSS](#css-4)
+    + [Targeting host + slotted child](#targeting-host---slotted-child)
+    + [Targeting host-context + host (with a :not)](#targeting-host-context---host--with-a--not-)
+    + [Targeting host-context + host (with a :not) > slotted child](#targeting-host-context---host--with-a--not----slotted-child)
 
 
 ## Button States
@@ -343,3 +348,39 @@ render() {
 ```
 
 If the component can render an `<a>`, `<button>` or a `<div>` add in more properties such as a `button` attribute in order to check if it should render a button.
+
+## Converting Scoped to Shadow
+
+### CSS
+
+There will be some CSS issues when converting to shadow. Below are some of the differences.
+
+#### Targeting host + slotted child
+
+```css
+/* IN SCOPED */
+:host(.ion-color)::slotted(ion-segment-button)
+
+/* IN SHADOW*/
+:host(.ion-color) ::slotted(ion-segment-button)
+```
+
+#### Targeting host-context + host (with a :not)
+
+```css
+/* IN SCOPED */
+:host-context(ion-toolbar.ion-color):not(.ion-color) {
+
+/* IN SHADOW */
+:host-context(ion-toolbar.ion-color):host(:not(.ion-color))  {
+```
+
+#### Targeting host-context + host (with a :not) > slotted child
+
+```css
+/* IN SCOPED */
+:host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(ion-segment-button) {
+
+/* IN SHADOW*/
+:host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
+```
