@@ -166,10 +166,12 @@ export const ChipExample: React.FC = () => (
 
 ## CSS Custom Properties
 
-| Name           | Description            |
-| -------------- | ---------------------- |
-| `--background` | Background of the chip |
-| `--color`      | Color of the chip      |
+| Name                         | Description                             |
+| ---------------------------- | --------------------------------------- |
+| `--background`               | Background of the chip                  |
+| `--background-hover`         | Background of the chip on hover         |
+| `--background-hover-opacity` | Opacity of the chip background on hover |
+| `--color`                    | Color of the chip                       |
 
 
 ## Dependencies

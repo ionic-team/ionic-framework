@@ -243,6 +243,8 @@ ion-chip,prop,color,string | undefined,undefined,false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
 ion-chip,css-prop,--background
+ion-chip,css-prop,--background-hover
+ion-chip,css-prop,--background-hover-opacity
 ion-chip,css-prop,--color
 
 ion-col,shadow
