@@ -3,7 +3,6 @@ import ReactDom from 'react-dom';
 
 import { NavContext } from '../contexts/NavContext';
 
-import { ReactProps } from './ReactProps';
 import { RouterDirection } from './hrefprops';
 import { attachEventProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
 import { deprecationWarning } from './utils/dev';
@@ -98,5 +97,5 @@ export const createReactComponent = <PropType, ElementType>(
       return NavContext;
     }
   };
-  return createForwardRef<PropType & ReactProps, ElementType>(ReactComponent, displayName);
+  return createForwardRef<PropType, ElementType>(ReactComponent, displayName);
 };

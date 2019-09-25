@@ -10,6 +10,26 @@ Render first route even if url is same, fixes [#19392](https://github.com/ionic-
 
 ## Breaking Changes
 
+### Events have been updated to use proper types from React
+
+The types for events (such as `onClick`) were not typed correctly prior to RC3. Before, they were the normal browser events, but now they are the proper React Synthetic events. Therefore, you might have type errors that need to be remedied:
+
+```typescript
+function handleClick(e: MouseEvent) {
+  ...
+}
+```
+
+Will need to become: 
+
+```typescript
+function handleClick(e: React.MouseEvent) {
+  ...
+}
+```
+
+Some Ionic components have the option to pass the event to them (like `IonPopover`). For these, you can access the `nativeEvent` property on the React synthetic event.
+
 ### Components with href attributes and the new routerLink prop
 As of RC3, components that use the href prop (`IonButton`, `IonItem`, etc..), no longer run these links through the router. As a result, page transitions are no longer applied to these links. To maintain page transitions, use the new `routerLink` prop instead. The href prop should be used when you want to enforce a full browser transition on the page, or when you need to link to an external resource.
 
