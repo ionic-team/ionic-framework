@@ -9,6 +9,8 @@
   --border-width: #{$hairlines-width 0 0};
   --border-color: #{$picker-md-border-color};
   --height: #{$picker-md-height};
+  --button-background-hover: #{ion-color(primary, base)};
+  --button-background-hover-opacity: .04;
 
   color: $picker-md-option-text-color;
 }
@@ -23,7 +25,7 @@
 
 .picker-button,
 .picker-button.ion-activated {
-  @include margin(0);
+  @include margin(4px, 2px, 4px, 2px);
   @include padding(0, 1.1em);
 
   height: $picker-md-button-height;

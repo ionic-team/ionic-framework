@@ -788,6 +788,8 @@ ion-picker,css-prop,--border-color
 ion-picker,css-prop,--border-radius
 ion-picker,css-prop,--border-style
 ion-picker,css-prop,--border-width
+ion-picker,css-prop,--button-background-hover
+ion-picker,css-prop,--button-background-hover-opacity
 ion-picker,css-prop,--height
 ion-picker,css-prop,--max-height
 ion-picker,css-prop,--max-width

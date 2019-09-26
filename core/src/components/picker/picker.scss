@@ -20,6 +20,9 @@
    * @prop --min-height: Minimum height of the picker
    * @prop --height: Height of the picker
    * @prop --max-height: Maximum height of the picker
+   *
+   * @prop --button-background-hover: Background of the picker button on hover
+   * @prop --button-background-hover-opacity: Opacity of the picker button background on hover
    */
   --border-radius: 0;
   --border-style: solid;
@@ -92,9 +95,25 @@
 }
 
 .picker-button {
+  @include border-radius(4px);
+
   border: 0;
 
   font-family: inherit;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.picker-button::after {
+  @include button-state();
+}
+
+.picker-button-inner {
+  position: relative;
+
+  z-index: 1;
 }
 
 .picker-button {
@@ -124,4 +143,22 @@
 .picker-below-highlight {
   display: none;
   pointer-events: none;
+}
+
+
+// Picker Button: Hover
+// --------------------------------------------------
+
+// TODO color hover
+
+@media (any-hover: hover) {
+  .picker-button:hover {
+    // color: var(--color-hover);
+  }
+
+  .picker-button:hover::after {
+    background: var(--button-background-hover);
+
+    opacity: var(--button-background-hover-opacity);
+  }
 }

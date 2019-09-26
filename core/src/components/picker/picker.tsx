@@ -234,7 +234,9 @@ export class Picker implements ComponentInterface, OverlayInterface {
                   onClick={() => this.buttonClick(b)}
                   class={buttonClass(b)}
                 >
-                  {b.text}
+                  <span class="picker-button-inner">
+                    {b.text}
+                  </span>
                 </button>
               </div>
             ))}

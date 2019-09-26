@@ -9,6 +9,8 @@
   --border-width: #{1px 0 0};
   --border-color: #{$picker-ios-border-color};
   --height: #{$picker-ios-height};
+  --button-background-hover: transparent;
+  --button-background-hover-opacity: 1;
 
   color: $picker-ios-option-text-color;
 }
@@ -93,4 +95,10 @@
     $picker-ios-bottom-background-color 100%);
 
   z-index: 11;
+}
+
+@media (any-hover: hover) {
+  .picker-button:hover {
+    opacity: .6;
+  }
 }
