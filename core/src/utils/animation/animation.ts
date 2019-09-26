@@ -1,5 +1,7 @@
 // TODO: Add more tests. until then, be sure to manually test menu and swipe to go back/routing transitions
 
+import { raf } from '../helpers';
+
 import { Animation, AnimationDirection, AnimationFill, AnimationOnFinishCallback, AnimationOnFinishOptions } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
@@ -125,7 +127,7 @@ export const createAnimation = () => {
       webAnimations.length = 0;
     } else {
       elements.forEach(element => {
-        requestAnimationFrame(() => {
+        raf(() => {
           removeStyleProperty(element, 'animation-name');
           removeStyleProperty(element, 'animation-duration');
           removeStyleProperty(element, 'animation-timing-function');
@@ -653,7 +655,7 @@ export const createAnimation = () => {
           setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
         }
 
-        requestAnimationFrame(() => {
+        raf(() => {
           setStyleProperty(element, 'animation-name', stylesheet.id || null);
         });
       }
@@ -734,7 +736,7 @@ export const createAnimation = () => {
 
   const updateCSSAnimation = (toggleAnimationName = true) => {
     elements.forEach(element => {
-      requestAnimationFrame(() => {
+      raf(() => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
         setStyleProperty(element, 'animation-duration', (getDuration() !== undefined) ? `${getDuration()}ms` : null);
         setStyleProperty(element, 'animation-timing-function', getEasing() || null);
@@ -753,7 +755,7 @@ export const createAnimation = () => {
           setStyleProperty(element, 'animation-name', `${keyframeName}-alt`);
         }
 
-        requestAnimationFrame(() => {
+        raf(() => {
           setStyleProperty(element, 'animation-name', keyframeName || null);
         });
       });
@@ -928,7 +930,7 @@ export const createAnimation = () => {
 
     elements.forEach(element => {
       if (_keyframes.length > 0) {
-        requestAnimationFrame(() => {
+        raf(() => {
           setStyleProperty(element, 'animation-play-state', 'running');
         });
       }
@@ -964,12 +966,10 @@ export const createAnimation = () => {
          *
          * TODO: Is there a cleaner way to do this?
          */
-        requestAnimationFrame(() => {
+        raf(() => {
           clearCSSAnimationPlayState();
-          requestAnimationFrame(() => {
-              animationFinish();
-            });
-          });
+          raf(animationFinish);
+        });
       });
     }
   };
