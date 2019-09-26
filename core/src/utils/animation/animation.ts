@@ -968,10 +968,8 @@ export const createAnimation = () => {
          */
         raf(() => {
           clearCSSAnimationPlayState();
-          raf(() => {
-              animationFinish();
-            });
-          });
+          raf(animationFinish);
+        });
       });
     }
   };
