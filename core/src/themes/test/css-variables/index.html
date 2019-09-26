@@ -964,11 +964,13 @@
 
     async function presentToast() {
       const toast = Object.assign(document.createElement('ion-toast'), {
-        message: 'Your settings have been saved.',
-        duration: 2000
+        message: 'Hello world!',
+        buttons: [
+          { text: 'Close', role: 'close' }
+        ]
       });
       document.body.appendChild(toast);
-      return await toast.present();
+      await toast.present();
     }
   </script>
 </body>
