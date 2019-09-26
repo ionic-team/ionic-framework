@@ -75,9 +75,10 @@ export const createKeyframeStylesheet = (keyframeName: string, keyframeRules: st
     return existingStylesheet;
   }
 
+  debugger;
   const stylesheet = (element.ownerDocument || document).createElement('style');
   stylesheet.id = keyframeName;
-  stylesheet.innerHTML = `@keyframes ${keyframeName} { ${keyframeRules} } @keyframes ${keyframeName}-alt { ${keyframeRules} }`;
+  stylesheet.textContent = `@keyframes ${keyframeName} { ${keyframeRules} } @keyframes ${keyframeName}-alt { ${keyframeRules} }`;
 
   styleContainer.appendChild(stylesheet);
 
