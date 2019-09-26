@@ -121,7 +121,6 @@ export const present = async (
   mdEnterAnimation: AnimationBuilder | IonicAnimationInterface,
   opts?: any
 ) => {
-  debugger;
   if (overlay.presented) {
     return;
   }

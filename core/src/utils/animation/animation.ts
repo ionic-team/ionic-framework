@@ -787,7 +787,6 @@ export const createAnimation = () => {
     pauseAnimation();
     shouldForceLinearEasing = forceLinearEasing;
 
-    debugger;
     if (!initialized) {
       initializeAnimation();
     } else {
