@@ -8,8 +8,7 @@ cp -a ../../package.json node_modules/@ionic/angular/package.json
 # Copy angular server
 rm -rf node_modules/@ionic/angular-server
 mkdir node_modules/@ionic/angular-server
-cp -a ../../../packages/angular-server/dist node_modules/@ionic/angular-server/dist
-cp -a ../../../packages/angular-server/package.json node_modules/@ionic/angular-server/package.json
+cp -a ../../../packages/angular-server/dist/ node_modules/@ionic/angular-server
 
 # # Copy core dist
 rm -rf node_modules/@ionic/core
