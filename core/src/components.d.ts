@@ -1662,27 +1662,6 @@ export namespace Components {
     */
     'routerDirection': RouterDirection;
   }
-  interface IonNavPop {}
-  interface IonNavPush {
-    /**
-    * Component to navigate to
-    */
-    'component'?: NavComponent;
-    /**
-    * Data you want to pass to the component as props
-    */
-    'componentProps'?: ComponentProps;
-  }
-  interface IonNavSetRoot {
-    /**
-    * Component you want to make root for the navigation stack
-    */
-    'component'?: NavComponent;
-    /**
-    * Data you want to pass to the component as props
-    */
-    'componentProps'?: ComponentProps;
-  }
   interface IonNote {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -3215,24 +3194,6 @@ declare global {
     new (): HTMLIonNavLinkElement;
   };
 
-  interface HTMLIonNavPopElement extends Components.IonNavPop, HTMLStencilElement {}
-  var HTMLIonNavPopElement: {
-    prototype: HTMLIonNavPopElement;
-    new (): HTMLIonNavPopElement;
-  };
-
-  interface HTMLIonNavPushElement extends Components.IonNavPush, HTMLStencilElement {}
-  var HTMLIonNavPushElement: {
-    prototype: HTMLIonNavPushElement;
-    new (): HTMLIonNavPushElement;
-  };
-
-  interface HTMLIonNavSetRootElement extends Components.IonNavSetRoot, HTMLStencilElement {}
-  var HTMLIonNavSetRootElement: {
-    prototype: HTMLIonNavSetRootElement;
-    new (): HTMLIonNavSetRootElement;
-  };
-
   interface HTMLIonNoteElement extends Components.IonNote, HTMLStencilElement {}
   var HTMLIonNoteElement: {
     prototype: HTMLIonNoteElement;
@@ -3554,9 +3515,6 @@ declare global {
     'ion-modal-controller': HTMLIonModalControllerElement;
     'ion-nav': HTMLIonNavElement;
     'ion-nav-link': HTMLIonNavLinkElement;
-    'ion-nav-pop': HTMLIonNavPopElement;
-    'ion-nav-push': HTMLIonNavPushElement;
-    'ion-nav-set-root': HTMLIonNavSetRootElement;
     'ion-note': HTMLIonNoteElement;
     'ion-picker': HTMLIonPickerElement;
     'ion-picker-column': HTMLIonPickerColumnElement;
@@ -4984,27 +4942,6 @@ declare namespace LocalJSX {
     */
     'routerDirection'?: RouterDirection;
   }
-  interface IonNavPop {}
-  interface IonNavPush {
-    /**
-    * Component to navigate to
-    */
-    'component'?: NavComponent;
-    /**
-    * Data you want to pass to the component as props
-    */
-    'componentProps'?: ComponentProps;
-  }
-  interface IonNavSetRoot {
-    /**
-    * Component you want to make root for the navigation stack
-    */
-    'component'?: NavComponent;
-    /**
-    * Data you want to pass to the component as props
-    */
-    'componentProps'?: ComponentProps;
-  }
   interface IonNote {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -6253,9 +6190,6 @@ declare namespace LocalJSX {
     'ion-modal-controller': IonModalController;
     'ion-nav': IonNav;
     'ion-nav-link': IonNavLink;
-    'ion-nav-pop': IonNavPop;
-    'ion-nav-push': IonNavPush;
-    'ion-nav-set-root': IonNavSetRoot;
     'ion-note': IonNote;
     'ion-picker': IonPicker;
     'ion-picker-column': IonPickerColumn;
@@ -6361,9 +6295,6 @@ declare module "@stencil/core" {
       'ion-modal-controller': LocalJSX.IonModalController & JSXBase.HTMLAttributes<HTMLIonModalControllerElement>;
       'ion-nav': LocalJSX.IonNav & JSXBase.HTMLAttributes<HTMLIonNavElement>;
       'ion-nav-link': LocalJSX.IonNavLink & JSXBase.HTMLAttributes<HTMLIonNavLinkElement>;
-      'ion-nav-pop': LocalJSX.IonNavPop & JSXBase.HTMLAttributes<HTMLIonNavPopElement>;
-      'ion-nav-push': LocalJSX.IonNavPush & JSXBase.HTMLAttributes<HTMLIonNavPushElement>;
-      'ion-nav-set-root': LocalJSX.IonNavSetRoot & JSXBase.HTMLAttributes<HTMLIonNavSetRootElement>;
       'ion-note': LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
       'ion-picker': LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
       'ion-picker-column': LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
