@@ -22,7 +22,7 @@
 * **config:** expose getMode() and deprecate Config.set() ([#19104](https://github.com/ionic-team/ionic/issues/19104)) ([0f05ea4](https://github.com/ionic-team/ionic/commit/0f05ea4))
 * **docs:** add VSCode docs support ([#19309](https://github.com/ionic-team/ionic/issues/19309)) ([a3f345c](https://github.com/ionic-team/ionic/commit/a3f345c))
 * **title:** add support for small title ([#19215](https://github.com/ionic-team/ionic/issues/19215)) ([e27962d](https://github.com/ionic-team/ionic/commit/e27962d)), closes [#18898](https://github.com/ionic-team/ionic/issues/18898)
-* **title:** add support for large title ([#19268](https://github.com/ionic-team/ionic/issues/19268)) ([923312e](https://github.com/ionic-team/ionic/commit/923312e)), closes [#16885](https://github.com/ionic-team/ionic/issues/16885)
+* **title:** add support for large title (experimental) ([#19268](https://github.com/ionic-team/ionic/issues/19268)) ([923312e](https://github.com/ionic-team/ionic/commit/923312e)), closes [#16885](https://github.com/ionic-team/ionic/issues/16885)
 
 
 ### Performance Improvements
