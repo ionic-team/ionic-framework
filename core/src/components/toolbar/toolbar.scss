@@ -65,7 +65,7 @@
 
   width: 100%;
 
-  height: 0;
+  height: var(--min-height);
   min-height: var(--min-height);
 
   contain: content;
