@@ -6,10 +6,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const version = process.argv[2];
+let version = process.argv[2];
 
-if (!version) {
-  throw new Error('version arg missing');
+if (version) {
+  version = '@' + version;
+} else {
+  version = '';
 }
 
 const srcPath = path.join(__dirname, 'cdn-loader.js');
@@ -19,7 +21,7 @@ let scriptContent = fs.readFileSync(srcPath, 'utf-8');
 
 scriptContent = scriptContent.replace(
   /__CDN_LOADER_URL__/g,
-  'https://cdn.jsdelivr.net/npm/@ionic/core@' + version
+  'https://cdn.jsdelivr.net/npm/@ionic/core' + version
 );
 
 fs.writeFileSync(path.join(__dirname, '..', 'loader', 'cdn.js'), scriptContent);

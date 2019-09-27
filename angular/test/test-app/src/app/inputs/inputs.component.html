@@ -93,7 +93,9 @@
 
     <ion-item color="dark">
       <ion-label>Range Mirror</ion-label>
-      <ion-range [(ngModel)]="range"></ion-range>
+      <ion-range [(ngModel)]="range">
+        <ion-toggle slot="start" id="nested-toggle" [(ngModel)]="toggle"></ion-toggle>
+      </ion-range>
       <ion-note slot="end">{{range}}</ion-note>
     </ion-item>
 

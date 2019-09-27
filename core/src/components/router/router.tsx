@@ -104,7 +104,7 @@ export class Router implements ComponentInterface {
    * Go back to previous page in the window.history.
    */
   @Method()
-  back() {
+  back(): Promise<void> {
     window.history.back();
     return Promise.resolve(this.waitPromise);
   }

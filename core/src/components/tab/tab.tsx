@@ -31,7 +31,6 @@ export class Tab implements ComponentInterface {
   @Prop() component?: ComponentRef;
 
   componentWillLoad() {
-
     if (Build.isDev) {
       if (this.component !== undefined && this.el.childElementCount > 0) {
         console.error('You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
@@ -49,7 +48,7 @@ export class Tab implements ComponentInterface {
     this.active = true;
   }
 
-  private async prepareLazyLoaded(): Promise<HTMLElement | undefined> {
+  private prepareLazyLoaded(): Promise<HTMLElement | undefined> {
     if (!this.loaded && this.component != null) {
       this.loaded = true;
       try {
@@ -58,7 +57,7 @@ export class Tab implements ComponentInterface {
         console.error(e);
       }
     }
-    return undefined;
+    return Promise.resolve(undefined);
   }
 
   render() {

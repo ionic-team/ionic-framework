@@ -4,7 +4,7 @@ An Action Sheet is a dialog that displays a set of options. It appears on top of
 
 ### Creating
 
-An action sheet can be created by the [Action Sheet Controller](../action-sheet-controller) from an array of `buttons`, with each button including properties for its `text`, and optionally a `handler` and `role`. If a handler returns `false` then the action sheet will not be dismissed. An action sheet can also optionally have a `title`, `subTitle` and an `icon`.
+An action sheet can be created by the [Action Sheet Controller](../action-sheet-controller) from an array of `buttons`, with each button including properties for its `text`, and optionally a `handler` and `role`. If a handler returns `false` then the action sheet will not be dismissed. An action sheet can also optionally have a `header` and a `subHeader`.
 
 ### Buttons
 
@@ -79,45 +79,45 @@ export class ActionSheetExample {
 
 ```javascript
 async function presentActionSheet() {
-  const actionSheetController = document.querySelector('ion-action-sheet-controller');
 
-  const actionSheet = await actionSheetController.create({
-    header: "Albums",
-    buttons: [{
-      text: 'Delete',
-      role: 'destructive',
-      icon: 'trash',
-      handler: () => {
-        console.log('Delete clicked');
-      }
-    }, {
-      text: 'Share',
-      icon: 'share',
-      handler: () => {
-        console.log('Share clicked');
-      }
-    }, {
-      text: 'Play (open modal)',
-      icon: 'arrow-dropright-circle',
-      handler: () => {
-        console.log('Play clicked');
-      }
-    }, {
-      text: 'Favorite',
-      icon: 'heart',
-      handler: () => {
-        console.log('Favorite clicked');
-      }
-    }, {
-      text: 'Cancel',
-      icon: 'close',
-      role: 'cancel',
-      handler: () => {
-        console.log('Cancel clicked');
-      }
-    }]
-  });
-  await actionSheet.present();
+  const actionSheet = document.createElement('ion-action-sheet');
+
+  actionSheet.header = "Albums";
+  actionSheet.buttons = [{
+    text: 'Delete',
+    role: 'destructive',
+    icon: 'trash',
+    handler: () => {
+      console.log('Delete clicked');
+    }
+  }, {
+    text: 'Share',
+    icon: 'share',
+    handler: () => {
+      console.log('Share clicked');
+    }
+  }, {
+    text: 'Play (open modal)',
+    icon: 'arrow-dropright-circle',
+    handler: () => {
+      console.log('Play clicked');
+    }
+  }, {
+    text: 'Favorite',
+    icon: 'heart',
+    handler: () => {
+      console.log('Favorite clicked');
+    }
+  }, {
+    text: 'Cancel',
+    icon: 'close',
+    role: 'cancel',
+    handler: () => {
+      console.log('Cancel clicked');
+    }
+  }];
+  document.body.appendChild(actionSheet);
+  return actionSheet.present();
 }
 ```
 
@@ -128,7 +128,7 @@ async function presentActionSheet() {
 import React, { useState } from 'react'
 import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
 
-export const ActionSheetExample: React.FunctionComponent = () => {
+export const ActionSheetExample: React.FC = () => {
 
   const [showActionSheet, setShowActionSheet] = useState(false);
 

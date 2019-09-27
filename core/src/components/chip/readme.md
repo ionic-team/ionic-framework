@@ -59,7 +59,7 @@ Chips represent complex entities in small blocks, such as a contact. A chip can 
 import React from 'react';
 import { IonChip, IonLabel, IonIcon, IonAvatar, IonContent } from '@ionic/react';
 
-export const ChipExample: React.FunctionComponent = () => (
+export const ChipExample: React.FC = () => (
   <IonContent>
     <IonChip>
       <IonLabel>Default</IonLabel>

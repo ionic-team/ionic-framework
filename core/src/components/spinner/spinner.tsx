@@ -38,19 +38,20 @@ export class Spinner implements ComponentInterface {
   @Prop() paused = false;
 
   private getName(): SpinnerTypes {
-    const name = this.name || config.get('spinner');
+    const spinnerName = this.name || config.get('spinner');
     const mode = getIonMode(this);
-    if (name) {
-      return name;
+    if (spinnerName) {
+      return spinnerName;
     }
-    return (mode === 'ios') ? 'lines' : 'crescent';
+    return (mode === 'ios') ? 'lines' : 'circular';
   }
 
   render() {
-    const mode = getIonMode(this);
-    const name = this.getName();
-    const spinner = SPINNERS[name] || SPINNERS['lines'];
-    const duration = (typeof this.duration === 'number' && this.duration > 10 ? this.duration : spinner.dur);
+    const self = this;
+    const mode = getIonMode(self);
+    const spinnerName = self.getName();
+    const spinner = SPINNERS[spinnerName] || SPINNERS['lines'];
+    const duration = (typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur);
     const svgs: any[] = [];
 
     if (spinner.circles !== undefined) {
@@ -67,11 +68,13 @@ export class Spinner implements ComponentInterface {
     return (
       <Host
         class={{
-          ...createColorClasses(this.color),
+          ...createColorClasses(self.color),
           [mode]: true,
-          [`spinner-${name}`]: true,
-          'spinner-paused': !!this.paused || config.getBoolean('_testing')
+          [`spinner-${spinnerName}`]: true,
+          'spinner-paused': !!self.paused || config.getBoolean('_testing')
         }}
+        role="progressbar"
+        style={spinner.elmDuration ? { animationDuration: duration + 'ms' } : {}}
       >
         {svgs}
       </Host>
@@ -81,21 +84,27 @@ export class Spinner implements ComponentInterface {
 
 const buildCircle = (spinner: SpinnerConfig, duration: number, index: number, total: number) => {
   const data = spinner.fn(duration, index, total);
-  data.style['animation-duration'] = `${duration}ms`;
+  data.style['animation-duration'] = duration + 'ms';
 
   return (
-    <svg viewBox="0 0 64 64" style={data.style}>
-      <circle transform="translate(32,32)" r={data.r}></circle>
+    <svg viewBox={data.viewBox || '0 0 64 64'} style={data.style}>
+      <circle
+        transform={data.transform || 'translate(32,32)'}
+        cx={data.cx}
+        cy={data.cy}
+        r={data.r}
+        style={spinner.elmDuration ? { animationDuration: duration + 'ms' } : {}}
+      />
     </svg>
   );
 };
 
 const buildLine = (spinner: SpinnerConfig, duration: number, index: number, total: number) => {
   const data = spinner.fn(duration, index, total);
-  data.style['animation-duration'] = `${duration}ms`;
+  data.style['animation-duration'] = duration + 'ms';
 
   return (
-    <svg viewBox="0 0 64 64" style={data.style}>
+    <svg viewBox={data.viewBox || '0 0 64 64'} style={data.style}>
       <line transform="translate(32,32)" y1={data.y1} y2={data.y2}></line>
     </svg>
   );
