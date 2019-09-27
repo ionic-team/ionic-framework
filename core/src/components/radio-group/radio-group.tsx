@@ -83,8 +83,14 @@ export class RadioGroup implements ComponentInterface {
   }
 
   private async updateRadios() {
-    const { value } = this;
+    /**
+     * Make sure we get all radios first
+     * so values are up to date prior
+     * to caching the radio group value
+     */
     const radios = await this.getRadios();
+    const { value } = this;
+
     let hasChecked = false;
 
     // Walk the DOM in reverse order, since the last selected one wins!

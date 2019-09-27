@@ -3,7 +3,7 @@ export const isDevMode = () => {
 };
 
 export const deprecationWarning = (message: string) => {
-  if(isDevMode()) {
+  if (isDevMode()) {
     console.warn(message);
   }
 };
