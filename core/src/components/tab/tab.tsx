@@ -48,7 +48,7 @@ export class Tab implements ComponentInterface {
     this.active = true;
   }
 
-  private async prepareLazyLoaded(): Promise<HTMLElement | undefined> {
+  private prepareLazyLoaded(): Promise<HTMLElement | undefined> {
     if (!this.loaded && this.component != null) {
       this.loaded = true;
       try {
@@ -57,7 +57,7 @@ export class Tab implements ComponentInterface {
         console.error(e);
       }
     }
-    return undefined;
+    return Promise.resolve(undefined);
   }
 
   render() {
