@@ -4,7 +4,7 @@
   "scripts": {
     "build": "node .scripts/build.js",
     "release.dev": "node .scripts/release-dev.js",
-    "release.prepare": "node .scripts/prepare.js",
+    "release.prepare": "node --inspect-brk .scripts/prepare.js",
     "release": "node .scripts/release.js",
     "changelog": "conventional-changelog -p angular -i ./CHANGELOG.md -k core -s"
   },

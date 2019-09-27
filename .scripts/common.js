@@ -8,9 +8,11 @@ const tc = require('turbocolor');
 const rootDir = path.join(__dirname, '../');
 
 const packages = [
-  'core',
-  'docs',
-  'angular',
+  // 'core',
+  // 'docs',
+  // 'angular',
+  'packages/react',
+  'packages/react-router'
 ];
 
 function readPkg(project) {

@@ -95,7 +95,7 @@ async function preparePackages(packages, version, install) {
   const tasks = [];
 
   // check git is nice and clean local and remote
-  common.checkGit(tasks);
+  // common.checkGit(tasks);
 
   // test we're good with git
   validateGit(tasks, version);
