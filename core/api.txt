@@ -736,16 +736,6 @@ ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | str
 ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 
-ion-nav-pop,none
-
-ion-nav-push,none
-ion-nav-push,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav-push,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
-
-ion-nav-set-root,none
-ion-nav-set-root,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav-set-root,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
-
 ion-note,shadow
 ion-note,prop,color,string | undefined,undefined,false,false
 ion-note,prop,mode,"ios" | "md",undefined,false,false
