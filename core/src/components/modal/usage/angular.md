@@ -68,7 +68,7 @@ export class ModalPage {
 
   constructor(navParams: NavParams) {
     // componentProps can also be accessed at construction time using NavParams
-    console.log(navParams.get('firstName');
+    console.log(navParams.get('firstName'));
   }
 
 }

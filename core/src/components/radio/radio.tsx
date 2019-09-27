@@ -50,18 +50,6 @@ export class Radio implements ComponentInterface {
   @Prop({ mutable: true }) value?: any | null;
 
   /**
-   * Emitted when the radio loads.
-   * @internal
-   */
-  @Event() ionRadioDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted when the radio unloads.
-   * @internal
-   */
-  @Event() ionRadioDidUnload!: EventEmitter<void>;
-
-  /**
    * Emitted when the styles change.
    * @internal
    */
@@ -114,14 +102,6 @@ export class Radio implements ComponentInterface {
       this.value = this.inputId;
     }
     this.emitStyle();
-  }
-
-  componentDidLoad() {
-    this.ionRadioDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionRadioDidUnload.emit();
   }
 
   private emitStyle() {

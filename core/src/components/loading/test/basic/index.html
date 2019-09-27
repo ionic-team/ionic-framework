@@ -30,8 +30,6 @@
       <ion-button id="backdrop-loading" expand="block" onclick="presentLoadingWithOptions({backdropDismiss: true})">Show Backdrop Click Loading</ion-button>
       <ion-button id="html-content-loading" expand="block" onclick="presentLoadingWithOptions({cssClass: 'html-loading', duration: 5000, message: '<ion-button>Click impatiently to load faster</ion-button>'})">Show Loading with HTML content</ion-button>
 
-      <ion-loading-controller></ion-loading-controller>
-
       <ion-grid>
         <ion-row>
           <ion-col size="6">
@@ -64,19 +62,19 @@
 
   </ion-app>
   <script>
-    async function presentLoading() {
-      const loadingController = document.querySelector('ion-loading-controller');
-      const loadingElement = await loadingController.create({
+    function presentLoading() {
+      const loadingElement = Object.assign(document.createElement('ion-loading'), {
         message: 'Hellooo',
         duration: 2000
       });
-      return await loadingElement.present();
+      document.body.appendChild(loadingElement);
+      return loadingElement.present();
     }
 
-    async function presentLoadingWithOptions(opts) {
-      const loadingController = document.querySelector('ion-loading-controller');
-      const loadingElement = await loadingController.create(opts);
-      return await loadingElement.present();
+    function presentLoadingWithOptions(opts) {
+      const loadingElement = Object.assign(document.createElement('ion-loading'), opts);
+      document.body.appendChild(loadingElement);
+      return loadingElement.present();
     }
   </script>
 

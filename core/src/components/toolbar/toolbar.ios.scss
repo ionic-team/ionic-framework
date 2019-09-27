@@ -8,11 +8,11 @@
   --background: #{$toolbar-ios-background};
   --color: #{$toolbar-ios-color};
   --border-color: #{$toolbar-ios-border-color};
-  --padding-top: 4px;
-  --padding-bottom: 4px;
-  --padding-start: 4px;
-  --padding-end: 4px;
-  --min-height: 44px;
+  --padding-top: #{$toolbar-ios-padding-top};
+  --padding-bottom: #{$toolbar-ios-padding-bottom};
+  --padding-start: #{$toolbar-ios-padding-start};
+  --padding-end: #{$toolbar-ios-padding-end};
+  --min-height: #{$toolbar-ios-min-height};
 }
 
 // Toolbar: Content
@@ -34,8 +34,31 @@
 }
 
 
+// Toolbar: Searchbar
+// --------------------------------------------------
+
+:host(.toolbar-searchbar) .toolbar-container {
+  @include padding(0);
+}
+
+// TODO - important is needed because searchbar is scoped
+:host(.toolbar-searchbar) ::slotted(ion-searchbar) {
+  /* stylelint-disable */
+  height: 52px !important;
+
+  padding-top: 1px !important;
+  padding-right: 16px !important;
+  padding-bottom: 15px !important;
+  padding-left: 16px !important;
+  /* stylelint-enable */
+}
+
 // iOS Toolbar Slot Placement
 // --------------------------------------------------
+
+::slotted(ion-buttons) {
+  min-height: 38px;
+}
 
 ::slotted([slot="start"]) {
   order: map-get($toolbar-order-ios, slot-start);
@@ -55,4 +78,20 @@
   order: map-get($toolbar-order-ios, slot-end);
 
   text-align: end;
+}
+
+
+// Toolbar: Large Title
+// --------------------------------------------------
+
+:host(.toolbar-title-large) .toolbar-container {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+:host(.toolbar-title-large) .toolbar-content ion-title {
+  flex: 1;
+  order: map-get($toolbar-order-ios, title-large);
+
+  min-width: 100%;
 }

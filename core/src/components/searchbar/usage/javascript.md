@@ -20,6 +20,9 @@
 <!-- Searchbar with telephone type -->
 <ion-searchbar type="tel"></ion-searchbar>
 
+<!-- Searchbar with numeric inputmode -->
+<ion-searchbar inputmode="numeric"></ion-searchbar>
+
 <!-- Searchbar disabled -->
 <ion-searchbar disabled="true"></ion-searchbar>
 

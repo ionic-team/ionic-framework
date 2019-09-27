@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
-import { dismiss, eventMethod, present, safeCall } from '../../utils/overlays';
+import { dismiss, eventMethod, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -26,7 +26,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   animation?: Animation;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonPickerElement;
 
   @State() presented = false;
 
@@ -103,6 +103,10 @@ export class Picker implements ComponentInterface, OverlayInterface {
    * Emitted after the picker has dismissed.
    */
   @Event({ eventName: 'ionPickerDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+
+  constructor() {
+    prepareOverlay(this.el);
+  }
 
   /**
    * Present the picker overlay after it has been created.

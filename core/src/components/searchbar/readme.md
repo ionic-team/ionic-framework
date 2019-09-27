@@ -35,6 +35,9 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 <!-- Searchbar with telephone type -->
 <ion-searchbar type="tel"></ion-searchbar>
 
+<!-- Searchbar with numeric inputmode -->
+<ion-searchbar inputmode="numeric"></ion-searchbar>
+
 <!-- Searchbar disabled -->
 <ion-searchbar disabled="true"></ion-searchbar>
 
@@ -81,6 +84,9 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 <!-- Searchbar with telephone type -->
 <ion-searchbar type="tel"></ion-searchbar>
 
+<!-- Searchbar with numeric inputmode -->
+<ion-searchbar inputmode="numeric"></ion-searchbar>
+
 <!-- Searchbar disabled -->
 <ion-searchbar disabled="true"></ion-searchbar>
 
@@ -109,17 +115,17 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 import React from 'react';
 import { IonSearchbar, IonToolbar, IonContent } from '@ionic/react';
 
-export const SearchbarExample: React.FunctionComponent = () => (
+export const SearchbarExample: React.FC = () => (
   <IonContent>
     {/*-- Default Searchbar --*/}
     <IonSearchbar></IonSearchbar>
-    
+
     {/*-- Searchbar with cancel button always shown --*/}
     <IonSearchbar showCancelButton="always"></IonSearchbar>
-    
+
     {/*-- Searchbar with cancel button never shown --*/}
     <IonSearchbar showCancelButton="never"></IonSearchbar>
-    
+
     {/*-- Searchbar with cancel button shown on focus --*/}
     <IonSearchbar showCancelButton="focus"></IonSearchbar>
 
@@ -131,6 +137,9 @@ export const SearchbarExample: React.FunctionComponent = () => (
 
     {/*-- Searchbar with telephone type --*/}
     <IonSearchbar type="tel"></IonSearchbar>
+
+    {/*-- Searchbar with numeric inputmode --*/}
+    <IonSearchbar inputmode="numeric"></IonSearchbar>
 
     {/*-- Searchbar disabled  --*/}
     <IonSearchbar disabled={true}></IonSearchbar>
@@ -162,13 +171,13 @@ export const SearchbarExample: React.FunctionComponent = () => (
 <template>
   <!-- Default Searchbar -->
   <ion-searchbar></ion-searchbar>
-  
+
   <!-- Searchbar with cancel button always shown -->
   <ion-searchbar showCancelButton="always"></ion-searchbar>
-  
+
   <!-- Searchbar with cancel button never shown -->
   <ion-searchbar showCancelButton="never"></ion-searchbar>
-  
+
   <!-- Searchbar with cancel button shown on focus -->
   <ion-searchbar showCancelButton="focus"></ion-searchbar>
 
@@ -180,6 +189,9 @@ export const SearchbarExample: React.FunctionComponent = () => (
 
   <!-- Searchbar with telephone type -->
   <ion-searchbar type="tel"></ion-searchbar>
+
+  <!-- Searchbar with numeric inputmode -->
+  <ion-searchbar inputmode="numeric"></ion-searchbar>
 
   <!-- Searchbar disabled -->
   <ion-searchbar disabled="true"></ion-searchbar>
