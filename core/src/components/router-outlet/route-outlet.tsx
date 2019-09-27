@@ -69,8 +69,13 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       (shouldComplete, step, dur) => {
         if (this.ani) {
           this.animationEnabled = false;
+
           this.ani.onFinish(() => {
             this.animationEnabled = true;
+
+            if (this.swipeHandler) {
+              this.swipeHandler.onEnd(shouldComplete);
+            }
           }, { oneTimeCallback: true });
 
           // Account for rounding errors in JS
@@ -93,9 +98,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
           this.ani.progressEnd(shouldComplete, newStepValue, dur);
 
-        }
-        if (this.swipeHandler) {
-          this.swipeHandler.onEnd(shouldComplete);
         }
       }
     );

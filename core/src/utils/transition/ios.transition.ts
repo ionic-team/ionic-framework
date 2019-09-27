@@ -16,7 +16,7 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
 };
 
 const getLargeTitle = (refEl: any) => {
-  return refEl.querySelector('ion-header:not(.header-collapse-ios-inactive) ion-title[size=large]');
+  return refEl.querySelector('ion-header:not(.header-collapse-condense-inactive) ion-title[size=large]');
 };
 
 const getBackButton = (refEl: any, backDirection: boolean) => {
@@ -24,10 +24,11 @@ const getBackButton = (refEl: any, backDirection: boolean) => {
 
   for (const buttons of buttonsList) {
     const parentHeader = buttons.closest('ion-header');
-    const activeHeader = parentHeader && !parentHeader.classList.contains('header-collapse-ios-inactive');
+    const activeHeader = parentHeader && !parentHeader.classList.contains('header-collapse-condense-inactive');
     const backButton = buttons.querySelector('ion-back-button');
+    const buttonsCollapse = buttons.classList.contains('buttons-collapse');
 
-    if (backButton !== null && ((buttons.collapse && activeHeader && backDirection) || !buttons.collapse)) {
+    if (backButton !== null && ((buttonsCollapse && activeHeader && backDirection) || !buttonsCollapse)) {
       return backButton;
     }
   }
@@ -60,26 +61,33 @@ const createLargeTitleTransition = (rootAnimation: IonicAnimation, rtl: boolean,
 };
 
 const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
-  console.log(rtl);
+  const START_TEXT_TRANSLATE = (rtl) ? '7px' : '-7px';
+  const END_TEXT_TRANSLATE = (rtl) ? '-4px' : '4px';
+
+  const ICON_TRANSLATE = (rtl) ? '-4px' : '4px';
+
+  const TEXT_TRANSFORM_ORIGIN_X = (rtl) ? 'right' : 'left';
+  const ICON_TRANSFORM_ORIGIN_X = (rtl) ? 'left' : 'right';
+
   const FORWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` },
-    { offset: 1, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` }
+    { offset: 0, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(8)}) scale(2.1)` },
+    { offset: 1, opacity: 1, transform: `translate(${END_TEXT_TRANSLATE}, ${addSafeArea(-40)}) scale(1)` }
   ];
   const BACKWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` },
+    { offset: 0, opacity: 1, transform: `translate(${END_TEXT_TRANSLATE}, ${addSafeArea(-40)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate(-7px, ${addSafeArea(8)}) scale(2.1)` }
+    { offset: 1, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(8)}) scale(2.1)` }
   ];
   const TEXT_KEYFRAMES = (backDirection) ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
 
   const FORWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate3d(4px, ${addSafeArea(-35)}, 0) scale(0.6)` },
-    { offset: 1, opacity: 1, transform: `translate3d(4px, ${addSafeArea(-40)}, 0) scale(1)` }
+    { offset: 0, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${addSafeArea(-35)}, 0) scale(0.6)` },
+    { offset: 1, opacity: 1, transform: `translate3d(${ICON_TRANSLATE}, ${addSafeArea(-40)}, 0) scale(1)` }
   ];
   const BACKWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate(4px, ${addSafeArea(-40)}) scale(1)` },
-    { offset: 0.2, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` },
-    { offset: 1, opacity: 0, transform: `translate(4px, ${addSafeArea(-35)}) scale(0.6)` }
+    { offset: 0, opacity: 1, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(-40)}) scale(1)` },
+    { offset: 0.2, opacity: 0, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(-35)}) scale(0.6)` },
+    { offset: 1, opacity: 0, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(-35)}) scale(0.6)` }
   ];
   const ICON_KEYFRAMES = (backDirection) ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
 
@@ -105,7 +113,7 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
 
   enteringBackButtonTextAnimation
     .beforeStyles({
-      'transform-origin': 'left center'
+      'transform-origin': `${TEXT_TRANSFORM_ORIGIN_X} center`
     })
     .beforeAddWrite(() => {
       backButtonEl.style.setProperty('display', 'none');
@@ -118,7 +126,7 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
 
   enteringBackButtonIconAnimation
     .beforeStyles({
-      'transform-origin': 'right center'
+      'transform-origin': `${ICON_TRANSFORM_ORIGIN_X} center`
     })
     .keyframes(ICON_KEYFRAMES);
 
@@ -126,16 +134,18 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
 };
 
 const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
-  const TRANSLATE = (rtl) ? '-18px' : '18px';
+  const START_TRANSLATE = (rtl) ? '-18px' : '18px';
+  const TRANSFORM_ORIGIN_X = (rtl) ? 'right' : 'left';
+
   const BACKWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate(${TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
+    { offset: 0, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
     { offset: 0.1, opacity: 0 },
     { offset: 1, opacity: 1, transform: `translate(0, ${addSafeArea(49)}) scale(1)` }
   ];
   const FORWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0.99, transform: `translate(0, ${addSafeArea(49)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate(${TRANSLATE}, ${addSafeArea(0)}) scale(0.5)` }
+    { offset: 1, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.5)` }
   ];
   const KEYFRAMES = (backDirection) ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
 
@@ -150,7 +160,7 @@ const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDire
 
   clonedLargeTitleAnimation
     .beforeStyles({
-      'transform-origin': 'left center',
+      'transform-origin': `${TRANSFORM_ORIGIN_X} center`,
       'height': '46px',
       'display': '',
       'position': 'relative'
@@ -254,7 +264,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       }
     }
 
-    const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-ios');
+    const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-condense');
 
     const { forward, backward } = createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
 
@@ -270,16 +280,16 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       const buttons = Array.from(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
 
       const parentHeader = enteringToolBarEl.closest('ion-header');
-      const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-ios-inactive');
+      const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-condense-inactive');
 
       let buttonsToAnimate;
       if (backDirection) {
         buttonsToAnimate = buttons.filter(button => {
-          const isCollapseButton = (button as any).collapse;
+          const isCollapseButton = button.classList.contains('buttons-collapse');
           return (isCollapseButton && !inactiveHeader) || !isCollapseButton;
         });
       } else {
-        buttonsToAnimate = buttons.filter(button => !(button as any).collapse);
+        buttonsToAnimate = buttons.filter(button => !button.classList.contains('buttons-collapse'));
       }
 
       enteringToolBarButtons.addElement(buttonsToAnimate);
@@ -409,10 +419,10 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         const buttons = leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]');
 
         const parentHeader = leavingToolBarEl.closest('ion-header');
-        const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-ios-inactive');
+        const inactiveHeader = parentHeader && parentHeader.classList.contains('header-collapse-condense-inactive');
 
         const buttonsToAnimate = Array.from(buttons).filter(button => {
-          const isCollapseButton = (button as any).collapse;
+          const isCollapseButton = button.classList.contains('buttons-collapse');
           return (isCollapseButton && !inactiveHeader) || !isCollapseButton;
         });
 
