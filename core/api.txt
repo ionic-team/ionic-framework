@@ -178,6 +178,7 @@ ion-button,css-prop,--ripple-color
 ion-button,css-prop,--transition
 
 ion-buttons,scoped
+ion-buttons,prop,collapse,boolean,false,false,false
 
 ion-card,scoped
 ion-card,prop,button,boolean,false,false,false
@@ -399,6 +400,7 @@ ion-grid,css-prop,--ion-grid-width-xl
 ion-grid,css-prop,--ion-grid-width-xs
 
 ion-header,none
+ion-header,prop,collapse,"condense" | undefined,undefined,false,false
 ion-header,prop,mode,"ios" | "md",undefined,false,false
 ion-header,prop,translucent,boolean,false,false,false
 
@@ -989,7 +991,6 @@ ion-segment,prop,mode,"ios" | "md",undefined,false,false
 ion-segment,prop,scrollable,boolean,false,false,false
 ion-segment,prop,value,null | string | undefined,undefined,false,false
 ion-segment,event,ionChange,SegmentChangeEventDetail,true
-ion-segment,event,ionStyle,StyleEventDetail,true
 
 ion-segment-button,shadow
 ion-segment-button,prop,checked,boolean,false,false,false
@@ -1204,6 +1205,7 @@ ion-thumbnail,css-prop,--size
 
 ion-title,shadow
 ion-title,prop,color,string | undefined,undefined,false,false
+ion-title,prop,size,"large" | "small" | undefined,undefined,false,false
 ion-title,css-prop,--color
 
 ion-toast,shadow

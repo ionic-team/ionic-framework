@@ -10,7 +10,7 @@ It's important to note that ion-header needs to be the one of the three root ele
 
 ## Usage
 
-### Javascript
+### Angular / javascript
 
 ```html
 <ion-header>
@@ -26,7 +26,13 @@ It's important to note that ion-header needs to be the one of the three root ele
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">My Navigation Bar</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content>
 ```
 
 
@@ -45,25 +51,60 @@ export const HeaderExample: React.FC = () => (
         </IonButtons>
         <IonTitle>My Navigation Bar</IonTitle>
       </IonToolbar>
-
+    
       <IonToolbar>
         <IonTitle>Subheader</IonTitle>
       </IonToolbar>
     </IonHeader>
-
-    <IonContent />
+    
+    <IonContent>
+      <IonHeader collapse="condense">
+        <IonToolbar>
+          <IonTitle size="large">My Navigation Bar</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+    </IonContent>
   </>
 );
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>My Navigation Bar</ion-title>
+    </ion-toolbar>
+  
+    <ion-toolbar>
+      <ion-title>Subheader</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">My Navigation Bar</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-content>
+</template>
 ```
 
 
 
 ## Properties
 
-| Property      | Attribute     | Description                                                                                                                                                                                                                                                                                                                           | Type            | Default     |
-| ------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ----------- |
-| `mode`        | `mode`        | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                     | `"ios" \| "md"` | `undefined` |
-| `translucent` | `translucent` | If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. | `boolean`       | `false`     |
+| Property      | Attribute     | Description                                                                                                                                                                                                                                                                                                                           | Type                      | Default     |
+| ------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------- |
+| `collapse`    | `collapse`    | Describes the scroll effect that will be applied to the header `condense` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)                                                                                                                | `"condense" \| undefined` | `undefined` |
+| `mode`        | `mode`        | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                     | `"ios" \| "md"`           | `undefined` |
+| `translucent` | `translucent` | If `true`, the header will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).  Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. | `boolean`                 | `false`     |
 
 
 ----------------------------------------------

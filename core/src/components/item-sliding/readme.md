@@ -12,7 +12,7 @@ By default, the buttons are placed on the `"end"` side. This means that options 
 
 By default if an icon is placed with text in the [item option](../item-option), it will display the icon on top of the text, but the icon slot can be changed to any of the following to position it in the option.
 
-| Slot        | description                                                              |
+| Slot        | Description                                                              |
 | ----------- | ------------------------------------------------------------------------ |
 | `start`     | In LTR, start is the left side of the button, and in RTL it is the right |
 | `top`       | The icon is above the text                                               |

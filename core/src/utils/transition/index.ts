@@ -7,7 +7,7 @@ const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
 
 // TODO: Remove when removing AnimationBuilder
-export type IonicAnimationInterface = (navEl: HTMLElement, opts: TransitionOptions) => IonicAnimation;
+export type IonicAnimationInterface = ((navEl: HTMLElement, opts: TransitionOptions) => IonicAnimation) | ((navEl: HTMLElement, opts: TransitionOptions) => Promise<IonicAnimation>);
 
 export const transition = (opts: TransitionOptions): Promise<TransitionResult> => {
   return new Promise((resolve, reject) => {
@@ -88,7 +88,7 @@ const animation = async (animationBuilder: IonicAnimationInterface | AnimationBu
     const mod = await import('../animation/old-animation');
     trans = await mod.create(animationBuilder as AnimationBuilder, opts.baseEl, opts);
   } catch (err) {
-    trans = (animationBuilder as IonicAnimationInterface)(opts.baseEl, opts);
+    trans = (animationBuilder as IonicAnimationInterface)(opts.baseEl, opts) as IonicAnimation;
   }
 
   fireWillEvents(opts.enteringEl, opts.leavingEl);

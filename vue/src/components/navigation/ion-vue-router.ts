@@ -122,7 +122,8 @@ function transition(parent: Vue, props: Props, leavingEl: HTMLElement) {
   }
 
   // Add the proper Ionic classes, important for smooth transitions
-  enteringEl.classList.add('ion-page', 'ion-page-invisible');
+  enteringEl.classList.add('ion-page');
+  enteringEl.classList.add('ion-page-invisible');
 
   // Commit to the transition as soon as the Ionic Router Outlet is ready
   return ionRouterOutlet.componentOnReady().then((el: HTMLIonRouterOutletElement) => {

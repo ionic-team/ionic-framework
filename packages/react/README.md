@@ -45,6 +45,7 @@ To open your application to build/emulate in Android Studio or Xcode run the `op
 ionic capacitor open <android|ios>
 ```
 
+
 ## Related
 
 * [Ionic Documentation](https://ionicframework.com/docs/)

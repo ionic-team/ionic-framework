@@ -1,3 +1,5 @@
+import { camelToDashCase } from './case';
+
 export const attachEventProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
   // add any classes in className to the class list
   const className = getClassName(node.classList, newProps, oldProps);
@@ -6,7 +8,7 @@ export const attachEventProps = (node: HTMLElement, newProps: any, oldProps: any
   }
 
   Object.keys(newProps).forEach(name => {
-    if (name === 'children' || name === 'style' || name === 'ref' || name === 'className') {
+    if (name === 'children' || name === 'style' || name === 'ref' || name === 'class' || name === 'className' || name === 'forwardedRef') {
       return;
     }
     if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
@@ -17,7 +19,11 @@ export const attachEventProps = (node: HTMLElement, newProps: any, oldProps: any
         syncEvent(node, eventNameLc, newProps[name]);
       }
     } else {
-      (node as any)[name] = newProps[name];
+      if (typeof newProps[name] === 'object') {
+        (node as any)[name] = newProps[name];
+      } else {
+        node.setAttribute(camelToDashCase(name), newProps[name]);
+      }
     }
   });
 };
