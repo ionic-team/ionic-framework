@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonLabel, IonItem, IonInput, IonToggle, IonCheckbox, IonContent } from '@ionic/react';
 
-export const LabelExample: React.FunctionComponent = () => (
+export const LabelExample: React.FC = () => (
   <IonContent>
     {/*-- Default Label --*/}
     <IonLabel>Label</IonLabel><br />
@@ -20,7 +20,7 @@ export const LabelExample: React.FunctionComponent = () => (
     </IonItem>
 
     <IonItem>
-      <IonLabel text-wrap>
+      <IonLabel class="ion-text-wrap">
         Multi-line text that should wrap when it is too long
         to fit on one line in the item.
       </IonLabel>

@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonChip, IonLabel, IonIcon, IonAvatar, IonContent } from '@ionic/react';
 
-export const ChipExample: React.FunctionComponent = () => (
+export const ChipExample: React.FC = () => (
   <IonContent>
     <IonChip>
       <IonLabel>Default</IonLabel>

@@ -19,7 +19,8 @@
   color: var(--color);
 }
 
-:host(.title-ios) {
+:host(.title-ios.title-default),
+:host(.title-ios.title-large) {
   @include position(0, null, null, 0);
   @include padding(0, 90px, 0);
 
@@ -32,8 +33,6 @@
 
   font-size: 17px;
   font-weight: 600;
-
-  letter-spacing: -.03em;
 
   text-align: center;
   box-sizing: border-box;
@@ -64,4 +63,53 @@
 
   overflow: hidden;
   pointer-events: auto;
+}
+
+
+// Small Title
+// --------------------------------------------------
+
+:host(.title-small) .toolbar-title {
+  white-space: normal;
+}
+
+:host(.title-ios.title-small) {
+  @include padding(6px, 9px, 16px, 9px);
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 13px;
+
+  text-align: center;
+}
+
+:host(.title-md.title-small) {
+  width: 100%;
+  height: 100%;
+
+  font-size: 15px;
+
+  font-weight: normal;
+}
+
+
+// Title: Large
+// --------------------------------------------------
+
+:host(.title-ios.title-large) {
+  @include padding(0, 16px);
+
+  bottom: 0;
+
+  align-items: flex-end;
+
+  min-width: 100%;
+
+  padding-bottom: 6px;
+
+  font-size: 34px;
+  font-weight: 700;
+
+  text-align: start;
 }

@@ -98,7 +98,7 @@ import React from 'react';
 
 import { IonButton, IonIcon, IonContent } from '@ionic/react';
 
-export const ButtonExample: React.FunctionComponent = () => (
+export const ButtonExample: React.FC = () => (
   <IonContent>
     {/*-- Default --*/}
     <IonButton>Default</IonButton>
