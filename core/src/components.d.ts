@@ -3672,10 +3672,10 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonAlertController extends JSXBase.HTMLAttributes<HTMLIonAlertControllerElement> {}
-  interface IonApp extends JSXBase.HTMLAttributes<HTMLIonAppElement> {}
-  interface IonAvatar extends JSXBase.HTMLAttributes<HTMLIonAvatarElement> {}
-  interface IonBackButton extends JSXBase.HTMLAttributes<HTMLIonBackButtonElement> {
+  interface IonAlertController {}
+  interface IonApp {}
+  interface IonAvatar {}
+  interface IonBackButton {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -6204,7 +6204,6 @@ declare module "@stencil/core" {
       'ion-action-sheet-controller': LocalJSX.IonActionSheetController & JSXBase.HTMLAttributes<HTMLIonActionSheetControllerElement>;
       'ion-alert': LocalJSX.IonAlert & JSXBase.HTMLAttributes<HTMLIonAlertElement>;
       'ion-alert-controller': LocalJSX.IonAlertController & JSXBase.HTMLAttributes<HTMLIonAlertControllerElement>;
-      'ion-anchor': LocalJSX.IonAnchor & JSXBase.HTMLAttributes<HTMLIonAnchorElement>;
       'ion-app': LocalJSX.IonApp & JSXBase.HTMLAttributes<HTMLIonAppElement>;
       'ion-avatar': LocalJSX.IonAvatar & JSXBase.HTMLAttributes<HTMLIonAvatarElement>;
       'ion-back-button': LocalJSX.IonBackButton & JSXBase.HTMLAttributes<HTMLIonBackButtonElement>;
