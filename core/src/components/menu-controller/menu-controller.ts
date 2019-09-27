@@ -4,8 +4,7 @@ import { AnimationBuilder, IonicAnimation, MenuI } from '../../interface';
 import { menuController } from '../../utils/menu-controller';
 
 @Component({
-  tag: 'ion-menu-controller',
-  styleUrl: 'menu-controller.scss'
+  tag: 'ion-menu-controller'
 })
 export class MenuController {
 
