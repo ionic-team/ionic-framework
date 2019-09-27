@@ -2,9 +2,9 @@ import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
 
-import { ReactProps } from './ReactProps';
+import { IonicReactProps } from './IonicReactProps';
 
-export const IonPage = /*@__PURE__*/(() => class IonPageInternal extends React.Component<React.HTMLAttributes<HTMLElement> & ReactProps> {
+export const IonPage = /*@__PURE__*/(() => class IonPageInternal extends React.Component<React.HTMLAttributes<HTMLElement> & IonicReactProps> {
   context!: React.ContextType<typeof NavContext>;
   ref = React.createRef<HTMLDivElement>();
 

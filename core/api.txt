@@ -400,7 +400,7 @@ ion-grid,css-prop,--ion-grid-width-xl
 ion-grid,css-prop,--ion-grid-width-xs
 
 ion-header,none
-ion-header,prop,collapse,boolean,false,false,false
+ion-header,prop,collapse,"condense" | undefined,undefined,false,false
 ion-header,prop,mode,"ios" | "md",undefined,false,false
 ion-header,prop,translucent,boolean,false,false,false
 
@@ -735,16 +735,6 @@ ion-nav-link,none
 ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
 ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-
-ion-nav-pop,none
-
-ion-nav-push,none
-ion-nav-push,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav-push,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
-
-ion-nav-set-root,none
-ion-nav-set-root,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav-set-root,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 
 ion-note,shadow
 ion-note,prop,color,string | undefined,undefined,false,false

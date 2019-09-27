@@ -4,7 +4,7 @@ import { Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { StackManager } from './StackManager';
-import { generateUniqueId } from '../utils';
+import { generateId } from '../utils';
 import { LocationHistory } from '../utils/LocationHistory'
 import { ViewItem } from './ViewItem';
 import { ViewStack } from './ViewStacks';
@@ -44,7 +44,7 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
 
     this.locationHistory.add({
       hash: window.location.hash,
-      key: generateUniqueId(6),
+      key: generateId(),
       pathname: window.location.pathname,
       search: window.location.search,
       state: {}
