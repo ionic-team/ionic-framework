@@ -74,16 +74,16 @@ const getClasses = (element: HTMLElement) => {
 
 const setClasses = (element: HTMLElement, classes: string[]) => {
   const classList = element.classList;
-
-  classList.remove(
+  [
     'ion-valid',
     'ion-invalid',
     'ion-touched',
     'ion-untouched',
     'ion-dirty',
     'ion-pristine'
-  );
-  classList.add(...classes);
+  ].forEach(c => classList.remove(c));
+
+  classes.forEach(c => classList.add(c));
 };
 
 const startsWith = (input: string, search: string): boolean => {

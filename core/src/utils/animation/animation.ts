@@ -529,8 +529,8 @@ export const createAnimation = () => {
     elements.forEach((el: HTMLElement) => {
       const elementClassList = el.classList;
 
-      elementClassList.add(...addClasses);
-      elementClassList.remove(...removeClasses);
+      addClasses.forEach(c => elementClassList.add(c));
+      removeClasses.forEach(c => elementClassList.remove(c));
 
       for (const property in styles) {
         if (styles.hasOwnProperty(property)) {
@@ -578,8 +578,8 @@ export const createAnimation = () => {
     elements.forEach((el: HTMLElement) => {
       const elementClassList = el.classList;
 
-      elementClassList.add(...addClasses);
-      elementClassList.remove(...removeClasses);
+      addClasses.forEach(c => elementClassList.add(c));
+      removeClasses.forEach(c => elementClassList.remove(c));
 
       for (const property in styles) {
         if (styles.hasOwnProperty(property)) {
