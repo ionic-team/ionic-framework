@@ -253,24 +253,6 @@ export namespace Components {
     */
     'getTop': () => Promise<HTMLIonAlertElement | undefined>;
   }
-  interface IonAnchor {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-    */
-    'href': string | undefined;
-    /**
-    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
-    */
-    'rel': string | undefined;
-    /**
-    * When using a router, it specifies the transition direction when navigating to another page using `href`.
-    */
-    'routerDirection': RouterDirection;
-  }
   interface IonApp {}
   interface IonAvatar {}
   interface IonBackButton {
@@ -2908,12 +2890,6 @@ declare global {
     new (): HTMLIonAlertControllerElement;
   };
 
-  interface HTMLIonAnchorElement extends Components.IonAnchor, HTMLStencilElement {}
-  var HTMLIonAnchorElement: {
-    prototype: HTMLIonAnchorElement;
-    new (): HTMLIonAnchorElement;
-  };
-
   interface HTMLIonAppElement extends Components.IonApp, HTMLStencilElement {}
   var HTMLIonAppElement: {
     prototype: HTMLIonAppElement;
@@ -3464,7 +3440,6 @@ declare global {
     'ion-action-sheet-controller': HTMLIonActionSheetControllerElement;
     'ion-alert': HTMLIonAlertElement;
     'ion-alert-controller': HTMLIonAlertControllerElement;
-    'ion-anchor': HTMLIonAnchorElement;
     'ion-app': HTMLIonAppElement;
     'ion-avatar': HTMLIonAvatarElement;
     'ion-back-button': HTMLIonBackButtonElement;
@@ -3694,24 +3669,6 @@ declare namespace LocalJSX {
     'translucent'?: boolean;
   }
   interface IonAlertController {}
-  interface IonAnchor {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-    */
-    'href'?: string | undefined;
-    /**
-    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
-    */
-    'rel'?: string | undefined;
-    /**
-    * When using a router, it specifies the transition direction when navigating to another page using `href`.
-    */
-    'routerDirection'?: RouterDirection;
-  }
   interface IonApp {}
   interface IonAvatar {}
   interface IonBackButton {
@@ -6135,7 +6092,6 @@ declare namespace LocalJSX {
     'ion-action-sheet-controller': IonActionSheetController;
     'ion-alert': IonAlert;
     'ion-alert-controller': IonAlertController;
-    'ion-anchor': IonAnchor;
     'ion-app': IonApp;
     'ion-avatar': IonAvatar;
     'ion-back-button': IonBackButton;
@@ -6240,7 +6196,6 @@ declare module "@stencil/core" {
       'ion-action-sheet-controller': LocalJSX.IonActionSheetController & JSXBase.HTMLAttributes<HTMLIonActionSheetControllerElement>;
       'ion-alert': LocalJSX.IonAlert & JSXBase.HTMLAttributes<HTMLIonAlertElement>;
       'ion-alert-controller': LocalJSX.IonAlertController & JSXBase.HTMLAttributes<HTMLIonAlertControllerElement>;
-      'ion-anchor': LocalJSX.IonAnchor & JSXBase.HTMLAttributes<HTMLIonAnchorElement>;
       'ion-app': LocalJSX.IonApp & JSXBase.HTMLAttributes<HTMLIonAppElement>;
       'ion-avatar': LocalJSX.IonAvatar & JSXBase.HTMLAttributes<HTMLIonAvatarElement>;
       'ion-back-button': LocalJSX.IonBackButton & JSXBase.HTMLAttributes<HTMLIonBackButtonElement>;
