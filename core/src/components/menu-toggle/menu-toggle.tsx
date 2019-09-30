@@ -1,6 +1,9 @@
 import { Component, ComponentInterface, Host, Listen, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import { menuController } from '../../utils/menu-controller';
+
+import { updateVisibility } from './menu-toggle-util';
 
 @Component({
   tag: 'ion-menu-toggle',
@@ -29,33 +32,20 @@ export class MenuToggle implements ComponentInterface {
    */
   @Prop() autoHide = true;
 
-  componentDidLoad() {
-    return this.updateVisibility();
+  connectedCallback() {
+    this.visibilityChanged();
   }
 
   @Listen('ionMenuChange', { target: 'body' })
   @Listen('ionSplitPaneVisible', { target: 'body' })
-  async updateVisibility() {
-    const menuCtrl = await getMenuController(document);
-    if (menuCtrl) {
-      const menu = await menuCtrl.get(this.menu);
-      if (menu && await menu.isActive()) {
-        this.visible = true;
-        return;
-      }
-    }
-    this.visible = false;
+  async visibilityChanged() {
+    this.visible = await updateVisibility(this.menu);
   }
 
-  private onClick = async () => {
-    const menuCtrl = await getMenuController(document);
-    if (menuCtrl) {
-      const menu = await menuCtrl.get(this.menu);
-      if (menu) {
-        menuCtrl.toggle(this.menu);
-      }
-    }
+  private onClick = () => {
+    return menuController.toggle(this.menu);
   }
+
   render() {
     const mode = getIonMode(this);
     const hidden = this.autoHide && !this.visible;
@@ -73,12 +63,4 @@ export class MenuToggle implements ComponentInterface {
       </Host>
     );
   }
-}
-
-function getMenuController(doc: Document): Promise<HTMLIonMenuControllerElement | undefined> {
-  const menuControllerElement = doc.querySelector('ion-menu-controller');
-  if (!menuControllerElement) {
-    return Promise.resolve(undefined);
-  }
-  return menuControllerElement.componentOnReady();
 }

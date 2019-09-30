@@ -77,6 +77,13 @@ ion-icon {
   pointer-events: none;
 }
 
+// Menu Button: Hidden
+// --------------------------------------------------
+
+:host(.menu-button-hidden) {
+  display: none;
+}
+
 // Menu Button: Disabled
 // --------------------------------------------------
 

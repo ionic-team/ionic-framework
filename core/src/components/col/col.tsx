@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { matchBreakpoint } from '../../utils/media';
@@ -244,23 +244,23 @@ export class Col implements ComponentInterface {
     return this.calculatePosition('push', isRTL ? 'right' : 'left');
   }
 
-  hostData() {
+  render() {
     const isRTL = document.dir === 'rtl';
     const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true
-      },
-      style: {
-        ...this.calculateOffset(isRTL),
-        ...this.calculatePull(isRTL),
-        ...this.calculatePush(isRTL),
-        ...this.calculateSize(),
-      }
-    };
-  }
-
-  render() {
-    return <slot></slot>;
+    return (
+      <Host
+        class={{
+          [mode]: true
+        }}
+        style={{
+          ...this.calculateOffset(isRTL),
+          ...this.calculatePull(isRTL),
+          ...this.calculatePush(isRTL),
+          ...this.calculateSize(),
+        }}
+      >
+        <slot></slot>
+      </Host>
+    );
   }
 }

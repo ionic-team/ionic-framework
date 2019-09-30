@@ -1,12 +1,23 @@
-import { Component, ComponentInterface, Method } from '@stencil/core';
+import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 
 import { ActionSheetOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
+/**
+ * @deprecated Use the `actionSheetController` exported from core.
+ */
 @Component({
   tag: 'ion-action-sheet-controller'
 })
 export class ActionSheetController implements ComponentInterface, OverlayController {
+
+  constructor() {
+    if (Build.isDev) {
+      console.warn(`[DEPRECATED][ion-action-sheet-controller] Use the actionSheetController export from @ionic/core:
+  import { actionSheetController } from '@ionic/core';
+  const actionSheet = await actionSheetController.create({...});`);
+    }
+  }
 
   /**
    * Create an action sheet overlay with action sheet options.

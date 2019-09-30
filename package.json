@@ -1,8 +1,6 @@
 {
-  "name": "@ionic/source",
-  "version": "0.0.1",
-  "description": "Ionic mono-repo root package.json, used mainly to execute build scripts. This package is not published to npm.",
   "private": true,
+  "description": "Ionic mono-repo root package.json, used mainly to execute build scripts. This package is not published to npm.",
   "scripts": {
     "build": "node .scripts/build.js",
     "release.dev": "node .scripts/release-dev.js",
@@ -16,11 +14,13 @@
     "execa": "^0.10.0",
     "fs-extra": "^7.0.0",
     "inquirer": "^6.0.0",
+    "lerna": "^3.16.2",
     "listr": "^0.14.0",
+    "rimraf": "^2.6.3",
     "semver": "^5.5.0",
     "turbocolor": "^2.4.1"
   },
-  "dependencies": {
-    "node-sass": "^4.9.0"
+  "engines": {
+    "node": ">= 10"
   }
 }

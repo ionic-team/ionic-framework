@@ -17,19 +17,6 @@ In case it's desired to keep `ion-menu-toggle` always visible, the `autoHide` pr
 | `menu`     | `menu`      | Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle.  If this property is not used, `ion-menu-toggle` will toggle the first menu that is active. | `string \| undefined` | `undefined` |
 
 
-## Dependencies
-
-### Used by
-
- - [ion-menu-button](../menu-button)
-
-### Graph
-```mermaid
-graph TD;
-  ion-menu-button --> ion-menu-toggle
-  style ion-menu-toggle fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

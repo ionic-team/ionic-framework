@@ -1,30 +1,30 @@
-import { Animation } from '../../../interface';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Modal Enter Animation
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new AnimationC();
+export const iosEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
+  const baseAnimation = createAnimation();
+  const backdropAnimation = createAnimation();
+  const wrapperAnimation = createAnimation();
 
-  const backdropAnimation = new AnimationC();
-  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
+  backdropAnimation
+    .addElement(baseEl.querySelector('ion-backdrop'))
+    .fromTo('opacity', 0.01, 0.4);
 
-  const wrapperAnimation = new AnimationC();
-  wrapperAnimation.addElement(baseEl.querySelector('.modal-wrapper'));
+  wrapperAnimation
+    .addElement(baseEl.querySelector('.modal-wrapper'))
+    .beforeStyles({ 'opacity': 1 })
+    .fromTo('transform', 'translateY(100%)', 'translateY(0%)');
 
-  wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', '100%', '0%');
-
-  backdropAnimation.fromTo('opacity', 0.01, 0.4);
-
-  return Promise.resolve(baseAnimation
+  return baseAnimation
     .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(400)
     .beforeAddClass('show-modal')
-    .add(backdropAnimation)
-    .add(wrapperAnimation));
-}
+    .addAnimation([backdropAnimation, wrapperAnimation]);
+};
 
 /**
  * Animations for modals

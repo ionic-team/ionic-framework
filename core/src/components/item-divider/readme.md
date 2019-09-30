@@ -1,6 +1,6 @@
 # ion-item-divider
 
-Item Dividers are block elements that can be used to separate items in a list. They are similar to list headers, but instead of being placed at the top of a list, they should go in between groups of like items.
+Item Dividers are block elements that can be used to separate items in a list. They are similar to list headers, but instead of being placed at the top of a list, they should go in between groups of items.
 
 <!-- Auto Generated Below -->
 
@@ -57,7 +57,7 @@ Item Dividers are block elements that can be used to separate items in a list. T
 import React from 'react';
 import { IonItemDivider, IonLabel, IonList, IonItem, IonContent } from '@ionic/react';
 
-export const ItemDividerExample: React.FunctionComponent = () => (
+export const ItemDividerExample: React.FC = () => (
   <IonContent>
     <IonItemDivider>
       <IonLabel>

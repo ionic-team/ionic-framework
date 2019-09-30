@@ -24,9 +24,11 @@
 // iOS Translucent Loading
 // -----------------------------------------
 
-:host(.loading-translucent) .loading-wrapper {
-  background-color: $loading-ios-translucent-background-color;
-  backdrop-filter: $loading-ios-translucent-filter;
+@supports (backdrop-filter: blur(0)) {
+  :host(.loading-translucent) .loading-wrapper {
+    background-color: $loading-ios-translucent-background-color;
+    backdrop-filter: $loading-ios-translucent-filter;
+  }
 }
 
 

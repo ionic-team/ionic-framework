@@ -1,12 +1,10 @@
 ```javascript
 async function presentPopover() {
-  const popoverController = document.querySelector('ion-popover-controller');
-  await popoverController.componentOnReady();
-
-  const popoverElement = await popoverController.create({
+  const popoverElement = Object.assing(document.createElement('ion-popover'), {
     component: 'profile-page',
     event: event
   });
+  document.body.appendChild(popoverElement);
   return await popoverElement.present();
 }
 ```

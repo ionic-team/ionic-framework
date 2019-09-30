@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
@@ -23,19 +23,19 @@ export class CardSubtitle implements ComponentInterface {
    */
   @Prop() color?: Color;
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [mode]: true
-      },
-      'role': 'heading',
-      'aria-level': '3'
-    };
-  }
-
   render() {
-    return <slot></slot>;
+    const mode = getIonMode(this);
+    return (
+      <Host
+        role="heading"
+        aria-level="3"
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+        }}
+      >
+        <slot></slot>
+      </Host>
+    );
   }
 }

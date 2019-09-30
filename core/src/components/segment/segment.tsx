@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
@@ -16,6 +16,8 @@ import { createColorClasses } from '../../utils/theme';
   scoped: true
 })
 export class Segment implements ComponentInterface {
+
+  private didInit = false;
 
   @Element() el!: HTMLElement;
 
@@ -43,8 +45,10 @@ export class Segment implements ComponentInterface {
 
   @Watch('value')
   protected valueChanged(value: string | undefined) {
-    this.updateButtons();
-    this.ionChange.emit({ value });
+    if (this.didInit) {
+      this.updateButtons();
+      this.ionChange.emit({ value });
+    }
   }
 
   /**
@@ -54,6 +58,7 @@ export class Segment implements ComponentInterface {
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
@@ -63,18 +68,19 @@ export class Segment implements ComponentInterface {
     this.value = selectedButton.value;
   }
 
-  componentWillLoad() {
-    this.emitStyle();
-  }
-
-  componentDidLoad() {
-    if (this.value == null) {
+  connectedCallback() {
+    if (this.value === undefined) {
       const checked = this.getButtons().find(b => b.checked);
       if (checked) {
         this.value = checked.value;
       }
     }
+    this.emitStyle();
+  }
+
+  componentDidLoad() {
     this.updateButtons();
+    this.didInit = true;
   }
 
   private emitStyle() {
@@ -94,15 +100,18 @@ export class Segment implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [mode]: true,
-        'segment-disabled': this.disabled,
-        'segment-scrollable': this.scrollable
-      }
-    };
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'segment-disabled': this.disabled,
+          'segment-scrollable': this.scrollable
+        }}
+      >
+      </Host>
+    );
   }
 }

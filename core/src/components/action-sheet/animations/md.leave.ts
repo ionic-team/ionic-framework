@@ -1,27 +1,25 @@
-import { Animation } from '../../../interface';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * MD Action Sheet Leave Animation
  */
-export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export const mdLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
+  const baseAnimation = createAnimation();
+  const backdropAnimation = createAnimation();
+  const wrapperAnimation = createAnimation();
 
-  const baseAnimation = new AnimationC();
+  backdropAnimation
+    .addElement(baseEl.querySelector('ion-backdrop'))
+    .fromTo('opacity', 0.32, 0);
 
-  const backdropAnimation = new AnimationC();
-  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
+  wrapperAnimation
+    .addElement(baseEl.querySelector('.action-sheet-wrapper'))
+    .fromTo('transform', 'translateY(0%)', 'translateY(100%)');
 
-  const wrapperAnimation = new AnimationC();
-  wrapperAnimation.addElement(baseEl.querySelector('.action-sheet-wrapper'));
-
-  backdropAnimation.fromTo('opacity', 0.32, 0);
-  wrapperAnimation.fromTo('translateY', '0%', '100%');
-
-  const ani = baseAnimation
+  return baseAnimation
     .addElement(baseEl)
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(450)
-    .add(backdropAnimation)
-    .add(wrapperAnimation);
-
-  return Promise.resolve(ani);
-}
+    .addAnimation([backdropAnimation, wrapperAnimation]);
+};

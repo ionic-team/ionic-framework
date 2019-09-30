@@ -128,13 +128,36 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    // Check for multiple inputs to change the position to relative
-    const inputs = this.el.querySelectorAll('ion-select, ion-datetime');
-    this.multipleInputs = inputs.length > 1 ? true : false;
+    // The following elements have a clickable cover that is relative to the entire item
+    const covers = this.el.querySelectorAll('ion-checkbox, ion-datetime, ion-select, ion-radio');
+
+    // The following elements can accept focus alongside the previous elements
+    // therefore if these elements are also a child of item, we don't want the
+    // input cover on top of those interfering with their clicks
+    const inputs = this.el.querySelectorAll('ion-input, ion-range, ion-searchbar, ion-segment, ion-textarea, ion-toggle');
+
+    // Check for multiple inputs to change the position of the input cover to relative
+    // for all of the covered inputs above
+    this.multipleInputs = covers.length + inputs.length > 1;
   }
 
+  // If the item contains an input including a checkbox, datetime, select, or radio
+  // then the item will have a clickable input cover that covers the item
+  // that should get the hover, focused and activated states UNLESS it has multiple
+  // inputs, then those need to individually get each click
+  private hasCover(): boolean {
+    const inputs = this.el.querySelectorAll('ion-checkbox, ion-datetime, ion-select, ion-radio');
+    return inputs.length === 1 && !this.multipleInputs;
+  }
+
+  // If the item has an href or button property it will render a native
+  // anchor or button that is clickable
   private isClickable(): boolean {
     return (this.href !== undefined || this.button);
+  }
+
+  private canActivate(): boolean {
+    return (this.isClickable() || this.hasCover());
   }
 
   render() {
@@ -142,6 +165,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const childStyles = {};
     const mode = getIonMode(this);
     const clickable = this.isClickable();
+    const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -168,7 +192,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           'item-disabled': disabled,
           'in-list': hostContext('ion-list', this.el),
           'item-multiple-inputs': this.multipleInputs,
-          'ion-activatable': this.isClickable(),
+          'ion-activatable': canActivate,
           'ion-focusable': true,
         }}
       >
@@ -187,7 +211,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
               {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
               <div class="item-inner-highlight"></div>
             </div>
-            {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
           </TagType>
           <div class="item-highlight"></div>
       </Host>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Router Link - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Router Link - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <p>
+        <a href="#">A</a>
+      </p>
+
+      <p>
+        <ion-router-link href="#">Router Link</ion-router-link>
+      </p>
+
+      <p>
+        <ion-router-link href="https://ionicframework.com" rel="external" target="_blank" style="text-decoration: underline">External Router Link</ion-router-link>
+      </p>
+
+      <p>
+        <ion-router-link href="#" download="yes" class="custom">Custom Router Link</ion-router-link>
+      </p>
+
+      <p>
+        <ion-router-link color="dark" href="#">Dark Router Link</ion-router-link>
+      </p>
+
+      <p>
+        <ion-router-link color="danger" href="#">Danger Router Link</ion-router-link>
+      </p>
+
+      <p>
+        <ion-router-link id="toggleColor" color="tertiary" href="#">Dynamic Color</ion-router-link>
+      </p>
+
+      <ion-button onclick="toggleColor()">Toggle Color</ion-button>
+    </ion-content>
+
+
+  </ion-app>
+
+  <script>
+    const el = document.querySelector('#toggleColor');
+
+    function toggleColor() {
+      const prev = el.getAttribute('color');
+      el.setAttribute('color', prev === 'secondary' ? 'tertiary' : 'secondary');
+      el.innerHTML = prev === 'secondary' ? 'Tertiary Router Link' : 'Secondary Router Link';
+    }
+  </script>
+
+  <style>
+    .custom {
+      font-family: cursive;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 5px;
+      text-decoration: dotted underline;
+      text-transform: uppercase;
+      color: magenta;
+    }
+  </style>
+</body>
+
+</html>

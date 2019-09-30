@@ -5,8 +5,6 @@ test('searchbar: basic', async () => {
     url: '/src/components/searchbar/test/basic?ionic:_testing=true'
   });
 
-  await page.waitFor(250);
-
   const compares = [];
   compares.push(await page.compareScreenshot());
 
@@ -38,8 +36,6 @@ test('searchbar:rtl: basic', async () => {
   const page = await newE2EPage({
     url: '/src/components/searchbar/test/basic?ionic:_testing=true&rtl=true'
   });
-
-  await page.waitFor(250);
 
   const compares = [];
   compares.push(await page.compareScreenshot());

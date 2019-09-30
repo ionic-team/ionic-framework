@@ -12,11 +12,62 @@
   --border-width: 0;
 }
 
-.header-translucent-ios {
-  backdrop-filter: $header-ios-translucent-filter;
+@supports (backdrop-filter: blur(0)) {
+  .header-translucent-ios {
+    backdrop-filter: $header-ios-translucent-filter;
+  }
+  
+  .header-translucent-ios ion-toolbar {
+    --opacity: .8;
+    --backdrop-filter: #{$header-ios-translucent-filter};
+  }
 }
 
-.header-translucent-ios ion-toolbar {
-  --opacity: .8;
-  --backdrop-filter: #{$header-ios-translucent-filter};
+// iOS Header - Collapse
+// --------------------------------------------------
+.header-collapse-condense {
+  z-index: 9;
+}
+
+.header-collapse-condense ion-toolbar {
+  position: sticky;
+  top: 0;
+}
+
+.header-collapse-condense ion-toolbar:first-child {
+  padding-top: 7px;
+
+  z-index: 1;
+}
+
+.header-collapse-condense ion-toolbar {
+  z-index: 0;
+}
+
+.header-collapse-condense ion-toolbar ion-searchbar {
+  height: 48px;
+
+  padding-top: 0px;
+  padding-bottom: 13px;
+}
+
+ion-toolbar.in-toolbar ion-title,
+ion-toolbar.in-toolbar ion-buttons {
+  transition: all 0.2s ease-in-out;
+}
+
+/**
+ * There is a bug in Safari where animating the opacity
+ * on an element in a scrollable container while scrolling
+ * causes the scroll position to jump to the top
+ */
+.header-collapse-condense ion-toolbar ion-title,
+.header-collapse-condense ion-toolbar ion-buttons {
+  transition: none;
+}
+
+.header-collapse-condense-inactive ion-toolbar.in-toolbar ion-title,
+.header-collapse-condense-inactive ion-toolbar.in-toolbar ion-buttons.buttons-collapse {
+  opacity: 0;
+  pointer-events: none;
 }

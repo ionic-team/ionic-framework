@@ -1,28 +1,28 @@
-import { Animation } from '../../../interface';
+import { IonicAnimation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Modal Leave Animation
  */
-export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new AnimationC();
-
-  const backdropAnimation = new AnimationC();
-  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
-
-  const wrapperAnimation = new AnimationC();
+export const iosLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
+  const baseAnimation = createAnimation();
+  const backdropAnimation = createAnimation();
+  const wrapperAnimation = createAnimation();
   const wrapperEl = baseEl.querySelector('.modal-wrapper');
-  wrapperAnimation.addElement(wrapperEl);
   const wrapperElRect = wrapperEl!.getBoundingClientRect();
 
-  wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', '0%', `${(baseEl.ownerDocument as any).defaultView.innerHeight - wrapperElRect.top}px`);
+  backdropAnimation
+    .addElement(baseEl.querySelector('ion-backdrop'))
+    .fromTo('opacity', 0.4, 0.0);
 
-  backdropAnimation.fromTo('opacity', 0.4, 0.0);
+  wrapperAnimation
+    .addElement(wrapperEl)
+    .beforeStyles({ 'opacity': 1 })
+    .fromTo('transform', 'translateY(0%)', `translateY(${(baseEl.ownerDocument as any).defaultView.innerHeight - wrapperElRect.top}px)`);
 
-  return Promise.resolve(baseAnimation
+  return baseAnimation
     .addElement(baseEl)
     .easing('ease-out')
     .duration(250)
-    .add(backdropAnimation)
-    .add(wrapperAnimation));
-}
+    .addAnimation([backdropAnimation, wrapperAnimation]);
+};

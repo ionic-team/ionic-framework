@@ -72,11 +72,9 @@ ion-alert-controller,method,getTop,getTop() => Promise<HTMLIonAlertElement | und
 
 ion-anchor,shadow
 ion-anchor,prop,color,string | undefined,undefined,false,false
-ion-anchor,prop,download,string | undefined,undefined,false,false
 ion-anchor,prop,href,string | undefined,undefined,false,false
 ion-anchor,prop,rel,string | undefined,undefined,false,false
 ion-anchor,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-ion-anchor,prop,target,string | undefined,undefined,false,false
 ion-anchor,css-prop,--background
 ion-anchor,css-prop,--color
 
@@ -180,6 +178,7 @@ ion-button,css-prop,--ripple-color
 ion-button,css-prop,--transition
 
 ion-buttons,scoped
+ion-buttons,prop,collapse,boolean,false,false,false
 
 ion-card,scoped
 ion-card,prop,button,boolean,false,false,false
@@ -360,6 +359,7 @@ ion-fab-button,event,ionFocus,void,true
 ion-fab-button,css-prop,--background
 ion-fab-button,css-prop,--background-activated
 ion-fab-button,css-prop,--background-focused
+ion-fab-button,css-prop,--background-hover
 ion-fab-button,css-prop,--border-color
 ion-fab-button,css-prop,--border-radius
 ion-fab-button,css-prop,--border-style
@@ -368,6 +368,7 @@ ion-fab-button,css-prop,--box-shadow
 ion-fab-button,css-prop,--color
 ion-fab-button,css-prop,--color-activated
 ion-fab-button,css-prop,--color-focused
+ion-fab-button,css-prop,--color-hover
 ion-fab-button,css-prop,--padding-bottom
 ion-fab-button,css-prop,--padding-end
 ion-fab-button,css-prop,--padding-start
@@ -399,6 +400,7 @@ ion-grid,css-prop,--ion-grid-width-xl
 ion-grid,css-prop,--ion-grid-width-xs
 
 ion-header,none
+ion-header,prop,collapse,"condense" | undefined,undefined,false,false
 ion-header,prop,mode,"ios" | "md",undefined,false,false
 ion-header,prop,translucent,boolean,false,false,false
 
@@ -417,7 +419,7 @@ ion-infinite-scroll,method,complete,complete() => Promise<void>
 ion-infinite-scroll,event,ionInfinite,void,true
 
 ion-infinite-scroll-content,none
-ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
+ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
 ion-infinite-scroll-content,prop,loadingText,string | undefined,undefined,false,false
 
 ion-input,scoped
@@ -431,7 +433,7 @@ ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
 ion-input,prop,color,string | undefined,undefined,false,false
 ion-input,prop,debounce,number,0,false,false
 ion-input,prop,disabled,boolean,false,false,false
-ion-input,prop,inputmode,string | undefined,undefined,false,false
+ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-input,prop,max,string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
 ion-input,prop,min,string | undefined,undefined,false,false
@@ -481,12 +483,17 @@ ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background
 ion-item,css-prop,--background-activated
+ion-item,css-prop,--background-focused
+ion-item,css-prop,--background-hover
 ion-item,css-prop,--border-color
 ion-item,css-prop,--border-radius
 ion-item,css-prop,--border-style
 ion-item,css-prop,--border-width
 ion-item,css-prop,--box-shadow
 ion-item,css-prop,--color
+ion-item,css-prop,--color-activated
+ion-item,css-prop,--color-focused
+ion-item,css-prop,--color-hover
 ion-item,css-prop,--detail-icon-color
 ion-item,css-prop,--detail-icon-font-size
 ion-item,css-prop,--detail-icon-opacity
@@ -580,7 +587,7 @@ ion-loading,prop,leaveAnimation,((Animation: Animation, baseEl: any, opts?: any)
 ion-loading,prop,message,string | undefined,undefined,false,false
 ion-loading,prop,mode,"ios" | "md",undefined,false,false
 ion-loading,prop,showBackdrop,boolean,true,false,false
-ion-loading,prop,spinner,"bubbles" | "circles" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
+ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
 ion-loading,prop,translucent,boolean,false,false,false
 ion-loading,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-loading,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
@@ -658,7 +665,7 @@ ion-menu-controller,method,isAnimating,isAnimating() => Promise<boolean>
 ion-menu-controller,method,isEnabled,isEnabled(menu?: string | null | undefined) => Promise<boolean>
 ion-menu-controller,method,isOpen,isOpen(menu?: string | null | undefined) => Promise<boolean>
 ion-menu-controller,method,open,open(menu?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,registerAnimation,registerAnimation(name: string, animation: AnimationBuilder) => Promise<void>
+ion-menu-controller,method,registerAnimation,registerAnimation(name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => Promise<void>
 ion-menu-controller,method,swipeGesture,swipeGesture(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
 ion-menu-controller,method,toggle,toggle(menu?: string | null | undefined) => Promise<boolean>
 
@@ -724,15 +731,10 @@ ion-nav,method,setRoot,setRoot<T extends NavComponent>(component: T, componentPr
 ion-nav,event,ionNavDidChange,void,false
 ion-nav,event,ionNavWillChange,void,false
 
-ion-nav-pop,none
-
-ion-nav-push,none
-ion-nav-push,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav-push,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
-
-ion-nav-set-root,none
-ion-nav-set-root,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav-set-root,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-nav-link,none
+ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
+ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 
 ion-note,shadow
 ion-note,prop,color,string | undefined,undefined,false,false
@@ -887,7 +889,7 @@ ion-refresher,event,ionStart,void,true
 ion-refresher-content,none
 ion-refresher-content,prop,pullingIcon,null | string | undefined,undefined,false,false
 ion-refresher-content,prop,pullingText,string | undefined,undefined,false,false
-ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
+ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
 ion-refresher-content,prop,refreshingText,string | undefined,undefined,false,false
 
 ion-reorder,shadow
@@ -920,9 +922,19 @@ ion-router,method,push,push(url: string, direction?: RouterDirection) => Promise
 ion-router,event,ionRouteDidChange,RouterEventDetail,true
 ion-router,event,ionRouteWillChange,RouterEventDetail,true
 
+ion-router-link,shadow
+ion-router-link,prop,color,string | undefined,undefined,false,false
+ion-router-link,prop,href,string | undefined,undefined,false,false
+ion-router-link,prop,rel,string | undefined,undefined,false,false
+ion-router-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+ion-router-link,prop,target,string | undefined,undefined,false,false
+ion-router-link,css-prop,--background
+ion-router-link,css-prop,--color
+
 ion-router-outlet,shadow
 ion-router-outlet,prop,animated,boolean,true,false,false
 ion-router-outlet,prop,animation,((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined,undefined,false,false
+ion-router-outlet,prop,mode,"ios" | "md",getIonMode(this),false,false
 
 ion-row,shadow
 
@@ -936,6 +948,7 @@ ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,string | undefined,undefined,false,false
 ion-searchbar,prop,debounce,number,250,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
+ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
 ion-searchbar,prop,searchIcon,string,'search',false,false
@@ -968,7 +981,6 @@ ion-segment,prop,mode,"ios" | "md",undefined,false,false
 ion-segment,prop,scrollable,boolean,false,false,false
 ion-segment,prop,value,null | string | undefined,undefined,false,false
 ion-segment,event,ionChange,SegmentChangeEventDetail,true
-ion-segment,event,ionStyle,StyleEventDetail,true
 
 ion-segment-button,shadow
 ion-segment-button,prop,checked,boolean,false,false,false
@@ -1047,6 +1059,7 @@ ion-slides,prop,pager,boolean,false,false,false
 ion-slides,prop,scrollbar,boolean,false,false,false
 ion-slides,method,getActiveIndex,getActiveIndex() => Promise<number>
 ion-slides,method,getPreviousIndex,getPreviousIndex() => Promise<number>
+ion-slides,method,getSwiper,getSwiper() => Promise<any>
 ion-slides,method,isBeginning,isBeginning() => Promise<boolean>
 ion-slides,method,isEnd,isEnd() => Promise<boolean>
 ion-slides,method,length,length() => Promise<number>
@@ -1082,7 +1095,7 @@ ion-slides,css-prop,--bullet-background-active
 ion-spinner,shadow
 ion-spinner,prop,color,string | undefined,undefined,false,false
 ion-spinner,prop,duration,number | undefined,undefined,false,false
-ion-spinner,prop,name,"bubbles" | "circles" | "crescent" | "dots" | "lines" | "lines-small" | undefined,undefined,false,false
+ion-spinner,prop,name,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | undefined,undefined,false,false
 ion-spinner,prop,paused,boolean,false,false,false
 ion-spinner,css-prop,--color
 
@@ -1182,12 +1195,12 @@ ion-thumbnail,css-prop,--size
 
 ion-title,shadow
 ion-title,prop,color,string | undefined,undefined,false,false
+ion-title,prop,size,"large" | "small" | undefined,undefined,false,false
 ion-title,css-prop,--color
 
 ion-toast,shadow
 ion-toast,prop,animated,boolean,true,false,false
 ion-toast,prop,buttons,(string | ToastButton)[] | undefined,undefined,false,false
-ion-toast,prop,closeButtonText,string | undefined,undefined,false,false
 ion-toast,prop,color,string | undefined,undefined,false,false
 ion-toast,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-toast,prop,duration,number,0,false,false
@@ -1198,7 +1211,6 @@ ion-toast,prop,leaveAnimation,((Animation: Animation, baseEl: any, opts?: any) =
 ion-toast,prop,message,string | undefined,undefined,false,false
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
-ion-toast,prop,showCloseButton,boolean,false,false,false
 ion-toast,prop,translucent,boolean,false,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-toast,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
@@ -1265,7 +1277,9 @@ ion-virtual-scroll,prop,approxFooterHeight,number,30,false,false
 ion-virtual-scroll,prop,approxHeaderHeight,number,30,false,false
 ion-virtual-scroll,prop,approxItemHeight,number,45,false,false
 ion-virtual-scroll,prop,footerFn,((item: any, index: number, items: any[]) => string | null | undefined) | undefined,undefined,false,false
+ion-virtual-scroll,prop,footerHeight,((item: any, index: number) => number) | undefined,undefined,false,false
 ion-virtual-scroll,prop,headerFn,((item: any, index: number, items: any[]) => string | null | undefined) | undefined,undefined,false,false
+ion-virtual-scroll,prop,headerHeight,((item: any, index: number) => number) | undefined,undefined,false,false
 ion-virtual-scroll,prop,itemHeight,((item: any, index: number) => number) | undefined,undefined,false,false
 ion-virtual-scroll,prop,items,any[] | undefined,undefined,false,false
 ion-virtual-scroll,prop,nodeRender,((el: HTMLElement | null, cell: Cell, domIndex: number) => HTMLElement) | undefined,undefined,false,false
