@@ -10,21 +10,22 @@
   display: none !important;
 }
 
-// Adds hidden attributes
 @each $breakpoint in map-keys($screen-breakpoints) {
-  $bp: breakpoint-min($breakpoint, $screen-breakpoints);
-  @if $bp {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
 
-    @media (max-width: $bp) {
-      .ion-hide-#{$breakpoint}-down {
-        display: none !important;
-      }
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    // Provide `ion-hide-[bp]-up` classes for hiding the content based
+    // on the min of the breakpoint
+    .ion-hide#{$infix}-up {
+      display: none !important;
     }
+  }
 
-    @media (min-width: breakpoint-min($breakpoint, $screen-breakpoints)) {
-      .ion-hide-#{$breakpoint}-up {
-        display: none !important;
-      }
+  @include media-breakpoint-down($breakpoint, $screen-breakpoints) {
+    // Provide `ion-hide-[bp]-down` classes for hiding the content based
+    // on the max of the breakpoint
+    .ion-hide#{$infix}-down {
+      display: none !important;
     }
   }
 }
