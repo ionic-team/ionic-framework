@@ -70,14 +70,6 @@ ion-alert-controller,method,create,create(options: AlertOptions) => Promise<HTML
 ion-alert-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-alert-controller,method,getTop,getTop() => Promise<HTMLIonAlertElement | undefined>
 
-ion-anchor,shadow
-ion-anchor,prop,color,string | undefined,undefined,false,false
-ion-anchor,prop,href,string | undefined,undefined,false,false
-ion-anchor,prop,rel,string | undefined,undefined,false,false
-ion-anchor,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-ion-anchor,css-prop,--background
-ion-anchor,css-prop,--color
-
 ion-app,none
 
 ion-avatar,shadow
@@ -952,7 +944,7 @@ ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search"
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
 ion-searchbar,prop,searchIcon,string,'search',false,false
-ion-searchbar,prop,showCancelButton,boolean | string,'never',false,false
+ion-searchbar,prop,showCancelButton,"always" | "focus" | "never",'never',false,false
 ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,value,null | string | undefined,'',false,false
