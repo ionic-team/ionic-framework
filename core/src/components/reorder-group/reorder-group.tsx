@@ -43,8 +43,6 @@ export class ReorderGroup implements ComponentInterface {
     if (this.gesture) {
       this.gesture.setDisabled(this.disabled);
     }
-    const a = { a: 2 };
-    delete a.a;
   }
 
   /**
@@ -54,12 +52,11 @@ export class ReorderGroup implements ComponentInterface {
    */
   @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
 
-  async componentDidLoad() {
+  async connectedCallback() {
     const contentEl = this.el.closest('ion-content');
     if (contentEl) {
       this.scrollEl = await contentEl.getScrollElement();
     }
-
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'reorder',
@@ -76,7 +73,7 @@ export class ReorderGroup implements ComponentInterface {
     this.disabledChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.onEnd();
     if (this.gesture) {
       this.gesture.destroy();
@@ -191,19 +188,18 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   private onEnd() {
-    const selectedItem = this.selectedItemEl;
+    const selectedItemEl = this.selectedItemEl;
     this.state = ReorderGroupState.Complete;
-    if (!selectedItem) {
+    if (!selectedItemEl) {
       this.state = ReorderGroupState.Idle;
       return;
     }
 
     const toIndex = this.lastToIndex;
-    const fromIndex = indexForItem(selectedItem);
+    const fromIndex = indexForItem(selectedItemEl);
 
     if (toIndex === fromIndex) {
-      selectedItem.style.transition = 'transform 200ms ease-in-out';
-      setTimeout(() => this.completeSync(), 200);
+      this.completeSync();
     } else {
       this.ionItemReorder.emit({
         from: fromIndex,
@@ -223,7 +219,7 @@ export class ReorderGroup implements ComponentInterface {
       const toIndex = this.lastToIndex;
       const fromIndex = indexForItem(selectedItemEl);
 
-      if (!listOrReorder || listOrReorder === true) {
+      if (toIndex !== fromIndex && (!listOrReorder || listOrReorder === true)) {
         const ref = (fromIndex < toIndex)
           ? children[toIndex + 1]
           : children[toIndex];

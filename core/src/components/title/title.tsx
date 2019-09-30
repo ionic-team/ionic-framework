@@ -1,7 +1,7 @@
-import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { Color, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -20,6 +20,38 @@ export class ToolbarTitle implements ComponentInterface {
    */
   @Prop() color?: Color;
 
+  /**
+   * The size of the toolbar title.
+   */
+  @Prop() size?: 'large' | 'small';
+
+  /**
+   * Emitted when the styles change.
+   * @internal
+   */
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  @Watch('size')
+  protected sizeChanged() {
+    this.emitStyle();
+  }
+
+  connectedCallback() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
+    const size = this.getSize();
+
+    this.ionStyle.emit({
+      [`title-${size}`]: true
+    });
+  }
+
+  private getSize() {
+    return (this.size !== undefined) ? this.size : 'default';
+  }
+
   private getMode() {
     const mode = getIonMode(this);
     const toolbar = this.el.closest('ion-toolbar');
@@ -28,11 +60,14 @@ export class ToolbarTitle implements ComponentInterface {
 
   render() {
     const mode = this.getMode();
+    const size = this.getSize();
+
     return (
       <Host
         class={{
           [mode]: true,
           [`title-${mode}`]: true,
+          [`title-${size}`]: true,
 
           ...createColorClasses(this.color),
         }}

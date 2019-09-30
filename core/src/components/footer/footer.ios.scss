@@ -18,3 +18,7 @@
     --backdrop-filter: #{$footer-ios-translucent-filter};
   }
 }
+
+.footer-ios.ion-no-border ion-toolbar:first-child {
+  --border-width: 0;
+}

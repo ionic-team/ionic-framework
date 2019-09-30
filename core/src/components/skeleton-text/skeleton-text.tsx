@@ -18,26 +18,6 @@ export class SkeletonText implements ComponentInterface {
    */
   @Prop() animated = false;
 
-  /**
-   * @deprecated Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.
-   */
-  @Prop() width?: string;
-
-  calculateWidth() {
-    // If width was passed in to the property use that first
-    // tslint:disable-next-line: deprecation
-    if (this.width !== undefined) {
-      return {
-        style: {
-          // tslint:disable-next-line: deprecation
-          width: this.width
-        }
-      };
-    }
-
-    return;
-  }
-
   render() {
     const animated = this.animated && config.getBoolean('animated', true);
     const inMedia = hostContext('ion-avatar', this.el) || hostContext('ion-thumbnail', this.el);
@@ -50,7 +30,6 @@ export class SkeletonText implements ComponentInterface {
           'skeleton-text-animated': animated,
           'in-media': inMedia
         }}
-        {...this.calculateWidth()}
       >
         <span>&nbsp;</span>
       </Host>

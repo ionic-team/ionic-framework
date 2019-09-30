@@ -59,24 +59,24 @@ const slidesOpts = {
         const slideSize = slidesSizesGrid[i];
         const slideOffset = $slideEl[0].swiperSlideOffset;
         const offsetMultiplier = ((center - slideOffset - (slideSize / 2)) / slideSize) * params.modifier;
-  
+
          let rotateY = isHorizontal ? rotate * offsetMultiplier : 0;
         let rotateX = isHorizontal ? 0 : rotate * offsetMultiplier;
         // var rotateZ = 0
         let translateZ = -translate * Math.abs(offsetMultiplier);
-  
+
          let translateY = isHorizontal ? 0 : params.stretch * (offsetMultiplier);
         let translateX = isHorizontal ? params.stretch * (offsetMultiplier) : 0;
-  
+
          // Fix for ultra small values
         if (Math.abs(translateX) < 0.001) translateX = 0;
         if (Math.abs(translateY) < 0.001) translateY = 0;
         if (Math.abs(translateZ) < 0.001) translateZ = 0;
         if (Math.abs(rotateY) < 0.001) rotateY = 0;
         if (Math.abs(rotateX) < 0.001) rotateX = 0;
-  
+
          const slideTransform = `translate3d(${translateX}px,${translateY}px,${translateZ}px)  rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  
+
          $slideEl.transform(slideTransform);
         $slideEl[0].style.zIndex = -Math.abs(Math.round(offsetMultiplier)) + 1;
         if (params.slideShadows) {
@@ -95,7 +95,7 @@ const slidesOpts = {
           if ($shadowAfterEl.length) $shadowAfterEl[0].style.opacity = (-offsetMultiplier) > 0 ? -offsetMultiplier : 0;
         }
       }
-  
+
        // Set correct perspective for IE10
       if (swiper.support.pointerEvents || swiper.support.prefixedPointerEvents) {
         const ws = $wrapperEl[0].style;
@@ -129,7 +129,7 @@ const slidesOpts = {
       const swiper = this;
       swiper.classNames.push(`${swiper.params.containerModifierClass}cube`);
       swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
-      
+
       const overwriteParams = {
         slidesPerView: 1,
         slidesPerColumn: 1,
@@ -140,7 +140,7 @@ const slidesOpts = {
         centeredSlides: false,
         virtualTranslate: true,
       };
-      
+
       this.params = Object.assign(this.params, overwriteParams);
       this.originalParams = Object.assign(this.originalParams, overwriteParams);
     },
@@ -170,7 +170,7 @@ const slidesOpts = {
           }
         }
       }
-      
+
       for (let i = 0; i < slides.length; i += 1) {
         const $slideEl = slides.eq(i);
         let slideIndex = i;
@@ -203,12 +203,12 @@ const slidesOpts = {
         if (rtl) {
           tx = -tx;
         }
-  
+
          if (!isHorizontal) {
           ty = tx;
           tx = 0;
         }
-  
+
          const transform$$1 = `rotateX(${isHorizontal ? 0 : -slideAngle}deg) rotateY(${isHorizontal ? slideAngle : 0}deg) translate3d(${tx}px, ${ty}px, ${tz}px)`;
         if (progress <= 1 && progress > -1) {
           wrapperRotate = (slideIndex * 90) + (progress * 90);
@@ -237,7 +237,7 @@ const slidesOpts = {
         '-ms-transform-origin': `50% 50% -${swiperSize / 2}px`,
         'transform-origin': `50% 50% -${swiperSize / 2}px`,
       });
-  
+
        if (params.shadow) {
         if (isHorizontal) {
           $cubeShadowEl.transform(`translate3d(0px, ${(swiperWidth / 2) + params.shadowOffset}px, ${-swiperWidth / 2}px) rotateX(90deg) rotateZ(0deg) scale(${params.shadowScale})`);
@@ -334,7 +334,7 @@ const slidesOpts = {
       }
     },
   }
-}    
+}
 ```
 
 #### Flip
@@ -380,9 +380,9 @@ const slideOpts = {
         } else if (rtl) {
           rotateY = -rotateY;
         }
-  
+
          $slideEl[0].style.zIndex = -Math.abs(Math.round(progress)) + slides.length;
-  
+
          if (swiper.params.flipEffect.slideShadows) {
           // Set shadows
           let shadowBefore = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
@@ -415,7 +415,7 @@ const slideOpts = {
         slides.eq(activeIndex).transitionEnd(function onTransitionEnd() {
           if (eventTriggered) return;
           if (!swiper || swiper.destroyed) return;
-  
+
           eventTriggered = true;
           swiper.animating = false;
           const triggerEvents = ['webkitTransitionEnd', 'transitionend'];
@@ -508,7 +508,7 @@ const slideOpts = {
   speed: 400
 };
 
-export const SlidesExample: React.FunctionComponent = () => (
+export const SlidesExample: React.FC = () => (
   <IonContent>
     <IonSlides pager={true} options={slideOpts}>
       <IonSlide>
@@ -611,6 +611,18 @@ Get the index of the previous slide.
 #### Returns
 
 Type: `Promise<number>`
+
+
+
+### `getSwiper() => Promise<any>`
+
+Get the Swiper instance.
+Use this to access the full Swiper API.
+See https://idangero.us/swiper/api/ for all API options.
+
+#### Returns
+
+Type: `Promise<any>`
 
 
 

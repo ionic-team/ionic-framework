@@ -23,7 +23,7 @@ export class Grid implements ComponentInterface {
           'grid-fixed': this.fixed
         }}
       >
-        <slot></slot>;
+        <slot></slot>
       </Host>
     );
   }

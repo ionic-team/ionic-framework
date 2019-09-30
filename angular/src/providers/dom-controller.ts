@@ -22,7 +22,7 @@ export class DomController {
   }
 }
 
-function getQueue() {
+const getQueue = () => {
   const win = typeof (window as any) !== 'undefined' ? window : null as any;
 
   if (win != null) {
@@ -41,6 +41,6 @@ function getQueue() {
     read: (cb: any) => cb(),
     write: (cb: any) => cb()
   };
-}
+};
 
 export type RafCallback = (timeStamp?: number) => void;

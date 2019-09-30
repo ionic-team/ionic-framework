@@ -4,8 +4,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="ion-padding">
   <h1>Welcome to Tab1</h1>
+  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="one">One</ion-segment-button>
+    <ion-segment-button value="two">Two</ion-segment-button>
+  </ion-segment>
+  <p>
+    Segment changed: <span class="segment-changed">{{changed}}</span>
+  </p>
   <p>
     <ion-button routerLink="/tabs/account/nested/1" id="goto-tab1-page2">Go to Page 2</ion-button>
     <ion-button routerLink="/tabs/lazy/nested" id="goto-tab3-page2">Go to Tab 3 - Page 2</ion-button>

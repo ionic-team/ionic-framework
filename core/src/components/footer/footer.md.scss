@@ -21,3 +21,7 @@
 
   content: "";
 }
+
+.footer-md.ion-no-border::before {
+  background-image: none;
+}

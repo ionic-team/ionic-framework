@@ -1,3 +1,4 @@
+@import "./ionic.deprecation";
 
 @mixin input-cover() {
   @include position(0, null, null, 0);

@@ -21,3 +21,11 @@
 
   content: "";
 }
+
+.header-collapse-condense {
+  display: none;
+}
+
+.header-md.ion-no-border::after {
+  background-image: none;
+}
