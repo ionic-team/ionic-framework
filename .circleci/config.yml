@@ -260,6 +260,12 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/core
+      - run:
+          command: sudo npm link @ionic/core
+          working_directory: /tmp/workspace/packages/react
+      - run:
           command: npm run test.spec
           working_directory: /tmp/workspace/packages/react
 
@@ -269,6 +275,18 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/core
+      - run:
+          command: sudo npm link @ionic/core
+          working_directory: /tmp/workspace/packages/react
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/packages/react
+      - run:
+          command: sudo npm link @ionic/react
+          working_directory: /tmp/workspace/packages/react-router
       - run:
           command: npm run test.spec
           working_directory: /tmp/workspace/packages/react-router
