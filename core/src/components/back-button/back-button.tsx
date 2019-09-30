@@ -42,7 +42,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   /**
    * The icon name to use for the back button.
    */
-  @Prop() icon?: string | null;
+  @Prop() icon?: any;
 
   /**
    * The text to display in the back button.

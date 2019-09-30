@@ -64,7 +64,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
    */
-  @Prop() clearIcon?: string;
+  @Prop() clearIcon?: any;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.

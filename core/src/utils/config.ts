@@ -33,7 +33,7 @@ export interface IonicConfig {
   /**
    * Overrides the default icon in all `<ion-back-button>` components.
    */
-  backButtonIcon?: string;
+  backButtonIcon?: any;
 
   /**
    * Overrides the default text in all `<ion-back-button>` components.
@@ -43,7 +43,7 @@ export interface IonicConfig {
   /**
    * Overrides the default icon in all `<ion-menu-button>` components.
    */
-  menuIcon?: string;
+  menuIcon?: any;
 
   /**
    * Overrides the default menu type for all `<ion-menu>` components.
@@ -66,7 +66,7 @@ export interface IonicConfig {
   /**
    * Overrides the default icon in all `<ion-refresh-content>` components.
    */
-  refreshingIcon?: string;
+  refreshingIcon?: any;
 
   /**
    * Overrides the default spinner type in all `<ion-refresh-content>` components.

@@ -13,7 +13,7 @@ export class RefresherContent implements ComponentInterface {
   /**
    * A static icon to display when you begin to pull down
    */
-  @Prop({ mutable: true }) pullingIcon?: string | null;
+  @Prop({ mutable: true }) pullingIcon?: any;
 
   /**
    * The text you want to display when you begin to pull down.

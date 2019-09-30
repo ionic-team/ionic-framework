@@ -23,7 +23,7 @@ export interface ToastOptions {
 
 export interface ToastButton {
   text?: string;
-  icon?: string;
+  icon?: any;
   side?: 'start' | 'end';
   role?: 'cancel' | string;
   cssClass?: string | string[];

@@ -19,7 +19,7 @@ export interface ActionSheetOptions {
 export interface ActionSheetButton {
   text?: string;
   role?: 'cancel' | 'destructive' | 'selected' | string;
-  icon?: string;
+  icon?: any;
   cssClass?: string | string[];
   handler?: () => boolean | void | Promise<boolean>;
 }
