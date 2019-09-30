@@ -1047,7 +1047,6 @@ ion-select-option,prop,value,any,undefined,false,false
 
 ion-skeleton-text,shadow
 ion-skeleton-text,prop,animated,boolean,false,false,false
-ion-skeleton-text,prop,width,string | undefined,undefined,false,false
 ion-skeleton-text,css-prop,--background
 ion-skeleton-text,css-prop,--background-rgb
 ion-skeleton-text,css-prop,--border-radius
