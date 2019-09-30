@@ -2360,10 +2360,6 @@ export namespace Components {
     * If `true`, the skeleton text will animate.
     */
     'animated': boolean;
-    /**
-    * @deprecated Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.
-    */
-    'width'?: string;
   }
   interface IonSlide {}
   interface IonSlides {
@@ -5649,10 +5645,6 @@ declare namespace LocalJSX {
     * If `true`, the skeleton text will animate.
     */
     'animated'?: boolean;
-    /**
-    * @deprecated Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.
-    */
-    'width'?: string;
   }
   interface IonSlide {}
   interface IonSlides {

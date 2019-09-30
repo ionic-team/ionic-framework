@@ -729,7 +729,7 @@ export class IonSelectOption {
 proxyInputs(IonSelectOption, ['disabled', 'selected', 'value']);
 
 export declare interface IonSkeletonText extends Components.IonSkeletonText {}
-@Component({ selector: 'ion-skeleton-text', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['animated', 'width'] })
+@Component({ selector: 'ion-skeleton-text', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['animated'] })
 export class IonSkeletonText {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -737,7 +737,7 @@ export class IonSkeletonText {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonSkeletonText, ['animated', 'width']);
+proxyInputs(IonSkeletonText, ['animated']);
 
 export declare interface IonSlide extends Components.IonSlide {}
 @Component({ selector: 'ion-slide', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
