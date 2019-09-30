@@ -87,7 +87,7 @@ ion-back-button,scoped
 ion-back-button,prop,color,string | undefined,undefined,false,false
 ion-back-button,prop,defaultHref,string | undefined,undefined,false,false
 ion-back-button,prop,disabled,boolean,false,false,true
-ion-back-button,prop,icon,null | string | undefined,undefined,false,false
+ion-back-button,prop,icon,null | string | undefined | { [mode: string]: string; },undefined,false,false
 ion-back-button,prop,mode,"ios" | "md",undefined,false,false
 ion-back-button,prop,text,null | string | undefined,undefined,false,false
 ion-back-button,prop,type,"button" | "reset" | "submit",'button',false,false
@@ -897,7 +897,7 @@ ion-refresher,event,ionRefresh,RefresherEventDetail,true
 ion-refresher,event,ionStart,void,true
 
 ion-refresher-content,none
-ion-refresher-content,prop,pullingIcon,null | string | undefined,undefined,false,false
+ion-refresher-content,prop,pullingIcon,null | string | undefined | { [mode: string]: string; },undefined,false,false
 ion-refresher-content,prop,pullingText,string | undefined,undefined,false,false
 ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
 ion-refresher-content,prop,refreshingText,string | undefined,undefined,false,false
@@ -954,7 +954,7 @@ ion-searchbar,prop,autocomplete,"off" | "on",'off',false,false
 ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
 ion-searchbar,prop,cancelButtonIcon,string,'md-arrow-back',false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
-ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
+ion-searchbar,prop,clearIcon,null | string | undefined | { [mode: string]: string; },undefined,false,false
 ion-searchbar,prop,color,string | undefined,undefined,false,false
 ion-searchbar,prop,debounce,number,250,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false

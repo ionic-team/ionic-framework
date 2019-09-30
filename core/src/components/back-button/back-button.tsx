@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { Color, Icon } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -42,7 +42,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   /**
    * The icon name to use for the back button.
    */
-  @Prop() icon?: any;
+  @Prop() icon?: Icon;
 
   /**
    * The text to display in the back button.

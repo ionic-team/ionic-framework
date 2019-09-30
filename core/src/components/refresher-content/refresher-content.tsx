@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { SpinnerTypes } from '../../interface';
+import { Icon, SpinnerTypes } from '../../interface';
 import { sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
@@ -13,7 +13,7 @@ export class RefresherContent implements ComponentInterface {
   /**
    * A static icon to display when you begin to pull down
    */
-  @Prop({ mutable: true }) pullingIcon?: any;
+  @Prop({ mutable: true }) pullingIcon?: Icon;
 
   /**
    * The text you want to display when you begin to pull down.

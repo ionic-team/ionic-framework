@@ -48,6 +48,7 @@ export type ComponentRef = Function | HTMLElement | string | null;
 export type ComponentProps<T = null> = {[key: string]: any};
 export type CssClassMap = { [className: string]: boolean };
 export type BackButtonEvent = CustomEvent<BackButtonEventDetail>;
+export type Icon = string | { [mode: string]: string } | null;
 
 export interface FrameworkDelegate {
   attachViewToDom(container: any, component: any, propsOrDataObj?: any, cssClasses?: string[]): Promise<HTMLElement>;

@@ -24,6 +24,7 @@ import {
   FrameworkDelegate,
   HeaderFn,
   HeaderHeightFn,
+  Icon,
   InputChangeEventDetail,
   IonicAnimation,
   ItemHeightFn,
@@ -289,7 +290,7 @@ export namespace Components {
     /**
     * The icon name to use for the back button.
     */
-    'icon'?: string | null;
+    'icon'?: Icon;
     /**
     * The mode determines which platform styles to use.
     */
@@ -2037,7 +2038,7 @@ export namespace Components {
     /**
     * A static icon to display when you begin to pull down
     */
-    'pullingIcon'?: string | null;
+    'pullingIcon'?: Icon;
     /**
     * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
@@ -2187,7 +2188,7 @@ export namespace Components {
     /**
     * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
     */
-    'clearIcon'?: string;
+    'clearIcon'?: Icon;
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -3784,7 +3785,7 @@ declare namespace LocalJSX {
     /**
     * The icon name to use for the back button.
     */
-    'icon'?: string | null;
+    'icon'?: Icon;
     /**
     * The mode determines which platform styles to use.
     */
@@ -5349,7 +5350,7 @@ declare namespace LocalJSX {
     /**
     * A static icon to display when you begin to pull down
     */
-    'pullingIcon'?: string | null;
+    'pullingIcon'?: Icon;
     /**
     * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
@@ -5491,7 +5492,7 @@ declare namespace LocalJSX {
     /**
     * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
     */
-    'clearIcon'?: string;
+    'clearIcon'?: Icon;
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */

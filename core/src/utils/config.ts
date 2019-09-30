@@ -1,4 +1,4 @@
-import { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../interface';
+import { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout, Icon } from '../interface';
 
 export interface IonicConfig {
   /**
@@ -33,7 +33,7 @@ export interface IonicConfig {
   /**
    * Overrides the default icon in all `<ion-back-button>` components.
    */
-  backButtonIcon?: any;
+  backButtonIcon?: Icon;
 
   /**
    * Overrides the default text in all `<ion-back-button>` components.
@@ -43,7 +43,7 @@ export interface IonicConfig {
   /**
    * Overrides the default icon in all `<ion-menu-button>` components.
    */
-  menuIcon?: any;
+  menuIcon?: Icon;
 
   /**
    * Overrides the default menu type for all `<ion-menu>` components.
@@ -66,7 +66,7 @@ export interface IonicConfig {
   /**
    * Overrides the default icon in all `<ion-refresh-content>` components.
    */
-  refreshingIcon?: any;
+  refreshingIcon?: Icon;
 
   /**
    * Overrides the default spinner type in all `<ion-refresh-content>` components.

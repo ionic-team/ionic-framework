@@ -1,4 +1,4 @@
-import { AnimationBuilder, Mode } from '../../interface';
+import { AnimationBuilder, Mode, Icon } from '../../interface';
 
 export interface ActionSheetOptions {
   header?: string;
@@ -19,7 +19,7 @@ export interface ActionSheetOptions {
 export interface ActionSheetButton {
   text?: string;
   role?: 'cancel' | 'destructive' | 'selected' | string;
-  icon?: any;
+  icon?: Icon;
   cssClass?: string | string[];
   handler?: () => boolean | void | Promise<boolean>;
 }

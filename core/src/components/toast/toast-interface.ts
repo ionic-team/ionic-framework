@@ -1,4 +1,4 @@
-import { AnimationBuilder, Color, Mode } from '../../interface';
+import { AnimationBuilder, Color, Mode, Icon } from '../../interface';
 
 export interface ToastOptions {
   header?: string;
@@ -23,7 +23,7 @@ export interface ToastOptions {
 
 export interface ToastButton {
   text?: string;
-  icon?: any;
+  icon?: Icon;
   side?: 'start' | 'end';
   role?: 'cancel' | string;
   cssClass?: string | string[];
