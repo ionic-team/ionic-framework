@@ -24,7 +24,7 @@
 
   @include media-breakpoint-down($breakpoint, $screen-breakpoints) {
     // Provide `ion-hide-{bp}-down` classes for hiding the element based
-    // on the max of the breakpoint
+    // on the breakpoint
     .ion-hide#{$infix}-down {
       display: none !important;
     }
