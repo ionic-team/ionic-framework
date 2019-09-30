@@ -1,2 +1,2 @@
-export * from './generateUniqueId';
+export * from './generateId';
 export * from './dev';
