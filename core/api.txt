@@ -400,7 +400,7 @@ ion-grid,css-prop,--ion-grid-width-xl
 ion-grid,css-prop,--ion-grid-width-xs
 
 ion-header,none
-ion-header,prop,collapse,boolean,false,false,false
+ion-header,prop,collapse,"condense" | undefined,undefined,false,false
 ion-header,prop,mode,"ios" | "md",undefined,false,false
 ion-header,prop,translucent,boolean,false,false,false
 

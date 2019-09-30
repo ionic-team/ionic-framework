@@ -1,5 +1,5 @@
 import React from 'react';
-import { generateUniqueId, isDevMode } from '../utils';
+import { generateId, isDevMode } from '../utils';
 import { View } from './View';
 import { ViewTransitionManager } from './ViewTransitionManager';
 import { RouteManagerContext } from './RouteManagerContext';
@@ -18,7 +18,7 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
 
   constructor(props: StackManagerProps) {
     super(props);
-    this.id = this.props.id || generateUniqueId();
+    this.id = this.props.id || generateId();
     this.handleViewSync = this.handleViewSync.bind(this);
     this.handleHideView = this.handleHideView.bind(this);
   }
