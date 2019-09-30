@@ -34,10 +34,13 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
 
     async componentDidMount() {
       const { isOpen } = this.props;
-      // TODO
       if (isOpen as boolean) {
         this.present();
       }
+    }
+
+    componentWillUnmount() {
+      if (this.overlay) { this.overlay.dismiss(); }
     }
 
     async componentDidUpdate(prevProps: Props) {
