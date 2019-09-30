@@ -108,6 +108,58 @@ jobs:
           paths:
             - "*"
 
+  build-react:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm install
+          working_directory: /tmp/workspace/packages/react
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/core
+      - run:
+          command: sudo npm link @ionic/core
+          working_directory: /tmp/workspace/packages/react
+      - run:
+          command: npm run build
+          working_directory: /tmp/workspace/packages/react
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - "*"
+
+  build-react-router:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm install
+          working_directory: /tmp/workspace/packages/react-router
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/core
+      - run:
+          command: sudo npm link @ionic/core
+          working_directory: /tmp/workspace/packages/react-router
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/packages/react
+      - run:
+          command: sudo npm link @ionic/react
+          working_directory: /tmp/workspace/packages/react-router
+      - run:
+          command: npm run build
+          working_directory: /tmp/workspace/packages/react-router
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - "*"
+
   test-core-clean-build:
     <<: *defaults
     steps:
@@ -204,32 +256,36 @@ workflows:
       - build
       - build-core:
           requires: [build]
-      - test-core-clean-build:
-          requires: [build-core]
-      - test-core-lint:
-          requires: [build-core]
-      - test-core-spec:
-          requires: [build-core]
-      - test-core-treeshake:
-          requires: [build-core]
-      - test-core-screenshot:
-          requires: [build-core]
-          filters:
-            branches:
-              ignore: master
-      - test-core-screenshot-master:
-          requires: [build-core]
-          filters:
-            branches:
-              only: master
+      # - test-core-clean-build:
+      #     requires: [build-core]
+      # - test-core-lint:
+      #     requires: [build-core]
+      # - test-core-spec:
+      #     requires: [build-core]
+      # - test-core-treeshake:
+      #     requires: [build-core]
+      # - test-core-screenshot:
+      #     requires: [build-core]
+      #     filters:
+      #       branches:
+      #         ignore: master
+      # - test-core-screenshot-master:
+      #     requires: [build-core]
+      #     filters:
+      #       branches:
+      #         only: master
 
-      - build-angular:
+      # - build-angular:
+      #     requires: [build-core]
+      # - build-angular-server:
+      #     requires: [build-angular]
+       - build-react:
           requires: [build-core]
-      - build-angular-server:
-          requires: [build-angular]
-      - test-angular-lint:
-          requires: [build-angular]
-      - test-angular-e2e:
-          requires:
-            - build-angular
-            - build-angular-server
+       - build-react-router:
+          requires: [build-core, build-react]
+      # - test-angular-lint:
+      #     requires: [build-angular]
+      # - test-angular-e2e:
+      #     requires:
+      #       - build-angular
+      #       - build-angular-server
