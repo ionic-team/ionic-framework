@@ -70,14 +70,6 @@ ion-alert-controller,method,create,create(options: AlertOptions) => Promise<HTML
 ion-alert-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-alert-controller,method,getTop,getTop() => Promise<HTMLIonAlertElement | undefined>
 
-ion-anchor,shadow
-ion-anchor,prop,color,string | undefined,undefined,false,false
-ion-anchor,prop,href,string | undefined,undefined,false,false
-ion-anchor,prop,rel,string | undefined,undefined,false,false
-ion-anchor,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-ion-anchor,css-prop,--background
-ion-anchor,css-prop,--color
-
 ion-app,none
 
 ion-avatar,shadow
