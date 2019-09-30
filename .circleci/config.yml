@@ -253,6 +253,26 @@ jobs:
           command: npm run lint
           working_directory: /tmp/workspace/packages/react-router
 
+  test-react-spec:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run test.spec
+          working_directory: /tmp/workspace/packages/react
+
+  test-react-router-spec:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run test.spec
+          working_directory: /tmp/workspace/packages/react-router
+
   test-angular-e2e:
     <<: *defaults
     steps:
@@ -306,6 +326,10 @@ workflows:
       - test-react-lint:
           requires: [build-react]
       - test-react-router-lint:
+          requires: [build-react-router]
+      - test-react-spec:
+          requires: [build-react]
+      - test-react-router-spec:
           requires: [build-react-router]
       # - test-angular-lint:
       #     requires: [build-angular]

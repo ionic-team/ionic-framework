@@ -22,7 +22,7 @@ describe('createComponent - events', () => {
 
   test('should add custom events', () => {
     const FakeIonFocus = jest.fn((e) => e);
-    const IonInput = createReactComponent<JSX.IonInput>('ion-input');
+    const IonInput = createReactComponent<JSX.IonInput, HTMLIonInputElement>('ion-input');
 
     const { getByText } = render(
       <IonInput onIonFocus={FakeIonFocus}>

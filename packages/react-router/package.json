@@ -27,7 +27,7 @@
     "lint": "tslint --project .",
     "lint.fix": "tslint --project . --fix",
     "tsc": "tsc -p .",
-    "test": "jest"
+    "test.spec": "jest --ci"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
