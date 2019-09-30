@@ -233,6 +233,26 @@ jobs:
           command: npm run lint
           working_directory: /tmp/workspace/angular
 
+  test-react-lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run lint
+          working_directory: /tmp/workspace/packages/react
+
+  test-react-router-lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run lint
+          working_directory: /tmp/workspace/packages/react-router
+
   test-angular-e2e:
     <<: *defaults
     steps:
@@ -275,14 +295,18 @@ workflows:
       #       branches:
       #         only: master
 
-      - build-angular:
-          requires: [build-core]
-      - build-angular-server:
-          requires: [build-angular]
+      # - build-angular:
+      #     requires: [build-core]
+      # - build-angular-server:
+      #     requires: [build-angular]
       - build-react:
           requires: [build-core]
       - build-react-router:
           requires: [build-core, build-react]
+      - test-react-lint:
+          requires: [build-react]
+      - test-react-router-lint:
+          requires: [build-react-router]
       # - test-angular-lint:
       #     requires: [build-angular]
       # - test-angular-e2e:
