@@ -275,13 +275,13 @@ workflows:
       #       branches:
       #         only: master
 
-      # - build-angular:
-      #     requires: [build-core]
-      # - build-angular-server:
-      #     requires: [build-angular]
-       - build-react:
+      - build-angular:
           requires: [build-core]
-       - build-react-router:
+      - build-angular-server:
+          requires: [build-angular]
+      - build-react:
+          requires: [build-core]
+      - build-react-router:
           requires: [build-core, build-react]
       # - test-angular-lint:
       #     requires: [build-angular]
