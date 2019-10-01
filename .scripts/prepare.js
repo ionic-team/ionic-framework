@@ -95,7 +95,7 @@ async function preparePackages(packages, version, install) {
   const tasks = [];
 
   // check git is nice and clean local and remote
-  // common.checkGit(tasks);
+  common.checkGit(tasks);
 
   // test we're good with git
   validateGit(tasks, version);
@@ -107,9 +107,10 @@ async function preparePackages(packages, version, install) {
   });
 
   // add update package.json of each project
-  packages.forEach(package => {
-    common.updatePackageVersion(tasks, package, version);
-  });
+  common.updatePackageVersions(tasks, packages, version);
+  // packages.forEach(package => {
+  //   common.updatePackageVersion(tasks, package, version);
+  // });
 
   // generate changelog
   generateChangeLog(tasks);
