@@ -11,8 +11,8 @@ const packages = [
   'core',
   'docs',
   'angular',
-  'packages/react',
-  'packages/react-router'
+  // 'packages/react',
+  // 'packages/react-router'
 ];
 
 function readPkg(project) {
