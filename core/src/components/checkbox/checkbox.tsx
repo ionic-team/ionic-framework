@@ -41,6 +41,11 @@ export class Checkbox implements ComponentInterface {
   @Prop({ mutable: true }) checked = false;
 
   /**
+   * If `true`, the checkbox will auto flip the checked prop when clicked.
+   */
+  @Prop({ mutable: true }) auto = true;
+
+  /**
    * If `true`, the checkbox will visually appear as indeterminate.
    */
   @Prop({ mutable: true }) indeterminate = false;
@@ -113,7 +118,7 @@ export class Checkbox implements ComponentInterface {
 
   private onClick = () => {
     this.setFocus();
-    this.checked = !this.checked;
+    if (this.auto) this.checked = !this.checked;
     this.indeterminate = false;
   }
 
@@ -136,13 +141,13 @@ export class Checkbox implements ComponentInterface {
     renderHiddenInput(true, el, this.name, (checked ? value : ''), disabled);
 
     let path = indeterminate
-      ? <path d="M6 12L18 12"/>
+      ? <path d="M6 12L18 12" />
       : <path d="M5.9,12.5l3.8,3.8l8.8-8.8" />;
 
     if (mode === 'md') {
       path = indeterminate
-        ? <path d="M2 12H22"/>
-        : <path d="M1.73,12.91 8.1,19.28 22.79,4.59"/>;
+        ? <path d="M2 12H22" />
+        : <path d="M1.73,12.91 8.1,19.28 22.79,4.59" />;
     }
 
     return (
