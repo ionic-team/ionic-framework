@@ -23,7 +23,7 @@ export class Menu implements ComponentInterface, MenuI {
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
 
-  private mode = getIonMode(this);
+  mode = getIonMode(this);
 
   isAnimating = false;
   width!: number; // TODO
@@ -138,7 +138,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   async connectedCallback() {
     if (this.type === undefined) {
-      this.type = config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
+      this.type = config.get('menuType', 'overlay');
     }
 
     if (!Build.isBrowser) {
