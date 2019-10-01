@@ -189,11 +189,12 @@ export const ToggleExample: React.FC = () => (
 
 ## Events
 
-| Event       | Description                                  | Type                                   |
-| ----------- | -------------------------------------------- | -------------------------------------- |
-| `ionBlur`   | Emitted when the toggle loses focus.         | `CustomEvent<void>`                    |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<ToggleChangeEventDetail>` |
-| `ionFocus`  | Emitted when the toggle has focus.           | `CustomEvent<void>`                    |
+| Event       | Description                                        | Type                                   |
+| ----------- | -------------------------------------------------- | -------------------------------------- |
+| `ionBlur`   | Emitted when the toggle loses focus.               | `CustomEvent<void>`                    |
+| `ionChange` | Emitted when the value property has changed.       | `CustomEvent<ToggleChangeEventDetail>` |
+| `ionFocus`  | Emitted when the toggle has focus.                 | `CustomEvent<void>`                    |
+| `ionToggle` | Emitted when the toggle is being toggled manually. | `CustomEvent<ToggleChangeEventDetail>` |
 
 
 ## CSS Custom Properties
