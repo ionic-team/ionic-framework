@@ -314,29 +314,29 @@ workflows:
       - build
       - build-core:
           requires: [build]
-      # - test-core-clean-build:
-      #     requires: [build-core]
-      # - test-core-lint:
-      #     requires: [build-core]
-      # - test-core-spec:
-      #     requires: [build-core]
-      # - test-core-treeshake:
-      #     requires: [build-core]
-      # - test-core-screenshot:
-      #     requires: [build-core]
-      #     filters:
-      #       branches:
-      #         ignore: master
-      # - test-core-screenshot-master:
-      #     requires: [build-core]
-      #     filters:
-      #       branches:
-      #         only: master
+      - test-core-clean-build:
+          requires: [build-core]
+      - test-core-lint:
+          requires: [build-core]
+      - test-core-spec:
+          requires: [build-core]
+      - test-core-treeshake:
+          requires: [build-core]
+      - test-core-screenshot:
+          requires: [build-core]
+          filters:
+            branches:
+              ignore: master
+      - test-core-screenshot-master:
+          requires: [build-core]
+          filters:
+            branches:
+              only: master
 
-      # - build-angular:
-      #     requires: [build-core]
-      # - build-angular-server:
-      #     requires: [build-angular]
+      - build-angular:
+          requires: [build-core]
+      - build-angular-server:
+          requires: [build-angular]
       - build-react:
           requires: [build-core]
       - build-react-router:
@@ -349,9 +349,9 @@ workflows:
           requires: [build-react]
       - test-react-router-spec:
           requires: [build-react-router]
-      # - test-angular-lint:
-      #     requires: [build-angular]
-      # - test-angular-e2e:
-      #     requires:
-      #       - build-angular
-      #       - build-angular-server
+      - test-angular-lint:
+          requires: [build-angular]
+      - test-angular-e2e:
+          requires:
+            - build-angular
+            - build-angular-server
