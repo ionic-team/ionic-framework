@@ -17,7 +17,7 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
 
 export const createReactComponent = <PropType, ElementType>(
   tagName: string,
-  hrefComponent = false
+  routerLinkComponent = false
 ) => {
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>> {
@@ -41,7 +41,7 @@ export const createReactComponent = <PropType, ElementType>(
       attachEventProps(node, this.props, prevProps);
     }
 
-    private handleClick = (e: MouseEvent) => {
+    private handleClick = (e: React.MouseEvent<PropType>) => {
       const { routerLink, routerDirection } = this.props;
       if (routerLink !== undefined) {
         e.preventDefault();
@@ -62,16 +62,19 @@ export const createReactComponent = <PropType, ElementType>(
         return acc;
       }, {});
 
-      const newProps: any = {
+      const newProps: IonicReactInternalProps<PropType> = {
         ...propsToPass,
         ref: forwardedRef,
         style
       };
 
-      if (hrefComponent) {
+      if (routerLinkComponent) {
+        if (this.props.routerLink && !this.props.href) {
+          newProps.href = this.props.routerLink;
+        }
         if (newProps.onClick) {
           const oldClick = newProps.onClick;
-          newProps.onClick = (e: MouseEvent) => {
+          newProps.onClick = (e: React.MouseEvent<PropType>) => {
             oldClick(e);
             if (!e.defaultPrevented) {
               this.handleClick(e);
