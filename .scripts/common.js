@@ -66,6 +66,18 @@ function checkGit(tasks) {
   );
 }
 
+function checkTestDist(tasks) {
+  tasks.push({
+    title: 'Check dist folders for required files',
+    task: () =>
+      execa.stdout('node', ['.scripts/test-dist.js']).then(status => {
+        if (status.indexOf('✅ test.dist') === -1) {
+          throw new Error(`Test Dist did not find some required files`);
+        }
+      })
+  });
+}
+
 const isValidVersion = input => Boolean(semver.valid(input));
 
 function preparePackage(tasks, package, version, install) {
@@ -283,6 +295,7 @@ function copyCDNLoader(tasks, version) {
 }
 
 module.exports = {
+  checkTestDist,
   checkGit,
   isValidVersion,
   isVersionGreater,

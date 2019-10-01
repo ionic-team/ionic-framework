@@ -112,6 +112,9 @@ async function preparePackages(packages, version, install) {
   // generate changelog
   generateChangeLog(tasks);
 
+  // check dist folders
+  common.checkTestDist(tasks);
+
   // update core readme with version number
   updateCoreReadme(tasks, version);
   common.copyCDNLoader(tasks, version);
