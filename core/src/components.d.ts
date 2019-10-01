@@ -40,7 +40,6 @@ import {
   PickerColumn,
   PickerOptions,
   PopoverOptions,
-  RadioChangeEventDetail,
   RadioGroupChangeEventDetail,
   RangeChangeEventDetail,
   RangeValue,
@@ -2261,10 +2260,6 @@ export namespace Components {
   }
   interface IonSegmentButton {
     /**
-    * If `true`, the segment button is selected.
-    */
-    'checked': boolean;
-    /**
     * If `true`, the user cannot interact with the segment button.
     */
     'disabled': boolean;
@@ -2345,10 +2340,6 @@ export namespace Components {
     * If `true`, the user cannot interact with the select option.
     */
     'disabled': boolean;
-    /**
-    * If `true`, the element is selected.
-    */
-    'selected': boolean;
     /**
     * The text value of the option.
     */
@@ -5577,10 +5568,6 @@ declare namespace LocalJSX {
   }
   interface IonSegmentButton {
     /**
-    * If `true`, the segment button is selected.
-    */
-    'checked'?: boolean;
-    /**
     * If `true`, the user cannot interact with the segment button.
     */
     'disabled'?: boolean;
@@ -5592,10 +5579,6 @@ declare namespace LocalJSX {
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
-    /**
-    * Emitted when the segment button is clicked.
-    */
-    'onIonSelect'?: (event: CustomEvent<void>) => void;
     /**
     * The type of the button.
     */
@@ -5676,10 +5659,6 @@ declare namespace LocalJSX {
     * If `true`, the user cannot interact with the select option.
     */
     'disabled'?: boolean;
-    /**
-    * If `true`, the element is selected.
-    */
-    'selected'?: boolean;
     /**
     * The text value of the option.
     */

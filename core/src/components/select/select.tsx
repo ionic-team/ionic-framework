@@ -5,7 +5,6 @@ import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssCla
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
-import { watchForOptions } from '../../utils/watch-options';
 
 import { SelectCompareFn } from './select-interface';
 
@@ -26,7 +25,6 @@ export class Select implements ComponentInterface {
   private overlay?: OverlaySelect;
   private didInit = false;
   private buttonEl?: HTMLButtonElement;
-  private mutationO?: MutationObserver;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -125,7 +123,6 @@ export class Select implements ComponentInterface {
 
   @Watch('value')
   valueChanged() {
-    this.updateOptions();
     this.emitStyle();
     if (this.didInit) {
       this.ionChange.emit({
@@ -135,34 +132,8 @@ export class Select implements ComponentInterface {
   }
 
   async connectedCallback() {
-    if (this.value === undefined) {
-      if (this.multiple) {
-        // there are no values set at this point
-        // so check to see who should be selected
-        const checked = this.childOpts.filter(o => o.selected);
-        this.value = checked.map(o => getOptionValue(o));
-      } else {
-        const checked = this.childOpts.find(o => o.selected);
-        if (checked) {
-          this.value = getOptionValue(checked);
-        }
-      }
-    }
-    this.updateOptions();
     this.updateOverlayOptions();
     this.emitStyle();
-
-    this.mutationO = watchForOptions<HTMLIonSelectOptionElement>(this.el, 'ion-select-option', async () => {
-      this.updateOptions();
-      this.updateOverlayOptions();
-    });
-  }
-
-  disconnectedCallback() {
-    if (this.mutationO) {
-      this.mutationO.disconnect();
-      this.mutationO = undefined;
-    }
   }
 
   componentDidLoad() {
@@ -218,30 +189,32 @@ export class Select implements ComponentInterface {
       return;
     }
     const childOpts = this.childOpts;
+    const value = this.value;
     switch (this.interface) {
       case 'action-sheet':
-        overlay.buttons = this.createActionSheetButtons(childOpts);
+        overlay.buttons = this.createActionSheetButtons(childOpts, value);
         break;
       case 'popover':
         const popover = overlay.querySelector('ion-select-popover');
         if (popover) {
-          popover.options = this.createPopoverOptions(childOpts);
+          popover.options = this.createPopoverOptions(childOpts, value);
         }
         break;
       case 'alert':
         const inputType = (this.multiple ? 'checkbox' : 'radio');
-        overlay.inputs = this.createAlertInputs(childOpts, inputType);
+        overlay.inputs = this.createAlertInputs(childOpts, inputType, value);
         break;
     }
   }
 
-  private createActionSheetButtons(data: any[]): ActionSheetButton[] {
+  private createActionSheetButtons(data: HTMLIonSelectOptionElement[], selectValue: any): ActionSheetButton[] {
     const actionSheetButtons = data.map(option => {
+      const value = getOptionValue(option);
       return {
-        role: (option.selected ? 'selected' : ''),
+        role: (isSelected(value, selectValue) ? 'selected' : ''),
         text: option.textContent,
         handler: () => {
-          this.value = getOptionValue(option);
+          this.value = value;
         }
       } as ActionSheetButton;
     });
@@ -258,38 +231,39 @@ export class Select implements ComponentInterface {
     return actionSheetButtons;
   }
 
-  private createAlertInputs(data: any[], inputType: string): AlertInput[] {
-    return data.map(o => {
-      return {
-        type: inputType,
-        label: o.textContent,
-        value: getOptionValue(o),
-        checked: o.selected,
-        disabled: o.disabled
-      } as AlertInput;
-    });
-  }
-
-  private createPopoverOptions(data: any[]): SelectPopoverOption[] {
+  private createAlertInputs(data: HTMLIonSelectOptionElement[], inputType: 'checkbox' | 'radio', selectValue: any): AlertInput[] {
     return data.map(o => {
       const value = getOptionValue(o);
       return {
-        text: o.textContent,
+        type: inputType,
+        label: o.textContent || '',
         value,
-        checked: o.selected,
+        checked: isSelected(value, selectValue),
+        disabled: o.disabled
+      };
+    });
+  }
+
+  private createPopoverOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectPopoverOption[] {
+    return data.map(o => {
+      const value = getOptionValue(o);
+      return {
+        text: o.textContent || '',
+        value,
+        checked: isSelected(value, selectValue),
         disabled: o.disabled,
         handler: () => {
           this.value = value;
           this.close();
         }
-      } as SelectPopoverOption;
+      };
     });
   }
 
   private async openPopover(ev: UIEvent) {
     const interfaceOptions = this.interfaceOptions;
     const mode = getIonMode(this);
-
+    const value = this.value;
     const popoverOpts: PopoverOptions = {
       mode,
       ...interfaceOptions,
@@ -301,22 +275,21 @@ export class Select implements ComponentInterface {
         header: interfaceOptions.header,
         subHeader: interfaceOptions.subHeader,
         message: interfaceOptions.message,
-        value: this.value,
-        options: this.createPopoverOptions(this.childOpts)
+        value,
+        options: this.createPopoverOptions(this.childOpts, value)
       }
     };
     return popoverController.create(popoverOpts);
   }
 
   private async openActionSheet() {
-
     const mode = getIonMode(this);
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
       mode,
       ...interfaceOptions,
 
-      buttons: this.createActionSheetButtons(this.childOpts),
+      buttons: this.createActionSheetButtons(this.childOpts, this.value),
       cssClass: ['select-action-sheet', interfaceOptions.cssClass]
     };
     return actionSheetController.create(actionSheetOpts);
@@ -335,7 +308,7 @@ export class Select implements ComponentInterface {
       ...interfaceOptions,
 
       header: interfaceOptions.header ? interfaceOptions.header : labelText,
-      inputs: this.createAlertInputs(this.childOpts, inputType),
+      inputs: this.createAlertInputs(this.childOpts, inputType, this.value),
       buttons: [
         {
           text: this.cancelText,
@@ -366,23 +339,6 @@ export class Select implements ComponentInterface {
       return Promise.resolve(false);
     }
     return this.overlay.dismiss();
-  }
-
-  private updateOptions() {
-    // iterate all options, updating the selected prop
-    let canSelect = true;
-    const { value, childOpts, compareWith, multiple } = this;
-    for (const selectOption of childOpts) {
-      const optValue = getOptionValue(selectOption);
-      const selected = canSelect && isOptionSelected(value, optValue, compareWith);
-      selectOption.selected = selected;
-
-      // if current option is selected and select is single-option, we can't select
-      // any option more
-      if (selected && !multiple) {
-        canSelect = false;
-      }
-    }
   }
 
   private getLabel() {
@@ -490,6 +446,13 @@ export class Select implements ComponentInterface {
   }
 }
 
+const isSelected = (value: any, selectValue: any) => {
+  if (Array.isArray(selectValue)) {
+    return selectValue.includes(value);
+  }
+  return selectValue === value;
+};
+
 const getOptionValue = (el: HTMLIonSelectOptionElement) => {
   const value = el.value;
   return (value === undefined)
@@ -505,17 +468,6 @@ const parseValue = (value: any) => {
     return value.join(',');
   }
   return value.toString();
-};
-
-const isOptionSelected = (currentValue: any[] | any, compareValue: any, compareWith?: string | SelectCompareFn | null) => {
-  if (currentValue === undefined) {
-    return false;
-  }
-  if (Array.isArray(currentValue)) {
-    return currentValue.some(val => compareOptions(val, compareValue, compareWith));
-  } else {
-    return compareOptions(currentValue, compareValue, compareWith);
-  }
 };
 
 const compareOptions = (currentValue: any, compareValue: any, compareWith?: string | SelectCompareFn | null): boolean => {

@@ -17,8 +17,6 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class Segment implements ComponentInterface {
 
-  private didInit = false;
-
   @Element() el!: HTMLElement;
 
   /**
@@ -45,10 +43,7 @@ export class Segment implements ComponentInterface {
 
   @Watch('value')
   protected valueChanged(value: string | undefined) {
-    if (this.didInit) {
-      this.updateButtons();
-      this.ionChange.emit({ value });
-    }
+    this.ionChange.emit({ value });
   }
 
   /**
@@ -69,18 +64,7 @@ export class Segment implements ComponentInterface {
   }
 
   connectedCallback() {
-    if (this.value === undefined) {
-      const checked = this.getButtons().find(b => b.checked);
-      if (checked) {
-        this.value = checked.value;
-      }
-    }
     this.emitStyle();
-  }
-
-  componentDidLoad() {
-    this.updateButtons();
-    this.didInit = true;
   }
 
   private emitStyle() {
@@ -89,21 +73,22 @@ export class Segment implements ComponentInterface {
     });
   }
 
-  private updateButtons() {
-    const value = this.value;
-    for (const button of this.getButtons()) {
-      button.checked = (button.value === value);
+  private onClick = (ev: Event) => {
+    const selectedSegment = ev.target && (ev.target as HTMLElement).closest('ion-segment-button');
+    if (selectedSegment) {
+      const currentValue = this.value;
+      const newValue = selectedSegment.value;
+      if (newValue !== currentValue) {
+        this.value = newValue;
+      }
     }
-  }
-
-  private getButtons() {
-    return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
   render() {
     const mode = getIonMode(this);
     return (
       <Host
+        onClick={this.onClick}
         class={{
           ...createColorClasses(this.color),
           [mode]: true,

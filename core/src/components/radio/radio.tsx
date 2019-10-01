@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h, State } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, RadioChangeEventDetail, StyleEventDetail } from '../../interface';
+import { Color, StyleEventDetail } from '../../interface';
 import { findItemLabel } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -57,12 +57,6 @@ export class Radio implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
-   * Emitted when checked radio button is selected.
-   * @internal
-   */
-  @Event() ionRadioChanged!: EventEmitter<RadioChangeEventDetail>;
-
-  /**
    * Emitted when the radio button has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
@@ -75,11 +69,8 @@ export class Radio implements ComponentInterface {
   connectedCallback() {
     const radioGroup = this.radioGroup = this.el.closest('ion-radio-group');
     if (radioGroup) {
-      radioGroup.componentOnReady().then(() => {
-        this.updateState();
-        radioGroup.addEventListener('ionChange', this.updateState);
-
-      });
+      this.updateState();
+      radioGroup.addEventListener('ionChange', this.updateState);
     }
   }
 
@@ -90,6 +81,7 @@ export class Radio implements ComponentInterface {
       this.radioGroup = null;
     }
   }
+
   componentWillLoad() {
     this.emitStyle();
   }
@@ -118,13 +110,6 @@ export class Radio implements ComponentInterface {
     this.ionBlur.emit();
   }
 
-  private onClick = () => {
-    this.ionRadioChanged.emit({
-      checked: !this.checked,
-      value: this.value
-    });
-  }
-
   render() {
     const { inputId, disabled, checked, color, el } = this;
     const mode = getIonMode(this);
@@ -135,7 +120,6 @@ export class Radio implements ComponentInterface {
     }
     return (
       <Host
-        onClick={this.onClick}
         role="radio"
         aria-disabled={disabled ? 'true' : null}
         aria-checked={`${checked}`}

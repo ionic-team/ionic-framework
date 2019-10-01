@@ -3,8 +3,6 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 import { getIonMode } from '../../global/ionic-global';
 import { RadioGroupChangeEventDetail } from '../../interface';
 
-import { RadioChangeEventDetail } from './radio-group-interface';
-
 @Component({
   tag: 'ion-radio-group'
 })
@@ -12,7 +10,6 @@ export class RadioGroup implements ComponentInterface {
 
   private inputId = `ion-rg-${radioGroupIds++}`;
   private labelId = `${this.inputId}-lbl`;
-  private mutationO?: MutationObserver;
 
   @Element() el!: HTMLElement;
 
@@ -54,20 +51,14 @@ export class RadioGroup implements ComponentInterface {
     }
   }
 
-  disconnectedCallback() {
-    if (this.mutationO) {
-      this.mutationO.disconnect();
-      this.mutationO = undefined;
-    }
-  }
-
-  private onRadioChangedSelect = (ev: CustomEvent<RadioChangeEventDetail>) => {
-    const selectedRadio = ev.target as HTMLIonRadioElement | null;
+  private onClick = (ev: Event) => {
+    const selectedRadio = ev.target && (ev.target as HTMLElement).closest('ion-radio');
     if (selectedRadio) {
-      const detail = ev.detail;
-      if (detail.checked) {
-        this.value = detail.value;
-      } else if (this.allowEmptySelection && detail.value === this.value) {
+      const currentValue = this.value;
+      const newValue = selectedRadio.value;
+      if (newValue !== currentValue) {
+        this.value = newValue;
+      } else if (this.allowEmptySelection) {
         this.value = undefined;
       }
     }
@@ -78,7 +69,7 @@ export class RadioGroup implements ComponentInterface {
       <Host
         role="radiogroup"
         aria-labelledby={this.labelId}
-        onIonRadioChanged={this.onRadioChangedSelect}
+        onClick={this.onClick}
         class={getIonMode(this)}
       >
       </Host>

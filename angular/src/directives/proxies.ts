@@ -719,17 +719,15 @@ export class IonSegment {
 proxyInputs(IonSegment, ['color', 'disabled', 'mode', 'scrollable', 'value']);
 
 export declare interface IonSegmentButton extends Components.IonSegmentButton {}
-@Component({ selector: 'ion-segment-button', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['checked', 'disabled', 'layout', 'mode', 'type', 'value'] })
+@Component({ selector: 'ion-segment-button', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['disabled', 'layout', 'mode', 'type', 'value'] })
 export class IonSegmentButton {
-  ionSelect!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSelect']);
   }
 }
-proxyInputs(IonSegmentButton, ['checked', 'disabled', 'layout', 'mode', 'type', 'value']);
+proxyInputs(IonSegmentButton, ['disabled', 'layout', 'mode', 'type', 'value']);
 
 export declare interface IonSelect extends Components.IonSelect {}
 @Component({ selector: 'ion-select', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'value'] })
@@ -749,7 +747,7 @@ proxyMethods(IonSelect, ['open']);
 proxyInputs(IonSelect, ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'value']);
 
 export declare interface IonSelectOption extends Components.IonSelectOption {}
-@Component({ selector: 'ion-select-option', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['disabled', 'selected', 'value'] })
+@Component({ selector: 'ion-select-option', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['disabled', 'value'] })
 export class IonSelectOption {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -757,7 +755,7 @@ export class IonSelectOption {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonSelectOption, ['disabled', 'selected', 'value']);
+proxyInputs(IonSelectOption, ['disabled', 'value']);
 
 export declare interface IonSkeletonText extends Components.IonSkeletonText {}
 @Component({ selector: 'ion-skeleton-text', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['animated', 'width'] })

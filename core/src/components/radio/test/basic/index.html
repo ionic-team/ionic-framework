@@ -21,7 +21,7 @@
 
     <ion-content id="content" class="radio-test outer-content">
       <ion-list>
-        <ion-radio-group id="fruitRadio">
+        <ion-radio-group id="fruitRadio" value="grape">
           <ion-item-divider>
             <ion-label>Fruits (Group w/ values)</ion-label>
           </ion-item-divider>
@@ -32,7 +32,7 @@
 
           <ion-item>
             <ion-label>Grape, checked, disabled</ion-label>
-            <ion-radio slot="start" id="grapeChecked" value="grape" checked disabled></ion-radio>
+            <ion-radio slot="start" id="grapeChecked" value="grape" disabled></ion-radio>
           </ion-item>
 
           <ion-item>
@@ -41,18 +41,18 @@
           </ion-item>
         </ion-radio-group>
 
-        <ion-radio-group id="pizzaRadio">
+        <ion-radio-group id="pizzaRadio" value="pepperoni">
           <ion-item-divider>
             <ion-label>Extra Pizza Topping (Group w/ no values)</ion-label>
           </ion-item-divider>
           <ion-item>
             <ion-label>Pepperoni</ion-label>
-            <ion-radio slot="end" name="pepperoni" checked id="pepperoni-radio"></ion-radio>
+            <ion-radio slot="end" name="pepperoni" value="pepperoni" id="pepperoni-radio"></ion-radio>
           </ion-item>
 
           <ion-item>
             <ion-label>Sausage</ion-label>
-            <ion-radio slot="end" color="danger" name="sausage"></ion-radio>
+            <ion-radio slot="end" color="danger" name="sausage" value="sausage"></ion-radio>
           </ion-item>
         </ion-radio-group>
 

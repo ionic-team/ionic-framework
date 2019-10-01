@@ -991,13 +991,11 @@ ion-segment,prop,value,null | string | undefined,undefined,false,false
 ion-segment,event,ionChange,SegmentChangeEventDetail,true
 
 ion-segment-button,shadow
-ion-segment-button,prop,checked,boolean,false,false,false
 ion-segment-button,prop,disabled,boolean,false,false,false
 ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,'icon-top',false,false
 ion-segment-button,prop,mode,"ios" | "md",undefined,false,false
 ion-segment-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-segment-button,prop,value,string,'ion-sb-' + (ids++),false,false
-ion-segment-button,event,ionSelect,void,true
 ion-segment-button,css-prop,--background
 ion-segment-button,css-prop,--background-activated
 ion-segment-button,css-prop,--background-checked
@@ -1048,7 +1046,6 @@ ion-select,css-prop,--padding-top
 
 ion-select-option,shadow
 ion-select-option,prop,disabled,boolean,false,false,false
-ion-select-option,prop,selected,boolean,false,false,false
 ion-select-option,prop,value,any,undefined,false,false
 
 ion-skeleton-text,shadow
