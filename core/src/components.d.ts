@@ -25,13 +25,11 @@ import {
   HeaderFn,
   HeaderHeightFn,
   InputChangeEventDetail,
-  IonicAnimation,
   ItemHeightFn,
   ItemRenderFn,
   ItemReorderEventDetail,
   LoadingOptions,
   MenuChangeEventDetail,
-  MenuI,
   ModalOptions,
   NavComponent,
   NavOptions,
@@ -1366,68 +1364,6 @@ export namespace Components {
     * The type of the button.
     */
     'type': 'submit' | 'reset' | 'button';
-  }
-  interface IonMenuController {
-    /**
-    * Close the menu. If a menu is specified, it will close that menu. If no menu is specified, then it will close any menu that is open. If it does not find any open menus, it will return `false`.
-    * @param menu The menuId or side of the menu to close.
-    */
-    'close': (menu?: string | null | undefined) => Promise<boolean>;
-    /**
-    * Enable or disable a menu. Disabling a menu will not allow gestures for that menu or any calls to open it. This is useful when there are multiple menus on the same side and only one of them should be allowed to open. Enabling a menu will automatically disable all other menus on that side.
-    * @param enable If `true`, the menu should be enabled.
-    * @param menu The menuId or side of the menu to enable or disable.
-    */
-    'enable': (enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
-    /**
-    * Get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `start` or `end`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`.
-    * @param menu The menuId or side of the menu.
-    */
-    'get': (menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
-    /**
-    * Get all menu instances.
-    */
-    'getMenus': () => Promise<HTMLIonMenuElement[]>;
-    /**
-    * Get the instance of the opened menu. Returns `null` if a menu is not found.
-    */
-    'getOpen': () => Promise<HTMLIonMenuElement | undefined>;
-    /**
-    * Get whether or not a menu is animating. Returns `true` if any menu is currently animating.
-    */
-    'isAnimating': () => Promise<boolean>;
-    /**
-    * Get whether or not the menu is enabled. Returns `true` if the specified menu is enabled. Returns `false` if a menu is disabled or not found.
-    * @param menu The menuId or side of the menu that is being checked.
-    */
-    'isEnabled': (menu?: string | null | undefined) => Promise<boolean>;
-    /**
-    * Get whether or not the menu is open. Returns `true` if the specified menu is open. If a menu is not specified, it will return `true` if any menu is currently open.
-    * @param menu The menuId or side of the menu that is being checked.
-    */
-    'isOpen': (menu?: string | null | undefined) => Promise<boolean>;
-    /**
-    * Open the menu. If a menu is not provided then it will open the first menu found. If the specified menu is `start` or `end`, then it will open the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `false`.
-    * @param menu The menuId or side of the menu to open.
-    */
-    'open': (menu?: string | null | undefined) => Promise<boolean>;
-    /**
-    * Registers a new animation that can be used with any `ion-menu` by passing the name of the animation in its `type` property.
-    * @param name The name of the animation to register.
-    * @param animation The animation function to register.
-    */
-    'registerAnimation': (name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => Promise<void>;
-    /**
-    * Enable or disable the ability to swipe open the menu.
-    * @param enable If `true`, the menu swipe gesture should be enabled.
-    * @param menu The menuId or side of the menu to enable or disable the swipe gesture on.
-    */
-    'swipeGesture': (enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
-    /**
-    * Toggle the menu open or closed. If the menu is already open, it will try to close the menu, otherwise it will try to open it. Returns `false` if a menu is not found.
-    * @param menu The menuId or side of the menu to toggle.
-    */
-    'toggle': (menu?: string | null | undefined) => Promise<boolean>;
   }
   interface IonMenuToggle {
     /**
@@ -3130,12 +3066,6 @@ declare global {
     new (): HTMLIonMenuButtonElement;
   };
 
-  interface HTMLIonMenuControllerElement extends Components.IonMenuController, HTMLStencilElement {}
-  var HTMLIonMenuControllerElement: {
-    prototype: HTMLIonMenuControllerElement;
-    new (): HTMLIonMenuControllerElement;
-  };
-
   interface HTMLIonMenuToggleElement extends Components.IonMenuToggle, HTMLStencilElement {}
   var HTMLIonMenuToggleElement: {
     prototype: HTMLIonMenuToggleElement;
@@ -3480,7 +3410,6 @@ declare global {
     'ion-loading-controller': HTMLIonLoadingControllerElement;
     'ion-menu': HTMLIonMenuElement;
     'ion-menu-button': HTMLIonMenuButtonElement;
-    'ion-menu-controller': HTMLIonMenuControllerElement;
     'ion-menu-toggle': HTMLIonMenuToggleElement;
     'ion-modal': HTMLIonModalElement;
     'ion-modal-controller': HTMLIonModalControllerElement;
@@ -4781,7 +4710,6 @@ declare namespace LocalJSX {
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
-  interface IonMenuController {}
   interface IonMenuToggle {
     /**
     * Automatically hides the content when the corresponding menu is not active.  By default, it's `true`. Change it to `false` in order to keep `ion-menu-toggle` always visible regardless the state of the menu.
@@ -6132,7 +6060,6 @@ declare namespace LocalJSX {
     'ion-loading-controller': IonLoadingController;
     'ion-menu': IonMenu;
     'ion-menu-button': IonMenuButton;
-    'ion-menu-controller': IonMenuController;
     'ion-menu-toggle': IonMenuToggle;
     'ion-modal': IonModal;
     'ion-modal-controller': IonModalController;
@@ -6236,7 +6163,6 @@ declare module "@stencil/core" {
       'ion-loading-controller': LocalJSX.IonLoadingController & JSXBase.HTMLAttributes<HTMLIonLoadingControllerElement>;
       'ion-menu': LocalJSX.IonMenu & JSXBase.HTMLAttributes<HTMLIonMenuElement>;
       'ion-menu-button': LocalJSX.IonMenuButton & JSXBase.HTMLAttributes<HTMLIonMenuButtonElement>;
-      'ion-menu-controller': LocalJSX.IonMenuController & JSXBase.HTMLAttributes<HTMLIonMenuControllerElement>;
       'ion-menu-toggle': LocalJSX.IonMenuToggle & JSXBase.HTMLAttributes<HTMLIonMenuToggleElement>;
       'ion-modal': LocalJSX.IonModal & JSXBase.HTMLAttributes<HTMLIonModalElement>;
       'ion-modal-controller': LocalJSX.IonModalController & JSXBase.HTMLAttributes<HTMLIonModalControllerElement>;

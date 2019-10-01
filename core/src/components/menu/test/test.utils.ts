@@ -5,7 +5,6 @@ import { generateE2EUrl } from '../../../utils/test/utils';
 export const testMenu = async (
   type: string,
   selector: string,
-  menuId = '',
   rtl = false
 ) => {
   try {
@@ -16,13 +15,6 @@ export const testMenu = async (
     });
 
     const screenshotCompares = [];
-
-    if (menuId.length > 0) {
-      const menuCtrl = await page.find('ion-menu-controller');
-      await page.waitFor(250);
-      await menuCtrl.callMethod('enable', true, menuId);
-    }
-
     const menu = await page.find(selector);
 
     await menu.callMethod('open');

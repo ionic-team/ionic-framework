@@ -78,14 +78,13 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-button expand="block" onclick="openFirst()">Open Start Menu</ion-button>
-        <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
-        <ion-button expand="block" onclick="openCustom()">Open Custom Menu</ion-button>
+        <ion-button expand="block" id="open-start">Open Start Menu</ion-button>
+        <ion-button expand="block" id="open-end">Open End Menu</ion-button>
+        <ion-button expand="block" id="open-custom">Open Custom Menu</ion-button>
       </ion-content>
     </div>
 
   </ion-app>
-  <ion-menu-controller></ion-menu-controller>
 
   <style>
     .my-custom-menu {
@@ -94,21 +93,21 @@
   </style>
 
   <script type="module">
-    const menuCtrl = document.querySelector('ion-menu-controller');
-
-    async function openFirst() {
-      await menuCtrl.enable(true, 'first');
-      await menuCtrl.open('first');
-    }
-
-    async  function openEnd() {
-      await menuCtrl.open('end');
-    }
-
-    async function openCustom() {
-      await menuCtrl.enable(true, 'custom');
-      await menuCtrl.open('custom');
-    }
+    import { menuController } from '../../../../../dist/ionic/index.esm.js';
+    
+    document.querySelector('#open-start').addEventListener('click', async () => {
+      await menuController.enable(true, 'first');
+      await menuController.open('first');
+    });
+    
+    document.querySelector('#open-end').addEventListener('click', async () => {
+      await menuController.open('end');
+    });
+    
+    document.querySelector('#open-custom').addEventListener('click', async () => {
+      await menuController.enable(true, 'custom');
+      await menuController.open('custom');
+    });
   </script>
 </body>
 

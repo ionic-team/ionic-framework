@@ -26,7 +26,7 @@ export const config: Config = {
     { components: ['ion-item', 'ion-item-divider', 'ion-item-group', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text', 'ion-note'] },
     { components: ['ion-item-sliding', 'ion-item-options', 'ion-item-option'] },
     { components: ['ion-loading'] },
-    { components: ['ion-menu', 'ion-menu-controller', 'ion-menu-toggle', 'ion-menu-button'] },
+    { components: ['ion-menu', 'ion-menu-toggle', 'ion-menu-button'] },
     { components: ['ion-modal'] },
     { components: ['ion-nav', 'ion-nav-link'] },
     { components: ['ion-img'] },
@@ -122,9 +122,6 @@ export const config: Config = {
         'ion-toast',
         'ion-toast-controller',
         'ion-toast',
-
-        // controllers
-        'ion-menu-controller',
 
         // navigation
         'ion-router',

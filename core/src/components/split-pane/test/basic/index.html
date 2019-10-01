@@ -64,7 +64,7 @@
 
         <ion-content class="ion-padding">
           <h1>Page 1</h1>
-          <ion-button onclick="menu()">Disable/enable menu</ion-button>
+          <ion-button id="toggle-menu">Disable/enable menu</ion-button>
           <f></f>
           <f></f>
           <f></f>
@@ -75,17 +75,13 @@
     </ion-split-pane>
 
   </ion-app>
-  <ion-menu-controller></ion-menu-controller>
 
-  <script>
-    const menuCtrl = document.querySelector('ion-menu-controller');
-    function openStart() {
-      menuCtrl.open('start');
-    }
-
-    async function menu() {
-      menuCtrl.enable(!await menuCtrl.isEnabled());
-    }
+  <script type="module">
+    import { menuController } from '../../../../../dist/ionic/index.esm.js';
+    
+    document.querySelector('#toggle-menu').addEventListener('click', async () => {
+      menuController.enable(!await menuController.isEnabled());
+    });
   </script>
 
   <style>

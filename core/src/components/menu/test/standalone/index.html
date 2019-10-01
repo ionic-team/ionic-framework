@@ -61,23 +61,21 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-button expand="block" onclick="openStart()">Open Start Menu</ion-button>
-        <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
+        <ion-button expand="block" id="open-start">Open Start Menu</ion-button>
+        <ion-button expand="block" id="open-end">Open End Menu</ion-button>
       </ion-content>
     </div>
 
-  <ion-menu-controller></ion-menu-controller>
-
-  <script>
-    function openStart() {
-      document.querySelector('ion-menu-controller')
-        .open('start');
-    }
-
-    function openEnd() {
-      document.querySelector('ion-menu-controller')
-        .open('end');
-    }
+  <script type="module">
+    import { menuController } from '../../../../../dist/ionic/index.esm.js';
+    
+    document.querySelector('#open-start').addEventListener('click', async () => {
+      await menuController.open('start');
+    });
+    
+    document.querySelector('#open-end').addEventListener('click', async () => {
+      await menuController.open('end');
+    });
   </script>
 </body>
 

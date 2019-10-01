@@ -168,32 +168,31 @@ constructor(private menu: MenuController) { }
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-button expand="block" onclick="openFirst()">Open Start Menu</ion-button>
-      <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
-      <ion-button expand="block" onclick="openCustom()">Open Custom Menu</ion-button>
+      <ion-button expand="block" id="open-start">Open Start Menu</ion-button>
+      <ion-button expand="block" id="open-end">Open End Menu</ion-button>
+      <ion-button expand="block" id="open-custom">Open Custom Menu</ion-button>
     </ion-content>
   </div>
 
 </ion-app>
-<ion-menu-controller></ion-menu-controller>
 ```
 
 ```javascript
-const menuCtrl = document.querySelector('ion-menu-controller');
+import { menuController } from '@ionic/core';
+    
+document.querySelector('#open-start').addEventListener('click', async () => {
+  await menuController.enable(true, 'first');
+  await menuController.open('first');
+});
 
-function openFirst() {
-  menuCtrl.enable(true, 'first');
-  menuCtrl.open('first');
-}
+document.querySelector('#open-end').addEventListener('click', async () => {
+  await menuController.open('end');
+});
 
-function openEnd() {
-  menuCtrl.open('end');
-}
-
-function openCustom() {
-  menuCtrl.enable(true, 'custom');
-  menuCtrl.open('custom');
-}
+document.querySelector('#open-custom').addEventListener('click', async () => {
+  await menuController.enable(true, 'custom');
+  await menuController.open('custom');
+});
 ```
 
 ```css
