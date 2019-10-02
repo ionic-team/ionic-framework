@@ -10,11 +10,11 @@ export const iosEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop'))
+    .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 0.26);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.picker-wrapper'))
+    .addElement(baseEl.querySelector('.picker-wrapper')!)
     .fromTo('transform', 'translateY(100%)', 'translateY(0%)');
 
   return baseAnimation

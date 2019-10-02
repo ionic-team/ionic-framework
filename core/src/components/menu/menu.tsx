@@ -434,10 +434,10 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
-      .onFinish(() => this.afterAnimation(shouldOpen), {
-        oneTimeCallback: true
-      })
-      .progressEnd(shouldComplete, newStepValue, 300);
+      .onFinish(
+        () => this.afterAnimation(shouldOpen),
+        { oneTimeCallback: true })
+      .progressEnd(shouldComplete ? 1 : 0, newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {
