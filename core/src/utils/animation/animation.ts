@@ -2,7 +2,7 @@
 
 import { raf } from '../helpers';
 
-import { Animation, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrameEdge, AnimationKeyFrames, AnimationLifecycle, AnimationOnFinishOptions, AnimationPlayOptions } from './animation-interface';
+import { Animation, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrames, AnimationLifecycle, AnimationOnFinishOptions, AnimationPlayOptions } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
 interface AnimationOnFinishCallback {
@@ -392,7 +392,7 @@ export const createAnimation = (): Animation => {
     return ani;
   };
 
-  const keyframes = (keyframeValues: any[]) => {
+  const keyframes = (keyframeValues: AnimationKeyFrames) => {
     _keyframes = keyframeValues;
 
     return ani;
@@ -915,30 +915,30 @@ export const createAnimation = (): Animation => {
   };
 
   const from = (property: string, value: any) => {
-    const firstFrame = _keyframes[0] as AnimationKeyFrameEdge | undefined;
+    const firstFrame = _keyframes[0] as AnimationKeyFrame | undefined;
 
-    if (firstFrame !== undefined && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
+    if (firstFrame !== undefined && firstFrame.offset === 0) {
       firstFrame[property] = value;
     } else {
       _keyframes = [
         { offset: 0, [property]: value },
         ..._keyframes
-      ] as AnimationKeyFrame[];
+      ];
     }
 
     return ani;
   };
 
   const to = (property: string, value: any) => {
-    const lastFrame = _keyframes[_keyframes.length - 1] as AnimationKeyFrameEdge | undefined;
+    const lastFrame = _keyframes[_keyframes.length - 1] as AnimationKeyFrame | undefined;
 
-    if (lastFrame !== undefined && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
+    if (lastFrame !== undefined && lastFrame.offset === 1) {
       lastFrame[property] = value;
     } else {
       _keyframes = [
         ..._keyframes,
         { offset: 1, [property]: value }
-      ] as AnimationKeyFrame[];
+      ];
     }
     return ani;
   };

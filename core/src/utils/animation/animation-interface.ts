@@ -225,14 +225,10 @@ export interface AnimationOnFinishOptions {
   oneTimeCallback: boolean;
 }
 
-export type AnimationKeyFrames = [AnimationKeyFrameEdge, AnimationKeyFrameEdge] | AnimationKeyFrame[];
+export type AnimationKeyFrames = AnimationKeyFrame[];
 
 export interface AnimationKeyFrame extends AnimationStyles {
   offset: number;
-}
-
-export interface AnimationKeyFrameEdge extends AnimationStyles {
-  offset?: number;
 }
 
 export type AnimationStyles = Record<string, any>;
