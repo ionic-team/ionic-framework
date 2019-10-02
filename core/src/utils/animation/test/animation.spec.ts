@@ -151,7 +151,7 @@ describe('Animation Class', () => {
     beforeEach(() => {
       animation = createAnimation();
     });
-    
+
     it('should get "linear" when easing not set', () => {
       expect(animation.getEasing()).toEqual("linear");
     });
@@ -161,7 +161,7 @@ describe('Animation Class', () => {
       animation
         .addAnimation(childAnimation)
         .easing('ease-in-out');
-      
+
       expect(childAnimation.getEasing()).toEqual('ease-in-out');
     });
 
@@ -186,8 +186,8 @@ describe('Animation Class', () => {
       expect(animation.getEasing()).toEqual('ease-in-out');
     });
 
-    it('should get undefined when duration not set', () => {
-      expect(animation.getDuration()).toEqual(undefined);
+    it('should get 0 when duration not set', () => {
+      expect(animation.getDuration()).toEqual(0);
     });
 
     it('should get parent duration when child duration is not set', () => {
@@ -210,8 +210,8 @@ describe('Animation Class', () => {
       expect(childAnimation.getDuration()).toEqual(500);
     });
 
-    it('should get undefined when delay not set', () => {
-      expect(animation.getDelay()).toEqual(undefined);
+    it('should get 0 when delay not set', () => {
+      expect(animation.getDelay()).toEqual(0);
     });
 
     it('should get parent delay when child delay is not set', () => {
@@ -234,8 +234,8 @@ describe('Animation Class', () => {
       expect(childAnimation.getDelay()).toEqual(500);
     });
 
-    it('should get undefined when iterations not set', () => {
-      expect(animation.getIterations()).toEqual(undefined);
+    it('should get 1 when iterations not set', () => {
+      expect(animation.getIterations()).toEqual(1);
     });
 
     it('should get parent iterations when child iterations is not set', () => {
@@ -258,8 +258,8 @@ describe('Animation Class', () => {
       expect(childAnimation.getIterations()).toEqual(2);
     });
 
-    it('should get undefined when fill not set', () => {
-      expect(animation.getFill()).toEqual(undefined);
+    it('should get "both" when fill not set', () => {
+      expect(animation.getFill()).toEqual('both');
     });
 
     it('should get parent fill when child fill is not set', () => {
@@ -282,8 +282,8 @@ describe('Animation Class', () => {
       expect(childAnimation.getFill()).toEqual('none');
     });
 
-    it('should get undefined when direction not set', () => {
-      expect(animation.getDirection()).toEqual(undefined);
+    it('should get "normal" when direction not set', () => {
+      expect(animation.getDirection()).toEqual("normal");
     });
 
     it('should get parent direction when child direction is not set', () => {
