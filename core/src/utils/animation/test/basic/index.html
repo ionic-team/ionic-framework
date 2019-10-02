@@ -17,7 +17,7 @@
       Element.prototype.animate = null;
     }
     
-    import { createAnimation } from '../../../../dist/index.mjs';
+    import { createAnimation } from '../../../../dist/ionic/index.esm.js';
 
     const squareA = document.querySelector('.square-a');
     
@@ -25,7 +25,8 @@
     
     rootAnimation
       .addElement(squareA)
-      .duration(1000)
+      .duration(500)
+      .iterations(2)
       .easing('linear')
       .keyframes([
         { background: 'rgba(255, 0, 0, 0.5)', offset: 0 },

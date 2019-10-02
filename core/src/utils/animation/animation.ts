@@ -949,8 +949,9 @@ export const createAnimation = () => {
        */
        const animationDelay = getDelay() || 0;
        const animationDuration = getDuration() || 0;
+       const animationIterations = getIterations() || 1;
 
-       cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + animationDuration + ANIMATION_END_FALLBACK_PADDING_MS);
+       cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + (animationDuration * animationIterations) + ANIMATION_END_FALLBACK_PADDING_MS);
 
        animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();
