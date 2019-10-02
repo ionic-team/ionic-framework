@@ -6,33 +6,27 @@
 // Align Self
 // --------------------------------------------------
 
-.ion-align-self-start,
-[align-self-start] {
+.ion-align-self-start {
   align-self: flex-start !important;
 }
 
-.ion-align-self-end,
-[align-self-end] {
+.ion-align-self-end {
   align-self: flex-end !important;
 }
 
-.ion-align-self-center,
-[align-self-center] {
+.ion-align-self-center {
   align-self: center !important;
 }
 
-.ion-align-self-stretch,
-[align-self-stretch] {
+.ion-align-self-stretch {
   align-self: stretch !important;
 }
 
-.ion-align-self-baseline,
-[align-self-baseline] {
+.ion-align-self-baseline {
   align-self: baseline !important;
 }
 
-.ion-align-self-auto,
-[align-self-auto] {
+.ion-align-self-auto {
   align-self: auto !important;
 }
 
@@ -40,18 +34,15 @@
 // Flex Wrap
 // --------------------------------------------------
 
-.ion-wrap,
-[wrap] {
+.ion-wrap {
   flex-wrap: wrap !important;
 }
 
-.ion-nowrap,
-[nowrap] {
+.ion-nowrap {
   flex-wrap: nowrap !important;
 }
 
-.ion-wrap-reverse,
-[wrap-reverse] {
+.ion-wrap-reverse {
   flex-wrap: wrap-reverse !important;
 }
 
@@ -59,33 +50,27 @@
 // Justify Content
 // --------------------------------------------------
 
-.ion-justify-content-start,
-[justify-content-start] {
+.ion-justify-content-start {
   justify-content: flex-start !important;
 }
 
-.ion-justify-content-center,
-[justify-content-center] {
+.ion-justify-content-center {
   justify-content: center !important;
 }
 
-.ion-justify-content-end,
-[justify-content-end] {
+.ion-justify-content-end {
   justify-content: flex-end !important;
 }
 
-.ion-justify-content-around,
-[justify-content-around] {
+.ion-justify-content-around {
   justify-content: space-around !important;
 }
 
-.ion-justify-content-between,
-[justify-content-between] {
+.ion-justify-content-between {
   justify-content: space-between !important;
 }
 
-.ion-justify-content-evenly,
-[justify-content-evenly] {
+.ion-justify-content-evenly {
   justify-content: space-evenly !important;
 }
 
@@ -93,27 +78,22 @@
 // Align Items
 // --------------------------------------------------
 
-.ion-align-items-start,
-[align-items-start] {
+.ion-align-items-start {
   align-items: flex-start !important;
 }
 
-.ion-align-items-center,
-[align-items-center] {
+.ion-align-items-center {
   align-items: center !important;
 }
 
-.ion-align-items-end,
-[align-items-end] {
+.ion-align-items-end {
   align-items: flex-end !important;
 }
 
-.ion-align-items-stretch,
-[align-items-stretch] {
+.ion-align-items-stretch {
   align-items: stretch !important;
 }
 
-.ion-align-items-baseline,
-[align-items-baseline] {
+.ion-align-items-baseline {
   align-items: baseline !important;
 }

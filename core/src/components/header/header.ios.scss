@@ -8,10 +8,6 @@
   --border-width: 0 0 #{$hairlines-width};
 }
 
-.header-ios[no-border] ion-toolbar:last-child {
-  --border-width: 0;
-}
-
 @supports (backdrop-filter: blur(0)) {
   .header-translucent-ios {
     backdrop-filter: $header-ios-translucent-filter;
@@ -21,6 +17,10 @@
     --opacity: .8;
     --backdrop-filter: #{$header-ios-translucent-filter};
   }
+}
+
+.header-ios.ion-no-border ion-toolbar:last-child {
+  --border-width: 0;
 }
 
 // iOS Header - Collapse

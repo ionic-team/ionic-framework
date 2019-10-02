@@ -22,10 +22,10 @@
   content: "";
 }
 
-.header-md[no-border]::after {
+.header-collapse-condense {
   display: none;
 }
 
-.header-collapse-condense {
+.header-md.ion-no-border::after {
   display: none;
 }
