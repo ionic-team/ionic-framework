@@ -148,6 +148,17 @@ export class Menu implements ComponentInterface, MenuI {
 
     const el = this.el;
     const parent = el.parentNode as any;
+    if (this.contentId === undefined) {
+      console.warn(`[DEPRECATED][ion-menu] Using the [main] attribute is deprecated, please use the "contentId" property instead:
+BEFORE:
+  <ion-menu>...</ion-menu>
+  <div main>...</div>
+
+AFTER:
+  <ion-menu contentId="my-content"></ion-menu>
+  <div id="my-content">...</div>
+`);
+    }
     const content = this.contentId !== undefined
       ? document.getElementById(this.contentId)
       : parent && parent.querySelector && parent.querySelector('[main]');
