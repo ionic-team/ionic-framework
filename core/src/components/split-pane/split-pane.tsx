@@ -29,8 +29,6 @@ export class SplitPane implements ComponentInterface {
 
   /**
    * The content `id` of the split-pane's main content.
-   * This property can be used instead of the `[main]` attribute to select the `main`
-   * content of the split-pane.
    */
   @Prop() contentId?: string;
 
@@ -151,7 +149,7 @@ AFTER:
     let foundMain = false;
     for (let i = 0; i < nu; i++) {
       const child = children[i] as HTMLElement;
-      const isMain = contentId !== undefined ? child.id === contentId : child.hasAttribute('main');
+      const isMain = contentId !== undefined && child.id === contentId;
       if (isMain) {
         if (foundMain) {
           console.warn('split pane cannot have more than one main node');
