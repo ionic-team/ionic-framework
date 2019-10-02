@@ -38,7 +38,6 @@ export interface Animation {
 
   /**
    * Set the keyframes for the animation.
-   * TODO: proper types
    */
   keyframes(keyframes: AnimationKeyFrames): Animation;
 
