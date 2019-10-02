@@ -2457,7 +2457,7 @@ export namespace Components {
   }
   interface IonSplitPane {
     /**
-    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.
+    * The content `id` of the split-pane's main content.
     */
     'contentId'?: string;
     /**
@@ -5706,7 +5706,7 @@ declare namespace LocalJSX {
   }
   interface IonSplitPane {
     /**
-    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.
+    * The content `id` of the split-pane's main content.
     */
     'contentId'?: string;
     /**
