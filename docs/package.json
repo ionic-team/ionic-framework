@@ -4,7 +4,8 @@
   "description": "Pre-packaged API documentation for the Ionic docs.",
   "main": "core.json",
   "files": [
-    "core.json"
+    "core.json",
+    "types.d.ts"
   ],
   "author": "Ionic Team",
   "license": "MIT",

@@ -94,6 +94,16 @@ export const config: Config = {
       file: '../docs/core.json'
     },
     {
+      type: 'copy',
+      dir: '../docs',
+      copy: [
+        {
+          src: '../node_modules/@stencil/core/dist/declarations/docs.d.ts',
+          dest: 'types.d.ts'
+        }
+      ]
+    },
+    {
       type: 'dist-hydrate-script'
     },
     apiSpecGenerator({
