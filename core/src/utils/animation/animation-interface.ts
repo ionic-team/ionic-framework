@@ -210,7 +210,7 @@ export interface Animation {
    * Add a callback to be run
    * upon the animation ending
    */
-  onFinish(callback: AnimationLifecycle, opts?: AnimationOnFinishOptions): Animation;
+  onFinish(callback: AnimationLifecycle, opts?: AnimationCallbackOptions): Animation;
 
   /** @deprecated */
   playAsync(): Promise<void>;
@@ -220,7 +220,7 @@ export interface Animation {
 
 export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;
 
-export interface AnimationOnFinishOptions {
+export interface AnimationCallbackOptions {
   oneTimeCallback: boolean;
 }
 
