@@ -13,6 +13,13 @@
     </ion-toolbar>
   </ion-header>
   
+  <!-- Header without a border -->
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-title>Header - No Border</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
   <ion-content>
     <ion-header collapse="condense">
       <ion-toolbar>

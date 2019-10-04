@@ -26,6 +26,13 @@ It's important to note that ion-header needs to be the one of the three root ele
   </ion-toolbar>
 </ion-header>
 
+<!-- Header without a border -->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Header - No Border</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
   <ion-header collapse="condense">
     <ion-toolbar>
@@ -57,6 +64,13 @@ export const HeaderExample: React.FC = () => (
       </IonToolbar>
     </IonHeader>
     
+    {/*-- Header without a border --*/}
+    <IonHeader className="ion-no-border">
+     <IonToolbar>
+      <IonTitle>Header - No Border</IonTitle>
+     </IonToolbar>
+    </IonHeader>
+    
     <IonContent>
       <IonHeader collapse="condense">
         <IonToolbar>
@@ -83,6 +97,13 @@ export const HeaderExample: React.FC = () => (
   
     <ion-toolbar>
       <ion-title>Subheader</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <!-- Header without a border -->
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-title>Header - No Border</ion-title>
     </ion-toolbar>
   </ion-header>
   
