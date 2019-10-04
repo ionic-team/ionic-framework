@@ -2,12 +2,12 @@
 
 import { raf } from '../helpers';
 
-import { Animation, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrames, AnimationLifecycle, AnimationOnFinishOptions, AnimationPlayOptions } from './animation-interface';
+import { Animation, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrames, AnimationLifecycle, AnimationPlayOptions } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
 interface AnimationOnFinishCallback {
   c: AnimationLifecycle;
-  o?: AnimationOnFinishOptions;
+  o?: AnimationCallbackOptions;
 }
 
 interface AnimationInternal extends Animation {
@@ -101,7 +101,7 @@ export const createAnimation = (): Animation => {
     cleanUpStyleSheets();
   };
 
-  const onFinish = (callback: AnimationLifecycle, opts?: AnimationOnFinishOptions) => {
+  const onFinish = (callback: AnimationLifecycle, opts?: AnimationCallbackOptions) => {
     const callbacks = (opts && opts.oneTimeCallback) ? onFinishOneTimeCallbacks : onFinishCallbacks;
     callbacks.push({ c: callback, o: opts });
 
