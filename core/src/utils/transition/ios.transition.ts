@@ -61,13 +61,15 @@ const createLargeTitleTransition = (rootAnimation: IonicAnimation, rtl: boolean,
 };
 
 const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
+  const backButtonBounds = backButtonEl.getBoundingClientRect();
+  const BACK_BUTTON_START_OFFSET = (rtl) ? `calc(100% - ${backButtonBounds.right + 4}px)` : `${backButtonBounds.left - 4}px`;
   const START_TEXT_TRANSLATE = (rtl) ? '7px' : '-7px';
   const END_TEXT_TRANSLATE = (rtl) ? '-4px' : '4px';
 
   const ICON_TRANSLATE = (rtl) ? '-4px' : '4px';
 
-  const TEXT_TRANSFORM_ORIGIN_X = (rtl) ? 'right' : 'left';
-  const ICON_TRANSFORM_ORIGIN_X = (rtl) ? 'left' : 'right';
+  const TEXT_ORIGIN_X = (rtl) ? 'right' : 'left';
+  const ICON_ORIGIN_X = (rtl) ? 'left' : 'right';
 
   const FORWARD_TEXT_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(8)}) scale(2.1)` },
@@ -113,20 +115,22 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
 
   enteringBackButtonTextAnimation
     .beforeStyles({
-      'transform-origin': `${TEXT_TRANSFORM_ORIGIN_X} center`
+      'transform-origin': `${TEXT_ORIGIN_X} center`
     })
     .beforeAddWrite(() => {
       backButtonEl.style.setProperty('display', 'none');
+      clonedBackButtonEl.style.setProperty(TEXT_ORIGIN_X, BACK_BUTTON_START_OFFSET);
     })
     .afterAddWrite(() => {
       backButtonEl.style.setProperty('display', '');
       clonedBackButtonEl.style.setProperty('display', 'none');
+      clonedBackButtonEl.style.removeProperty(TEXT_ORIGIN_X);
     })
     .keyframes(TEXT_KEYFRAMES);
 
   enteringBackButtonIconAnimation
     .beforeStyles({
-      'transform-origin': `${ICON_TRANSFORM_ORIGIN_X} center`
+      'transform-origin': `${ICON_ORIGIN_X} center`
     })
     .keyframes(ICON_KEYFRAMES);
 
@@ -134,8 +138,10 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
 };
 
 const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
+  const largeTitleBounds = largeTitleEl.getBoundingClientRect();
+  const TITLE_START_OFFSET = (rtl) ? `calc(100% - ${largeTitleBounds.right}px)` : `${largeTitleBounds.left}px`;
   const START_TRANSLATE = (rtl) ? '-18px' : '18px';
-  const TRANSFORM_ORIGIN_X = (rtl) ? 'right' : 'left';
+  const ORIGIN_X = (rtl) ? 'right' : 'left';
 
   const BACKWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
@@ -160,10 +166,11 @@ const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDire
 
   clonedLargeTitleAnimation
     .beforeStyles({
-      'transform-origin': `${TRANSFORM_ORIGIN_X} center`,
+      'transform-origin': `${ORIGIN_X} center`,
       'height': '46px',
       'display': '',
-      'position': 'relative'
+      'position': 'relative',
+      [ORIGIN_X]: TITLE_START_OFFSET
     })
     .beforeAddWrite(() => {
       largeTitleEl.style.setProperty('display', 'none');
@@ -214,9 +221,9 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
     }
 
     if (!contentEl && enteringToolBarEls.length === 0 && headerEls.length === 0) {
-      enteringContentAnimation.addElement(enteringEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs'));
+      enteringContentAnimation.addElement(enteringEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs')!);  // REVIEW
     } else {
-      enteringContentAnimation.addElement(contentEl);
+      enteringContentAnimation.addElement(contentEl!);  // REVIEW
       enteringContentAnimation.addElement(headerEls);
     }
 
@@ -250,12 +257,12 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           .afterStyles({ opacity: '' });
 
         enteringTransitionCover
-          .addElement(enteringTransitionCoverEl)
+          .addElement(enteringTransitionCoverEl!) // REVIEW
           .beforeClearStyles([OPACITY])
           .fromTo(OPACITY, 0, 0.1);
 
         enteringTransitionShadow
-          .addElement(enteringTransitionShadowEl)
+          .addElement(enteringTransitionShadowEl!) // REVIEW
           .beforeClearStyles([OPACITY])
           .fromTo(OPACITY, 0.03, 0.70);
 
@@ -274,7 +281,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       rootAnimation.addAnimation(enteringToolBar);
 
       const enteringTitle = createAnimation();
-      enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title'));
+      enteringTitle.addElement(enteringToolBarEl.querySelector('ion-title')!);  // REVIEW
 
       const enteringToolBarButtons = createAnimation();
       const buttons = Array.from(enteringToolBarEl.querySelectorAll('ion-buttons,[menuToggle]'));
@@ -298,7 +305,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       enteringToolBarItems.addElement(enteringToolBarEl.querySelectorAll(':scope > *:not(ion-title):not(ion-buttons):not([menuToggle])'));
 
       const enteringToolBarBg = createAnimation();
-      enteringToolBarBg.addElement(shadow(enteringToolBarEl).querySelector('.toolbar-background'));
+      enteringToolBarBg.addElement(shadow(enteringToolBarEl).querySelector('.toolbar-background')!); // REVIEW
 
       const enteringBackButton = createAnimation();
       const backButtonEl = enteringToolBarEl.querySelector('ion-back-button');
@@ -345,7 +352,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         if (backButtonEl && !forward) {
           const enteringBackBtnText = createAnimation();
           enteringBackBtnText
-            .addElement(shadow(backButtonEl).querySelector('.button-text'))
+            .addElement(shadow(backButtonEl).querySelector('.button-text')!) // REVIEW
             .fromTo(`transform`, (isRTL ? 'translateX(-100px)' : 'translateX(100px)'), 'translateX(0px)');
 
           enteringToolBar.addAnimation(enteringBackBtnText);
@@ -359,7 +366,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       const leavingContent = createAnimation();
       const leavingContentEl = leavingEl.querySelector(':scope > ion-content');
 
-      leavingContent.addElement(leavingContentEl);
+      leavingContent.addElement(leavingContentEl!); // REVIEW
       leavingContent.addElement(leavingEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *'));
       rootAnimation.addAnimation(leavingContent);
 
@@ -393,12 +400,12 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
             .afterStyles({ opacity: '' });
 
           leavingTransitionCover
-            .addElement(leavingTransitionCoverEl)
+            .addElement(leavingTransitionCoverEl!) // REVIEW
             .beforeClearStyles([OPACITY])
             .fromTo(OPACITY, 0.1, 0);
 
           leavingTransitionShadow
-            .addElement(leavingTransitionShadowEl)
+            .addElement(leavingTransitionShadowEl!) // REVIEW
             .beforeClearStyles([OPACITY])
             .fromTo(OPACITY, 0.70, 0.03);
 
@@ -413,7 +420,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         leavingToolBar.addElement(leavingToolBarEl);
 
         const leavingTitle = createAnimation();
-        leavingTitle.addElement(leavingToolBarEl.querySelector('ion-title'));
+        leavingTitle.addElement(leavingToolBarEl.querySelector('ion-title')!); // REVIEW
 
         const leavingToolBarButtons = createAnimation();
         const buttons = leavingToolBarEl.querySelectorAll('ion-buttons,[menuToggle]');
@@ -435,7 +442,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         }
 
         const leavingToolBarBg = createAnimation();
-        leavingToolBarBg.addElement(shadow(leavingToolBarEl).querySelector('.toolbar-background'));
+        leavingToolBarBg.addElement(shadow(leavingToolBarEl).querySelector('.toolbar-background')!); // REVIEW
 
         const leavingBackButton = createAnimation();
         const backButtonEl = leavingToolBarEl.querySelector('ion-back-button');
@@ -472,7 +479,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           if (backButtonEl && !backward) {
             const leavingBackBtnText = createAnimation();
             leavingBackBtnText
-              .addElement(shadow(backButtonEl).querySelector('.button-text'))
+              .addElement(shadow(backButtonEl).querySelector('.button-text')!) // REVIEW
               .fromTo('transform', `translateX(${CENTER})`, `translateX(${(isRTL ? -124 : 124) + 'px'})`);
             leavingToolBar.addAnimation(leavingBackBtnText);
           }
