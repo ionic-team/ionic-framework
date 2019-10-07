@@ -107,12 +107,13 @@ async function preparePackages(packages, version, install) {
   });
 
   // add update package.json of each project
-  packages.forEach(package => {
-    common.updatePackageVersion(tasks, package, version);
-  });
+  common.updatePackageVersions(tasks, packages, version);
 
   // generate changelog
   generateChangeLog(tasks);
+
+  // check dist folders
+  common.checkTestDist(tasks);
 
   // update core readme with version number
   updateCoreReadme(tasks, version);
