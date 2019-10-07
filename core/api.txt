@@ -881,6 +881,8 @@ ion-range,css-prop,--knob-background
 ion-range,css-prop,--knob-border-radius
 ion-range,css-prop,--knob-box-shadow
 ion-range,css-prop,--knob-size
+ion-range,css-prop,--pin-background
+ion-range,css-prop,--pin-color
 
 ion-refresher,none
 ion-refresher,prop,closeDuration,string,'280ms',false,false
