@@ -1,3 +1,17 @@
+## [4.10.1](https://github.com/ionic-team/ionic/compare/v4.10.0...v4.10.1) (2019-10-07)
+
+
+### Bug Fixes
+
+* **animation:** animation timer fallback now accounts for iterations ([#19527](https://github.com/ionic-team/ionic/issues/19527)) ([9f5ed23](https://github.com/ionic-team/ionic/commit/9f5ed23))
+* **css:** update deprecations to remove wrap ([#19535](https://github.com/ionic-team/ionic/issues/19535)) ([bfb704e](https://github.com/ionic-team/ionic/commit/bfb704e)), closes [#19499](https://github.com/ionic-team/ionic/issues/19499)
+* **header:** fix collapsing iOS header when using with split pane ([#19480](https://github.com/ionic-team/ionic/issues/19480)) ([dea1c26](https://github.com/ionic-team/ionic/commit/dea1c26)), closes [#19541](https://github.com/ionic-team/ionic/issues/19541)
+* **list:** add bottom border for first item in inset list ([#19525](https://github.com/ionic-team/ionic/issues/19525)) ([71b8853](https://github.com/ionic-team/ionic/commit/71b8853)), closes [#19507](https://github.com/ionic-team/ionic/issues/19507)
+* **md:** fix flicker when navigating back in MD mode on certain Android devices ([#19553](https://github.com/ionic-team/ionic/issues/19553)) ([19ee21a](https://github.com/ionic-team/ionic/commit/19ee21a)), closes [#19491](https://github.com/ionic-team/ionic/issues/19491)
+* **searchbar:** update padding and button alignment ([#19532](https://github.com/ionic-team/ionic/issues/19532)) ([77658e6](https://github.com/ionic-team/ionic/commit/77658e6)), closes [#19502](https://github.com/ionic-team/ionic/issues/19502)
+
+
+
 # [4.10.0 Neon](https://github.com/ionic-team/ionic/compare/v4.9.1...v4.10.0) (2019-09-27)
 
 
