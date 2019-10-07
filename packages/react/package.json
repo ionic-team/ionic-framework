@@ -28,6 +28,7 @@
     "lint.fix": "tslint --project . --fix",
     "tsc": "tsc -p .",
     "copy": "node scripts/copy.js",
+    "test.spec": "jest --ci",
     "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js"
   },
   "main": "dist/index.js",

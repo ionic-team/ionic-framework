@@ -88,7 +88,9 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
     const rootArea = event.rootBounds.width * event.rootBounds.height;
 
     const isPageHidden = intersectionArea === 0 && rootArea === 0;
-    const isPageTransitioning = intersectionArea > 0 && (intersection.left !== event.rootBounds.left || intersection.right !== event.rootBounds.right);
+    const leftDiff = Math.abs(intersection.left - event.boundingClientRect.left);
+    const rightDiff = Math.abs(intersection.right - event.boundingClientRect.right);
+    const isPageTransitioning = intersectionArea > 0 && (leftDiff >= 5 || rightDiff >= 5);
 
     if (isPageHidden || isPageTransitioning) {
       return;
