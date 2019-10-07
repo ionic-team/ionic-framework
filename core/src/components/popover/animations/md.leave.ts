@@ -10,7 +10,7 @@ export const mdLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const wrapperAnimation = createAnimation();
 
   const backdropVar = getComputedStyle(baseEl).getPropertyValue('--ion-backdrop-opacity');
-  const backdropOpacity = backdropVar ? backdropVar : 0.32;
+  const backdropOpacity = backdropVar !== '' ? backdropVar : 0.32;
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop'))

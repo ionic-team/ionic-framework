@@ -103,7 +103,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimati
   const wrapperAnimation = createAnimation();
 
   const backdropVar = getComputedStyle(baseEl).getPropertyValue('--ion-backdrop-opacity');
-  const backdropOpacity = backdropVar ? backdropVar : 0.08;
+  const backdropOpacity = backdropVar !== '' ? backdropVar : 0.08;
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop'))

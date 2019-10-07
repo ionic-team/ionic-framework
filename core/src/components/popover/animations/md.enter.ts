@@ -85,7 +85,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimatio
   const viewportAnimation = createAnimation();
 
   const backdropVar = getComputedStyle(baseEl).getPropertyValue('--ion-backdrop-opacity');
-  const backdropOpacity = backdropVar ? backdropVar : 0.32;
+  const backdropOpacity = backdropVar !== '' ? backdropVar : 0.32;
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop'))
