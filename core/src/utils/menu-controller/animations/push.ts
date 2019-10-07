@@ -24,22 +24,16 @@ export const menuPushAnimation = (menu: MenuI): IonicAnimation => {
   }
 
   const menuAnimation = createAnimation()
-    .addElement(menu.menuInnerEl)
+    .addElement(menu.menuInnerEl!)
     .fromTo('transform', `translateX(${menuClosedX})`, 'translateX(0px)');
 
   const contentAnimation = createAnimation()
-    .addElement(menu.contentEl)
+    .addElement(menu.contentEl!)
     .fromTo('transform', 'translateX(0px)', `translateX(${contentOpenedX})`);
 
   const backdropAnimation = createAnimation()
-    .addElement(menu.backdropEl)
+    .addElement(menu.backdropEl!)
     .fromTo('opacity', 0.01, 0.32);
 
-  const isIos = menu.mode === 'ios';
-
-  return baseAnimation(AnimationC, isIos).then(animation => {
-    return animation.add(menuAnimation)
-      .add(backdropAnimation)
-      .add(contentAnimation);
-  });
+  return baseAnimation(menu.mode === 'ios').addAnimation([menuAnimation, contentAnimation, backdropAnimation]);
 };

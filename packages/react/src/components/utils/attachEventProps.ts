@@ -69,8 +69,8 @@ export const isCoveredByReact = (eventNameSuffix: string, doc: Document = docume
   return isSupported;
 };
 
-export const syncEvent = (node: Element, eventName: string, newEventHandler: (e: Event) => any) => {
-  const eventStore = (node as any).__events || ((node as any).__events = {});
+export const syncEvent = (node: Element & {__events?: {[key: string]: ((e: Event) => any) | undefined}}, eventName: string, newEventHandler?: (e: Event) => any) => {
+  const eventStore = node.__events || (node.__events = {});
   const oldEventHandler = eventStore[eventName];
 
   // Remove old listener so they don't double up.

@@ -7,7 +7,10 @@ const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
 
 // TODO: Remove when removing AnimationBuilder
-export type IonicAnimationInterface = ((navEl: HTMLElement, opts: TransitionOptions) => IonicAnimation) | ((navEl: HTMLElement, opts: TransitionOptions) => Promise<IonicAnimation>);
+export type IonicAnimationInterface = (
+  ((navEl: HTMLElement, opts: TransitionOptions) => IonicAnimation) |
+  ((navEl: HTMLElement, opts: TransitionOptions) => Promise<IonicAnimation>)
+);
 
 export const transition = (opts: TransitionOptions): Promise<TransitionResult> => {
   return new Promise((resolve, reject) => {
@@ -95,19 +98,16 @@ const animation = async (animationBuilder: IonicAnimationInterface | AnimationBu
 
   const didComplete = await playTransition(trans, opts);
 
-  // TODO: Remove AnimationBuilder
-  (trans as any).hasCompleted = didComplete;
-
   if (opts.progressCallback) {
     opts.progressCallback(undefined);
   }
 
-  if ((trans as any).hasCompleted) {
+  if (didComplete) {
     fireDidEvents(opts.enteringEl, opts.leavingEl);
   }
 
   return {
-    hasCompleted: (trans as any).hasCompleted,
+    hasCompleted: didComplete,
     animation: trans
   };
 };
@@ -146,11 +146,19 @@ const notifyViewReady = async (viewIsReady: undefined | ((enteringEl: HTMLElemen
   }
 };
 
-const playTransition = (trans: IonicAnimation | Animation, opts: TransitionOptions): Promise<Animation | boolean> => {
+const playTransition = (trans: IonicAnimation | Animation, opts: TransitionOptions): Promise<boolean> => {
   const progressCallback = opts.progressCallback;
 
   // TODO: Remove AnimationBuilder
-  const promise = new Promise<Animation | boolean>(resolve => trans.onFinish(resolve));
+  const promise = new Promise<boolean>(resolve => {
+    trans.onFinish((currentStep: any) => {
+      if (typeof currentStep === 'number') {
+        resolve(currentStep === 1);
+      } else if ((trans as any).hasCompleted !== undefined) {
+        resolve((trans as Animation).hasCompleted);
+      }
+    });
+  });
 
   // cool, let's do this, start the transition
   if (progressCallback) {

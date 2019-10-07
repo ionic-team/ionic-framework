@@ -24,8 +24,10 @@
     "clean": "rm -rf dist dist-transpiled",
     "compile": "npm run tsc && rollup -c",
     "release": "np --any-branch --no-cleanup",
+    "lint": "tslint --project .",
+    "lint.fix": "tslint --project . --fix",
     "tsc": "tsc -p .",
-    "test": "jest"
+    "test.spec": "jest --ci"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -34,7 +36,10 @@
     "dist/"
   ],
   "dependencies": {
-    "tslib": "*"
+    "tslib": "*",
+    "tslint": "^5.20.0",
+    "tslint-ionic-rules": "0.0.21",
+    "tslint-react": "^4.1.0"
   },
   "peerDependencies": {
     "@ionic/core": "^4.10.0",

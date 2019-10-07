@@ -12,6 +12,8 @@ export const menuOverlayAnimation = (menu: MenuI): IonicAnimation => {
   let closedX: string;
   let openedX: string;
   const width = menu.width + 8;
+  const menuAnimation = createAnimation();
+  const backdropAnimation = createAnimation();
 
   if (menu.isEndSide) {
     // right side
@@ -25,18 +27,15 @@ export const menuOverlayAnimation = (menu: MenuI): IonicAnimation => {
   }
 
   menuAnimation
-    .addElement(menu.menuInnerEl)
+    .addElement(menu.menuInnerEl!)
     .fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
 
   const isIos = menu.mode === 'ios';
   const opacity = isIos ? 0.2 : 0.25;
 
-  const backdropAnimation = new AnimationC()
-    .addElement(menu.backdropEl)
+  backdropAnimation
+    .addElement(menu.backdropEl!)
     .fromTo('opacity', 0.01, opacity);
 
-  return baseAnimation(AnimationC, isIos).then(animation => {
-    return animation.add(menuAnimation)
-      .add(backdropAnimation);
-  });
+  return baseAnimation(isIos).addAnimation([menuAnimation, backdropAnimation]);
 };

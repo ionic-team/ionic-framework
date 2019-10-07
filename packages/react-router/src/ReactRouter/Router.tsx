@@ -2,27 +2,26 @@ import { NavDirection } from '@ionic/core';
 import { RouterDirection } from '@ionic/react';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
-import { BrowserRouter, BrowserRouterProps, matchPath, RouteComponentProps, withRouter } from 'react-router-dom';
+import { BrowserRouter, BrowserRouterProps, RouteComponentProps, matchPath, withRouter } from 'react-router-dom';
+
 import { generateId } from '../utils';
+
 import { IonRouteData } from './IonRouteData';
 import { NavManager } from './NavManager';
 import { RouteManagerContext, RouteManagerContextState } from './RouteManagerContext';
 import { ViewItem } from './ViewItem';
-import { ViewStacks, ViewStack } from './ViewStacks';
-
-
-interface RouteManagerProps extends RouteComponentProps { }
+import { ViewStack, ViewStacks } from './ViewStacks';
 
 interface RouteManagerState extends RouteManagerContextState {
-  location?: HistoryLocation,
-  action?: HistoryAction
+  location?: HistoryLocation;
+  action?: HistoryAction;
 }
 
-class RouteManager extends React.Component<RouteManagerProps, RouteManagerState> {
+class RouteManager extends React.Component<RouteComponentProps, RouteManagerState> {
   listenUnregisterCallback: UnregisterCallback | undefined;
   activeIonPageId?: string;
 
-  constructor(props: RouteManagerProps) {
+  constructor(props: RouteComponentProps) {
     super(props);
     this.listenUnregisterCallback = this.props.history.listen(this.historyChange.bind(this));
     this.state = {
@@ -35,7 +34,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
     };
   }
 
-  componentDidUpdate(_prevProps: RouteManagerProps, prevState: RouteManagerState) {
+  componentDidUpdate(_prevProps: RouteComponentProps, prevState: RouteManagerState) {
     // Trigger a page change if the location or action is different
     if (this.state.location && prevState.location !== this.state.location || prevState.action !== this.state.action) {
       this.setActiveView(this.state.location!, this.state.action!);
@@ -61,7 +60,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
     this.setState({
       location,
       action
-    })
+    });
   }
 
   setActiveView(location: HistoryLocation, action: HistoryAction) {
@@ -77,36 +76,33 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
       }
       leavingView = viewStacks.findViewInfoById(this.activeIonPageId).view;
 
-      if (enteringView) {
+      if (enteringView.isIonRoute) {
+        enteringView.show = true;
+        enteringView.mount = true;
+        enteringView.routeData.match = match!;
 
-        if (enteringView.isIonRoute) {
-          enteringView.show = true;
-          enteringView.mount = true;
-          enteringView.routeData.match = match!;
+        this.activeIonPageId = enteringView.id;
 
-          this.activeIonPageId = enteringView.id;
-
-          if (leavingView) {
-            if (direction === 'forward') {
-              if (action === 'PUSH') {
-                /**
-                * If the page is being pushed into the stack by another view,
-                * record the view that originally directed to the new view for back button purposes.
-                */
-                enteringView.prevId = enteringView.prevId || leavingView.id;
-              } else {
-                direction = direction || 'back';
-                leavingView.mount = false;
-              }
-            } else if (action === 'REPLACE') {
+        if (leavingView) {
+          if (direction === 'forward') {
+            if (action === 'PUSH') {
+              /**
+               * If the page is being pushed into the stack by another view,
+               * record the view that originally directed to the new view for back button purposes.
+               */
+              enteringView.prevId = enteringView.prevId || leavingView.id;
+            } else {
+              direction = direction || 'back';
               leavingView.mount = false;
             }
+          } else if (action === 'REPLACE') {
+            leavingView.mount = false;
           }
-        } else {
-          enteringView.show = true;
-          enteringView.mount = true;
-          enteringView.routeData.match = match!;
         }
+      } else {
+        enteringView.show = true;
+        enteringView.mount = true;
+        enteringView.routeData.match = match!;
       }
     });
 
@@ -120,7 +116,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
     this.setState({
       viewStacks
     }, () => {
-      const { view: enteringView, viewStack } = this.state.viewStacks.findViewInfoById(this.activeIonPageId)
+      const { view: enteringView, viewStack } = this.state.viewStacks.findViewInfoById(this.activeIonPageId);
       if (enteringView && viewStack) {
         const enteringEl = enteringView.ionPageElement ? enteringView.ionPageElement : undefined;
         const leavingEl = leavingView && leavingView.ionPageElement ? leavingView.ionPageElement : undefined;
@@ -132,7 +128,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
             enteringEl!,
             leavingEl!,
             viewStack.routerOutlet,
-            navDirection)
+            navDirection);
         } else if (leavingEl) {
           leavingEl.classList.add('ion-page-hidden');
           leavingEl.setAttribute('aria-hidden', 'true');
@@ -142,7 +138,9 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
   }
 
   componentWillUnmount() {
-    this.listenUnregisterCallback && this.listenUnregisterCallback();
+    if (this.listenUnregisterCallback) {
+      this.listenUnregisterCallback();
+    }
   }
 
   async setupIonRouter(id: string, children: any, routerOutlet: HTMLIonRouterOutletElement) {
@@ -172,12 +170,12 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
           match,
           childProps: child.props
         },
-        route: route,
+        route,
         mount: true,
         show: !!match,
         isIonRoute: false
       };
-      if (!!match && view.isIonRoute) {
+      if (match && view.isIonRoute) {
         activeId = viewId;
       }
       return view;
@@ -186,9 +184,9 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
 
   async registerViewStack(stack: string, activeId: string | undefined, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, _location: HistoryLocation) {
 
-    return new Promise((resolve) => {
-      this.setState((prevState) => {
-        const prevViewStacks = Object.assign(new ViewStacks, prevState.viewStacks);
+    return new Promise(resolve => {
+      this.setState(prevState => {
+        const prevViewStacks = Object.assign(new ViewStacks(), prevState.viewStacks);
         const newStack: ViewStack = {
           id: stack,
           views: stackItems,
@@ -205,7 +203,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
         resolve();
       });
     });
-  };
+  }
 
   removeViewStack(stack: string) {
     const viewStacks = Object.assign(new ViewStacks(), this.state.viewStacks);
@@ -216,7 +214,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
   }
 
   syncView(page: HTMLElement, viewId: string) {
-    this.setState((state) => {
+    this.setState(state => {
 
       const viewStacks = Object.assign(new ViewStacks(), state.viewStacks);
       const { view } = viewStacks.findViewInfoById(viewId);
@@ -226,14 +224,14 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
 
       return {
         viewStacks
-      }
+      };
 
     }, () => {
       this.setActiveView(this.state.location || this.props.location, this.state.action!);
-    })
+    });
   }
 
-  transitionView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOutlet: HTMLIonRouterOutletElement, direction?: NavDirection) {
+  transitionView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOutlet?: HTMLIonRouterOutletElement, direction?: NavDirection) {
     /**
      * Super hacky workaround to make sure ionRouterOutlet is available
      * since transitionView might be called before IonRouterOutlet is fully mounted
@@ -256,7 +254,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
     await ionRouterOuter.commit(enteringEl, leavingEl, {
       deepWait: true,
       duration: direction === undefined ? 0 : undefined,
-      direction: direction,
+      direction,
       showGoBack: direction === 'forward',
       progressAnimation: false
     });
@@ -271,7 +269,8 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
   render() {
     return (
       <RouteManagerContext.Provider value={this.state}>
-        <NavManager {...this.props}
+        <NavManager
+          {...this.props}
           findViewInfoById={(id: string) => this.state.viewStacks.findViewInfoById(id)}
           findViewInfoByLocation={(location: HistoryLocation) => this.state.viewStacks.findViewInfoByLocation(location)}
           getActiveIonPage={() => this.state.viewStacks.findViewInfoById(this.activeIonPageId)}
@@ -281,7 +280,7 @@ class RouteManager extends React.Component<RouteManagerProps, RouteManagerState>
       </RouteManagerContext.Provider>
     );
   }
-};
+}
 
 const RouteManagerWithRouter = withRouter(RouteManager);
 RouteManagerWithRouter.displayName = 'RouteManager';
