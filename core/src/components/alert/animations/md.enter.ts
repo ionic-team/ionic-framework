@@ -10,14 +10,14 @@ export const mdEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop'))
+    .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 0.32);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.alert-wrapper'))
+    .addElement(baseEl.querySelector('.alert-wrapper')!)
     .keyframes([
-      { offset: 0, opacity: 0.01, transform: 'scale(0.9)' },
-      { offset: 1, opacity: 1, transform: 'scale(1)' }
+      { offset: 0, opacity: '0.01', transform: 'scale(0.9)' },
+      { offset: 1, opacity: '1', transform: 'scale(1)' }
     ]);
 
   return baseAnimation

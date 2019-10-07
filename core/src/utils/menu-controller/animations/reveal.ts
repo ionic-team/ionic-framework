@@ -12,7 +12,7 @@ export const menuRevealAnimation = (menu: MenuI): IonicAnimation => {
   const openedX = (menu.width * (menu.isEndSide ? -1 : 1)) + 'px';
 
   const contentOpen = createAnimation()
-    .addElement(menu.contentEl)
+    .addElement(menu.contentEl!) // REVIEW
     .fromTo('transform', 'translateX(0px)', `translateX(${openedX})`);
 
   return baseAnimation().addAnimation(contentOpen);
