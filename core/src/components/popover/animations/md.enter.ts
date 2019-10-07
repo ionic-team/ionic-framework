@@ -84,12 +84,9 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimatio
   const contentAnimation = createAnimation();
   const viewportAnimation = createAnimation();
 
-  const backdropVar = getComputedStyle(baseEl).getPropertyValue('--ion-backdrop-opacity');
-  const backdropOpacity = backdropVar !== '' ? backdropVar : 0.32;
-
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop'))
-    .fromTo('opacity', 0.01, backdropOpacity);
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.popover-wrapper'))

@@ -9,12 +9,9 @@ export const iosLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
 
-  const backdropVar = getComputedStyle(baseEl).getPropertyValue('--ion-backdrop-opacity');
-  const backdropOpacity = backdropVar !== '' ? backdropVar : 0.3;
-
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop'))
-    .fromTo('opacity', backdropOpacity, 0);
+    .fromTo('opacity', 'var(--backdrop-opacity)', 0);
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.alert-wrapper'))
