@@ -19,14 +19,6 @@ export const raf = (h: any) => {
   return setTimeout(h);
 };
 
-export const rIC = (callback: () => void) => {
-  if ('requestIdleCallback' in window) {
-    (window as any).requestIdleCallback(callback);
-  } else {
-    setTimeout(callback, 32);
-  }
-};
-
 export const hasShadowDom = (el: HTMLElement) => {
   return !!el.shadowRoot && !!(el as any).attachShadow;
 };

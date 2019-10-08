@@ -91,6 +91,7 @@ Type: `Promise<void>`
 
 | Name                                | Description                                      |
 | ----------------------------------- | ------------------------------------------------ |
+| `--backdrop-opacity`                | Opacity of the backdrop                          |
 | `--background`                      | Background of the picker                         |
 | `--background-rgb`                  | Background of the picker in rgb format           |
 | `--border-color`                    | Border color of the picker                       |

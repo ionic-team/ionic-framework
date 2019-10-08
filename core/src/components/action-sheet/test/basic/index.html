@@ -28,6 +28,7 @@
       <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
       <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
       <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
+      <ion-button expand="block" id="customBackdrop" onclick="presentWithCssClass('custom-backdrop')">Custom Backdrop Opacity</ion-button>
     </ion-content>
 
   </ion-app>
@@ -47,6 +48,10 @@
 
       --max-width: 300px;
       --height: 325px;
+    }
+
+    .custom-backdrop {
+      --ion-backdrop-opacity: 1;
     }
 
   </style>
@@ -146,10 +151,12 @@
       await actionSheetElement.present();
     }
 
-    async function presentWithCssClass() {
+    async function presentWithCssClass(classList) {
+      const addClass = classList ? classList : "my-color-class my-custom-class";
+
       const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         header: "Custom Css Class",
-        cssClass: "my-color-class my-custom-class",
+        cssClass: addClass,
         buttons: [
           {
             text: 'Add to Favorites',

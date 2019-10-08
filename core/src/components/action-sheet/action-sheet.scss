@@ -20,6 +20,8 @@
    * @prop --min-height: Minimum height of the action sheet
    * @prop --height: height of the action sheet
    * @prop --max-height: Maximum height of the action sheet
+   *
+   * @prop --backdrop-opacity: Opacity of the backdrop
    */
   --background-hover: #{$text-color};
   --background-hover-opacity: 0.04;
