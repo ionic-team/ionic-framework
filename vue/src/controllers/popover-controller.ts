@@ -1,20 +1,16 @@
-import { PopoverOptions } from '@ionic/core';
-import { OverlayBaseController } from '../util';
+import Vue from 'vue';
+import { PopoverOptions, popoverController as _popoverController } from '@ionic/core';
 import { VueDelegate } from './vue-delegate';
 
-export const CTRL = 'ion-popover-controller';
-export class PopoverController extends OverlayBaseController<PopoverOptions, HTMLIonPopoverElement> {
-
-  constructor(
-    private delegate: VueDelegate
-  ) {
-    super(CTRL);
-  }
-
-  create(opts: PopoverOptions): Promise<HTMLIonPopoverElement> {
-    return super.create({
-      ...opts,
-      delegate: this.delegate
-    });
-  }
-}
+export const popoverController = (delegate?: VueDelegate) => {
+  delegate = delegate || new VueDelegate(Vue);
+  return {
+    ..._popoverController,
+    create(options: PopoverOptions) {
+      return _popoverController.create({
+        ...options,
+        delegate,
+      });
+    }
+  };
+};

@@ -1,14 +1,18 @@
 import { PluginFunction, VueConstructor, default as VueImport } from 'vue';
 import {
-  ActionSheetController,
-  AlertController,
-  LoadingController,
-  MenuController,
-  ModalController,
-  PopoverController,
-  ToastController
+  IonicConfig,
+  OverlayController
+} from '@ionic/core';
+import {
+  actionSheetController,
+  alertController,
+  loadingController,
+  menuController,
+  pickerController,
+  toastController,
 } from './controllers';
-import { IonicConfig } from '@ionic/core';
+import { modalController } from './controllers/modal-controller';
+import { popoverController } from './controllers/popover-controller';
 import { appInitialize } from './app-initialize';
 import { VueDelegate } from './controllers/vue-delegate';
 import IonTabs from './components/navigation/ion-tabs';
@@ -16,13 +20,14 @@ import IonPage from './components/navigation/ion-page';
 import { createInputComponent } from './components/inputs';
 
 export interface Controllers {
-  actionSheetController: ActionSheetController;
-  alertController: AlertController;
-  loadingController: LoadingController;
-  menuController: MenuController;
-  modalController: ModalController;
-  popoverController: PopoverController;
-  toastController: ToastController;
+  actionSheetController: OverlayController;
+  alertController: OverlayController;
+  loadingController: OverlayController;
+  menuController: typeof menuController;
+  modalController: OverlayController;
+  popoverController: OverlayController;
+  toastController: OverlayController;
+  pickerController: OverlayController;
 }
 
 declare module 'vue/types/vue' {
@@ -31,7 +36,6 @@ declare module 'vue/types/vue' {
   }
 }
 
-
 function createApi(vueInstance: VueConstructor) {
   const cache: Partial<Controllers> = {};
   const vueDelegate = new VueDelegate(vueInstance);
@@ -39,45 +43,51 @@ function createApi(vueInstance: VueConstructor) {
   return {
     get actionSheetController() {
       if (!cache.actionSheetController) {
-        cache.actionSheetController = new ActionSheetController();
+        cache.actionSheetController = actionSheetController;
       }
       return cache.actionSheetController;
     },
     get alertController() {
       if (!cache.alertController) {
-        cache.alertController = new AlertController();
+        cache.alertController = alertController;
       }
       return cache.alertController;
     },
     get loadingController() {
       if (!cache.loadingController) {
-        cache.loadingController = new LoadingController();
+        cache.loadingController = loadingController;
       }
       return cache.loadingController;
     },
     get menuController() {
       if (!cache.menuController) {
-        cache.menuController = new MenuController();
+        cache.menuController = menuController;
       }
       return cache.menuController;
     },
     get modalController() {
       if (!cache.modalController) {
-        cache.modalController = new ModalController(vueDelegate);
+        cache.modalController = modalController(vueDelegate);
       }
       return cache.modalController;
     },
     get popoverController() {
       if (!cache.popoverController) {
-        cache.popoverController = new PopoverController(vueDelegate);
+        cache.popoverController = popoverController(vueDelegate);
       }
       return cache.popoverController;
     },
     get toastController() {
       if (!cache.toastController) {
-        cache.toastController = new ToastController();
+        cache.toastController = toastController;
       }
       return cache.toastController;
+    },
+    get pickerController() {
+      if (!cache.pickerController) {
+        cache.pickerController = pickerController;
+      }
+      return cache.pickerController;
     }
   };
 }
@@ -113,6 +123,9 @@ export const install: PluginFunction<IonicConfig> = (_Vue, config) => {
   const api = createApi(Vue);
 
   Object.defineProperty(Vue.prototype, '$ionic', {
-    get() { return api; }
+    get() {
+      console.warn('[Ionic] The usage of the global $ionic Vue property is deprecated and will be removed in the future versions.\nInstead import controllers directly with "import { alertController } from \'@ionic/vue\'"');
+      return api;
+    }
   });
 };

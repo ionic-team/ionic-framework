@@ -58,7 +58,7 @@
     "vue-router": "^3.0.1"
   },
   "dependencies": {
-    "@ionic/core": "^4.6.0"
+    "@ionic/core": "^4.10.0"
   },
   "peerDependencies": {
     "vue": "^2.5.17",

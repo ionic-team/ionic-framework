@@ -1,7 +1,13 @@
-export { ActionSheetController } from './action-sheet-controller';
-export { AlertController } from './alert-controller';
-export { LoadingController } from './loading-controller';
-export { MenuController } from './menu-controller';
-export { ModalController } from './modal-controller';
-export { PopoverController } from './popover-controller';
-export { ToastController } from './toast-controller';
+export {
+  actionSheetController,
+  alertController,
+  loadingController,
+  menuController,
+  toastController,
+  pickerController,
+} from '@ionic/core';
+import { modalController as _modalController } from './modal-controller';
+import { popoverController as _popoverController } from './popover-controller';
+
+export const modalController = _modalController();
+export const popoverController = _popoverController();
