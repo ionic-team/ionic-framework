@@ -51,9 +51,18 @@
   /* stylelint-enable */
 }
 
-:host(.toolbar-searchbar) ::slotted(ion-buttons) {
+:host(.toolbar-searchbar) ::slotted(*) {
   align-self: start;
 }
+
+:host(.toolbar-searchbar) ::slotted(ion-chip) {
+  @include margin(3px, null, null, null);
+}
+
+:host(.toolbar-searchbar) ::slotted(ion-back-button) {
+  height: 38px;
+}
+
 
 // iOS Toolbar Slot Placement
 // --------------------------------------------------
