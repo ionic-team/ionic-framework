@@ -216,7 +216,7 @@ const overlayAnimation = async (
       }
     });
   }
-  const animationResult = await animation.playAsync();
+  const animationResult = await animation.play();
 
   /**
    * TODO: Remove AnimationBuilder
