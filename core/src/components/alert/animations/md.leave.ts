@@ -10,11 +10,11 @@ export const mdLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop'))
-    .fromTo('opacity', 0.32, 0);
+    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .fromTo('opacity', 'var(--backdrop-opacity)', 0);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.alert-wrapper'))
+    .addElement(baseEl.querySelector('.alert-wrapper')!)
     .fromTo('opacity', 0.99, 0);
 
   return baseAnimation

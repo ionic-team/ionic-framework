@@ -165,7 +165,7 @@ const createMenuController = () => {
     return menu._setOpen(shouldOpen, animated);
   };
 
-  const _createAnimation = (type: string, menuCmp: MenuI): Promise<any> => {
+  const _createAnimation = (type: string, menuCmp: MenuI) => {
     const animationBuilder = menuAnimations.get(type) as any;
     if (!animationBuilder) {
       throw new Error('animation not registered');
