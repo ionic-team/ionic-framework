@@ -10,7 +10,7 @@
   display: none !important;
 }
 
-// Adds hidden attributes
+// Adds hidden classes
 @each $breakpoint in map-keys($screen-breakpoints) {
   $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
 
