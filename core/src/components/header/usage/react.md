@@ -17,6 +17,13 @@ export const HeaderExample: React.FC = () => (
       </IonToolbar>
     </IonHeader>
     
+    {/*-- Header without a border --*/}
+    <IonHeader className="ion-no-border">
+     <IonToolbar>
+      <IonTitle>Header - No Border</IonTitle>
+     </IonToolbar>
+    </IonHeader>
+    
     <IonContent>
       <IonHeader collapse="condense">
         <IonToolbar>

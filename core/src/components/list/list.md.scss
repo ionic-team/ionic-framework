@@ -26,7 +26,7 @@
 
 .list-md.list-inset ion-item:first-child {
   --border-radius: #{$list-inset-md-border-radius $list-inset-md-border-radius 0 0};
-  --border-width: 0;
+  --border-width: #{0 0 $item-md-border-bottom-width 0};
 }
 
 .list-md.list-inset ion-item:last-child {

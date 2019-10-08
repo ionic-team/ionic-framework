@@ -3,69 +3,239 @@ export interface Animation {
   elements: HTMLElement[];
   childAnimations: Animation[];
 
-  animationFinish(): void;
-  play(): Animation;
-  playAsync(): Promise<Animation>;
-  playSync(): Animation;
-  pause(): Animation;
-  stop(): Animation;
-  destroy(): Animation;
+  /**
+   * Play the animation
+   *
+   * If the `sync` options is `true`, the animation will play synchronously. This
+   * is the equivalent of running the animation
+   * with a duration of 0ms.
+   */
+  play(opts?: AnimationPlayOptions): Promise<void>;
 
-  progressStart(forceLinearEasing: boolean): Animation;
-  progressStep(step: number): Animation;
-  progressEnd(shouldComplete: boolean, step: number, dur: number | undefined): Animation;
+  /**
+   * Pauses the animation
+   */
+  pause(): void;
+
+  /**
+   * Stop the animation and reset
+   * all elements to their initial state
+   */
+  stop(): void;
+
+  /**
+   * Destroy the animation and all child animations.
+   */
+  destroy(): void;
+
+  progressStart(forceLinearEasing: boolean): void;
+  progressStep(step: number): void;
+  progressEnd(playTo: 0 | 1 | undefined, step: number, dur?: number): void;
 
   from(property: string, value: any): Animation;
   to(property: string, value: any): Animation;
   fromTo(property: string, fromValue: any, toValue: any): Animation;
-  keyframes(keyframes: any[]): Animation;
 
-  addAnimation(animationToADd: Animation | Animation[] | undefined | null): Animation;
-  addElement(el: Element | Element[] | Node | Node[] | NodeList | undefined | null): Animation;
+  /**
+   * Set the keyframes for the animation.
+   */
+  keyframes(keyframes: AnimationKeyFrames): Animation;
+
+  /**
+   * Group one or more animations together to be controlled by a parent animation.
+   */
+  addAnimation(animationToAdd: Animation | Animation[]): Animation;
+
+  /**
+   * Add one or more elements to the animation
+   */
+  addElement(el: Element | Element[] | Node | Node[] | NodeList): Animation;
+
+  /**
+   * Sets the number of times the animation cycle
+   * should be played before stopping.
+   */
   iterations(iterations: number): Animation;
-  fill(fill: AnimationFill | undefined): Animation;
-  direction(direction: AnimationDirection | undefined): Animation;
-  duration(duration: number): Animation;
-  easing(easing: string): Animation;
-  delay(delay: number): Animation;
-  parent(animation: Animation): Animation;
-  update(deep: boolean): Animation;
 
-  getKeyframes(): any[];
-  getDirection(): AnimationDirection | undefined;
-  getFill(): AnimationFill | undefined;
-  getDelay(): number | undefined;
-  getIterations(): number | undefined;
-  getEasing(): string | undefined;
-  getDuration(): number | undefined;
+  /**
+   * Sets how the animation applies styles to its
+   * elements before and after the animation's execution.
+   */
+  fill(fill: AnimationFill | undefined): Animation;
+
+  /**
+   * Sets whether the animation should play forwards,
+   * backwards, or alternating back and forth.
+   */
+  direction(direction: AnimationDirection | undefined): Animation;
+
+  /**
+   * Sets the length of time the animation takes
+   * to complete one cycle.
+   */
+  duration(duration: number | undefined): Animation;
+
+  /**
+   * Sets how the animation progresses through the
+   * duration of each cycle.
+   */
+  easing(easing: string | undefined): Animation;
+
+  /**
+   * Sets when an animation starts (in milliseconds).
+   */
+  delay(delay: number | undefined): Animation;
+
+  /**
+   * Get an array of keyframes for the animation.
+   */
+  getKeyframes(): AnimationKeyFrames;
+
+  /**
+   * Returns the animation's direction.
+   */
+  getDirection(): AnimationDirection;
+
+  /**
+   * Returns the animation's fill mode.
+   */
+  getFill(): AnimationFill;
+
+  /**
+   * Gets the animation's delay in milliseconds.
+   */
+  getDelay(): number;
+
+  /**
+   * Gets the number of iterations the animation will run.
+   */
+  getIterations(): number;
+
+  /**
+   * Returns the animation's easing.
+   */
+  getEasing(): string;
+
+  /**
+   * Gets the animation's duration in milliseconds.
+   */
+  getDuration(): number;
+
+  /**
+   * Returns the raw Web Animations object
+   * for all elements in an Animation.
+   * This will return an empty array on
+   * browsers that do not support
+   * the Web Animations API.
+   */
   getWebAnimations(): any[];
 
+  /**
+   * Add a function that performs a
+   * DOM read to be run after the
+   * animation end
+   */
   afterAddRead(readFn: () => void): Animation;
+
+  /**
+   * Add a function that performs a
+   * DOM write to be run after the
+   * animation end
+   */
   afterAddWrite(writeFn: () => void): Animation;
+
+  /**
+   * Clear CSS inline styles from the animation's
+   * elements after the animation ends.
+   */
   afterClearStyles(propertyNames: string[]): Animation;
+
+  /**
+   * Set CSS inline styles to the animation's
+   * elements after the animation ends.
+   */
   afterStyles(styles: { [property: string]: any }): Animation;
-  afterRemoveClass(className: string | string[] | undefined): Animation;
-  afterAddClass(className: string | string[] | undefined): Animation;
 
+  /**
+   * Add CSS class to the animation's
+   * elements after the animation ends.
+   */
+  afterAddClass(className: string | string[]): Animation;
+
+  /**
+   * Remove CSS class from the animation's
+   * elements after the animation ends.
+   */
+  afterRemoveClass(className: string | string[]): Animation;
+
+  /**
+   * Add a function that performs a
+   * DOM read to be run before the
+   * animation starts
+   */
   beforeAddRead(readFn: () => void): Animation;
+
+  /**
+   * Add a function that performs a
+   * DOM write to be run before the
+   * animation starts
+   */
   beforeAddWrite(writeFn: () => void): Animation;
+
+  /**
+   * Clear CSS inline styles from the animation's
+   * elements before the animation begins.
+   */
   beforeClearStyles(propertyNames: string[]): Animation;
+
+  /**
+   * Set CSS inline styles to the animation's
+   * elements before the animation begins.
+   */
   beforeStyles(styles: { [property: string]: any }): Animation;
-  beforeRemoveClass(className: string | string[] | undefined): Animation;
-  beforeAddClass(className: string | string[] | undefined): Animation;
 
-  onFinish(callback: (didComplete: boolean, animation: Animation) => void, opts?: AnimationOnFinishOptions): Animation;
-  clearOnFinish(): Animation;
+  /**
+   * Add a class to the animation's
+   * elements before the animation starts
+   */
+  beforeAddClass(className: string | string[]): Animation;
+
+  /**
+   * Remove a class from the animation's
+   * elements before the animation starts
+   */
+  beforeRemoveClass(className: string | string[]): Animation;
+
+  /**
+   * Add a callback to be run
+   * upon the animation ending
+   */
+  onFinish(callback: AnimationLifecycle, opts?: AnimationCallbackOptions): Animation;
+
+  /** @deprecated */
+  playAsync(): Promise<void>;
+  /** @deprecated */
+  playSync(): void;
 }
 
-export interface AnimationOnFinishCallback {
-  callback: (didComplete: boolean, animation: Animation) => void;
-  opts: AnimationOnFinishOptions;
-}
+export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;
 
-export interface AnimationOnFinishOptions {
+export interface AnimationCallbackOptions {
   oneTimeCallback: boolean;
 }
 
+export type AnimationKeyFrames = AnimationKeyFrame[];
+
+export interface AnimationKeyFrame extends AnimationStyles {
+  offset: number;
+}
+
+export type AnimationStyles = Record<string, any>;
+
+export interface AnimationPlayOptions {
+  sync: boolean;
+}
+
+export type AnimationPlayTo = 'start' | 'end';
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationFill = 'auto' | 'none' | 'forwards' | 'backwards' | 'both';
