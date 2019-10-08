@@ -38,7 +38,7 @@
 // --------------------------------------------------
 
 :host(.toolbar-searchbar) .toolbar-container {
-  @include padding(0);
+  @include padding(0, null);
 }
 
 // TODO - important is needed because searchbar is scoped
@@ -47,10 +47,12 @@
   height: 52px !important;
 
   padding-top: 1px !important;
-  padding-right: 16px !important;
   padding-bottom: 15px !important;
-  padding-left: 16px !important;
   /* stylelint-enable */
+}
+
+:host(.toolbar-searchbar) ::slotted(ion-buttons) {
+  align-self: start;
 }
 
 // iOS Toolbar Slot Placement

@@ -103,11 +103,11 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimati
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop'))
+    .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 0.08);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.popover-wrapper'))
+    .addElement(baseEl.querySelector('.popover-wrapper')!)
     .fromTo('opacity', 0.01, 1);
 
   return baseAnimation

@@ -12,43 +12,35 @@
   @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
     // Provide `[text-{bp}]` attributes for aligning the text based
     // on the breakpoint
-    .ion-text#{$infix}-center,
-    [text#{$infix}-center] {
+    .ion-text#{$infix}-center {
       text-align: center !important;
     }
 
-    .ion-text#{$infix}-justify,
-    [text#{$infix}-justify] {
+    .ion-text#{$infix}-justify {
       text-align: justify !important;
     }
 
-    .ion-text#{$infix}-start,
-    [text#{$infix}-start] {
+    .ion-text#{$infix}-start {
       text-align: start !important;
     }
 
-    .ion-text#{$infix}-end,
-    [text#{$infix}-end] {
+    .ion-text#{$infix}-end {
       text-align: end !important;
     }
 
-    .ion-text#{$infix}-left,
-    [text#{$infix}-left] {
+    .ion-text#{$infix}-left {
       text-align: left !important;
     }
 
-    .ion-text#{$infix}-right,
-    [text#{$infix}-right] {
+    .ion-text#{$infix}-right {
       text-align: right !important;
     }
 
-    .ion-text#{$infix}-nowrap,
-    [text#{$infix}-nowrap] {
+    .ion-text#{$infix}-nowrap {
       white-space: nowrap !important;
     }
 
-    .ion-text#{$infix}-wrap,
-    [text#{$infix}-wrap] {
+    .ion-text#{$infix}-wrap {
       white-space: normal !important;
     }
   }

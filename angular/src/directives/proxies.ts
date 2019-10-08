@@ -517,38 +517,6 @@ export class IonNavLink {
 }
 proxyInputs(IonNavLink, ['component', 'componentProps', 'routerDirection']);
 
-export declare interface IonNavPop extends Components.IonNavPop {}
-@Component({ selector: 'ion-nav-pop', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
-export class IonNavPop {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
-export declare interface IonNavPush extends Components.IonNavPush {}
-@Component({ selector: 'ion-nav-push', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['component', 'componentProps'] })
-export class IonNavPush {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-proxyInputs(IonNavPush, ['component', 'componentProps']);
-
-export declare interface IonNavSetRoot extends Components.IonNavSetRoot {}
-@Component({ selector: 'ion-nav-set-root', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['component', 'componentProps'] })
-export class IonNavSetRoot {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-proxyInputs(IonNavSetRoot, ['component', 'componentProps']);
-
 export declare interface IonNote extends Components.IonNote {}
 @Component({ selector: 'ion-note', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
 export class IonNote {
@@ -761,7 +729,7 @@ export class IonSelectOption {
 proxyInputs(IonSelectOption, ['disabled', 'selected', 'value']);
 
 export declare interface IonSkeletonText extends Components.IonSkeletonText {}
-@Component({ selector: 'ion-skeleton-text', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['animated', 'width'] })
+@Component({ selector: 'ion-skeleton-text', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['animated'] })
 export class IonSkeletonText {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -769,7 +737,7 @@ export class IonSkeletonText {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonSkeletonText, ['animated', 'width']);
+proxyInputs(IonSkeletonText, ['animated']);
 
 export declare interface IonSlide extends Components.IonSlide {}
 @Component({ selector: 'ion-slide', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })

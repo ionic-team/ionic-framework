@@ -44,9 +44,9 @@
         </ion-header>
         <ion-content class="ion-padding">
           <h1>Page One</h1>
-          <ion-nav-push component="page-two">
+          <ion-nav-link router-direction="forward" component="page-two">
             <ion-button class="next">Go to Page Two</ion-button>
-          </ion-nav-push>
+          </ion-nav-link>
         </ion-content>
       `;
     }
@@ -63,12 +63,12 @@
         </ion-header>
         <ion-content class="ion-padding">
           <h1>Page Two</h1>
-          <ion-nav-push component="page-three">
+          <ion-nav-link router-direction="forward" component="page-three">
             <ion-button class="next">Go to Page Three</ion-button>
-          </ion-nav-push>
-          <ion-nav-pop>
+          </ion-nav-link>
+          <ion-nav-link router-direction="back">
             <ion-button class="back">Go Back</ion-button>
-          </ion-nav-pop>
+          </ion-nav-link>
         </ion-content>
       `;
     }
@@ -85,9 +85,9 @@
         </ion-header>
         <ion-content class="ion-padding">
           <h1>Page Three</h1>
-          <ion-nav-pop>
+          <ion-nav-link router-direction="back">
             <ion-button class="back">Go Back</ion-button>
-          </ion-nav-pop>
+          </ion-nav-link>
         </ion-content>
       `;
     }
