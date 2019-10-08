@@ -19,6 +19,7 @@ ion-action-sheet,event,ionActionSheetDidDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetDidPresent,void,true
 ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
+ion-action-sheet,css-prop,--backdrop-opacity
 ion-action-sheet,css-prop,--background
 ion-action-sheet,css-prop,--background-activated
 ion-action-sheet,css-prop,--background-selected
@@ -57,6 +58,7 @@ ion-alert,event,ionAlertDidDismiss,OverlayEventDetail<any>,true
 ion-alert,event,ionAlertDidPresent,void,true
 ion-alert,event,ionAlertWillDismiss,OverlayEventDetail<any>,true
 ion-alert,event,ionAlertWillPresent,void,true
+ion-alert,css-prop,--backdrop-opacity
 ion-alert,css-prop,--background
 ion-alert,css-prop,--height
 ion-alert,css-prop,--max-height
@@ -589,6 +591,7 @@ ion-loading,event,ionLoadingDidDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingDidPresent,void,true
 ion-loading,event,ionLoadingWillDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingWillPresent,void,true
+ion-loading,css-prop,--backdrop-opacity
 ion-loading,css-prop,--background
 ion-loading,css-prop,--height
 ion-loading,css-prop,--max-height
@@ -684,6 +687,7 @@ ion-modal,event,ionModalDidDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalDidPresent,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalWillPresent,void,true
+ion-modal,css-prop,--backdrop-opacity
 ion-modal,css-prop,--background
 ion-modal,css-prop,--border-color
 ion-modal,css-prop,--border-radius
@@ -754,6 +758,7 @@ ion-picker,event,ionPickerDidDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerDidPresent,void,true
 ion-picker,event,ionPickerWillDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerWillPresent,void,true
+ion-picker,css-prop,--backdrop-opacity
 ion-picker,css-prop,--background
 ion-picker,css-prop,--background-rgb
 ion-picker,css-prop,--border-color
@@ -793,6 +798,7 @@ ion-popover,event,ionPopoverDidDismiss,OverlayEventDetail<any>,true
 ion-popover,event,ionPopoverDidPresent,void,true
 ion-popover,event,ionPopoverWillDismiss,OverlayEventDetail<any>,true
 ion-popover,event,ionPopoverWillPresent,void,true
+ion-popover,css-prop,--backdrop-opacity
 ion-popover,css-prop,--background
 ion-popover,css-prop,--box-shadow
 ion-popover,css-prop,--height
