@@ -57,7 +57,7 @@ export default () => {
         return elmMode;
       }
 
-      elm = elm.parentNode;
+      elm = elm.parentElement;
     }
     return defaultMode;
   });
