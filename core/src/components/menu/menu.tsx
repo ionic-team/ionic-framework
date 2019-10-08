@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuI, Side } from '../../interface';
+import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
 import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
@@ -327,7 +327,7 @@ AFTER:
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const isReversed = !shouldOpen;
-    const ani = (this.animation as IonicAnimation)!
+    const ani = (this.animation as Animation)!
       .direction((isReversed) ? 'reverse' : 'normal')
       .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)');
 
@@ -376,7 +376,7 @@ AFTER:
     }
 
     // the cloned animation should not use an easing curve during seek
-    (this.animation as IonicAnimation)
+    (this.animation as Animation)
       .direction((this._isOpen) ? 'reverse' : 'normal')
       .progressStart(true);
   }
@@ -531,7 +531,7 @@ AFTER:
     assert(this._isOpen, 'menu cannot be closed');
 
     this.isAnimating = true;
-    const ani = (this.animation as IonicAnimation)!.direction('reverse');
+    const ani = (this.animation as Animation)!.direction('reverse');
     ani.playSync();
     this.afterAnimation(false);
   }
