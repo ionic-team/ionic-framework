@@ -11,7 +11,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 0.32);
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.modal-wrapper')!)

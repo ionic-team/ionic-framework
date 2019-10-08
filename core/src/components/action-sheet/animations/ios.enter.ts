@@ -11,7 +11,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 0.4);
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.action-sheet-wrapper')!)
