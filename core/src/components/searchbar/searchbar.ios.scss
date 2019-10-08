@@ -159,9 +159,9 @@
 // -----------------------------------------
 
 :host-context(ion-toolbar) {
-  height: 52px;
-
   @include padding(1px, null, 15px, null);
+
+  height: 52px;
 }
 
 // Searchbar in Toolbar Color
