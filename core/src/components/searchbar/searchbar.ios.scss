@@ -155,6 +155,15 @@
   }
 }
 
+// Searchbar in Toolbar
+// -----------------------------------------
+
+:host-context(ion-toolbar) {
+  height: 52px;
+
+  @include padding(1px, null, 15px, null);
+}
+
 // Searchbar in Toolbar Color
 // -----------------------------------------
 
