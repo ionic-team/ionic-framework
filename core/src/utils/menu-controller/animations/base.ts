@@ -8,7 +8,7 @@ import { createAnimation } from '../../animation/animation';
  * and registers itself with Menu.
  */
 
-export const baseAnimation = (isIos: boolean): IonicAnimation => {
+export const baseAnimation = (isIos: boolean): Animation => {
   // https://material.io/guidelines/motion/movement.html#movement-movement-in-out-of-screen-bounds
   // https://material.io/guidelines/motion/duration-easing.html#duration-easing-natural-easing-curves
 
