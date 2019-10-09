@@ -233,6 +233,8 @@ export default {
 | `--knob-border-radius`    | Border radius of the range knob    |
 | `--knob-box-shadow`       | Box shadow of the range knob       |
 | `--knob-size`             | Size of the range knob             |
+| `--pin-background`        | Background of the range pin        |
+| `--pin-color`             | Color of the range pin             |
 
 
 ----------------------------------------------

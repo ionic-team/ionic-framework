@@ -32,12 +32,12 @@ describe('syncEvent', () => {
   })
 });
 
-describe('attachEventProps', () => {
+describe('attachProps', () => {
   it('should pass props to a dom node', () => {
     const onIonClickCallback = () => {};
 
     var div = document.createElement("div");
-    utils.attachEventProps(div, {
+    utils.attachProps(div, {
       'children': [],
       'style': 'color: red',
       'ref': () => {},

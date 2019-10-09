@@ -199,3 +199,16 @@ export const setupConfig = (config: IonicConfig) => {
   };
   return win.Ionic.config;
 };
+
+export const getMode = (): Mode => {
+  const win = window as any;
+  const config = win && win.Ionic && win.Ionic.config;
+  if (config) {
+    if (config.mode) {
+      return config.mode;
+    } else {
+      return config.get('mode');
+    }
+  }
+  return 'md';
+};

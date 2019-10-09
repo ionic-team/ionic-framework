@@ -20,13 +20,21 @@ export class Buttons implements ComponentInterface {
    * only be shown once all toolbars have fully collapsed.
    *
    * Only applies in `ios` mode with `collapse` set to
-   * `true` on `ion-header`
+   * `true` on `ion-header`.
+   *
+   * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
    */
   @Prop() collapse = false;
 
   render() {
+    const mode = getIonMode(this);
     return (
-      <Host class={getIonMode(this)}>
+      <Host
+        class={{
+          [mode]: true,
+          ['buttons-collapse']: this.collapse
+        }}
+      >
       </Host>
     );
   }

@@ -2,7 +2,6 @@ import { Build, Component, ComponentInterface, Element, Host, h } from '@stencil
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { rIC } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
 @Component({
@@ -51,4 +50,12 @@ export class App implements ComponentInterface {
 
 const needInputShims = () => {
   return isPlatform(window, 'ios') && isPlatform(window, 'mobile');
+};
+
+const rIC = (callback: () => void) => {
+  if ('requestIdleCallback' in window) {
+    (window as any).requestIdleCallback(callback);
+  } else {
+    setTimeout(callback, 32);
+  }
 };

@@ -1,5 +1,6 @@
+import { DefaultIonLifeCycleContext, IonLifeCycleContext } from '@ionic/react';
 import React from 'react';
-import { IonLifeCycleContext, DefaultIonLifeCycleContext } from '@ionic/react';
+
 import { RouteManagerContext } from './RouteManagerContext';
 
 interface ViewTransitionManagerProps {
@@ -20,7 +21,7 @@ export class ViewTransitionManager extends React.Component<ViewTransitionManager
   context!: React.ContextType<typeof RouteManagerContext>;
 
   constructor(props: ViewTransitionManagerProps) {
-    super(props)
+    super(props);
     this.state = {
       show: true
     };
@@ -52,7 +53,7 @@ export class ViewTransitionManager extends React.Component<ViewTransitionManager
       <IonLifeCycleContext.Provider value={this.ionLifeCycleContext}>
         {show && this.props.children}
       </IonLifeCycleContext.Provider>
-    )
+    );
   }
 
   static get contextType() {

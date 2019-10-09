@@ -23,7 +23,7 @@ By default, Ionic slides use the built-in `slide` animation effect. Custom anima
 #### Coverflow
 
 ```typescript
-const slidesOpts = {
+const slideOpts = {
   slidesPerView: 3,
   coverflowEffect: {
     rotate: 50,
@@ -116,7 +116,7 @@ const slidesOpts = {
 #### Cube
 
 ```typescript
-const slidesOpts = {
+const slideOpts = {
   grabCursor: true,
   cubeEffect: {
     shadow: true,
@@ -276,7 +276,7 @@ const slidesOpts = {
 #### Fade
 
 ```typescript
-const slidesOpts = {
+const slideOpts = {
   on: {
     beforeInit() {
       const swiper = this;

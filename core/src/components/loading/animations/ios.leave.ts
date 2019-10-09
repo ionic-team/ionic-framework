@@ -10,11 +10,11 @@ export const iosLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop'))
+    .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.3, 0);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.loading-wrapper'))
+    .addElement(baseEl.querySelector('.loading-wrapper')!)
     .keyframes([
       { offset: 0, opacity: 0.99, transform: 'scale(1)' },
       { offset: 1, opacity: 0, transform: 'scale(0.9)' }

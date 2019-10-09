@@ -1,5 +1,6 @@
-import React, { ReactNode } from 'react';
 import { NavDirection } from '@ionic/core';
+import React, { ReactNode } from 'react';
+
 import { ViewStacks } from './ViewStacks';
 
 export interface RouteManagerContextState {
@@ -15,11 +16,11 @@ export const RouteManagerContext = /*@__PURE__*/React.createContext<RouteManager
   viewStacks: new ViewStacks(),
   syncView: () => { navContextNotFoundError(); },
   hideView: () => { navContextNotFoundError(); },
-  setupIonRouter: () => { return Promise.reject(navContextNotFoundError()) },
+  setupIonRouter: () => Promise.reject(navContextNotFoundError()),
   removeViewStack: () => { navContextNotFoundError(); },
   transitionView: () => { navContextNotFoundError(); }
 });
 
 function navContextNotFoundError() {
-  console.error('IonReactRouter not found, did you add it to the app?')
+  console.error('IonReactRouter not found, did you add it to the app?');
 }
