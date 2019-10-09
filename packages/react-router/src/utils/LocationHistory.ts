@@ -7,7 +7,7 @@ export class LocationHistory {
 
   add(location: HistoryLocation) {
     this.locationHistory.push(location);
-    if(this.locationHistory.length > RESTRICT_SIZE) {
+    if (this.locationHistory.length > RESTRICT_SIZE) {
       this.locationHistory.splice(0, 10);
     }
   }
