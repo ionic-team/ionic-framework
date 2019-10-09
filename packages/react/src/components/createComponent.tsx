@@ -5,7 +5,6 @@ import { NavContext } from '../contexts/NavContext';
 
 import { RouterDirection } from './hrefprops';
 import { attachProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
-import { deprecationWarning } from './utils/dev';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.Ref<ElementType>;
@@ -29,11 +28,6 @@ export const createReactComponent = <PropType, ElementType>(
 
     componentDidMount() {
       this.componentDidUpdate(this.props);
-      if (this.props.href) {
-        setTimeout(() => {
-          deprecationWarning('hrefchange', 'As of RC3, href links no longer go through the router, so transitions will not be applied to these links. To maintain transitions, use the new routerLink prop.');
-        }, 2000);
-      }
     }
 
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
