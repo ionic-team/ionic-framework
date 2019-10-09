@@ -41,19 +41,18 @@
   @include padding(0, null);
 }
 
-// TODO - important is needed because searchbar is scoped
-:host(.toolbar-searchbar) ::slotted(ion-searchbar) {
-  /* stylelint-disable */
-  height: 52px !important;
-
-  padding-top: 1px !important;
-  padding-bottom: 15px !important;
-  /* stylelint-enable */
-}
-
-:host(.toolbar-searchbar) ::slotted(ion-buttons) {
+:host(.toolbar-searchbar) ::slotted(*) {
   align-self: start;
 }
+
+:host(.toolbar-searchbar) ::slotted(ion-chip) {
+  @include margin(3px, null, null, null);
+}
+
+:host(.toolbar-searchbar) ::slotted(ion-back-button) {
+  height: 38px;
+}
+
 
 // iOS Toolbar Slot Placement
 // --------------------------------------------------
