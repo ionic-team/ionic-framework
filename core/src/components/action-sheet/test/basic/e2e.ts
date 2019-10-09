@@ -34,6 +34,10 @@ test('action-sheet: basic, scroll without cancel', async () => {
   await testActionSheet(DIRECTORY, '#scrollWithoutCancel');
 });
 
+test('action-sheet: basic, custom backdrop', async () => {
+  await testActionSheet(DIRECTORY, '#customBackdrop');
+});
+
 /**
  * RTL Tests
  */
@@ -68,4 +72,8 @@ test('action-sheet:rtl: basic, scrollable options', async () => {
 
 test('action-sheet:rtl: basic, scroll without cancel', async () => {
   await testActionSheet(DIRECTORY, '#scrollWithoutCancel', true);
+});
+
+test('action-sheet:rtl: basic, custom backdrop', async () => {
+  await testActionSheet(DIRECTORY, '#customBackdrop', true);
 });

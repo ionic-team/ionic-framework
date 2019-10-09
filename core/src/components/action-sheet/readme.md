@@ -321,6 +321,7 @@ Type: `Promise<void>`
 
 | Name                     | Description                                        |
 | ------------------------ | -------------------------------------------------- |
+| `--backdrop-opacity`     | Opacity of the backdrop                            |
 | `--background`           | Background of the action sheet group               |
 | `--background-activated` | Background of the action sheet button when pressed |
 | `--background-selected`  | Background of the selected action sheet button     |

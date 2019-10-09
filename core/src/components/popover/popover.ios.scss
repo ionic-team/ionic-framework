@@ -8,6 +8,7 @@
   --width: #{$popover-ios-width};
   --max-height: #{$popover-ios-max-height};
   --box-shadow: none;
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.08);
 }
 
 .popover-content {
