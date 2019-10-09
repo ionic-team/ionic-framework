@@ -1,3 +1,7 @@
+# [4.11.0 Sodium](https://github.com/ionic-team/ionic/compare/v4.10.3...v4.11.0) (2019-10-09)
+
+Ionic React! Enjoy! 🧂 🌊 🐼 
+
 ## [4.10.3](https://github.com/ionic-team/ionic/compare/v4.10.2...v4.10.3) (2019-10-09)
 
 
@@ -175,13 +179,13 @@ With this version comes support for Angular 8! Follow the below steps to update.
     $ npm install @ionic/angular-toolkit@2.0.0 -D
     ```
 
-1. Update `@angular/core` and `@angular/cli`:
+2. Update `@angular/core` and `@angular/cli`:
 
     ```shell
     $ npx ng update @angular/core @angular/cli
     ```
 
-1. Update `@angular-devkit` dependencies:
+3. Update `@angular-devkit` dependencies:
 
     ```shell
     $ npm i @angular-devkit/architect@latest @angular-devkit/build-angular@latest @angular-devkit/core@latest @angular-devkit/schematics@latest
