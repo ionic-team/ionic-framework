@@ -20,7 +20,6 @@ export * from './directives/proxies';
 export { AngularDelegate } from './providers/angular-delegate';
 export { ActionSheetController } from './providers/action-sheet-controller';
 export { AlertController } from './providers/alert-controller';
-export { Events } from './providers/events';
 export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
 export { PickerController } from './providers/picker-controller';
