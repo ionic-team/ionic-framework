@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import {
   Platform, ModalController, AlertController, ActionSheetController,
-  PopoverController, ToastController, Events, PickerController, MenuController,
+  PopoverController, ToastController, PickerController, MenuController,
   LoadingController, NavController, DomController, Config
 } from '@ionic/angular';
 
@@ -13,7 +13,6 @@ export class ProvidersComponent {
 
   isLoaded = false;
   isReady = false;
-  isEvent = false;
   isResumed = false;
   isPaused = false;
   isResized = false;
@@ -25,7 +24,6 @@ export class ProvidersComponent {
   constructor(
     actionSheetCtrl: ActionSheetController,
     alertCtrl: AlertController,
-    events: Events,
     loadingCtrl: LoadingController,
     menuCtrl: MenuController,
     pickerCtrl: PickerController,
@@ -40,7 +38,7 @@ export class ProvidersComponent {
   ) {
     // test all providers load
     if (
-      actionSheetCtrl && alertCtrl && events && loadingCtrl && menuCtrl && pickerCtrl &&
+      actionSheetCtrl && alertCtrl && loadingCtrl && menuCtrl && pickerCtrl &&
       modalCtrl && platform && popoverCtrl && toastCtrl && navCtrl && domCtrl && config
       ) {
         this.isLoaded = true;
@@ -68,13 +66,6 @@ export class ProvidersComponent {
     });
     this.isDesktop = platform.is('desktop');
     this.isMobile = platform.is('mobile');
-
-    // test events
-    events.subscribe('topic', () => {
-      this.isEvent = true;
-      NgZone.assertInAngularZone();
-    });
-    events.publish('topic');
 
     // test config
     this.isTesting = config.getBoolean('_testing');
