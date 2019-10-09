@@ -67,24 +67,6 @@ export class SplitPane implements ComponentInterface {
     }
   }
 
-  componentWillLoad() {
-    if (this.contentId === undefined) {
-      console.warn(`[DEPRECATED][ion-split-pane] Using the [main] attribute is deprecated, please use the "contentId" property instead:
-BEFORE:
-  <ion-split-pane>
-    ...
-    <div main>...</div>
-  </ion-split-pane>
-
-AFTER:
-  <ion-split-pane contentId="main-content">
-    ...
-    <div id="main-content">...</div>
-  </ion-split-pane>
-`);
-    }
-  }
-
   @Watch('disabled')
   @Watch('when')
   protected updateState() {
