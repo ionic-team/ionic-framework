@@ -4,7 +4,7 @@ import ReactDom from 'react-dom';
 import { NavContext } from '../contexts/NavContext';
 
 import { RouterDirection } from './hrefprops';
-import { attachEventProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
+import { attachProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
 import { deprecationWarning } from './utils/dev';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
@@ -38,7 +38,7 @@ export const createReactComponent = <PropType, ElementType>(
 
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       const node = ReactDom.findDOMNode(this) as HTMLElement;
-      attachEventProps(node, this.props, prevProps);
+      attachProps(node, this.props, prevProps);
     }
 
     private handleClick = (e: React.MouseEvent<PropType>) => {

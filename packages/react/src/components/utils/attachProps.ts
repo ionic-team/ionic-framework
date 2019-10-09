@@ -1,6 +1,6 @@
 import { camelToDashCase } from './case';
 
-export const attachEventProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
+export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
   // add any classes in className to the class list
   const className = getClassName(node.classList, newProps, oldProps);
   if (className !== '') {
@@ -19,11 +19,12 @@ export const attachEventProps = (node: HTMLElement, newProps: any, oldProps: any
         syncEvent(node, eventNameLc, newProps[name]);
       }
     } else {
+      (node as any)[name] = newProps[name];
       const propType = typeof newProps[name];
-      if (propType === 'object' || propType === 'undefined') {
-        (node as any)[name] = newProps[name];
-      } else {
+      if (propType === 'string') {
         node.setAttribute(camelToDashCase(name), newProps[name]);
+      } else {
+        (node as any)[name] = newProps[name];
       }
     }
   });
