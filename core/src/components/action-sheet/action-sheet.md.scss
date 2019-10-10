@@ -8,6 +8,7 @@
   --background: #{$action-sheet-md-background-color};
   --background-selected: #{var(--background, $action-sheet-md-button-background-selected)};
   --background-activated: var(--background);
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.32);
 }
 
 .action-sheet-title {
