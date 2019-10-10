@@ -8,11 +8,11 @@ export const mdLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
-  const wrapperEl = baseEl.querySelector('.modal-wrapper');
+  const wrapperEl = baseEl.querySelector('.modal-wrapper')!;
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop'))
-    .fromTo('opacity', 0.32, 0.0);
+    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .fromTo('opacity', 'var(--backdrop-opacity)', 0.0);
 
   wrapperAnimation
     .addElement(wrapperEl)

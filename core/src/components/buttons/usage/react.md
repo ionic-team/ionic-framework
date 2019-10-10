@@ -48,6 +48,15 @@ export const ButtonsExample: React.FC = () => (
         <IonMenuButton autoHide={false} />
       </IonButtons>
     </IonToolbar>
+    
+    <IonToolbar>
+      <IonButtons collapse="true">
+        <IonButton>
+          <IonIcon slot="icon-only" name="star" />
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Collapsible Buttons</IonTitle>
+    </IonToolbar>
   </IonContent>
 );
 ```

@@ -19,6 +19,7 @@ ion-action-sheet,event,ionActionSheetDidDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetDidPresent,void,true
 ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
+ion-action-sheet,css-prop,--backdrop-opacity
 ion-action-sheet,css-prop,--background
 ion-action-sheet,css-prop,--background-activated
 ion-action-sheet,css-prop,--background-selected
@@ -57,6 +58,7 @@ ion-alert,event,ionAlertDidDismiss,OverlayEventDetail<any>,true
 ion-alert,event,ionAlertDidPresent,void,true
 ion-alert,event,ionAlertWillDismiss,OverlayEventDetail<any>,true
 ion-alert,event,ionAlertWillPresent,void,true
+ion-alert,css-prop,--backdrop-opacity
 ion-alert,css-prop,--background
 ion-alert,css-prop,--height
 ion-alert,css-prop,--max-height
@@ -69,14 +71,6 @@ ion-alert-controller,none
 ion-alert-controller,method,create,create(options: AlertOptions) => Promise<HTMLIonAlertElement>
 ion-alert-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
 ion-alert-controller,method,getTop,getTop() => Promise<HTMLIonAlertElement | undefined>
-
-ion-anchor,shadow
-ion-anchor,prop,color,string | undefined,undefined,false,false
-ion-anchor,prop,href,string | undefined,undefined,false,false
-ion-anchor,prop,rel,string | undefined,undefined,false,false
-ion-anchor,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
-ion-anchor,css-prop,--background
-ion-anchor,css-prop,--color
 
 ion-app,none
 
@@ -400,7 +394,7 @@ ion-grid,css-prop,--ion-grid-width-xl
 ion-grid,css-prop,--ion-grid-width-xs
 
 ion-header,none
-ion-header,prop,collapse,boolean,false,false,false
+ion-header,prop,collapse,"condense" | undefined,undefined,false,false
 ion-header,prop,mode,"ios" | "md",undefined,false,false
 ion-header,prop,translucent,boolean,false,false,false
 
@@ -597,6 +591,7 @@ ion-loading,event,ionLoadingDidDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingDidPresent,void,true
 ion-loading,event,ionLoadingWillDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingWillPresent,void,true
+ion-loading,css-prop,--backdrop-opacity
 ion-loading,css-prop,--background
 ion-loading,css-prop,--height
 ion-loading,css-prop,--max-height
@@ -692,6 +687,7 @@ ion-modal,event,ionModalDidDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalDidPresent,void,true
 ion-modal,event,ionModalWillDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalWillPresent,void,true
+ion-modal,css-prop,--backdrop-opacity
 ion-modal,css-prop,--background
 ion-modal,css-prop,--border-color
 ion-modal,css-prop,--border-radius
@@ -736,16 +732,6 @@ ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | str
 ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 
-ion-nav-pop,none
-
-ion-nav-push,none
-ion-nav-push,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav-push,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
-
-ion-nav-set-root,none
-ion-nav-set-root,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
-ion-nav-set-root,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
-
 ion-note,shadow
 ion-note,prop,color,string | undefined,undefined,false,false
 ion-note,prop,mode,"ios" | "md",undefined,false,false
@@ -772,6 +758,7 @@ ion-picker,event,ionPickerDidDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerDidPresent,void,true
 ion-picker,event,ionPickerWillDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerWillPresent,void,true
+ion-picker,css-prop,--backdrop-opacity
 ion-picker,css-prop,--background
 ion-picker,css-prop,--background-rgb
 ion-picker,css-prop,--border-color
@@ -811,6 +798,7 @@ ion-popover,event,ionPopoverDidDismiss,OverlayEventDetail<any>,true
 ion-popover,event,ionPopoverDidPresent,void,true
 ion-popover,event,ionPopoverWillDismiss,OverlayEventDetail<any>,true
 ion-popover,event,ionPopoverWillPresent,void,true
+ion-popover,css-prop,--backdrop-opacity
 ion-popover,css-prop,--background
 ion-popover,css-prop,--box-shadow
 ion-popover,css-prop,--height
@@ -881,6 +869,8 @@ ion-range,css-prop,--knob-background
 ion-range,css-prop,--knob-border-radius
 ion-range,css-prop,--knob-box-shadow
 ion-range,css-prop,--knob-size
+ion-range,css-prop,--pin-background
+ion-range,css-prop,--pin-color
 
 ion-refresher,none
 ion-refresher,prop,closeDuration,string,'280ms',false,false
@@ -962,7 +952,7 @@ ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search"
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
 ion-searchbar,prop,searchIcon,string,'search',false,false
-ion-searchbar,prop,showCancelButton,boolean | string,'never',false,false
+ion-searchbar,prop,showCancelButton,"always" | "focus" | "never",'never',false,false
 ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,value,null | string | undefined,'',false,false
@@ -1057,7 +1047,6 @@ ion-select-option,prop,value,any,undefined,false,false
 
 ion-skeleton-text,shadow
 ion-skeleton-text,prop,animated,boolean,false,false,false
-ion-skeleton-text,prop,width,string | undefined,undefined,false,false
 ion-skeleton-text,css-prop,--background
 ion-skeleton-text,css-prop,--background-rgb
 ion-skeleton-text,css-prop,--border-radius

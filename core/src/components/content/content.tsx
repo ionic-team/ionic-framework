@@ -122,7 +122,7 @@ export class Content implements ComponentInterface {
   private shouldForceOverscroll() {
     const { forceOverscroll, mode } = this;
     return forceOverscroll === undefined
-      ? mode === 'ios' && isPlatform(window, 'mobile')
+      ? mode === 'ios' && isPlatform('ios')
       : forceOverscroll;
   }
 

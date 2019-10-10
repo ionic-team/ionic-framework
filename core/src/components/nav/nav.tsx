@@ -986,7 +986,7 @@ export class Nav implements NavOutlet {
         newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.32, 0.72), new Point(0, 1), new Point(1, 1), stepValue);
       }
 
-      this.sbAni.progressEnd(shouldComplete, newStepValue, dur);
+      (this.sbAni as IonicAnimation).progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
     }
   }
 
