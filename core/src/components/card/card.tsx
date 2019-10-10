@@ -14,7 +14,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
     ios: 'card.ios.scss',
     md: 'card.md.scss'
   },
-  scoped: true
+  shadow: true
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
 

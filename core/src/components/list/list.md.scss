@@ -88,3 +88,11 @@
   --border-width: 0;
   --inner-border-width: 0;
 }
+
+
+// Material Design List Inside A Card
+// --------------------------------------------------
+
+ion-card .list-md {
+  @include margin(0);
+}

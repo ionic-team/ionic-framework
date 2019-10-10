@@ -31,7 +31,8 @@ export class CardSubtitle implements ComponentInterface {
         aria-level="3"
         class={{
           ...createColorClasses(this.color),
-          [mode]: true,
+          'ion-inherit-color': true,
+          [mode]: true
         }}
       >
         <slot></slot>
