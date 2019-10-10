@@ -79,3 +79,11 @@
   --border-width: 0;
   --inner-border-width: 0;
 }
+
+
+// iOS List Inside A Card
+// --------------------------------------------------
+
+ion-card .list-ios {
+  @include margin(0);
+}

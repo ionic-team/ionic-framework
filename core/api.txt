@@ -174,7 +174,7 @@ ion-button,css-prop,--transition
 ion-buttons,scoped
 ion-buttons,prop,collapse,boolean,false,false,false
 
-ion-card,scoped
+ion-card,shadow
 ion-card,prop,button,boolean,false,false,false
 ion-card,prop,color,string | undefined,undefined,false,false
 ion-card,prop,disabled,boolean,false,false,false
