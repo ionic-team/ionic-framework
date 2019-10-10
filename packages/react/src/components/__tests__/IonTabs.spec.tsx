@@ -1,7 +1,7 @@
 import React from 'react';
 import { IonTabs, IonTabButton, IonLabel, IonIcon, IonTabBar} from '../index';
 import { render, cleanup } from 'react-testing-library';
-import { IonRouterOutlet } from '../proxies';
+import { IonRouterOutlet } from '../IonRouterOutlet';
 
 afterEach(cleanup)
 

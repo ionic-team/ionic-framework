@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "4.9.0-rc.2",
+  "version": "4.11.0",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -28,6 +28,7 @@
     "lint.fix": "tslint --project . --fix",
     "tsc": "tsc -p .",
     "copy": "node scripts/copy.js",
+    "test.spec": "jest --ci",
     "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js"
   },
   "main": "dist/index.js",
@@ -38,7 +39,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^4.9.0",
+    "@ionic/core": "4.11.0",
     "tslib": "*"
   },
   "peerDependencies": {

@@ -230,7 +230,8 @@ export class StackController {
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
     if (enteringEl && enteringEl !== leavingEl) {
-      enteringEl.classList.add('ion-page', 'ion-page-invisible');
+      enteringEl.classList.add('ion-page');
+      enteringEl.classList.add('ion-page-invisible');
       if (enteringEl.parentElement !== containerEl) {
         containerEl.appendChild(enteringEl);
       }

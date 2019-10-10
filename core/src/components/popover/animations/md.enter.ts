@@ -85,11 +85,11 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimatio
   const viewportAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop'))
+    .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 0.32);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.popover-wrapper'))
+    .addElement(baseEl.querySelector('.popover-wrapper')!)
     .fromTo('opacity', 0.01, 1);
 
   contentAnimation
@@ -102,7 +102,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimatio
     .fromTo('transform', 'scale(0.001)', 'scale(1)');
 
   viewportAnimation
-    .addElement(baseEl.querySelector('.popover-viewport'))
+    .addElement(baseEl.querySelector('.popover-viewport')!)
     .fromTo('opacity', 0.01, 1);
 
   return baseAnimation

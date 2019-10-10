@@ -400,7 +400,7 @@ ion-grid,css-prop,--ion-grid-width-xl
 ion-grid,css-prop,--ion-grid-width-xs
 
 ion-header,none
-ion-header,prop,collapse,boolean,false,false,false
+ion-header,prop,collapse,"condense" | undefined,undefined,false,false
 ion-header,prop,mode,"ios" | "md",undefined,false,false
 ion-header,prop,translucent,boolean,false,false,false
 
@@ -881,6 +881,8 @@ ion-range,css-prop,--knob-background
 ion-range,css-prop,--knob-border-radius
 ion-range,css-prop,--knob-box-shadow
 ion-range,css-prop,--knob-size
+ion-range,css-prop,--pin-background
+ion-range,css-prop,--pin-color
 
 ion-refresher,none
 ion-refresher,prop,closeDuration,string,'280ms',false,false
