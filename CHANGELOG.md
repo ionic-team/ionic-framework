@@ -1,3 +1,26 @@
+# [4.11.0 Sodium](https://github.com/ionic-team/ionic/compare/v4.10.3...v4.11.0) (2019-10-09)
+
+Ionic React! Enjoy! 🧂 🌊 🐼 
+
+## [4.10.3](https://github.com/ionic-team/ionic/compare/v4.10.2...v4.10.3) (2019-10-09)
+
+
+### Bug Fixes
+
+* **content:** set overscroll only on iOS ([#19470](https://github.com/ionic-team/ionic/issues/19470)) ([63c2008](https://github.com/ionic-team/ionic/commit/63c2008a86de19847677fda7b9fedce73ed7669f)), closes [#19465](https://github.com/ionic-team/ionic/issues/19465)
+* **searchbar:** update alignment of chips and other elements in toolbar ([#19596](https://github.com/ionic-team/ionic/issues/19596)) ([637f26b](https://github.com/ionic-team/ionic/commit/637f26b3642a266b6ef3b9d3d71b7327a5d3cc37)), closes [#19495](https://github.com/ionic-team/ionic/issues/19495) [#19502](https://github.com/ionic-team/ionic/issues/19502)
+
+
+
+## [4.10.2](https://github.com/ionic-team/ionic/compare/v4.10.1...v4.10.2) (2019-10-08)
+
+
+### Bug Fixes
+
+* **overlay:** ensure lifecycle events fire properly ([#19579](https://github.com/ionic-team/ionic/issues/19579)) ([a7b9642](https://github.com/ionic-team/ionic/commit/a7b9642)), closes [#19576](https://github.com/ionic-team/ionic/issues/19576)
+
+
+
 ## [4.10.1](https://github.com/ionic-team/ionic/compare/v4.10.0...v4.10.1) (2019-10-07)
 
 
@@ -156,13 +179,13 @@ With this version comes support for Angular 8! Follow the below steps to update.
     $ npm install @ionic/angular-toolkit@2.0.0 -D
     ```
 
-1. Update `@angular/core` and `@angular/cli`:
+2. Update `@angular/core` and `@angular/cli`:
 
     ```shell
     $ npx ng update @angular/core @angular/cli
     ```
 
-1. Update `@angular-devkit` dependencies:
+3. Update `@angular-devkit` dependencies:
 
     ```shell
     $ npm i @angular-devkit/architect@latest @angular-devkit/build-angular@latest @angular-devkit/core@latest @angular-devkit/schematics@latest

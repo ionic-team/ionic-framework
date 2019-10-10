@@ -14,7 +14,7 @@ export const createForwardRef = <PropType, ElementType>(ReactComponent: any, dis
   return React.forwardRef(forwardRef);
 };
 
-export * from './attachEventProps';
+export * from './attachProps';
 export * from './case';
 
 export const isPlatform = (platform: Platforms) => {
