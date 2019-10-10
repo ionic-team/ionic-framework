@@ -15,6 +15,8 @@
    * @prop --min-height: Minimum height of the popover
    * @prop --height: Height of the popover
    * @prop --max-height: Maximum height of the popover
+   *
+   * @prop --backdrop-opacity: Opacity of the backdrop
    */
   --background: #{$popover-background-color};
   --min-width: 0;

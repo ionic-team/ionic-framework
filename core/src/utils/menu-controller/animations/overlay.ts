@@ -11,9 +11,7 @@ import { baseAnimation } from './base';
 export const menuOverlayAnimation = (menu: MenuI): IonicAnimation => {
   let closedX: string;
   let openedX: string;
-
-  const BOX_SHADOW_WIDTH = 8;
-  const width = menu.width + BOX_SHADOW_WIDTH;
+  const width = menu.width + 8;
   const menuAnimation = createAnimation();
   const backdropAnimation = createAnimation();
 
@@ -32,9 +30,12 @@ export const menuOverlayAnimation = (menu: MenuI): IonicAnimation => {
     .addElement(menu.menuInnerEl!)
     .fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
 
+  const isIos = menu.mode === 'ios';
+  const opacity = isIos ? 0.2 : 0.25;
+
   backdropAnimation
     .addElement(menu.backdropEl!)
-    .fromTo('opacity', 0.01, 0.32);
+    .fromTo('opacity', 0.01, opacity);
 
-  return baseAnimation().addAnimation([menuAnimation, backdropAnimation]);
+  return baseAnimation(isIos).addAnimation([menuAnimation, backdropAnimation]);
 };

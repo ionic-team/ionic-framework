@@ -11,7 +11,7 @@ export const mdLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.32, 0);
+    .fromTo('opacity', 'var(--backdrop-opacity)', 0);
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.action-sheet-wrapper')!)

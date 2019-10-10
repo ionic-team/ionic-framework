@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "4.10.0-rc.3",
+  "version": "4.11.0",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -50,8 +50,8 @@
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
-    "@ionic/core": "^4.10.0",
-    "@ionic/react": "4.10.0-rc.3",
+    "@ionic/core": "4.11.0",
+    "@ionic/react": "4.11.0",
     "@types/jest": "^23.3.9",
     "@types/node": "12.6.9",
     "@types/react": "^16.9.2",

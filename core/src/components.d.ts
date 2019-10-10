@@ -253,24 +253,6 @@ export namespace Components {
     */
     'getTop': () => Promise<HTMLIonAlertElement | undefined>;
   }
-  interface IonAnchor {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-    */
-    'href': string | undefined;
-    /**
-    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
-    */
-    'rel': string | undefined;
-    /**
-    * When using a router, it specifies the transition direction when navigating to another page using `href`.
-    */
-    'routerDirection': RouterDirection;
-  }
   interface IonApp {}
   interface IonAvatar {}
   interface IonBackButton {
@@ -1662,27 +1644,6 @@ export namespace Components {
     */
     'routerDirection': RouterDirection;
   }
-  interface IonNavPop {}
-  interface IonNavPush {
-    /**
-    * Component to navigate to
-    */
-    'component'?: NavComponent;
-    /**
-    * Data you want to pass to the component as props
-    */
-    'componentProps'?: ComponentProps;
-  }
-  interface IonNavSetRoot {
-    /**
-    * Component you want to make root for the navigation stack
-    */
-    'component'?: NavComponent;
-    /**
-    * Data you want to pass to the component as props
-    */
-    'componentProps'?: ComponentProps;
-  }
   interface IonNote {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -2227,7 +2188,7 @@ export namespace Components {
     /**
     * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
     */
-    'showCancelButton': boolean | string;
+    'showCancelButton': 'never' | 'focus' | 'always';
     /**
     * If `true`, enable spellcheck on the input.
     */
@@ -2381,10 +2342,6 @@ export namespace Components {
     * If `true`, the skeleton text will animate.
     */
     'animated': boolean;
-    /**
-    * @deprecated Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.
-    */
-    'width'?: string;
   }
   interface IonSlide {}
   interface IonSlides {
@@ -2500,7 +2457,7 @@ export namespace Components {
   }
   interface IonSplitPane {
     /**
-    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.
+    * The content `id` of the split-pane's main content.
     */
     'contentId'?: string;
     /**
@@ -2720,10 +2677,6 @@ export namespace Components {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * @deprecated Use `buttons` instead. Text to display in the close button.
-    */
-    'closeButtonText'?: string;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -2782,10 +2735,6 @@ export namespace Components {
     * Present the toast overlay after it has been created.
     */
     'present': () => Promise<void>;
-    /**
-    * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
-    */
-    'showCloseButton': boolean;
     /**
     * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
@@ -2939,12 +2888,6 @@ declare global {
   var HTMLIonAlertControllerElement: {
     prototype: HTMLIonAlertControllerElement;
     new (): HTMLIonAlertControllerElement;
-  };
-
-  interface HTMLIonAnchorElement extends Components.IonAnchor, HTMLStencilElement {}
-  var HTMLIonAnchorElement: {
-    prototype: HTMLIonAnchorElement;
-    new (): HTMLIonAnchorElement;
   };
 
   interface HTMLIonAppElement extends Components.IonApp, HTMLStencilElement {}
@@ -3223,24 +3166,6 @@ declare global {
     new (): HTMLIonNavLinkElement;
   };
 
-  interface HTMLIonNavPopElement extends Components.IonNavPop, HTMLStencilElement {}
-  var HTMLIonNavPopElement: {
-    prototype: HTMLIonNavPopElement;
-    new (): HTMLIonNavPopElement;
-  };
-
-  interface HTMLIonNavPushElement extends Components.IonNavPush, HTMLStencilElement {}
-  var HTMLIonNavPushElement: {
-    prototype: HTMLIonNavPushElement;
-    new (): HTMLIonNavPushElement;
-  };
-
-  interface HTMLIonNavSetRootElement extends Components.IonNavSetRoot, HTMLStencilElement {}
-  var HTMLIonNavSetRootElement: {
-    prototype: HTMLIonNavSetRootElement;
-    new (): HTMLIonNavSetRootElement;
-  };
-
   interface HTMLIonNoteElement extends Components.IonNote, HTMLStencilElement {}
   var HTMLIonNoteElement: {
     prototype: HTMLIonNoteElement;
@@ -3515,7 +3440,6 @@ declare global {
     'ion-action-sheet-controller': HTMLIonActionSheetControllerElement;
     'ion-alert': HTMLIonAlertElement;
     'ion-alert-controller': HTMLIonAlertControllerElement;
-    'ion-anchor': HTMLIonAnchorElement;
     'ion-app': HTMLIonAppElement;
     'ion-avatar': HTMLIonAvatarElement;
     'ion-back-button': HTMLIonBackButtonElement;
@@ -3562,9 +3486,6 @@ declare global {
     'ion-modal-controller': HTMLIonModalControllerElement;
     'ion-nav': HTMLIonNavElement;
     'ion-nav-link': HTMLIonNavLinkElement;
-    'ion-nav-pop': HTMLIonNavPopElement;
-    'ion-nav-push': HTMLIonNavPushElement;
-    'ion-nav-set-root': HTMLIonNavSetRootElement;
     'ion-note': HTMLIonNoteElement;
     'ion-picker': HTMLIonPickerElement;
     'ion-picker-column': HTMLIonPickerColumnElement;
@@ -3748,24 +3669,6 @@ declare namespace LocalJSX {
     'translucent'?: boolean;
   }
   interface IonAlertController {}
-  interface IonAnchor {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-    */
-    'href'?: string | undefined;
-    /**
-    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
-    */
-    'rel'?: string | undefined;
-    /**
-    * When using a router, it specifies the transition direction when navigating to another page using `href`.
-    */
-    'routerDirection'?: RouterDirection;
-  }
   interface IonApp {}
   interface IonAvatar {}
   interface IonBackButton {
@@ -4992,27 +4895,6 @@ declare namespace LocalJSX {
     */
     'routerDirection'?: RouterDirection;
   }
-  interface IonNavPop {}
-  interface IonNavPush {
-    /**
-    * Component to navigate to
-    */
-    'component'?: NavComponent;
-    /**
-    * Data you want to pass to the component as props
-    */
-    'componentProps'?: ComponentProps;
-  }
-  interface IonNavSetRoot {
-    /**
-    * Component you want to make root for the navigation stack
-    */
-    'component'?: NavComponent;
-    /**
-    * Data you want to pass to the component as props
-    */
-    'componentProps'?: ComponentProps;
-  }
   interface IonNote {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -5547,7 +5429,7 @@ declare namespace LocalJSX {
     /**
     * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
     */
-    'showCancelButton'?: boolean | string;
+    'showCancelButton'?: 'never' | 'focus' | 'always';
     /**
     * If `true`, enable spellcheck on the input.
     */
@@ -5720,10 +5602,6 @@ declare namespace LocalJSX {
     * If `true`, the skeleton text will animate.
     */
     'animated'?: boolean;
-    /**
-    * @deprecated Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.
-    */
-    'width'?: string;
   }
   interface IonSlide {}
   interface IonSlides {
@@ -5828,7 +5706,7 @@ declare namespace LocalJSX {
   }
   interface IonSplitPane {
     /**
-    * The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane.
+    * The content `id` of the split-pane's main content.
     */
     'contentId'?: string;
     /**
@@ -6045,10 +5923,6 @@ declare namespace LocalJSX {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * @deprecated Use `buttons` instead. Text to display in the close button.
-    */
-    'closeButtonText'?: string;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -6104,10 +5978,6 @@ declare namespace LocalJSX {
     * The position of the toast on the screen.
     */
     'position'?: 'top' | 'bottom' | 'middle';
-    /**
-    * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
-    */
-    'showCloseButton'?: boolean;
     /**
     * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
@@ -6222,7 +6092,6 @@ declare namespace LocalJSX {
     'ion-action-sheet-controller': IonActionSheetController;
     'ion-alert': IonAlert;
     'ion-alert-controller': IonAlertController;
-    'ion-anchor': IonAnchor;
     'ion-app': IonApp;
     'ion-avatar': IonAvatar;
     'ion-back-button': IonBackButton;
@@ -6269,9 +6138,6 @@ declare namespace LocalJSX {
     'ion-modal-controller': IonModalController;
     'ion-nav': IonNav;
     'ion-nav-link': IonNavLink;
-    'ion-nav-pop': IonNavPop;
-    'ion-nav-push': IonNavPush;
-    'ion-nav-set-root': IonNavSetRoot;
     'ion-note': IonNote;
     'ion-picker': IonPicker;
     'ion-picker-column': IonPickerColumn;
@@ -6330,7 +6196,6 @@ declare module "@stencil/core" {
       'ion-action-sheet-controller': LocalJSX.IonActionSheetController & JSXBase.HTMLAttributes<HTMLIonActionSheetControllerElement>;
       'ion-alert': LocalJSX.IonAlert & JSXBase.HTMLAttributes<HTMLIonAlertElement>;
       'ion-alert-controller': LocalJSX.IonAlertController & JSXBase.HTMLAttributes<HTMLIonAlertControllerElement>;
-      'ion-anchor': LocalJSX.IonAnchor & JSXBase.HTMLAttributes<HTMLIonAnchorElement>;
       'ion-app': LocalJSX.IonApp & JSXBase.HTMLAttributes<HTMLIonAppElement>;
       'ion-avatar': LocalJSX.IonAvatar & JSXBase.HTMLAttributes<HTMLIonAvatarElement>;
       'ion-back-button': LocalJSX.IonBackButton & JSXBase.HTMLAttributes<HTMLIonBackButtonElement>;
@@ -6377,9 +6242,6 @@ declare module "@stencil/core" {
       'ion-modal-controller': LocalJSX.IonModalController & JSXBase.HTMLAttributes<HTMLIonModalControllerElement>;
       'ion-nav': LocalJSX.IonNav & JSXBase.HTMLAttributes<HTMLIonNavElement>;
       'ion-nav-link': LocalJSX.IonNavLink & JSXBase.HTMLAttributes<HTMLIonNavLinkElement>;
-      'ion-nav-pop': LocalJSX.IonNavPop & JSXBase.HTMLAttributes<HTMLIonNavPopElement>;
-      'ion-nav-push': LocalJSX.IonNavPush & JSXBase.HTMLAttributes<HTMLIonNavPushElement>;
-      'ion-nav-set-root': LocalJSX.IonNavSetRoot & JSXBase.HTMLAttributes<HTMLIonNavSetRootElement>;
       'ion-note': LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
       'ion-picker': LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
       'ion-picker-column': LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
