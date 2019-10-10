@@ -1,5 +1,39 @@
+# [4.10.0-rc3]
 
-# [4.8.0-rc2]
+## Bug fixes
+
+Pages should maintain their original previous page id [2afcb6](https://github.com/ionic-team/ionic/commit/2afcb6c80b167b95beb79641504d9237b498dbef), fixes [#19351](https://github.com/ionic-team/ionic/issues/19351)
+
+Dismiss overlay component on unmount, [3c2694](https://github.com/ionic-team/ionic/commit/3c26946d47b37d42dfaa3294cfb6bf8f0ef11aa4), fixes [#19377](https://github.com/ionic-team/ionic/issues/19377)
+
+Render first route even if url is same, fixes [#19392](https://github.com/ionic-team/ionic/issues/19392)
+
+## Breaking Changes
+
+### Events have been updated to use proper types from React
+
+The types for events (such as `onClick`) were not typed correctly prior to RC3. Before, they were the normal browser events, but now they are the proper React Synthetic events. Therefore, you might have type errors that need to be remedied:
+
+```typescript
+function handleClick(e: MouseEvent) {
+  ...
+}
+```
+
+Will need to become: 
+
+```typescript
+function handleClick(e: React.MouseEvent) {
+  ...
+}
+```
+
+Some Ionic components have the option to pass the event to them (like `IonPopover`). For these, you can access the `nativeEvent` property on the React synthetic event.
+
+### Components with href attributes and the new routerLink prop
+As of RC3, components that use the href prop (`IonButton`, `IonItem`, etc..), no longer run these links through the router. As a result, page transitions are no longer applied to these links. To maintain page transitions, use the new `routerLink` prop instead. The href prop should be used when you want to enforce a full browser transition on the page, or when you need to link to an external resource.
+
+# [4.9.0-rc2]
 
 ## Features
 

@@ -14,7 +14,7 @@ Popover controllers programmatically control the popover component. Popovers can
 
 ```javascript
 async function presentPopover() {
-  const popoverElement = Object.assing(document.createElement('ion-popover'), {
+  const popoverElement = Object.assign(document.createElement('ion-popover'), {
     component: 'profile-page',
     event: event
   });

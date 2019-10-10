@@ -8,6 +8,11 @@ import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 
+const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
+const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
+const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
+const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
+
 @Component({
   tag: 'ion-menu',
   styleUrls: {
@@ -23,7 +28,10 @@ export class Menu implements ComponentInterface, MenuI {
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
 
-  private mode = getIonMode(this);
+  mode = getIonMode(this);
+
+  private easing: string = this.mode === 'ios' ? iosEasing : mdEasing;
+  private easingReverse: string = this.mode === 'ios' ? iosEasingReverse : mdEasingReverse;
 
   isAnimating = false;
   width!: number; // TODO
@@ -138,7 +146,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   async connectedCallback() {
     if (this.type === undefined) {
-      this.type = config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
+      this.type = config.get('menuType', 'overlay');
     }
 
     if (!Build.isBrowser) {
@@ -148,6 +156,17 @@ export class Menu implements ComponentInterface, MenuI {
 
     const el = this.el;
     const parent = el.parentNode as any;
+    if (this.contentId === undefined) {
+      console.warn(`[DEPRECATED][ion-menu] Using the [main] attribute is deprecated, please use the "contentId" property instead:
+BEFORE:
+  <ion-menu>...</ion-menu>
+  <div main>...</div>
+
+AFTER:
+  <ion-menu contentId="my-content"></ion-menu>
+  <div id="my-content">...</div>
+`);
+    }
     const content = this.contentId !== undefined
       ? document.getElementById(this.contentId)
       : parent && parent.querySelector && parent.querySelector('[main]');
@@ -318,12 +337,12 @@ export class Menu implements ComponentInterface, MenuI {
     const isReversed = !shouldOpen;
     const ani = (this.animation as IonicAnimation)!
       .direction((isReversed) ? 'reverse' : 'normal')
-      .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)');
+      .easing((isReversed) ? this.easingReverse : this.easing);
 
     if (animated) {
-      await ani.playAsync();
+      await ani.play();
     } else {
-      ani.playSync();
+      ani.play({ sync: true });
     }
   }
 
@@ -434,10 +453,10 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
-      .onFinish(() => this.afterAnimation(shouldOpen), {
-        oneTimeCallback: true
-      })
-      .progressEnd(shouldComplete, newStepValue, 300);
+      .onFinish(
+        () => this.afterAnimation(shouldOpen),
+        { oneTimeCallback: true })
+      .progressEnd(shouldComplete ? 1 : 0, newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {
@@ -521,7 +540,7 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.isAnimating = true;
     const ani = (this.animation as IonicAnimation)!.direction('reverse');
-    ani.playSync();
+    ani.play({ sync: true });
     this.afterAnimation(false);
   }
 

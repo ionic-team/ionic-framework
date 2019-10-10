@@ -1,7 +1,7 @@
 import { OverlayEventDetail } from '@ionic/core';
 import React from 'react';
 
-import { attachEventProps } from './utils';
+import { attachProps } from './utils';
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;
@@ -34,10 +34,13 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
 
     async componentDidMount() {
       const { isOpen } = this.props;
-      // TODO
       if (isOpen as boolean) {
         this.present();
       }
+    }
+
+    componentWillUnmount() {
+      if (this.overlay) { this.overlay.dismiss(); }
     }
 
     async componentDidUpdate(prevProps: Props) {
@@ -54,7 +57,7 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
       const overlay = this.overlay = await controller.create({
         ...cProps as any
       });
-      attachEventProps(overlay, {
+      attachProps(overlay, {
         [dismissEventName]: onDidDismiss
       }, prevProps);
       await overlay.present();
