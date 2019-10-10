@@ -20,6 +20,7 @@
    * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the textarea
    * @prop --padding-bottom: Bottom padding of the textarea
    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the textarea
+   * @prop --max-height: Maximum height of the textarea
    */
   --background: initial;
   --color: initial;
@@ -32,6 +33,7 @@
   --padding-bottom: 0;
   --padding-start: 0;
   --border-radius: 0;
+  --max-height: 100%;
 
   display: block;
   position: relative;
@@ -84,7 +86,7 @@
 
   width: 100%;
   max-width: 100%;
-  max-height: 100%;
+  max-height: var(--max-height);
 
   border: 0;
 

@@ -1192,6 +1192,7 @@ ion-textarea,event,ionInput,KeyboardEvent,true
 ion-textarea,css-prop,--background
 ion-textarea,css-prop,--border-radius
 ion-textarea,css-prop,--color
+ion-textarea,css-prop,--max-height
 ion-textarea,css-prop,--padding-bottom
 ion-textarea,css-prop,--padding-end
 ion-textarea,css-prop,--padding-start
