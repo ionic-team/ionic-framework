@@ -797,13 +797,6 @@
         </ion-content>
       </ion-tab>
     </ion-tabs>
-
-    <ion-alert-controller></ion-alert-controller>
-    <ion-action-sheet-controller></ion-action-sheet-controller>
-    <ion-loading-controller></ion-loading-controller>
-    <ion-modal-controller></ion-modal-controller>
-    <ion-popover-controller></ion-popover-controller>
-    <ion-toast-controller></ion-toast-controller>
   </ion-app>
 
   <script>
@@ -836,23 +829,18 @@
     }
 
     async function presentAlert() {
-      const alertController = document.querySelector('ion-alert-controller');
-      await alertController.componentOnReady();
-
-      const alert = await alertController.create({
+      const alert = Object.assign(document.createElement('ion-alert'), {
         header: 'Alert',
         subHeader: 'Subtitle',
         message: 'This is an alert message.',
         buttons: ['OK']
       });
+      document.body.appendChild(alert);
       return await alert.present();
     }
 
     async function presentActionSheet() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
-
-      const actionSheet = await actionSheetController.create({
+      const actionSheet = Object.assign(document.createElement('ion-action-sheet'), {
         header: "Albums",
         buttons: [{
           text: 'Delete',
@@ -888,17 +876,16 @@
           }
         }]
       });
+      document.body.appendChild(actionSheet);
       await actionSheet.present();
     }
 
     async function presentLoading() {
-      const loadingController = document.querySelector('ion-loading-controller');
-      await loadingController.componentOnReady();
-
-      const loading = await loadingController.create({
+      const loading = Object.assign(document.createElement('ion-loading'), {
         message: 'Hellooo',
         duration: 2000
       });
+      document.body.appendChild(loading);
 
       await loading.present();
 
@@ -909,9 +896,6 @@
 
     async function createModal() {
       // initialize controller
-      const modalController = document.querySelector('ion-modal-controller');
-      await modalController.componentOnReady();
-
       // create component to open
       const element = document.createElement('div');
       element.innerHTML = `
@@ -927,16 +911,18 @@
       </ion-content>
       `;
 
+
+      // present the modal
+      const modalElement = Object.assign(document.createElement('ion-modal'), {
+        component: element
+      });
+
       // listen for close event
       const button = element.querySelector('ion-button');
       button.addEventListener('click', () => {
-        modalController.dismiss();
+        modalElement.dismiss();
       });
-
-      // present the modal
-      const modalElement = await modalController.create({
-        component: element
-      });
+      document.body.appendChild(modalElement);
       return modalElement;
     }
 
@@ -946,12 +932,11 @@
     }
 
     async function presentPopover(event) {
-      const popoverController = document.querySelector('ion-popover-controller');
-      await popoverController.componentOnReady();
-      const popoverElement = await popoverController.create({
+      const popoverElement = Object.assign(document.createElement('ion-popover'), {
         component: 'profile-page',
         event: event
       });
+      document.body.appendChild(popoverElement);
       return await popoverElement.present();
     }
 
@@ -978,13 +963,11 @@
     customElements.define('profile-page', ProfilePage);
 
     async function presentToast() {
-      const toastController = document.querySelector('ion-toast-controller');
-      await toastController.componentOnReady();
-
-      const toast = await toastController.create({
+      const toast = Object.assign(document.createElement('ion-toast'), {
         message: 'Your settings have been saved.',
         duration: 2000
       });
+      document.body.appendChild(toast);
       return await toast.present();
     }
   </script>

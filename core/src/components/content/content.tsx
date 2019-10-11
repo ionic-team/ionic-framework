@@ -24,6 +24,7 @@ export class Content implements ComponentInterface {
   private cTop = -1;
   private cBottom = -1;
   private scrollEl!: HTMLElement;
+  private mode = getIonMode(this);
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
   // V8 will be able to inline any read/write to it since it's a monomorphic class.
@@ -102,19 +103,12 @@ export class Content implements ComponentInterface {
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
 
-  componentWillLoad() {
-    if (this.forceOverscroll === undefined) {
-      const mode = getIonMode(this);
-      this.forceOverscroll = mode === 'ios' && isPlatform(window, 'mobile');
-    }
+  disconnectedCallback() {
+    this.onScrollEnd();
   }
 
   componentDidLoad() {
     this.resize();
-  }
-
-  componentDidUnload() {
-    this.onScrollEnd();
   }
 
   @Listen('click', { capture: true })
@@ -123,6 +117,13 @@ export class Content implements ComponentInterface {
       ev.preventDefault();
       ev.stopPropagation();
     }
+  }
+
+  private shouldForceOverscroll() {
+    const { forceOverscroll, mode } = this;
+    return forceOverscroll === undefined
+      ? mode === 'ios' && isPlatform('ios')
+      : forceOverscroll;
   }
 
   private resize() {
@@ -299,10 +300,10 @@ export class Content implements ComponentInterface {
   }
 
   render() {
+    const { scrollX, scrollY } = this;
     const mode = getIonMode(this);
-    const { scrollX, scrollY, forceOverscroll } = this;
-
-    const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', false));
+    const forceOverscroll = this.shouldForceOverscroll();
+    const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', true));
 
     this.resize();
 
@@ -312,31 +313,33 @@ export class Content implements ComponentInterface {
           ...createColorClasses(this.color),
           [mode]: true,
           'content-sizing': hostContext('ion-popover', this.el),
-          'overscroll': !!this.forceOverscroll,
+          'overscroll': forceOverscroll,
         }}
         style={{
           '--offset-top': `${this.cTop}px`,
           '--offset-bottom': `${this.cBottom}px`,
         }}
       >
-        <div
+        <main
           class={{
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
-            'overscroll': (scrollX || scrollY) && !!forceOverscroll
+            'overscroll': (scrollX || scrollY) && forceOverscroll
           }}
           ref={el => this.scrollEl = el!}
           onScroll={ev => this.onScroll(ev)}
         >
           <slot></slot>
-        </div>
+        </main>
+
         {transitionShadow ? (
           <div class="transition-effect">
             <div class="transition-cover"></div>
             <div class="transition-shadow"></div>
           </div>
         ) : null}
+
         <slot name="fixed"></slot>
       </Host>
     );

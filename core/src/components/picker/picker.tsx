@@ -1,8 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
-import { dismiss, eventMethod, present, safeCall } from '../../utils/overlays';
+import { dismiss, eventMethod, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -26,7 +26,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   animation?: Animation;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonPickerElement;
 
   @State() presented = false;
 
@@ -104,14 +104,8 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionPickerDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    const cancelBtn = this.buttons.find(b => b.role === 'cancel');
-    if (cancelBtn) {
-      this.buttonClick(cancelBtn);
-    } else {
-      this.dismiss();
-    }
+  constructor() {
+    prepareOverlay(this.el);
   }
 
   /**
@@ -199,55 +193,63 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return selected;
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      'aria-modal': 'true',
-      class: {
-        [mode]: true,
-
-        // Used internally for styling
-        [`picker-${mode}`]: true,
-
-        ...getClassMap(this.cssClass)
-      },
-      style: {
-        zIndex: 20000 + this.overlayIndex
-      }
-    };
+  private onBackdropTap = () => {
+    const cancelBtn = this.buttons.find(b => b.role === 'cancel');
+    if (cancelBtn) {
+      this.buttonClick(cancelBtn);
+    } else {
+      this.dismiss();
+    }
   }
 
   render() {
-    return [
-      <ion-backdrop
-        visible={this.showBackdrop}
-        tappable={this.backdropDismiss}
-      >
-      </ion-backdrop>,
-      <div class="picker-wrapper" role="dialog">
-        <div class="picker-toolbar">
-          {this.buttons.map(b => (
-            <div class={buttonWrapperClass(b)}>
-              <button
-                type="button"
-                onClick={() => this.buttonClick(b)}
-                class={buttonClass(b)}
-              >
-                {b.text}
-              </button>
-            </div>
-          ))}
-        </div>
+    const mode = getIonMode(this);
+    return (
+      <Host
+        aria-modal="true"
+        class={{
+          [mode]: true,
 
-        <div class="picker-columns">
-          <div class="picker-above-highlight"></div>
-            {this.presented && this.columns.map(c =>
-              <ion-picker-column col={c}></ion-picker-column>
-            )}
-          <div class="picker-below-highlight"></div>
+          // Used internally for styling
+          [`picker-${mode}`]: true,
+
+          ...getClassMap(this.cssClass)
+        }}
+        style={{
+          zIndex: `${20000 + this.overlayIndex}`
+        }}
+        onIonBackdropTap={this.onBackdropTap}
+      >
+        <ion-backdrop
+          visible={this.showBackdrop}
+          tappable={this.backdropDismiss}
+        >
+        </ion-backdrop>
+        <div class="picker-wrapper" role="dialog">
+          <div class="picker-toolbar">
+            {this.buttons.map(b => (
+              <div class={buttonWrapperClass(b)}>
+                <button
+                  type="button"
+                  onClick={() => this.buttonClick(b)}
+                  class={buttonClass(b)}
+                >
+                  {b.text}
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div class="picker-columns">
+            <div class="picker-above-highlight"></div>
+              {this.presented && this.columns.map(c =>
+                <ion-picker-column col={c}></ion-picker-column>
+              )}
+            <div class="picker-below-highlight"></div>
+          </div>
         </div>
-      </div>
-    ];
+      </Host>
+    );
   }
 }
 

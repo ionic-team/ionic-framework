@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, TabBarChangedEventDetail } from '../../interface';
@@ -67,24 +67,23 @@ export class TabBar implements ComponentInterface {
     this.selectedTabChanged();
   }
 
-  hostData() {
+  render() {
     const { color, translucent, keyboardVisible } = this;
     const mode = getIonMode(this);
-    return {
-      'role': 'tablist',
-      'aria-hidden': keyboardVisible ? 'true' : null,
-      class: {
-        ...createColorClasses(color),
-        [mode]: true,
-        'tab-bar-translucent': translucent,
-        'tab-bar-hidden': keyboardVisible,
-      }
-    };
-  }
 
-  render() {
     return (
-      <slot></slot>
+      <Host
+        role="tablist"
+        aria-hidden={keyboardVisible ? 'true' : null}
+        class={{
+          ...createColorClasses(color),
+          [mode]: true,
+          'tab-bar-translucent': translucent,
+          'tab-bar-hidden': keyboardVisible,
+        }}
+      >
+        <slot></slot>
+      </Host>
     );
   }
 }

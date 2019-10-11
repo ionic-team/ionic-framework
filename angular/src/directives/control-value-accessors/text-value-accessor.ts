@@ -20,8 +20,8 @@ export class TextValueAccessor extends ValueAccessor {
     super(el);
   }
 
-  @HostListener('ionChange', ['$event.target.value'])
-  _handleInputEvent(value: any) {
-    this.handleChangeEvent(value);
+  @HostListener('ionChange', ['$event.target'])
+  _handleInputEvent(el: any) {
+    this.handleChangeEvent(el, el.value);
   }
 }

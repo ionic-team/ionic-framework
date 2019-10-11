@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Host, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
@@ -39,14 +39,14 @@ export class Backdrop implements ComponentInterface {
    */
   @Event() ionBackdropTap!: EventEmitter<void>;
 
-  componentDidLoad() {
+  connectedCallback() {
     if (this.stopPropagation) {
       this.blocker.block();
     }
   }
 
-  componentDidUnload() {
-    this.blocker.destroy();
+  disconnectedCallback() {
+    this.blocker.unblock();
   }
 
   @Listen('touchstart', { passive: false, capture: true })
@@ -73,16 +73,18 @@ export class Backdrop implements ComponentInterface {
     }
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-
-    return {
-      tabindex: '-1',
-      class: {
-        [mode]: true,
-        'backdrop-hide': !this.visible,
-        'backdrop-no-tappable': !this.tappable,
-      }
-    };
+    return (
+      <Host
+        tabindex="-1"
+        class={{
+          [mode]: true,
+          'backdrop-hide': !this.visible,
+          'backdrop-no-tappable': !this.tappable,
+        }}
+      >
+      </Host>
+    );
   }
 }

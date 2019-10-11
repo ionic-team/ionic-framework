@@ -338,7 +338,7 @@ import {
 } from '@ionic/react';
 import './SkeletonTextExample.css';
 
-export const SkeletonTextExample: React.FunctionComponent = () => {
+export const SkeletonTextExample: React.FC = () => {
   const [data, setData] = useState();
 
   setTimeout(() => {
@@ -631,10 +631,9 @@ export const SkeletonTextExample: React.FunctionComponent = () => {
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                                             | Type                  | Default     |
-| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `animated` | `animated` | If `true`, the skeleton text will animate.                                                                                                              | `boolean`             | `false`     |
-| `width`    | `width`    | <span style="color:red">**[DEPRECATED]**</span> Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.<br/><br/> | `string \| undefined` | `undefined` |
+| Property   | Attribute  | Description                                | Type      | Default |
+| ---------- | ---------- | ------------------------------------------ | --------- | ------- |
+| `animated` | `animated` | If `true`, the skeleton text will animate. | `boolean` | `false` |
 
 
 ## CSS Custom Properties
