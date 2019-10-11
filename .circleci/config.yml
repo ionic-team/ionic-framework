@@ -181,6 +181,16 @@ jobs:
           command: npm run lint
           working_directory: /tmp/workspace/core
 
+  test-core-e2e:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run test.e2e --ci
+          working_directory: /tmp/workspace/core
+
   test-core-spec:
     <<: *defaults
     steps:
