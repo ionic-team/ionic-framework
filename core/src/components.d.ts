@@ -777,6 +777,10 @@ export namespace Components {
     */
     'activated': boolean;
     /**
+    * Set the close button icon which appears when this button is used as a main fab-button inside a `ion-fab` with a `fab-list`.
+    */
+    'closeButtonIcon': string;
+    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -4208,6 +4212,10 @@ declare namespace LocalJSX {
     * If `true`, the fab button will be show a close icon.
     */
     'activated'?: boolean;
+    /**
+    * Set the close button icon which appears when this button is used as a main fab-button inside a `ion-fab` with a `fab-list`.
+    */
+    'closeButtonIcon'?: string;
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
