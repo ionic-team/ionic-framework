@@ -819,9 +819,7 @@ export const createAnimation = (): Animation => {
        const animationDuration = getDuration() || 0;
        const animationIterations = getIterations() || 1;
 
-       /**
-        * No need to set a timeout when animation has infinite interations
-        */
+       // No need to set a timeout when animation has infinite iterations
        if (isFinite(animationIterations)) {
         cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + (animationDuration * animationIterations) + ANIMATION_END_FALLBACK_PADDING_MS);
        }
