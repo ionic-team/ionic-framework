@@ -96,6 +96,10 @@
   align-items: center;
   pointer-events: auto;
 
+  height: inherit;
+  min-height: inherit;
+  max-height: inherit;
+
   contain: content;
 }
 
