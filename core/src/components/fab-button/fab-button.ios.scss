@@ -13,6 +13,7 @@
   --color-focused: var(--color-activated);
   --box-shadow: #{$fab-ios-box-shadow};
   --transition: #{$fab-ios-transition};
+  --close-icon-font-size: #{$fab-ios-icon-font-size};
 }
 
 :host(.activated) {
@@ -21,9 +22,12 @@
   --transition: #{$fab-ios-transition-activated};
 }
 
-::slotted(ion-icon),
-.close-icon {
+::slotted(ion-icon) {
   font-size: $fab-ios-icon-font-size;
+}
+
+.close-icon {
+  font-size: var(--close-icon-font-size);
 }
 
 // FAB buttons in a list

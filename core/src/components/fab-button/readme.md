@@ -136,6 +136,7 @@ export const FabButtonExample: React.FC = () => (
 | `--border-style`         | Border style of the button                                                                                |
 | `--border-width`         | Border width of the button                                                                                |
 | `--box-shadow`           | Box shadow of the button                                                                                  |
+| `--close-icon-font-size` | Font size of the close button icon                                                                        |
 | `--color`                | Text color of the button                                                                                  |
 | `--color-activated`      | Text color of the button when pressed                                                                     |
 | `--color-focused`        | Text color of the button when focused with the tab key                                                    |
