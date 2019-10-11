@@ -42,7 +42,7 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 import React from 'react';
 import { IonContent, IonFab, IonFabButton } from '@ionic/react';
 
-export const FabButtonExample: React.FunctionComponent = () => (
+export const FabButtonExample: React.FC = () => (
   <IonContent>
     {/*-- Fixed Floating Action Button that does not scroll with the content --*/}
     <IonFab>

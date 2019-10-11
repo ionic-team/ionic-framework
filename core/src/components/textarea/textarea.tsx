@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
@@ -169,28 +169,26 @@ export class Textarea implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<void>;
 
-  /**
-   * Emitted when the input has been created.
-   * @internal
-   */
-  @Event() ionInputDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has been removed.
-   * @internal
-   */
-  @Event() ionInputDidUnload!: EventEmitter<void>;
-
-  componentWillLoad() {
+  connectedCallback() {
     this.emitStyle();
+    this.debounceChanged();
+    if (Build.isBrowser) {
+      this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
+        detail: this.el
+      }));
+    }
+  }
+
+  disconnectedCallback() {
+    if (Build.isBrowser) {
+      document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
+        detail: this.el
+      }));
+    }
   }
 
   componentDidLoad() {
-    this.debounceChanged();
-
     this.runAutoGrow();
-
-    this.ionInputDidLoad.emit();
   }
 
   // TODO: performance hit, this cause layout thrashing
@@ -202,10 +200,6 @@ export class Textarea implements ComponentInterface {
         nativeInput.style.height = nativeInput.scrollHeight + 'px';
       });
     }
-  }
-
-  componentDidUnload() {
-    this.ionInputDidUnload.emit();
   }
 
   /**

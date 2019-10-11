@@ -30,7 +30,7 @@
 
 .searchbar-search-icon {
   @include margin-horizontal(calc(50% - 60px), null);
-  @include position(0, null, null, 8px);
+  @include position(0, null, null, 5px);
 
   position: absolute;
 
@@ -50,7 +50,7 @@
 
   height: 100%;
 
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 400;
 
   contain: strict;
@@ -153,6 +153,15 @@
   :host(.ion-color) .searchbar-cancel-button:hover {
     color: #{current-color(tint)};
   }
+}
+
+// Searchbar in Toolbar
+// -----------------------------------------
+
+:host-context(ion-toolbar) {
+  @include padding(1px, null, 15px, null);
+
+  height: 52px;
 }
 
 // Searchbar in Toolbar Color

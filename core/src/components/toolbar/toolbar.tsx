@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Host, Listen, Prop, h } from '@
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, CssClassMap, StyleEventDetail } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -89,6 +89,7 @@ export class Toolbar implements ComponentInterface {
     return (
       <Host
         class={{
+          'in-toolbar': hostContext('ion-toolbar', this.el),
           [mode]: true,
           ...childStyles,
           ...createColorClasses(this.color),

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Animation - Reuse</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <script type="module">   
+    const forceCSSAnimations = new URLSearchParams(window.location.search).get('ionic:_forceCSSAnimations');
+    if (forceCSSAnimations) {
+      Element.prototype.animate = null;
+    } 
+
+    import { createAnimation } from '../../../../dist/ionic/index.esm.js';
+
+    createAnimation()
+      .addElement(document.querySelector('.square-a'))
+      .fromTo('transform', 'translateX(0)', 'translateX(500px)')
+      .fill('both')
+      .duration(1000)
+      .easing('ease-in-out')
+      .direction('alternate')
+      .iterations(Infinity)
+      .play();
+      
+     createAnimation()
+      .addElement(document.querySelector('.square-b'))
+      .fromTo('transform', 'translateX(0)', 'translateX(500px)')
+      .fill('both')
+      .duration(1000)
+      .easing('ease-in-out')
+      .direction('alternate')
+      .iterations(Infinity)
+      .play();
+
+  </script>
+  
+  <style>
+    .square {
+      width: 100px;
+      height: 100px;
+      background: rgba(255, 0, 0, 0.5);
+      text-align: center;
+      line-height: 100px;
+      margin-left: 25px;
+      margin-top: 25px;
+      margin-bottom: 25px;
+    }
+  </style>
+  </head>
+
+<body
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Animations</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+      <div class="ion-padding">        
+        <div class="square square-a">
+          Hello
+        </div>
+        <div class="square square-b">
+          Hello
+        </div>
+      </div>
+    </ion-content>
+  </ion-app>
+</body>
+
+</html>
+

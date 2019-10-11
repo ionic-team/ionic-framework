@@ -13,9 +13,6 @@
 
 <body>
   <ion-app>
-    <ion-action-sheet-controller></ion-action-sheet-controller>
-    <ion-alert-controller></ion-alert-controller>
-
     <ion-header>
       <ion-toolbar>
         <ion-title>Action Sheet - Basic</ion-title>
@@ -31,6 +28,7 @@
       <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
       <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
       <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
+      <ion-button expand="block" id="customBackdrop" onclick="presentWithCssClass('custom-backdrop')">Custom Backdrop Opacity</ion-button>
     </ion-content>
 
   </ion-app>
@@ -52,6 +50,10 @@
       --height: 325px;
     }
 
+    .custom-backdrop {
+      --ion-backdrop-opacity: 1;
+    }
+
   </style>
   <script>
     window.addEventListener('ionActionSheetDidDismiss', function (e) { console.log('didDismiss', e) })
@@ -59,8 +61,7 @@
     async function presentBasic() {
       const mode = Ionic.mode;
 
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         header: "Albums",
         buttons: [{
           text: 'Delete',
@@ -97,17 +98,16 @@
           }
         }]
       });
+      document.body.append(actionSheetElement);
       await actionSheetElement.present();
     }
 
     async function presentAlert() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         buttons: [{
           text: 'Open Alert',
           handler: async () => {
-            const alertController = document.querySelector('ion-alert-controller');
-            const alert = await alertController.create({
+            const alert = Object.assign(document.createElement('ion-alert'), {
               header: 'Alert from Action Sheet',
               subHeader: 'Subtitle',
               message: 'This is an alert message.',
@@ -119,6 +119,7 @@
                 }
               }]
             });
+            document.body.appendChild(alert);
             await alert.present();
             return false;
           }
@@ -130,12 +131,12 @@
           }
         }]
       });
+      document.body.append(actionSheetElement);
       await actionSheetElement.present();
     }
 
     async function presentCancelOnly() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         buttons: [
           {
             text: 'Cancel',
@@ -146,14 +147,16 @@
           }
         ]
       });
+      document.body.append(actionSheetElement);
       await actionSheetElement.present();
     }
 
-    async function presentWithCssClass() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+    async function presentWithCssClass(classList) {
+      const addClass = classList ? classList : "my-color-class my-custom-class";
+
+      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         header: "Custom Css Class",
-        cssClass: "my-color-class my-custom-class",
+        cssClass: addClass,
         buttons: [
           {
             text: 'Add to Favorites',
@@ -194,14 +197,14 @@
           }
         ]
       });
+      document.body.append(actionSheetElement);
       await actionSheetElement.present();
     }
 
     async function presentIcons() {
       const mode = Ionic.mode;
 
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         header: "Albums",
         buttons: [{
           text: 'Delete',
@@ -237,13 +240,13 @@
             console.log('Cancel clicked');
           }
         }]
-      })
+      });
+      document.body.append(actionSheetElement);
       await actionSheetElement.present();
     }
 
     async function presentNoBackdropDismiss() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         backdropDismiss: false,
         buttons: [{
           text: 'Archive',
@@ -264,12 +267,12 @@
           }
         }]
       });
+      document.body.append(actionSheetElement);
       await actionSheetElement.present();
     }
 
     async function presentScroll() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         buttons: [
           {
             text: 'Add Reaction',
@@ -357,12 +360,12 @@
           }
         ]
       });
+      document.body.append(actionSheetElement);
       await actionSheetElement.present();
     }
 
     async function presentScrollNoCancel() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      const actionSheetElement = await actionSheetController.create({
+      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         buttons: [
           {
             text: 'Add Reaction',
@@ -428,6 +431,7 @@
           }
         ]
       });
+      document.body.append(actionSheetElement);
       await actionSheetElement.present();
     }
   </script>

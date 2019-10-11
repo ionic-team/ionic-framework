@@ -50,7 +50,7 @@ export class ItemDivider implements ComponentInterface {
           'item': true,
         }}
       >
-        <slot name="start"></slot>,
+        <slot name="start"></slot>
         <div class="item-divider-inner">
           <div class="item-divider-wrapper">
             <slot></slot>

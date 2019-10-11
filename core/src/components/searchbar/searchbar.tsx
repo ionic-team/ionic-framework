@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, SearchbarChangeEventDetail } from '../../interface';
+import { Color, SearchbarChangeEventDetail, StyleEventDetail } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses } from '../../utils/theme';
@@ -82,6 +82,13 @@ export class Searchbar implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * A hint to the browser for which keyboard to display.
+   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
+   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+   */
+  @Prop() inputmode: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search' = 'search';
+
+  /**
    * Set the input's placeholder.
    * `placeholder` can accept either plaintext or HTML as a string.
    * To display characters normally reserved for HTML, they
@@ -104,7 +111,7 @@ export class Searchbar implements ComponentInterface {
    * Setting to `"always"` shows the cancel button regardless
    * of focus state.
    */
-  @Prop() showCancelButton: boolean | string = 'never';
+  @Prop() showCancelButton: 'never' | 'focus' | 'always' = 'never';
 
   /**
    * If `true`, enable spellcheck on the input.
@@ -151,6 +158,12 @@ export class Searchbar implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<void>;
 
+  /**
+   * Emitted when the styles change.
+   * @internal
+   */
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
   @Watch('value')
   protected valueChanged() {
     const inputEl = this.nativeInput;
@@ -169,6 +182,10 @@ export class Searchbar implements ComponentInterface {
     });
   }
 
+  connectedCallback() {
+    this.emitStyle();
+  }
+
   componentDidLoad() {
     this.positionElements();
     this.debounceChanged();
@@ -176,6 +193,12 @@ export class Searchbar implements ComponentInterface {
     setTimeout(() => {
       this.noAnimate = false;
     }, 300);
+  }
+
+  private emitStyle() {
+    this.ionStyle.emit({
+      'searchbar': true
+    });
   }
 
   /**
@@ -379,10 +402,9 @@ export class Searchbar implements ComponentInterface {
    * 2. `showCancelButton` is set to `focus`, and the searchbar has been focused.
    */
   private shouldShowCancelButton(): boolean {
-    if (
-      isCancelButtonSetToNever(this.showCancelButton) ||
-      (isCancelButtonSetToFocus(this.showCancelButton) && !this.focused)
-    ) { return false; }
+    if ((this.showCancelButton === 'never') || (this.showCancelButton === 'focus' && !this.focused)) {
+      return false;
+    }
 
     return true;
   }
@@ -393,7 +415,7 @@ export class Searchbar implements ComponentInterface {
     const clearIcon = this.clearIcon || (mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
 
-    const cancelButton = !isCancelButtonSetToNever(this.showCancelButton) && (
+    const cancelButton = (this.showCancelButton !== 'never') && (
       <button
         aria-label="cancel"
         type="button"
@@ -434,6 +456,7 @@ export class Searchbar implements ComponentInterface {
             disabled={this.disabled}
             ref={el => this.nativeInput = el}
             class="searchbar-input"
+            inputMode={this.inputmode}
             onInput={this.onInput}
             onBlur={this.onBlur}
             onFocus={this.onFocus}
@@ -465,32 +488,3 @@ export class Searchbar implements ComponentInterface {
     );
   }
 }
-
-/**
- * Check if the cancel button should never be shown.
- *
- * TODO: Remove this when the `true` and `false`
- * options are removed.
- */
-const isCancelButtonSetToNever = (showCancelButton: boolean | string): boolean => {
-  return (
-    showCancelButton === 'never' ||
-    showCancelButton === 'false' ||
-    showCancelButton === false
-  );
-};
-
-/**
- * Check if the cancel button should be shown on focus.
- *
- * TODO: Remove this when the `true` and `false`
- * options are removed.
- */
-const isCancelButtonSetToFocus = (showCancelButton: boolean | string): boolean => {
-  return (
-    showCancelButton === 'focus' ||
-    showCancelButton === 'true' ||
-    showCancelButton === true ||
-    showCancelButton === ''
-  );
-};

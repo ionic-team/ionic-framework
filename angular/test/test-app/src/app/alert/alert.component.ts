@@ -28,6 +28,7 @@ export class AlertComponent {
           role: 'cancel',
           text: 'Cancel',
           handler: () => {
+            console.log(NgZone.isInAngularZone());
             NgZone.assertInAngularZone();
           }
         }

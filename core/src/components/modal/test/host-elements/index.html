@@ -25,7 +25,6 @@
         <ion-button class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
       </p>
     </ion-content>
-    <ion-modal-controller></ion-modal-controller>
   </ion-app>
 
   <script>
@@ -57,14 +56,11 @@
 
 
     async function presentModal() {
-
-      // initialize controller
-      const modalController = document.querySelector('ion-modal-controller');
-
       // present the modal
-      const modalElement = await modalController.create({
+      const modalElement = Object.assign(document.createElement('ion-modal'), {
         component: 'modal-page'
       });
+      document.body.appendChild(modalElement);
       modalElement.present();
     }
 

@@ -31,10 +31,11 @@ export class CardTitle implements ComponentInterface {
         aria-level="2"
         class={{
           ...createColorClasses(this.color),
+          'ion-inherit-color': true,
           [mode]: true
         }}
       >
-        <slot></slot>;
+        <slot></slot>
       </Host>
     );
   }

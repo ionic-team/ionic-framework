@@ -1,0 +1,2 @@
+
+export { IonReactRouter } from './Router';

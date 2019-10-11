@@ -8,10 +8,6 @@
   --border-width: #{$hairlines-width} 0 0;
 }
 
-.footer-ios[no-border] ion-toolbar:first-child {
-  --border-width: 0;
-}
-
 @supports (backdrop-filter: blur(0)) {
   .footer-translucent-ios {
     backdrop-filter: $footer-ios-translucent-filter;
@@ -21,4 +17,8 @@
     --opacity: .8;
     --backdrop-filter: #{$footer-ios-translucent-filter};
   }
+}
+
+.footer-ios.ion-no-border ion-toolbar:first-child {
+  --border-width: 0;
 }

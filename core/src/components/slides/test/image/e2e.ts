@@ -5,8 +5,6 @@ test('slides: image', async () => {
     url: '/src/components/slides/test/image?ionic:_testing=true'
   });
 
-  await page.waitFor(500);
-
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
 });

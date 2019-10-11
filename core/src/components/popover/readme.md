@@ -46,15 +46,14 @@ export class PopoverExample {
 ### Javascript
 
 ```javascript
-async function presentPopover(ev) {
-  const popoverController = document.querySelector('ion-popover-controller');
-
-  const popover = await popoverController.create({
+function presentPopover(ev) {
+  const popover = Object.assign(document.createElement('ion-popover'), {
     component: 'popover-example-page',
     event: ev,
     translucent: true
   });
-  return await popover.present();
+  document.body.appendChild(popover);
+  return popover.present();
 }
 ```
 
@@ -65,7 +64,7 @@ async function presentPopover(ev) {
 import React, { useState } from 'react';
 import { IonPopover, IonButton } from '@ionic/react';
 
-export const PopoverExample: React.FunctionComponent = () => {
+export const PopoverExample: React.FC = () => {
   const [showPopover, setShowPopover] = useState(false);
 
   return (
@@ -157,16 +156,17 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name           | Description                   |
-| -------------- | ----------------------------- |
-| `--background` | Background of the popover     |
-| `--box-shadow` | Box shadow of the popover     |
-| `--height`     | Height of the popover         |
-| `--max-height` | Maximum height of the popover |
-| `--max-width`  | Maximum width of the popover  |
-| `--min-height` | Minimum height of the popover |
-| `--min-width`  | Minimum width of the popover  |
-| `--width`      | Width of the popover          |
+| Name                 | Description                   |
+| -------------------- | ----------------------------- |
+| `--backdrop-opacity` | Opacity of the backdrop       |
+| `--background`       | Background of the popover     |
+| `--box-shadow`       | Box shadow of the popover     |
+| `--height`           | Height of the popover         |
+| `--max-height`       | Maximum height of the popover |
+| `--max-width`        | Maximum width of the popover  |
+| `--min-height`       | Minimum height of the popover |
+| `--min-width`        | Minimum width of the popover  |
+| `--width`            | Width of the popover          |
 
 
 ## Dependencies
