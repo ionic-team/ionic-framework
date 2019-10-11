@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const execa = require('execa');
+const inquirer = require('inquirer');
 const Listr = require('listr');
 const semver = require('semver');
 const tc = require('turbocolor');
@@ -32,6 +33,34 @@ function packagePath(project) {
 
 function projectPath(project) {
   return path.join(rootDir, project);
+}
+
+async function askTag() {
+  const prompts = [
+    {
+      type: 'list',
+      name: 'tag',
+      message: 'Select npm tag or specify a new tag',
+      choices: ['latest', 'next']
+        .concat([
+          new inquirer.Separator(),
+          {
+            name: 'Other (specify)',
+            value: null
+          }
+        ])
+    },
+    {
+      type: 'confirm',
+      name: 'confirm',
+      message: answers => {
+        return `Will publish to ${tc.cyan(answers.tag)}. Continue?`;
+      }
+    }
+  ];
+
+  const { tag, confirm } = await inquirer.prompt(prompts);
+  return { tag, confirm };
 }
 
 function checkGit(tasks) {
@@ -300,6 +329,7 @@ function copyCDNLoader(tasks, version) {
 module.exports = {
   checkTestDist,
   checkGit,
+  askTag,
   isValidVersion,
   isVersionGreater,
   copyCDNLoader,
