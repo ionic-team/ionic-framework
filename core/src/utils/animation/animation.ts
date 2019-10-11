@@ -128,8 +128,8 @@ export const createAnimation = (): Animation => {
 
       webAnimations.length = 0;
     } else {
-      elements.forEach(element => {
-        raf(() => {
+      raf(() => {
+        elements.forEach(element => {
           removeStyleProperty(element, 'animation-name');
           removeStyleProperty(element, 'animation-duration');
           removeStyleProperty(element, 'animation-timing-function');
@@ -632,8 +632,8 @@ export const createAnimation = (): Animation => {
   };
 
   const updateCSSAnimation = (toggleAnimationName = true) => {
-    elements.forEach(element => {
-      raf(() => {
+    raf(() => {
+      elements.forEach(element => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
         setStyleProperty(element, 'animation-duration', `${getDuration()}ms`);
         setStyleProperty(element, 'animation-timing-function', getEasing());
@@ -796,12 +796,12 @@ export const createAnimation = (): Animation => {
   const playCSSAnimations = () => {
     clearCSSAnimationsTimeout();
 
-    elements.forEach(element => {
-      if (_keyframes.length > 0) {
-        raf(() => {
+    raf(() => {
+      elements.forEach(element => {
+        if (_keyframes.length > 0) {
           setStyleProperty(element, 'animation-play-state', 'running');
-        });
-      }
+        }
+      });
     });
 
     if (_keyframes.length === 0 || elements.length === 0) {
