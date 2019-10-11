@@ -120,20 +120,21 @@ export const queryDeep = async (page: E2EPage, ...selectors: string[]): Promise<
  *
  * @param el: E2EElement - The element to verify classes on
  * @param selector: string - A selector to use instead of the element tag name
+ * @param globalMode: string - the global mode as a fallback
  *
  * Examples:
- * await checkComponentModeClasses(await page.find('ion-card-content'))
+ * await checkComponentModeClasses(await page.find('ion-card-content'), globalMode)
  * => expect(el).toHaveClass(`card-content-{mode}`);
  *
- * await checkComponentModeClasses(await page.find('ion-card-content'), 'some-class')
+ * await checkComponentModeClasses(await page.find('ion-card-content'), globalMode, 'some-class')
  * => expect(el).toHaveClass(`some-class-{mode}`);
  */
-export const checkComponentModeClasses = async (el: E2EElement, selector?: string) => {
+export const checkComponentModeClasses = async (el: E2EElement, globalMode: string, selector?: string) => {
   // If passed a selector to use, use that, else grab the nodeName
   // of the element and remove the ion prefix to get the class selector
   const component = selector !== undefined ? selector : el.nodeName.toLowerCase().replace('ion-', '');
 
-  const mode = await el.getProperty('mode');
+  const mode = (await el.getProperty('mode')) || globalMode;
 
   expect(el).toHaveClass(`${component}-${mode}`);
 };
@@ -142,6 +143,7 @@ export const checkComponentModeClasses = async (el: E2EElement, selector?: strin
  * Given an element, get the mode and verify it exists as a class
  *
  * @param el: E2EElement - the element to verify the mode class on
+ * @param globalMode: string - the global mode as a fallback
  */
 export const checkModeClasses = async (el: E2EElement, globalMode: string) => {
   const mode = (await el.getProperty('mode')) || globalMode;
