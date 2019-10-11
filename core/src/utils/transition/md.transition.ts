@@ -1,8 +1,8 @@
-import { IonicAnimation } from '../../interface';
+import { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
 import { TransitionOptions } from '../transition';
 
-export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): IonicAnimation => {
+export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): Animation => {
   const OFF_BOTTOM = '40px';
   const CENTER = '0px';
 
