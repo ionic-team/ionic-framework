@@ -2,7 +2,7 @@ import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch, h 
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, IonicAnimation, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
@@ -18,7 +18,7 @@ import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToVie
 export class Nav implements NavOutlet {
 
   private transInstr: TransitionInstruction[] = [];
-  private sbAni?: Animation | IonicAnimation;
+  private sbAni?: Animation;
   private animationEnabled = true;
   private useRouter = false;
   private isTransitioning = false;
@@ -825,7 +825,7 @@ export class Nav implements NavOutlet {
     const opts = ti.opts!;
 
     const progressCallback = opts.progressAnimation
-      ? (ani: IonicAnimation | Animation | undefined) => this.sbAni = ani
+      ? (ani: Animation | undefined) => this.sbAni = ani
       : undefined;
     const mode = getIonMode(this);
     const enteringEl = enteringView.element!;
@@ -986,7 +986,7 @@ export class Nav implements NavOutlet {
         newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.32, 0.72), new Point(0, 1), new Point(1, 1), stepValue);
       }
 
-      (this.sbAni as IonicAnimation).progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
+      (this.sbAni as Animation).progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
     }
   }
 

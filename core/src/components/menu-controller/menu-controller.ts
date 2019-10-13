@@ -1,6 +1,6 @@
 import { Build, Component, Method } from '@stencil/core';
 
-import { AnimationBuilder, IonicAnimation, MenuI } from '../../interface';
+import { AnimationBuilder } from '../../interface';
 import { menuController } from '../../utils/menu-controller';
 
 @Component({
@@ -149,7 +149,7 @@ export class MenuController {
    * @param animation The animation function to register.
    */
   @Method()
-  async registerAnimation(name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) {
+  async registerAnimation(name: string, animation: AnimationBuilder) {
     return menuController.registerAnimation(name, animation as any);
   }
 }
