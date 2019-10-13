@@ -50,7 +50,6 @@ export const IonMenu = /*@__PURE__*/createReactComponent<JSX.IonMenu, HTMLIonMen
 export const IonMenuButton = /*@__PURE__*/createReactComponent<JSX.IonMenuButton, HTMLIonMenuButtonElement>('ion-menu-button');
 export const IonMenuToggle = /*@__PURE__*/createReactComponent<JSX.IonMenuToggle, HTMLIonMenuToggleElement>('ion-menu-toggle');
 export const IonNote = /*@__PURE__*/createReactComponent<JSX.IonNote, HTMLIonNoteElement>('ion-note');
-export const IonPicker = /*@__PURE__*/createReactComponent<JSX.IonPicker, HTMLIonPickerElement>('ion-picker');
 export const IonPickerColumn = /*@__PURE__*/createReactComponent<JSX.IonPickerColumn, HTMLIonPickerColumnElement>('ion-picker-column');
 export const IonNav = /*@__PURE__*/createReactComponent<JSX.IonNav, HTMLIonNavElement>('ion-nav');
 export const IonProgressBar = /*@__PURE__*/createReactComponent<JSX.IonProgressBar, HTMLIonProgressBarElement>('ion-progress-bar');
