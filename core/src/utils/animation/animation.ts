@@ -128,8 +128,10 @@ export const createAnimation = (): Animation => {
 
       webAnimations.length = 0;
     } else {
+      const elementsArray = elements.slice();
+
       raf(() => {
-        elements.forEach(element => {
+        elementsArray.forEach(element => {
           removeStyleProperty(element, 'animation-name');
           removeStyleProperty(element, 'animation-duration');
           removeStyleProperty(element, 'animation-timing-function');
