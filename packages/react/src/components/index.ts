@@ -9,6 +9,7 @@ export * from './proxies';
 export { IonAlert } from './IonAlert';
 export { IonLoading } from './IonLoading';
 export { IonToast } from './IonToast';
+export { IonPicker } from './IonPicker';
 
 // createOverlayComponent
 export { IonActionSheet } from './IonActionSheet';
