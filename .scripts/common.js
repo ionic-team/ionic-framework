@@ -144,7 +144,7 @@ function preparePackage(tasks, package, version, install) {
       title: `${pkg.name}: build`,
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
-    if (package === 'core') {
+    if (package === 'core' || package === 'packages/react') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
@@ -277,6 +277,9 @@ function updateDependency(pkg, dependency, version) {
   }
   if (pkg.devDependencies && pkg.devDependencies[dependency]) {
     pkg.devDependencies[dependency] = version;
+  }
+  if (pkg.peerDependencies && pkg.peerDependencies[dependency]) {
+    pkg.peerDependencies[dependency] = version;
   }
 }
 
