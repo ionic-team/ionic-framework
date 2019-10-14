@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h, readTask, writeT
 
 import { getIonMode } from '../../global/ionic-global';
 
-import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarBorderIntersection, handleToolbarIntersection, setHeaderActive } from './header.utils';
+import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarIntersection, setHeaderActive } from './header.utils';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */

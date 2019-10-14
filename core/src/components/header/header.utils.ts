@@ -68,13 +68,11 @@ const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | un
   }
 };
 
-export const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) => {
+const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) => {
   if (!ev[0].isIntersecting) { return; }
 
-  writeTask(() => {
-    const scale = ((1 - ev[0].intersectionRatio) * 100) / 75;
-    setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scale === 1) ? undefined : scale);
-  });
+  const scale = ((1 - ev[0].intersectionRatio) * 100) / 75;
+  setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scale === 1) ? undefined : scale);
 };
 
 /**
@@ -83,9 +81,9 @@ export const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: Header
  * hide the primary toolbar content and show the scrollable toolbar content
  */
 export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex) => {
-  handleToolbarBorderIntersection(ev, mainHeaderIndex);
-
   writeTask(() => {
+    handleToolbarBorderIntersection(ev, mainHeaderIndex);
+
     const event = ev[0];
 
     const intersection = event.intersectionRect;
