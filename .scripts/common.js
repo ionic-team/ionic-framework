@@ -278,6 +278,9 @@ function updateDependency(pkg, dependency, version) {
   if (pkg.devDependencies && pkg.devDependencies[dependency]) {
     pkg.devDependencies[dependency] = version;
   }
+  if (pkg.peerDependencies && pkg.peerDependencies[dependency]) {
+    pkg.peerDependencies[dependency] = version;
+  }
 }
 
 function isVersionGreater(oldVersion, newVersion) {
