@@ -128,7 +128,7 @@ export const createAnimation = (): Animation => {
 
       webAnimations.length = 0;
     } else {
-      const elementsArray = elements.slice(0);
+      const elementsArray = elements.slice();
 
       raf(() => {
         elementsArray.forEach(element => {
