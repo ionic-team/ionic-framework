@@ -33,7 +33,8 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
       getStackManager: this.getStackManager.bind(this),
       getPageManager: this.getPageManager.bind(this),
       currentPath: this.props.location.pathname,
-      registerIonPage: () => { return; } // overridden in View for each IonPage
+      registerIonPage: () => { return; }, // overridden in View for each IonPage
+      tabNavigate: this.tabNavigate.bind(this)
     };
 
     this.listenUnregisterCallback = this.props.history.listen((location: HistoryLocation) => {
@@ -91,6 +92,10 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
 
   navigate(path: string, direction?: RouterDirection | 'none') {
     this.props.history.push(path, { direction });
+  }
+
+  tabNavigate(url: string) {
+    this.props.history.replace(url, { direction: 'back' });
   }
 
   getPageManager() {
