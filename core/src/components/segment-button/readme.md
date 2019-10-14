@@ -656,6 +656,7 @@ export const SegmentButtonExample: React.FC = () => (
 | `--color-disabled`          | Color of the disabled segment button                                                                              |
 | `--indicator-color`         | Color of the indicator (highlight) under the segment button                                                       |
 | `--indicator-color-checked` | Color of the indicator (highlight) under the checked segment button                                               |
+| `--indicator-height`        | Height of the indicator (highlight) under the segment button                                                      |
 | `--margin-bottom`           | Bottom margin of the segment button                                                                               |
 | `--margin-end`              | Right margin if direction is left-to-right, and left margin if direction is right-to-left of the segment button   |
 | `--margin-start`            | Left margin if direction is left-to-right, and right margin if direction is right-to-left of the segment button   |

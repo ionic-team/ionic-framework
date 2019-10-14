@@ -35,6 +35,7 @@
    *
    * @prop --indicator-color: Color of the indicator (highlight) under the segment button
    * @prop --indicator-color-checked: Color of the indicator (highlight) under the checked segment button
+   * @prop --indicator-height: Height of the indicator (highlight) under the segment button
    *
    */
   --padding-start: 0;
@@ -127,7 +128,7 @@
 
   width: 100%;
 
-  height: 2px;
+  height: var(--indicator-height);
 
   background-color: var(--indicator-color);
 
