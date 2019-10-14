@@ -10,6 +10,7 @@ export interface NavContextState {
   navigate: (path: string, direction?: RouterDirection | 'none') => void;
   hasIonicRouter: () => boolean;
   registerIonPage: (page: HTMLElement) => void;
+  tabNavigate: (url: string) => void;
   currentPath: string | undefined;
 }
 
@@ -26,6 +27,7 @@ export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
     }
   },
   navigate: (path: string) => { window.location.pathname = path; },
+  tabNavigate: () => undefined,
   hasIonicRouter: () => false,
   registerIonPage: () => undefined,
   currentPath: undefined
