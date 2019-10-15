@@ -2,7 +2,7 @@ import { NavDirection } from '@ionic/core';
 import { RouterDirection } from '@ionic/react';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
-import { BrowserRouter, BrowserRouterProps, RouteComponentProps, matchPath, withRouter } from 'react-router-dom';
+import { BrowserRouter, BrowserRouterProps, HashRouter, HashRouterProps, RouteComponentProps, matchPath, withRouter } from 'react-router-dom';
 
 import { generateId } from '../utils';
 
@@ -285,13 +285,26 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
 const RouteManagerWithRouter = withRouter(RouteManager);
 RouteManagerWithRouter.displayName = 'RouteManager';
 
-export class IonReactRouter extends React.Component<BrowserRouterProps> {
+type IonReactRouterProps = BrowserRouterProps & HashRouterProps & {
+  useHashRouter?: boolean;
+}
+
+export class IonReactRouter extends React.Component<IonReactRouterProps> {
   render() {
-    const { children, ...props } = this.props;
-    return (
-      <BrowserRouter {...props}>
-        <RouteManagerWithRouter>{children}</RouteManagerWithRouter>
-      </BrowserRouter>
-    );
+    const { useHashRouter, children, ...props } = this.props;
+
+    if (useHashRouter === true) {
+      return (
+        <HashRouter {...props}>
+          <RouteManagerWithRouter>{children}</RouteManagerWithRouter>
+        </HashRouter>
+      );
+    } else {
+      return (
+        <BrowserRouter {...props}>
+          <RouteManagerWithRouter>{children}</RouteManagerWithRouter>
+        </BrowserRouter>
+      );
+    }
   }
 }
