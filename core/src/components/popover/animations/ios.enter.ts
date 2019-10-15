@@ -1,10 +1,10 @@
-import { IonicAnimation } from '../../../interface';
+import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Popover Enter Animation
  */
-export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimation => {
+export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation => {
   let originY = 'top';
   let originX = 'left';
 

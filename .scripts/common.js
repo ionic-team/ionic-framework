@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const execa = require('execa');
+const inquirer = require('inquirer');
 const Listr = require('listr');
 const semver = require('semver');
 const tc = require('turbocolor');
@@ -32,6 +33,34 @@ function packagePath(project) {
 
 function projectPath(project) {
   return path.join(rootDir, project);
+}
+
+async function askTag() {
+  const prompts = [
+    {
+      type: 'list',
+      name: 'tag',
+      message: 'Select npm tag or specify a new tag',
+      choices: ['latest', 'next']
+        .concat([
+          new inquirer.Separator(),
+          {
+            name: 'Other (specify)',
+            value: null
+          }
+        ])
+    },
+    {
+      type: 'confirm',
+      name: 'confirm',
+      message: answers => {
+        return `Will publish to ${tc.cyan(answers.tag)}. Continue?`;
+      }
+    }
+  ];
+
+  const { tag, confirm } = await inquirer.prompt(prompts);
+  return { tag, confirm };
 }
 
 function checkGit(tasks) {
@@ -128,13 +157,6 @@ function preparePackage(tasks, package, version, install) {
         task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
       });
       projectTasks.push({
-        title: `${pkg.name}: update ionic/core dep to ${version}`,
-        task: () => {
-          updateDependency(pkg, '@ionic/core', version);
-          writePkg(package, pkg);
-        }
-      });
-      projectTasks.push({
         title: `${pkg.name}: test`,
         task: () => execa('npm', ['test'], { cwd: projectRoot })
       });
@@ -144,10 +166,20 @@ function preparePackage(tasks, package, version, install) {
       title: `${pkg.name}: build`,
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
-    if (package === 'core') {
+    if (package === 'core' || package === 'packages/react') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
+      });
+    }
+
+    if (version) {
+      projectTasks.push({
+        title: `${pkg.name}: update ionic/core dep to ${version}`,
+        task: () => {
+          updateDependency(pkg, '@ionic/core', version);
+          writePkg(package, pkg);
+        }
       });
     }
   }
@@ -186,7 +218,7 @@ function prepareDevPackage(tasks, package, version) {
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
 
-    if (package === 'core') {
+    if (package === 'core' || package === 'packages/react') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
@@ -278,6 +310,9 @@ function updateDependency(pkg, dependency, version) {
   if (pkg.devDependencies && pkg.devDependencies[dependency]) {
     pkg.devDependencies[dependency] = version;
   }
+  if (pkg.peerDependencies && pkg.peerDependencies[dependency]) {
+    pkg.peerDependencies[dependency] = version;
+  }
 }
 
 function isVersionGreater(oldVersion, newVersion) {
@@ -297,6 +332,7 @@ function copyCDNLoader(tasks, version) {
 module.exports = {
   checkTestDist,
   checkGit,
+  askTag,
   isValidVersion,
   isVersionGreater,
   copyCDNLoader,

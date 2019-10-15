@@ -6,7 +6,6 @@ import { IonTabBarInner } from '../inner-proxies';
 import { IonTabButton } from '../proxies';
 
 type Props = LocalJSX.IonTabBar & {
-  navigate?: (path: string, direction: 'back' | 'none') => void;
   currentPath?: string;
   slot?: 'bottom' | 'top';
 };
@@ -22,6 +21,7 @@ interface State {
 }
 
 const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Props, State> {
+  context!: React.ContextType<typeof NavContext>;
 
   constructor(props: Props) {
     super(props);
@@ -67,13 +67,15 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
   }
 
   private onTabButtonClick = (e: CustomEvent<{ href: string, selected: boolean, tab: string }>) => {
-    const { navigate } = this.props;
-    if (navigate) {
-      if (this.state.activeTab === e.detail.tab) {
-        navigate(this.state.tabs[e.detail.tab].originalHref, 'back');
+    if (this.state.activeTab === e.detail.tab) {
+      const originalHref = this.state.tabs[e.detail.tab].originalHref;
+      if (this.context.hasIonicRouter()) {
+        this.context.tabNavigate(originalHref);
       } else {
-        navigate(this.state.tabs[e.detail.tab].currentHref, 'none');
+        this.context.navigate(originalHref, 'back');
       }
+    } else {
+      this.context.navigate(this.state.tabs[e.detail.tab].currentHref, 'none');
     }
   }
 
@@ -96,6 +98,10 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
       </IonTabBarInner>
     );
   }
+
+  static get contextType() {
+    return NavContext;
+  }
 })();
 
 export const IonTabBar: React.FC<Props> = props => {
@@ -103,9 +109,6 @@ export const IonTabBar: React.FC<Props> = props => {
   return (
     <IonTabBarUnwrapped
       {...props as any}
-      navigate={props.navigate || ((path: string, direction: 'back' | 'none') => {
-        context.navigate(path, direction);
-      })}
       currentPath={props.currentPath || context.currentPath}
     >
       {props.children}
