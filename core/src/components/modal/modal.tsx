@@ -19,9 +19,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
   tag: 'ion-modal',
   styleUrls: {
     ios: 'modal.ios.scss',
-    md: 'modal.md.scss'
+    md: 'modal.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Modal implements ComponentInterface, OverlayInterface {
 
@@ -123,7 +123,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
     const componentProps = {
       ...this.componentProps,
-      modal: this.el
+      modal: this.el,
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], componentProps);
     await deepReady(this.usersElement);
@@ -163,14 +163,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
-  }
+  };
 
   private onDismiss = (ev: UIEvent) => {
     ev.stopPropagation();
     ev.preventDefault();
 
     this.dismiss();
-  }
+  };
 
   private onLifecycle = (modalEvent: CustomEvent) => {
     const el = this.usersElement;
@@ -179,11 +179,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
       const ev = new CustomEvent(name, {
         bubbles: false,
         cancelable: false,
-        detail: modalEvent.detail
+        detail: modalEvent.detail,
       });
       el.dispatchEvent(ev);
     }
-  }
+  };
 
   render() {
     const mode = getIonMode(this);
@@ -194,7 +194,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         aria-modal="true"
         class={{
           [mode]: true,
-          ...getClassMap(this.cssClass)
+          ...getClassMap(this.cssClass),
         }}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,

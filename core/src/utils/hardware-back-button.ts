@@ -22,8 +22,8 @@ export const startHardwareBackButton = () => {
       detail: {
         register(priority: number, handler: Handler) {
           handlers.push({ priority, handler });
-        }
-      }
+        },
+      },
     });
     doc.dispatchEvent(ev);
 

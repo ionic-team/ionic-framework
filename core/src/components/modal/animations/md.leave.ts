@@ -18,7 +18,7 @@ export const mdLeaveAnimation = (baseEl: HTMLElement): Animation => {
     .addElement(wrapperEl)
     .keyframes([
       { offset: 0, opacity: 0.99, transform: 'translateY(0px)' },
-      { offset: 1, opacity: 0, transform: 'translateY(40px)' }
+      { offset: 1, opacity: 0, transform: 'translateY(40px)' },
     ]);
 
   return baseAnimation

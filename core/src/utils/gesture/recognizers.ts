@@ -61,6 +61,6 @@ export const createPanRecognizer = (direction: string, thresh: number, maxAngle:
 
     getDirection(): number {
       return isPan;
-    }
+    },
   };
 };

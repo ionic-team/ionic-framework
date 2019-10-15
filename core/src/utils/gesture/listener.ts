@@ -5,15 +5,17 @@ export const addEventListener = (
   callback: EventListenerOrEventListenerObject,
   opts: {
     passive?: boolean;
-    capture?: boolean
+    capture?: boolean;
   }
 ): (() => void) => {
   // use event listener options when supported
   // otherwise it's just a boolean for the "capture" arg
-  const listenerOpts = supportsPassive(el) ? {
-    'capture': !!opts.capture,
-    'passive': !!opts.passive,
-  } : !!opts.capture;
+  const listenerOpts = supportsPassive(el)
+    ? {
+      'capture': !!opts.capture,
+      'passive': !!opts.passive,
+    }
+    : !!opts.capture;
 
   let add: string;
   let remove: string;
@@ -37,9 +39,11 @@ const supportsPassive = (node: Node) => {
       const opts = Object.defineProperty({}, 'passive', {
         get: () => {
           _sPassive = true;
-        }
+        },
       });
-      node.addEventListener('optsTest', () => { return; }, opts);
+      node.addEventListener('optsTest', () => {
+        return;
+      }, opts);
     } catch (e) {
       _sPassive = false;
     }

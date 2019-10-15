@@ -11,9 +11,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-card-subtitle',
   styleUrls: {
     ios: 'card-subtitle.ios.scss',
-    md: 'card-subtitle.md.scss'
+    md: 'card-subtitle.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class CardSubtitle implements ComponentInterface {
   /**
@@ -32,7 +32,7 @@ export class CardSubtitle implements ComponentInterface {
         class={{
           ...createColorClasses(this.color),
           'ion-inherit-color': true,
-          [mode]: true
+          [mode]: true,
         }}
       >
         <slot></slot>

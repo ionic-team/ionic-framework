@@ -17,7 +17,7 @@ export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
     .addElement(baseEl.querySelector('.loading-wrapper')!)
     .keyframes([
       { offset: 0, opacity: 0.99, transform: 'scale(1)' },
-      { offset: 1, opacity: 0, transform: 'scale(0.9)' }
+      { offset: 1, opacity: 0, transform: 'scale(0.9)' },
     ]);
 
   return baseAnimation

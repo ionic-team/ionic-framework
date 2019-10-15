@@ -10,8 +10,8 @@ import { cloneElement, createHeaderIndex, handleContentScroll, handleToolbarInte
   tag: 'ion-header',
   styleUrls: {
     ios: 'header.ios.scss',
-    md: 'header.md.scss'
-  }
+    md: 'header.md.scss',
+  },
 })
 export class Header implements ComponentInterface {
 
@@ -20,7 +20,7 @@ export class Header implements ComponentInterface {
   private contentScrollCallback?: any;
   private intersectionObserver?: any;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonHeaderElement;
 
   /**
    * Describes the scroll effect that will be applied to the header
@@ -84,7 +84,9 @@ export class Header implements ComponentInterface {
   }
 
   private async setupCollapsibleHeader(contentEl: HTMLIonContentElement | null, pageEl: Element | null) {
-    if (!contentEl || !pageEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); return; }
+    if (!contentEl || !pageEl) {
+      console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); return;
+    }
 
     this.scrollEl = await contentEl.getScrollElement();
 
@@ -92,12 +94,16 @@ export class Header implements ComponentInterface {
       const headers = pageEl.querySelectorAll('ion-header');
       const mainHeader = Array.from(headers).find((header: any) => header.collapse !== 'condense') as HTMLElement | undefined;
 
-      if (!mainHeader || !this.scrollEl) { return; }
+      if (!mainHeader || !this.scrollEl) {
+        return;
+      }
 
       const mainHeaderIndex = createHeaderIndex(mainHeader);
       const scrollHeaderIndex = createHeaderIndex(this.el);
 
-      if (!mainHeaderIndex || !scrollHeaderIndex) { return; }
+      if (!mainHeaderIndex || !scrollHeaderIndex) {
+        return;
+      }
 
       setHeaderActive(mainHeaderIndex, false);
 
@@ -111,7 +117,9 @@ export class Header implements ComponentInterface {
        * Handle interaction between toolbar collapse and
        * showing/hiding content in the primary ion-header
        */
-      const toolbarIntersection = (ev: any) => { handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex); };
+      const toolbarIntersection = (ev: any) => {
+        handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex);
+      };
 
       readTask(() => {
         const mainHeaderHeight = mainHeaderIndex.el.clientHeight;
@@ -124,7 +132,9 @@ export class Header implements ComponentInterface {
        * showing/hiding border on last toolbar
        * in primary header
        */
-      this.contentScrollCallback = () => { handleContentScroll(this.scrollEl!, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
+      this.contentScrollCallback = () => {
+        handleContentScroll(this.scrollEl!, mainHeaderIndex, scrollHeaderIndex, remainingHeight);
+      };
       this.scrollEl.addEventListener('scroll', this.contentScrollCallback);
     });
 

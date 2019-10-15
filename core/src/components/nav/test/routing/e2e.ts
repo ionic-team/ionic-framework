@@ -5,7 +5,7 @@ const navChanged = () => new Promise(resolve => window.addEventListener('ionRout
 test.skip('nav: routing', async () => {
 
   const page = await newE2EPage({
-    url: '/src/components/nav/test/routing?ionic:_testing=true'
+    url: '/src/components/nav/test/routing?ionic:_testing=true',
   });
 
   expect(await page.compareScreenshot()).toMatchScreenshot();

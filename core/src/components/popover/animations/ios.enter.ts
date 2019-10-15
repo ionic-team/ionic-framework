@@ -36,12 +36,12 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation =>
 
   const arrowCSS = {
     top: targetTop + targetHeight,
-    left: targetLeft + targetWidth / 2 - arrowWidth / 2
+    left: targetLeft + targetWidth / 2 - arrowWidth / 2,
   };
 
   const popoverCSS: { top: any; left: any } = {
     top: targetTop + targetHeight + (arrowHeight - 1),
-    left: targetLeft + targetWidth / 2 - contentWidth / 2
+    left: targetLeft + targetWidth / 2 - contentWidth / 2,
   };
 
   // If the popover left is less than the padding it is off screen

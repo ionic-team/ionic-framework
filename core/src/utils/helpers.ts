@@ -54,7 +54,8 @@ export const assert = (actual: any, reason: string) => {
   if (!actual) {
     const message = 'ASSERT: ' + reason;
     console.error(message);
-    debugger; // tslint:disable-line
+    // eslint-disable-next-line no-debugger
+    debugger;
     throw new Error(message);
   }
 };
@@ -63,7 +64,7 @@ export const now = (ev: UIEvent) => {
   return ev.timeStamp || Date.now();
 };
 
-export const pointerCoord = (ev: any): { x: number, y: number } => {
+export const pointerCoord = (ev: any): { x: number; y: number } => {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
@@ -89,10 +90,10 @@ export const pointerCoord = (ev: any): { x: number, y: number } => {
 export const isEndSide = (side: Side): boolean => {
   const isRTL = document.dir === 'rtl';
   switch (side) {
-    case 'start': return isRTL;
-    case 'end': return !isRTL;
-    default:
-      throw new Error(`"${side}" is not a valid value for [side]. Use "start" or "end" instead.`);
+  case 'start': return isRTL;
+  case 'end': return !isRTL;
+  default:
+    throw new Error(`"${side}" is not a valid value for [side]. Use "start" or "end" instead.`);
   }
 };
 
@@ -104,7 +105,7 @@ export const debounceEvent = (event: EventEmitter, wait: number): EventEmitter =
   const original = (event as any)._original || event;
   return {
     _original: event,
-    emit: debounce(original.emit.bind(original), wait)
+    emit: debounce(original.emit.bind(original), wait),
   } as EventEmitter;
 };
 

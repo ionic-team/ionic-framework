@@ -21,7 +21,7 @@ describe('Animation Class', () => {
       const els = [
         document.createElement('p'),
         document.createElement('p'),
-        document.createElement('p')
+        document.createElement('p'),
       ];
 
       animation.addElement(els);
@@ -64,7 +64,7 @@ describe('Animation Class', () => {
       animation.addAnimation(undefined);
 
       expect(animation.childAnimations.length).toEqual(0);
-    })
+    });
   });
 
   describe('Animation Keyframes', () => {
@@ -77,7 +77,7 @@ describe('Animation Class', () => {
       animation.keyframes([
         { transform: 'scale(1)', opacity: 1, offset: 0 },
         { transform: 'scale(0.5)', opacity: 0.5, offset: 0.5 },
-        { transform: 'scale(0)', opacity: 0, offset: 1 }
+        { transform: 'scale(0)', opacity: 0, offset: 1 },
       ]);
 
       expect(animation.getKeyframes().length).toEqual(3);
@@ -96,7 +96,7 @@ describe('Animation Class', () => {
         opacity: 0,
         color: 'purple',
         background: 'red',
-        offset: 0
+        offset: 0,
       });
     });
 
@@ -112,7 +112,7 @@ describe('Animation Class', () => {
         opacity: 0,
         color: 'purple',
         background: 'red',
-        offset: 1
+        offset: 1,
       });
     });
 
@@ -121,27 +121,27 @@ describe('Animation Class', () => {
         .keyframes([
           { offset: 0, background: 'red' },
           { offset: 0.99, background: 'blue' },
-          { offset: 1, background: 'green' }
+          { offset: 1, background: 'green' },
         ])
-        .fromTo('opacity', 0, 1)
+        .fromTo('opacity', 0, 1);
 
       const keyframes = animation.getKeyframes();
       expect(keyframes.length).toEqual(3);
       expect(keyframes[0]).toEqual({
         opacity: 0,
         background: 'red',
-        offset: 0
+        offset: 0,
       });
 
       expect(keyframes[1]).toEqual({
         background: 'blue',
-        offset: 0.99
+        offset: 0.99,
       });
 
       expect(keyframes[2]).toEqual({
         opacity: 1,
         background: 'green',
-        offset: 1
+        offset: 1,
       });
     });
   });
@@ -306,7 +306,7 @@ describe('Animation Class', () => {
       expect(childAnimation.getDirection()).toEqual('alternate-reverse');
     });
 
-  })
+  });
 });
 
 describe('cubic-bezier conversion', () => {
@@ -316,7 +316,7 @@ describe('cubic-bezier conversion', () => {
         new Point(0, 0),
         new Point(0.32, 0.72),
         new Point(0, 1),
-        new Point(1, 1)
+        new Point(1, 1),
       ];
 
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.5), 0.16);
@@ -329,42 +329,42 @@ describe('cubic-bezier conversion', () => {
         new Point(0, 0),
         new Point(1, 0),
         new Point(0.68, 0.28),
-        new Point(1, 1)
+        new Point(1, 1),
       ];
 
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.08), 0.60);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.50), 0.84);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.94), 0.98);
-    })
+    });
 
     it('cubic-bezier(0.4, 0, 0.6, 1)', () => {
       const equation = [
         new Point(0, 0),
         new Point(0.4, 0),
         new Point(0.6, 1),
-        new Point(1, 1)
+        new Point(1, 1),
       ];
 
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.39), 0.43);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.03), 0.11);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.89), 0.78);
-    })
+    });
 
     it('cubic-bezier(0, 0, 0.2, 1)', () => {
       const equation = [
         new Point(0, 0),
         new Point(0, 0),
         new Point(0.2, 1),
-        new Point(1, 1)
+        new Point(1, 1),
       ];
 
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.95), 0.71);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.1), 0.03);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.70), 0.35);
-    })
-  })
+    });
+  });
 });
 
 const shouldApproximatelyEqual = (givenValue: number, expectedValue: number): boolean => {
   expect(Math.abs(expectedValue - givenValue)).toBeLessThanOrEqual(0.01);
-}
+};

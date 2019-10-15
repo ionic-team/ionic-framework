@@ -28,7 +28,7 @@ export default () => {
     ...configFromSession(win),
     persistConfig: false,
     ...Ionic.config,
-    ...configFromURL(win)
+    ...configFromURL(win),
   };
 
   config.reset(configObj);

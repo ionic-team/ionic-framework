@@ -41,7 +41,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation => 
 
   const popoverCSS: { top: any; left: any } = {
     top: targetTop,
-    left: targetLeft
+    left: targetLeft,
   };
 
   // If the popover left is less than the padding it is off screen
@@ -97,7 +97,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation => 
     .beforeStyles({
       'top': `${popoverCSS.top}px`,
       'left': `${popoverCSS.left}px`,
-      'transform-origin': `${originY} ${originX}`
+      'transform-origin': `${originY} ${originX}`,
     })
     .fromTo('transform', 'scale(0.001)', 'scale(1)');
 

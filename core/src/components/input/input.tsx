@@ -12,9 +12,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-input',
   styleUrls: {
     ios: 'input.ios.scss',
-    md: 'input.md.scss'
+    md: 'input.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Input implements ComponentInterface {
 
@@ -24,7 +24,7 @@ export class Input implements ComponentInterface {
 
   @State() hasFocus = false;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonInputElement;
 
   /**
    * The color to use from your application's color palette.
@@ -223,7 +223,7 @@ export class Input implements ComponentInterface {
     this.debounceChanged();
     if (Build.isBrowser) {
       this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
-        detail: this.el
+        detail: this.el,
       }));
     }
   }
@@ -231,7 +231,7 @@ export class Input implements ComponentInterface {
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
-        detail: this.el
+        detail: this.el,
       }));
     }
   }
@@ -283,7 +283,7 @@ export class Input implements ComponentInterface {
       this.value = input.value || '';
     }
     this.ionInput.emit(ev as KeyboardEvent);
-  }
+  };
 
   private onBlur = () => {
     this.hasFocus = false;
@@ -291,7 +291,7 @@ export class Input implements ComponentInterface {
     this.emitStyle();
 
     this.ionBlur.emit();
-  }
+  };
 
   private onFocus = () => {
     this.hasFocus = true;
@@ -299,7 +299,7 @@ export class Input implements ComponentInterface {
     this.emitStyle();
 
     this.ionFocus.emit();
-  }
+  };
 
   private onKeydown = () => {
     if (this.shouldClearOnEdit()) {
@@ -312,7 +312,7 @@ export class Input implements ComponentInterface {
       // Reset the flag
       this.didBlurAfterEdit = false;
     }
-  }
+  };
 
   private clearTextInput = (ev?: Event) => {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
@@ -330,7 +330,7 @@ export class Input implements ComponentInterface {
     if (this.nativeInput) {
       this.nativeInput.value = '';
     }
-  }
+  };
 
   private focusChanged() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
@@ -359,7 +359,7 @@ export class Input implements ComponentInterface {
           ...createColorClasses(this.color),
           [mode]: true,
           'has-value': this.hasValue(),
-          'has-focus': this.hasFocus
+          'has-focus': this.hasFocus,
         }}
       >
         <input
@@ -393,13 +393,14 @@ export class Input implements ComponentInterface {
           onFocus={this.onFocus}
           onKeyDown={this.onKeydown}
         />
-        {(this.clearInput && !this.readonly && !this.disabled) && <button
-          type="button"
-          class="input-clear-icon"
-          tabindex="-1"
-          onTouchStart={this.clearTextInput}
-          onMouseDown={this.clearTextInput}
-        />}
+        {(this.clearInput && !this.readonly && !this.disabled) &&
+          <button
+            type="button"
+            class="input-clear-icon"
+            tabindex="-1"
+            onTouchStart={this.clearTextInput}
+            onMouseDown={this.clearTextInput}
+          />}
       </Host>
     );
   }

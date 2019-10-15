@@ -248,49 +248,83 @@ export const createAnimation = (): Animation => {
   };
 
   const getFill = () => {
-    if (_fill !== undefined) { return _fill; }
-    if (parentAnimation) { return parentAnimation.getFill(); }
+    if (_fill !== undefined) {
+      return _fill;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getFill();
+    }
 
     return 'both';
   };
 
   const getDirection = () => {
-    if (forceDirectionValue !== undefined) { return forceDirectionValue; }
-    if (_direction !== undefined) { return _direction; }
-    if (parentAnimation) { return parentAnimation.getDirection(); }
+    if (forceDirectionValue !== undefined) {
+      return forceDirectionValue;
+    }
+    if (_direction !== undefined) {
+      return _direction;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getDirection();
+    }
 
     return 'normal';
 
   };
 
   const getEasing = () => {
-    if (shouldForceLinearEasing) { return 'linear'; }
-    if (_easing !== undefined) { return _easing; }
-    if (parentAnimation) { return parentAnimation.getEasing(); }
+    if (shouldForceLinearEasing) {
+      return 'linear';
+    }
+    if (_easing !== undefined) {
+      return _easing;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getEasing();
+    }
 
     return 'linear';
   };
 
   const getDuration = () => {
-    if (shouldForceSyncPlayback) { return 0; }
-    if (forceDurationValue !== undefined) { return forceDurationValue; }
-    if (_duration !== undefined) { return _duration; }
-    if (parentAnimation) { return parentAnimation.getDuration(); }
+    if (shouldForceSyncPlayback) {
+      return 0;
+    }
+    if (forceDurationValue !== undefined) {
+      return forceDurationValue;
+    }
+    if (_duration !== undefined) {
+      return _duration;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getDuration();
+    }
 
     return 0;
   };
 
   const getIterations = () => {
-    if (_iterations !== undefined) { return _iterations; }
-    if (parentAnimation) { return parentAnimation.getIterations(); }
+    if (_iterations !== undefined) {
+      return _iterations;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getIterations();
+    }
 
     return 1;
   };
 
   const getDelay = () => {
-    if (forceDelayValue !== undefined) { return forceDelayValue; }
-    if (_delay !== undefined) { return _delay; }
-    if (parentAnimation) { return parentAnimation.getDelay(); }
+    if (forceDelayValue !== undefined) {
+      return forceDelayValue;
+    }
+    if (_delay !== undefined) {
+      return _delay;
+    }
+    if (parentAnimation) {
+      return parentAnimation.getDelay();
+    }
 
     return 0;
   };
@@ -432,11 +466,9 @@ export const createAnimation = (): Animation => {
       addClasses.forEach(c => elementClassList.add(c));
       removeClasses.forEach(c => elementClassList.remove(c));
 
-      for (const property in styles) {
-        if (styles.hasOwnProperty(property)) {
-          setStyleProperty(el, property, styles[property]);
-        }
-      }
+      Object.keys(styles).forEach(property => {
+        setStyleProperty(el, property, styles[property]);
+      });
     });
   };
 
@@ -481,11 +513,9 @@ export const createAnimation = (): Animation => {
       addClasses.forEach(c => elementClassList.add(c));
       removeClasses.forEach(c => elementClassList.remove(c));
 
-      for (const property in styles) {
-        if (styles.hasOwnProperty(property)) {
-          setStyleProperty(el, property, styles[property]);
-        }
-      }
+      Object.keys(styles).forEach(property => {
+        setStyleProperty(el, property, styles[property]);
+      });
     });
   };
 
@@ -515,7 +545,9 @@ export const createAnimation = (): Animation => {
   };
 
   const animationFinish = () => {
-    if (numAnimationsRunning === 0) { return; }
+    if (numAnimationsRunning === 0) {
+      return;
+    }
 
     numAnimationsRunning--;
 
@@ -569,7 +601,7 @@ export const createAnimation = (): Animation => {
         easing: getEasing(),
         iterations: getIterations(),
         fill: getFill(),
-        direction: getDirection()
+        direction: getDirection(),
       });
 
       animation.pause();
@@ -628,7 +660,7 @@ export const createAnimation = (): Animation => {
         easing: getEasing(),
         iterations: getIterations(),
         fill: getFill(),
-        direction: getDirection()
+        direction: getDirection(),
       });
     });
   };
@@ -740,7 +772,7 @@ export const createAnimation = (): Animation => {
       forceDirectionValue = undefined;
       forceDelayValue = undefined;
     }, {
-      oneTimeCallback: true
+      oneTimeCallback: true,
     });
 
     if (!parentAnimation) {
@@ -807,7 +839,7 @@ export const createAnimation = (): Animation => {
     });
 
     if (_keyframes.length === 0 || elements.length === 0) {
-       animationFinish();
+      animationFinish();
     } else {
       /**
        * This is a catchall in the event that a CSS Animation did not finish.
@@ -817,16 +849,16 @@ export const createAnimation = (): Animation => {
        * accounts for this, but using raw CSS Animations requires
        * this workaround.
        */
-       const animationDelay = getDelay() || 0;
-       const animationDuration = getDuration() || 0;
-       const animationIterations = getIterations() || 1;
+      const animationDelay = getDelay() || 0;
+      const animationDuration = getDuration() || 0;
+      const animationIterations = getIterations() || 1;
 
-       // No need to set a timeout when animation has infinite iterations
-       if (isFinite(animationIterations)) {
+      // No need to set a timeout when animation has infinite iterations
+      if (isFinite(animationIterations)) {
         cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + (animationDuration * animationIterations) + ANIMATION_END_FALLBACK_PADDING_MS);
-       }
+      }
 
-       animationEnd(elements[0], () => {
+      animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();
 
         /**
@@ -928,7 +960,7 @@ export const createAnimation = (): Animation => {
     } else {
       _keyframes = [
         { offset: 0, [property]: value },
-        ..._keyframes
+        ..._keyframes,
       ];
     }
 
@@ -943,7 +975,7 @@ export const createAnimation = (): Animation => {
     } else {
       _keyframes = [
         ..._keyframes,
-        { offset: 1, [property]: value }
+        { offset: 1, [property]: value },
       ];
     }
     return ani;
@@ -1002,6 +1034,6 @@ export const createAnimation = (): Animation => {
 
     progressStart,
     progressStep,
-    progressEnd
+    progressEnd,
   };
 };

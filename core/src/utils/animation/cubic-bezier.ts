@@ -61,13 +61,15 @@ const solveQuadraticEquation = (a: number, b: number, c: number) => {
   } else {
     return [
       (-b + Math.sqrt(discriminant)) / (2 * a),
-      (-b - Math.sqrt(discriminant)) / (2 * a)
+      (-b - Math.sqrt(discriminant)) / (2 * a),
     ];
   }
 };
 
 const solveCubicEquation = (a: number, b: number, c: number, d: number) => {
-  if (a === 0) { return solveQuadraticEquation(b, c, d); }
+  if (a === 0) {
+    return solveQuadraticEquation(b, c, d);
+  }
 
   b /= a;
   c /= a;
@@ -97,6 +99,6 @@ const solveCubicEquation = (a: number, b: number, c: number, d: number) => {
   return [
     s * Math.cos(phi / 3) - b / 3,
     s * Math.cos((phi + 2 * Math.PI) / 3) - b / 3,
-    s * Math.cos((phi + 4 * Math.PI) / 3) - b / 3
+    s * Math.cos((phi + 4 * Math.PI) / 3) - b / 3,
   ];
 };

@@ -5,13 +5,13 @@ import { getIonMode } from '../../global/ionic-global';
 @Component({
   tag: 'ion-select-option',
   shadow: true,
-  styleUrl: 'select-option.scss'
+  styleUrl: 'select-option.scss',
 })
 export class SelectOption implements ComponentInterface {
 
   private inputId = `ion-selopt-${selectOptionIds++}`;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonSelectOptionElement;
 
   /**
    * If `true`, the user cannot interact with the select option.

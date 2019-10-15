@@ -74,7 +74,7 @@ export const matchesPath = (inputPath: string[], chain: RouteChain): RouteChain 
     return chain.map((route, i) => ({
       id: route.id,
       path: route.path,
-      params: mergeParams(route.params, allparams![i])
+      params: mergeParams(route.params, allparams![i]),
     }));
   }
   return chain;
@@ -88,7 +88,7 @@ export const mergeParams = (a: any, b: any): any => {
   } else if (a && b) {
     return {
       ...a,
-      ...b
+      ...b,
     };
   }
   return undefined;
@@ -109,7 +109,7 @@ export const routerIDsToChain = (ids: RouteID[], chains: RouteChain[]): RouteCha
     return match.map((route, i) => ({
       id: route.id,
       path: route.path,
-      params: mergeParams(route.params, ids[i] && ids[i].params)
+      params: mergeParams(route.params, ids[i] && ids[i].params),
     }));
   }
   return null;

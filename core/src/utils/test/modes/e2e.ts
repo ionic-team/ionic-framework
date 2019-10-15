@@ -6,7 +6,7 @@ import { checkComponentModeClasses, checkModeClasses } from '../utils';
 // specific classes added and test them
 test('component: modes', async () => {
   const page = await newE2EPage({
-    url: '/src/utils/test/modes?ionic:_testing=true'
+    url: '/src/utils/test/modes?ionic:_testing=true',
   });
 
   // First test: .button class

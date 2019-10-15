@@ -121,7 +121,7 @@ export const createPointerEvents = (
   return {
     setDisabled,
     stop,
-    destroy
+    destroy,
   };
 };
 

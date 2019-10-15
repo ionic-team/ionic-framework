@@ -195,7 +195,7 @@ export const setupConfig = (config: IonicConfig) => {
   win.Ionic = win.Ionic || {};
   win.Ionic.config = {
     ...win.Ionic.config,
-    ...config
+    ...config,
   };
   return win.Ionic.config;
 };

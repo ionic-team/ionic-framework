@@ -12,15 +12,15 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   tag: 'ion-radio',
   styleUrls: {
     ios: 'radio.ios.scss',
-    md: 'radio.md.scss'
+    md: 'radio.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Radio implements ComponentInterface {
 
   private inputId = `ion-rb-${radioButtonIds++}`;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonRadioElement;
 
   /**
    * The color to use from your application's color palette.
@@ -86,7 +86,7 @@ export class Radio implements ComponentInterface {
     if (isChecked) {
       this.ionSelect.emit({
         checked: true,
-        value: this.value
+        value: this.value,
       });
     }
     this.emitStyle();
@@ -113,11 +113,11 @@ export class Radio implements ComponentInterface {
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   private onClick = () => {
     if (this.checked) {
@@ -125,7 +125,7 @@ export class Radio implements ComponentInterface {
     } else {
       this.checked = true;
     }
-  }
+  };
 
   render() {
     const { inputId, disabled, checked, color, el } = this;

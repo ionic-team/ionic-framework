@@ -4,7 +4,7 @@ export const watchForOptions = <T extends HTMLElement>(containerEl: HTMLElement,
   });
   mutation.observe(containerEl, {
     childList: true,
-    subtree: true
+    subtree: true,
   });
   return mutation;
 };

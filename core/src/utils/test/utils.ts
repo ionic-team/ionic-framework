@@ -11,11 +11,13 @@ export const generateE2EUrl = (component: string, type: string, rtl = false): st
 };
 
 /**
- * Gets the value of a property on an element
+ * Gets the value of a propserty on an element
  */
 export const getElementProperty = async (element: any, property: string): Promise<string> => {
   const getProperty = await element.getProperty(property);
-  if (!getProperty) { return ''; }
+  if (!getProperty) {
+    return '';
+  }
 
   return getProperty.jsonValue();
 };
@@ -32,15 +34,12 @@ export const getElementProperty = async (element: any, property: string): Promis
  * page.exposeFunction prior to calling this function.
  */
 export const listenForEvent = async (page: any, eventType: string, element: any, callbackName: string): Promise<any> => {
-  try {
-      return await page.evaluate((scopeEventType: string, scopeElement: any, scopeCallbackName: string) => {
-        scopeElement.addEventListener(scopeEventType, (e: any) => {
-          (window as any)[scopeCallbackName]({ detail: e.detail });
-        });
-      }, eventType, element, callbackName);
-  } catch (err) {
-    throw err;
-  }
+  return await page.evaluate((scopeEventType: string, scopeElement: any, scopeCallbackName: string) => {
+    scopeElement.addEventListener(scopeEventType, (e: any) => {
+      (window as any)[scopeCallbackName]({ detail: e.detail });
+    });
+  }, eventType, element, callbackName);
+
 };
 
 /**
@@ -51,27 +50,22 @@ export const listenForEvent = async (page: any, eventType: string, element: any,
  * @param y: number - Amount to drag `element` by on the y-axis
  */
 export const dragElementBy = async (element: any, page: any, x = 0, y = 0): Promise<void> => {
-  try {
-    const boundingBox = await element.boundingBox();
+  const boundingBox = await element.boundingBox();
 
-    const startX = boundingBox.x + boundingBox.width / 2;
-    const startY = boundingBox.y + boundingBox.height / 2;
+  const startX = boundingBox.x + boundingBox.width / 2;
+  const startY = boundingBox.y + boundingBox.height / 2;
 
-    const endX = startX + x;
-    const endY = startY + y;
+  const endX = startX + x;
+  const endY = startY + y;
 
-    const midX = endX / 2;
-    const midY = endY / 2;
+  const midX = endX / 2;
+  const midY = endY / 2;
 
-    await page.mouse.move(startX, startY);
-    await page.mouse.down();
-    await page.mouse.move(midX, midY);
-    await page.mouse.move(endX, endY);
-    await page.mouse.up();
-
-  } catch (err) {
-    throw err;
-  }
+  await page.mouse.move(startX, startY);
+  await page.mouse.down();
+  await page.mouse.move(midX, midY);
+  await page.mouse.move(endX, endY);
+  await page.mouse.up();
 };
 
 /**
@@ -98,19 +92,17 @@ export const waitForFunctionTestContext = async (fn: any, params: any, interval 
  * Pierce through shadow roots
  * https://github.com/GoogleChrome/puppeteer/issues/858#issuecomment-359763824
  */
-export const queryDeep = async (page: E2EPage, ...selectors: string[]): Promise<ElementHandle> => {
+export const queryDeep = async (page: E2EPage, ...selectors: string[]): Promise<ElementHandle | null> => {
   const shadowSelectorFn = (el: Element, selector: string): Element | null => (el && el.shadowRoot) && el.shadowRoot.querySelector(selector);
 
-  return new Promise(async resolve => {
-    const [firstSelector, ...restSelectors] = selectors;
-    let parentElement = await page.$(firstSelector);
+  const [firstSelector, ...restSelectors] = selectors;
+  let parentElement = await page.$(firstSelector);
 
-    for (const selector of restSelectors) {
-      parentElement = await page.evaluateHandle(shadowSelectorFn, parentElement, selector) as any;
-    }
+  for (const selector of restSelectors) {
+    parentElement = await page.evaluateHandle(shadowSelectorFn, parentElement, selector) as any;
+  }
 
-    if (parentElement) { resolve(parentElement); }
-  });
+  return parentElement;
 };
 
 /**

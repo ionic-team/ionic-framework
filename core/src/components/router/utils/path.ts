@@ -31,7 +31,7 @@ export const chainToPath = (chain: RouteChain): string[] | null => {
 export const writePath = (history: History, root: string, useHash: boolean, path: string[], direction: RouterDirection, state: number) => {
   let url = generatePath([
     ...parsePath(root),
-    ...path
+    ...path,
   ]);
   if (useHash) {
     url = '#' + url;

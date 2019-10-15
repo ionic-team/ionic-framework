@@ -8,13 +8,13 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-title',
   styleUrls: {
     'ios': 'title.ios.scss',
-    'md': 'title.md.scss'
+    'md': 'title.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class ToolbarTitle implements ComponentInterface {
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonTitleElement;
 
   /**
    * The color to use from your application's color palette.
@@ -47,7 +47,7 @@ export class ToolbarTitle implements ComponentInterface {
     const size = this.getSize();
 
     this.ionStyle.emit({
-      [`title-${size}`]: true
+      [`title-${size}`]: true,
     });
   }
 

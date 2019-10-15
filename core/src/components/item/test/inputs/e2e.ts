@@ -2,7 +2,7 @@ import { E2EPage, newE2EPage } from '@stencil/core/testing';
 
 test('item: inputs', async () => {
   const page = await newE2EPage({
-    url: '/src/components/item/test/inputs?ionic:_testing=true'
+    url: '/src/components/item/test/inputs?ionic:_testing=true',
   });
 
   // check form

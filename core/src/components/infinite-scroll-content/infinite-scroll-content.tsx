@@ -9,8 +9,8 @@ import { sanitizeDOMString } from '../../utils/sanitization';
   tag: 'ion-infinite-scroll-content',
   styleUrls: {
     ios: 'infinite-scroll-content.ios.scss',
-    md: 'infinite-scroll-content.md.scss'
-  }
+    md: 'infinite-scroll-content.md.scss',
+  },
 })
 export class InfiniteScrollContent implements ComponentInterface {
 
@@ -48,7 +48,7 @@ export class InfiniteScrollContent implements ComponentInterface {
           [mode]: true,
 
           // Used internally for styling
-          [`infinite-scroll-content-${mode}`]: true
+          [`infinite-scroll-content-${mode}`]: true,
         }}
       >
         <div class="infinite-loading">

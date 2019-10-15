@@ -16,7 +16,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
     maxAngle: 40,
     threshold: 10,
 
-    ...config
+    ...config,
   };
 
   const canStart = finalConfig.canStart;
@@ -40,14 +40,14 @@ export const createGesture = (config: GestureConfig): Gesture => {
     deltaY: 0,
     timeStamp: 0,
     event: undefined as any,
-    data: undefined
+    data: undefined,
   };
 
   const pan = createPanRecognizer(finalConfig.direction, finalConfig.threshold, finalConfig.maxAngle);
   const gesture = GESTURE_CONTROLLER.createGesture({
     name: config.gestureName,
     priority: config.gesturePriority,
-    disableScroll: config.disableScroll
+    disableScroll: config.disableScroll,
   });
 
   const pointerDown = (ev: UIEvent): boolean => {
@@ -211,7 +211,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
     destroy() {
       gesture.destroy();
       pointerEvents.destroy();
-    }
+    },
   };
 };
 

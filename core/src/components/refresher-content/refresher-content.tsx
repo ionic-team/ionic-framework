@@ -6,7 +6,7 @@ import { SpinnerTypes } from '../../interface';
 import { sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
-  tag: 'ion-refresher-content'
+  tag: 'ion-refresher-content',
 })
 export class RefresherContent implements ComponentInterface {
 
@@ -62,21 +62,17 @@ export class RefresherContent implements ComponentInterface {
           {this.pullingIcon &&
             <div class="refresher-pulling-icon">
               <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
-            </div>
-          }
+            </div>}
           {this.pullingText &&
-            <div class="refresher-pulling-text" innerHTML={sanitizeDOMString(this.pullingText)}></div>
-          }
+            <div class="refresher-pulling-text" innerHTML={sanitizeDOMString(this.pullingText)}></div>}
         </div>
         <div class="refresher-refreshing">
           {this.refreshingSpinner &&
             <div class="refresher-refreshing-icon">
               <ion-spinner name={this.refreshingSpinner}></ion-spinner>
-            </div>
-          }
+            </div>}
           {this.refreshingText &&
-            <div class="refresher-refreshing-text" innerHTML={sanitizeDOMString(this.refreshingText)}></div>
-          }
+            <div class="refresher-refreshing-text" innerHTML={sanitizeDOMString(this.refreshingText)}></div>}
         </div>
       </Host>
     );

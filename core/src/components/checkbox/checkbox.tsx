@@ -12,16 +12,16 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   tag: 'ion-checkbox',
   styleUrls: {
     ios: 'checkbox.ios.scss',
-    md: 'checkbox.md.scss'
+    md: 'checkbox.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Checkbox implements ComponentInterface {
 
   private inputId = `ion-cb-${checkboxIds++}`;
   private buttonEl?: HTMLElement;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonCheckboxElement;
 
   /**
    * The color to use from your application's color palette.
@@ -88,7 +88,7 @@ export class Checkbox implements ComponentInterface {
   checkedChanged(isChecked: boolean) {
     this.ionChange.emit({
       checked: isChecked,
-      value: this.value
+      value: this.value,
     });
     this.emitStyle();
   }
@@ -115,15 +115,15 @@ export class Checkbox implements ComponentInterface {
     this.setFocus();
     this.checked = !this.checked;
     this.indeterminate = false;
-  }
+  };
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   render() {
     const { inputId, indeterminate, disabled, checked, value, color, el } = this;
@@ -159,7 +159,7 @@ export class Checkbox implements ComponentInterface {
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
-          'interactive': true
+          'interactive': true,
         }}
       >
         <svg class="checkbox-icon" viewBox="0 0 24 24">

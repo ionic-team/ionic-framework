@@ -7,7 +7,7 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
  * @deprecated Use the `actionSheetController` exported from core.
  */
 @Component({
-  tag: 'ion-action-sheet-controller'
+  tag: 'ion-action-sheet-controller',
 })
 export class ActionSheetController implements ComponentInterface, OverlayController {
 

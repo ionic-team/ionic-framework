@@ -11,9 +11,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-note',
   styleUrls: {
     ios: 'note.ios.scss',
-    md: 'note.md.scss'
+    md: 'note.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Note implements ComponentInterface {
   /**

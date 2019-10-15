@@ -13,13 +13,13 @@ let ids = 0;
   tag: 'ion-segment-button',
   styleUrls: {
     ios: 'segment-button.ios.scss',
-    md: 'segment-button.md.scss'
+    md: 'segment-button.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class SegmentButton implements ComponentInterface, ButtonInterface {
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonSegmentButtonElement;
 
   /**
    * If `true`, the segment button is selected.
@@ -68,7 +68,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
   private onClick = () => {
     this.checked = true;
-  }
+  };
 
   render() {
     const { checked, type, disabled, hasIcon, hasLabel, layout } = this;

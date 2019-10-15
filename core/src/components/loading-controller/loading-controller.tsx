@@ -7,7 +7,7 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
  * @deprecated Use the `loadingController` exported from core.
  */
 @Component({
-  tag: 'ion-loading-controller'
+  tag: 'ion-loading-controller',
 })
 export class LoadingController implements ComponentInterface, OverlayController {
 

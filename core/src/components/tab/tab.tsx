@@ -6,7 +6,7 @@ import { attachComponent } from '../../utils/framework-delegate';
 @Component({
   tag: 'ion-tab',
   styleUrl: 'tab.scss',
-  shadow: true
+  shadow: true,
 })
 export class Tab implements ComponentInterface {
 
@@ -69,7 +69,7 @@ export class Tab implements ComponentInterface {
         aria-labelledby={`tab-button-${tab}`}
         class={{
           'ion-page': component === undefined,
-          'tab-hidden': !active
+          'tab-hidden': !active,
         }}
       >
         <slot></slot>

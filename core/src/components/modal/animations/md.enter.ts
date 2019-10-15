@@ -17,7 +17,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement): Animation => {
     .addElement(baseEl.querySelector('.modal-wrapper')!)
     .keyframes([
       { offset: 0, opacity: 0.01, transform: 'translateY(40px)' },
-      { offset: 1, opacity: 1, transform: 'translateY(0px)' }
+      { offset: 1, opacity: 1, transform: 'translateY(0px)' },
     ]);
 
   return baseAnimation

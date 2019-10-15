@@ -11,12 +11,12 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-label',
   styleUrls: {
     ios: 'label.ios.scss',
-    md: 'label.md.scss'
+    md: 'label.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Label implements ComponentInterface {
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonLabelElement;
 
   /**
    * The color to use from your application's color palette.
@@ -60,7 +60,7 @@ export class Label implements ComponentInterface {
     const position = this.position;
     this.ionStyle.emit({
       'label': true,
-      [`label-${position}`]: position !== undefined
+      [`label-${position}`]: position !== undefined,
     });
   }
 
@@ -73,7 +73,7 @@ export class Label implements ComponentInterface {
           ...createColorClasses(this.color),
           [mode]: true,
           [`label-${position}`]: position !== undefined,
-          [`label-no-animate`]: (this.noAnimate)
+          [`label-no-animate`]: (this.noAnimate),
         }}
       >
       </Host>

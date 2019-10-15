@@ -17,9 +17,9 @@ const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
   tag: 'ion-menu',
   styleUrls: {
     ios: 'menu.ios.scss',
-    md: 'menu.md.scss'
+    md: 'menu.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Menu implements ComponentInterface, MenuI {
 
@@ -90,7 +90,7 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.ionMenuChange.emit({
       disabled: this.disabled,
-      open: this._isOpen
+      open: this._isOpen,
     });
   }
 
@@ -558,7 +558,7 @@ AFTER:
           'menu-enabled': !disabled,
           'menu-side-end': isEndSide,
           'menu-side-start': !isEndSide,
-          'menu-pane-visible': isPaneVisible
+          'menu-pane-visible': isPaneVisible,
         }}
       >
         <div

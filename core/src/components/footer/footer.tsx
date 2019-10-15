@@ -9,8 +9,8 @@ import { getIonMode } from '../../global/ionic-global';
   tag: 'ion-footer',
   styleUrls: {
     ios: 'footer.ios.scss',
-    md: 'footer.md.scss'
-  }
+    md: 'footer.md.scss',
+  },
 })
 export class Footer implements ComponentInterface {
 

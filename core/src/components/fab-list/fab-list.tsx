@@ -5,11 +5,11 @@ import { getIonMode } from '../../global/ionic-global';
 @Component({
   tag: 'ion-fab-list',
   styleUrl: 'fab-list.scss',
-  shadow: true
+  shadow: true,
 })
 export class FabList implements ComponentInterface {
 
-  @Element() el!: HTMLIonFabElement;
+  @Element() el!: HTMLIonFabListElement;
 
   /**
    * If `true`, the fab list will show all fab buttons in the list.
@@ -39,7 +39,7 @@ export class FabList implements ComponentInterface {
         class={{
           [mode]: true,
           'fab-list-active': this.activated,
-          [`fab-list-side-${this.side}`]: true
+          [`fab-list-side-${this.side}`]: true,
         }}
       >
         <slot></slot>

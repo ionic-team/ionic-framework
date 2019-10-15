@@ -11,9 +11,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-badge',
   styleUrls: {
     ios: 'badge.ios.scss',
-    md: 'badge.md.scss'
+    md: 'badge.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Badge implements ComponentInterface {
   /**

@@ -11,7 +11,7 @@ import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
   tag: 'ion-slides',
   styleUrls: {
     ios: 'slides.ios.scss',
-    md: 'slides.md.scss'
+    md: 'slides.md.scss',
   },
   assetsDir: 'swiper',
 })
@@ -22,7 +22,9 @@ export class Slides implements ComponentInterface {
   private swiperReady = false;
   private mutationO?: MutationObserver;
   private readySwiper!: (swiper: SwiperInterface) => void;
-  private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
+  private swiper: Promise<SwiperInterface> = new Promise(resolve => {
+    this.readySwiper = resolve;
+  });
 
   @Element() el!: HTMLIonSlidesElement;
 
@@ -139,7 +141,7 @@ export class Slides implements ComponentInterface {
     });
     mut.observe(this.el, {
       childList: true,
-      subtree: true
+      subtree: true,
     });
     this.el.componentOnReady().then(() => this.initSwiper());
   }
@@ -151,7 +153,9 @@ export class Slides implements ComponentInterface {
     }
     const swiper = await this.getSwiper();
     swiper.destroy(true, true);
-    this.swiper = new Promise(resolve => { this.readySwiper = resolve; });
+    this.swiper = new Promise(resolve => {
+      this.readySwiper = resolve;
+    });
     this.swiperReady = false;
   }
 
@@ -163,7 +167,7 @@ export class Slides implements ComponentInterface {
   async update() {
     const [swiper] = await Promise.all([
       this.getSwiper(),
-      waitForSlides(this.el)
+      waitForSlides(this.el),
     ]);
     swiper.update();
   }
@@ -405,27 +409,27 @@ export class Slides implements ComponentInterface {
         stretch: 0,
         depth: 100,
         modifier: 1,
-        slideShadows: true
+        slideShadows: true,
       },
       flipEffect: {
         slideShadows: true,
-        limitRotation: true
+        limitRotation: true,
       },
       cubeEffect: {
         slideShadows: true,
         shadow: true,
         shadowOffset: 20,
-        shadowScale: 0.94
+        shadowScale: 0.94,
       },
       fadeEffect: {
-        crossfade: false
+        crossfade: false,
       },
       a11y: {
         prevSlideMessage: 'Previous slide',
         nextSlideMessage: 'Next slide',
         firstSlideMessage: 'This is the first slide',
-        lastSlideMessage: 'This is the last slide'
-      }
+        lastSlideMessage: 'This is the last slide',
+      },
     };
 
     if (this.pager) {
@@ -467,8 +471,8 @@ export class Slides implements ComponentInterface {
         touchStart: this.ionSlideTouchStart.emit,
         touchEnd: this.ionSlideTouchEnd.emit,
         tap: this.ionSlideTap.emit,
-        doubleTap: this.ionSlideDoubleTap.emit
-      }
+        doubleTap: this.ionSlideDoubleTap.emit,
+      },
     };
 
     const customEvents = (!!this.options && !!this.options.on) ? this.options.on : {};
@@ -490,7 +494,7 @@ export class Slides implements ComponentInterface {
           // Used internally for styling
           [`slides-${mode}`]: true,
 
-          'swiper-container': true
+          'swiper-container': true,
         }}
       >
         <div class="swiper-wrapper">

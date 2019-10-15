@@ -13,14 +13,14 @@ import { createColorClasses, openURL } from '../../utils/theme';
   tag: 'ion-back-button',
   styleUrls: {
     ios: 'back-button.ios.scss',
-    md: 'back-button.md.scss'
+    md: 'back-button.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class BackButton implements ComponentInterface, ButtonInterface {
 
   private mode = getIonMode(this);
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonBackButtonElement;
 
   /**
    * The color to use from your application's color palette.
@@ -85,7 +85,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
       return nav.pop({ skipIfBusy: true });
     }
     return openURL(this.defaultHref, ev, 'back');
-  }
+  };
 
   render() {
     const { color, defaultHref, disabled, type, mode, hasIconOnly, backButtonIcon, backButtonText } = this;
@@ -103,7 +103,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'back-button-has-icon-only': hasIconOnly,
           'ion-activatable': true,
           'ion-focusable': true,
-          'show-back-button': showBackButton
+          'show-back-button': showBackButton,
         }}
       >
         <button type={type} disabled={disabled} class="button-native">

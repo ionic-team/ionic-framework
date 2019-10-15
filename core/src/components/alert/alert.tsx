@@ -18,9 +18,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
   tag: 'ion-alert',
   styleUrls: {
     ios: 'alert.ios.scss',
-    md: 'alert.md.scss'
+    md: 'alert.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Alert implements ComponentInterface, OverlayInterface {
 
@@ -88,7 +88,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   /**
    * Array of input to show in the alert.
    */
-  @Prop({ mutable: true }) inputs: AlertInput[] = [];
+  @Prop() inputs: AlertInput[] = [];
 
   /**
    * If `true`, the alert will be dismissed when the backdrop is clicked.
@@ -159,7 +159,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       id: i.id || `alert-input-${this.overlayIndex}-${index}`,
       handler: i.handler,
       min: i.min,
-      max: i.max
+      max: i.max,
     }) as AlertInput);
   }
 
@@ -284,9 +284,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private renderAlertInputs(labelledBy: string | undefined) {
     switch (this.inputType) {
-      case 'checkbox': return this.renderCheckbox(labelledBy);
-      case 'radio': return this.renderRadio(labelledBy);
-      default: return this.renderInput(labelledBy);
+    case 'checkbox': return this.renderCheckbox(labelledBy);
+    case 'radio': return this.renderRadio(labelledBy);
+    default: return this.renderInput(labelledBy);
     }
   }
 
@@ -298,7 +298,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     }
     return (
       <div class="alert-checkbox-group" aria-labelledby={labelledby}>
-        { inputs.map(i => (
+        {inputs.map(i => (
           <button
             type="button"
             onClick={() => this.cbClick(i)}
@@ -312,7 +312,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
               'alert-checkbox': true,
               'alert-checkbox-button': true,
               'ion-focusable': true,
-              'alert-checkbox-button-disabled': i.disabled || false
+              'alert-checkbox-button-disabled': i.disabled || false,
             }}
           >
             <div class="alert-button-inner">
@@ -337,7 +337,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     }
     return (
       <div class="alert-radio-group" role="radiogroup" aria-labelledby={labelledby} aria-activedescendant={this.activeId}>
-        { inputs.map(i => (
+        {inputs.map(i => (
           <button
             type="button"
             onClick={() => this.rbClick(i)}
@@ -350,7 +350,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
               'alert-tappable': true,
               'alert-radio': true,
               'ion-focusable': true,
-              'alert-radio-button-disabled': i.disabled || false
+              'alert-radio-button-disabled': i.disabled || false,
             }}
             role="radio"
           >
@@ -373,7 +373,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     }
     return (
       <div class="alert-input-group" aria-labelledby={labelledby}>
-        { inputs.map(i => (
+        {inputs.map(i => (
           <div class="alert-input-wrapper">
             <input
               placeholder={i.placeholder}
@@ -387,7 +387,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
               tabIndex={0}
               class={{
                 'alert-input': true,
-                'alert-input-disabled': i.disabled || false
+                'alert-input-disabled': i.disabled || false,
               }}
             />
           </div>
@@ -398,7 +398,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
-  }
+  };
 
   private dispatchCancelHandler = (ev: CustomEvent) => {
     const role = ev.detail.role;
@@ -406,14 +406,14 @@ export class Alert implements ComponentInterface, OverlayInterface {
       const cancelButton = this.processedButtons.find(b => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
-  }
+  };
 
   private renderAlertButtons() {
     const buttons = this.processedButtons;
     const mode = getIonMode(this);
     const alertButtonGroupClass = {
       'alert-button-group': true,
-      'alert-button-group-vertical': buttons.length > 2
+      'alert-button-group-vertical': buttons.length > 2,
     };
     return (
       <div class={alertButtonGroupClass}>
@@ -453,7 +453,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,
-          'alert-translucent': this.translucent
+          'alert-translucent': this.translucent,
         }}
         onIonAlertWillDismiss={this.dispatchCancelHandler}
         onIonBackdropTap={this.onBackdropTap}
@@ -484,6 +484,6 @@ const buttonClass = (button: AlertButton): CssClassMap => {
     'alert-button': true,
     'ion-focusable': true,
     'ion-activatable': true,
-    ...getClassMap(button.cssClass)
+    ...getClassMap(button.cssClass),
   };
 };

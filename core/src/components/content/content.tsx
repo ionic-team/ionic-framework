@@ -13,7 +13,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-content',
   styleUrl: 'content.scss',
-  shadow: true
+  shadow: true,
 })
 export class Content implements ComponentInterface {
 
@@ -69,7 +69,7 @@ export class Content implements ComponentInterface {
    * If the content exceeds the bounds of ionContent, nothing will change.
    * Note, the does not disable the system bounce on iOS. That is an OS level setting.
    */
-  @Prop({ mutable: true }) forceOverscroll?: boolean;
+  @Prop() forceOverscroll?: boolean;
 
   /**
    * If you want to enable the content scrolling in the X axis, set this property to `true`.
@@ -147,7 +147,7 @@ export class Content implements ComponentInterface {
     }
   }
 
-  private onScroll(ev: UIEvent) {
+  private onScroll = (ev: UIEvent) => {
     const timeStamp = Date.now();
     const shouldStart = !this.isScrolling;
     this.lastScroll = timeStamp;
@@ -164,7 +164,7 @@ export class Content implements ComponentInterface {
         this.ionScroll.emit(this.detail);
       });
     }
-  }
+  };
 
   /**
    * Get the element where the actual scrolling takes place.
@@ -274,7 +274,7 @@ export class Content implements ComponentInterface {
   private onScrollStart() {
     this.isScrolling = true;
     this.ionScrollStart.emit({
-      isScrolling: true
+      isScrolling: true,
     });
 
     if (this.watchDog) {
@@ -294,7 +294,7 @@ export class Content implements ComponentInterface {
     if (this.isScrolling) {
       this.isScrolling = false;
       this.ionScrollEnd.emit({
-        isScrolling: false
+        isScrolling: false,
       });
     }
   }
@@ -325,10 +325,10 @@ export class Content implements ComponentInterface {
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
-            'overscroll': (scrollX || scrollY) && forceOverscroll
+            'overscroll': (scrollX || scrollY) && forceOverscroll,
           }}
           ref={el => this.scrollEl = el!}
-          onScroll={ev => this.onScroll(ev)}
+          onScroll={this.onScroll}
         >
           <slot></slot>
         </main>

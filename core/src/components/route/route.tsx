@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
 @Component({
-  tag: 'ion-route'
+  tag: 'ion-route',
 })
 export class Route implements ComponentInterface {
 

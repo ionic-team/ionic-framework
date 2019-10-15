@@ -9,12 +9,12 @@ import { getIonMode } from '../../global/ionic-global';
   tag: 'ion-list',
   styleUrls: {
     ios: 'list.ios.scss',
-    md: 'list.md.scss'
-  }
+    md: 'list.md.scss',
+  },
 })
 export class List implements ComponentInterface {
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonListElement;
 
   /**
    * How the bottom border should be displayed on all items.
@@ -54,7 +54,7 @@ export class List implements ComponentInterface {
 
           'list-inset': inset,
           [`list-lines-${lines}`]: lines !== undefined,
-          [`list-${mode}-lines-${lines}`]: lines !== undefined
+          [`list-${mode}-lines-${lines}`]: lines !== undefined,
         }}
       >
       </Host>

@@ -10,7 +10,7 @@ import { transition } from '../../utils/transition';
 @Component({
   tag: 'ion-router-outlet',
   styleUrl: 'route-outlet.scss',
-  shadow: true
+  shadow: true,
 })
 export class RouterOutlet implements ComponentInterface, NavOutlet {
 
@@ -21,12 +21,12 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private ani?: Animation;
   private animationEnabled = true;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonRouterOutletElement;
 
   /**
    * The mode determines which platform styles to use.
    */
-  @Prop({ mutable: true }) mode = getIonMode(this);
+  @Prop() mode = getIonMode(this);
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -138,7 +138,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     });
     return {
       changed,
-      element: this.activeEl
+      element: this.activeEl,
     };
   }
 
@@ -146,10 +146,12 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Method()
   async getRouteId(): Promise<RouteID | undefined> {
     const active = this.activeEl;
-    return active ? {
-      id: active.tagName,
-      element: active,
-    } : undefined;
+    return active
+      ? {
+        id: active.tagName,
+        element: active,
+      }
+      : undefined;
   }
 
   private async setRoot(component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions): Promise<boolean> {
@@ -194,7 +196,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
         ? ani => this.ani = ani
         : undefined
       ),
-      ...opts
+      ...opts,
     });
 
     // emit nav changed event

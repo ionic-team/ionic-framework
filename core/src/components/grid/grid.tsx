@@ -5,7 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 @Component({
   tag: 'ion-grid',
   styleUrl: 'grid.scss',
-  shadow: true
+  shadow: true,
 })
 export class Grid implements ComponentInterface {
 
@@ -20,7 +20,7 @@ export class Grid implements ComponentInterface {
       <Host
         class={{
           [mode]: true,
-          'grid-fixed': this.fixed
+          'grid-fixed': this.fixed,
         }}
       >
         <slot></slot>

@@ -10,7 +10,7 @@ import { SPINNERS } from './spinner-configs';
 @Component({
   tag: 'ion-spinner',
   styleUrl: 'spinner.scss',
-  shadow: true
+  shadow: true,
 })
 export class Spinner implements ComponentInterface {
 
@@ -71,7 +71,7 @@ export class Spinner implements ComponentInterface {
           ...createColorClasses(self.color),
           [mode]: true,
           [`spinner-${spinnerName}`]: true,
-          'spinner-paused': !!self.paused || config.getBoolean('_testing')
+          'spinner-paused': !!self.paused || config.getBoolean('_testing'),
         }}
         role="progressbar"
         style={spinner.elmDuration ? { animationDuration: duration + 'ms' } : {}}

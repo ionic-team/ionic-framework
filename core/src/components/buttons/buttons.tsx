@@ -6,7 +6,7 @@ import { getIonMode } from '../../global/ionic-global';
   tag: 'ion-buttons',
   styleUrls: {
     ios: 'buttons.ios.scss',
-    md: 'buttons.md.scss'
+    md: 'buttons.md.scss',
   },
   scoped: true,
 })
@@ -32,7 +32,7 @@ export class Buttons implements ComponentInterface {
       <Host
         class={{
           [mode]: true,
-          ['buttons-collapse']: this.collapse
+          ['buttons-collapse']: this.collapse,
         }}
       >
       </Host>

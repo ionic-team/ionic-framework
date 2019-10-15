@@ -12,9 +12,9 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
   tag: 'ion-menu-button',
   styleUrls: {
     ios: 'menu-button.ios.scss',
-    md: 'menu-button.md.scss'
+    md: 'menu-button.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class MenuButton implements ComponentInterface, ButtonInterface {
 
@@ -59,7 +59,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
 
   private onClick = async () => {
     return menuController.toggle(this.menu);
-  }
+  };
 
   render() {
     const { color, disabled } = this;
@@ -68,7 +68,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
     const hidden = this.autoHide && !this.visible;
 
     const attrs = {
-      type: this.type
+      type: this.type,
     };
 
     return (
@@ -85,7 +85,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           'menu-button-hidden': hidden,
           'menu-button-disabled': disabled,
           'ion-activatable': true,
-          'ion-focusable': true
+          'ion-focusable': true,
         }}
       >
         <button

@@ -11,7 +11,7 @@ import { readRedirects, readRoutes } from './utils/parser';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
 
 @Component({
-  tag: 'ion-router'
+  tag: 'ion-router',
 })
 export class Router implements ComponentInterface {
 
@@ -21,7 +21,7 @@ export class Router implements ComponentInterface {
   private lastState = 0;
   private waitPromise?: Promise<void>;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonRouterElement;
 
   /**
    * By default `ion-router` will match the routes at the root path ("/").

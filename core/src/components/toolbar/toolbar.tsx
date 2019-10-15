@@ -17,9 +17,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   tag: 'ion-toolbar',
   styleUrls: {
     ios: 'toolbar.ios.scss',
-    md: 'toolbar.md.scss'
+    md: 'toolbar.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Toolbar implements ComponentInterface {
   private childrenStyles = new Map<string, CssClassMap>();

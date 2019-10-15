@@ -17,21 +17,22 @@ export const mdEnterAnimation = (baseEl: ShadowRoot, position: string): Animatio
   wrapperAnimation.addElement(wrapperEl);
 
   switch (position) {
-    case 'top':
-      wrapperEl.style.top = top;
-      wrapperAnimation.fromTo('opacity', 0.01, 1);
-      break;
-    case 'middle':
-      const topPosition = Math.floor(
-        hostEl.clientHeight / 2 - wrapperEl.clientHeight / 2
-      );
-      wrapperEl.style.top = `${topPosition}px`;
-      wrapperAnimation.fromTo('opacity', 0.01, 1);
-      break;
-    default:
-      wrapperEl.style.bottom = bottom;
-      wrapperAnimation.fromTo('opacity', 0.01, 1);
-      break;
+  case 'top':
+    wrapperEl.style.top = top;
+    wrapperAnimation.fromTo('opacity', 0.01, 1);
+    break;
+  case 'middle': {
+    const topPosition = Math.floor(
+      hostEl.clientHeight / 2 - wrapperEl.clientHeight / 2
+    );
+    wrapperEl.style.top = `${topPosition}px`;
+    wrapperAnimation.fromTo('opacity', 0.01, 1);
+    break;
+  }
+  default:
+    wrapperEl.style.bottom = bottom;
+    wrapperAnimation.fromTo('opacity', 0.01, 1);
+    break;
   }
   return baseAnimation
     .addElement(hostEl)

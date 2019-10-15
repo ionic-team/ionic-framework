@@ -40,7 +40,7 @@ describe('toggle', () => {
     // make sure we received the correct event detail
     expect(ionChange).toHaveReceivedEventDetail({
       checked: true,
-      value: 'on'
+      value: 'on',
     });
 
     // set unchecked
@@ -62,7 +62,7 @@ describe('toggle', () => {
     // make sure we received the correct event detail
     expect(ionChange).toHaveReceivedEventDetail({
       checked: false,
-      value: 'on'
+      value: 'on',
     });
   });
 
@@ -115,7 +115,7 @@ describe('toggle', () => {
 
     expect(ionChange).toHaveReceivedEventDetail({
       checked: false,
-      value: 'on'
+      value: 'on',
     });
   });
 

@@ -128,7 +128,7 @@ describe('routerPathToChain', () => {
       CHAIN_1,
       CHAIN_2,
       chain3,
-      chain4
+      chain4,
     ];
     expect(routerPathToChain(['to'], routes)).toEqual(null);
     expect(routerPathToChain([''], routes)).toEqual(null);
@@ -155,7 +155,7 @@ describe('routerPathToChain', () => {
       chain4,
       chain5,
       chain6,
-      chain7
+      chain7,
     ];
     // no match
     expect(routerPathToChain(['categories'], routes)).toEqual(null);
@@ -180,12 +180,12 @@ describe('routerPathToChain', () => {
     const chain1: RouteChain = [
       { id: 'tabs', path: [''], params: undefined },
       { id: 'tab1', path: [''], params: undefined },
-      { id: 'schedule', path: [''], params: undefined }
+      { id: 'schedule', path: [''], params: undefined },
     ];
     const chain2: RouteChain = [
       { id: 'tabs', path: [''], params: undefined },
       { id: 'tab2', path: ['tab2'], params: undefined },
-      { id: 'page2', path: [''], params: undefined }
+      { id: 'page2', path: [''], params: undefined },
     ];
 
     expect(routerPathToChain([''], [chain1])).toEqual(chain1);
@@ -219,7 +219,7 @@ describe('mergeParams', () => {
     expect(mergeParams(params1, params2)).toEqual({
       data: '2',
       data2: 'hola',
-      data3: 'hello'
+      data3: 'hello',
     });
     expect(params1).toEqual({ data: '1', data3: 'hello' });
     expect(params2).toEqual({ data: '2', data2: 'hola' });
@@ -227,7 +227,7 @@ describe('mergeParams', () => {
 });
 
 describe('RouterSegments', () => {
-  it ('should initialize with empty array', () => {
+  it('should initialize with empty array', () => {
     const s = new RouterSegments([]);
     expect(s.next()).toEqual('');
     expect(s.next()).toEqual('');
@@ -236,7 +236,7 @@ describe('RouterSegments', () => {
     expect(s.next()).toEqual('');
   });
 
-  it ('should initialize with array', () => {
+  it('should initialize with array', () => {
     const s = new RouterSegments(['', 'path', 'to', 'destination']);
     expect(s.next()).toEqual('');
     expect(s.next()).toEqual('path');

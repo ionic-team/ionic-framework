@@ -29,7 +29,7 @@ export const readRouteNodes = (root: Element, node = root): RouteTree => {
         path: parsePath(readProp(el, 'url')),
         id: component.toLowerCase(),
         params: el.componentProps,
-        children: readRouteNodes(root, el)
+        children: readRouteNodes(root, el),
       };
     });
 };
@@ -57,7 +57,7 @@ const flattenNode = (chain: RouteChain, routes: RouteChain[], node: RouteNode) =
   s.push({
     id: node.id,
     path: node.path,
-    params: node.params
+    params: node.params,
   });
 
   if (node.children.length === 0) {

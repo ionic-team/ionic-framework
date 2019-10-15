@@ -5,11 +5,11 @@ import { getIonMode } from '../../global/ionic-global';
 @Component({
   tag: 'ion-ripple-effect',
   styleUrl: 'ripple-effect.scss',
-  shadow: true
+  shadow: true,
 })
 export class RippleEffect implements ComponentInterface {
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonRippleEffectElement;
 
   /**
    * Sets the type of ripple-effect:
@@ -84,7 +84,7 @@ export class RippleEffect implements ComponentInterface {
         role="presentation"
         class={{
           [mode]: true,
-          'unbounded': this.unbounded
+          'unbounded': this.unbounded,
         }}
       >
       </Host>

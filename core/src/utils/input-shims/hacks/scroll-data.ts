@@ -59,6 +59,6 @@ const calcScrollData = (
     scrollAmount,
     scrollDuration,
     scrollPadding: keyboardHeight,
-    inputSafeY: -(inputTop - safeAreaTop) + 4
+    inputSafeY: -(inputTop - safeAreaTop) + 4,
   };
 };

@@ -13,9 +13,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-progress-bar',
   styleUrls: {
     ios: 'progress-bar.ios.scss',
-    md: 'progress-bar.md.scss'
+    md: 'progress-bar.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class ProgressBar implements ComponentInterface {
 
@@ -65,13 +65,12 @@ export class ProgressBar implements ComponentInterface {
           [mode]: true,
           [`progress-bar-${type}`]: true,
           'progress-paused': paused,
-          'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
+          'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed,
         }}
       >
         {type === 'indeterminate'
           ? renderIndeterminate()
-          : renderProgress(value, buffer)
-        }
+          : renderProgress(value, buffer)}
       </Host>
     );
   }
@@ -80,7 +79,7 @@ export class ProgressBar implements ComponentInterface {
 const renderIndeterminate = () => {
   return [
     <div class="indeterminate-bar-primary"><span class="progress-indeterminate"></span></div>,
-    <div class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
+    <div class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>,
   ];
 };
 

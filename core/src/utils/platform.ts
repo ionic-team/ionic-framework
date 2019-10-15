@@ -129,5 +129,5 @@ const PLATFORMS_MAP = {
   'mobile': isMobile,
   'mobileweb': isMobileWeb,
   'desktop': isDesktop,
-  'hybrid': isHybrid
+  'hybrid': isHybrid,
 };

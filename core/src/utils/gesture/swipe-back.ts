@@ -54,6 +54,6 @@ export const createSwipeBackGesture = (
     canStart,
     onStart: onStartHandler,
     onMove,
-    onEnd
+    onEnd,
   });
 };

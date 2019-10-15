@@ -19,9 +19,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
   tag: 'ion-loading',
   styleUrls: {
     ios: 'loading.ios.scss',
-    md: 'loading.md.scss'
+    md: 'loading.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Loading implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
@@ -177,7 +177,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
-  }
+  };
 
   render() {
     const { message, spinner } = this;
@@ -186,12 +186,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
       <Host
         onIonBackdropTap={this.onBackdropTap}
         style={{
-          zIndex: `${40000 + this.overlayIndex}`
+          zIndex: `${40000 + this.overlayIndex}`,
         }}
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,
-          'loading-translucent': this.translucent
+          'loading-translucent': this.translucent,
         }}
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />

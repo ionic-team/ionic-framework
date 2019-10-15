@@ -8,7 +8,7 @@ import { getIonMode } from '../../global/ionic-global';
     ios: 'reorder.ios.scss',
     md: 'reorder.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Reorder implements ComponentInterface {
 

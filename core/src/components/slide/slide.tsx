@@ -4,7 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-slide',
-  styleUrl: 'slide.scss'
+  styleUrl: 'slide.scss',
 })
 export class Slide implements ComponentInterface {
 
@@ -15,7 +15,7 @@ export class Slide implements ComponentInterface {
         class={{
           [mode]: true,
           'swiper-slide': true,
-          'swiper-zoom-container': true
+          'swiper-zoom-container': true,
         }}
       >
       </Host>

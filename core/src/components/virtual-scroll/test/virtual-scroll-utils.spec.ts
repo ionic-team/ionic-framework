@@ -183,7 +183,7 @@ describe('calcCells', () => {
         height: 30,
         reads: 2,
         visible: false,
-      }
+      },
     ]);
   });
 
@@ -225,7 +225,7 @@ describe('calcCells', () => {
         height: 60,
         reads: 0,
         visible: true,
-      }
+      },
     ]);
   });
 
@@ -301,7 +301,7 @@ describe('calcCells', () => {
         height: 20,
         reads: 2,
         visible: false,
-      }
+      },
     ]);
   });
 });
@@ -381,7 +381,7 @@ describe('updateVDom', () => {
       { cell: cells[3], change: 2, d: false, top: 50, visible: true },
       { cell: cells[4], change: 2, d: false, top: 70, visible: true },
       { cell: cells[5], change: 2, d: false, top: 80, visible: true },
-      { cell: cells[6], change: 2, d: false, top: 100, visible: true }
+      { cell: cells[6], change: 2, d: false, top: 100, visible: true },
     ]);
   });
 
@@ -395,7 +395,7 @@ describe('updateVDom', () => {
       { cell: cells[0], change: 0, d: false, top: 0, visible: true },
       { cell: cells[1], change: 0, d: false, top: 20, visible: true },
       { cell: cells[2], change: 0, d: false, top: 40, visible: true },
-      { cell: cells[3], change: 0, d: false, top: 60, visible: true }
+      { cell: cells[3], change: 0, d: false, top: 60, visible: true },
     ]);
 
     updateVDom(vdom, heightIndex, cells, { offset: 0, length: 5 });
@@ -404,7 +404,7 @@ describe('updateVDom', () => {
       { cell: cells[1], change: 0, d: false, top: 20, visible: true },
       { cell: cells[2], change: 0, d: false, top: 40, visible: true },
       { cell: cells[3], change: 0, d: false, top: 60, visible: true },
-      { cell: cells[4], change: 2, d: false, top: 80, visible: true }
+      { cell: cells[4], change: 2, d: false, top: 80, visible: true },
     ]);
 
     updateVDom(vdom, heightIndex, cells, { offset: 1, length: 4 });
@@ -413,7 +413,7 @@ describe('updateVDom', () => {
       { cell: cells[1], change: 0, d: false, top: 20, visible: true },
       { cell: cells[2], change: 0, d: false, top: 40, visible: true },
       { cell: cells[3], change: 0, d: false, top: 60, visible: true },
-      { cell: cells[4], change: 0, d: false, top: 80, visible: true }
+      { cell: cells[4], change: 0, d: false, top: 80, visible: true },
     ]);
 
     updateVDom(vdom, heightIndex, cells, { offset: 1, length: 5 });
@@ -422,7 +422,7 @@ describe('updateVDom', () => {
       { cell: cells[1], change: 0, d: false, top: 20, visible: true },
       { cell: cells[2], change: 0, d: false, top: 40, visible: true },
       { cell: cells[3], change: 0, d: false, top: 60, visible: true },
-      { cell: cells[4], change: 0, d: false, top: 80, visible: true }
+      { cell: cells[4], change: 0, d: false, top: 80, visible: true },
     ]);
 
     updateVDom(vdom, heightIndex, cells, { offset: 2, length: 5 });
@@ -431,7 +431,7 @@ describe('updateVDom', () => {
       { cell: cells[6], change: 2, d: false, top: 120, visible: true },
       { cell: cells[2], change: 0, d: false, top: 40, visible: true },
       { cell: cells[3], change: 0, d: false, top: 60, visible: true },
-      { cell: cells[4], change: 0, d: false, top: 80, visible: true }
+      { cell: cells[4], change: 0, d: false, top: 80, visible: true },
     ]);
 
     updateVDom(vdom, heightIndex, cells, { offset: 10, length: 6 });
@@ -441,7 +441,7 @@ describe('updateVDom', () => {
       { cell: cells[12], change: 2, d: false, top: 240, visible: true },
       { cell: cells[13], change: 2, d: false, top: 260, visible: true },
       { cell: cells[14], change: 2, d: false, top: 280, visible: true },
-      { cell: cells[15], change: 2, d: false, top: 300, visible: true }
+      { cell: cells[15], change: 2, d: false, top: 300, visible: true },
     ]);
 
     updateVDom(vdom, heightIndex, cells, { offset: 13, length: 10 });
@@ -502,19 +502,19 @@ describe('updateVDom', () => {
   });
 });
 
-function mockVirtualScroll(
+const mockVirtualScroll = (
   items: any[],
   itemHeight?: ItemHeightFn,
   headerFn?: HeaderFn,
   footerFn?: HeaderFn
-) {
+) => {
   const cells = calcCells(items, itemHeight, undefined, undefined, headerFn, footerFn, 10, 10, 30, 0, 0, items.length);
   const heightIndex = resizeBuffer(undefined, cells.length);
   calcHeightIndex(heightIndex, cells, 0);
   return { items, heightIndex, cells };
-}
+};
 
-function mockHeightBuffer(size: number, step: (index: number) => number) {
+const mockHeightBuffer = (size: number, step: (index: number) => number) => {
   const buf = new Uint32Array(size);
   let acum = 0;
   for (let i = 0; i < size; i++) {
@@ -522,4 +522,4 @@ function mockHeightBuffer(size: number, step: (index: number) => number) {
     acum += step(i);
   }
   return buf;
-}
+};

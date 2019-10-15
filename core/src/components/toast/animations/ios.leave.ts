@@ -17,15 +17,15 @@ export const iosLeaveAnimation = (baseEl: ShadowRoot, position: string): Animati
   wrapperAnimation.addElement(wrapperEl);
 
   switch (position) {
-    case 'top':
-      wrapperAnimation.fromTo('transform', `translateY(${top})`, 'translateY(-100%)');
-      break;
-    case 'middle':
-      wrapperAnimation.fromTo('opacity', 0.99, 0);
-      break;
-    default:
-      wrapperAnimation.fromTo('transform', `translateY(${bottom})`, 'translateY(100%)');
-      break;
+  case 'top':
+    wrapperAnimation.fromTo('transform', `translateY(${top})`, 'translateY(-100%)');
+    break;
+  case 'middle':
+    wrapperAnimation.fromTo('opacity', 0.99, 0);
+    break;
+  default:
+    wrapperAnimation.fromTo('transform', `translateY(${bottom})`, 'translateY(100%)');
+    break;
   }
   return baseAnimation
     .addElement(hostEl)

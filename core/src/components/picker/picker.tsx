@@ -15,9 +15,9 @@ import { iosLeaveAnimation } from './animations/ios.leave';
   tag: 'ion-picker',
   styleUrls: {
     ios: 'picker.ios.scss',
-    md: 'picker.md.scss'
+    md: 'picker.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
@@ -187,7 +187,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
       selected[col.name] = {
         text: selectedColumn ? selectedColumn.text : undefined,
         value: selectedColumn ? selectedColumn.value : undefined,
-        columnIndex: index
+        columnIndex: index,
       };
     });
     return selected;
@@ -200,7 +200,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
     } else {
       this.dismiss();
     }
-  }
+  };
 
   render() {
     const mode = getIonMode(this);
@@ -213,10 +213,10 @@ export class Picker implements ComponentInterface, OverlayInterface {
           // Used internally for styling
           [`picker-${mode}`]: true,
 
-          ...getClassMap(this.cssClass)
+          ...getClassMap(this.cssClass),
         }}
         style={{
-          zIndex: `${20000 + this.overlayIndex}`
+          zIndex: `${20000 + this.overlayIndex}`,
         }}
         onIonBackdropTap={this.onBackdropTap}
       >
@@ -242,9 +242,9 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
           <div class="picker-columns">
             <div class="picker-above-highlight"></div>
-              {this.presented && this.columns.map(c =>
-                <ion-picker-column col={c}></ion-picker-column>
-              )}
+            {this.presented && this.columns.map(c =>
+              <ion-picker-column col={c}></ion-picker-column>
+            )}
             <div class="picker-below-highlight"></div>
           </div>
         </div>
@@ -256,7 +256,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 const buttonWrapperClass = (button: PickerButton): CssClassMap => {
   return {
     [`picker-toolbar-${button.role}`]: button.role !== undefined,
-    'picker-toolbar-button': true
+    'picker-toolbar-button': true,
   };
 };
 
@@ -264,6 +264,6 @@ const buttonClass = (button: PickerButton): CssClassMap => {
   return {
     'picker-button': true,
     'ion-activatable': true,
-    ...getClassMap(button.cssClass)
+    ...getClassMap(button.cssClass),
   };
 };

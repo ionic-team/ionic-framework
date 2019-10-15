@@ -6,7 +6,9 @@
 export const getDateValue = (date: DatetimeData, format: string): number => {
   const getValue = getValueFromFormat(date, format);
 
-  if (getValue !== undefined) { return getValue; }
+  if (getValue !== undefined) {
+    return getValue;
+  }
 
   const defaultDate = parseDate(new Date().toISOString());
   return getValueFromFormat((defaultDate as DatetimeData), format);
@@ -183,8 +185,8 @@ export const isLeapYear = (year: number): boolean => {
   return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 };
 
-const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
-const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
+const ISO_8601_REGEXP = /^(\d{4}|[+-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+-])(\d{2})(?::(\d{2}))?)?)?$/;
+const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+-])(\d{2})(?::(\d{2}))?)?)?$/;
 
 export const parseDate = (val: string | undefined | null): DatetimeData | undefined => {
   // manually parse IS0 cuz Date.parse cannot be trusted
@@ -333,7 +335,7 @@ export const updateDate = (existingData: DatetimeData, newData: any): boolean =>
           ? newData.hour.value
           : (newData.ampm.value === 'pm'
             ? (existingData.hour! < 12 ? existingData.hour! + 12 : existingData.hour!)
-            : (existingData.hour! >= 12 ? existingData.hour! - 12 : existingData.hour))
+            : (existingData.hour! >= 12 ? existingData.hour! - 12 : existingData.hour)),
       };
       (existingData as any)['hour'] = newData['hour'].value;
       return true;
@@ -344,11 +346,9 @@ export const updateDate = (existingData: DatetimeData, newData: any): boolean =>
 
   } else {
     // blank data, clear everything out
-    for (const k in existingData) {
-      if (existingData.hasOwnProperty(k)) {
-        delete (existingData as any)[k];
-      }
-    }
+    Object.keys(existingData).forEach(k => {
+      delete (existingData as any)[k];
+    });
   }
   return false;
 };
@@ -641,5 +641,5 @@ const MONTH_SHORT_NAMES = [
 ];
 
 const VALID_AMPM_PREFIX = [
-  FORMAT_hh, FORMAT_h, FORMAT_mm, FORMAT_m, FORMAT_ss, FORMAT_s
+  FORMAT_hh, FORMAT_h, FORMAT_mm, FORMAT_m, FORMAT_ss, FORMAT_s,
 ];

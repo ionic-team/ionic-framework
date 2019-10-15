@@ -7,8 +7,8 @@ import { Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
   tag: 'ion-refresher',
   styleUrls: {
     ios: 'refresher.ios.scss',
-    md: 'refresher.md.scss'
-  }
+    md: 'refresher.md.scss',
+  },
 })
 export class Refresher implements ComponentInterface {
 
@@ -18,7 +18,7 @@ export class Refresher implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private gesture?: Gesture;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonRefresherElement;
 
   /**
    * The current state which the refresher is in. The refresher's states include:
@@ -318,7 +318,7 @@ export class Refresher implements ComponentInterface {
     // emit "refresh" because it was pulled down far enough
     // and they let go to begin refreshing
     this.ionRefresh.emit({
-      complete: this.complete.bind(this)
+      complete: this.complete.bind(this),
     });
   }
 
@@ -369,7 +369,7 @@ export class Refresher implements ComponentInterface {
           'refresher-ready': this.state === RefresherState.Ready,
           'refresher-refreshing': this.state === RefresherState.Refreshing,
           'refresher-cancelling': this.state === RefresherState.Cancelling,
-          'refresher-completing': this.state === RefresherState.Completing
+          'refresher-completing': this.state === RefresherState.Completing,
         }}
       >
       </Host>

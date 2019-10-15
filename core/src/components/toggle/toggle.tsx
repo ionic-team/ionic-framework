@@ -13,9 +13,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   tag: 'ion-toggle',
   styleUrls: {
     ios: 'toggle.ios.scss',
-    md: 'toggle.md.scss'
+    md: 'toggle.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Toggle implements ComponentInterface {
 
@@ -24,7 +24,7 @@ export class Toggle implements ComponentInterface {
   private buttonEl?: HTMLElement;
   private lastDrag = 0;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonToggleElement;
 
   @State() activated = false;
 
@@ -84,7 +84,7 @@ export class Toggle implements ComponentInterface {
   checkedChanged(isChecked: boolean) {
     this.ionChange.emit({
       checked: isChecked,
-      value: this.value
+      value: this.value,
     });
   }
 
@@ -162,15 +162,15 @@ export class Toggle implements ComponentInterface {
     if (this.lastDrag + 300 < Date.now()) {
       this.checked = !this.checked;
     }
-  }
+  };
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   render() {
     const { inputId, disabled, checked, activated, color, el } = this;
@@ -197,7 +197,7 @@ export class Toggle implements ComponentInterface {
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
-          'interactive': true
+          'interactive': true,
         }}
       >
         <div class="toggle-icon">

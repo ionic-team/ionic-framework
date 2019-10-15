@@ -15,9 +15,9 @@ import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convert
   tag: 'ion-datetime',
   styleUrls: {
     ios: 'datetime.ios.scss',
-    md: 'datetime.md.scss'
+    md: 'datetime.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Datetime implements ComponentInterface {
 
@@ -196,7 +196,7 @@ export class Datetime implements ComponentInterface {
     this.updateDatetimeValue(this.value);
     this.emitStyle();
     this.ionChange.emit({
-      value: this.value
+      value: this.value,
     });
   }
 
@@ -235,7 +235,7 @@ export class Datetime implements ComponentInterface {
       monthNames: convertToArrayOfStrings(this.monthNames, 'monthNames'),
       monthShortNames: convertToArrayOfStrings(this.monthShortNames, 'monthShortNames'),
       dayNames: convertToArrayOfStrings(this.dayNames, 'dayNames'),
-      dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
+      dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames'),
     };
 
     this.updateDatetimeValue(this.value);
@@ -267,7 +267,7 @@ export class Datetime implements ComponentInterface {
 
       const changeData: any = {};
       changeData[data.name] = {
-        value: colOptions[colSelectedIndex].value
+        value: colOptions[colSelectedIndex].value,
       };
 
       this.updateDatetimeValue(changeData);
@@ -295,7 +295,7 @@ export class Datetime implements ComponentInterface {
     const pickerOptions: PickerOptions = {
       mode,
       ...this.pickerOptions,
-      columns: this.generateColumns()
+      columns: this.generateColumns(),
     };
 
     // If the user has not passed in picker buttons,
@@ -309,7 +309,7 @@ export class Datetime implements ComponentInterface {
           handler: () => {
             this.updateDatetimeValue(this.value);
             this.ionCancel.emit();
-          }
+          },
         },
         {
           text: this.doneText,
@@ -329,8 +329,8 @@ export class Datetime implements ComponentInterface {
             this.datetimeValue.tzOffset = date.getTimezoneOffset() * -1;
 
             this.value = convertDataToISO(this.datetimeValue);
-          }
-        }
+          },
+        },
       ];
     }
     return pickerOptions;
@@ -362,12 +362,11 @@ export class Datetime implements ComponentInterface {
       // loop through each format in the template
       // create a new picker column to build up with data
       const key = convertFormatToKey(format)!;
-      let values: any[];
 
       // check if they have exact values to use for this date part
       // otherwise use the default date part values
       const self = this as any;
-      values = self[key + 'Values']
+      const values = self[key + 'Values']
         ? convertToArrayOfNumbers(self[key + 'Values'], key)
         : dateValueRange(format, this.datetimeMin, this.datetimeMax);
 
@@ -387,7 +386,7 @@ export class Datetime implements ComponentInterface {
       return {
         name: key,
         selectedIndex: selectedIndex >= 0 ? selectedIndex : 0,
-        options: colOptions
+        options: colOptions,
       };
     });
 
@@ -556,7 +555,9 @@ export class Datetime implements ComponentInterface {
       this.value === undefined ||
       this.value === null ||
       this.value.length === 0
-    ) { return; }
+    ) {
+      return;
+    }
 
     return renderDatetime(template, this.datetimeValue, this.locale);
   }
@@ -574,15 +575,15 @@ export class Datetime implements ComponentInterface {
   private onClick = () => {
     this.setFocus();
     this.open();
-  }
+  };
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   render() {
     const { inputId, text, disabled, readonly, isExpanded, el, placeholder } = this;
@@ -616,7 +617,7 @@ export class Datetime implements ComponentInterface {
           'datetime-disabled': disabled,
           'datetime-readonly': readonly,
           'datetime-placeholder': addPlaceholderClass,
-          'in-item': hostContext('ion-item', el)
+          'in-item': hostContext('ion-item', el),
         }}
       >
         <div class="datetime-text">{datetimeText}</div>

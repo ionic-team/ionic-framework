@@ -7,11 +7,11 @@ import { hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-skeleton-text',
   styleUrl: 'skeleton-text.scss',
-  shadow: true
+  shadow: true,
 })
 export class SkeletonText implements ComponentInterface {
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonSkeletonTextElement;
 
   /**
    * If `true`, the skeleton text will animate.
@@ -28,7 +28,7 @@ export class SkeletonText implements ComponentInterface {
         class={{
           [mode]: true,
           'skeleton-text-animated': animated,
-          'in-media': inMedia
+          'in-media': inMedia,
         }}
       >
         <span>&nbsp;</span>

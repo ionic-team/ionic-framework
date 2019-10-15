@@ -11,9 +11,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-list-header',
   styleUrls: {
     ios: 'list-header.ios.scss',
-    md: 'list-header.md.scss'
+    md: 'list-header.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class ListHeader implements ComponentInterface {
 

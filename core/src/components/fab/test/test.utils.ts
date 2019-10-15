@@ -7,39 +7,35 @@ export const testFab = async (
   selector: string,
   rtl = false
 ) => {
-  try {
-    const pageUrl = generateE2EUrl('fab', type, rtl);
+  const pageUrl = generateE2EUrl('fab', type, rtl);
 
-    const page = await newE2EPage({
-      url: pageUrl
-    });
+  const page = await newE2EPage({
+    url: pageUrl,
+  });
 
-    const screenshotCompares = [];
-    screenshotCompares.push(await page.compareScreenshot());
+  const screenshotCompares = [];
+  screenshotCompares.push(await page.compareScreenshot());
 
-    const fab = await getFabComponent(page, selector);
-    await fab.click();
+  const fab = await getFabComponent(page, selector);
+  await fab.click();
 
-    await page.waitFor(250);
+  await page.waitFor(250);
 
-    await ensureFabState(fab, 'active');
+  await ensureFabState(fab, 'active');
 
-    screenshotCompares.push(await page.compareScreenshot('open'));
+  screenshotCompares.push(await page.compareScreenshot('open'));
 
-    const fabButton = await getFabButton(fab);
-    await fabButton.click();
+  const fabButton = await getFabButton(fab);
+  await fabButton.click();
 
-    await page.waitFor(250);
+  await page.waitFor(250);
 
-    await ensureFabState(fab, 'inactive');
+  await ensureFabState(fab, 'inactive');
 
-    screenshotCompares.push(await page.compareScreenshot('close'));
+  screenshotCompares.push(await page.compareScreenshot('close'));
 
-    for (const screenshotCompare of screenshotCompares) {
-      expect(screenshotCompare).toMatchScreenshot();
-    }
-  } catch (err) {
-    throw err;
+  for (const screenshotCompare of screenshotCompares) {
+    expect(screenshotCompare).toMatchScreenshot();
   }
 };
 
@@ -48,28 +44,24 @@ export const testDisabledFab = async (
   selector: string,
   rtl = false
 ) => {
-  try {
-    const pageUrl = generateE2EUrl('fab', type, rtl);
+  const pageUrl = generateE2EUrl('fab', type, rtl);
 
-    const page = await newE2EPage({
-      url: pageUrl
-    });
+  const page = await newE2EPage({
+    url: pageUrl,
+  });
 
-    const screenshotCompares = [];
-    screenshotCompares.push(await page.compareScreenshot('disabled'));
+  const screenshotCompares = [];
+  screenshotCompares.push(await page.compareScreenshot('disabled'));
 
-    const fab = await getFabComponent(page, selector);
-    await fab.click();
+  const fab = await getFabComponent(page, selector);
+  await fab.click();
 
-    await ensureFabState(fab, 'inactive');
+  await ensureFabState(fab, 'inactive');
 
-    screenshotCompares.push(await page.compareScreenshot('disabled, attempt open'));
+  screenshotCompares.push(await page.compareScreenshot('disabled, attempt open'));
 
-    for (const screenshotCompare of screenshotCompares) {
-      expect(screenshotCompare).toMatchScreenshot();
-    }
-  } catch (err) {
-    throw err;
+  for (const screenshotCompare of screenshotCompares) {
+    expect(screenshotCompare).toMatchScreenshot();
   }
 };
 

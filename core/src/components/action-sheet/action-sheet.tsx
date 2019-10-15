@@ -17,9 +17,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
   tag: 'ion-action-sheet',
   styleUrls: {
     ios: 'action-sheet.ios.scss',
-    md: 'action-sheet.md.scss'
+    md: 'action-sheet.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class ActionSheet implements ComponentInterface, OverlayInterface {
 
@@ -183,7 +183,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
-  }
+  };
 
   private dispatchCancelHandler = (ev: CustomEvent) => {
     const role = ev.detail.role;
@@ -191,7 +191,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       const cancelButton = this.getButtons().find(b => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
-  }
+  };
 
   render() {
     const mode = getIonMode(this);
@@ -210,7 +210,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
           [mode]: true,
 
           ...getClassMap(this.cssClass),
-          'action-sheet-translucent': this.translucent
+          'action-sheet-translucent': this.translucent,
         }}
         onIonActionSheetWillDismiss={this.dispatchCancelHandler}
         onIonBackdropTap={this.onBackdropTap}
@@ -223,8 +223,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                 <div class="action-sheet-title">
                   {this.header}
                   {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
-                </div>
-              }
+                </div>}
               {buttons.map(b =>
                 <button type="button" ion-activatable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                   <span class="action-sheet-button-inner">
@@ -253,8 +252,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                     {cancelButton.text}
                   </span>
                 </button>
-              </div>
-            }
+              </div>}
           </div>
         </div>
       </Host>

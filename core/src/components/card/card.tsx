@@ -12,9 +12,9 @@ import { createColorClasses, openURL } from '../../utils/theme';
   tag: 'ion-card',
   styleUrls: {
     ios: 'card.ios.scss',
-    md: 'card.md.scss'
+    md: 'card.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
 
@@ -82,7 +82,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
 
     if (!clickable) {
       return [
-        <slot></slot>
+        <slot></slot>,
       ];
     }
     const { href, routerDirection } = this;
@@ -93,7 +93,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         download: this.download,
         href: this.href,
         rel: this.rel,
-        target: this.target
+        target: this.target,
       };
 
     return (
@@ -118,7 +118,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
 
           ...createColorClasses(this.color),
           'card-disabled': this.disabled,
-          'ion-activatable': this.isClickable()
+          'ion-activatable': this.isClickable(),
         }}
       >
         {this.renderCard(mode)}

@@ -10,7 +10,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-text',
   styleUrl: 'text.scss',
-  shadow: true
+  shadow: true,
 })
 export class Text implements ComponentInterface {
 

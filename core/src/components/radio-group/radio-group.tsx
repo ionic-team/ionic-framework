@@ -5,7 +5,7 @@ import { RadioGroupChangeEventDetail } from '../../interface';
 import { findCheckedOption, watchForOptions } from '../../utils/watch-options';
 
 @Component({
-  tag: 'ion-radio-group'
+  tag: 'ion-radio-group',
 })
 export class RadioGroup implements ComponentInterface {
 
@@ -13,7 +13,7 @@ export class RadioGroup implements ComponentInterface {
   private labelId = `${this.inputId}-lbl`;
   private mutationO?: MutationObserver;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonRadioGroupElement;
 
   /**
    * If `true`, the radios can be deselected.
@@ -127,7 +127,7 @@ export class RadioGroup implements ComponentInterface {
     if (selectedRadio) {
       this.value = selectedRadio.value;
     }
-  }
+  };
 
   private onDeselect = (ev: Event) => {
     const selectedRadio = ev.target as HTMLIonRadioElement | null;
@@ -135,7 +135,7 @@ export class RadioGroup implements ComponentInterface {
       selectedRadio.checked = false;
       this.value = undefined;
     }
-  }
+  };
 
   render() {
     return (

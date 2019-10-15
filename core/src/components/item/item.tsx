@@ -16,9 +16,9 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   tag: 'ion-item',
   styleUrls: {
     ios: 'item.ios.scss',
-    md: 'item.md.scss'
+    md: 'item.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
 
@@ -173,7 +173,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         download,
         href,
         rel,
-        target
+        target,
       };
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
     this.itemStyles.forEach(value => {
@@ -196,24 +196,24 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           'ion-focusable': true,
         }}
       >
-          <TagType
-            {...attrs}
-            class="item-native"
-            disabled={disabled}
-            onClick={(ev: Event) => openURL(href, ev, routerDirection)}
-          >
-            <slot name="start"></slot>
-            <div class="item-inner">
-              <div class="input-wrapper">
-                <slot></slot>
-              </div>
-              <slot name="end"></slot>
-              {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
-              <div class="item-inner-highlight"></div>
+        <TagType
+          {...attrs}
+          class="item-native"
+          disabled={disabled}
+          onClick={(ev: Event) => openURL(href, ev, routerDirection)}
+        >
+          <slot name="start"></slot>
+          <div class="item-inner">
+            <div class="input-wrapper">
+              <slot></slot>
             </div>
-            {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-          </TagType>
-          <div class="item-highlight"></div>
+            <slot name="end"></slot>
+            {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
+            <div class="item-inner-highlight"></div>
+          </div>
+          {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        </TagType>
+        <div class="item-highlight"></div>
       </Host>
     );
   }

@@ -19,9 +19,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
   tag: 'ion-popover',
   styleUrls: {
     ios: 'popover.ios.scss',
-    md: 'popover.md.scss'
+    md: 'popover.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Popover implements ComponentInterface, OverlayInterface {
 
@@ -135,7 +135,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
     }
     const data = {
       ...this.componentProps,
-      popover: this.el
+      popover: this.el,
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['popover-viewport', (this.el as any)['s-sc']], data);
     await deepReady(this.usersElement);
@@ -178,11 +178,11 @@ export class Popover implements ComponentInterface, OverlayInterface {
     ev.preventDefault();
 
     this.dismiss();
-  }
+  };
 
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
-  }
+  };
 
   private onLifecycle = (modalEvent: CustomEvent) => {
     const el = this.usersElement;
@@ -191,11 +191,11 @@ export class Popover implements ComponentInterface, OverlayInterface {
       const event = new CustomEvent(name, {
         bubbles: false,
         cancelable: false,
-        detail: modalEvent.detail
+        detail: modalEvent.detail,
       });
       el.dispatchEvent(event);
     }
-  }
+  };
 
   render() {
     const mode = getIonMode(this);
@@ -210,7 +210,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,
-          'popover-translucent': this.translucent
+          'popover-translucent': this.translucent,
         }}
         onIonPopoverDidPresent={onLifecycle}
         onIonPopoverWillPresent={onLifecycle}

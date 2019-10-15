@@ -8,15 +8,15 @@ import { now } from '../../utils/helpers';
   tag: 'ion-backdrop',
   styleUrls: {
     ios: 'backdrop.ios.scss',
-    md: 'backdrop.md.scss'
+    md: 'backdrop.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Backdrop implements ComponentInterface {
 
   private lastClick = -10000;
   private blocker = GESTURE_CONTROLLER.createBlocker({
-    disableScroll: true
+    disableScroll: true,
   });
 
   /**

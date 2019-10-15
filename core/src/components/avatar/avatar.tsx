@@ -6,9 +6,9 @@ import { getIonMode } from '../../global/ionic-global';
   tag: 'ion-avatar',
   styleUrls: {
     ios: 'avatar.ios.scss',
-    md: 'avatar.md.scss'
+    md: 'avatar.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Avatar implements ComponentInterface {
 

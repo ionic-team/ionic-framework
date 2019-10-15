@@ -1,0 +1,64 @@
+{
+  "plugins": [
+    "react"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@stencil/recommended"
+  ],
+  "rules": {
+    "indent": ["error", 2],
+    "no-trailing-spaces": "error",
+    "curly": ["error", "all"],
+    "no-shadow": "error",
+    "comma-spacing": "error",
+    "comma-style": "error",
+    "func-style": ["error", "expression", { "allowArrowFunctions": true }],
+    "computed-property-spacing": "error",
+    "no-constant-condition": 0,
+    "require-atomic-updates": 1,
+    "no-var": 1,
+    "prefer-object-spread": 2,
+    "comma-dangle": [2, "always-multiline"],
+    // "no-nested-ternary": 2,
+    "multiline-ternary": [2, "always-multiline"],
+    "operator-linebreak": [2, "after", { "overrides": { "?": "before", ":": "before" } }],
+    "linebreak-style": 2,
+    "no-duplicate-imports": 2,
+    "space-within-parens": 0,
+
+    "@stencil/ban-prefix": 0,
+    "@stencil/own-props-must-be-private": 0,
+    "@stencil/own-methods-must-be-private": 0,
+    "@typescript-eslint/camelcase": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "@typescript-eslint/no-this-alias": 0,
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/no-unused-vars": 0,
+    "@typescript-eslint/no-empty-interface": 0,
+    "@typescript-eslint/no-use-before-define": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/semi": ["error"],
+    "@typescript-eslint/brace-style": "error",
+    "@typescript-eslint/func-call-spacing": "error",
+    "react/jsx-closing-tag-location": "error",
+    "react/jsx-curly-newline": ["error", "never"],
+    "react/jsx-closing-bracket-location": "error",
+    "react/jsx-curly-spacing": ["error", {"when": "never", "children": true}],
+    "react/jsx-boolean-value": ["error", "never"],
+    "react/jsx-child-element-spacing": "error",
+    "react/jsx-indent-props": [2, "first"],
+    "react/jsx-props-no-multi-spaces": "error",
+    "react/jsx-equals-spacing": ["error", "never"],
+    // "react/jsx-sort-props": ["error"],
+    "react/jsx-no-bind": [1, {
+      "ignoreRefs": true
+    }]
+  }
+}

@@ -18,7 +18,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   tag: 'ion-button',
   styleUrls: {
     ios: 'button.ios.scss',
-    md: 'button.md.scss'
+    md: 'button.md.scss',
   },
   shadow: true,
 })
@@ -27,7 +27,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inToolbar = false;
   private inItem = false;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonButtonElement;
 
   /**
    * The color to use from your application's color palette.
@@ -39,7 +39,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * The type of button.
    */
-  @Prop({ mutable: true }) buttonType = 'button';
+  @Prop() buttonType = 'button';
 
   /**
    * If `true`, the user cannot interact with the button.
@@ -57,7 +57,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
    * a toolbar, where the default is `"clear"`.
    */
-  @Prop({ reflectToAttr: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
+  @Prop({ reflectToAttr: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
 
   /**
    * When using a router, it specifies the transition direction when navigating to
@@ -163,15 +163,15 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
         fakeButton.remove();
       }
     }
-  }
+  };
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   render() {
     const mode = getIonMode(this);
@@ -184,7 +184,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
         download: this.download,
         href,
         rel,
-        target
+        target,
       };
 
     let fill = this.fill;

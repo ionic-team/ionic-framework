@@ -19,8 +19,8 @@ describe('Datetime', () => {
       const dateTimeData: DatetimeData = {
         year: date.getFullYear(),
         month: date.getMonth() + 1,
-        day: date.getDate()
-      }
+        day: date.getDate(),
+      };
 
       const dayValue = getDateValue(dateTimeData, 'DD');
       const monthvalue = getDateValue(dateTimeData, 'MM');
@@ -40,7 +40,7 @@ describe('Datetime', () => {
         { expectedHourUTC: 12, input: `2019-11-02T12:08:06.601-00:00`, expectedOutput: `2019-11-02T%HOUR%:08:06.601Z` },
         { expectedHourUTC: 8, input: `1994-12-15T13:47:20.789+05:00`, expectedOutput: `1994-12-15T%HOUR%:47:20.789Z` },
         { expectedHourUTC: 18, input: `1994-12-15T13:47:20.789-05:00`, expectedOutput: `1994-12-15T%HOUR%:47:20.789Z` },
-        { expectedHourUTC: 9, input: `2019-02-14T09:00:00.000Z`, expectedOutput: `2019-02-14T%HOUR%:00:00.000Z` }
+        { expectedHourUTC: 9, input: `2019-02-14T09:00:00.000Z`, expectedOutput: `2019-02-14T%HOUR%:00:00.000Z` },
       ];
 
       dateStringTests.forEach(test => {
@@ -61,7 +61,7 @@ describe('Datetime', () => {
         { input: '2008-09-02', expectedOutput: '2008-09-02' },
         { input: '1995-02', expectedOutput: '1995-02' },
         { input: '1994-03-14', expectedOutput: '1994-03-14' },
-        { input: '9 01:47', expectedOutput: '09-01T01:47' }
+        { input: '9 01:47', expectedOutput: '09-01T01:47' },
       ];
 
       dateStringTests.forEach(test => {
@@ -72,7 +72,7 @@ describe('Datetime', () => {
 
     it('should default to today for null and undefined cases', () => {
       const today = new Date();
-      const todayString = renderDatetime('YYYY-MM-DD', { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() } )
+      const todayString = renderDatetime('YYYY-MM-DD', { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() } );
 
       const convertToLocalUndefined = getLocalDateTime(undefined);
       expect(convertToLocalUndefined.toISOString()).toContain(todayString);
@@ -101,6 +101,6 @@ describe('Datetime', () => {
   });
 });
 
-function padNumber(number: number, totalLength: number = 2): string {
+const padNumber = (number: number, totalLength = 2): string => {
   return number.toString().padStart(totalLength, '0');
-}
+};

@@ -4,7 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-infinite-scroll',
-  styleUrl: 'infinite-scroll.scss'
+  styleUrl: 'infinite-scroll.scss',
 })
 export class InfiniteScroll implements ComponentInterface {
 
@@ -14,7 +14,7 @@ export class InfiniteScroll implements ComponentInterface {
   private didFire = false;
   private isBusy = false;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonInfiniteScrollElement;
   @State() isLoading = false;
 
   /**
@@ -131,7 +131,7 @@ export class InfiniteScroll implements ComponentInterface {
     }
 
     return 4;
-  }
+  };
 
   /**
    * Call `complete()` within the `ionInfinite` output event handler when
@@ -223,7 +223,7 @@ export class InfiniteScroll implements ComponentInterface {
         class={{
           [mode]: true,
           'infinite-scroll-loading': this.isLoading,
-          'infinite-scroll-enabled': !disabled
+          'infinite-scroll-enabled': !disabled,
         }}
       />
     );

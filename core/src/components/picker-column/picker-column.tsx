@@ -12,8 +12,8 @@ import { clamp } from '../../utils/helpers';
   tag: 'ion-picker-column',
   styleUrls: {
     ios: 'picker-column.ios.scss',
-    md: 'picker-column.md.scss'
-  }
+    md: 'picker-column.md.scss',
+  },
 })
 export class PickerColumnCmp implements ComponentInterface {
 
@@ -32,7 +32,7 @@ export class PickerColumnCmp implements ComponentInterface {
   private tmrId: any;
   private noAnimate = true;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonPickerColumnElement;
 
   /**
    * Emitted when the selected value has changed
@@ -335,7 +335,9 @@ export class PickerColumnCmp implements ComponentInterface {
      * a value different than the value at
      * selectedIndex
      */
-    if (this.velocity !== 0) { return; }
+    if (this.velocity !== 0) {
+      return;
+    }
 
     const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
     if (this.col.prevSelected !== selectedIndex || forceRefresh) {
@@ -355,10 +357,10 @@ export class PickerColumnCmp implements ComponentInterface {
           [mode]: true,
           'picker-col': true,
           'picker-opts-left': this.col.align === 'left',
-          'picker-opts-right': this.col.align === 'right'
+          'picker-opts-right': this.col.align === 'right',
         }}
         style={{
-          'max-width': this.col.columnWidth
+          'max-width': this.col.columnWidth,
         }}
       >
         {col.prefix && (
@@ -371,7 +373,7 @@ export class PickerColumnCmp implements ComponentInterface {
           style={{ maxWidth: col.optionsWidth! }}
           ref={el => this.optsEl = el}
         >
-          { col.options.map((o, index) =>
+          {col.options.map((o, index) =>
             <Button
               type="button"
               class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}

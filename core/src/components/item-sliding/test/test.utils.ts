@@ -1,51 +1,47 @@
 // Opens a sliding item by simulating a drag event
 export const openItemSliding = async (id: string, page: any, rtl = false) => {
-  try {
-    const slidingItem = await page.$(id);
+  const slidingItem = await page.$(id);
 
-    // Simulate a drag
-    const boundingBox = await slidingItem.boundingBox();
-    const centerX = parseFloat(boundingBox.x + boundingBox.width / 2);
-    const centerY = parseFloat(boundingBox.y + boundingBox.height / 2);
+  // Simulate a drag
+  const boundingBox = await slidingItem.boundingBox();
+  const centerX = parseFloat(boundingBox.x + boundingBox.width / 2);
+  const centerY = parseFloat(boundingBox.y + boundingBox.height / 2);
 
-    // In LTR start the drag at the center, move halfway in between the
-    // center and 0, then end at 0
-    //
-    //  0                                boundingBox.width
-    //  |---------|---------|---------|---------|
-    // endX     halfX    centerX
+  // In LTR start the drag at the center, move halfway in between the
+  // center and 0, then end at 0
+  //
+  //  0                                boundingBox.width
+  //  |---------|---------|---------|---------|
+  // endX     halfX    centerX
 
-    let halfX = centerX / 2;
-    let endX = 0;
+  let halfX = centerX / 2;
+  let endX = 0;
 
-    // In RTL start at the center, move halfway in between the center and
-    // the total width, then end at the total width
-    //
-    //  0                                boundingBox.width
-    //  |---------|---------|---------|---------|
-    //                   centerX    halfX      endX
+  // In RTL start at the center, move halfway in between the center and
+  // the total width, then end at the total width
+  //
+  //  0                                boundingBox.width
+  //  |---------|---------|---------|---------|
+  //                   centerX    halfX      endX
 
-    if (rtl) {
-      halfX = centerX + (centerX / 2);
-      endX = boundingBox.width;
-    }
-
-    // Start in the center of the item
-    await page.mouse.move(centerX, centerY);
-    await page.mouse.down();
-
-    // Move halfway first
-    await page.mouse.move(halfX, centerY);
-
-    // Move all of the way to the end
-    await page.mouse.move(endX, centerY);
-    await page.mouse.up();
-
-    // Add a timeout to make sure the item is open
-    await page.waitFor(2000);
-  } catch (err) {
-    throw err;
+  if (rtl) {
+    halfX = centerX + (centerX / 2);
+    endX = boundingBox.width;
   }
+
+  // Start in the center of the item
+  await page.mouse.move(centerX, centerY);
+  await page.mouse.down();
+
+  // Move halfway first
+  await page.mouse.move(halfX, centerY);
+
+  // Move all of the way to the end
+  await page.mouse.move(endX, centerY);
+  await page.mouse.up();
+
+  // Add a timeout to make sure the item is open
+  await page.waitFor(2000);
 };
 
 // Close a sliding item after taking a screenshot

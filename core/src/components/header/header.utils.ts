@@ -19,7 +19,9 @@ interface ToolbarIndex {
 
 export const cloneElement = (tagName: string) => {
   const getCachedEl = document.querySelector(`${tagName}.ion-cloned-element`);
-  if (getCachedEl !== null) { return getCachedEl; }
+  if (getCachedEl !== null) {
+    return getCachedEl;
+  }
 
   const clonedEl = document.createElement(tagName);
   clonedEl.classList.add('ion-cloned-element');
@@ -30,7 +32,9 @@ export const cloneElement = (tagName: string) => {
 };
 
 export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderIndex | undefined => {
-  if (!headerEl) { return; }
+  if (!headerEl) {
+    return;
+  }
 
   const toolbars = headerEl.querySelectorAll('ion-toolbar');
 
@@ -43,9 +47,9 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
         background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
         ionTitleEl,
         innerTitleEl: (ionTitleEl) ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
-        ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')) || []
+        ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')) || [],
       } as ToolbarIndex;
-    }) || [[]]
+    }) || [[]],
   } as HeaderIndex;
 };
 
@@ -134,7 +138,9 @@ export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, trans
   toolbars.forEach(toolbar => {
     const ionTitle = toolbar.ionTitleEl;
     const titleDiv = toolbar.innerTitleEl;
-    if (!ionTitle || ionTitle.size !== 'large') { return; }
+    if (!ionTitle || ionTitle.size !== 'large') {
+      return;
+    }
 
     titleDiv.style.transformOrigin = 'left center';
     titleDiv.style.transition = (transition) ? TRANSITION : '';

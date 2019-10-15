@@ -16,9 +16,9 @@ import { SelectCompareFn } from './select-interface';
   tag: 'ion-select',
   styleUrls: {
     ios: 'select.ios.scss',
-    md: 'select.md.scss'
+    md: 'select.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Select implements ComponentInterface {
 
@@ -219,19 +219,21 @@ export class Select implements ComponentInterface {
     }
     const childOpts = this.childOpts;
     switch (this.interface) {
-      case 'action-sheet':
-        overlay.buttons = this.createActionSheetButtons(childOpts);
-        break;
-      case 'popover':
-        const popover = overlay.querySelector('ion-select-popover');
-        if (popover) {
-          popover.options = this.createPopoverOptions(childOpts);
-        }
-        break;
-      case 'alert':
-        const inputType = (this.multiple ? 'checkbox' : 'radio');
-        overlay.inputs = this.createAlertInputs(childOpts, inputType);
-        break;
+    case 'action-sheet':
+      overlay.buttons = this.createActionSheetButtons(childOpts);
+      break;
+    case 'popover': {
+      const popover = overlay.querySelector('ion-select-popover');
+      if (popover) {
+        popover.options = this.createPopoverOptions(childOpts);
+      }
+      break;
+    }
+    case 'alert': {
+      const inputType = (this.multiple ? 'checkbox' : 'radio');
+      overlay.inputs = this.createAlertInputs(childOpts, inputType);
+      break;
+    }
     }
   }
 
@@ -242,7 +244,7 @@ export class Select implements ComponentInterface {
         text: option.textContent,
         handler: () => {
           this.value = getOptionValue(option);
-        }
+        },
       } as ActionSheetButton;
     });
 
@@ -252,7 +254,7 @@ export class Select implements ComponentInterface {
       role: 'cancel',
       handler: () => {
         this.ionCancel.emit();
-      }
+      },
     });
 
     return actionSheetButtons;
@@ -265,7 +267,7 @@ export class Select implements ComponentInterface {
         label: o.textContent,
         value: getOptionValue(o),
         checked: o.selected,
-        disabled: o.disabled
+        disabled: o.disabled,
       } as AlertInput;
     });
   }
@@ -281,7 +283,7 @@ export class Select implements ComponentInterface {
         handler: () => {
           this.value = value;
           this.close();
-        }
+        },
       } as SelectPopoverOption;
     });
   }
@@ -302,8 +304,8 @@ export class Select implements ComponentInterface {
         subHeader: interfaceOptions.subHeader,
         message: interfaceOptions.message,
         value: this.value,
-        options: this.createPopoverOptions(this.childOpts)
-      }
+        options: this.createPopoverOptions(this.childOpts),
+      },
     };
     return popoverController.create(popoverOpts);
   }
@@ -317,7 +319,7 @@ export class Select implements ComponentInterface {
       ...interfaceOptions,
 
       buttons: this.createActionSheetButtons(this.childOpts),
-      cssClass: ['select-action-sheet', interfaceOptions.cssClass]
+      cssClass: ['select-action-sheet', interfaceOptions.cssClass],
     };
     return actionSheetController.create(actionSheetOpts);
   }
@@ -342,17 +344,17 @@ export class Select implements ComponentInterface {
           role: 'cancel',
           handler: () => {
             this.ionCancel.emit();
-          }
+          },
         },
         {
           text: this.okText,
           handler: (selectedValues: any) => {
             this.value = selectedValues;
-          }
-        }
+          },
+        },
       ],
       cssClass: ['select-alert', interfaceOptions.cssClass,
-                 (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
+        (this.multiple ? 'multiple-select-alert' : 'single-select-alert')],
     };
     return alertController.create(alertOpts);
   }
@@ -418,21 +420,21 @@ export class Select implements ComponentInterface {
       'has-placeholder': this.placeholder != null,
       'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
-      'select-disabled': this.disabled
+      'select-disabled': this.disabled,
     });
   }
 
   private onClick = (ev: UIEvent) => {
     this.setFocus();
     this.open(ev);
-  }
+  };
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   render() {
     const { placeholder, name, disabled, isExpanded, value, el } = this;
@@ -454,7 +456,7 @@ export class Select implements ComponentInterface {
 
     const selectTextClasses: CssClassMap = {
       'select-text': true,
-      'select-placeholder': addPlaceholderClass
+      'select-placeholder': addPlaceholderClass,
     };
 
     return (

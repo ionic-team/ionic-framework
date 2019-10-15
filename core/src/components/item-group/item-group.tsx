@@ -6,8 +6,8 @@ import { getIonMode } from '../../global/ionic-global';
   tag: 'ion-item-group',
   styleUrls: {
     ios: 'item-group.ios.scss',
-    md: 'item-group.md.scss'
-  }
+    md: 'item-group.md.scss',
+  },
 })
 export class ItemGroup implements ComponentInterface {
 
@@ -22,7 +22,7 @@ export class ItemGroup implements ComponentInterface {
           // Used internally for styling
           [`item-group-${mode}`]: true,
 
-          'item': true
+          'item': true,
         }}
       >
       </Host>

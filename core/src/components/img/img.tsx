@@ -5,13 +5,13 @@ import { getIonMode } from '../../global/ionic-global';
 @Component({
   tag: 'ion-img',
   styleUrl: 'img.scss',
-  shadow: true
+  shadow: true,
 })
 export class Img implements ComponentInterface {
 
   private io?: IntersectionObserver;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonImgElement;
 
   @State() loadSrc?: string;
 
@@ -77,11 +77,11 @@ export class Img implements ComponentInterface {
 
   private onLoad = () => {
     this.ionImgDidLoad.emit();
-  }
+  };
 
   private onError = () => {
     this.ionError.emit();
-  }
+  };
 
   private removeIO() {
     if (this.io) {

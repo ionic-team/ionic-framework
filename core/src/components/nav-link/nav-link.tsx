@@ -5,10 +5,10 @@ import { ComponentProps, NavComponent, RouterDirection } from '../../interface';
 import { navLink } from './nav-link-utils';
 
 @Component({
-  tag: 'ion-nav-link'
+  tag: 'ion-nav-link',
 })
 export class NavLink implements ComponentInterface {
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonNavLinkElement;
 
   /**
    * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
@@ -27,7 +27,7 @@ export class NavLink implements ComponentInterface {
 
   private onClick = () => {
     return navLink(this.el, this.routerDirection, this.component, this.componentProps);
-  }
+  };
 
   render() {
     return (

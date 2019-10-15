@@ -10,7 +10,7 @@ import { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../..
 @Component({
   tag: 'ion-tabs',
   styleUrl: 'tabs.scss',
-  shadow: true
+  shadow: true,
 })
 export class Tabs implements NavOutlet {
 
@@ -177,7 +177,7 @@ export class Tabs implements NavOutlet {
     } else {
       this.select(tab);
     }
-  }
+  };
 
   render() {
     return (

@@ -50,36 +50,36 @@ describe('ionic-conference-app', () => {
     win = mockWindow();
   });
 
-  function conferenceAppRouting() {
-  const p2 = mockRouteElement(win, '/', 'tab-schedule');
-  const p3 = mockRouteElement(win, '/', 'PAGE-SCHEDULE');
-  p2.appendChild(p3);
+  const conferenceAppRouting = () => {
+    const p2 = mockRouteElement(win, '/', 'tab-schedule');
+    const p3 = mockRouteElement(win, '/', 'PAGE-SCHEDULE');
+    p2.appendChild(p3);
 
-  const p4 = mockRouteElement(win, '/speaker', 'tab-speaker');
-  const p5 = mockRouteElement(win, '/', 'page-speaker-list');
-  p4.appendChild(p5);
+    const p4 = mockRouteElement(win, '/speaker', 'tab-speaker');
+    const p5 = mockRouteElement(win, '/', 'page-speaker-list');
+    p4.appendChild(p5);
 
-  const p6 = mockRouteElement(win, '/map', 'page-map');
-  const p7 = mockRouteElement(win, '/about', 'page-about');
+    const p6 = mockRouteElement(win, '/map', 'page-map');
+    const p7 = mockRouteElement(win, '/about', 'page-about');
 
-  const p1 = mockRouteElement(win, '/', 'page-tabs');
-  p1.appendChild(p2);
-  p1.appendChild(p4);
-  p1.appendChild(p6);
-  p1.appendChild(p7);
+    const p1 = mockRouteElement(win, '/', 'page-tabs');
+    p1.appendChild(p2);
+    p1.appendChild(p4);
+    p1.appendChild(p6);
+    p1.appendChild(p7);
 
-  const p8 = mockRouteElement(win, '/tutorial', 'page-tutorial');
-  const container = win.document.createElement('div');
-  container.appendChild(p1);
-  container.appendChild(p8);
-  return container;
-}
+    const p8 = mockRouteElement(win, '/tutorial', 'page-tutorial');
+    const container = win.document.createElement('div');
+    container.appendChild(p1);
+    container.appendChild(p8);
+    return container;
+  };
 });
 
-export function getRouteIDs(path: string, routes: RouteChain[]): string[] {
+export const getRouteIDs = (path: string, routes: RouteChain[]): string[] => {
   return routerPathToChain(parsePath(path), routes)!.map(r => r.id);
-}
+};
 
-export function getRoutePath(ids: RouteID[], routes: RouteChain[]): string {
+export const getRoutePath = (ids: RouteID[], routes: RouteChain[]): string =>{
   return generatePath(chainToPath(routerIDsToChain(ids, routes)!)!);
-}
+};

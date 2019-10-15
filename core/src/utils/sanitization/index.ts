@@ -5,7 +5,9 @@
 
 export const sanitizeDOMString = (untrustedString: string | undefined): string | undefined => {
   try {
-    if (typeof untrustedString !== 'string' || untrustedString === '') { return untrustedString; }
+    if (typeof untrustedString !== 'string' || untrustedString === '') {
+      return untrustedString;
+    }
 
     /**
      * Create a document fragment
@@ -81,7 +83,9 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
  */
 const sanitizeElement = (element: any) => {
   // IE uses childNodes, so ignore nodes that are not elements
-  if (element.nodeType && element.nodeType !== 1) { return; }
+  if (element.nodeType && element.nodeType !== 1) {
+    return;
+  }
 
   for (let i = element.attributes.length - 1; i >= 0; i--) {
     const attribute = element.attributes.item(i);

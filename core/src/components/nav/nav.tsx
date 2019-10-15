@@ -13,7 +13,7 @@ import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToVie
 @Component({
   tag: 'ion-nav',
   styleUrl: 'nav.scss',
-  shadow: true
+  shadow: true,
 })
 export class Nav implements NavOutlet {
 
@@ -26,7 +26,7 @@ export class Nav implements NavOutlet {
   private views: ViewController[] = [];
   private gesture?: Gesture;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonNavElement;
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -157,7 +157,7 @@ export class Nav implements NavOutlet {
       {
         insertStart: -1,
         insertViews: [{ page: component, params: componentProps }],
-        opts
+        opts,
       },
       done
     );
@@ -185,7 +185,7 @@ export class Nav implements NavOutlet {
       {
         insertStart: insertIndex,
         insertViews: [{ page: component, params: componentProps }],
-        opts
+        opts,
       },
       done
     );
@@ -212,7 +212,7 @@ export class Nav implements NavOutlet {
       {
         insertStart: insertIndex,
         insertViews: insertComponents,
-        opts
+        opts,
       },
       done
     );
@@ -231,7 +231,7 @@ export class Nav implements NavOutlet {
       {
         removeStart: -1,
         removeCount: 1,
-        opts
+        opts,
       },
       done
     );
@@ -253,7 +253,7 @@ export class Nav implements NavOutlet {
     const tiConfig: TransitionInstruction = {
       removeStart: -1,
       removeCount: -1,
-      opts
+      opts,
     };
     if (typeof indexOrViewCtrl === 'object' && (indexOrViewCtrl as ViewController).component) {
       tiConfig.removeView = indexOrViewCtrl;
@@ -279,7 +279,7 @@ export class Nav implements NavOutlet {
       {
         removeStart: 1,
         removeCount: -1,
-        opts
+        opts,
       },
       done
     );
@@ -304,7 +304,7 @@ export class Nav implements NavOutlet {
       {
         removeStart: startIndex,
         removeCount,
-        opts
+        opts,
       },
       done
     );
@@ -361,7 +361,7 @@ export class Nav implements NavOutlet {
         insertViews: views,
         removeStart: 0,
         removeCount: -1,
-        opts
+        opts,
       },
       done
     );
@@ -378,7 +378,7 @@ export class Nav implements NavOutlet {
     if (matches(active, id, params)) {
       return Promise.resolve({
         changed: false,
-        element: active.element
+        element: active.element,
       });
     }
 
@@ -396,10 +396,10 @@ export class Nav implements NavOutlet {
           markVisible: async () => {
             mark();
             await finish;
-          }
+          },
         });
         return p;
-      }
+      },
     };
 
     if (direction === 'root') {
@@ -410,7 +410,7 @@ export class Nav implements NavOutlet {
       if (viewController) {
         finish = this.popTo(viewController, {
           ...commonOpts,
-          direction: 'back'
+          direction: 'back',
         });
       } else if (direction === 'forward') {
         finish = this.push(id, params, commonOpts);
@@ -418,7 +418,7 @@ export class Nav implements NavOutlet {
         finish = this.setRoot(id, params, {
           ...commonOpts,
           direction: 'back',
-          animated: true
+          animated: true,
         });
       }
     }
@@ -431,10 +431,10 @@ export class Nav implements NavOutlet {
     const active = this.getActiveSync();
     return active
       ? {
-          id: active.element!.tagName,
-          params: active.params,
-          element: active.element
-        }
+        id: active.element!.tagName,
+        params: active.params,
+        element: active.element,
+      }
       : undefined;
   }
 
@@ -626,13 +626,13 @@ export class Nav implements NavOutlet {
       const result = requiresTransition
         ? await this.transition(enteringView!, leavingView, ti)
         : {
-            // transition is not required, so we are already done!
-            // they're inserting/removing the views somewhere in the middle or
-            // beginning, so visually nothing needs to animate/transition
-            // resolve immediately because there's no animation that's happening
-            hasCompleted: true,
-            requiresTransition: false
-          };
+          // transition is not required, so we are already done!
+          // they're inserting/removing the views somewhere in the middle or
+          // beginning, so visually nothing needs to animate/transition
+          // resolve immediately because there's no animation that's happening
+          hasCompleted: true,
+          requiresTransition: false,
+        };
 
       this.success(result, ti);
       this.ionNavDidChange.emit();
@@ -841,7 +841,7 @@ export class Nav implements NavOutlet {
       enteringEl,
       leavingEl,
 
-      ...opts
+      ...opts,
     };
     const { hasCompleted } = await transition(animationOpts);
     return this.transitionFinish(hasCompleted, enteringView, leavingView, opts);
@@ -863,7 +863,7 @@ export class Nav implements NavOutlet {
       requiresTransition: true,
       enteringView,
       leavingView,
-      direction: opts.direction
+      direction: opts.direction,
     };
   }
 
@@ -950,8 +950,8 @@ export class Nav implements NavOutlet {
       removeCount: 1,
       opts: {
         direction: 'back',
-        progressAnimation: true
-      }
+        progressAnimation: true,
+      },
     }, undefined);
   }
 

@@ -95,7 +95,7 @@ const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOpt
 
   return {
     hasCompleted: didComplete,
-    animation: trans
+    animation: trans,
   };
 };
 
@@ -109,21 +109,22 @@ const noAnimation = async (opts: TransitionOptions): Promise<TransitionResult> =
   fireDidEvents(enteringEl, leavingEl);
 
   return {
-    hasCompleted: true
+    hasCompleted: true,
   };
 };
 
 const waitForReady = async (opts: TransitionOptions, defaultDeep: boolean) => {
   const deep = opts.deepWait !== undefined ? opts.deepWait : defaultDeep;
-  const promises = deep ? [
-    deepReady(opts.enteringEl),
-    deepReady(opts.leavingEl),
-  ] : [
+  await Promise.all(deep
+    ? [
+      deepReady(opts.enteringEl),
+      deepReady(opts.leavingEl),
+    ]
+    : [
       shallowReady(opts.enteringEl),
       shallowReady(opts.leavingEl),
-    ];
-
-  await Promise.all(promises);
+    ]
+  );
   await notifyViewReady(opts.viewIsReady, opts.enteringEl);
 };
 

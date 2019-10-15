@@ -7,7 +7,7 @@ import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, g
 
 @Component({
   tag: 'ion-virtual-scroll',
-  styleUrl: 'virtual-scroll.scss'
+  styleUrl: 'virtual-scroll.scss',
 })
 export class VirtualScroll implements ComponentInterface {
 
@@ -241,7 +241,7 @@ export class VirtualScroll implements ComponentInterface {
 
   private onScroll = () => {
     this.updateVirtualScroll();
-  }
+  };
 
   private updateVirtualScroll() {
     // do nothing if virtual-scroll is disabled
@@ -415,9 +415,9 @@ export class VirtualScroll implements ComponentInterface {
   private renderVirtualNode(node: VirtualNode) {
     const { type, value, index } = node.cell;
     switch (type) {
-      case CELL_TYPE_ITEM: return this.renderItem!(value, index);
-      case CELL_TYPE_HEADER: return this.renderHeader!(value, index);
-      case CELL_TYPE_FOOTER: return this.renderFooter!(value, index);
+    case CELL_TYPE_ITEM: return this.renderItem!(value, index);
+    case CELL_TYPE_HEADER: return this.renderHeader!(value, index);
+    case CELL_TYPE_FOOTER: return this.renderFooter!(value, index);
     }
   }
 
@@ -425,7 +425,7 @@ export class VirtualScroll implements ComponentInterface {
     return (
       <Host
         style={{
-          height: `${this.totalHeight}px`
+          height: `${this.totalHeight}px`,
         }}
       >
         {this.renderItem && (
@@ -454,9 +454,9 @@ const VirtualProxy: FunctionalComponent<{dom: VirtualNode[]}> = ({ dom }, childr
         class: classes,
         style: {
           ...vattrs.style,
-          transform: `translate3d(0,${node.top}px,0)`
-        }
-      }
+          transform: `translate3d(0,${node.top}px,0)`,
+        },
+      },
     };
   });
 };

@@ -18,9 +18,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
   tag: 'ion-toast',
   styleUrls: {
     ios: 'toast.ios.scss',
-    md: 'toast.md.scss'
+    md: 'toast.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Toast implements ComponentInterface, OverlayInterface {
 
@@ -221,12 +221,17 @@ export class Toast implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     const buttonGroupsClasses = {
       'toast-button-group': true,
-      [`toast-button-group-${side}`]: true
+      [`toast-button-group-${side}`]: true,
     };
     return (
       <div class={buttonGroupsClasses}>
         {buttons.map(b =>
-          <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)}>
+          <button
+            type="button"
+            class={buttonClass(b)}
+            tabIndex={0}
+            onClick={() => this.buttonClick(b)}
+          >
             <div class="toast-button-inner">
               {b.icon &&
                 <ion-icon
@@ -250,7 +255,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     const wrapperClass = {
       'toast-wrapper': true,
-      [`toast-${this.position}`]: true
+      [`toast-${this.position}`]: true,
     };
 
     return (
@@ -263,7 +268,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
           ...createColorClasses(this.color),
           ...getClassMap(this.cssClass),
-          'toast-translucent': this.translucent
+          'toast-translucent': this.translucent,
         }}
       >
         <div class={wrapperClass}>
@@ -272,11 +277,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
             <div class="toast-content">
               {this.header !== undefined &&
-                <div class="toast-header">{this.header}</div>
-              }
+                <div class="toast-header">{this.header}</div>}
               {this.message !== undefined &&
-                <div class="toast-message" innerHTML={sanitizeDOMString(this.message)}></div>
-              }
+                <div class="toast-message" innerHTML={sanitizeDOMString(this.message)}></div>}
             </div>
 
             {this.renderButtons(endButtons, 'end')}
@@ -294,6 +297,6 @@ const buttonClass = (button: ToastButton): CssClassMap => {
     [`toast-button-${button.role}`]: button.role !== undefined,
     'ion-focusable': true,
     'ion-activatable': true,
-    ...getClassMap(button.cssClass)
+    ...getClassMap(button.cssClass),
   };
 };

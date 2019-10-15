@@ -28,7 +28,7 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
 
 @Component({
   tag: 'ion-item-sliding',
-  styleUrl: 'item-sliding.scss'
+  styleUrl: 'item-sliding.scss',
 })
 export class ItemSliding implements ComponentInterface {
 
@@ -122,10 +122,14 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async open(side: Side | undefined) {
-    if (this.item === null) { return; }
+    if (this.item === null) {
+      return;
+    }
 
     const optionsToOpen = this.getOptions(side);
-    if (!optionsToOpen) { return; }
+    if (!optionsToOpen) {
+      return;
+    }
 
     /**
      * If side is not set, we need to infer the side
@@ -145,8 +149,12 @@ export class ItemSliding implements ComponentInterface {
      * If a side is open and a user tries to
      * re-open the same side, we should not do anything
      */
-    if (isStartOpen && optionsToOpen === this.leftOptions) { return; }
-    if (isEndOpen && optionsToOpen === this.rightOptions) { return; }
+    if (isStartOpen && optionsToOpen === this.leftOptions) {
+      return;
+    }
+    if (isEndOpen && optionsToOpen === this.rightOptions) {
+      return;
+    }
 
     this.closeOpened();
 
@@ -184,7 +192,7 @@ export class ItemSliding implements ComponentInterface {
     return false;
   }
 
-   /**
+  /**
     * Given an optional side, return the ion-item-options element.
     *
     * @param side This side of the options to get. If a side is not provided it will
@@ -259,11 +267,11 @@ export class ItemSliding implements ComponentInterface {
     let openAmount = this.initialOpenAmount - gesture.deltaX;
 
     switch (this.sides) {
-      case ItemSide.End: openAmount = Math.max(0, openAmount); break;
-      case ItemSide.Start: openAmount = Math.min(0, openAmount); break;
-      case ItemSide.Both: break;
-      case ItemSide.None: return;
-      default: console.warn('invalid ItemSideFlags value', this.sides); break;
+    case ItemSide.End: openAmount = Math.max(0, openAmount); break;
+    case ItemSide.Start: openAmount = Math.min(0, openAmount); break;
+    case ItemSide.Both: break;
+    case ItemSide.None: return;
+    default: console.warn('invalid ItemSideFlags value', this.sides); break;
     }
 
     let optsWidth;
@@ -360,7 +368,7 @@ export class ItemSliding implements ComponentInterface {
     style.transform = `translate3d(${-openAmount}px,0,0)`;
     this.ionDrag.emit({
       amount: openAmount,
-      ratio: this.getSlidingRatioSync()
+      ratio: this.getSlidingRatioSync(),
     });
   }
 
@@ -384,7 +392,7 @@ export class ItemSliding implements ComponentInterface {
           'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
           'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
           'item-sliding-active-swipe-end': (this.state & SlidingState.SwipeEnd) !== 0,
-          'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0
+          'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0,
         }}
       >
       </Host>

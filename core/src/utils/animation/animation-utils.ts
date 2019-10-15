@@ -41,14 +41,14 @@ export const generateKeyframeRules = (keyframes: any[] = []) => {
   return keyframes.map(keyframe => {
     const offset = keyframe.offset;
 
-    const frameString = [];
-    for (const property in keyframe) {
-      if (keyframe.hasOwnProperty(property) && property !== 'offset') {
-        frameString.push(`${property}: ${keyframe[property]};`);
-      }
-    }
+    const frameString = Object.keys(keyframe)
+      .filter(property => property !== 'offset')
+      .map(property => {
+        return `${property}: ${keyframe[property]};`;
+      })
+      .join(' ');
 
-    return `${offset * 100}% { ${frameString.join(' ')} }`;
+    return `${offset * 100}% { ${frameString} }`;
   }).join(' ');
 };
 

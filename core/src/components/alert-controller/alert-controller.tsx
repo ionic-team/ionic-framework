@@ -7,7 +7,7 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
  * @deprecated Use the `alertController` exported from core.
  */
 @Component({
-  tag: 'ion-alert-controller'
+  tag: 'ion-alert-controller',
 })
 export class AlertController implements ComponentInterface, OverlayController {
 

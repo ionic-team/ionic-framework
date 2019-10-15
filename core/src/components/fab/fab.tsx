@@ -5,11 +5,11 @@ import { getIonMode } from '../../global/ionic-global';
 @Component({
   tag: 'ion-fab',
   styleUrl: 'fab.scss',
-  shadow: true
+  shadow: true,
 })
 export class Fab implements ComponentInterface {
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonFabElement;
 
   /**
    * Where to align the fab horizontally in the viewport.
@@ -70,7 +70,7 @@ export class Fab implements ComponentInterface {
     if (hasList && !isButtonDisabled) {
       this.activated = !this.activated;
     }
-  }
+  };
 
   render() {
     const { horizontal, vertical, edge } = this;
@@ -82,7 +82,7 @@ export class Fab implements ComponentInterface {
           [mode]: true,
           [`fab-horizontal-${horizontal}`]: horizontal !== undefined,
           [`fab-vertical-${vertical}`]: vertical !== undefined,
-          'fab-edge': edge
+          'fab-edge': edge,
         }}
       >
         <slot></slot>

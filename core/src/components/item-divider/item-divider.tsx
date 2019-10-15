@@ -15,13 +15,13 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-item-divider',
   styleUrls: {
     ios: 'item-divider.ios.scss',
-    md: 'item-divider.md.scss'
+    md: 'item-divider.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class ItemDivider implements ComponentInterface {
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonItemDividerElement;
 
   /**
    * The color to use from your application's color palette.

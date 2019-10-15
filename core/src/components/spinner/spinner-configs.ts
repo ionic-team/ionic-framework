@@ -14,9 +14,9 @@ const spinners = {
           'top': `${ 9 * Math.sin(angle) }px`,
           'left': `${ 9 * Math.cos(angle) }px`,
           'animation-delay': animationDelay,
-        }
+        },
       };
-    }
+    },
   },
 
   'circles': {
@@ -32,9 +32,9 @@ const spinners = {
           'top': `${ 9 * Math.sin(angle)}px`,
           'left': `${ 9 * Math.cos(angle) }px`,
           'animation-delay': animationDelay,
-        }
+        },
       };
-    }
+    },
   },
 
   'circular': {
@@ -49,9 +49,9 @@ const spinners = {
         fill: 'none',
         viewBox: '22 22 44 44',
         transform: 'translate(0,0)',
-        style: {}
+        style: {},
       };
-    }
+    },
   },
 
   'crescent': {
@@ -60,9 +60,9 @@ const spinners = {
     fn: () => {
       return {
         r: 26,
-        style: {}
+        style: {},
       };
-    }
+    },
   },
 
   'dots': {
@@ -75,9 +75,9 @@ const spinners = {
         style: {
           'left': `${ 9 - (9 * index)}px`,
           'animation-delay': animationDelay,
-        }
+        },
       };
-    }
+    },
   },
 
   'lines': {
@@ -93,9 +93,9 @@ const spinners = {
         style: {
           'transform': transform,
           'animation-delay': animationDelay,
-        }
+        },
       };
-    }
+    },
   },
 
   'lines-small': {
@@ -110,10 +110,10 @@ const spinners = {
         style: {
           'transform': transform,
           'animation-delay': animationDelay,
-        }
+        },
       };
-    }
-  }
+    },
+  },
 
 };
 

@@ -11,9 +11,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-card-title',
   styleUrls: {
     ios: 'card-title.ios.scss',
-    md: 'card-title.md.scss'
+    md: 'card-title.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class CardTitle implements ComponentInterface {
   /**
@@ -32,7 +32,7 @@ export class CardTitle implements ComponentInterface {
         class={{
           ...createColorClasses(this.color),
           'ion-inherit-color': true,
-          [mode]: true
+          [mode]: true,
         }}
       >
         <slot></slot>

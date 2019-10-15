@@ -7,7 +7,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-router-link',
   styleUrl: 'router-link.scss',
-  shadow: true
+  shadow: true,
 })
 export class RouterLink implements ComponentInterface {
 
@@ -45,14 +45,14 @@ export class RouterLink implements ComponentInterface {
 
   private onClick = (ev: Event) => {
     openURL(this.href, ev, this.routerDirection);
-  }
+  };
 
   render() {
     const mode = getIonMode(this);
     const attrs = {
       href: this.href,
       rel: this.rel,
-      target: this.target
+      target: this.target,
     };
     return (
       <Host
@@ -60,7 +60,7 @@ export class RouterLink implements ComponentInterface {
         class={{
           ...createColorClasses(this.color),
           [mode]: true,
-          'ion-activatable': true
+          'ion-activatable': true,
         }}
       >
         <a {...attrs}>

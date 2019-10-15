@@ -5,7 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 @Component({
   tag: 'ion-thumbnail',
   styleUrl: 'thumbnail.scss',
-  shadow: true
+  shadow: true,
 })
 export class Thumbnail implements ComponentInterface {
 

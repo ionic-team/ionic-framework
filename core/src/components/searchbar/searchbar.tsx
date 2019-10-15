@@ -14,9 +14,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-searchbar',
   styleUrls: {
     ios: 'searchbar.ios.scss',
-    md: 'searchbar.md.scss'
+    md: 'searchbar.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Searchbar implements ComponentInterface {
 
@@ -197,7 +197,7 @@ export class Searchbar implements ComponentInterface {
 
   private emitStyle() {
     this.ionStyle.emit({
-      'searchbar': true
+      'searchbar': true,
     });
   }
 
@@ -240,7 +240,7 @@ export class Searchbar implements ComponentInterface {
         this.ionInput.emit();
       }
     }, 16 * 4);
-  }
+  };
 
   /**
    * Clears the input field and tells the input to blur since
@@ -258,7 +258,7 @@ export class Searchbar implements ComponentInterface {
     if (this.nativeInput) {
       this.nativeInput.blur();
     }
-  }
+  };
 
   /**
    * Update the Searchbar input value when the input changes
@@ -269,7 +269,7 @@ export class Searchbar implements ComponentInterface {
       this.value = input.value;
     }
     this.ionInput.emit(ev as KeyboardEvent);
-  }
+  };
 
   /**
    * Sets the Searchbar to not focused and checks if it should align left
@@ -279,7 +279,7 @@ export class Searchbar implements ComponentInterface {
     this.focused = false;
     this.ionBlur.emit();
     this.positionElements();
-  }
+  };
 
   /**
    * Sets the Searchbar to focused and active on input focus.
@@ -288,7 +288,7 @@ export class Searchbar implements ComponentInterface {
     this.focused = true;
     this.ionFocus.emit();
     this.positionElements();
-  }
+  };
 
   /**
    * Positions the input search icon, placeholder, and the cancel button
@@ -425,10 +425,9 @@ export class Searchbar implements ComponentInterface {
         class="searchbar-cancel-button"
       >
         <div>
-          { mode === 'md'
+          {mode === 'md'
             ? <ion-icon aria-hidden="true" mode={mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
-            : this.cancelButtonText
-          }
+            : this.cancelButtonText}
         </div>
       </button>
     );
@@ -446,7 +445,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-has-value': this.hasValue(),
           'searchbar-left-aligned': this.shouldAlignLeft,
           'searchbar-has-focus': this.focused,
-          'searchbar-should-show-cancel': this.shouldShowCancelButton()
+          'searchbar-should-show-cancel': this.shouldShowCancelButton(),
         }}
       >
 

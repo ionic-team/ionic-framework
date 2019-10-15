@@ -60,7 +60,7 @@ describe('generatePath', () => {
       'path/to',
       'page',
       'number-TWO',
-      ''
+      '',
     ];
     expect(generatePath(stack)).toEqual('/path/to/page/number-TWO');
 
@@ -237,17 +237,17 @@ describe('writePath', () => {
   });
 });
 
-function mockHistory(): History {
+const mockHistory = (): History => {
   return {
     replaceState: jest.fn(),
     pushState: jest.fn(),
     length: 0,
   } as any;
-}
+};
 
-function mockLocation(pathname: string, hash: string): Location {
+const mockLocation = (pathname: string, hash: string): Location => {
   return {
     pathname,
-    hash
+    hash,
   } as Location;
-}
+};

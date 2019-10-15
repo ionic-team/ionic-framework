@@ -5,7 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 @Component({
   tag: 'ion-row',
   styleUrl: 'row.scss',
-  shadow: true
+  shadow: true,
 })
 export class Row implements ComponentInterface {
 

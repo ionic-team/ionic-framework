@@ -7,7 +7,7 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
  * @deprecated Use the `modalController` exported from core.
  */
 @Component({
-  tag: 'ion-modal-controller'
+  tag: 'ion-modal-controller',
 })
 export class ModalController implements ComponentInterface, OverlayController {
 

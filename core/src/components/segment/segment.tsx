@@ -11,15 +11,15 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-segment',
   styleUrls: {
     ios: 'segment.ios.scss',
-    md: 'segment.md.scss'
+    md: 'segment.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Segment implements ComponentInterface {
 
   private didInit = false;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonSegmentElement;
 
   /**
    * The color to use from your application's color palette.
@@ -85,7 +85,7 @@ export class Segment implements ComponentInterface {
 
   private emitStyle() {
     this.ionStyle.emit({
-      'segment': true
+      'segment': true,
     });
   }
 
@@ -108,7 +108,7 @@ export class Segment implements ComponentInterface {
           ...createColorClasses(this.color),
           [mode]: true,
           'segment-disabled': this.disabled,
-          'segment-scrollable': this.scrollable
+          'segment-scrollable': this.scrollable,
         }}
       >
       </Host>

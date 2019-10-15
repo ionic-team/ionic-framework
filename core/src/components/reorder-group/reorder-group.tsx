@@ -12,7 +12,7 @@ const enum ReorderGroupState {
 
 @Component({
   tag: 'ion-reorder-group',
-  styleUrl: 'reorder-group.scss'
+  styleUrl: 'reorder-group.scss',
 })
 export class ReorderGroup implements ComponentInterface {
 
@@ -32,7 +32,7 @@ export class ReorderGroup implements ComponentInterface {
 
   @State() state = ReorderGroupState.Idle;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonReorderGroupElement;
 
   /**
    * If `true`, the reorder will be hidden.
@@ -204,7 +204,7 @@ export class ReorderGroup implements ComponentInterface {
       this.ionItemReorder.emit({
         from: fromIndex,
         to: toIndex,
-        complete: this.completeSync.bind(this)
+        complete: this.completeSync.bind(this),
       });
     }
 

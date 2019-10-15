@@ -70,7 +70,7 @@ describe('datetime-util', () => {
             month: 12,
             day: 25,
             hour: 14,
-            minute: 42
+            minute: 42,
           })
         ).toEqual('2018-12-25T14:42:00Z');
       });
@@ -82,7 +82,7 @@ describe('datetime-util', () => {
             month: 12,
             day: 25,
             hour: 0,
-            minute: 2
+            minute: 2,
           })
         ).toEqual('2018-12-25T00:02:00Z');
       });
@@ -95,7 +95,7 @@ describe('datetime-util', () => {
             day: 25,
             hour: 14,
             minute: 42,
-            second: 36
+            second: 36,
           })
         ).toEqual('2018-12-25T14:42:36Z');
       });
@@ -108,7 +108,7 @@ describe('datetime-util', () => {
             day: 25,
             hour: 14,
             minute: 42,
-            second: 3
+            second: 3,
           })
         ).toEqual('2018-12-25T14:42:03Z');
       });
@@ -122,7 +122,7 @@ describe('datetime-util', () => {
             hour: 14,
             minute: 42,
             second: 23,
-            millisecond: 250
+            millisecond: 250,
           })
         ).toEqual('2018-12-25T14:42:23.250Z');
       });
@@ -136,7 +136,7 @@ describe('datetime-util', () => {
             hour: 14,
             minute: 42,
             second: 23,
-            millisecond: 25
+            millisecond: 25,
           })
         ).toEqual('2018-12-25T14:42:23.025Z');
       });
@@ -149,7 +149,7 @@ describe('datetime-util', () => {
             day: 25,
             hour: 14,
             minute: 42,
-            tzOffset: 360
+            tzOffset: 360,
           })
         ).toEqual('2018-12-25T14:42:00+06:00');
       });
@@ -162,7 +162,7 @@ describe('datetime-util', () => {
             day: 25,
             hour: 14,
             minute: 42,
-            tzOffset: 390
+            tzOffset: 390,
           })
         ).toEqual('2018-12-25T14:42:00+06:30');
       });
@@ -175,7 +175,7 @@ describe('datetime-util', () => {
             day: 25,
             hour: 14,
             minute: 42,
-            tzOffset: -300
+            tzOffset: -300,
           })
         ).toEqual('2018-12-25T14:42:00-05:00');
       });
@@ -188,7 +188,7 @@ describe('datetime-util', () => {
             day: 25,
             hour: 14,
             minute: 42,
-            tzOffset: -435
+            tzOffset: -435,
           })
         ).toEqual('2018-12-25T14:42:00-07:15');
       });
@@ -201,7 +201,7 @@ describe('datetime-util', () => {
             day: 25,
             hour: 14,
             minute: 42,
-            tzOffset: 0
+            tzOffset: 0,
           })
         ).toEqual('2018-12-25T14:42:00-00:00');
       });

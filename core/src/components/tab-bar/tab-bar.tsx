@@ -11,13 +11,13 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-tab-bar',
   styleUrls: {
     ios: 'tab-bar.ios.scss',
-    md: 'tab-bar.md.scss'
+    md: 'tab-bar.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class TabBar implements ComponentInterface {
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonTabBarElement;
 
   @State() keyboardVisible = false;
 
@@ -36,7 +36,7 @@ export class TabBar implements ComponentInterface {
   selectedTabChanged() {
     if (this.selectedTab !== undefined) {
       this.ionTabBarChanged.emit({
-        tab: this.selectedTab
+        tab: this.selectedTab,
       });
     }
   }

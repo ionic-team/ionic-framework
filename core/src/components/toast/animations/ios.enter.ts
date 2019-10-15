@@ -17,19 +17,20 @@ export const iosEnterAnimation = (baseEl: ShadowRoot, position: string): Animati
   wrapperAnimation.addElement(wrapperEl);
 
   switch (position) {
-    case 'top':
-      wrapperAnimation.fromTo('transform', 'translateY(-100%)', `translateY(${top})`);
-      break;
-    case 'middle':
-      const topPosition = Math.floor(
-        hostEl.clientHeight / 2 - wrapperEl.clientHeight / 2
-      );
-      wrapperEl.style.top = `${topPosition}px`;
-      wrapperAnimation.fromTo('opacity', 0.01, 1);
-      break;
-    default:
-      wrapperAnimation.fromTo('transform', 'translateY(100%)', `translateY(${bottom})`);
-      break;
+  case 'top':
+    wrapperAnimation.fromTo('transform', 'translateY(-100%)', `translateY(${top})`);
+    break;
+  case 'middle': {
+    const topPosition = Math.floor(
+      hostEl.clientHeight / 2 - wrapperEl.clientHeight / 2
+    );
+    wrapperEl.style.top = `${topPosition}px`;
+    wrapperAnimation.fromTo('opacity', 0.01, 1);
+    break;s;
+  }
+  default:
+    wrapperAnimation.fromTo('transform', 'translateY(100%)', `translateY(${bottom})`);
+    break;
   }
   return baseAnimation
     .addElement(hostEl)

@@ -7,36 +7,32 @@ export const testPopover = async (
   selector: string,
   rtl = false
 ) => {
-  try {
-    const pageUrl = generateE2EUrl('popover', type, rtl);
+  const pageUrl = generateE2EUrl('popover', type, rtl);
 
-    const page = await newE2EPage({
-      url: pageUrl
-    });
+  const page = await newE2EPage({
+    url: pageUrl,
+  });
 
-    const screenshotCompares = [];
+  const screenshotCompares = [];
 
-    await page.click(selector);
-    await page.waitForSelector(selector);
+  await page.click(selector);
+  await page.waitForSelector(selector);
 
-    let popover = await page.find('ion-popover');
-    await popover.waitForVisible();
+  let popover = await page.find('ion-popover');
+  await popover.waitForVisible();
 
-    screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot());
 
-    await popover.callMethod('dismiss');
-    await popover.waitForNotVisible();
+  await popover.callMethod('dismiss');
+  await popover.waitForNotVisible();
 
-    screenshotCompares.push(await page.compareScreenshot('dismiss'));
+  screenshotCompares.push(await page.compareScreenshot('dismiss'));
 
-    popover = await page.find('ion-popover');
-    expect(popover).toBeNull();
+  popover = await page.find('ion-popover');
+  expect(popover).toBeNull();
 
-    for (const screenshotCompare of screenshotCompares) {
-      expect(screenshotCompare).toMatchScreenshot();
-    }
-
-  } catch (err) {
-    throw err;
+  for (const screenshotCompare of screenshotCompares) {
+    expect(screenshotCompare).toMatchScreenshot();
   }
+
 };

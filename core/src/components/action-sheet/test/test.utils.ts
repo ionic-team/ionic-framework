@@ -8,40 +8,36 @@ export const testActionSheet = async (
   rtl = false,
   afterScreenshotHook = async (..._args: any[]): Promise<void> => {/**/ }
 ) => {
-  try {
-    const pageUrl = generateE2EUrl('action-sheet', type, rtl);
+  const pageUrl = generateE2EUrl('action-sheet', type, rtl);
 
-    const page = await newE2EPage({
-      url: pageUrl
-    });
+  const page = await newE2EPage({
+    url: pageUrl,
+  });
 
-    const screenshotCompares = [];
+  const screenshotCompares = [];
 
-    const presentBtn = await page.find(selector);
-    await presentBtn.click();
+  const presentBtn = await page.find(selector);
+  await presentBtn.click();
 
-    let actionSheet = await page.find('ion-action-sheet');
-    await actionSheet.waitForVisible();
+  let actionSheet = await page.find('ion-action-sheet');
+  await actionSheet.waitForVisible();
 
-    screenshotCompares.push(await page.compareScreenshot());
+  screenshotCompares.push(await page.compareScreenshot());
 
-    await afterScreenshotHook(page, screenshotCompares, actionSheet);
+  await afterScreenshotHook(page, screenshotCompares, actionSheet);
 
-    await actionSheet.callMethod('dismiss');
-    await actionSheet.waitForNotVisible();
+  await actionSheet.callMethod('dismiss');
+  await actionSheet.waitForNotVisible();
 
-    screenshotCompares.push(await page.compareScreenshot('dismiss'));
+  screenshotCompares.push(await page.compareScreenshot('dismiss'));
 
-    actionSheet = await page.find('ion-action-sheet');
-    expect(actionSheet).toBe(null);
+  actionSheet = await page.find('ion-action-sheet');
+  expect(actionSheet).toBe(null);
 
-    for (const screenshotCompare of screenshotCompares) {
-      expect(screenshotCompare).toMatchScreenshot();
-    }
-
-  } catch (err) {
-    throw err;
+  for (const screenshotCompare of screenshotCompares) {
+    expect(screenshotCompare).toMatchScreenshot();
   }
+
 };
 
 export const testActionSheetBackdrop = async (
@@ -49,17 +45,13 @@ export const testActionSheetBackdrop = async (
   screenshotCompares: any,
   actionSheet: any
 ) => {
-  try {
-    const backdrop = await page.find('ion-backdrop');
-    await backdrop.click();
+  const backdrop = await page.find('ion-backdrop');
+  await backdrop.click();
 
-    screenshotCompares.push(await page.compareScreenshot(`dismiss backdrop`));
+  screenshotCompares.push(await page.compareScreenshot(`dismiss backdrop`));
 
-    const isVisible = await actionSheet.isVisible();
-    expect(isVisible).toBe(true);
-  } catch (err) {
-    throw err;
-  }
+  const isVisible = await actionSheet.isVisible();
+  expect(isVisible).toBe(true);
 };
 
 export const testActionSheetAlert = async (

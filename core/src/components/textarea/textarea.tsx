@@ -12,9 +12,9 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-textarea',
   styleUrls: {
     ios: 'textarea.ios.scss',
-    md: 'textarea.md.scss'
+    md: 'textarea.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class Textarea implements ComponentInterface {
 
@@ -22,7 +22,7 @@ export class Textarea implements ComponentInterface {
   private inputId = `ion-input-${textareaIds++}`;
   private didBlurAfterEdit = false;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonTextareaElement;
 
   @State() hasFocus = false;
 
@@ -46,7 +46,7 @@ export class Textarea implements ComponentInterface {
   /**
    * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
-  @Prop({ mutable: true }) clearOnEdit = false;
+  @Prop() clearOnEdit = false;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
@@ -174,7 +174,7 @@ export class Textarea implements ComponentInterface {
     this.debounceChanged();
     if (Build.isBrowser) {
       this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
-        detail: this.el
+        detail: this.el,
       }));
     }
   }
@@ -182,7 +182,7 @@ export class Textarea implements ComponentInterface {
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
-        detail: this.el
+        detail: this.el,
       }));
     }
   }
@@ -229,7 +229,7 @@ export class Textarea implements ComponentInterface {
       'interactive-disabled': this.disabled,
       'has-placeholder': this.placeholder != null,
       'has-value': this.hasValue(),
-      'has-focus': this.hasFocus
+      'has-focus': this.hasFocus,
     });
   }
 
@@ -273,25 +273,25 @@ export class Textarea implements ComponentInterface {
     }
     this.emitStyle();
     this.ionInput.emit(ev as KeyboardEvent);
-  }
+  };
 
   private onFocus = () => {
     this.hasFocus = true;
     this.focusChange();
 
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.hasFocus = false;
     this.focusChange();
 
     this.ionBlur.emit();
-  }
+  };
 
   private onKeyDown = () => {
     this.checkClearOnEdit();
-  }
+  };
 
   render() {
     const mode = getIonMode(this);

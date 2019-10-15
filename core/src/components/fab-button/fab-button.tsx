@@ -12,12 +12,12 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   tag: 'ion-fab-button',
   styleUrls: {
     ios: 'fab-button.ios.scss',
-    md: 'fab-button.md.scss'
+    md: 'fab-button.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class FabButton implements ComponentInterface, AnchorInterface, ButtonInterface {
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonFabButtonElement;
 
   /**
    * The color to use from your application's color palette.
@@ -103,11 +103,11 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   render() {
     const { el, disabled, color, href, activated, show, translucent, size } = this;
@@ -120,7 +120,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
         download: this.download,
         href,
         rel: this.rel,
-        target: this.target
+        target: this.target,
       };
 
     return (

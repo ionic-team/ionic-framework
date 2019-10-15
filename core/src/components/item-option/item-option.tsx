@@ -19,13 +19,13 @@ import { createColorClasses } from '../../utils/theme';
   tag: 'ion-item-option',
   styleUrls: {
     ios: 'item-option.ios.scss',
-    md: 'item-option.md.scss'
+    md: 'item-option.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class ItemOption implements ComponentInterface, AnchorInterface, ButtonInterface {
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonItemOptionElement;
 
   /**
    * The color to use from your application's color palette.
@@ -81,7 +81,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
     if (el) {
       ev.preventDefault();
     }
-  }
+  };
 
   render() {
     const { disabled, expandable, href } = this;
@@ -92,7 +92,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
       : {
         download: this.download,
         href: this.href,
-        target: this.target
+        target: this.target,
       };
 
     return (

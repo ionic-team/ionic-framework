@@ -10,7 +10,7 @@ export const testModal = async (
   const pageUrl = generateE2EUrl('modal', type, rtl);
 
   const page = await newE2EPage({
-    url: pageUrl
+    url: pageUrl,
   });
 
   const screenshotCompares = [];

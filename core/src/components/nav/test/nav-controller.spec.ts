@@ -1,4 +1,4 @@
-import { newSpecPage, mockWindow } from '@stencil/core/testing';
+import { newSpecPage } from '@stencil/core/testing';
 
 import { ComponentProps } from '../../../interface';
 import { Nav } from '../nav';
@@ -119,9 +119,9 @@ describe('NavController', () => {
       mockViews(nav, [view1]);
 
       const view2 = mockView(MockView2);
-      
+
       await nav.push(view2, null, null, trnsDone);
-      
+
       const hasCompleted = true;
       const requiresTransition = true;
       expect(trnsDone).toHaveBeenCalledWith(
@@ -819,7 +819,7 @@ describe('NavController', () => {
 
       await nav.setPages([
         { page: view4 },
-        { page: view5 }
+        { page: view5 },
       ], null, trnsDone);
       expect(instance1.ionViewWillUnload).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
@@ -860,7 +860,7 @@ describe('NavController', () => {
     });
   });
 
-  function spyOnLifecycles(view: ViewController) {
+  const spyOnLifecycles = (view: ViewController) => {
     const element = view.element as any;
     Object.assign(element, {
       ionViewWillEnter: () => {
@@ -890,15 +890,15 @@ describe('NavController', () => {
 
     element.dispatchEvent = (ev: CustomEvent) => {
       switch(ev.type) {
-        case 'ionViewWillEnter': element.ionViewWillEnter(); break;
-        case 'ionViewDidEnter': element.ionViewDidEnter(); break;
-        case 'ionViewWillLeave': element.ionViewWillLeave(); break;
-        case 'ionViewDidLeave': element.ionViewDidLeave(); break;
-        case 'ionViewWillUnload': element.ionViewWillUnload(); break;
+      case 'ionViewWillEnter': element.ionViewWillEnter(); break;
+      case 'ionViewDidEnter': element.ionViewDidEnter(); break;
+      case 'ionViewWillLeave': element.ionViewWillLeave(); break;
+      case 'ionViewDidLeave': element.ionViewDidLeave(); break;
+      case 'ionViewWillUnload': element.ionViewWillUnload(); break;
       }
     };
     return instance;
-  }
+  };
 
   let trnsDone: jest.Mock;
   let nav: Nav;
@@ -912,8 +912,8 @@ describe('NavController', () => {
       html: `<ion-nav></ion-nav>`,
       autoApplyChanges: true,
       context: {
-        config
-      }
+        config,
+      },
     });
     nav = page.rootInstance;
   });
@@ -924,65 +924,46 @@ describe('NavController', () => {
   const MockView3 = 'mock-view3';
   const MockView4 = 'mock-view4';
   const MockView5 = 'mock-view5';
-  
+
   const mockWebAnimation = (el: HTMLElement) => {
     Element.prototype.animate = () => {};
-    
+
     el.animate = () => {
       const animation = {
+        play: () => {},
         stop: () => {},
         pause: () => {},
         cancel: () => {},
-        onfinish: undefined
-      }
-      
+        onfinish: undefined as any,
+      };
+
       animation.play = () => {
         if (animation.onfinish) {
           animation.onfinish();
         }
-      }
-      
-      return animation;
-    }
-  }
+      };
 
-  function mockView(component?: any, params?: ComponentProps) {
+      return animation;
+    };
+  };
+
+  const mockView = (component?: any, params?: ComponentProps) => {
     if (!component) {
       component = MockView;
     }
 
     const view = new ViewController(component, params);
     view.element = document.createElement(component) as HTMLElement;
-    
-    mockWebAnimation(view.element);
-    
-    return view;
-  }
 
-  function mockViews(navI: Nav, views: ViewController[]) {
+    mockWebAnimation(view.element);
+
+    return view;
+  };
+
+  const mockViews = (navI: Nav, views: ViewController[]) => {
     navI['views'] = views;
     views.forEach(v => {
       v.nav = navI;
     });
-  }
-
-  // function mockNavController(): Promise<Nav> {
-  //   const navI = new Nav() as any;
-  //   navI.animated = false;
-  //   navI.el = win.document.createElement('ion-nav');
-  //   navI.win = win;
-  //   navI.queue = { write: (fn: any) => fn(), read: (fn: any) => fn() };
-
-  //   navI.config = new Config();
-  //   navI.config.reset({ animated: false });
-  //   navI._viewInit = (enteringView: ViewController) => {
-  //     if (!enteringView.element) {
-  //       enteringView.element = (typeof enteringView.component === 'string')
-  //         ? win.document.createElement(enteringView.component)
-  //         : enteringView.element = enteringView.component as HTMLElement;
-  //     }
-  //     enteringView.state = VIEW_STATE_ATTACHED;
-  //   };
-  //   return navI;
-  // }
+  };
 });

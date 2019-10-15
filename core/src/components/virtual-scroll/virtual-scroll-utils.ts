@@ -133,16 +133,16 @@ const createNode = (el: HTMLElement, type: CellType): HTMLElement | null => {
 
 const getTemplate = (el: HTMLElement, type: CellType): HTMLTemplateElement | null => {
   switch (type) {
-    case CELL_TYPE_ITEM: return el.querySelector('template:not([name])');
-    case CELL_TYPE_HEADER: return el.querySelector('template[name=header]');
-    case CELL_TYPE_FOOTER: return el.querySelector('template[name=footer]');
+  case CELL_TYPE_ITEM: return el.querySelector('template:not([name])');
+  case CELL_TYPE_HEADER: return el.querySelector('template[name=header]');
+  case CELL_TYPE_FOOTER: return el.querySelector('template[name=footer]');
   }
 };
 
 export const getViewport = (scrollTop: number, vierportHeight: number, margin: number): Viewport => {
   return {
     top: Math.max(scrollTop - margin, 0),
-    bottom: scrollTop + vierportHeight + margin
+    bottom: scrollTop + vierportHeight + margin,
   };
 };
 
