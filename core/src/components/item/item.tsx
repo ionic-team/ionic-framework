@@ -49,7 +49,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The icon to use when `detail` is set to `true`.
    */
-  @Prop() detailIcon = 'ios-arrow-forward';
+  @Prop() detailIcon = 'chevron-forward';
 
   /**
    * If `true`, the user cannot interact with the item.
