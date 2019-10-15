@@ -287,7 +287,7 @@ RouteManagerWithRouter.displayName = 'RouteManager';
 
 type IonReactRouterProps = BrowserRouterProps & HashRouterProps & {
   useHashRouter?: boolean;
-}
+};
 
 export class IonReactRouter extends React.Component<IonReactRouterProps> {
   render() {
