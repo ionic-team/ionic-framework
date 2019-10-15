@@ -72,7 +72,7 @@ describe('Datetime', () => {
 
     it('should default to today for null and undefined cases', () => {
       const today = new Date();
-      const todayString = renderDatetime('YYYY-MM-DD', { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() } );
+      const todayString = renderDatetime('YYYY-MM-DD', { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() });
 
       const convertToLocalUndefined = getLocalDateTime(undefined);
       expect(convertToLocalUndefined.toISOString()).toContain(todayString);
