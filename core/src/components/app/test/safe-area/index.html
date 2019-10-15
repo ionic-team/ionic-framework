@@ -59,7 +59,9 @@
     async function showToast() {
       const toast = Object.assign(document.createElement('ion-toast'), {
         message: 'Hello world!',
-        showCloseButton: true
+        buttons: [
+          { text: 'Close', role: 'close' }
+        ]
       });
       document.body.appendChild(toast);
       await toast.present();

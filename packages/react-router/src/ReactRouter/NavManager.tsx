@@ -3,21 +3,23 @@ import { NavContext, NavContextState } from '@ionic/react';
 import { Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { ViewManager } from './ViewManager';
-import { generateUniqueId } from '../utils';
-import { LocationHistory } from '../utils/LocationHistory'
+
+import { generateId } from '../utils';
+import { LocationHistory } from '../utils/LocationHistory';
+
+import { StackManager } from './StackManager';
 import { ViewItem } from './ViewItem';
-import { ViewStack } from './RouteManagerContext';
+import { ViewStack } from './ViewStacks';
 
 interface NavManagerProps extends RouteComponentProps {
-  findViewInfoByLocation: (location: HistoryLocation) => {view?: ViewItem, viewStack?: ViewStack };
-  findViewInfoById: (id: string) => {view?: ViewItem, viewStack?: ViewStack };
-};
-interface NavManagerState extends NavContextState {};
+  findViewInfoByLocation: (location: HistoryLocation) => { view?: ViewItem, viewStack?: ViewStack };
+  findViewInfoById: (id: string) => { view?: ViewItem, viewStack?: ViewStack };
+  getActiveIonPage: () => { view?: ViewItem, viewStack?: ViewStack };
+}
 
-export class NavManager extends React.Component<NavManagerProps, NavManagerState> {
+export class NavManager extends React.Component<NavManagerProps, NavContextState> {
 
-  listenUnregisterCallback: UnregisterCallback;
+  listenUnregisterCallback: UnregisterCallback | undefined;
   locationHistory: LocationHistory = new LocationHistory();
 
   constructor(props: NavManagerProps) {
@@ -28,20 +30,23 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
       getHistory: this.getHistory.bind(this),
       getLocation: this.getLocation.bind(this),
       navigate: this.navigate.bind(this),
-      getViewManager: this.getViewManager.bind(this),
-      currentPath: this.props.location.pathname
-    }
+      getStackManager: this.getStackManager.bind(this),
+      getPageManager: this.getPageManager.bind(this),
+      currentPath: this.props.location.pathname,
+      registerIonPage: () => { return; }, // overridden in View for each IonPage
+      tabNavigate: this.tabNavigate.bind(this)
+    };
 
     this.listenUnregisterCallback = this.props.history.listen((location: HistoryLocation) => {
       this.setState({
         currentPath: location.pathname
-      })
+      });
       this.locationHistory.add(location);
     });
 
     this.locationHistory.add({
       hash: window.location.hash,
-      key: generateUniqueId(6),
+      key: generateId(),
       pathname: window.location.pathname,
       search: window.location.search,
       state: {}
@@ -49,15 +54,15 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
   }
 
   componentWillUnmount() {
-    if(this.listenUnregisterCallback) {
+    if (this.listenUnregisterCallback) {
       this.listenUnregisterCallback();
     }
   }
 
   goBack(defaultHref?: string) {
-    const { view: leavingView } = this.props.findViewInfoByLocation(this.props.location);
-    if (leavingView) {
-      const { view: enteringView } = this.props.findViewInfoById(leavingView.prevId!);
+    const { view: activeIonPage } = this.props.getActiveIonPage();
+    if (activeIonPage) {
+      const { view: enteringView } = this.props.findViewInfoById(activeIonPage.prevId!);
       if (enteringView) {
         const lastLocation = this.locationHistory.findLastLocation(enteringView.routeData.match.url);
         if (lastLocation) {
@@ -66,10 +71,14 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
           this.props.history.replace(enteringView.routeData.match.url, { direction: 'back' });
         }
       } else {
-        defaultHref && this.props.history.replace(defaultHref, { direction: 'back' });
+        if (defaultHref) {
+          this.props.history.replace(defaultHref, { direction: 'back' });
+        }
       }
     } else {
-      defaultHref && this.props.history.replace(defaultHref, { direction: 'back' });
+      if (defaultHref) {
+        this.props.history.replace(defaultHref, { direction: 'back' });
+      }
     }
   }
 
@@ -81,12 +90,20 @@ export class NavManager extends React.Component<NavManagerProps, NavManagerState
     return this.props.location as any;
   }
 
-  navigate(path: string, direction?: RouterDirection) {
+  navigate(path: string, direction?: RouterDirection | 'none') {
     this.props.history.push(path, { direction });
   }
 
-  getViewManager() {
-    return ViewManager;
+  tabNavigate(url: string) {
+    this.props.history.replace(url, { direction: 'back' });
+  }
+
+  getPageManager() {
+    return (children: any) => children;
+  }
+
+  getStackManager() {
+    return StackManager;
   }
 
   render() {

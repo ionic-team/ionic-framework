@@ -55,6 +55,15 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
     <ion-menu-button autoHide="false"></ion-menu-button>
   </ion-buttons>
 </ion-toolbar>
+
+<ion-toolbar>
+  <ion-buttons collapse="true">
+    <ion-button>
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Collapsible Buttons</ion-title>
+</ion-toolbar>
 ```
 
 
@@ -99,6 +108,15 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
       </ion-button>
     </ion-menu-toggle>
   </ion-buttons>
+</ion-toolbar>
+
+<ion-toolbar>
+  <ion-buttons collapse="true">
+    <ion-button>
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Collapsible Buttons</ion-title>
 </ion-toolbar>
 ```
 
@@ -155,6 +173,15 @@ export const ButtonsExample: React.FC = () => (
         <IonMenuButton autoHide={false} />
       </IonButtons>
     </IonToolbar>
+    
+    <IonToolbar>
+      <IonButtons collapse="true">
+        <IonButton>
+          <IonIcon slot="icon-only" name="star" />
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Collapsible Buttons</IonTitle>
+    </IonToolbar>
   </IonContent>
 );
 ```
@@ -199,9 +226,25 @@ export const ButtonsExample: React.FC = () => (
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
+  
+  <ion-toolbar>
+    <ion-buttons collapse="true">
+      <ion-button>
+        <ion-icon slot="icon-only" name="star"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Collapsible Buttons</ion-title>
+  </ion-toolbar>
 </template>
 ```
 
+
+
+## Properties
+
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                       | Type      | Default |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| `collapse` | `collapse` | If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles) | `boolean` | `false` |
 
 
 ----------------------------------------------

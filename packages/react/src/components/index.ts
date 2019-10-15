@@ -9,6 +9,7 @@ export * from './proxies';
 export { IonAlert } from './IonAlert';
 export { IonLoading } from './IonLoading';
 export { IonToast } from './IonToast';
+export { IonPicker } from './IonPicker';
 
 // createOverlayComponent
 export { IonActionSheet } from './IonActionSheet';
@@ -20,9 +21,11 @@ export { IonPage } from './IonPage';
 export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
 export { IonBackButton } from './navigation/IonBackButton';
+export { IonRouterOutlet } from './IonRouterOutlet';
 
 // Utils
 export { isPlatform, getPlatforms } from './utils';
+export { RouterDirection } from './hrefprops';
 
 // Icons that are used by internal components
 addIcons({

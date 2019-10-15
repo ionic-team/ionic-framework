@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, IonicAnimation, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
 import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { transition } from '../../utils/transition';
@@ -18,7 +18,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private activeComponent: any;
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
-  private ani?: IonicAnimation | Animation;
+  private ani?: Animation;
   private animationEnabled = true;
 
   @Element() el!: HTMLElement;
@@ -69,8 +69,13 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       (shouldComplete, step, dur) => {
         if (this.ani) {
           this.animationEnabled = false;
+
           this.ani.onFinish(() => {
             this.animationEnabled = true;
+
+            if (this.swipeHandler) {
+              this.swipeHandler.onEnd(shouldComplete);
+            }
           }, { oneTimeCallback: true });
 
           // Account for rounding errors in JS
@@ -91,11 +96,8 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
             newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.32, 0.72), new Point(0, 1), new Point(1, 1), step);
           }
 
-          this.ani.progressEnd(shouldComplete, newStepValue, dur);
+          (this.ani as Animation).progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
 
-        }
-        if (this.swipeHandler) {
-          this.swipeHandler.onEnd(shouldComplete);
         }
       }
     );

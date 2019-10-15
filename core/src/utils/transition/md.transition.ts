@@ -1,8 +1,8 @@
-import { IonicAnimation } from '../../interface';
+import { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
 import { TransitionOptions } from '../transition';
 
-export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): IonicAnimation => {
+export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): Animation => {
   const OFF_BOTTOM = '40px';
   const CENTER = '0px';
 
@@ -50,6 +50,7 @@ export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): 
     const leavingPage = createAnimation();
     leavingPage
       .addElement(getIonPageElement(leavingEl))
+      .afterStyles({ 'display': 'none' })
       .fromTo('transform', `translateY(${CENTER})`, `translateY(${OFF_BOTTOM})`)
       .fromTo('opacity', 1, 0);
 

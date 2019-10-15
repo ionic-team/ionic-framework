@@ -66,7 +66,7 @@ export class Tabs implements NavOutlet {
    */
   @Method()
   async select(tab: string | HTMLIonTabElement): Promise<boolean> {
-    const selectedTab = await this.getTab(tab);
+    const selectedTab = getTab(this.tabs, tab);
     if (!this.shouldSwitch(selectedTab)) {
       return false;
     }
@@ -84,14 +84,7 @@ export class Tabs implements NavOutlet {
    */
   @Method()
   async getTab(tab: string | HTMLIonTabElement): Promise<HTMLIonTabElement | undefined> {
-    const tabEl = (typeof tab === 'string')
-      ? this.tabs.find(t => t.tab === tab)
-      : tab;
-
-    if (!tabEl) {
-      console.error(`tab with id: "${tabEl}" does not exist`);
-    }
-    return tabEl;
+    return getTab(this.tabs, tab);
   }
 
   /**
@@ -105,7 +98,7 @@ export class Tabs implements NavOutlet {
   /** @internal */
   @Method()
   async setRouteId(id: string): Promise<RouteWrite> {
-    const selectedTab = await this.getTab(id);
+    const selectedTab = getTab(this.tabs, id);
     if (!this.shouldSwitch(selectedTab)) {
       return { changed: false, element: this.selectedTab };
     }
@@ -200,3 +193,14 @@ export class Tabs implements NavOutlet {
     );
   }
 }
+
+const getTab = (tabs: HTMLIonTabElement[], tab: string | HTMLIonTabElement): HTMLIonTabElement | undefined => {
+  const tabEl = (typeof tab === 'string')
+    ? tabs.find(t => t.tab === tab)
+    : tab;
+
+  if (!tabEl) {
+    console.error(`tab with id: "${tabEl}" does not exist`);
+  }
+  return tabEl;
+};

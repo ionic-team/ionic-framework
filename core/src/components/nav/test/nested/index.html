@@ -20,9 +20,9 @@
           </ion-header>
           <ion-content class="ion-padding">
             <h1>Page 1</h1>
-            <ion-nav-push component="page-two">
+            <ion-nav-link router-direction="forward" component="page-two">
               <ion-button class="next">Go to Page 2</ion-button>
-            </ion-nav-push>
+            </ion-nav-link>
           </ion-content>
         `;
       }
@@ -50,9 +50,9 @@
           <ion-content class="ion-padding">
             <h1>Page 2.1</h1>
             <div>
-              <ion-nav-push component="page-two-two">
+              <ion-nav-link router-direction="forward" component="page-two-two">
                 <ion-button class="next">Go to Page 2.2</ion-button>
-              </ion-nav-push>
+              </ion-nav-link>
             </div>
           </ion-content>
         `;
@@ -74,9 +74,9 @@
           <ion-content class="ion-padding">
             <h1>Page 2.2</h1>
             <div>
-              <ion-nav-push component="page-three">
+              <ion-nav-link router-direction="forward" component="page-three">
                 <ion-button class="next">Go to Page 3</ion-button>
-              </ion-nav-push>
+              </ion-nav-link>
             </div>
           </ion-content>
         `;

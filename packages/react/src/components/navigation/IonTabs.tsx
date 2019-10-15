@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
-import { IonRouterOutlet } from '../proxies';
+import { IonRouterOutlet } from '../IonRouterOutlet';
 
 import { IonTabBar } from './IonTabBar';
 
@@ -60,19 +60,11 @@ export const IonTabs = /*@__PURE__*/(() => class extends React.Component<Props> 
       throw new Error('IonTabs needs a IonTabBar');
     }
 
-    const NavManager = this.context.getViewManager();
-
     return (
       <div style={hostStyles}>
         {tabBar.props.slot === 'top' ? tabBar : null}
         <div style={tabsInner} className="tabs-inner">
-          {this.context.hasIonicRouter() ? (
-            <NavManager>
-              {outlet}
-            </NavManager>
-          ) : (
-              <>{outlet}</>
-            )}
+          {outlet}
         </div>
         {tabBar.props.slot === 'bottom' ? tabBar : null}
       </div>
