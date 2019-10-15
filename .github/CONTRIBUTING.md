@@ -234,6 +234,16 @@ perf(css): remove all css utility attributes
 BREAKING CHANGE: The CSS utility attributes have been removed. Use CSS classes instead.
 ```
 
+Appears under "Breaking Changes" with the breaking change explanation:
+
+```
+refactor(animations): update to new animation system
+
+BREAKING CHANGE:
+
+Removes the old animation system to use the new Ionic animations.
+```
+
 The following commit and commit `667ecc1` do not appear in the changelog if they are under the same release. If not, the revert commit appears under the "Reverts" header.
 
 ```
