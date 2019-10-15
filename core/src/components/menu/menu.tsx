@@ -229,7 +229,7 @@ AFTER:
 
   @Listen('click', { capture: true })
   onBackdropClick(ev: any) {
-    if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
+    if (this._isOpen && this.lastOnEnd < ev.currentTime - 100) {
       const shouldClose = (ev.composedPath)
         ? !ev.composedPath().includes(this.menuInnerEl)
         : false;
@@ -428,7 +428,7 @@ AFTER:
       shouldOpen = true;
     }
 
-    this.lastOnEnd = detail.timeStamp;
+    this.lastOnEnd = detail.currentTime;
 
     // Account for rounding errors in JS
     let newStepValue = (shouldComplete) ? 0.001 : -0.001;
@@ -520,7 +520,7 @@ AFTER:
   private updateState() {
     const isActive = this._isActive();
     if (this.gesture) {
-      this.gesture.setDisabled(!isActive || !this.swipeGesture);
+      this.gesture.enable(isActive && this.swipeGesture);
     }
 
     // Close menu immediately

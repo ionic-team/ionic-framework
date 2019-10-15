@@ -38,7 +38,7 @@ export class Nav implements NavOutlet {
   @Watch('swipeGesture')
   swipeGestureChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.swipeGesture !== true);
+      this.gesture.enable(this.swipeGesture === true);
     }
   }
 
