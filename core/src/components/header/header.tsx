@@ -60,10 +60,7 @@ export class Header implements ComponentInterface {
     if (!canCollapse && this.collapsibleHeaderInitialized) {
       this.destroyCollapsibleHeader();
     } else if (canCollapse && !this.collapsibleHeaderInitialized) {
-      const tabs = this.el.closest('ion-tabs');
-      const page = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-
-      const pageEl = (tabs) ? this.el.closest('ion-tab') : (page) ? page : null;
+      const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
       const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
 
       await this.setupCollapsibleHeader(contentEl, pageEl);
