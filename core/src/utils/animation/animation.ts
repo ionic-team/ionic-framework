@@ -128,8 +128,10 @@ export const createAnimation = (): Animation => {
 
       webAnimations.length = 0;
     } else {
-      elements.forEach(element => {
-        raf(() => {
+      const elementsArray = elements.slice();
+
+      raf(() => {
+        elementsArray.forEach(element => {
           removeStyleProperty(element, 'animation-name');
           removeStyleProperty(element, 'animation-duration');
           removeStyleProperty(element, 'animation-timing-function');
@@ -632,8 +634,8 @@ export const createAnimation = (): Animation => {
   };
 
   const updateCSSAnimation = (toggleAnimationName = true) => {
-    elements.forEach(element => {
-      raf(() => {
+    raf(() => {
+      elements.forEach(element => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
         setStyleProperty(element, 'animation-duration', `${getDuration()}ms`);
         setStyleProperty(element, 'animation-timing-function', getEasing());
@@ -796,12 +798,12 @@ export const createAnimation = (): Animation => {
   const playCSSAnimations = () => {
     clearCSSAnimationsTimeout();
 
-    elements.forEach(element => {
-      if (_keyframes.length > 0) {
-        raf(() => {
+    raf(() => {
+      elements.forEach(element => {
+        if (_keyframes.length > 0) {
           setStyleProperty(element, 'animation-play-state', 'running');
-        });
-      }
+        }
+      });
     });
 
     if (_keyframes.length === 0 || elements.length === 0) {
@@ -819,7 +821,10 @@ export const createAnimation = (): Animation => {
        const animationDuration = getDuration() || 0;
        const animationIterations = getIterations() || 1;
 
-       cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + (animationDuration * animationIterations) + ANIMATION_END_FALLBACK_PADDING_MS);
+       // No need to set a timeout when animation has infinite iterations
+       if (isFinite(animationIterations)) {
+        cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + (animationDuration * animationIterations) + ANIMATION_END_FALLBACK_PADDING_MS);
+       }
 
        animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();

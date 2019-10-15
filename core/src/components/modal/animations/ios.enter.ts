@@ -1,17 +1,17 @@
-import { IonicAnimation } from '../../../interface';
+import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Modal Enter Animation
  */
-export const iosEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
+export const iosEnterAnimation = (baseEl: HTMLElement): Animation => {
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 0.4);
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.modal-wrapper')!)

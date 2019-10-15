@@ -17,8 +17,12 @@ async function main() {
       throw new Error('env.GH_TOKEN is undefined');
     }
 
-    const version = await askVersion();
+    const { version, confirm } = await askVersion();
     const install = process.argv.indexOf('--no-install') < 0;
+
+    if (!confirm) {
+      return;
+    }
 
     // compile and verify packages
     await preparePackages(common.packages, version, install);
@@ -85,8 +89,8 @@ async function askVersion() {
     }
   ];
 
-  const {version} = await inquirer.prompt(prompts);
-  return version;
+  const { version, confirm } = await inquirer.prompt(prompts);
+  return { version, confirm };
 }
 
 

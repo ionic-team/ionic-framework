@@ -1,17 +1,17 @@
-import { IonicAnimation } from '../../../interface';
+import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Picker Leave Animation
  */
-export const iosLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
+export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.26, 0.01);
+    .fromTo('opacity', 'var(--backdrop-opacity)', 0.01);
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.picker-wrapper')!)
