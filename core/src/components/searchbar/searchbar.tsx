@@ -102,7 +102,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * The icon to use as the search icon.
    */
-  @Prop() searchIcon = 'search';
+  @Prop() searchIcon = 'search-sharp';
 
   /**
    * Sets the behavior for the cancel button. Defaults to `"never"`.
