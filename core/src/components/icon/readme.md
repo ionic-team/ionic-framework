@@ -2,10 +2,6 @@
 
 # ion-icon
 
-Icons can be used on their own as a standalone component, or inside of another component.
-
-Ionicons provide platform continuity out of the box in Ionic by rendering a different icon based on the device the app is running on. For example, by setting the icon `name` to `alarm` the icon will automatically use the `ios-alarm` on an iOS device, and the `md-alarm` for any device running Material Design. This allows the developer to write the markup once while Ionic handles displaying the appropriate icon based on the mode.
-
 For a full list of available icons and more usage explanations, check out the [Ionicons documentation](https://ionicons.com/).
 
 <!-- Auto Generated Below -->
