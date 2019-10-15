@@ -26,7 +26,7 @@ export const iosEnterAnimation = (baseEl: ShadowRoot, position: string): Animati
     );
     wrapperEl.style.top = `${topPosition}px`;
     wrapperAnimation.fromTo('opacity', 0.01, 1);
-    break;s;
+    break;
   }
   default:
     wrapperAnimation.fromTo('transform', 'translateY(100%)', `translateY(${bottom})`);
