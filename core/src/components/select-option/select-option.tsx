@@ -32,7 +32,7 @@ export class SelectOption implements ComponentInterface {
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop({ mutable: true, reflectToAttr: true, attr: 'class' }) customCssClass?: string | { [className: string]: boolean; } | undefined;
+  @Prop({ mutable: true, reflectToAttr: true, attribute: 'class' }) customCssClass?: string | { [className: string]: boolean; } | undefined;
 
   render() {
     return (
