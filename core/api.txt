@@ -942,7 +942,7 @@ ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
 ion-searchbar,prop,autocomplete,"off" | "on",'off',false,false
 ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
-ion-searchbar,prop,cancelButtonIcon,string,'md-arrow-back',false,false
+ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', 'md-arrow-back') as string,false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,string | undefined,undefined,false,false

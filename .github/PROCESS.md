@@ -240,6 +240,8 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
     - For major or minor releases, ensure that the version number has an associated title (for example: `4.5.0 Boron`)
     - Commit these changes with the version number as the message, e.g. `git commit -m "4.5.0"`
 
+1. *(Optional)* Run `npm run release -- --dry-run` to run the release without publishing and verify the version.
+
 1. Run `npm run release`
 
 1. Click **Merge pull request**. Use the dropdown to select this option if necessary.
