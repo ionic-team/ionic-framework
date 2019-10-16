@@ -2136,7 +2136,7 @@ export namespace Components {
     */
     'autocorrect': 'on' | 'off';
     /**
-    * Set the cancel button icon. Only applies to `md` mode.
+    * Set the cancel button icon. Only applies to `md` mode. Defaults to `"arrow-back-sharp"`.
     */
     'cancelButtonIcon': string;
     /**
@@ -5361,7 +5361,7 @@ declare namespace LocalJSX {
     */
     'autocorrect'?: 'on' | 'off';
     /**
-    * Set the cancel button icon. Only applies to `md` mode.
+    * Set the cancel button icon. Only applies to `md` mode. Defaults to `"arrow-back-sharp"`.
     */
     'cancelButtonIcon'?: string;
     /**
