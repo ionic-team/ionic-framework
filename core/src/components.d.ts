@@ -2144,7 +2144,7 @@ export namespace Components {
     */
     'cancelButtonText': string;
     /**
-    * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
+    * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.
     */
     'clearIcon'?: string;
     /**
@@ -5369,7 +5369,7 @@ declare namespace LocalJSX {
     */
     'cancelButtonText'?: string;
     /**
-    * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
+    * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.
     */
     'clearIcon'?: string;
     /**

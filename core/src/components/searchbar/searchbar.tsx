@@ -62,7 +62,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() cancelButtonText = 'Cancel';
 
   /**
-   * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
+   * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.
    */
   @Prop() clearIcon?: string;
 
@@ -413,7 +413,7 @@ export class Searchbar implements ComponentInterface {
   render() {
     const animated = this.animated && config.getBoolean('animated', true);
     const mode = getIonMode(this);
-    const clearIcon = this.clearIcon || (mode === 'ios' ? 'ios-close-circle' : 'md-close');
+    const clearIcon = this.clearIcon || (mode === 'ios' ? 'close-circle' : 'close-sharp');
     const searchIcon = this.searchIcon || (mode === 'ios' ? 'search-outline' : 'search-sharp');
 
     const cancelButton = (this.showCancelButton !== 'never') && (
