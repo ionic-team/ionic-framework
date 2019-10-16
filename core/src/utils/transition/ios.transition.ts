@@ -1,4 +1,4 @@
-import { IonicAnimation } from '../../interface';
+import { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
 import { TransitionOptions } from '../transition';
 
@@ -36,7 +36,7 @@ const getBackButton = (refEl: any, backDirection: boolean) => {
   return null;
 };
 
-const createLargeTitleTransition = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, enteringEl: any, leavingEl: any) => {
+const createLargeTitleTransition = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, enteringEl: any, leavingEl: any) => {
   const enteringBackButton = getBackButton(enteringEl, backDirection);
   const leavingLargeTitle = getLargeTitle(leavingEl);
 
@@ -60,7 +60,7 @@ const createLargeTitleTransition = (rootAnimation: IonicAnimation, rtl: boolean,
   };
 };
 
-const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
+const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
   const backButtonBounds = backButtonEl.getBoundingClientRect();
   const BACK_BUTTON_START_OFFSET = (rtl) ? `calc(100% - ${backButtonBounds.right + 4}px)` : `${backButtonBounds.left - 4}px`;
   const START_TEXT_TRANSLATE = (rtl) ? '7px' : '-7px';
@@ -137,7 +137,7 @@ const animateBackButton = (rootAnimation: IonicAnimation, rtl: boolean, backDire
   rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation]);
 };
 
-const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
+const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
   const largeTitleBounds = largeTitleEl.getBoundingClientRect();
   const TITLE_START_OFFSET = (rtl) ? `calc(100% - ${largeTitleBounds.right}px)` : `${largeTitleBounds.left}px`;
   const START_TRANSLATE = (rtl) ? '-18px' : '18px';
@@ -184,7 +184,7 @@ const animateLargeTitle = (rootAnimation: IonicAnimation, rtl: boolean, backDire
   rootAnimation.addAnimation(clonedLargeTitleAnimation);
 };
 
-export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptions): IonicAnimation => {
+export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptions): Animation => {
   try {
     const EASING = 'cubic-bezier(0.32,0.72,0,1)';
     const OPACITY = 'opacity';

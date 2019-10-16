@@ -131,6 +131,16 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
   }
 }
 
+
+// Global Card Styles
+// --------------------------------------------------
+
+ion-card.ion-color .ion-inherit-color,
+ion-card-header.ion-color .ion-inherit-color {
+  color: inherit;
+}
+
+
 // Menu Styles
 // TODO: Find a better long term solution for this
 // --------------------------------------------------
@@ -167,4 +177,3 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
 .md .menu-content-push {
   box-shadow: $menu-md-box-shadow;
 }
-
