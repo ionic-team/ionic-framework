@@ -2176,9 +2176,9 @@ export namespace Components {
     */
     'placeholder': string;
     /**
-    * The icon to use as the search icon.
+    * The icon to use as the search icon. Defaults to `"search-outline"` in `ios` mode and `"search-sharp"` in `md` mode.
     */
-    'searchIcon': string;
+    'searchIcon'?: string;
     /**
     * Sets focus on the specified `ion-searchbar`. Use this method instead of the global `input.focus()`.
     */
@@ -5421,7 +5421,7 @@ declare namespace LocalJSX {
     */
     'placeholder'?: string;
     /**
-    * The icon to use as the search icon.
+    * The icon to use as the search icon. Defaults to `"search-outline"` in `ios` mode and `"search-sharp"` in `md` mode.
     */
     'searchIcon'?: string;
     /**

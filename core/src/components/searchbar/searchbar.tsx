@@ -100,9 +100,10 @@ export class Searchbar implements ComponentInterface {
   @Prop() placeholder = 'Search';
 
   /**
-   * The icon to use as the search icon.
+   * The icon to use as the search icon. Defaults to `"search-outline"` in
+   * `ios` mode and `"search-sharp"` in `md` mode.
    */
-  @Prop() searchIcon = 'search-sharp';
+  @Prop() searchIcon?: string;
 
   /**
    * Sets the behavior for the cancel button. Defaults to `"never"`.
@@ -413,7 +414,7 @@ export class Searchbar implements ComponentInterface {
     const animated = this.animated && config.getBoolean('animated', true);
     const mode = getIonMode(this);
     const clearIcon = this.clearIcon || (mode === 'ios' ? 'ios-close-circle' : 'md-close');
-    const searchIcon = this.searchIcon;
+    const searchIcon = this.searchIcon || (mode === 'ios' ? 'search-outline' : 'search-sharp');
 
     const cancelButton = (this.showCancelButton !== 'never') && (
       <button
