@@ -53,8 +53,9 @@ export class Searchbar implements ComponentInterface {
 
   /**
    * Set the cancel button icon. Only applies to `md` mode.
+   * Defaults to `"arrow-back-sharp"`.
    */
-  @Prop() cancelButtonIcon = config.get('backButtonIcon', 'md-arrow-back') as string;
+  @Prop() cancelButtonIcon = config.get('backButtonIcon', 'arrow-back-sharp') as string;
 
   /**
    * Set the the cancel button text. Only applies to `ios` mode.
