@@ -70,7 +70,7 @@ export class PickerColumnCmp implements ComponentInterface {
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
-    this.gesture.setDisabled(false);
+    this.gesture.enable();
     this.tmrId = setTimeout(() => {
       this.noAnimate = false;
       this.refresh(true);
