@@ -3,7 +3,7 @@ import { BrowserRouter, BrowserRouterProps } from 'react-router-dom';
 
 import { RouteManagerWithRouter } from './Router';
 
-export const IonReactRouter = /*@__PURE__*/ (() => class IonReactRouterInternal extends React.Component<BrowserRouterProps> {
+export class IonReactRouter extends React.Component<BrowserRouterProps> {
   render() {
     const { children, ...props } = this.props;
     return (
@@ -12,4 +12,4 @@ export const IonReactRouter = /*@__PURE__*/ (() => class IonReactRouterInternal 
       </BrowserRouter>
     );
   }
-})();
+}
