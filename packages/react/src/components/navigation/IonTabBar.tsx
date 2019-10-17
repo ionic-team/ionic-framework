@@ -72,7 +72,7 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
       if (this.context.hasIonicRouter()) {
         this.context.tabNavigate(originalHref);
       } else {
-        this.context.navigate(originalHref, 'back');
+      this.context.navigate(originalHref, 'back');
       }
     } else {
       this.context.navigate(this.state.tabs[e.detail.tab].currentHref, 'none');

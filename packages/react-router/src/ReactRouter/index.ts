@@ -1,2 +1,2 @@
-
-export { IonReactRouter } from './Router';
+export { IonReactRouter } from './IonReactRouter';
+export { IonReactHashRouter } from './IonReactHashRouter';
