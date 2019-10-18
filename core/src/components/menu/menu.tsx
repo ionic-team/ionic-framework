@@ -5,7 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
 import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import { assert, isEndSide as isEnd } from '../../utils/helpers';
+import { assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
@@ -229,7 +229,7 @@ AFTER:
 
   @Listen('click', { capture: true })
   onBackdropClick(ev: any) {
-    if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
+    if (this._isOpen && this.lastOnEnd < ev.currentTime - 100) {
       const shouldClose = (ev.composedPath)
         ? !ev.composedPath().includes(this.menuInnerEl)
         : false;
@@ -428,7 +428,7 @@ AFTER:
       shouldOpen = true;
     }
 
-    this.lastOnEnd = detail.timeStamp;
+    this.lastOnEnd = detail.currentTime;
 
     // Account for rounding errors in JS
     let newStepValue = (shouldComplete) ? 0.001 : -0.001;
@@ -449,7 +449,7 @@ AFTER:
      * to the new easing curve, as `stepValue` is going to be given
      * in terms of a linear curve.
      */
-    newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.4, 0), new Point(0.6, 1), new Point(1, 1), adjustedStepValue);
+    newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.4, 0), new Point(0.6, 1), new Point(1, 1), clamp(0, adjustedStepValue, 1));
 
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
@@ -520,7 +520,7 @@ AFTER:
   private updateState() {
     const isActive = this._isActive();
     if (this.gesture) {
-      this.gesture.setDisabled(!isActive || !this.swipeGesture);
+      this.gesture.enable(isActive && this.swipeGesture);
     }
 
     // Close menu immediately

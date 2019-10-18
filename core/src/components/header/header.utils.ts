@@ -49,20 +49,13 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
   } as HeaderIndex;
 };
 
-export const handleContentScroll = (scrollEl: HTMLElement, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex, remainingHeight = 0) => {
+export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: HeaderIndex) => {
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
-    const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
-
     const scale = clamp(1, 1 + (-scrollTop / 500), 1.1);
-
-    const borderOpacity = clamp(0, (scrollTop - remainingHeight) / lastMainToolbar.el.clientHeight, 1);
-    const maxOpacity = 1;
-    const scaledOpacity = borderOpacity * maxOpacity;
 
     writeTask(() => {
       scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
-      setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scaledOpacity === 1) ? undefined : scaledOpacity);
     });
   });
 };
@@ -75,6 +68,13 @@ const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | un
   }
 };
 
+const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) => {
+  if (!ev[0].isIntersecting) { return; }
+
+  const scale = ((1 - ev[0].intersectionRatio) * 100) / 75;
+  setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scale === 1) ? undefined : scale);
+};
+
 /**
  * If toolbars are intersecting, hide the scrollable toolbar content
  * and show the primary toolbar content. If the toolbars are not intersecting,
@@ -82,7 +82,10 @@ const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | un
  */
 export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex) => {
   writeTask(() => {
+    handleToolbarBorderIntersection(ev, mainHeaderIndex);
+
     const event = ev[0];
+
     const intersection = event.intersectionRect;
     const intersectionArea = intersection.width * intersection.height;
     const rootArea = event.rootBounds.width * event.rootBounds.height;
@@ -114,6 +117,7 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
       if (hasValidIntersection) {
         setHeaderActive(mainHeaderIndex);
         setHeaderActive(scrollHeaderIndex, false);
+        setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], 1);
       }
     }
   });
@@ -126,7 +130,6 @@ export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
     } else {
       headerIndex.el.classList.add('header-collapse-condense-inactive');
     }
-    setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? undefined : 0);
   });
 };
 
