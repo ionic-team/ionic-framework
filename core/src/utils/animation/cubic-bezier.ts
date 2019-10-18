@@ -17,6 +17,9 @@ export class Point {
  * P1: (0.32, 0.72)
  * P2: (0, 1)
  * P3: (1, 1)
+ *
+ * If you give a cubic bezier curve that never reaches the
+ * provided progression, this function will return NaN.
  */
 export const getTimeGivenProgression = (p0: Point, p1: Point, p2: Point, p3: Point, progression: number) => {
   const tValues = solveCubicBezier(p0.y, p1.y, p2.y, p3.y, progression);
