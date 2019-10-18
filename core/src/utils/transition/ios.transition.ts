@@ -1,6 +1,6 @@
 import { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
-import { TransitionOptions } from '../transition';
+import { TransitionOptions, getIonPageElement } from '../transition';
 
 const DURATION = 540;
 const addSafeArea = (val: number, side = 'top'): string => {
@@ -375,6 +375,13 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         leavingContent
           .beforeClearStyles([OPACITY])
           .fromTo('transform', `translateX(${CENTER})`, (isRTL ? 'translateX(-100%)' : 'translateX(100%)'));
+
+        const leavingPage = getIonPageElement(leavingEl) as HTMLElement;
+        rootAnimation.afterAddWrite(() => {
+          if (rootAnimation.getDirection() === 'normal') {
+            leavingPage.style.setProperty('display', 'none');
+          }
+        });
 
       } else {
         // leaving content, forward direction
