@@ -156,7 +156,7 @@
 ::slotted(ion-note) {
   @include margin(0);
 
-  align-self: flex-start;
+  align-self: center;
 
   font-size: $item-md-note-slot-font-size;
 }
