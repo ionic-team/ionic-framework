@@ -43,6 +43,12 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     }
   }
 
+  componentWillUnmount() {
+    if (this.listenUnregisterCallback) {
+      this.listenUnregisterCallback();
+    }
+  }
+
   hideView(viewId: string) {
     const viewStacks = Object.assign(new ViewStacks(), this.state.viewStacks);
     const { view } = viewStacks.findViewInfoById(viewId);
@@ -97,17 +103,16 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
               enteringView.prevId = enteringView.prevId || leavingView.id;
             } else {
               direction = direction || 'back';
-              leavingView.mount = false;
             }
-          } else if (action === 'REPLACE') {
-            leavingView.mount = false;
           }
         }
+        this.removeOrphanedViews(enteringView, enteringViewStack);
       } else {
         enteringView.show = true;
         enteringView.mount = true;
         enteringView.routeData.match = match!;
       }
+
     });
 
     if (leavingView) {
@@ -140,10 +145,20 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     });
   }
 
-  componentWillUnmount() {
-    if (this.listenUnregisterCallback) {
-      this.listenUnregisterCallback();
-    }
+  removeOrphanedViews(view: ViewItem, viewStack: ViewStack) {
+    const viewsToRemove = viewStack.views.filter(v => v.prevId === view.id);
+    viewsToRemove.forEach(v => {
+      this.removeOrphanedViews(v, viewStack);
+      // If view is not currently visible, go ahead and remove it from DOM
+      if (v.ionPageElement!.classList.contains('ion-page-hidden')) {
+        v.show = false;
+        v.ionPageElement = undefined;
+        v.isIonRoute = false;
+        v.prevId = undefined;
+        v.key = generateId();
+      }
+      v.mount = false;
+    });
   }
 
   async setupIonRouter(id: string, children: any, routerOutlet: HTMLIonRouterOutletElement) {
