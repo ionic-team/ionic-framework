@@ -215,8 +215,12 @@ AFTER:
 
   @Listen('ionSplitPaneVisible', { target: 'body' })
   onSplitPaneChanged(ev: CustomEvent) {
-    this.isPaneVisible = ev.detail.isPane(this.el);
-    this.updateState();
+    const eventElement: any = ev.target;
+    // Check if the contentId of the side-pane equals the contentId of this menu
+    if (eventElement.contentId === this.contentId) {
+      this.isPaneVisible = ev.detail.isPane(this.el);
+      this.updateState();
+    }
   }
 
   @Listen('click', { capture: true })
