@@ -163,8 +163,8 @@ BEFORE:
   <div main>...</div>
 
 AFTER:
-  <ion-menu contentId="my-content"></ion-menu>
-  <div id="my-content">...</div>
+  <ion-menu contentId="main-content"></ion-menu>
+  <div id="main-content">...</div>
 `);
     }
     const content = this.contentId !== undefined
