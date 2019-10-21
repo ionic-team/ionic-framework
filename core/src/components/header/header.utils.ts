@@ -60,11 +60,11 @@ export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: He
   });
 };
 
-const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | undefined) => {
+const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: string | undefined) => {
   if (opacity === undefined) {
-    toolbar.background.style.removeProperty('--opacity');
+    toolbar.background.style.removeProperty('--border-style');
   } else {
-    toolbar.background.style.setProperty('--opacity', opacity.toString());
+    toolbar.background.style.setProperty('--border-style', opacity.toString());
   }
 };
 
@@ -72,7 +72,7 @@ const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) 
   if (!ev[0].isIntersecting) { return; }
 
   const scale = ((1 - ev[0].intersectionRatio) * 100) / 75;
-  setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scale === 1) ? undefined : scale);
+  setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scale === 1) ? undefined : 'none');
 };
 
 /**
@@ -117,7 +117,7 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
       if (hasValidIntersection) {
         setHeaderActive(mainHeaderIndex);
         setHeaderActive(scrollHeaderIndex, false);
-        setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], 1);
+        setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], undefined);
       }
     }
   });
