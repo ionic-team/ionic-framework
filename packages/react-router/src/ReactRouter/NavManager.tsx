@@ -15,6 +15,7 @@ interface NavManagerProps extends RouteComponentProps {
   findViewInfoByLocation: (location: HistoryLocation) => { view?: ViewItem, viewStack?: ViewStack };
   findViewInfoById: (id: string) => { view?: ViewItem, viewStack?: ViewStack };
   getActiveIonPage: () => { view?: ViewItem, viewStack?: ViewStack };
+  onNavigate: (type: 'push' | 'replace', path: string, state?: any) => void;
 }
 
 export class NavManager extends React.Component<NavManagerProps, NavContextState> {
@@ -27,8 +28,6 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
     this.state = {
       goBack: this.goBack.bind(this),
       hasIonicRouter: () => true,
-      getHistory: this.getHistory.bind(this),
-      getLocation: this.getLocation.bind(this),
       navigate: this.navigate.bind(this),
       getStackManager: this.getStackManager.bind(this),
       getPageManager: this.getPageManager.bind(this),
@@ -66,36 +65,28 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
       if (enteringView) {
         const lastLocation = this.locationHistory.findLastLocation(enteringView.routeData.match.url);
         if (lastLocation) {
-          this.props.history.replace(lastLocation.pathname + lastLocation.search, { direction: 'back' });
+          this.props.onNavigate('replace', lastLocation.pathname + lastLocation.search, 'back');
         } else {
-          this.props.history.replace(enteringView.routeData.match.url, { direction: 'back' });
+          this.props.onNavigate('replace', enteringView.routeData.match.url, 'back');
         }
       } else {
         if (defaultHref) {
-          this.props.history.replace(defaultHref, { direction: 'back' });
+          this.props.onNavigate('replace', defaultHref, 'back');
         }
       }
     } else {
       if (defaultHref) {
-        this.props.history.replace(defaultHref, { direction: 'back' });
+        this.props.onNavigate('replace', defaultHref, 'back');
       }
     }
   }
 
-  getHistory() {
-    return this.props.history as any;
-  }
-
-  getLocation() {
-    return this.props.location as any;
-  }
-
   navigate(path: string, direction?: RouterDirection | 'none') {
-    this.props.history.push(path, { direction });
+    this.props.onNavigate('push', path, direction);
   }
 
-  tabNavigate(url: string) {
-    this.props.history.replace(url, { direction: 'back' });
+  tabNavigate(path: string) {
+    this.props.onNavigate('replace', path, 'back');
   }
 
   getPageManager() {
