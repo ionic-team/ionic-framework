@@ -1,4 +1,5 @@
 @import "./split-pane.vars";
+@import "../menu/menu.vars";
 
 // Split Pane
 // --------------------------------------------------
@@ -6,8 +7,14 @@
 :host {
   /**
    * @prop --border: Border between panes
+   * @prop --menu-min-width: Minimum width of the menu
+   * @prop --menu-max-width: Maximum width of the menu
+   * @prop --menu-width: Width of the menu
    */
-   
+  --menu-width: #{$menu-width};
+  --menu-min-width: auto;
+  --menu-max-width: auto;
+  
   @include position(0, 0, 0, 0);
 
   display: flex;
@@ -17,6 +24,12 @@
   flex-wrap: nowrap;
 
   contain: strict;
+}
+
+::slotted(ion-menu) {
+  --width: var(--menu-width);
+  --min-width: var(--menu-min-width);
+  --max-width: var(--menu-max-width);
 }
 
 :host(.split-pane-visible) ::slotted(.split-pane-side),
