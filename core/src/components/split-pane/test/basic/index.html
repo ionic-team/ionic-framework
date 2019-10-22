@@ -69,6 +69,21 @@
           <f></f>
           <f></f>
           <f></f>
+          
+          <ion-item>
+            <ion-label>Toggle Menu Min Width</ion-label>
+            <ion-toggle id="menu-min-width"></ion-toggle>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label>Toggle Menu Max Width</ion-label>
+            <ion-toggle id="menu-max-width"></ion-toggle>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label>Toggle Menu Fixed Width</ion-label>
+            <ion-toggle id="menu-width"></ion-toggle>
+          </ion-item>
         </ion-content>
 
       </div>
@@ -78,6 +93,16 @@
   <ion-menu-controller></ion-menu-controller>
 
   <script>
+    const menuMinWidth = document.querySelector('ion-toggle#menu-min-width');
+    const menuMaxWidth = document.querySelector('ion-toggle#menu-max-width');
+    const menuWidth = document.querySelector('ion-toggle#menu-width');
+    
+    const splitPane = document.querySelector('ion-split-pane');
+    
+    menuMinWidth.addEventListener('ionChange', () => splitPane.classList.toggle('menu-min-width'));    
+    menuMaxWidth.addEventListener('ionChange', () => splitPane.classList.toggle('menu-max-width'));    
+    menuWidth.addEventListener('ionChange', () => splitPane.classList.toggle('menu-width'));    
+    
     const menuCtrl = document.querySelector('ion-menu-controller');
     function openStart() {
       menuCtrl.open('start');
@@ -89,6 +114,18 @@
   </script>
 
   <style>
+    .menu-width {
+      --menu-width: 100px;
+    }
+    
+    .menu-min-width {
+      --menu-min-width: 50px;
+    }
+    
+    .menu-max-width {
+      --menu-max-width: 100px;
+    }
+    
     f {
       display: block;
       height: 150px;

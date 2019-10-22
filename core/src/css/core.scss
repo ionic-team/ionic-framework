@@ -3,6 +3,10 @@
 @import "../components/menu/menu.ios.vars";
 @import "../components/menu/menu.md.vars";
 
+
+
+
+
 // Ionic Font Family
 // --------------------------------------------------
 
@@ -74,6 +78,10 @@ body.backdrop-no-scroll {
   contain: layout size style;
   overflow: hidden;
   z-index: $z-index-page-container;
+}
+
+.split-pane-visible > .ion-page.split-pane-main {
+  position: relative;
 }
 
 ion-route,

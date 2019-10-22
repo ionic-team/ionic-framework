@@ -4,11 +4,11 @@
 // Split Pane
 // --------------------------------------------------
 
-.split-pane-md {
+:host(.split-pane-md) {
   --border: #{$split-pane-md-border};
 }
 
-.split-pane-md.split-pane-visible > .split-pane-side {
+:host(.split-pane-md.split-pane-visible) ::slotted(.split-pane-side) {
   min-width: $split-pane-md-side-min-width;
   max-width: $split-pane-md-side-max-width;
 
@@ -16,7 +16,7 @@
   border-left: 0;
 }
 
-.split-pane-md.split-pane-visible > .split-pane-side[side=end] {
+:host(.split-pane-md.split-pane-visible) ::slotted(.split-pane-side[side=end]) {
   min-width: $split-pane-md-side-min-width;
   max-width: $split-pane-md-side-max-width;
 
