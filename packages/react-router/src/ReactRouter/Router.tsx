@@ -102,7 +102,10 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
               enteringView.prevId = enteringView.prevId || leavingView.id;
             } else {
               direction = direction || 'back';
+              leavingView.mount = false;
             }
+          } else if (action === 'REPLACE') {
+            leavingView.mount = false;
           }
         } else {
           // If there is not a leavingView, then we shouldn't provide a direction
