@@ -5,8 +5,6 @@ import { Animation, createAnimation } from '@ionic/core';
   providedIn: 'root',
 })
 export class AnimationController {
-  constructor() {}
-
   /**
    * Create a new animation
    */
