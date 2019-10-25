@@ -19,13 +19,10 @@
 // Segment: Color
 // --------------------------------------------------
 
-:host(.ion-color) {
-  --indicator-color: #{current-color(base)};
-}
-
 :host(.ion-color) ::slotted(ion-segment-button) {
   --background-activated: #{current-color(base, .16)};
   --ripple-color: #{current-color(base)};
+  --indicator-color: #{current-color(base)};
 
   background: transparent;
   color: $segment-button-md-text-color;
@@ -48,11 +45,9 @@
 // Segment: Default Toolbar
 // --------------------------------------------------
 
-:host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) {
-  --indicator-color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
-}
-
 :host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
+  --indicator-color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
+
   background: #{var(--ion-toolbar-background-unchecked, var(--background))};
   color: #{var(--ion-toolbar-color-unchecked, var(--color))};
 }
@@ -66,28 +61,12 @@
 // Segment: Toolbar Color
 // --------------------------------------------------
 
-:host-context(ion-toolbar.ion-color):host(:not(.ion-color)) {
-  --indicator-color: #{current-color(contrast)};
-}
-
 :host-context(ion-toolbar.ion-color):host(:not(.ion-color)) ::slotted(ion-segment-button) {
   --background-hover: #{current-color(contrast, .04)};
   --background-activated: #{current-color(base)};
   --color: #{current-color(contrast, .6)};
   --color-checked: #{current-color(contrast)};
-}
-
-// Segment: Checked Indicator
-// --------------------------------------------------
-
-.segment-checked-indicator {
-  @include position(null, 0, 0, 0);
-}
-
-.segment-checked-indicator-background {
-  height: 2px;
-
-  background: var(--indicator-color);
+  --indicator-color: #{current-color(contrast)};
 }
 
 // Segment: Scrollable

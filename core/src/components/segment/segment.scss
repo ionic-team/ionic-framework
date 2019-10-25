@@ -7,7 +7,6 @@
   /**
    * @prop --background: Background of the segment button
    */
-  --indicator-color: initial;
   --ripple-color: currentColor;
   --color: initial;
   --color-hover: var(--color);
@@ -56,35 +55,4 @@
 
 :host(.segment-scrollable::-webkit-scrollbar) {
   display: none;
-}
-
-
-// Segment: Checked Indicator
-// --------------------------------------------------
-
-.segment-checked-indicator {
-  display: none;
-
-  position: absolute;
-
-  box-sizing: border-box;
-}
-
-.segment-checked-indicator-background {
-  width: 100%;
-  height: 100%;
-}
-
-.segment-checked-indicator-animated {
-  transition: var(--indicator-transition);
-}
-
-
-// Segment: Reduced Motion
-// --------------------------------------------------
-
-@media (prefers-reduced-motion: reduce) {
-  .segment-checked-indicator-animated {
-    transition: none;
-  }
 }

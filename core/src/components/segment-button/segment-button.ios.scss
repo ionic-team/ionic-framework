@@ -37,8 +37,6 @@
   font-weight: 450;
 
   line-height: #{$segment-button-ios-line-height};
-
-  z-index: 2;
 }
 
 
@@ -116,4 +114,21 @@
 
 :host(.segment-button-checked) {
   font-weight: 500;
+}
+
+
+// Segment: Checked Indicator
+// --------------------------------------------------
+
+.segment-checked-indicator {
+  @include padding(null, $segment-button-ios-margin, null, $segment-button-ios-margin);
+  @include position(0, 0, 0, 0);
+}
+
+.segment-checked-indicator-background {
+  @include border-radius($segment-button-ios-border-radius);
+
+  background: var(--indicator-color);
+
+  box-shadow: $segment-button-ios-box-shadow-checked;
 }
