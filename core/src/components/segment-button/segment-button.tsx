@@ -18,9 +18,6 @@ let ids = 0;
   shadow: true
 })
 export class SegmentButton implements ComponentInterface, ButtonInterface {
-  private animated = false;
-  private indicatorEl!: HTMLDivElement | undefined;
-
   @Element() el!: HTMLElement;
 
   /**
@@ -107,7 +104,6 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
             'segment-checked-indicator': true,
             'segment-checked-indicator-animated': true
           }}
-          ref={el => this.indicatorEl = el}
         >
           <div class="segment-checked-indicator-background"></div>
         </div>
