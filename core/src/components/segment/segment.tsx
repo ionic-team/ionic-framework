@@ -208,7 +208,17 @@ export class Segment implements ComponentInterface {
       ? `translate3d(${xPosition}px, 0, 0) scaleX(${activatedScale}) scaleY(0.95)`
       : `translate3d(${xPosition}px, 0, 0) scaleX(${widthDelta})`;
 
+    // Clear the z-index when the transition ends
+    const endHandler = () => {
+      checked.style.setProperty('z-index', '');
+      currentIndicator.removeEventListener('transitionend', endHandler);
+    };
+    currentIndicator.addEventListener('transitionend', endHandler);
+
     writeTask(() => {
+      // When the current indicator transition begins, we need to set the z-index
+      // to 1 on the previous button so that when the indicator moves over the text
+      // is still on top
       checked.style.setProperty('z-index', '1');
 
       // Remove the transition before positioning on top of the old indicator
@@ -225,11 +235,6 @@ export class Segment implements ComponentInterface {
       } else {
         currentIndicator.style.setProperty('transform', '');
       }
-
-      // TODO temporary
-      setTimeout(() => {
-        checked.style.setProperty('z-index', '');
-      }, 260);
     });
 
     clicked.checked = true;
