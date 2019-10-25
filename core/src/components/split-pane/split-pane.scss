@@ -7,14 +7,12 @@
 :host {
   /**
    * @prop --border: Border between panes
-   * @prop --menu-min-width: Minimum width of the menu
-   * @prop --menu-max-width: Maximum width of the menu
-   * @prop --menu-width: Width of the menu
+   * @prop --side-min-width: Minimum width of the side pane
+   * @prop --side-max-width: Maximum width of the side pane
+   * @prop --side-width: Width of the side pane
    */
-  --menu-width: #{$menu-width};
-  --menu-min-width: auto;
-  --menu-max-width: auto;
-  
+  --side-width: 100%;
+
   @include position(0, 0, 0, 0);
 
   display: flex;
@@ -26,10 +24,29 @@
   contain: strict;
 }
 
-::slotted(ion-menu) {
-  --width: var(--menu-width);
-  --min-width: var(--menu-min-width);
-  --max-width: var(--menu-max-width);
+/**
+ * Only pass CSS Variables down on smaller
+ * screens as they affect the inner content, rather
+ * than the outer `ion-menu`
+ */
+::slotted(ion-menu:not(.menu-pane-visible)) {
+  --width: var(--side-width);
+  --min-width: var(--side-min-width);
+  --max-width: var(--side-max-width);
+}
+
+/**
+ * Do not pass CSS Variables down on larger 
+ * screens as we want them to affect the outer
+ * `ion-menu` rather than the inner content
+ */
+::slotted(ion-menu.menu-pane-visible) {
+  
+  flex: 0 1 auto;
+
+  width: var(--side-width);
+  min-width: var(--side-min-width);
+  max-width: var(--side-max-width);
 }
 
 :host(.split-pane-visible) ::slotted(.split-pane-side),
@@ -38,11 +55,13 @@
 
   position: relative;
 
-  flex: 1;
-
   /* stylelint-disable-next-line declaration-no-important */
   box-shadow: none !important;
   z-index: 0;
+}
+
+:host(.split-pane-visible) ::slotted(.split-pane-main) {
+  flex: 1;
 }
 
 :host(.split-pane-visible) ::slotted(.split-pane-side:not(ion-menu)),
