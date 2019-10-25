@@ -11,7 +11,7 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
-<body onLoad="onLoad()">
+<body>
   <ion-app>
     <ion-header>
       <ion-toolbar>
@@ -259,17 +259,17 @@
   /*
    * MD Custom Icon Segment (Facebook, Instagram, Slack)
    */
-  .md .segment-facebook-checked .segment-button-facebook {
+  .md .segment-button-facebook {
     --color-checked: #3a3d46;
     --indicator-color: #3a3d46;
   }
 
-  .md .segment-instagram-checked .segment-button-instagram {
+  .md .segment-button-instagram {
     --color-checked: #e4405f;
     --indicator-color: #e4405f;
   }
 
-  .md .segment-slack-checked .segment-button-slack {
+  .md .segment-button-slack {
     --color-checked: #3aaf85;
     --indicator-color: #3aaf85;
   }
@@ -279,34 +279,24 @@
    */
   .ios .custom-icon {
     --indicator-color: transparent;
-    --indicator-transition: none;
-  }
-
-  .ios .segment-facebook-checked .segment-button-facebook {
-    --background-checked: #3a3d46;
-    --color-checked: #ffffff;
-  }
-
-  .ios .segment-instagram-checked .segment-button-instagram {
-    --background-checked: #e4405f;
-    --color-checked: #ffffff;
-  }
-
-  .ios .segment-slack-checked .segment-button-slack {
-    --background-checked: #3aaf85;
-    --color-checked: #ffffff;
   }
 
   .ios .segment-button-facebook {
     --color: #3a3d46;
+    --background-checked: #3a3d46;
+    --color-checked: #ffffff;
   }
 
   .ios .segment-button-instagram {
     --color: #e4405f;
+    --background-checked: #e4405f;
+    --color-checked: #ffffff;
   }
 
   .ios .segment-button-slack {
     --color: #3aaf85;
+    --background-checked: #3aaf85;
+    --color-checked: #ffffff;
   }
 
   /* This CSS should not apply */
@@ -333,30 +323,5 @@
     --background-hover: orange;
   }
 </style>
-
-<script>
-  async function onLoad() {
-    const customIconSegments = document.querySelectorAll('.custom-icon');
-
-    for (var i = 0; i < customIconSegments.length; i++) {
-      const customIconSegment = customIconSegments[i];
-
-      await customIconSegment.componentOnReady();
-      addIconClass(customIconSegment, customIconSegment.value);
-
-      customIconSegment.addEventListener('ionChange', function(ev) {
-        addIconClass(customIconSegment, ev.detail.value);
-      });
-    }
-  }
-
-  function addIconClass(el, value) {
-    console.log('adding class to', el, value);
-    if (value) {
-      el.classList.remove('segment-facebook-checked', 'segment-instagram-checked', 'segment-slack-checked');
-      el.classList.add(`segment-${value}-checked`);
-    }
-  }
-</script>
 
 </html>

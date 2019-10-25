@@ -17,10 +17,7 @@ import { createColorClasses } from '../../utils/theme';
   shadow: true
 })
 export class Segment implements ComponentInterface {
-  private animated = false;
   private gesture?: Gesture;
-  private indicatorEl!: HTMLDivElement | undefined;
-  private nextIndex?: number;
   private didInit = false;
 
   @Element() el!: HTMLIonSegmentElement;
@@ -97,6 +94,7 @@ export class Segment implements ComponentInterface {
 
   async componentDidLoad() {
     this.updateButtons();
+    this.setCheckedClasses();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -113,22 +111,18 @@ export class Segment implements ComponentInterface {
     this.didInit = true;
   }
 
-  componentDidRender() {
-    this.calculateIndicatorPosition();
-  }
-
   onStart(detail: GestureDetail) {
     this.activate(detail);
   }
 
   onMove(detail: GestureDetail) {
-    this.setNextIndex(detail, false);
+    this.setNextIndex(detail);
   }
 
   onEnd(detail: GestureDetail) {
-    this.setNextIndex(detail, true);
-
     this.activated = false;
+
+    this.setNextIndex(detail, true);
 
     detail.event.preventDefault();
     detail.event.stopImmediatePropagation();
@@ -155,62 +149,116 @@ export class Segment implements ComponentInterface {
     if (clicked.checked) {
       this.activated = true;
     }
+
+    this.activateIndicator();
   }
 
-  private calculateIndicatorPosition() {
-    const isRTL = document.dir === 'rtl';
-    const mode = getIonMode(this);
-    const indicator = this.indicatorEl;
+  private activateIndicator() {
     const activated = this.activated;
     const buttons = this.getButtons();
-    const value = this.value;
-    const index = buttons.findIndex(button => button.value === value);
+    const clicked = buttons.find(button => button.checked === true);
+    const mode = getIonMode();
 
-    // If there is no indicator rendered or there is no checked button
-    // then don't move the indicator's position
-    if (!indicator || index === -1) {
+    if (!clicked) {
       return;
     }
 
-    // TODO clean up
+    const indicator = this.getIndicator(clicked);
+
+    if (!indicator) {
+      return;
+    }
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (activated && mode === 'ios' && !reduceMotion) {
+      indicator.style.setProperty('transform', 'scale(0.95)');
+    } else {
+      indicator.style.setProperty('transform', '');
+    }
+  }
+
+  private getIndicator(button: HTMLIonSegmentButtonElement): HTMLDivElement | null {
+    return button.shadowRoot && button.shadowRoot.querySelector('.segment-checked-indicator');
+  }
+
+  private checkButton(clicked: HTMLIonSegmentButtonElement, checked: HTMLIonSegmentButtonElement) {
+    const activated = this.activated;
+    const mode = getIonMode(this);
+    const currentIndicator = this.getIndicator(clicked);
+    const previousIndicator = this.getIndicator(checked);
+
+    if (previousIndicator === null || currentIndicator === null) {
+      return;
+    }
+
+    const previousClientRect = previousIndicator.getBoundingClientRect();
+    const currentClientRect = currentIndicator.getBoundingClientRect();
+    const widthDelta = previousClientRect.width / currentClientRect.width;
+    const xPosition = previousClientRect.left - currentClientRect.left;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Scale iOS smaller when activated
+    const activatedScale = widthDelta * 0.95;
+
+    // Scale the indicator smaller if the gesture started on it, the mode is
+    // ios, and the user does not have reduced motion on
+    const transform = activated && mode === 'ios' && !reduceMotion
+      ? `translate3d(${xPosition}px, 0, 0) scaleX(${activatedScale}) scaleY(0.95)`
+      : `translate3d(${xPosition}px, 0, 0) scaleX(${widthDelta})`;
+
+    // Clear the z-index when the transition ends
+    const endHandler = () => {
+      checked.style.setProperty('z-index', '');
+      currentIndicator.removeEventListener('transitionend', endHandler);
+    };
+    currentIndicator.addEventListener('transitionend', endHandler);
+
+    writeTask(() => {
+      // When the current indicator transition begins, we need to set the z-index
+      // to 1 on the previous button so that when the indicator moves over the text
+      // is still on top
+      checked.style.setProperty('z-index', '1');
+
+      // Remove the transition before positioning on top of the old indicator
+      currentIndicator.classList.remove('segment-checked-indicator-animated');
+      currentIndicator.style.setProperty('transform', transform);
+
+      // Force a repaint to ensure the transform happens
+      currentIndicator.getBoundingClientRect();
+
+      // Add the transition to move the indicator into place
+      currentIndicator.classList.add('segment-checked-indicator-animated');
+      if (activated && mode === 'ios' && !reduceMotion) {
+        currentIndicator.style.setProperty('transform', 'scale(0.95)');
+      } else {
+        currentIndicator.style.setProperty('transform', '');
+      }
+    });
+
+    clicked.checked = true;
+    this.setCheckedClasses();
+  }
+
+  private setCheckedClasses() {
+    const buttons = this.getButtons();
+    const index = buttons.findIndex(button => button.checked === true);
     const next = index + 1;
+
     for (const button of buttons) {
       button.classList.remove('segment-button-after-checked');
     }
     if (next < buttons.length) {
       buttons[next].classList.add('segment-button-after-checked');
     }
-
-    // Transform the indicator based on the index of the button
-    const left = isRTL ? `-${(index * 100)}%` : `${(index * 100)}%`;
-    const width = `calc(${100 / buttons.length}%)`;
-
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Scale the indicator smaller if the gesture started on it, the mode is
-    // ios, and the user does not have reduced motion on
-    const transform = activated && mode === 'ios' && !reduceMotion
-      ? `translate3d(${left}, 0, 0) scale(0.95)`
-      : `translate3d(${left}, 0, 0)`;
-
-    writeTask(() => {
-      const indicatorStyle = indicator.style;
-
-      indicatorStyle.width = width;
-      indicatorStyle.transform = transform;
-      indicatorStyle.display = `block`;
-    });
-
-    // After the indicator is set for the first time
-    // we can animate it between the segment buttons
-    this.animated = true;
   }
 
-  private setNextIndex(detail: GestureDetail, isEnd: boolean) {
+  private setNextIndex(detail: GestureDetail, isEnd = false) {
     const isRTL = document.dir === 'rtl';
     const activated = this.activated;
     const buttons = this.getButtons();
-    const index = this.nextIndex !== undefined ? this.nextIndex : buttons.findIndex(button => button.checked === true);
+    const index = buttons.findIndex(button => button.checked === true);
     const startEl = buttons[index];
 
     if (index === -1) {
@@ -225,7 +273,7 @@ export class Segment implements ComponentInterface {
     const left = rect.left;
     const width = rect.width;
 
-    let nextIndex = this.nextIndex;
+    let nextIndex;
 
     const decreaseIndex = isRTL ? currentX > (left + width) : currentX < left;
     const increaseIndex = isRTL ? currentX < left : currentX > (left + width);
@@ -274,10 +322,18 @@ export class Segment implements ComponentInterface {
       }
     }
 
-    if (nextIndex !== undefined && !buttons[nextIndex].disabled) {
-      buttons[nextIndex].checked = true;
+    if (isEnd) {
+      this.activateIndicator();
     }
-    this.nextIndex = nextIndex;
+
+    if (nextIndex === undefined || buttons[nextIndex].disabled) {
+      return;
+    }
+
+    const clicked = buttons[nextIndex];
+    const checked = buttons[index];
+
+    this.checkButton(clicked, checked);
   }
 
   private emitStyle() {
@@ -310,16 +366,6 @@ export class Segment implements ComponentInterface {
         }}
       >
         <slot></slot>
-        <div
-          part="indicator"
-          class={{
-            'segment-checked-indicator': true,
-            'segment-checked-indicator-animated': this.animated
-          }}
-          ref={el => this.indicatorEl = el}
-        >
-          <div class="segment-checked-indicator-background"></div>
-        </div>
       </Host>
     );
   }

@@ -46,6 +46,8 @@
 
   display: flex;
 
+  position: relative;
+
   flex: 1 1 auto;
   flex-direction: column;
 
@@ -97,6 +99,8 @@
 
   contain: content;
   cursor: pointer;
+
+  z-index: 2;
 }
 
 
@@ -208,4 +212,40 @@
 
 ion-ripple-effect {
   color: var(--ripple-color, var(--color-checked));
+}
+
+// Segment: Checked Indicator
+// --------------------------------------------------
+
+.segment-checked-indicator {
+  @include transform-origin(center);
+
+  position: absolute;
+
+  opacity: 0;
+
+  box-sizing: border-box;
+}
+
+.segment-checked-indicator-background {
+  width: 100%;
+  height: 100%;
+}
+
+.segment-checked-indicator-animated {
+  transition: var(--indicator-transition);
+}
+
+:host(.segment-button-checked) .segment-checked-indicator {
+  opacity: 1;
+}
+
+
+// Segment: Reduced Motion
+// --------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  .segment-checked-indicator-animated {
+    transition: none;
+  }
 }

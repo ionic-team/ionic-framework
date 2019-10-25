@@ -6,7 +6,7 @@
 
 :host {
   --background: #{$segment-ios-background-color};
-  --indicator-color: #{$segment-button-ios-indicator-color};;
+  --indicator-color: #{$segment-button-ios-indicator-color};
   --indicator-transition: #{$segment-button-ios-transition-animated};
 
   @include border-radius($segment-ios-border-radius);
@@ -46,17 +46,15 @@
   --color: #{var(--ion-toolbar-color-unchecked, var(--color))};
 }
 
-:host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) .segment-checked-indicator-background {
-  background: #{var(--ion-toolbar-background-checked, var(--indicator-color))};
-}
-
 :host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
+  --indicator-color: #{var(--ion-toolbar-background-checked, $segment-button-ios-indicator-color)};
   color: #{var(--ion-toolbar-color-unchecked, var(--color))};
 }
 
 :host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(.segment-button-checked) {
   color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 }
+
 // TODO the indicator color can't be globally themed
 
 // Segment: Color Toolbar
@@ -68,23 +66,6 @@
 
 :host-context(ion-toolbar.ion-color):host(:not(.ion-color)) ::slotted(.segment-button-checked) {
   color: #{current-color(base)};
-}
-
-
-// Segment: Checked Indicator
-// --------------------------------------------------
-
-.segment-checked-indicator {
-  @include padding($segment-button-ios-margin);
-  @include position(0, 0, 0, 0);
-}
-
-.segment-checked-indicator-background {
-  @include border-radius($segment-button-ios-border-radius);
-
-  background: var(--indicator-color);
-
-  box-shadow: $segment-button-ios-box-shadow-checked;
 }
 
 

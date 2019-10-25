@@ -18,7 +18,6 @@ let ids = 0;
   shadow: true
 })
 export class SegmentButton implements ComponentInterface, ButtonInterface {
-
   @Element() el!: HTMLElement;
 
   /**
@@ -99,6 +98,16 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           <slot></slot>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>
+        <div
+          part="indicator"
+          class={{
+            'segment-checked-indicator': true,
+            'segment-checked-indicator-animated': true
+          }}
+        >
+          <div class="segment-checked-indicator-background"></div>
+        </div>
+
       </Host>
     );
   }
