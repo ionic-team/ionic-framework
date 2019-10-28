@@ -63,6 +63,7 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
       attachProps(overlay, {
         [dismissEventName]: onDidDismiss
       }, prevProps);
+      // Check isOpen again since the value could of changed during the async call to controller.create
       if (this.props.isOpen === true) {
         await overlay.present();
       }
