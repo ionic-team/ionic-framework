@@ -69,29 +69,29 @@ function addIonicons(): Rule {
   };
 }
 
-function addIonicBuilder(): Rule {
+function addIonicBuilder(project: string): Rule {
   return (host: Tree) => {
     addArchitectBuilder(host, 'ionic-cordova-serve', {
       builder: '@ionic/angular-toolkit:cordova-serve',
       options: {
-        cordovaBuildTarget: 'app:ionic-cordova-build',
-        devServerTarget: 'app:serve'
+        cordovaBuildTarget: `${project}:ionic-cordova-build`,
+        devServerTarget: `${project}:serve`
       },
       configurations: {
         production: {
-          cordovaBuildTarget: 'app:ionic-cordova-build:production',
-          devServerTarget: 'app:serve:production'
+          cordovaBuildTarget: `${project}:ionic-cordova-build:production`,
+          devServerTarget: `${project}:serve:production`
         }
       }
     });
     addArchitectBuilder(host, 'ionic-cordova-build', {
       builder: '@ionic/angular-toolkit:cordova-build',
       options: {
-        browserTarget: 'app:build'
+        browserTarget: `${project}:build`
       },
       configurations: {
         production: {
-          browserTarget: 'app:build:production'
+          browserTarget: `${project}:build:production`
         }
       }
     });
@@ -128,7 +128,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicAngularToPackageJson(),
       addIonicAngularToolkitToPackageJson(),
       addIonicAngularModuleToAppModule(sourcePath),
-      addIonicBuilder(),
+      addIonicBuilder(options.project),
       addIonicStyles(),
       addIonicons(),
       mergeWith(rootTemplateSource),
