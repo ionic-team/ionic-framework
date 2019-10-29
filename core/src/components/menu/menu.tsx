@@ -229,7 +229,7 @@ AFTER:
 
   @Listen('click', { capture: true })
   onBackdropClick(ev: any) {
-    if (this._isOpen && this.lastOnEnd < ev.currentTime - 100) {
+    if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
       const shouldClose = (ev.composedPath)
         ? !ev.composedPath().includes(this.menuInnerEl)
         : false;
@@ -337,7 +337,12 @@ AFTER:
     const isReversed = !shouldOpen;
     const ani = (this.animation as Animation)!
       .direction((isReversed) ? 'reverse' : 'normal')
-      .easing((isReversed) ? this.easingReverse : this.easing);
+      .easing((isReversed) ? this.easingReverse : this.easing)
+      .onFinish(() => {
+        if (ani.getDirection() === 'reverse') {
+          ani.direction('normal');
+        }
+      });
 
     if (animated) {
       await ani.play();
