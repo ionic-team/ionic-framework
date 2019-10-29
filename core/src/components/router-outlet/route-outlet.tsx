@@ -47,7 +47,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Watch('swipeHandler')
   swipeHandlerChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.swipeHandler === undefined);
+      this.gesture.enable(this.swipeHandler !== undefined);
     }
   }
 

@@ -1,6 +1,6 @@
 import { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
-import { TransitionOptions } from '../transition';
+import { TransitionOptions, getIonPageElement } from '../transition';
 
 export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): Animation => {
   const OFF_BOTTOM = '40px';
@@ -58,17 +58,4 @@ export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): 
   }
 
   return rootTransition;
-};
-
-const getIonPageElement = (element: HTMLElement) => {
-  if (element.classList.contains('ion-page')) {
-    return element;
-  }
-
-  const ionPage = element.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs');
-  if (ionPage) {
-    return ionPage;
-  }
-  // idk, return the original element so at least something animates and we don't have a null pointer
-  return element;
 };
