@@ -229,7 +229,7 @@ AFTER:
 
   @Listen('click', { capture: true })
   onBackdropClick(ev: any) {
-    if (this._isOpen && this.lastOnEnd < ev.currentTime - 100) {
+    if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
       const shouldClose = (ev.composedPath)
         ? !ev.composedPath().includes(this.menuInnerEl)
         : false;
