@@ -48,8 +48,10 @@
       const pickerController = document.querySelector('ion-picker-controller');
       const pickerElement = await pickerController.create({
         buttons: [{
+          text: 'Cancel',
+          role: 'cancel'
+        }, {
           text: 'Save',
-          role: 'cancel',
           handler: () => console.log('Clicked Save!')
         }, {
           text: 'Log',

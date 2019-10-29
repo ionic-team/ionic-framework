@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
-import { dismiss, eventMethod, prepareOverlay, present, safeCall, BACKDROP } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -163,15 +163,29 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return Promise.resolve(this.columns.find(column => column.name === name));
   }
 
-  private buttonClick(button: PickerButton) {
-    // keep the time of the most recent button click
-    // a handler has been provided, execute it
-    // pass the handler the values from the inputs
-    const shouldDismiss = safeCall(button.handler, this.getSelected()) !== false;
+  private async buttonClick(button: PickerButton) {
+    const role = button.role;
+    if (isCancel(role)) {
+      return this.dismiss(undefined, role);
+    }
+    const shouldDismiss = await this.callButtonHandler(button);
     if (shouldDismiss) {
-      return this.dismiss(undefined, button.role);
+      return this.dismiss(this.getSelected(), button.role);
     }
     return Promise.resolve();
+  }
+
+  private async callButtonHandler(button: PickerButton | undefined) {
+    if (button) {
+      // a handler has been provided, execute it
+      // pass the handler the values from the inputs
+      const rtn = await safeCall(button.handler);
+      if (rtn === false) {
+        // if the return value of the handler is false then do not dismiss
+        return false;
+      }
+    }
+    return true;
   }
 
   private getSelected() {
