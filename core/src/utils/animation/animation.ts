@@ -688,7 +688,6 @@ export const createAnimation = (): Animation => {
       initializeAnimation();
     } else {
       update();
-      setAnimationStep(0);
     }
 
     return ani;
