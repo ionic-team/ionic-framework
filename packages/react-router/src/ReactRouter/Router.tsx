@@ -100,11 +100,13 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
                * record the view that originally directed to the new view for back button purposes.
                */
               enteringView.prevId = enteringView.prevId || leavingView.id;
+            } else if (action === 'POP') {
+              direction = leavingView.prevId === enteringView.id ? 'back' : 'none';
             } else {
               direction = direction || 'back';
               leavingView.mount = false;
             }
-          } else if (action === 'REPLACE') {
+          } else if (direction === 'back' || action === 'REPLACE') {
             leavingView.mount = false;
           }
         } else {
