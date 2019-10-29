@@ -57,6 +57,12 @@
   color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 }
 
+@media (any-hover: hover) {
+  :host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button:hover) {
+    background: #{ion-color(primary, base, .04)};
+  }
+}
+
 
 // Segment: Toolbar Color
 // --------------------------------------------------

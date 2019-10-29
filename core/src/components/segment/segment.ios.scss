@@ -46,6 +46,7 @@
   --color: #{var(--ion-toolbar-color-unchecked, var(--color))};
 }
 
+// TODO the indicator color can't be globally themed
 :host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
   --indicator-color: #{var(--ion-toolbar-background-checked, $segment-button-ios-indicator-color)};
   color: #{var(--ion-toolbar-color-unchecked, var(--color))};
@@ -55,7 +56,6 @@
   color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 }
 
-// TODO the indicator color can't be globally themed
 
 // Segment: Color Toolbar
 // --------------------------------------------------
