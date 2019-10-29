@@ -51,8 +51,8 @@
   padding-bottom: 13px;
 }
 
-ion-toolbar.in-toolbar ion-title,
-ion-toolbar.in-toolbar ion-buttons {
+.header-collapse-main ion-toolbar.in-toolbar ion-title,
+.header-collapse-main ion-toolbar.in-toolbar ion-buttons {
   transition: all 0.2s ease-in-out;
 }
 
