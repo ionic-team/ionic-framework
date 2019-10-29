@@ -67,12 +67,3 @@
 :host-context(ion-toolbar.ion-color):host(:not(.ion-color)) ::slotted(.segment-button-checked) {
   color: #{current-color(base)};
 }
-
-
-// Segment: Checked Borders
-// --------------------------------------------------
-
-::slotted(.segment-button-checked)::before,
-::slotted(.segment-button-after-checked)::before {
-  opacity: 0;
-}

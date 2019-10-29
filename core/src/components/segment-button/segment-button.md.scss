@@ -15,9 +15,9 @@
   --padding-start: #{$segment-button-md-padding-start};
   --transition: #{$segment-button-md-transition};
 
-  // min-width: $segment-button-md-min-width;
+  min-width: $segment-button-md-min-width;
 
-  // max-width: $segment-button-md-max-width;
+  max-width: $segment-button-md-max-width;
   min-height: $segment-button-md-min-height;
 
   border-width: var(--border-width);

@@ -132,3 +132,12 @@
 
   box-shadow: $segment-button-ios-box-shadow-checked;
 }
+
+
+// Segment: Checked Borders
+// --------------------------------------------------
+
+:host(.segment-button-checked)::before,
+:host(.segment-button-after-checked)::before {
+  opacity: 0;
+}
