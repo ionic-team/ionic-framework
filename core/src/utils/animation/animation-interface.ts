@@ -2,6 +2,7 @@ export interface Animation {
   parentAnimation: Animation | undefined;
   elements: HTMLElement[];
   childAnimations: Animation[];
+  id: string | undefined;
 
   /**
    * Play the animation

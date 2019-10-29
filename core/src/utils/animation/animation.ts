@@ -24,7 +24,7 @@ interface AnimationInternal extends Animation {
   animationFinish(): void;
 }
 
-export const createAnimation = (): Animation => {
+export const createAnimation = (animationId?: string): Animation => {
   let _delay: number | undefined;
   let _duration: number | undefined;
   let _easing: string | undefined;
@@ -32,6 +32,8 @@ export const createAnimation = (): Animation => {
   let _fill: AnimationFill | undefined;
   let _direction: AnimationDirection | undefined;
   let _keyframes: AnimationKeyFrames = [];
+  const id: string | undefined = animationId;
+
   let beforeAddClasses: string[] = [];
   let beforeRemoveClasses: string[] = [];
   let initialized = false;
@@ -533,7 +535,7 @@ export const createAnimation = (): Animation => {
     elements.forEach(element => {
       if (_keyframes.length > 0) {
         const keyframeRules = generateKeyframeRules(_keyframes);
-        keyframeName = generateKeyframeName(keyframeRules);
+        keyframeName = (animationId !== undefined) ? animationId : generateKeyframeName(keyframeRules);
         const stylesheet = createKeyframeStylesheet(keyframeName, keyframeRules, element);
         stylesheets.push(stylesheet);
 
@@ -564,6 +566,7 @@ export const createAnimation = (): Animation => {
   const initializeWebAnimation = () => {
     elements.forEach(element => {
       const animation = element.animate(_keyframes, {
+        id,
         delay: getDelay(),
         duration: getDuration(),
         easing: getEasing(),
@@ -957,6 +960,7 @@ export const createAnimation = (): Animation => {
     parentAnimation,
     elements,
     childAnimations,
+    id,
     animationFinish,
     from,
     to,
