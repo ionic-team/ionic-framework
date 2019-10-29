@@ -89,10 +89,6 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
     this.props.onNavigate('replace', path, 'back');
   }
 
-  tabNavigate(url: string) {
-    this.props.history.replace(url, { direction: 'back' });
-  }
-
   getPageManager() {
     return (children: any) => children;
   }
