@@ -30,6 +30,10 @@
     .create ion-icon {
       transform: scale(0.9);
     }
+    
+    .main-toolbar {
+      --background: rgba(0, 0, 0, 0.05);
+    }
   </style>
 </head>
 
@@ -77,8 +81,8 @@
       connectedCallback() {
   
         this.innerHTML = `
-          <ion-header class="main-header">
-            <ion-toolbar>    
+          <ion-header class="main-header" translucent>
+            <ion-toolbar class="main-toolbar">    
               <ion-buttons collapse>
                 <ion-back-button default-href="/"></ion-back-button>
               </ion-buttons>  
@@ -89,7 +93,7 @@
             </ion-toolbar>
           </ion-header>
         
-          <ion-content id="content" class="main-content">
+          <ion-content id="content" class="main-content" fullscreen>
             <ion-header collapse="condense">              
               <ion-toolbar>      
                 <ion-title size="large">Page Two</ion-title>
