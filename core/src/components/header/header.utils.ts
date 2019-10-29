@@ -60,7 +60,7 @@ export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: He
   });
 };
 
-export const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | undefined) => {
+export const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity?: number) => {
   if (opacity === undefined) {
     toolbar.background.style.removeProperty('--opacity');
   } else {
@@ -117,7 +117,7 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
       if (hasValidIntersection) {
         setHeaderActive(mainHeaderIndex);
         setHeaderActive(scrollHeaderIndex, false);
-        setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], 1);
+        setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0]);
       }
     }
   });
