@@ -49,6 +49,7 @@
       const pickerElement = await pickerController.create({
         buttons: [{
           text: 'Save',
+          role: 'cancel',
           handler: () => console.log('Clicked Save!')
         }, {
           text: 'Log',
@@ -112,7 +113,12 @@
         }],
         cssClass: customClass
       });
-      return await pickerElement.present();
+
+      await pickerElement.present();
+
+      const { data, role } = await pickerElement.onDidDismiss();
+
+      console.log('Picker dismissed!', data, role);
     }
   </script>
 </body>
