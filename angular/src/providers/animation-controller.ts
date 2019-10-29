@@ -8,7 +8,7 @@ export class AnimationController {
   /**
    * Create a new animation
    */
-  create(): Animation {
-    return createAnimation();
+  create(animationId?: string): Animation {
+    return createAnimation(animationId);
   }
 }
