@@ -1,5 +1,5 @@
 import { createAnimation } from '../animation';
-import { getTimeGivenProgression, Point } from '../cubic-bezier';
+import { getTimeGivenProgression } from '../cubic-bezier';
 import { Animation } from '../animation-interface';
 
 describe('Animation Class', () => {
@@ -313,70 +313,83 @@ describe('cubic-bezier conversion', () => {
   describe('should properly get a time value (x value) given a progression value (y value)', () => {
     it('cubic-bezier(0.32, 0.72, 0, 1)', () => {
       const equation = [
-        new Point(0, 0),
-        new Point(0.32, 0.72),
-        new Point(0, 1),
-        new Point(1, 1)
+        [0, 0],
+        [0.32, 0.72],
+        [0, 1],
+        [1, 1]
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.5), 0.16);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.97), 0.56);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.33), 0.11);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.5), [0.16]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.97), [0.56]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.33), [0.11]);
     });
 
     it('cubic-bezier(1, 0, 0.68, 0.28)', () => {
       const equation = [
-        new Point(0, 0),
-        new Point(1, 0),
-        new Point(0.68, 0.28),
-        new Point(1, 1)
+        [0, 0],
+        [1, 0],
+        [0.68, 0.28],
+        [1, 1]
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.08), 0.60);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.50), 0.84);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.94), 0.98);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.08), [0.60]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.50), [0.84]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.94), [0.98]);
     })
 
     it('cubic-bezier(0.4, 0, 0.6, 1)', () => {
       const equation = [
-        new Point(0, 0),
-        new Point(0.4, 0),
-        new Point(0.6, 1),
-        new Point(1, 1)
+        [0, 0],
+        [0.4, 0],
+        [0.6, 1],
+        [1, 1]
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.39), 0.43);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.03), 0.11);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.89), 0.78);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.39), [0.43]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.03), [0.11]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.89), [0.78]);
     })
 
     it('cubic-bezier(0, 0, 0.2, 1)', () => {
       const equation = [
-        new Point(0, 0),
-        new Point(0, 0),
-        new Point(0.2, 1),
-        new Point(1, 1)
+        [0, 0],
+        [0, 0],
+        [0.2, 1],
+        [1, 1]
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.95), 0.71);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.1), 0.03);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.70), 0.35);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.95), [0.71]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.1), [0.03]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.70), [0.35]);
     })
     
     it('cubic-bezier(0.32, 0.72, 0, 1) (with out of bounds progression)', () => {
       const equation = [
-        new Point(0, 0),
-        new Point(0.05, 0.2),
-        new Point(.14, 1.72),
-        new Point(1, 1)
+        [0, 0],
+        [0.05, 0.2],
+        [.14, 1.72],
+        [1, 1]
       ];
         
-      expect(getTimeGivenProgression(...equation, 1.32)).toBeNaN();
-      expect(getTimeGivenProgression(...equation, -0.32)).toBeNaN();
+      expect(getTimeGivenProgression(...equation, 1.32)[0]).toBeUndefined();
+      expect(getTimeGivenProgression(...equation, -0.32)[0]).toBeUndefined();
+    })
+    
+    it('cubic-bezier(0.21, 1.71, 0.88, 0.9) (multiple solutions)', () => {
+      const equation = [
+        [0, 0],
+        [0.21, 1.71],
+        [0.88, 0.9],
+        [1, 1]
+      ];
+        
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 1.02), [0.35, 0.87]);
     })
   })
 });
 
-const shouldApproximatelyEqual = (givenValue: number, expectedValue: number): boolean => {
-  expect(Math.abs(expectedValue - givenValue)).toBeLessThanOrEqual(0.01);
+const shouldApproximatelyEqual = (givenValues: number[], expectedValues: number[]): void => {
+  givenValues.forEach((givenValue, i) => {
+    expect(Math.abs(expectedValues[i] - givenValue)).toBeLessThanOrEqual(0.01);
+  });
 }
