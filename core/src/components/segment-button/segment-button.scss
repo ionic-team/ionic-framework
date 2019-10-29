@@ -71,6 +71,7 @@
   @include text-inherit();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include transform(translate3d(0,0,0));
 
   display: flex;
   position: relative;
