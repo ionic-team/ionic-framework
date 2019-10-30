@@ -203,8 +203,24 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return selected;
   }
 
+  private getButtons(): PickerButton[] {
+    return this.buttons.map(b => {
+      return (typeof b === 'string')
+        ? { text: b }
+        : b;
+    });
+  }
+
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
+  }
+
+  private dispatchCancelHandler = (ev: CustomEvent) => {
+    const role = ev.detail.role;
+    if (isCancel(role)) {
+      const cancelButton = this.getButtons().find(b => b.role === 'cancel');
+      this.callButtonHandler(cancelButton);
+    }
   }
 
   render() {
@@ -224,6 +240,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
           zIndex: `${20000 + this.overlayIndex}`
         }}
         onIonBackdropTap={this.onBackdropTap}
+        onIonPickerWillDismiss={this.dispatchCancelHandler}
       >
         <ion-backdrop
           visible={this.showBackdrop}
