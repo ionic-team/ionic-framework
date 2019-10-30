@@ -1,4 +1,23 @@
-## [4.11.2](https://github.com/ionic-team/ionic/compare/v4.11.1...v4.11.2) (2019-10-21)
+## [4.11.3](https://github.com/ionic-team/ionic/compare/v4.11.1...v4.11.3) (2019-10-30)
+
+
+### Bug Fixes
+
+* **animations:** ensure all elements are cleaned up when calling .destroy() ([#19654](https://github.com/ionic-team/ionic/issues/19654)) ([d97e167](https://github.com/ionic-team/ionic/commit/d97e167f3153012d09964c263b4b76811b68a212))
+* **header:** collapsible header works in tabs ([#19658](https://github.com/ionic-team/ionic/issues/19658)) ([4853909](https://github.com/ionic-team/ionic/commit/48539093bfef339a1e710532836f89d4d21224ad)), closes [#19640](https://github.com/ionic-team/ionic/issues/19640)
+* **ios:** hide leaving view after nav transition to avoid flicker ([#19691](https://github.com/ionic-team/ionic/issues/19691)) ([70e0562](https://github.com/ionic-team/ionic/commit/70e0562dc9d46054fc83b9615b99a0917b2f39ae)), closes [#19674](https://github.com/ionic-team/ionic/issues/19674)
+* **menu:** clamp out of bounds swipe value ([#19684](https://github.com/ionic-team/ionic/issues/19684)) ([1535e95](https://github.com/ionic-team/ionic/commit/1535e95a5fa4bfea6cc68075d6d3fd7de4b5d328)), closes [#18927](https://github.com/ionic-team/ionic/issues/18927)
+* **react:** adding change events to iontabs, fixes [#19665](https://github.com/ionic-team/ionic/issues/19665) ([#19711](https://github.com/ionic-team/ionic/issues/19711)) ([b7baf24](https://github.com/ionic-team/ionic/commit/b7baf24e5053a379156e6c3d82c2b5d3afa999f1))
+* **react:** adding HashRouter to available ion routers, fixes [#19621](https://github.com/ionic-team/ionic/issues/19621) ([#19683](https://github.com/ionic-team/ionic/issues/19683)) ([fcdbb3c](https://github.com/ionic-team/ionic/commit/fcdbb3ce98747d3b37107904ca110daad95e48bc))
+* **react:** checking if node is actually an element before treating it like one, fixes [#19769](https://github.com/ionic-team/ionic/issues/19769) ([#19783](https://github.com/ionic-team/ionic/issues/19783)) ([9d0caf6](https://github.com/ionic-team/ionic/commit/9d0caf6de070145c4af618847b27e24c49027b8e))
+* **react:** checking isOpen again after async call before opening overlay, fixes [#19755](https://github.com/ionic-team/ionic/issues/19755) ([f70e71a](https://github.com/ionic-team/ionic/commit/f70e71a3d461cdab65626a5a7e1b6f4d03b852b1))
+* **react:** don't remove current view, provide a better method to determine showGoBack fixes [#19731](https://github.com/ionic-team/ionic/issues/19731) and [#19732](https://github.com/ionic-team/ionic/issues/19732) ([31c754d](https://github.com/ionic-team/ionic/commit/31c754dab7ada494ff5f0026d5cf3f7f65198eff))
+* **react:** removing pages from DOM on nav, fixes [#19701](https://github.com/ionic-team/ionic/issues/19701) ([#19712](https://github.com/ionic-team/ionic/issues/19712)) ([ee21d3a](https://github.com/ionic-team/ionic/commit/ee21d3ae43d8c6b076387a58bca655a56c920bcd))
+* **react:** unmount leaving view when using browser back button, fixes [#19749](https://github.com/ionic-team/ionic/issues/19749) ([#19781](https://github.com/ionic-team/ionic/issues/19781)) ([2dc5540](https://github.com/ionic-team/ionic/commit/2dc554091056612f1bcd2751d6eeb41cae488751))
+
+
+
+## [4.11.2](https://github.com/ionic-team/ionic/compare/v4.11.0...v4.11.2) (2019-10-21)
 
 
 ### Bug Fixes
