@@ -203,14 +203,6 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return selected;
   }
 
-  private getButtons(): PickerButton[] {
-    return this.buttons.map(b => {
-      return (typeof b === 'string')
-        ? { text: b }
-        : b;
-    });
-  }
-
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
   }
@@ -218,7 +210,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
   private dispatchCancelHandler = (ev: CustomEvent) => {
     const role = ev.detail.role;
     if (isCancel(role)) {
-      const cancelButton = this.getButtons().find(b => b.role === 'cancel');
+      const cancelButton = this.buttons.find(b => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
   }
