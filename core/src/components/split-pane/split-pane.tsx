@@ -18,7 +18,8 @@ const QUERY: { [key: string]: string } = {
   styleUrls: {
     ios: 'split-pane.ios.scss',
     md: 'split-pane.md.scss'
-  }
+  },
+  shadow: true
 })
 export class SplitPane implements ComponentInterface {
 
@@ -159,6 +160,7 @@ export class SplitPane implements ComponentInterface {
           'split-pane-visible': this.visible
         }}
       >
+        <slot></slot>
       </Host>
     );
   }
