@@ -198,7 +198,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       // pass the handler the values from the inputs
       try {
         const rtn = await safeCall(button.handler);
-        if (rtn === false && !isCancel(button)) {
+        if (rtn === false && !isCancel(button.role)) {
           // if the return value of the handler is false then do not dismiss
           return false;
         }
