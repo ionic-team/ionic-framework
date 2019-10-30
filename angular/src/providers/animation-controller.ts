@@ -26,7 +26,7 @@ export class AnimationController {
    * when doing a gesture animation (i.e. going from linear easing
    * during a drag, to another easing when `progressEnd` is called)
    */
-  easingTime(p0: number[], p1: number[], p2: number[], p3: number[], progression: number): number[] => {
+  easingTime(p0: number[], p1: number[], p2: number[], p3: number[], progression: number): number[] {
     return getTimeGivenProgression(p0, p1, p2, p3, progression);
   }
 }
