@@ -7,9 +7,9 @@
 :host {
   /**
    * @prop --border: Border between panes
-   * @prop --side-min-width: Minimum width of the side pane
-   * @prop --side-max-width: Maximum width of the side pane
-   * @prop --side-width: Width of the side pane
+   * @prop --side-min-width: Minimum width of the side pane. Does not apply when split pane is collapsed.
+   * @prop --side-max-width: Maximum width of the side pane. Does not apply when split pane is collapsed.
+   * @prop --side-width: Width of the side pane. Does not apply when split pane is collapsed.
    */
   --side-width: 100%;
 
@@ -22,17 +22,6 @@
   flex-wrap: nowrap;
 
   contain: strict;
-}
-
-/**
- * Only pass CSS Variables down on smaller
- * screens as they affect the inner content, rather
- * than the outer `ion-menu`
- */
-::slotted(ion-menu:not(.menu-pane-visible)) {
-  --width: var(--side-width);
-  --min-width: var(--side-min-width);
-  --max-width: var(--side-max-width);
 }
 
 /**

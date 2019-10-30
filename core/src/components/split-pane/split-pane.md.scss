@@ -11,16 +11,16 @@
 }
 
 :host(.split-pane-md.split-pane-visible) ::slotted(.split-pane-side) {
-  min-width: var(--side-min-width, var(--side-width));
-  max-width: var(--side-max-width, var(--side-width));
+  min-width: var(--side-min-width);
+  max-width: var(--side-max-width);
 
   border-right: var(--border);
   border-left: 0;
 }
 
 :host(.split-pane-md.split-pane-visible) ::slotted(.split-pane-side[side=end]) {
-  min-width: var(--side-min-width, var(--side-width));
-  max-width: var(--side-max-width, var(--side-width));
+  min-width: var(--side-min-width);
+  max-width: var(--side-max-width);
 
   border-right: 0;
   border-left: var(--border);
