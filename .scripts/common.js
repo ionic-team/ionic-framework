@@ -129,7 +129,7 @@ function preparePackage(tasks, package, version, install) {
       });
       projectTasks.push({
         title: `${pkg.name}: test`,
-        task: () => execa('npm', ['test'], { cwd: projectRoot })
+        task: async () => await execa('npm', ['test'], { cwd: projectRoot })
       });
     }
 
@@ -137,7 +137,7 @@ function preparePackage(tasks, package, version, install) {
       title: `${pkg.name}: build`,
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
-    if (package === 'core') {
+    if (package === 'core' || package === 'packages/react') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
