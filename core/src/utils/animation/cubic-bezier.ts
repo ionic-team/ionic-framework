@@ -6,6 +6,7 @@
  */
 
 /**
+ * EXPERIMENTAL
  * Given a cubic-bezier curve, get the x value (time) given
  * the y value (progression).
  * Ex: cubic-bezier(0.32, 0.72, 0, 1);
