@@ -611,8 +611,7 @@ export const createAnimation = (animationId?: string): Animation => {
       });
 
     } else {
-      const animationDelay = getDelay() || 0;
-      const animationDuration = `-${animationDelay + (getDuration()! * step)}ms`;
+      const animationDuration = `-${(getDuration()! * step)}ms`;
 
       elements.forEach(element => {
         if (_keyframes.length > 0) {
@@ -636,13 +635,13 @@ export const createAnimation = (animationId?: string): Animation => {
     });
   };
 
-  const updateCSSAnimation = (toggleAnimationName = true) => {
+  const updateCSSAnimation = (toggleAnimationName = true, forceStep?: number) => {
     raf(() => {
       elements.forEach(element => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
         setStyleProperty(element, 'animation-duration', `${getDuration()}ms`);
         setStyleProperty(element, 'animation-timing-function', getEasing());
-        setStyleProperty(element, 'animation-delay', `${getDelay()}ms`);
+        setStyleProperty(element, 'animation-delay', (forceStep !== undefined) ? `-${forceStep * getDuration()}ms` : `${getDelay()}ms`);
         setStyleProperty(element, 'animation-fill-mode', getFill() || null);
         setStyleProperty(element, 'animation-direction', getDirection() || null);
 
@@ -663,7 +662,7 @@ export const createAnimation = (animationId?: string): Animation => {
     });
   };
 
-  const update = (deep = false, toggleAnimationName = true) => {
+  const update = (deep = false, toggleAnimationName = true, forceStep?: number) => {
     if (deep) {
       childAnimations.forEach(animation => {
         animation.update(deep);
@@ -673,15 +672,15 @@ export const createAnimation = (animationId?: string): Animation => {
     if (supportsWebAnimations) {
       updateWebAnimation();
     } else {
-      updateCSSAnimation(toggleAnimationName);
+      updateCSSAnimation(toggleAnimationName, forceStep);
     }
 
     return ani;
   };
 
-  const progressStart = (forceLinearEasing = false) => {
+  const progressStart = (forceLinearEasing = false, forceStep?: number) => {
     childAnimations.forEach(animation => {
-      animation.progressStart(forceLinearEasing);
+      animation.progressStart(forceLinearEasing, forceStep);
     });
 
     pauseAnimation();
@@ -690,8 +689,7 @@ export const createAnimation = (animationId?: string): Animation => {
     if (!initialized) {
       initializeAnimation();
     } else {
-      update();
-      setAnimationStep(0);
+      update(false, true, forceStep);
     }
 
     return ani;
