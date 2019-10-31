@@ -45,35 +45,51 @@
 // Segment: Default Toolbar
 // --------------------------------------------------
 
-:host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button) {
+// Default Segment, In a Toolbar
+:host(.in-toolbar:not(.ion-color)) ::slotted(ion-segment-button) {
   --indicator-color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
 
-  background: #{var(--ion-toolbar-background-unchecked, var(--background))};
-  color: #{var(--ion-toolbar-color-unchecked, var(--color))};
+  background: #{var(--ion-toolbar-segment-background, var(--background))};
+  color: #{var(--ion-toolbar-segment-color, var(--color))};
 }
 
-:host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(.segment-button-checked) {
-  background: #{var(--ion-toolbar-background-checked, var(--background-checked))};
-  color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
-}
-
-@media (any-hover: hover) {
-  :host-context(ion-toolbar:not(.ion-color)):host(:not(.ion-color)) ::slotted(ion-segment-button:hover) {
-    background: #{ion-color(primary, base, .04)};
-  }
+// Default Segment, In a Toolbar, Checked
+:host(.in-toolbar:not(.ion-color)) ::slotted(.segment-button-checked) {
+  background: #{var(--ion-toolbar-segment-background-checked, var(--background-checked))};
+  color: #{var(--ion-toolbar-segment-color-checked, var(--color-checked))};
 }
 
 
 // Segment: Toolbar Color
 // --------------------------------------------------
 
-:host-context(ion-toolbar.ion-color):host(:not(.ion-color)) ::slotted(ion-segment-button) {
-  --background-hover: #{current-color(contrast, .04)};
+// Default Segment, In a Toolbar with Color
+:host(.in-toolbar-color:not(.ion-color)) ::slotted(ion-segment-button) {
+  color: #{current-color(contrast, .6)};
+
+  // TODO activated state
   --background-activated: #{current-color(base)};
-  --color: #{current-color(contrast, .6)};
-  --color-checked: #{current-color(contrast)};
-  --indicator-color: #{current-color(contrast)};
 }
+
+// Default Segment, In a Toolbar with Color, Checked
+:host(.in-toolbar-color:not(.ion-color)) ::slotted(.segment-button-checked) {
+  color: #{current-color(contrast)};
+}
+
+
+// Segment: Toolbar Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.in-toolbar:not(.ion-color)) ::slotted(ion-segment-button:hover) {
+    background: #{ion-color(primary, base, .04)};
+  }
+
+  :host(.in-toolbar-color:not(.ion-color)) ::slotted(ion-segment-button:hover) {
+    background: #{ion-color(primary, contrast, .04)};
+  }
+}
+
 
 // Segment: Scrollable
 // --------------------------------------------------

@@ -115,3 +115,14 @@
 
   background: var(--indicator-color);
 }
+
+// Segment button indicator color should use the background checked variable with
+// a fallback to the default value of --indicator-color
+:host(.in-toolbar) .segment-checked-indicator-background {
+  background: #{var(--ion-toolbar-segment-background-checked, var(--indicator-color))};
+}
+
+// Do not use the global or local CSS variable if the toolbar has a color
+:host(.in-toolbar-color) .segment-checked-indicator-background {
+  background: #{current-color(contrast)};
+}

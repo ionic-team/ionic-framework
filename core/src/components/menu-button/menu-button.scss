@@ -125,6 +125,7 @@ ion-icon {
 // Menu Button in Toolbar: Global Theming
 // --------------------------------------------------
 
+// TODO this will not work in Safari - component is shadow not scoped
 :host-context(ion-toolbar:not(.ion-color)) {
   color: #{var(--ion-toolbar-color, var(--color))};
 }
