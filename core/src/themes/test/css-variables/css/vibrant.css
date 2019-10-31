@@ -85,7 +85,7 @@
   --ion-toolbar-segment-background: var(--ion-color-danger);
   --ion-toolbar-segment-color: var(--ion-color-danger-contrast);
 
-  --ion-toolbar-segment-background-checked: var(--ion-color-danger-contrast);
+  --ion-toolbar-segment-indicator-color: var(--ion-color-danger-contrast);
   --ion-toolbar-segment-color-checked: var(--ion-color-danger);
 }
 
