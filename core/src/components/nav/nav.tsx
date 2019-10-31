@@ -3,7 +3,7 @@ import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch, h 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
-import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
+import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
 
@@ -981,9 +981,9 @@ export class Nav implements NavOutlet {
        */
       if (!shouldComplete) {
         this.sbAni.easing('cubic-bezier(1, 0, 0.68, 0.28)');
-        newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(1, 0), new Point(0.68, 0.28), new Point(1, 1), stepValue);
+        newStepValue += getTimeGivenProgression([0, 0], [1, 0], [0.68, 0.28], [1, 1], stepValue)[0];
       } else {
-        newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.32, 0.72), new Point(0, 1), new Point(1, 1), stepValue);
+        newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], stepValue)[0];
       }
 
       (this.sbAni as Animation).progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
