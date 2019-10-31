@@ -389,7 +389,7 @@ AFTER:
     }
 
     // the cloned animation should not use an easing curve during seek
-    (this.animation as Animation).progressStart(true);
+    (this.animation as Animation).progressStart(true, (this._isOpen) ? 1 : 0);
   }
 
   private onMove(detail: GestureDetail) {
