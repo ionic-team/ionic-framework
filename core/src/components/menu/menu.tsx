@@ -337,7 +337,12 @@ AFTER:
     const isReversed = !shouldOpen;
     const ani = (this.animation as Animation)!
       .direction((isReversed) ? 'reverse' : 'normal')
-      .easing((isReversed) ? this.easingReverse : this.easing);
+      .easing((isReversed) ? this.easingReverse : this.easing)
+      .onFinish(() => {
+        if (ani.getDirection() === 'reverse') {
+          ani.direction('normal');
+        }
+      });
 
     if (animated) {
       await ani.play();
@@ -384,9 +389,7 @@ AFTER:
     }
 
     // the cloned animation should not use an easing curve during seek
-    (this.animation as Animation)
-      .direction((this._isOpen) ? 'reverse' : 'normal')
-      .progressStart(true);
+    (this.animation as Animation).progressStart(true, (this._isOpen) ? 1 : 0);
   }
 
   private onMove(detail: GestureDetail) {
@@ -398,7 +401,7 @@ AFTER:
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
 
-    this.animation.progressStep(stepValue);
+    this.animation.progressStep((this._isOpen) ? 1 - stepValue : stepValue);
   }
 
   private onEnd(detail: GestureDetail) {
@@ -451,12 +454,14 @@ AFTER:
      */
     newStepValue += getTimeGivenProgression([0, 0], [0.4, 0], [0.6, 1], [1, 1], clamp(0, adjustedStepValue, 1))[0];
 
+    const playTo = (this._isOpen) ? !shouldComplete : shouldComplete;
+
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
       .onFinish(
         () => this.afterAnimation(shouldOpen),
         { oneTimeCallback: true })
-      .progressEnd(shouldComplete ? 1 : 0, newStepValue, 300);
+      .progressEnd((playTo) ? 1 : 0, (this._isOpen) ? 1 - newStepValue : newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {
