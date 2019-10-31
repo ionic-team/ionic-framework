@@ -65,10 +65,10 @@
 
 // Default Segment, In a Toolbar with Color
 :host(.in-toolbar-color:not(.ion-color)) ::slotted(ion-segment-button) {
-  color: #{current-color(contrast, .6)};
-
   // TODO activated state
   --background-activated: #{current-color(base)};
+
+  color: #{current-color(contrast, .6)};
 }
 
 // Default Segment, In a Toolbar with Color, Checked
