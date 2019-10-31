@@ -22,7 +22,6 @@ export class IonBackButtonDelegate {
    */
   @HostListener('click', ['$event'])
   onClick(ev: Event) {
-    console.log('clicked', ev);
     if (this.routerOutlet && this.routerOutlet.canGoBack()) {
       this.routerOutlet.pop();
       ev.preventDefault();
