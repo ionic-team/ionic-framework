@@ -92,8 +92,8 @@ export const createPointerEvents = (
     stopMouse();
   };
 
-  const enable = (enable = true) => {
-    if (!enable) {
+  const enable = (isEnabled = true) => {
+    if (!isEnabled) {
       if (rmTouchStart) {
         rmTouchStart();
       }
