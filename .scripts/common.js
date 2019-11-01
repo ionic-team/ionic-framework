@@ -158,7 +158,7 @@ function preparePackage(tasks, package, version, install) {
       });
       projectTasks.push({
         title: `${pkg.name}: test`,
-        task: () => execa('npm', ['test'], { cwd: projectRoot })
+        task: async () => await execa('npm', ['test'], { cwd: projectRoot })
       });
     }
 

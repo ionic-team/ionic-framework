@@ -92,7 +92,7 @@ export class Toggle implements ComponentInterface {
   disabledChanged() {
     this.emitStyle();
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
   }
 

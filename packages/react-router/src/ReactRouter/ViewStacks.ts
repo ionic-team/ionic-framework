@@ -85,16 +85,4 @@ export class ViewStacks {
     return { view, viewStack };
   }
 
-  setHiddenViews() {
-    const keys = this.getKeys();
-    keys.forEach(key => {
-      const viewStack = this.viewStacks[key];
-      viewStack!.views.forEach(view => {
-        if (!view.routeData.match && !view.isIonRoute) {
-          view.show = false;
-          view.mount = false;
-        }
-      });
-    });
-  }
 }

@@ -5,11 +5,8 @@
  * TODO: Reduce rounding error
  */
 
-export class Point {
-  constructor(public x: number, public y: number) {}
-}
-
 /**
+ * EXPERIMENTAL
  * Given a cubic-bezier curve, get the x value (time) given
  * the y value (progression).
  * Ex: cubic-bezier(0.32, 0.72, 0, 1);
@@ -17,10 +14,14 @@ export class Point {
  * P1: (0.32, 0.72)
  * P2: (0, 1)
  * P3: (1, 1)
+ *
+ * If you give a cubic bezier curve that never reaches the
+ * provided progression, this function will return an empty array.
  */
-export const getTimeGivenProgression = (p0: Point, p1: Point, p2: Point, p3: Point, progression: number) => {
-  const tValues = solveCubicBezier(p0.y, p1.y, p2.y, p3.y, progression);
-  return solveCubicParametricEquation(p0.x, p1.x, p2.x, p3.x, tValues[0]); // TODO: Add better strategy for dealing with multiple solutions
+export const getTimeGivenProgression = (p0: number[], p1: number[], p2: number[], p3: number[], progression: number): number[] => {
+  return solveCubicBezier(p0[1], p1[1], p2[1], p3[1], progression).map(tValue => {
+    return solveCubicParametricEquation(p0[0], p1[0], p2[0], p3[0], tValue);
+  });
 };
 
 /**

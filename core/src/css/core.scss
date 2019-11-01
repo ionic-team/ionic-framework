@@ -76,6 +76,10 @@ body.backdrop-no-scroll {
   z-index: $z-index-page-container;
 }
 
+.split-pane-visible > .ion-page.split-pane-main {
+  position: relative;
+}
+
 ion-route,
 ion-route-redirect,
 ion-router,
