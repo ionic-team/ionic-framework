@@ -2,7 +2,17 @@
 
 # ion-icon
 
-For a full list of available icons and more usage explanations, check out the [Ionicons documentation](https://ionicons.com/).
+Icons can be used on their own as a standalone component, or inside of another component.
+
+By default, Ionicons will use the same icon for each platform (iOS or Material Design). In previous versions of Ionicons, icons would automatically update based on the platform. As of Ionicons 5.0, apps will have to handle this on a per-icon basis, if needed.
+
+To use different icons depending on platform, set the `ios` and `md` properties or attributes. In the example below, when the app has the `ios` mode applied, it'll show the `logo-apple` icon. When using `md`, it'll show the `logo-android` icon.
+
+```
+<ion-icon ios="logo-apple" md="logo-android"></ion-icon>
+```
+
+For a full list of available icons and more usage explanations, please check out the [Ionicons documentation](https://ionicons.com/).
 
 <!-- Auto Generated Below -->
 
