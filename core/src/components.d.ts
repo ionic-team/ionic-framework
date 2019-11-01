@@ -3534,7 +3534,7 @@ declare global {
 }
 
 declare namespace LocalJSX {
-  interface IonActionSheet extends JSXBase.HTMLAttributes<HTMLIonActionSheetElement> {
+  interface IonActionSheet {
     /**
     * If `true`, the action sheet will animate.
     */
@@ -3596,8 +3596,8 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonActionSheetController extends JSXBase.HTMLAttributes<HTMLIonActionSheetControllerElement> {}
-  interface IonAlert extends JSXBase.HTMLAttributes<HTMLIonAlertElement> {
+  interface IonActionSheetController {}
+  interface IonAlert {
     /**
     * If `true`, the alert will animate.
     */
@@ -3667,35 +3667,10 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-<<<<<<< HEAD
   interface IonAlertController {}
   interface IonApp {}
   interface IonAvatar {}
   interface IonBackButton {
-=======
-  interface IonAlertController extends JSXBase.HTMLAttributes<HTMLIonAlertControllerElement> {}
-  interface IonAnchor extends JSXBase.HTMLAttributes<HTMLIonAnchorElement> {
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
-    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-    */
-    'href'?: string | undefined;
-    /**
-    * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
-    */
-    'rel'?: string | undefined;
-    /**
-    * When using a router, it specifies the transition direction when navigating to another page using `href`.
-    */
-    'routerDirection'?: RouterDirection;
-  }
-  interface IonApp extends JSXBase.HTMLAttributes<HTMLIonAppElement> {}
-  interface IonAvatar extends JSXBase.HTMLAttributes<HTMLIonAvatarElement> {}
-  interface IonBackButton extends JSXBase.HTMLAttributes<HTMLIonBackButtonElement> {
->>>>>>> chore(angular): update sync script
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -3725,7 +3700,7 @@ declare namespace LocalJSX {
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
-  interface IonBackdrop extends JSXBase.HTMLAttributes<HTMLIonBackdropElement> {
+  interface IonBackdrop {
     /**
     * Emitted when the backdrop is tapped.
     */
@@ -3743,7 +3718,7 @@ declare namespace LocalJSX {
     */
     'visible'?: boolean;
   }
-  interface IonBadge extends JSXBase.HTMLAttributes<HTMLIonBadgeElement> {
+  interface IonBadge {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -3753,7 +3728,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
   }
-  interface IonButton extends JSXBase.HTMLAttributes<HTMLIonButtonElement> {
+  interface IonButton {
     /**
     * The type of button.
     */
@@ -3823,13 +3798,13 @@ declare namespace LocalJSX {
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
-  interface IonButtons extends JSXBase.HTMLAttributes<HTMLIonButtonsElement> {
+  interface IonButtons {
     /**
     * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
     */
     'collapse'?: boolean;
   }
-  interface IonCard extends JSXBase.HTMLAttributes<HTMLIonCardElement> {
+  interface IonCard {
     /**
     * If `true`, a button tag will be rendered and the card will be tappable.
     */
@@ -3871,13 +3846,13 @@ declare namespace LocalJSX {
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
-  interface IonCardContent extends JSXBase.HTMLAttributes<HTMLIonCardContentElement> {
+  interface IonCardContent {
     /**
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
   }
-  interface IonCardHeader extends JSXBase.HTMLAttributes<HTMLIonCardHeaderElement> {
+  interface IonCardHeader {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -3891,7 +3866,7 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonCardSubtitle extends JSXBase.HTMLAttributes<HTMLIonCardSubtitleElement> {
+  interface IonCardSubtitle {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -3901,7 +3876,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
   }
-  interface IonCardTitle extends JSXBase.HTMLAttributes<HTMLIonCardTitleElement> {
+  interface IonCardTitle {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -3911,7 +3886,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
   }
-  interface IonCheckbox extends JSXBase.HTMLAttributes<HTMLIonCheckboxElement> {
+  interface IonCheckbox {
     /**
     * If `true`, the checkbox is selected.
     */
@@ -3953,7 +3928,7 @@ declare namespace LocalJSX {
     */
     'value'?: string;
   }
-  interface IonChip extends JSXBase.HTMLAttributes<HTMLIonChipElement> {
+  interface IonChip {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -3967,7 +3942,7 @@ declare namespace LocalJSX {
     */
     'outline'?: boolean;
   }
-  interface IonCol extends JSXBase.HTMLAttributes<HTMLIonColElement> {
+  interface IonCol {
     /**
     * The amount to offset the column, in terms of how many columns it should shift to the end of the total available.
     */
@@ -4065,7 +4040,7 @@ declare namespace LocalJSX {
     */
     'sizeXs'?: string;
   }
-  interface IonContent extends JSXBase.HTMLAttributes<HTMLIonContentElement> {
+  interface IonContent {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -4103,7 +4078,7 @@ declare namespace LocalJSX {
     */
     'scrollY'?: boolean;
   }
-  interface IonDatetime extends JSXBase.HTMLAttributes<HTMLIonDatetimeElement> {
+  interface IonDatetime {
     /**
     * The text to display on the picker's cancel button.
     */
@@ -4209,7 +4184,7 @@ declare namespace LocalJSX {
     */
     'yearValues'?: number[] | number | string;
   }
-  interface IonFab extends JSXBase.HTMLAttributes<HTMLIonFabElement> {
+  interface IonFab {
     /**
     * If `true`, both the `ion-fab-button` and all `ion-fab-list` inside `ion-fab` will become active. That means `ion-fab-button` will become a `close` icon and `ion-fab-list` will become visible.
     */
@@ -4227,7 +4202,7 @@ declare namespace LocalJSX {
     */
     'vertical'?: 'top' | 'bottom' | 'center';
   }
-  interface IonFabButton extends JSXBase.HTMLAttributes<HTMLIonFabButtonElement> {
+  interface IonFabButton {
     /**
     * If `true`, the fab button will be show a close icon.
     */
@@ -4289,7 +4264,7 @@ declare namespace LocalJSX {
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
-  interface IonFabList extends JSXBase.HTMLAttributes<HTMLIonFabListElement> {
+  interface IonFabList {
     /**
     * If `true`, the fab list will show all fab buttons in the list.
     */
@@ -4299,7 +4274,7 @@ declare namespace LocalJSX {
     */
     'side'?: 'start' | 'end' | 'top' | 'bottom';
   }
-  interface IonFooter extends JSXBase.HTMLAttributes<HTMLIonFooterElement> {
+  interface IonFooter {
     /**
     * The mode determines which platform styles to use.
     */
@@ -4309,13 +4284,13 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonGrid extends JSXBase.HTMLAttributes<HTMLIonGridElement> {
+  interface IonGrid {
     /**
     * If `true`, the grid will have a fixed width based on the screen size.
     */
     'fixed'?: boolean;
   }
-  interface IonHeader extends JSXBase.HTMLAttributes<HTMLIonHeaderElement> {
+  interface IonHeader {
     /**
     * Describes the scroll effect that will be applied to the header `condense` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
     */
@@ -4329,7 +4304,7 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonImg extends JSXBase.HTMLAttributes<HTMLIonImgElement> {
+  interface IonImg {
     /**
     * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
     */
@@ -4351,7 +4326,7 @@ declare namespace LocalJSX {
     */
     'src'?: string;
   }
-  interface IonInfiniteScroll extends JSXBase.HTMLAttributes<HTMLIonInfiniteScrollElement> {
+  interface IonInfiniteScroll {
     /**
     * If `true`, the infinite scroll will be hidden and scroll event listeners will be removed.  Set this to true to disable the infinite scroll from actively trying to receive new data while scrolling. This is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
     */
@@ -4369,7 +4344,7 @@ declare namespace LocalJSX {
     */
     'threshold'?: string;
   }
-  interface IonInfiniteScrollContent extends JSXBase.HTMLAttributes<HTMLIonInfiniteScrollContentElement> {
+  interface IonInfiniteScrollContent {
     /**
     * An animated SVG spinner that shows while loading.
     */
@@ -4379,7 +4354,7 @@ declare namespace LocalJSX {
     */
     'loadingText'?: string;
   }
-  interface IonInput extends JSXBase.HTMLAttributes<HTMLIonInputElement> {
+  interface IonInput {
     /**
     * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
     */
@@ -4505,7 +4480,7 @@ declare namespace LocalJSX {
     */
     'value'?: string | null;
   }
-  interface IonItem extends JSXBase.HTMLAttributes<HTMLIonItemElement> {
+  interface IonItem {
     /**
     * If `true`, a button tag will be rendered and the item will be tappable.
     */
@@ -4559,7 +4534,7 @@ declare namespace LocalJSX {
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
-  interface IonItemDivider extends JSXBase.HTMLAttributes<HTMLIonItemDividerElement> {
+  interface IonItemDivider {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -4573,8 +4548,8 @@ declare namespace LocalJSX {
     */
     'sticky'?: boolean;
   }
-  interface IonItemGroup extends JSXBase.HTMLAttributes<HTMLIonItemGroupElement> {}
-  interface IonItemOption extends JSXBase.HTMLAttributes<HTMLIonItemOptionElement> {
+  interface IonItemGroup {}
+  interface IonItemOption {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -4612,7 +4587,7 @@ declare namespace LocalJSX {
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
-  interface IonItemOptions extends JSXBase.HTMLAttributes<HTMLIonItemOptionsElement> {
+  interface IonItemOptions {
     /**
     * Emitted when the item has been fully swiped.
     */
@@ -4622,7 +4597,7 @@ declare namespace LocalJSX {
     */
     'side'?: Side;
   }
-  interface IonItemSliding extends JSXBase.HTMLAttributes<HTMLIonItemSlidingElement> {
+  interface IonItemSliding {
     /**
     * If `true`, the user cannot interact with the sliding item.
     */
@@ -4632,7 +4607,7 @@ declare namespace LocalJSX {
     */
     'onIonDrag'?: (event: CustomEvent<any>) => void;
   }
-  interface IonLabel extends JSXBase.HTMLAttributes<HTMLIonLabelElement> {
+  interface IonLabel {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -4646,7 +4621,7 @@ declare namespace LocalJSX {
     */
     'position'?: 'fixed' | 'stacked' | 'floating';
   }
-  interface IonList extends JSXBase.HTMLAttributes<HTMLIonListElement> {
+  interface IonList {
     /**
     * If `true`, the list will have margin around it and rounded corners.
     */
@@ -4660,7 +4635,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
   }
-  interface IonListHeader extends JSXBase.HTMLAttributes<HTMLIonListHeaderElement> {
+  interface IonListHeader {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -4670,7 +4645,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
   }
-  interface IonLoading extends JSXBase.HTMLAttributes<HTMLIonLoadingElement> {
+  interface IonLoading {
     /**
     * If `true`, the loading indicator will animate.
     */
@@ -4736,8 +4711,8 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonLoadingController extends JSXBase.HTMLAttributes<HTMLIonLoadingControllerElement> {}
-  interface IonMenu extends JSXBase.HTMLAttributes<HTMLIonMenuElement> {
+  interface IonLoadingController {}
+  interface IonMenu {
     /**
     * The content's id the menu should use.
     */
@@ -4783,7 +4758,7 @@ declare namespace LocalJSX {
     */
     'type'?: string;
   }
-  interface IonMenuButton extends JSXBase.HTMLAttributes<HTMLIonMenuButtonElement> {
+  interface IonMenuButton {
     /**
     * Automatically hides the menu button when the corresponding menu is not active
     */
@@ -4805,8 +4780,8 @@ declare namespace LocalJSX {
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
-  interface IonMenuController extends JSXBase.HTMLAttributes<HTMLIonMenuControllerElement> {}
-  interface IonMenuToggle extends JSXBase.HTMLAttributes<HTMLIonMenuToggleElement> {
+  interface IonMenuController {}
+  interface IonMenuToggle {
     /**
     * Automatically hides the content when the corresponding menu is not active.  By default, it's `true`. Change it to `false` in order to keep `ion-menu-toggle` always visible regardless the state of the menu.
     */
@@ -4816,7 +4791,7 @@ declare namespace LocalJSX {
     */
     'menu'?: string;
   }
-  interface IonModal extends JSXBase.HTMLAttributes<HTMLIonModalElement> {
+  interface IonModal {
     /**
     * If `true`, the modal will animate.
     */
@@ -4874,8 +4849,8 @@ declare namespace LocalJSX {
     */
     'showBackdrop'?: boolean;
   }
-  interface IonModalController extends JSXBase.HTMLAttributes<HTMLIonModalControllerElement> {}
-  interface IonNav extends JSXBase.HTMLAttributes<HTMLIonNavElement> {
+  interface IonModalController {}
+  interface IonNav {
     /**
     * If `true`, the nav should animate the transition of components.
     */
@@ -4905,7 +4880,7 @@ declare namespace LocalJSX {
     */
     'swipeGesture'?: boolean;
   }
-  interface IonNavLink extends JSXBase.HTMLAttributes<HTMLIonNavLinkElement> {
+  interface IonNavLink {
     /**
     * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
     */
@@ -4919,32 +4894,7 @@ declare namespace LocalJSX {
     */
     'routerDirection'?: RouterDirection;
   }
-<<<<<<< HEAD
   interface IonNote {
-=======
-  interface IonNavPop extends JSXBase.HTMLAttributes<HTMLIonNavPopElement> {}
-  interface IonNavPush extends JSXBase.HTMLAttributes<HTMLIonNavPushElement> {
-    /**
-    * Component to navigate to
-    */
-    'component'?: NavComponent;
-    /**
-    * Data you want to pass to the component as props
-    */
-    'componentProps'?: ComponentProps;
-  }
-  interface IonNavSetRoot extends JSXBase.HTMLAttributes<HTMLIonNavSetRootElement> {
-    /**
-    * Component you want to make root for the navigation stack
-    */
-    'component'?: NavComponent;
-    /**
-    * Data you want to pass to the component as props
-    */
-    'componentProps'?: ComponentProps;
-  }
-  interface IonNote extends JSXBase.HTMLAttributes<HTMLIonNoteElement> {
->>>>>>> chore(angular): update sync script
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -4954,7 +4904,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
   }
-  interface IonPicker extends JSXBase.HTMLAttributes<HTMLIonPickerElement> {
+  interface IonPicker {
     /**
     * If `true`, the picker will animate.
     */
@@ -5016,14 +4966,14 @@ declare namespace LocalJSX {
     */
     'showBackdrop'?: boolean;
   }
-  interface IonPickerColumn extends JSXBase.HTMLAttributes<HTMLIonPickerColumnElement> {
+  interface IonPickerColumn {
     /**
     * Picker column data
     */
     'col': PickerColumn;
   }
-  interface IonPickerController extends JSXBase.HTMLAttributes<HTMLIonPickerControllerElement> {}
-  interface IonPopover extends JSXBase.HTMLAttributes<HTMLIonPopoverElement> {
+  interface IonPickerController {}
+  interface IonPopover {
     /**
     * If `true`, the popover will animate.
     */
@@ -5089,8 +5039,8 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonPopoverController extends JSXBase.HTMLAttributes<HTMLIonPopoverControllerElement> {}
-  interface IonProgressBar extends JSXBase.HTMLAttributes<HTMLIonProgressBarElement> {
+  interface IonPopoverController {}
+  interface IonProgressBar {
     /**
     * If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].
     */
@@ -5116,7 +5066,7 @@ declare namespace LocalJSX {
     */
     'value'?: number;
   }
-  interface IonRadio extends JSXBase.HTMLAttributes<HTMLIonRadioElement> {
+  interface IonRadio {
     /**
     * If `true`, the radio is selected.
     */
@@ -5154,7 +5104,7 @@ declare namespace LocalJSX {
     */
     'value'?: any | null;
   }
-  interface IonRadioGroup extends JSXBase.HTMLAttributes<HTMLIonRadioGroupElement> {
+  interface IonRadioGroup {
     /**
     * If `true`, the radios can be deselected.
     */
@@ -5172,7 +5122,7 @@ declare namespace LocalJSX {
     */
     'value'?: any | null;
   }
-  interface IonRange extends JSXBase.HTMLAttributes<HTMLIonRangeElement> {
+  interface IonRange {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -5238,7 +5188,7 @@ declare namespace LocalJSX {
     */
     'value'?: RangeValue;
   }
-  interface IonRefresher extends JSXBase.HTMLAttributes<HTMLIonRefresherElement> {
+  interface IonRefresher {
     /**
     * Time it takes to close the refresher.
     */
@@ -5276,7 +5226,7 @@ declare namespace LocalJSX {
     */
     'snapbackDuration'?: string;
   }
-  interface IonRefresherContent extends JSXBase.HTMLAttributes<HTMLIonRefresherContentElement> {
+  interface IonRefresherContent {
     /**
     * A static icon to display when you begin to pull down
     */
@@ -5294,8 +5244,8 @@ declare namespace LocalJSX {
     */
     'refreshingText'?: string;
   }
-  interface IonReorder extends JSXBase.HTMLAttributes<HTMLIonReorderElement> {}
-  interface IonReorderGroup extends JSXBase.HTMLAttributes<HTMLIonReorderGroupElement> {
+  interface IonReorder {}
+  interface IonReorderGroup {
     /**
     * If `true`, the reorder will be hidden.
     */
@@ -5305,13 +5255,13 @@ declare namespace LocalJSX {
     */
     'onIonItemReorder'?: (event: CustomEvent<ItemReorderEventDetail>) => void;
   }
-  interface IonRippleEffect extends JSXBase.HTMLAttributes<HTMLIonRippleEffectElement> {
+  interface IonRippleEffect {
     /**
     * Sets the type of ripple-effect:  - `bounded`: the ripple effect expands from the user's click position - `unbounded`: the ripple effect expands from the center of the button and overflows the container.  NOTE: Surfaces for bounded ripples should have the overflow property set to hidden, while surfaces for unbounded ripples should have it set to visible.
     */
     'type'?: 'bounded' | 'unbounded';
   }
-  interface IonRoute extends JSXBase.HTMLAttributes<HTMLIonRouteElement> {
+  interface IonRoute {
     /**
     * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
     */
@@ -5329,7 +5279,7 @@ declare namespace LocalJSX {
     */
     'url'?: string;
   }
-  interface IonRouteRedirect extends JSXBase.HTMLAttributes<HTMLIonRouteRedirectElement> {
+  interface IonRouteRedirect {
     /**
     * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
     */
@@ -5343,7 +5293,7 @@ declare namespace LocalJSX {
     */
     'to': string | undefined | null;
   }
-  interface IonRouter extends JSXBase.HTMLAttributes<HTMLIonRouterElement> {
+  interface IonRouter {
     /**
     * Emitted when the route had changed
     */
@@ -5361,7 +5311,7 @@ declare namespace LocalJSX {
     */
     'useHash'?: boolean;
   }
-  interface IonRouterLink extends JSXBase.HTMLAttributes<HTMLIonRouterLinkElement> {
+  interface IonRouterLink {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -5383,7 +5333,7 @@ declare namespace LocalJSX {
     */
     'target'?: string | undefined;
   }
-  interface IonRouterOutlet extends JSXBase.HTMLAttributes<HTMLIonRouterOutletElement> {
+  interface IonRouterOutlet {
     /**
     * If `true`, the router-outlet should animate the transition of components.
     */
@@ -5397,8 +5347,8 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
   }
-  interface IonRow extends JSXBase.HTMLAttributes<HTMLIonRowElement> {}
-  interface IonSearchbar extends JSXBase.HTMLAttributes<HTMLIonSearchbarElement> {
+  interface IonRow {}
+  interface IonSearchbar {
     /**
     * If `true`, enable searchbar animation.
     */
@@ -5492,7 +5442,7 @@ declare namespace LocalJSX {
     */
     'value'?: string | null;
   }
-  interface IonSegment extends JSXBase.HTMLAttributes<HTMLIonSegmentElement> {
+  interface IonSegment {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -5518,7 +5468,7 @@ declare namespace LocalJSX {
     */
     'value'?: string | null;
   }
-  interface IonSegmentButton extends JSXBase.HTMLAttributes<HTMLIonSegmentButtonElement> {
+  interface IonSegmentButton {
     /**
     * If `true`, the segment button is selected.
     */
@@ -5548,7 +5498,7 @@ declare namespace LocalJSX {
     */
     'value'?: string;
   }
-  interface IonSelect extends JSXBase.HTMLAttributes<HTMLIonSelectElement> {
+  interface IonSelect {
     /**
     * The text to display on the cancel button.
     */
@@ -5614,7 +5564,7 @@ declare namespace LocalJSX {
     */
     'value'?: any | null;
   }
-  interface IonSelectOption extends JSXBase.HTMLAttributes<HTMLIonSelectOptionElement> {
+  interface IonSelectOption {
     /**
     * If `true`, the user cannot interact with the select option.
     */
@@ -5628,7 +5578,7 @@ declare namespace LocalJSX {
     */
     'value'?: any | null;
   }
-  interface IonSelectPopover extends JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement> {
+  interface IonSelectPopover {
     /**
     * Header text for the popover
     */
@@ -5646,14 +5596,14 @@ declare namespace LocalJSX {
     */
     'subHeader'?: string;
   }
-  interface IonSkeletonText extends JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement> {
+  interface IonSkeletonText {
     /**
     * If `true`, the skeleton text will animate.
     */
     'animated'?: boolean;
   }
-  interface IonSlide extends JSXBase.HTMLAttributes<HTMLIonSlideElement> {}
-  interface IonSlides extends JSXBase.HTMLAttributes<HTMLIonSlidesElement> {
+  interface IonSlide {}
+  interface IonSlides {
     /**
     * The mode determines which platform styles to use.
     */
@@ -5735,7 +5685,7 @@ declare namespace LocalJSX {
     */
     'scrollbar'?: boolean;
   }
-  interface IonSpinner extends JSXBase.HTMLAttributes<HTMLIonSpinnerElement> {
+  interface IonSpinner {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -5753,7 +5703,7 @@ declare namespace LocalJSX {
     */
     'paused'?: boolean;
   }
-  interface IonSplitPane extends JSXBase.HTMLAttributes<HTMLIonSplitPaneElement> {
+  interface IonSplitPane {
     /**
     * The content `id` of the split-pane's main content.
     */
@@ -5771,7 +5721,7 @@ declare namespace LocalJSX {
     */
     'when'?: string | boolean;
   }
-  interface IonTab extends JSXBase.HTMLAttributes<HTMLIonTabElement> {
+  interface IonTab {
     /**
     * The component to display inside of the tab.
     */
@@ -5781,7 +5731,7 @@ declare namespace LocalJSX {
     */
     'tab': string;
   }
-  interface IonTabBar extends JSXBase.HTMLAttributes<HTMLIonTabBarElement> {
+  interface IonTabBar {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -5799,7 +5749,7 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonTabButton extends JSXBase.HTMLAttributes<HTMLIonTabButtonElement> {
+  interface IonTabButton {
     /**
     * If `true`, the user cannot interact with the tab button.
     */
@@ -5837,7 +5787,7 @@ declare namespace LocalJSX {
     */
     'target'?: string | undefined;
   }
-  interface IonTabs extends JSXBase.HTMLAttributes<HTMLIonTabsElement> {
+  interface IonTabs {
     /**
     * Emitted when the navigation has finished transitioning to a new component.
     */
@@ -5847,7 +5797,7 @@ declare namespace LocalJSX {
     */
     'onIonTabsWillChange'?: (event: CustomEvent<{tab: string}>) => void;
   }
-  interface IonText extends JSXBase.HTMLAttributes<HTMLIonTextElement> {
+  interface IonText {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -5857,7 +5807,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
   }
-  interface IonTextarea extends JSXBase.HTMLAttributes<HTMLIonTextareaElement> {
+  interface IonTextarea {
     /**
     * If `true`, the element height will increase based on the value.
     */
@@ -5951,8 +5901,8 @@ declare namespace LocalJSX {
     */
     'wrap'?: 'hard' | 'soft' | 'off';
   }
-  interface IonThumbnail extends JSXBase.HTMLAttributes<HTMLIonThumbnailElement> {}
-  interface IonTitle extends JSXBase.HTMLAttributes<HTMLIonTitleElement> {
+  interface IonThumbnail {}
+  interface IonTitle {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -5962,7 +5912,7 @@ declare namespace LocalJSX {
     */
     'size'?: 'large' | 'small';
   }
-  interface IonToast extends JSXBase.HTMLAttributes<HTMLIonToastElement> {
+  interface IonToast {
     /**
     * If `true`, the toast will animate.
     */
@@ -6032,8 +5982,8 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonToastController extends JSXBase.HTMLAttributes<HTMLIonToastControllerElement> {}
-  interface IonToggle extends JSXBase.HTMLAttributes<HTMLIonToggleElement> {
+  interface IonToastController {}
+  interface IonToggle {
     /**
     * If `true`, the toggle is selected.
     */
@@ -6071,7 +6021,7 @@ declare namespace LocalJSX {
     */
     'value'?: string | null;
   }
-  interface IonToolbar extends JSXBase.HTMLAttributes<HTMLIonToolbarElement> {
+  interface IonToolbar {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
@@ -6081,7 +6031,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
   }
-  interface IonVirtualScroll extends JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement> {
+  interface IonVirtualScroll {
     /**
     * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
     */
@@ -6240,7 +6190,6 @@ export { LocalJSX as JSX };
 
 declare module "@stencil/core" {
   export namespace JSX {
-<<<<<<< HEAD
     interface IntrinsicElements {
       'ion-action-sheet': LocalJSX.IonActionSheet & JSXBase.HTMLAttributes<HTMLIonActionSheetElement>;
       'ion-action-sheet-controller': LocalJSX.IonActionSheetController & JSXBase.HTMLAttributes<HTMLIonActionSheetControllerElement>;
@@ -6338,9 +6287,6 @@ declare module "@stencil/core" {
       'ion-toolbar': LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
       'ion-virtual-scroll': LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;
     }
-=======
-    interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
->>>>>>> chore(angular): update sync script
   }
 }
 
