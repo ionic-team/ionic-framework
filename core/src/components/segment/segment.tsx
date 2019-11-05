@@ -179,7 +179,7 @@ export class Segment implements ComponentInterface {
   }
 
   private getIndicator(button: HTMLIonSegmentButtonElement): HTMLDivElement | null {
-    return button.shadowRoot && button.shadowRoot.querySelector('.segment-checked-indicator');
+    return button.shadowRoot && button.shadowRoot.querySelector('.segment-button-indicator');
   }
 
   private checkButton(clicked: HTMLIonSegmentButtonElement, checked: HTMLIonSegmentButtonElement) {
@@ -222,14 +222,14 @@ export class Segment implements ComponentInterface {
       checked.style.setProperty('z-index', '1');
 
       // Remove the transition before positioning on top of the old indicator
-      currentIndicator.classList.remove('segment-checked-indicator-animated');
+      currentIndicator.classList.remove('segment-button-indicator-animated');
       currentIndicator.style.setProperty('transform', transform);
 
       // Force a repaint to ensure the transform happens
       currentIndicator.getBoundingClientRect();
 
       // Add the transition to move the indicator into place
-      currentIndicator.classList.add('segment-checked-indicator-animated');
+      currentIndicator.classList.add('segment-button-indicator-animated');
       if (activated && mode === 'ios' && !reduceMotion) {
         currentIndicator.style.setProperty('transform', 'scale(0.95)');
       } else {
