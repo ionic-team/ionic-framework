@@ -10,6 +10,7 @@
   --color: #{$searchbar-md-input-text-color};
   --icon-color: #{$searchbar-md-input-search-icon-color};
   --background: #{$searchbar-md-input-background-color};
+  --box-shadow: #{$searchbar-md-input-box-shadow};
 
   @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
 
@@ -68,7 +69,7 @@
 
   line-height: $searchbar-md-input-line-height;
 
-  box-shadow: $searchbar-md-input-box-shadow;
+  box-shadow: var(--box-shadow);
 }
 
 
