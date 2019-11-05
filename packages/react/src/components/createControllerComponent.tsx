@@ -54,18 +54,15 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
 
     async present(prevProps?: Props) {
       const { isOpen, onDidDismiss, ...cProps } = this.props;
-      let overlay = this.overlay;
-      if (!overlay) {
-        overlay = this.overlay = await controller.create({
-          ...cProps as any
-        });
-      }
-      attachProps(overlay, {
+      this.overlay = await controller.create({
+        ...cProps as any
+      });
+      attachProps(this.overlay, {
         [dismissEventName]: onDidDismiss
       }, prevProps);
       // Check isOpen again since the value could of changed during the async call to controller.create
       if (this.props.isOpen === true) {
-        await overlay.present();
+        await this.overlay.present();
       }
     }
 
