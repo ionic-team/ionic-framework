@@ -6,7 +6,7 @@ export interface RouteManagerContextState {
   syncView: (page: HTMLElement, viewId: string) => void;
   hideView: (viewId: string) => void;
   viewStacks: ViewStacks;
-  setupIonRouter: (id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) => Promise<void>;
+  setupIonRouter: (id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) => void;
   removeViewStack: (stack: string) => void;
 }
 

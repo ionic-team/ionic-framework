@@ -1,10 +1,11 @@
 import { NavDirection } from '@ionic/core';
-import { RouterDirection } from '@ionic/react';
+import { RouterDirection, getConfig } from '@ionic/react';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { RouteComponentProps, matchPath, withRouter } from 'react-router-dom';
 
 import { generateId } from '../utils';
+import { LocationHistory } from '../utils/LocationHistory';
 
 import { IonRouteData } from './IonRouteData';
 import { NavManager } from './NavManager';
@@ -21,11 +22,13 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   listenUnregisterCallback: UnregisterCallback | undefined;
   activeIonPageId?: string;
   currentDirection?: RouterDirection;
+  locationHistory: LocationHistory = new LocationHistory();
 
   constructor(props: RouteComponentProps) {
     super(props);
     this.listenUnregisterCallback = this.props.history.listen(this.historyChange.bind(this));
     this.handleNavigate = this.handleNavigate.bind(this);
+    this.navigateBack = this.navigateBack.bind(this);
     this.state = {
       viewStacks: new ViewStacks(),
       hideView: this.hideView.bind(this),
@@ -33,6 +36,14 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
       removeViewStack: this.removeViewStack.bind(this),
       syncView: this.syncView.bind(this)
     };
+
+    this.locationHistory.add({
+      hash: window.location.hash,
+      key: generateId(),
+      pathname: window.location.pathname,
+      search: window.location.search,
+      state: {}
+    });
   }
 
   componentDidUpdate(_prevProps: RouteComponentProps, prevState: RouteManagerState) {
@@ -66,6 +77,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   historyChange(location: HistoryLocation, action: HistoryAction) {
     location.state = location.state || { direction: this.currentDirection };
     this.currentDirection = undefined;
+    this.locationHistory.add(location);
     this.setState({
       location,
       action
@@ -139,7 +151,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
         if (enteringEl) {
           // Don't animate from an empty view
           const navDirection = leavingEl && leavingEl.innerHTML === '' ? undefined : direction === 'none' ? undefined : direction;
-          this.transitionView(
+          this.commitView(
             enteringEl!,
             leavingEl!,
             viewStack.routerOutlet,
@@ -173,7 +185,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     });
   }
 
-  async setupIonRouter(id: string, children: any, routerOutlet: HTMLIonRouterOutletElement) {
+  setupIonRouter(id: string, children: any, routerOutlet: HTMLIonRouterOutletElement) {
     const views: ViewItem[] = [];
     let activeId: string | undefined;
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
@@ -181,7 +193,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
       views.push(createViewItem(child, this.props.history.location));
     });
 
-    await this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);
+    this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);
 
     function createViewItem(child: React.ReactElement<any>, location: HistoryLocation) {
       const viewId = generateId();
@@ -212,27 +224,59 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     }
   }
 
-  async registerViewStack(stack: string, activeId: string | undefined, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, _location: HistoryLocation) {
-
-    return new Promise(resolve => {
-      this.setState(prevState => {
-        const prevViewStacks = Object.assign(new ViewStacks(), prevState.viewStacks);
-        const newStack: ViewStack = {
-          id: stack,
-          views: stackItems,
-          routerOutlet
-        };
-        if (activeId) {
-          this.activeIonPageId = activeId;
-        }
-        prevViewStacks.set(stack, newStack);
-        return {
-          viewStacks: prevViewStacks
-        };
-      }, () => {
-        resolve();
-      });
+  registerViewStack(stack: string, activeId: string | undefined, stackItems: ViewItem[], routerOutlet: HTMLIonRouterOutletElement, _location: HistoryLocation) {
+    this.setState(prevState => {
+      const prevViewStacks = Object.assign(new ViewStacks(), prevState.viewStacks);
+      const newStack: ViewStack = {
+        id: stack,
+        views: stackItems,
+        routerOutlet
+      };
+      if (activeId) {
+        this.activeIonPageId = activeId;
+      }
+      prevViewStacks.set(stack, newStack);
+      return {
+        viewStacks: prevViewStacks
+      };
+    }, () => {
+      this.setupRouterOutlet(routerOutlet);
     });
+  }
+
+  async setupRouterOutlet(routerOutlet: HTMLIonRouterOutletElement) {
+    const waitUntilReady = async () => {
+      if (routerOutlet.componentOnReady) {
+        routerOutlet.dispatchEvent(new Event('routerOutletReady'));
+        return;
+      } else {
+        setTimeout(() => {
+          waitUntilReady();
+        }, 0);
+      }
+    };
+
+    await waitUntilReady();
+
+    const canStart = () => {
+      const config = getConfig();
+      const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
+      if (swipeEnabled) {
+        const { view } = this.state.viewStacks.findViewInfoById(this.activeIonPageId);
+        return !!(view && view.prevId);
+      } else {
+        return false;
+      }
+    };
+
+    const onStart = () => {
+      this.navigateBack();
+    };
+    routerOutlet.swipeHandler = {
+      canStart,
+      onStart,
+      onEnd: _shouldContinue => true
+    };
   }
 
   removeViewStack(stack: string) {
@@ -245,7 +289,6 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
 
   syncView(page: HTMLElement, viewId: string) {
     this.setState(state => {
-
       const viewStacks = Object.assign(new ViewStacks(), state.viewStacks);
       const { view } = viewStacks.findViewInfoById(viewId);
 
@@ -259,20 +302,6 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     }, () => {
       this.setActiveView(this.state.location || this.props.location, this.state.action!);
     });
-  }
-
-  transitionView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOutlet: HTMLIonRouterOutletElement | undefined, direction: NavDirection | undefined, showGoBack: boolean) {
-    /**
-     * Super hacky workaround to make sure ionRouterOutlet is available
-     * since transitionView might be called before IonRouterOutlet is fully mounted
-     */
-    if (ionRouterOutlet && ionRouterOutlet.componentOnReady) {
-      this.commitView(enteringEl, leavingEl, ionRouterOutlet, direction, showGoBack);
-    } else {
-      setTimeout(() => {
-        this.transitionView(enteringEl, leavingEl, ionRouterOutlet, direction, showGoBack);
-      }, 10);
-    }
   }
 
   private async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction?: NavDirection, showGoBack?: boolean) {
@@ -305,15 +334,36 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     }
   }
 
+  navigateBack(defaultHref?: string) {
+    const { view: activeIonPage } = this.state.viewStacks.findViewInfoById(this.activeIonPageId);
+    if (activeIonPage) {
+      const { view: enteringView } = this.state.viewStacks.findViewInfoById(activeIonPage.prevId);
+      if (enteringView) {
+        const lastLocation = this.locationHistory.findLastLocation(enteringView.routeData.match!.url);
+        if (lastLocation) {
+          this.handleNavigate('replace', lastLocation.pathname + lastLocation.search, 'back');
+        } else {
+          this.handleNavigate('replace', enteringView.routeData.match!.url, 'back');
+        }
+      } else {
+        if (defaultHref) {
+          this.handleNavigate('replace', defaultHref, 'back');
+        }
+      }
+    } else {
+      if (defaultHref) {
+        this.handleNavigate('replace', defaultHref, 'back');
+      }
+    }
+  }
+
   render() {
     return (
       <RouteManagerContext.Provider value={this.state}>
         <NavManager
           {...this.props}
+          onNavigateBack={this.navigateBack}
           onNavigate={this.handleNavigate}
-          findViewInfoById={(id: string) => this.state.viewStacks.findViewInfoById(id)}
-          findViewInfoByLocation={(location: HistoryLocation) => this.state.viewStacks.findViewInfoByLocation(location)}
-          getActiveIonPage={() => this.state.viewStacks.findViewInfoById(this.activeIonPageId)}
         >
           {this.props.children}
         </NavManager>
