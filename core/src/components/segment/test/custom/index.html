@@ -221,15 +221,24 @@
    */
   .themed {
     --ion-toolbar-background: #3880ff;
-    --ion-toolbar-background-checked: #fff;
     --ion-toolbar-color: #fff;
     --ion-toolbar-color-activated: #fff;
 
     /* Segment */
-    --ion-toolbar-segment-background: rgba(255, 255, 255, 0.065);
-    --ion-toolbar-segment-background-checked: #3880ff;
+    --ion-toolbar-segment-indicator-color: #ffffff;
+  }
+
+  /* Material Design Segment */
+  .md .themed {
     --ion-toolbar-segment-color: rgba(255, 255, 255, .6);
     --ion-toolbar-segment-color-checked: #ffffff;
+  }
+
+  /* iOS Segment */
+  .ios .themed {
+    --ion-toolbar-segment-background: rgba(255, 255, 255, 0.065);
+    --ion-toolbar-segment-color: #ffffff;
+    --ion-toolbar-segment-color-checked: #3880ff;
   }
 
   /*
