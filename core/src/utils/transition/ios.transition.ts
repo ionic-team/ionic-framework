@@ -27,8 +27,9 @@ const getBackButton = (refEl: any, backDirection: boolean) => {
     const activeHeader = parentHeader && !parentHeader.classList.contains('header-collapse-condense-inactive');
     const backButton = buttons.querySelector('ion-back-button');
     const buttonsCollapse = buttons.classList.contains('buttons-collapse');
+    const startSlot = buttons.slot === 'start' || buttons.slot === '';
 
-    if (backButton !== null && ((buttonsCollapse && activeHeader && backDirection) || !buttonsCollapse)) {
+    if (backButton !== null && startSlot && ((buttonsCollapse && activeHeader && backDirection) || !buttonsCollapse)) {
       return backButton;
     }
   }
