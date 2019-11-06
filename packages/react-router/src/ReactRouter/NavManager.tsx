@@ -34,6 +34,13 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
       });
     });
 
+    if (document) {
+      document.addEventListener('ionBackButton', (e: any) => {
+        e.detail.register(0, () => {
+          this.props.history.goBack();
+        });
+      });
+    }
   }
 
   componentWillUnmount() {
