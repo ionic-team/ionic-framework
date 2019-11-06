@@ -1,4 +1,4 @@
-import { Platforms, getPlatforms as getPlatformsCore, isPlatform as isPlatformCore, Config as CoreConfig } from '@ionic/core';
+import { Config as CoreConfig, Platforms, getPlatforms as getPlatformsCore, isPlatform as isPlatformCore } from '@ionic/core';
 import React from 'react';
 
 import { IonicReactProps } from '../IonicReactProps';
