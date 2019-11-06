@@ -6,8 +6,6 @@
 
 :host {
   --background: transparent;
-  --color: #{$segment-button-md-text-color};
-  --color-checked: #{$segment-button-md-text-color-checked};
   --indicator-color: var(--color-checked);
   --indicator-transition: #{$segment-button-md-transition-animated};
 }
@@ -20,7 +18,6 @@
 // --------------------------------------------------
 
 :host(.ion-color) ::slotted(ion-segment-button) {
-  --background-activated: #{current-color(base, .16)};
   --ripple-color: #{current-color(base)};
   --indicator-color: #{current-color(base)};
 
@@ -36,6 +33,10 @@
   color: #{current-color(base)};
 }
 
+:host(.ion-color) ::slotted(.activated) {
+  background: #{current-color(base, .16)};
+}
+
 @media (any-hover: hover) {
   :host(.ion-color) ::slotted(ion-segment-button:hover) {
     background: #{current-color(base, .04)};
@@ -47,7 +48,7 @@
 
 // Default Segment, In a Toolbar
 :host(.in-toolbar:not(.ion-color)) ::slotted(ion-segment-button) {
-  --indicator-color: #{var(--ion-toolbar-color-checked, var(--color-checked))};
+  --indicator-color: #{var(--ion-toolbar-segment-color-checked, var(--color-checked))};
 
   background: #{var(--ion-toolbar-segment-background, var(--background))};
   color: #{var(--ion-toolbar-segment-color, var(--color))};
@@ -65,9 +66,6 @@
 
 // Default Segment, In a Toolbar with Color
 :host(.in-toolbar-color:not(.ion-color)) ::slotted(ion-segment-button) {
-  // TODO activated state
-  --background-activated: #{current-color(base)};
-
   color: #{current-color(contrast, .6)};
 }
 
@@ -76,15 +74,23 @@
   color: #{current-color(contrast)};
 }
 
+// Default Segment, In a Toolbar with Color, Activated
+:host(.in-toolbar-color:not(.ion-color)) ::slotted(.activated) {
+  color: #{current-color(base)};
+}
 
 // Segment: Toolbar Hover
 // --------------------------------------------------
 
 @media (any-hover: hover) {
+  // Default Segment, In a Default Toolbar, Hover
   :host(.in-toolbar:not(.ion-color)) ::slotted(ion-segment-button:hover) {
-    background: #{ion-color(primary, base, .04)};
+    background: var(--background-hover, #{ion-color(primary, base, .04)});
+    // TODO overrides the ability to set it globally in a toolbar
+    color: var(--color-hover);
   }
 
+  // Default Segment, In a Toolbar with Color, Hover
   :host(.in-toolbar-color:not(.ion-color)) ::slotted(ion-segment-button:hover) {
     background: #{ion-color(primary, contrast, .04)};
   }

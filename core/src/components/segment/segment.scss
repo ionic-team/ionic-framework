@@ -8,11 +8,6 @@
    * @prop --background: Background of the segment button
    */
   --ripple-color: currentColor;
-  --color: initial;
-  --color-hover: var(--color);
-  --color-activated: var(--color);
-  --color-checked: var(--color);
-  --color-disabled: var(--color);
 
   @include font-smoothing();
 

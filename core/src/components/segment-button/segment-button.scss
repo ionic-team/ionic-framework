@@ -37,6 +37,11 @@
    * @prop --indicator-color: Color of the indicator (highlight) for the checked segment button
    * @prop --indicator-transition: Transition of the indicator (highlight) for the checked segment button
    */
+  --color: initial;
+  --color-hover: var(--color);
+  --color-activated: var(--color);
+  --color-checked: var(--color);
+  --color-disabled: var(--color);
   --padding-start: 0;
   --padding-end: 0;
   --padding-top: 0;
