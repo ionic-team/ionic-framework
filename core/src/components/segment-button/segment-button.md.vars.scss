@@ -18,23 +18,14 @@ $segment-button-md-background-checked:                $segment-button-md-backgro
 /// @prop - Background of the hovered segment button
 $segment-button-md-background-hover:                  ion-color(primary, base, .04) !default;
 
-/// @prop - Background of the activated segment button
-$segment-button-md-background-activated:              ion-color(primary, base, .16) !default;
-
 /// @prop - Width of the bottom border on the segment button
 $segment-button-md-border-bottom-width:               2px !default;
 
 /// @prop - Color of the bottom border on the segment button
 $segment-button-md-border-bottom-color:               transparent !default;
 
-/// @prop - Text color of the activated segment button
+/// @prop - Text color of the checked segment button
 $segment-button-md-text-color-checked:              ion-color(primary, base) !default;
-
-/// @prop - Border color of the activated segment button
-$segment-button-md-border-bottom-color-activated:     ion-color(primary, base) !default;
-
-/// @prop - Opacity of the activated segment button
-$segment-button-md-opacity-activated:                 1 !default;
 
 /// @prop - Opacity of the disabled segment button
 $segment-button-md-opacity-disabled:                  .3 !default;

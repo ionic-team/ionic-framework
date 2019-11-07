@@ -6,13 +6,11 @@
 :host {
   /**
    * @prop --background: Background of the segment button
-   * @prop --background-activated: Background of the segment button when pressed
    * @prop --background-checked: Background of the checked segment button
    * @prop --background-disabled: Background of the disabled segment button
    * @prop --background-hover: Background of the segment button on hover
    *
    * @prop --color: Color of the segment button
-   * @prop --color-activated: Color of the segment button when pressed
    * @prop --color-checked: Color of the checked segment button
    * @prop --color-disabled: Color of the disabled segment button
    * @prop --color-hover: Color of the segment button on hover
@@ -40,7 +38,6 @@
    */
   --color: initial;
   --color-hover: initial;
-  --color-activated: var(--color);
   --color-checked: var(--color);
   --color-disabled: var(--color);
   --padding-start: 0;
@@ -117,15 +114,6 @@
 :host(.segment-button-checked) {
   background: var(--background-checked);
   color: var(--color-checked);
-}
-
-
-// Segment Button: Activated
-// --------------------------------------------------
-
-:host(.activated) {
-  background: var(--background-activated);
-  color: var(--color-activated);
 }
 
 

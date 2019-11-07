@@ -992,7 +992,6 @@ ion-segment-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-segment-button,prop,value,string,'ion-sb-' + (ids++),false,false
 ion-segment-button,event,ionSelect,void,true
 ion-segment-button,css-prop,--background
-ion-segment-button,css-prop,--background-activated
 ion-segment-button,css-prop,--background-checked
 ion-segment-button,css-prop,--background-disabled
 ion-segment-button,css-prop,--background-hover
@@ -1001,7 +1000,6 @@ ion-segment-button,css-prop,--border-radius
 ion-segment-button,css-prop,--border-style
 ion-segment-button,css-prop,--border-width
 ion-segment-button,css-prop,--color
-ion-segment-button,css-prop,--color-activated
 ion-segment-button,css-prop,--color-checked
 ion-segment-button,css-prop,--color-disabled
 ion-segment-button,css-prop,--color-hover
