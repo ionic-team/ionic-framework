@@ -4,7 +4,7 @@ import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallbac
 import React from 'react';
 import { RouteComponentProps, matchPath, withRouter } from 'react-router-dom';
 
-import { generateId } from '../utils';
+import { generateId, isDevMode } from '../utils';
 import { LocationHistory } from '../utils/LocationHistory';
 
 import { IonRouteData } from './IonRouteData';
@@ -168,6 +168,18 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
         } else if (leavingEl) {
           leavingEl.classList.add('ion-page-hidden');
           leavingEl.setAttribute('aria-hidden', 'true');
+        }
+
+        // Warn if an IonPage was not eventually rendered in Dev Mode
+        if (isDevMode()) {
+          if (enteringView.routeData.match!.url !== location.pathname) {
+            setTimeout(() => {
+              const { view } = this.state.viewStacks.findViewInfoById(this.activeIonPageId);
+              if (view!.routeData.match!.url !== location.pathname) {
+                console.warn('No IonPage was found to render. Make sure you wrap your page with an IonPage component.');
+              }
+            }, 1000);
+          }
         }
       }
     });
