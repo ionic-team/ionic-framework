@@ -4,7 +4,8 @@ export interface PressRecognizerOptions {
   el: HTMLElement;
   time: number;
   threshold: number;
-  onPressHandler: () => void;
+  onPressHandler?: () => void;
+  onPressUpHandler?: () => void;
 }
 
 export const createPressRecognizer = (opts: PressRecognizerOptions) => {
@@ -15,7 +16,10 @@ export const createPressRecognizer = (opts: PressRecognizerOptions) => {
     clearGestureTimeout();
 
     timeout = setTimeout(() => {
-      opts.onPressHandler();
+      if (opts.onPressHandler) {
+        opts.onPressHandler();
+      }
+
       clearGestureTimeout();
     }, opts.time || 500);
   };
@@ -23,6 +27,14 @@ export const createPressRecognizer = (opts: PressRecognizerOptions) => {
   const onMove = (detail: GestureDetail) => {
     if (Math.abs(detail.deltaX) + Math.abs(detail.deltaY) <= THRESHOLD) {
       return;
+    }
+
+    clearGestureTimeout();
+  };
+
+  const onEnd = () => {
+    if (opts.onPressUpHandler) {
+      opts.onPressUpHandler();
     }
 
     clearGestureTimeout();
@@ -41,6 +53,6 @@ export const createPressRecognizer = (opts: PressRecognizerOptions) => {
     threshold: 0,
     onStart,
     onMove,
-    onEnd: () => clearGestureTimeout()
+    onEnd
   });
 };
