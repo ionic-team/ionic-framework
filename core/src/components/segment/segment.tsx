@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, List
 import { getIonMode } from '../../global/ionic-global';
 import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
 import { Gesture, GestureDetail } from '../../utils/gesture';
+import { pointerCoord } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -126,6 +127,13 @@ export class Segment implements ComponentInterface {
 
     detail.event.preventDefault();
     detail.event.stopImmediatePropagation();
+
+    const ripple = (detail.event!.target! as HTMLElement).shadowRoot!.querySelector('ion-ripple-effect');
+    if (!ripple) { return; }
+
+    const { x, y } = pointerCoord(detail.event);
+
+    ripple.addRipple(x, y).then(remove => remove());
   }
 
   private activate(detail: GestureDetail) {
