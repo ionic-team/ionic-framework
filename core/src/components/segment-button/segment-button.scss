@@ -34,11 +34,12 @@
    *
    * @prop --transition: Transition of the segment button
    *
-   * @prop --indicator-color: Color of the indicator (highlight) for the checked segment button
-   * @prop --indicator-transition: Transition of the indicator (highlight) for the checked segment button
+   * @prop --indicator-box-shadow: Box shadow on the indicator for the checked segment button
+   * @prop --indicator-color: Color of the indicator for the checked segment button
+   * @prop --indicator-transition: Transition of the indicator for the checked segment button
    */
   --color: initial;
-  --color-hover: var(--color);
+  --color-hover: initial;
   --color-activated: var(--color);
   --color-checked: var(--color);
   --color-disabled: var(--color);
@@ -143,7 +144,11 @@
 @media (any-hover: hover) {
   :host(:hover) {
     background: var(--background-hover);
-    color: var(--color-hover);
+    color: var(--color-hover, var(--color));
+  }
+
+  :host(.segment-button-checked:hover) {
+    color: var(--color-hover, var(--color-checked));
   }
 }
 
@@ -236,6 +241,8 @@ ion-ripple-effect {
 .segment-button-indicator-background {
   width: 100%;
   height: 100%;
+
+  box-shadow: var(--indicator-box-shadow);
 }
 
 .segment-button-indicator-animated {

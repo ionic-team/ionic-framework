@@ -79,6 +79,7 @@
   --ion-item-border-color: #5bff76;
   --ion-item-background-activated: #5bff76;
 
+  --ion-toolbar-color: #fff;
 }
 
 .ios {
@@ -90,6 +91,7 @@
 }
 
 .md {
-  --ion-toolbar-segment-color: rgba(var(--ion-color-danger-rgb), .6);
+  --ion-toolbar-segment-color: #fff;
   --ion-toolbar-segment-color-checked: var(--ion-color-danger);
+  --ion-toolbar-segment-background-hover: rgba(var(--ion-color-danger-contrast-rgb), .04);
 }

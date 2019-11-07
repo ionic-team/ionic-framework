@@ -129,8 +129,6 @@
   @include border-radius($segment-button-ios-border-radius);
 
   background: var(--indicator-color);
-
-  box-shadow: $segment-button-ios-box-shadow-checked;
 }
 
 

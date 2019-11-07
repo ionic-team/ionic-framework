@@ -6,6 +6,7 @@
 
 :host {
   --background: transparent;
+  --indicator-box-shadow: none;
   --indicator-color: var(--color-checked);
   --indicator-transition: #{$segment-button-md-transition-animated};
 }
@@ -83,13 +84,6 @@
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  // Default Segment, In a Default Toolbar, Hover
-  :host(.in-toolbar:not(.ion-color)) ::slotted(ion-segment-button:hover) {
-    background: var(--background-hover, #{ion-color(primary, base, .04)});
-    // TODO overrides the ability to set it globally in a toolbar
-    color: var(--color-hover);
-  }
-
   // Default Segment, In a Toolbar with Color, Hover
   :host(.in-toolbar-color:not(.ion-color)) ::slotted(ion-segment-button:hover) {
     background: #{ion-color(primary, contrast, .04)};

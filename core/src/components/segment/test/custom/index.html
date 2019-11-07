@@ -226,7 +226,7 @@
   .md .custom-checked ion-segment-button {
     --background-hover: rgba(17, 228, 10, 0.5);
     --color-checked: purple;
-    --color-hover: #11e40a;
+    --color-hover: blue;
   }
 
   /*
@@ -245,6 +245,7 @@
   .md .themed {
     --ion-toolbar-segment-color: rgba(255, 255, 255, .6);
     --ion-toolbar-segment-color-checked: #ffffff;
+    --ion-toolbar-segment-background-hover: rgba(255, 255, 255, 0.04);
   }
 
   /* iOS Segment */
@@ -286,16 +287,19 @@
    * MD Custom Icon Segment (Facebook, Instagram, Slack)
    */
   .md .segment-button-facebook {
+    --background-hover: rgb(58, 61, 70, .04);
     --color-checked: #3a3d46;
     --indicator-color: #3a3d46;
   }
 
   .md .segment-button-instagram {
+    --background-hover: rgb(228, 64, 95, .04);
     --color-checked: #e4405f;
     --indicator-color: #e4405f;
   }
 
   .md .segment-button-slack {
+    --background-hover: rgb(58, 175, 133, .04);
     --color-checked: #3aaf85;
     --indicator-color: #3aaf85;
   }
@@ -347,6 +351,8 @@
   }
 
   .custom-states-background ion-segment-button {
+    --indicator-color: transparent;
+    --indicator-box-shadow: none;
     --color: white;
 
     --background: red;
