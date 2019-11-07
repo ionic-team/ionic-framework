@@ -23,6 +23,7 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
 
   return class extends React.Component<Props> {
     overlay?: OverlayType;
+    isUnmounted = false;
 
     constructor(props: Props) {
       super(props);
@@ -40,6 +41,7 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
     }
 
     componentWillUnmount() {
+      this.isUnmounted = true;
       if (this.overlay) { this.overlay.dismiss(); }
     }
 
@@ -60,8 +62,9 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
       attachProps(this.overlay, {
         [dismissEventName]: onDidDismiss
       }, prevProps);
-      // Check isOpen again since the value could of changed during the async call to controller.create
-      if (this.props.isOpen === true) {
+      // Check isOpen again since the value could have changed during the async call to controller.create
+      // It's also possible for the component to have become unmounted.
+      if (this.props.isOpen === true && this.isUnmounted === false) {
         await this.overlay.present();
       }
     }
