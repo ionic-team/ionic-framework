@@ -22,7 +22,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   listenUnregisterCallback: UnregisterCallback | undefined;
   activeIonPageId?: string;
   currentDirection?: RouterDirection;
-  locationHistory: LocationHistory = new LocationHistory();
+  locationHistory = new LocationHistory();
 
   constructor(props: RouteComponentProps) {
     super(props);
@@ -77,7 +77,13 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   historyChange(location: HistoryLocation, action: HistoryAction) {
     location.state = location.state || { direction: this.currentDirection };
     this.currentDirection = undefined;
-    this.locationHistory.add(location);
+    if (action === 'PUSH') {
+      this.locationHistory.add(location);
+    } else if ((action === 'REPLACE' && location.state.direction === 'back') || action === 'POP') {
+      this.locationHistory.pop();
+    } else {
+      this.locationHistory.replace(location);
+    }
     this.setState({
       location,
       action
@@ -111,21 +117,22 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
                * If the page is being pushed into the stack by another view,
                * record the view that originally directed to the new view for back button purposes.
                */
-              enteringView.prevId = enteringView.prevId || leavingView.id;
+              enteringView.prevId = leavingView.id;
             } else if (action === 'POP') {
               direction = leavingView.prevId === enteringView.id ? 'back' : 'none';
             } else {
               direction = direction || 'back';
               leavingView.mount = false;
             }
-          } else if (direction === 'back' || action === 'REPLACE') {
+          }
+          if (direction === 'back' || action === 'REPLACE') {
             leavingView.mount = false;
+            this.removeOrphanedViews(enteringView, enteringViewStack);
           }
         } else {
           // If there is not a leavingView, then we shouldn't provide a direction
           direction = undefined;
         }
-        this.removeOrphanedViews(enteringView, enteringViewStack);
       } else {
         enteringView.show = true;
         enteringView.mount = true;
@@ -151,12 +158,13 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
         if (enteringEl) {
           // Don't animate from an empty view
           const navDirection = leavingEl && leavingEl.innerHTML === '' ? undefined : direction === 'none' ? undefined : direction;
+          const shouldGoBack = !!enteringView.prevId || !!this.locationHistory.previous();
           this.commitView(
             enteringEl!,
             leavingEl!,
             viewStack.routerOutlet,
             navDirection,
-            !!enteringView.prevId);
+            shouldGoBack);
         } else if (leavingEl) {
           leavingEl.classList.add('ion-page-hidden');
           leavingEl.setAttribute('aria-hidden', 'true');
@@ -166,6 +174,8 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   }
 
   removeOrphanedViews(view: ViewItem, viewStack: ViewStack) {
+    // Note: This technique is a bit wonky for views that reference each other and get into a circular loop.
+    // It can still remove a view that probably shouldn't be.
     const viewsToRemove = viewStack.views.filter(v => v.prevId === view.id);
     viewsToRemove.forEach(v => {
       // Don't remove if view is currently active
@@ -339,15 +349,20 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     if (activeIonPage) {
       const { view: enteringView } = this.state.viewStacks.findViewInfoById(activeIonPage.prevId);
       if (enteringView) {
-        const lastLocation = this.locationHistory.findLastLocation(enteringView.routeData.match!.url);
+        const lastLocation = this.locationHistory.findLastLocationByUrl(enteringView.routeData.match!.url);
         if (lastLocation) {
           this.handleNavigate('replace', lastLocation.pathname + lastLocation.search, 'back');
         } else {
           this.handleNavigate('replace', enteringView.routeData.match!.url, 'back');
         }
       } else {
-        if (defaultHref) {
-          this.handleNavigate('replace', defaultHref, 'back');
+        const currentLocation = this.locationHistory.previous();
+        if (currentLocation) {
+          this.handleNavigate('replace', currentLocation.pathname + currentLocation.search, 'back');
+        } else {
+          if (defaultHref) {
+            this.handleNavigate('replace', defaultHref, 'back');
+          }
         }
       }
     } else {
