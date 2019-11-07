@@ -178,7 +178,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
               if (view!.routeData.match!.url !== location.pathname) {
                 console.warn('No IonPage was found to render. Make sure you wrap your page with an IonPage component.');
               }
-            }, 1000);
+            }, 100);
           }
         }
       }
