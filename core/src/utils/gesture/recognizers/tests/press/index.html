@@ -20,14 +20,14 @@
         square.classList.toggle('pressed');
       }
       
-      const pan = createPressRecognizer({
+      const pressRecognizer = createPressRecognizer({
         el: square,
         time: 251,
         threshold: 10,
         onPressHandler: () => onPress(),
       });
             
-      pan.enable(true);
+      pressRecognizer.enable(true);
     </script>
     
     <style>
