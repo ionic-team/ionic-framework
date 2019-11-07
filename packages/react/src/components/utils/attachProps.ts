@@ -1,33 +1,36 @@
 import { camelToDashCase } from './case';
 
 export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}) => {
-  // add any classes in className to the class list
-  const className = getClassName(node.classList, newProps, oldProps);
-  if (className !== '') {
-    node.className = className;
-  }
-
-  Object.keys(newProps).forEach(name => {
-    if (name === 'children' || name === 'style' || name === 'ref' || name === 'class' || name === 'className' || name === 'forwardedRef') {
-      return;
+  // some test frameworks don't render DOM elements, so we test here to make sure we are dealing with DOM first
+  if (node instanceof Element) {
+    // add any classes in className to the class list
+    const className = getClassName(node.classList, newProps, oldProps);
+    if (className !== '') {
+      node.className = className;
     }
-    if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
-      const eventName = name.substring(2);
-      const eventNameLc = eventName[0].toLowerCase() + eventName.substring(1);
 
-      if (!isCoveredByReact(eventNameLc)) {
-        syncEvent(node, eventNameLc, newProps[name]);
+    Object.keys(newProps).forEach(name => {
+      if (name === 'children' || name === 'style' || name === 'ref' || name === 'class' || name === 'className' || name === 'forwardedRef') {
+        return;
       }
-    } else {
-      (node as any)[name] = newProps[name];
-      const propType = typeof newProps[name];
-      if (propType === 'string') {
-        node.setAttribute(camelToDashCase(name), newProps[name]);
+      if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
+        const eventName = name.substring(2);
+        const eventNameLc = eventName[0].toLowerCase() + eventName.substring(1);
+
+        if (!isCoveredByReact(eventNameLc)) {
+          syncEvent(node, eventNameLc, newProps[name]);
+        }
       } else {
         (node as any)[name] = newProps[name];
+        const propType = typeof newProps[name];
+        if (propType === 'string') {
+          node.setAttribute(camelToDashCase(name), newProps[name]);
+        } else {
+          (node as any)[name] = newProps[name];
+        }
       }
-    }
-  });
+    });
+  }
 };
 
 export const getClassName = (classList: DOMTokenList, newProps: any, oldProps: any) => {

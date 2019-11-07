@@ -31,8 +31,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
       hideView: this.hideView.bind(this),
       setupIonRouter: this.setupIonRouter.bind(this),
       removeViewStack: this.removeViewStack.bind(this),
-      syncView: this.syncView.bind(this),
-      transitionView: this.transitionView.bind(this),
+      syncView: this.syncView.bind(this)
     };
   }
 
@@ -75,7 +74,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
 
   setActiveView(location: HistoryLocation, action: HistoryAction) {
     const viewStacks = Object.assign(new ViewStacks(), this.state.viewStacks);
-    let direction: RouterDirection = (location.state && location.state.direction) || 'forward';
+    let direction: RouterDirection | undefined = (location.state && location.state.direction) || 'forward';
     let leavingView: ViewItem | undefined;
     const viewStackKeys = viewStacks.getKeys();
 
@@ -101,10 +100,18 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
                * record the view that originally directed to the new view for back button purposes.
                */
               enteringView.prevId = enteringView.prevId || leavingView.id;
+            } else if (action === 'POP') {
+              direction = leavingView.prevId === enteringView.id ? 'back' : 'none';
             } else {
               direction = direction || 'back';
+              leavingView.mount = false;
             }
+          } else if (direction === 'back' || action === 'REPLACE') {
+            leavingView.mount = false;
           }
+        } else {
+          // If there is not a leavingView, then we shouldn't provide a direction
+          direction = undefined;
         }
         this.removeOrphanedViews(enteringView, enteringViewStack);
       } else {
@@ -136,7 +143,8 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
             enteringEl!,
             leavingEl!,
             viewStack.routerOutlet,
-            navDirection);
+            navDirection,
+            !!enteringView.prevId);
         } else if (leavingEl) {
           leavingEl.classList.add('ion-page-hidden');
           leavingEl.setAttribute('aria-hidden', 'true');
@@ -148,16 +156,20 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   removeOrphanedViews(view: ViewItem, viewStack: ViewStack) {
     const viewsToRemove = viewStack.views.filter(v => v.prevId === view.id);
     viewsToRemove.forEach(v => {
-      this.removeOrphanedViews(v, viewStack);
-      // If view is not currently visible, go ahead and remove it from DOM
-      if (v.ionPageElement!.classList.contains('ion-page-hidden')) {
-        v.show = false;
-        v.ionPageElement = undefined;
-        v.isIonRoute = false;
-        v.prevId = undefined;
-        v.key = generateId();
+      // Don't remove if view is currently active
+      if (v.id !== this.activeIonPageId) {
+        this.removeOrphanedViews(v, viewStack);
+
+        // If view is not currently visible, go ahead and remove it from DOM
+        if (v.ionPageElement!.classList.contains('ion-page-hidden')) {
+          v.show = false;
+          v.ionPageElement = undefined;
+          v.isIonRoute = false;
+          v.prevId = undefined;
+          v.key = generateId();
+        }
+        v.mount = false;
       }
-      v.mount = false;
     });
   }
 
@@ -249,21 +261,21 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     });
   }
 
-  transitionView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOutlet?: HTMLIonRouterOutletElement, direction?: NavDirection) {
+  transitionView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOutlet: HTMLIonRouterOutletElement | undefined, direction: NavDirection | undefined, showGoBack: boolean) {
     /**
      * Super hacky workaround to make sure ionRouterOutlet is available
      * since transitionView might be called before IonRouterOutlet is fully mounted
      */
     if (ionRouterOutlet && ionRouterOutlet.componentOnReady) {
-      this.commitView(enteringEl, leavingEl, ionRouterOutlet, direction);
+      this.commitView(enteringEl, leavingEl, ionRouterOutlet, direction, showGoBack);
     } else {
       setTimeout(() => {
-        this.transitionView(enteringEl, leavingEl, ionRouterOutlet, direction);
+        this.transitionView(enteringEl, leavingEl, ionRouterOutlet, direction, showGoBack);
       }, 10);
     }
   }
 
-  private async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction?: NavDirection) {
+  private async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction?: NavDirection, showGoBack?: boolean) {
 
     if (enteringEl === leavingEl) {
       return;
@@ -273,7 +285,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
       deepWait: true,
       duration: direction === undefined ? 0 : undefined,
       direction,
-      showGoBack: direction === 'forward',
+      showGoBack,
       progressAnimation: false
     });
 

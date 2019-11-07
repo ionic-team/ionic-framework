@@ -1098,12 +1098,15 @@ ion-spinner,prop,name,"bubbles" | "circles" | "circular" | "crescent" | "dots" |
 ion-spinner,prop,paused,boolean,false,false,false
 ion-spinner,css-prop,--color
 
-ion-split-pane,none
+ion-split-pane,shadow
 ion-split-pane,prop,contentId,string | undefined,undefined,false,false
 ion-split-pane,prop,disabled,boolean,false,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false,false
 ion-split-pane,event,ionSplitPaneVisible,{ visible: boolean; },true
 ion-split-pane,css-prop,--border
+ion-split-pane,css-prop,--side-max-width
+ion-split-pane,css-prop,--side-min-width
+ion-split-pane,css-prop,--side-width
 
 ion-tab,shadow
 ion-tab,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
