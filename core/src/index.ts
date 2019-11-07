@@ -3,6 +3,8 @@ import 'ionicons';
 export { createAnimation } from './utils/animation/animation';
 export { getTimeGivenProgression } from './utils/animation/cubic-bezier';
 export { createGesture } from './utils/gesture';
+export { createPressRecognizer } from './utils/gesture/recognizers/press';
+
 export { isPlatform, Platforms, getPlatforms } from './utils/platform';
 
 export * from './utils/config';

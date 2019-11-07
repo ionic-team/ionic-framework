@@ -35,6 +35,7 @@ export { Animation, AnimationBuilder } from './utils/animation/animation-interfa
 export * from './utils/overlays-interface';
 export * from './global/config';
 export { Gesture, GestureDetail } from './utils/gesture';
+export { PressRecognizerOptions } from './utils/gesture/recognizers/press';
 
 // Global aux types
 export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time';
