@@ -1,23 +1,31 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
 
 export const useIonViewWillEnter = (callback: () => void) => {
-  const value = useContext(IonLifeCycleContext);
-  value.onIonViewWillEnter(callback);
+  const context = useContext(IonLifeCycleContext);
+  useEffect(() => {
+    context.onIonViewWillEnter(callback);
+  }, []);
 };
 
 export const useIonViewDidEnter = (callback: () => void) => {
-  const value = useContext(IonLifeCycleContext);
-  value.onIonViewDidEnter(callback);
+  const context = useContext(IonLifeCycleContext);
+  useEffect(() => {
+    context.onIonViewDidEnter(callback);
+  }, []);
 };
 
 export const useIonViewWillLeave = (callback: () => void) => {
-  const value = useContext(IonLifeCycleContext);
-  value.onIonViewWillLeave(callback);
+  const context = useContext(IonLifeCycleContext);
+  useEffect(() => {
+    context.onIonViewWillLeave(callback);
+  }, []);
 };
 
 export const useIonViewDidLeave = (callback: () => void) => {
-  const value = useContext(IonLifeCycleContext);
-  value.onIonViewDidLeave(callback);
+  const context = useContext(IonLifeCycleContext);
+  useEffect(() => {
+    context.onIonViewDidLeave(callback);
+  }, []);
 };

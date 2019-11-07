@@ -22,52 +22,46 @@ export const IonLifeCycleContext = /*@__PURE__*/React.createContext<IonLifeCycle
   ionViewDidLeave: () => { return; },
 });
 
+type LifeCycleCallback = () => void;
+
 export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextInterface {
 
-  ionViewWillEnterCallback?: () => void;
-  ionViewDidEnterCallback?: () => void;
-  ionViewWillLeaveCallback?: () => void;
-  ionViewDidLeaveCallback?: () => void;
+  ionViewWillEnterCallbacks: LifeCycleCallback[] = [];
+  ionViewDidEnterCallbacks: LifeCycleCallback[] = [];
+  ionViewWillLeaveCallbacks: LifeCycleCallback[] = [];
+  ionViewDidLeaveCallbacks: LifeCycleCallback[] = [];
   componentCanBeDestroyedCallback?: () => void;
 
-  onIonViewWillEnter(callback: () => void) {
-    this.ionViewWillEnterCallback = callback;
+  onIonViewWillEnter(callback: LifeCycleCallback) {
+    this.ionViewWillEnterCallbacks.push(callback);
   }
 
   ionViewWillEnter() {
-    if (this.ionViewWillEnterCallback) {
-      this.ionViewWillEnterCallback();
-    }
+    this.ionViewWillEnterCallbacks.forEach(cb => cb());
   }
 
-  onIonViewDidEnter(callback: () => void) {
-    this.ionViewDidEnterCallback = callback;
+  onIonViewDidEnter(callback: LifeCycleCallback) {
+    this.ionViewDidEnterCallbacks.push(callback);
   }
 
   ionViewDidEnter() {
-    if (this.ionViewDidEnterCallback) {
-      this.ionViewDidEnterCallback();
-    }
+    this.ionViewDidEnterCallbacks.forEach(cb => cb());
   }
 
-  onIonViewWillLeave(callback: () => void) {
-    this.ionViewWillLeaveCallback = callback;
+  onIonViewWillLeave(callback: LifeCycleCallback) {
+    this.ionViewWillLeaveCallbacks.push(callback);
   }
 
   ionViewWillLeave() {
-    if (this.ionViewWillLeaveCallback) {
-      this.ionViewWillLeaveCallback();
-    }
+    this.ionViewWillLeaveCallbacks.forEach(cb => cb());
   }
 
-  onIonViewDidLeave(callback: () => void) {
-    this.ionViewDidLeaveCallback = callback;
+  onIonViewDidLeave(callback: LifeCycleCallback) {
+    this.ionViewDidLeaveCallbacks.push(callback);
   }
 
   ionViewDidLeave() {
-    if (this.ionViewDidLeaveCallback) {
-      this.ionViewDidLeaveCallback();
-    }
+    this.ionViewDidLeaveCallbacks.forEach(cb => cb());
     this.componentCanBeDestroyed();
   }
 
