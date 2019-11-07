@@ -77,14 +77,14 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-segment class="custom-states-color" value="checked">
+        <ion-segment class="custom-states-color" value="disabled">
           <ion-segment-button value="activated" class="activated">
             <ion-label>Activated</ion-label>
           </ion-segment-button>
-          <ion-segment-button value="checked">
-            <ion-label>Checked</ion-label>
-          </ion-segment-button>
           <ion-segment-button value="inactive">
+            <ion-label>Inactive</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="inactive2">
             <ion-label>Inactive</ion-label>
           </ion-segment-button>
           <ion-segment-button value="disabled" disabled>
@@ -360,6 +360,10 @@
     --background-disabled: blue;
     --background-checked: indigo;
     --background-hover: orange;
+  }
+
+  .custom-states-background ion-segment-button:hover {
+    opacity: 1;
   }
 </style>
 

@@ -64,7 +64,7 @@
 // Segment Button: Disabled
 // --------------------------------------------------
 
-:host(.segment-button-disabled) .button-native {
+:host(.segment-button-disabled) {
   opacity: $segment-button-ios-opacity-disabled;
 }
 
@@ -95,7 +95,7 @@
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  :host(:hover) .button-native {
+  :host(:hover) {
     opacity: $segment-button-ios-opacity-hover;
   }
 }
@@ -104,7 +104,7 @@
 // Segment Button: Activated
 // --------------------------------------------------
 
-:host(.activated:not(.segment-button-checked)) .button-native {
+:host(.activated:not(.segment-button-checked)) {
   opacity: $segment-button-ios-opacity-activated;
 }
 
