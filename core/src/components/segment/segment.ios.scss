@@ -59,6 +59,7 @@
 // Toolbar with Color, Default Segment
 :host(.in-toolbar-color:not(.ion-color)) {
   background: #{current-color(contrast, 0.11)};
+  color: #{current-color(contrast)};
 }
 
 // Toolbar with Color, Default Segment, Checked
