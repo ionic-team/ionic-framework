@@ -6,9 +6,6 @@
 
 :host {
   --background: transparent;
-  --indicator-box-shadow: none;
-  --indicator-color: var(--color-checked);
-  --indicator-transition: #{$segment-button-md-transition-animated};
 }
 
 :host(.segment-disabled) {

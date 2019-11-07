@@ -10,6 +10,9 @@
   --background-hover: #{$segment-button-md-background-hover};
   --color: #{$segment-button-md-text-color};
   --color-checked: #{$segment-button-md-text-color-checked};
+  --indicator-box-shadow: none;
+  --indicator-color: var(--color-checked);
+  --indicator-transition: #{$segment-button-md-transition-animated};
   --padding-top: #{$segment-button-md-padding-top};
   --padding-end: #{$segment-button-md-padding-end};
   --padding-bottom: #{$segment-button-md-padding-bottom};
@@ -93,7 +96,7 @@
   @include margin(12px, null, 12px, null);
 }
 
-// Segment: Checked Indicator
+// Segment Button: Indicator
 // --------------------------------------------------
 
 .segment-button-indicator {

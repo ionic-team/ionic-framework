@@ -6,9 +6,6 @@
 
 :host {
   --background: #{$segment-ios-background-color};
-  --indicator-box-shadow: #{$segment-button-ios-box-shadow-checked};
-  --indicator-color: #{$segment-button-ios-indicator-color};
-  --indicator-transition: #{$segment-button-ios-transition-animated};
 
   @include border-radius($segment-ios-border-radius);
 

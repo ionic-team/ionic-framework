@@ -12,6 +12,9 @@
   --border-width: #{$segment-button-ios-border-width};
   --border-color: #{$segment-button-ios-border-color};
   --border-style: solid;
+  --indicator-box-shadow: #{$segment-button-ios-box-shadow-checked};
+  --indicator-color: #{$segment-button-ios-indicator-color};
+  --indicator-transition: #{$segment-button-ios-transition-animated};
   --transition: #{$segment-button-ios-transition};
   --padding-top: 0;
   --padding-end: 13px;
@@ -100,7 +103,7 @@
 }
 
 
-// Segment: Checked
+// Segment Button: Checked
 // --------------------------------------------------
 
 :host(.segment-button-checked) {
@@ -108,7 +111,7 @@
 }
 
 
-// Segment: Checked Indicator
+// Segment Button: Checked Indicator
 // --------------------------------------------------
 
 .segment-button-indicator {
@@ -123,7 +126,7 @@
 }
 
 
-// Segment: Checked Borders
+// Segment Button: Checked Borders
 // --------------------------------------------------
 
 :host(.segment-button-checked)::before,
@@ -132,11 +135,11 @@
 }
 
 
-// Segment: Default Toolbar
+// Segment Button: Toolbar
 // --------------------------------------------------
 
-// Segment button indicator color should use the background checked variable with
-// a fallback to the default value of --indicator-color
+// Segment button indicator color should use the global variable with
+// a fallback to the local variable
 :host(.in-toolbar) .segment-button-indicator-background {
   background: #{var(--ion-toolbar-segment-indicator-color, var(--indicator-color))};
 }
