@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createGesture, GestureConfig, Gesture } from '@ionic/core';
+import { Gesture, GestureConfig, createGesture } from '@ionic/core';
 
 @Injectable({
   providedIn: 'root',
