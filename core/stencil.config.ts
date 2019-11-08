@@ -28,7 +28,7 @@ export const config: Config = {
     { components: ['ion-loading'] },
     { components: ['ion-menu', 'ion-menu-controller', 'ion-menu-toggle', 'ion-menu-button'] },
     { components: ['ion-modal'] },
-    { components: ['ion-nav', 'ion-nav-link', 'ion-nav-pop', 'ion-nav-push', 'ion-nav-set-root'] },
+    { components: ['ion-nav', 'ion-nav-link'] },
     { components: ['ion-img'] },
     { components: ['ion-popover'] },
     { components: ['ion-progress-bar'] },
@@ -53,7 +53,6 @@ export const config: Config = {
 
     // Deprecated
     { components: [
-      'ion-anchor',
       'ion-action-sheet-controller',
       'ion-alert-controller',
       'ion-loading-controller',
@@ -70,11 +69,13 @@ export const config: Config = {
   ],
   outputTargets: [
     {
+      type: 'docs-vscode',
+      file: 'dist/html.html-data.json',
+      sourceCodeBaseUrl: 'https://github.com/ionic-team/ionic/tree/master/core/',
+    },
+    {
       type: 'dist',
-      esmLoaderPath: '../loader',
-      copy: [
-        { src: '**/*.scss' }
-      ]
+      esmLoaderPath: '../loader'
     },
     // {
     //   type: 'experimental-dist-module',
@@ -131,7 +132,6 @@ export const config: Config = {
         'ion-route-redirect',
         'ion-router-link',
         'ion-router-outlet',
-        'ion-anchor',
 
         // tabs
         'ion-tabs',

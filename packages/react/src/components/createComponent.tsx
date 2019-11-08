@@ -1,32 +1,28 @@
-import { RouterDirection } from '@ionic/core';
 import React from 'react';
 import ReactDom from 'react-dom';
 
 import { NavContext } from '../contexts/NavContext';
 
-import { ReactProps } from './ReactProps';
-import { attachEventProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
+import { RouterDirection } from './hrefprops';
+import { attachProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
 
-interface IonicReactInternalProps<ElementType> {
+interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.Ref<ElementType>;
-  children?: React.ReactNode;
   href?: string;
-  target?: string;
-  style?: string;
+  routerLink?: string;
   ref?: React.Ref<any>;
   routerDirection?: RouterDirection;
-  className?: string;
 }
 
 export const createReactComponent = <PropType, ElementType>(
   tagName: string,
-  hrefComponent = false
+  routerLinkComponent = false
 ) => {
   const displayName = dashToPascalCase(tagName);
-  const ReactComponent = class extends React.Component<IonicReactInternalProps<ElementType>> {
+  const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>> {
     context!: React.ContextType<typeof NavContext>;
 
-    constructor(props: IonicReactInternalProps<ElementType>) {
+    constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
     }
 
@@ -34,17 +30,16 @@ export const createReactComponent = <PropType, ElementType>(
       this.componentDidUpdate(this.props);
     }
 
-    componentDidUpdate(prevProps: IonicReactInternalProps<ElementType>) {
+    componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       const node = ReactDom.findDOMNode(this) as HTMLElement;
-      attachEventProps(node, this.props, prevProps);
+      attachProps(node, this.props, prevProps);
     }
 
-    private handleClick = (e: MouseEvent) => {
-      // TODO: review target usage
-      const { href, routerDirection } = this.props;
-      if (href !== undefined && this.context.hasIonicRouter()) {
+    private handleClick = (e: React.MouseEvent<PropType>) => {
+      const { routerLink, routerDirection } = this.props;
+      if (routerLink !== undefined) {
         e.preventDefault();
-        this.context.navigate(href, routerDirection);
+        this.context.navigate(routerLink, routerDirection);
       }
     }
 
@@ -61,16 +56,19 @@ export const createReactComponent = <PropType, ElementType>(
         return acc;
       }, {});
 
-      const newProps: any = {
+      const newProps: IonicReactInternalProps<PropType> = {
         ...propsToPass,
         ref: forwardedRef,
         style
       };
 
-      if (hrefComponent) {
+      if (routerLinkComponent) {
+        if (this.props.routerLink && !this.props.href) {
+          newProps.href = this.props.routerLink;
+        }
         if (newProps.onClick) {
           const oldClick = newProps.onClick;
-          newProps.onClick = (e: MouseEvent) => {
+          newProps.onClick = (e: React.MouseEvent<PropType>) => {
             oldClick(e);
             if (!e.defaultPrevented) {
               this.handleClick(e);
@@ -96,5 +94,5 @@ export const createReactComponent = <PropType, ElementType>(
       return NavContext;
     }
   };
-  return createForwardRef<PropType & ReactProps, ElementType>(ReactComponent, displayName);
+  return createForwardRef<PropType, ElementType>(ReactComponent, displayName);
 };

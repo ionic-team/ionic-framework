@@ -1,11 +1,9 @@
-import { Platforms, getPlatforms as getPlatformsCore, isPlatform as isPlatformCore } from '@ionic/core';
+import { Config as CoreConfig, Platforms, getPlatforms as getPlatformsCore, isPlatform as isPlatformCore } from '@ionic/core';
 import React from 'react';
-export const dashToPascalCase = (str: string) => str.toLowerCase().split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');
 
-export type IonicReactExternalProps<PropType, ElementType> = PropType & {
-  ref?: React.RefObject<ElementType>;
-  children?: React.ReactNode;
-};
+import { IonicReactProps } from '../IonicReactProps';
+
+export type IonicReactExternalProps<PropType, ElementType> = PropType & Omit<React.HTMLAttributes<ElementType>, 'style'> & IonicReactProps;
 
 export const createForwardRef = <PropType, ElementType>(ReactComponent: any, displayName: string) => {
   const forwardRef = (props: IonicReactExternalProps<PropType, ElementType>, ref: React.Ref<ElementType>) => {
@@ -16,7 +14,8 @@ export const createForwardRef = <PropType, ElementType>(ReactComponent: any, dis
   return React.forwardRef(forwardRef);
 };
 
-export * from './attachEventProps';
+export * from './attachProps';
+export * from './case';
 
 export const isPlatform = (platform: Platforms) => {
   return isPlatformCore(window, platform);
@@ -24,4 +23,14 @@ export const isPlatform = (platform: Platforms) => {
 
 export const getPlatforms = () => {
   return getPlatformsCore(window);
+};
+
+export const getConfig = (): CoreConfig | null => {
+  if (typeof (window as any) !== 'undefined') {
+    const Ionic = (window as any).Ionic;
+    if (Ionic && Ionic.config) {
+      return Ionic.config;
+    }
+  }
+  return null;
 };

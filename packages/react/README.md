@@ -1,4 +1,4 @@
-## @ionic/react (beta)
+## @ionic/react
 
 These are React specific building blocks on top of  [@ionic/core](https://www.npmjs.com/package/@ionic/core) components/services.
 
@@ -27,9 +27,6 @@ ionic init "My React App" --type=react
 ionic integrations enable capacitor
 ```
 
-Open the './capacitor.config.json' file in your projects root.
-Change `"webDir": "www"` to be `"webDir": "build"` (dependent on your config but Ionic React defaults with this as the build directory)
-
 Then run the following command to get started with either `ios` or `android` platforms.
 ```
 ionic capacitor add <android|ios>
@@ -44,6 +41,7 @@ To open your application to build/emulate in Android Studio or Xcode run the `op
 ```
 ionic capacitor open <android|ios>
 ```
+
 
 ## Related
 

@@ -6,7 +6,10 @@ import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-title',
-  styleUrl: 'title.scss',
+  styleUrls: {
+    'ios': 'title.ios.scss',
+    'md': 'title.md.scss'
+  },
   shadow: true
 })
 export class ToolbarTitle implements ComponentInterface {
@@ -22,9 +25,8 @@ export class ToolbarTitle implements ComponentInterface {
 
   /**
    * The size of the toolbar title.
-   * Only applies in `ios` mode.
    */
-  @Prop() size?: 'large' | undefined;
+  @Prop() size?: 'large' | 'small';
 
   /**
    * Emitted when the styles change.
@@ -42,29 +44,26 @@ export class ToolbarTitle implements ComponentInterface {
   }
 
   private emitStyle() {
+    const size = this.getSize();
+
     this.ionStyle.emit({
-      [`title-${this.getSize()}`]: true
+      [`title-${size}`]: true
     });
   }
 
   private getSize() {
-    return (this.size !== undefined) ? this.size : 'standard';
-  }
-
-  private getMode() {
-    const mode = getIonMode(this);
-    const toolbar = this.el.closest('ion-toolbar');
-    return (toolbar && toolbar.mode) || mode;
+    return (this.size !== undefined) ? this.size : 'default';
   }
 
   render() {
-    const mode = this.getMode();
+    const mode = getIonMode(this);
+    const size = this.getSize();
+
     return (
       <Host
         class={{
           [mode]: true,
-          [`title-${mode}`]: true,
-          [`title-${mode}-${this.getSize()}`]: true,
+          [`title-${size}`]: true,
 
           ...createColorClasses(this.color),
         }}

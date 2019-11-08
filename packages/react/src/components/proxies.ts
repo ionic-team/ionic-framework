@@ -2,6 +2,7 @@ import { JSX } from '@ionic/core';
 import { JSX as IoniconsJSX } from 'ionicons';
 
 import { createReactComponent } from './createComponent';
+import { HrefProps } from './hrefprops';
 
 // ionicons
 export const IonIcon = /*@__PURE__*/createReactComponent<IoniconsJSX.IonIcon, HTMLIonIconElement>('ion-icon');
@@ -10,13 +11,13 @@ export const IonIcon = /*@__PURE__*/createReactComponent<IoniconsJSX.IonIcon, HT
 export const IonApp = /*@__PURE__*/createReactComponent<JSX.IonApp, HTMLIonAppElement>('ion-app');
 export const IonTab = /*@__PURE__*/createReactComponent<JSX.IonTab, HTMLIonTabElement>('ion-tab');
 export const IonTabButton = /*@__PURE__*/createReactComponent<JSX.IonTabButton, HTMLIonTabButtonElement>('ion-tab-button');
-export const IonRouterLink = /*@__PURE__*/createReactComponent<JSX.IonRouterLink, HTMLIonRouterLinkElement>('ion-router-link', true);
+export const IonRouterLink = /*@__PURE__*/createReactComponent<HrefProps<JSX.IonRouterLink>, HTMLIonRouterLinkElement>('ion-router-link', true);
 export const IonAvatar = /*@__PURE__*/createReactComponent<JSX.IonAvatar, HTMLIonAvatarElement>('ion-avatar');
 export const IonBackdrop = /*@__PURE__*/createReactComponent<JSX.IonBackdrop, HTMLIonBackdropElement>('ion-backdrop');
 export const IonBadge = /*@__PURE__*/createReactComponent<JSX.IonBadge, HTMLIonBadgeElement>('ion-badge');
-export const IonButton = /*@__PURE__*/createReactComponent<JSX.IonButton, HTMLIonButtonElement>('ion-button', true);
+export const IonButton = /*@__PURE__*/createReactComponent<HrefProps<JSX.IonButton>, HTMLIonButtonElement>('ion-button', true);
 export const IonButtons = /*@__PURE__*/createReactComponent<JSX.IonButtons, HTMLIonButtonsElement>('ion-buttons');
-export const IonCard = /*@__PURE__*/createReactComponent<JSX.IonCard, HTMLIonCardElement>('ion-card', true);
+export const IonCard = /*@__PURE__*/createReactComponent<HrefProps<JSX.IonCard>, HTMLIonCardElement>('ion-card', true);
 export const IonCardContent = /*@__PURE__*/createReactComponent<JSX.IonCardContent, HTMLIonCardContentElement>('ion-card-content');
 export const IonCardHeader = /*@__PURE__*/createReactComponent<JSX.IonCardHeader, HTMLIonCardHeaderElement>('ion-card-header');
 export const IonCardSubtitle = /*@__PURE__*/createReactComponent<JSX.IonCardSubtitle, HTMLIonCardSubtitleElement>('ion-card-subtitle');
@@ -27,7 +28,7 @@ export const IonContent = /*@__PURE__*/createReactComponent<JSX.IonContent, HTML
 export const IonChip = /*@__PURE__*/createReactComponent<JSX.IonChip, HTMLIonChipElement>('ion-chip');
 export const IonDatetime = /*@__PURE__*/createReactComponent<JSX.IonDatetime, HTMLIonDatetimeElement>('ion-datetime');
 export const IonFab = /*@__PURE__*/createReactComponent<JSX.IonFab, HTMLIonFabElement>('ion-fab');
-export const IonFabButton = /*@__PURE__*/createReactComponent<JSX.IonFabButton, HTMLIonFabButtonElement>('ion-fab-button', true);
+export const IonFabButton = /*@__PURE__*/createReactComponent<HrefProps<JSX.IonFabButton>, HTMLIonFabButtonElement>('ion-fab-button', true);
 export const IonFabList = /*@__PURE__*/createReactComponent<JSX.IonFabList, HTMLIonFabListElement>('ion-fab-list');
 export const IonFooter = /*@__PURE__*/createReactComponent<JSX.IonFooter, HTMLIonFooterElement>('ion-footer');
 export const IonGrid = /*@__PURE__*/createReactComponent<JSX.IonGrid, HTMLIonGridElement>('ion-grid');
@@ -36,10 +37,10 @@ export const IonImg = /*@__PURE__*/createReactComponent<JSX.IonImg, HTMLIonImgEl
 export const IonInfiniteScroll = /*@__PURE__*/createReactComponent<JSX.IonInfiniteScroll, HTMLIonInfiniteScrollElement>('ion-infinite-scroll');
 export const IonInfiniteScrollContent = /*@__PURE__*/createReactComponent<JSX.IonInfiniteScrollContent, HTMLIonInfiniteScrollContentElement>('ion-infinite-scroll-content');
 export const IonInput = /*@__PURE__*/createReactComponent<JSX.IonInput, HTMLIonInputElement>('ion-input');
-export const IonItem = /*@__PURE__*/createReactComponent<JSX.IonItem, HTMLIonItemElement>('ion-item', true);
+export const IonItem = /*@__PURE__*/createReactComponent<HrefProps<JSX.IonItem>, HTMLIonItemElement>('ion-item', true);
 export const IonItemDivider = /*@__PURE__*/createReactComponent<JSX.IonItemDivider, HTMLIonItemDividerElement>('ion-item-divider');
 export const IonItemGroup = /*@__PURE__*/createReactComponent<JSX.IonItemGroup, HTMLIonItemGroupElement>('ion-item-group');
-export const IonItemOption = /*@__PURE__*/createReactComponent<JSX.IonItemOption, HTMLIonItemOptionElement>('ion-item-option', true);
+export const IonItemOption = /*@__PURE__*/createReactComponent<HrefProps<JSX.IonItemOption>, HTMLIonItemOptionElement>('ion-item-option', true);
 export const IonItemOptions = /*@__PURE__*/createReactComponent<JSX.IonItemOptions, HTMLIonItemOptionsElement>('ion-item-options');
 export const IonItemSliding = /*@__PURE__*/createReactComponent<JSX.IonItemSliding, HTMLIonItemSlidingElement>('ion-item-sliding');
 export const IonLabel = /*@__PURE__*/createReactComponent<JSX.IonLabel, HTMLIonLabelElement>('ion-label');
@@ -49,7 +50,6 @@ export const IonMenu = /*@__PURE__*/createReactComponent<JSX.IonMenu, HTMLIonMen
 export const IonMenuButton = /*@__PURE__*/createReactComponent<JSX.IonMenuButton, HTMLIonMenuButtonElement>('ion-menu-button');
 export const IonMenuToggle = /*@__PURE__*/createReactComponent<JSX.IonMenuToggle, HTMLIonMenuToggleElement>('ion-menu-toggle');
 export const IonNote = /*@__PURE__*/createReactComponent<JSX.IonNote, HTMLIonNoteElement>('ion-note');
-export const IonPicker = /*@__PURE__*/createReactComponent<JSX.IonPicker, HTMLIonPickerElement>('ion-picker');
 export const IonPickerColumn = /*@__PURE__*/createReactComponent<JSX.IonPickerColumn, HTMLIonPickerColumnElement>('ion-picker-column');
 export const IonNav = /*@__PURE__*/createReactComponent<JSX.IonNav, HTMLIonNavElement>('ion-nav');
 export const IonProgressBar = /*@__PURE__*/createReactComponent<JSX.IonProgressBar, HTMLIonProgressBarElement>('ion-progress-bar');
@@ -61,7 +61,6 @@ export const IonRefresherContent = /*@__PURE__*/createReactComponent<JSX.IonRefr
 export const IonReorder = /*@__PURE__*/createReactComponent<JSX.IonReorder, HTMLIonReorderElement>('ion-reorder');
 export const IonReorderGroup = /*@__PURE__*/createReactComponent<JSX.IonReorderGroup, HTMLIonReorderGroupElement>('ion-reorder-group');
 export const IonRippleEffect = /*@__PURE__*/createReactComponent<JSX.IonRippleEffect, HTMLIonRippleEffectElement>('ion-ripple-effect');
-export const IonRouterOutlet = /*@__PURE__*/createReactComponent<JSX.IonRouterOutlet, HTMLIonRouterOutletElement>('ion-router-outlet');
 export const IonRow = /*@__PURE__*/createReactComponent<JSX.IonRow, HTMLIonRowElement>('ion-row');
 export const IonSearchbar = /*@__PURE__*/createReactComponent<JSX.IonSearchbar, HTMLIonSearchbarElement>('ion-searchbar');
 export const IonSegment = /*@__PURE__*/createReactComponent<JSX.IonSegment, HTMLIonSegmentElement>('ion-segment');

@@ -1,3 +1,2 @@
-export * from './Router';
-export * from './ViewManager';
-
+export { IonReactRouter } from './IonReactRouter';
+export { IonReactHashRouter } from './IonReactHashRouter';

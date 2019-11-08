@@ -1,11 +1,12 @@
+import { JSX as LocalJSX } from '@ionic/core';
 import React from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
-import { IonRouterOutlet } from '../proxies';
+import { IonRouterOutlet } from '../IonRouterOutlet';
 
 import { IonTabBar } from './IonTabBar';
 
-interface Props {
+interface Props extends LocalJSX.IonTabs {
   children: React.ReactNode;
 }
 
@@ -28,7 +29,7 @@ const tabsInner: React.CSSProperties = {
   contain: 'layout size style'
 };
 
-export const IonTabs = /*@__PURE__*/(() => class extends React.Component<Props> {
+export class IonTabs extends React.Component<Props> {
   context!: React.ContextType<typeof NavContext>;
   routerOutletRef: React.Ref<HTMLIonRouterOutletElement> = React.createRef();
 
@@ -38,7 +39,7 @@ export const IonTabs = /*@__PURE__*/(() => class extends React.Component<Props> 
 
   render() {
     let outlet: React.ReactElement<{}> | undefined;
-    let tabBar: React.ReactElement<{ slot: 'bottom' | 'top' }> | undefined;
+    let tabBar: React.ReactElement | undefined;
 
     React.Children.forEach(this.props.children, (child: any) => {
       if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
@@ -48,7 +49,8 @@ export const IonTabs = /*@__PURE__*/(() => class extends React.Component<Props> 
         outlet = child;
       }
       if (child.type === IonTabBar) {
-        tabBar = child;
+        const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
+        tabBar = React.cloneElement(child, { onIonTabsDidChange, onIonTabsWillChange });
       }
     });
 
@@ -60,30 +62,18 @@ export const IonTabs = /*@__PURE__*/(() => class extends React.Component<Props> 
       throw new Error('IonTabs needs a IonTabBar');
     }
 
-    const NavManager = this.context.getViewManager();
-
     return (
       <div style={hostStyles}>
         {tabBar.props.slot === 'top' ? tabBar : null}
         <div style={tabsInner} className="tabs-inner">
-          {this.context.hasIonicRouter() ? (
-            <NavManager>
-              {outlet}
-            </NavManager>
-          ) : (
-              <>{outlet}</>
-            )}
+          {outlet}
         </div>
         {tabBar.props.slot === 'bottom' ? tabBar : null}
       </div>
     );
   }
 
-  static get displayName() {
-    return 'IonTabs';
-  }
-
   static get contextType() {
     return NavContext;
   }
-})();
+}

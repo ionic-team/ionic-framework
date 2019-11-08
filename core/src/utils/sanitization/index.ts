@@ -52,11 +52,11 @@ export const sanitizeDOMString = (untrustedString: string | undefined): string |
      */
 
     // IE does not support .children on document fragments, only .childNodes
-    const documentFragmentChildren = getElementChildren(documentFragment);
+    const dfChildren = getElementChildren(documentFragment);
 
     /* tslint:disable-next-line */
-    for (let childIndex = 0; childIndex < documentFragmentChildren.length; childIndex++) {
-      sanitizeElement(documentFragmentChildren[childIndex]);
+    for (let childIndex = 0; childIndex < dfChildren.length; childIndex++) {
+      sanitizeElement(dfChildren[childIndex]);
     }
 
     // Append document fragment to div
@@ -118,8 +118,8 @@ const sanitizeElement = (element: any) => {
  * IE doesn't always support .children
  * so we revert to .childNodes instead
  */
-const getElementChildren = (element: any) => {
-  return (element.children != null) ? element.children : element.childNodes;
+const getElementChildren = (el: any) => {
+  return (el.children != null) ? el.children : el.childNodes;
 };
 
 const allowedAttributes = ['class', 'id', 'href', 'src', 'name', 'slot'];

@@ -12,7 +12,7 @@
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 </head>
 
-<body onload="selectTab()">
+<body>
   <ion-tabs>
     <ion-tab tab="tab-one">
       <div class="content-div div-one">
@@ -71,11 +71,11 @@
   </style>
 
   <script>
-    async function selectTab() {
+    customElements.whenDefined('ion-tabs').then(async () => {
       const tabs = document.querySelector('ion-tabs');
       await tabs.componentOnReady();
       await tabs.select('tab-three');
-    }
+    });
   </script>
 </body>
 

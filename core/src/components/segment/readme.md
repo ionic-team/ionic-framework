@@ -452,7 +452,6 @@ export const SegmentExample: React.FC = () => (
 | Event       | Description                                  | Type                                    |
 | ----------- | -------------------------------------------- | --------------------------------------- |
 | `ionChange` | Emitted when the value property has changed. | `CustomEvent<SegmentChangeEventDetail>` |
-| `ionStyle`  | Emitted when the styles change.              | `CustomEvent<StyleEventDetail>`         |
 
 
 ----------------------------------------------

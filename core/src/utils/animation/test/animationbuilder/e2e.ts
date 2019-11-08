@@ -1,10 +1,5 @@
 import { E2EPage, newE2EPage } from '@stencil/core/testing';
 
-test('animation:backwards-compatibility animationbuilder', async () => {
-  const page = await newE2EPage({ url: '/src/utils/animation/test/animationbuilder?_forceAnimationBuilder=true' });
-  await testNavigation(page);
-});
-
 test('animation:backwards-compatibility animation', async () => {
   const page = await newE2EPage({ url: '/src/utils/animation/test/animationbuilder' });
   await testNavigation(page);

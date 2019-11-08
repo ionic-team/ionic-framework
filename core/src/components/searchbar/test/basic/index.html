@@ -26,7 +26,7 @@
       </ion-searchbar>
 
       <h5 class="ion-padding-start ion-padding-top"> Search - No Cancel Button </h5>
-      <ion-searchbar id="noCancel" value="after view" autocorrect="off" autocomplete="off" spellcheck="true" type="text" show-cancel-button="never">
+      <ion-searchbar class="red-box" id="noCancel" value="after view" autocorrect="off" autocomplete="off" spellcheck="true" type="text" show-cancel-button="never">
       </ion-searchbar>
 
       <h5 class="ion-padding-start ion-padding-top"> Search - Always Show Cancel Button</h5>
@@ -78,6 +78,10 @@
       <ion-searchbar show-cancel-button="focus" cancel-button-text="Really Long Cancel" color="danger">
       </ion-searchbar>
 
+      <h5 class="ion-padding-start ion-padding-top"> Search - Custom Cancel Button Icon through property</h5>
+      <ion-searchbar show-cancel-button="focus" cancel-button-icon="rewind">
+      </ion-searchbar>
+
       <h5 class="ion-padding-start ion-padding-top"> Search - Value passed </h5>
       <ion-searchbar value="mysearch" cancel-button-text="Really Long Cancel" color="dark" show-cancel-button="focus">
       </ion-searchbar>
@@ -113,6 +117,12 @@
       <div class="ion-padding-horizontal">
         <ion-button expand="block" color="secondary" onClick="toggleDisabled()">Toggle disabled</ion-button>
       </div>
+
+      <style>
+        .red-box {
+          --box-shadow: 0 2px 2px 0 rgba(255, 0, 0, 0.14), 0 3px 1px -2px rgba(255, 0, 0, 0.2), 0 1px 5px 0 rgba(255, 0, 0, 0.12);
+        }
+      </style>
 
       <script>
         function toggleAttr() {

@@ -37,6 +37,7 @@ export class CardHeader implements ComponentInterface {
         class={{
           ...createColorClasses(this.color),
           'card-header-translucent': this.translucent,
+          'ion-inherit-color': true,
           [mode]: true
         }}
       >

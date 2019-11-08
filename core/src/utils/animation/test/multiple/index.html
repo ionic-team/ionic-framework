@@ -17,7 +17,7 @@
       Element.prototype.animate = null;
     }
     
-    import { createAnimation } from '../../../../dist/index.mjs';
+    import { createAnimation } from '../../../../dist/ionic/index.esm.js';
     
     const squareA = document.querySelector('.square-a');
     const squareB = document.querySelector('.square-b');
@@ -123,6 +123,7 @@
     
     rootAnimation
       .addAnimation([animationA, animationB, animationC])
+      .fill('none')
       .onFinish(() => {
         const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationRootFinished' });
         squareA.dispatchEvent(ev);
