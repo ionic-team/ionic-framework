@@ -1,7 +1,7 @@
 # Copy angular dist
 rm -rf node_modules/@ionic/angular
 mkdir node_modules/@ionic/angular
-cp -a ../../dist node_modules/@ionic/angular
+cp -a ../../dist/ node_modules/@ionic/angular
 
 # Copy angular server
 rm -rf node_modules/@ionic/angular-server
