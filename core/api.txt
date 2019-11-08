@@ -1091,6 +1091,10 @@ ion-slides,event,ionSlideTransitionStart,void,true
 ion-slides,event,ionSlideWillChange,void,true
 ion-slides,css-prop,--bullet-background
 ion-slides,css-prop,--bullet-background-active
+ion-slides,css-prop,--progress-bar-background
+ion-slides,css-prop,--progress-bar-background-active
+ion-slides,css-prop,--scroll-bar-background
+ion-slides,css-prop,--scroll-bar-background-active
 
 ion-spinner,shadow
 ion-spinner,prop,color,string | undefined,undefined,false,false
