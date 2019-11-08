@@ -182,28 +182,6 @@ function preparePackage(tasks, package, version, install) {
         task: () => execa('npm', ['link'], { cwd: projectRoot })
       });
     }
-
-    // Bump ionic/core deps
-    // if (version) {
-    //   projectTasks.push({
-    //     title: `${pkg.name}: update ionic/core dep to ${version}`,
-    //     task: () => {
-    //       updateDependency(pkg, '@ionic/core', version);
-    //       writePkg(package, pkg);
-    //     }
-    //   });
-    //   if (package === 'packages/angular-server' || package === 'angular') {
-    //     const subPkg = subReadPkg(package);
-    //     projectTasks.push({
-    //       title: `${pkg.name}: update ionic/core dep to ${version}`,
-    //       task: () => {
-    //         updateDependency(subPkg, '@ionic/core', version);
-    //         subWritePkg(package, subPkg);
-    //       }
-    //     });
-    //   }
-    //
-    // }
   }
 
   // Add project tasks
