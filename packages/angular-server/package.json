@@ -20,13 +20,14 @@
     "url": "https://github.com/ionic-team/ionic/issues"
   },
   "homepage": "https://ionicframework.com/",
-  "files": [
-    "dist"
-  ],
   "scripts": {
+    "test": "echo 'angular no tests yet'",
     "build": "ng-packagr -p package.json",
     "build.prod": "npm run clean && npm run build",
-    "clean": "rm -rf ./dist"
+    "clean": "rm -rf ./dist",
+    "lint": "npm run lint.ts",
+    "lint.ts": "tslint --project .",
+    "lint.fix": "tslint --project . --fix"
   },
   "ngPackage": {
     "lib": {
@@ -50,6 +51,9 @@
     "@angular/platform-server": "8.2.13",
     "@ionic/core": "*",
     "ng-packagr": "5.7.1",
-    "typescript": "3.4.5"
+    "tslint": "^5.12.1",
+    "tslint-ionic-rules": "0.0.21",
+    "typescript": "3.4.5",
+    "typescript-tslint-plugin": "0.5.4"
   }
 }
