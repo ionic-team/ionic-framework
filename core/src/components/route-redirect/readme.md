@@ -90,9 +90,9 @@ routeRedirect.setAttribute('to', isLoggedIn ? undefined : '/login');
 
 ## Events
 
-| Event                     | Description                                                                                                                                                                                                               | Type                |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `ionRouteRedirectChanged` | Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules. | `CustomEvent<void>` |
+| Event                     | Description                                                                                                                                                                                                               | Type               |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `ionRouteRedirectChanged` | Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules. | `CustomEvent<any>` |
 
 
 ----------------------------------------------

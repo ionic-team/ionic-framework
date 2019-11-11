@@ -58,10 +58,7 @@ export class Route implements ComponentInterface {
     }
   }
 
-  componentDidLoad() {
-    this.ionRouteDataChanged.emit();
-  }
-  componentDidUnload() {
+  connectedCallback() {
     this.ionRouteDataChanged.emit();
   }
 }

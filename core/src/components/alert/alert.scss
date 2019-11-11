@@ -14,6 +14,8 @@
    * @prop --min-height: Minimum height of the alert
    * @prop --height: Height of the alert
    * @prop --max-height: Maximum height of the alert
+   *
+   * @prop --backdrop-opacity: Opacity of the backdrop
    */
   --min-width: #{$alert-min-width};
   --width: auto;
@@ -148,6 +150,17 @@
 
   width: 100%;
   height: 100%;
+}
+
+
+// Alert Button: Disabled
+// --------------------------------------------------
+.alert-input-disabled,
+.alert-checkbox-button-disabled .alert-button-inner,
+.alert-radio-button-disabled .alert-button-inner {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
 }
 
 .alert-tappable {

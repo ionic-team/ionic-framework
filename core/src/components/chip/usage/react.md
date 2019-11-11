@@ -1,10 +1,9 @@
 ```tsx
 import React from 'react';
+import { IonChip, IonLabel, IonIcon, IonAvatar, IonContent } from '@ionic/react';
 
-import { IonChip, IonLabel, IonIcon, IonAvatar } from '@ionic/react';
-
-const ChipExample: React.SFC<{}> = () => (
-  <>
+export const ChipExample: React.FC = () => (
+  <IonContent>
     <IonChip>
       <IonLabel>Default</IonLabel>
     </IonChip>
@@ -45,7 +44,6 @@ const ChipExample: React.SFC<{}> = () => (
       <IonLabel>Avatar Chip</IonLabel>
       <IonIcon name="close-circle" />
     </IonChip>
-  </>
+  </IonContent>
 );
-
-export default ChipExample;
+```

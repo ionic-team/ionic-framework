@@ -78,27 +78,34 @@ By default, the split pane will expand when the screen is larger than 992px. To 
 
 ```tsx
 import React from 'react';
+import {
+  IonSplitPane,
+  IonMenu,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonRouterOutlet,
+  IonContent,
+  IonPage
+} from '@ionic/react';
 
-import { IonSplitPane, IonMenu, IonHeader, IonToolbar, IonTitle, IonRouterOutlet } from '@ionic/react';
+export const SplitPlaneExample: React.SFC<{}> = () => (
+  <IonContent>
+    <IonSplitPane contentId="menuContent">
+      {/*--  our side menu  --*/}
+      <IonMenu contentId="menuContent">
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Menu</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+      </IonMenu>
 
-const Example: React.SFC<{}> = () => (
-
-  <IonSplitPane contentId="menuContent">
-    {/*--  our side menu  --*/}
-    <IonMenu contentId="menuContent">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Menu</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-    </IonMenu>
-
-    {/*-- the main content --*/}
-    <IonRouterOutlet></IonRouterOutlet>
-  </IonSplitPane>
+      {/*-- the main content --*/}
+      <IonPage id="menuContent"/>
+    </IonSplitPane>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -126,25 +133,28 @@ export default Example;
 
 ## Properties
 
-| Property    | Attribute    | Description                                                                                                                                                    | Type                  | Default       |
-| ----------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------- |
-| `contentId` | `content-id` | The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane. | `string \| undefined` | `undefined`   |
-| `disabled`  | `disabled`   | If `true`, the split pane will be hidden.                                                                                                                      | `boolean`             | `false`       |
-| `when`      | `when`       | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.                          | `boolean \| string`   | `QUERY['lg']` |
+| Property    | Attribute    | Description                                                                                                                           | Type                  | Default       |
+| ----------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------- |
+| `contentId` | `content-id` | The content `id` of the split-pane's main content.                                                                                    | `string \| undefined` | `undefined`   |
+| `disabled`  | `disabled`   | If `true`, the split pane will be hidden.                                                                                             | `boolean`             | `false`       |
+| `when`      | `when`       | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression. | `boolean \| string`   | `QUERY['lg']` |
 
 
 ## Events
 
-| Event                 | Description                                                        | Type                              |
-| --------------------- | ------------------------------------------------------------------ | --------------------------------- |
-| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | `CustomEvent<{visible: boolean}>` |
+| Event                 | Description                                                        | Type                                 |
+| --------------------- | ------------------------------------------------------------------ | ------------------------------------ |
+| `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed | `CustomEvent<{ visible: boolean; }>` |
 
 
 ## CSS Custom Properties
 
-| Name       | Description          |
-| ---------- | -------------------- |
-| `--border` | Border between panes |
+| Name               | Description                                                                  |
+| ------------------ | ---------------------------------------------------------------------------- |
+| `--border`         | Border between panes                                                         |
+| `--side-max-width` | Maximum width of the side pane. Does not apply when split pane is collapsed. |
+| `--side-min-width` | Minimum width of the side pane. Does not apply when split pane is collapsed. |
+| `--side-width`     | Width of the side pane. Does not apply when split pane is collapsed.         |
 
 
 ----------------------------------------------

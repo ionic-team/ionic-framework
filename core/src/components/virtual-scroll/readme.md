@@ -97,6 +97,9 @@ kill its performance is to perform any DOM operations within section header
 and footer functions. These functions are called for every record in the
 dataset, so please make sure they're performant.
 
+## React
+
+The Virtual Scroll component is not supported in React.
 
 <!-- Auto Generated Below -->
 
@@ -240,76 +243,6 @@ within a `<div>` is a safe way to make sure dimensions are measured correctly.
 ```
 
 
-### React
-
-```tsx
-import React from 'react';
-
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonVirtualScroll } from '@ionic/react';
-
-let rotateImg = 0;
-const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, seddo eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-
-const images = [
-  'bandit',
-  'batmobile',
-  'blues-brothers',
-  'bueller',
-  'delorean',
-  'eleanor',
-  'general-lee',
-  'ghostbusters',
-  'knight-rider',
-  'mirth-mobile'
-];
-
-function getImgSrc() {
-  const src = 'https://dummyimage.com/600x400/${Math.round( Math.random() * 99999)}/fff.png';
-  rotateImg++;
-  if (rotateImg === images.length) {
-    rotateImg = 0;
-  }
-  return src;
-}
-
-const items: any[] = [];
-
-for (let i = 0; i < 1000; i++) {
-  items.push({
-    name: i + ' - ' + images[rotateImg],
-    imgSrc: getImgSrc(),
-    avatarSrc: getImgSrc(),
-    imgHeight: Math.floor(Math.random() * 50 + 150),
-    content: lorem.substring(0, Math.random() * (lorem.length - 100) + 100)
-  });
-
-  rotateImg++;
-  if (rotateImg === images.length) {
-    rotateImg = 0;
-  }
-}
-
-const Example: React.SFC<{}> = () => (
-
-  <IonContent>
-    <IonVirtualScroll items="items" approxItemHeight="320px">
-      <IonCard virtualItem="let item; let itemBounds = bounds;">
-        <div>
-          <img src="item.imgSrc" height="item.imgHeight" alt="item.name" />
-        </div>
-        <IonCardHeader>
-          <IonCardTitle>{{ name }}</IonCardTitle>
-        </IonCardHeader>
-        <IonCardContent>{{ content }}</IonCardContent>
-      </IonCard>
-    </IonVirtualScroll>
-  </IonContent>
-);
-
-export default Example;
-```
-
-
 
 ## Properties
 
@@ -319,7 +252,9 @@ export default Example;
 | `approxHeaderHeight` | `approx-header-height` | The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                            | `number`                                                                                 | `30`        |
 | `approxItemHeight`   | `approx-item-height`   | It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. | `number`                                                                                 | `45`        |
 | `footerFn`           | --                     | Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.                                                                                                                                                                                                                | `((item: any, index: number, items: any[]) => string \| null \| undefined) \| undefined` | `undefined` |
+| `footerHeight`       | --                     | An optional function that maps each item footer within their height.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `((item: any, index: number) => number) \| undefined`                                    | `undefined` |
 | `headerFn`           | --                     | Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.             | `((item: any, index: number, items: any[]) => string \| null \| undefined) \| undefined` | `undefined` |
+| `headerHeight`       | --                     | An optional function that maps each item header within their height.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `((item: any, index: number) => number) \| undefined`                                    | `undefined` |
 | `itemHeight`         | --                     | An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance                                                                                                                                                                                                                                      | `((item: any, index: number) => number) \| undefined`                                    | `undefined` |
 | `items`              | --                     | The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.                                                                                                                                                                                                                                                                                                                      | `any[] \| undefined`                                                                     | `undefined` |
 | `nodeRender`         | --                     | NOTE: only Vanilla JS API.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `((el: HTMLElement \| null, cell: Cell, domIndex: number) => HTMLElement) \| undefined`  | `undefined` |
@@ -330,49 +265,38 @@ export default Example;
 
 ## Methods
 
-### `checkEnd() => void`
+### `checkEnd() => Promise<void>`
 
-Marks the tail of the items array as dirty, so they can be re-rendered.
-It's equivalent to calling `checkRange(length)` where `length` is the
-total length of the items.
+This method marks the tail the items array as dirty, so they can be re-rendered.
 
-#### Returns
+It's equivalent to calling:
 
-Type: `void`
-
-
-
-### `checkRange(offset: number, length?: number) => void`
-
-Marks a subset of the items as dirty so they can be re-rendered.
-Items should be marked as dirty any time the content or their style changes.
-
-The subset of items to be updated are specified by an offset and a length.
-If a length is not provided it will check all of the items beginning at
-the offset.
-
-#### Parameters
-
-| Name     | Type     | Description                                   |
-| -------- | -------- | --------------------------------------------- |
-| `offset` | `number` | The index of the item to start marking dirty. |
-| `length` | `number` | The number of items to mark dirty.            |
+```js
+virtualScroll.checkRange(lastItemLen);
+```
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
+
+
+
+### `checkRange(offset: number, len?: number) => Promise<void>`
+
+This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as
+dirty any time the content or their style changes.
+
+The subset of items to be updated can are specifing by an offset and a length.
+
+#### Returns
+
+Type: `Promise<void>`
 
 
 
 ### `positionForItem(index: number) => Promise<number>`
 
 Returns the position of the virtual item at the given index.
-
-#### Parameters
-
-| Name    | Type     | Description            |
-| ------- | -------- | ---------------------- |
-| `index` | `number` | The index of the item. |
 
 #### Returns
 

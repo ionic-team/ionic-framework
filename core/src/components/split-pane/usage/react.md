@@ -1,24 +1,31 @@
 ```tsx
 import React from 'react';
+import {
+  IonSplitPane,
+  IonMenu,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonRouterOutlet,
+  IonContent,
+  IonPage
+} from '@ionic/react';
 
-import { IonSplitPane, IonMenu, IonHeader, IonToolbar, IonTitle, IonRouterOutlet } from '@ionic/react';
+export const SplitPlaneExample: React.SFC<{}> = () => (
+  <IonContent>
+    <IonSplitPane contentId="menuContent">
+      {/*--  our side menu  --*/}
+      <IonMenu contentId="menuContent">
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Menu</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+      </IonMenu>
 
-const Example: React.SFC<{}> = () => (
-
-  <IonSplitPane contentId="menuContent">
-    {/*--  our side menu  --*/}
-    <IonMenu contentId="menuContent">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Menu</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-    </IonMenu>
-
-    {/*-- the main content --*/}
-    <IonRouterOutlet></IonRouterOutlet>
-  </IonSplitPane>
+      {/*-- the main content --*/}
+      <IonPage id="menuContent"/>
+    </IonSplitPane>
+  </IonContent>
 );
-
-export default Example;
 ```

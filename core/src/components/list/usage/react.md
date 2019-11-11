@@ -1,10 +1,9 @@
 ```tsx
 import React from 'react';
+import { IonList, IonItem, IonLabel, IonInput, IonToggle, IonRadio, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions, IonContent } from '@ionic/react';
 
-import { IonList, IonItem, IonLabel, IonInput, IonToggle, IonRadio, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const ListExample: React.FC = () => (
+  <IonContent>
     {/*-- List of Text Items --*/}
     <IonList>
       <IonItem>
@@ -64,8 +63,6 @@ const Example: React.SFC<{}> = () => (
         </IonItemOptions>
       </IonItemSliding>
     </IonList>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```

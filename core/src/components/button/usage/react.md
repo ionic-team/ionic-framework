@@ -1,10 +1,10 @@
 ```tsx
 import React from 'react';
 
-import { IonButton, IonIcon } from '@ionic/react';
+import { IonButton, IonIcon, IonContent } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
-  <>
+export const ButtonExample: React.FC = () => (
+  <IonContent>
     {/*-- Default --*/}
     <IonButton>Default</IonButton>
 
@@ -53,8 +53,7 @@ const Example: React.SFC<{}> = () => (
     <IonButton size="large">Large</IonButton>
     <IonButton>Default</IonButton>
     <IonButton size="small">Small</IonButton>
-  </>
+  </IonContent>
 );
 
-export default Example;
 ```

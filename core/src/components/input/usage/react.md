@@ -1,10 +1,9 @@
 ```tsx
 import React from 'react';
+import { IonInput, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonInput, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const InputExample: React.FC = () => (
+  <IonContent>
     {/*-- Default Input --*/}
     <IonInput></IonInput>
 
@@ -46,7 +45,6 @@ const Example: React.SFC<{}> = () => (
       <IonLabel position="stacked">Stacked Label</IonLabel>
       <IonInput></IonInput>
     </IonItem>
-  </>
+  </IonContent>
 );
-
-export default Example
+```

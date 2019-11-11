@@ -1,9 +1,13 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
 
-import { Color, Mode, RouterDirection } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-fab-button',
   styleUrls: {
@@ -14,13 +18,6 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 })
 export class FabButton implements ComponentInterface, AnchorInterface, ButtonInterface {
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'window' }) win!: Window;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.
@@ -79,6 +76,8 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
   /**
    * If `true`, the fab button will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 
@@ -110,55 +109,55 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     this.ionBlur.emit();
   }
 
-  hostData() {
-    const { el, disabled, color, activated, show, translucent, size } = this;
-    const inList = hostContext('ion-fab-list', el);
-    return {
-      'aria-disabled': disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(color),
-        [`${this.mode}`]: true,
-        'fab-button-in-list': inList,
-        'fab-button-translucent-in-list': inList && translucent,
-        'fab-button-close-active': activated,
-        'fab-button-show': show,
-        'fab-button-disabled': disabled,
-        'fab-button-translucent': translucent,
-        'ion-activatable': true,
-        'ion-focusable': true,
-        [`fab-button-${size}`]: size !== undefined,
-      }
-    };
-  }
-
   render() {
-    const TagType = this.href === undefined ? 'button' : 'a' as any;
+    const { el, disabled, color, href, activated, show, translucent, size } = this;
+    const inList = hostContext('ion-fab-list', el);
+    const mode = getIonMode(this);
+    const TagType = href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
       : {
         download: this.download,
-        href: this.href,
+        href,
         rel: this.rel,
         target: this.target
       };
 
     return (
-      <TagType
-        {...attrs}
-        class="button-native"
-        disabled={this.disabled}
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-        onClick={(ev: Event) => openURL(this.win, this.href, ev, this.routerDirection)}
+      <Host
+        aria-disabled={disabled ? 'true' : null}
+        class={{
+          ...createColorClasses(color),
+          [mode]: true,
+          'fab-button-in-list': inList,
+          'fab-button-translucent-in-list': inList && translucent,
+          'fab-button-close-active': activated,
+          'fab-button-show': show,
+          'fab-button-disabled': disabled,
+          'fab-button-translucent': translucent,
+          'ion-activatable': true,
+          'ion-focusable': true,
+          [`fab-button-${size}`]: size !== undefined,
+        }}
       >
-        <span class="close-icon">
-          <ion-icon name="close" lazy={false}></ion-icon>
-        </span>
-        <span class="button-inner">
-          <slot></slot>
-        </span>
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-      </TagType>
+
+        <TagType
+          {...attrs}
+          class="button-native"
+          disabled={disabled}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          onClick={(ev: Event) => openURL(href, ev, this.routerDirection)}
+        >
+          <span class="close-icon">
+            <ion-icon name="close" lazy={false}></ion-icon>
+          </span>
+          <span class="button-inner">
+            <slot></slot>
+          </span>
+          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        </TagType>
+      </Host>
     );
   }
 }

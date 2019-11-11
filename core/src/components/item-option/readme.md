@@ -42,6 +42,19 @@ action for the item.
 | `--color`      | Color of the item option      |
 
 
+## Dependencies
+
+### Depends on
+
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-item-option --> ion-ripple-effect
+  style ion-item-option fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

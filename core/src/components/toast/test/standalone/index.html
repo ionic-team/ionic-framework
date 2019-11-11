@@ -8,18 +8,18 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <button id="basic-toast" onclick="presentToast('bottom')">Show Toast Bottom</button>
   <button onclick="presentToast('top')">Show Toast Top</button>
   <button onclick="presentToast('middle')">Show Toast Middle</button>
   <button onclick="presentToastWithOptions({message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.', duration: 2000})">Show Toast with long message</button>
-  <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true})">Show Toast with Close Button</button>
-  <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, closeButtonText: 'closing time'})">Show Toast with Custom Close Button Text</button>
-  <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, translucent: true})">Show Translucent Toast</button>
-  <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'custom'})">Show Toast with Custom Properties</button>
+  <button onclick="presentToastWithOptions({message: 'click to close', buttons: ['Close'] })">Show Toast with Close Button</button>
+  <button onclick="presentToastWithOptions({message: 'click to close', buttons: ['closing time'] })">Show Toast with Custom Close Button Text</button>
+  <button onclick="presentToastWithOptions({message: 'click to close', buttons: ['Close'], translucent: true})">Show Translucent Toast</button>
+  <button onclick="presentToastWithOptions({message: 'click to close', buttons: ['Close'], cssClass: 'custom'})">Show Toast with Custom Properties</button>
 
   <ion-toast-controller></ion-toast-controller>
 
@@ -49,7 +49,6 @@
 
     async function presentToast(position) {
       const toastController = document.querySelector('ion-toast-controller');
-      await toastController.componentOnReady();
       const toastElement = await toastController.create({
         message: 'Hellooo',
         position,
@@ -60,7 +59,6 @@
 
     async function presentToastWithOptions(opts) {
       const toastController = document.querySelector('ion-toast-controller');
-      await toastController.componentOnReady();
       const toastElement = await toastController.create(opts);
       return await toastElement.present();
     }

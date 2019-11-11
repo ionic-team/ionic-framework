@@ -4,6 +4,10 @@
 // iOS Modals
 // --------------------------------------------------
 
+:host {
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
+}
+
 @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
   :host {
     --border-radius: #{$modal-ios-border-radius};

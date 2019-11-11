@@ -1,14 +1,23 @@
-import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
+import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 
 import { LoadingOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
+/**
+ * @deprecated Use the `loadingController` exported from core.
+ */
 @Component({
   tag: 'ion-loading-controller'
 })
 export class LoadingController implements ComponentInterface, OverlayController {
 
-  @Prop({ context: 'document' }) doc!: Document;
+  constructor() {
+    if (Build.isDev) {
+      console.warn(`[DEPRECATED][ion-loading-controller] Use the loadingController export from @ionic/core:
+  import { loadingController } from '@ionic/core';
+  const modal = await loadingController.create({...});`);
+    }
+  }
 
   /**
    * Create a loading overlay with loading options.
@@ -17,7 +26,7 @@ export class LoadingController implements ComponentInterface, OverlayController 
    */
   @Method()
   create(options?: LoadingOptions): Promise<HTMLIonLoadingElement> {
-    return createOverlay(this.doc.createElement('ion-loading'), options);
+    return createOverlay('ion-loading', options);
   }
 
   /**
@@ -32,7 +41,7 @@ export class LoadingController implements ComponentInterface, OverlayController 
    */
   @Method()
   dismiss(data?: any, role?: string, id?: string) {
-    return dismissOverlay(this.doc, data, role, 'ion-loading', id);
+    return dismissOverlay(document, data, role, 'ion-loading', id);
   }
 
   /**
@@ -40,6 +49,6 @@ export class LoadingController implements ComponentInterface, OverlayController 
    */
   @Method()
   async getTop(): Promise<HTMLIonLoadingElement | undefined> {
-    return getOverlay(this.doc, 'ion-loading') as HTMLIonLoadingElement;
+    return getOverlay(document, 'ion-loading') as HTMLIonLoadingElement;
   }
 }

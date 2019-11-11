@@ -96,10 +96,10 @@ This attribute specifies the size of the button. Setting this attribute will cha
 ```tsx
 import React from 'react';
 
-import { IonButton, IonIcon } from '@ionic/react';
+import { IonButton, IonIcon, IonContent } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
-  <>
+export const ButtonExample: React.FC = () => (
+  <IonContent>
     {/*-- Default --*/}
     <IonButton>Default</IonButton>
 
@@ -148,10 +148,9 @@ const Example: React.SFC<{}> = () => (
     <IonButton size="large">Large</IonButton>
     <IonButton>Default</IonButton>
     <IonButton size="small">Small</IonButton>
-  </>
+  </IonContent>
 );
 
-export default Example;
 ```
 
 
@@ -253,29 +252,42 @@ export default Example;
 
 ## CSS Custom Properties
 
-| Name                     | Description                             |
-| ------------------------ | --------------------------------------- |
-| `--background`           | Background of the button                |
-| `--background-activated` | Background of the button when activated |
-| `--background-focused`   | Background of the button when focused   |
-| `--background-hover`     | Background of the button on hover       |
-| `--border-color`         | Border color of the button              |
-| `--border-radius`        | Border radius of the button             |
-| `--border-style`         | Border style of the button              |
-| `--border-width`         | Border width of the button              |
-| `--box-shadow`           | Box shadow of the button                |
-| `--color`                | Text color of the button                |
-| `--color-activated`      | Text color of the button when activated |
-| `--color-focused`        | Text color of the button when focused   |
-| `--color-hover`          | Text color of the button when hover     |
-| `--opacity`              | Opacity of the button                   |
-| `--padding-bottom`       | Padding bottom of the button            |
-| `--padding-end`          | Padding end of the button               |
-| `--padding-start`        | Padding start of the button             |
-| `--padding-top`          | Padding top of the button               |
-| `--ripple-color`         | Color of the button ripple effect       |
-| `--transition`           | Transition of the button                |
+| Name                     | Description                                                                                               |
+| ------------------------ | --------------------------------------------------------------------------------------------------------- |
+| `--background`           | Background of the button                                                                                  |
+| `--background-activated` | Background of the button when pressed                                                                     |
+| `--background-focused`   | Background of the button when focused with the tab key                                                    |
+| `--background-hover`     | Background of the button on hover                                                                         |
+| `--border-color`         | Border color of the button                                                                                |
+| `--border-radius`        | Border radius of the button                                                                               |
+| `--border-style`         | Border style of the button                                                                                |
+| `--border-width`         | Border width of the button                                                                                |
+| `--box-shadow`           | Box shadow of the button                                                                                  |
+| `--color`                | Text color of the button                                                                                  |
+| `--color-activated`      | Text color of the button when pressed                                                                     |
+| `--color-focused`        | Text color of the button when focused with the tab key                                                    |
+| `--color-hover`          | Text color of the button when hover                                                                       |
+| `--opacity`              | Opacity of the button                                                                                     |
+| `--padding-bottom`       | Bottom padding of the button                                                                              |
+| `--padding-end`          | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button |
+| `--padding-start`        | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button |
+| `--padding-top`          | Top padding of the button                                                                                 |
+| `--ripple-color`         | Color of the button ripple effect                                                                         |
+| `--transition`           | Transition of the button                                                                                  |
 
+
+## Dependencies
+
+### Depends on
+
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-button --> ion-ripple-effect
+  style ion-button fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

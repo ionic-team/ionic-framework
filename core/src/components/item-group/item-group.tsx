@@ -1,6 +1,6 @@
-import { Component, ComponentInterface } from '@stencil/core';
+import { Component, ComponentInterface, Host, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-item-group',
@@ -11,19 +11,21 @@ import { Mode } from '../../interface';
 })
 export class ItemGroup implements ComponentInterface {
 
-  mode!: Mode;
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        role="group"
+        class={{
+          [mode]: true,
 
-  hostData() {
-    return {
-      'role': 'group',
-      class: {
-        [`${this.mode}`]: true,
+          // Used internally for styling
+          [`item-group-${mode}`]: true,
 
-        // Used internally for styling
-        [`item-group-${this.mode}`]: true,
-
-        'item': true
-      }
-    };
+          'item': true
+        }}
+      >
+      </Host>
+    );
   }
 }

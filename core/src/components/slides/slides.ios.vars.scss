@@ -10,7 +10,7 @@ $slides-ios-bullet-background-active:             ion-color(primary, base) !defa
 $slides-ios-progress-bar-background-alpha:        .25 !default;
 
 /// @prop - Background color of the progress bar
-$slides-ios-progress-bar-background:              rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-ios-progress-bar-background-alpha) !default;
+$slides-ios-progress-bar-background:              rgba($text-color-rgb, $slides-ios-progress-bar-background-alpha) !default;
 
 /// @prop - Background color of the active progress bar
 $slides-ios-progress-bar-background-active:       ion-color(primary, shade) !default;
@@ -19,10 +19,10 @@ $slides-ios-progress-bar-background-active:       ion-color(primary, shade) !def
 $slides-ios-scroll-bar-background-alpha:          .1 !default;
 
 /// @prop - Background color of the scroll bar
-$slides-ios-scroll-bar-background:                rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-ios-scroll-bar-background-alpha) !default;
+$slides-ios-scroll-bar-background:                rgba($text-color-rgb, $slides-ios-scroll-bar-background-alpha) !default;
 
 /// @prop - Alpha to use for the background color of the scroll bar while dragging
 $slides-ios-scroll-bar-drag-background-alpha:     .5 !default;
 
 /// @prop - Background color of the scroll bar drag handle
-$slides-ios-scroll-bar-drag-background:           rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-ios-scroll-bar-drag-background-alpha) !default;
+$slides-ios-scroll-bar-drag-background:           rgba($text-color-rgb, $slides-ios-scroll-bar-drag-background-alpha) !default;

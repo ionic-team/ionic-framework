@@ -18,7 +18,7 @@
     "no-floating-promises": false,
     "no-invalid-template-strings": true,
     "ban-export-const-enum": true,
-
+    "only-arrow-functions": true,
     "prefer-for-of": false
   }
 }

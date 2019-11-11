@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonIcon } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FC<{}> = () => (
   <>
     {/*-- automatically uses the correct "star" icon depending on the mode --*/}
     <IonIcon name="star" />

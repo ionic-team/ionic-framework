@@ -1,11 +1,9 @@
 ```tsx
 import React from 'react';
-
 import { IonContent, IonFab, IonFabButton } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+export const FabButtonExample: React.FC = () => (
   <IonContent>
-
     {/*-- Fixed Floating Action Button that does not scroll with the content --*/}
     <IonFab>
       <IonFabButton>Button</IonFabButton>
@@ -25,5 +23,4 @@ const Example: React.SFC<{}> = () => (
     <IonFabButton color="dark">Dark</IonFabButton>
   </IonContent>
 );
-
-export default Example
+```

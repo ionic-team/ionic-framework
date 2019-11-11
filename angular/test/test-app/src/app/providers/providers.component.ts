@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import {
-  Platform, Config, ModalController, AlertController, ActionSheetController,
-  PopoverController, ToastController,  Events, PickerController, MenuController,
-  LoadingController, NavController, DomController
+  Platform, ModalController, AlertController, ActionSheetController,
+  PopoverController, ToastController, PickerController, MenuController,
+  LoadingController, NavController, DomController, Config
 } from '@ionic/angular';
 
 @Component({
@@ -13,7 +13,9 @@ export class ProvidersComponent {
 
   isLoaded = false;
   isReady = false;
-  isEvent = false;
+  isResumed = false;
+  isPaused = false;
+  isResized = false;
   isTesting: boolean = undefined;
   isDesktop: boolean = undefined;
   isMobile: boolean = undefined;
@@ -22,7 +24,6 @@ export class ProvidersComponent {
   constructor(
     actionSheetCtrl: ActionSheetController,
     alertCtrl: AlertController,
-    events: Events,
     loadingCtrl: LoadingController,
     menuCtrl: MenuController,
     pickerCtrl: PickerController,
@@ -32,11 +33,12 @@ export class ProvidersComponent {
     toastCtrl: ToastController,
     navCtrl: NavController,
     domCtrl: DomController,
-    config: Config
+    config: Config,
+    zone: NgZone
   ) {
     // test all providers load
     if (
-      actionSheetCtrl && alertCtrl && events && loadingCtrl && menuCtrl && pickerCtrl &&
+      actionSheetCtrl && alertCtrl && loadingCtrl && menuCtrl && pickerCtrl &&
       modalCtrl && platform && popoverCtrl && toastCtrl && navCtrl && domCtrl && config
       ) {
         this.isLoaded = true;
@@ -44,21 +46,36 @@ export class ProvidersComponent {
 
     // test platform ready()
     platform.ready().then(() => {
+      NgZone.assertInAngularZone();
       this.isReady = true;
     });
-
+    platform.resume.subscribe(() => {
+      console.log('platform:resume');
+      NgZone.assertInAngularZone();
+      this.isResumed = true;
+    });
+    platform.pause.subscribe(() => {
+      console.log('platform:pause');
+      NgZone.assertInAngularZone();
+      this.isPaused = true;
+    });
+    platform.resize.subscribe(() => {
+      console.log('platform:resize');
+      NgZone.assertInAngularZone();
+      this.isResized = true;
+    });
     this.isDesktop = platform.is('desktop');
     this.isMobile = platform.is('mobile');
-
-    // test events
-    events.subscribe('topic', () => {
-      this.isEvent = true;
-    });
-    events.publish('topic');
 
     // test config
     this.isTesting = config.getBoolean('_testing');
     config.set('keyboardHeight', 12345);
     this.keyboardHeight = config.getNumber('keyboardHeight');
+
+    zone.runOutsideAngular(() => {
+      document.dispatchEvent(new CustomEvent('pause'));
+      document.dispatchEvent(new CustomEvent('resume'));
+      window.dispatchEvent(new CustomEvent('resize'));
+    });
   }
 }

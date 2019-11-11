@@ -5,7 +5,7 @@ import { dragElementBy, queryDeep } from '../../../utils/test/utils';
 /**
  * Moves a reorder item by simulating a drag event
  */
-export async function moveReorderItem(id: string, page: pd.E2EPage, direction: 'up' | 'down' = 'up', numberOfSpaces = 1, ...parentSelectors: string[]) {
+export const moveReorderItem = async (id: string, page: pd.E2EPage, direction: 'up' | 'down' = 'up', numberOfSpaces = 1, ...parentSelectors: string[]) => {
   try {
     const reorderItem = parentSelectors && parentSelectors.length > 0 ? await (await queryDeep(page, ...parentSelectors)).$(id) : await page.$(id);
 
@@ -19,4 +19,4 @@ export async function moveReorderItem(id: string, page: pd.E2EPage, direction: '
   } catch (err) {
     throw err;
   }
-}
+};

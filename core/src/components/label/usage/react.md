@@ -1,19 +1,18 @@
 ```tsx
 import React from 'react';
+import { IonLabel, IonItem, IonInput, IonToggle, IonCheckbox, IonContent } from '@ionic/react';
 
-import { IonLabel, IonItem, IonInput, IonToggle, IonCheckbox } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const LabelExample: React.FC = () => (
+  <IonContent>
     {/*-- Default Label --*/}
-    <IonLabel>Label</IonLabel>
+    <IonLabel>Label</IonLabel><br />
 
     {/*-- Label Colors --*/}
-    <IonLabel color="primary">Primary Label</IonLabel>
-    <IonLabel color="secondary">Secondary Label</IonLabel>
-    <IonLabel color="danger">Danger Label</IonLabel>
-    <IonLabel color="light">Light Label</IonLabel>
-    <IonLabel color="dark">Dark Label</IonLabel>
+    <IonLabel color="primary">Primary Label</IonLabel><br />
+    <IonLabel color="secondary">Secondary Label</IonLabel><br />
+    <IonLabel color="danger">Danger Label</IonLabel><br />
+    <IonLabel color="light">Light Label</IonLabel><br />
+    <IonLabel color="dark">Dark Label</IonLabel><br />
 
     {/*-- Item Labels --*/}
     <IonItem>
@@ -21,7 +20,7 @@ const Example: React.SFC<{}> = () => (
     </IonItem>
 
     <IonItem>
-      <IonLabel text-wrap>
+      <IonLabel class="ion-text-wrap">
         Multi-line text that should wrap when it is too long
         to fit on one line in the item.
       </IonLabel>
@@ -57,8 +56,6 @@ const Example: React.SFC<{}> = () => (
       <IonCheckbox slot="start" checked />
       <IonLabel>Checkbox</IonLabel>
     </IonItem>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```

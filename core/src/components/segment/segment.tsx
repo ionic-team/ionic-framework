@@ -1,8 +1,12 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, Watch, h } from '@stencil/core';
 
-import { Color, Mode, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-segment',
   styleUrls: {
@@ -13,6 +17,8 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class Segment implements ComponentInterface {
 
+  private didInit = false;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -21,11 +27,6 @@ export class Segment implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If `true`, the user cannot interact with the segment.
@@ -44,8 +45,10 @@ export class Segment implements ComponentInterface {
 
   @Watch('value')
   protected valueChanged(value: string | undefined) {
-    this.updateButtons();
-    this.ionChange.emit({ value });
+    if (this.didInit) {
+      this.updateButtons();
+      this.ionChange.emit({ value });
+    }
   }
 
   /**
@@ -55,6 +58,7 @@ export class Segment implements ComponentInterface {
 
   /**
    * Emitted when the styles change.
+   * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
@@ -64,18 +68,19 @@ export class Segment implements ComponentInterface {
     this.value = selectedButton.value;
   }
 
-  componentWillLoad() {
-    this.emitStyle();
-  }
-
-  componentDidLoad() {
-    if (this.value == null) {
+  connectedCallback() {
+    if (this.value === undefined) {
       const checked = this.getButtons().find(b => b.checked);
       if (checked) {
         this.value = checked.value;
       }
     }
+    this.emitStyle();
+  }
+
+  componentDidLoad() {
     this.updateButtons();
+    this.didInit = true;
   }
 
   private emitStyle() {
@@ -95,14 +100,18 @@ export class Segment implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
-        'segment-disabled': this.disabled,
-        'segment-scrollable': this.scrollable
-      }
-    };
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'segment-disabled': this.disabled,
+          'segment-scrollable': this.scrollable
+        }}
+      >
+      </Host>
+    );
   }
 }

@@ -1,3 +1,4 @@
+@import "../themes/ionic.skip-warns.scss";
 @import "../themes/ionic.globals";
 @import "../themes/ionic.mixins";
 
@@ -19,6 +20,10 @@ html {
   height: 100%;
 
   text-size-adjust: 100%;
+}
+
+html:not(.hydrated) body {
+  display: none;
 }
 
 html.plt-pwa {

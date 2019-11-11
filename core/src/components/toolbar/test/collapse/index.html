@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toolbar - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+  <style>
+    #main ion-title {
+      transition: opacity ease-in-out 200ms;
+    }
+    .hide-title ion-title {
+      opacity: 0;
+    }
+  .my-class {
+    top: 0;
+    position: sticky;
+    z-index: 10;
+  }
+  .my-class ion-title {
+    text-align: left;
+    padding-left: 16px;
+    padding-right: 0;
+    font-size: 35px;
+  }
+  .two-class {
+    z-index: -1;
+  }
+  </style>
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar color="primary" id="main" style="--border-width: 0;">
+          <ion-title>Title</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content">
+      <ion-header>
+        <ion-toolbar color="primary" id="big-toolbar" class="my-class">
+          <ion-title>Title</ion-title>
+        </ion-toolbar>
+        <ion-toolbar color="primary" class="two-class">
+          <ion-searchbar></ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-card color="secondary">
+        <ion-card-header>
+          Card Header
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-title>
+            Title
+          </ion-card-title>
+          Some normal text in content.
+          <h3>h3 in content</h3>
+          <p>
+            Paragraph in content.
+          </p>
+          <p>
+            Another paragraph in content.
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card color="primary" class="rainbow-content">
+        <ion-card-header>
+          Card Header
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-title>
+            Title
+          </ion-card-title>
+          Some normal text in content.
+          <h3>h3 in content</h3>
+          <p>
+            Paragraph in content.
+          </p>
+          <p>
+            Another paragraph in content.
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card color="primary">
+        <ion-card-header>
+          Card Header
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-title>
+            Title
+          </ion-card-title>
+          Some normal text in content.
+          <h3>h3 in content</h3>
+          <p>
+            Paragraph in content.
+          </p>
+          <p>
+            Another paragraph in content.
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-list id="dynamicList">
+      </ion-list>
+
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-searchbar>
+        </ion-searchbar>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-title>
+          Footer
+        </ion-title>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-app>
+
+  <style>
+    .rainbow-content {
+      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    }
+
+  </style>
+
+  <script>
+    const i = new IntersectionObserver((e) => {
+      if (e[0].isIntersecting) {
+        document.querySelector('#main').classList.add('hide-title')
+      } else {
+        document.querySelector('#main').classList.remove('hide-title')
+      }
+    }, {
+      threshold: 0.5
+    });
+    i.observe(document.querySelector('#big-toolbar'));
+  </script>
+</body>
+
+</html>

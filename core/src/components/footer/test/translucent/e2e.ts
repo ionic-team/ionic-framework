@@ -7,7 +7,8 @@ test('footer: translucent', async () => {
     url: '/src/components/footer/test/translucent?ionic:_testing=true'
   });
 
-  await checkComponentModeClasses(await page.find('ion-footer'), 'footer-translucent');
+  const globalMode = await page.evaluate(() => document.documentElement.getAttribute('mode'));
+  await checkComponentModeClasses(await page.find('ion-footer'), globalMode!, 'footer-translucent');
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();

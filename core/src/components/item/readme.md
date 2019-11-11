@@ -4,11 +4,11 @@ Items are elements that can contain text, icons, avatars, images, inputs, and an
 
 ## Clickable Items
 
-An item is considered "clickable" if it has an `href` or `button` property set. Clickable items have a few visual differences that indicate they can be interacted with. For example, a clickable item receives the ripple effect upon activation in `md` mode, has a highlight when activated in `ios` mode, and has a [detail arrow](/#detail-arrows) by default in `ios` mode.
+An item is considered "clickable" if it has an `href` or `button` property set. Clickable items have a few visual differences that indicate they can be interacted with. For example, a clickable item receives the ripple effect upon activation in `md` mode, has a highlight when activated in `ios` mode, and has a [detail arrow](#detail-arrows) by default in `ios` mode.
 
 ## Detail Arrows
 
-By default [clickable items](/#clickable-items) will display a right arrow icon on `ios` mode. To hide the right arrow icon on clickable elements, set the `detail` property to `false`. To show the right arrow icon on an item that doesn't display it naturally, set the `detail` property to `true`.
+By default [clickable items](#clickable-items) will display a right arrow icon on `ios` mode. To hide the right arrow icon on clickable elements, set the `detail` property to `false`. To show the right arrow icon on an item that doesn't display it naturally, set the `detail` property to `true`.
 
 <!--
 
@@ -131,14 +131,14 @@ List Items
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
     Multiline text that should wrap when it is too long
     to fit on one line in the item.
     </ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
       <ion-text color="primary">
         <h3>H3 Primary Title</h3>
       </ion-text>
@@ -455,14 +455,14 @@ List Items
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
     Multiline text that should wrap when it is too long
     to fit on one line in the item.
     </ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label text-wrap>
+    <ion-label class="ion-text-wrap">
       <ion-text color="primary">
         <h3>H3 Primary Title</h3>
       </ion-text>
@@ -714,7 +714,7 @@ import React from 'react';
 
 import { IonItem, IonLabel, IonList, IonText, IonAvatar, IonThumbnail, IonButton, IonIcon, IonSelect, IonSelectOption, IonDatetime, IonToggle, IonInput, IonCheckbox, IonRange } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FC<{}> = () => (
   <>
     {/*-- Default Item --*/}
     <IonItem>
@@ -778,14 +778,14 @@ const Example: React.SFC<{}> = () => (
       </IonItem>
 
       <IonItem>
-        <IonLabel text-wrap>
+        <IonLabel class="ion-text-wrap">
         Multiline text that should wrap when it is too long
         to fit on one line in the item.
         </IonLabel>
       </IonItem>
 
       <IonItem>
-        <IonLabel text-wrap>
+        <IonLabel class="ion-text-wrap">
           <IonText color="primary">
             <h3>H3 Primary Title</h3>
           </IonText>
@@ -1098,14 +1098,14 @@ List Items
     </ion-item>
 
     <ion-item>
-      <ion-label text-wrap>
+      <ion-label class="ion-text-wrap">
       Multiline text that should wrap when it is too long
       to fit on one line in the item.
       </ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label text-wrap>
+      <ion-label class="ion-text-wrap">
         <ion-text color="primary">
           <h3>H3 Primary Title</h3>
         </ion-text>
@@ -1392,37 +1392,62 @@ Item Inputs
 
 ## CSS Custom Properties
 
-| Name                        | Description                                         |
-| --------------------------- | --------------------------------------------------- |
-| `--background`              | Background of the item                              |
-| `--background-activated`    | Background of the activated item                    |
-| `--border-color`            | Color of the item border                            |
-| `--border-radius`           | Radius of the item border                           |
-| `--border-style`            | Style of the item border                            |
-| `--border-width`            | Width of the item border                            |
-| `--box-shadow`              | Box shadow of the item                              |
-| `--color`                   | Color of the item                                   |
-| `--detail-icon-color`       | Color of the item detail icon                       |
-| `--detail-icon-font-size`   | Font size of the item detail icon                   |
-| `--detail-icon-opacity`     | Opacity of the item detail icon                     |
-| `--highlight-color-focused` | The color of the highlight on the item when focused |
-| `--highlight-color-invalid` | The color of the highlight on the item when invalid |
-| `--highlight-color-valid`   | The color of the highlight on the item when valid   |
-| `--highlight-height`        | The height of the highlight on the item             |
-| `--inner-border-width`      | Width of the item inner border                      |
-| `--inner-box-shadow`        | Box shadow of the item inner                        |
-| `--inner-padding-bottom`    | Bottom padding of the item inner                    |
-| `--inner-padding-end`       | End padding of the item inner                       |
-| `--inner-padding-start`     | Start padding of the item inner                     |
-| `--inner-padding-top`       | Top padding of the item inner                       |
-| `--min-height`              | Minimum height of the item                          |
-| `--padding-bottom`          | Bottom padding of the item                          |
-| `--padding-end`             | End padding of the item                             |
-| `--padding-start`           | Start padding of the item                           |
-| `--padding-top`             | Top padding of the item                             |
-| `--ripple-color`            | Color of the item ripple effect                     |
-| `--transition`              | Transition of the item                              |
+| Name                        | Description                                                                                                   |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `--background`              | Background of the item                                                                                        |
+| `--background-activated`    | Background of the item when pressed                                                                           |
+| `--background-focused`      | Background of the item when focused with the tab key                                                          |
+| `--background-hover`        | Background of the item on hover                                                                               |
+| `--border-color`            | Color of the item border                                                                                      |
+| `--border-radius`           | Radius of the item border                                                                                     |
+| `--border-style`            | Style of the item border                                                                                      |
+| `--border-width`            | Width of the item border                                                                                      |
+| `--box-shadow`              | Box shadow of the item                                                                                        |
+| `--color`                   | Color of the item                                                                                             |
+| `--color-activated`         | Color of the item when pressed                                                                                |
+| `--color-focused`           | Color of the item when focused with the tab key                                                               |
+| `--color-hover`             | Color of the item on hover                                                                                    |
+| `--detail-icon-color`       | Color of the item detail icon                                                                                 |
+| `--detail-icon-font-size`   | Font size of the item detail icon                                                                             |
+| `--detail-icon-opacity`     | Opacity of the item detail icon                                                                               |
+| `--highlight-color-focused` | The color of the highlight on the item when focused                                                           |
+| `--highlight-color-invalid` | The color of the highlight on the item when invalid                                                           |
+| `--highlight-color-valid`   | The color of the highlight on the item when valid                                                             |
+| `--highlight-height`        | The height of the highlight on the item                                                                       |
+| `--inner-border-width`      | Width of the item inner border                                                                                |
+| `--inner-box-shadow`        | Box shadow of the item inner                                                                                  |
+| `--inner-padding-bottom`    | Bottom padding of the item inner                                                                              |
+| `--inner-padding-end`       | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item inner |
+| `--inner-padding-start`     | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item inner |
+| `--inner-padding-top`       | Top padding of the item inner                                                                                 |
+| `--min-height`              | Minimum height of the item                                                                                    |
+| `--padding-bottom`          | Bottom padding of the item                                                                                    |
+| `--padding-end`             | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the item       |
+| `--padding-start`           | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the item       |
+| `--padding-top`             | Top padding of the item                                                                                       |
+| `--ripple-color`            | Color of the item ripple effect                                                                               |
+| `--transition`              | Transition of the item                                                                                        |
 
+
+## Dependencies
+
+### Used by
+
+ - ion-select-popover
+
+### Depends on
+
+- ion-icon
+- [ion-ripple-effect](../ripple-effect)
+
+### Graph
+```mermaid
+graph TD;
+  ion-item --> ion-icon
+  ion-item --> ion-ripple-effect
+  ion-select-popover --> ion-item
+  style ion-item fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

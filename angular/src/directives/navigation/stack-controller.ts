@@ -31,7 +31,7 @@ export class StackController {
   createView(ref: ComponentRef<any>, activatedRoute: ActivatedRoute): RouteView {
     const url = getUrl(this.router, activatedRoute);
     const element = (ref && ref.location && ref.location.nativeElement) as HTMLElement;
-    const unlistenEvents = bindLifecycleEvents(ref.instance, element);
+    const unlistenEvents = bindLifecycleEvents(this.zone, ref.instance, element);
     return {
       id: this.nextId++,
       stackId: computeStackId(this.tabsPrefix, url),
@@ -59,6 +59,7 @@ export class StackController {
       direction = 'back';
       animation = undefined;
     }
+
     const viewsSnapshot = this.views.slice();
 
     let currentNavigation;
@@ -94,16 +95,36 @@ export class StackController {
       }
     }
 
+    const reused = this.views.includes(enteringView);
     const views = this.insertView(enteringView, direction);
-    return this.wait(async () => {
-      await this.transition(enteringView, leavingView, animation, this.canGoBack(1), false);
-      await cleanupAsync(enteringView, views, viewsSnapshot, this.location);
-      return {
-        enteringView,
-        direction,
-        animation,
-        tabSwitch
-      };
+
+    // Trigger change detection before transition starts
+    // This will call ngOnInit() the first time too, just after the view
+    // was attached to the dom, but BEFORE the transition starts
+    if (!reused) {
+      enteringView.ref.changeDetectorRef.detectChanges();
+    }
+
+    // Wait until previous transitions finish
+    return this.zone.runOutsideAngular(() => {
+      return this.wait(() => {
+        // disconnect leaving page from change detection to
+        // reduce jank during the page transition
+        if (leavingView) {
+          leavingView.ref.changeDetectorRef.detach();
+        }
+        // In case the enteringView is the same as the leavingPage we need to reattach()
+        enteringView.ref.changeDetectorRef.reattach();
+
+        return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false)
+          .then(() => cleanupAsync(enteringView, views, viewsSnapshot, this.location))
+          .then(() => ({
+            enteringView,
+            direction,
+            animation,
+            tabSwitch
+          }));
+      });
     });
   }
 
@@ -138,28 +159,30 @@ export class StackController {
     });
   }
 
-  async startBackTransition() {
+  startBackTransition() {
     const leavingView = this.activeView;
     if (leavingView) {
       const views = this.getStack(leavingView.stackId);
       const enteringView = views[views.length - 2];
-      enteringView.ref.changeDetectorRef.reattach();
-      await this.wait(() => {
+      return this.wait(() => {
         return this.transition(
           enteringView, // entering view
           leavingView, // leaving view
           'back',
-          true,
+          this.canGoBack(2),
           true
         );
       });
     }
+    return Promise.resolve();
   }
 
   endBackTransition(shouldComplete: boolean) {
     if (shouldComplete) {
       this.skipTransition = true;
       this.pop(1);
+    } else if (this.activeView) {
+      cleanup(this.activeView, this.views, this.views, this.location);
     }
   }
 
@@ -189,7 +212,7 @@ export class StackController {
     return this.views.slice();
   }
 
-  private async transition(
+  private transition(
     enteringView: RouteView | undefined,
     leavingView: RouteView | undefined,
     direction: 'forward' | 'back' | undefined,
@@ -198,26 +221,32 @@ export class StackController {
   ) {
     if (this.skipTransition) {
       this.skipTransition = false;
-      return;
+      return Promise.resolve(false);
+    }
+    if (leavingView === enteringView) {
+      return Promise.resolve(false);
     }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
     if (enteringEl && enteringEl !== leavingEl) {
-      enteringEl.classList.add('ion-page', 'ion-page-invisible');
+      enteringEl.classList.add('ion-page');
+      enteringEl.classList.add('ion-page-invisible');
       if (enteringEl.parentElement !== containerEl) {
         containerEl.appendChild(enteringEl);
       }
 
-      await containerEl.componentOnReady();
-      await containerEl.commit(enteringEl, leavingEl, {
-        deepWait: true,
-        duration: direction === undefined ? 0 : undefined,
-        direction,
-        showGoBack,
-        progressAnimation
-      });
+      if ((containerEl as any).commit) {
+        return containerEl.commit(enteringEl, leavingEl, {
+          deepWait: true,
+          duration: direction === undefined ? 0 : undefined,
+          direction,
+          showGoBack,
+          progressAnimation
+        });
+      }
     }
+    return Promise.resolve(false);
   }
 
   private async wait<T>(task: () => Promise<T>): Promise<T> {
@@ -230,22 +259,24 @@ export class StackController {
   }
 }
 
-function cleanupAsync(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
-  return new Promise(resolve => {
-    requestAnimationFrame(() => {
-      cleanup(activeRoute, views, viewsSnapshot, location);
-      resolve();
+const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
+  if (typeof (requestAnimationFrame as any) === 'function') {
+    return new Promise<any>(resolve => {
+      requestAnimationFrame(() => {
+        cleanup(activeRoute, views, viewsSnapshot, location);
+        resolve();
+      });
     });
-  });
-}
+  }
+  return Promise.resolve();
+};
 
-function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
+const cleanup = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
   viewsSnapshot
     .filter(view => !views.includes(view))
     .forEach(destroyView);
 
   views.forEach(view => {
-
     /**
      * In the event that a user navigated multiple
      * times in rapid succession, we want to make sure
@@ -265,4 +296,4 @@ function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: Rout
       view.ref.changeDetectorRef.detach();
     }
   });
-}
+};

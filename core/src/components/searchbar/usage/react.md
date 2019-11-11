@@ -1,19 +1,18 @@
 ```tsx
 import React from 'react';
+import { IonSearchbar, IonToolbar, IonContent } from '@ionic/react';
 
-import { IonSearchbar, IonToolbar } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const SearchbarExample: React.FC = () => (
+  <IonContent>
     {/*-- Default Searchbar --*/}
     <IonSearchbar></IonSearchbar>
-    
+
     {/*-- Searchbar with cancel button always shown --*/}
     <IonSearchbar showCancelButton="always"></IonSearchbar>
-    
+
     {/*-- Searchbar with cancel button never shown --*/}
     <IonSearchbar showCancelButton="never"></IonSearchbar>
-    
+
     {/*-- Searchbar with cancel button shown on focus --*/}
     <IonSearchbar showCancelButton="focus"></IonSearchbar>
 
@@ -26,8 +25,11 @@ const Example: React.SFC<{}> = () => (
     {/*-- Searchbar with telephone type --*/}
     <IonSearchbar type="tel"></IonSearchbar>
 
+    {/*-- Searchbar with numeric inputmode --*/}
+    <IonSearchbar inputmode="numeric"></IonSearchbar>
+
     {/*-- Searchbar disabled  --*/}
-    <IonSearchbar disabled="true"></IonSearchbar>
+    <IonSearchbar disabled={true}></IonSearchbar>
 
     {/*-- Searchbar with a cancel button and custom cancel button text --*/}
     <IonSearchbar showCancelButton="focus" cancelButtonText="Custom Cancel"></IonSearchbar>
@@ -45,8 +47,6 @@ const Example: React.SFC<{}> = () => (
     <IonToolbar>
       <IonSearchbar></IonSearchbar>
     </IonToolbar>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
