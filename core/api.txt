@@ -1038,6 +1038,8 @@ ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
+ion-select,css-prop,--placeholder-color
+ion-select,css-prop,--placeholder-opacity
 
 ion-select-option,shadow
 ion-select-option,prop,disabled,boolean,false,false,false
