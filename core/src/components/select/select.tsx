@@ -474,7 +474,7 @@ export class Select implements ComponentInterface {
         <div class={selectTextClasses} part="select-text">
           {selectText}
         </div>
-        <div class="select-icon" role="presentation" part="select-icon">
+        <div class="select-icon" role="presentation" part="icon">
           <div class="select-icon-inner"></div>
         </div>
         <button
