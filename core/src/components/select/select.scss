@@ -4,6 +4,7 @@
 // --------------------------------------------------
 
 :host {
+  --placeholder-opacity: 0.33;
   /**
    * @prop --padding-top: Top padding of the select
    * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select
@@ -39,7 +40,7 @@
 .select-placeholder {
   color: currentColor;
 
-  opacity: .33;
+  opacity: var(--placeholder-opacity);
 }
 
 button {
