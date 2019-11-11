@@ -1,16 +1,20 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '../../interface';
-import { debounceEvent, findItemLabel, renderHiddenInput } from '../../utils/helpers';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
+import { debounceEvent, findItemLabel } from '../../utils/helpers';
+import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-input',
   styleUrls: {
     ios: 'input.ios.scss',
     md: 'input.md.scss'
   },
-  shadow: true
+  scoped: true
 })
 export class Input implements ComponentInterface {
 
@@ -28,11 +32,6 @@ export class Input implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
@@ -67,7 +66,7 @@ export class Input implements ComponentInterface {
   /**
    * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
-  @Prop({ mutable: true }) clearOnEdit?: boolean;
+  @Prop() clearOnEdit?: boolean;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
@@ -91,9 +90,10 @@ export class Input implements ComponentInterface {
 
   /**
    * A hint to the browser for which keyboard to display.
-   * This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
+   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
    */
-  @Prop() inputmode?: string;
+  @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -188,7 +188,7 @@ export class Input implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<InputChangeEventDetail>;
 
   /**
    * Emitted when the input loses focus.
@@ -202,11 +202,13 @@ export class Input implements ComponentInterface {
 
   /**
    * Emitted when the input has been created.
+   * @internal
    */
   @Event() ionInputDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the input has been removed.
+   * @internal
    */
   @Event() ionInputDidUnload!: EventEmitter<void>;
 
@@ -214,24 +216,24 @@ export class Input implements ComponentInterface {
    * Emitted when the styles change.
    * @internal
    */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
-  componentWillLoad() {
-    // By default, password inputs clear after focus when they have content
-    if (this.clearOnEdit === undefined && this.type === 'password') {
-      this.clearOnEdit = true;
-    }
+  connectedCallback() {
     this.emitStyle();
-  }
-
-  componentDidLoad() {
     this.debounceChanged();
-
-    this.ionInputDidLoad.emit();
+    if (Build.isBrowser) {
+      this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
+        detail: this.el
+      }));
+    }
   }
 
-  componentDidUnload() {
-    this.ionInputDidUnload.emit();
+  disconnectedCallback() {
+    if (Build.isBrowser) {
+      document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
+        detail: this.el
+      }));
+    }
   }
 
   /**
@@ -239,10 +241,25 @@ export class Input implements ComponentInterface {
    * `input.focus()`.
    */
   @Method()
-  setFocus() {
+  async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
     }
+  }
+
+  /**
+   * Returns the native `<input>` element used under the hood.
+   */
+  @Method()
+  getInputElement(): Promise<HTMLInputElement> {
+    return Promise.resolve(this.nativeInput!);
+  }
+
+  private shouldClearOnEdit() {
+    const { type, clearOnEdit } = this;
+    return (clearOnEdit === undefined)
+      ? type === 'password'
+      : clearOnEdit;
   }
 
   private getValue(): string {
@@ -285,7 +302,7 @@ export class Input implements ComponentInterface {
   }
 
   private onKeydown = () => {
-    if (this.clearOnEdit) {
+    if (this.shouldClearOnEdit()) {
       // Did the input value change after it was blurred and edited?
       if (this.didBlurAfterEdit && this.hasValue()) {
         // Clear the input
@@ -297,13 +314,27 @@ export class Input implements ComponentInterface {
     }
   }
 
-  private clearTextInput = () => {
+  private clearTextInput = (ev?: Event) => {
+    if (this.clearInput && !this.readonly && !this.disabled && ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+
     this.value = '';
+
+    /**
+     * This is needed for clearOnEdit
+     * Otherwise the value will not be cleared
+     * if user is inside the input
+     */
+    if (this.nativeInput) {
+      this.nativeInput.value = '';
+    }
   }
 
   private focusChanged() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
+    if (!this.hasFocus && this.shouldClearOnEdit() && this.hasValue()) {
       this.didBlurAfterEdit = true;
     }
   }
@@ -312,68 +343,65 @@ export class Input implements ComponentInterface {
     return this.getValue().length > 0;
   }
 
-  hostData() {
-    return {
-      'aria-disabled': this.disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(this.color),
-        'in-item': hostContext('ion-item', this.el),
-        'has-value': this.hasValue(),
-        'has-focus': this.hasFocus
-      }
-    };
-  }
-
   render() {
+    const mode = getIonMode(this);
     const value = this.getValue();
-    renderHiddenInput(false, this.el, this.name, value, this.disabled);
-
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
     if (label) {
       label.id = labelId;
     }
 
-    return [
-      <input
-        class="native-input"
-        ref={input => this.nativeInput = input}
-        aria-labelledby={labelId}
-        disabled={this.disabled}
-        accept={this.accept}
-        autoCapitalize={this.autocapitalize}
-        autoComplete={this.autocomplete}
-        autoCorrect={this.autocorrect}
-        autoFocus={this.autofocus}
-        inputMode={this.inputmode}
-        min={this.min}
-        max={this.max}
-        minLength={this.minlength}
-        maxLength={this.maxlength}
-        multiple={this.multiple}
-        name={this.name}
-        pattern={this.pattern}
-        placeholder={this.placeholder || ''}
-        readOnly={this.readonly}
-        required={this.required}
-        spellCheck={this.spellcheck}
-        step={this.step}
-        size={this.size}
-        type={this.type}
-        value={value}
-        onInput={this.onInput}
-        onBlur={this.onBlur}
-        onFocus={this.onFocus}
-        onKeyDown={this.onKeydown}
-      />,
-      (this.clearInput && !this.readonly && !this.disabled) && <button
-        type="button"
-        class="input-clear-icon"
-        tabindex="-1"
-        onTouchStart={this.clearTextInput}
-        onMouseDown={this.clearTextInput}
-      />
-    ];
+    return (
+      <Host
+        aria-disabled={this.disabled ? 'true' : null}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'has-value': this.hasValue(),
+          'has-focus': this.hasFocus
+        }}
+      >
+        <input
+          class="native-input"
+          ref={input => this.nativeInput = input}
+          aria-labelledby={labelId}
+          disabled={this.disabled}
+          accept={this.accept}
+          autoCapitalize={this.autocapitalize}
+          autoComplete={this.autocomplete}
+          autoCorrect={this.autocorrect}
+          autoFocus={this.autofocus}
+          inputMode={this.inputmode}
+          min={this.min}
+          max={this.max}
+          minLength={this.minlength}
+          maxLength={this.maxlength}
+          multiple={this.multiple}
+          name={this.name}
+          pattern={this.pattern}
+          placeholder={this.placeholder || ''}
+          readOnly={this.readonly}
+          required={this.required}
+          spellCheck={this.spellcheck}
+          step={this.step}
+          size={this.size}
+          type={this.type}
+          value={value}
+          onInput={this.onInput}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
+          onKeyDown={this.onKeydown}
+        />
+        {(this.clearInput && !this.readonly && !this.disabled) && <button
+          type="button"
+          class="input-clear-icon"
+          tabindex="-1"
+          onTouchStart={this.clearTextInput}
+          onMouseDown={this.clearTextInput}
+        />}
+      </Host>
+    );
   }
 }
 

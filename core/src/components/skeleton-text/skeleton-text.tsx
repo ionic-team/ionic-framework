@@ -1,21 +1,38 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import { hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-skeleton-text',
-  styleUrls: {
-    ios: 'skeleton-text.ios.scss',
-    md: 'skeleton-text.md.scss'
-  },
+  styleUrl: 'skeleton-text.scss',
   shadow: true
 })
 export class SkeletonText implements ComponentInterface {
 
+  @Element() el!: HTMLElement;
+
   /**
-   * Width for the element to render at.
+   * If `true`, the skeleton text will animate.
    */
-  @Prop() width = '100%';
+  @Prop() animated = false;
 
   render() {
-    return <span style={{ width: this.width }}>&nbsp;</span>;
+    const animated = this.animated && config.getBoolean('animated', true);
+    const inMedia = hostContext('ion-avatar', this.el) || hostContext('ion-thumbnail', this.el);
+    const mode = getIonMode(this);
+
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'skeleton-text-animated': animated,
+          'in-media': inMedia
+        }}
+      >
+        <span>&nbsp;</span>
+      </Host>
+    );
   }
 }

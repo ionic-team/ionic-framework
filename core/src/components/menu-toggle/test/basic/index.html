@@ -7,8 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -52,7 +53,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content padding>
+      <ion-content class="ion-padding">
         hola macho
       </ion-content>
     </ion-menu>
@@ -72,7 +73,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content padding>
+      <ion-content class="ion-padding">
         <div>
           <ion-button onclick="openDefault()">Menu Button Will Open Default</ion-button>
         </div>
@@ -90,21 +91,18 @@
 
   <script>
 
-    async function openDefault() {
+    function openDefault() {
       const menuButton = document.querySelector('ion-menu-toggle');
-      await menuButton.componentOnReady();
       menuButton.menu = null;
     }
 
-    async function openStart() {
+    function openStart() {
       const menuButton = document.querySelector('ion-menu-toggle');
-      await menuButton.componentOnReady();
       menuButton.menu = 'start';
     }
 
-    async function openEnd() {
+    function openEnd() {
       const menuButton = document.querySelector('ion-menu-toggle');
-      await menuButton.componentOnReady();
       menuButton.menu = 'end';
     }
   </script>

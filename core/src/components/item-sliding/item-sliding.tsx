@@ -1,6 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { Gesture, GestureDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Gesture, GestureDetail, Side } from '../../interface';
+import { isEndSide } from '../../utils/helpers';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -46,16 +48,14 @@ export class ItemSliding implements ComponentInterface {
 
   @State() state: SlidingState = SlidingState.Disabled;
 
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-
   /**
-   * If `true`, the user cannot interact with the sliding-item.
+   * If `true`, the user cannot interact with the sliding item.
    */
   @Prop() disabled = false;
   @Watch('disabled')
   disabledChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
   }
 
@@ -64,14 +64,12 @@ export class ItemSliding implements ComponentInterface {
    */
   @Event() ionDrag!: EventEmitter;
 
-  async componentDidLoad() {
+  async connectedCallback() {
     this.item = this.el.querySelector('ion-item');
-
     await this.updateOptions();
 
-    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
-      queue: this.queue,
       gestureName: 'item-swipe',
       gesturePriority: 100,
       threshold: 5,
@@ -83,13 +81,18 @@ export class ItemSliding implements ComponentInterface {
     this.disabledChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
+      this.gesture = undefined;
     }
 
     this.item = null;
     this.leftOptions = this.rightOptions = undefined;
+
+    if (openSlidingItem === this.el) {
+      openSlidingItem = undefined;
+    }
   }
 
   /**
@@ -113,6 +116,54 @@ export class ItemSliding implements ComponentInterface {
   }
 
   /**
+   * Open the sliding item.
+   *
+   * @param side The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item.
+   */
+  @Method()
+  async open(side: Side | undefined) {
+    if (this.item === null) { return; }
+
+    const optionsToOpen = this.getOptions(side);
+    if (!optionsToOpen) { return; }
+
+    /**
+     * If side is not set, we need to infer the side
+     * so we know which direction to move the options
+     */
+    if (side === undefined) {
+      side = (optionsToOpen === this.leftOptions) ? 'start' : 'end';
+    }
+
+    // In RTL we want to switch the sides
+    side = isEndSide(side) ? 'end' : 'start';
+
+    const isStartOpen = this.openAmount < 0;
+    const isEndOpen = this.openAmount > 0;
+
+    /**
+     * If a side is open and a user tries to
+     * re-open the same side, we should not do anything
+     */
+    if (isStartOpen && optionsToOpen === this.leftOptions) { return; }
+    if (isEndOpen && optionsToOpen === this.rightOptions) { return; }
+
+    this.closeOpened();
+
+    this.state = SlidingState.Enabled;
+
+    requestAnimationFrame(() => {
+      this.calculateOptsWidth();
+
+      const width = (side === 'end') ? this.optsWidthRightSide : -this.optsWidthLeftSide;
+      openSlidingItem = this.el;
+
+      this.setOpenAmount(width, false);
+      this.state = (side === 'end') ? SlidingState.End : SlidingState.Start;
+    });
+  }
+
+  /**
    * Close the sliding item. Items can also be closed from the [List](../../list/List).
    */
   @Method()
@@ -127,9 +178,26 @@ export class ItemSliding implements ComponentInterface {
   async closeOpened(): Promise<boolean> {
     if (openSlidingItem !== undefined) {
       openSlidingItem.close();
+      openSlidingItem = undefined;
       return true;
     }
     return false;
+  }
+
+   /**
+    * Given an optional side, return the ion-item-options element.
+    *
+    * @param side This side of the options to get. If a side is not provided it will
+    * return the first one available.
+    */
+  private getOptions(side?: string): HTMLIonItemOptionsElement | undefined {
+    if (side === undefined) {
+      return this.leftOptions || this.rightOptions;
+    } else if (side === 'start') {
+      return this.leftOptions;
+    } else {
+      return this.rightOptions;
+    }
   }
 
   private async updateOptions() {
@@ -143,7 +211,9 @@ export class ItemSliding implements ComponentInterface {
     for (let i = 0; i < options.length; i++) {
       const option = await options.item(i).componentOnReady();
 
-      if (option.side === 'start') {
+      const side = isEndSide(option.side) ? 'end' : 'start';
+
+      if (side === 'start') {
         this.leftOptions = option;
         sides |= ItemSide.Start;
       } else {
@@ -161,6 +231,7 @@ export class ItemSliding implements ComponentInterface {
       this.closeOpened();
       return false;
     }
+
     return !!(this.rightOptions || this.leftOptions);
   }
 
@@ -237,13 +308,18 @@ export class ItemSliding implements ComponentInterface {
   private calculateOptsWidth() {
     this.optsWidthRightSide = 0;
     if (this.rightOptions) {
+      this.rightOptions.style.display = 'flex';
       this.optsWidthRightSide = this.rightOptions.offsetWidth;
+      this.rightOptions.style.display = '';
     }
 
     this.optsWidthLeftSide = 0;
     if (this.leftOptions) {
+      this.leftOptions.style.display = 'flex';
       this.optsWidthLeftSide = this.leftOptions.offsetWidth;
+      this.leftOptions.style.display = '';
     }
+
     this.optsDirty = false;
   }
 
@@ -271,10 +347,10 @@ export class ItemSliding implements ComponentInterface {
         ? SlidingState.Start | SlidingState.SwipeStart
         : SlidingState.Start;
     } else {
-      this.tmr = window.setTimeout(() => {
+      this.tmr = setTimeout(() => {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
-      }, 600);
+      }, 600) as any;
 
       openSlidingItem = undefined;
       style.transform = '';
@@ -298,25 +374,30 @@ export class ItemSliding implements ComponentInterface {
     }
   }
 
-  hostData() {
-    return {
-      class: {
-        'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
-        'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
-        'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
-        'item-sliding-active-swipe-end': (this.state & SlidingState.SwipeEnd) !== 0,
-        'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0
-      }
-    };
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
+          'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
+          'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
+          'item-sliding-active-swipe-end': (this.state & SlidingState.SwipeEnd) !== 0,
+          'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0
+        }}
+      >
+      </Host>
+    );
   }
 }
 
-function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
+const swipeShouldReset = (isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean => {
   // The logic required to know when the sliding item should close (openAmount=0)
-  // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
+  // depends on three booleans (isResetDirection, isMovingFast, isOnResetZone)
   // and it ended up being too complicated to be written manually without errors
   // so the truth table is attached below: (0=false, 1=true)
-  // isCloseDirection | isMovingFast | isOnCloseZone || shouldClose
+  // isResetDirection | isMovingFast | isOnResetZone || shouldClose
   //         0        |       0      |       0       ||    0
   //         0        |       0      |       1       ||    1
   //         0        |       1      |       0       ||    0
@@ -327,4 +408,4 @@ function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOn
   //         1        |       1      |       1       ||    1
   // The resulting expression was generated by resolving the K-map (Karnaugh map):
   return (!isMovingFast && isOnResetZone) || (isResetDirection && isMovingFast);
-}
+};

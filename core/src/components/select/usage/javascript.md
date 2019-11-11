@@ -59,6 +59,56 @@
 </ion-list>
 ```
 
+## Objects as Values
+
+```html
+<ion-list>
+  <ion-list-header>Objects as Values (compareWith)</ion-list-header>
+
+  <ion-item>
+    <ion-label>Users</ion-label>
+    <ion-select id="objectSelectCompareWith"></ion-select>
+  </ion-item>
+</ion-list>
+```
+
+```javascript
+  let objectOptions = [
+    {
+      id: 1,
+      first: 'Alice',
+      last: 'Smith',
+    },
+    {
+      id: 2,
+      first: 'Bob',
+      last: 'Davis',
+    },
+    {
+      id: 3,
+      first: 'Charlie',
+      last: 'Rosenburg',
+    }
+  ];
+
+  let compareWithFn = (o1, o2) => {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  };
+
+  let objectSelectElement = document.getElementById('objectSelectCompareWith');
+  objectSelectElement.compareWith = compareWithFn;
+  
+  objectOptions.forEach((option, i) => {
+    let selectOption = document.createElement('ion-select-option');
+    selectOption.value = option;
+    selectOption.textContent = option.first + ' ' + option.last;
+    selectOption.selected = (i === 0);
+    
+    objectSelectElement.appendChild(selectOption)
+  });
+}
+```
+
 ## Interface Options
 
 ```html

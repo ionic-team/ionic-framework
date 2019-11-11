@@ -1,3 +1,5 @@
+import { HTMLStencilElement } from '@ionic/core';
+
 // A proxy method that initializes the controller and calls requested method
 export function proxyMethod(tag: string, method: string, ...opts: any[]): Promise<any> {
   return initController(tag).then((ctrl: any) => ctrl[method].apply(ctrl, opts));

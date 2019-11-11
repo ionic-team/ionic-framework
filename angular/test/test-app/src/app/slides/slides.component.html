@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Slides Test
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-slides pager="true" (ionSlideDidChange)="checkIndex()">
+
+    <ion-slide *ngFor="let text of slidesData">
+      <h1>{{text}}</h1>
+    </ion-slide>
+
+  </ion-slides>
+
+  <p>
+    index: <span id="slide-index">{{slideIndex}}</span>
+    index2: <span id="slide-index-2">{{slideIndex2}}</span>
+  </p>
+
+  <ion-button id="add-slides" (click)="addSlides()">
+    Add Slides
+  </ion-button>
+  <ion-button id="btn-prev" (click)="prevSlide()">
+    Prev Slide
+  </ion-button>
+  <ion-button id="btn-next" (click)="nextSlide()">
+    Next Slide
+  </ion-button>
+</ion-content>

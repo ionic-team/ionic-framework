@@ -9,6 +9,8 @@
   --min-height: #{$item-md-min-height};
   --background: #{$item-md-background};
   --background-activated: var(--background);
+  --background-focused: #{$item-md-background-focused};
+  --background-hover: #{$item-md-background-hover};
   --border-color: #{$item-md-border-bottom-color};
   --color: #{$item-md-color};
   --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
@@ -26,6 +28,25 @@
   font-weight: normal;
 
   text-transform: none;
+}
+
+
+// Material Design Item: Focused & Activated
+// --------------------------------------------------
+
+:host(.ion-focused.activated) .item-native {
+  background: var(--background-focused);
+  color: var(--color-focused);
+}
+
+:host(.ion-color.activated) .item-native {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+:host(.ion-color.ion-focused.activated) .item-native {
+  background: current-color(shade);
+  color: current-color(contrast);
 }
 
 
@@ -85,11 +106,11 @@
 // Material Design Item Slots
 // --------------------------------------------------
 
-::slotted(:not(.interactive)[slot="start"]) {
+::slotted([slot="start"]) {
   @include margin-horizontal($item-md-start-slot-margin-start, $item-md-start-slot-margin-end);
 }
 
-::slotted(:not(.interactive)[slot="end"]) {
+::slotted([slot="end"]) {
   @include margin-horizontal($item-md-end-slot-margin-start, $item-md-end-slot-margin-end);
 }
 
@@ -98,10 +119,13 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-
   color: $item-md-icon-slot-color;
 
   font-size: $item-md-icon-slot-font-size;
+}
+
+:host(.ion-color) ::slotted(ion-icon) {
+  color: current-color(contrast);
 }
 
 ::slotted(ion-icon[slot]) {
@@ -114,6 +138,15 @@
 
 ::slotted(ion-icon[slot="end"]) {
   @include margin-horizontal($item-md-icon-end-slot-margin-start, $item-md-icon-end-slot-margin-end);
+}
+
+
+// Material Design Slotted Toggle
+// --------------------------------------------------
+
+::slotted(ion-toggle[slot="start"]),
+::slotted(ion-toggle[slot="end"]) {
+  @include margin(0);
 }
 
 
@@ -232,24 +265,14 @@
 
 :host(.item-label-floating),
 :host(.item-label-stacked) {
-  --min-height: 65px;
+  --min-height: 55px;
 }
 
-// TODO: refactor
-:host(.item-label-stacked) ::slotted(ion-input),
-:host(.item-label-floating) ::slotted(ion-input),
-:host(.item-label-stacked) ::slotted(ion-textarea),
-:host(.item-label-floating) ::slotted(ion-textarea),
+// TODO: refactor, ion-item and ion-textarea have the same CSS
 :host(.item-label-stacked) ::slotted(ion-select),
 :host(.item-label-floating) ::slotted(ion-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
-  --padding-start: 0;
-}
-
-
-:host(:not(.item-label)) ::slotted(ion-input),
-:host(:not(.item-label)) ::slotted(ion-textarea) {
   --padding-start: 0;
 }
 

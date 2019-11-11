@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toolbar - Components</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+</head>
+
+<body>
+  <ion-app>
+    <ion-content id="content">
+      <!-- Left Side Menu Toggle Components -->
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Left Side Menu Toggle</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-segment color="secondary" value="second">
+          <ion-segment-button value="first">
+            Segment
+          </ion-segment-button>
+          <ion-segment-button value="second">
+            Component
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-searchbar placeholder="Searchbar..."></ion-searchbar>
+      </ion-toolbar>
+
+      <!-- Right Side Menu Toggle Components -->
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button onclick="buttonClick()">
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Right Side Menu Toggle</ion-title>
+        <ion-buttons slot="end">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-segment color="secondary" value="component">
+          <ion-segment-button value="segment">
+            Segment
+          </ion-segment-button>
+          <ion-segment-button value="component">
+            Component
+          </ion-segment-button>
+        </ion-segment>
+        <ion-buttons slot="end">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-searchbar placeholder="Searchbar..."></ion-searchbar>
+        <ion-buttons slot="end">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+
+      <ion-toolbar color="light">
+        <ion-segment value="third">
+          <ion-segment-button value="first">
+            Light
+          </ion-segment-button>
+          <ion-segment-button value="second">
+            Bar
+          </ion-segment-button>
+          <ion-segment-button value="third">
+            Segment
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="light">
+        <ion-segment color="primary" value="first">
+          <ion-segment-button value="first">
+            Light
+          </ion-segment-button>
+          <ion-segment-button value="second">
+            Bar
+          </ion-segment-button>
+          <ion-segment-button value="third">
+            Primary
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+    </ion-content>
+  </ion-app>
+</body>
+
+</html>

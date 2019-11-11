@@ -1,17 +1,32 @@
-import { proxyMethod } from '../util/util';
 
-export class OverlayBaseController<Opts, Overlay> {
-  constructor(private ctrl: string) {}
+interface ControllerShape<Opts, HTMLElm> {
+  create(options: Opts): Promise<HTMLElm>;
+  dismiss(data?: any, role?: string, id?: string): Promise<boolean>;
+  getTop(): Promise<HTMLElm | undefined>;
+}
 
-  create(opts?: Opts): Promise<Overlay> {
-    return proxyMethod(this.ctrl, 'create', opts);
+export class OverlayBaseController<Opts, Overlay> implements ControllerShape<Opts, Overlay> {
+  constructor(private ctrl: ControllerShape<Opts, Overlay>) {}
+
+  /**
+   * Creates a new overlay
+   */
+  create(opts?: Opts) {
+    // TODO: next major release opts is not optional
+    return this.ctrl.create((opts || {}) as any);
   }
 
-  dismiss(data?: any, role?: string, id?: string): Promise<void> {
-    return proxyMethod(this.ctrl, 'dismiss', data, role, id);
+  /**
+   * When `id` is not provided, it dismisses the top overlay.
+   */
+  dismiss(data?: any, role?: string, id?: string) {
+    return this.ctrl.dismiss(data, role, id);
   }
 
-  getTop(): Promise<Overlay> {
-    return proxyMethod(this.ctrl, 'getTop');
+  /**
+   * Returns the top overlay.
+   */
+  getTop() {
+    return this.ctrl.getTop();
   }
 }

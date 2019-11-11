@@ -6,8 +6,12 @@
 :host {
  /**
    * @prop --background: Background of the button
+   * @prop --background-focused: Background of the button when focused with the tab key
+   * @prop --background-hover: Background of the button when hover
    *
    * @prop --color: Text color of the button
+   * @prop --color-focused: Text color of the button when focused with the tab key
+   * @prop --color-hover: Text color of the button when hover
    *
    * @prop --min-width: Minimum width of the button
    * @prop --min-height: Minimum height of the button
@@ -20,35 +24,56 @@
    *
    * @prop --opacity: Opacity of the button
    *
-   * @prop --margin-top: Margin top of the button
-   * @prop --margin-end: Margin end of the button
-   * @prop --margin-bottom: Margin bottom of the button
-   * @prop --margin-start: Margin start of the button
+   * @prop --margin-top: Top margin of the button
+   * @prop --margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the button
+   * @prop --margin-bottom: Bottom margin of the button
+   * @prop --margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the button
    *
-   * @prop --padding-top: Padding top of the button
-   * @prop --padding-end: Padding end of the button
-   * @prop --padding-bottom: Padding bottom of the button
-   * @prop --padding-start: Padding start of the button
+   * @prop --padding-top: Top padding of the button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
+   * @prop --padding-bottom: Bottom padding of the button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    *
-   * @prop --icon-margin-top: Margin top of the button icon
-   * @prop --icon-margin-end: Margin end of the button icon
-   * @prop --icon-margin-bottom: Margin bottom of the button icon
-   * @prop --icon-margin-start: Margin start of the button icon
+   * @prop --icon-margin-top: Top margin of the button icon
+   * @prop --icon-margin-end: Right margin if direction is left-to-right, and left margin if direction is right-to-left of the button icon
+   * @prop --icon-margin-bottom: Bottom margin of the button icon
+   * @prop --icon-margin-start: Left margin if direction is left-to-right, and right margin if direction is right-to-left of the button icon
    *
-   * @prop --icon-padding-top: Padding top of the button icon
-   * @prop --icon-padding-end: Padding end of the button icon
-   * @prop --icon-padding-bottom: Padding bottom of the button icon
-   * @prop --icon-padding-start: Padding start of the button icon
+   * @prop --icon-padding-top: Top padding of the button icon
+   * @prop --icon-padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button icon
+   * @prop --icon-padding-bottom: Bottom padding of the button icon
+   * @prop --icon-padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button icon
    *
    * @prop --icon-font-size: Font size of the button icon
    * @prop --icon-font-weight: Font weight of the button icon
    */
   --background: transparent;
+  --color-focused: var(--color);
+  --color-hover: var(--color);
+  --icon-margin-top: 0;
+  --icon-margin-bottom: 0;
+  --icon-padding-top: 0;
+  --icon-padding-end: 0;
+  --icon-padding-bottom: 0;
+  --icon-padding-start: 0;
+  --margin-top: 0;
+  --margin-end: 0;
+  --margin-bottom: 0;
+  --margin-start: 0;
+  --min-width: auto;
+  --min-height: auto;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --opacity: 1;
   --ripple-color: currentColor;
   --transition: background-color, opacity 100ms linear;
-  --opacity: 1;
 
   display: none;
+
+  min-width: var(--min-width);
+  min-height: var(--min-height);
 
   color: var(--color);
 
@@ -77,15 +102,16 @@
 // Back Button States
 // --------------------------------------------------
 
-:host(.activated) .button-native {
-  opacity: .4;
-}
-
 :host-context(.can-go-back > ion-header),
 :host(.show-back-button) {
   display: block;
 }
 
+:host(.back-button-disabled) {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
 
 // Native Back Button
 // --------------------------------------------------
@@ -100,8 +126,10 @@
   display: block;
   position: relative;
 
-  min-width: var(--min-width);
-  min-height: var(--min-height);
+  width: 100%;
+  height: 100%;
+
+  min-height: inherit;
 
   transition: var(--transition);
 
@@ -147,4 +175,49 @@ ion-icon {
   font-weight: var(--icon-font-weight);
 
   pointer-events: none;
+}
+
+
+// Back Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) .button-native {
+    background: var(--background-hover);
+    color: var(--color-hover);
+  }
+}
+
+// Back Button: Focused
+// --------------------------------------------------
+
+:host(.ion-focused) .button-native {
+  background: var(--background-focused);
+  color: var(--color-focused);
+}
+
+
+// Back Button Color: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.ion-color:hover) .button-native {
+    color: #{current-color(base)};
+  }
+}
+
+
+// Back Button Color: Focused
+// --------------------------------------------------
+
+:host(.ion-color.ion-focused) .button-native {
+  color: #{current-color(base)};
+}
+
+
+// Back Button in Toolbar: Global Theming
+// --------------------------------------------------
+
+:host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
+  color: #{var(--ion-toolbar-color, var(--color))};
 }

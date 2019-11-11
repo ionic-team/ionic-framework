@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tab Bar - Spec</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <link rel="stylesheet" href="../../../../../css/ionic.bundle.css">
+  <link rel="stylesheet" href="../../../../../scripts/testing/styles.css">
+</head>
+
+<body>
+  <ion-app>
+    <ion-content>
+      <ion-tab-bar translucent selected-tab="1">
+
+        <ion-tab-button tab="1">
+          <ion-label>Recents</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="2">
+          <ion-label>Favorites</ion-label>
+          <ion-badge>6</ion-badge>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="3">
+          <ion-label>Settings</ion-label>
+        </ion-tab-button>
+    
+      </ion-tab-bar>
+
+      <!-- Badges -->
+      <ion-tab-bar translucent selected-tab="1">
+        <ion-tab-button tab="1">
+          <ion-icon name="heart"></ion-icon>
+          <ion-label>Item One Max</ion-label>
+          <ion-badge color="danger"></ion-badge>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="2">
+          <ion-icon name="musical-note"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="3">
+          <ion-icon name="today"></ion-icon>
+          <ion-badge color="danger">88</ion-badge>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="4">
+          <ion-icon name="calendar"></ion-icon>
+          <ion-badge color="danger">888+</ion-badge>
+        </ion-tab-button>
+      </ion-tab-bar>
+    
+      <ion-tab-bar translucent selected-tab="1">
+        <ion-tab-button tab="1">
+          <ion-icon name="musical-note"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="2" layout="icon-bottom">
+          <ion-icon name="heart"></ion-icon>
+          <ion-label>Item One Max</ion-label>
+          <ion-badge color="danger"></ion-badge>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="3">
+          <ion-icon name="today"></ion-icon>
+          <ion-badge color="danger">88</ion-badge>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="4">
+          <ion-icon name="calendar"></ion-icon>
+          <ion-badge color="danger">888+</ion-badge>
+        </ion-tab-button>
+      </ion-tab-bar>
+    
+      <ion-tab-bar translucent selected-tab="1">
+        <ion-tab-button tab="1">
+          <ion-icon name="heart"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="2">
+          <ion-icon name="musical-note"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="3">
+          <ion-icon name="today"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    
+      <ion-tab-bar translucent selected-tab="1">
+        <ion-tab-button tab="1">
+          <ion-icon name="musical-note"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="2" layout="icon-bottom">
+          <ion-icon name="heart"></ion-icon>
+          <ion-label>Item One Max</ion-label>
+          <ion-badge color="danger">88</ion-badge>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="3">
+          <ion-icon name="today"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="4">
+          <ion-icon name="calendar"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    
+      <!-- Custom Height -->
+      <ion-tab-bar translucent color="danger" selected-tab="3" class="custom-height">
+        <ion-tab-button tab="1">
+          <ion-icon name="heart"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="2">
+          <ion-icon name="musical-note"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="3">
+          <ion-icon name="today"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="4">
+          <ion-icon name="calendar"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    
+      <!-- Custom Height / Alignment -->
+      <ion-tab-bar translucent color="tertiary" selected-tab="3" class="custom-height custom-top">
+        <ion-tab-button tab="1">
+          <ion-icon name="heart"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="2">
+          <ion-icon name="musical-note"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="3">
+          <ion-icon name="today"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="4">
+          <ion-icon name="calendar"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    
+      <!-- Translucent -->
+      <ion-tab-bar translucent>
+        <ion-tab-button tab="1">
+          <ion-icon name="heart"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="2">
+          <ion-icon name="musical-note"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="3">
+          <ion-icon name="today"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="4">
+          <ion-icon name="calendar"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    
+      <!-- Translucent / Custom Color -->
+      <ion-tab-bar translucent class="custom-background">
+        <ion-tab-button tab="1">
+          <ion-icon name="heart"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="2">
+          <ion-icon name="musical-note"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="3">
+          <ion-icon name="today"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="4">
+          <ion-icon name="calendar"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-content>
+  </ion-app>
+  <!-- Default -->
+  
+
+  <style>
+    ion-content {
+      --background: linear-gradient(
+        to right, orange , yellow, green, cyan, blue, violet
+      );
+    }
+
+    ion-tab-bar {
+      margin-bottom: 5px;
+    }
+
+    .custom-height {
+      height: 80px;
+    }
+
+    .custom-top ion-tab-button {
+      justify-content: start;
+    }
+
+    .custom-background {
+      --background: rgba(124, 243, 217, 0.6);
+    }
+  </style>
+</body>
+
+</html>

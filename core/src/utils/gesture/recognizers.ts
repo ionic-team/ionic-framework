@@ -6,7 +6,7 @@ export interface PanRecognizer {
   getDirection(): number;
 }
 
-export function createPanRecognizer(direction: string, thresh: number, maxAngle: number): PanRecognizer {
+export const createPanRecognizer = (direction: string, thresh: number, maxAngle: number): PanRecognizer => {
   const radians = maxAngle * (Math.PI / 180);
   const isDirX = direction === 'x';
   const maxCosine = Math.cos(radians);
@@ -63,4 +63,4 @@ export function createPanRecognizer(direction: string, thresh: number, maxAngle:
       return isPan;
     }
   };
-}
+};

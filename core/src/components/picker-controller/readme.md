@@ -5,17 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+> **[DEPRECATED]** Use the `pickerController` exported from core.
+
 ## Methods
 
-### `create(opts: PickerOptions) => Promise<HTMLIonPickerElement>`
+### `create(options: PickerOptions) => Promise<HTMLIonPickerElement>`
 
 Create a picker overlay with picker options.
-
-#### Parameters
-
-| Name   | Type            | Description |
-| ------ | --------------- | ----------- |
-| `opts` | `PickerOptions` |             |
 
 #### Returns
 
@@ -26,14 +22,6 @@ Type: `Promise<HTMLIonPickerElement>`
 ### `dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>`
 
 Dismiss the open picker overlay.
-
-#### Parameters
-
-| Name   | Type                  | Description |
-| ------ | --------------------- | ----------- |
-| `data` | `any`                 |             |
-| `role` | `string \| undefined` |             |
-| `id`   | `string \| undefined` |             |
 
 #### Returns
 

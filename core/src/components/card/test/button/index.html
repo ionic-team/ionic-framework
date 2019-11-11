@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Card - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Card - Button</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content">
+
+      <ion-card button>
+        <ion-card-header>
+          <ion-card-subtitle>
+            Subtitle
+          </ion-card-subtitle>
+          <ion-card-title>
+            Button Card
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          This is content, inside of a card with a button attribute.
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card href="#">
+        <ion-card-header>
+          <ion-card-title>
+            Anchor Card
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          This is content, inside of a card with a href attribute.
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card button>
+        <div style="position: absolute; top: 0; left:0; right:0; bottom:0;">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB8AQAAAACDZekTAAABMElEQVR4AWLABZjQBdjRBfgb0ATkD6AJ2D9AE6j/gCbw/weAyzk2IwAKwBgIixvNKPaA+P7yXplUZ1/7OO79DkYdjHrIqKeMeskoISXkWkLuBWSMkhGQMYCMAWQMISVkDCBjDCKjZAAZA8gYQMYAUkLGaBAZg8goGYPIGATGIDAGgTEIjEFgDCKjZAwiYxAYg8AYBMYgMAaBMYiMkjGIjEHGSMgYQErIGEDGAAKjZAwyhpAxgIwB5F9nvVsBCAUgDC3Zf2MGuCe1+r6QyBuMwSysg5WyF3bLeXBinCmnzr1wc9wtt08+SBAZI4XklCSTddpAX2gUnaOV9JZm033oAD8gDAyCUnAM0sFCaAlPIS5MhtpwHfLjBuyBXzAQjsJieE4T6kptqm81ss7W6ss/gwMyz60frEbR8QAAAABJRU5ErkJggg==">
+        </div>
+
+        <ion-card-header>
+          <ion-card-subtitle>
+            Subtitle
+          </ion-card-subtitle>
+          <ion-card-title>
+            Title
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          This button should have a background.
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card button>
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB8AQAAAACDZekTAAABMElEQVR4AWLABZjQBdjRBfgb0ATkD6AJ2D9AE6j/gCbw/weAyzk2IwAKwBgIixvNKPaA+P7yXplUZ1/7OO79DkYdjHrIqKeMeskoISXkWkLuBWSMkhGQMYCMAWQMISVkDCBjDCKjZAAZA8gYQMYAUkLGaBAZg8goGYPIGATGIDAGgTEIjEFgDCKjZAwiYxAYg8AYBMYgMAaBMYiMkjGIjEHGSMgYQErIGEDGAAKjZAwyhpAxgIwB5F9nvVsBCAUgDC3Zf2MGuCe1+r6QyBuMwSysg5WyF3bLeXBinCmnzr1wc9wtt08+SBAZI4XklCSTddpAX2gUnaOV9JZm033oAD8gDAyCUnAM0sFCaAlPIS5MhtpwHfLjBuyBXzAQjsJieE4T6kptqm81ss7W6ss/gwMyz60frEbR8QAAAABJRU5ErkJggg==">
+      </ion-card>
+
+    </ion-content>
+
+  </ion-app>
+  <style>
+    .content {
+      background: #e5e5e5;
+    }
+
+  </style>
+</body>
+
+</html>

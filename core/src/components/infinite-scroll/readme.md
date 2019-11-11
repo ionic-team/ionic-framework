@@ -12,6 +12,10 @@ The `ion-infinite-scroll` component has the infinite scroll logic. It requires a
 
 Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` components allows developers to create their own content components, if desired. This content can contain anything, from an SVG element to elements with unique CSS animations.
 
+## React
+
+The Infinite Scroll component is not supported in React.
+
 <!-- Auto Generated Below -->
 
 
@@ -38,7 +42,7 @@ Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` component
 
 ```typescript
 import { Component, ViewChild } from '@angular/core';
-import { InfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
 
 @Component({
   selector: 'infinite-scroll-example',
@@ -46,7 +50,7 @@ import { InfiniteScroll } from '@ionic/angular';
   styleUrls: ['./infinite-scroll-example.css']
 })
 export class InfiniteScrollExample {
-  @ViewChild(InfiniteScroll) infiniteScroll: InfiniteScroll;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor() {}
 
@@ -64,7 +68,7 @@ export class InfiniteScrollExample {
   }
 
   toggleInfiniteScroll() {
-    infiniteScroll.disabled = !infiniteScroll.disabled;
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 }
 ```
@@ -74,7 +78,7 @@ export class InfiniteScrollExample {
 
 ```html
 <ion-content>
-  <ion-button onclick="toggleInfiniteScroll()" expand="block">
+  <ion-button onClick="toggleInfiniteScroll()" expand="block">
     Toggle Infinite Scroll
   </ion-button>
 
@@ -123,14 +127,14 @@ function toggleInfiniteScroll() {
 
 ## Events
 
-| Event         | Description                                                                                                                                                                                 | Detail |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| `ionInfinite` | Emitted when the scroll reaches the threshold distance. From within your infinite handler, you must call the infinite scroll's `complete()` method when your async operation has completed. | void   |
+| Event         | Description                                                                                                                                                                                 | Type                |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `ionInfinite` | Emitted when the scroll reaches the threshold distance. From within your infinite handler, you must call the infinite scroll's `complete()` method when your async operation has completed. | `CustomEvent<void>` |
 
 
 ## Methods
 
-### `complete() => void`
+### `complete() => Promise<void>`
 
 Call `complete()` within the `ionInfinite` output event handler when
 your async operation has completed. For example, the `loading`
@@ -143,7 +147,7 @@ to `enabled`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

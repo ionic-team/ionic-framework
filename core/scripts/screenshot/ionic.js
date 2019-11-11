@@ -23,8 +23,10 @@ class IonicConnector extends ScreenshotConnector {
       return true
     });
 
-    if (missingImages.length > 0) {
-      await Promise.all(missingImages.map(async image => {
+    while (missingImages.length > 0) {
+      const images = missingImages.splice(0, 20);
+
+      await Promise.all(images.map(async image => {
         this.logger.debug(`downloading: ${image}`);
 
         try {

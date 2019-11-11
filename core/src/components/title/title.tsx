@@ -1,16 +1,18 @@
-import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-title',
-  styleUrl: 'title.scss',
+  styleUrls: {
+    'ios': 'title.ios.scss',
+    'md': 'title.md.scss'
+  },
   shadow: true
 })
 export class ToolbarTitle implements ComponentInterface {
-
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -21,26 +23,55 @@ export class ToolbarTitle implements ComponentInterface {
    */
   @Prop() color?: Color;
 
-  private getMode() {
-    const toolbar = this.el.closest('ion-toolbar');
-    return (toolbar && toolbar.mode) || this.mode;
+  /**
+   * The size of the toolbar title.
+   */
+  @Prop() size?: 'large' | 'small';
+
+  /**
+   * Emitted when the styles change.
+   * @internal
+   */
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  @Watch('size')
+  protected sizeChanged() {
+    this.emitStyle();
   }
 
-  hostData() {
-    const mode = this.getMode();
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [`title-${mode}`]: true
-      }
-    };
+  connectedCallback() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
+    const size = this.getSize();
+
+    this.ionStyle.emit({
+      [`title-${size}`]: true
+    });
+  }
+
+  private getSize() {
+    return (this.size !== undefined) ? this.size : 'default';
   }
 
   render() {
-    return [
-      <div class="toolbar-title">
-        <slot></slot>
-      </div>
-    ];
+    const mode = getIonMode(this);
+    const size = this.getSize();
+
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          [`title-${size}`]: true,
+
+          ...createColorClasses(this.color),
+        }}
+      >
+        <div class="toolbar-title">
+          <slot></slot>
+        </div>
+      </Host>
+    );
   }
 }

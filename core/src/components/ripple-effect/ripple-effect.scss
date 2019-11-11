@@ -15,6 +15,7 @@ $opacity-duration: $fade-in-duration + $fade-out-duration;
   position: absolute;
 
   contain: strict;
+  pointer-events: none;
 }
 
 :host(.unbounded) {

@@ -3,53 +3,99 @@ import { waitTime, testStack, handleErrorMessages } from './utils';
 
 describe('tabs', () => {
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
   describe('entry url - /tabs', () => {
     beforeEach(async () => {
       await browser.get('/tabs');
+      await waitTime(30);
     });
 
     it('should redirect and load tab-account', async () => {
       await testTabTitle('Tab 1 - Page 1');
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab1']);
+      await testState(1, 'account');
+    });
+
+    it('should navigate between tabs and ionChange events should be dispatched ', async () => {
+      let tab = await testTabTitle('Tab 1 - Page 1');
+      expect(await tab.$('.segment-changed').getText()).toEqual('false');
+
+      await element(by.css('#tab-button-contact')).click();
+      tab = await testTabTitle('Tab 2 - Page 1');
+      expect(await tab.$('.segment-changed').getText()).toEqual('false');
     });
 
     it('should simulate stack + double tab click', async () => {
       let tab = await getSelectedTab() as ElementFinder;
       await tab.$('#goto-tab1-page2').click();
-      await testTabTitle('Tab 1 - Page 2');
+      await testTabTitle('Tab 1 - Page 2 (1)');
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab1', 'app-tabs-tab1-nested']);
+      await testState(1, 'account');
       expect(await tab.$('ion-back-button').isDisplayed()).toBe(true);
 
       await element(by.css('#tab-button-contact')).click();
       await testTabTitle('Tab 2 - Page 1');
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab1', 'app-tabs-tab1-nested', 'app-tabs-tab2']);
+      await testState(2, 'contact');
 
       await element(by.css('#tab-button-account')).click();
-      tab = await testTabTitle('Tab 1 - Page 2');
+      tab = await testTabTitle('Tab 1 - Page 2 (1)');
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab1', 'app-tabs-tab1-nested', 'app-tabs-tab2']);
+      await testState(3, 'account');
       expect(await tab.$('ion-back-button').isDisplayed()).toBe(true);
 
       await element(by.css('#tab-button-account')).click();
       await testTabTitle('Tab 1 - Page 1');
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab1', 'app-tabs-tab2']);
+      await testState(3, 'account');
     });
 
     it('should simulate stack + back button click', async () => {
       const tab = await getSelectedTab();
       await tab.$('#goto-tab1-page2').click();
-      await testTabTitle('Tab 1 - Page 2');
+      await testTabTitle('Tab 1 - Page 2 (1)');
+      await testState(1, 'account');
 
       await element(by.css('#tab-button-contact')).click();
       await testTabTitle('Tab 2 - Page 1');
+      await testState(2, 'contact');
 
       await element(by.css('#tab-button-account')).click();
-      await testTabTitle('Tab 1 - Page 2');
+      await testTabTitle('Tab 1 - Page 2 (1)');
+      await testState(3, 'account');
 
       await element(by.css('ion-back-button')).click();
       await testTabTitle('Tab 1 - Page 1');
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab1', 'app-tabs-tab2']);
+      await testState(3, 'account');
+    });
+
+    it('should navigate deep then go home', async () => {
+      let tab = await getSelectedTab();
+      await tab.$('#goto-tab1-page2').click();
+      tab = await testTabTitle('Tab 1 - Page 2 (1)');
+
+      await tab.$('#goto-next').click();
+      tab = await testTabTitle('Tab 1 - Page 2 (2)');
+
+      await element(by.css('#tab-button-contact')).click();
+      tab = await testTabTitle('Tab 2 - Page 1');
+
+      await element(by.css('#tab-button-account')).click();
+      await testTabTitle('Tab 1 - Page 2 (2)');
+      await testStack('ion-tabs ion-router-outlet', [
+        'app-tabs-tab1',
+        'app-tabs-tab1-nested',
+        'app-tabs-tab1-nested',
+        'app-tabs-tab2'
+      ]);
+      await element(by.css('#tab-button-account')).click();
+      await testTabTitle('Tab 1 - Page 1');
+      await testStack('ion-tabs ion-router-outlet', [
+        'app-tabs-tab1',
+        'app-tabs-tab2'
+      ]);
     });
 
     it('should switch tabs and go back', async () => {
@@ -66,7 +112,7 @@ describe('tabs', () => {
       const tab = await testTabTitle('Tab 2 - Page 1');
 
       await tab.$('#goto-tab1-page2').click();
-      await testTabTitle('Tab 1 - Page 2');
+      await testTabTitle('Tab 1 - Page 2 (1)');
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab2', 'app-tabs-tab1-nested']);
     });
 
@@ -87,13 +133,14 @@ describe('tabs', () => {
     });
   });
 
-  describe('entry url - /tabs/account/nested/12', () => {
+  describe('entry url - /tabs/account/nested/1', () => {
     beforeEach(async () => {
-      await browser.get('/tabs/account/nested/12');
+      await browser.get('/tabs/account/nested/1');
+      await waitTime(30);
     });
 
     it('should only display the back-button when there is a page in the stack', async () => {
-      let tab = await testTabTitle('Tab 1 - Page 2') as ElementFinder;
+      let tab = await testTabTitle('Tab 1 - Page 2 (1)') as ElementFinder;
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab1-nested']);
       expect(await tab.$('ion-back-button').isDisplayed()).toBe(false);
 
@@ -101,14 +148,38 @@ describe('tabs', () => {
       tab = await testTabTitle('Tab 1 - Page 1');
 
       await tab.$('#goto-tab1-page2').click();
-      tab = await testTabTitle('Tab 1 - Page 2');
+      tab = await testTabTitle('Tab 1 - Page 2 (1)');
       expect(await tab.$('ion-back-button').isDisplayed()).toBe(true);
+    });
+
+    it('should not reuse the same page', async () => {
+      let tab = await testTabTitle('Tab 1 - Page 2 (1)') as ElementFinder;
+      await tab.$('#goto-next').click();
+      tab = await testTabTitle('Tab 1 - Page 2 (2)');
+      await tab.$('#goto-next').click();
+      tab = await testTabTitle('Tab 1 - Page 2 (3)');
+
+      await testStack('ion-tabs ion-router-outlet',[
+        'app-tabs-tab1-nested',
+        'app-tabs-tab1-nested',
+        'app-tabs-tab1-nested'
+      ]);
+
+      await tab.$('ion-back-button').click();
+      tab = await testTabTitle('Tab 1 - Page 2 (2)');
+      await tab.$('ion-back-button').click();
+      tab = await testTabTitle('Tab 1 - Page 2 (1)');
+
+      expect(await tab.$('ion-back-button').isDisplayed()).toBe(false);
+
+      await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab1-nested']);
     });
   });
 
   describe('entry url - /tabs/lazy', () => {
     beforeEach(async () => {
       await browser.get('/tabs/lazy');
+      await waitTime(30);
     });
 
     it('should not display the back-button if coming from a different stack', async () => {
@@ -116,15 +187,40 @@ describe('tabs', () => {
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab3']);
 
       await tab.$('#goto-tab1-page2').click();
-      tab = await testTabTitle('Tab 1 - Page 2');
+      tab = await testTabTitle('Tab 1 - Page 2 (1)');
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab3', 'app-tabs-tab1-nested']);
       expect(await tab.$('ion-back-button').isDisplayed()).toBe(false);
     });
   });
+
+  describe('enter url - /tabs/contact/one', () => {
+    beforeEach(async () => {
+      await browser.get('/tabs/contact/one');
+      await waitTime(30);
+    });
+
+    it('should return to correct tab after going to page in different outlet', async () => {
+      const tab = await getSelectedTab();
+      await tab.$('#goto-nested-page1').click();
+
+      await waitTime(600);
+      await testStack('app-nested-outlet ion-router-outlet', ['app-nested-outlet-page']);
+
+      const nestedOutlet = await element(by.css('app-nested-outlet'));
+      const backButton = await nestedOutlet.$('ion-back-button');
+      await backButton.click();
+
+      await testTabTitle('Tab 2 - Page 1');
+    });
+  })
 });
 
+async function testState(count: number, tab: string) {
+  expect(await element(by.css('#tabs-state')).getText()).toEqual(`${count}.${tab}`);
+}
+
 async function testTabTitle(title: string) {
-  await waitTime(600);
+  await waitTime(1000);
   const tab = await getSelectedTab();
   expect(await tab.$('ion-title').getText()).toEqual(title);
   return tab;

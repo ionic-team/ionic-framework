@@ -17,7 +17,7 @@
 $font-family-base:                  var(--ion-font-family, inherit) !default;
 
 // Global app direction
-$app-direction: ltr !default;
+$app-direction: null !default;
 
 // Global font path
 $font-path: "/dist/fonts" !default;
@@ -40,8 +40,8 @@ $screen-breakpoints: (
 // --------------------------------------------------
 // Grouped by elements which would be siblings
 
-$z-index-menu-overlay:           80;
-$z-index-overlay:                1000;
+$z-index-menu-overlay:           1000;
+$z-index-overlay:                1001;
 $z-index-click-block:            99999;
 
 $z-index-fixed-content:          999;

@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Forms test
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit($event)">
+    <ion-list>
+
+      <ion-item>
+        <ion-label>DateTime</ion-label>
+        <ion-datetime formControlName="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Select</ion-label>
+        <ion-select formControlName="select">
+          <ion-select-option value="">No Game Console</ion-select-option>
+          <ion-select-option value="nes">NES</ion-select-option>
+          <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+          <ion-select-option value="ps">PlayStation</ion-select-option>
+          <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+          <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+          <ion-select-option value="snes">SNES</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Toggle</ion-label>
+        <ion-toggle formControlName="toggle" slot="end"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Input (required)</ion-label>
+        <ion-input formControlName="input" class="required"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Input</ion-label>
+        <ion-input formControlName="input2"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Checkbox</ion-label>
+        <ion-checkbox formControlName="checkbox" slot="start"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Range</ion-label>
+        <ion-range formControlName="range"></ion-range>
+      </ion-item>
+
+    </ion-list>
+    <p>
+      Form Status: <span id="status">{{ profileForm.status }}</span>
+    </p>
+    <p>
+      Form Status: <span id="data">{{ profileForm.value | json }}</span>
+    </p>
+    <p>
+      Form Submit: <span id="submit">{{submitted}}</span>
+    </p>
+    <ion-button id="submit-button" type="submit" [disabled]="!profileForm.valid">Submit</ion-button>
+
+  </form>
+  <ion-list>
+    <ion-item>
+      <ion-label>Outside form</ion-label>
+      <ion-toggle [formControl]="outsideToggle"></ion-toggle>
+      <ion-note slot="end">{{outsideToggle.value}}</ion-note>
+    </ion-item>
+  </ion-list>
+  <p>
+    <ion-button (click)="setValues()" id="set-values">Set values</ion-button>
+  </p>
+</ion-content>

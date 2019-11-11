@@ -7,8 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -41,7 +42,7 @@
       </ion-virtual-scroll>
 
       <ion-infinite-scroll threshold="100px" id="infinite-scroll">
-        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="Loading more data...">
         </ion-infinite-scroll-content>
       </ion-infinite-scroll>
 
@@ -51,10 +52,9 @@
   <script>
     const items = Array.from({ length: 100 }, (x, i) => i);
     const virtual = document.getElementById('virtual');
-    virtual.itemHeight = () => 44;
     virtual.items = items;
     virtual.nodeRender = (el, cell) => {
-      if (cell.type === 0) {
+      if (cell.type === 'item') {
         renderItem(el, cell.value);
       }
     };
@@ -75,7 +75,7 @@
         append = Array.from({ length: 10 }, (x, i) => "append" + i);
       }
       items.push(...append);
-      virtual.markDirtyTail(append.length)
+      virtual.checkEnd(append.length);
     }
 
     function getAsyncData() {

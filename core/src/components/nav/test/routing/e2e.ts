@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 const navChanged = () => new Promise(resolve => window.addEventListener('ionRouteDidChange', resolve));
 
-test('nav: routing', async () => {
+test.skip('nav: routing', async () => {
 
   const page = await newE2EPage({
     url: '/src/components/nav/test/routing?ionic:_testing=true'

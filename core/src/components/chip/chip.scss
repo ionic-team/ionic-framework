@@ -5,8 +5,8 @@
    * @prop --background: Background of the chip
    * @prop --color: Color of the chip
    */
-  --background: rgba(0, 0, 0, .12);
-  --color: rgba(0, 0, 0, .87);
+  --background: #{rgba($text-color-rgb, .12)};
+  --color: #{rgba($text-color-rgb, .87)};
 
   @include border-radius(16px);
   @include font-smoothing();
@@ -37,20 +37,9 @@
   box-sizing: border-box;
 }
 
-:host(:focus) {
-  outline: none;
-}
 
-:host(:focus) {
-  --background: rgba(0, 0, 0, .16);
-}
-
-:host(.activated) {
-  --background: rgba(0, 0, 0, .20);
-}
-
-
-// Colors
+// Chip Colors
+// ---------------------------------------------
 
 :host(.ion-color) {
   background: current-color(base, .08);
@@ -66,14 +55,16 @@
 }
 
 
-// Outline
+// Outline Chip
+// ---------------------------------------------
 
 :host(.chip-outline) {
   border-width: 1px;
   border-style: solid;
 }
 
-:host(.chip-outline:not(.ion-color)) {
+:host(.chip-outline) {
+
   border-color: rgba(0, 0, 0, .32);
 
   background: transparent;
@@ -92,7 +83,8 @@
 }
 
 
-// Icon
+// Chip Icon
+// ---------------------------------------------
 
 ::slotted(ion-icon) {
   font-size: 20px;
@@ -111,7 +103,8 @@
 }
 
 
-// Avatar
+// Chip Avatar
+// ---------------------------------------------
 
 ::slotted(ion-avatar) {
   width: 24px;
@@ -127,11 +120,32 @@
 }
 
 
-// Hover
+// Chip: Focus
+// ---------------------------------------------
+
+:host(:focus) {
+  outline: none;
+}
+
+:host(:focus) {
+  --background: #{rgba($text-color-rgb, .16)};
+}
+
+
+// Chip: Activated
+// ---------------------------------------------
+
+:host(.activated) {
+  --background: #{rgba($text-color-rgb, .20)};
+}
+
+
+// Chip: Hover
+// ---------------------------------------------
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --background: rgba(0, 0, 0, .16);
+    --background: #{rgba($text-color-rgb, .16)};
   }
 
   :host(.ion-color:hover) {
@@ -139,6 +153,6 @@
   }
 
   :host(.chip-outline:not(.ion-color):hover) {
-    background: rgba(0, 0, 0, .04);
+    background: rgba($text-color-rgb, .04);
   }
 }

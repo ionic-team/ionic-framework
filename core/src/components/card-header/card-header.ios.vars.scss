@@ -19,7 +19,7 @@ $card-ios-header-padding-start:                         $card-ios-header-padding
 $card-ios-header-translucent-background-color-alpha:    .9 !default;
 
 /// @prop - Filter of the translucent card header background color
-$card-ios-header-translucent-background-color:          rgba(var(--ion-background-color-rgb, $background-color-rgb), $card-ios-header-translucent-background-color-alpha) !default;
+$card-ios-header-translucent-background-color:          rgba($background-color-rgb, $card-ios-header-translucent-background-color-alpha) !default;
 
 /// @prop - Filter of the translucent card header
 $card-ios-header-translucent-filter:                    saturate(180%) blur(30px) !default;

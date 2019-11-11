@@ -18,8 +18,10 @@ import { Component } from '@angular/core';
   `
 })
 export class SlideExample {
+  // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
   slideOpts = {
-    effect: 'flip'
+    initialSlide: 1,
+    speed: 400
   };
   constructor() {}
 }

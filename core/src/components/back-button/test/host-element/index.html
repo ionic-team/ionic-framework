@@ -7,8 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../dist/ionic.js"></script>
-  <script>
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <script>
     class PageOne extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
@@ -21,11 +22,11 @@
                 <ion-title>Page One</ion-title>
               </ion-toolbar>
             </ion-header>
-            <ion-content padding>
+            <ion-content class="ion-padding">
               <h1>Page One</h1>
-              <ion-nav-push component="page-two">
+              <ion-nav-link router-direction="forward" component="page-two">
                 <ion-button class="next">Go to Page Two</ion-button>
-              </ion-nav-push>
+              </ion-nav-link>
             </ion-content>
         `;
       }
@@ -43,12 +44,12 @@
                 <ion-title>Page Two</ion-title>
               </ion-toolbar>
             </ion-header>
-            <ion-content padding>
+            <ion-content class="ion-padding">
               <h1>Page Two</h1>
               <div>
-                <ion-nav-push component="page-three">
+                <ion-nav-link router-direction="forward" component="page-three">
                   <ion-button class="next">Go to Page Three</ion-button>
-                </ion-nav-push>
+                </ion-nav-link>
               </div>
             </ion-content>
         `;
@@ -67,12 +68,12 @@
                 <ion-title>Page Three</ion-title>
               </ion-toolbar>
             </ion-header>
-            <ion-content padding>
+            <ion-content class="ion-padding">
               <h1>Page Three</h1>
               <div>
-                <ion-nav-push component="page-four">
+                <ion-nav-link router-direction="forward" component="page-four">
                   <ion-button class="next">Go to Page Four</ion-button>
-                </ion-nav-push>
+                </ion-nav-link>
               </div>
             </ion-content>
         `;
@@ -91,7 +92,7 @@
                 <ion-title>Page Four</ion-title>
               </ion-toolbar>
             </ion-header>
-            <ion-content padding>
+            <ion-content class="ion-padding">
               <h1>Page Four</h1>
             </ion-content>
         `;

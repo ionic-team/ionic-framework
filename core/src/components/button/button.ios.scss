@@ -34,6 +34,10 @@
   --opacity: #{$button-ios-opacity-activated};
 }
 
+:host(.button-solid.activated.ion-color) .button-native {
+  background: current-color(shade);
+}
+
 // iOS Outline Button
 // --------------------------------------------------
 
@@ -67,18 +71,6 @@
 }
 
 
-// iOS Round Button
-// --------------------------------------------------
-
-:host(.button-round) {
-  --border-radius: #{$button-ios-round-border-radius};
-  --padding-top: #{$button-ios-round-padding-top};
-  --padding-start: #{$button-ios-round-padding-start};
-  --padding-end: #{$button-ios-round-padding-end};
-  --padding-bottom: #{$button-ios-round-padding-bottom};
-}
-
-
 // iOS Button Sizes
 // --------------------------------------------------
 
@@ -107,6 +99,18 @@
 }
 
 
+// iOS Round Button
+// --------------------------------------------------
+
+:host(.button-round) {
+  --border-radius: #{$button-ios-round-border-radius};
+  --padding-top: #{$button-ios-round-padding-top};
+  --padding-start: #{$button-ios-round-padding-start};
+  --padding-end: #{$button-ios-round-padding-end};
+  --padding-bottom: #{$button-ios-round-padding-bottom};
+}
+
+
 // iOS strong Button
 // --------------------------------------------------
 
@@ -123,7 +127,21 @@
     --opacity: #{$button-ios-opacity-hover};
   }
 
-  :host(.button-clear:hover) {
+  :host(.button-clear:hover),
+  :host(.button-outline:hover) {
     --opacity: #{$button-ios-clear-opacity-hover};
+  }
+
+  // Since iOS changes the opacity on hover,
+  // we want to keep the background if focused
+  // or activated
+  :host(.ion-focused:hover) {
+    --background-hover: var(--background-focused);
+    --color-hover: var(--color-focused);
+  }
+
+  :host(.activated:hover) {
+    --background-hover: var(--background-activated);
+    --color-hover: var(--color-activated);
   }
 }

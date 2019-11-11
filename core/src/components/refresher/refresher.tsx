@@ -1,7 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
-import { Gesture, GestureDetail, Mode, RefresherEventDetail } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { getIonMode } from '../../global/ionic-global';
+import { Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 
 @Component({
   tag: 'ion-refresher',
@@ -18,11 +18,7 @@ export class Refresher implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private gesture?: Gesture;
 
-  mode!: Mode;
-
   @Element() el!: HTMLElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * The current state which the refresher is in. The refresher's states include:
@@ -60,13 +56,26 @@ export class Refresher implements ComponentInterface {
   @Prop() snapbackDuration = '280ms';
 
   /**
+   * How much to multiply the pull speed by. To slow the pull animation down,
+   * pass a number less than `1`. To speed up the pull, pass a number greater
+   * than `1`. The default value is `1` which is equal to the speed of the cursor.
+   * If a negative value is passed in, the factor will be `1` instead.
+   *
+   * For example: If the value passed is `1.2` and the content is dragged by
+   * `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels
+   * (an increase of 20 percent). If the value passed is `0.8`, the dragged amount
+   * will be `8` pixels, less than the amount the cursor has moved.
+   */
+  @Prop() pullFactor = 1;
+
+  /**
    * If `true`, the refresher will be hidden.
    */
   @Prop() disabled = false;
   @Watch('disabled')
   disabledChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
   }
 
@@ -88,22 +97,19 @@ export class Refresher implements ComponentInterface {
    */
   @Event() ionStart!: EventEmitter<void>;
 
-  async componentDidLoad() {
+  async connectedCallback() {
     if (this.el.getAttribute('slot') !== 'fixed') {
       console.error('Make sure you use: <ion-refresher slot="fixed">');
       return;
     }
     const contentEl = this.el.closest('ion-content');
-    if (contentEl) {
-      await contentEl.componentOnReady();
-      this.scrollEl = await contentEl.getScrollElement();
-    } else {
-      console.error('ion-refresher did not attach, make sure the parent is an ion-content.');
+    if (!contentEl) {
+      console.error('<ion-refresher> must be used inside an <ion-content>');
+      return;
     }
-
-    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
-      el: this.el.closest('ion-content') as any,
-      queue: this.queue,
+    this.scrollEl = await contentEl.getScrollElement();
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+      el: contentEl,
       gestureName: 'refresher',
       gesturePriority: 10,
       direction: 'y',
@@ -118,8 +124,12 @@ export class Refresher implements ComponentInterface {
     this.disabledChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.scrollEl = undefined;
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
   }
 
   /**
@@ -132,7 +142,7 @@ export class Refresher implements ComponentInterface {
    * `refreshing` to `completing`.
    */
   @Method()
-  complete() {
+  async complete() {
     this.close(RefresherState.Completing, '120ms');
   }
 
@@ -140,7 +150,7 @@ export class Refresher implements ComponentInterface {
    * Changes the refresher's state from `refreshing` to `cancelling`.
    */
   @Method()
-  cancel() {
+  async cancel() {
     this.close(RefresherState.Cancelling, '');
   }
 
@@ -185,7 +195,7 @@ export class Refresher implements ComponentInterface {
     // this method can get called like a bazillion times per second,
     // so it's built to be as efficient as possible, and does its
     // best to do any DOM read/writes only when absolutely necessary
-    // if multitouch then get out immediately
+    // if multi-touch then get out immediately
     const ev = detail.event as TouchEvent;
     if (ev.touches && ev.touches.length > 1) {
       return;
@@ -198,7 +208,8 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    const deltaY = detail.deltaY;
+    const pullFactor = (Number.isNaN(this.pullFactor) || this.pullFactor < 0) ? 1 : this.pullFactor;
+    const deltaY = detail.deltaY * pullFactor;
     // don't bother if they're scrolling up
     // and have not already started dragging
     if (deltaY <= 0) {
@@ -233,7 +244,9 @@ export class Refresher implements ComponentInterface {
     }
 
     // prevent native scroll events
-    ev.preventDefault();
+    if (ev.cancelable) {
+      ev.preventDefault();
+    }
 
     // the refresher is actively pulling at this point
     // move the scroll element within the content element
@@ -329,7 +342,7 @@ export class Refresher implements ComponentInterface {
 
   private setCss(y: number, duration: string, overflowVisible: boolean, delay: string) {
     this.appliedStyles = (y > 0);
-    this.queue.write(() => {
+    writeTask(() => {
       if (this.scrollEl) {
         const style = this.scrollEl.style;
         style.transform = ((y > 0) ? `translateY(${y}px) translateZ(0px)` : 'translateZ(0px)');
@@ -340,20 +353,27 @@ export class Refresher implements ComponentInterface {
     });
   }
 
-  hostData() {
-    return {
-      slot: 'fixed',
-      class: {
-        ...createThemedClasses(this.mode, 'refresher'),
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        slot="fixed"
+        class={{
+          [mode]: true,
 
-        'refresher-active': this.state !== RefresherState.Inactive,
-        'refresher-pulling': this.state === RefresherState.Pulling,
-        'refresher-ready': this.state === RefresherState.Ready,
-        'refresher-refreshing': this.state === RefresherState.Refreshing,
-        'refresher-cancelling': this.state === RefresherState.Cancelling,
-        'refresher-completing': this.state === RefresherState.Completing
-      }
-    };
+          // Used internally for styling
+          [`refresher-${mode}`]: true,
+
+          'refresher-active': this.state !== RefresherState.Inactive,
+          'refresher-pulling': this.state === RefresherState.Pulling,
+          'refresher-ready': this.state === RefresherState.Ready,
+          'refresher-refreshing': this.state === RefresherState.Refreshing,
+          'refresher-cancelling': this.state === RefresherState.Cancelling,
+          'refresher-completing': this.state === RefresherState.Completing
+        }}
+      >
+      </Host>
+    );
   }
 }
 

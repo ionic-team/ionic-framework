@@ -1,8 +1,12 @@
-import { Component, ComponentInterface, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-chip',
   styleUrls: {
@@ -20,29 +24,25 @@ export class Chip implements ComponentInterface {
   @Prop() color?: Color;
 
   /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
-
-  /**
    * Display an outline style button.
    */
   @Prop() outline = false;
 
-  hostData() {
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        'chip-outline': this.outline,
-        'ion-activatable': true,
-      }
-    };
-  }
-
   render() {
-    return [
-      <slot></slot>,
-      this.mode === 'md' ? <ion-ripple-effect></ion-ripple-effect> : null
-    ];
+    const mode = getIonMode(this);
+
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'chip-outline': this.outline,
+          'ion-activatable': true,
+        }}
+      >
+        <slot></slot>
+        {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+      </Host>
+    );
   }
 }

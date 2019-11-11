@@ -25,6 +25,7 @@
 
 svg {
   @include position(0, null, null, 0);
+  @include transform-origin(center);
 
   position: absolute;
 
@@ -94,16 +95,33 @@ svg {
 }
 
 :host(.spinner-dots) svg {
-  @include transform-origin(center);
-
   animation: spinner-dots 1s linear infinite;
+}
+
+
+// Spinner: circular
+// --------------------------------------------------
+
+:host(.spinner-circular) {
+  animation: spinner-circular linear infinite;
+}
+
+:host(.spinner-circular) circle {
+  animation: spinner-circular-inner ease-in-out infinite;
+  stroke: currentColor;
+  stroke-dasharray: 80px, 200px;
+  stroke-dashoffset: 0px;
+  stroke-width: 3.6;
+  fill: none;
 }
 
 
 // Spinner: paused
 // --------------------------------------------------
 
-:host(.spinner-paused) svg {
+:host(.spinner-paused),
+:host(.spinner-paused) svg,
+:host(.spinner-paused) circle {
   animation-play-state: paused;
 }
 
@@ -161,5 +179,26 @@ svg {
     transform: scale(1, 1);
 
     opacity: .9;
+  }
+}
+
+@keyframes spinner-circular {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner-circular-inner {
+  0% {
+    stroke-dasharray: 1px, 200px;
+    stroke-dashoffset: 0px;
+  }
+  50% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -15px;
+  }
+  100% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -125px;
   }
 }

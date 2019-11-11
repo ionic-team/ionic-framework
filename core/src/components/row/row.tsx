@@ -1,4 +1,6 @@
-import { Component, ComponentInterface } from '@stencil/core';
+import { Component, ComponentInterface, Host, h } from '@stencil/core';
+
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-row',
@@ -6,7 +8,12 @@ import { Component, ComponentInterface } from '@stencil/core';
   shadow: true
 })
 export class Row implements ComponentInterface {
+
   render() {
-    return <slot></slot>;
+    return (
+      <Host class={getIonMode(this)}>
+        <slot></slot>
+      </Host>
+    );
   }
 }

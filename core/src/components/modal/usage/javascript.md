@@ -1,34 +1,78 @@
+
 ```javascript
-async function presentModal() {
-  // initialize controller
-  const modalController = document.querySelector('ion-modal-controller');
-  await modalController.componentOnReady();
+customElements.define('modal-page', class extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Modal Header</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button onClick="dismissModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  Modal Content
+</ion-content>`;
+  }
+});
 
-  // create component to open
-  const element = document.createElement('div');
-  element.innerHTML = `
-  &lt;ion-header&gt;
-    &lt;ion-toolbar&gt;
-      &lt;ion-title&gt;Super Modal&lt;/ion-title&gt;
-    &lt;/ion-toolbar&gt;
-  &lt;/ion-header&gt;
-  &lt;ion-content&gt;
-    &lt;h1&gt;Content of doom&lt;/h1&gt;
-    &lt;div&gt;Here's some more content&lt;/div&gt;
-    &lt;ion-button class="dismiss"&gt;Dismiss Modal&lt;/ion-button&gt;
-  &lt;/ion-content&gt;
-  `;
-
-  // listen for close event
-  const button = element.querySelector('ion-button');
-  button.addEventListener('click', () => {
-    modalController.dismiss();
-  });
+function presentModal() {
+  // create the modal with the `modal-page` component
+  const modalElement = document.createElement('ion-modal');
+  modalElement.component = 'modal-page';
 
   // present the modal
-  const modalElement = await modalController.create({
-    component: element
-  });
-  modalElement.present();
+  document.body.appendChild(modalElement);
+  return modalElement.present();
 }
+```
+
+### Passing Data
+
+During creation of a modal, data can be passed in through the `componentProps`. The previous example can be written to include data:
+
+```javascript
+const modalElement = document.createElement('ion-modal');
+modalElement.component = 'modal-page';
+modalElement.componentProps = {
+  'firstName': 'Douglas',
+  'lastName': 'Adams',
+  'middleInitial': 'N'
+};
+```
+
+To get the data passed into the `componentProps`, query for the modal in the `modal-page`:
+
+```js
+customElements.define('modal-page', class extends HTMLElement {
+  connectedCallback() {
+    const modalElement = document.querySelector('ion-modal');
+    console.log(modalElement.componentProps.firstName);
+
+    ...
+  }
+}
+```
+
+
+### Dismissing a Modal
+
+A modal can be dismissed by calling the dismiss method on the modal controller and optionally passing any data from the modal.
+
+```javascript
+async function dismissModal() {
+  await modal.dismiss({
+    'dismissed': true
+  });
+}
+```
+
+After being dismissed, the data can be read in through the `onWillDismiss` or `onDidDismiss` attached to the modal after creation:
+
+```javascript
+const { data } = await modalElement.onWillDismiss();
+console.log(data);
 ```

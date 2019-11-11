@@ -7,8 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -19,9 +20,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
-      <ion-action-sheet-controller></ion-action-sheet-controller>
-
+    <ion-content class="ion-padding">
       <ion-button expand="block" id="spec" onclick="presentSpec()">Spec</ion-button>
     </ion-content>
 
@@ -33,9 +32,7 @@
     async function presentSpec() {
       const mode = Ionic.mode;
 
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
-      const actionSheetElement = await actionSheetController.create({
+      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
         header: "Open in",
         buttons: [{
           text: 'Item 1',
@@ -69,6 +66,7 @@
           }
         }]
       });
+      document.body.appendChild(actionSheetElement);
       await actionSheetElement.present();
     }
   </script>

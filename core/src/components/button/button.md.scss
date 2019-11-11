@@ -47,6 +47,7 @@
   --box-shadow: none;
   --background-activated: transparent;
   --background-focused: #{ion-color(primary, base, .1)};
+  --background-hover: #{ion-color(primary, base, .04)};
   --color-activated: #{ion-color(primary, base)};
 }
 
@@ -59,9 +60,9 @@
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --opacity: #{$button-md-clear-opacity};
   --background-activated: transparent;
   --background-focused: #{ion-color(primary, base, .1)};
+  --background-hover: #{ion-color(primary, base, .04)};
   --color-activated: #{ion-color(primary, base)};
   --color-focused: #{ion-color(primary, base)};
 }
@@ -117,23 +118,16 @@
 }
 
 
-// Material Design Button Sizes
+// Material Design Button: Hover
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  :host(.button-outline:hover) .button-native {
-    background: ion-color(primary, base, .04);
+  :host(.button-solid.ion-color:hover) .button-native {
+    background: #{current-color(tint)};
   }
 
+  :host(.button-clear.ion-color:hover) .button-native,
   :host(.button-outline.ion-color:hover) .button-native {
-    background: current-color(base, .04);
-  }
-
-  :host(.button-clear:hover) .button-native {
-    background: ion-color(primary, base, .04);
-  }
-
-  :host(.button-clear.ion-color:hover) .button-native {
-    background: current-color(base, .04);
+    background: #{current-color(base, .04)};
   }
 }

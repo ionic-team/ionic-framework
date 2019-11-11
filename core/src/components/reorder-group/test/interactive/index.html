@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Reorder - Interactive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/core.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body>
+  <ion-list><ion-reorder-group disabled="false"></ion-reorder-group></ion-list>
+
+  <script>
+    class TestReorderListShadowDom extends HTMLElement {
+      constructor() {
+        super();
+        const shadow = this.attachShadow({mode: 'open'});
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = `<ion-list><ion-reorder-group disabled="false"></ion-reorder-group></ion-list>`;
+        shadow.appendChild(wrapper);
+      }
+    }
+
+    customElements.define('test-reorder-list-shadow-dom', TestReorderListShadowDom);
+
+    function addReorderItem(list) {
+      const reorderItem = document.createElement('ion-reorder');
+      reorderItem.innerHTML = `<ion-item>
+          <ion-label>
+            <h2>Item ${list.childElementCount}</h2>
+          </ion-label>
+      </ion-item>`;
+
+      reorderItem.id = `item-${list.childElementCount}`;
+
+      list.appendChild(reorderItem);
+    }
+
+    const testShadowDomEl = document.createElement('test-reorder-list-shadow-dom');
+    document.body.appendChild(testShadowDomEl);
+
+    let lists = Array.from(document.getElementsByTagName('ion-reorder-group'));
+    lists.push(testShadowDomEl.shadowRoot.querySelector('ion-reorder-group'));
+
+    for (var i = 0; i < lists.length; i++) {
+      lists[i].addEventListener('ionItemReorder', ({detail}) => detail.complete(true));
+      for (var j = 0; j < 3; j++) addReorderItem(lists[i]);
+    }
+  </script>
+</body>
+</html>

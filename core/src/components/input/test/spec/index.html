@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Input - Spec</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body>
+  <ion-app>
+    <ion-content class="ion-padding">
+      <ion-item>
+        <ion-label position="floating">Floating: input</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item class="item-has-focus">
+        <ion-label position="floating">Floating: input focused value</ion-label>
+        <ion-input value="value"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Stacked: input</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Stacked: input value</ion-label>
+        <ion-input value="value"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Stacked: div</ion-label>
+        <div>A div</div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Floating: textarea</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Floating: textarea value</ion-label>
+        <ion-textarea value="value"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Stacked: textarea</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item>
+      <ion-item class="item-has-focus">
+        <ion-label position="stacked">Stacked: textarea focused value</ion-label>
+        <ion-textarea value="value"></ion-textarea>
+      </ion-item>
+      <ion-item class="custom item-has-focus">
+        <ion-label position="stacked">Stacked: textarea focus</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item>
+
+    </ion-content>
+
+    <style>
+      ion-item {
+        --background: #f5f5f5;
+      }
+
+      .custom {
+        --background: lightblue;
+      }
+
+      .custom ion-label {
+        color: white !important;
+      }
+
+      .custom.item-has-focus ion-label {
+        color: purple !important;
+      }
+    </style>
+  </ion-app>
+</body>
+
+</html>

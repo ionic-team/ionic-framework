@@ -4,13 +4,34 @@
 // --------------------------------------------------
 
 :host {
+  --background-focused: rgba(66, 66, 66, 0.24);
+  --background-hover: rgba(66, 66, 66, 0.08);
+  --border-radius: 50%;
   --color: initial;
+  --padding-start: 8px;
+  --padding-end: 8px;
+
+  width: 48px;
+  height: 48px;
+
+  font-size: 24px;
 }
 
-button {
-  @include padding(0, 8px);
+
+// Menu Button Color: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(.ion-color:hover) .button-native {
+    background: #{current-color(base, .08)};
+  }
 }
 
-ion-icon {
-  font-size: 26px;
+
+// Menu Button Color: Focused
+// --------------------------------------------------
+
+:host(.ion-color.ion-focused) .button-native {
+  background: #{current-color(base, .24)};
+  color: #{current-color(base)};
 }

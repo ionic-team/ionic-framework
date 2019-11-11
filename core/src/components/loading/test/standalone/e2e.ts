@@ -1,17 +1,23 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { testLoading } from '../test.utils';
 
-test('loading: standalone', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/loading/test/standalone?ionic:_testing=true'
-  });
+const DIRECTORY = 'standalone';
 
-  await page.click('#basic');
-  const loading = await page.find('ion-loading');
-  expect(loading).not.toBeNull();
+test('loading: basic standalone', async () => {
+  await testLoading(DIRECTORY, '#basic-loading');
+});
 
-  await loading.waitForVisible();
-  await page.waitFor(500);
+test('loading: long content standalone', async () => {
+  await testLoading(DIRECTORY, '#long-content-loading');
+});
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+test('loading: no spinner standalone', async () => {
+  await testLoading(DIRECTORY, '#no-spinner-loading');
+});
+
+test('loading: translucent standalone', async () => {
+  await testLoading(DIRECTORY, '#translucent-loading');
+});
+
+test('loading: custom class standalone', async () => {
+  await testLoading(DIRECTORY, '#custom-class-loading');
 });

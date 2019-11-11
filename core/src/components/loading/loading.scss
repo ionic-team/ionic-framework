@@ -16,6 +16,8 @@
    * @prop --max-height: Maximum height of the loading dialog
    *
    * @prop --spinner-color: Color of the loading spinner
+   *
+   * @prop --backdrop-opacity: Opacity of the backdrop
    */
   --min-width: auto;
   --width: auto;
@@ -37,6 +39,10 @@
   touch-action: none;
   user-select: none;
   z-index: $z-index-overlay;
+}
+
+:host(.overlay-hidden) {
+  display: none;
 }
 
 .loading-wrapper {

@@ -1,24 +1,69 @@
-@import "../../themes/ionic.globals";
-
+@import "./skeleton-text.vars";
 
 // Skeleton Text
 // --------------------------------------------------
 
 :host {
   /**
-   * --background: Background of the skeleton text
+   * @prop --background: Background of the skeleton text
+   * @prop --background-rgb: Background of the skeleton text in rgb format
+   *
+   * @prop --border-radius: Border radius of the skeleton text
    */
+  --background: #{$skeleton-text-background};
 
-  display: inline-block;
+  @include border-radius(var(--border-radius, inherit));
+
+  display: block;
 
   width: 100%;
-  pointer-events: none;
+  height: inherit;
+
+  margin-top: 4px;
+  margin-bottom: 4px;
+
+  background: var(--background);
+
+  line-height: 10px;
 
   user-select: none;
+
+  pointer-events: none;
 }
 
 span {
   display: inline-block;
-
-  font-size: 8px;
 }
+
+:host(.in-media) {
+  @include margin(0);
+
+  height: 100%;
+}
+
+// Animated Skeleton Text
+// -----------------------------------------------------------
+
+:host(.skeleton-text-animated) {
+  position: relative;
+
+  background: linear-gradient(to right, $skeleton-text-background 8%, $skeleton-text-background-animated 18%, $skeleton-text-background 33%);
+  background-size: 800px 104px;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+}
+
+/* stylelint-disable property-blacklist */
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0
+  }
+
+  100% {
+    background-position: 468px 0
+  }
+}
+/* stylelint-enable property-blacklist */

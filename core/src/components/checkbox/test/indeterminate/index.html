@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Checkbox - Indeterminate</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body onLoad="onLoad()">
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Checkbox - Indeterminate</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content">
+      <ion-list-header>
+        Native
+      </ion-list-header>
+
+      <div class="ion-padding-start">
+        <!-- Default to unchecked -->
+        <label for="unchecked">Unchecked</label>
+        <input name="unchecked" type="checkbox">
+        <br>
+
+        <!-- Default to checked -->
+        <label for="checked">Checked</label>
+        <input name="checked" type="checkbox" checked />
+        <br>
+
+        <!-- Default to indeterminate -->
+        <label for="indeterminate">Indeterminate</label>
+        <input name="indeterminate" type="checkbox" class="indeterminate">
+        <br>
+
+        <!-- Default to checked / indeterminate -->
+        <label for="both">Checked / Indeterminate</label>
+        <input name="both" type="checkbox" checked class="indeterminate">
+        <br>
+      </div>
+
+      <ion-list-header>
+        Ionic
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Unchecked</ion-label>
+        <ion-checkbox slot="end"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Checked</ion-label>
+        <ion-checkbox slot="end" checked></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Indeterminate</ion-label>
+        <ion-checkbox slot="end" indeterminate></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Checked / Indeterminate</ion-label>
+        <ion-checkbox slot="end" checked indeterminate></ion-checkbox>
+      </ion-item>
+
+      <ion-list-header>
+        Colors
+      </ion-list-header>
+      <div class="ion-padding-start">
+        <ion-checkbox indeterminate></ion-checkbox>
+        <ion-checkbox indeterminate color="secondary"></ion-checkbox>
+        <ion-checkbox indeterminate color="tertiary"></ion-checkbox>
+        <ion-checkbox indeterminate color="success"></ion-checkbox>
+        <ion-checkbox indeterminate color="warning"></ion-checkbox>
+        <ion-checkbox indeterminate color="danger"></ion-checkbox>
+        <ion-checkbox indeterminate color="dark"></ion-checkbox>
+        <ion-checkbox indeterminate color="medium"></ion-checkbox>
+        <ion-checkbox indeterminate color="light"></ion-checkbox>
+      </div>
+
+      <ion-list-header>
+        Parent
+      </ion-list-header>
+
+      <ul>
+        <li>
+          <ion-checkbox name="tall" id="tall" indeterminate></ion-checkbox>
+          <label for="tall">Tall Things</label>
+          <ul>
+            <li>
+              <ion-checkbox name="tall-1" id="tall-1" checked></ion-checkbox>
+              <label for="tall-1">Skyscrapers</label>
+            </li>
+            <li>
+              <ion-checkbox name="tall-2" id="tall-2"></ion-checkbox>
+              <label for="tall-2">Trees</label>
+            </li>
+            <li>
+              <ion-checkbox name="tall-2" id="tall-2"></ion-checkbox>
+              <label for="tall-2">Giants</label>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </ion-content>
+  </ion-app>
+
+  <style>
+    ul {
+      list-style: none;
+      margin: 5px 20px;
+      padding: 0;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    ul label {
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 4px;
+    }
+  </style>
+
+  <script>
+    var indeterminateCheckboxes = document.getElementsByClassName("indeterminate");
+
+    for (var i = 0; i < indeterminateCheckboxes.length; i++) {
+      var checkbox = indeterminateCheckboxes[i];
+      checkbox.indeterminate = true;
+    }
+
+    function onLoad() {
+      var checkboxes = document.getElementsByTagName("ion-checkbox");
+
+      for (var i = 0; i < checkboxes.length; i++) {
+        var checkbox = checkboxes[i];
+        checkbox.addEventListener('ionChange', function (event) {
+          checkboxChanged(this, event);
+        });
+      }
+    }
+
+    function checkboxChanged(el, ev) {
+      var isParent = el.id === "tall";
+
+      if (isParent) {
+        checkChildren(el.checked);
+      } else {
+        checkParent();
+      }
+    }
+
+    function checkParent() {
+      var parent = document.getElementById("tall");
+      var children = getChildren();
+      var countChecked = 0;
+
+      for(var i = 0; i < children.length; i++) {
+        var child = children[i];
+        if (child.checked) {
+          countChecked = ++countChecked;
+        }
+      }
+
+      // None checked, uncheck parent
+      if (countChecked == 0) {
+        parent.checked = false;
+        parent.indeterminate = false;
+      // All checked, check parent
+      } else if (countChecked == children.length) {
+        parent.checked = true;
+        parent.indeterminate = false;
+      // One checked, indeterminate parent
+      } else {
+        parent.indeterminate = true;
+      }
+    }
+
+    function checkChildren(shouldCheck) {
+      var children = getChildren();
+      for (var i = 0; i < children.length; i++) {
+        var child = children[i];
+        child.checked = shouldCheck;
+      }
+    }
+
+    function getChildren() {
+      return document.querySelectorAll("ion-checkbox[name^=tall-]");
+    }
+  </script>
+</body>
+
+</html>

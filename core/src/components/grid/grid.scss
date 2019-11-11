@@ -24,6 +24,8 @@
   @include margin-horizontal(auto);
 
   display: block;
+
+  flex: 1;
 }
 
 // Fixed Grid
@@ -37,10 +39,11 @@
 // --------------------------------------------------
 
 // Remove the padding from grid and all immediate children columns
-:host([no-padding]) {
-  @include padding(0);
-}
-
-:host([no-padding]) ::slotted(ion-col) {
-  @include padding(0);
+:host(.ion-no-padding) {
+  --ion-grid-column-padding: 0;
+  --ion-grid-column-padding-xs: 0;
+  --ion-grid-column-padding-sm: 0;
+  --ion-grid-column-padding-md: 0;
+  --ion-grid-column-padding-lg: 0;
+  --ion-grid-column-padding-xl: 0;
 }

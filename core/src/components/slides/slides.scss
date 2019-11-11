@@ -4,10 +4,16 @@
 // Slides
 // --------------------------------------------------
 
-.slides {
+ion-slides {
   /**
    * @prop --bullet-background: Background of the pagination bullets
    * @prop --bullet-background-active: Background of the active pagination bullet
+   *
+   * @prop --progress-bar-background: Background of the pagination progress-bar
+   * @prop --progress-bar-background-active: Background of the active pagination progress-bar
+   *
+   * @prop --scroll-bar-background: Background of the pagination scroll-bar
+   * @prop --scroll-bar-background-active: Background of the active pagination scroll-bar
    */
   display: block;
 

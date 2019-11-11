@@ -1,0 +1,14 @@
+@import "../../themes/ionic.globals.ios";
+@import "../tab-button/tab-button.ios.vars";
+
+// iOS Tab Bar
+// --------------------------------------------------
+
+/// @prop - Alpha of translucent tab bar background color
+$tab-bar-ios-translucent-background-color-alpha:    .8 !default;
+
+/// @prop - Translucent tab bar background color
+$tab-bar-ios-translucent-background-color:          rgba($background-color-rgb, $tab-bar-ios-translucent-background-color-alpha) !default;
+
+/// @prop - Filter of the translucent tab bar background color
+$tab-bar-ios-translucent-filter:                    saturate(210%) blur(20px) !default;

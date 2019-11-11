@@ -8,14 +8,11 @@
   --background: #{$item-md-divider-background};
   --color: #{$item-md-divider-color};
   --padding-start: #{$item-md-divider-padding-start};
+  --inner-padding-end: #{$item-md-divider-padding-end};
 
   border-bottom: $item-md-divider-border-bottom;
 
   font-size: $item-md-divider-font-size;
-}
-
-.item-divider-inner {
-  @include padding-horizontal(null, $item-md-divider-padding-end);
 }
 
 
@@ -43,10 +40,13 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-
   color: $item-md-icon-slot-color;
 
   font-size: $item-md-icon-slot-font-size;
+}
+
+:host(.ion-color) ::slotted(ion-icon) {
+    color: current-color(contrast);
 }
 
 ::slotted(ion-icon[slot]) {

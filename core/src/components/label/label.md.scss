@@ -4,6 +4,7 @@
 // Material Design Label
 // --------------------------------------------------
 
+:host(.ion-text-wrap),
 :host([text-wrap]) {
   line-height: $label-md-text-wrap-line-height;
 }
@@ -13,19 +14,39 @@
 // --------------------------------------------------
 
 :host(.label-stacked) {
-  font-size: 12.8px;
+  @include transform-origin(start, top);
+  @include transform(translate3d(0, 50%, 0), scale(.75));
+
+  transition: color 150ms $label-md-transition-timing-function;
 }
 
 :host(.label-floating) {
-  @include transform(translate3d(0, 27px, 0));
+  @include transform(translate3d(0, 96%, 0));
   @include transform-origin(start, top);
 
-  transition: transform 150ms ease-in-out;
+  transition:
+    color 150ms $label-md-transition-timing-function,
+    transform 150ms $label-md-transition-timing-function;
 }
 
 :host(.label-stacked),
 :host(.label-floating) {
-  @include margin(null, null, 0, 0);
+  @include margin(0, 0, 0, 0);
+}
+
+:host-context(.item-select).label-floating {
+  @include transform(translate3d(0, 130%, 0));
+}
+
+:host-context(.item-has-focus).label-floating,
+:host-context(.item-has-placeholder).label-floating,
+:host-context(.item-has-value).label-floating {
+  @include transform(translate3d(0, 50%, 0), scale(.75));
+}
+
+:host-context(.item-has-focus).label-stacked,
+:host-context(.item-has-focus).label-floating {
+  color: $label-md-text-color-focused;
 }
 
 

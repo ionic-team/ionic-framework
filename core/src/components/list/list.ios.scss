@@ -64,7 +64,6 @@
   --inner-border-width: #{0 0 $list-ios-item-border-bottom-width 0};
 }
 
-
 // Remove the border from items in lists
 // if they are explicitly styled by the item
 // to be different than the list
@@ -74,4 +73,17 @@
 
 .list-ios .item-lines-full {
   --inner-border-width: 0;
+}
+
+.list-ios .item-lines-none {
+  --border-width: 0;
+  --inner-border-width: 0;
+}
+
+
+// iOS List Inside A Card
+// --------------------------------------------------
+
+ion-card .list-ios {
+  @include margin(0);
 }

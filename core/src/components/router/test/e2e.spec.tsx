@@ -1,4 +1,4 @@
-import { mockWindow } from '@stencil/core/mock-doc';
+import { mockWindow } from '@stencil/core/testing';
 
 import { RouteChain, RouteID } from '../utils/interface';
 import { routerIDsToChain, routerPathToChain } from '../utils/matching';

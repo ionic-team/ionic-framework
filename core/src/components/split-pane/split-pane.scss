@@ -1,12 +1,17 @@
 @import "./split-pane.vars";
+@import "../menu/menu.vars";
 
 // Split Pane
 // --------------------------------------------------
 
-.split-pane {
+:host {
   /**
    * @prop --border: Border between panes
+   * @prop --side-min-width: Minimum width of the side pane. Does not apply when split pane is collapsed.
+   * @prop --side-max-width: Maximum width of the side pane. Does not apply when split pane is collapsed.
+   * @prop --side-width: Width of the side pane. Does not apply when split pane is collapsed.
    */
+  --side-width: 100%;
 
   @include position(0, 0, 0, 0);
 
@@ -19,34 +24,50 @@
   contain: strict;
 }
 
-.split-pane-visible > .split-pane-side,
-.split-pane-visible > .split-pane-main {
+/**
+ * Do not pass CSS Variables down on larger 
+ * screens as we want them to affect the outer
+ * `ion-menu` rather than the inner content
+ */
+::slotted(ion-menu.menu-pane-visible) {
+  
+  flex: 0 1 auto;
+
+  width: var(--side-width);
+  min-width: var(--side-min-width);
+  max-width: var(--side-max-width);
+}
+
+:host(.split-pane-visible) ::slotted(.split-pane-side),
+:host(.split-pane-visible) ::slotted(.split-pane-main) {
   @include position(0, 0, 0, 0);
 
   position: relative;
-
-  flex: 1;
 
   /* stylelint-disable-next-line declaration-no-important */
   box-shadow: none !important;
   z-index: 0;
 }
 
-.split-pane-visible > .split-pane-side:not(ion-menu),
-.split-pane-visible > ion-menu.split-pane-side.menu-enabled {
+:host(.split-pane-visible) ::slotted(.split-pane-main) {
+  flex: 1;
+}
+
+:host(.split-pane-visible) ::slotted(.split-pane-side:not(ion-menu)),
+:host(.split-pane-visible) ::slotted(ion-menu.split-pane-side.menu-enabled) {
   display: flex;
 
   flex-shrink: 0;
 }
 
-.split-pane-side:not(ion-menu) {
+::slotted(.split-pane-side:not(ion-menu)) {
   display: none;
 }
 
-.split-pane-visible > .split-pane-side {
+:host(.split-pane-visible) ::slotted(.split-pane-side) {
   order: -1;
 }
 
-.split-pane-visible > .split-pane-side[side=end] {
+:host(.split-pane-visible) ::slotted(.split-pane-side[side=end]) {
   order: 1;
 }

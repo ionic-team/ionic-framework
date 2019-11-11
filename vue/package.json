@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "0.0.1",
+  "version": "0.0.9",
   "description": "Vue specific wrappers for @ionic/core",
   "main": "dist/ionic-vue.common.js",
   "types": "dist/types/index.d.ts",
@@ -9,6 +9,7 @@
   "jsdelivr": "dist/ionic-vue.js",
   "contributors": [
     "Josh Thomas <josh@ionic.io>",
+    "Mike Hartington <mikehartington@gmail.com",
     "Michael Tintiuc <michael.tintiuc@moduscreate.com>"
   ],
   "files": [
@@ -52,13 +53,15 @@
     "tslint": "5.11.0",
     "tslint-ionic-rules": "0.0.19",
     "typescript": "3.1.1",
-    "vue-class-component": "^6.2.0",
-    "vue-property-decorator": "^7.2.0",
     "vue": "^2.5.17",
     "vue-template-compiler": "^2.5.17",
     "vue-router": "^3.0.1"
   },
   "dependencies": {
-    "@ionic/core": "4.0.0-beta.12"
+    "@ionic/core": "^4.6.0"
+  },
+  "peerDependencies": {
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1"
   }
 }

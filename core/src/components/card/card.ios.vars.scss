@@ -32,3 +32,9 @@ $card-ios-font-size:                   14px !default;
 
 /// @prop - Color of the card text
 $card-ios-text-color:                  $text-color-step-400 !default;
+
+/// @prop - Transition timing function of the card
+$card-ios-transition-timing-function:  cubic-bezier(0.12, 0.72, 0.29, 1) !default;
+
+/// @prop - Transform of the card on activate
+$card-ios-transform-activated:         scale3d(.97, .97, 1) !default;

@@ -12,6 +12,7 @@ export class InputsComponent {
   toggle = true;
   select = 'nes';
   range = 10;
+  changes = 0;
 
   setValues() {
     console.log('set values');
@@ -31,5 +32,9 @@ export class InputsComponent {
     this.toggle = false;
     this.select = undefined;
     this.range = undefined;
+  }
+  counter() {
+    this.changes++;
+    return Math.floor(this.changes / 2);
   }
 }

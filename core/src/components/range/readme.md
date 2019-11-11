@@ -32,15 +32,19 @@ left or right of the range.
     </ion-range>
   </ion-item>
 
- <ion-item>
-   <ion-range min="20" max="80" step="2">
-     <ion-icon size="small" slot="start" name="sunny"></ion-icon>
-     <ion-icon slot="end" name="sunny"></ion-icon>
-   </ion-range>
- </ion-item>
+  <ion-item>
+    <ion-range min="20" max="80" step="2">
+      <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+      <ion-icon slot="end" name="sunny"></ion-icon>
+    </ion-range>
+  </ion-item>
 
   <ion-item>
     <ion-range min="1000" max="2000" step="100" snaps="true" color="secondary"></ion-range>
+  </ion-item>
+
+  <ion-item>
+    <ion-range min="1000" max="2000" step="100" snaps="true" ticks="false" color="secondary"></ion-range>
   </ion-item>
 
   <ion-item>
@@ -65,21 +69,117 @@ left or right of the range.
     </ion-range>
   </ion-item>
 
- <ion-item>
-   <ion-range min="20" max="80" step="2">
-     <ion-icon size="small" slot="start" name="sunny"></ion-icon>
-     <ion-icon slot="end" name="sunny"></ion-icon>
-   </ion-range>
- </ion-item>
+  <ion-item>
+    <ion-range min="20" max="80" step="2">
+      <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+      <ion-icon slot="end" name="sunny"></ion-icon>
+    </ion-range>
+  </ion-item>
 
   <ion-item>
     <ion-range min="1000" max="2000" step="100" snaps="true" color="secondary"></ion-range>
   </ion-item>
 
   <ion-item>
+    <ion-range min="1000" max="2000" step="100" snaps="true" ticks="false" color="secondary"></ion-range>
+  </ion-item>
+
+  <ion-item>
     <ion-range dual-knobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
   </ion-item>
 </ion-list>
+```
+
+
+### React
+
+```tsx
+import React from 'react';
+import { IonList, IonItem, IonRange, IonLabel, IonIcon, IonContent } from '@ionic/react';
+
+export const RangeExample: React.FC = () => (
+  <IonContent>
+    <IonList>
+      <IonItem>
+        <IonRange color="danger" pin={true} />
+      </IonItem>
+
+      <IonItem>
+        <IonRange min={-200} max={200} color="secondary">
+          <IonLabel slot="start">-200</IonLabel>
+          <IonLabel slot="end">200</IonLabel>
+        </IonRange>
+      </IonItem>
+
+      <IonItem>
+        <IonRange min={20} max={80} step={2}>
+          <IonIcon size="small" slot="start" name="sunny" />
+          <IonIcon slot="end" name="sunny" />
+        </IonRange>
+      </IonItem>
+
+      <IonItem>
+        <IonRange min={1000} max={2000} step={100} snaps={true} color="secondary" />
+      </IonItem>
+
+      <IonItem>
+        <IonRange min={1000} max={2000} step={100} snaps={true} ticks={false} color="secondary" />
+      </IonItem>
+
+      <IonItem>
+        <IonRange dualKnobs={true} min={21} max={72} step={3} snaps={true} />
+      </IonItem>
+    </IonList>
+  </IonContent>
+);
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-list>
+    <ion-item>
+      <ion-range color="danger" pin="true"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-range min="-200" max="200" color="secondary">
+        <ion-label slot="start">-200</ion-label>
+        <ion-label slot="end">200</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-range min="20" max="80" step="2">
+        <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+        <ion-icon slot="end" name="sunny"></ion-icon>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-range min="1000" max="2000" step="100" snaps="true" color="secondary"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-range min="1000" max="2000" step="100" snaps="true" ticks="false" color="secondary"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-range ref="rangeDualKnobs" dual-knobs="true" min="21" max="72" step="3" snaps="true"></ion-range>
+    </ion-item>
+  </ion-list>
+</template>
+
+<script>
+export default {
+  mounted() {
+    // Sets initial value for dual-knob ion-range
+    this.$refs.rangeDualKnobs.value = { lower: 24, upper: 42 };
+  }
+}
+</script>
 ```
 
 
@@ -99,16 +199,25 @@ left or right of the range.
 | `pin`       | `pin`        | If `true`, a pin with integer value is shown when the knob is pressed.                                                                                                                                                                                                 | `boolean`                                     | `false`     |
 | `snaps`     | `snaps`      | If `true`, the knob snaps to tick marks evenly spaced based on the step property value.                                                                                                                                                                                | `boolean`                                     | `false`     |
 | `step`      | `step`       | Specifies the value granularity.                                                                                                                                                                                                                                       | `number`                                      | `1`         |
+| `ticks`     | `ticks`      | If `true`, tick marks are displayed based on the step value. Only applies when `snaps` is `true`.                                                                                                                                                                      | `boolean`                                     | `true`      |
 | `value`     | `value`      | the value of the range.                                                                                                                                                                                                                                                | `number \| { lower: number; upper: number; }` | `0`         |
 
 
 ## Events
 
-| Event       | Description                                  | Detail           |
-| ----------- | -------------------------------------------- | ---------------- |
-| `ionBlur`   | Emitted when the range loses focus.          | void             |
-| `ionChange` | Emitted when the value property has changed. | InputChangeEvent |
-| `ionFocus`  | Emitted when the range has focus.            | void             |
+| Event       | Description                                  | Type                                  |
+| ----------- | -------------------------------------------- | ------------------------------------- |
+| `ionBlur`   | Emitted when the range loses focus.          | `CustomEvent<void>`                   |
+| `ionChange` | Emitted when the value property has changed. | `CustomEvent<RangeChangeEventDetail>` |
+| `ionFocus`  | Emitted when the range has focus.            | `CustomEvent<void>`                   |
+
+
+## Slots
+
+| Slot      | Description                                                                        |
+| --------- | ---------------------------------------------------------------------------------- |
+| `"end"`   | Content is placed to the right of the range slider in LTR, and to the left in RTL. |
+| `"start"` | Content is placed to the left of the range slider in LTR, and to the right in RTL. |
 
 
 ## CSS Custom Properties
@@ -124,6 +233,8 @@ left or right of the range.
 | `--knob-border-radius`    | Border radius of the range knob    |
 | `--knob-box-shadow`       | Box shadow of the range knob       |
 | `--knob-size`             | Size of the range knob             |
+| `--pin-background`        | Background of the range pin        |
+| `--pin-color`             | Color of the range pin             |
 
 
 ----------------------------------------------

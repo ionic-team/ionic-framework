@@ -11,12 +11,13 @@
   --button-color: #{ion-color(primary, base)};
   --color: #{$toast-md-color};
   --max-width: #{$toast-max-width};
+  --start: 8px;
+  --end: 8px;
 
   font-size: #{$toast-md-font-size};
 }
 
 .toast-wrapper {
-  @include position-horizontal(8px, 8px);
   @include margin(auto);
 
   display: block;
@@ -27,12 +28,76 @@
   z-index: $z-index-overlay-wrapper;
 }
 
-.toast-message {
-  @include padding($toast-md-message-padding-top, $toast-md-message-padding-end, $toast-md-message-padding-bottom, $toast-md-message-padding-start);
+.toast-content {
+  @include padding($toast-md-content-padding-top, $toast-md-content-padding-end, $toast-md-content-padding-bottom, $toast-md-content-padding-start);
+}
 
+.toast-header {
+  margin-bottom: $toast-md-header-margin-bottom;
+
+  font-weight: $toast-md-header-font-weight;
+
+  line-height: $toast-md-header-line-height;
+}
+
+.toast-message {
   line-height: $toast-md-message-line-height;
 }
 
+
+// Material Design Toast Button
+// --------------------------------------------------
+
+
+.toast-button-group-start {
+  @include margin(null, null, null, 8px);
+}
+
+.toast-button-group-end {
+  @include margin(null, 8px, null, null);
+}
+
 .toast-button {
-  --margin-end: 0;
+  @include padding($toast-md-button-padding-top, $toast-md-button-padding-end, $toast-md-button-padding-bottom, $toast-md-button-padding-start);
+
+  // necessary for ripple to work properly
+  position: relative;
+
+  background-color: $toast-md-button-background-color;
+
+  font-family: var(--ion-font-family);
+  font-size: $toast-md-button-font-size;
+  font-weight: $toast-md-button-font-weight;
+
+  letter-spacing: $toast-md-button-letter-spacing;
+
+  text-transform: $toast-md-button-text-transform;
+
+  overflow: hidden;
+}
+
+.toast-button-cancel {
+  color: $toast-md-button-cancel-text-color;
+}
+
+.toast-button-icon-only {
+  @include border-radius($toast-md-button-icon-only-border-radius);
+  @include padding($toast-md-button-icon-only-padding);
+
+  width: $toast-md-button-icon-only-width;
+  height: $toast-md-button-icon-only-height;
+}
+
+
+// Material Design Toast Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  .toast-button:hover {
+    background-color: $toast-md-button-background-color-hover;
+  }
+
+  .toast-button-cancel:hover {
+    background-color: $toast-md-button-cancel-background-color-hover;
+  }
 }

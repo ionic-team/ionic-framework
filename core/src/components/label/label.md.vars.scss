@@ -5,13 +5,13 @@
 // --------------------------------------------------
 
 /// @prop - Text color of the label by an input, select, or datetime
-$label-md-text-color:                 $text-color-step-600 !default;
+$label-md-text-color:                    $text-color-step-600 !default;
 
 /// @prop - Text color of the stacked/floating label when it is focused
-$label-md-text-color-focused:         ion-color(primary, base) !default;
+$label-md-text-color-focused:            ion-color(primary, base) !default;
 
 /// @prop - Line height of the label when the text wraps
-$label-md-text-wrap-line-height:      1.5 !default;
+$label-md-text-wrap-line-height:         1.5 !default;
 
-/// @prop - Color of the item paragraph
-$item-md-paragraph-text-color:        $text-color-step-400 !default;
+/// @prop - Transition timing function of the label (stacked / focused)
+$label-md-transition-timing-function:    cubic-bezier(.4, 0, .2, 1) !default;

@@ -2,30 +2,30 @@
 <!-- Default Segment -->
 <ion-segment>
   <ion-segment-button value="friends">
-    Friends
+    <ion-label>Friends</ion-label>
   </ion-segment-button>
   <ion-segment-button value="enemies">
-    Enemies
+    <ion-label>Enemies</ion-label>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Disabled Segment -->
 <ion-segment disabled>
   <ion-segment-button value="sunny" checked>
-    Sunny
+    <ion-label>Sunny</ion-label>
   </ion-segment-button>
   <ion-segment-button value="rainy">
-    Rainy
+    <ion-label>Rainy</ion-label>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Segment with anchors -->
 <ion-segment>
   <ion-segment-button href="#dogs" value="dogs">
-    Dogs
+    <ion-label>Dogs</ion-label>
   </ion-segment-button>
   <ion-segment-button href="#cats" value="cats">
-    Cats
+    <ion-label>Cats</ion-label>
   </ion-segment-button>
 </ion-segment>
 
@@ -57,13 +57,13 @@
 <!-- Segment with secondary color -->
 <ion-segment color="secondary">
   <ion-segment-button value="standard">
-    Standard
+    <ion-label>Standard</ion-label>
   </ion-segment-button>
   <ion-segment-button value="hybrid">
-    Hybrid
+    <ion-label>Hybrid</ion-label>
   </ion-segment-button>
   <ion-segment-button value="sat">
-    Satellite
+    <ion-label>Satellite</ion-label>
   </ion-segment-button>
 </ion-segment>
 
@@ -78,6 +78,16 @@
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>
+
+<!-- Segment with default selection -->
+<ion-segment value="javascript">
+  <ion-segment-button value="python">
+    <ion-label>Python</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="javascript">
+    <ion-label>Javascript</ion-label>
+  </ion-segment-button>
+</ion-segment>
 ```
 
 ```javascript

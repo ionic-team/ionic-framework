@@ -78,29 +78,27 @@
 </ion-item>
 ```
 
-```javascript
-this.customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
+```typescript
+@Component({…})
+export class MyComponent {
+  customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
+  customDayShortNames = ['s\u00f8n', 'man', 'tir', 'ons', 'tor', 'fre', 'l\u00f8r'];
+  customPickerOptions: any;
 
-this.customDayShortNames = [
-  's\u00f8n',
-  'man',
-  'tir',
-  'ons',
-  'tor',
-  'fre',
-  'l\u00f8r'
-];
-
-this.customPickerOptions = {
-  buttons: [{
-    text: 'Save',
-    handler: () => console.log('Clicked Save!')
-  }, {
-    text: 'Log',
-    handler: () => {
-      console.log('Clicked Log. Do not Dismiss.');
-      return false;
+  constructor() {
+    this.customPickerOptions = {
+      buttons: [{
+        text: 'Save',
+        handler: () => console.log('Clicked Save!')
+      }, {
+        text: 'Log',
+        handler: () => {
+          console.log('Clicked Log. Do not Dismiss.');
+          return false;
+        }
+      }]
     }
-  }]
+  }
+
 }
 ```

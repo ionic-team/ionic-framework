@@ -1,5 +1,5 @@
-import { VueConstructor, default as Vue } from 'vue';
-import { FrameworkDelegate, ViewLifecycle } from '@ionic/core';
+import { VueConstructor } from 'vue';
+import { FrameworkDelegate, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE, LIFECYCLE_WILL_UNLOAD } from '@ionic/core';
 import { EsModule, HTMLVueElement, WebpackFunction } from '../interfaces';
 
 
@@ -15,7 +15,6 @@ function createVueComponent(vue: VueConstructor, component: WebpackFunction | ob
 export class VueDelegate implements FrameworkDelegate {
   constructor(
     public vue: VueConstructor,
-    public $root: Vue
   ) {}
 
   // Attach the passed Vue component to DOM
@@ -33,17 +32,15 @@ export class VueDelegate implements FrameworkDelegate {
 
     // Get the Vue controller
     return createVueComponent(this.vue, component).then((Component: VueConstructor) => {
-      const componentInstance = new Component({
-        propsData: opts
-      });
+      const componentInstance = new Component(opts);
       componentInstance.$mount();
 
       // Add any classes to the Vue component's root element
-      addClasses(componentInstance.$el, classes);
+      addClasses(componentInstance.$el as HTMLElement, classes);
 
       // Append the Vue component to DOM
       parentElement.appendChild(componentInstance.$el);
-      return componentInstance.$el;
+      return componentInstance.$el as HTMLElement;
     });
   }
 
@@ -59,11 +56,11 @@ export class VueDelegate implements FrameworkDelegate {
 }
 
 const LIFECYCLES = [
-  ViewLifecycle.WillEnter,
-  ViewLifecycle.DidEnter,
-  ViewLifecycle.WillLeave,
-  ViewLifecycle.DidLeave,
-  ViewLifecycle.WillUnload
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_UNLOAD
 ];
 
 export function bindLifecycleEvents(instance: any, element: HTMLElement) {

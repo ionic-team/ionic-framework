@@ -1,6 +1,5 @@
 @import "./tab-bar";
-@import "../../themes/ionic.globals.ios";
-@import "../tab-button/tab-button.ios.vars";
+@import "./tab-bar.ios.vars";
 
 // iOS Tabs
 // --------------------------------------------------
@@ -19,7 +18,18 @@
 // iOS Translucent Tab bar
 // --------------------------------------------------
 
-:host(.tab-bar-translucent) {
-  background-color: #{current-color(base, .8)};
-  backdrop-filter: saturate(210%) blur(20px);
+@supports (backdrop-filter: blur(0)) {
+  :host(.tab-bar-translucent) {
+    --background: #{$tab-bar-ios-translucent-background-color};
+    backdrop-filter: $tab-bar-ios-translucent-filter;
+  }
+
+  // iOS Translucent Tab bar with Color
+  :host(.ion-color.tab-bar-translucent) {
+    background: #{current-color(base, $tab-bar-ios-translucent-background-color-alpha)};
+  }
+
+  :host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
+    background: rgba($background-color-rgb, .6);
+  }
 }

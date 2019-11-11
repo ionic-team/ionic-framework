@@ -38,6 +38,8 @@
   @include text-inherit();
   @include padding(0, .7em);
 
+  display: inline-block;
+
   position: relative;
 
   width: 100%;
@@ -51,19 +53,43 @@
 
   cursor: pointer;
   appearance: none;
+
+  box-sizing: border-box;
 }
 
 .button-inner {
   display: flex;
 
-  flex-direction: column;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
 
   width: 100%;
   height: 100%;
+}
+
+.horizontal-wrapper {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+}
+
+::slotted(*) {
+  flex-shrink: 0;
+}
+
+::slotted([slot="start"]) {
+  @include margin(0, 5px, 0, 0);
+}
+
+::slotted([slot="end"]) {
+  @include margin(0, 0, 0, 5px);
 }
 
 ::slotted([slot="icon-only"]) {
@@ -85,4 +111,18 @@
   transition-duration: 0;
   transition-property: none;
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
+}
+
+
+// Item Disabled Styling
+// --------------------------------------------------
+
+:host(.item-option-disabled) {
+  pointer-events: none;
+}
+
+:host(.item-option-disabled) .button-native {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
 }

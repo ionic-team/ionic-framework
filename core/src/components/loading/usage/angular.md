@@ -15,7 +15,11 @@ export class LoadingExample {
       message: 'Hellooo',
       duration: 2000
     });
-    return await loading.present();
+    await loading.present();
+    
+    const { role, data } = await loading.onDidDismiss();
+    
+    console.log('Loading dismissed!');
   }
 
   async presentLoadingWithOptions() {

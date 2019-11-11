@@ -1,3 +1,5 @@
+@import "./ionic.deprecation";
+
 @mixin input-cover() {
   @include position(0, null, null, 0);
   @include margin(0);
@@ -13,6 +15,10 @@
 
   appearance: none;
   outline: none;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
 }
 
 @mixin text-inherit() {
@@ -105,14 +111,14 @@
   @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
 }
 
-// Maximum breakpoint width. Null for the largest (last) breakpoint.
-// The maximum value is calculated as the minimum of the next one less 0.1.
+// Maximum breakpoint width. Null for the smallest (first) breakpoint.
+// The maximum value is calculated as the minimum of the current one.
 //
 //    >> breakpoint-max(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
-//    767px
+//    576px
 @function breakpoint-max($name, $breakpoints: $screen-breakpoints) {
-  $next: breakpoint-next($name, $breakpoints);
-  @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
+  $min: breakpoint-min($name, $breakpoints);
+  @return if($min, breakpoint-min($name, $breakpoints), null);
 }
 
 // Media of at most the maximum breakpoint width. No query for the largest breakpoint.
@@ -130,50 +136,32 @@
 
 
 // Text Direction - ltr / rtl
-// $app-direction: multi | rtl | ltr | null (default)
-// multi: Both [dir=ltr] and [dir=rtl] are applied to css selectors.
-// rtl: Always assumes rtl and only includes rtl css. No [dir] selectors.
-// ltr: Always assumes ltr and only includes ltr css. No [dir] selectors.
-// null: CSS defaults to use the ltr css, and adds [dir=rtl] selectors to override ltr defaults.
+//
+// CSS defaults to use the ltr css, and adds [dir=rtl] selectors
+// to override ltr defaults.
 // ----------------------------------------------------------
 
 @mixin multi-dir() {
-  @if $app-direction == multi {
-    $root: #{&};
-    @at-root [dir] {
-      #{$root} {
-        @content;
-      }
-    }
-  } @else {
-    @content;
-  }
+  @content;
+
+  // $root: #{&};
+  // @at-root [dir] {
+  //   #{$root} {
+  //     @content;
+  //   }
+  // }
 }
 
 @mixin rtl() {
-  @if $app-direction == multi or $app-direction == null {
-    $root: #{&};
-    @at-root [dir="rtl"] {
-      #{$root} {
-        @content;
-      }
-    }
-  } @else if $app-direction == rtl {
+  $root: #{&};
+
+  @at-root #{add-root-selector($root, "[dir=rtl]")} {
     @content;
   }
 }
 
 @mixin ltr() {
-  @if $app-direction == multi {
-    $root: #{&};
-    @at-root [dir="ltr"] {
-      #{$root} {
-        @content;
-      }
-    }
-  } @else if $app-direction == ltr or $app-direction == null {
-    @content;
-  }
+  @content;
 }
 
 
@@ -210,19 +198,30 @@
 // @param {string} $end
 // ----------------------------------------------------------
 @mixin property-horizontal($prop, $start, $end: $start) {
-  @if $start == $end {
-    @include multi-dir() {
-      #{$prop}-left: $start;
-      #{$prop}-right: $end;
-    }
+  @if $start == 0 and $end == 0 {
+    #{$prop}-left: $start;
+    #{$prop}-right: $end;
+
   } @else {
-    @include ltr() {
-      #{$prop}-left: $start;
-      #{$prop}-right: $end;
-    }
-    @include rtl() {
-      #{$prop}-left: $end;
-      #{$prop}-right: $start;
+    #{$prop}-left: $start;
+    #{$prop}-right: $end;
+
+    @at-root {
+      @supports ((margin-inline-start: 0) or (-webkit-margin-start: 0)) {
+        & {
+          @if $start != null {
+            #{$prop}-left: unset;
+          }
+          @if $end != null {
+            #{$prop}-right: unset;
+          }
+
+          -webkit-#{$prop}-start: $start;
+          #{$prop}-inline-start: $start;
+          -webkit-#{$prop}-end: $end;
+          #{$prop}-inline-end: $end;
+        }
+      }
     }
   }
 }
@@ -236,32 +235,9 @@
 // @param {boolean} $content include content or use default
 // ----------------------------------------------------------
 @mixin property($prop, $top, $end: $top, $bottom: $top, $start: $end) {
-  @if $top == $end and $top == $bottom and $top == $start {
-    @include multi-dir() {
-      #{$prop}: $top;
-    }
-  } @else if $top == $bottom and $end == $start and $top != null and $end != null {
-    @include multi-dir() {
-      #{$prop}: $top $end;
-    }
-  } @else if $end == $start and $top != null and $end != null and $bottom != null {
-    @include multi-dir() {
-      #{$prop}: $top $end $bottom;
-    }
-  } @else if $top != null and $end != null and $bottom != null and $start != null {
-    @include ltr() {
-      #{$prop}: $top $end $bottom $start;
-    }
-    @include rtl() {
-      #{$prop}: $top $start $bottom $end;
-    }
-  } @else {
-    @include property-horizontal($prop, $start, $end);
-    @include multi-dir() {
-      #{$prop}-top: $top;
-      #{$prop}-bottom: $bottom;
-    }
-  }
+  @include property-horizontal($prop, $start, $end);
+  #{$prop}-top: $top;
+  #{$prop}-bottom: $bottom;
 }
 
 // Add padding horizontal
@@ -316,6 +292,9 @@
       right: $end;
     }
     @include rtl() {
+      left: unset;
+      right: unset;
+
       left: $end;
       right: $start;
     }
