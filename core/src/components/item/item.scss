@@ -149,7 +149,7 @@
 // Item: Disabled
 // --------------------------------------------------
 
-:host(.item-interactive-disabled) {
+:host(.item-interactive-disabled:not(.item-multiple-inputs)) {
   cursor: default;
   pointer-events: none;
 }
@@ -393,21 +393,14 @@ button, a {
 
 
 // Item w/ Multiple Inputs
-// -----------------------------------------
-// Multiple inputs in an item should have the input cover
-// relative to them instead of the item
-// We do not want to do this for the start slot so a click
-// on the label keeps triggering the first input for certain
-// inputs (e.g. checkbox)
+// --------------------------------------------------
+// Multiple inputs in an item should have the input
+// cover relative to themselves instead of the item
 
-:host(.item-multiple-inputs) ::slotted(ion-select[slot="end"]),
-:host(.item-multiple-inputs) ::slotted(ion-datetime[slot="end"]),
-:host(.item-multiple-inputs) ::slotted(ion-checkbox[slot="end"]),
-:host(.item-multiple-inputs) ::slotted(ion-radio[slot="end"]),
-:host(.item-multiple-inputs) ::slotted(ion-toggle[slot="end"]),
-:host(.item-multiple-inputs) ::slotted(ion-range[slot="end"]),
-:host(.item-multiple-inputs) ::slotted(ion-input[slot="end"]),
-:host(.item-multiple-inputs) ::slotted(ion-textarea[slot="end"]) {
+:host(.item-multiple-inputs) ::slotted(ion-checkbox),
+:host(.item-multiple-inputs) ::slotted(ion-datetime),
+:host(.item-multiple-inputs) ::slotted(ion-radio),
+:host(.item-multiple-inputs) ::slotted(ion-select) {
   position: relative;
 }
 

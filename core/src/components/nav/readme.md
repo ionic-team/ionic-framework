@@ -1,7 +1,8 @@
 # ion-nav
 
-Nav is a standalone component for loading arbitrary components and pushing to new components on to the stack.
-Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we load a Nav component, and push other components to the stack, they will not affect the apps overall router. This fits use cases where you could have a modal, which needs it's own sub-navigation, but not make it tied to the apps URL.
+Nav is a standalone component for loading arbitrary components and pushing new components on to the stack.
+
+Unlike Router Outlet, Nav is not tied to a particular router. This means that if we load a Nav component, and push other components to the stack, they will not affect the app's overall router. This fits use cases where you could have a modal, which needs its own sub-navigation, without making it tied to the apps URL.
 
 
 <!-- Auto Generated Below -->
@@ -9,13 +10,13 @@ Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we 
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                                                                                                                                    | Type                                                                                   | Default     |
-| -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
-| `animated`     | `animated`      | If `true`, the nav should animate the transition of components.                                                                                                                                | `boolean`                                                                              | `true`      |
-| `animation`    | --              | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `root`         | `root`          | Root NavComponent to load                                                                                                                                                                      | `Function \| HTMLElement \| ViewController \| null \| string \| undefined`             | `undefined` |
-| `rootParams`   | --              | Any parameters for the root component                                                                                                                                                          | `undefined \| { [key: string]: any; }`                                                 | `undefined` |
-| `swipeGesture` | `swipe-gesture` | If the nav component should allow for swipe-to-go-back.                                                                                                                                        | `boolean \| undefined`                                                                 | `undefined` |
+| Property       | Attribute       | Description                                                                                                                                                                                    | Type                                                                       | Default     |
+| -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------- |
+| `animated`     | `animated`      | If `true`, the nav should animate the transition of components.                                                                                                                                | `boolean`                                                                  | `true`      |
+| `animation`    | --              | By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions. | `((baseEl: any, opts?: any) => Animation) \| undefined`                    | `undefined` |
+| `root`         | `root`          | Root NavComponent to load                                                                                                                                                                      | `Function \| HTMLElement \| ViewController \| null \| string \| undefined` | `undefined` |
+| `rootParams`   | --              | Any parameters for the root component                                                                                                                                                          | `undefined \| { [key: string]: any; }`                                     | `undefined` |
+| `swipeGesture` | `swipe-gesture` | If the nav component should allow for swipe-to-go-back.                                                                                                                                        | `boolean \| undefined`                                                     | `undefined` |
 
 
 ## Events

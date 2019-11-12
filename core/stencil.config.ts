@@ -10,7 +10,7 @@ export const config: Config = {
     { components: ['ion-action-sheet'] },
     { components: ['ion-alert'] },
     { components: ['ion-back-button'] },
-    { components: ['ion-app', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
+    { components: ['ion-app', 'ion-router-outlet', 'ion-buttons', 'ion-content', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-backdrop'] },
     { components: ['ion-button', 'ion-icon'] },
@@ -28,7 +28,7 @@ export const config: Config = {
     { components: ['ion-loading'] },
     { components: ['ion-menu', 'ion-menu-controller', 'ion-menu-toggle', 'ion-menu-button'] },
     { components: ['ion-modal'] },
-    { components: ['ion-nav', 'ion-nav-pop', 'ion-nav-push', 'ion-nav-set-root'] },
+    { components: ['ion-nav', 'ion-nav-link'] },
     { components: ['ion-img'] },
     { components: ['ion-popover'] },
     { components: ['ion-progress-bar'] },
@@ -37,7 +37,7 @@ export const config: Config = {
     { components: ['ion-refresher', 'ion-refresher-content'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
     { components: ['ion-ripple-effect'] },
-    { components: ['ion-anchor', 'ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-link', 'ion-router-outlet'] },
+    { components: ['ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-link'] },
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
@@ -50,6 +50,8 @@ export const config: Config = {
     { components: ['ion-toast'] },
     { components: ['ion-toggle'] },
     { components: ['ion-virtual-scroll'] },
+
+    // Deprecated
     { components: [
       'ion-action-sheet-controller',
       'ion-alert-controller',
@@ -61,9 +63,16 @@ export const config: Config = {
     ]},
   ],
   plugins: [
-    sass()
+    sass({
+      injectGlobalPaths: ['src/themes/ionic.skip-warns.scss']
+    })
   ],
   outputTargets: [
+    {
+      type: 'docs-vscode',
+      file: 'dist/html.html-data.json',
+      sourceCodeBaseUrl: 'https://github.com/ionic-team/ionic/tree/master/core/',
+    },
     {
       type: 'dist',
       esmLoaderPath: '../loader'
@@ -79,6 +88,9 @@ export const config: Config = {
     {
       type: 'docs-json',
       file: '../docs/core.json'
+    },
+    {
+      type: 'dist-hydrate-script'
     },
     apiSpecGenerator({
       file: 'api.txt'
@@ -120,7 +132,6 @@ export const config: Config = {
         'ion-route-redirect',
         'ion-router-link',
         'ion-router-outlet',
-        'ion-anchor',
 
         // tabs
         'ion-tabs',

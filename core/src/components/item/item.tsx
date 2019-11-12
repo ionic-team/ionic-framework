@@ -1,9 +1,9 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } from '@stencil/core';
-
+import { Component, ComponentInterface, Element, h, Host, Listen, Prop, State } from '@stencil/core';
 import { getIonMode } from '../../global/ionic-global';
 import { Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
+
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -128,19 +128,26 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    // Check for multiple inputs/clickables to change the position to relative
-    const inputs = this.el.querySelectorAll('ion-select, ion-datetime, ion-checkbox, ion-radio, ion-toggle, ion-range, ion-input, ion-textarea');
-    const clickables = this.el.querySelectorAll('ion-button, a');
-    this.multipleInputs = inputs.length + clickables.length > 1 ? true : false;
+    // The following elements have a clickable cover that is relative to the entire item
+    const covers = this.el.querySelectorAll('ion-checkbox, ion-datetime, ion-select, ion-radio');
+
+    // The following elements can accept focus alongside the previous elements
+    // therefore if these elements are also a child of item, we don't want the
+    // input cover on top of those interfering with their clicks
+    const inputs = this.el.querySelectorAll('ion-input, ion-range, ion-searchbar, ion-segment, ion-textarea, ion-toggle');
+
+    // Check for multiple inputs to change the position of the input cover to relative
+    // for all of the covered inputs above
+    this.multipleInputs = covers.length + inputs.length > 1;
   }
 
-  // If the item contains an input including a radio, checkbox, datetime, etc.
-  // then the item will have a clickable input cover that should
-  // get the hover, focused and activated states UNLESS it has multiple
-  // inputs, then those need to individually get the click
+  // If the item contains an input including a checkbox, datetime, select, or radio
+  // then the item will have a clickable input cover that covers the item
+  // that should get the hover, focused and activated states UNLESS it has multiple
+  // inputs, then those need to individually get each click
   private hasCover(): boolean {
     const inputs = this.el.querySelectorAll('ion-checkbox, ion-datetime, ion-select, ion-radio');
-    return inputs.length > 0 && !this.multipleInputs;
+    return inputs.length === 1 && !this.multipleInputs;
   }
 
   // If the item has an href or button property it will render a native

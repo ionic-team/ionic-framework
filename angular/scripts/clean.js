@@ -1,12 +1,12 @@
 const fs = require('fs-extra');
 const path = require('path');
 
+const ROOT_DIR = path.join(__dirname, '..');
 
 const cleanDirs = [
-  'dist'
+  path.join(ROOT_DIR, 'dist')
 ];
 
 cleanDirs.forEach(dir => {
-  const cleanDir = path.join(__dirname, '../', dir);
-  fs.removeSync(cleanDir);
+  fs.emptyDirSync(dir);
 });

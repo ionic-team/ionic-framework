@@ -38,7 +38,7 @@ $checkbox-md-icon-border-style:          solid !default;
 $checkbox-md-icon-border-radius:         2px !default;
 
 /// @prop - Border color of the checkbox icon when off
-$checkbox-md-icon-border-color-off:      rgba(0, 0, 0, .54) !default;
+$checkbox-md-icon-border-color-off:      rgba($text-color-rgb, .51) !default;
 
 /// @prop - Border color of the checkbox icon when on
 $checkbox-md-icon-border-color-on:       ion-color(primary, base) !default;

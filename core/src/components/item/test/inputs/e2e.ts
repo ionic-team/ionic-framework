@@ -1,15 +1,15 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
+import { E2EPage, newE2EPage } from "@stencil/core/testing";
 
-test('item: inputs', async () => {
+test("item: inputs", async () => {
   const page = await newE2EPage({
-    url: '/src/components/item/test/inputs?ionic:_testing=true',
+    url: "/src/components/item/test/inputs?ionic:_testing=true"
   });
 
   // check form
-  await page.click('#submit');
+  await page.click("#submit");
   await checkFormResult(
     page,
-    '{"date":"","select":"n64","toggle":"","input":"","input2":"","checkbox":"","checkboxStart":"","dateEnd":"","toggleStart":""}',
+    '{"date":"","select":"n64","toggle":"","input":"","input2":"","checkbox":"","range":"10"}'
   );
   await page.waitFor(100);
 
@@ -18,70 +18,70 @@ test('item: inputs', async () => {
   expect(compare).toMatchScreenshot();
 
   // Disable everything
-  const disableToggle = await page.find('#btnDisabled');
+  const disableToggle = await page.find("#btnDisabled");
   await disableToggle.waitForVisible();
   await disableToggle.click();
   await page.waitFor(300);
 
   // check form
-  await page.click('#submit');
-  await checkFormResult(page, '{}');
+  await page.click("#submit");
+  await checkFormResult(page, "{}");
   await page.waitFor(100);
 
   // screenshot
-  compare = await page.compareScreenshot('should disable all');
+  compare = await page.compareScreenshot("should disable all");
   expect(compare).toMatchScreenshot();
 
   // Reenable and set some value
   await disableToggle.click();
-  await page.click('#btnSomeValue');
+  await page.click("#btnSomeValue");
   await page.waitFor(100);
 
   // check form
-  await page.click('#submit');
+  await page.click("#submit");
   await checkFormResult(
     page,
-    '{"date":"2016-12-09","select":"nes","toggle":"on","input":"Some text","input2":"Some text","checkbox":"on","checkboxStart":"on","dateEnd":"1994-7-25","toggleStart":"on"}',
+    '{"date":"2016-12-09","select":"nes","toggle":"on","input":"Some text","input2":"Some text","checkbox":"on","range":"20"}'
   );
   await page.waitFor(100);
 
-  compare = await page.compareScreenshot('should reenable and set value');
+  compare = await page.compareScreenshot("should reenable and set value");
   expect(compare).toMatchScreenshot();
 
   // Set "null"
-  await page.click('#btnNullValue');
+  await page.click("#btnNullValue");
   await page.waitFor(100);
 
-  compare = await page.compareScreenshot('should set null');
+  compare = await page.compareScreenshot("should set null");
   expect(compare).toMatchScreenshot();
 
   // Set "empty"
-  await page.click('#btnEmptyValue');
+  await page.click("#btnEmptyValue");
   await page.waitFor(100);
 
-  compare = await page.compareScreenshot('should set empty');
+  compare = await page.compareScreenshot("should set empty");
   expect(compare).toMatchScreenshot();
 
   // Set "empty"
-  await page.click('#btnEmptyValue');
+  await page.click("#btnEmptyValue");
   await page.waitFor(100);
 
-  compare = await page.compareScreenshot('should set empty');
+  compare = await page.compareScreenshot("should set empty");
   expect(compare).toMatchScreenshot();
 
   // Test multiple
-  await page.click('#checkboxStart');
-  await page.click('#dateEnd');
+  await page.click("#checkboxStart");
+  await page.click("#dateEnd");
   await page.waitFor(100);
 
   compare = await page.compareScreenshot(
-    'should check checkbox and open date picker',
+    "should check checkbox and open date picker"
   );
   expect(compare).toMatchScreenshot();
 });
 
-async function checkFormResult(page: E2EPage, content: string) {
-  const div = await page.find('#form-result');
+const checkFormResult = async (page: E2EPage, content: string) => {
+  const div = await page.find("#form-result");
 
   expect(div.textContent).toEqual(content);
-}
+};

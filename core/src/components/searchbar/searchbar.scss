@@ -5,7 +5,8 @@
 
 :host {
   /**
-   * @prop --background: Background of the searchbar
+   * @prop --background: Background of the searchbar input
+   * @prop --box-shadow: Box shadow of the searchbar input
    * @prop --cancel-button-color: Color of the searchbar cancel button
    * @prop --clear-button-color: Color of the searchbar clear button
    * @prop --color: Color of the searchbar text
@@ -68,8 +69,6 @@
 .searchbar-input {
   @include text-inherit();
 
-  box-sizing: border-box;
-
   display: block;
 
   width: 100%;
@@ -81,6 +80,10 @@
   background: var(--background);
 
   font-family: inherit;
+
+  box-shadow: var(--box-shadow);
+
+  box-sizing: border-box;
   appearance: none;
 
   &::placeholder {

@@ -7,6 +7,7 @@
 :host {
   --background: #{$alert-ios-background-color};
   --max-width: #{$alert-ios-max-width};
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.3);
 
   font-size: $alert-ios-font-size;
 }
@@ -22,11 +23,12 @@
 // iOS Translucent Alert
 // -----------------------------------------
 
-:host(.alert-translucent) .alert-wrapper {
-  background: $alert-ios-translucent-background-color;
-  backdrop-filter: $alert-ios-translucent-filter;
+@supports (backdrop-filter: blur(0)) {
+  :host(.alert-translucent) .alert-wrapper {
+    background: $alert-ios-translucent-background-color;
+    backdrop-filter: $alert-ios-translucent-filter;
+  }
 }
-
 
 // iOS Alert Header
 // --------------------------------------------------

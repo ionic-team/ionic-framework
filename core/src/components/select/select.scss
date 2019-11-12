@@ -9,7 +9,13 @@
    * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select
    * @prop --padding-bottom: Bottom padding of the select
    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the select
+   *
+   * @prop --placeholder-color: Color of the select placeholder text
+   * @prop --placeholder-opacity: Opacity of the select placeholder text
    */
+  --placeholder-color: currentColor;
+  --placeholder-opacity: 0.33;
+
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   display: flex;
@@ -37,9 +43,9 @@
 }
 
 .select-placeholder {
-  color: currentColor;
+  color: var(--placeholder-color);
 
-  opacity: .33;
+  opacity: var(--placeholder-opacity);
 }
 
 button {

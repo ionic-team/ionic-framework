@@ -11,6 +11,8 @@
   --padding-end: 5px;
 
   height: 32px;
+
+  font-size: 31px;
 }
 
 :host(.activated) {
@@ -21,10 +23,6 @@
   :host(:hover) {
     opacity: .6;
   }
-}
-
-ion-icon {
-  font-size: 31px;
 }
 
 

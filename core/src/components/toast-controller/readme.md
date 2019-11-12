@@ -6,6 +6,8 @@ ToastController is a component used to create Toast components. Please see the d
 <!-- Auto Generated Below -->
 
 
+> **[DEPRECATED]** Use the `toastController` exported from core.
+
 ## Methods
 
 ### `create(options?: ToastOptions | undefined) => Promise<HTMLIonToastElement>`

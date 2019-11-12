@@ -90,7 +90,7 @@ export class ModalPage {
 
   constructor(navParams: NavParams) {
     // componentProps can also be accessed at construction time using NavParams
-    console.log(navParams.get('firstName');
+    console.log(navParams.get('firstName'));
   }
 
 }
@@ -156,12 +156,6 @@ export class CalendarComponentModule {}
 
 ### Javascript
 
-```html
-<body>
-  <ion-modal-controller></ion-modal-controller>
-</body>
-```
-
 ```javascript
 customElements.define('modal-page', class extends HTMLElement {
   connectedCallback() {
@@ -182,18 +176,14 @@ customElements.define('modal-page', class extends HTMLElement {
   }
 });
 
-async function presentModal() {
-  // initialize controller
-  const modalController = document.querySelector('ion-modal-controller');
-  await modalController.componentOnReady();
-
+function presentModal() {
   // create the modal with the `modal-page` component
-  const modalElement = await modalController.create({
-    component: 'modal-page'
-  });
+  const modalElement = document.createElement('ion-modal');
+  modalElement.component = 'modal-page';
 
   // present the modal
-  await modalElement.present();
+  document.body.appendChild(modalElement);
+  return modalElement.present();
 }
 ```
 
@@ -202,14 +192,13 @@ async function presentModal() {
 During creation of a modal, data can be passed in through the `componentProps`. The previous example can be written to include data:
 
 ```javascript
-const modalElement = await modalController.create({
-  component: 'modal-page',
-  componentProps: {
-    'firstName': 'Douglas',
-    'lastName': 'Adams',
-    'middleInitial': 'N'
-  }
-});
+const modalElement = document.createElement('ion-modal');
+modalElement.component = 'modal-page';
+modalElement.componentProps = {
+  'firstName': 'Douglas',
+  'lastName': 'Adams',
+  'middleInitial': 'N'
+};
 ```
 
 To get the data passed into the `componentProps`, query for the modal in the `modal-page`:
@@ -232,7 +221,7 @@ A modal can be dismissed by calling the dismiss method on the modal controller a
 
 ```javascript
 async function dismissModal() {
-  await modalController.dismiss({
+  await modal.dismiss({
     'dismissed': true
   });
 }
@@ -252,7 +241,7 @@ console.log(data);
 import React, { useState } from 'react';
 import { IonModal, IonButton, IonContent } from '@ionic/react';
 
-export const ModalExample: React.FunctionComponent = () => {
+export const ModalExample: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -278,7 +267,7 @@ export const ModalExample: React.FunctionComponent = () => {
         <ion-title>{{ title }}</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content padding>
+    <ion-content class="ion-padding">
       {{ content }}
     </ion-content>
   </div>
@@ -337,18 +326,18 @@ export default {
 
 ## Properties
 
-| Property                 | Attribute          | Description                                                                                                      | Type                                                                                   | Default     |
-| ------------------------ | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
-| `animated`               | `animated`         | If `true`, the modal will animate.                                                                               | `boolean`                                                                              | `true`      |
-| `backdropDismiss`        | `backdrop-dismiss` | If `true`, the modal will be dismissed when the backdrop is clicked.                                             | `boolean`                                                                              | `true`      |
-| `component` _(required)_ | `component`        | The component to display inside of the modal.                                                                    | `Function \| HTMLElement \| null \| string`                                            | `undefined` |
-| `componentProps`         | --                 | The data to pass to the modal component.                                                                         | `undefined \| { [key: string]: any; }`                                                 | `undefined` |
-| `cssClass`               | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                                                      | `undefined` |
-| `enterAnimation`         | --                 | Animation to use when the modal is presented.                                                                    | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `keyboardClose`          | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                                                              | `true`      |
-| `leaveAnimation`         | --                 | Animation to use when the modal is dismissed.                                                                    | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `mode`                   | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                                                        | `undefined` |
-| `showBackdrop`           | `show-backdrop`    | If `true`, a backdrop will be displayed behind the modal.                                                        | `boolean`                                                                              | `true`      |
+| Property                 | Attribute          | Description                                                                                                      | Type                                                    | Default     |
+| ------------------------ | ------------------ | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ----------- |
+| `animated`               | `animated`         | If `true`, the modal will animate.                                                                               | `boolean`                                               | `true`      |
+| `backdropDismiss`        | `backdrop-dismiss` | If `true`, the modal will be dismissed when the backdrop is clicked.                                             | `boolean`                                               | `true`      |
+| `component` _(required)_ | `component`        | The component to display inside of the modal.                                                                    | `Function \| HTMLElement \| null \| string`             | `undefined` |
+| `componentProps`         | --                 | The data to pass to the modal component.                                                                         | `undefined \| { [key: string]: any; }`                  | `undefined` |
+| `cssClass`               | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string \| string[] \| undefined`                       | `undefined` |
+| `enterAnimation`         | --                 | Animation to use when the modal is presented.                                                                    | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `keyboardClose`          | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                           | `boolean`                                               | `true`      |
+| `leaveAnimation`         | --                 | Animation to use when the modal is dismissed.                                                                    | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `mode`                   | `mode`             | The mode determines which platform styles to use.                                                                | `"ios" \| "md"`                                         | `undefined` |
+| `showBackdrop`           | `show-backdrop`    | If `true`, a backdrop will be displayed behind the modal.                                                        | `boolean`                                               | `true`      |
 
 
 ## Events
@@ -406,19 +395,20 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name              | Description                        |
-| ----------------- | ---------------------------------- |
-| `--background`    | Background of the modal content    |
-| `--border-color`  | Border color of the modal content  |
-| `--border-radius` | Border radius of the modal content |
-| `--border-style`  | Border style of the modal content  |
-| `--border-width`  | Border width of the modal content  |
-| `--height`        | Height of the modal                |
-| `--max-height`    | Maximum height of the modal        |
-| `--max-width`     | Maximum width of the modal         |
-| `--min-height`    | Minimum height of the modal        |
-| `--min-width`     | Minimum width of the modal         |
-| `--width`         | Width of the modal                 |
+| Name                 | Description                        |
+| -------------------- | ---------------------------------- |
+| `--backdrop-opacity` | Opacity of the backdrop            |
+| `--background`       | Background of the modal content    |
+| `--border-color`     | Border color of the modal content  |
+| `--border-radius`    | Border radius of the modal content |
+| `--border-style`     | Border style of the modal content  |
+| `--border-width`     | Border width of the modal content  |
+| `--height`           | Height of the modal                |
+| `--max-height`       | Maximum height of the modal        |
+| `--max-width`        | Maximum width of the modal         |
+| `--min-height`       | Minimum height of the modal        |
+| `--min-width`        | Minimum width of the modal         |
+| `--width`            | Width of the modal                 |
 
 
 ## Dependencies
