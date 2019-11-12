@@ -1,9 +1,9 @@
-import { Component, ComponentInterface, Element, h, Host, Listen, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } from '@stencil/core';
+
 import { getIonMode } from '../../global/ionic-global';
 import { Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
-
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
