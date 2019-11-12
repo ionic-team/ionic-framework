@@ -204,11 +204,11 @@ export const createGesture = (config: GestureConfig): Gesture => {
   return {
     enable(enable = true) {
       if (!enable) {
-        reset();
-
         if (hasCapturedPan) {
           pointerUp(undefined);
         }
+
+        reset();
       }
       pointerEvents.enable(enable);
     },
