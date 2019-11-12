@@ -26,7 +26,7 @@
 
         <ion-item>
           <ion-label>Gender</ion-label>
-          <ion-select id="gender" placeholder="Select One">
+          <ion-select id="gender" placeholder="Select One" class="custom-select">
             <ion-select-option value="fn">Female</ion-select-option>
             <ion-select-option value="ml">Male</ion-select-option>
           </ion-select>
@@ -285,6 +285,9 @@
     <style>
       .outer-content {
         --background: #f2f2f2;
+      }
+      .custom-select {
+        --placeholder-opacity: 0.5;
       }
     </style>
 

@@ -34,10 +34,10 @@ export * from './components/virtual-scroll/virtual-scroll-interface';
 export { Animation, AnimationBuilder } from './utils/animation/animation-interface';
 export * from './utils/overlays-interface';
 export * from './global/config';
-export { Gesture, GestureDetail } from './utils/gesture';
+
+export { Gesture, GestureConfig, GestureDetail } from './utils/gesture';
 export { PressRecognizerOptions } from './utils/gesture/recognizers/press';
 
-// Global aux types
 export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time';
 export type Side = 'start' | 'end';
 export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
