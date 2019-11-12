@@ -27,5 +27,5 @@ export interface ViewItem<RouteData = any> {
   /**
    * location of the view
    */
-  location?: string
+  location?: string;
 }

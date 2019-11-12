@@ -115,13 +115,12 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
           mount: true,
           show: false,
           isIonRoute: false
-        } as ViewItem<IonRouteData>
+        } as ViewItem<IonRouteData>;
 
       if (_enteringView !== enteringView) {
         enteringViewStack.views.push(enteringView);
       }
-      enteringView.location = location.pathname
-
+      enteringView.location = location.pathname;
 
       leavingView = viewStacks.findViewInfoById(this.activeIonPageId).view;
 

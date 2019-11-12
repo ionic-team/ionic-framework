@@ -58,7 +58,7 @@ export class ViewStacks {
         path: v.routeData.childProps.path || v.routeData.childProps.from,
         component: v.routeData.childProps.component
       };
-      const myMatch : IonRouteData['match'] | null | undefined = matchPath(location.pathname, matchProps);
+      const myMatch: IonRouteData['match'] | null | undefined = matchPath(location.pathname, matchProps);
       if (myMatch) {
         view = v;
         match = myMatch;
