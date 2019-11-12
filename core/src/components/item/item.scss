@@ -404,15 +404,6 @@ button, a {
   position: relative;
 }
 
-// Place clickable elements above inputs to keep them
-// clickable (input-cover() mixin adds z-index: 2 for
-// inputs)
-
-:host(.item-multiple-inputs) ::slotted(ion-button),
-:host(.item-multiple-inputs) ::slotted(a) {
-  z-index: 3;
-}
-
 // Item Textarea
 // --------------------------------------------------
 
