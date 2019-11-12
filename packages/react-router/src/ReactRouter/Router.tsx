@@ -97,10 +97,32 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     const viewStackKeys = viewStacks.getKeys();
 
     viewStackKeys.forEach(key => {
-      const { view: enteringView, viewStack: enteringViewStack, match } = viewStacks.findViewInfoByLocation(location, key);
-      if (!enteringView || !enteringViewStack) {
+      const { view: _enteringView, viewStack: enteringViewStack, match } = viewStacks.findViewInfoByLocation(location, key);
+      if (!_enteringView || !enteringViewStack) {
         return;
       }
+
+      const enteringView = (!_enteringView.location) || (_enteringView.location && _enteringView.location === location.pathname)
+        ? _enteringView
+        : {
+          id: generateId(),
+          key: generateId(),
+          route: _enteringView.route,
+          routeData: {
+            ..._enteringView.routeData,
+            match
+          },
+          mount: true,
+          show: false,
+          isIonRoute: false
+        } as ViewItem<IonRouteData>
+
+      if (_enteringView !== enteringView) {
+        enteringViewStack.views.push(enteringView);
+      }
+      enteringView.location = location.pathname
+
+
       leavingView = viewStacks.findViewInfoById(this.activeIonPageId).view;
 
       if (enteringView.isIonRoute) {
