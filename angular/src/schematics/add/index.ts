@@ -37,7 +37,7 @@ function addIonicAngularModuleToAppModule(projectSourceRoot): Rule {
   };
 }
 
-function addIonicStyles(): Rule {
+function addIonicStyles(root?: string): Rule {
   return (host: Tree) => {
     const ionicStyles = [
       'node_modules/@ionic/angular/css/normalize.css',
@@ -49,7 +49,7 @@ function addIonicStyles(): Rule {
       'node_modules/@ionic/angular/css/text-alignment.css',
       'node_modules/@ionic/angular/css/text-transformation.css',
       'node_modules/@ionic/angular/css/flex-utils.css',
-      'src/theme/variables.css'
+      `${root}src/theme/variables.css`
     ].forEach(entry => {
       addStyle(host, entry);
     });
@@ -117,6 +117,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
         `Ionic Add requires a project type of "application".`
       );
     }
+    const root = (options.root) ? `${options.root}/${options.project}/` : '';
 
     const sourcePath = join(project.root as Path, 'src');
     const rootTemplateSource = apply(url('./files/root'), [
@@ -129,7 +130,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicAngularToolkitToPackageJson(),
       addIonicAngularModuleToAppModule(sourcePath),
       addIonicBuilder(),
-      addIonicStyles(),
+      addIonicStyles(root),
       addIonicons(),
       mergeWith(rootTemplateSource),
       // install freshly added dependencies
