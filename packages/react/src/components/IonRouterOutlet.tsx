@@ -4,7 +4,7 @@ import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
 
-import { ReactProps } from './ReactProps';
+import { IonicReactProps } from './IonicReactProps';
 import { IonRouterOutletInner } from './inner-proxies';
 import { createForwardRef } from './utils';
 
@@ -43,4 +43,4 @@ const IonRouterOutletContainer = /*@__PURE__*/(() => class extends React.Compone
   }
 })();
 
-export const IonRouterOutlet = createForwardRef<Props & ReactProps, HTMLIonRouterOutletElement>(IonRouterOutletContainer, 'IonRouterOutlet');
+export const IonRouterOutlet = createForwardRef<Props & IonicReactProps, HTMLIonRouterOutletElement>(IonRouterOutletContainer, 'IonRouterOutlet');

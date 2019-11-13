@@ -1,10 +1,10 @@
-import { IonicAnimation } from '../../../interface';
+import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * Md Popover Enter Animation
  */
-export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimation => {
+export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation => {
   const POPOVER_MD_BODY_PADDING = 12;
   const doc = (baseEl.ownerDocument as any);
   const isRTL = doc.dir === 'rtl';
@@ -85,11 +85,11 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimatio
   const viewportAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop'))
-    .fromTo('opacity', 0.01, 0.32);
+    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.popover-wrapper'))
+    .addElement(baseEl.querySelector('.popover-wrapper')!)
     .fromTo('opacity', 0.01, 1);
 
   contentAnimation
@@ -102,7 +102,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimatio
     .fromTo('transform', 'scale(0.001)', 'scale(1)');
 
   viewportAnimation
-    .addElement(baseEl.querySelector('.popover-viewport'))
+    .addElement(baseEl.querySelector('.popover-viewport')!)
     .fromTo('opacity', 0.01, 1);
 
   return baseAnimation

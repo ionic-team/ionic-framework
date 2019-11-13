@@ -54,7 +54,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Set the cancel button icon. Only applies to `md` mode.
    */
-  @Prop() cancelButtonIcon = 'md-arrow-back';
+  @Prop() cancelButtonIcon = config.get('backButtonIcon', 'md-arrow-back') as string;
 
   /**
    * Set the the cancel button text. Only applies to `ios` mode.
@@ -111,7 +111,7 @@ export class Searchbar implements ComponentInterface {
    * Setting to `"always"` shows the cancel button regardless
    * of focus state.
    */
-  @Prop() showCancelButton: boolean | string = 'never';
+  @Prop() showCancelButton: 'never' | 'focus' | 'always' = 'never';
 
   /**
    * If `true`, enable spellcheck on the input.
@@ -187,14 +187,6 @@ export class Searchbar implements ComponentInterface {
   }
 
   componentDidLoad() {
-    if (this.showCancelButton === 'false' || this.showCancelButton === false) {
-      console.warn('The boolean values of showCancelButton are deprecated. Please use "never" instead of "false".');
-    }
-
-    if (this.showCancelButton === '' || this.showCancelButton === 'true' || this.showCancelButton === true) {
-      console.warn('The boolean values of showCancelButton are deprecated. Please use "focus" instead of "true".');
-    }
-
     this.positionElements();
     this.debounceChanged();
 
@@ -410,10 +402,9 @@ export class Searchbar implements ComponentInterface {
    * 2. `showCancelButton` is set to `focus`, and the searchbar has been focused.
    */
   private shouldShowCancelButton(): boolean {
-    if (
-      isCancelButtonSetToNever(this.showCancelButton) ||
-      (isCancelButtonSetToFocus(this.showCancelButton) && !this.focused)
-    ) { return false; }
+    if ((this.showCancelButton === 'never') || (this.showCancelButton === 'focus' && !this.focused)) {
+      return false;
+    }
 
     return true;
   }
@@ -424,7 +415,7 @@ export class Searchbar implements ComponentInterface {
     const clearIcon = this.clearIcon || (mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon;
 
-    const cancelButton = !isCancelButtonSetToNever(this.showCancelButton) && (
+    const cancelButton = (this.showCancelButton !== 'never') && (
       <button
         aria-label="cancel"
         type="button"
@@ -497,32 +488,3 @@ export class Searchbar implements ComponentInterface {
     );
   }
 }
-
-/**
- * Check if the cancel button should never be shown.
- *
- * TODO: Remove this when the `true` and `false`
- * options are removed.
- */
-const isCancelButtonSetToNever = (showCancelButton: boolean | string): boolean => {
-  return (
-    showCancelButton === 'never' ||
-    showCancelButton === 'false' ||
-    showCancelButton === false
-  );
-};
-
-/**
- * Check if the cancel button should be shown on focus.
- *
- * TODO: Remove this when the `true` and `false`
- * options are removed.
- */
-const isCancelButtonSetToFocus = (showCancelButton: boolean | string): boolean => {
-  return (
-    showCancelButton === 'focus' ||
-    showCancelButton === 'true' ||
-    showCancelButton === true ||
-    showCancelButton === ''
-  );
-};

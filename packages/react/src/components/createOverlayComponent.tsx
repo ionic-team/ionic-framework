@@ -2,7 +2,7 @@ import { OverlayEventDetail } from '@ionic/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { attachEventProps } from './utils';
+import { attachProps } from './utils';
 
 interface OverlayElement extends HTMLElement {
   present: () => Promise<void>;
@@ -37,14 +37,16 @@ export const createOverlayComponent = <T extends object, OverlayType extends Ove
     }
 
     componentDidMount() {
-      // TODO
       if (this.props.isOpen as boolean) {
         this.present();
       }
     }
 
-    async componentDidUpdate(prevProps: Props) {
+    componentWillUnmount() {
+      if (this.overlay) { this.overlay.dismiss(); }
+    }
 
+    async componentDidUpdate(prevProps: Props) {
       if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === true) {
         this.present(prevProps);
       }
@@ -66,7 +68,7 @@ export const createOverlayComponent = <T extends object, OverlayType extends Ove
         componentProps: {}
       });
 
-      attachEventProps(overlay, elementProps, prevProps);
+      attachProps(overlay, elementProps, prevProps);
 
       await overlay.present();
     }
