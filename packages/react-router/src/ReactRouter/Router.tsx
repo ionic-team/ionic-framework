@@ -97,19 +97,25 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     const viewStackKeys = viewStacks.getKeys();
 
     viewStackKeys.forEach(key => {
-      const { view: _enteringView, viewStack: enteringViewStack, match } = viewStacks.findViewInfoByLocation(location, key);
-      if (!_enteringView || !enteringViewStack) {
+      const { view: stackEnteringView, viewStack: enteringViewStack, match } = viewStacks.findViewInfoByLocation(location, key);
+      if (!stackEnteringView || !enteringViewStack) {
         return;
       }
 
-      const enteringView = (!_enteringView.location) || (_enteringView.location && _enteringView.location === location.pathname)
-        ? _enteringView
+      /**
+       * if stackEnteringView already has a location and it is different from the current location,
+       * make a fresh clone of the view and add it to the stack. This ensures that if the same view
+       * is selected because the match rule has some wildcards, a separate view is created for
+       * each different location matching the same view
+       */
+      const enteringView = (!stackEnteringView.location) || (stackEnteringView.location && stackEnteringView.location === location.pathname)
+        ? stackEnteringView
         : {
           id: generateId(),
           key: generateId(),
-          route: _enteringView.route,
+          route: stackEnteringView.route,
           routeData: {
-            ..._enteringView.routeData,
+            ...stackEnteringView.routeData,
             match
           },
           mount: true,
@@ -117,7 +123,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
           isIonRoute: false
         } as ViewItem<IonRouteData>;
 
-      if (_enteringView !== enteringView) {
+      if (stackEnteringView !== enteringView) {
         enteringViewStack.views.push(enteringView);
       }
       enteringView.location = location.pathname;
