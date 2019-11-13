@@ -121,7 +121,7 @@
           <ion-datetime placeholder="startTime" display-format="HH:mm" id="datetime-end"></ion-datetime>
           <ion-checkbox slot="end" id="checkbox-end"></ion-checkbox>
         </ion-item>
-    
+
         <ion-item>
           <ion-select slot="start" placeholder="month" id="select-start">
             <ion-select-option value="1">January</ion-select-option>
@@ -131,7 +131,7 @@
           <ion-label>Input w/ clickable</ion-label>
           <ion-button slot="end" id="button-end" onclick="setButtonColorRed()">Button</ion-button>
         </ion-item>
-    
+
         <ion-item>
           <ion-radio slot="start" id="radio-start"></ion-radio>
           <ion-label>Input w/ cover + input</ion-label>
@@ -144,6 +144,17 @@
           <ion-toggle id="toggle-1-end"></ion-toggle>
           <ion-toggle id="toggle-2-end"></ion-toggle>
         </ion-item>
+
+        <ion-item button id="clickableItem">
+          <ion-label>Clickable item</ion-label>
+          <ion-checkbox slot="end"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start"></ion-checkbox>
+          <ion-label>Checkbox w/ disabled button</ion-label>
+          <ion-button slot="end" onclick="setButtonColorRed()" disabled>Button</ion-button>
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-app>
@@ -151,6 +162,15 @@
   <script>
     var ids = ['item', 'datetime', 'select', 'toggle', 'text', 'placeholder', 'checkbox', 'toggle', 'range'];
     var isDisabled = false;
+
+    const clickableItem = document.querySelector('#clickableItem')
+
+    clickableItem.addEventListener('click', function() {
+      console.log('Clicked item', clickableItem);
+      const color = clickableItem.color;
+      clickableItem.color = color === undefined ? 'primary' : undefined;
+    });
+
 
     function toggleDisabled() {
       isDisabled = !isDisabled;
