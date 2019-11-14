@@ -4440,7 +4440,7 @@ declare namespace LocalJSX {
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when a keyboard input ocurred.
+    * Emitted when a keyboard input occurred.
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
@@ -5414,7 +5414,7 @@ declare namespace LocalJSX {
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when a keyboard input ocurred.
+    * Emitted when a keyboard input occurred.
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
@@ -5869,7 +5869,7 @@ declare namespace LocalJSX {
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when a keyboard input ocurred.
+    * Emitted when a keyboard input occurred.
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
