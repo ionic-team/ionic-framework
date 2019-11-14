@@ -78,13 +78,13 @@ const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection
   const ICON_ORIGIN_X = (rtl) ? 'left' : 'right';
 
   const FORWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(largeTitleBox.top - 38)}) scale(2.1)` },
+    { offset: 0, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(largeTitleBox.top - 40)}) scale(2.1)` },
     { offset: 1, opacity: 1, transform: `translate(${END_TEXT_TRANSLATE}, ${addSafeArea(backButtonBox.top - 46)}) scale(1)` }
   ];
   const BACKWARD_TEXT_KEYFRAMES = [
     { offset: 0, opacity: 1, transform: `translate(${END_TEXT_TRANSLATE}, ${addSafeArea(backButtonBox.top - 46)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(largeTitleBox.top - 38)}) scale(2.1)` }
+    { offset: 1, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(largeTitleBox.top - 40)}) scale(2.1)` }
   ];
   const TEXT_KEYFRAMES = (backDirection) ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
 
@@ -149,14 +149,14 @@ const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection
   const ORIGIN_X = (rtl) ? 'right' : 'left';
 
   const BACKWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(backButtonBox.top)}) scale(0.49)` },
+    { offset: 0, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(backButtonBox.top - 4)}) scale(0.49)` },
     { offset: 0.1, opacity: 0 },
     { offset: 1, opacity: 1, transform: `translate(0, ${addSafeArea(largeTitleBox.top - 2)}) scale(1)` }
   ];
   const FORWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0.99, transform: `translate(0, ${addSafeArea(largeTitleBox.top - 2)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(backButtonBox.top)}) scale(0.5)` }
+    { offset: 1, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(backButtonBox.top - 4)}) scale(0.5)` }
   ];
 
   const KEYFRAMES = (backDirection) ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
