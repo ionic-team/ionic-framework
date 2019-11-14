@@ -22,7 +22,7 @@ export const IonLifeCycleContext = /*@__PURE__*/React.createContext<IonLifeCycle
   ionViewDidLeave: () => { return; },
 });
 
-type LifeCycleCallback = () => void;
+export interface LifeCycleCallback { (): void; id?: number; }
 
 export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextInterface {
 
@@ -33,7 +33,16 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
   componentCanBeDestroyedCallback?: () => void;
 
   onIonViewWillEnter(callback: LifeCycleCallback) {
-    this.ionViewWillEnterCallbacks.push(callback);
+    if (callback.id) {
+      const index = this.ionViewWillEnterCallbacks.findIndex(x => x.id === callback.id);
+      if (index > -1) {
+        this.ionViewWillEnterCallbacks[index] = callback;
+      } else {
+        this.ionViewWillEnterCallbacks.push(callback);
+      }
+    } else {
+      this.ionViewWillEnterCallbacks.push(callback);
+    }
   }
 
   ionViewWillEnter() {
@@ -41,7 +50,16 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
   }
 
   onIonViewDidEnter(callback: LifeCycleCallback) {
-    this.ionViewDidEnterCallbacks.push(callback);
+    if (callback.id) {
+      const index = this.ionViewDidEnterCallbacks.findIndex(x => x.id === callback.id);
+      if (index > -1) {
+        this.ionViewDidEnterCallbacks[index] = callback;
+      } else {
+        this.ionViewDidEnterCallbacks.push(callback);
+      }
+    } else {
+      this.ionViewDidEnterCallbacks.push(callback);
+    }
   }
 
   ionViewDidEnter() {
@@ -49,7 +67,16 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
   }
 
   onIonViewWillLeave(callback: LifeCycleCallback) {
-    this.ionViewWillLeaveCallbacks.push(callback);
+    if (callback.id) {
+      const index = this.ionViewWillLeaveCallbacks.findIndex(x => x.id === callback.id);
+      if (index > -1) {
+        this.ionViewWillLeaveCallbacks[index] = callback;
+      } else {
+        this.ionViewWillLeaveCallbacks.push(callback);
+      }
+    } else {
+      this.ionViewWillLeaveCallbacks.push(callback);
+    }
   }
 
   ionViewWillLeave() {
@@ -57,7 +84,16 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
   }
 
   onIonViewDidLeave(callback: LifeCycleCallback) {
-    this.ionViewDidLeaveCallbacks.push(callback);
+    if (callback.id) {
+      const index = this.ionViewDidLeaveCallbacks.findIndex(x => x.id === callback.id);
+      if (index > -1) {
+        this.ionViewDidLeaveCallbacks[index] = callback;
+      } else {
+        this.ionViewDidLeaveCallbacks.push(callback);
+      }
+    } else {
+      this.ionViewDidLeaveCallbacks.push(callback);
+    }
   }
 
   ionViewDidLeave() {

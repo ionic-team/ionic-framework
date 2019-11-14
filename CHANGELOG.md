@@ -1,3 +1,11 @@
+## [4.11.5](https://github.com/ionic-team/ionic/compare/v4.11.0...v4.11.5) (2019-11-14)
+
+
+### Bug Fixes
+
+* **react:** improved lifecycle hooks to deal with stale closures, fixes [#19873](https://github.com/ionic-team/ionic/issues/19873) ([#19874](https://github.com/ionic-team/ionic/issues/19874)) ([5ff786a](https://github.com/ionic-team/ionic/commit/5ff786a23d5aa32281bbf5daaa7f8156de39caca))
+
+
 ## [4.11.4](https://github.com/ionic-team/ionic/compare/v4.11.1...v4.11.4) (2019-11-07)
 
 
