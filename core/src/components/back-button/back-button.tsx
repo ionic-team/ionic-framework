@@ -106,7 +106,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'show-back-button': showBackButton
         }}
       >
-        <button type={type} disabled={disabled} class="button-native" part="button-native">
+        <button type={type} disabled={disabled} class="button-native" part="button">
           <span class="button-inner">
             {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false} part="icon"></ion-icon>}
             {backButtonText && <span class="button-text" part="text">{backButtonText}</span>}
