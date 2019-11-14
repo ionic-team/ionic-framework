@@ -33,7 +33,7 @@ export class Config {
   }
 
   set(key: keyof IonicConfig, value?: any) {
-    console.warn(`[DEPRECATION][Config]: The Config.set() method is deprecated and will be removed in the next major release.`);
+    console.warn(`[DEPRECATION][Config]: The Config.set() method is deprecated and will be removed in Ionic Framework 6.0. Please see https://ionicframework.com/docs/angular/config for alternatives.`);
     const c = getConfig();
     if (c) {
       c.set(key, value);
