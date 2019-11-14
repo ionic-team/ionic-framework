@@ -5,17 +5,15 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$list-ios-header-background-color};
-  --color: #{$list-ios-header-color};
+  --background: #{$list-header-ios-background-color};
+  --color: #{$list-header-ios-color};
 
-  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-ios-header-padding-start}), null);
+  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-header-ios-padding-start}), null);
 
   position: relative;
 
-  font-size: $list-ios-header-font-size;
-  font-weight: $list-ios-header-font-weight;
+  font-size: $list-header-ios-font-size;
+  font-weight: $list-header-ios-font-weight;
 
-  letter-spacing: $list-ios-header-letter-spacing;
-
-  text-transform: $list-ios-header-text-transform;
+  letter-spacing: $list-header-ios-letter-spacing;
 }

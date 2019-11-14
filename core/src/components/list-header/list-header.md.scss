@@ -6,11 +6,11 @@
 
 :host {
   --background: transparent;
-  --color: #{$list-md-header-color};
+  --color: #{$list-header-md-color};
 
-  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-md-header-padding-start}), null);
+  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-header-md-padding-start}), null);
 
-  min-height: $list-md-header-min-height;
+  min-height: $list-header-md-min-height;
 
-  font-size: $list-md-header-font-size;
+  font-size: $list-header-md-font-size;
 }
