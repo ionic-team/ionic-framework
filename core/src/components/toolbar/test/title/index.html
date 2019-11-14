@@ -82,6 +82,16 @@
   
         this.innerHTML = `
           <ion-header class="main-header" translucent>
+            <ion-toolbar class="main-toolbar">
+              <ion-segment>
+                <ion-segment-button value="all">
+                  All
+                </ion-segment-button>
+                <ion-segment-button value="favorites">
+                  Favorites
+                </ion-segment-button>
+              </ion-segment>
+            </ion-toolbar>
             <ion-toolbar class="main-toolbar">    
               <ion-buttons collapse>
                 <ion-back-button default-href="/"></ion-back-button>

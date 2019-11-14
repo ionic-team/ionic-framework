@@ -140,6 +140,8 @@ const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection
 
 const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
   const largeTitleBounds = largeTitleEl.getBoundingClientRect();
+
+  console.log(largeTitleBounds);
   const TITLE_START_OFFSET = (rtl) ? `calc(100% - ${largeTitleBounds.right}px)` : `${largeTitleBounds.left}px`;
   const START_TRANSLATE = (rtl) ? '-18px' : '18px';
   const ORIGIN_X = (rtl) ? 'right' : 'left';
@@ -147,10 +149,10 @@ const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection
   const BACKWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
     { offset: 0.1, opacity: 0 },
-    { offset: 1, opacity: 1, transform: `translate(0, ${addSafeArea(49)}) scale(1)` }
+    { offset: 1, opacity: 1, transform: `translate(0, ${addSafeArea(largeTitleBounds.top - 2)}) scale(1)` }
   ];
   const FORWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0.99, transform: `translate(0, ${addSafeArea(49)}) scale(1)` },
+    { offset: 0, opacity: 0.99, transform: `translate(0, ${addSafeArea(largeTitleBounds.top - 2)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
     { offset: 1, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.5)` }
   ];
