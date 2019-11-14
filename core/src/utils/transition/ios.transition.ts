@@ -67,7 +67,7 @@ const createLargeTitleTransition = (rootAnimation: Animation, rtl: boolean, back
   };
 };
 
-const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, backButtonEl: any, largeTitleBox: any, backButtonBox: any) => {
+const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, backButtonEl: any, largeTitleBox: ClientRect, backButtonBox: ClientRect) => {
   const BACK_BUTTON_START_OFFSET = (rtl) ? `calc(100% - ${backButtonBox.right + 4}px)` : `${backButtonBox.left - 4}px`;
   const START_TEXT_TRANSLATE = (rtl) ? '7px' : '-7px';
   const END_TEXT_TRANSLATE = (rtl) ? '-4px' : '4px';
@@ -143,7 +143,7 @@ const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection
   rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation]);
 };
 
-const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, largeTitleEl: any, largeTitleBox: any, backButtonBox: any) => {
+const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, largeTitleEl: any, largeTitleBox: ClientRect, backButtonBox: ClientRect) => {
   const TITLE_START_OFFSET = (rtl) ? `calc(100% - ${largeTitleEl.right}px)` : `${largeTitleEl.left}px`;
   const START_TRANSLATE = (rtl) ? '-18px' : '18px';
   const ORIGIN_X = (rtl) ? 'right' : 'left';
