@@ -103,6 +103,11 @@ ion-toast-controller,
   opacity: 0;
 }
 
+.can-go-back > ion-header ion-back-button {
+  display: block;
+}
+
+
 // Ionic Safe Margins
 // --------------------------------------------------
 

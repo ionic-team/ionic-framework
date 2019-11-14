@@ -77,7 +77,7 @@ ion-app,none
 ion-avatar,shadow
 ion-avatar,css-prop,--border-radius
 
-ion-back-button,scoped
+ion-back-button,shadow
 ion-back-button,prop,color,string | undefined,undefined,false,false
 ion-back-button,prop,defaultHref,string | undefined,undefined,false,false
 ion-back-button,prop,disabled,boolean,false,false,true
