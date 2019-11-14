@@ -99,8 +99,8 @@ const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection
 
   const clonedBackButtonEl = getClonedElement('ion-back-button');
 
-  const backButtonTextEl = clonedBackButtonEl.querySelector('.button-text');
-  const backButtonIconEl = clonedBackButtonEl.querySelector('ion-icon');
+  const backButtonTextEl = shadow(clonedBackButtonEl).querySelector('.button-text');
+  const backButtonIconEl = shadow(clonedBackButtonEl).querySelector('ion-icon');
 
   clonedBackButtonEl.text = backButtonEl.text;
   clonedBackButtonEl.mode = backButtonEl.mode;
