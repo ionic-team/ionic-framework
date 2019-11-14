@@ -117,7 +117,7 @@ export class Header implements ComponentInterface {
          */
         const toolbarIntersection = (ev: any) => { handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex); };
         this.intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: [0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], rootMargin: `-${mainHeaderHeight}px 0px 0px 0px` });
-        this.intersectionObserver.observe(scrollHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1].el);
+        this.intersectionObserver.observe(scrollHeaderIndex.toolbars[scrollHeaderIndex.toolbars.length - 1].el);
 
       /**
        * Handle scaling of large iOS titles and
