@@ -1,9 +1,15 @@
 {
   "extends": "./tsconfig.app.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/app-server"
+    "module": "commonjs",
+    "outDir": "../out-tsc/app-server",
+    "target": "es5"
   },
   "angularCompilerOptions": {
     "entryModule": "./src/app/app.server.module#AppServerModule"
-  }
+  },
+  "files": [
+    "src/main.server.ts",
+    "server.ts"
+  ]
 }
