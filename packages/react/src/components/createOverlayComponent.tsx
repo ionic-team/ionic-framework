@@ -2,7 +2,7 @@ import { OverlayEventDetail } from '@ionic/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { attachProps } from './utils';
+import { attachProps, createForwardRef, dashToPascalCase } from './utils';
 
 interface OverlayElement extends HTMLElement {
   present: () => Promise<void>;
@@ -23,7 +23,7 @@ export const createOverlayComponent = <T extends object, OverlayType extends Ove
 
   type Props = T & ReactOverlayProps;
 
-  return class extends React.Component<Props> {
+  const ReactComponent = class extends React.Component<Props> {
     overlay?: OverlayType;
     el: HTMLDivElement;
 
@@ -80,4 +80,5 @@ export const createOverlayComponent = <T extends object, OverlayType extends Ove
       );
     }
   };
+  return createForwardRef<Props, OverlayType>(ReactComponent, dashToPascalCase(displayName));
 };

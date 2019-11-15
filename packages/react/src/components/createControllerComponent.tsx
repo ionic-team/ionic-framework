@@ -1,7 +1,7 @@
 import { OverlayEventDetail } from '@ionic/core';
 import React from 'react';
 
-import { attachProps } from './utils';
+import { attachProps, createForwardRef, dashToPascalCase } from './utils';
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;
@@ -21,7 +21,7 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
 
   type Props = OptionsType & ReactControllerProps;
 
-  return class extends React.Component<Props> {
+  const ReactComponent = class extends React.Component<Props> {
     overlay?: OverlayType;
     isUnmounted = false;
 
@@ -73,4 +73,5 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
       return null;
     }
   };
+  return createForwardRef<Props, OverlayType>(ReactComponent, dashToPascalCase(displayName));
 };
