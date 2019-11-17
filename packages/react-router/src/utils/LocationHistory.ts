@@ -12,9 +12,30 @@ export class LocationHistory {
     }
   }
 
-  findLastLocation(url: string) {
-    const reversedLocations = [...this.locationHistory].reverse();
-    const last = reversedLocations.find(x => x.pathname.toLowerCase() === url.toLowerCase());
-    return last;
+  pop() {
+    this.locationHistory.pop();
+  }
+
+  replace(location: HistoryLocation) {
+    this.locationHistory.pop();
+    this.locationHistory.push(location);
+  }
+
+  findLastLocationByUrl(url: string) {
+    for (let i = this.locationHistory.length - 1; i >= 0; i--) {
+      const location = this.locationHistory[i];
+      if (location.pathname.toLocaleLowerCase() === url.toLocaleLowerCase()) {
+        return location;
+      }
+    }
+    return undefined;
+  }
+
+  previous() {
+    return this.locationHistory[this.locationHistory.length - 2];
+  }
+
+  current() {
+    return this.locationHistory[this.locationHistory.length - 1];
   }
 }

@@ -76,6 +76,10 @@ body.backdrop-no-scroll {
   z-index: $z-index-page-container;
 }
 
+.split-pane-visible > .ion-page.split-pane-main {
+  position: relative;
+}
+
 ion-route,
 ion-route-redirect,
 ion-router,
@@ -98,6 +102,11 @@ ion-toast-controller,
 .ion-page-invisible {
   opacity: 0;
 }
+
+.can-go-back > ion-header ion-back-button {
+  display: block;
+}
+
 
 // Ionic Safe Margins
 // --------------------------------------------------

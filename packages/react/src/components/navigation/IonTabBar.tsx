@@ -6,6 +6,8 @@ import { IonTabBarInner } from '../inner-proxies';
 import { IonTabButton } from '../proxies';
 
 type Props = LocalJSX.IonTabBar & {
+  onIonTabsDidChange?: (event: CustomEvent<{ tab: string }>) => void;
+  onIonTabsWillChange?: (event: CustomEvent<{ tab: string }>) => void;
   currentPath?: string;
   slot?: 'bottom' | 'top';
 };
@@ -75,6 +77,12 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
         this.context.navigate(originalHref, 'back');
       }
     } else {
+      if (this.props.onIonTabsWillChange) {
+        this.props.onIonTabsWillChange(new CustomEvent('ionTabWillChange', { detail: { tab: e.detail.tab } }));
+      }
+      if (this.props.onIonTabsDidChange) {
+        this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
+      }
       this.context.navigate(this.state.tabs[e.detail.tab].currentHref, 'none');
     }
   }

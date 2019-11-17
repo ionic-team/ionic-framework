@@ -1,6 +1,6 @@
 import { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
-import { TransitionOptions } from '../transition';
+import { TransitionOptions, getIonPageElement } from '../transition';
 
 const DURATION = 540;
 const addSafeArea = (val: number, side = 'top'): string => {
@@ -27,8 +27,9 @@ const getBackButton = (refEl: any, backDirection: boolean) => {
     const activeHeader = parentHeader && !parentHeader.classList.contains('header-collapse-condense-inactive');
     const backButton = buttons.querySelector('ion-back-button');
     const buttonsCollapse = buttons.classList.contains('buttons-collapse');
+    const startSlot = buttons.slot === 'start' || buttons.slot === '';
 
-    if (backButton !== null && ((buttonsCollapse && activeHeader && backDirection) || !buttonsCollapse)) {
+    if (backButton !== null && startSlot && ((buttonsCollapse && activeHeader && backDirection) || !buttonsCollapse)) {
       return backButton;
     }
   }
@@ -98,8 +99,8 @@ const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection
 
   const clonedBackButtonEl = getClonedElement('ion-back-button');
 
-  const backButtonTextEl = clonedBackButtonEl.querySelector('.button-text');
-  const backButtonIconEl = clonedBackButtonEl.querySelector('ion-icon');
+  const backButtonTextEl = shadow(clonedBackButtonEl).querySelector('.button-text');
+  const backButtonIconEl = shadow(clonedBackButtonEl).querySelector('ion-icon');
 
   clonedBackButtonEl.text = backButtonEl.text;
   clonedBackButtonEl.mode = backButtonEl.mode;
@@ -375,6 +376,13 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         leavingContent
           .beforeClearStyles([OPACITY])
           .fromTo('transform', `translateX(${CENTER})`, (isRTL ? 'translateX(-100%)' : 'translateX(100%)'));
+
+        const leavingPage = getIonPageElement(leavingEl) as HTMLElement;
+        rootAnimation.afterAddWrite(() => {
+          if (rootAnimation.getDirection() === 'normal') {
+            leavingPage.style.setProperty('display', 'none');
+          }
+        });
 
       } else {
         // leaving content, forward direction

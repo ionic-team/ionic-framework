@@ -77,7 +77,7 @@ ion-app,none
 ion-avatar,shadow
 ion-avatar,css-prop,--border-radius
 
-ion-back-button,scoped
+ion-back-button,shadow
 ion-back-button,prop,color,string | undefined,undefined,false,false
 ion-back-button,prop,defaultHref,string | undefined,undefined,false,false
 ion-back-button,prop,disabled,boolean,false,false,true
@@ -942,7 +942,7 @@ ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
 ion-searchbar,prop,autocomplete,"off" | "on",'off',false,false
 ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
-ion-searchbar,prop,cancelButtonIcon,string,'md-arrow-back',false,false
+ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', 'md-arrow-back') as string,false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,string | undefined,undefined,false,false
@@ -965,6 +965,7 @@ ion-searchbar,event,ionClear,void,true
 ion-searchbar,event,ionFocus,void,true
 ion-searchbar,event,ionInput,KeyboardEvent,true
 ion-searchbar,css-prop,--background
+ion-searchbar,css-prop,--box-shadow
 ion-searchbar,css-prop,--cancel-button-color
 ion-searchbar,css-prop,--clear-button-color
 ion-searchbar,css-prop,--color
@@ -1037,6 +1038,8 @@ ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
+ion-select,css-prop,--placeholder-color
+ion-select,css-prop,--placeholder-opacity
 
 ion-select-option,shadow
 ion-select-option,prop,customCssClass,string | undefined | { [className: string]: boolean; },undefined,false,true
@@ -1091,6 +1094,10 @@ ion-slides,event,ionSlideTransitionStart,void,true
 ion-slides,event,ionSlideWillChange,void,true
 ion-slides,css-prop,--bullet-background
 ion-slides,css-prop,--bullet-background-active
+ion-slides,css-prop,--progress-bar-background
+ion-slides,css-prop,--progress-bar-background-active
+ion-slides,css-prop,--scroll-bar-background
+ion-slides,css-prop,--scroll-bar-background-active
 
 ion-spinner,shadow
 ion-spinner,prop,color,string | undefined,undefined,false,false
@@ -1099,12 +1106,15 @@ ion-spinner,prop,name,"bubbles" | "circles" | "circular" | "crescent" | "dots" |
 ion-spinner,prop,paused,boolean,false,false,false
 ion-spinner,css-prop,--color
 
-ion-split-pane,none
+ion-split-pane,shadow
 ion-split-pane,prop,contentId,string | undefined,undefined,false,false
 ion-split-pane,prop,disabled,boolean,false,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false,false
 ion-split-pane,event,ionSplitPaneVisible,{ visible: boolean; },true
 ion-split-pane,css-prop,--border
+ion-split-pane,css-prop,--side-max-width
+ion-split-pane,css-prop,--side-min-width
+ion-split-pane,css-prop,--side-width
 
 ion-tab,shadow
 ion-tab,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false

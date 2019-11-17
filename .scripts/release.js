@@ -13,6 +13,8 @@ const fs = require('fs-extra');
 
 async function main() {
   try {
+    const dryRun = process.argv.indexOf('--dry-run') > -1;
+
     if (!process.env.GH_TOKEN) {
       throw new Error('env.GH_TOKEN is undefined');
     }
@@ -26,15 +28,31 @@ async function main() {
     // repo must be clean
     common.checkGit(tasks);
 
-    // publish each package in NPM
-    common.publishPackages(tasks, common.packages, version);
+    const { tag, confirm } = await common.askTag();
 
-    // push tag to git remote
-    publishGit(tasks, version, changelog);
+    if (!confirm) {
+      return;
+    }
+
+    if(!dryRun) {
+      // publish each package in NPM
+      common.publishPackages(tasks, common.packages, version, tag);
+
+      // push tag to git remote
+      publishGit(tasks, version, changelog);
+    }
 
     const listr = new Listr(tasks);
     await listr.run();
-    console.log(`\nionic ${version} published!! 🎉\n`);
+
+    // Dry run doesn't publish to npm or git
+    if (dryRun) {
+      console.log(`
+        \n${tc.yellow('Did not publish. Remove the "--dry-run" flag to publish:')}\n${tc.green(version)} to ${tc.cyan(tag)}\n
+      `);
+    } else {
+      console.log(`\nionic ${version} published to ${tag}!! 🎉\n`);
+    }
 
   } catch (err) {
     console.log('\n', tc.red(err), '\n');
@@ -104,10 +122,16 @@ async function publishGithub(version, tag, changelog) {
     token: process.env.GH_TOKEN
   });
 
+  let branch = await execa.stdout('git', ['symbolic-ref', '--short', 'HEAD']);
+
+  if (!branch) {
+    branch = 'master';
+  }
+
   await octokit.repos.createRelease({
     owner: 'ionic-team',
     repo: 'ionic',
-    target_commitish: 'master',
+    target_commitish: branch,
     tag_name: tag,
     name: version,
     body: changelog,
