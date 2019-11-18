@@ -55,7 +55,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   get backButtonIcon() {
-    const icon = this.icon || config.get('backButtonIcon');
+    const icon = this.icon;
     if (icon != null) {
       // icon is set on the component or by the config
       return icon;
@@ -63,11 +63,11 @@ export class BackButton implements ComponentInterface, ButtonInterface {
 
     if (this.mode === 'ios') {
       // default ios back button icon
-      return 'chevron-back';
+      return config.get('backButtonIcon', 'chevron-back');
     }
 
     // default md back button icon
-    return 'arrow-back-sharp';
+    return config.get('backButtonIcon', 'arrow-back-sharp');
   }
 
   get backButtonText() {
