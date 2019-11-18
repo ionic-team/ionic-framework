@@ -205,7 +205,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
       enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
-      enteringView.ref.changeDetectorRef.detectChanges();
 
       // Store references to the proxy by component
       this.proxyMap.set(cmpRef.instance, activatedRouteProxy);

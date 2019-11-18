@@ -20,9 +20,9 @@ export class NumericValueAccessor extends ValueAccessor {
     super(el);
   }
 
-  @HostListener('ionChange', ['$event.target.value'])
-  _handleIonChange(value: any) {
-    this.handleChangeEvent(value);
+  @HostListener('ionChange', ['$event.target'])
+  _handleIonChange(el: any) {
+    this.handleChangeEvent(el, el.value);
   }
 
   registerOnChange(fn: (_: number | null) => void) {

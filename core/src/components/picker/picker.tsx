@@ -1,8 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
-import { dismiss, eventMethod, present, safeCall } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -26,7 +26,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   animation?: Animation;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonPickerElement;
 
   @State() presented = false;
 
@@ -104,14 +104,8 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionPickerDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    const cancelBtn = this.buttons.find(b => b.role === 'cancel');
-    if (cancelBtn) {
-      this.buttonClick(cancelBtn);
-    } else {
-      this.dismiss();
-    }
+  constructor() {
+    prepareOverlay(this.el);
   }
 
   /**
@@ -169,19 +163,29 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return Promise.resolve(this.columns.find(column => column.name === name));
   }
 
-  private buttonClick(button: PickerButton) {
-    // if (this.disabled) {
-    //   return;
-    // }
-
-    // keep the time of the most recent button click
-    // a handler has been provided, execute it
-    // pass the handler the values from the inputs
-    const shouldDismiss = safeCall(button.handler, this.getSelected()) !== false;
-    if (shouldDismiss) {
-      return this.dismiss();
+  private async buttonClick(button: PickerButton) {
+    const role = button.role;
+    if (isCancel(role)) {
+      return this.dismiss(undefined, role);
     }
-    return Promise.resolve(false);
+    const shouldDismiss = await this.callButtonHandler(button);
+    if (shouldDismiss) {
+      return this.dismiss(this.getSelected(), button.role);
+    }
+    return Promise.resolve();
+  }
+
+  private async callButtonHandler(button: PickerButton | undefined) {
+    if (button) {
+      // a handler has been provided, execute it
+      // pass the handler the values from the inputs
+      const rtn = await safeCall(button.handler);
+      if (rtn === false) {
+        // if the return value of the handler is false then do not dismiss
+        return false;
+      }
+    }
+    return true;
   }
 
   private getSelected() {
@@ -199,55 +203,67 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return selected;
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      'aria-modal': 'true',
-      class: {
-        [mode]: true,
+  private onBackdropTap = () => {
+    this.dismiss(undefined, BACKDROP);
+  }
 
-        // Used internally for styling
-        [`picker-${mode}`]: true,
-
-        ...getClassMap(this.cssClass)
-      },
-      style: {
-        zIndex: 20000 + this.overlayIndex
-      }
-    };
+  private dispatchCancelHandler = (ev: CustomEvent) => {
+    const role = ev.detail.role;
+    if (isCancel(role)) {
+      const cancelButton = this.buttons.find(b => b.role === 'cancel');
+      this.callButtonHandler(cancelButton);
+    }
   }
 
   render() {
-    return [
-      <ion-backdrop
-        visible={this.showBackdrop}
-        tappable={this.backdropDismiss}
-      >
-      </ion-backdrop>,
-      <div class="picker-wrapper" role="dialog">
-        <div class="picker-toolbar">
-          {this.buttons.map(b => (
-            <div class={buttonWrapperClass(b)}>
-              <button
-                type="button"
-                onClick={() => this.buttonClick(b)}
-                class={buttonClass(b)}
-              >
-                {b.text}
-              </button>
-            </div>
-          ))}
-        </div>
+    const mode = getIonMode(this);
+    return (
+      <Host
+        aria-modal="true"
+        class={{
+          [mode]: true,
 
-        <div class="picker-columns">
-          <div class="picker-above-highlight"></div>
-            {this.presented && this.columns.map(c =>
-              <ion-picker-column col={c}></ion-picker-column>
-            )}
-          <div class="picker-below-highlight"></div>
+          // Used internally for styling
+          [`picker-${mode}`]: true,
+
+          ...getClassMap(this.cssClass)
+        }}
+        style={{
+          zIndex: `${20000 + this.overlayIndex}`
+        }}
+        onIonBackdropTap={this.onBackdropTap}
+        onIonPickerWillDismiss={this.dispatchCancelHandler}
+      >
+        <ion-backdrop
+          visible={this.showBackdrop}
+          tappable={this.backdropDismiss}
+        >
+        </ion-backdrop>
+        <div class="picker-wrapper" role="dialog">
+          <div class="picker-toolbar">
+            {this.buttons.map(b => (
+              <div class={buttonWrapperClass(b)}>
+                <button
+                  type="button"
+                  onClick={() => this.buttonClick(b)}
+                  class={buttonClass(b)}
+                >
+                  {b.text}
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div class="picker-columns">
+            <div class="picker-above-highlight"></div>
+              {this.presented && this.columns.map(c =>
+                <ion-picker-column col={c}></ion-picker-column>
+              )}
+            <div class="picker-below-highlight"></div>
+          </div>
         </div>
-      </div>
-    ];
+      </Host>
+    );
   }
 }
 

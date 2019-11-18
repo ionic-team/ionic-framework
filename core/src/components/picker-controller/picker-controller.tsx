@@ -1,12 +1,23 @@
-import { Component, ComponentInterface, Method } from '@stencil/core';
+import { Build, Component, ComponentInterface, Method } from '@stencil/core';
 
 import { OverlayController, PickerOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
+/**
+ * @deprecated Use the `pickerController` exported from core.
+ */
 @Component({
   tag: 'ion-picker-controller'
 })
 export class PickerController implements ComponentInterface, OverlayController {
+
+  constructor() {
+    if (Build.isDev) {
+      console.warn(`[DEPRECATED][ion-picker-controller] Use the pickerController export from @ionic/core:
+  import { pickerController } from '@ionic/core';
+  const picker = await pickerController.create({...});`);
+    }
+  }
 
   /**
    * Create a picker overlay with picker options.

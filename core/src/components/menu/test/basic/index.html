@@ -10,7 +10,12 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-
+  <script>
+    const forceCSSAnimations = new URLSearchParams(window.location.search).get('ionic:_forceCSSAnimations');
+    if (forceCSSAnimations) {
+      window.Animation = null;
+    }
+  </script>
 </head>
 
 <body>
@@ -88,21 +93,21 @@
     }
   </style>
 
-  <script>
+  <script type="module">
     const menuCtrl = document.querySelector('ion-menu-controller');
 
-    function openFirst() {
-      menuCtrl.enable(true, 'first');
-      menuCtrl.open('first');
+    async function openFirst() {
+      await menuCtrl.enable(true, 'first');
+      await menuCtrl.open('first');
     }
 
-    function openEnd() {
-      menuCtrl.open('end');
+    async  function openEnd() {
+      await menuCtrl.open('end');
     }
 
-    function openCustom() {
-      menuCtrl.enable(true, 'custom');
-      menuCtrl.open('custom');
+    async function openCustom() {
+      await menuCtrl.enable(true, 'custom');
+      await menuCtrl.open('custom');
     }
   </script>
 </body>

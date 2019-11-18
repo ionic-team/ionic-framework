@@ -11,6 +11,13 @@
 </ion-toolbar>
 
 <ion-toolbar>
+  <ion-title size="small">Small Title above a Default Title</ion-title>
+</ion-toolbar>
+<ion-toolbar>
+  <ion-title>Default Title</ion-title>
+</ion-toolbar>
+
+<ion-toolbar>
   <ion-buttons slot="secondary">
     <ion-button>
       <ion-icon slot="icon-only" name="contact"></ion-icon>

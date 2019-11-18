@@ -20,7 +20,7 @@ export interface AlertOptions {
 }
 
 export interface AlertInput {
-  type?: TextFieldTypes | 'checkbox' | 'radio';
+  type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';
   name?: string;
   placeholder?: string;
   value?: any;

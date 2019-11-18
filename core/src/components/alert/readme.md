@@ -17,7 +17,7 @@ Optionally, a `role` property can be added to a button, such as `cancel`. If a `
 
 ### Inputs
 
-Alerts can also include several different inputs whose data can be passed back to the app. Inputs can be used as a simple way to prompt users for information. Radios, checkboxes and text inputs are all accepted, but they cannot be mixed. For example, an alert could have all radio button inputs, or all checkbox inputs, but the same alert cannot mix radio and checkbox inputs. Do note however, different types of "text" inputs can be mixed, such as `url`, `email`, `text`, etc. If you require a complex form UI which doesn't fit within the guidelines of an alert then we recommend building the form within a modal instead.
+Alerts can also include several different inputs whose data can be passed back to the app. Inputs can be used as a simple way to prompt users for information. Radios, checkboxes and text inputs are all accepted, but they cannot be mixed. For example, an alert could have all radio button inputs, or all checkbox inputs, but the same alert cannot mix radio and checkbox inputs. Do note however, different types of "text" inputs can be mixed, such as `url`, `email`, `text`, `textarea` etc. If you require a complex form UI which doesn't fit within the guidelines of an alert then we recommend building the form within a modal instead.
 
 
 <!-- Auto Generated Below -->
@@ -101,6 +101,13 @@ export class AlertExample {
           id: 'name2-id',
           value: 'hello',
           placeholder: 'Placeholder 2'
+        },
+        // multiline input.
+        {
+          name: 'paragraph',
+          id: 'paragraph',
+          type: 'textarea',
+          placeholder: 'Placeholder 3'
         },
         {
           name: 'name3',
@@ -287,241 +294,235 @@ export class AlertExample {
 ### Javascript
 
 ```javascript
-async function presentAlert() {
-  const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
+function presentAlert() {
+  const alert = document.createElement('ion-alert');
+  alert.header = 'Alert';
+  alert.subHeader = 'Subtitle';
+  alert.message = 'This is an alert message.';
+  alert.buttons = ['OK'];
 
-  const alert = await alertController.create({
-    header: 'Alert',
-    subHeader: 'Subtitle',
-    message: 'This is an alert message.',
-    buttons: ['OK']
-  });
-  return await alert.present();
+  document.body.appendChild(alert);
+  return alert.present();
 }
 
-async function presentAlertMultipleButtons() {
-  const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
+function presentAlertMultipleButtons() {
+  const alert = document.createElement('ion-alert');
+  alert.header = 'Alert';
+  alert.subHeader = 'Subtitle';
+  alert.message = 'This is an alert message.';
+  alert.buttons = ['Cancel', 'Open Modal', 'Delete'];
 
-  const alert = await alertController.create({
-    header: 'Alert',
-    subHeader: 'Subtitle',
-    message: 'This is an alert message.',
-    buttons: ['Cancel', 'Open Modal', 'Delete']
-  });
-  return await alert.present();
+  document.body.appendChild(alert);
+  return alert.present();
 }
 
-async function presentAlertConfirm() {
-  const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
-
-  const alert = await alertController.create({
-    header: 'Confirm!',
-    message: 'Message <strong>text</strong>!!!',
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        cssClass: 'secondary',
-        handler: (blah) => {
-          console.log('Confirm Cancel: blah');
-        }
-      }, {
-        text: 'Okay',
-        handler: () => {
-          console.log('Confirm Okay')
-        }
+function presentAlertConfirm() {
+  const alert = document.createElement('ion-alert');
+  alert.header = 'Confirm!';
+  alert.message = 'Message <strong>text</strong>!!!';
+  alert.buttons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      cssClass: 'secondary',
+      handler: (blah) => {
+        console.log('Confirm Cancel: blah');
       }
-    ]
-  });
-  return await alert.present();
+    }, {
+      text: 'Okay',
+      handler: () => {
+        console.log('Confirm Okay')
+      }
+    }
+  ];
+
+  document.body.appendChild(alert);
+  return alert.present();
 }
 
-async function presentAlertPrompt() {
-  const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
+function presentAlertPrompt() {
+  const alert = document.createElement('ion-alert');
+  alert.header = 'Prompt!';
+  alert.inputs = [
+    {
+      placeholder: 'Placeholder 1'
+    },
+    {
+      name: 'name2',
+      id: 'name2-id',
+      value: 'hello',
+      placeholder: 'Placeholder 2'
+    },
+    // multiline input.
+    {
+      name: 'paragraph',
+      id: 'paragraph',
+      type: 'textarea',
+      placeholder: 'Placeholder 3'
+    },
+    {
+      name: 'name3',
+      value: 'http://ionicframework.com',
+      type: 'url',
+      placeholder: 'Favorite site ever'
+    },
+    // input date with min & max
+    {
+      name: 'name4',
+      type: 'date',
+      min: '2017-03-01',
+      max: '2018-01-12'
+    },
+    // input date without min nor max
+    {
+      name: 'name5',
+      type: 'date'
+    },
+    {
+      name: 'name6',
+      type: 'number',
+      min: -5,
+      max: 10
+    },
+    {
+      name: 'name7',
+      type: 'number'
+    }
+  ];
+  alert.buttons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      cssClass: 'secondary',
+      handler: () => {
+        console.log('Confirm Cancel')
+      }
+    }, {
+      text: 'Ok',
+      handler: () => {
+        console.log('Confirm Ok')
+      }
+    }
+  ];
 
-  const alert = await alertController.create({
-    header: 'Prompt!',
-    inputs: [
-      {
-        placeholder: 'Placeholder 1'
-      },
-      {
-        name: 'name2',
-        id: 'name2-id',
-        value: 'hello',
-        placeholder: 'Placeholder 2'
-      },
-      {
-        name: 'name3',
-        value: 'http://ionicframework.com',
-        type: 'url',
-        placeholder: 'Favorite site ever'
-      },
-      // input date with min & max
-      {
-        name: 'name4',
-        type: 'date',
-        min: '2017-03-01',
-        max: '2018-01-12'
-      },
-      // input date without min nor max
-      {
-        name: 'name5',
-        type: 'date'
-      },
-      {
-        name: 'name6',
-        type: 'number',
-        min: -5,
-        max: 10
-      },
-      {
-        name: 'name7',
-        type: 'number'
-      }
-    ],
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        cssClass: 'secondary',
-        handler: () => {
-          console.log('Confirm Cancel')
-        }
-      }, {
-        text: 'Ok',
-        handler: () => {
-          console.log('Confirm Ok')
-        }
-      }
-    ]
-  });
-  return await alert.present();
+  document.body.appendChild(alert);
+  return alert.present();
 }
 
-async function presentAlertRadio() {
-  const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
-
-  const alert = await alertController.create({
-    header: 'Radio',
-    inputs: [
-      {
-        type: 'radio',
-        label: 'Radio 1',
-        value: 'value1',
-        checked: true
-      },
-      {
-        type: 'radio',
-        label: 'Radio 2',
-        value: 'value2'
-      },
-      {
-        type: 'radio',
-        label: 'Radio 3',
-        value: 'value3'
-      },
-      {
-        type: 'radio',
-        label: 'Radio 4',
-        value: 'value4'
-      },
-      {
-        type: 'radio',
-        label: 'Radio 5',
-        value: 'value5'
-      },
-      {
-        type: 'radio',
-        label: 'Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 ',
-        value: 'value6'
+function presentAlertRadio() {
+  const alert = document.createElement('ion-alert');
+  alert.header = 'Radio';
+  alert.inputs = [
+    {
+      type: 'radio',
+      label: 'Radio 1',
+      value: 'value1',
+      checked: true
+    },
+    {
+      type: 'radio',
+      label: 'Radio 2',
+      value: 'value2'
+    },
+    {
+      type: 'radio',
+      label: 'Radio 3',
+      value: 'value3'
+    },
+    {
+      type: 'radio',
+      label: 'Radio 4',
+      value: 'value4'
+    },
+    {
+      type: 'radio',
+      label: 'Radio 5',
+      value: 'value5'
+    },
+    {
+      type: 'radio',
+      label: 'Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 ',
+      value: 'value6'
+    }
+  ];
+  alert.buttons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      cssClass: 'secondary',
+      handler: () => {
+        console.log('Confirm Cancel')
       }
-    ],
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        cssClass: 'secondary',
-        handler: () => {
-          console.log('Confirm Cancel')
-        }
-      }, {
-        text: 'Ok',
-        handler: () => {
-          console.log('Confirm Ok')
-        }
+    }, {
+      text: 'Ok',
+      handler: () => {
+        console.log('Confirm Ok')
       }
-    ]
-  });
-  return await alert.present();
+    }
+  ];
+  document.body.appendChild(alert);
+  return alert.present();
 }
 
-async function presentAlertCheckbox() {
-  const alertController = document.querySelector('ion-alert-controller');
-  await alertController.componentOnReady();
+function presentAlertCheckbox() {
+  const alert = document.createElement('ion-alert');
+  alert.header = 'Checkbox';
+  alert.inputs = [
+    {
+      type: 'checkbox',
+      label: 'Checkbox 1',
+      value: 'value1',
+      checked: true
+    },
 
-  const alert = await alertController.create({
-    header: 'Checkbox',
-    inputs: [
-      {
-        type: 'checkbox',
-        label: 'Checkbox 1',
-        value: 'value1',
-        checked: true
-      },
+    {
+      type: 'checkbox',
+      label: 'Checkbox 2',
+      value: 'value2'
+    },
 
-      {
-        type: 'checkbox',
-        label: 'Checkbox 2',
-        value: 'value2'
-      },
+    {
+      type: 'checkbox',
+      label: 'Checkbox 3',
+      value: 'value3'
+    },
 
-      {
-        type: 'checkbox',
-        label: 'Checkbox 3',
-        value: 'value3'
-      },
+    {
+      type: 'checkbox',
+      label: 'Checkbox 4',
+      value: 'value4'
+    },
 
-      {
-        type: 'checkbox',
-        label: 'Checkbox 4',
-        value: 'value4'
-      },
+    {
+      type: 'checkbox',
+      label: 'Checkbox 5',
+      value: 'value5'
+    },
 
-      {
-        type: 'checkbox',
-        label: 'Checkbox 5',
-        value: 'value5'
-      },
-
-      {
-        type: 'checkbox',
-        label: 'Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6',
-        value: 'value6'
+    {
+      type: 'checkbox',
+      label: 'Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6',
+      value: 'value6'
+    }
+  ];
+  alert.buttons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      cssClass: 'secondary',
+      handler: () => {
+        console.log('Confirm Cancel')
       }
-    ],
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        cssClass: 'secondary',
-        handler: () => {
-          console.log('Confirm Cancel')
-        }
-      }, {
-        text: 'Ok',
-        handler: () => {
-          console.log('Confirm Ok')
-        }
+    }, {
+      text: 'Ok',
+      handler: () => {
+        console.log('Confirm Ok')
       }
-    ]
-  });
-  return await alert.present();
+    }
+  ];
+
+  document.body.appendChild(alert);
+  return alert.present();
 }
 ```
 
@@ -532,7 +533,7 @@ async function presentAlertCheckbox() {
 import React, { useState } from 'react';
 import { IonAlert, IonButton, IonContent } from '@ionic/react';
 
-export const AlertExample: React.FunctionComponent = () => {
+export const AlertExample: React.FC = () => {
 
   const [showAlert1, setShowAlert1] = useState(false);
   const [showAlert2, setShowAlert2] = useState(false);
@@ -1038,21 +1039,21 @@ export default {
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                                                                                                                                                                                                                                                                        | Type                                                                                   | Default     |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
-| `animated`        | `animated`         | If `true`, the alert will animate.                                                                                                                                                                                                                                                                                                 | `boolean`                                                                              | `true`      |
-| `backdropDismiss` | `backdrop-dismiss` | If `true`, the alert will be dismissed when the backdrop is clicked.                                                                                                                                                                                                                                                               | `boolean`                                                                              | `true`      |
-| `buttons`         | --                 | Array of buttons to be added to the alert.                                                                                                                                                                                                                                                                                         | `(string \| AlertButton)[]`                                                            | `[]`        |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                                                                                                                   | `string \| string[] \| undefined`                                                      | `undefined` |
-| `enterAnimation`  | --                 | Animation to use when the alert is presented.                                                                                                                                                                                                                                                                                      | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `header`          | `header`           | The main title in the heading of the alert.                                                                                                                                                                                                                                                                                        | `string \| undefined`                                                                  | `undefined` |
-| `inputs`          | --                 | Array of input to show in the alert.                                                                                                                                                                                                                                                                                               | `AlertInput[]`                                                                         | `[]`        |
-| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                                                                             | `boolean`                                                                              | `true`      |
-| `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                                                                                                                                                                                                                                      | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `message`         | `message`          | The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string \| undefined`                                                                  | `undefined` |
-| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                  | `"ios" \| "md"`                                                                        | `undefined` |
-| `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                                                                                                                                                                                                                                               | `string \| undefined`                                                                  | `undefined` |
-| `translucent`     | `translucent`      | If `true`, the alert will be translucent.                                                                                                                                                                                                                                                                                          | `boolean`                                                                              | `false`     |
+| Property          | Attribute          | Description                                                                                                                                                                                                                                                                                                                        | Type                                                    | Default     |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ----------- |
+| `animated`        | `animated`         | If `true`, the alert will animate.                                                                                                                                                                                                                                                                                                 | `boolean`                                               | `true`      |
+| `backdropDismiss` | `backdrop-dismiss` | If `true`, the alert will be dismissed when the backdrop is clicked.                                                                                                                                                                                                                                                               | `boolean`                                               | `true`      |
+| `buttons`         | --                 | Array of buttons to be added to the alert.                                                                                                                                                                                                                                                                                         | `(string \| AlertButton)[]`                             | `[]`        |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                                                                                                                   | `string \| string[] \| undefined`                       | `undefined` |
+| `enterAnimation`  | --                 | Animation to use when the alert is presented.                                                                                                                                                                                                                                                                                      | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `header`          | `header`           | The main title in the heading of the alert.                                                                                                                                                                                                                                                                                        | `string \| undefined`                                   | `undefined` |
+| `inputs`          | --                 | Array of input to show in the alert.                                                                                                                                                                                                                                                                                               | `AlertInput[]`                                          | `[]`        |
+| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                                                                             | `boolean`                                               | `true`      |
+| `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                                                                                                                                                                                                                                      | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `message`         | `message`          | The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string \| undefined`                                   | `undefined` |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                  | `"ios" \| "md"`                                         | `undefined` |
+| `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                                                                                                                                                                                                                                               | `string \| undefined`                                   | `undefined` |
+| `translucent`     | `translucent`      | If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                                                                               | `boolean`                                               | `false`     |
 
 
 ## Events
@@ -1110,15 +1111,16 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name           | Description                 |
-| -------------- | --------------------------- |
-| `--background` | Background of the alert     |
-| `--height`     | Height of the alert         |
-| `--max-height` | Maximum height of the alert |
-| `--max-width`  | Maximum width of the alert  |
-| `--min-height` | Minimum height of the alert |
-| `--min-width`  | Minimum width of the alert  |
-| `--width`      | Width of the alert          |
+| Name                 | Description                 |
+| -------------------- | --------------------------- |
+| `--backdrop-opacity` | Opacity of the backdrop     |
+| `--background`       | Background of the alert     |
+| `--height`           | Height of the alert         |
+| `--max-height`       | Maximum height of the alert |
+| `--max-width`        | Maximum width of the alert  |
+| `--min-height`       | Minimum height of the alert |
+| `--min-width`        | Minimum width of the alert  |
+| `--width`            | Width of the alert          |
 
 
 ## Dependencies

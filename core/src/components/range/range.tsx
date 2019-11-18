@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
-import { clamp, debounceEvent } from '../../utils/helpers';
+import { clamp, debounceEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -113,7 +113,7 @@ export class Range implements ComponentInterface {
   @Watch('disabled')
   protected disabledChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
     this.emitStyle();
   }
@@ -169,29 +169,32 @@ export class Range implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  componentWillLoad() {
+  connectedCallback() {
     this.updateRatio();
     this.debounceChanged();
-    this.emitStyle();
+    this.disabledChanged();
   }
 
-  async componentDidLoad() {
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.rangeSlider!,
-      gestureName: 'range',
-      gesturePriority: 100,
-      threshold: 0,
-      onStart: ev => this.onStart(ev),
-      onMove: ev => this.onMove(ev),
-      onEnd: ev => this.onEnd(ev),
-    });
-    this.gesture.setDisabled(this.disabled);
-  }
-
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
+    }
+  }
+
+  async componentDidLoad() {
+    const rangeSlider = this.rangeSlider;
+    if (rangeSlider) {
+      this.gesture = (await import('../../utils/gesture')).createGesture({
+        el: rangeSlider,
+        gestureName: 'range',
+        gesturePriority: 100,
+        threshold: 0,
+        onStart: ev => this.onStart(ev),
+        onMove: ev => this.onMove(ev),
+        onEnd: ev => this.onEnd(ev),
+      });
+      this.gesture.enable(!this.disabled);
     }
   }
 
@@ -405,6 +408,8 @@ export class Range implements ComponentInterface {
         ticks.push(tick);
       }
     }
+
+    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 
     return (
       <Host

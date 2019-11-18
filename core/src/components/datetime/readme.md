@@ -89,9 +89,8 @@ experience.
 
 Ionic uses the [ISO 8601 datetime format](https://www.w3.org/TR/NOTE-datetime)
 for its value. The value is simply a string, rather than using JavaScript's
-`Date` object. Additionally, when using the ISO datetime format, it makes it
-easier to serialize and pass within JSON objects, and sending databases a
-standardized format which it can be easily parsed if need be.
+`Date` object. Using the ISO datetime format makes it easy to serialize
+and parse within JSON objects and databases.
 
 An ISO format can be used as a simple year, or just the hour and minute, or get
 more detailed down to the millisecond and timezone. Any of the ISO formats below
@@ -115,9 +114,9 @@ January always has a leading zero, such as `01`. Additionally, the hour is
 always in the 24-hour format, so `00` is `12am` on a 12-hour clock, `13` means
 `1pm`, and `23` means `11pm`.
 
-It's also important to note that neither the `displayFormat` or `pickerFormat`
+Also note that neither the `displayFormat` nor the `pickerFormat`
 can set the datetime value's output, which is the value that is set by the
-component's `ngModel`. The format's are merely for displaying the value as text
+component's `ngModel`. The formats are merely for displaying the value as text
 and the picker's interface, but the datetime's value is always persisted as a
 valid ISO 8601 datetime string.
 
@@ -416,7 +415,7 @@ const customDayShortNames = [
   'l\u00f8r'
 ];
 
-export const DateTimeExample: React.FunctionComponent = () => (
+export const DateTimeExample: React.FC = () => (
   <IonContent>
     <IonItem>
       <IonLabel>MMMM</IonLabel>

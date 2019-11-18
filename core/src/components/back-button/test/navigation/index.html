@@ -21,7 +21,6 @@
 
   async function loadFirstPage() {
     const nav = document.querySelector('ion-nav');
-    await nav.componentOnReady();
     const firstPage = document.createElement('div');
     firstPage.classList.add('first-page');
     firstPage.innerHTML = `

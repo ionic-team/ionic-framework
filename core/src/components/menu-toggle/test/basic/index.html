@@ -91,21 +91,18 @@
 
   <script>
 
-    async function openDefault() {
+    function openDefault() {
       const menuButton = document.querySelector('ion-menu-toggle');
-      await menuButton.componentOnReady();
       menuButton.menu = null;
     }
 
-    async function openStart() {
+    function openStart() {
       const menuButton = document.querySelector('ion-menu-toggle');
-      await menuButton.componentOnReady();
       menuButton.menu = 'start';
     }
 
-    async function openEnd() {
+    function openEnd() {
       const menuButton = document.querySelector('ion-menu-toggle');
-      await menuButton.componentOnReady();
       menuButton.menu = 'end';
     }
   </script>

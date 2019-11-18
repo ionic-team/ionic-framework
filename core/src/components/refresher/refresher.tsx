@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
@@ -75,7 +75,7 @@ export class Refresher implements ComponentInterface {
   @Watch('disabled')
   disabledChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
   }
 
@@ -97,21 +97,19 @@ export class Refresher implements ComponentInterface {
    */
   @Event() ionStart!: EventEmitter<void>;
 
-  async componentDidLoad() {
+  async connectedCallback() {
     if (this.el.getAttribute('slot') !== 'fixed') {
       console.error('Make sure you use: <ion-refresher slot="fixed">');
       return;
     }
     const contentEl = this.el.closest('ion-content');
-    if (contentEl) {
-      await contentEl.componentOnReady();
-      this.scrollEl = await contentEl.getScrollElement();
-    } else {
-      console.error('ion-refresher did not attach, make sure the parent is an ion-content.');
+    if (!contentEl) {
+      console.error('<ion-refresher> must be used inside an <ion-content>');
+      return;
     }
-
+    this.scrollEl = await contentEl.getScrollElement();
     this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.el.closest('ion-content') as any,
+      el: contentEl,
       gestureName: 'refresher',
       gesturePriority: 10,
       direction: 'y',
@@ -126,7 +124,7 @@ export class Refresher implements ComponentInterface {
     this.disabledChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.scrollEl = undefined;
     if (this.gesture) {
       this.gesture.destroy();
@@ -355,24 +353,27 @@ export class Refresher implements ComponentInterface {
     });
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-    return {
-      slot: 'fixed',
-      class: {
-        [mode]: true,
+    return (
+      <Host
+        slot="fixed"
+        class={{
+          [mode]: true,
 
-        // Used internally for styling
-        [`refresher-${mode}`]: true,
+          // Used internally for styling
+          [`refresher-${mode}`]: true,
 
-        'refresher-active': this.state !== RefresherState.Inactive,
-        'refresher-pulling': this.state === RefresherState.Pulling,
-        'refresher-ready': this.state === RefresherState.Ready,
-        'refresher-refreshing': this.state === RefresherState.Refreshing,
-        'refresher-cancelling': this.state === RefresherState.Cancelling,
-        'refresher-completing': this.state === RefresherState.Completing
-      }
-    };
+          'refresher-active': this.state !== RefresherState.Inactive,
+          'refresher-pulling': this.state === RefresherState.Pulling,
+          'refresher-ready': this.state === RefresherState.Ready,
+          'refresher-refreshing': this.state === RefresherState.Refreshing,
+          'refresher-cancelling': this.state === RefresherState.Cancelling,
+          'refresher-completing': this.state === RefresherState.Completing
+        }}
+      >
+      </Host>
+    );
   }
 }
 

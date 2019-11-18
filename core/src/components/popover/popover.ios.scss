@@ -8,6 +8,7 @@
   --width: #{$popover-ios-width};
   --max-height: #{$popover-ios-max-height};
   --box-shadow: none;
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.08);
 }
 
 .popover-content {
@@ -57,8 +58,10 @@
 // Translucent Popover
 // -----------------------------------------
 
-:host(.popover-translucent) .popover-content,
-:host(.popover-translucent) .popover-arrow::after {
-  background: $popover-ios-translucent-background-color;
-  backdrop-filter: $popover-ios-translucent-filter;
+@supports (backdrop-filter: blur(0)) {
+  :host(.popover-translucent) .popover-content,
+  :host(.popover-translucent) .popover-arrow::after {
+    background: $popover-ios-translucent-background-color;
+    backdrop-filter: $popover-ios-translucent-filter;
+  }
 }

@@ -7,8 +7,6 @@ export default {
     format: 'es'
   },
   plugins: [
-    resolve({
-      module: true
-    })
+    resolve()
   ]
 };

@@ -97,6 +97,8 @@
   appearance: none;
 
   &::placeholder {
+    @include padding(0);
+
     color: var(--placeholder-color);
 
     font-family: inherit;

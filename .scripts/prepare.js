@@ -17,8 +17,12 @@ async function main() {
       throw new Error('env.GH_TOKEN is undefined');
     }
 
-    const version = await askVersion();
+    const { version, confirm } = await askVersion();
     const install = process.argv.indexOf('--no-install') < 0;
+
+    if (!confirm) {
+      return;
+    }
 
     // compile and verify packages
     await preparePackages(common.packages, version, install);
@@ -85,8 +89,8 @@ async function askVersion() {
     }
   ];
 
-  const {version} = await inquirer.prompt(prompts);
-  return version;
+  const { version, confirm } = await inquirer.prompt(prompts);
+  return { version, confirm };
 }
 
 
@@ -107,15 +111,17 @@ async function preparePackages(packages, version, install) {
   });
 
   // add update package.json of each project
-  packages.forEach(package => {
-    common.updatePackageVersion(tasks, package, version);
-  });
+  common.updatePackageVersions(tasks, packages, version);
 
   // generate changelog
   generateChangeLog(tasks);
 
+  // check dist folders
+  common.checkTestDist(tasks);
+
   // update core readme with version number
   updateCoreReadme(tasks, version);
+  common.copyCDNLoader(tasks, version);
 
   const listr = new Listr(tasks, { showSubtasks: true });
   await listr.run();
@@ -170,7 +176,6 @@ function updateCoreReadme(tasks, version) {
     task: () => execa('node', ['update-readme.js', version], { cwd: path.join(common.rootDir, 'core', 'scripts') }),
   });
 }
-
 
 const SEMVER_INCREMENTS = ['patch', 'minor', 'major'];
 

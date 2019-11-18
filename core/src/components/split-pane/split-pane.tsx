@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -18,7 +18,8 @@ const QUERY: { [key: string]: string } = {
   styleUrls: {
     ios: 'split-pane.ios.scss',
     md: 'split-pane.md.scss'
-  }
+  },
+  shadow: true
 })
 export class SplitPane implements ComponentInterface {
 
@@ -29,8 +30,6 @@ export class SplitPane implements ComponentInterface {
 
   /**
    * The content `id` of the split-pane's main content.
-   * This property can be used instead of the `[main]` attribute to select the `main`
-   * content of the split-pane.
    */
   @Prop() contentId?: string;
 
@@ -57,12 +56,12 @@ export class SplitPane implements ComponentInterface {
     this.ionSplitPaneVisible.emit(detail);
   }
 
-  componentDidLoad() {
+  connectedCallback() {
     this.styleChildren();
     this.updateState();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.rmL) {
       this.rmL();
       this.rmL = undefined;
@@ -133,7 +132,7 @@ export class SplitPane implements ComponentInterface {
     let foundMain = false;
     for (let i = 0; i < nu; i++) {
       const child = children[i] as HTMLElement;
-      const isMain = contentId !== undefined ? child.id === contentId : child.hasAttribute('main');
+      const isMain = contentId !== undefined && child.id === contentId;
       if (isMain) {
         if (foundMain) {
           console.warn('split pane cannot have more than one main node');
@@ -148,19 +147,22 @@ export class SplitPane implements ComponentInterface {
     }
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
 
-    return {
-      class: {
-        [mode]: true,
+          // Used internally for styling
+          [`split-pane-${mode}`]: true,
 
-        // Used internally for styling
-        [`split-pane-${mode}`]: true,
-
-        'split-pane-visible': this.visible
-      }
-    };
+          'split-pane-visible': this.visible
+        }}
+      >
+        <slot></slot>
+      </Host>
+    );
   }
 }
 

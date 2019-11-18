@@ -85,5 +85,13 @@ export const PlatformConfiguration = {
     innerWidth: 360,
     innerHeight: 740,
     matchMedia: mockMatchMedia(['(any-pointer:coarse)'])
+  },
+  iPadOS: {
+    navigator: {
+      userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0 Safari/605.1.15'
+    },
+    innerWidth: 1024,
+    innerHeight: 1292,
+    matchMedia: mockMatchMedia(['(any-pointer:coarse)'])
   }
 };

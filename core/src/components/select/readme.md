@@ -31,15 +31,18 @@ By default, the select uses object equality (`===`) to determine if an option is
 
 ## Select Buttons
 
-By default, the alert has two buttons: `Cancel` and `OK`. Each button's text can be customized using the `cancelText` and `okText` properties.
+The alert supports two buttons: `Cancel` and `OK`. Each button's text can be customized using the `cancelText` and `okText` properties.
 
 The `action-sheet` and `popover` interfaces do not have an `OK` button, clicking on any of the options will automatically close the overlay and select that value. The `popover` interface does not have a `Cancel` button, clicking on the backdrop will close the overlay.
 
 
 ## Interface Options
 
-Since select uses the alert, action sheet and popover interfaces, options can be passed to these components through the `interfaceOptions` property. This can be used to pass a custom header, subheader, css class, and more. See the [AlertController API docs](../alert-controller), [ActionSheetController API docs](../action-sheet-controller), and [PopoverController API docs](../popover-controller) for the properties that each interface accepts.
+Since select uses the alert, action sheet and popover interfaces, options can be passed to these components through the `interfaceOptions` property. This can be used to pass a custom header, subheader, css class, and more. 
 
+See the [AlertController API docs](../alert-controller), [ActionSheetController API docs](../action-sheet-controller), and [PopoverController API docs](../popover-controller) for the properties that each interface accepts.
+
+Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
 
 <!-- Auto Generated Below -->
 
@@ -475,7 +478,7 @@ const compareWith = (o1: any, o2: any) => {
   return o1 && o2 ? o1.id === o2.id : o1 === o2;
 };
 
-export const SelectExample: React.FunctionComponent = () => (
+export const SelectExample: React.FC = () => (
   <IonContent>
     ## Single Selection
     <IonList>
@@ -790,13 +793,15 @@ Type: `Promise<any>`
 
 ## CSS Custom Properties
 
-| Name               | Description                                                                                               |
-| ------------------ | --------------------------------------------------------------------------------------------------------- |
+| Name                    | Description                                                                                               |
+| ----------------------- | --------------------------------------------------------------------------------------------------------- |
 | `--opacity`        | Opacity of the select when disabled                                                                       |
-| `--padding-bottom` | Bottom padding of the select                                                                              |
-| `--padding-end`    | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select |
-| `--padding-start`  | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the select |
-| `--padding-top`    | Top padding of the select                                                                                 |
+| `--padding-bottom`      | Bottom padding of the select                                                                              |
+| `--padding-end`         | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select |
+| `--padding-start`       | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the select |
+| `--padding-top`         | Top padding of the select                                                                                 |
+| `--placeholder-color`   | Color of the select placeholder text                                                                      |
+| `--placeholder-opacity` | Opacity of the select placeholder text                                                                    |
 
 
 ----------------------------------------------

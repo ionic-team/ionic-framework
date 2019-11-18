@@ -5,6 +5,7 @@
 const tc = require('turbocolor');
 const execa = require('execa');
 const Listr = require('listr');
+const path = require('path');
 const octokit = require('@octokit/rest')()
 const common = require('./common');
 const fs = require('fs-extra');
@@ -12,9 +13,13 @@ const fs = require('fs-extra');
 
 async function main() {
   try {
+    const dryRun = process.argv.indexOf('--dry-run') > -1;
+
     if (!process.env.GH_TOKEN) {
       throw new Error('env.GH_TOKEN is undefined');
     }
+
+    checkProductionRelease();
 
     const tasks = [];
     const { version } = common.readPkg('core');
@@ -23,15 +28,31 @@ async function main() {
     // repo must be clean
     common.checkGit(tasks);
 
-    // publish each package in NPM
-    common.publishPackages(tasks, common.packages, version);
+    const { tag, confirm } = await common.askTag();
 
-    // push tag to git remote
-    publishGit(tasks, version, changelog);
+    if (!confirm) {
+      return;
+    }
+
+    if(!dryRun) {
+      // publish each package in NPM
+      common.publishPackages(tasks, common.packages, version, tag);
+
+      // push tag to git remote
+      publishGit(tasks, version, changelog);
+    }
 
     const listr = new Listr(tasks);
     await listr.run();
-    console.log(`\nionic ${version} published!! 🎉\n`);
+
+    // Dry run doesn't publish to npm or git
+    if (dryRun) {
+      console.log(`
+        \n${tc.yellow('Did not publish. Remove the "--dry-run" flag to publish:')}\n${tc.green(version)} to ${tc.cyan(tag)}\n
+      `);
+    } else {
+      console.log(`\nionic ${version} published to ${tag}!! 🎉\n`);
+    }
 
   } catch (err) {
     console.log('\n', tc.red(err), '\n');
@@ -39,6 +60,15 @@ async function main() {
   }
 }
 
+function checkProductionRelease() {
+  const corePath = common.projectPath('core');
+  const hasEsm = fs.existsSync(path.join(corePath, 'dist', 'esm'));
+  const hasEsmEs5 = fs.existsSync(path.join(corePath, 'dist', 'esm-es5'));
+  const hasCjs = fs.existsSync(path.join(corePath, 'dist', 'cjs'));
+  if (!hasEsm || !hasEsmEs5 || !hasCjs) {
+    throw new Error('core build is not a production build');
+  }
+}
 
 function publishGit(tasks, version, changelog) {
   const tag = `v${version}`;
@@ -54,7 +84,7 @@ function publishGit(tasks, version, changelog) {
     },
     {
       title: 'Push tags to remove',
-      task: () => execa('git', ['push', '--tags'], { cwd: common.rootDir })
+      task: () => execa('git', ['push', '--follow-tags'], { cwd: common.rootDir })
     },
     {
       title: 'Publish Github release',
@@ -92,10 +122,16 @@ async function publishGithub(version, tag, changelog) {
     token: process.env.GH_TOKEN
   });
 
+  let branch = await execa.stdout('git', ['symbolic-ref', '--short', 'HEAD']);
+
+  if (!branch) {
+    branch = 'master';
+  }
+
   await octokit.repos.createRelease({
     owner: 'ionic-team',
     repo: 'ionic',
-    target_commitish: 'master',
+    target_commitish: branch,
     tag_name: tag,
     name: version,
     body: changelog,

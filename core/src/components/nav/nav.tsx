@@ -3,6 +3,7 @@ import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch, h 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
 
@@ -18,6 +19,7 @@ export class Nav implements NavOutlet {
 
   private transInstr: TransitionInstruction[] = [];
   private sbAni?: Animation;
+  private animationEnabled = true;
   private useRouter = false;
   private isTransitioning = false;
   private destroyed = false;
@@ -36,7 +38,7 @@ export class Nav implements NavOutlet {
   @Watch('swipeGesture')
   swipeGestureChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.swipeGesture !== true);
+      this.gesture.enable(this.swipeGesture === true);
     }
   }
 
@@ -937,6 +939,7 @@ export class Nav implements NavOutlet {
       !!this.swipeGesture &&
       !this.isTransitioning &&
       this.transInstr.length === 0 &&
+      this.animationEnabled &&
       this.canGoBackSync()
     );
   }
@@ -960,7 +963,30 @@ export class Nav implements NavOutlet {
 
   private onEnd(shouldComplete: boolean, stepValue: number, dur: number) {
     if (this.sbAni) {
-      this.sbAni.progressEnd(shouldComplete, stepValue, dur);
+      this.animationEnabled = false;
+      this.sbAni.onFinish(() => {
+        this.animationEnabled = true;
+      }, { oneTimeCallback: true });
+
+      // Account for rounding errors in JS
+      let newStepValue = (shouldComplete) ? -0.001 : 0.001;
+
+      /**
+       * Animation will be reversed here, so need to
+       * reverse the easing curve as well
+       *
+       * Additionally, we need to account for the time relative
+       * to the new easing curve, as `stepValue` is going to be given
+       * in terms of a linear curve.
+       */
+      if (!shouldComplete) {
+        this.sbAni.easing('cubic-bezier(1, 0, 0.68, 0.28)');
+        newStepValue += getTimeGivenProgression([0, 0], [1, 0], [0.68, 0.28], [1, 1], stepValue)[0];
+      } else {
+        newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], stepValue)[0];
+      }
+
+      (this.sbAni as Animation).progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
     }
   }
 
