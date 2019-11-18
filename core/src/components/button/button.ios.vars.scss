@@ -34,13 +34,13 @@ $button-ios-height:                                   2.8em !default;
 $button-ios-border-radius:                            10px !default;
 
 /// @prop - Font size of the button text
-$button-ios-font-size:                                17px !default;
+$button-ios-font-size:                                16px !default;
 
 /// @prop - Font weight of the button text
-$button-ios-font-weight:                              normal !default;
+$button-ios-font-weight:                              500 !default;
 
 /// @prop - Letter spacing of the button text
-$button-ios-letter-spacing:                           0 !default;
+$button-ios-letter-spacing:                           -.03em !default;
 
 /// @prop - Background color of the button
 $button-ios-background-color:                         ion-color(primary, base) !default;
@@ -152,6 +152,15 @@ $button-ios-outline-background-color-focused:         ion-color(primary, base, $
 
 // iOS Clear Button
 // --------------------------------------------------
+
+/// @prop - Font size of the clear button
+$button-ios-clear-font-size:                          17px !default;
+
+/// @prop - Font weight of the clear button
+$button-ios-clear-font-weight:                        normal !default;
+
+/// @prop - Letter spacing of the clear button
+$button-ios-clear-letter-spacing:                     0 !default;
 
 /// @prop - Border color of the clear button
 $button-ios-clear-border-color:                       transparent !default;
