@@ -76,6 +76,7 @@
 :host(.button-solid) {
   --background: #{ion-color(primary, base)};
   --background-focused: #{ion-color(primary, shade)};
+  // TODO
   // --background-hover: #{ion-color(primary, tint)};
   --color: #{ion-color(primary, contrast)};
   --color-activated: #{ion-color(primary, contrast)};
@@ -299,6 +300,7 @@ ion-ripple-effect {
 }
 
 @media (any-hover: hover) {
+  // TODO
   // :host(:hover) .button-native {
   //   color: var(--color-hover);
   // }
