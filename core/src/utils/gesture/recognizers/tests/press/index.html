@@ -16,16 +16,10 @@
       
       const square = document.querySelector('.square');
       
-      const canStart = (d) => {
-        console.log('can start!');
-        return true;
-      }
-      
       const pressRecognizer = createPressRecognizer({
         el: square,
         time: 251,
         minThreshold: 10,
-        canStart: (detail) => canStart(detail),
         onStart: () => square.classList.remove('pressedUp'),
         onPressHandler: () => square.classList.toggle('pressed'),
         onPressUpHandler: () => square.classList.add('pressedUp')
