@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "4.10.0-rc.3",
+  "version": "5.0.0-beta.0",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -39,7 +39,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^4.10.0",
+    "@ionic/core": "5.0.0-beta.0",
     "tslib": "*"
   },
   "peerDependencies": {

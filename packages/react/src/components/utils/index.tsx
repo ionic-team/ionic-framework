@@ -1,4 +1,4 @@
-import { Platforms, getPlatforms as getPlatformsCore, isPlatform as isPlatformCore } from '@ionic/core';
+import { Config as CoreConfig, Platforms, getPlatforms as getPlatformsCore, isPlatform as isPlatformCore } from '@ionic/core';
 import React from 'react';
 
 import { IonicReactProps } from '../IonicReactProps';
@@ -14,7 +14,7 @@ export const createForwardRef = <PropType, ElementType>(ReactComponent: any, dis
   return React.forwardRef(forwardRef);
 };
 
-export * from './attachEventProps';
+export * from './attachProps';
 export * from './case';
 
 export const isPlatform = (platform: Platforms) => {
@@ -23,4 +23,14 @@ export const isPlatform = (platform: Platforms) => {
 
 export const getPlatforms = () => {
   return getPlatformsCore(window);
+};
+
+export const getConfig = (): CoreConfig | null => {
+  if (typeof (window as any) !== 'undefined') {
+    const Ionic = (window as any).Ionic;
+    if (Ionic && Ionic.config) {
+      return Ionic.config;
+    }
+  }
+  return null;
 };

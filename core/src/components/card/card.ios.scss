@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --background: var(--ion-item-background, transparent);
+  --background: #{$item-ios-background};
   --color: #{$card-ios-text-color};
 
   @include margin($card-ios-margin-top, $card-ios-margin-end, $card-ios-margin-bottom, $card-ios-margin-start);

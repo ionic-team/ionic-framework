@@ -36,14 +36,14 @@ export class Content implements ComponentInterface {
     event: undefined!,
     startX: 0,
     startY: 0,
-    startTimeStamp: 0,
+    startTime: 0,
     currentX: 0,
     currentY: 0,
     velocityX: 0,
     velocityY: 0,
     deltaX: 0,
     deltaY: 0,
-    timeStamp: 0,
+    currentTime: 0,
     data: undefined,
     isScrolling: true,
   };
@@ -379,19 +379,19 @@ const updateScrollDetail = (
 ) => {
   const prevX = detail.currentX;
   const prevY = detail.currentY;
-  const prevT = detail.timeStamp;
+  const prevT = detail.currentTime;
   const currentX = el.scrollLeft;
   const currentY = el.scrollTop;
   const timeDelta = timestamp - prevT;
 
   if (shouldStart) {
     // remember the start positions
-    detail.startTimeStamp = timestamp;
+    detail.startTime = timestamp;
     detail.startX = currentX;
     detail.startY = currentY;
     detail.velocityX = detail.velocityY = 0;
   }
-  detail.timeStamp = timestamp;
+  detail.currentTime = timestamp;
   detail.currentX = detail.scrollLeft = currentX;
   detail.currentY = detail.scrollTop = currentY;
   detail.deltaX = currentX - detail.startX;

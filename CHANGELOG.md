@@ -1,3 +1,186 @@
+## [4.11.5](https://github.com/ionic-team/ionic/compare/v4.11.0...v4.11.5) (2019-11-14)
+
+
+### Bug Fixes
+
+* **react:** improved lifecycle hooks to deal with stale closures, fixes [#19873](https://github.com/ionic-team/ionic/issues/19873) ([#19874](https://github.com/ionic-team/ionic/issues/19874)) ([5ff786a](https://github.com/ionic-team/ionic/commit/5ff786a23d5aa32281bbf5daaa7f8156de39caca))
+
+
+## [4.11.4](https://github.com/ionic-team/ionic/compare/v4.11.1...v4.11.4) (2019-11-07)
+
+
+### Bug Fixes
+
+* **react:** check for component unmount, fixes [#19859](https://github.com/ionic-team/ionic/issues/19859) ([7356c40](https://github.com/ionic-team/ionic/commit/7356c401742ce2b3241d6ab05fce0fa65d2f1f8a))
+* **react:** adding multiple subscriptions to lifecycle events, fixes [#19792](https://github.com/ionic-team/ionic/issues/19792) ([#19858](https://github.com/ionic-team/ionic/issues/19858)) ([0a3014d](https://github.com/ionic-team/ionic/commit/0a3014d35e2102570fd3d8c5ada29eb01aab18e9))
+* **react:** add check to warn if no ionpage is found, fixes [#19832](https://github.com/ionic-team/ionic/issues/19832) ([#19857](https://github.com/ionic-team/ionic/issues/19857)) ([628e766](https://github.com/ionic-team/ionic/commit/628e76668ea72baebdb02b9dcfe24c0da837fb08))
+* **react:** expand the location stack to better support back button, fixes [#19748](https://github.com/ionic-team/ionic/issues/19748) ([#19856](https://github.com/ionic-team/ionic/issues/19856)) ([d89508b](https://github.com/ionic-team/ionic/commit/d89508b1b58481d518b89362a8792d05f3f451c9))
+* **react:** adding hardware back button support, fixes(19819) ([#19851](https://github.com/ionic-team/ionic/issues/19851)) ([fd9745d](https://github.com/ionic-team/ionic/commit/fd9745ddcddded76d64220838aef0f599bf4352f))
+* **react:** adding swipe back functionality and routerOutlet ready improvements, fixes [#19818](https://github.com/ionic-team/ionic/issues/19818) ([#19849](https://github.com/ionic-team/ionic/issues/19849)) ([bcc40c8](https://github.com/ionic-team/ionic/commit/bcc40c8d59b723bbdb1dfd318bfb2219eb8df3cf))
+* **react:** create a new overlay each time component is presented, fixes [#19841](https://github.com/ionic-team/ionic/issues/19841), [#19823](https://github.com/ionic-team/ionic/issues/19823) ([#19842](https://github.com/ionic-team/ionic/issues/19842)) ([9fad416](https://github.com/ionic-team/ionic/commit/9fad4161be4859969e14d4d33169ef022052d6bf))
+
+
+## [4.11.3](https://github.com/ionic-team/ionic/compare/v4.11.1...v4.11.3) (2019-10-30)
+
+
+### Bug Fixes
+
+* **react:** adding change events to iontabs, fixes [#19665](https://github.com/ionic-team/ionic/issues/19665) ([#19711](https://github.com/ionic-team/ionic/issues/19711)) ([b7baf24](https://github.com/ionic-team/ionic/commit/b7baf24e5053a379156e6c3d82c2b5d3afa999f1))
+* **react:** adding HashRouter to available ion routers, fixes [#19621](https://github.com/ionic-team/ionic/issues/19621) ([#19683](https://github.com/ionic-team/ionic/issues/19683)) ([fcdbb3c](https://github.com/ionic-team/ionic/commit/fcdbb3ce98747d3b37107904ca110daad95e48bc))
+* **react:** checking if node is actually an element before treating it like one, fixes [#19769](https://github.com/ionic-team/ionic/issues/19769) ([#19783](https://github.com/ionic-team/ionic/issues/19783)) ([9d0caf6](https://github.com/ionic-team/ionic/commit/9d0caf6de070145c4af618847b27e24c49027b8e))
+* **react:** checking isOpen again after async call before opening overlay, fixes [#19755](https://github.com/ionic-team/ionic/issues/19755) ([f70e71a](https://github.com/ionic-team/ionic/commit/f70e71a3d461cdab65626a5a7e1b6f4d03b852b1))
+* **react:** don't remove current view, provide a better method to determine showGoBack fixes [#19731](https://github.com/ionic-team/ionic/issues/19731) and [#19732](https://github.com/ionic-team/ionic/issues/19732) ([31c754d](https://github.com/ionic-team/ionic/commit/31c754dab7ada494ff5f0026d5cf3f7f65198eff))
+* **react:** removing pages from DOM on nav, fixes [#19701](https://github.com/ionic-team/ionic/issues/19701) ([#19712](https://github.com/ionic-team/ionic/issues/19712)) ([ee21d3a](https://github.com/ionic-team/ionic/commit/ee21d3ae43d8c6b076387a58bca655a56c920bcd))
+* **react:** unmount leaving view when using browser back button, fixes [#19749](https://github.com/ionic-team/ionic/issues/19749) ([#19781](https://github.com/ionic-team/ionic/issues/19781)) ([2dc5540](https://github.com/ionic-team/ionic/commit/2dc554091056612f1bcd2751d6eeb41cae488751))
+
+
+
+## [4.11.2](https://github.com/ionic-team/ionic/compare/v4.11.0...v4.11.2) (2019-10-21)
+
+
+### Bug Fixes
+
+* **animations:** ensure all elements are cleaned up when calling .destroy() ([#19654](https://github.com/ionic-team/ionic/issues/19654)) ([d97e167](https://github.com/ionic-team/ionic/commit/d97e167))
+* **header:** collapsible header works in tabs ([#19658](https://github.com/ionic-team/ionic/issues/19658)) ([4853909](https://github.com/ionic-team/ionic/commit/4853909)), closes [#19640](https://github.com/ionic-team/ionic/issues/19640)
+* **ios:** hide leaving view after nav transition to avoid flicker ([#19691](https://github.com/ionic-team/ionic/issues/19691)) ([70e0562](https://github.com/ionic-team/ionic/commit/70e0562)), closes [#19674](https://github.com/ionic-team/ionic/issues/19674)
+* **menu:** clamp out of bounds swipe value ([#19684](https://github.com/ionic-team/ionic/issues/19684)) ([1535e95](https://github.com/ionic-team/ionic/commit/1535e95)), closes [#18927](https://github.com/ionic-team/ionic/issues/18927)
+* **react:** add IonPicker as controller component, fixes [#19620](https://github.com/ionic-team/ionic/issues/19620) ([#19643](https://github.com/ionic-team/ionic/issues/19643)) ([ed98d9e](https://github.com/ionic-team/ionic/commit/ed98d9e))
+* **react:** adding change events to IonTabs, fixes [#19665](https://github.com/ionic-team/ionic/issues/19665) ([#19711](https://github.com/ionic-team/ionic/issues/19711)) ([b7baf24](https://github.com/ionic-team/ionic/commit/b7baf24))
+* **react:** adding HashRouter to available ion routers, fixes [#19621](https://github.com/ionic-team/ionic/issues/19621) ([#19683](https://github.com/ionic-team/ionic/issues/19683)) ([fcdbb3c](https://github.com/ionic-team/ionic/commit/fcdbb3c))
+* **react:** pages no longer hidden when navigating between tabs, fixes [#19646](https://github.com/ionic-team/ionic/issues/19646) ([#19647](https://github.com/ionic-team/ionic/issues/19647)) ([8776556](https://github.com/ionic-team/ionic/commit/8776556))
+* **react:** ensure views are removed from DOM after navigating back, fixes [#19701](https://github.com/ionic-team/ionic/issues/19701) ([#19712](https://github.com/ionic-team/ionic/issues/19712)) ([ee21d3a](https://github.com/ionic-team/ionic/commit/ee21d3a))
+
+
+
+# [5.0.0-beta.0](https://github.com/ionic-team/ionic/compare/v4.11.1...v5.0.0-beta.0) (2019-10-15)
+
+
+### Bug Fixes
+
+* **animations:** ensure all elements are cleaned up when calling .destroy() ([#19654](https://github.com/ionic-team/ionic/issues/19654)) ([2f88237](https://github.com/ionic-team/ionic/commit/2f882373bf08ce6ff7ec2ffb36b73e94c20881ca))
+* **content:** set overscroll only on iOS ([#19470](https://github.com/ionic-team/ionic/issues/19470)) ([63c2008](https://github.com/ionic-team/ionic/commit/63c2008a86de19847677fda7b9fedce73ed7669f)), closes [#19465](https://github.com/ionic-team/ionic/issues/19465)
+* **css:** update responsive display media queries ([#18601](https://github.com/ionic-team/ionic/issues/18601)) ([5d6e077](https://github.com/ionic-team/ionic/commit/5d6e077067c269d1589e7432e5074af6fc64b2fb)), closes [#18600](https://github.com/ionic-team/ionic/issues/18600)
+* **grid:** remove padding on children columns when grid has ion-no-padding ([#19592](https://github.com/ionic-team/ionic/issues/19592)) ([17119f5](https://github.com/ionic-team/ionic/commit/17119f59cf525b90b966e99117137512dbd397b4)), closes [#17459](https://github.com/ionic-team/ionic/issues/17459)
+* **searchbar:** update alignment of chips and other elements in toolbar ([#19596](https://github.com/ionic-team/ionic/issues/19596)) ([637f26b](https://github.com/ionic-team/ionic/commit/637f26b3642a266b6ef3b9d3d71b7327a5d3cc37)), closes [#19495](https://github.com/ionic-team/ionic/issues/19495) [#19502](https://github.com/ionic-team/ionic/issues/19502)
+* **toast:** inherit height in container to center align content ([#19409](https://github.com/ionic-team/ionic/issues/19409)) ([250718a](https://github.com/ionic-team/ionic/commit/250718a40f159fbd99f96d54c11e9a6aea080f04))
+
+
+### Features
+
+* **components:** cascade mode from parent to child components ([#19369](https://github.com/ionic-team/ionic/issues/19369)) ([3dd5f05](https://github.com/ionic-team/ionic/commit/3dd5f057604dcae7b017accdd37f4f3518a1f113)), closes [#18285](https://github.com/ionic-team/ionic/issues/18285)
+* **menu:** default to overlay for ios menu ([#19063](https://github.com/ionic-team/ionic/issues/19063)) ([dbf6a44](https://github.com/ionic-team/ionic/commit/dbf6a448ff3539fda2f182e00fa21435fcd60493)), closes [#18662](https://github.com/ionic-team/ionic/issues/18662)
+* **overlays:** add global backdrop opacity variable for animations ([#19533](https://github.com/ionic-team/ionic/issues/19533)) ([bd22926](https://github.com/ionic-team/ionic/commit/bd22926c4995b2d953a08aac7125241929f78f9e)), closes [#16446](https://github.com/ionic-team/ionic/issues/16446)
+
+
+### Performance Improvements
+
+* **animations:** do not create setTimeout if infinite iterations ([#19632](https://github.com/ionic-team/ionic/issues/19632)) ([0d699fb](https://github.com/ionic-team/ionic/commit/0d699fb2e40b1481d8a63457dce3c58fa45976a3)), closes [#19627](https://github.com/ionic-team/ionic/issues/19627)
+* **animations:** wrap loops in requestAnimationFrame call ([#19630](https://github.com/ionic-team/ionic/issues/19630)) ([589e67e](https://github.com/ionic-team/ionic/commit/589e67e4af3c2c5e42984f82cbd83d0246029535)), closes [#19629](https://github.com/ionic-team/ionic/issues/19629)
+
+
+### Breaking Changes
+
+> We recommend updating to the latest version of 4.x before trying out version 5 in order to see deprecation warnings related to your app in the console.
+
+* **all:** mode is now cascaded from parent to child component. If this is not desired set a different mode on the child component. ([#19369](https://github.com/ionic-team/ionic/issues/19369)) ([55462d7](https://github.com/ionic-team/ionic/commit/55462d7a0935f57b6855f9bd1bf788bfcf532bc3))
+* **anchor:** remove `ion-anchor`, use `ion-router-link` instead. ([#18935](https://github.com/ionic-team/ionic/issues/18935)) ([e7cd197](https://github.com/ionic-team/ionic/commit/e7cd197af79cdf87f04bc769e0367c7e93c0aa0b))
+* **card:** convert card to shadow. ([#19395](https://github.com/ionic-team/ionic/issues/19395)) ([08bb60d](https://github.com/ionic-team/ionic/commit/08bb60dcbba3140bb2da64bb74217af8a36a266d))
+* **css:** responsive display media queries in the display CSS file have been updated. Instead of using the maximum value of that breakpoint (for `.ion-hide-{breakpoint}-down` classes) the maximum of the media query will be the minimum of that breakpoint. ([#18601](https://github.com/ionic-team/ionic/issues/18601)) ([40a8bff](https://github.com/ionic-team/ionic/commit/40a8bffcd54882300906243781abc12776c61ca6))
+* **css:** remove all CSS utility attributes. Use CSS classes instead. See the documentation for the correct class names: https://ionicframework.com/docs/layout/css-utilities ([#18956](https://github.com/ionic-team/ionic/issues/18956)) ([04862df](https://github.com/ionic-team/ionic/commit/04862df7e1029a4e6c188536cb573ddfd57e9c85))
+
+  BEFORE:
+
+  ```html
+  <ion-header text-center></ion-header>
+  <ion-content padding></ion-content>
+  <ion-label text-wrap></ion-label>
+  <ion-item wrap></ion-item>
+  ```
+
+  AFTER:
+
+  ```html
+  <ion-header class="ion-text-center"></ion-header>
+  <ion-content class="ion-padding"></ion-content>
+  <ion-label class="ion-text-wrap"></ion-label>
+  <ion-item class="ion-wrap"></ion-item>
+  ```
+* **events:** remove the Events service. ([#19600](https://github.com/ionic-team/ionic/issues/19600)) ([8d4a721](https://github.com/ionic-team/ionic/commit/8d4a721c6675c13d1f84c455bb222af60be34312))
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io
+* **header/footer:** remove `no-border` attribute from header/footer, use `ion-no-border` class instead. ([#18954](https://github.com/ionic-team/ionic/issues/18954)) ([d9f6119](https://github.com/ionic-team/ionic/commit/d9f61197ffc62af10243a6719cc08200fd57ff8b))
+* **menu:** iOS menu now defaults to overlay, set `type` to `"reveal"` to get the old behavior. ([#19063](https://github.com/ionic-team/ionic/issues/19063)) ([ccb54a1](https://github.com/ionic-team/ionic/commit/ccb54a1255ca2a303c27e5a0cf68f4e3fb86a2fb))
+* **menu-controller:** remove `swipeEnable()`, use `swipeGesture()` instead. ([#19526](https://github.com/ionic-team/ionic/issues/19526)) ([30bd8fd](https://github.com/ionic-team/ionic/commit/30bd8fd739974926f0eaadddc33c50b546be4887))
+* **nav:** remove `ion-nav-pop`, `ion-nav-push` and `ion-nav-set-root`. Use `ion-nav-link` with `routerDirection` instead. ([#19240](https://github.com/ionic-team/ionic/issues/19240)) ([e334d73](https://github.com/ionic-team/ionic/commit/e334d73e544efddf7335c4ce9a5382f8a34d013e))
+* **searchbar:** remove boolean values from `showCancelButton`, use string values: `"always"`, `"focus"`, `"never"`. ([#18953](https://github.com/ionic-team/ionic/issues/18953)) ([508e186](https://github.com/ionic-team/ionic/commit/508e1868ad672ded49ddababd7a506ff1721534d))
+
+  BEFORE:
+
+  ```html
+  <ion-searchbar show-cancel-button>
+  <ion-searchbar show-cancel-button="true">
+  <ion-searchbar show-cancel-button="false">
+  ```
+
+  AFTER:
+
+  ```html
+  <ion-searchbar show-cancel-button="focus">
+  <ion-searchbar show-cancel-button="focus">
+  <ion-searchbar show-cancel-button="never">
+  ```
+* **scss:** remove `scss` files from `dist/`, use CSS variables to theme instead. ([#19292](https://github.com/ionic-team/ionic/issues/19292)) ([6450aff](https://github.com/ionic-team/ionic/commit/6450aff080c561c60c140000b89ff340edeeaeca))
+* **skeleton-text:** remove `width` property. Use CSS instead. ([#18936](https://github.com/ionic-team/ionic/issues/18936)) ([7c3db79](https://github.com/ionic-team/ionic/commit/7c3db79c23dac599aa8131753b33b1ed3487d776))
+* **split-pane:** remove `main` attribute. Use `contentId` instead. ([#19511](https://github.com/ionic-team/ionic/issues/19511)) ([02d7841](https://github.com/ionic-team/ionic/commit/02d784140ce0fc75718781454e8dd8a2f621ee0d))
+
+  BEFORE:
+
+  ```html
+  <ion-split-pane>
+    ...
+    <div main>...</div>
+  </ion-split-pane>
+  ```
+
+  AFTER:
+
+  ```html
+  <ion-split-pane content-id="main-content">
+    ...
+    <div id="main-content">...</div>
+  </ion-split-pane>
+  ```
+* **theming:** ionic default colors have been updated. ([#19279](https://github.com/ionic-team/ionic/issues/19279)) ([7f4cf08](https://github.com/ionic-team/ionic/commit/7f4cf08d996f90ae90064a351f8e373ce7a16799))
+* **toast:** remove `showCloseButton` and `closeButtonText`, add a button using the `buttons` property with `role: 'cancel'` instead. ([#18957](https://github.com/ionic-team/ionic/issues/18957)) ([ad7f112](https://github.com/ionic-team/ionic/commit/ad7f112e1eb04e41e697936454e63977d1bde34b))
+
+
+
+## [4.11.1](https://github.com/ionic-team/ionic/compare/v4.11.0...v4.11.1) (2019-10-14)
+
+
+### Bug Fixes
+
+* **build:** properly update peer dependencies ([#19639](https://github.com/ionic-team/ionic/issues/19639)) ([b552daa](https://github.com/ionic-team/ionic/commit/b552daa))
+* **react:** add IonPicker as controller component, fixes [#19620](https://github.com/ionic-team/ionic/issues/19620) ([#19643](https://github.com/ionic-team/ionic/issues/19643)) ([ed98d9e](https://github.com/ionic-team/ionic/commit/ed98d9e))
+* **react:** handle tab back nav better, fixes [#19646](https://github.com/ionic-team/ionic/issues/19646) ([#19647](https://github.com/ionic-team/ionic/issues/19647)) ([8776556](https://github.com/ionic-team/ionic/commit/8776556))
+* **react:** moving tslint and friends to devDependencies ([#19624](https://github.com/ionic-team/ionic/issues/19624)) ([7f4b77d](https://github.com/ionic-team/ionic/commit/7f4b77d))
+
+
+
+# [4.11.0 Sodium](https://github.com/ionic-team/ionic/compare/v4.10.3...v4.11.0) (2019-10-09)
+
+Ionic React! Enjoy! 🧂 🌊 🐼
+
+## [4.10.3](https://github.com/ionic-team/ionic/compare/v4.10.2...v4.10.3) (2019-10-09)
+
+
+### Bug Fixes
+
+* **content:** set overscroll only on iOS ([#19470](https://github.com/ionic-team/ionic/issues/19470)) ([63c2008](https://github.com/ionic-team/ionic/commit/63c2008a86de19847677fda7b9fedce73ed7669f)), closes [#19465](https://github.com/ionic-team/ionic/issues/19465)
+* **searchbar:** update alignment of chips and other elements in toolbar ([#19596](https://github.com/ionic-team/ionic/issues/19596)) ([637f26b](https://github.com/ionic-team/ionic/commit/637f26b3642a266b6ef3b9d3d71b7327a5d3cc37)), closes [#19495](https://github.com/ionic-team/ionic/issues/19495) [#19502](https://github.com/ionic-team/ionic/issues/19502)
+
+
+
 ## [4.10.2](https://github.com/ionic-team/ionic/compare/v4.10.1...v4.10.2) (2019-10-08)
 
 
@@ -165,13 +348,13 @@ With this version comes support for Angular 8! Follow the below steps to update.
     $ npm install @ionic/angular-toolkit@2.0.0 -D
     ```
 
-1. Update `@angular/core` and `@angular/cli`:
+2. Update `@angular/core` and `@angular/cli`:
 
     ```shell
     $ npx ng update @angular/core @angular/cli
     ```
 
-1. Update `@angular-devkit` dependencies:
+3. Update `@angular-devkit` dependencies:
 
     ```shell
     $ npm i @angular-devkit/architect@latest @angular-devkit/build-angular@latest @angular-devkit/core@latest @angular-devkit/schematics@latest

@@ -18,7 +18,8 @@ const QUERY: { [key: string]: string } = {
   styleUrls: {
     ios: 'split-pane.ios.scss',
     md: 'split-pane.md.scss'
-  }
+  },
+  shadow: true
 })
 export class SplitPane implements ComponentInterface {
 
@@ -64,24 +65,6 @@ export class SplitPane implements ComponentInterface {
     if (this.rmL) {
       this.rmL();
       this.rmL = undefined;
-    }
-  }
-
-  componentWillLoad() {
-    if (this.contentId === undefined) {
-      console.warn(`[DEPRECATED][ion-split-pane] Using the [main] attribute is deprecated, please use the "contentId" property instead:
-BEFORE:
-  <ion-split-pane>
-    ...
-    <div main>...</div>
-  </ion-split-pane>
-
-AFTER:
-  <ion-split-pane contentId="main-content">
-    ...
-    <div id="main-content">...</div>
-  </ion-split-pane>
-`);
     }
   }
 
@@ -177,6 +160,7 @@ AFTER:
           'split-pane-visible': this.visible
         }}
       >
+        <slot></slot>
       </Host>
     );
   }

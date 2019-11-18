@@ -76,6 +76,10 @@ body.backdrop-no-scroll {
   z-index: $z-index-page-container;
 }
 
+.split-pane-visible > .ion-page.split-pane-main {
+  position: relative;
+}
+
 ion-route,
 ion-route-redirect,
 ion-router,
@@ -98,6 +102,11 @@ ion-toast-controller,
 .ion-page-invisible {
   opacity: 0;
 }
+
+.can-go-back > ion-header ion-back-button {
+  display: block;
+}
+
 
 // Ionic Safe Margins
 // --------------------------------------------------
@@ -130,6 +139,16 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
     --ion-safe-area-right: env(safe-area-inset-right);
   }
 }
+
+
+// Global Card Styles
+// --------------------------------------------------
+
+ion-card.ion-color .ion-inherit-color,
+ion-card-header.ion-color .ion-inherit-color {
+  color: inherit;
+}
+
 
 // Menu Styles
 // TODO: Find a better long term solution for this
@@ -167,4 +186,3 @@ html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
 .md .menu-content-push {
   box-shadow: $menu-md-box-shadow;
 }
-

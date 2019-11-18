@@ -54,7 +54,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Set the cancel button icon. Only applies to `md` mode.
    */
-  @Prop() cancelButtonIcon = 'md-arrow-back';
+  @Prop() cancelButtonIcon = config.get('backButtonIcon', 'md-arrow-back') as string;
 
   /**
    * Set the the cancel button text. Only applies to `ios` mode.
@@ -129,7 +129,7 @@ export class Searchbar implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | null = '';
 
   /**
-   * Emitted when a keyboard input ocurred.
+   * Emitted when a keyboard input occurred.
    */
   @Event() ionInput!: EventEmitter<KeyboardEvent>;
 

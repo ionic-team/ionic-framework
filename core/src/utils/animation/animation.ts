@@ -19,12 +19,12 @@ interface AnimationInternal extends Animation {
   /**
    * Updates any existing animations.
    */
-  update(deep: boolean): Animation;
+  update(deep: boolean, toggleAnimationName: boolean, step?: number): Animation;
 
   animationFinish(): void;
 }
 
-export const createAnimation = (): Animation => {
+export const createAnimation = (animationId?: string): Animation => {
   let _delay: number | undefined;
   let _duration: number | undefined;
   let _easing: string | undefined;
@@ -32,6 +32,8 @@ export const createAnimation = (): Animation => {
   let _fill: AnimationFill | undefined;
   let _direction: AnimationDirection | undefined;
   let _keyframes: AnimationKeyFrames = [];
+  const id: string | undefined = animationId;
+
   let beforeAddClasses: string[] = [];
   let beforeRemoveClasses: string[] = [];
   let initialized = false;
@@ -128,8 +130,10 @@ export const createAnimation = (): Animation => {
 
       webAnimations.length = 0;
     } else {
-      elements.forEach(element => {
-        raf(() => {
+      const elementsArray = elements.slice();
+
+      raf(() => {
+        elementsArray.forEach(element => {
           removeStyleProperty(element, 'animation-name');
           removeStyleProperty(element, 'animation-duration');
           removeStyleProperty(element, 'animation-timing-function');
@@ -531,7 +535,7 @@ export const createAnimation = (): Animation => {
     elements.forEach(element => {
       if (_keyframes.length > 0) {
         const keyframeRules = generateKeyframeRules(_keyframes);
-        keyframeName = generateKeyframeName(keyframeRules);
+        keyframeName = (animationId !== undefined) ? animationId : generateKeyframeName(keyframeRules);
         const stylesheet = createKeyframeStylesheet(keyframeName, keyframeRules, element);
         stylesheets.push(stylesheet);
 
@@ -562,6 +566,7 @@ export const createAnimation = (): Animation => {
   const initializeWebAnimation = () => {
     elements.forEach(element => {
       const animation = element.animate(_keyframes, {
+        id,
         delay: getDelay(),
         duration: getDuration(),
         easing: getEasing(),
@@ -606,8 +611,7 @@ export const createAnimation = (): Animation => {
       });
 
     } else {
-      const animationDelay = getDelay() || 0;
-      const animationDuration = `-${animationDelay + (getDuration()! * step)}ms`;
+      const animationDuration = `-${getDuration()! * step}ms`;
 
       elements.forEach(element => {
         if (_keyframes.length > 0) {
@@ -618,7 +622,7 @@ export const createAnimation = (): Animation => {
     }
   };
 
-  const updateWebAnimation = () => {
+  const updateWebAnimation = (step?: number) => {
     webAnimations.forEach(animation => {
       animation.effect.updateTiming({
         delay: getDelay(),
@@ -629,15 +633,19 @@ export const createAnimation = (): Animation => {
         direction: getDirection()
       });
     });
+
+    if (step !== undefined) {
+      setAnimationStep(step);
+    }
   };
 
-  const updateCSSAnimation = (toggleAnimationName = true) => {
-    elements.forEach(element => {
-      raf(() => {
+  const updateCSSAnimation = (toggleAnimationName = true, step?: number) => {
+    raf(() => {
+      elements.forEach(element => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
         setStyleProperty(element, 'animation-duration', `${getDuration()}ms`);
         setStyleProperty(element, 'animation-timing-function', getEasing());
-        setStyleProperty(element, 'animation-delay', `${getDelay()}ms`);
+        setStyleProperty(element, 'animation-delay', (step !== undefined) ? `-${step! * getDuration()}ms` : `${getDelay()}ms`);
         setStyleProperty(element, 'animation-fill-mode', getFill() || null);
         setStyleProperty(element, 'animation-direction', getDirection() || null);
 
@@ -658,25 +666,25 @@ export const createAnimation = (): Animation => {
     });
   };
 
-  const update = (deep = false, toggleAnimationName = true) => {
+  const update = (deep = false, toggleAnimationName = true, step?: number) => {
     if (deep) {
       childAnimations.forEach(animation => {
-        animation.update(deep);
+        animation.update(deep, toggleAnimationName, step);
       });
     }
 
     if (supportsWebAnimations) {
-      updateWebAnimation();
+      updateWebAnimation(step);
     } else {
-      updateCSSAnimation(toggleAnimationName);
+      updateCSSAnimation(toggleAnimationName, step);
     }
 
     return ani;
   };
 
-  const progressStart = (forceLinearEasing = false) => {
+  const progressStart = (forceLinearEasing = false, step?: number) => {
     childAnimations.forEach(animation => {
-      animation.progressStart(forceLinearEasing);
+      animation.progressStart(forceLinearEasing, step);
     });
 
     pauseAnimation();
@@ -685,8 +693,7 @@ export const createAnimation = (): Animation => {
     if (!initialized) {
       initializeAnimation();
     } else {
-      update();
-      setAnimationStep(0);
+      update(false, true, step);
     }
 
     return ani;
@@ -796,12 +803,12 @@ export const createAnimation = (): Animation => {
   const playCSSAnimations = () => {
     clearCSSAnimationsTimeout();
 
-    elements.forEach(element => {
-      if (_keyframes.length > 0) {
-        raf(() => {
+    raf(() => {
+      elements.forEach(element => {
+        if (_keyframes.length > 0) {
           setStyleProperty(element, 'animation-play-state', 'running');
-        });
-      }
+        }
+      });
     });
 
     if (_keyframes.length === 0 || elements.length === 0) {
@@ -819,7 +826,10 @@ export const createAnimation = (): Animation => {
        const animationDuration = getDuration() || 0;
        const animationIterations = getIterations() || 1;
 
-       cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + (animationDuration * animationIterations) + ANIMATION_END_FALLBACK_PADDING_MS);
+       // No need to set a timeout when animation has infinite iterations
+       if (isFinite(animationIterations)) {
+        cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + (animationDuration * animationIterations) + ANIMATION_END_FALLBACK_PADDING_MS);
+       }
 
        animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();
@@ -952,6 +962,7 @@ export const createAnimation = (): Animation => {
     parentAnimation,
     elements,
     childAnimations,
+    id,
     animationFinish,
     from,
     to,

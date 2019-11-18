@@ -2,6 +2,7 @@ export interface Animation {
   parentAnimation: Animation | undefined;
   elements: HTMLElement[];
   childAnimations: Animation[];
+  id: string | undefined;
 
   /**
    * Play the animation
@@ -28,7 +29,7 @@ export interface Animation {
    */
   destroy(): void;
 
-  progressStart(forceLinearEasing: boolean): void;
+  progressStart(forceLinearEasing: boolean, step?: number): void;
   progressStep(step: number): void;
   progressEnd(playTo: 0 | 1 | undefined, step: number, dur?: number): void;
 
@@ -239,3 +240,5 @@ export interface AnimationPlayOptions {
 export type AnimationPlayTo = 'start' | 'end';
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationFill = 'auto' | 'none' | 'forwards' | 'backwards' | 'both';
+
+export type AnimationBuilder = (baseEl: any, opts?: any) => Animation;

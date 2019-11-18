@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "4.10.0-rc.3",
+  "version": "5.0.0-beta.0",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -36,22 +36,19 @@
     "dist/"
   ],
   "dependencies": {
-    "tslib": "*",
-    "tslint": "^5.20.0",
-    "tslint-ionic-rules": "0.0.21",
-    "tslint-react": "^4.1.0"
+    "tslib": "*"
   },
   "peerDependencies": {
-    "@ionic/core": "^4.10.0",
-    "@ionic/react": "4.10.0-rc.3",
+    "@ionic/core": "5.0.0-beta.0",
+    "@ionic/react": "5.0.0-beta.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
-    "@ionic/core": "^4.10.0",
-    "@ionic/react": "4.10.0-rc.3",
+    "@ionic/core": "5.0.0-beta.0",
+    "@ionic/react": "5.0.0-beta.0",
     "@types/jest": "^23.3.9",
     "@types/node": "12.6.9",
     "@types/react": "^16.9.2",
@@ -70,6 +67,9 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "ts-jest": "^24.0.2",
+    "tslint": "^5.20.0",
+    "tslint-ionic-rules": "0.0.21",
+    "tslint-react": "^4.1.0",
     "typescript": "3.5.3"
   },
   "jest": {

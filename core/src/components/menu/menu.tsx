@@ -2,10 +2,10 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuI, Side } from '../../interface';
-import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
+import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
+import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import { assert, isEndSide as isEnd } from '../../utils/helpers';
+import { assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
@@ -163,8 +163,8 @@ BEFORE:
   <div main>...</div>
 
 AFTER:
-  <ion-menu contentId="my-content"></ion-menu>
-  <div id="my-content">...</div>
+  <ion-menu contentId="main-content"></ion-menu>
+  <div id="main-content">...</div>
 `);
     }
     const content = this.contentId !== undefined
@@ -335,9 +335,14 @@ AFTER:
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const isReversed = !shouldOpen;
-    const ani = (this.animation as IonicAnimation)!
+    const ani = (this.animation as Animation)!
       .direction((isReversed) ? 'reverse' : 'normal')
-      .easing((isReversed) ? this.easingReverse : this.easing);
+      .easing((isReversed) ? this.easingReverse : this.easing)
+      .onFinish(() => {
+        if (ani.getDirection() === 'reverse') {
+          ani.direction('normal');
+        }
+      });
 
     if (animated) {
       await ani.play();
@@ -384,9 +389,7 @@ AFTER:
     }
 
     // the cloned animation should not use an easing curve during seek
-    (this.animation as IonicAnimation)
-      .direction((this._isOpen) ? 'reverse' : 'normal')
-      .progressStart(true);
+    (this.animation as Animation).progressStart(true, (this._isOpen) ? 1 : 0);
   }
 
   private onMove(detail: GestureDetail) {
@@ -398,7 +401,7 @@ AFTER:
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
 
-    this.animation.progressStep(stepValue);
+    this.animation.progressStep((this._isOpen) ? 1 - stepValue : stepValue);
   }
 
   private onEnd(detail: GestureDetail) {
@@ -428,7 +431,7 @@ AFTER:
       shouldOpen = true;
     }
 
-    this.lastOnEnd = detail.timeStamp;
+    this.lastOnEnd = detail.currentTime;
 
     // Account for rounding errors in JS
     let newStepValue = (shouldComplete) ? 0.001 : -0.001;
@@ -449,14 +452,16 @@ AFTER:
      * to the new easing curve, as `stepValue` is going to be given
      * in terms of a linear curve.
      */
-    newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.4, 0), new Point(0.6, 1), new Point(1, 1), adjustedStepValue);
+    newStepValue += getTimeGivenProgression([0, 0], [0.4, 0], [0.6, 1], [1, 1], clamp(0, adjustedStepValue, 1))[0];
+
+    const playTo = (this._isOpen) ? !shouldComplete : shouldComplete;
 
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
       .onFinish(
         () => this.afterAnimation(shouldOpen),
         { oneTimeCallback: true })
-      .progressEnd(shouldComplete ? 1 : 0, newStepValue, 300);
+      .progressEnd((playTo) ? 1 : 0, (this._isOpen) ? 1 - newStepValue : newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {
@@ -520,7 +525,7 @@ AFTER:
   private updateState() {
     const isActive = this._isActive();
     if (this.gesture) {
-      this.gesture.setDisabled(!isActive || !this.swipeGesture);
+      this.gesture.enable(isActive && this.swipeGesture);
     }
 
     // Close menu immediately
@@ -539,8 +544,10 @@ AFTER:
     assert(this._isOpen, 'menu cannot be closed');
 
     this.isAnimating = true;
-    const ani = (this.animation as IonicAnimation)!.direction('reverse');
+
+    const ani = (this.animation as Animation)!.direction('reverse');
     ani.play({ sync: true });
+
     this.afterAnimation(false);
   }
 

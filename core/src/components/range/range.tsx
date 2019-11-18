@@ -113,7 +113,7 @@ export class Range implements ComponentInterface {
   @Watch('disabled')
   protected disabledChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
     this.emitStyle();
   }
@@ -194,7 +194,7 @@ export class Range implements ComponentInterface {
         onMove: ev => this.onMove(ev),
         onEnd: ev => this.onEnd(ev),
       });
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
   }
 

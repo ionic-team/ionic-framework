@@ -22,52 +22,82 @@ export const IonLifeCycleContext = /*@__PURE__*/React.createContext<IonLifeCycle
   ionViewDidLeave: () => { return; },
 });
 
+export interface LifeCycleCallback { (): void; id?: number; }
+
 export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextInterface {
 
-  ionViewWillEnterCallback?: () => void;
-  ionViewDidEnterCallback?: () => void;
-  ionViewWillLeaveCallback?: () => void;
-  ionViewDidLeaveCallback?: () => void;
+  ionViewWillEnterCallbacks: LifeCycleCallback[] = [];
+  ionViewDidEnterCallbacks: LifeCycleCallback[] = [];
+  ionViewWillLeaveCallbacks: LifeCycleCallback[] = [];
+  ionViewDidLeaveCallbacks: LifeCycleCallback[] = [];
   componentCanBeDestroyedCallback?: () => void;
 
-  onIonViewWillEnter(callback: () => void) {
-    this.ionViewWillEnterCallback = callback;
+  onIonViewWillEnter(callback: LifeCycleCallback) {
+    if (callback.id) {
+      const index = this.ionViewWillEnterCallbacks.findIndex(x => x.id === callback.id);
+      if (index > -1) {
+        this.ionViewWillEnterCallbacks[index] = callback;
+      } else {
+        this.ionViewWillEnterCallbacks.push(callback);
+      }
+    } else {
+      this.ionViewWillEnterCallbacks.push(callback);
+    }
   }
 
   ionViewWillEnter() {
-    if (this.ionViewWillEnterCallback) {
-      this.ionViewWillEnterCallback();
-    }
+    this.ionViewWillEnterCallbacks.forEach(cb => cb());
   }
 
-  onIonViewDidEnter(callback: () => void) {
-    this.ionViewDidEnterCallback = callback;
+  onIonViewDidEnter(callback: LifeCycleCallback) {
+    if (callback.id) {
+      const index = this.ionViewDidEnterCallbacks.findIndex(x => x.id === callback.id);
+      if (index > -1) {
+        this.ionViewDidEnterCallbacks[index] = callback;
+      } else {
+        this.ionViewDidEnterCallbacks.push(callback);
+      }
+    } else {
+      this.ionViewDidEnterCallbacks.push(callback);
+    }
   }
 
   ionViewDidEnter() {
-    if (this.ionViewDidEnterCallback) {
-      this.ionViewDidEnterCallback();
-    }
+    this.ionViewDidEnterCallbacks.forEach(cb => cb());
   }
 
-  onIonViewWillLeave(callback: () => void) {
-    this.ionViewWillLeaveCallback = callback;
+  onIonViewWillLeave(callback: LifeCycleCallback) {
+    if (callback.id) {
+      const index = this.ionViewWillLeaveCallbacks.findIndex(x => x.id === callback.id);
+      if (index > -1) {
+        this.ionViewWillLeaveCallbacks[index] = callback;
+      } else {
+        this.ionViewWillLeaveCallbacks.push(callback);
+      }
+    } else {
+      this.ionViewWillLeaveCallbacks.push(callback);
+    }
   }
 
   ionViewWillLeave() {
-    if (this.ionViewWillLeaveCallback) {
-      this.ionViewWillLeaveCallback();
-    }
+    this.ionViewWillLeaveCallbacks.forEach(cb => cb());
   }
 
-  onIonViewDidLeave(callback: () => void) {
-    this.ionViewDidLeaveCallback = callback;
+  onIonViewDidLeave(callback: LifeCycleCallback) {
+    if (callback.id) {
+      const index = this.ionViewDidLeaveCallbacks.findIndex(x => x.id === callback.id);
+      if (index > -1) {
+        this.ionViewDidLeaveCallbacks[index] = callback;
+      } else {
+        this.ionViewDidLeaveCallbacks.push(callback);
+      }
+    } else {
+      this.ionViewDidLeaveCallbacks.push(callback);
+    }
   }
 
   ionViewDidLeave() {
-    if (this.ionViewDidLeaveCallback) {
-      this.ionViewDidLeaveCallback();
-    }
+    this.ionViewDidLeaveCallbacks.forEach(cb => cb());
     this.componentCanBeDestroyed();
   }
 

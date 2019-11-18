@@ -243,12 +243,12 @@ export const InputExample: React.FC = () => (
 
 ## Events
 
-| Event       | Description                            | Type                                  |
-| ----------- | -------------------------------------- | ------------------------------------- |
-| `ionBlur`   | Emitted when the input loses focus.    | `CustomEvent<void>`                   |
-| `ionChange` | Emitted when the value has changed.    | `CustomEvent<InputChangeEventDetail>` |
-| `ionFocus`  | Emitted when the input has focus.      | `CustomEvent<void>`                   |
-| `ionInput`  | Emitted when a keyboard input ocurred. | `CustomEvent<KeyboardEvent>`          |
+| Event       | Description                             | Type                                  |
+| ----------- | --------------------------------------- | ------------------------------------- |
+| `ionBlur`   | Emitted when the input loses focus.     | `CustomEvent<void>`                   |
+| `ionChange` | Emitted when the value has changed.     | `CustomEvent<InputChangeEventDetail>` |
+| `ionFocus`  | Emitted when the input has focus.       | `CustomEvent<void>`                   |
+| `ionInput`  | Emitted when a keyboard input occurred. | `CustomEvent<KeyboardEvent>`          |
 
 
 ## Methods
