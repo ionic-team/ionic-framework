@@ -129,7 +129,7 @@ export class Searchbar implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | null = '';
 
   /**
-   * Emitted when a keyboard input ocurred.
+   * Emitted when a keyboard input occurred.
    */
   @Event() ionInput!: EventEmitter<KeyboardEvent>;
 

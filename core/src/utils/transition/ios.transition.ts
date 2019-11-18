@@ -48,11 +48,17 @@ const createLargeTitleTransition = (rootAnimation: Animation, rtl: boolean, back
   const shouldAnimationBackward = enteringLargeTitle !== null && leavingBackButton !== null && backDirection;
 
   if (shouldAnimationForward) {
-    animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle);
-    animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton);
+    const leavingLargeTitleBox = leavingLargeTitle.getBoundingClientRect();
+    const enteringBackButtonBox = enteringBackButton.getBoundingClientRect();
+
+    animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle, leavingLargeTitleBox, enteringBackButtonBox);
+    animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton, leavingLargeTitleBox, enteringBackButtonBox);
   } else if (shouldAnimationBackward) {
-    animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle);
-    animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton);
+    const enteringLargeTitleBox = enteringLargeTitle.getBoundingClientRect();
+    const leavingBackButtonBox = leavingBackButton.getBoundingClientRect();
+
+    animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle, enteringLargeTitleBox, leavingBackButtonBox);
+    animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton, enteringLargeTitleBox, leavingBackButtonBox);
   }
 
   return {
@@ -61,9 +67,8 @@ const createLargeTitleTransition = (rootAnimation: Animation, rtl: boolean, back
   };
 };
 
-const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, backButtonEl: any) => {
-  const backButtonBounds = backButtonEl.getBoundingClientRect();
-  const BACK_BUTTON_START_OFFSET = (rtl) ? `calc(100% - ${backButtonBounds.right + 4}px)` : `${backButtonBounds.left - 4}px`;
+const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, backButtonEl: any, largeTitleBox: DOMRect, backButtonBox: DOMRect) => {
+  const BACK_BUTTON_START_OFFSET = (rtl) ? `calc(100% - ${backButtonBox.right + 4}px)` : `${backButtonBox.left - 4}px`;
   const START_TEXT_TRANSLATE = (rtl) ? '7px' : '-7px';
   const END_TEXT_TRANSLATE = (rtl) ? '-4px' : '4px';
 
@@ -73,24 +78,24 @@ const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection
   const ICON_ORIGIN_X = (rtl) ? 'left' : 'right';
 
   const FORWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(8)}) scale(2.1)` },
-    { offset: 1, opacity: 1, transform: `translate(${END_TEXT_TRANSLATE}, ${addSafeArea(-40)}) scale(1)` }
+    { offset: 0, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(largeTitleBox.top - 40)}) scale(2.1)` },
+    { offset: 1, opacity: 1, transform: `translate(${END_TEXT_TRANSLATE}, ${addSafeArea(backButtonBox.top - 46)}) scale(1)` }
   ];
   const BACKWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate(${END_TEXT_TRANSLATE}, ${addSafeArea(-40)}) scale(1)` },
+    { offset: 0, opacity: 1, transform: `translate(${END_TEXT_TRANSLATE}, ${addSafeArea(backButtonBox.top - 46)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(8)}) scale(2.1)` }
+    { offset: 1, opacity: 0, transform: `translate(${START_TEXT_TRANSLATE}, ${addSafeArea(largeTitleBox.top - 40)}) scale(2.1)` }
   ];
   const TEXT_KEYFRAMES = (backDirection) ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
 
   const FORWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${addSafeArea(-35)}, 0) scale(0.6)` },
-    { offset: 1, opacity: 1, transform: `translate3d(${ICON_TRANSLATE}, ${addSafeArea(-40)}, 0) scale(1)` }
+    { offset: 0, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${addSafeArea(backButtonBox.top - 41)}, 0) scale(0.6)` },
+    { offset: 1, opacity: 1, transform: `translate3d(${ICON_TRANSLATE}, ${addSafeArea(backButtonBox.top - 46)}, 0) scale(1)` }
   ];
   const BACKWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(-40)}) scale(1)` },
-    { offset: 0.2, opacity: 0, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(-35)}) scale(0.6)` },
-    { offset: 1, opacity: 0, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(-35)}) scale(0.6)` }
+    { offset: 0, opacity: 1, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(backButtonBox.top - 46)}) scale(1)` },
+    { offset: 0.2, opacity: 0, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(backButtonBox.top - 41)}) scale(0.6)` },
+    { offset: 1, opacity: 0, transform: `translate(${ICON_TRANSLATE}, ${addSafeArea(backButtonBox.top - 41)}) scale(0.6)` }
   ];
   const ICON_KEYFRAMES = (backDirection) ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
 
@@ -138,22 +143,22 @@ const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection
   rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation]);
 };
 
-const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, largeTitleEl: any) => {
-  const largeTitleBounds = largeTitleEl.getBoundingClientRect();
-  const TITLE_START_OFFSET = (rtl) ? `calc(100% - ${largeTitleBounds.right}px)` : `${largeTitleBounds.left}px`;
+const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, largeTitleEl: any, largeTitleBox: DOMRect, backButtonBox: DOMRect) => {
+  const TITLE_START_OFFSET = (rtl) ? `calc(100% - ${largeTitleEl.right}px)` : `${largeTitleEl.left}px`;
   const START_TRANSLATE = (rtl) ? '-18px' : '18px';
   const ORIGIN_X = (rtl) ? 'right' : 'left';
 
   const BACKWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.49)` },
+    { offset: 0, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(backButtonBox.top - 4)}) scale(0.49)` },
     { offset: 0.1, opacity: 0 },
-    { offset: 1, opacity: 1, transform: `translate(0, ${addSafeArea(49)}) scale(1)` }
+    { offset: 1, opacity: 1, transform: `translate(0, ${addSafeArea(largeTitleBox.top - 2)}) scale(1)` }
   ];
   const FORWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0.99, transform: `translate(0, ${addSafeArea(49)}) scale(1)` },
+    { offset: 0, opacity: 0.99, transform: `translate(0, ${addSafeArea(largeTitleBox.top - 2)}) scale(1)` },
     { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(0)}) scale(0.5)` }
+    { offset: 1, opacity: 0, transform: `translate(${START_TRANSLATE}, ${addSafeArea(backButtonBox.top - 4)}) scale(0.5)` }
   ];
+
   const KEYFRAMES = (backDirection) ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
 
   const clonedTitleEl = getClonedElement('ion-title');

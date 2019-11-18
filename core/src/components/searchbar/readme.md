@@ -249,7 +249,7 @@ export const SearchbarExample: React.FC = () => (
 | `ionChange` | Emitted when the value has changed.             | `CustomEvent<SearchbarChangeEventDetail>` |
 | `ionClear`  | Emitted when the clear input button is clicked. | `CustomEvent<void>`                       |
 | `ionFocus`  | Emitted when the input has focus.               | `CustomEvent<void>`                       |
-| `ionInput`  | Emitted when a keyboard input ocurred.          | `CustomEvent<KeyboardEvent>`              |
+| `ionInput`  | Emitted when a keyboard input occurred.         | `CustomEvent<KeyboardEvent>`              |
 
 
 ## Methods

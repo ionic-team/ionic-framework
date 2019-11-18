@@ -72,7 +72,10 @@ const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) 
   if (!ev[0].isIntersecting) { return; }
 
   const scale = ((1 - ev[0].intersectionRatio) * 100) / 75;
-  setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scale === 1) ? undefined : scale);
+
+  mainHeaderIndex.toolbars.forEach(toolbar => {
+    setToolbarBackgroundOpacity(toolbar, (scale === 1) ? undefined : scale);
+  });
 };
 
 /**
