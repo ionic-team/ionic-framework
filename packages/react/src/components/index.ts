@@ -24,7 +24,7 @@ export { IonBackButton } from './navigation/IonBackButton';
 export { IonRouterOutlet } from './IonRouterOutlet';
 
 // Utils
-export { isPlatform, getPlatforms } from './utils';
+export { isPlatform, getPlatforms, getConfig } from './utils';
 export { RouterDirection } from './hrefprops';
 
 // Icons that are used by internal components

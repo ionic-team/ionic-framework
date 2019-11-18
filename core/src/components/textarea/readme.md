@@ -219,7 +219,7 @@ export const TextAreaExample: React.FC = () => (
 | `ionBlur`   | Emitted when the input loses focus.       | `CustomEvent<void>`                      |
 | `ionChange` | Emitted when the input value has changed. | `CustomEvent<TextareaChangeEventDetail>` |
 | `ionFocus`  | Emitted when the input has focus.         | `CustomEvent<void>`                      |
-| `ionInput`  | Emitted when a keyboard input ocurred.    | `CustomEvent<KeyboardEvent>`             |
+| `ionInput`  | Emitted when a keyboard input occurred.   | `CustomEvent<KeyboardEvent>`             |
 
 
 ## Methods

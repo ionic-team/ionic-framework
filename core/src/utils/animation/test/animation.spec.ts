@@ -385,6 +385,18 @@ describe('cubic-bezier conversion', () => {
         
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 1.02), [0.35, 0.87]);
     })
+    
+    it('cubic-bezier(0.32, 0.72, 0, 1) (with out of bounds progression)', () => {
+      const equation = [
+        [0, 0],
+        [0.05, 0.2],
+        [.14, 1.72],
+        [1, 1]
+      ];
+        
+      expect(getTimeGivenProgression(...equation, 1.32)).toEqual([]);
+      expect(getTimeGivenProgression(...equation, -0.32)).toEqual([]);
+    })
   })
 });
 
