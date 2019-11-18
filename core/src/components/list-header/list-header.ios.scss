@@ -7,6 +7,7 @@
 :host {
   --background: #{$list-header-ios-background-color};
   --color: #{$list-header-ios-color};
+  --border-color: #{$item-ios-border-bottom-color};
 
   @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-header-ios-padding-start}), null);
 
@@ -16,4 +17,17 @@
   font-weight: $list-header-ios-font-weight;
 
   letter-spacing: $list-header-ios-letter-spacing;
+}
+
+// List Header Lines
+// --------------------------------------------------
+
+// Full lines - apply the border to the list header
+// Inset lines - apply the border to the list header inner
+:host(.list-header-lines-full) {
+  --border-width: #{0 0 $item-ios-border-bottom-width 0};
+}
+
+:host(.list-header-lines-inset) {
+  --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
 }
