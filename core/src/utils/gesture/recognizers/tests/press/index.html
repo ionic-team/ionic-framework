@@ -15,16 +15,20 @@
       import { createPressRecognizer } from '../../../../../dist/ionic/index.esm.js';
       
       const square = document.querySelector('.square');
-
-      const onPress = () => {
-        square.classList.toggle('pressed');
+      
+      const canStart = (d) => {
+        console.log('can start!');
+        return true;
       }
       
       const pressRecognizer = createPressRecognizer({
         el: square,
         time: 251,
-        threshold: 10,
-        onPressHandler: () => onPress(),
+        minThreshold: 10,
+        canStart: (detail) => canStart(detail),
+        onStart: () => square.classList.remove('pressedUp'),
+        onPressHandler: () => square.classList.toggle('pressed'),
+        onPressUpHandler: () => square.classList.add('pressedUp')
       });
             
       pressRecognizer.enable(true);

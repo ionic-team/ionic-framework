@@ -12,10 +12,9 @@ test(`gesture: press`, async () => {
   page.mouse.move(x, y);
   page.mouse.down();
   await page.waitFor(300);
+  expect(await page.find('.square')).toHaveClass('pressed');
   page.mouse.up();
-
-  const squareAgain = await page.find('.square');
-  expect(squareAgain).toHaveClass('pressed');
+  expect(await page.find('.square')).toHaveClass('pressedUp');
 
   screenshotCompares.push(await page.compareScreenshot('end press'));
 
@@ -40,6 +39,7 @@ test(`gesture: press:short press`, async () => {
 
   const squareAgain = await page.find('.square');
   expect(squareAgain).not.toHaveClass('pressed');
+  expect(squareAgain).not.toHaveClass('pressedUp');
 
   screenshotCompares.push(await page.compareScreenshot('end press'));
 
@@ -58,6 +58,7 @@ test(`gesture: press:click`, async () => {
 
   const square = await page.find('.square');
   expect(square).not.toHaveClass('pressed');
+  expect(square).not.toHaveClass('pressedUp');
 
   screenshotCompares.push(await page.compareScreenshot('end press'));
 

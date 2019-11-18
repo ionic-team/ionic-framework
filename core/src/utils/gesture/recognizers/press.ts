@@ -1,18 +1,39 @@
-import { GestureDetail, createGesture } from '../index';
+import { GestureConfig, GestureDetail, createGesture } from '../index';
 
-export interface PressRecognizerOptions {
-  el: HTMLElement;
+export interface PressRecognizerOptions extends GestureConfig {
+  /**
+   * How long the user must press the
+   * element before onPressHandler is fired.
+   */
   time: number;
-  threshold: number;
+
+  /**
+   * The maximum amount of movement on the x and y
+   * axes that is allowed and still have onPressHandler fire.
+   */
+  maxThreshold: number;
+
+  /**
+   * Fired when the long press occurs.
+   */
   onPressHandler?: () => void;
+
+  /**
+   * Fired when the pointer is lifted.
+   */
   onPressUpHandler?: () => void;
 }
 
 export const createPressRecognizer = (opts: PressRecognizerOptions) => {
-  const THRESHOLD = opts.threshold || 10;
+  const THRESHOLD = opts.maxThreshold || 10;
   let timeout: any;
+  let pressed = false;
 
-  const onStart = () => {
+  const onStart = (detail: GestureDetail) => {
+    if (opts.onStart) {
+      opts.onStart(detail);
+    }
+
     clearGestureTimeout();
 
     timeout = setTimeout(() => {
@@ -20,11 +41,16 @@ export const createPressRecognizer = (opts: PressRecognizerOptions) => {
         opts.onPressHandler();
       }
 
+      pressed = true;
       clearGestureTimeout();
     }, opts.time || 500);
   };
 
   const onMove = (detail: GestureDetail) => {
+    if (opts.onMove) {
+      opts.onMove(detail);
+    }
+
     if (Math.abs(detail.deltaX) + Math.abs(detail.deltaY) <= THRESHOLD) {
       return;
     }
@@ -32,11 +58,18 @@ export const createPressRecognizer = (opts: PressRecognizerOptions) => {
     clearGestureTimeout();
   };
 
-  const onEnd = () => {
+  const onEnd = (detail: GestureDetail) => {
+    if (opts.onEnd) {
+      opts.onEnd(detail);
+    }
+
+    if (!pressed) { return; }
+
     if (opts.onPressUpHandler) {
       opts.onPressUpHandler();
     }
 
+    pressed = false;
     clearGestureTimeout();
   };
 
@@ -48,11 +81,11 @@ export const createPressRecognizer = (opts: PressRecognizerOptions) => {
   };
 
   return createGesture({
-    el: opts.el,
-    gestureName: 'press',
-    threshold: 0,
+    ...opts,
+    gestureName: opts.gestureName || 'press',
+    threshold: opts.threshold || 0,
     onStart,
     onMove,
-    onEnd
+    onEnd,
   });
 };
