@@ -226,6 +226,7 @@ ion-checkbox,css-prop,--border-style
 ion-checkbox,css-prop,--border-width
 ion-checkbox,css-prop,--checkmark-color
 ion-checkbox,css-prop,--size
+ion-checkbox,css-prop,--stroke-width
 ion-checkbox,css-prop,--transition
 
 ion-chip,shadow

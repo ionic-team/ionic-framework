@@ -219,6 +219,7 @@ export const CheckboxExample: React.FC = () => (
 | `--border-width`         | Border width of the checkbox icon              |
 | `--checkmark-color`      | Color of the checkbox checkmark when checked   |
 | `--size`                 | Size of the checkbox icon                      |
+| `--stroke-width`         | Stroke width of the checkbox checkmark         |
 | `--transition`           | Transition of the checkbox icon                |
 
 
