@@ -89,7 +89,7 @@
           </ion-segment-button>
         </ion-segment>
 
-        <ion-segment style="--indicator-transition: none;">
+        <ion-segment class="segment-no-animate">
           <ion-segment-button>
             <ion-label>Animate</ion-label>
           </ion-segment-button>
@@ -241,6 +241,9 @@
         margin-bottom: 10px;
       }
 
+      .segment-no-animate ion-segment-button {
+        --indicator-transition: none;
+      }
     </style>
   </ion-app>
 </body>

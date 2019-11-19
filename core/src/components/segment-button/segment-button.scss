@@ -224,6 +224,8 @@ ion-ripple-effect {
   opacity: 0;
 
   box-sizing: border-box;
+
+  will-change: transform, opacity;
 }
 
 .segment-button-indicator-background {

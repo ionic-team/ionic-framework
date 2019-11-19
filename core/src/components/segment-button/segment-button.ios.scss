@@ -56,6 +56,8 @@
 
   content: "";
   opacity: 1;
+
+  will-change: opacity;
 }
 
 :host(:first-of-type)::before {
@@ -100,14 +102,6 @@
   :host(:hover) {
     opacity: $segment-button-ios-opacity-hover;
   }
-}
-
-
-// Segment Button: Checked
-// --------------------------------------------------
-
-:host(.segment-button-checked) {
-  font-weight: 500;
 }
 
 
