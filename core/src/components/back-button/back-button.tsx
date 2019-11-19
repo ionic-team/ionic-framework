@@ -15,7 +15,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
     ios: 'back-button.ios.scss',
     md: 'back-button.md.scss'
   },
-  scoped: true
+  shadow: true
 })
 export class BackButton implements ComponentInterface, ButtonInterface {
 
@@ -106,10 +106,10 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'show-back-button': showBackButton
         }}
       >
-        <button type={type} disabled={disabled} class="button-native">
+        <button type={type} disabled={disabled} class="button-native" part="button">
           <span class="button-inner">
-            {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}></ion-icon>}
-            {backButtonText && <span class="button-text">{backButtonText}</span>}
+            {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false} part="icon"></ion-icon>}
+            {backButtonText && <span class="button-text" part="text">{backButtonText}</span>}
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </button>

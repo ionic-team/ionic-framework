@@ -171,15 +171,15 @@ export const SearchbarExample: React.FC = () => (
 <template>
   <!-- Default Searchbar -->
   <ion-searchbar></ion-searchbar>
-  
+
   <!-- Searchbar with cancel button always shown -->
-  <ion-searchbar showCancelButton="always"></ion-searchbar>
-  
+  <ion-searchbar show-cancel-button="always"></ion-searchbar>
+
   <!-- Searchbar with cancel button never shown -->
-  <ion-searchbar showCancelButton="never"></ion-searchbar>
-  
+  <ion-searchbar show-cancel-button="never"></ion-searchbar>
+
   <!-- Searchbar with cancel button shown on focus -->
-  <ion-searchbar showCancelButton="focus"></ion-searchbar>
+  <ion-searchbar show-cancel-button="focus"></ion-searchbar>
 
   <!-- Searchbar with danger color -->
   <ion-searchbar color="danger"></ion-searchbar>
@@ -197,7 +197,7 @@ export const SearchbarExample: React.FC = () => (
   <ion-searchbar disabled="true"></ion-searchbar>
 
   <!-- Searchbar with a cancel button and custom cancel button text -->
-  <ion-searchbar showCancelButton="focus" cancelButtonText="Custom Cancel"></ion-searchbar>
+  <ion-searchbar show-cancel-button="focus" cancel-button-text="Custom Cancel"></ion-searchbar>
 
   <!-- Searchbar with a custom debounce -->
   <ion-searchbar debounce="500"></ion-searchbar>
@@ -249,7 +249,7 @@ export const SearchbarExample: React.FC = () => (
 | `ionChange` | Emitted when the value has changed.             | `CustomEvent<SearchbarChangeEventDetail>` |
 | `ionClear`  | Emitted when the clear input button is clicked. | `CustomEvent<void>`                       |
 | `ionFocus`  | Emitted when the input has focus.               | `CustomEvent<void>`                       |
-| `ionInput`  | Emitted when a keyboard input ocurred.          | `CustomEvent<KeyboardEvent>`              |
+| `ionInput`  | Emitted when a keyboard input occurred.         | `CustomEvent<KeyboardEvent>`              |
 
 
 ## Methods
@@ -280,7 +280,8 @@ Type: `Promise<void>`
 
 | Name                        | Description                              |
 | --------------------------- | ---------------------------------------- |
-| `--background`              | Background of the searchbar              |
+| `--background`              | Background of the searchbar input        |
+| `--box-shadow`              | Box shadow of the searchbar input        |
 | `--cancel-button-color`     | Color of the searchbar cancel button     |
 | `--clear-button-color`      | Color of the searchbar clear button      |
 | `--color`                   | Color of the searchbar text              |

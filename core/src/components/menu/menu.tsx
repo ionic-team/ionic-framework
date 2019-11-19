@@ -3,7 +3,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
-import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
+import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
@@ -163,8 +163,8 @@ BEFORE:
   <div main>...</div>
 
 AFTER:
-  <ion-menu contentId="my-content"></ion-menu>
-  <div id="my-content">...</div>
+  <ion-menu contentId="main-content"></ion-menu>
+  <div id="main-content">...</div>
 `);
     }
     const content = this.contentId !== undefined
@@ -229,7 +229,7 @@ AFTER:
 
   @Listen('click', { capture: true })
   onBackdropClick(ev: any) {
-    if (this._isOpen && this.lastOnEnd < ev.currentTime - 100) {
+    if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
       const shouldClose = (ev.composedPath)
         ? !ev.composedPath().includes(this.menuInnerEl)
         : false;
@@ -337,7 +337,12 @@ AFTER:
     const isReversed = !shouldOpen;
     const ani = (this.animation as Animation)!
       .direction((isReversed) ? 'reverse' : 'normal')
-      .easing((isReversed) ? this.easingReverse : this.easing);
+      .easing((isReversed) ? this.easingReverse : this.easing)
+      .onFinish(() => {
+        if (ani.getDirection() === 'reverse') {
+          ani.direction('normal');
+        }
+      });
 
     if (animated) {
       await ani.play();
@@ -384,9 +389,7 @@ AFTER:
     }
 
     // the cloned animation should not use an easing curve during seek
-    (this.animation as Animation)
-      .direction((this._isOpen) ? 'reverse' : 'normal')
-      .progressStart(true);
+    (this.animation as Animation).progressStart(true, (this._isOpen) ? 1 : 0);
   }
 
   private onMove(detail: GestureDetail) {
@@ -398,7 +401,7 @@ AFTER:
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
 
-    this.animation.progressStep(stepValue);
+    this.animation.progressStep((this._isOpen) ? 1 - stepValue : stepValue);
   }
 
   private onEnd(detail: GestureDetail) {
@@ -449,14 +452,16 @@ AFTER:
      * to the new easing curve, as `stepValue` is going to be given
      * in terms of a linear curve.
      */
-    newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.4, 0), new Point(0.6, 1), new Point(1, 1), clamp(0, adjustedStepValue, 1));
+    newStepValue += getTimeGivenProgression([0, 0], [0.4, 0], [0.6, 1], [1, 1], clamp(0, adjustedStepValue, 1))[0];
+
+    const playTo = (this._isOpen) ? !shouldComplete : shouldComplete;
 
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
       .onFinish(
         () => this.afterAnimation(shouldOpen),
         { oneTimeCallback: true })
-      .progressEnd(shouldComplete ? 1 : 0, newStepValue, 300);
+      .progressEnd((playTo) ? 1 : 0, (this._isOpen) ? 1 - newStepValue : newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {

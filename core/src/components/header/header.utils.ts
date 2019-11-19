@@ -45,7 +45,7 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
         innerTitleEl: (ionTitleEl) ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
         ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')) || []
       } as ToolbarIndex;
-    }) || [[]]
+    }) || []
   } as HeaderIndex;
 };
 
@@ -60,7 +60,7 @@ export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: He
   });
 };
 
-const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | undefined) => {
+export const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity?: number) => {
   if (opacity === undefined) {
     toolbar.background.style.removeProperty('--opacity');
   } else {
@@ -72,7 +72,10 @@ const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) 
   if (!ev[0].isIntersecting) { return; }
 
   const scale = ((1 - ev[0].intersectionRatio) * 100) / 75;
-  setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scale === 1) ? undefined : scale);
+
+  mainHeaderIndex.toolbars.forEach(toolbar => {
+    setToolbarBackgroundOpacity(toolbar, (scale === 1) ? undefined : scale);
+  });
 };
 
 /**
@@ -117,20 +120,18 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
       if (hasValidIntersection) {
         setHeaderActive(mainHeaderIndex);
         setHeaderActive(scrollHeaderIndex, false);
-        setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], 1);
+        setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0]);
       }
     }
   });
 };
 
 export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
-  writeTask(() => {
-    if (active) {
-      headerIndex.el.classList.remove('header-collapse-condense-inactive');
-    } else {
-      headerIndex.el.classList.add('header-collapse-condense-inactive');
-    }
-  });
+  if (active) {
+    headerIndex.el.classList.remove('header-collapse-condense-inactive');
+  } else {
+    headerIndex.el.classList.add('header-collapse-condense-inactive');
+  }
 };
 
 export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, transition = false) => {
