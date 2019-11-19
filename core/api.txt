@@ -566,9 +566,14 @@ ion-list,method,closeSlidingItems,closeSlidingItems() => Promise<boolean>
 
 ion-list-header,shadow
 ion-list-header,prop,color,string | undefined,undefined,false,false
+ion-list-header,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-list-header,prop,mode,"ios" | "md",undefined,false,false
 ion-list-header,css-prop,--background
+ion-list-header,css-prop,--border-color
+ion-list-header,css-prop,--border-style
+ion-list-header,css-prop,--border-width
 ion-list-header,css-prop,--color
+ion-list-header,css-prop,--inner-border-width
 
 ion-loading,scoped
 ion-loading,prop,animated,boolean,true,false,false
