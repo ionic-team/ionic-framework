@@ -18,6 +18,7 @@
    *
    * @prop --offset-top: Offset top of the content
    * @prop --offset-bottom: Offset bottom of the content
+   * @prop --animation: Animation of the content
    */
   --background: #{$background-color};
   --color: #{$text-color};
@@ -29,6 +30,7 @@
   --offset-top: 0px;
   --offset-bottom: 0px;
   --overflow: auto;
+  --animation: none;
 
   display: block;
   position: relative;
@@ -66,6 +68,7 @@
   position: absolute;
 
   background: var(--background);
+  background: var(--animation);
   color: var(--color);
 
   box-sizing: border-box;
