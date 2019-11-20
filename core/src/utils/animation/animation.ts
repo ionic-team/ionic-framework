@@ -845,14 +845,8 @@ export const createAnimation = (animationId?: string): Animation => {
       }
       if (!initialized) {
         initializeAnimation();
-/*
-  TODO check this
-  <<<<<<< HEAD
       } else {
         update();
-=======
->>>>>>> origin/master
-*/
       }
 
       if (finished) {
