@@ -19,7 +19,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 })
 export class BackButton implements ComponentInterface, ButtonInterface {
 
-  private mode = getIonMode(this);
+  mode = getIonMode(this);
   @Element() el!: HTMLElement;
 
   /**
@@ -54,20 +54,32 @@ export class BackButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-  private get backButtonIcon() {
-    return this.icon != null ? this.icon : config.get('backButtonIcon', 'arrow-back');
+  get backButtonIcon() {
+    const icon = this.icon;
+    if (icon != null) {
+      // icon is set on the component or by the config
+      return icon;
+    }
+
+    if (this.mode === 'ios') {
+      // default ios back button icon
+      return config.get('backButtonIcon', 'chevron-back');
+    }
+
+    // default md back button icon
+    return config.get('backButtonIcon', 'arrow-back-sharp');
   }
 
-  private get backButtonText() {
+  get backButtonText() {
     const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
     return this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
   }
 
-  private get hasIconOnly() {
+  get hasIconOnly() {
     return this.backButtonIcon && !this.backButtonText;
   }
 
-  private get rippleType() {
+  get rippleType() {
     // If the button only has an icon we use the unbounded
     // "circular" ripple effect
     if (this.hasIconOnly) {

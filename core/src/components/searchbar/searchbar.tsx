@@ -53,8 +53,9 @@ export class Searchbar implements ComponentInterface {
 
   /**
    * Set the cancel button icon. Only applies to `md` mode.
+   * Defaults to `"arrow-back-sharp"`.
    */
-  @Prop() cancelButtonIcon = config.get('backButtonIcon', 'md-arrow-back') as string;
+  @Prop() cancelButtonIcon = config.get('backButtonIcon', 'arrow-back-sharp') as string;
 
   /**
    * Set the the cancel button text. Only applies to `ios` mode.
@@ -62,7 +63,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() cancelButtonText = 'Cancel';
 
   /**
-   * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
+   * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.
    */
   @Prop() clearIcon?: string;
 
@@ -100,9 +101,10 @@ export class Searchbar implements ComponentInterface {
   @Prop() placeholder = 'Search';
 
   /**
-   * The icon to use as the search icon.
+   * The icon to use as the search icon. Defaults to `"search-outline"` in
+   * `ios` mode and `"search-sharp"` in `md` mode.
    */
-  @Prop() searchIcon = 'search';
+  @Prop() searchIcon?: string;
 
   /**
    * Sets the behavior for the cancel button. Defaults to `"never"`.
@@ -412,8 +414,8 @@ export class Searchbar implements ComponentInterface {
   render() {
     const animated = this.animated && config.getBoolean('animated', true);
     const mode = getIonMode(this);
-    const clearIcon = this.clearIcon || (mode === 'ios' ? 'ios-close-circle' : 'md-close');
-    const searchIcon = this.searchIcon;
+    const clearIcon = this.clearIcon || (mode === 'ios' ? 'close-circle' : 'close-sharp');
+    const searchIcon = this.searchIcon || (mode === 'ios' ? 'search-outline' : 'search-sharp');
 
     const cancelButton = (this.showCancelButton !== 'never') && (
       <button
