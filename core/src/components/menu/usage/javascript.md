@@ -57,7 +57,7 @@
         <ion-title>Menu - Basic</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content padding>
+    <ion-content class="ion-padding">
       <ion-button expand="block" onclick="openFirst()">Open Start Menu</ion-button>
       <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
       <ion-button expand="block" onclick="openCustom()">Open Custom Menu</ion-button>

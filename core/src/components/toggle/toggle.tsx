@@ -92,15 +92,11 @@ export class Toggle implements ComponentInterface {
   disabledChanged() {
     this.emitStyle();
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
   }
 
-  componentWillLoad() {
-    this.emitStyle();
-  }
-
-  async componentDidLoad() {
+  async connectedCallback() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'toggle',
@@ -114,11 +110,15 @@ export class Toggle implements ComponentInterface {
     this.disabledChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
     }
+  }
+
+  componentWillLoad() {
+    this.emitStyle();
   }
 
   private emitStyle() {
@@ -216,7 +216,7 @@ export class Toggle implements ComponentInterface {
   }
 }
 
-function shouldToggle(doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean {
+const shouldToggle = (doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean => {
   const isRTL = doc.dir === 'rtl';
 
   if (checked) {
@@ -226,6 +226,6 @@ function shouldToggle(doc: HTMLDocument, checked: boolean, deltaX: number, margi
     return (!isRTL && (- margin < deltaX)) ||
       (isRTL && (margin > deltaX));
   }
-}
+};
 
 let toggleIds = 0;

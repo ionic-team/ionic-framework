@@ -56,13 +56,13 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-card color="primary" class="rainbow-content">
+      <ion-card class="rainbow-content">
         <ion-card-header>
-          Card Header
+          Custom CSS Card Header
         </ion-card-header>
         <ion-card-content>
           <ion-card-title>
-            Title
+            Custom CSS Title
           </ion-card-title>
           Some normal text in content.
           <h3>h3 in content</h3>
@@ -121,8 +121,12 @@
   <style>
     .rainbow-content {
       background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+      color: white;
     }
-
+    .rainbow-content ion-card-header,
+    .rainbow-content ion-card-title {
+      color: white;
+    }
   </style>
 
   <script>

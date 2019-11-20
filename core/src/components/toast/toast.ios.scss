@@ -25,9 +25,11 @@
   z-index: $z-index-overlay-wrapper;
 }
 
-:host(.toast-translucent) .toast-wrapper {
-  background: $toast-ios-translucent-background-color;
-  backdrop-filter: $toast-ios-translucent-filter;
+@supports (backdrop-filter: blur(0)) {
+  :host(.toast-translucent) .toast-wrapper {
+    background: $toast-ios-translucent-background-color;
+    backdrop-filter: $toast-ios-translucent-filter;
+  }
 }
 
 .toast-wrapper.toast-top {

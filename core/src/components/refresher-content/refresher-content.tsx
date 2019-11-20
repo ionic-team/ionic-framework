@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -55,37 +55,30 @@ export class RefresherContent implements ComponentInterface {
     }
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true,
-      }
-    };
-  }
-
   render() {
-    return [
-      <div class="refresher-pulling">
-        {this.pullingIcon &&
-          <div class="refresher-pulling-icon">
-            <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
-          </div>
-        }
-        {this.pullingText &&
-          <div class="refresher-pulling-text" innerHTML={sanitizeDOMString(this.pullingText)}></div>
-        }
-      </div>,
-      <div class="refresher-refreshing">
-        {this.refreshingSpinner &&
-          <div class="refresher-refreshing-icon">
-            <ion-spinner name={this.refreshingSpinner}></ion-spinner>
-          </div>
-        }
-        {this.refreshingText &&
-          <div class="refresher-refreshing-text" innerHTML={sanitizeDOMString(this.refreshingText)}></div>
-        }
-      </div>
-    ];
+    return (
+      <Host class={getIonMode(this)}>
+        <div class="refresher-pulling">
+          {this.pullingIcon &&
+            <div class="refresher-pulling-icon">
+              <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
+            </div>
+          }
+          {this.pullingText &&
+            <div class="refresher-pulling-text" innerHTML={sanitizeDOMString(this.pullingText)}></div>
+          }
+        </div>
+        <div class="refresher-refreshing">
+          {this.refreshingSpinner &&
+            <div class="refresher-refreshing-icon">
+              <ion-spinner name={this.refreshingSpinner}></ion-spinner>
+            </div>
+          }
+          {this.refreshingText &&
+            <div class="refresher-refreshing-text" innerHTML={sanitizeDOMString(this.refreshingText)}></div>
+          }
+        </div>
+      </Host>
+    );
   }
 }

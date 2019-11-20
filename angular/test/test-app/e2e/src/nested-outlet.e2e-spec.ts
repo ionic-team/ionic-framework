@@ -4,7 +4,7 @@ import { waitTime, handleErrorMessages, goBack } from './utils';
 describe('nested-outlet', () => {
 
   afterEach(() => {
-    handleErrorMessages();
+    return handleErrorMessages();
   });
 
   it('should navigate correctly', async () => {

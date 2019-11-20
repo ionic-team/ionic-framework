@@ -1,15 +1,15 @@
 /* tslint:disable */
 /* auto-generated angular directive proxies */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone } from '@angular/core';
 import { proxyInputs, proxyMethods, proxyOutputs } from './proxies-utils';
 
-import { Components } from '@ionic/core'
+import { Components } from '@ionic/core';
 
 export declare interface IonApp extends Components.IonApp {}
 @Component({ selector: 'ion-app', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
 export class IonApp {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -19,7 +19,7 @@ export declare interface IonAvatar extends Components.IonAvatar {}
 @Component({ selector: 'ion-avatar', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
 export class IonAvatar {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -29,7 +29,7 @@ export declare interface IonBackButton extends Components.IonBackButton {}
 @Component({ selector: 'ion-back-button', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'text', 'type'] })
 export class IonBackButton {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -41,7 +41,7 @@ export declare interface IonBackdrop extends Components.IonBackdrop {}
 export class IonBackdrop {
   ionBackdropTap!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionBackdropTap']);
@@ -53,7 +53,7 @@ export declare interface IonBadge extends Components.IonBadge {}
 @Component({ selector: 'ion-badge', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
 export class IonBadge {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -66,7 +66,7 @@ export class IonButton {
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
@@ -75,20 +75,21 @@ export class IonButton {
 proxyInputs(IonButton, ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'href', 'mode', 'rel', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']);
 
 export declare interface IonButtons extends Components.IonButtons {}
-@Component({ selector: 'ion-buttons', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
+@Component({ selector: 'ion-buttons', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['collapse'] })
 export class IonButtons {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
+proxyInputs(IonButtons, ['collapse']);
 
 export declare interface IonCard extends Components.IonCard {}
 @Component({ selector: 'ion-card', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerDirection', 'target', 'type'] })
 export class IonCard {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -99,7 +100,7 @@ export declare interface IonCardContent extends Components.IonCardContent {}
 @Component({ selector: 'ion-card-content', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['mode'] })
 export class IonCardContent {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -110,7 +111,7 @@ export declare interface IonCardHeader extends Components.IonCardHeader {}
 @Component({ selector: 'ion-card-header', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'translucent'] })
 export class IonCardHeader {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -121,7 +122,7 @@ export declare interface IonCardSubtitle extends Components.IonCardSubtitle {}
 @Component({ selector: 'ion-card-subtitle', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
 export class IonCardSubtitle {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -132,7 +133,7 @@ export declare interface IonCardTitle extends Components.IonCardTitle {}
 @Component({ selector: 'ion-card-title', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
 export class IonCardTitle {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -146,7 +147,7 @@ export class IonCheckbox {
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
@@ -158,7 +159,7 @@ export declare interface IonChip extends Components.IonChip {}
 @Component({ selector: 'ion-chip', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'outline'] })
 export class IonChip {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -169,7 +170,7 @@ export declare interface IonCol extends Components.IonCol {}
 @Component({ selector: 'ion-col', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['offset', 'offsetLg', 'offsetMd', 'offsetSm', 'offsetXl', 'offsetXs', 'pull', 'pullLg', 'pullMd', 'pullSm', 'pullXl', 'pullXs', 'push', 'pushLg', 'pushMd', 'pushSm', 'pushXl', 'pushXs', 'size', 'sizeLg', 'sizeMd', 'sizeSm', 'sizeXl', 'sizeXs'] })
 export class IonCol {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -183,7 +184,7 @@ export class IonContent {
   ionScroll!: EventEmitter<CustomEvent>;
   ionScrollEnd!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionScrollStart', 'ionScroll', 'ionScrollEnd']);
@@ -200,7 +201,7 @@ export class IonDatetime {
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
@@ -213,7 +214,7 @@ export declare interface IonFab extends Components.IonFab {}
 @Component({ selector: 'ion-fab', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['activated', 'edge', 'horizontal', 'vertical'] })
 export class IonFab {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -227,7 +228,7 @@ export class IonFabButton {
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
@@ -239,7 +240,7 @@ export declare interface IonFabList extends Components.IonFabList {}
 @Component({ selector: 'ion-fab-list', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['activated', 'side'] })
 export class IonFabList {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -250,7 +251,7 @@ export declare interface IonFooter extends Components.IonFooter {}
 @Component({ selector: 'ion-footer', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['mode', 'translucent'] })
 export class IonFooter {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -261,7 +262,7 @@ export declare interface IonGrid extends Components.IonGrid {}
 @Component({ selector: 'ion-grid', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['fixed'] })
 export class IonGrid {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -269,21 +270,21 @@ export class IonGrid {
 proxyInputs(IonGrid, ['fixed']);
 
 export declare interface IonHeader extends Components.IonHeader {}
-@Component({ selector: 'ion-header', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['mode', 'translucent'] })
+@Component({ selector: 'ion-header', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['collapse', 'mode', 'translucent'] })
 export class IonHeader {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonHeader, ['mode', 'translucent']);
+proxyInputs(IonHeader, ['collapse', 'mode', 'translucent']);
 
 export declare interface IonIcon extends Components.IonIcon {}
 @Component({ selector: 'ion-icon', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['ariaLabel', 'color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'size', 'src'] })
 export class IonIcon {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -297,7 +298,7 @@ export class IonImg {
   ionImgDidLoad!: EventEmitter<CustomEvent>;
   ionError!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionImgWillLoad', 'ionImgDidLoad', 'ionError']);
@@ -310,7 +311,7 @@ export declare interface IonInfiniteScroll extends Components.IonInfiniteScroll 
 export class IonInfiniteScroll {
   ionInfinite!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionInfinite']);
@@ -323,7 +324,7 @@ export declare interface IonInfiniteScrollContent extends Components.IonInfinite
 @Component({ selector: 'ion-infinite-scroll-content', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['loadingSpinner', 'loadingText'] })
 export class IonInfiniteScrollContent {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -338,7 +339,7 @@ export class IonInput {
   ionBlur!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionBlur', 'ionFocus']);
@@ -351,7 +352,7 @@ export declare interface IonItem extends Components.IonItem {}
 @Component({ selector: 'ion-item', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['button', 'color', 'detail', 'detailIcon', 'disabled', 'download', 'href', 'lines', 'mode', 'rel', 'routerDirection', 'target', 'type'] })
 export class IonItem {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -362,7 +363,7 @@ export declare interface IonItemDivider extends Components.IonItemDivider {}
 @Component({ selector: 'ion-item-divider', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'sticky'] })
 export class IonItemDivider {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -373,7 +374,7 @@ export declare interface IonItemGroup extends Components.IonItemGroup {}
 @Component({ selector: 'ion-item-group', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
 export class IonItemGroup {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -383,7 +384,7 @@ export declare interface IonItemOption extends Components.IonItemOption {}
 @Component({ selector: 'ion-item-option', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'target', 'type'] })
 export class IonItemOption {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -395,7 +396,7 @@ export declare interface IonItemOptions extends Components.IonItemOptions {}
 export class IonItemOptions {
   ionSwipe!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionSwipe']);
@@ -408,7 +409,7 @@ export declare interface IonItemSliding extends Components.IonItemSliding {}
 export class IonItemSliding {
   ionDrag!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionDrag']);
@@ -421,7 +422,7 @@ export declare interface IonLabel extends Components.IonLabel {}
 @Component({ selector: 'ion-label', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'position'] })
 export class IonLabel {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -432,7 +433,7 @@ export declare interface IonList extends Components.IonList {}
 @Component({ selector: 'ion-list', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['inset', 'lines', 'mode'] })
 export class IonList {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -444,7 +445,7 @@ export declare interface IonListHeader extends Components.IonListHeader {}
 @Component({ selector: 'ion-list-header', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
 export class IonListHeader {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -459,7 +460,7 @@ export class IonMenu {
   ionDidOpen!: EventEmitter<CustomEvent>;
   ionDidClose!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionWillOpen', 'ionWillClose', 'ionDidOpen', 'ionDidClose']);
@@ -472,7 +473,7 @@ export declare interface IonMenuButton extends Components.IonMenuButton {}
 @Component({ selector: 'ion-menu-button', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['autoHide', 'color', 'disabled', 'menu', 'type'] })
 export class IonMenuButton {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -483,7 +484,7 @@ export declare interface IonMenuToggle extends Components.IonMenuToggle {}
 @Component({ selector: 'ion-menu-toggle', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['autoHide', 'menu'] })
 export class IonMenuToggle {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -496,7 +497,7 @@ export class IonNav {
   ionNavWillChange!: EventEmitter<CustomEvent>;
   ionNavDidChange!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionNavWillChange', 'ionNavDidChange']);
@@ -505,43 +506,22 @@ export class IonNav {
 proxyMethods(IonNav, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']);
 proxyInputs(IonNav, ['animated', 'animation', 'root', 'rootParams', 'swipeGesture']);
 
-export declare interface IonNavPop extends Components.IonNavPop {}
-@Component({ selector: 'ion-nav-pop', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
-export class IonNavPop {
+export declare interface IonNavLink extends Components.IonNavLink {}
+@Component({ selector: 'ion-nav-link', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['component', 'componentProps', 'routerDirection'] })
+export class IonNavLink {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-
-export declare interface IonNavPush extends Components.IonNavPush {}
-@Component({ selector: 'ion-nav-push', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['component', 'componentProps'] })
-export class IonNavPush {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-proxyInputs(IonNavPush, ['component', 'componentProps']);
-
-export declare interface IonNavSetRoot extends Components.IonNavSetRoot {}
-@Component({ selector: 'ion-nav-set-root', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['component', 'componentProps'] })
-export class IonNavSetRoot {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-proxyInputs(IonNavSetRoot, ['component', 'componentProps']);
+proxyInputs(IonNavLink, ['component', 'componentProps', 'routerDirection']);
 
 export declare interface IonNote extends Components.IonNote {}
 @Component({ selector: 'ion-note', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
 export class IonNote {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -552,7 +532,7 @@ export declare interface IonProgressBar extends Components.IonProgressBar {}
 @Component({ selector: 'ion-progress-bar', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['buffer', 'color', 'mode', 'reversed', 'type', 'value'] })
 export class IonProgressBar {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -566,7 +546,7 @@ export class IonRadio {
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionSelect', 'ionFocus', 'ionBlur']);
@@ -579,7 +559,7 @@ export declare interface IonRadioGroup extends Components.IonRadioGroup {}
 export class IonRadioGroup {
   ionChange!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange']);
@@ -594,7 +574,7 @@ export class IonRange {
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
@@ -609,7 +589,7 @@ export class IonRefresher {
   ionPull!: EventEmitter<CustomEvent>;
   ionStart!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionRefresh', 'ionPull', 'ionStart']);
@@ -622,7 +602,7 @@ export declare interface IonRefresherContent extends Components.IonRefresherCont
 @Component({ selector: 'ion-refresher-content', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText'] })
 export class IonRefresherContent {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -633,7 +613,7 @@ export declare interface IonReorder extends Components.IonReorder {}
 @Component({ selector: 'ion-reorder', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
 export class IonReorder {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -644,7 +624,7 @@ export declare interface IonReorderGroup extends Components.IonReorderGroup {}
 export class IonReorderGroup {
   ionItemReorder!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionItemReorder']);
@@ -657,7 +637,7 @@ export declare interface IonRippleEffect extends Components.IonRippleEffect {}
 @Component({ selector: 'ion-ripple-effect', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['type'] })
 export class IonRippleEffect {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -669,14 +649,14 @@ export declare interface IonRow extends Components.IonRow {}
 @Component({ selector: 'ion-row', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
 export class IonRow {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
 export declare interface IonSearchbar extends Components.IonSearchbar {}
-@Component({ selector: 'ion-searchbar', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'mode', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value'] })
+@Component({ selector: 'ion-searchbar', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'inputmode', 'mode', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value'] })
 export class IonSearchbar {
   ionInput!: EventEmitter<CustomEvent>;
   ionChange!: EventEmitter<CustomEvent>;
@@ -685,25 +665,24 @@ export class IonSearchbar {
   ionBlur!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
   }
 }
 proxyMethods(IonSearchbar, ['setFocus', 'getInputElement']);
-proxyInputs(IonSearchbar, ['animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'mode', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value']);
+proxyInputs(IonSearchbar, ['animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'inputmode', 'mode', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value']);
 
 export declare interface IonSegment extends Components.IonSegment {}
 @Component({ selector: 'ion-segment', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'disabled', 'mode', 'scrollable', 'value'] })
 export class IonSegment {
   ionChange!: EventEmitter<CustomEvent>;
-  ionStyle!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionStyle']);
+    proxyOutputs(this, this.el, ['ionChange']);
   }
 }
 proxyInputs(IonSegment, ['color', 'disabled', 'mode', 'scrollable', 'value']);
@@ -713,7 +692,7 @@ export declare interface IonSegmentButton extends Components.IonSegmentButton {}
 export class IonSegmentButton {
   ionSelect!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionSelect']);
@@ -729,7 +708,7 @@ export class IonSelect {
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionCancel', 'ionFocus', 'ionBlur']);
@@ -742,7 +721,7 @@ export declare interface IonSelectOption extends Components.IonSelectOption {}
 @Component({ selector: 'ion-select-option', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['disabled', 'selected', 'value'] })
 export class IonSelectOption {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -750,21 +729,21 @@ export class IonSelectOption {
 proxyInputs(IonSelectOption, ['disabled', 'selected', 'value']);
 
 export declare interface IonSkeletonText extends Components.IonSkeletonText {}
-@Component({ selector: 'ion-skeleton-text', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['animated', 'width'] })
+@Component({ selector: 'ion-skeleton-text', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['animated'] })
 export class IonSkeletonText {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonSkeletonText, ['animated', 'width']);
+proxyInputs(IonSkeletonText, ['animated']);
 
 export declare interface IonSlide extends Components.IonSlide {}
 @Component({ selector: 'ion-slide', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
 export class IonSlide {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -790,20 +769,20 @@ export class IonSlides {
   ionSlideTouchStart!: EventEmitter<CustomEvent>;
   ionSlideTouchEnd!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
   }
 }
-proxyMethods(IonSlides, ['update', 'updateAutoHeight', 'slideTo', 'slideNext', 'slidePrev', 'getActiveIndex', 'getPreviousIndex', 'length', 'isEnd', 'isBeginning', 'startAutoplay', 'stopAutoplay', 'lockSwipeToNext', 'lockSwipeToPrev', 'lockSwipes']);
+proxyMethods(IonSlides, ['update', 'updateAutoHeight', 'slideTo', 'slideNext', 'slidePrev', 'getActiveIndex', 'getPreviousIndex', 'length', 'isEnd', 'isBeginning', 'startAutoplay', 'stopAutoplay', 'lockSwipeToNext', 'lockSwipeToPrev', 'lockSwipes', 'getSwiper']);
 proxyInputs(IonSlides, ['mode', 'options', 'pager', 'scrollbar']);
 
 export declare interface IonSpinner extends Components.IonSpinner {}
 @Component({ selector: 'ion-spinner', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'duration', 'name', 'paused'] })
 export class IonSpinner {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -815,7 +794,7 @@ export declare interface IonSplitPane extends Components.IonSplitPane {}
 export class IonSplitPane {
   ionSplitPaneVisible!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionSplitPaneVisible']);
@@ -827,7 +806,7 @@ export declare interface IonTabBar extends Components.IonTabBar {}
 @Component({ selector: 'ion-tab-bar', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'selectedTab', 'translucent'] })
 export class IonTabBar {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -838,7 +817,7 @@ export declare interface IonTabButton extends Components.IonTabButton {}
 @Component({ selector: 'ion-tab-button', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['disabled', 'download', 'href', 'layout', 'mode', 'rel', 'selected', 'tab', 'target'] })
 export class IonTabButton {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -849,7 +828,7 @@ export declare interface IonText extends Components.IonText {}
 @Component({ selector: 'ion-text', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
 export class IonText {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
@@ -864,7 +843,7 @@ export class IonTextarea {
   ionBlur!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionBlur', 'ionFocus']);
@@ -877,22 +856,22 @@ export declare interface IonThumbnail extends Components.IonThumbnail {}
 @Component({ selector: 'ion-thumbnail', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })
 export class IonThumbnail {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
 
 export declare interface IonTitle extends Components.IonTitle {}
-@Component({ selector: 'ion-title', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color'] })
+@Component({ selector: 'ion-title', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'size'] })
 export class IonTitle {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonTitle, ['color']);
+proxyInputs(IonTitle, ['color', 'size']);
 
 export declare interface IonToggle extends Components.IonToggle {}
 @Component({ selector: 'ion-toggle', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value'] })
@@ -901,7 +880,7 @@ export class IonToggle {
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
@@ -913,7 +892,7 @@ export declare interface IonToolbar extends Components.IonToolbar {}
 @Component({ selector: 'ion-toolbar', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
 export class IonToolbar {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef) {
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
   }

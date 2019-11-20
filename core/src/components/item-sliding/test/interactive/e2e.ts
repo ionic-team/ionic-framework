@@ -28,7 +28,7 @@ test('item-sliding: interactive', async () => {
   }
 });
 
-async function slideAndDelete(item: any, page: any) {
+const slideAndDelete = async (item: any, page: any) => {
   try {
     // Get the element's ID
     const id = await(await item.getProperty('id')).jsonValue();
@@ -37,9 +37,9 @@ async function slideAndDelete(item: any, page: any) {
   } catch (err) {
     throw err;
   }
-}
+};
 
-async function deleteItemSliding(item: any, page: any, id: string) {
+const deleteItemSliding = async (item: any, page: any, id: string) => {
   // Click the "delete" option
   const options = await item.$$('ion-item-option');
   await options[0].click();
@@ -48,4 +48,4 @@ async function deleteItemSliding(item: any, page: any, id: string) {
   await page.waitForSelector(id, { hidden: true });
 
   await page.waitFor(1000);
-}
+};

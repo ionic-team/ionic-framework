@@ -94,7 +94,11 @@ export class Checkbox implements ComponentInterface {
   }
 
   @Watch('disabled')
-  emitStyle() {
+  disabledChanged() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
     this.ionStyle.emit({
       'checkbox-checked': this.checked,
       'interactive-disabled': this.disabled,

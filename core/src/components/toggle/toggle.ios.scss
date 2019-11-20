@@ -43,29 +43,10 @@
 
   transition: background-color $toggle-ios-transition-duration;
 
-  background-color: $toggle-ios-border-color-off;
+  background: var(--background);
 
   overflow: hidden;
   pointer-events: none;
-}
-
-
-// iOS Toggle Background Oval: Unchecked
-// -----------------------------------------
-
-.toggle-icon::before {
-  @include position($toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width);
-  @include border-radius($toggle-ios-border-radius);
-
-  position: absolute;
-
-  transform: scale3d(1, 1, 1);
-
-  transition: transform $toggle-ios-transition-duration;
-
-  background: var(--background);
-
-  content: "";
 }
 
 
