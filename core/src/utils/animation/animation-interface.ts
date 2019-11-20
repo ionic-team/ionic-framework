@@ -2,6 +2,7 @@ export interface Animation {
   parentAnimation: Animation | undefined;
   elements: HTMLElement[];
   childAnimations: Animation[];
+  id: string | undefined;
 
   /**
    * Play the animation
@@ -28,7 +29,7 @@ export interface Animation {
    */
   destroy(): void;
 
-  progressStart(forceLinearEasing: boolean): void;
+  progressStart(forceLinearEasing: boolean, step?: number): void;
   progressStep(step: number): void;
   progressEnd(playTo: 0 | 1 | undefined, step: number, dur?: number): void;
 
@@ -38,7 +39,6 @@ export interface Animation {
 
   /**
    * Set the keyframes for the animation.
-   * TODO: proper types
    */
   keyframes(keyframes: AnimationKeyFrames): Animation;
 
@@ -211,7 +211,7 @@ export interface Animation {
    * Add a callback to be run
    * upon the animation ending
    */
-  onFinish(callback: AnimationLifecycle, opts?: AnimationOnFinishOptions): Animation;
+  onFinish(callback: AnimationLifecycle, opts?: AnimationCallbackOptions): Animation;
 
   /** @deprecated */
   playAsync(): Promise<void>;
@@ -220,12 +220,12 @@ export interface Animation {
 }
 
 export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;
+export type AnimationKeyFrames = [AnimationKeyFrameEdge, AnimationKeyFrameEdge] | AnimationKeyFrame[];
+export type AnimationStyles = Record<string, any>;
 
-export interface AnimationOnFinishOptions {
+export interface AnimationCallbackOptions {
   oneTimeCallback: boolean;
 }
-
-export type AnimationKeyFrames = [AnimationKeyFrameEdge, AnimationKeyFrameEdge] | AnimationKeyFrame[];
 
 export interface AnimationKeyFrame extends AnimationStyles {
   offset: number;
@@ -235,8 +235,6 @@ export interface AnimationKeyFrameEdge extends AnimationStyles {
   offset?: number;
 }
 
-export type AnimationStyles = Record<string, any>;
-
 export interface AnimationPlayOptions {
   sync: boolean;
 }
@@ -244,3 +242,5 @@ export interface AnimationPlayOptions {
 export type AnimationPlayTo = 'start' | 'end';
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationFill = 'auto' | 'none' | 'forwards' | 'backwards' | 'both';
+
+export type AnimationBuilder = (baseEl: any, opts?: any) => Animation;

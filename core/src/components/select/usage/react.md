@@ -54,7 +54,11 @@ export const SelectExample: React.FC = () => (
   <IonContent>
     ## Single Selection
     <IonList>
-      <IonListHeader>Single Selection</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Single Selection
+        </IonLabel>
+      </IonListHeader>
 
       <IonItem>
         <IonLabel>Gender</IonLabel>
@@ -76,7 +80,11 @@ export const SelectExample: React.FC = () => (
     </IonList>
     ## Multiple Selection
     <IonList>
-      <IonListHeader>Multiple Selection</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Multiple Selection
+        </IonLabel>
+      </IonListHeader>
 
       <IonItem>
         <IonLabel>Toppings</IonLabel>
@@ -110,7 +118,11 @@ export const SelectExample: React.FC = () => (
     </IonList>
     ## Objects as Values
     <IonList>
-      <IonListHeader>Objects as Values (compareWith)</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Objects as Values (compareWith)
+        </IonLabel>
+      </IonListHeader>
       <IonItem>
         <IonLabel>Users</IonLabel>
         <IonSelect compareWith={compareWith}>
@@ -126,7 +138,11 @@ export const SelectExample: React.FC = () => (
     </IonList>
     ## Interface Options
     <IonList>
-      <IonListHeader>Interface Options</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Interface Options
+        </IonLabel>
+      </IonListHeader>
 
       <IonItem>
         <IonLabel>Alert</IonLabel>

@@ -1,4 +1,4 @@
-import { IonicAnimation } from '../../../interface';
+import { Animation } from '../../../interface';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp } from '../../../utils/helpers';
 
@@ -13,7 +13,7 @@ export const SwipeToCloseDefaults = {
 
 export const createSwipeToCloseGesture = (
   el: HTMLIonModalElement,
-  animation: IonicAnimation,
+  animation: Animation,
   onDismiss: (velocityY: number) => void
 ) => {
   const height = el.offsetHeight;

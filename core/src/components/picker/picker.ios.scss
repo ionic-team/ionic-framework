@@ -9,6 +9,7 @@
   --border-width: #{1px 0 0};
   --border-color: #{$picker-ios-border-color};
   --height: #{$picker-ios-height};
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.26);
 
   color: $picker-ios-option-text-color;
 }

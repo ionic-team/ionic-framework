@@ -1,5 +1,9 @@
 import { createAnimation } from '../animation';
+<<<<<<< HEAD
 import { getTimeGivenProgression, Point } from '../cubic-bezier';
+=======
+import { getTimeGivenProgression } from '../cubic-bezier';
+>>>>>>> origin/master
 import { Animation } from '../animation-interface';
 
 describe('Animation Class', () => {
@@ -151,7 +155,7 @@ describe('Animation Class', () => {
     beforeEach(() => {
       animation = createAnimation();
     });
-    
+
     it('should get "linear" when easing not set', () => {
       expect(animation.getEasing()).toEqual("linear");
     });
@@ -161,7 +165,7 @@ describe('Animation Class', () => {
       animation
         .addAnimation(childAnimation)
         .easing('ease-in-out');
-      
+
       expect(childAnimation.getEasing()).toEqual('ease-in-out');
     });
 
@@ -186,8 +190,13 @@ describe('Animation Class', () => {
       expect(animation.getEasing()).toEqual('ease-in-out');
     });
 
+<<<<<<< HEAD
     it('should get undefined when duration not set', () => {
       expect(animation.getDuration()).toEqual(undefined);
+=======
+    it('should get 0 when duration not set', () => {
+      expect(animation.getDuration()).toEqual(0);
+>>>>>>> origin/master
     });
 
     it('should get parent duration when child duration is not set', () => {
@@ -210,8 +219,13 @@ describe('Animation Class', () => {
       expect(childAnimation.getDuration()).toEqual(500);
     });
 
+<<<<<<< HEAD
     it('should get undefined when delay not set', () => {
       expect(animation.getDelay()).toEqual(undefined);
+=======
+    it('should get 0 when delay not set', () => {
+      expect(animation.getDelay()).toEqual(0);
+>>>>>>> origin/master
     });
 
     it('should get parent delay when child delay is not set', () => {
@@ -234,8 +248,13 @@ describe('Animation Class', () => {
       expect(childAnimation.getDelay()).toEqual(500);
     });
 
+<<<<<<< HEAD
     it('should get undefined when iterations not set', () => {
       expect(animation.getIterations()).toEqual(undefined);
+=======
+    it('should get 1 when iterations not set', () => {
+      expect(animation.getIterations()).toEqual(1);
+>>>>>>> origin/master
     });
 
     it('should get parent iterations when child iterations is not set', () => {
@@ -256,12 +275,21 @@ describe('Animation Class', () => {
         .iterations(1);
 
       expect(childAnimation.getIterations()).toEqual(2);
+<<<<<<< HEAD
     });
 
     it('should get undefined when fill not set', () => {
       expect(animation.getFill()).toEqual(undefined);
     });
 
+=======
+    });
+
+    it('should get "both" when fill not set', () => {
+      expect(animation.getFill()).toEqual('both');
+    });
+
+>>>>>>> origin/master
     it('should get parent fill when child fill is not set', () => {
       const childAnimation = createAnimation();
       animation
@@ -282,8 +310,13 @@ describe('Animation Class', () => {
       expect(childAnimation.getFill()).toEqual('none');
     });
 
+<<<<<<< HEAD
     it('should get undefined when direction not set', () => {
       expect(animation.getDirection()).toEqual(undefined);
+=======
+    it('should get "normal" when direction not set', () => {
+      expect(animation.getDirection()).toEqual("normal");
+>>>>>>> origin/master
     });
 
     it('should get parent direction when child direction is not set', () => {
@@ -313,58 +346,119 @@ describe('cubic-bezier conversion', () => {
   describe('should properly get a time value (x value) given a progression value (y value)', () => {
     it('cubic-bezier(0.32, 0.72, 0, 1)', () => {
       const equation = [
-        new Point(0, 0),
-        new Point(0.32, 0.72),
-        new Point(0, 1),
-        new Point(1, 1)
+        [0, 0],
+        [0.32, 0.72],
+        [0, 1],
+        [1, 1]
       ];
 
+<<<<<<< HEAD
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.5), 0.16);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.97), 0.56);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.33), 0.11);
+=======
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.5), [0.16]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.97), [0.56]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.33), [0.11]);
+>>>>>>> origin/master
     });
 
     it('cubic-bezier(1, 0, 0.68, 0.28)', () => {
       const equation = [
-        new Point(0, 0),
-        new Point(1, 0),
-        new Point(0.68, 0.28),
-        new Point(1, 1)
+        [0, 0],
+        [1, 0],
+        [0.68, 0.28],
+        [1, 1]
       ];
 
+<<<<<<< HEAD
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.08), 0.60);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.50), 0.84);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.94), 0.98);
+=======
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.08), [0.60]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.50), [0.84]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.94), [0.98]);
+>>>>>>> origin/master
     })
 
     it('cubic-bezier(0.4, 0, 0.6, 1)', () => {
       const equation = [
-        new Point(0, 0),
-        new Point(0.4, 0),
-        new Point(0.6, 1),
-        new Point(1, 1)
+        [0, 0],
+        [0.4, 0],
+        [0.6, 1],
+        [1, 1]
       ];
 
+<<<<<<< HEAD
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.39), 0.43);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.03), 0.11);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.89), 0.78);
+=======
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.39), [0.43]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.03), [0.11]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.89), [0.78]);
+>>>>>>> origin/master
     })
 
     it('cubic-bezier(0, 0, 0.2, 1)', () => {
       const equation = [
-        new Point(0, 0),
-        new Point(0, 0),
-        new Point(0.2, 1),
-        new Point(1, 1)
+        [0, 0],
+        [0, 0],
+        [0.2, 1],
+        [1, 1]
       ];
 
+<<<<<<< HEAD
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.95), 0.71);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.1), 0.03);
       shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.70), 0.35);
+=======
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.95), [0.71]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.1), [0.03]);
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.70), [0.35]);
+    })
+    
+    it('cubic-bezier(0.32, 0.72, 0, 1) (with out of bounds progression)', () => {
+      const equation = [
+        [0, 0],
+        [0.05, 0.2],
+        [.14, 1.72],
+        [1, 1]
+      ];
+        
+      expect(getTimeGivenProgression(...equation, 1.32)[0]).toBeUndefined();
+      expect(getTimeGivenProgression(...equation, -0.32)[0]).toBeUndefined();
+    })
+    
+    it('cubic-bezier(0.21, 1.71, 0.88, 0.9) (multiple solutions)', () => {
+      const equation = [
+        [0, 0],
+        [0.21, 1.71],
+        [0.88, 0.9],
+        [1, 1]
+      ];
+        
+      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 1.02), [0.35, 0.87]);
+    })
+    
+    it('cubic-bezier(0.32, 0.72, 0, 1) (with out of bounds progression)', () => {
+      const equation = [
+        [0, 0],
+        [0.05, 0.2],
+        [.14, 1.72],
+        [1, 1]
+      ];
+        
+      expect(getTimeGivenProgression(...equation, 1.32)).toEqual([]);
+      expect(getTimeGivenProgression(...equation, -0.32)).toEqual([]);
+>>>>>>> origin/master
     })
   })
 });
 
-const shouldApproximatelyEqual = (givenValue: number, expectedValue: number): boolean => {
-  expect(Math.abs(expectedValue - givenValue)).toBeLessThanOrEqual(0.01);
+const shouldApproximatelyEqual = (givenValues: number[], expectedValues: number[]): void => {
+  givenValues.forEach((givenValue, i) => {
+    expect(Math.abs(expectedValues[i] - givenValue)).toBeLessThanOrEqual(0.01);
+  });
 }

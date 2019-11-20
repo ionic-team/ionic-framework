@@ -6,10 +6,10 @@ import { IonTabBarInner } from '../inner-proxies';
 import { IonTabButton } from '../proxies';
 
 type Props = LocalJSX.IonTabBar & {
-  ref?: React.RefObject<HTMLIonTabBarElement>;
-  navigate: (path: string, direction: 'back' | 'none') => void;
-  currentPath: string;
-  children?: React.ReactNode;
+  onIonTabsDidChange?: (event: CustomEvent<{ tab: string }>) => void;
+  onIonTabsWillChange?: (event: CustomEvent<{ tab: string }>) => void;
+  currentPath?: string;
+  slot?: 'bottom' | 'top';
 };
 
 interface Tab {
@@ -23,6 +23,7 @@ interface State {
 }
 
 const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Props, State> {
+  context!: React.ContextType<typeof NavContext>;
 
   constructor(props: Props) {
     super(props);
@@ -48,7 +49,7 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
     const activeTab = Object.keys(state.tabs)
       .find(key => {
         const href = state.tabs[key].originalHref;
-        return props.currentPath.startsWith(href);
+        return props.currentPath!.startsWith(href);
       });
 
     if (activeTab === undefined || (activeTab === state.activeTab && state.tabs[activeTab].currentHref === props.currentPath)) {
@@ -69,9 +70,20 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
 
   private onTabButtonClick = (e: CustomEvent<{ href: string, selected: boolean, tab: string }>) => {
     if (this.state.activeTab === e.detail.tab) {
-      this.props.navigate(this.state.tabs[e.detail.tab].originalHref, 'back');
+      const originalHref = this.state.tabs[e.detail.tab].originalHref;
+      if (this.context.hasIonicRouter()) {
+        this.context.tabNavigate(originalHref);
+      } else {
+        this.context.navigate(originalHref, 'back');
+      }
     } else {
-      this.props.navigate(this.state.tabs[e.detail.tab].currentHref, 'none');
+      if (this.props.onIonTabsWillChange) {
+        this.props.onIonTabsWillChange(new CustomEvent('ionTabWillChange', { detail: { tab: e.detail.tab } }));
+      }
+      if (this.props.onIonTabsDidChange) {
+        this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
+      }
+      this.context.navigate(this.state.tabs[e.detail.tab].currentHref, 'none');
     }
   }
 
@@ -94,16 +106,17 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
       </IonTabBarInner>
     );
   }
+
+  static get contextType() {
+    return NavContext;
+  }
 })();
 
-export const IonTabBar: React.FC<LocalJSX.IonTabBar & { currentPath?: string, navigate?: (path: string) => void; }> = props => {
+export const IonTabBar: React.FC<Props> = props => {
   const context = useContext(NavContext);
   return (
     <IonTabBarUnwrapped
       {...props as any}
-      navigate={props.navigate || ((path: string, direction: 'back' | 'none') => {
-        context.navigate(path, direction);
-      })}
       currentPath={props.currentPath || context.currentPath}
     >
       {props.children}

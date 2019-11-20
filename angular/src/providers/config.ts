@@ -33,6 +33,7 @@ export class Config {
   }
 
   set(key: keyof IonicConfig, value?: any) {
+    console.warn(`[DEPRECATION][Config]: The Config.set() method is deprecated and will be removed in Ionic Framework 6.0. Please see https://ionicframework.com/docs/angular/config for alternatives.`);
     const c = getConfig();
     if (c) {
       c.set(key, value);
@@ -44,7 +45,7 @@ export const ConfigToken = new InjectionToken<any>('USERCONFIG');
 
 const getConfig = (): CoreConfig | null => {
   if (typeof (window as any) !== 'undefined') {
-    const Ionic = (window as IonicWindow).Ionic;
+    const Ionic = (window as any as IonicWindow).Ionic;
     if (Ionic && Ionic.config) {
       return Ionic.config;
     }

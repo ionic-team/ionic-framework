@@ -1,4 +1,4 @@
-import { IonicAnimation } from '../../../interface';
+import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
@@ -9,11 +9,11 @@ export const iosLeaveAnimation = (
   baseEl: HTMLElement,
   presentingEl?: HTMLElement,
   duration = 500
-  ): IonicAnimation => {
+  ): Animation => {
 
   const backdropAnimation = createAnimation()
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.4, 0.0);
+    .fromTo('opacity', 'var(--backdrop-opacity)', 0.0);
 
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelector('.modal-wrapper')!)

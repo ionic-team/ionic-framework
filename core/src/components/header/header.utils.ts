@@ -45,34 +45,37 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
         innerTitleEl: (ionTitleEl) ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
         ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')) || []
       } as ToolbarIndex;
-    }) || [[]]
+    }) || []
   } as HeaderIndex;
 };
 
-export const handleContentScroll = (scrollEl: HTMLElement, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex, remainingHeight = 0) => {
+export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: HeaderIndex) => {
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
-    const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
-
     const scale = clamp(1, 1 + (-scrollTop / 500), 1.1);
-
-    const borderOpacity = clamp(0, (scrollTop - remainingHeight) / lastMainToolbar.el.clientHeight, 1);
-    const maxOpacity = 1;
-    const scaledOpacity = borderOpacity * maxOpacity;
 
     writeTask(() => {
       scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
-      setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scaledOpacity === 1) ? undefined : scaledOpacity);
     });
   });
 };
 
-const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | undefined) => {
+export const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity?: number) => {
   if (opacity === undefined) {
     toolbar.background.style.removeProperty('--opacity');
   } else {
     toolbar.background.style.setProperty('--opacity', opacity.toString());
   }
+};
+
+const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) => {
+  if (!ev[0].isIntersecting) { return; }
+
+  const scale = ((1 - ev[0].intersectionRatio) * 100) / 75;
+
+  mainHeaderIndex.toolbars.forEach(toolbar => {
+    setToolbarBackgroundOpacity(toolbar, (scale === 1) ? undefined : scale);
+  });
 };
 
 /**
@@ -81,15 +84,19 @@ const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | un
  * hide the primary toolbar content and show the scrollable toolbar content
  */
 export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex) => {
-  console.log(ev);
   writeTask(() => {
+    handleToolbarBorderIntersection(ev, mainHeaderIndex);
+
     const event = ev[0];
+
     const intersection = event.intersectionRect;
     const intersectionArea = intersection.width * intersection.height;
     const rootArea = event.rootBounds.width * event.rootBounds.height;
 
     const isPageHidden = intersectionArea === 0 && rootArea === 0;
-    const isPageTransitioning = intersectionArea > 0 && (intersection.left !== event.rootBounds.left || intersection.right !== event.rootBounds.right);
+    const leftDiff = Math.abs(intersection.left - event.boundingClientRect.left);
+    const rightDiff = Math.abs(intersection.right - event.boundingClientRect.right);
+    const isPageTransitioning = intersectionArea > 0 && (leftDiff >= 5 || rightDiff >= 5);
 
     if (isPageHidden || isPageTransitioning) {
       return;
@@ -113,20 +120,18 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
       if (hasValidIntersection) {
         setHeaderActive(mainHeaderIndex);
         setHeaderActive(scrollHeaderIndex, false);
+        setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0]);
       }
     }
   });
 };
 
 export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
-  writeTask(() => {
-    if (active) {
-      headerIndex.el.classList.remove('header-collapse-ios-inactive');
-    } else {
-      headerIndex.el.classList.add('header-collapse-ios-inactive');
-    }
-    setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? undefined : 0);
-  });
+  if (active) {
+    headerIndex.el.classList.remove('header-collapse-condense-inactive');
+  } else {
+    headerIndex.el.classList.add('header-collapse-condense-inactive');
+  }
 };
 
 export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, transition = false) => {

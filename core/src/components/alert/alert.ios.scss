@@ -7,6 +7,7 @@
 :host {
   --background: #{$alert-ios-background-color};
   --max-width: #{$alert-ios-max-width};
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.3);
 
   font-size: $alert-ios-font-size;
 }

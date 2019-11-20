@@ -14,14 +14,12 @@ export { IonVirtualScroll } from './directives/virtual-scroll/virtual-scroll';
 export { VirtualItem } from './directives/virtual-scroll/virtual-item';
 export { VirtualHeader } from './directives/virtual-scroll/virtual-header';
 export { VirtualFooter } from './directives/virtual-scroll/virtual-footer';
-export { CssUtilsDeprecations } from './directives/css-utils-deprecations';
 export * from './directives/proxies';
 
 // PROVIDERS
 export { AngularDelegate } from './providers/angular-delegate';
 export { ActionSheetController } from './providers/action-sheet-controller';
 export { AlertController } from './providers/alert-controller';
-export { Events } from './providers/events';
 export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
 export { PickerController } from './providers/picker-controller';
@@ -32,6 +30,8 @@ export { ToastController } from './providers/toast-controller';
 export { NavController } from './providers/nav-controller';
 export { DomController } from './providers/dom-controller';
 export { Config } from './providers/config';
+export { AnimationController } from './providers/animation-controller';
+export { GestureController } from './providers/gesture-controller';
 
 // ROUTER STRATEGY
 export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';

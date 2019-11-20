@@ -471,10 +471,10 @@ export class Select implements ComponentInterface {
           'select-disabled': disabled,
         }}
       >
-        <div class={selectTextClasses}>
+        <div class={selectTextClasses} part="text">
           {selectText}
         </div>
-        <div class="select-icon" role="presentation">
+        <div class="select-icon" role="presentation" part="icon">
           <div class="select-icon-inner"></div>
         </div>
         <button

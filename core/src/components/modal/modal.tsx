@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, IonicAnimation, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
@@ -31,7 +31,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private usersElement?: HTMLElement;
 
   presented = false;
-  animation?: IonicAnimation;
+  animation?: Animation;
   mode = getIonMode(this);
 
   @Element() el!: HTMLIonModalElement;
@@ -155,7 +155,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         ani,
         () => this.dismiss()
       );
-      this.gesture.setDisabled(false);
+      this.gesture.enable(true);
     }
   }
 
@@ -167,8 +167,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    const iosAni = this.animation ? this.animation : iosLeaveAnimation;
-    const dismissed = await dismiss(this, data, role, 'modalLeave', iosAni, mdLeaveAnimation, this.presentingElement);
+    // TODO investigate
+    // const iosAni = this.animation ? this.animation : iosLeaveAnimation;
+    const dismissed = await dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, this.presentingElement);
     this.animation = undefined;
     if (dismissed) {
       await detachComponent(this.delegate, this.usersElement);

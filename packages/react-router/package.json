@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "4.9.0-rc.2",
+  "version": "5.0.0-beta.1",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -24,8 +24,10 @@
     "clean": "rm -rf dist dist-transpiled",
     "compile": "npm run tsc && rollup -c",
     "release": "np --any-branch --no-cleanup",
+    "lint": "tslint --project .",
+    "lint.fix": "tslint --project . --fix",
     "tsc": "tsc -p .",
-    "test": "jest"
+    "test.spec": "jest --ci"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -37,16 +39,16 @@
     "tslib": "*"
   },
   "peerDependencies": {
-    "@ionic/core": "^4.9.0",
-    "@ionic/react": "4.9.0-rc.2",
+    "@ionic/core": "5.0.0-beta.1",
+    "@ionic/react": "5.0.0-beta.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
-    "@ionic/core": "^4.9.0",
-    "@ionic/react": "4.9.0-rc.2",
+    "@ionic/core": "5.0.0-beta.1",
+    "@ionic/react": "5.0.0-beta.1",
     "@types/jest": "^23.3.9",
     "@types/node": "12.6.9",
     "@types/react": "^16.9.2",
@@ -65,6 +67,9 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "ts-jest": "^24.0.2",
+    "tslint": "^5.20.0",
+    "tslint-ionic-rules": "0.0.21",
+    "tslint-react": "^4.1.0",
     "typescript": "3.5.3"
   },
   "jest": {

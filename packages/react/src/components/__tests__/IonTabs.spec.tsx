@@ -1,7 +1,7 @@
 import React from 'react';
 import { IonTabs, IonTabButton, IonLabel, IonIcon, IonTabBar} from '../index';
 import { render, cleanup } from 'react-testing-library';
-import { IonRouterOutlet } from '../proxies';
+import { IonRouterOutlet } from '../IonRouterOutlet';
 
 afterEach(cleanup)
 
@@ -10,7 +10,7 @@ describe('IonTabs', () => {
     const { container } = render(
       <IonTabs>
         <IonRouterOutlet></IonRouterOutlet>
-        <IonTabBar slot="bottom" currentPath={'/'} navigate={() => {}}>
+        <IonTabBar slot="bottom" currentPath={'/'}>
           <IonTabButton tab="schedule">
             <IonLabel>Schedule</IonLabel>
             <IonIcon name="schedule"></IonIcon>
@@ -44,7 +44,7 @@ describe('IonTabs', () => {
     const { container } = render(
       <IonTabs>
         <IonRouterOutlet></IonRouterOutlet>
-        <IonTabBar slot="bottom" currentPath={'/'} navigate={() => {}}>
+        <IonTabBar slot="bottom" currentPath={'/'}>
           {false &&
           <IonTabButton tab="schedule">
             <IonLabel>Schedule</IonLabel>

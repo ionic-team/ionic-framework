@@ -1,10 +1,10 @@
-import { IonicAnimation } from '../../../interface';
+import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Popover Enter Animation
  */
-export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimation => {
+export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation => {
   let originY = 'top';
   let originX = 'left';
 
@@ -104,7 +104,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): IonicAnimati
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 0.08);
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.popover-wrapper')!)

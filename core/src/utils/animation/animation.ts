@@ -1,11 +1,13 @@
 // TODO: Add more tests. until then, be sure to manually test menu and swipe to go back/routing transitions
 
-import { Animation, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrames, AnimationLifecycle, AnimationOnFinishOptions, AnimationPlayOptions, AnimationKeyFrameEdge } from './animation-interface';
+import { raf } from '../helpers';
+
+import { Animation, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrameEdge, AnimationKeyFrames, AnimationLifecycle, AnimationPlayOptions } from './animation-interface';
 import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
 
 interface AnimationOnFinishCallback {
   c: AnimationLifecycle;
-  o?: AnimationOnFinishOptions;
+  o?: AnimationCallbackOptions;
 }
 
 interface AnimationInternal extends Animation {
@@ -17,12 +19,12 @@ interface AnimationInternal extends Animation {
   /**
    * Updates any existing animations.
    */
-  update(deep: boolean): Animation;
+  update(deep: boolean, toggleAnimationName: boolean, step?: number): Animation;
 
   animationFinish(): void;
 }
 
-export const createAnimation = (): Animation => {
+export const createAnimation = (animationId?: string): Animation => {
   let _delay: number | undefined;
   let _duration: number | undefined;
   let _easing: string | undefined;
@@ -51,6 +53,7 @@ export const createAnimation = (): Animation => {
   let keyframeName: string | undefined;
   let ani: AnimationInternal;
 
+  const id: string | undefined = animationId;
   const onFinishCallbacks: AnimationOnFinishCallback[] = [];
   const onFinishOneTimeCallbacks: AnimationOnFinishCallback[] = [];
   const elements: HTMLElement[] = [];
@@ -99,7 +102,7 @@ export const createAnimation = (): Animation => {
     cleanUpStyleSheets();
   };
 
-  const onFinish = (callback: AnimationLifecycle, opts?: AnimationOnFinishOptions) => {
+  const onFinish = (callback: AnimationLifecycle, opts?: AnimationCallbackOptions) => {
     const callbacks = (opts && opts.oneTimeCallback) ? onFinishOneTimeCallbacks : onFinishCallbacks;
     callbacks.push({ c: callback, o: opts });
 
@@ -126,8 +129,10 @@ export const createAnimation = (): Animation => {
 
       webAnimations.length = 0;
     } else {
-      elements.forEach(element => {
-        requestAnimationFrame(() => {
+      const elementsArray = elements.slice();
+
+      raf(() => {
+        elementsArray.forEach(element => {
           removeStyleProperty(element, 'animation-name');
           removeStyleProperty(element, 'animation-duration');
           removeStyleProperty(element, 'animation-timing-function');
@@ -396,8 +401,8 @@ export const createAnimation = (): Animation => {
     elements.forEach(el => {
       const elementClassList = el.classList;
 
-      elementClassList.add(...addClasses);
-      elementClassList.remove(...removeClasses);
+      addClasses.forEach(c => elementClassList.add(c));
+      removeClasses.forEach(c => elementClassList.remove(c));
 
       for (const property in styles) {
         if (styles.hasOwnProperty(property)) {
@@ -425,11 +430,11 @@ export const createAnimation = (): Animation => {
     const removeClasses = afterRemoveClasses;
     const styles = afterStylesValue;
 
-    elements.forEach((el: HTMLElement) => {
+    elements.forEach(el => {
       const elementClassList = el.classList;
 
-      elementClassList.add(...addClasses);
-      elementClassList.remove(...removeClasses);
+      addClasses.forEach(c => elementClassList.add(c));
+      removeClasses.forEach(c => elementClassList.remove(c));
 
       for (const property in styles) {
         if (styles.hasOwnProperty(property)) {
@@ -474,7 +479,7 @@ export const createAnimation = (): Animation => {
     elements.forEach(element => {
       if (_keyframes.length > 0) {
         const keyframeRules = generateKeyframeRules(_keyframes);
-        keyframeName = generateKeyframeName(keyframeRules);
+        keyframeName = (animationId !== undefined) ? animationId : generateKeyframeName(keyframeRules);
         const stylesheet = createKeyframeStylesheet(keyframeName, keyframeRules, element);
         stylesheets.push(stylesheet);
 
@@ -495,9 +500,9 @@ export const createAnimation = (): Animation => {
           setStyleProperty(element, 'animation-name', `${stylesheet.id}-alt`);
         }
 
-        requestAnimationFrame(() => (
-          setStyleProperty(element, 'animation-name', stylesheet.id || null)
-        ));
+        raf(() => {
+          setStyleProperty(element, 'animation-name', stylesheet.id || null);
+        });
       }
     });
   };
@@ -505,6 +510,7 @@ export const createAnimation = (): Animation => {
   const initializeWebAnimation = () => {
     elements.forEach(element => {
       const animation = element.animate(_keyframes, {
+        id,
         delay: getDelay(),
         duration: getDuration(),
         easing: getEasing(),
@@ -549,8 +555,7 @@ export const createAnimation = (): Animation => {
       });
 
     } else {
-      const animationDelay = getDelay() || 0;
-      const animationDuration = `-${animationDelay + (getDuration()! * step)}ms`;
+      const animationDuration = `-${getDuration()! * step}ms`;
 
       elements.forEach(element => {
         if (_keyframes.length > 0) {
@@ -561,7 +566,7 @@ export const createAnimation = (): Animation => {
     }
   };
 
-  const updateWebAnimation = () => {
+  const updateWebAnimation = (step?: number) => {
     webAnimations.forEach(animation => {
       animation.effect.updateTiming({
         delay: getDelay(),
@@ -572,15 +577,19 @@ export const createAnimation = (): Animation => {
         direction: getDirection()
       });
     });
+
+    if (step !== undefined) {
+      setAnimationStep(step);
+    }
   };
 
-  const updateCSSAnimation = (toggleAnimationName = true) => {
-    elements.forEach(element => {
-      requestAnimationFrame(() => {
+  const updateCSSAnimation = (toggleAnimationName = true, step?: number) => {
+    raf(() => {
+      elements.forEach(element => {
         setStyleProperty(element, 'animation-name', keyframeName || null);
         setStyleProperty(element, 'animation-duration', `${getDuration()}ms`);
         setStyleProperty(element, 'animation-timing-function', getEasing());
-        setStyleProperty(element, 'animation-delay', `${getDelay()}ms`);
+        setStyleProperty(element, 'animation-delay', (step !== undefined) ? `-${step! * getDuration()}ms` : `${getDelay()}ms`);
         setStyleProperty(element, 'animation-fill-mode', getFill() || null);
         setStyleProperty(element, 'animation-direction', getDirection() || null);
 
@@ -594,32 +603,32 @@ export const createAnimation = (): Animation => {
           setStyleProperty(element, 'animation-name', `${keyframeName}-alt`);
         }
 
-        requestAnimationFrame(() => {
+        raf(() => {
           setStyleProperty(element, 'animation-name', keyframeName || null);
         });
       });
     });
   };
 
-  const update = (deep = false, toggleAnimationName = true) => {
+  const update = (deep = false, toggleAnimationName = true, step?: number) => {
     if (deep) {
       childAnimations.forEach(animation => {
-        animation.update(deep);
+        animation.update(deep, toggleAnimationName, step);
       });
     }
 
     if (supportsWebAnimations) {
-      updateWebAnimation();
+      updateWebAnimation(step);
     } else {
-      updateCSSAnimation(toggleAnimationName);
+      updateCSSAnimation(toggleAnimationName, step);
     }
 
     return ani;
   };
 
-  const progressStart = (forceLinearEasing = false) => {
+  const progressStart = (forceLinearEasing = false, step?: number) => {
     childAnimations.forEach(animation => {
-      animation.progressStart(forceLinearEasing);
+      animation.progressStart(forceLinearEasing, step);
     });
 
     pauseAnimation();
@@ -628,8 +637,7 @@ export const createAnimation = (): Animation => {
     if (!initialized) {
       initializeAnimation();
     } else {
-      update();
-      setAnimationStep(0);
+      update(false, true, step);
     }
 
     return ani;
@@ -656,8 +664,14 @@ export const createAnimation = (): Animation => {
 
     finished = false;
 
+    /*
+      TODO: investigate if still needed
     // tslint:disable-next-line: strict-boolean-conditions
     willComplete = true; // playTo === 1
+    */
+
+    willComplete = playTo === 1;
+
     if (playTo === 0) {
       forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
 
@@ -745,12 +759,12 @@ export const createAnimation = (): Animation => {
   const playCSSAnimations = () => {
     clearCSSAnimationsTimeout();
 
-    elements.forEach(element => {
-      if (_keyframes.length > 0) {
-        requestAnimationFrame(() => {
+    raf(() => {
+      elements.forEach(element => {
+        if (_keyframes.length > 0) {
           setStyleProperty(element, 'animation-play-state', 'running');
-        });
-      }
+        }
+      });
     });
 
     if (_keyframes.length === 0 || elements.length === 0) {
@@ -766,8 +780,12 @@ export const createAnimation = (): Animation => {
        */
        const animationDelay = getDelay() || 0;
        const animationDuration = getDuration() || 0;
+       const animationIterations = getIterations() || 1;
 
-       cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + animationDuration + ANIMATION_END_FALLBACK_PADDING_MS);
+       // No need to set a timeout when animation has infinite iterations
+       if (isFinite(animationIterations)) {
+        cssAnimationsTimerFallback = setTimeout(onAnimationEndFallback, animationDelay + (animationDuration * animationIterations) + ANIMATION_END_FALLBACK_PADDING_MS);
+       }
 
        animationEnd(elements[0], () => {
         clearCSSAnimationsTimeout();
@@ -783,12 +801,10 @@ export const createAnimation = (): Animation => {
          *
          * TODO: Is there a cleaner way to do this?
          */
-        requestAnimationFrame(() => {
+        raf(() => {
           clearCSSAnimationPlayState();
-          requestAnimationFrame(() => {
-              animationFinish();
-            });
-          });
+          raf(animationFinish);
+        });
       });
     }
   };
@@ -829,8 +845,14 @@ export const createAnimation = (): Animation => {
       }
       if (!initialized) {
         initializeAnimation();
+/*
+  TODO check this
+  <<<<<<< HEAD
       } else {
         update();
+=======
+>>>>>>> origin/master
+*/
       }
 
       if (finished) {
@@ -905,6 +927,7 @@ export const createAnimation = (): Animation => {
     parentAnimation,
     elements,
     childAnimations,
+    id,
     animationFinish,
     from,
     to,

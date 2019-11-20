@@ -1,8 +1,5 @@
 import { config } from '../global/config';
-import { ActionSheetOptions, AlertOptions, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicAnimation, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
-
-// TODO: Remove when removing AnimationBuilder
-export type IonicAnimationInterface = (baseEl: any, opts: any) => IonicAnimation;
+import { ActionSheetOptions, AlertOptions, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 let lastId = 0;
 
@@ -38,7 +35,7 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
   }
 };
 
-export const runningAnimations = new WeakMap<OverlayInterface, IonicAnimation | Animation>();
+export const runningAnimations = new WeakMap<OverlayInterface, Animation>();
 
 export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined): Promise<T> => {
   return customElements.whenDefined(tagName).then(() => {
@@ -119,8 +116,8 @@ export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTM
 export const present = async (
   overlay: OverlayInterface,
   name: keyof IonicConfig,
-  iosEnterAnimation: AnimationBuilder | IonicAnimationInterface,
-  mdEnterAnimation: AnimationBuilder | IonicAnimationInterface,
+  iosEnterAnimation: AnimationBuilder,
+  mdEnterAnimation: AnimationBuilder,
   opts?: any
 ) => {
   if (overlay.presented) {
@@ -145,8 +142,8 @@ export const dismiss = async (
   data: any | undefined,
   role: string | undefined,
   name: keyof IonicConfig,
-  iosLeaveAnimation: AnimationBuilder | IonicAnimationInterface | IonicAnimation,
-  mdLeaveAnimation: AnimationBuilder | IonicAnimationInterface | IonicAnimation,
+  iosLeaveAnimation: AnimationBuilder,
+  mdLeaveAnimation: AnimationBuilder,
   opts?: any
 ): Promise<boolean> => {
   if (!overlay.presented) {
@@ -178,7 +175,7 @@ const getAppRoot = (doc: Document) => {
 
 const overlayAnimation = async (
   overlay: OverlayInterface,
-  animationBuilder: AnimationBuilder | IonicAnimationInterface | IonicAnimation,
+  animationBuilder: AnimationBuilder,
   baseEl: any,
   opts: any
 ): Promise<boolean> => {
@@ -192,27 +189,12 @@ const overlayAnimation = async (
   baseEl.classList.remove('overlay-hidden');
 
   const aniRoot = baseEl.shadowRoot || overlay.el;
-
-  /**
-   * TODO: Remove AnimationBuilder
-   */
-  let animation;
-  if (typeof animationBuilder === 'object') {
-    animation = animationBuilder;
-  } else {
-    try {
-      animation = (animationBuilder as IonicAnimationInterface)(aniRoot, opts);
-      animation.fill('both');
-    } catch (err) {
-      const mod = await import('./animation/old-animation');
-      animation = await mod.create(animationBuilder as AnimationBuilder, aniRoot, opts);
-    }
-  }
-  runningAnimations.set(overlay, animation as any);
+  const animation = animationBuilder(aniRoot, opts);
 
   if (!overlay.animated || !config.getBoolean('animated', true)) {
     animation.duration(0);
   }
+
   if (overlay.keyboardClose) {
     animation.beforeAddWrite(() => {
       const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
@@ -221,16 +203,10 @@ const overlayAnimation = async (
       }
     });
   }
-  const animationResult = await animation.playAsync();
 
-  /**
-   * TODO: Remove AnimationBuilder
-   */
-  const hasCompleted = (typeof animationResult as any === 'boolean') ? animationResult : (animation as any).hasCompleted;
-  animation.destroy();
-  runningAnimations.delete(overlay);
+  await animation.play();
 
-  return hasCompleted;
+  return true;
 };
 
 export const eventMethod = <T>(element: HTMLElement, eventName: string): Promise<T> => {

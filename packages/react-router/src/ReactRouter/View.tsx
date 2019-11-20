@@ -1,21 +1,21 @@
-import React from 'react';
 import { IonLifeCycleContext, NavContext } from '@ionic/react';
-import { ViewItem } from './ViewItem';
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
+
 import { isDevMode } from '../utils';
+
+import { ViewItem } from './ViewItem';
 
 interface ViewProps extends React.HTMLAttributes<HTMLElement> {
   onViewSync: (page: HTMLElement, viewId: string) => void;
   onHideView: (viewId: string) => void;
   view: ViewItem;
-};
-
-interface StackViewState { }
+}
 
 /**
  * The View component helps manage the IonPage's lifecycle and registration
  */
-export class View extends React.Component<ViewProps, StackViewState> {
+export class View extends React.Component<ViewProps, {}> {
   context!: React.ContextType<typeof IonLifeCycleContext>;
   ionPage?: HTMLElement;
 
@@ -65,7 +65,7 @@ export class View extends React.Component<ViewProps, StackViewState> {
     this.ionPage.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
     this.ionPage.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
     this.ionPage.classList.add('ion-page-invisible');
-    if(isDevMode()) {
+    if (isDevMode()) {
       this.ionPage.setAttribute('data-view-id', this.props.view.id);
     }
     this.props.onViewSync(page, this.props.view.id);
@@ -78,7 +78,7 @@ export class View extends React.Component<ViewProps, StackViewState> {
           const newProvider = {
             ...value,
             registerIonPage: this.registerIonPage.bind(this)
-          }
+          };
           return (
             <NavContext.Provider value={newProvider}>
               {this.props.children}

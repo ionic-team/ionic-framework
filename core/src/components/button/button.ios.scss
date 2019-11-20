@@ -68,6 +68,11 @@
   --background-focused: #{ion-color(primary, base, .1)};
   --color-activated: #{ion-color(primary, base)};
   --color-focused: #{ion-color(primary, base)};
+
+  font-size: #{$button-ios-clear-font-size};
+  font-weight: #{$button-ios-clear-font-weight};
+
+  letter-spacing: #{$button-ios-clear-letter-spacing};
 }
 
 

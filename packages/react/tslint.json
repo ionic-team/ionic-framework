@@ -19,7 +19,7 @@
     "no-invalid-template-strings": true,
     "ban-export-const-enum": true,
     "only-arrow-functions": true,
-
+    "strict-boolean-conditions": [false],
     "jsx-key": false,
     "jsx-self-close": false,
     "jsx-curly-spacing": [true, "never"],
