@@ -50,7 +50,7 @@ export class IonTabs {
 
   constructor(
     private navCtrl: NavController,
-  ) {}
+  ) { }
 
   /**
    * @internal
@@ -70,7 +70,7 @@ export class IonTabs {
   select(tab: string) {
     const alreadySelected = this.outlet.getActiveStackId() === tab;
     const href = `${this.outlet.tabsPrefix}/${tab}`;
-    const lastRoute = this.outlet.getLastUrl(tab);
+    const lastRoute = this.outlet.getLastRouteView(tab);
     const lastUrl = lastRoute && lastRoute.url || href;
     const url = alreadySelected ? href : lastUrl;
 

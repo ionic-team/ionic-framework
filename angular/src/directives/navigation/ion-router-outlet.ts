@@ -234,9 +234,17 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   }
 
   /**
+   * Returns the URL of the active page of each stack.
+   */
+  getLastUrl(stackId?: string): string | undefined {
+    const active = this.stackCtrl.getLastUrl(stackId);
+    return active ? active.url : undefined;
+  }
+
+  /**
    * Returns the RouteView of the active page of each stack.
    */
-  getLastUrl(stackId?: string): RouteView | undefined {
+  getLastRouteView(stackId?: string): RouteView | undefined {
     return this.stackCtrl.getLastUrl(stackId);
   }
 

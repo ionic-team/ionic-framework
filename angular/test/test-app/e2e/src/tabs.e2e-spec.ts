@@ -136,14 +136,14 @@ describe('tabs', () => {
       const expectUrlToContain = 'search=hello#fragment';
       let tab = await getSelectedTab() as ElementFinder;
       await tab.$('#goto-nested-page1-with-query-params').click();
-      await testTabTitle('Tab 1 - Page 2');
+      await testTabTitle('Tab 1 - Page 2 (1)');
       await testUrlContains(expectUrlToContain);
 
       await element(by.css('#tab-button-contact')).click();
       await testTabTitle('Tab 2 - Page 1');
 
       await element(by.css('#tab-button-account')).click();
-      tab = await testTabTitle('Tab 1 - Page 2');
+      tab = await testTabTitle('Tab 1 - Page 2 (1)');
       await testUrlContains(expectUrlToContain);
     });
   });
