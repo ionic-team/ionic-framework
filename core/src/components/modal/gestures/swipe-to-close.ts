@@ -54,7 +54,7 @@ export const createSwipeToCloseGesture = (
     const threshold = (detail.deltaY + velocity * 1000) / height;
 
     const shouldComplete = threshold >= 0.5;
-    let newStepValue = 0;
+    let newStepValue = (shouldComplete) ? -0.001 : 0.001;
 
     if (!shouldComplete) {
       animation.easing('cubic-bezier(1, 0, 0.68, 0.28)');
