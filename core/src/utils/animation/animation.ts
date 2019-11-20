@@ -302,21 +302,33 @@ export const createAnimation = (animationId?: string): Animation => {
 
   const direction = (animationDirection: AnimationDirection) => {
     _direction = animationDirection;
+
+    update(true);
+
     return ani;
   };
 
   const fill = (animationFill: AnimationFill) => {
     _fill = animationFill;
+
+    update(true);
+
     return ani;
   };
 
   const delay = (animationDelay: number) => {
     _delay = animationDelay;
+
+    update(true);
+
     return ani;
   };
 
   const easing = (animationEasing: string) => {
     _easing = animationEasing;
+
+    update(true);
+
     return ani;
   };
 
@@ -331,11 +343,17 @@ export const createAnimation = (animationId?: string): Animation => {
     }
 
     _duration = animationDuration;
+
+    update(true);
+
     return ani;
   };
 
   const iterations = (animationIterations: number) => {
     _iterations = animationIterations;
+
+    update(true);
+
     return ani;
   };
 
@@ -845,8 +863,6 @@ export const createAnimation = (animationId?: string): Animation => {
       }
       if (!initialized) {
         initializeAnimation();
-      } else {
-        update();
       }
 
       if (finished) {

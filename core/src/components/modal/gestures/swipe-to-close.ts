@@ -1,4 +1,5 @@
 import { Animation } from '../../../interface';
+import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp } from '../../../utils/helpers';
 
@@ -17,6 +18,7 @@ export const createSwipeToCloseGesture = (
   onDismiss: (velocityY: number) => void
 ) => {
   const height = el.offsetHeight;
+  let isOpen = false;
 
   const canStart = (detail: GestureDetail) => {
     const target = detail.event.target as HTMLElement | null;
@@ -38,7 +40,7 @@ export const createSwipeToCloseGesture = (
 
   const onStart = () => {
     animation.easing('linear');
-    animation.progressStart(false);
+    animation.progressStart(false, (isOpen) ? 1 : 0);
   };
 
   const onMove = (detail: GestureDetail) => {
@@ -51,19 +53,28 @@ export const createSwipeToCloseGesture = (
     const step = Math.max(0, (detail.deltaY / height));
     const threshold = (detail.deltaY + velocity * 1000) / height;
 
-    // if (!shouldComplete) {
-    //   animation.easing('cubic-bezier(1, 0, 0.68, 0.28)');
-    //   newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(1, 0), new Point(0.68, 0.28), new Point(1, 1), step);
-    // } else {
-    //   newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.32, 0.72), new Point(0, 1), new Point(1, 1), step);
-    // }
-    if (threshold >= 0.5) {
-      const duration = computeDuration(step * height, velocity);
-      onDismiss(duration);
+    const shouldComplete = threshold >= 0.5;
+    let newStepValue = 0;
+
+    if (!shouldComplete) {
+      animation.easing('cubic-bezier(1, 0, 0.68, 0.28)');
+      newStepValue += getTimeGivenProgression([0, 0], [1, 0], [0.68, 0.28], [1, 1], step)[0];
     } else {
-      const duration = computeDuration((1 - step) * height, velocity);
-      animation.progressEnd(0, step, duration);
+      animation.easing('cubic-bezier(0.32, 0.72, 0, 1)');
+      newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], step)[0];
     }
+
+    let duration;
+    if (shouldComplete) {
+      duration = computeDuration(step * height, velocity);
+      // onDismiss(duration);
+      isOpen = true;
+    } else {
+      duration = computeDuration((1 - step) * height, velocity);
+      isOpen = false;
+    }
+
+    animation.progressEnd((shouldComplete) ? 1 : 0, newStepValue, duration);
   };
 
   return createGesture({
