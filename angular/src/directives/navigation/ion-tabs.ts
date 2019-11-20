@@ -50,7 +50,7 @@ export class IonTabs {
 
   constructor(
     private navCtrl: NavController,
-  ) { }
+  ) {}
 
   /**
    * @internal
