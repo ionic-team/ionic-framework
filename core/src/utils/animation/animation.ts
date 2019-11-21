@@ -568,12 +568,12 @@ export const createAnimation = (animationId?: string): Animation => {
     step = Math.min(Math.max(step, 0), 0.999);
     if (supportsWebAnimations) {
       webAnimations.forEach(animation => {
-        animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration()! * step);
+        animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration() * step);
         animation.pause();
       });
 
     } else {
-      const animationDuration = `-${getDuration()! * step}ms`;
+      const animationDuration = `-${getDuration() * step}ms`;
 
       elements.forEach(element => {
         if (_keyframes.length > 0) {
@@ -696,7 +696,7 @@ export const createAnimation = (animationId?: string): Animation => {
         update();
         setAnimationStep(1 - step);
       } else {
-        forceDelayValue = ((1 - step) * getDuration()!) * -1;
+        forceDelayValue = ((1 - step) * getDuration()) * -1;
         update(false, false);
       }
     } else if (playTo === 1) {
@@ -704,7 +704,7 @@ export const createAnimation = (animationId?: string): Animation => {
         update();
         setAnimationStep(step);
       } else {
-        forceDelayValue = (step * getDuration()!) * -1;
+        forceDelayValue = (step * getDuration()) * -1;
         update(false, false);
       }
     }
