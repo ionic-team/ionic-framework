@@ -568,12 +568,12 @@ export const createAnimation = (animationId?: string): Animation => {
     step = Math.min(Math.max(step, 0), 0.999);
     if (supportsWebAnimations) {
       webAnimations.forEach(animation => {
-        animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration()! * step);
+        animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration() * step);
         animation.pause();
       });
 
     } else {
-      const animationDuration = `-${getDuration()! * step}ms`;
+      const animationDuration = `-${getDuration() * step}ms`;
 
       elements.forEach(element => {
         if (_keyframes.length > 0) {
@@ -682,13 +682,8 @@ export const createAnimation = (animationId?: string): Animation => {
 
     finished = false;
 
-    /*
-      TODO: investigate if still needed
     // tslint:disable-next-line: strict-boolean-conditions
-    willComplete = true; // playTo === 1
-    */
-
-    willComplete = playTo === 1;
+    willComplete = true;
 
     if (playTo === 0) {
       forceDirectionValue = (getDirection() === 'reverse') ? 'normal' : 'reverse';
@@ -696,6 +691,7 @@ export const createAnimation = (animationId?: string): Animation => {
       if (forceDirectionValue === 'reverse') {
         willComplete = false;
       }
+
       if (supportsWebAnimations) {
         update();
         setAnimationStep(1 - step);
@@ -705,6 +701,7 @@ export const createAnimation = (animationId?: string): Animation => {
       }
     } else if (playTo === 1) {
       if (supportsWebAnimations) {
+        update();
         setAnimationStep(step);
       } else {
         forceDelayValue = (step * getDuration()) * -1;
