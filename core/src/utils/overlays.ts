@@ -142,7 +142,7 @@ export const dismiss = async (
   data: any | undefined,
   role: string | undefined,
   name: keyof IonicConfig,
-  iosLeaveAnimation: AnimationBuilder,
+  iosLeaveAnimation: AnimationBuilder | undefined,
   mdLeaveAnimation: AnimationBuilder,
   opts?: any
 ): Promise<boolean> => {
@@ -158,7 +158,9 @@ export const dismiss = async (
       ? overlay.leaveAnimation
       : config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-    await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
+    if (animationBuilder !== undefined) {
+      await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
+    }
     overlay.didDismiss.emit({ data, role });
 
   } catch (err) {
@@ -179,12 +181,6 @@ const overlayAnimation = async (
   baseEl: any,
   opts: any
 ): Promise<boolean> => {
-  const runningAnimation = runningAnimations.get(overlay) as any;
-  if (runningAnimation) {
-    runningAnimation.destroy();
-    runningAnimations.delete(runningAnimation);
-    return false;
-  }
   // Make overlay visible in case it's hidden
   baseEl.classList.remove('overlay-hidden');
 

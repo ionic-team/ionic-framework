@@ -42,5 +42,6 @@ export const iosLeaveAnimation = (
 
     baseAnimation.addAnimation(presentingAnimation);
   }
+
   return baseAnimation;
 };

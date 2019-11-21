@@ -57,5 +57,6 @@ export const iosEnterAnimation = (
     bodyEl.style.backgroundColor = 'black';
     baseAnimation.addAnimation(presentingAnimation);
   }
+
   return baseAnimation;
 };

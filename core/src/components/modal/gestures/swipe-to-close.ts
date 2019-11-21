@@ -39,8 +39,7 @@ export const createSwipeToCloseGesture = (
   };
 
   const onStart = () => {
-    animation.easing('linear');
-    animation.progressStart(false, (isOpen) ? 1 : 0);
+    animation.progressStart(true, (isOpen) ? 1 : 0);
   };
 
   const onMove = (detail: GestureDetail) => {
@@ -64,17 +63,16 @@ export const createSwipeToCloseGesture = (
       newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], step)[0];
     }
 
-    let duration;
-    if (shouldComplete) {
-      duration = computeDuration(step * height, velocity);
-      // onDismiss(duration);
-      isOpen = true;
-    } else {
-      duration = computeDuration((1 - step) * height, velocity);
-      isOpen = false;
-    }
+    const duration = (shouldComplete) ? computeDuration(step * height, velocity) : computeDuration((1 - step) * height, velocity);
+    isOpen = shouldComplete;
 
-    animation.progressEnd((shouldComplete) ? 1 : 0, newStepValue, duration);
+    animation
+      .onFinish(() => {
+        if (shouldComplete) {
+          onDismiss(duration);
+        }
+      })
+      .progressEnd((shouldComplete) ? 1 : 0, newStepValue, duration);
   };
 
   return createGesture({
