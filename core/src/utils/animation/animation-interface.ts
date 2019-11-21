@@ -220,18 +220,20 @@ export interface Animation {
 }
 
 export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;
+export type AnimationKeyFrames = [AnimationKeyFrameEdge, AnimationKeyFrameEdge] | AnimationKeyFrame[];
+export type AnimationStyles = Record<string, any>;
 
 export interface AnimationCallbackOptions {
   oneTimeCallback: boolean;
 }
 
-export type AnimationKeyFrames = AnimationKeyFrame[];
-
 export interface AnimationKeyFrame extends AnimationStyles {
   offset: number;
 }
 
-export type AnimationStyles = Record<string, any>;
+export interface AnimationKeyFrameEdge extends AnimationStyles {
+  offset?: number;
+}
 
 export interface AnimationPlayOptions {
   sync: boolean;
