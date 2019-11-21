@@ -711,7 +711,6 @@ export const createAnimation = (animationId?: string): Animation => {
 
     if (playTo !== undefined) {
       onFinish(() => {
-        willComplete = true;
         forceDurationValue = undefined;
         forceDirectionValue = undefined;
         forceDelayValue = undefined;
