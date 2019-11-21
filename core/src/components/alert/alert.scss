@@ -66,6 +66,7 @@
   background: var(--background);
 
   contain: content;
+  opacity: 0;
   z-index: $z-index-overlay-wrapper;
 }
 

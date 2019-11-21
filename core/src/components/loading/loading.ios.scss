@@ -43,7 +43,3 @@
 .loading-spinner + .loading-content {
   @include margin-horizontal(16px, null);
 }
-
-ion-backdrop {
-  opacity: 0.3;
-}
