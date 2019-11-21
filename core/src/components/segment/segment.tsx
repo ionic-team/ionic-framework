@@ -157,33 +157,6 @@ export class Segment implements ComponentInterface {
     if (clicked.checked) {
       this.activated = true;
     }
-
-    this.activateIndicator();
-  }
-
-  private activateIndicator() {
-    const activated = this.activated;
-    const buttons = this.getButtons();
-    const clicked = buttons.find(button => button.checked === true);
-    const mode = getIonMode();
-
-    if (!clicked) {
-      return;
-    }
-
-    const indicator = this.getIndicator(clicked);
-
-    if (!indicator) {
-      return;
-    }
-
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (activated && mode === 'ios' && !reduceMotion) {
-      indicator.style.setProperty('transform', 'scale(0.95)');
-    } else {
-      indicator.style.setProperty('transform', '');
-    }
   }
 
   private getIndicator(button: HTMLIonSegmentButtonElement): HTMLDivElement | null {
@@ -191,8 +164,6 @@ export class Segment implements ComponentInterface {
   }
 
   private checkButton(clicked: HTMLIonSegmentButtonElement, checked: HTMLIonSegmentButtonElement) {
-    const activated = this.activated;
-    const mode = getIonMode(this);
     const currentIndicator = this.getIndicator(clicked);
     const previousIndicator = this.getIndicator(checked);
 
@@ -202,19 +173,13 @@ export class Segment implements ComponentInterface {
 
     const previousClientRect = previousIndicator.getBoundingClientRect();
     const currentClientRect = currentIndicator.getBoundingClientRect();
+
     const widthDelta = previousClientRect.width / currentClientRect.width;
     const xPosition = previousClientRect.left - currentClientRect.left;
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Scale iOS smaller when activated
-    const activatedScale = widthDelta * 0.95;
-
     // Scale the indicator smaller if the gesture started on it, the mode is
     // ios, and the user does not have reduced motion on
-    const transform = activated && mode === 'ios' && !reduceMotion
-      ? `translate3d(${xPosition}px, 0, 0) scaleX(${activatedScale}) scaleY(0.95)`
-      : `translate3d(${xPosition}px, 0, 0) scaleX(${widthDelta})`;
+    const transform = `translate3d(${xPosition}px, 0, 0) scaleX(${widthDelta})`;
 
     // Clear the z-index when the transition ends
     const endHandler = () => {
@@ -238,11 +203,9 @@ export class Segment implements ComponentInterface {
 
       // Add the transition to move the indicator into place
       currentIndicator.classList.add('segment-button-indicator-animated');
-      if (activated && mode === 'ios' && !reduceMotion) {
-        currentIndicator.style.setProperty('transform', 'scale(0.95)');
-      } else {
-        currentIndicator.style.setProperty('transform', '');
-      }
+
+      // Remove the transform to slide the indicator back to the button clicked
+      currentIndicator.style.setProperty('transform', '');
     });
 
     clicked.checked = true;
@@ -331,7 +294,7 @@ export class Segment implements ComponentInterface {
     }
 
     if (isEnd) {
-      this.activateIndicator();
+      this.activated = false;
     }
 
     if (nextIndex === undefined || buttons[nextIndex].disabled) {
@@ -371,6 +334,7 @@ export class Segment implements ComponentInterface {
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
+          'segment-activated': this.activated,
           'segment-disabled': this.disabled,
           'segment-scrollable': this.scrollable
         }}

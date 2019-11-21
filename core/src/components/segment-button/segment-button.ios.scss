@@ -15,6 +15,7 @@
   --indicator-box-shadow: #{$segment-button-ios-box-shadow-checked};
   --indicator-color: #{$segment-button-ios-indicator-color};
   --indicator-transition: #{$segment-button-ios-transition-animated};
+  --indicator-transform: none;
   --transition: #{$segment-button-ios-transition};
   --padding-top: 0;
   --padding-end: 13px;
@@ -95,21 +96,11 @@
 }
 
 
-// Segment Button: Hover
-// --------------------------------------------------
-
-@media (any-hover: hover) {
-  :host(:hover) {
-    opacity: $segment-button-ios-opacity-hover;
-  }
-}
-
-
 // Segment Button: Checked Indicator
 // --------------------------------------------------
 
 .segment-button-indicator {
-  @include padding(null, $segment-button-ios-margin, null, $segment-button-ios-margin);
+  @include padding(null, $segment-button-ios-margin);
   @include position(0, 0, 0, 0);
 }
 
@@ -117,6 +108,10 @@
   @include border-radius($segment-button-ios-border-radius);
 
   background: var(--indicator-color);
+}
+
+.segment-button-indicator-background {
+  transition: var(--indicator-transition);
 }
 
 

@@ -24,8 +24,16 @@
   background: #{current-color(base, 0.065)};
 }
 
-:host(.ion-color)::slotted(.segment-button-checked) {
+:host(.ion-color) ::slotted(.segment-button-checked) {
   color: #000;
+}
+
+
+// Segment: Activated
+// --------------------------------------------------
+
+:host(.segment-activated) ::slotted(ion-segment-button) {
+  --indicator-transform: scale(0.95);
 }
 
 
