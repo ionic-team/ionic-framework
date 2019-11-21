@@ -163,9 +163,9 @@ export class Segment implements ComponentInterface {
     return button.shadowRoot && button.shadowRoot.querySelector('.segment-button-indicator');
   }
 
-  private checkButton(clicked: HTMLIonSegmentButtonElement, checked: HTMLIonSegmentButtonElement) {
-    const currentIndicator = this.getIndicator(clicked);
-    const previousIndicator = this.getIndicator(checked);
+  private checkButton(previous: HTMLIonSegmentButtonElement, current: HTMLIonSegmentButtonElement) {
+    const previousIndicator = this.getIndicator(previous);
+    const currentIndicator = this.getIndicator(current);
 
     if (previousIndicator === null || currentIndicator === null) {
       return;
@@ -177,13 +177,13 @@ export class Segment implements ComponentInterface {
     const widthDelta = previousClientRect.width / currentClientRect.width;
     const xPosition = previousClientRect.left - currentClientRect.left;
 
-    // Scale the indicator smaller if the gesture started on it, the mode is
-    // ios, and the user does not have reduced motion on
+    // Scale the indicator width to match the previous indicator width
+    // and translate it on top of the previous indicator
     const transform = `translate3d(${xPosition}px, 0, 0) scaleX(${widthDelta})`;
 
     // Clear the z-index when the transition ends
     const endHandler = () => {
-      checked.style.setProperty('z-index', '');
+      previous.style.setProperty('z-index', '');
       currentIndicator.removeEventListener('transitionend', endHandler);
     };
     currentIndicator.addEventListener('transitionend', endHandler);
@@ -192,9 +192,9 @@ export class Segment implements ComponentInterface {
       // When the current indicator transition begins, we need to set the z-index
       // to 1 on the previous button so that when the indicator moves over the text
       // is still on top
-      checked.style.setProperty('z-index', '1');
+      previous.style.setProperty('z-index', '1');
 
-      // Remove the transition before positioning on top of the old indicator
+      // Remove the transition before positioning on top of the previous indicator
       currentIndicator.classList.remove('segment-button-indicator-animated');
       currentIndicator.style.setProperty('transform', transform);
 
@@ -208,7 +208,7 @@ export class Segment implements ComponentInterface {
       currentIndicator.style.setProperty('transform', '');
     });
 
-    clicked.checked = true;
+    current.checked = true;
     this.setCheckedClasses();
   }
 
@@ -301,10 +301,10 @@ export class Segment implements ComponentInterface {
       return;
     }
 
-    const clicked = buttons[nextIndex];
-    const checked = buttons[index];
+    const previous = buttons[index];
+    const current = buttons[nextIndex];
 
-    this.checkButton(clicked, checked);
+    this.checkButton(previous, current);
   }
 
   private emitStyle() {
