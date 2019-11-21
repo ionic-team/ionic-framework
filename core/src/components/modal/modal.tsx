@@ -176,15 +176,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (this.animation) {
         this.animation.destroy();
       }
-      console.log('done!!!', this.usersElement, this.animation);
     }
-
-/*
-    if (this.animation && role !== BACKDROP) {
-      console.log(role);
-      this.animation.destroy();
-    }
-*/
 
     this.animation = undefined;
 
