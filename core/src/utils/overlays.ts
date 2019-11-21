@@ -1,7 +1,9 @@
 import { config } from '../global/config';
-import { ActionSheetOptions, AlertOptions, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 let lastId = 0;
+
+export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
 const createController = <Opts extends object, HTMLElm extends any>(tagName: string) => {
   return {
@@ -161,6 +163,8 @@ export const dismiss = async (
     }
     overlay.didDismiss.emit({ data, role });
 
+    activeAnimations.delete(overlay);
+
   } catch (err) {
     console.error(err);
   }
@@ -197,6 +201,9 @@ const overlayAnimation = async (
       }
     });
   }
+
+  const activeAni = activeAnimations.get(overlay) || [];
+  activeAnimations.set(overlay, [...activeAni, animation]);
 
   await animation.play();
 

@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
+import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -168,7 +168,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
     const iosAni = (this.animation === undefined || role === BACKDROP) ? iosLeaveAnimation : undefined;
-
+    const enteringAnimation = activeAnimations.get(this) || [];
     const dismissed = await dismiss(this, data, role, 'modalLeave', iosAni, mdLeaveAnimation, this.presentingElement);
 
     if (dismissed) {
@@ -176,6 +176,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
       if (this.animation) {
         this.animation.destroy();
       }
+
+      enteringAnimation.forEach(ani => {
+        ani.destroy();
+      });
     }
 
     this.animation = undefined;
