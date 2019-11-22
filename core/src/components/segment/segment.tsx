@@ -230,21 +230,26 @@ export class Segment implements ComponentInterface {
     const activated = this.activated;
     const buttons = this.getButtons();
     const index = buttons.findIndex(button => button.checked === true);
-    const startEl = buttons[index];
+    const previous = buttons[index];
+    let current;
+    let nextIndex;
 
     if (index === -1) {
       return;
     }
 
-    const currentX = detail.currentX;
-
     // Get the element that the touch event started on in case
     // it was the checked button, then we will move the indicator
-    const rect = startEl.getBoundingClientRect();
+    const rect = previous.getBoundingClientRect() as DOMRect;
     const left = rect.left;
     const width = rect.width;
 
-    let nextIndex;
+    // Get the element that the gesture is on top of based on the currentX of the
+    // gesture event and the Y coordinate of the starting element, since the gesture
+    // can move up and down off of the segment
+    const currentX = detail.currentX;
+    const previousY = rect.y;
+    const nextEl = document.elementFromPoint(currentX, previousY) as HTMLIonSegmentButtonElement;
 
     const decreaseIndex = isRTL ? currentX > (left + width) : currentX < left;
     const increaseIndex = isRTL ? currentX < left : currentX > (left + width);
@@ -271,38 +276,21 @@ export class Segment implements ComponentInterface {
           }
         }
       }
-    }
 
-    // If the indicator is not activated then we will just set the indicator
-    // where the gesture ended
-    if (!activated && isEnd) {
-      if (decreaseIndex) {
-        const diff = Math.abs(Math.ceil((left - currentX) / width));
-        const newIndex = index - diff;
-
-        if (newIndex >= 0) {
-          nextIndex = newIndex;
-        }
-      } else if (increaseIndex) {
-        const diff = Math.abs(Math.floor((currentX - left) / width));
-        const newIndex = index + diff;
-
-        if (newIndex < buttons.length) {
-          nextIndex = newIndex;
-        }
+      if (nextIndex !== undefined && !buttons[nextIndex].disabled) {
+        current = buttons[nextIndex];
       }
     }
 
-    if (isEnd) {
-      this.activated = false;
+    // If the indicator is not activated then we will just set the indicator
+    // to the element where the gesture ended
+    if (!activated && isEnd) {
+      current = nextEl;
     }
 
-    if (nextIndex === undefined || buttons[nextIndex].disabled) {
+    if (!current) {
       return;
     }
-
-    const previous = buttons[index];
-    const current = buttons[nextIndex];
 
     this.checkButton(previous, current);
   }
