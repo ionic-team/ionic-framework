@@ -167,7 +167,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    const iosAni = (this.animation === undefined || role === BACKDROP) ? iosLeaveAnimation : undefined;
+    const iosAni = (this.animation === undefined || (role === BACKDROP || role === undefined)) ? iosLeaveAnimation : undefined;
     const enteringAnimation = activeAnimations.get(this) || [];
     const dismissed = await dismiss(this, data, role, 'modalLeave', iosAni, mdLeaveAnimation, this.presentingElement);
 
@@ -180,6 +180,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       enteringAnimation.forEach(ani => {
         ani.destroy();
       });
+
     }
 
     this.animation = undefined;
