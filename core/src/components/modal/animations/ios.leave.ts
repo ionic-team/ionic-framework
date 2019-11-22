@@ -33,6 +33,7 @@ export const iosLeaveAnimation = (
     const presentingAnimation = createAnimation()
       .addElement(presentingEl)
       .beforeClearStyles(['transform'])
+      .afterClearStyles(['transform'])
       .onFinish(currentStep => {
         if (currentStep === 1) {
           /**
