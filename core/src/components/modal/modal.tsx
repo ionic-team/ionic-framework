@@ -153,7 +153,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.gesture = createSwipeToCloseGesture(
         this.el,
         ani,
-        () => this.dismiss()
+        () => this.dismiss(undefined, 'gesture')
       );
       this.gesture.enable(true);
     }
