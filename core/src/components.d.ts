@@ -1508,7 +1508,7 @@ export namespace Components {
     */
     'showBackdrop': boolean;
     /**
-    * If `true`, the modal will support a swipe and pan drag gesture to close. Only supported on iOS as Android does not use this type of interaction.
+    * If `true`, the modal will support a swipe and pan drag gesture to close. Only applies in iOS mode.
     */
     'swipeGesture': boolean;
   }
@@ -4869,7 +4869,7 @@ declare namespace LocalJSX {
     */
     'showBackdrop'?: boolean;
     /**
-    * If `true`, the modal will support a swipe and pan drag gesture to close. Only supported on iOS as Android does not use this type of interaction.
+    * If `true`, the modal will support a swipe and pan drag gesture to close. Only applies in iOS mode.
     */
     'swipeGesture'?: boolean;
   }
