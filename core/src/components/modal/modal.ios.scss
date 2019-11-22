@@ -19,15 +19,6 @@
   @include transform(translate3d(0, 100%, 0));
 }
 
-// :host(.modal-animation-reset) {
-//   .modal-wrapper {
-//     transition: 500ms transform cubic-bezier(0.32, 0.72, 0, 1);
-//   }
-//   ion-backdrop {
-//     transition: 500ms opacity cubic-bezier(0.32, 0.72, 0, 1);
-//   }
-// }
-
 :host(.modal-card) {
   align-items: flex-end;
 }

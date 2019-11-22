@@ -18,6 +18,6 @@
 
 .modal-wrapper {
   @include transform(translate3d(0, 40px, 0));
-  
-  opacity: 0.01;
+
+  opacity: .01;
 }
