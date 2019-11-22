@@ -15,7 +15,7 @@ export const SwipeToCloseDefaults = {
 export const createSwipeToCloseGesture = (
   el: HTMLIonModalElement,
   animation: Animation,
-  onDismiss: (velocityY: number) => void
+  onDismiss: () => void
 ) => {
   const height = el.offsetHeight;
   let isOpen = false;
@@ -73,7 +73,7 @@ export const createSwipeToCloseGesture = (
     animation
       .onFinish(() => {
         if (shouldComplete) {
-          onDismiss(duration);
+          onDismiss();
         }
       })
       .progressEnd((shouldComplete) ? 1 : 0, newStepValue, duration);
