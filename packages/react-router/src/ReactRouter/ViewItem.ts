@@ -23,4 +23,9 @@ export interface ViewItem<RouteData = any> {
    * An IonRoute is a Route that contains an IonPage. Only IonPages participate in transition and lifecycle events.
    */
   isIonRoute: boolean;
+
+  /**
+   * location of the view
+   */
+  location?: string;
 }

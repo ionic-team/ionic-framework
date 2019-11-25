@@ -97,10 +97,37 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     const viewStackKeys = viewStacks.getKeys();
 
     viewStackKeys.forEach(key => {
-      const { view: enteringView, viewStack: enteringViewStack, match } = viewStacks.findViewInfoByLocation(location, key);
-      if (!enteringView || !enteringViewStack) {
+      const { view: stackEnteringView, viewStack: enteringViewStack, match } = viewStacks.findViewInfoByLocation(location, key);
+      if (!stackEnteringView || !enteringViewStack) {
         return;
       }
+
+      /**
+       * if stackEnteringView already has a location and it is different from the current location,
+       * make a fresh clone of the view and add it to the stack. This ensures that if the same view
+       * is selected because the match rule has some wildcards, a separate view is created for
+       * each different location matching the same view
+       */
+      const enteringView = (!stackEnteringView.location) || (stackEnteringView.location && stackEnteringView.location === location.pathname)
+        ? stackEnteringView
+        : {
+          id: generateId(),
+          key: generateId(),
+          route: stackEnteringView.route,
+          routeData: {
+            ...stackEnteringView.routeData,
+            match
+          },
+          mount: true,
+          show: false,
+          isIonRoute: false
+        } as ViewItem<IonRouteData>;
+
+      if (stackEnteringView !== enteringView) {
+        enteringViewStack.views.push(enteringView);
+      }
+      enteringView.location = location.pathname;
+
       leavingView = viewStacks.findViewInfoById(this.activeIonPageId).view;
 
       if (enteringView.isIonRoute) {
