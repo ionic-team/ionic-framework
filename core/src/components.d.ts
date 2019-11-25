@@ -1510,7 +1510,7 @@ export namespace Components {
     /**
     * If `true`, the modal will support a swipe and pan drag gesture to close. Only applies in iOS mode.
     */
-    'swipeGesture': boolean;
+    'swipeToClose': boolean;
   }
   interface IonModalController {
     /**
@@ -4871,7 +4871,7 @@ declare namespace LocalJSX {
     /**
     * If `true`, the modal will support a swipe and pan drag gesture to close. Only applies in iOS mode.
     */
-    'swipeGesture'?: boolean;
+    'swipeToClose'?: boolean;
   }
   interface IonModalController {}
   interface IonNav {

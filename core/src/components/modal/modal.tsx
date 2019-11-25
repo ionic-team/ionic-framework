@@ -91,7 +91,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * If `true`, the modal will support a swipe and pan drag gesture to close. Only applies in iOS mode.
    */
-  @Prop() swipeGesture = false;
+  @Prop() swipeToClose = false;
 
   /**
    * The element that presented the modal. This is used for card presentation effects
@@ -144,7 +144,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
     const mode = getIonMode(this);
-    if (this.swipeGesture && mode === 'ios') {
+    if (this.swipeToClose && mode === 'ios') {
       // All of the elements needed for the swipe gesture
       // should be in the DOM and referenced by now, except
       // for the presenting el

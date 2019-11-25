@@ -513,8 +513,7 @@
       const modalElement = await modalController.create({
         presentingElement: presentingEl,
         component: element,
-        swipeGesture: true,
-        presentationStyle: 'card'
+        swipeToClose: true
       });
       return modalElement;
     }
