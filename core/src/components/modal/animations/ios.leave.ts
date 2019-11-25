@@ -28,8 +28,8 @@ export const iosLeaveAnimation = (
     .addAnimation([backdropAnimation, wrapperAnimation]);
 
   if (presentingEl) {
+    const modalTransform = (presentingEl.tagName === 'ION-MODAL') ? 40 : 0;
     const currentPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
-    const presentingFromY = SwipeToCloseDefaults.MIN_PRESENTING_Y;
     const presentingAnimation = createAnimation()
       .addElement(presentingEl)
       .beforeClearStyles(['transform'])
@@ -50,7 +50,7 @@ export const iosLeaveAnimation = (
           });
         }
       })
-      .fromTo('transform', `translateY(${presentingFromY}px) scale(${currentPresentingScale})`, 'translateY(0px) scale(1)');
+      .fromTo('transform', `translateY(${-modalTransform}px) scale(${currentPresentingScale})`, 'translateY(0px) scale(1)');
 
     baseAnimation.addAnimation(presentingAnimation);
   }

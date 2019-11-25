@@ -38,10 +38,11 @@ export const iosEnterAnimation = (
   // onstart(true) END 1->0 START onFinish(false)
 
   if (presentingEl) {
+    const modalTransform = (presentingEl.tagName === 'ION-MODAL') ? 40 : 0;
     const bodyEl = document.body;
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
-    const presentingToY = SwipeToCloseDefaults.MIN_PRESENTING_Y;
-    const finalTransform = `translateY(${presentingToY}%) scale(${toPresentingScale})`;
+    const finalTransform = `translateY(${-modalTransform}px) scale(${toPresentingScale})`;
+
     const presentingAnimation = createAnimation()
       .beforeStyles({
         'transform': 'translateY(0)',

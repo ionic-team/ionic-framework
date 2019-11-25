@@ -460,7 +460,6 @@
       const sortedGroups = Object.keys(contactGroups)
                                  .map(k => { return { letter: k, contacts: contactGroups[k] }})
                                  .sort((a, b) => a.letter.localeCompare(b.letter))
-      console.log(sortedGroups);
 
       const items = new Array(20).fill(0).map((item, i) => {
         return {
@@ -505,10 +504,11 @@
       });
 
       const create = element.querySelector('ion-button.add');
-      create.addEventListener('click', () => {
-        presentModal();
-      });
+      create.addEventListener('click', async () => {
+        const topModal = await modalController.getTop();
 
+        presentModal(topModal);
+      });
       // present the modal
       const modalElement = await modalController.create({
         presentingElement: presentingEl,
