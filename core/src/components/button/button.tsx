@@ -20,7 +20,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
     ios: 'button.ios.scss',
     md: 'button.md.scss'
   },
-  shadow: true,
+  shadow: false,
 })
 export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
   private inItem = false;
