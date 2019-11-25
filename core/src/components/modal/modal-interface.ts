@@ -3,7 +3,7 @@ import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode
 export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   component: T;
   componentProps?: ComponentProps<T>;
-  presentingEl?: HTMLElement;
+  presentingElement?: HTMLElement;
   showBackdrop?: boolean;
   backdropDismiss?: boolean;
   cssClass?: string | string[];
