@@ -1,6 +1,6 @@
 import { testModal } from '../test.utils';
 
-const DIRECTORY = 'card';
+const DIRECTORY = 'spec';
 
 test('modal: card', async () => {
   await testModal(DIRECTORY, '#card-modal');
