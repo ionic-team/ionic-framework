@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
@@ -121,10 +121,6 @@ export class Refresher implements ComponentInterface {
       (refreshingSpinner as any).componentOnReady()
     ]);
 
-    // Hide refreshing spinner
-    refreshingSpinner.style.setProperty('display', 'none');
-    refreshingSpinner.style.setProperty('animation', '500ms linear 1 refresher-pop forwards');
-
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
     const MAX_PULL = window.innerHeight * 0.25;
     const NUM_TICKS = ticks.length;
@@ -135,37 +131,37 @@ export class Refresher implements ComponentInterface {
         return;
       }
 
-      const scrollTop = this.scrollEl!.scrollTop;
-      if (scrollTop > 0) {
-        this.state = RefresherState.Inactive;
-        return;
-      }
+      readTask(() => {
+        const scrollTop = this.scrollEl!.scrollTop;
+        if (scrollTop > 0) {
+          this.state = RefresherState.Inactive;
+          return;
+        }
 
-      const distancePerTick = MAX_PULL / NUM_TICKS;
-      const opacity = clamp(0, Math.abs(scrollTop) / distancePerTick, 1);
-      const pullAmount = Math.abs(scrollTop) / MAX_PULL;
-      const currentTickToShow = clamp(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
-      const shouldPlaySpinner = currentTickToShow === NUM_TICKS - 1;
+        const distancePerTick = MAX_PULL / NUM_TICKS;
+        const opacity = clamp(0, Math.abs(scrollTop) / distancePerTick, 0.99);
+        const pullAmount = Math.abs(scrollTop) / MAX_PULL;
+        const currentTickToShow = clamp(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
+        const shouldPlaySpinner = currentTickToShow === NUM_TICKS - 1;
 
-      this.state = (shouldPlaySpinner) ? RefresherState.Refreshing : RefresherState.Pulling;
-      this.el.style.setProperty('z-index', '1');
+        writeTask(() => {
+          this.state = (shouldPlaySpinner) ? RefresherState.Refreshing : RefresherState.Pulling;
 
-      pullingSpinner.style.setProperty('opacity', opacity.toString());
+          pullingSpinner.style.setProperty('opacity', opacity.toString());
 
-      ticks.forEach((el, i) => {
-        el.style.setProperty('display', (i <= currentTickToShow) ? '' : 'none');
-      });
+          ticks.forEach((el, i) => {
+            el.style.setProperty('opacity', (i <= currentTickToShow) ? '0.99' : '0');
+          });
 
-      pullingSpinner.style.setProperty('display', (shouldPlaySpinner) ? 'none' : '');
-      refreshingSpinner.style.setProperty('display', (shouldPlaySpinner) ? '' : 'none');
+          this.scrollEl!.style.setProperty('transform', (shouldPlaySpinner) ? 'translateY(44px)' : 'translateY(0px)');
 
-      this.scrollEl!.style.setProperty('transform', (shouldPlaySpinner) ? 'translateY(44px)' : 'translateY(0px)');
-
-      if (shouldPlaySpinner) {
-        this.ionRefresh.emit({
-          complete: this.complete.bind(this)
+          if (shouldPlaySpinner) {
+            this.ionRefresh.emit({
+              complete: this.complete.bind(this)
+            });
+          }
         });
-      }
+      });
     });
 
   }
@@ -223,12 +219,13 @@ export class Refresher implements ComponentInterface {
    */
   @Method()
   async complete() {
+    // TODO: hacky
     if (this.experimentalRefresher) {
       this.state = RefresherState.Completing;
       this.scrollEl!.style.setProperty('transition', '0.2s all ease-in-out');
       this.scrollEl!.style.removeProperty('transform');
       setTimeout(() => {
-        this.el.style.removeProperty('z-index');
+        this.state = RefresherState.Inactive;
       }, 200);
     } else {
       this.close(RefresherState.Completing, '120ms');
@@ -452,7 +449,7 @@ export class Refresher implements ComponentInterface {
 
           // Used internally for styling
           [`refresher-${mode}`]: true,
-
+          'refresher-experimental': this.experimentalRefresher,
           'refresher-active': this.state !== RefresherState.Inactive,
           'refresher-pulling': this.state === RefresherState.Pulling,
           'refresher-ready': this.state === RefresherState.Ready,

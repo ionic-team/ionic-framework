@@ -17,6 +17,35 @@ ion-refresher {
   }
 }
 
+.refresher-experimental {
+  z-index: 1;
+}
+
+.refresher-experimental ion-refresher-content {
+  .refresher-refreshing ion-spinner {
+    display: none;
+    animation: 500ms linear refresher-pop forwards;
+  }
+}
+
+.refresher-experimental.refresher-refreshing ion-refresher-content {
+  .refresher-pulling ion-spinner {
+    display: none;
+  }
+  .refresher-refreshing ion-spinner {
+    display: block;
+  }
+}
+
+.refresher-experimental.refresher-pulling ion-refresher-content {
+  .refresher-pulling ion-spinner {
+    display: block;
+  }
+  .refresher-refreshing ion-spinner {
+    display: none;
+  }
+}
+
 // Refresher Content
 // --------------------------------------------------
 
