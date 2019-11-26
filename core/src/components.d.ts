@@ -1976,6 +1976,7 @@ export namespace Components {
     * If `true`, the refresher will be hidden.
     */
     'disabled': boolean;
+    'experimentalRefresher': boolean;
     /**
     * A number representing how far down the user has pulled. The number `0` represents the user hasn't pulled down at all. The number `1`, and anything greater than `1`, represents that the user has pulled far enough down that when they let go then the refresh will happen. If they let go and the number is less than `1`, then the refresh will not happen, and the content will return to it's original position.
     */
@@ -2002,6 +2003,7 @@ export namespace Components {
     * A static icon to display when you begin to pull down
     */
     'pullingIcon'?: string | null;
+    'pullingSpinner'?: SpinnerTypes | null;
     /**
     * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
@@ -5205,6 +5207,7 @@ declare namespace LocalJSX {
     * If `true`, the refresher will be hidden.
     */
     'disabled'?: boolean;
+    'experimentalRefresher'?: boolean;
     /**
     * Emitted while the user is pulling down the content and exposing the refresher.
     */
@@ -5239,6 +5242,7 @@ declare namespace LocalJSX {
     * A static icon to display when you begin to pull down
     */
     'pullingIcon'?: string | null;
+    'pullingSpinner'?: SpinnerTypes | null;
     /**
     * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */

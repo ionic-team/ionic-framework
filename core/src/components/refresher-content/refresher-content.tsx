@@ -15,6 +15,9 @@ export class RefresherContent implements ComponentInterface {
    */
   @Prop({ mutable: true }) pullingIcon?: string | null;
 
+  // TODO: figure this out
+  @Prop({ mutable: true }) pullingSpinner?: SpinnerTypes | null;
+
   /**
    * The text you want to display when you begin to pull down.
    * `pullingText` can accept either plaintext or HTML as a string.
@@ -43,7 +46,7 @@ export class RefresherContent implements ComponentInterface {
   @Prop() refreshingText?: string;
 
   componentWillLoad() {
-    if (this.pullingIcon === undefined) {
+    if (this.pullingSpinner === undefined && this.pullingIcon === undefined) {
       this.pullingIcon = config.get('refreshingIcon', 'arrow-down');
     }
     if (this.refreshingSpinner === undefined) {
@@ -59,6 +62,11 @@ export class RefresherContent implements ComponentInterface {
     return (
       <Host class={getIonMode(this)}>
         <div class="refresher-pulling">
+          {this.pullingSpinner &&
+            <div class="refresher-pulling-icon">
+              <ion-spinner name={this.pullingSpinner} paused></ion-spinner>
+            </div>
+          }
           {this.pullingIcon &&
             <div class="refresher-pulling-icon">
               <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>

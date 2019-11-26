@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
+import { clamp } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-refresher',
@@ -17,6 +18,9 @@ export class Refresher implements ComponentInterface {
   private progress = 0;
   private scrollEl?: HTMLElement;
   private gesture?: Gesture;
+
+  // TODO: Remove this and find a way to expose new functionality
+  @Prop() experimentalRefresher = false;
 
   @Element() el!: HTMLElement;
 
@@ -97,6 +101,75 @@ export class Refresher implements ComponentInterface {
    */
   @Event() ionStart!: EventEmitter<void>;
 
+  private async setupExperimentalRefresher() {
+    if (this.scrollEl === undefined) {
+      console.log('Refresher requires a scroll element.');
+      return;
+    }
+
+    const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLElement | null;
+    const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner') as HTMLElement | null;
+
+    if (pullingSpinner === null || refreshingSpinner === null) {
+      console.warn('Please provide a pulling ion-spinner and a refreshing ion-spinner.');
+      return;
+    }
+
+    // TEMP
+    await Promise.all([
+      (pullingSpinner as any).componentOnReady(),
+      (refreshingSpinner as any).componentOnReady()
+    ]);
+
+    // Hide refreshing spinner
+    refreshingSpinner.style.setProperty('display', 'none');
+    refreshingSpinner.style.setProperty('animation', '500ms linear 1 refresher-pop forwards');
+
+    const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
+    const MAX_PULL = window.innerHeight * 0.25;
+    const NUM_TICKS = ticks.length;
+
+    ticks.forEach(el => el.style.setProperty('animation', 'none'));
+    this.scrollEl.addEventListener('scroll', () => {
+      if (this.state === RefresherState.Refreshing) {
+        return;
+      }
+
+      const scrollTop = this.scrollEl!.scrollTop;
+      if (scrollTop > 0) {
+        this.state = RefresherState.Inactive;
+        return;
+      }
+
+      const distancePerTick = MAX_PULL / NUM_TICKS;
+      const opacity = clamp(0, Math.abs(scrollTop) / distancePerTick, 1);
+      const pullAmount = Math.abs(scrollTop) / MAX_PULL;
+      const currentTickToShow = clamp(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
+      const shouldPlaySpinner = currentTickToShow === NUM_TICKS - 1;
+
+      this.state = (shouldPlaySpinner) ? RefresherState.Refreshing : RefresherState.Pulling;
+      this.el.style.setProperty('z-index', '1');
+
+      pullingSpinner.style.setProperty('opacity', opacity.toString());
+
+      ticks.forEach((el, i) => {
+        el.style.setProperty('display', (i <= currentTickToShow) ? '' : 'none');
+      });
+
+      pullingSpinner.style.setProperty('display', (shouldPlaySpinner) ? 'none' : '');
+      refreshingSpinner.style.setProperty('display', (shouldPlaySpinner) ? '' : 'none');
+
+      this.scrollEl!.style.setProperty('transform', (shouldPlaySpinner) ? 'translateY(44px)' : 'translateY(0px)');
+
+      if (shouldPlaySpinner) {
+        this.ionRefresh.emit({
+          complete: this.complete.bind(this)
+        });
+      }
+    });
+
+  }
+
   async connectedCallback() {
     if (this.el.getAttribute('slot') !== 'fixed') {
       console.error('Make sure you use: <ion-refresher slot="fixed">');
@@ -107,21 +180,28 @@ export class Refresher implements ComponentInterface {
       console.error('<ion-refresher> must be used inside an <ion-content>');
       return;
     }
-    this.scrollEl = await contentEl.getScrollElement();
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: contentEl,
-      gestureName: 'refresher',
-      gesturePriority: 10,
-      direction: 'y',
-      threshold: 20,
-      passive: false,
-      canStart: () => this.canStart(),
-      onStart: () => this.onStart(),
-      onMove: ev => this.onMove(ev),
-      onEnd: () => this.onEnd(),
-    });
 
-    this.disabledChanged();
+    this.scrollEl = await contentEl.getScrollElement();
+
+    if (this.experimentalRefresher) {
+      this.setupExperimentalRefresher();
+    } else {
+
+      this.gesture = (await import('../../utils/gesture')).createGesture({
+        el: contentEl,
+        gestureName: 'refresher',
+        gesturePriority: 10,
+        direction: 'y',
+        threshold: 20,
+        passive: false,
+        canStart: () => this.canStart(),
+        onStart: () => this.onStart(),
+        onMove: ev => this.onMove(ev),
+        onEnd: () => this.onEnd(),
+      });
+
+      this.disabledChanged();
+    }
   }
 
   disconnectedCallback() {
@@ -143,7 +223,16 @@ export class Refresher implements ComponentInterface {
    */
   @Method()
   async complete() {
-    this.close(RefresherState.Completing, '120ms');
+    if (this.experimentalRefresher) {
+      this.state = RefresherState.Completing;
+      this.scrollEl!.style.setProperty('transition', '0.2s all ease-in-out');
+      this.scrollEl!.style.removeProperty('transform');
+      setTimeout(() => {
+        this.el.style.removeProperty('z-index');
+      }, 200);
+    } else {
+      this.close(RefresherState.Completing, '120ms');
+    }
   }
 
   /**

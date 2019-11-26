@@ -583,7 +583,7 @@ export class IonRange {
 proxyInputs(IonRange, ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'snaps', 'step', 'ticks', 'value']);
 
 export declare interface IonRefresher extends Components.IonRefresher {}
-@Component({ selector: 'ion-refresher', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'] })
+@Component({ selector: 'ion-refresher', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['closeDuration', 'disabled', 'experimentalRefresher', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'] })
 export class IonRefresher {
   ionRefresh!: EventEmitter<CustomEvent>;
   ionPull!: EventEmitter<CustomEvent>;
@@ -596,10 +596,10 @@ export class IonRefresher {
   }
 }
 proxyMethods(IonRefresher, ['complete', 'cancel', 'getProgress']);
-proxyInputs(IonRefresher, ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration']);
+proxyInputs(IonRefresher, ['closeDuration', 'disabled', 'experimentalRefresher', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration']);
 
 export declare interface IonRefresherContent extends Components.IonRefresherContent {}
-@Component({ selector: 'ion-refresher-content', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText'] })
+@Component({ selector: 'ion-refresher-content', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['pullingIcon', 'pullingSpinner', 'pullingText', 'refreshingSpinner', 'refreshingText'] })
 export class IonRefresherContent {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -607,7 +607,7 @@ export class IonRefresherContent {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonRefresherContent, ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText']);
+proxyInputs(IonRefresherContent, ['pullingIcon', 'pullingSpinner', 'pullingText', 'refreshingSpinner', 'refreshingText']);
 
 export declare interface IonReorder extends Components.IonReorder {}
 @Component({ selector: 'ion-reorder', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>' })

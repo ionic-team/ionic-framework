@@ -25,3 +25,22 @@
 .refresher-ios .refresher-refreshing .spinner-dots circle {
   fill: $refresher-ios-icon-color;
 }
+
+
+@keyframes refresher-pop {
+  0% {
+    transform: scale(1) rotate(0deg);
+    animation-timing-function: ease-in;
+  }
+  25% {
+    transform: scale(1.15) rotate(45deg);
+    animation-timing-function: linear;
+  }
+  50% {
+    transform: scale(1) rotate(90deg);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(1) rotate(180deg);
+  }
+}
