@@ -12,7 +12,7 @@
 }
 
 .popover-content {
-  @include border-radius($popover-md-border-radius);
+  @include border-radius(var(--border-radious,$popover-md-border-radius));
   @include transform-origin(start, top);
 }
 
