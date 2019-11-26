@@ -2,7 +2,7 @@ import { NavDirection } from '@ionic/core';
 import { RouterDirection, getConfig } from '@ionic/react';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
-import { RouteComponentProps, matchPath, withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter, matchPath } from 'react-router-dom';
 
 import { generateId, isDevMode } from '../utils';
 import { LocationHistory } from '../utils/LocationHistory';
@@ -23,6 +23,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   activeIonPageId?: string;
   currentDirection?: RouterDirection;
   locationHistory = new LocationHistory();
+  routes: { [key: string]: any } = {};
 
   constructor(props: RouteComponentProps) {
     super(props);
@@ -34,7 +35,9 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
       hideView: this.hideView.bind(this),
       setupIonRouter: this.setupIonRouter.bind(this),
       removeViewStack: this.removeViewStack.bind(this),
-      syncView: this.syncView.bind(this)
+      syncView: this.syncView.bind(this),
+      syncRoute: this.syncRoute.bind(this),
+      getRoute: this.getRoute.bind(this)
     };
 
     this.locationHistory.add({
@@ -45,6 +48,10 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
       state: {}
     });
   }
+
+  // componentDidMount() {
+  //   this.setActiveView(this.props.location, this.state.action!);
+  // }
 
   componentDidUpdate(_prevProps: RouteComponentProps, prevState: RouteManagerState) {
     // Trigger a page change if the location or action is different
@@ -57,6 +64,10 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     if (this.listenUnregisterCallback) {
       this.listenUnregisterCallback();
     }
+  }
+
+  getRoute(id: string) {
+    return this.routes[id];
   }
 
   hideView(viewId: string) {
@@ -108,25 +119,29 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
        * is selected because the match rule has some wildcards, a separate view is created for
        * each different location matching the same view
        */
-      const enteringView = (!stackEnteringView.location) || (stackEnteringView.location && stackEnteringView.location === location.pathname)
-        ? stackEnteringView
-        : {
-          id: generateId(),
-          key: generateId(),
-          route: stackEnteringView.route,
-          routeData: {
-            ...stackEnteringView.routeData,
-            match
-          },
-          mount: true,
-          show: false,
-          isIonRoute: false
-        } as ViewItem<IonRouteData>;
+      // let enteringView: ViewItem<IonRouteData>;
+      // if ((!stackEnteringView.location) || (stackEnteringView.location && stackEnteringView.location === location.pathname)) {
+      //   enteringView = stackEnteringView;
+      // } else {
+      //   enteringView = {
+      //     id: generateId(),
+      //     key: generateId(),
+      //     routeId: stackEnteringView.routeId,
+      //     routeData: {
+      //       ...stackEnteringView.routeData,
+      //       match
+      //     },
+      //     mount: true,
+      //     show: false,
+      //     isIonRoute: false
+      //   } as ViewItem<IonRouteData>;
+      // }
 
-      if (stackEnteringView !== enteringView) {
-        enteringViewStack.views.push(enteringView);
-      }
-      enteringView.location = location.pathname;
+      // if (stackEnteringView !== enteringView) {
+      //   enteringViewStack.views.push(enteringView);
+      // }
+      // enteringView.location = location.pathname;
+      const enteringView = stackEnteringView;
 
       leavingView = viewStacks.findViewInfoById(this.activeIonPageId).view;
 
@@ -239,15 +254,18 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     let activeId: string | undefined;
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
-      views.push(createViewItem(child, this.props.history.location));
+      const routeId = generateId();
+      this.routes[routeId] = child;
+      views.push(createViewItem(child, routeId, this.props.history.location));
     });
 
     this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);
 
-    function createViewItem(child: React.ReactElement<any>, location: HistoryLocation) {
+    function createViewItem(child: React.ReactElement<any>, routeId: string, location: HistoryLocation) {
       const viewId = generateId();
       const key = generateId();
-      const route = child;
+
+      // const route = child;
       const matchProps = {
         exact: child.props.exact,
         path: child.props.path || child.props.from,
@@ -261,7 +279,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
           match,
           childProps: child.props
         },
-        route,
+        routeId,
         mount: true,
         show: !!match,
         isIonRoute: false
@@ -350,6 +368,19 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
 
     }, () => {
       this.setActiveView(this.state.location || this.props.location, this.state.action!);
+    });
+  }
+
+  syncRoute(_id: string, routerOutlet: any) {
+    const ionRouterOutlet = React.Children.only(routerOutlet) as React.ReactElement;
+    
+    React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
+      for(let routeKey in this.routes) {
+        const route = this.routes[routeKey];
+        if(route.props.path == child.props.path) {
+          this.routes[routeKey] = child;
+        }
+      }  
     });
   }
 
