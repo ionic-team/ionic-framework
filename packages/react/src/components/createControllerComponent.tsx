@@ -19,14 +19,17 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
 ) => {
   const dismissEventName = `on${displayName}DidDismiss`;
 
-  type Props = OptionsType & ReactControllerProps;
+  type Props = OptionsType & ReactControllerProps & {
+    forwardedRef?: React.RefObject<OverlayType>
+  };
 
-  return class extends React.Component<Props> {
+  class Overlay extends React.Component<Props> {
     overlay?: OverlayType;
     isUnmounted = false;
 
     constructor(props: Props) {
       super(props);
+      this.handleDismiss = this.handleDismiss.bind(this);
     }
 
     static get displayName() {
@@ -54,18 +57,30 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
       }
     }
 
+    handleDismiss(event: CustomEvent<OverlayEventDetail<any>>) {
+      if (this.props.onDidDismiss) {
+        this.props.onDidDismiss(event);
+      }
+      if (this.props.forwardedRef) {
+        (this.props.forwardedRef as any).current = undefined;
+      }
+    }
+
     async present(prevProps?: Props) {
       const { isOpen, onDidDismiss, ...cProps } = this.props;
       this.overlay = await controller.create({
         ...cProps as any
       });
       attachProps(this.overlay, {
-        [dismissEventName]: onDidDismiss
+        [dismissEventName]: this.handleDismiss
       }, prevProps);
       // Check isOpen again since the value could have changed during the async call to controller.create
       // It's also possible for the component to have become unmounted.
       if (this.props.isOpen === true && this.isUnmounted === false) {
-        await this.overlay.present();
+        if (this.props.forwardedRef) {
+          (this.props.forwardedRef as any).current = this.overlay;
+        }
+        await this.overlay.present();       
       }
     }
 
@@ -73,4 +88,8 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
       return null;
     }
   };
+
+  return React.forwardRef<OverlayType, Props>((props, ref) => {
+    return <Overlay {...props} forwardedRef={ref} />
+  })
 };

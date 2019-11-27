@@ -87,6 +87,10 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
       ref: this.routerOutletEl
     };
 
+    if(ionRouterOutlet.props.forwardedRef) {
+      ionRouterOutlet.props.forwardedRef.current = this.routerOutletEl;
+    }
+
     if (isDevMode()) {
       elementProps['data-stack-id'] = this.id;
     }
