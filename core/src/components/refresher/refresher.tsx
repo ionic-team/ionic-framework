@@ -17,6 +17,7 @@ export class Refresher implements ComponentInterface {
   private didStart = false;
   private progress = 0;
   private scrollEl?: HTMLElement;
+  private scrollListenerCallback?: any;
   private gesture?: Gesture;
 
   // TODO: Remove this and find a way to expose new functionality
@@ -101,9 +102,29 @@ export class Refresher implements ComponentInterface {
    */
   @Event() ionStart!: EventEmitter<void>;
 
+  private checkExperimentalRefresher() {
+    if (this.experimentalRefresher) {
+      this.setupExperimentalRefresher();
+    } else {
+      this.destroyExperimentalRefresher();
+    }
+  }
+
+  private destroyExperimentalRefresher() {
+    if (this.scrollEl && this.scrollListenerCallback) {
+      this.scrollEl.removeEventListener('scroll', this.scrollListenerCallback);
+      this.scrollListenerCallback = undefined;
+    }
+  }
+
   private async setupExperimentalRefresher() {
     if (this.scrollEl === undefined) {
       console.log('Refresher requires a scroll element.');
+      return;
+    }
+
+    if (this.scrollListenerCallback) {
+      console.debug('Experimental Refresher already enabled.');
       return;
     }
 
@@ -126,7 +147,8 @@ export class Refresher implements ComponentInterface {
     const NUM_TICKS = ticks.length;
 
     ticks.forEach(el => el.style.setProperty('animation', 'none'));
-    this.scrollEl.addEventListener('scroll', () => {
+
+    this.scrollListenerCallback = () => {
       if (this.state === RefresherState.Refreshing) {
         return;
       }
@@ -162,8 +184,17 @@ export class Refresher implements ComponentInterface {
           }
         });
       });
-    });
+    };
 
+    this.scrollEl.addEventListener('scroll', this.scrollListenerCallback);
+  }
+
+  componentDidUnload() {
+    this.destroyExperimentalRefresher();
+  }
+
+  componentDidUpdate() {
+    this.checkExperimentalRefresher();
   }
 
   async connectedCallback() {
@@ -182,7 +213,6 @@ export class Refresher implements ComponentInterface {
     if (this.experimentalRefresher) {
       this.setupExperimentalRefresher();
     } else {
-
       this.gesture = (await import('../../utils/gesture')).createGesture({
         el: contentEl,
         gestureName: 'refresher',
