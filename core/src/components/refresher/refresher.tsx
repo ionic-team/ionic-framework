@@ -4,6 +4,8 @@ import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { clamp } from '../../utils/helpers';
 
+import { handleScrollWhilePulling, handleScrollWhileRefreshing } from './refresher.utils';
+
 @Component({
   tag: 'ion-refresher',
   styleUrls: {
@@ -124,7 +126,6 @@ export class Refresher implements ComponentInterface {
     }
 
     if (this.scrollListenerCallback) {
-      console.debug('Experimental Refresher already enabled.');
       return;
     }
 
@@ -149,14 +150,9 @@ export class Refresher implements ComponentInterface {
     ticks.forEach(el => el.style.setProperty('animation', 'none'));
 
     this.scrollListenerCallback = () => {
-      if (this.state === RefresherState.Refreshing) {
-        return;
-      }
-
       readTask(() => {
         const scrollTop = this.scrollEl!.scrollTop;
         if (scrollTop > 0) {
-          this.state = RefresherState.Inactive;
           return;
         }
 
@@ -164,29 +160,65 @@ export class Refresher implements ComponentInterface {
         const opacity = clamp(0, Math.abs(scrollTop) / distancePerTick, 0.99);
         const pullAmount = Math.abs(scrollTop) / MAX_PULL;
         const currentTickToShow = clamp(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
-        const shouldPlaySpinner = currentTickToShow === NUM_TICKS - 1;
+        const shouldPlaySpinner = this.state === RefresherState.Refreshing || currentTickToShow === NUM_TICKS - 1;
+        this.state = (shouldPlaySpinner) ? RefresherState.Refreshing : RefresherState.Pulling;
 
-        writeTask(() => {
-          this.state = (shouldPlaySpinner) ? RefresherState.Refreshing : RefresherState.Pulling;
+        if (this.state === RefresherState.Refreshing) {
+          handleScrollWhileRefreshing(refreshingSpinner, opacity, this.pointerDown);
 
-          pullingSpinner.style.setProperty('opacity', opacity.toString());
-
-          ticks.forEach((el, i) => {
-            el.style.setProperty('opacity', (i <= currentTickToShow) ? '0.99' : '0');
-          });
-
-          this.scrollEl!.style.setProperty('transform', (shouldPlaySpinner) ? 'translateY(44px)' : 'translateY(0px)');
-
-          if (shouldPlaySpinner) {
+          if (!this.didEmit && shouldPlaySpinner) {
             this.ionRefresh.emit({
               complete: this.complete.bind(this)
             });
+            this.didEmit = true;
+            this.scrollEl!.style.setProperty('transform', 'translateY(44px)');
           }
-        });
+        } else {
+          handleScrollWhilePulling(this.scrollEl!, pullingSpinner, ticks, opacity, currentTickToShow, shouldPlaySpinner);
+        }
       });
     };
 
     this.scrollEl.addEventListener('scroll', this.scrollListenerCallback);
+
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+        el: this.scrollEl,
+        gestureName: 'refresher',
+        gesturePriority: 10,
+        direction: 'y',
+        threshold: 0,
+        onStart: () => {
+          this.pointerDown = true;
+        },
+        onEnd: () => {
+          this.pointerDown = false;
+
+          if (this.needsComplete) {
+            this.resetExperimentalScrollEl();
+            this.needsComplete = false;
+          }
+        },
+      });
+
+    this.disabledChanged();
+  }
+
+  private pointerDown = false;
+  private needsComplete = false;
+  private didEmit = false;
+
+  private resetExperimentalScrollEl() {
+    // TODO: hacky
+
+    this.state = RefresherState.Completing;
+    this.scrollEl!.style.setProperty('transition', '0.2s all ease-in-out');
+    this.scrollEl!.style.removeProperty('transform');
+    setTimeout(() => {
+      this.didEmit = false;
+      this.needsComplete = false;
+      this.pointerDown = false;
+      this.state = RefresherState.Inactive;
+    }, 200);
   }
 
   componentDidUpdate() {
@@ -246,14 +278,13 @@ export class Refresher implements ComponentInterface {
    */
   @Method()
   async complete() {
-    // TODO: hacky
     if (this.experimentalRefresher) {
-      this.state = RefresherState.Completing;
-      this.scrollEl!.style.setProperty('transition', '0.2s all ease-in-out');
-      this.scrollEl!.style.removeProperty('transform');
-      setTimeout(() => {
-        this.state = RefresherState.Inactive;
-      }, 200);
+      this.needsComplete = true;
+
+      // Do not reset scroll el until user removes pointer from screen
+      if (!this.pointerDown) {
+        this.resetExperimentalScrollEl();
+      }
     } else {
       this.close(RefresherState.Completing, '120ms');
     }

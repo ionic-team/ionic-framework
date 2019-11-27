@@ -28,7 +28,8 @@ ion-refresher {
   }
 }
 
-.refresher-experimental.refresher-refreshing ion-refresher-content {
+.refresher-experimental.refresher-refreshing ion-refresher-content,
+.refresher-experimental.refresher-completing ion-refresher-content {
   .refresher-pulling ion-spinner {
     display: none;
   }
