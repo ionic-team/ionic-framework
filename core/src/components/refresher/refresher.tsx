@@ -189,10 +189,6 @@ export class Refresher implements ComponentInterface {
     this.scrollEl.addEventListener('scroll', this.scrollListenerCallback);
   }
 
-  componentDidUnload() {
-    this.destroyExperimentalRefresher();
-  }
-
   componentDidUpdate() {
     this.checkExperimentalRefresher();
   }
@@ -231,6 +227,7 @@ export class Refresher implements ComponentInterface {
   }
 
   disconnectedCallback() {
+    this.destroyExperimentalRefresher();
     this.scrollEl = undefined;
     if (this.gesture) {
       this.gesture.destroy();
