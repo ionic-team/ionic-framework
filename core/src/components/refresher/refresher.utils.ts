@@ -21,11 +21,7 @@ export const handleScrollWhilePulling = (
 
 export const handleScrollWhileRefreshing = (
   spinner: HTMLElement,
-  opacity: number,
-  pointerDown: boolean
+  opacity: number
 ) => {
-  if (!pointerDown) { return; }
-  writeTask(() => {
-    spinner.style.setProperty('opacity', opacity.toString());
-  });
+  writeTask(() => spinner.style.setProperty('opacity', opacity.toString()));
 };

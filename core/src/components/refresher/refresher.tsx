@@ -169,7 +169,9 @@ export class Refresher implements ComponentInterface {
         this.state = (shouldPlaySpinner) ? RefresherState.Refreshing : RefresherState.Pulling;
 
         if (this.state === RefresherState.Refreshing) {
-          handleScrollWhileRefreshing(refreshingSpinner, opacity, this.pointerDown);
+          if (this.pointerDown) {
+            handleScrollWhileRefreshing(refreshingSpinner, opacity);
+          }
 
           if (!this.didEmit && shouldPlaySpinner) {
             this.ionRefresh.emit({
@@ -178,7 +180,7 @@ export class Refresher implements ComponentInterface {
             this.didEmit = true;
 
             if (!this.pointerDown) {
-              this.translateExperimentalScrollEl('44px');
+              this.translateExperimentalScrollEl('62px');
             }
           }
         } else {
@@ -208,7 +210,7 @@ export class Refresher implements ComponentInterface {
             this.resetExperimentalScrollEl();
             this.needsComplete = false;
           } else if (this.didEmit) {
-            this.translateExperimentalScrollEl('44px');
+            this.translateExperimentalScrollEl('62px');
           }
         },
       });

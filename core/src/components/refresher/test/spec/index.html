@@ -20,7 +20,13 @@
   <ion-app>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Pull To Refresh</ion-title>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/" text="Mailboxes"></ion-back-button>
+        </ion-buttons>
+        <ion-title>All Inboxes</ion-title>
+        <ion-buttons slot="end">
+          <ion-button>Edit</ion-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
 
@@ -28,6 +34,15 @@
       <ion-refresher experimental-refresher="true" id="refresher" slot="fixed">
         <ion-refresher-content pulling-spinner="lines"></ion-refresher-content>
       </ion-refresher>
+      
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">All Inboxes</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar></ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
 
       <ion-list id="list"></ion-list>
     </ion-content>
