@@ -163,6 +163,9 @@ export class Refresher implements ComponentInterface {
         const pullAmount = Math.abs(scrollTop) / MAX_PULL;
         const currentTickToShow = clamp(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
         const shouldPlaySpinner = this.state === RefresherState.Refreshing || currentTickToShow === NUM_TICKS - 1;
+
+        refreshingSpinner.style.setProperty('--refreshing-rotation-duration', (this.lastVelocityY >= 1.0) ? '0.5s' : '2s');
+
         this.state = (shouldPlaySpinner) ? RefresherState.Refreshing : RefresherState.Pulling;
 
         if (this.state === RefresherState.Refreshing) {
@@ -195,6 +198,9 @@ export class Refresher implements ComponentInterface {
         onStart: () => {
           this.pointerDown = true;
         },
+        onMove: ev => {
+          this.lastVelocityY = ev.velocityY;
+        },
         onEnd: () => {
           this.pointerDown = false;
 
@@ -213,6 +219,7 @@ export class Refresher implements ComponentInterface {
   private pointerDown = false;
   private needsComplete = false;
   private didEmit = false;
+  private lastVelocityY = 0;
 
   private translateExperimentalScrollEl(value: string) {
     this.scrollEl!.style.setProperty('transform', `translateY(${value})`);
