@@ -144,12 +144,14 @@ export class Refresher implements ComponentInterface {
     ]);
 
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
-    const MAX_PULL = window.innerHeight * 0.25;
+    const MAX_PULL = this.scrollEl!.clientHeight * 0.20;
     const NUM_TICKS = ticks.length;
 
     ticks.forEach(el => el.style.setProperty('animation', 'none'));
 
     this.scrollListenerCallback = () => {
+      if (!this.pointerDown && this.state === RefresherState.Inactive) { return; }
+
       readTask(() => {
         const scrollTop = this.scrollEl!.scrollTop;
         if (scrollTop > 0) {
@@ -171,7 +173,10 @@ export class Refresher implements ComponentInterface {
               complete: this.complete.bind(this)
             });
             this.didEmit = true;
-            this.scrollEl!.style.setProperty('transform', 'translateY(44px)');
+
+            if (!this.pointerDown) {
+              this.translateExperimentalScrollEl('44px');
+            }
           }
         } else {
           handleScrollWhilePulling(this.scrollEl!, pullingSpinner, ticks, opacity, currentTickToShow, shouldPlaySpinner);
@@ -196,6 +201,8 @@ export class Refresher implements ComponentInterface {
           if (this.needsComplete) {
             this.resetExperimentalScrollEl();
             this.needsComplete = false;
+          } else if (this.didEmit) {
+            this.translateExperimentalScrollEl('44px');
           }
         },
       });
@@ -206,6 +213,10 @@ export class Refresher implements ComponentInterface {
   private pointerDown = false;
   private needsComplete = false;
   private didEmit = false;
+
+  private translateExperimentalScrollEl(value: string) {
+    this.scrollEl!.style.setProperty('transform', `translateY(${value})`);
+  }
 
   private resetExperimentalScrollEl() {
     // TODO: hacky
