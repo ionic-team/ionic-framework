@@ -1,8 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('refresher: basic', async () => {
+test('refresher: spec', async () => {
   const page = await newE2EPage({
-    url: '/src/components/refresher/test/basic?ionic:_testing=true'
+    url: '/src/components/refresher/test/spec?ionic:_testing=true'
   });
 
   const compare = await page.compareScreenshot();
