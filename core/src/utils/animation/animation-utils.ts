@@ -1,8 +1,8 @@
 let animationPrefix: string | null = null;
 
-export const getAnimationPrefix = (): string => {
+export const getAnimationPrefix = (ele: HTMLElement): string => {
   if (animationPrefix === null) {
-    const eleStyle: { [key: string]: any } = document.createElement('div').style;
+    const eleStyle: { [key: string]: any } = ele.style;
     animationPrefix = '';
     if (eleStyle.animationName === undefined) {
       const domPrefixes = 'Webkit Moz O ms Khtml'.split(' ');
@@ -18,11 +18,11 @@ export const getAnimationPrefix = (): string => {
 };
 
 export const setStyleProperty = (element: HTMLElement, propertyName: string, value: string | null) => {
-  element.style.setProperty(getAnimationPrefix() + propertyName, value);
+  element.style.setProperty(getAnimationPrefix(element) + propertyName, value);
 };
 
 export const removeStyleProperty = (element: HTMLElement, propertyName: string) => {
-  element.style.removeProperty(getAnimationPrefix() + propertyName);
+  element.style.removeProperty(getAnimationPrefix(element) + propertyName);
 };
 
 export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
@@ -87,7 +87,7 @@ export const getStyleContainer = (element: HTMLElement) => {
 
 export const createKeyframeStylesheet = (keyframeName: string, keyframeRules: string, element: HTMLElement): HTMLElement => {
   const styleContainer = getStyleContainer(element);
-  const keyframePrefix = getAnimationPrefix();
+  const keyframePrefix = getAnimationPrefix(element);
 
   const existingStylesheet = styleContainer.querySelector('#' + keyframeName);
   if (existingStylesheet) {
