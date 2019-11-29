@@ -1,10 +1,28 @@
+let animationPrefix: string | null = null;
+
+export const getAnimationPrefix = (): string => {
+  if (animationPrefix === null) {
+    const eleStyle: { [key: string]: any } = document.createElement('div').style;
+    animationPrefix = '';
+    if (eleStyle.animationName === undefined) {
+      const domPrefixes = 'Webkit Moz O ms Khtml'.split(' ');
+      for (const prefix of domPrefixes) {
+        if (eleStyle[prefix + 'AnimationName'] !== undefined) {
+          animationPrefix = '-' + prefix.toLowerCase() + '-';
+          break;
+        }
+      }
+    }
+  }
+  return animationPrefix;
+};
 
 export const setStyleProperty = (element: HTMLElement, propertyName: string, value: string | null) => {
-  element.style.setProperty(propertyName, value);
+  element.style.setProperty(getAnimationPrefix() + propertyName, value);
 };
 
 export const removeStyleProperty = (element: HTMLElement, propertyName: string) => {
-  element.style.removeProperty(propertyName);
+  element.style.removeProperty(getAnimationPrefix() + propertyName);
 };
 
 export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
@@ -69,6 +87,7 @@ export const getStyleContainer = (element: HTMLElement) => {
 
 export const createKeyframeStylesheet = (keyframeName: string, keyframeRules: string, element: HTMLElement): HTMLElement => {
   const styleContainer = getStyleContainer(element);
+  const keyframePrefix = getAnimationPrefix();
 
   const existingStylesheet = styleContainer.querySelector('#' + keyframeName);
   if (existingStylesheet) {
@@ -77,7 +96,7 @@ export const createKeyframeStylesheet = (keyframeName: string, keyframeRules: st
 
   const stylesheet = (element.ownerDocument || document).createElement('style');
   stylesheet.id = keyframeName;
-  stylesheet.textContent = `@keyframes ${keyframeName} { ${keyframeRules} } @keyframes ${keyframeName}-alt { ${keyframeRules} }`;
+  stylesheet.textContent = `@${keyframePrefix}keyframes ${keyframeName} { ${keyframeRules} } @${keyframePrefix}keyframes ${keyframeName}-alt { ${keyframeRules} }`;
 
   styleContainer.appendChild(stylesheet);
 
