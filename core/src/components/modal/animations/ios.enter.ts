@@ -27,7 +27,7 @@ export const iosEnterAnimation = (
     .addAnimation([backdropAnimation, wrapperAnimation]);
 
   if (presentingEl) {
-    const modalTransform = (presentingEl.tagName === 'ION-MODAL') ? 40 : 0;
+    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? 40 : 0;
     const bodyEl = document.body;
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const finalTransform = `translateY(${-modalTransform}px) scale(${toPresentingScale})`;

@@ -28,7 +28,7 @@ export const iosLeaveAnimation = (
     .addAnimation([backdropAnimation, wrapperAnimation]);
 
   if (presentingEl) {
-    const modalTransform = (presentingEl.tagName === 'ION-MODAL') ? 40 : 0;
+    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? 40 : 0;
     const currentPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const presentingAnimation = createAnimation()
       .addElement(presentingEl)
