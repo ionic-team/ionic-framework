@@ -24,6 +24,7 @@ Modals in iOS mode have the ability to be presented in a card-style and swiped t
 ```tsx
 <IonModal 
   isOpen={showModal} 
+  swipeToClose={true}
   presentingElement={pageRef.current} 
   onDidDismiss={() => setShowModal(false)}>
     <p>This is modal content</p>
@@ -37,6 +38,7 @@ In most scenarios, setting a ref on `IonPage` and passing that ref's `current` v
 <IonModal 
   ref={firstModalRef} 
   isOpen={showModal} 
+  swipeToClose={true}
   presentingElement={pageRef.current} 
   onDidDismiss={() => setShowModal(false)}>
     <p>This is modal content</p>
