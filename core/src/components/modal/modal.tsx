@@ -89,13 +89,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * If `true`, the modal will support a swipe and pan drag gesture to close. Only applies in iOS mode.
+   * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
    */
   @Prop() swipeToClose = false;
 
   /**
    * The element that presented the modal. This is used for card presentation effects
-   * and for stacking multiple modals on top of each other.
+   * and for stacking multiple modals on top of each other. Only applies in iOS mode.
    */
   @Prop() presentingElement?: HTMLElement;
 
