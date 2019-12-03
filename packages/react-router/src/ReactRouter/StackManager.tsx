@@ -96,7 +96,7 @@ class StackManagerInner extends React.Component<StackManagerProps, StackManagerS
       ref: this.routerOutletEl
     };
 
-    if(ionRouterOutlet.props.forwardedRef) {
+    if (ionRouterOutlet.props.forwardedRef) {
       ionRouterOutlet.props.forwardedRef.current = this.routerOutletEl;
     }
 
@@ -115,7 +115,7 @@ const withContext = (Component: any) => {
     <RouteManagerContext.Consumer>
       {context => <Component {...props} routeManager={context} />}
     </RouteManagerContext.Consumer>
-  )
-}
+  );
+};
 
 export const StackManager = withContext(StackManagerInner);

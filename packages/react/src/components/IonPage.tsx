@@ -14,11 +14,11 @@ interface IonPageInternalProps extends IonPageProps {
 
 class IonPageInternal extends React.Component<IonPageInternalProps> {
   context!: React.ContextType<typeof NavContext>;
-  ref: React.RefObject<HTMLDivElement>;// React.createRef<HTMLDivElement>();
+  ref: React.RefObject<HTMLDivElement>;
 
   constructor(props: IonPageInternalProps) {
     super(props);
-    this.ref = this.props.forwardedRef || React.createRef()
+    this.ref = this.props.forwardedRef || React.createRef();
   }
 
   componentDidMount() {
@@ -26,7 +26,7 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
       if (this.context.hasIonicRouter()) {
         this.context.registerIonPage(this.ref.current);
       }
-    }  
+    }
   }
 
   render() {
@@ -46,6 +46,6 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
   static get contextType() {
     return NavContext;
   }
-};
+}
 
 export const IonPage = createForwardRef(IonPageInternal, 'IonPage');

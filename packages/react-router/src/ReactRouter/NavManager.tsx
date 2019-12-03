@@ -3,6 +3,7 @@ import { NavContext, NavContextState } from '@ionic/react';
 import { Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+
 import { StackManager } from './StackManager';
 
 interface NavManagerProps extends RouteComponentProps {

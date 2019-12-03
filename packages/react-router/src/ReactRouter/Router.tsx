@@ -2,7 +2,7 @@ import { NavDirection } from '@ionic/core';
 import { RouterDirection, getConfig } from '@ionic/react';
 import { Action as HistoryAction, Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
-import { RouteComponentProps, withRouter, matchPath } from 'react-router-dom';
+import { RouteComponentProps, matchPath, withRouter } from 'react-router-dom';
 
 import { generateId, isDevMode } from '../utils';
 import { LocationHistory } from '../utils/LocationHistory';
@@ -23,7 +23,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   activeIonPageId?: string;
   currentDirection?: RouterDirection;
   locationHistory = new LocationHistory();
-  routes: { [key: string]: any } = {};
+  routes: { [key: string]: any; } = {};
 
   constructor(props: RouteComponentProps) {
     super(props);
@@ -48,10 +48,6 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
       state: {}
     });
   }
-
-  // componentDidMount() {
-  //   this.setActiveView(this.props.location, this.state.action!);
-  // }
 
   componentDidUpdate(_prevProps: RouteComponentProps, prevState: RouteManagerState) {
     // Trigger a page change if the location or action is different
@@ -144,12 +140,12 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
             leavingView.mount = false;
             this.removeOrphanedViews(enteringView, enteringViewStack);
           }
-        leavingViewHtml = enteringView.id === leavingView.id ? leavingView.ionPageElement!.outerHTML : undefined;
+          leavingViewHtml = enteringView.id === leavingView.id ? leavingView.ionPageElement!.outerHTML : undefined;
         } else {
           // If there is not a leavingView, then we shouldn't provide a direction
           direction = undefined;
         }
-        
+
       } else {
         enteringView.show = true;
         enteringView.mount = true;
@@ -176,7 +172,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
           if (enteringEl) {
             // Don't animate from an empty view
             const navDirection = leavingEl && leavingEl.innerHTML === '' ? undefined : direction === 'none' ? undefined : direction;
-            const shouldGoBack = !!enteringView.prevId || !!this.locationHistory.previous();
+            const shouldGoBack = !!enteringView.prevId;
             this.commitView(
               enteringEl!,
               leavingEl!,
@@ -353,9 +349,9 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     const ionRouterOutlet = React.Children.only(routerOutlet) as React.ReactElement;
 
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
-      for (let routeKey in this.routes) {
+      for (const routeKey in this.routes) {
         const route = this.routes[routeKey];
-        if (route.props.path == child.props.path) {
+        if (route.props.path === child.props.path) {
           this.routes[routeKey] = child;
         }
       }
@@ -408,11 +404,11 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     if (leavingView) {
       if (leavingView.id === leavingView.prevId) {
         const previousLocation = this.locationHistory.previous();
-        if(previousLocation) {
+        if (previousLocation) {
           this.handleNavigate('replace', previousLocation.pathname + previousLocation.search, 'back');
         } else {
           defaultHref && this.handleNavigate('replace', defaultHref, 'back');
-        }        
+        }
       } else {
         const { view: enteringView } = this.state.viewStacks.findViewInfoById(leavingView.prevId);
         if (enteringView) {
@@ -459,7 +455,7 @@ function clonePageElement(leavingViewHtml: string) {
   const newEl = document.createElement('div');
   newEl.innerHTML = leavingViewHtml;
   newEl.classList.add('ion-page-hidden');
-  newEl.style.zIndex = null;
+  newEl.style.zIndex = '';
   // Remove an existing back button so the new element doesn't get two of them
   const ionBackButton = newEl.getElementsByTagName('ion-back-button');
   if (ionBackButton[0]) {
