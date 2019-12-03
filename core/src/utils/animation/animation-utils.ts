@@ -1,27 +1,25 @@
-let animationPrefix: string | null = null;
+export const getAnimationPrefix = (el: HTMLElement): string => {
+  const supportsUnprefixed = (el.style as any).animationName !== undefined;
+  const supportsWebkitPrefix = (el.style as any).webkitAnimationName !== undefined;
 
-export const getAnimationPrefix = (ele: HTMLElement): string => {
-  if (animationPrefix === null) {
-    const eleStyle: { [key: string]: any } = ele.style;
-    animationPrefix = '';
-    if (eleStyle.animationName === undefined) {
-      const domPrefixes = 'Webkit Moz O ms Khtml'.split(' ');
-      for (const prefix of domPrefixes) {
-        if (eleStyle[prefix + 'AnimationName'] !== undefined) {
-          animationPrefix = '-' + prefix.toLowerCase() + '-';
-          break;
-        }
-      }
-    }
+  if (!supportsUnprefixed && supportsWebkitPrefix) {
+    return '-webkit-';
   }
-  return animationPrefix;
+
+  return '';
 };
 
 export const setStyleProperty = (element: HTMLElement, propertyName: string, value: string | null) => {
-  element.style.setProperty(getAnimationPrefix(element) + propertyName, value);
+  if (propertyName.startsWith('animation-')) {
+    propertyName = getAnimationPrefix(element) + propertyName;
+  }
+  element.style.setProperty(propertyName, value);
 };
 
 export const removeStyleProperty = (element: HTMLElement, propertyName: string) => {
+  if (propertyName.startsWith('animation-')) {
+    propertyName = getAnimationPrefix(element) + propertyName;
+  }
   element.style.removeProperty(getAnimationPrefix(element) + propertyName);
 };
 
