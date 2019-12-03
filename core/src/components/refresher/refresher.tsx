@@ -22,9 +22,6 @@ export class Refresher implements ComponentInterface {
   private scrollListenerCallback?: any;
   private gesture?: Gesture;
 
-  // TODO: Remove this and find a way to expose new functionality
-  @Prop() experimentalRefresher = false;
-
   @Element() el!: HTMLElement;
 
   /**
@@ -103,9 +100,15 @@ export class Refresher implements ComponentInterface {
    * Emitted when the user begins to start pulling down.
    */
   @Event() ionStart!: EventEmitter<void>;
+  
+  private shouldUseNativeRefresher() {
+    const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLElement | null;
+    const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner') as HTMLElement | null;
+    return pullingSpinner !== null && refreshingSpinner !== null;
+  }
 
   private checkExperimentalRefresher() {
-    if (this.experimentalRefresher) {
+    if (this.shouldUseNativeRefresher()) {
       this.setupExperimentalRefresher();
     } else {
       this.destroyExperimentalRefresher();
@@ -128,14 +131,9 @@ export class Refresher implements ComponentInterface {
     if (this.scrollListenerCallback) {
       return;
     }
-
-    const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLElement | null;
-    const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner') as HTMLElement | null;
-
-    if (pullingSpinner === null || refreshingSpinner === null) {
-      console.warn('Please provide a pulling ion-spinner and a refreshing ion-spinner.');
-      return;
-    }
+    
+    const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLElement;
+    const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner') as HTMLElement;
 
     // TEMP
     await Promise.all([
@@ -257,8 +255,7 @@ export class Refresher implements ComponentInterface {
     }
 
     this.scrollEl = await contentEl.getScrollElement();
-
-    if (this.experimentalRefresher) {
+    if (this.shouldUseNativeRefresher()) {
       this.setupExperimentalRefresher();
     } else {
       this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -298,7 +295,7 @@ export class Refresher implements ComponentInterface {
    */
   @Method()
   async complete() {
-    if (this.experimentalRefresher) {
+    if (this.shouldUseNativeRefresher()) {
       this.needsComplete = true;
 
       // Do not reset scroll el until user removes pointer from screen
@@ -527,7 +524,7 @@ export class Refresher implements ComponentInterface {
 
           // Used internally for styling
           [`refresher-${mode}`]: true,
-          'refresher-experimental': this.experimentalRefresher,
+          'refresher-native': this.shouldUseNativeRefresher(),
           'refresher-active': this.state !== RefresherState.Inactive,
           'refresher-pulling': this.state === RefresherState.Pulling,
           'refresher-ready': this.state === RefresherState.Ready,

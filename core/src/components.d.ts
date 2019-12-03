@@ -1976,7 +1976,6 @@ export namespace Components {
     * If `true`, the refresher will be hidden.
     */
     'disabled': boolean;
-    'experimentalRefresher': boolean;
     /**
     * A number representing how far down the user has pulled. The number `0` represents the user hasn't pulled down at all. The number `1`, and anything greater than `1`, represents that the user has pulled far enough down that when they let go then the refresh will happen. If they let go and the number is less than `1`, then the refresh will not happen, and the content will return to it's original position.
     */
@@ -5206,7 +5205,6 @@ declare namespace LocalJSX {
     * If `true`, the refresher will be hidden.
     */
     'disabled'?: boolean;
-    'experimentalRefresher'?: boolean;
     /**
     * Emitted while the user is pulling down the content and exposing the refresher.
     */

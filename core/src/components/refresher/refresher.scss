@@ -17,11 +17,11 @@ ion-refresher {
   }
 }
 
-.refresher-experimental {
+.refresher-native {
   z-index: 1;
 }
 
-.refresher-experimental ion-refresher-content {
+.refresher-native ion-refresher-content {
   .refresher-refreshing ion-spinner {
     --refreshing-rotation-duration: 2s;
     display: none;
@@ -33,8 +33,8 @@ ion-refresher {
   }
 }
 
-.refresher-experimental.refresher-refreshing ion-refresher-content,
-.refresher-experimental.refresher-completing ion-refresher-content {
+.refresher-native.refresher-refreshing ion-refresher-content,
+.refresher-native.refresher-completing ion-refresher-content {
   .refresher-pulling ion-spinner {
     display: none;
   }
@@ -43,7 +43,7 @@ ion-refresher {
   }
 }
 
-.refresher-experimental.refresher-pulling ion-refresher-content {
+.refresher-native.refresher-pulling ion-refresher-content {
   .refresher-pulling ion-spinner {
     display: block;
   }

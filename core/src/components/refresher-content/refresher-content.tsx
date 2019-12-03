@@ -60,7 +60,7 @@ export class RefresherContent implements ComponentInterface {
 
   render() {
     const pullingIcon = this.pullingIcon;
-    const hasSpinner = pullingIcon != null && SPINNERS[pullingIcon] as any !== undefined; // eslint-disable-line
+    const hasSpinner = pullingIcon != null && SPINNERS[pullingIcon] as any !== undefined;
     return (
       <Host class={getIonMode(this)}>
         <div class="refresher-pulling">
