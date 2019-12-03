@@ -17,12 +17,12 @@ export interface ReactOverlayProps {
 
 export const createOverlayComponent = <OverlayComponent extends object, OverlayType extends OverlayElement>(
   displayName: string,
-  controller: { create: (options: any) => Promise<OverlayType> }
+  controller: { create: (options: any) => Promise<OverlayType>; }
 ) => {
   const dismissEventName = `on${displayName}DidDismiss`;
 
   type Props = OverlayComponent & ReactOverlayProps & {
-    forwardedRef?: React.RefObject<OverlayType>
+    forwardedRef?: React.RefObject<OverlayType>;
   };
 
   class Overlay extends React.Component<Props> {
@@ -96,9 +96,9 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
         this.el
       );
     }
-  };
+  }
 
   return React.forwardRef<OverlayType, Props>((props, ref) => {
-    return <Overlay {...props} forwardedRef={ref} />
-  })
+    return <Overlay {...props} forwardedRef={ref} />;
+  });
 };
