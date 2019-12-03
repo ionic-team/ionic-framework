@@ -3,8 +3,10 @@ export interface ViewItem<RouteData = any> {
   id: string;
   /** The key used by React. A new key is generated each time the view comes into the DOM so React thinks its a completely new element. */
   key: string;
+
+  routeId: string;
   /** The <Route /> or <Redirect /> component associated with the view */
-  route: React.ReactElement<any>;
+  // route: React.ReactElement<any>;
   /** The reference to the <IonPage /> element. */
   ionPageElement?: HTMLElement;
   /** The routeData for the view. */
@@ -23,4 +25,9 @@ export interface ViewItem<RouteData = any> {
    * An IonRoute is a Route that contains an IonPage. Only IonPages participate in transition and lifecycle events.
    */
   isIonRoute: boolean;
+
+  /**
+   * location of the view
+   */
+  location?: string;
 }
