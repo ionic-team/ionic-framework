@@ -20,7 +20,7 @@ export const removeStyleProperty = (element: HTMLElement, propertyName: string) 
   if (propertyName.startsWith('animation')) {
     propertyName = getAnimationPrefix(element) + propertyName;
   }
-  element.style.removeProperty(getAnimationPrefix(element) + propertyName);
+  element.style.removeProperty(propertyName);
 };
 
 export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
