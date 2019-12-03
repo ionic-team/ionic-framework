@@ -3,7 +3,6 @@ import { NavContext, NavContextState } from '@ionic/react';
 import { Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-
 import { StackManager } from './StackManager';
 
 interface NavManagerProps extends RouteComponentProps {
@@ -25,7 +24,6 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
       getPageManager: this.getPageManager.bind(this),
       currentPath: this.props.location.pathname,
       registerIonPage: () => { return; }, // overridden in View for each IonPage
-      tabNavigate: this.tabNavigate.bind(this)
     };
 
     this.listenUnregisterCallback = this.props.history.listen((location: HistoryLocation) => {
@@ -53,12 +51,8 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
     this.props.onNavigateBack(defaultHref);
   }
 
-  navigate(path: string, direction?: RouterDirection | 'none') {
-    this.props.onNavigate('push', path, direction);
-  }
-
-  tabNavigate(path: string) {
-    this.props.onNavigate('replace', path, 'back');
+  navigate(path: string, direction?: RouterDirection | 'none', type: 'push' | 'replace' = 'push') {
+    this.props.onNavigate(type, path, direction);
   }
 
   getPageManager() {
