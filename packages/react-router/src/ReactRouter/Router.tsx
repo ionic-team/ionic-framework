@@ -106,42 +106,14 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     let direction: RouterDirection | undefined = (location.state && location.state.direction) || 'forward';
     let leavingView: ViewItem | undefined;
     const viewStackKeys = viewStacks.getKeys();
+    let shouldTransitionPage = false;
+    let leavingViewHtml: string | undefined;
 
     viewStackKeys.forEach(key => {
-      const { view: stackEnteringView, viewStack: enteringViewStack, match } = viewStacks.findViewInfoByLocation(location, key);
-      if (!stackEnteringView || !enteringViewStack) {
+      const { view: enteringView, viewStack: enteringViewStack, match } = viewStacks.findViewInfoByLocation(location, key);
+      if (!enteringView || !enteringViewStack) {
         return;
       }
-
-      /**
-       * if stackEnteringView already has a location and it is different from the current location,
-       * make a fresh clone of the view and add it to the stack. This ensures that if the same view
-       * is selected because the match rule has some wildcards, a separate view is created for
-       * each different location matching the same view
-       */
-      // let enteringView: ViewItem<IonRouteData>;
-      // if ((!stackEnteringView.location) || (stackEnteringView.location && stackEnteringView.location === location.pathname)) {
-      //   enteringView = stackEnteringView;
-      // } else {
-      //   enteringView = {
-      //     id: generateId(),
-      //     key: generateId(),
-      //     routeId: stackEnteringView.routeId,
-      //     routeData: {
-      //       ...stackEnteringView.routeData,
-      //       match
-      //     },
-      //     mount: true,
-      //     show: false,
-      //     isIonRoute: false
-      //   } as ViewItem<IonRouteData>;
-      // }
-
-      // if (stackEnteringView !== enteringView) {
-      //   enteringViewStack.views.push(enteringView);
-      // }
-      // enteringView.location = location.pathname;
-      const enteringView = stackEnteringView;
 
       leavingView = viewStacks.findViewInfoById(this.activeIonPageId).view;
 
@@ -149,6 +121,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
         enteringView.show = true;
         enteringView.mount = true;
         enteringView.routeData.match = match!;
+        shouldTransitionPage = true;
 
         this.activeIonPageId = enteringView.id;
 
@@ -171,10 +144,12 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
             leavingView.mount = false;
             this.removeOrphanedViews(enteringView, enteringViewStack);
           }
+        leavingViewHtml = enteringView.id === leavingView.id ? leavingView.ionPageElement!.outerHTML : undefined;
         } else {
           // If there is not a leavingView, then we shouldn't provide a direction
           direction = undefined;
         }
+        
       } else {
         enteringView.show = true;
         enteringView.mount = true;
@@ -193,28 +168,31 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     this.setState({
       viewStacks
     }, () => {
-      const { view: enteringView, viewStack } = this.state.viewStacks.findViewInfoById(this.activeIonPageId);
-      if (enteringView && viewStack) {
-        const enteringEl = enteringView.ionPageElement ? enteringView.ionPageElement : undefined;
-        const leavingEl = leavingView && leavingView.ionPageElement ? leavingView.ionPageElement : undefined;
-        if (enteringEl) {
-          // Don't animate from an empty view
-          const navDirection = leavingEl && leavingEl.innerHTML === '' ? undefined : direction === 'none' ? undefined : direction;
-          const shouldGoBack = !!enteringView.prevId || !!this.locationHistory.previous();
-          this.commitView(
-            enteringEl!,
-            leavingEl!,
-            viewStack.routerOutlet,
-            navDirection,
-            shouldGoBack);
-        } else if (leavingEl) {
-          leavingEl.classList.add('ion-page-hidden');
-          leavingEl.setAttribute('aria-hidden', 'true');
+      if (shouldTransitionPage) {
+        const { view: enteringView, viewStack } = this.state.viewStacks.findViewInfoById(this.activeIonPageId);
+        if (enteringView && viewStack) {
+          const enteringEl = enteringView.ionPageElement ? enteringView.ionPageElement : undefined;
+          const leavingEl = leavingView && leavingView.ionPageElement ? leavingView.ionPageElement : undefined;
+          if (enteringEl) {
+            // Don't animate from an empty view
+            const navDirection = leavingEl && leavingEl.innerHTML === '' ? undefined : direction === 'none' ? undefined : direction;
+            const shouldGoBack = !!enteringView.prevId || !!this.locationHistory.previous();
+            this.commitView(
+              enteringEl!,
+              leavingEl!,
+              viewStack.routerOutlet,
+              navDirection,
+              shouldGoBack,
+              leavingViewHtml);
+          } else if (leavingEl) {
+            leavingEl.classList.add('ion-page-hidden');
+            leavingEl.setAttribute('aria-hidden', 'true');
+          }
         }
 
         // Warn if an IonPage was not eventually rendered in Dev Mode
         if (isDevMode()) {
-          if (enteringView.routeData.match!.url !== location.pathname) {
+          if (enteringView && enteringView.routeData.match!.url !== location.pathname) {
             setTimeout(() => {
               const { view } = this.state.viewStacks.findViewInfoById(this.activeIonPageId);
               if (view!.routeData.match!.url !== location.pathname) {
@@ -373,30 +351,41 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
 
   syncRoute(_id: string, routerOutlet: any) {
     const ionRouterOutlet = React.Children.only(routerOutlet) as React.ReactElement;
-    
+
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
-      for(let routeKey in this.routes) {
+      for (let routeKey in this.routes) {
         const route = this.routes[routeKey];
-        if(route.props.path == child.props.path) {
+        if (route.props.path == child.props.path) {
           this.routes[routeKey] = child;
         }
-      }  
+      }
     });
   }
 
-  private async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction?: NavDirection, showGoBack?: boolean) {
+  private async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOutlet: HTMLIonRouterOutletElement, direction?: NavDirection, showGoBack?: boolean, leavingViewHtml?: string) {
 
-    if (enteringEl === leavingEl) {
-      return;
+    if ((enteringEl === leavingEl) && direction && leavingViewHtml) {
+      // If a page is transitioning to another version of itself
+      // we clone it so we can have an animation to show
+      const newLeavingElement = clonePageElement(leavingViewHtml);
+      ionRouterOutlet.appendChild(newLeavingElement);
+      await ionRouterOutlet.commit(enteringEl, newLeavingElement, {
+        deepWait: true,
+        duration: direction === undefined ? 0 : undefined,
+        direction,
+        showGoBack,
+        progressAnimation: false
+      });
+      ionRouterOutlet.removeChild(newLeavingElement);
+    } else {
+      await ionRouterOutlet.commit(enteringEl, leavingEl, {
+        deepWait: true,
+        duration: direction === undefined ? 0 : undefined,
+        direction,
+        showGoBack,
+        progressAnimation: false
+      });
     }
-
-    await ionRouterOuter.commit(enteringEl, leavingEl, {
-      deepWait: true,
-      duration: direction === undefined ? 0 : undefined,
-      direction,
-      showGoBack,
-      progressAnimation: false
-    });
 
     if (leavingEl && (enteringEl !== leavingEl)) {
       /** add hidden attributes */
@@ -415,23 +404,32 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   }
 
   navigateBack(defaultHref?: string) {
-    const { view: activeIonPage } = this.state.viewStacks.findViewInfoById(this.activeIonPageId);
-    if (activeIonPage) {
-      const { view: enteringView } = this.state.viewStacks.findViewInfoById(activeIonPage.prevId);
-      if (enteringView) {
-        const lastLocation = this.locationHistory.findLastLocationByUrl(enteringView.routeData.match!.url);
-        if (lastLocation) {
-          this.handleNavigate('replace', lastLocation.pathname + lastLocation.search, 'back');
+    const { view: leavingView } = this.state.viewStacks.findViewInfoById(this.activeIonPageId);
+    if (leavingView) {
+      if (leavingView.id === leavingView.prevId) {
+        const previousLocation = this.locationHistory.previous();
+        if(previousLocation) {
+          this.handleNavigate('replace', previousLocation.pathname + previousLocation.search, 'back');
         } else {
-          this.handleNavigate('replace', enteringView.routeData.match!.url, 'back');
-        }
+          defaultHref && this.handleNavigate('replace', defaultHref, 'back');
+        }        
       } else {
-        const currentLocation = this.locationHistory.previous();
-        if (currentLocation) {
-          this.handleNavigate('replace', currentLocation.pathname + currentLocation.search, 'back');
+        const { view: enteringView } = this.state.viewStacks.findViewInfoById(leavingView.prevId);
+        if (enteringView) {
+          const lastLocation = this.locationHistory.findLastLocationByUrl(enteringView.routeData.match!.url);
+          if (lastLocation) {
+            this.handleNavigate('replace', lastLocation.pathname + lastLocation.search, 'back');
+          } else {
+            this.handleNavigate('replace', enteringView.routeData.match!.url, 'back');
+          }
         } else {
-          if (defaultHref) {
-            this.handleNavigate('replace', defaultHref, 'back');
+          const currentLocation = this.locationHistory.previous();
+          if (currentLocation) {
+            this.handleNavigate('replace', currentLocation.pathname + currentLocation.search, 'back');
+          } else {
+            if (defaultHref) {
+              this.handleNavigate('replace', defaultHref, 'back');
+            }
           }
         }
       }
@@ -455,6 +453,19 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
       </RouteManagerContext.Provider>
     );
   }
+}
+
+function clonePageElement(leavingViewHtml: string) {
+  const newEl = document.createElement('div');
+  newEl.innerHTML = leavingViewHtml;
+  newEl.classList.add('ion-page-hidden');
+  newEl.style.zIndex = null;
+  // Remove an existing back button so the new element doesn't get two of them
+  const ionBackButton = newEl.getElementsByTagName('ion-back-button');
+  if (ionBackButton[0]) {
+    ionBackButton[0].innerHTML = '';
+  }
+  return newEl.firstChild as HTMLElement;
 }
 
 export const RouteManagerWithRouter = withRouter(RouteManager);
