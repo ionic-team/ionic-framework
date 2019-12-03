@@ -172,7 +172,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
           if (enteringEl) {
             // Don't animate from an empty view
             const navDirection = leavingEl && leavingEl.innerHTML === '' ? undefined : direction === 'none' ? undefined : direction;
-            const shouldGoBack = !!enteringView.prevId; // || !!this.locationHistory.previous();
+            const shouldGoBack = !!enteringView.prevId;
             this.commitView(
               enteringEl!,
               leavingEl!,
