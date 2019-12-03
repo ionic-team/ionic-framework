@@ -15,12 +15,12 @@ export interface ReactControllerProps {
 
 export const createControllerComponent = <OptionsType extends object, OverlayType extends OverlayBase>(
   displayName: string,
-  controller: { create: (options: OptionsType) => Promise<OverlayType> }
+  controller: { create: (options: OptionsType) => Promise<OverlayType>; }
 ) => {
   const dismissEventName = `on${displayName}DidDismiss`;
 
   type Props = OptionsType & ReactControllerProps & {
-    forwardedRef?: React.RefObject<OverlayType>
+    forwardedRef?: React.RefObject<OverlayType>;
   };
 
   class Overlay extends React.Component<Props> {
@@ -80,16 +80,16 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
         if (this.props.forwardedRef) {
           (this.props.forwardedRef as any).current = this.overlay;
         }
-        await this.overlay.present();       
+        await this.overlay.present();
       }
     }
 
     render(): null {
       return null;
     }
-  };
+  }
 
   return React.forwardRef<OverlayType, Props>((props, ref) => {
-    return <Overlay {...props} forwardedRef={ref} />
-  })
+    return <Overlay {...props} forwardedRef={ref} />;
+  });
 };

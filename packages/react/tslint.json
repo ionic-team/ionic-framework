@@ -14,7 +14,6 @@
     "trailing-comma": false,
     "no-null-keyword": false,
     "no-console": false,
-    "no-unbound-method": true,
     "no-floating-promises": false,
     "no-invalid-template-strings": true,
     "ban-export-const-enum": true,
@@ -27,6 +26,8 @@
     "jsx-no-bind": false,
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
-    "jsx-wrap-multiline": false
+    "jsx-wrap-multiline": false,
+    "no-empty-interface": false,
+    "no-unbound-method": false
   }
 }
