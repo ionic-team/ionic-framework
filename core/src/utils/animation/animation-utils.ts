@@ -10,14 +10,14 @@ export const getAnimationPrefix = (el: HTMLElement): string => {
 };
 
 export const setStyleProperty = (element: HTMLElement, propertyName: string, value: string | null) => {
-  if (propertyName.startsWith('animation-')) {
+  if (propertyName.startsWith('animation')) {
     propertyName = getAnimationPrefix(element) + propertyName;
   }
   element.style.setProperty(propertyName, value);
 };
 
 export const removeStyleProperty = (element: HTMLElement, propertyName: string) => {
-  if (propertyName.startsWith('animation-')) {
+  if (propertyName.startsWith('animation')) {
     propertyName = getAnimationPrefix(element) + propertyName;
   }
   element.style.removeProperty(getAnimationPrefix(element) + propertyName);
