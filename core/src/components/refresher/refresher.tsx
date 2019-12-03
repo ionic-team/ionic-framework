@@ -180,7 +180,7 @@ export class Refresher implements ComponentInterface {
             this.didEmit = true;
 
             if (!this.pointerDown) {
-              this.translateExperimentalScrollEl('62px');
+              this.translateExperimentalScrollEl('60px');
             }
           }
         } else {
@@ -210,7 +210,7 @@ export class Refresher implements ComponentInterface {
             this.resetExperimentalScrollEl();
             this.needsComplete = false;
           } else if (this.didEmit) {
-            this.translateExperimentalScrollEl('62px');
+            this.translateExperimentalScrollEl('60px');
           }
         },
       });
