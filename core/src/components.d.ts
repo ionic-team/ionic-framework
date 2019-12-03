@@ -1972,6 +1972,7 @@ export namespace Components {
     * Call `complete()` when your async operation has completed. For example, the `refreshing` state is while the app is performing an asynchronous operation, such as receiving more data from an AJAX request. Once the data has been received, you then call this method to signify that the refreshing has completed and to close the refresher. This method also changes the refresher's state from `refreshing` to `completing`.
     */
     'complete': () => Promise<void>;
+    'contentId'?: string;
     /**
     * If `true`, the refresher will be hidden.
     */
@@ -5201,6 +5202,7 @@ declare namespace LocalJSX {
     * Time it takes to close the refresher.
     */
     'closeDuration'?: string;
+    'contentId'?: string;
     /**
     * If `true`, the refresher will be hidden.
     */

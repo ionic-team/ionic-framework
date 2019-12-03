@@ -30,23 +30,23 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
-      <ion-refresher id="refresher" slot="fixed">
+    <ion-content color="dark">
+      <ion-refresher id="refresher" slot="fixed" content-id="liam">
         <ion-refresher-content pulling-icon="lines" refreshing-spinner="lines"></ion-refresher-content>
       </ion-refresher>
       
-<!--
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">All Inboxes</ion-title>
-        </ion-toolbar>
-        <ion-toolbar>
-          <ion-searchbar></ion-searchbar>
-        </ion-toolbar>
-      </ion-header>
--->
-
-      <ion-list id="list"></ion-list>
+      <div id="liam">
+        <ion-header collapse="condense">
+          <ion-toolbar>
+            <ion-title size="large">All Inboxes</ion-title>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-searchbar></ion-searchbar>
+          </ion-toolbar>
+        </ion-header>
+  
+        <ion-list id="list"></ion-list>
+      </div>
     </ion-content>
   </ion-app>
   <ion-menu-controller></ion-menu-controller>
@@ -62,9 +62,9 @@
     refresher.addEventListener('ionRefresh', async function () {
       console.log('Loading data...');
       const data = await getAsyncData();
-      //items = items.concat(data);
+      items = items.concat(data);
       refresher.complete();
-      //render();
+      render();
       console.log('Done');
     });
     function render() {
@@ -83,7 +83,7 @@
             data.push(i);
           }
           resolve(data);
-        }, 2000);
+        }, 2500);
       });
     }
     render();
