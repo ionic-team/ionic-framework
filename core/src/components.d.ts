@@ -2000,10 +2000,9 @@ export namespace Components {
   }
   interface IonRefresherContent {
     /**
-    * A static icon to display when you begin to pull down
+    * A static icon or a spinner to display when you begin to pull down. A spinner name can be provided to gradually show tick marks whe pulling down on iOS devices.
     */
-    'pullingIcon'?: string | null;
-    'pullingSpinner'?: SpinnerTypes | null;
+    'pullingIcon'?: SpinnerTypes | string | null;
     /**
     * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
@@ -5239,10 +5238,9 @@ declare namespace LocalJSX {
   }
   interface IonRefresherContent {
     /**
-    * A static icon to display when you begin to pull down
+    * A static icon or a spinner to display when you begin to pull down. A spinner name can be provided to gradually show tick marks whe pulling down on iOS devices.
     */
-    'pullingIcon'?: string | null;
-    'pullingSpinner'?: SpinnerTypes | null;
+    'pullingIcon'?: SpinnerTypes | string | null;
     /**
     * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */

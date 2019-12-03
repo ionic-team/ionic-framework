@@ -894,7 +894,6 @@ ion-refresher,event,ionStart,void,true
 
 ion-refresher-content,none
 ion-refresher-content,prop,pullingIcon,null | string | undefined,undefined,false,false
-ion-refresher-content,prop,pullingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
 ion-refresher-content,prop,pullingText,string | undefined,undefined,false,false
 ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
 ion-refresher-content,prop,refreshingText,string | undefined,undefined,false,false
