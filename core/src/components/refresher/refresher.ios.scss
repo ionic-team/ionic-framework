@@ -26,6 +26,46 @@
   fill: $refresher-ios-icon-color;
 }
 
+ion-refresher.refresher-native {
+  display: block;
+
+  z-index: 1;
+  
+  ion-spinner {
+    @include margin(0, auto, 0, auto);
+  }
+}
+
+.refresher-native ion-refresher-content {
+  .refresher-refreshing ion-spinner {
+    --refreshing-rotation-duration: 2s;
+    display: none;
+    animation: var(--refreshing-rotation-duration) ease-out refresher-rotate forwards;
+  }
+  .refresher-refreshing {
+    display: none;
+    animation: 250ms linear refresher-pop forwards;
+  }
+}
+
+.refresher-native.refresher-refreshing ion-refresher-content,
+.refresher-native.refresher-completing ion-refresher-content {
+  .refresher-pulling ion-spinner {
+    display: none;
+  }
+  .refresher-refreshing ion-spinner {
+    display: block;
+  }
+}
+
+.refresher-native.refresher-pulling ion-refresher-content {
+  .refresher-pulling ion-spinner {
+    display: block;
+  }
+  .refresher-refreshing ion-spinner {
+    display: none;
+  }
+}
 
 @keyframes refresher-pop {
   0% {
