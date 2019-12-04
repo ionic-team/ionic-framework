@@ -124,6 +124,14 @@
 }
 
 
+// Segment Button: Checked
+// --------------------------------------------------
+
+:host(.segment-button-checked) {
+  z-index: -1;
+}
+
+
 // Segment Button: Toolbar
 // --------------------------------------------------
 

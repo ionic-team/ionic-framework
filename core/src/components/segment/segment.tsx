@@ -183,17 +183,11 @@ export class Segment implements ComponentInterface {
 
     // Clear the z-index when the transition ends
     const endHandler = () => {
-      previous.style.setProperty('z-index', '');
       currentIndicator.removeEventListener('transitionend', endHandler);
     };
     currentIndicator.addEventListener('transitionend', endHandler);
 
     writeTask(() => {
-      // When the current indicator transition begins, we need to set the z-index
-      // to 1 on the previous button so that when the indicator moves over the text
-      // is still on top
-      previous.style.setProperty('z-index', '1');
-
       // Remove the transition before positioning on top of the previous indicator
       currentIndicator.classList.remove('segment-button-indicator-animated');
       currentIndicator.style.setProperty('transform', transform);
