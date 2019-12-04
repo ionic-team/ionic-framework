@@ -6,7 +6,6 @@ import { ViewItem } from './ViewItem';
 
 export interface ViewStack {
   id: string;
-  routerOutlet: HTMLIonRouterOutletElement;
   views: ViewItem[];
 }
 
