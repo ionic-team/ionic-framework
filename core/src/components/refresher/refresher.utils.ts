@@ -17,13 +17,12 @@ export const handleScrollWhilePulling = (
 
 export const handleScrollWhileRefreshing = (
   spinner: HTMLElement,
-  opacity: number,
   lastVelocityY: number
 ) => {
   writeTask(() => {
     // If user pulls down quickly, the spinner should spin faster
     spinner.style.setProperty('--refreshing-rotation-duration', (lastVelocityY >= 1.0) ? '0.5s' : '2s');
-    spinner.style.setProperty('opacity', opacity.toString());
+    spinner.style.setProperty('opacity', '1');
   });
 };
 

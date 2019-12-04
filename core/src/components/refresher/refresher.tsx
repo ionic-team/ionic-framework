@@ -138,7 +138,7 @@ export class Refresher implements ComponentInterface {
   private async completeNativeRefresher(el: HTMLElement) {
     this.state = RefresherState.Completing;
 
-    await translateElement(el);
+    await translateElement(el, undefined);
 
     this.didEmit = false;
     this.needsComplete = false;
@@ -180,6 +180,22 @@ export class Refresher implements ComponentInterface {
       readTask(() => {
         // PTR should only be active when overflow scrolling at the top
         const scrollTop = this.scrollEl!.scrollTop;
+
+        /**
+         * If refresher is refreshing
+         * and user tries to scroll
+         * progressively fade refresher out/in
+         * TODO clean this up
+         */
+        if (scrollTop > 0 && this.state === RefresherState.Refreshing) {
+          const ratio = clamp(0, scrollTop / (60 / 2), 1);
+          writeTask(() => {
+            refreshingSpinner.style.setProperty('opacity', (1 - ratio).toString());
+          });
+
+          return;
+        }
+
         if (scrollTop > 0) {
           return;
         }
@@ -204,7 +220,7 @@ export class Refresher implements ComponentInterface {
 
         if (this.state === RefresherState.Refreshing) {
           if (this.pointerDown) {
-            handleScrollWhileRefreshing(refreshingSpinner, opacity, this.lastVelocityY);
+            handleScrollWhileRefreshing(refreshingSpinner, this.lastVelocityY);
           }
 
           if (!this.didEmit && shouldPlaySpinner) {
@@ -238,7 +254,10 @@ export class Refresher implements ComponentInterface {
         threshold: 0,
         onStart: () => {
           this.pointerDown = true;
-          translateElement(elementToTransform, '0px');
+
+          if (!this.didEmit) {
+            translateElement(elementToTransform, '0px');
+          }
         },
         onMove: ev => {
           this.lastVelocityY = ev.velocityY;
