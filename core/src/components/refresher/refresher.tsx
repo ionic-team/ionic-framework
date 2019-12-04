@@ -5,7 +5,7 @@ import { Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
-import { handleScrollWhilePulling, handleScrollWhileRefreshing } from './refresher.utils';
+import { handleScrollWhilePulling, handleScrollWhileRefreshing, shouldUseNativeRefresher, translateElement } from './refresher.utils';
 
 @Component({
   tag: 'ion-refresher',
@@ -22,7 +22,14 @@ export class Refresher implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private scrollListenerCallback?: any;
   private gesture?: Gesture;
-  @Prop() contentId?: string;
+
+  private pointerDown = false;
+  private needsComplete = false;
+  private didEmit = false;
+  private lastVelocityY = 0;
+
+  private contentEl: HTMLIonContentElement | null = null;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -70,8 +77,15 @@ export class Refresher implements ComponentInterface {
    * `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels
    * (an increase of 20 percent). If the value passed is `0.8`, the dragged amount
    * will be `8` pixels, less than the amount the cursor has moved.
+   *
+   * Does not apply to native refreshers.
    */
   @Prop() pullFactor = 1;
+
+  /**
+   * The ID of the content to be refreshed. Only applies to native refreshers.
+   */
+  @Prop() contentId?: string;
 
   /**
    * If `true`, the refresher will be hidden.
@@ -102,33 +116,33 @@ export class Refresher implements ComponentInterface {
    */
   @Event() ionStart!: EventEmitter<void>;
 
-  private shouldUseNativeRefresher() {
-    const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLElement | null;
-    const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner') as HTMLElement | null;
-    return pullingSpinner !== null && refreshingSpinner !== null;
-  }
-
-  private checkExperimentalRefresher() {
-    if (this.shouldUseNativeRefresher()) {
-      this.setupExperimentalRefresher();
+  private checkNativeRefresher() {
+    if (shouldUseNativeRefresher(this.el)) {
+      this.setupNativeRefresher();
     } else {
-      this.destroyExperimentalRefresher();
+      this.destroyNativeRefresher();
     }
   }
 
-  private destroyExperimentalRefresher() {
+  private destroyNativeRefresher() {
     if (this.scrollEl && this.scrollListenerCallback) {
       this.scrollEl.removeEventListener('scroll', this.scrollListenerCallback);
       this.scrollListenerCallback = undefined;
     }
   }
 
-  private async setupExperimentalRefresher() {
-    if (this.scrollEl === undefined) {
-      console.log('Refresher requires a scroll element.');
-      return;
-    }
+  private async completeNativeRefresher(el: HTMLElement) {
+    this.state = RefresherState.Completing;
 
+    await translateElement(el);
+
+    this.didEmit = false;
+    this.needsComplete = false;
+    this.pointerDown = false;
+    this.state = RefresherState.Inactive;
+  }
+
+  private async setupNativeRefresher() {
     if (this.scrollListenerCallback) {
       return;
     }
@@ -138,7 +152,7 @@ export class Refresher implements ComponentInterface {
 
     const elementToTransform = this.contentEl!.querySelector(`#${this.contentId}`) as HTMLElement | undefined;
     if (elementToTransform === undefined) {
-      console.log('Requires element to transform');
+      console.error('The native style refresher must have a contentId.');
       return;
     }
 
@@ -148,47 +162,60 @@ export class Refresher implements ComponentInterface {
       (refreshingSpinner as any).componentOnReady()
     ]);
 
-    this.el.classList.add('refresher-native');
-
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
     const MAX_PULL = this.scrollEl!.clientHeight * 0.20;
     const NUM_TICKS = ticks.length;
+    const distancePerTick = MAX_PULL / NUM_TICKS;
 
     ticks.forEach(el => el.style.setProperty('animation', 'none'));
 
     this.scrollListenerCallback = () => {
+      // If pointer is not on screen or refresher is not active, ignore scroll
       if (!this.pointerDown && this.state === RefresherState.Inactive) { return; }
 
       readTask(() => {
-        const scrollTop = (this.scrollEl!.scrollTop + 15);
+        // PTR should only be active when overflow scrolling at the top
+        const scrollTop = this.scrollEl!.scrollTop;
         if (scrollTop > 0) {
           return;
         }
 
-        const distancePerTick = MAX_PULL / NUM_TICKS;
+        // emit "start" if it hasn't started yet
+        if (!this.didStart && this.pointerDown) {
+          this.didStart = true;
+          this.ionStart.emit();
+        }
+
+        // emit "pulling" on every move
+        if (this.pointerDown) {
+          this.ionPull.emit();
+        }
+
         const opacity = clamp(0, Math.abs(scrollTop) / distancePerTick, 0.99);
-        const pullAmount = Math.abs(scrollTop) / MAX_PULL;
+        const pullAmount = this.progress = clamp(0, Math.abs(scrollTop) / MAX_PULL, 1);
         const currentTickToShow = clamp(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
         const shouldPlaySpinner = this.state === RefresherState.Refreshing || currentTickToShow === NUM_TICKS - 1;
-        refreshingSpinner.style.setProperty('--refreshing-rotation-duration', (this.lastVelocityY >= 1.0) ? '0.5s' : '2s');
 
         this.state = (shouldPlaySpinner) ? RefresherState.Refreshing : RefresherState.Pulling;
 
         if (this.state === RefresherState.Refreshing) {
           if (this.pointerDown) {
-            handleScrollWhileRefreshing(refreshingSpinner, opacity);
+            handleScrollWhileRefreshing(refreshingSpinner, opacity, this.lastVelocityY);
           }
 
           if (!this.didEmit && shouldPlaySpinner) {
-            this.ionRefresh.emit({
-              complete: this.complete.bind(this)
-            });
+            this.ionRefresh.emit({ complete: this.complete.bind(this) });
             this.didEmit = true;
-
             hapticImpact({ style: 'light' });
 
+            /**
+             * Translate the content element
+             * otherwise when pointer is removed from screen
+             * the scroll content will bounce back
+             * over the refresher
+             */
             if (!this.pointerDown) {
-              this.translateExperimentalScrollEl(elementToTransform, '60px');
+              translateElement(elementToTransform, '60px');
             }
           }
         } else {
@@ -197,30 +224,30 @@ export class Refresher implements ComponentInterface {
       });
     };
 
-    this.scrollEl.addEventListener('scroll', this.scrollListenerCallback);
+    this.scrollEl!.addEventListener('scroll', this.scrollListenerCallback);
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
-        el: this.scrollEl,
+        el: this.scrollEl!,
         gestureName: 'refresher',
         gesturePriority: 10,
         direction: 'y',
         threshold: 0,
         onStart: () => {
           this.pointerDown = true;
-
-          this.translateExperimentalScrollEl(elementToTransform, '0px');
+          translateElement(elementToTransform, '0px');
         },
         onMove: ev => {
           this.lastVelocityY = ev.velocityY;
         },
         onEnd: () => {
           this.pointerDown = false;
+          this.didStart = false;
 
           if (this.needsComplete) {
-            this.resetExperimentalScrollEl(elementToTransform);
+            this.completeNativeRefresher(elementToTransform);
             this.needsComplete = false;
           } else if (this.didEmit) {
-            this.translateExperimentalScrollEl(elementToTransform, '60px');
+            translateElement(elementToTransform, '60px');
           }
         },
       });
@@ -228,36 +255,8 @@ export class Refresher implements ComponentInterface {
     this.disabledChanged();
   }
 
-  private pointerDown = false;
-  private needsComplete = false;
-  private didEmit = false;
-  private lastVelocityY = 0;
-
-  private contentEl: HTMLIonContentElement | null = null;
-
-  private translateExperimentalScrollEl(el: HTMLElement, value: string) {
-    writeTask(() => {
-      el.style.setProperty('transition', '0.2s all ease-out');
-      el.style.setProperty('transform', `translate3d(0px, ${value}, 0px)`);
-    });
-  }
-
-  private resetExperimentalScrollEl(el: HTMLElement) {
-    // TODO: hacky
-    this.state = RefresherState.Completing;
-
-    el.style.setProperty('transition', '0.2s all ease-in-out');
-    el.style.removeProperty('transform');
-    setTimeout(() => {
-      this.didEmit = false;
-      this.needsComplete = false;
-      this.pointerDown = false;
-      this.state = RefresherState.Inactive;
-    }, 200);
-  }
-
   componentDidUpdate() {
-    this.checkExperimentalRefresher();
+    this.checkNativeRefresher();
   }
 
   async connectedCallback() {
@@ -273,8 +272,8 @@ export class Refresher implements ComponentInterface {
     }
 
     this.scrollEl = await contentEl.getScrollElement();
-    if (this.shouldUseNativeRefresher()) {
-      this.setupExperimentalRefresher();
+    if (shouldUseNativeRefresher(this.el)) {
+      this.setupNativeRefresher();
     } else {
       this.gesture = (await import('../../utils/gesture')).createGesture({
         el: contentEl,
@@ -294,7 +293,7 @@ export class Refresher implements ComponentInterface {
   }
 
   disconnectedCallback() {
-    this.destroyExperimentalRefresher();
+    this.destroyNativeRefresher();
     this.scrollEl = undefined;
     if (this.gesture) {
       this.gesture.destroy();
@@ -313,12 +312,12 @@ export class Refresher implements ComponentInterface {
    */
   @Method()
   async complete() {
-    if (this.shouldUseNativeRefresher()) {
+    if (shouldUseNativeRefresher(this.el)) {
       this.needsComplete = true;
 
       // Do not reset scroll el until user removes pointer from screen
       if (!this.pointerDown) {
-        this.resetExperimentalScrollEl(this.contentEl!.querySelector(`#${this.contentId}`) as HTMLElement);
+        this.completeNativeRefresher(this.contentEl!.querySelector(`#${this.contentId}`) as HTMLElement);
       }
     } else {
       this.close(RefresherState.Completing, '120ms');
@@ -547,7 +546,8 @@ export class Refresher implements ComponentInterface {
           'refresher-ready': this.state === RefresherState.Ready,
           'refresher-refreshing': this.state === RefresherState.Refreshing,
           'refresher-cancelling': this.state === RefresherState.Cancelling,
-          'refresher-completing': this.state === RefresherState.Completing
+          'refresher-completing': this.state === RefresherState.Completing,
+          'refresher-native': shouldUseNativeRefresher(this.el)
         }}
       >
       </Host>

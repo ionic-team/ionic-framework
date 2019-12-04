@@ -23,7 +23,7 @@ ion-refresher.refresher-native {
   z-index: 1;
   
   ion-spinner {
-    margin: 0 auto;
+    @include margin(0, auto, 0, auto);
   }
 }
 

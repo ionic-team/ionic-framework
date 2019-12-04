@@ -29,7 +29,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content color="dark">
+    <ion-content>
       <ion-refresher id="refresher" slot="fixed" content-id="liam">
         <ion-refresher-content pulling-icon="lines" refreshing-spinner="lines"></ion-refresher-content>
       </ion-refresher>
@@ -58,12 +58,20 @@
     }
     const list = document.getElementById('list');
     const refresher = document.getElementById('refresher');
+    
+    refresher.addEventListener('ionPull', () => {
+      console.log('ionPull');
+    });
+    
+    refresher.addEventListener('ionStart', () => {
+      console.log('ionStart');
+    });
     refresher.addEventListener('ionRefresh', async function () {
       console.log('Loading data...');
       const data = await getAsyncData();
       items = items.concat(data);
       refresher.complete();
-      render();
+      //render();
       console.log('Done');
     });
     function render() {
