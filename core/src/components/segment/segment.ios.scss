@@ -10,6 +10,8 @@
   @include border-radius($segment-ios-border-radius);
 
   overflow: hidden;
+  
+  z-index: 0;
 }
 
 :host(.segment-disabled) {
