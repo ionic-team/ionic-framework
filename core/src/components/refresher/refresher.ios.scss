@@ -36,7 +36,7 @@ ion-refresher.refresher-native {
   }
 }
 
-.refresher-native ion-refresher-content {
+.refresher-native {
   .refresher-refreshing ion-spinner {
     --refreshing-rotation-duration: 2s;
     display: none;
@@ -48,8 +48,8 @@ ion-refresher.refresher-native {
   }
 }
 
-.refresher-native.refresher-refreshing ion-refresher-content,
-.refresher-native.refresher-completing ion-refresher-content {
+.refresher-native.refresher-refreshing,
+.refresher-native.refresher-completing {
   .refresher-pulling ion-spinner {
     display: none;
   }
@@ -58,7 +58,7 @@ ion-refresher.refresher-native {
   }
 }
 
-.refresher-native.refresher-pulling ion-refresher-content {
+.refresher-native.refresher-pulling {
   .refresher-pulling ion-spinner {
     display: block;
   }
