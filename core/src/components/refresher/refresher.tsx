@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { clamp } from '../../utils/helpers';
+import { hapticImpact } from '../../utils/native/haptic';
 
 import { handleScrollWhilePulling, handleScrollWhileRefreshing } from './refresher.utils';
 
@@ -183,6 +184,8 @@ export class Refresher implements ComponentInterface {
               complete: this.complete.bind(this)
             });
             this.didEmit = true;
+
+            hapticImpact({ style: 'light' });
 
             if (!this.pointerDown) {
               this.translateExperimentalScrollEl(elementToTransform, '60px');

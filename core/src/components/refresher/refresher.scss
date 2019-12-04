@@ -21,6 +21,10 @@ ion-refresher.refresher-native {
   display: block;
 
   z-index: 1;
+  
+  ion-spinner {
+    margin: 0 auto;
+  }
 }
 
 .refresher-native ion-refresher-content {
