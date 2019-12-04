@@ -30,11 +30,11 @@
     </ion-header>
 
     <ion-content>
-      <ion-refresher id="refresher" slot="fixed" content-id="liam">
+      <ion-refresher id="refresher" slot="fixed" content-id="my-content">
         <ion-refresher-content pulling-icon="lines" refreshing-spinner="lines"></ion-refresher-content>
       </ion-refresher>
 
-      <div id="liam">
+      <div id="my-content">
         <ion-header collapse="condense">
           <ion-toolbar>
             <ion-title size="large">All Inboxes</ion-title>
@@ -66,12 +66,13 @@
     refresher.addEventListener('ionStart', () => {
       console.log('ionStart');
     });
+    
     refresher.addEventListener('ionRefresh', async function () {
       console.log('Loading data...');
       const data = await getAsyncData();
       items = items.concat(data);
       refresher.complete();
-      //render();
+      render();
       console.log('Done');
     });
     function render() {

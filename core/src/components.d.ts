@@ -1965,7 +1965,7 @@ export namespace Components {
     */
     'cancel': () => Promise<void>;
     /**
-    * Time it takes to close the refresher.
+    * Time it takes to close the refresher. Does not apply to native refreshers.
     */
     'closeDuration': string;
     /**
@@ -1989,15 +1989,15 @@ export namespace Components {
     */
     'pullFactor': number;
     /**
-    * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
+    * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`. Does not apply to native refreshers.
     */
     'pullMax': number;
     /**
-    * The minimum distance the user must pull down until the refresher will go into the `refreshing` state.
+    * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Does not apply to native refreshers.
     */
     'pullMin': number;
     /**
-    * Time it takes the refresher to to snap back to the `refreshing` state.
+    * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply to native refreshers.
     */
     'snapbackDuration': string;
   }
@@ -5202,7 +5202,7 @@ declare namespace LocalJSX {
   }
   interface IonRefresher {
     /**
-    * Time it takes to close the refresher.
+    * Time it takes to close the refresher. Does not apply to native refreshers.
     */
     'closeDuration'?: string;
     /**
@@ -5230,15 +5230,15 @@ declare namespace LocalJSX {
     */
     'pullFactor'?: number;
     /**
-    * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
+    * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`. Does not apply to native refreshers.
     */
     'pullMax'?: number;
     /**
-    * The minimum distance the user must pull down until the refresher will go into the `refreshing` state.
+    * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Does not apply to native refreshers.
     */
     'pullMin'?: number;
     /**
-    * Time it takes the refresher to to snap back to the `refreshing` state.
+    * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply to native refreshers.
     */
     'snapbackDuration'?: string;
   }

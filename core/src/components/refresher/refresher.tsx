@@ -47,6 +47,7 @@ export class Refresher implements ComponentInterface {
   /**
    * The minimum distance the user must pull down until the
    * refresher will go into the `refreshing` state.
+   * Does not apply to native refreshers.
    */
   @Prop() pullMin = 60;
 
@@ -54,16 +55,19 @@ export class Refresher implements ComponentInterface {
    * The maximum distance of the pull until the refresher
    * will automatically go into the `refreshing` state.
    * Defaults to the result of `pullMin + 60`.
+   * Does not apply to native refreshers.
    */
   @Prop() pullMax: number = this.pullMin + 60;
 
   /**
    * Time it takes to close the refresher.
+   * Does not apply to native refreshers.
    */
   @Prop() closeDuration = '280ms';
 
   /**
    * Time it takes the refresher to to snap back to the `refreshing` state.
+   * Does not apply to native refreshers.
    */
   @Prop() snapbackDuration = '280ms';
 
