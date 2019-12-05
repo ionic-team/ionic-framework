@@ -47,7 +47,11 @@ export class RefresherContent implements ComponentInterface {
 
   componentWillLoad() {
     if (this.pullingIcon === undefined) {
-      this.pullingIcon = config.get('refreshingIcon', 'arrow-down');
+      const mode = getIonMode(this);
+      this.pullingIcon = config.get(
+        'refreshingIcon',
+        mode === 'ios' ? config.get('spinner', 'lines') : 'arrow-down'
+      );
     }
     if (this.refreshingSpinner === undefined) {
       const mode = getIonMode(this);
