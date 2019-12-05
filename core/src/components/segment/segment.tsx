@@ -181,12 +181,6 @@ export class Segment implements ComponentInterface {
     // and translate it on top of the previous indicator
     const transform = `translate3d(${xPosition}px, 0, 0) scaleX(${widthDelta})`;
 
-    // Clear the z-index when the transition ends
-    const endHandler = () => {
-      currentIndicator.removeEventListener('transitionend', endHandler);
-    };
-    currentIndicator.addEventListener('transitionend', endHandler);
-
     writeTask(() => {
       // Remove the transition before positioning on top of the previous indicator
       currentIndicator.classList.remove('segment-button-indicator-animated');
@@ -286,7 +280,9 @@ export class Segment implements ComponentInterface {
       return;
     }
 
-    this.checkButton(previous, current);
+    if (previous !== current) {
+      this.checkButton(previous, current);
+    }
   }
 
   private emitStyle() {
