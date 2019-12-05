@@ -86,7 +86,8 @@ export class Refresher implements ComponentInterface {
    * (an increase of 20 percent). If the value passed is `0.8`, the dragged amount
    * will be `8` pixels, less than the amount the cursor has moved.
    *
-   * Does not apply to native refreshers.
+   * Does not apply when the refresher has a `contentId` and the refresher 
+   * content uses a spinner, enabling the native refresher.
    */
   @Prop() pullFactor = 1;
 
