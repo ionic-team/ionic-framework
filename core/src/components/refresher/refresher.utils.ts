@@ -26,10 +26,11 @@ export const handleScrollWhileRefreshing = (
   });
 };
 
-export const shouldUseNativeRefresher = (referenceEl: HTMLElement) => {
+export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement) => {
   const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
   const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
-  return pullingSpinner !== null && refreshingSpinner !== null;
+
+  return pullingSpinner !== null && refreshingSpinner !== null && referenceEl.contentId !== undefined;
 };
 
 export const translateElement = (el: HTMLElement, value?: string) => {

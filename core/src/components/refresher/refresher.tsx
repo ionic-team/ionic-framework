@@ -30,7 +30,7 @@ export class Refresher implements ComponentInterface {
 
   private contentEl: HTMLIonContentElement | null = null;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonRefresherElement;
 
   /**
    * The current state which the refresher is in. The refresher's states include:
@@ -141,8 +141,8 @@ export class Refresher implements ComponentInterface {
     }
   }
 
-  private async completeNativeRefresher(el: HTMLElement) {
-    this.state = RefresherState.Completing;
+  private async resetNativeRefresher(el: HTMLElement, state: RefresherState) {
+    this.state = state;
 
     await translateElement(el, undefined);
 
@@ -166,18 +166,13 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    // TEMP
-    await Promise.all([
-      (pullingSpinner as any).componentOnReady(),
-      (refreshingSpinner as any).componentOnReady()
-    ]);
-
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
-    const MAX_PULL = this.scrollEl!.clientHeight * 0.20;
+    const MAX_PULL = this.scrollEl!.clientHeight * 0.15;
     const NUM_TICKS = ticks.length;
-    const distancePerTick = MAX_PULL / NUM_TICKS;
 
-    ticks.forEach(el => el.style.setProperty('animation', 'none'));
+    writeTask(() => {
+      ticks.forEach(el => el.style.setProperty('animation', 'none'));
+    });
 
     this.scrollListenerCallback = () => {
       // If pointer is not on screen or refresher is not active, ignore scroll
@@ -186,6 +181,7 @@ export class Refresher implements ComponentInterface {
       readTask(() => {
         // PTR should only be active when overflow scrolling at the top
         const scrollTop = this.scrollEl!.scrollTop;
+        const refresherHeight = this.el.clientHeight;
 
         /**
          * If refresher is refreshing
@@ -194,9 +190,11 @@ export class Refresher implements ComponentInterface {
          * TODO clean this up
          */
         if (scrollTop > 0 && this.state === RefresherState.Refreshing) {
-          const ratio = clamp(0, scrollTop / (60 / 2), 1);
-          writeTask(() => {
-            refreshingSpinner.style.setProperty('opacity', (1 - ratio).toString());
+          readTask(() => {
+            const ratio = clamp(0, scrollTop / (refresherHeight * 0.5), 1);
+            writeTask(() => {
+              refreshingSpinner.style.setProperty('opacity', (1 - ratio).toString());
+            });
           });
 
           return;
@@ -217,8 +215,10 @@ export class Refresher implements ComponentInterface {
           this.ionPull.emit();
         }
 
-        const opacity = clamp(0, Math.abs(scrollTop) / distancePerTick, 0.99);
-        const pullAmount = this.progress = clamp(0, Math.abs(scrollTop) / MAX_PULL, 1);
+        const opacity = clamp(0, Math.abs(scrollTop) / refresherHeight, 0.99);
+
+        // delay showing the next tick marks until user has pulled 30px
+        const pullAmount = this.progress = clamp(0, (Math.abs(scrollTop) - 30) / MAX_PULL, 1);
         const currentTickToShow = clamp(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
         const shouldPlaySpinner = this.state === RefresherState.Refreshing || currentTickToShow === NUM_TICKS - 1;
 
@@ -241,7 +241,7 @@ export class Refresher implements ComponentInterface {
              * over the refresher
              */
             if (!this.pointerDown) {
-              translateElement(elementToTransform, '60px');
+              translateElement(elementToTransform, `${refresherHeight}px`);
             }
           }
         } else {
@@ -273,10 +273,12 @@ export class Refresher implements ComponentInterface {
           this.didStart = false;
 
           if (this.needsComplete) {
-            this.completeNativeRefresher(elementToTransform);
+            this.resetNativeRefresher(elementToTransform, RefresherState.Completing);
             this.needsComplete = false;
           } else if (this.didEmit) {
-            translateElement(elementToTransform, '60px');
+            readTask(() => {
+              translateElement(elementToTransform, `${this.el.clientHeight}px`);
+            });
           }
         },
       });
@@ -346,7 +348,7 @@ export class Refresher implements ComponentInterface {
 
       // Do not reset scroll el until user removes pointer from screen
       if (!this.pointerDown) {
-        this.completeNativeRefresher(this.contentEl!.querySelector(`#${this.contentId}`) as HTMLElement);
+        this.resetNativeRefresher(this.contentEl!.querySelector(`#${this.contentId}`) as HTMLElement, RefresherState.Completing);
       }
     } else {
       this.close(RefresherState.Completing, '120ms');
@@ -358,7 +360,14 @@ export class Refresher implements ComponentInterface {
    */
   @Method()
   async cancel() {
-    this.close(RefresherState.Cancelling, '');
+    if (shouldUseNativeRefresher(this.el)) {
+      // Do not reset scroll el until user removes pointer from screen
+      if (!this.pointerDown) {
+        this.resetNativeRefresher(this.contentEl!.querySelector(`#${this.contentId}`) as HTMLElement, RefresherState.Cancelling);
+      }
+    } else {
+      this.close(RefresherState.Cancelling, '');
+    }
   }
 
   /**
