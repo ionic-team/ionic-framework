@@ -179,7 +179,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
     if (button) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
-      const rtn = await safeCall(button.handler);
+      const rtn = await safeCall(button.handler, this.getSelected());
       if (rtn === false) {
         // if the return value of the handler is false then do not dismiss
         return false;
