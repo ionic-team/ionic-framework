@@ -56,7 +56,8 @@ export class Refresher implements ComponentInterface {
    * The maximum distance of the pull until the refresher
    * will automatically go into the `refreshing` state.
    * Defaults to the result of `pullMin + 60`.
-   * Does not apply to native refreshers.
+   * Does not apply when the refresher has a `contentId` and the refresher 
+   * content uses a spinner, enabling the native refresher.
    */
   @Prop() pullMax: number = this.pullMin + 60;
 
