@@ -47,7 +47,7 @@ export class Refresher implements ComponentInterface {
   /**
    * The minimum distance the user must pull down until the
    * refresher will go into the `refreshing` state.
-   * Does not apply when the refresher has a `contentId` and the refresher 
+   * Does not apply when the refresher has a `contentId` and the refresher
    * content uses a spinner, enabling the native refresher.
    */
   @Prop() pullMin = 60;
@@ -56,21 +56,21 @@ export class Refresher implements ComponentInterface {
    * The maximum distance of the pull until the refresher
    * will automatically go into the `refreshing` state.
    * Defaults to the result of `pullMin + 60`.
-   * Does not apply when the refresher has a `contentId` and the refresher 
+   * Does not apply when the refresher has a `contentId` and the refresher
    * content uses a spinner, enabling the native refresher.
    */
   @Prop() pullMax: number = this.pullMin + 60;
 
   /**
    * Time it takes to close the refresher.
-   * Does not apply when the refresher has a `contentId` and the refresher 
+   * Does not apply when the refresher has a `contentId` and the refresher
    * content uses a spinner, enabling the native refresher.
    */
   @Prop() closeDuration = '280ms';
 
   /**
    * Time it takes the refresher to to snap back to the `refreshing` state.
-   * Does not apply when the refresher has a `contentId` and the refresher 
+   * Does not apply when the refresher has a `contentId` and the refresher
    * content uses a spinner, enabling the native refresher.
    */
   @Prop() snapbackDuration = '280ms';
@@ -86,7 +86,7 @@ export class Refresher implements ComponentInterface {
    * (an increase of 20 percent). If the value passed is `0.8`, the dragged amount
    * will be `8` pixels, less than the amount the cursor has moved.
    *
-   * Does not apply when the refresher has a `contentId` and the refresher 
+   * Does not apply when the refresher has a `contentId` and the refresher
    * content uses a spinner, enabling the native refresher.
    */
   @Prop() pullFactor = 1;
