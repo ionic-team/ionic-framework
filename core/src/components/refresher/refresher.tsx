@@ -63,7 +63,8 @@ export class Refresher implements ComponentInterface {
 
   /**
    * Time it takes to close the refresher.
-   * Does not apply to native refreshers.
+   * Does not apply when the refresher has a `contentId` and the refresher 
+   * content uses a spinner, enabling the native refresher.
    */
   @Prop() closeDuration = '280ms';
 
