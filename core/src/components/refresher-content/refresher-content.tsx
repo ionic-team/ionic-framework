@@ -14,7 +14,7 @@ export class RefresherContent implements ComponentInterface {
   /**
    * A static icon or a spinner to display when you begin to pull down.
    * A spinner name can be provided to gradually show tick marks
-   * whe pulling down on iOS devices.
+   * when pulling down on iOS devices.
    */
   @Prop({ mutable: true }) pullingIcon?: SpinnerTypes | string | null;
 
