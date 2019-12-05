@@ -750,16 +750,6 @@ export const createAnimation = (animationId?: string): Animation => {
     return ani;
   };
 
-  const playAsync = () => {
-    return play();
-  };
-
-  const playSync = () => {
-    play({ sync: true });
-
-    return ani;
-  };
-
   const onAnimationEndFallback = () => {
     cssAnimationsTimerFallback = undefined;
     animationFinish();
@@ -941,8 +931,6 @@ export const createAnimation = (animationId?: string): Animation => {
     fromTo,
     parent,
     play,
-    playAsync,
-    playSync,
     pause,
     stop,
     destroy,
