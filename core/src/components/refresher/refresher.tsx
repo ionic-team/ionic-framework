@@ -167,7 +167,7 @@ export class Refresher implements ComponentInterface {
     }
 
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
-    const MAX_PULL = this.scrollEl!.clientHeight * 0.15;
+    const MAX_PULL = this.scrollEl!.clientHeight * 0.16;
     const NUM_TICKS = ticks.length;
 
     writeTask(() => {
