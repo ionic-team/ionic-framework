@@ -70,7 +70,8 @@ export class Refresher implements ComponentInterface {
 
   /**
    * Time it takes the refresher to to snap back to the `refreshing` state.
-   * Does not apply to native refreshers.
+   * Does not apply when the refresher has a `contentId` and the refresher 
+   * content uses a spinner, enabling the native refresher.
    */
   @Prop() snapbackDuration = '280ms';
 
