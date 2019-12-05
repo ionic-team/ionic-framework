@@ -1965,7 +1965,7 @@ export namespace Components {
     */
     'cancel': () => Promise<void>;
     /**
-    * Time it takes to close the refresher. Does not apply when the refresher has a `contentId` and the refresher  content uses a spinner, enabling the native refresher.
+    * Time it takes to close the refresher. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.
     */
     'closeDuration': string;
     /**
@@ -1985,19 +1985,19 @@ export namespace Components {
     */
     'getProgress': () => Promise<number>;
     /**
-    * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher has a `contentId` and the refresher  content uses a spinner, enabling the native refresher.
+    * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.
     */
     'pullFactor': number;
     /**
-    * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`. Does not apply when the refresher has a `contentId` and the refresher  content uses a spinner, enabling the native refresher.
+    * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.
     */
     'pullMax': number;
     /**
-    * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Does not apply when the refresher has a `contentId` and the refresher  content uses a spinner, enabling the native refresher.
+    * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.
     */
     'pullMin': number;
     /**
-    * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher has a `contentId` and the refresher  content uses a spinner, enabling the native refresher.
+    * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.
     */
     'snapbackDuration': string;
   }
@@ -5202,7 +5202,7 @@ declare namespace LocalJSX {
   }
   interface IonRefresher {
     /**
-    * Time it takes to close the refresher. Does not apply when the refresher has a `contentId` and the refresher  content uses a spinner, enabling the native refresher.
+    * Time it takes to close the refresher. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.
     */
     'closeDuration'?: string;
     /**
@@ -5226,19 +5226,19 @@ declare namespace LocalJSX {
     */
     'onIonStart'?: (event: CustomEvent<void>) => void;
     /**
-    * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher has a `contentId` and the refresher  content uses a spinner, enabling the native refresher.
+    * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.
     */
     'pullFactor'?: number;
     /**
-    * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`. Does not apply when the refresher has a `contentId` and the refresher  content uses a spinner, enabling the native refresher.
+    * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.
     */
     'pullMax'?: number;
     /**
-    * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Does not apply when the refresher has a `contentId` and the refresher  content uses a spinner, enabling the native refresher.
+    * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.
     */
     'pullMin'?: number;
     /**
-    * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher has a `contentId` and the refresher  content uses a spinner, enabling the native refresher.
+    * Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.
     */
     'snapbackDuration'?: string;
   }
