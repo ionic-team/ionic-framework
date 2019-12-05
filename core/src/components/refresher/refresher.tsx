@@ -47,7 +47,8 @@ export class Refresher implements ComponentInterface {
   /**
    * The minimum distance the user must pull down until the
    * refresher will go into the `refreshing` state.
-   * Does not apply to native refreshers.
+   * Does not apply when the refresher has a `contentId` and the refresher 
+   * content uses a spinner, enabling the native refresher.
    */
   @Prop() pullMin = 60;
 
