@@ -11,6 +11,7 @@ ion-refresher {
   height: $refresher-height;
 
   pointer-events: none;
+
   z-index: $z-index-refresher;
 
   &.refresher-active {
