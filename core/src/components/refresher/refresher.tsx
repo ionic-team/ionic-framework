@@ -172,6 +172,7 @@ export class Refresher implements ComponentInterface {
 
     writeTask(() => {
       ticks.forEach(el => el.style.setProperty('animation', 'none'));
+      this.el.classList.add('refresher-native');
     });
 
     this.scrollListenerCallback = () => {
@@ -585,7 +586,6 @@ export class Refresher implements ComponentInterface {
           'refresher-refreshing': this.state === RefresherState.Refreshing,
           'refresher-cancelling': this.state === RefresherState.Cancelling,
           'refresher-completing': this.state === RefresherState.Completing,
-          'refresher-native': shouldUseNativeRefresher(this.el)
         }}
       >
       </Host>

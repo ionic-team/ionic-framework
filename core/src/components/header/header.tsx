@@ -124,7 +124,7 @@ export class Header implements ComponentInterface {
        * showing/hiding border on last toolbar
        * in primary header
        */
-        this.contentScrollCallback = () => { handleContentScroll(this.scrollEl!, scrollHeaderIndex); };
+        this.contentScrollCallback = () => { handleContentScroll(this.scrollEl!, scrollHeaderIndex, contentEl); };
         this.scrollEl!.addEventListener('scroll', this.contentScrollCallback);
     });
 
