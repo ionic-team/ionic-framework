@@ -5,7 +5,7 @@ import { Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
-import { handleScrollWhilePulling, handleScrollWhileRefreshing, shouldUseNativeRefresher, translateElement } from './refresher.utils';
+import { handleScrollWhilePulling, handleScrollWhileRefreshing, setSpinnerOpacity, shouldUseNativeRefresher, translateElement } from './refresher.utils';
 
 @Component({
   tag: 'ion-refresher',
@@ -202,6 +202,7 @@ export class Refresher implements ComponentInterface {
         }
 
         if (scrollTop > 0) {
+          writeTask(() => setSpinnerOpacity(pullingSpinner, 0));
           return;
         }
 

@@ -1,5 +1,9 @@
 import { writeTask } from '@stencil/core';
 
+export const setSpinnerOpacity = (spinner: HTMLElement, opacity: number) => {
+  spinner.style.setProperty('opacity', opacity.toString());
+};
+
 export const handleScrollWhilePulling = (
   spinner: HTMLElement,
   ticks: NodeListOf<SVGElement>,
@@ -7,7 +11,7 @@ export const handleScrollWhilePulling = (
   currentTickToShow: number
 ) => {
   writeTask(() => {
-    spinner.style.setProperty('opacity', opacity.toString());
+    setSpinnerOpacity(spinner, opacity);
 
     ticks.forEach((el, i) => {
       el.style.setProperty('opacity', (i <= currentTickToShow) ? '0.99' : '0');
