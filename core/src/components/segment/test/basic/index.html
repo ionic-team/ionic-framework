@@ -207,7 +207,6 @@
 
         async function listenForEvent() {
           const ionSegmentElement = document.querySelector('ion-segment.event-tester');
-          await ionSegmentElement.componentOnReady();
           ionSegmentElement.addEventListener('ionChange', (event) => {
             console.log('event.target: ', event.target.value);
           });

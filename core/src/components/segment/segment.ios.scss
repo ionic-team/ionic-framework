@@ -10,7 +10,7 @@
   @include border-radius($segment-ios-border-radius);
 
   overflow: hidden;
-  
+
   z-index: 0;
 }
 
@@ -72,4 +72,11 @@
 // Toolbar with Color, Default Segment, Checked
 :host(.in-toolbar-color:not(.ion-color)) ::slotted(.segment-button-checked) {
   color: #{current-color(base)};
+}
+
+@media (any-hover: hover) {
+  // Toolbar with Color, Default Segment, Checked / Hover
+  :host(.in-toolbar-color:not(.ion-color)) ::slotted(.segment-button-checked:hover) {
+    color: #{current-color(base)};
+  }
 }
