@@ -15,13 +15,16 @@ import { ViewStack, ViewStacks } from './ViewStacks';
 
 interface RouteManagerState extends RouteManagerContextState {
   location?: HistoryLocation;
-  action?: HistoryAction;
+  action?: IonRouteAction;
 }
+
+type IonRouteAction = 'push' | 'replace' | 'pop';
 
 class RouteManager extends React.Component<RouteComponentProps, RouteManagerState> {
   listenUnregisterCallback: UnregisterCallback | undefined;
   activeIonPageId?: string;
-  currentDirection?: RouterDirection;
+  currentIonRouteAction?: IonRouteAction;
+  currentRouteDirection?: RouterDirection;
   locationHistory = new LocationHistory();
   routes: { [key: string]: React.ReactElement<any>; } = {};
   ionPageElements: { [key: string]: HTMLElement; } = {};
@@ -86,22 +89,29 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   }
 
   historyChange(location: HistoryLocation, action: HistoryAction) {
-    location.state = location.state || { direction: this.currentDirection };
-    this.currentDirection = undefined;
-    if (action === 'PUSH') {
+    const ionRouteAction = this.currentIonRouteAction === 'pop' ? 'pop' : action.toLowerCase();
+    let direction = this.currentRouteDirection;
+
+    if (ionRouteAction === 'push') {
       this.locationHistory.add(location);
-    } else if ((action === 'REPLACE' && location.state.direction === 'back') || action === 'POP') {
+    } else if (ionRouteAction === 'pop') {
       this.locationHistory.pop();
-    } else {
+      direction = direction || 'back';
+    } else if (ionRouteAction === 'replace') {
       this.locationHistory.replace(location);
+      direction = 'none';
     }
+
+    location.state = location.state || { direction };
     this.setState({
       location,
-      action
+      action: ionRouteAction as IonRouteAction
     });
+    this.currentRouteDirection = undefined;
+    this.currentIonRouteAction = undefined;
   }
 
-  setActiveView(location: HistoryLocation, action: HistoryAction, viewStacks: ViewStacks) {
+  setActiveView(location: HistoryLocation, action: IonRouteAction, viewStacks: ViewStacks) {
     let direction: RouterDirection | undefined = (location.state && location.state.direction) || 'forward';
     let leavingView: ViewItem | undefined;
     const viewStackKeys = viewStacks.getKeys();
@@ -125,24 +135,17 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
         this.activeIonPageId = enteringView.id;
 
         if (leavingView) {
-          if (direction === 'forward') {
-            if (action === 'PUSH') {
-              /**
-               * If the page is being pushed into the stack by another view,
-               * record the view that originally directed to the new view for back button purposes.
-               */
-              enteringView.prevId = leavingView.id;
-            } else if (action === 'POP') {
-              direction = leavingView.prevId === enteringView.id ? 'back' : 'none';
-            } else {
-              direction = direction || 'back';
-              leavingView.mount = false;
-            }
-          }
-          if (direction === 'back' || action === 'REPLACE') {
+          if (action === 'push' && direction === 'forward') {
+            /**
+             * If the page is being pushed into the stack by another view,
+             * record the view that originally directed to the new view for back button purposes.
+             */
+            enteringView.prevId = leavingView.id;
+          } else if (action === 'pop' || action === 'replace') {
             leavingView.mount = false;
             this.removeOrphanedViews(enteringView, enteringViewStack);
           }
+
           leavingViewHtml = enteringView.id === leavingView.id ? this.ionPageElements[leavingView.id].outerHTML : undefined;
         } else {
           // If there is not a leavingView, then we shouldn't provide a direction
@@ -291,6 +294,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   }
 
   async setupRouterOutlet(routerOutlet: HTMLIonRouterOutletElement) {
+
     const canStart = () => {
       const config = getConfig();
       const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
@@ -345,6 +349,11 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
 
   private async commitView(enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOutlet: HTMLIonRouterOutletElement, direction?: NavDirection, showGoBack?: boolean, leavingViewHtml?: string) {
     if (!this.firstRender) {
+
+      if (!('componentOnReady' in ionRouterOutlet)) {
+        await waitUntilRouterOutletReady(ionRouterOutlet);
+      }
+
       if ((enteringEl === leavingEl) && direction && leavingViewHtml) {
         // If a page is transitioning to another version of itself
         // we clone it so we can have an animation to show
@@ -380,12 +389,21 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     }
   }
 
-  handleNavigate(type: 'push' | 'replace', path: string, direction?: RouterDirection) {
-    this.currentDirection = direction;
-    if (type === 'push') {
-      this.props.history.push(path);
-    } else {
-      this.props.history.replace(path);
+  handleNavigate(ionRouteAction: IonRouteAction, path: string, direction?: RouterDirection) {
+    this.currentIonRouteAction = ionRouteAction;
+    switch (ionRouteAction) {
+      case 'push':
+        this.currentRouteDirection = direction;
+        this.props.history.push(path);
+        break;
+      case 'pop':
+        this.currentRouteDirection = direction || 'back';
+        this.props.history.replace(path);
+        break;
+      case 'replace':
+        this.currentRouteDirection = 'none';
+        this.props.history.replace(path);
+        break;
     }
   }
 
@@ -395,26 +413,26 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
       if (leavingView.id === leavingView.prevId) {
         const previousLocation = this.locationHistory.previous();
         if (previousLocation) {
-          this.handleNavigate('replace', previousLocation.pathname + previousLocation.search, 'back');
+          this.handleNavigate('pop', previousLocation.pathname + previousLocation.search);
         } else {
-          defaultHref && this.handleNavigate('replace', defaultHref, 'back');
+          defaultHref && this.handleNavigate('pop', defaultHref);
         }
       } else {
         const { view: enteringView } = this.state.viewStacks.findViewInfoById(leavingView.prevId);
         if (enteringView) {
           const lastLocation = this.locationHistory.findLastLocationByUrl(enteringView.routeData.match!.url);
           if (lastLocation) {
-            this.handleNavigate('replace', lastLocation.pathname + lastLocation.search, 'back');
+            this.handleNavigate('pop', lastLocation.pathname + lastLocation.search);
           } else {
-            this.handleNavigate('replace', enteringView.routeData.match!.url, 'back');
+            this.handleNavigate('pop', enteringView.routeData.match!.url);
           }
         } else {
           const currentLocation = this.locationHistory.previous();
           if (currentLocation) {
-            this.handleNavigate('replace', currentLocation.pathname + currentLocation.search, 'back');
+            this.handleNavigate('pop', currentLocation.pathname + currentLocation.search);
           } else {
             if (defaultHref) {
-              this.handleNavigate('replace', defaultHref, 'back');
+              this.handleNavigate('pop', defaultHref);
             }
           }
         }
@@ -452,6 +470,16 @@ function clonePageElement(leavingViewHtml: string) {
     ionBackButton[0].innerHTML = '';
   }
   return newEl.firstChild as HTMLElement;
+}
+
+async function waitUntilRouterOutletReady(ionRouterOutlet: HTMLIonRouterElement) {
+  if ('componentOnReady' in ionRouterOutlet) {
+    return;
+  } else {
+    setTimeout(() => {
+      waitUntilRouterOutletReady(ionRouterOutlet);
+    }, 0);
+  }
 }
 
 export const RouteManagerWithRouter = withRouter(RouteManager);

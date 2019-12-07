@@ -36,6 +36,10 @@ class StackManagerInner extends React.Component<StackManagerProps, StackManagerS
     return state;
   }
 
+  // componentDidUpdate() {
+  //   this.props.routeManager.syncRoute('', this.props.children);
+  // }
+
   componentWillUnmount() {
     this.props.routeManager.removeViewStack(this.id);
   }

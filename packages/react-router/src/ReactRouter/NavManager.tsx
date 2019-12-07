@@ -8,7 +8,7 @@ import { StackManager } from './StackManager';
 
 interface NavManagerProps extends RouteComponentProps {
   onNavigateBack: (defaultHref?: string) => void;
-  onNavigate: (type: 'push' | 'replace', path: string, state?: any) => void;
+  onNavigate: (type: 'push' | 'replace' | 'pop', path: string, state?: any) => void;
 }
 
 export class NavManager extends React.Component<NavManagerProps, NavContextState> {
@@ -24,7 +24,7 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
       getStackManager: this.getStackManager.bind(this),
       getPageManager: this.getPageManager.bind(this),
       currentPath: this.props.location.pathname,
-      registerIonPage: () => { return; }, // overridden in View for each IonPage
+      registerIonPage: () => { return; } // overridden in View for each IonPage
     };
 
     this.listenUnregisterCallback = this.props.history.listen((location: HistoryLocation) => {
