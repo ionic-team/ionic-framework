@@ -442,7 +442,7 @@ proxyMethods(IonList, ['closeSlidingItems']);
 proxyInputs(IonList, ['inset', 'lines', 'mode']);
 
 export declare interface IonListHeader extends Components.IonListHeader {}
-@Component({ selector: 'ion-list-header', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+@Component({ selector: 'ion-list-header', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'lines', 'mode'] })
 export class IonListHeader {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -450,7 +450,7 @@ export class IonListHeader {
     this.el = r.nativeElement;
   }
 }
-proxyInputs(IonListHeader, ['color', 'mode']);
+proxyInputs(IonListHeader, ['color', 'lines', 'mode']);
 
 export declare interface IonMenu extends Components.IonMenu {}
 @Component({ selector: 'ion-menu', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['contentId', 'disabled', 'maxEdgeStart', 'menuId', 'side', 'swipeGesture', 'type'] })
