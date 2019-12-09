@@ -146,6 +146,79 @@ describe('tabs', () => {
       tab = await testTabTitle('Tab 1 - Page 2 (1)');
       await testUrlContains(expectUrlToContain);
     });
+
+    it('should set root when clicking on an active tab to navigate to the root', async () => {
+      const expectNestedTabUrlToContain = 'search=hello#fragment';
+      let tab = await getSelectedTab() as ElementFinder;
+      const initialUrl = await browser.getCurrentUrl();
+      await tab.$('#goto-nested-page1-with-query-params').click();
+      await testTabTitle('Tab 1 - Page 2 (1)');
+      await testUrlContains(expectNestedTabUrlToContain);
+
+      await element(by.css('#tab-button-account')).click();
+      await testTabTitle('Tab 1 - Page 1');
+
+      await testUrlEquals(initialUrl);
+    });
+
+  });
+
+  describe('entry tab contains navigation extras', () => {
+    const expectNestedTabUrlToContain = 'search=hello#fragment';
+    const rootUrlParams = 'test=123#rootFragment';
+    const rootUrl = `/tabs/account?${rootUrlParams}`;
+
+    beforeEach(async () => {
+      await browser.get(rootUrl);
+      await waitTime(30);
+    });
+
+    it('should preserve root url navigation extras when clicking on an active tab to navigate to the root', async () => {
+      await browser.get(rootUrl);
+
+      let tab = await getSelectedTab() as ElementFinder;
+      await tab.$('#goto-nested-page1-with-query-params').click();
+      await testTabTitle('Tab 1 - Page 2 (1)');
+      await testUrlContains(expectNestedTabUrlToContain);
+
+      await element(by.css('#tab-button-account')).click();
+      await testTabTitle('Tab 1 - Page 1');
+
+      await testUrlContains(rootUrl);
+    });
+
+    it('should preserve root url navigation extras when changing tabs', async () => {
+      await browser.get(rootUrl);
+
+      let tab = await getSelectedTab() as ElementFinder;
+      await element(by.css('#tab-button-contact')).click();
+      tab = await testTabTitle('Tab 2 - Page 1');
+
+      await element(by.css('#tab-button-account')).click();
+      await testTabTitle('Tab 1 - Page 1');
+
+      await testUrlContains(rootUrl);
+    });
+
+    it('should navigate deep then go home and preserve navigation extras', async () => {
+      let tab = await getSelectedTab();
+      await tab.$('#goto-tab1-page2').click();
+      tab = await testTabTitle('Tab 1 - Page 2 (1)');
+
+      await tab.$('#goto-next').click();
+      tab = await testTabTitle('Tab 1 - Page 2 (2)');
+
+      await element(by.css('#tab-button-contact')).click();
+      tab = await testTabTitle('Tab 2 - Page 1');
+
+      await element(by.css('#tab-button-account')).click();
+      await testTabTitle('Tab 1 - Page 2 (2)');
+
+      await element(by.css('#tab-button-account')).click();
+      await testTabTitle('Tab 1 - Page 1');
+
+      await testUrlContains(rootUrl);
+    });
   });
 
   describe('entry url - /tabs/account/nested/1', () => {
@@ -174,7 +247,7 @@ describe('tabs', () => {
       await tab.$('#goto-next').click();
       tab = await testTabTitle('Tab 1 - Page 2 (3)');
 
-      await testStack('ion-tabs ion-router-outlet',[
+      await testStack('ion-tabs ion-router-outlet', [
         'app-tabs-tab1-nested',
         'app-tabs-tab1-nested',
         'app-tabs-tab1-nested'
@@ -245,6 +318,12 @@ async function testUrlContains(urlFragment: string) {
   await browser.wait(ExpectedConditions.urlContains(urlFragment),
     5000,
     `expected ${browser.getCurrentUrl()} to contain ${urlFragment}`);
+}
+
+async function testUrlEquals(url: string) {
+  await browser.wait(ExpectedConditions.urlIs(url),
+    5000,
+    `expected ${browser.getCurrentUrl()} to equal ${url}`);
 }
 
 async function getSelectedTab(): Promise<ElementFinder> {
