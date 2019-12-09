@@ -50,14 +50,14 @@ export class RefresherContent implements ComponentInterface {
       const mode = getIonMode(this);
       this.pullingIcon = config.get(
         'refreshingIcon',
-        mode === 'ios' ? config.get('spinner', 'lines') : 'arrow-down'
+        mode === 'ios' ? config.get('spinner', 'lines') : 'circular'
       );
     }
     if (this.refreshingSpinner === undefined) {
       const mode = getIonMode(this);
       this.refreshingSpinner = config.get(
         'refreshingSpinner',
-        config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
+        config.get('spinner', mode === 'ios' ? 'lines' : 'circular')
       );
     }
   }
