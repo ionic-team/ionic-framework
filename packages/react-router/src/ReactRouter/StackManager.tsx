@@ -13,13 +13,10 @@ interface StackManagerProps {
   children?: React.ReactNode;
 }
 
-interface StackManagerState {
-  routerOutletReady: boolean;
-}
+interface StackManagerState { }
 
 class StackManagerInner extends React.Component<StackManagerProps, StackManagerState> {
   routerOutletEl: React.RefObject<HTMLIonRouterOutletElement> = React.createRef();
-
   id: string;
 
   constructor(props: StackManagerProps) {
@@ -27,18 +24,11 @@ class StackManagerInner extends React.Component<StackManagerProps, StackManagerS
     this.id = this.props.id || generateId();
     this.handleViewSync = this.handleViewSync.bind(this);
     this.handleHideView = this.handleHideView.bind(this);
-    this.state = {
-      routerOutletReady: false
-    };
+    this.state = {};
   }
 
   componentDidMount() {
     this.props.routeManager.setupIonRouter(this.id, this.props.children, this.routerOutletEl.current!);
-    this.routerOutletEl.current!.addEventListener('routerOutletReady', () => {
-      this.setState({
-        routerOutletReady: true
-      });
-    });
   }
 
   static getDerivedStateFromProps(props: StackManagerProps, state: StackManagerState) {
@@ -70,9 +60,7 @@ class StackManagerInner extends React.Component<StackManagerProps, StackManagerS
     const viewStack = routeManager.viewStacks.get(this.id);
     const views = (viewStack || { views: [] }).views.filter(x => x.show);
     const ionRouterOutlet = React.Children.only(this.props.children) as React.ReactElement;
-    const { routerOutletReady } = this.state;
-
-    const childElements = routerOutletReady ? views.map(view => {
+    const childElements = views.map(view => {
       const route = routeManager.getRoute(view.routeId);
       return (
         <ViewTransitionManager
@@ -90,7 +78,7 @@ class StackManagerInner extends React.Component<StackManagerProps, StackManagerS
           </View>
         </ViewTransitionManager>
       );
-    }) : <div></div>;
+    });
 
     const elementProps: any = {
       ref: this.routerOutletEl

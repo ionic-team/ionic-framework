@@ -75,7 +75,7 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
       if (originalHref === currentHref) {
         this.context.navigate(originalHref, 'none');
       } else {
-        this.context.navigate(originalHref, 'back', 'replace');
+        this.context.navigate(originalHref, 'back', 'pop');
       }
     } else {
       if (this.props.onIonTabsWillChange) {

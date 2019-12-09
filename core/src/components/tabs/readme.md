@@ -176,38 +176,34 @@ will match the following tab:
 ### React
 
 ```tsx
+import React from 'react';
+import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/react';
+
 export const TabsExample: React.FC = () => (
-<IonTabs>
-  <IonRouterOutlet>
-    <Redirect exact path="/" to="/tabs/schedule" />
-    {/* 
-      Using the render method prop cuts down the number of renders your components will have due to route changes.
-      Use the component prop when your component depends on the RouterComponentProps passed in automatically.        
-    */}
-    <Route path="/tabs/schedule" render={() => <SchedulePage />} exact={true} />
-    <Route path="/tabs/speakers" render={() => <SpeakerList />} exact={true} />
-    <Route path="/tabs/map" render={() => <MapView />} exact={true} />
-    <Route path="/tabs/about" render={() => <About />} exact={true} />
-  </IonRouterOutlet>
-  <IonTabBar slot="bottom">
-    <IonTabButton tab="schedule" href="/tabs/schedule">
-      <IonIcon icon={calendar} />
-      <IonLabel>Schedule</IonLabel>
-    </IonTabButton>
-    <IonTabButton tab="speakers" href="/tabs/speakers">
-      <IonIcon icon={contacts} />
-      <IonLabel>Speakers</IonLabel>
-    </IonTabButton>
-    <IonTabButton tab="map" href="/tabs/map">
-      <IonIcon icon={map} />
-      <IonLabel>Map</IonLabel>
-    </IonTabButton>
-    <IonTabButton tab="about" href="/tabs/about">
-      <IonIcon icon={informationCircle} />
-      <IonLabel>About</IonLabel>
-    </IonTabButton>
-  </IonTabBar>
-</IonTabs>
+  <IonTabs>
+    <IonTabBar slot="bottom">
+      <IonTabButton tab="schedule">
+        <IonIcon name="calendar" />
+        <IonLabel>Schedule</IonLabel>
+        <IonBadge>6</IonBadge>
+      </IonTabButton>
+
+      <IonTabButton tab="speakers">
+        <IonIcon name="contacts" />
+        <IonLabel>Speakers</IonLabel>
+      </IonTabButton>
+
+      <IonTabButton tab="map">
+        <IonIcon name="map" />
+        <IonLabel>Map</IonLabel>
+      </IonTabButton>
+
+      <IonTabButton tab="about">
+        <IonIcon name="information-circle" />
+        <IonLabel>About</IonLabel>
+      </IonTabButton>
+    </IonTabBar>
+  </IonTabs>
 );
 ```
 

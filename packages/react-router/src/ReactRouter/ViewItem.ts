@@ -5,10 +5,7 @@ export interface ViewItem<RouteData = any> {
   key: string;
 
   routeId: string;
-  /** The <Route /> or <Redirect /> component associated with the view */
-  // route: React.ReactElement<any>;
-  /** The reference to the <IonPage /> element. */
-  ionPageElement?: HTMLElement;
+
   /** The routeData for the view. */
   routeData: RouteData;
   /** Used to track which page pushed the page into view. Used for back button purposes. */
