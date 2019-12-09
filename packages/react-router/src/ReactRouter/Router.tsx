@@ -7,6 +7,7 @@ import { RouteComponentProps, matchPath, withRouter } from 'react-router-dom';
 import { generateId, isDevMode } from '../utils';
 import { LocationHistory } from '../utils/LocationHistory';
 
+import { IonRouteAction } from './IonRouteAction';
 import { IonRouteData } from './IonRouteData';
 import { NavManager } from './NavManager';
 import { RouteManagerContext, RouteManagerContextState } from './RouteManagerContext';
@@ -17,8 +18,6 @@ interface RouteManagerState extends RouteManagerContextState {
   location?: HistoryLocation;
   action?: IonRouteAction;
 }
-
-type IonRouteAction = 'push' | 'replace' | 'pop';
 
 class RouteManager extends React.Component<RouteComponentProps, RouteManagerState> {
   listenUnregisterCallback: UnregisterCallback | undefined;

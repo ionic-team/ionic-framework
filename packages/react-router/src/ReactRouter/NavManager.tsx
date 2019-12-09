@@ -4,6 +4,7 @@ import { Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
+import { IonRouteAction } from './IonRouteAction';
 import { StackManager } from './StackManager';
 
 interface NavManagerProps extends RouteComponentProps {
@@ -52,8 +53,8 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
     this.props.onNavigateBack(defaultHref);
   }
 
-  navigate(path: string, direction?: RouterDirection | 'none', type: 'push' | 'replace' = 'push') {
-    this.props.onNavigate(type, path, direction);
+  navigate(path: string, direction?: RouterDirection | 'none', ionRouteAction: IonRouteAction = 'push') {
+    this.props.onNavigate(ionRouteAction, path, direction);
   }
 
   getPageManager() {
