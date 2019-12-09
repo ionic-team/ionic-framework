@@ -191,6 +191,11 @@ export class StackController {
     return views.length > 0 ? views[views.length - 1] : undefined;
   }
 
+  getRootUrl(stackId?: string) {
+    const views = this.getStack(stackId);
+    return views.length > 0 ? views[0] : undefined;
+  }
+
   getActiveStackId(): string | undefined {
     return this.activeView ? this.activeView.stackId : undefined;
   }

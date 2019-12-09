@@ -249,6 +249,13 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   }
 
   /**
+   * Returns the root view in the tab stack.
+   */
+  getRootView(stackId?: string): RouteView | undefined {
+    return this.stackCtrl.getRootUrl(stackId);
+  }
+
+  /**
    * Returns the active stack ID. In the context of ion-tabs, it means the active tab.
    */
   getActiveStackId(): string | undefined {
