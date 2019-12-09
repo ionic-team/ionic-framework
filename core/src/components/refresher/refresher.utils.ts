@@ -1,6 +1,73 @@
 import { writeTask } from '@stencil/core';
 
+import { createAnimation } from '../../';
 import { isPlatform } from '../../utils/platform';
+
+// MD Native Refresher
+// -----------------------------
+type RefresherAnimationType = 'scale' | 'translate';
+
+export const getRefresherAnimationType = (contentEl: HTMLElement): RefresherAnimationType => {
+  const previousSibling = contentEl.previousElementSibling;
+  const hasHeader = previousSibling !== null && previousSibling.tagName === 'ION-HEADER';
+
+  return hasHeader ? 'translate' : 'scale';
+};
+
+export const createPullingAnimation = (type: RefresherAnimationType, pullingSpinner: HTMLElement) => {
+  return type === 'scale' ? createScaleAnimation(pullingSpinner) : createTranslateAnimation(pullingSpinner);
+};
+
+const createScaleAnimation = (pullingSpinner: HTMLElement) => {
+  return createAnimation().addElement(pullingSpinner);
+};
+
+const createTranslateAnimation = (pullingRefresherIcon: HTMLElement) => {
+  const height = pullingRefresherIcon.clientHeight;
+  const spinner = pullingRefresherIcon.querySelector('ion-spinner') as HTMLElement;
+  const circle = spinner!.shadowRoot!.querySelector('circle') as any;
+  const baseAnimation = createAnimation()
+    .duration(1000)
+    .easing('ease-out');
+
+  const circleInnerAnimation = createAnimation()
+    .addElement(circle)
+    .keyframes([
+      { offset: 0, 'stroke-dasharray': '1px, 200px', 'stroke-dashoffset': '0px' },
+      { offset: 0.5, 'stroke-dasharray': '100px, 200px', 'stroke-dashoffset': '-15px' },
+      { offset: 1, 'stroke-dasharray': '100px, 200px', 'stroke-dashoffset': '-125px' }
+    ]);
+
+  const circleOuterAnimation = createAnimation()
+    .addElement(spinner)
+    .keyframes([
+      { offset: 0, opacity: '0.3', transform: 'rotate(0deg)' },
+      { offset: 0.45, opacity: '0.3' },
+      { offset: 0.55, opacity: '1' },
+      { offset: 1, opacity: '1', transform: 'rotate(360deg)' }
+    ]);
+
+  const spinnerAnimation = createAnimation()
+    .addElement(pullingRefresherIcon)
+    .keyframes([
+      { offset: 0, transform: `translateY(-${height + 10}px)` },
+      { offset: 1, transform: 'translateY(100px)' }
+    ]);
+
+  baseAnimation.addAnimation([circleInnerAnimation, circleOuterAnimation, spinnerAnimation]);
+
+  return baseAnimation;
+};
+
+export const createSnapBackAnimation = (pullingRefresherIcon: HTMLElement) => {
+  return createAnimation()
+    .duration(125)
+    .addElement(pullingRefresherIcon)
+    .fromTo('transform', 'translateY(var(--ion-pulling-refresher-translate, 100px))', 'translateY(0px)');
+};
+
+// iOS Native Refresher
+// -----------------------------
 
 export const setSpinnerOpacity = (spinner: HTMLElement, opacity: number) => {
   spinner.style.setProperty('opacity', opacity.toString());
@@ -30,19 +97,6 @@ export const handleScrollWhileRefreshing = (
     spinner.style.setProperty('--refreshing-rotation-duration', (lastVelocityY >= 1.0) ? '0.5s' : '2s');
     spinner.style.setProperty('opacity', '1');
   });
-};
-
-export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, mode: string) => {
-  const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
-  const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
-
-  return (
-    pullingSpinner !== null &&
-    refreshingSpinner !== null &&
-    referenceEl.contentId !== undefined &&
-    mode === 'ios' &&
-    isPlatform('mobile')
-  );
 };
 
 export const translateElement = (el: HTMLElement, value?: string) => {
@@ -89,4 +143,22 @@ const transitionEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) 
   }
 
   return unregister;
+};
+
+// Utils
+// -----------------------------
+
+export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, mode: string) => {
+  const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
+  const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
+
+  return (
+    pullingSpinner !== null &&
+    refreshingSpinner !== null &&
+    (
+      (mode === 'ios' && isPlatform('mobile') && referenceEl.contentId !== undefined) ||
+      mode === 'md'
+    )
+
+  );
 };
