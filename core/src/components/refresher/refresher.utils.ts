@@ -1,5 +1,7 @@
 import { writeTask } from '@stencil/core';
 
+import { isPlatform } from '../../utils/platform';
+
 export const setSpinnerOpacity = (spinner: HTMLElement, opacity: number) => {
   spinner.style.setProperty('opacity', opacity.toString());
 };
@@ -30,11 +32,17 @@ export const handleScrollWhileRefreshing = (
   });
 };
 
-export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement) => {
+export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, mode: string) => {
   const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
   const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
 
-  return pullingSpinner !== null && refreshingSpinner !== null && referenceEl.contentId !== undefined;
+  return (
+    pullingSpinner !== null &&
+    refreshingSpinner !== null &&
+    referenceEl.contentId !== undefined &&
+    mode === 'ios' &&
+    isPlatform('mobile')
+  );
 };
 
 export const translateElement = (el: HTMLElement, value?: string) => {

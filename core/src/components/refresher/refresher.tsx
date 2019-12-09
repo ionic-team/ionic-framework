@@ -27,6 +27,7 @@ export class Refresher implements ComponentInterface {
   private needsComplete = false;
   private didEmit = false;
   private lastVelocityY = 0;
+  private nativeRefresher = false;
 
   private contentEl: HTMLIonContentElement | null = null;
 
@@ -127,7 +128,7 @@ export class Refresher implements ComponentInterface {
   @Event() ionStart!: EventEmitter<void>;
 
   private checkNativeRefresher() {
-    if (shouldUseNativeRefresher(this.el)) {
+    if (shouldUseNativeRefresher(this.el, getIonMode(this))) {
       this.setupNativeRefresher();
     } else {
       this.destroyNativeRefresher();
@@ -139,6 +140,8 @@ export class Refresher implements ComponentInterface {
       this.scrollEl.removeEventListener('scroll', this.scrollListenerCallback);
       this.scrollListenerCallback = undefined;
     }
+
+    this.nativeRefresher = false;
   }
 
   private async resetNativeRefresher(el: HTMLElement, state: RefresherState) {
@@ -166,6 +169,7 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
+    this.nativeRefresher = true;
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
     const MAX_PULL = this.scrollEl!.clientHeight * 0.16;
     const NUM_TICKS = ticks.length;
@@ -305,7 +309,7 @@ export class Refresher implements ComponentInterface {
     }
 
     this.scrollEl = await contentEl.getScrollElement();
-    if (shouldUseNativeRefresher(this.el)) {
+    if (shouldUseNativeRefresher(this.el, getIonMode(this))) {
       this.setupNativeRefresher();
     } else {
       this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -345,7 +349,7 @@ export class Refresher implements ComponentInterface {
    */
   @Method()
   async complete() {
-    if (shouldUseNativeRefresher(this.el)) {
+    if (this.nativeRefresher) {
       this.needsComplete = true;
 
       // Do not reset scroll el until user removes pointer from screen
@@ -362,7 +366,7 @@ export class Refresher implements ComponentInterface {
    */
   @Method()
   async cancel() {
-    if (shouldUseNativeRefresher(this.el)) {
+    if (this.nativeRefresher) {
       // Do not reset scroll el until user removes pointer from screen
       if (!this.pointerDown) {
         this.resetNativeRefresher(this.contentEl!.querySelector(`#${this.contentId}`) as HTMLElement, RefresherState.Cancelling);
