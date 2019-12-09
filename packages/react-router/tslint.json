@@ -30,6 +30,8 @@
     "jsx-wrap-multiline": false,
     "forin": false,
     "strict-type-predicates": false,
-    "no-unused-expression": false
+    "no-unused-expression": false,
+    "no-constant-condition": false,
+    "no-empty-interface": false
   }
 }

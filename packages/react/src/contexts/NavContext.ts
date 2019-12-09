@@ -5,7 +5,7 @@ export interface NavContextState {
   getPageManager: () => any;
   getStackManager: () => any;
   goBack: (defaultHref?: string) => void;
-  navigate: (path: string, direction?: RouterDirection | 'none', type?: 'push' | 'replace') => void;
+  navigate: (path: string, direction?: RouterDirection | 'none', ionRouteAction?: 'push' | 'replace' | 'pop') => void;
   hasIonicRouter: () => boolean;
   registerIonPage: (page: HTMLElement) => void;
   currentPath: string | undefined;
