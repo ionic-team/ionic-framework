@@ -18,14 +18,10 @@ export const createPullingAnimation = (type: RefresherAnimationType, pullingSpin
   return type === 'scale' ? createScaleAnimation(pullingSpinner) : createTranslateAnimation(pullingSpinner);
 };
 
-const createScaleAnimation = (pullingSpinner: HTMLElement) => {
-  return createAnimation().addElement(pullingSpinner);
-};
-
-const createTranslateAnimation = (pullingRefresherIcon: HTMLElement) => {
-  const height = pullingRefresherIcon.clientHeight;
+const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
   const spinner = pullingRefresherIcon.querySelector('ion-spinner') as HTMLElement;
   const circle = spinner!.shadowRoot!.querySelector('circle') as any;
+
   const baseAnimation = createAnimation()
     .duration(1000)
     .easing('ease-out');
@@ -33,9 +29,9 @@ const createTranslateAnimation = (pullingRefresherIcon: HTMLElement) => {
   const circleInnerAnimation = createAnimation()
     .addElement(circle)
     .keyframes([
-      { offset: 0, 'stroke-dasharray': '1px, 200px', 'stroke-dashoffset': '0px' },
-      { offset: 0.5, 'stroke-dasharray': '100px, 200px', 'stroke-dashoffset': '-15px' },
-      { offset: 1, 'stroke-dasharray': '100px, 200px', 'stroke-dashoffset': '-125px' }
+      { offset: 0, strokeDasharray: '1px, 200px', strokeDashoffset: '0px' },
+      { offset: 0.5, strokeDasharray: '100px, 200px', strokeDashoffset: '-15px' },
+      { offset: 1, strokeDasharray: '100px, 200px', strokeDashoffset: '-125px' }
     ]);
 
   const circleOuterAnimation = createAnimation()
@@ -47,6 +43,25 @@ const createTranslateAnimation = (pullingRefresherIcon: HTMLElement) => {
       { offset: 1, opacity: '1', transform: 'rotate(360deg)' }
     ]);
 
+  return baseAnimation.addAnimation([circleInnerAnimation, circleOuterAnimation]);
+};
+
+const createScaleAnimation = (pullingRefresherIcon: HTMLElement) => {
+  const baseAnimation = createBaseAnimation(pullingRefresherIcon);
+  const spinnerAnimation = createAnimation()
+    .addElement(pullingRefresherIcon)
+    .keyframes([
+      { offset: 0, transform: `scale(0) translateY(0px)` },
+      { offset: 1, transform: 'scale(1) translateY(100px)' }
+    ]);
+
+  return baseAnimation.addAnimation([spinnerAnimation]);
+};
+
+const createTranslateAnimation = (pullingRefresherIcon: HTMLElement) => {
+  const height = pullingRefresherIcon.clientHeight;
+  const baseAnimation = createBaseAnimation(pullingRefresherIcon);
+
   const spinnerAnimation = createAnimation()
     .addElement(pullingRefresherIcon)
     .keyframes([
@@ -54,9 +69,7 @@ const createTranslateAnimation = (pullingRefresherIcon: HTMLElement) => {
       { offset: 1, transform: 'translateY(100px)' }
     ]);
 
-  baseAnimation.addAnimation([circleInnerAnimation, circleOuterAnimation, spinnerAnimation]);
-
-  return baseAnimation;
+  return baseAnimation.addAnimation([spinnerAnimation]);
 };
 
 export const createSnapBackAnimation = (pullingRefresherIcon: HTMLElement) => {

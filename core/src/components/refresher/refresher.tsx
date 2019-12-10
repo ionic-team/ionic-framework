@@ -293,6 +293,8 @@ export class Refresher implements ComponentInterface {
 
       this.disabledChanged();
     } else {
+      this.nativeRefresher = true;
+
       const circle = pullingSpinner.shadowRoot!.querySelector('circle')!;
       const pullingRefresherIcon = this.el.querySelector('ion-refresher-content .refresher-pulling-icon') as HTMLElement;
 
@@ -318,6 +320,10 @@ export class Refresher implements ComponentInterface {
             const animationType = getRefresherAnimationType(this.contentEl!);
             animation = createPullingAnimation(animationType, pullingRefresherIcon);
             animation.progressStart(false, 0);
+
+            this.ionStart.emit();
+
+            this.animations.push(animation);
           });
         },
         onMove: ev => {
@@ -326,27 +332,35 @@ export class Refresher implements ComponentInterface {
           delta = clamp(0, (ev.deltaY / MAX) * 0.5, 1);
 
           animation.progressStep(delta);
+
+          this.ionPull.emit();
         },
         onEnd: () => {
-          if (delta <= 0.3) {
+          if (delta <= 0.4) {
             animation.progressEnd(0, delta, 500);
           } else {
             const progress = getTimeGivenProgression([0, 0], [0, 0], [1, 1], [1, 1], delta)[0];
             const snapBackAnimation = createSnapBackAnimation(pullingRefresherIcon);
-
+            this.animations.push(snapBackAnimation);
             writeTask(async () => {
               pullingRefresherIcon.style.setProperty('--ion-pulling-refresher-translate', `${(progress * 100)}px`);
+              animation.progressEnd();
               await snapBackAnimation.play();
 
               this.state = RefresherState.Refreshing;
+
+              animation.destroy();
+              this.ionRefresh.emit();
             });
           }
-        },
+        }
       });
 
       this.disabledChanged();
     }
   }
+
+  private animations: any[] = [];
 
   componentDidUpdate() {
     this.checkNativeRefresher();
@@ -394,6 +408,23 @@ export class Refresher implements ComponentInterface {
     }
   }
 
+  private completeNativeRefresher() {
+    this.needsComplete = true;
+
+    // Do not reset scroll el until user removes pointer from screen
+    if (this.pointerDown) { return; }
+
+    if (getIonMode(this) === 'ios') {
+      this.resetNativeRefresher(this.contentEl!.querySelector(`#${this.contentId}`) as HTMLElement, RefresherState.Completing);
+    } else {
+      this.animations.forEach(ani => ani.destroy());
+      this.state = RefresherState.Completing;
+      setTimeout(() => {
+        this.state = RefresherState.Inactive;
+      }, 250);
+    }
+  }
+
   /**
    * Call `complete()` when your async operation has completed.
    * For example, the `refreshing` state is while the app is performing
@@ -406,12 +437,7 @@ export class Refresher implements ComponentInterface {
   @Method()
   async complete() {
     if (this.nativeRefresher) {
-      this.needsComplete = true;
-
-      // Do not reset scroll el until user removes pointer from screen
-      if (!this.pointerDown) {
-        this.resetNativeRefresher(this.contentEl!.querySelector(`#${this.contentId}`) as HTMLElement, RefresherState.Completing);
-      }
+      this.completeNativeRefresher();
     } else {
       this.close(RefresherState.Completing, '120ms');
     }
