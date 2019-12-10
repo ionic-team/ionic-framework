@@ -212,11 +212,6 @@ export interface Animation {
    * upon the animation ending
    */
   onFinish(callback: AnimationLifecycle, opts?: AnimationCallbackOptions): Animation;
-
-  /** @deprecated */
-  playAsync(): Promise<void>;
-  /** @deprecated */
-  playSync(): void;
 }
 
 export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;

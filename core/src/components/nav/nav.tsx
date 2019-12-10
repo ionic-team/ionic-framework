@@ -986,7 +986,7 @@ export class Nav implements NavOutlet {
         newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], stepValue)[0];
       }
 
-      (this.sbAni as Animation).progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
+      this.sbAni.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
     }
   }
 
