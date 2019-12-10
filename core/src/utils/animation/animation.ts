@@ -3,7 +3,7 @@
 import { raf } from '../helpers';
 
 import { Animation, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrameEdge, AnimationKeyFrames, AnimationLifecycle, AnimationPlayOptions } from './animation-interface';
-import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, removeStyleProperty, setStyleProperty } from './animation-utils';
+import { addClassToArray, animationEnd, createKeyframeStylesheet, generateKeyframeName, generateKeyframeRules, processKeyframes, removeStyleProperty, setStyleProperty } from './animation-utils';
 
 interface AnimationOnFinishCallback {
   c: AnimationLifecycle;
@@ -526,8 +526,10 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const initializeWebAnimation = () => {
+    const processedKeyframes = processKeyframes(_keyframes);
+
     elements.forEach(element => {
-      const animation = element.animate(_keyframes, {
+      const animation = element.animate(processedKeyframes, {
         id,
         delay: getDelay(),
         duration: getDuration(),
