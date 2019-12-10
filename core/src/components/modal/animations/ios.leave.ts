@@ -28,11 +28,21 @@ export const iosLeaveAnimation = (
 
   if (presentingEl) {
     const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? 40 : 0;
+    const bodyEl = document.body;
     const currentPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const presentingAnimation = createAnimation()
       .addElement(presentingEl)
       .beforeClearStyles(['transform'])
       .afterClearStyles(['transform'])
+      .onFinish(currentStep => {
+        // only reset background color if this is the last card-style modal
+        if (currentStep !== 1) { return; }
+
+        const numModals = Array.from(bodyEl.querySelectorAll('ion-modal')).filter(m => m.presentingElement !== undefined).length;
+        if (numModals <= 1) {
+          bodyEl.style.setProperty('background-color', '');
+        }
+      })
       .keyframes([
         { offset: 0, transform: `translateY(${-modalTransform}px) scale(${currentPresentingScale})`, 'border-radius': '10px 10px 0 0' },
         { offset: 1, transform: 'translateY(0px) scale(1)', 'border-radius': '0px' }
