@@ -88,7 +88,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   }
 
   historyChange(location: HistoryLocation, action: HistoryAction) {
-    const ionRouteAction = this.currentIonRouteAction === 'pop' ? 'pop' : action.toLowerCase();
+    const ionRouteAction = this.currentIonRouteAction === 'pop' ? 'pop' : action.toLowerCase() as IonRouteAction;
     let direction = this.currentRouteDirection;
 
     if (ionRouteAction === 'push') {
@@ -99,6 +99,11 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     } else if (ionRouteAction === 'replace') {
       this.locationHistory.replace(location);
       direction = 'none';
+    }
+
+    if (direction === 'root') {
+      this.locationHistory.clear();
+      this.locationHistory.add(location);
     }
 
     location.state = location.state || { direction };
@@ -175,8 +180,15 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
           const enteringEl = this.ionPageElements[enteringView.id];
           const leavingEl = leavingView && this.ionPageElements[leavingView.id];
           if (enteringEl) {
-            // Don't animate from an empty view
-            const navDirection = leavingEl && leavingEl.innerHTML === '' ? undefined : direction === 'none' ? undefined : direction;
+            let navDirection: NavDirection | undefined;
+            if (leavingEl && leavingEl.innerHTML === '') {
+              // Don't animate from an empty view
+              navDirection = undefined;
+            } else if (direction === 'none' || direction === 'root') {
+              navDirection = undefined;
+            } else {
+              navDirection = direction;
+            }
             const shouldGoBack = !!enteringView.prevId;
             const routerOutlet = this.routerOutlets[viewStack.id];
             this.commitView(
