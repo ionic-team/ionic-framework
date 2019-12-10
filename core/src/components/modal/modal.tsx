@@ -176,10 +176,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         this.animation.destroy();
       }
 
-      enteringAnimation.forEach(ani => {
-        ani.destroy();
-      });
-
+      enteringAnimation.forEach(ani => ani.destroy());
     }
 
     this.animation = undefined;
