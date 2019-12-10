@@ -34,14 +34,16 @@ export const iosEnterAnimation = (
 
     const presentingAnimation = createAnimation()
       .beforeStyles({
-        'transform': 'translateY(0)',
-        'border-radius': '10px 10px 0 0'
+        'transform': 'translateY(0)'
       })
       .afterStyles({
         'transform': finalTransform
       })
       .addElement(presentingEl)
-      .fromTo('transform', 'translateY(0px) scale(1)', finalTransform);
+      .keyframes([
+        { offset: 0, transform: 'translateY(0px) scale(1)', 'border-radius': '0px' },
+        { offset: 1, transform: finalTransform, 'border-radius': '10px 10px 0 0' }
+      ]);
 
     // Wrap around animation code
     bodyEl.style.backgroundColor = 'black';

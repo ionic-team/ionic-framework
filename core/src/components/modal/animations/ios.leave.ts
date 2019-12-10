@@ -1,6 +1,5 @@
 import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
-import { raf } from '../../../utils/helpers';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
 /**
@@ -34,23 +33,10 @@ export const iosLeaveAnimation = (
       .addElement(presentingEl)
       .beforeClearStyles(['transform'])
       .afterClearStyles(['transform'])
-      .onFinish(currentStep => {
-        if (currentStep === 1) {
-          /**
-           * This is a hack to work around an issue in Safari
-           * where the border-radius change is not rendered
-           * unless a layout is forced
-           */
-          raf(() => {
-            presentingEl.style.removeProperty('border-radius');
-            presentingEl.style.setProperty('overflow', 'unset');
-            raf(() => {
-              presentingEl.style.setProperty('overflow', '');
-            });
-          });
-        }
-      })
-      .fromTo('transform', `translateY(${-modalTransform}px) scale(${currentPresentingScale})`, 'translateY(0px) scale(1)');
+      .keyframes([
+        { offset: 0, transform: `translateY(${-modalTransform}px) scale(${currentPresentingScale})`, 'border-radius': '10px 10px 0 0' },
+        { offset: 1, transform: 'translateY(0px) scale(1)', 'border-radius': '0px' }
+      ]);
 
     baseAnimation.addAnimation(presentingAnimation);
   }
