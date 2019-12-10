@@ -11,7 +11,7 @@ export const processKeyframes = (keyframes: AnimationKeyFrames) => {
         const value = keyframe[key];
         const newKey = convertHyphenToCamelCase(key);
 
-        keyframe[newKey] = keyframe[key];
+        keyframe[newKey] = value;
         delete keyframe[key];
       }
     }
