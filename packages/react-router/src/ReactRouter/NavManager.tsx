@@ -9,7 +9,7 @@ import { StackManager } from './StackManager';
 
 interface NavManagerProps extends RouteComponentProps {
   onNavigateBack: (defaultHref?: string) => void;
-  onNavigate: (type: 'push' | 'replace' | 'pop', path: string, state?: any) => void;
+  onNavigate: (ionRouteAction: IonRouteAction, path: string, state?: any) => void;
 }
 
 export class NavManager extends React.Component<NavManagerProps, NavContextState> {
