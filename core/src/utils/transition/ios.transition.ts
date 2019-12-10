@@ -256,8 +256,8 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
         enteringTransitionEffect
           .addElement(enteringTransitionEffectEl)
-          .beforeStyles({ opacity: '1' })
-          .afterStyles({ opacity: '' });
+          .beforeStyles({ opacity: '1', display: 'block' })
+          .afterStyles({ opacity: '', display: '' });
 
         enteringTransitionCover
           .addElement(enteringTransitionCoverEl!) // REVIEW
@@ -406,8 +406,8 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
           leavingTransitionEffect
             .addElement(leavingTransitionEffectEl)
-            .beforeStyles({ opacity: '1' })
-            .afterStyles({ opacity: '' });
+            .beforeStyles({ opacity: '1', display: 'block' })
+            .afterStyles({ opacity: '', display: '' });
 
           leavingTransitionCover
             .addElement(leavingTransitionCoverEl!) // REVIEW

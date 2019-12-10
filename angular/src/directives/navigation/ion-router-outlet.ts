@@ -16,6 +16,8 @@ import { RouteView, getUrl } from './stack-utils';
   inputs: ['animated', 'swipeGesture']
 })
 export class IonRouterOutlet implements OnDestroy, OnInit {
+  nativeEl: HTMLIonRouterOutletElement;
+
   private activated: ComponentRef<any> | null = null;
   private activatedView: RouteView | null = null;
 
@@ -23,7 +25,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   private _swipeGesture?: boolean;
   private name: string;
   private stackCtrl: StackController;
-  private nativeEl: HTMLIonRouterOutletElement;
 
   // Maintain map of activated route proxies for each component instance
   private proxyMap = new WeakMap<any, ActivatedRoute>();
