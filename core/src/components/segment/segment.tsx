@@ -20,6 +20,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
   private didInit = false;
+  private checked?: HTMLIonSegmentButtonElement;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -39,6 +40,8 @@ export class Segment implements ComponentInterface {
 
   /**
    * If `true`, the segment buttons will overflow and the user can swipe to see them.
+   * In addition, this will disable the gesture to drag the indicator between the buttons
+   * in order to swipe to see hidden buttons.
    */
   @Prop() scrollable = false;
 
@@ -68,15 +71,22 @@ export class Segment implements ComponentInterface {
 
   @Watch('disabled')
   disabledChanged() {
-    if (this.gesture) {
+    if (this.gesture && !this.scrollable) {
       this.gesture.enable(!this.disabled);
     }
   }
 
   @Listen('ionSelect')
   segmentClick(ev: CustomEvent) {
-    const button = ev.target as HTMLIonSegmentButtonElement;
-    this.value = button.value;
+    const current = ev.target as HTMLIonSegmentButtonElement;
+    const previous = this.checked;
+    this.value = current.value;
+
+    if (previous && this.scrollable) {
+      this.checkButton(previous, current);
+    }
+
+    this.checked = current;
   }
 
   connectedCallback() {
@@ -107,6 +117,7 @@ export class Segment implements ComponentInterface {
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
+    this.gesture.enable(!this.scrollable);
     this.disabledChanged();
 
     this.didInit = true;
@@ -204,6 +215,9 @@ export class Segment implements ComponentInterface {
     const buttons = this.getButtons();
     const index = buttons.findIndex(button => button.checked === true);
     const next = index + 1;
+
+    // Keep track of the currently checked button
+    this.checked = buttons.find(button => button.checked === true);
 
     for (const button of buttons) {
       button.classList.remove('segment-button-after-checked');

@@ -52,8 +52,10 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   @Event() ionSelect!: EventEmitter<void>;
 
   @Watch('checked')
-  checkedChanged(checked: boolean, prev: boolean) {
-    if (checked && !prev) {
+  checkedChanged(newValue: boolean, oldValue: boolean) {
+    // If the segment button is not already checked
+    // emit the ionSelect event
+    if (newValue && !oldValue) {
       this.ionSelect.emit();
     }
   }
