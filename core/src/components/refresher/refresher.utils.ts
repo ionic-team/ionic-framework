@@ -29,18 +29,19 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
   const circleInnerAnimation = createAnimation()
     .addElement(circle)
     .keyframes([
-      { offset: 0, strokeDasharray: '1px, 200px', strokeDashoffset: '0px' },
-      { offset: 0.5, strokeDasharray: '100px, 200px', strokeDashoffset: '-15px' },
-      { offset: 1, strokeDasharray: '100px, 200px', strokeDashoffset: '-125px' }
+      { offset: 0, 'stroke-dasharray': '1px, 200px' },
+      { offset: 0.20, 'stroke-dasharray': '1px, 200px' },
+      { offset: 0.55, 'stroke-dasharray': '100px, 200px' },
+      { offset: 1, 'stroke-dasharray': '100px, 200px' }
     ]);
 
   const circleOuterAnimation = createAnimation()
     .addElement(spinner)
     .keyframes([
-      { offset: 0, opacity: '0.3', transform: 'rotate(0deg)' },
+      { offset: 0, opacity: '0.3', transform: 'rotate(-90deg)' },
       { offset: 0.45, opacity: '0.3' },
       { offset: 0.55, opacity: '1' },
-      { offset: 1, opacity: '1', transform: 'rotate(360deg)' }
+      { offset: 1, opacity: '1', transform: 'rotate(210deg)' }
     ]);
 
   return baseAnimation.addAnimation([circleInnerAnimation, circleOuterAnimation]);
@@ -65,7 +66,7 @@ const createTranslateAnimation = (pullingRefresherIcon: HTMLElement) => {
   const spinnerAnimation = createAnimation()
     .addElement(pullingRefresherIcon)
     .keyframes([
-      { offset: 0, transform: `translateY(-${height + 10}px)` },
+      { offset: 0, transform: `translateY(-${height + 20}px)` },
       { offset: 1, transform: 'translateY(100px)' }
     ]);
 

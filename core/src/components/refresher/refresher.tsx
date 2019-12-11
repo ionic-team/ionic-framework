@@ -298,9 +298,14 @@ export class Refresher implements ComponentInterface {
       const circle = pullingSpinner.shadowRoot!.querySelector('circle')!;
       const pullingRefresherIcon = this.el.querySelector('ion-refresher-content .refresher-pulling-icon') as HTMLElement;
 
+      // TODO setup
       writeTask(() => {
         circle.style.setProperty('animation', 'none');
         this.el.classList.add('refresher-native');
+
+        const refreshingCircle = refreshingSpinner.shadowRoot!.querySelector('circle')!;
+        refreshingSpinner.style.setProperty('animation-delay', '-655ms');
+        refreshingCircle.style.setProperty('animation-delay', '-655ms');
       });
 
       let animation: any;
