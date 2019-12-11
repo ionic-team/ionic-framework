@@ -16,6 +16,13 @@ Basic Usage
     </ion-label>
   </ion-item>
 
+  <!-- Item as a Button with Ripple -->
+  <ion-item (click)="buttonClick()" button>
+    <ion-label>
+      Button Item with Ripple
+    </ion-label>
+  </ion-item>
+
   <!-- Item as an Anchor -->
   <ion-item href="https://www.ionicframework.com">
     <ion-label>

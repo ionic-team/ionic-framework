@@ -409,6 +409,13 @@ Basic Usage
   </ion-label>
 </ion-item>
 
+<!-- Item as a Button with Ripple -->
+<ion-item (click)="buttonClick()" button>
+  <ion-label>
+    Button Item with Ripple
+  </ion-label>
+</ion-item>
+
 <!-- Item as an Anchor -->
 <ion-item href="https://www.ionicframework.com">
   <ion-label>
@@ -737,6 +744,13 @@ const Example: React.FC<{}> = () => (
       </IonLabel>
     </IonItem>
 
+    {/*-- Item as a Button with Ripple --*/}
+    <IonItem onClick={() => {}} button>
+      <IonLabel>
+        Button Item
+      </IonLabel>
+    </IonItem>
+
     {/*-- Item as an Anchor --*/}
     <IonItem href="https://www.ionicframework.com">
       <IonLabel>
@@ -1045,6 +1059,13 @@ Basic Usage
   <ion-item @click="buttonClick()">
     <ion-label>
       Button Item
+    </ion-label>
+  </ion-item>
+
+  <!-- Item as a Button with Ripple -->
+  <ion-item (click)="buttonClick()" button>
+    <ion-label>
+      Button Item with Ripple
     </ion-label>
   </ion-item>
 

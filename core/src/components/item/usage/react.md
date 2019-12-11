@@ -19,6 +19,13 @@ const Example: React.FC<{}> = () => (
       </IonLabel>
     </IonItem>
 
+    {/*-- Item as a Button with Ripple --*/}
+    <IonItem onClick={() => {}} button>
+      <IonLabel>
+        Button Item
+      </IonLabel>
+    </IonItem>
+
     {/*-- Item as an Anchor --*/}
     <IonItem href="https://www.ionicframework.com">
       <IonLabel>
