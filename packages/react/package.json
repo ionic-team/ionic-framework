@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@types/jest": "^23.3.9",
-    "@types/node": "10.12.9",
+    "@types/node": "^12.12.14",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "fs-extra": "^8.1.0",
@@ -67,7 +67,7 @@
     "tslint": "^5.18.0",
     "tslint-ionic-rules": "0.0.21",
     "tslint-react": "^4.0.0",
-    "typescript": "3.5.3"
+    "typescript": "^3.7.2"
   },
   "jest": {
     "preset": "ts-jest",

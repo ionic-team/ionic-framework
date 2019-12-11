@@ -69,12 +69,13 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
   }
 
   private onTabButtonClick = (e: CustomEvent<{ href: string, selected: boolean, tab: string }>) => {
+    const originalHref = this.state.tabs[e.detail.tab].originalHref;
+    const currentHref = this.state.tabs[e.detail.tab].currentHref;
     if (this.state.activeTab === e.detail.tab) {
-      const originalHref = this.state.tabs[e.detail.tab].originalHref;
-      if (this.context.hasIonicRouter()) {
-        this.context.tabNavigate(originalHref);
+      if (originalHref === currentHref) {
+        this.context.navigate(originalHref, 'none');
       } else {
-        this.context.navigate(originalHref, 'back');
+        this.context.navigate(originalHref, 'back', 'pop');
       }
     } else {
       if (this.props.onIonTabsWillChange) {
@@ -83,7 +84,7 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
       if (this.props.onIonTabsDidChange) {
         this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
       }
-      this.context.navigate(this.state.tabs[e.detail.tab].currentHref, 'none');
+      this.context.navigate(currentHref, 'none');
     }
   }
 

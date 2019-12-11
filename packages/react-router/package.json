@@ -50,7 +50,7 @@
     "@ionic/core": "5.0.0-beta.1",
     "@ionic/react": "5.0.0-beta.1",
     "@types/jest": "^23.3.9",
-    "@types/node": "12.6.9",
+    "@types/node": "^12.12.14",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@types/react-router": "^5.0.3",
@@ -70,7 +70,7 @@
     "tslint": "^5.20.0",
     "tslint-ionic-rules": "0.0.21",
     "tslint-react": "^4.1.0",
-    "typescript": "3.5.3"
+    "typescript": "^3.7.2"
   },
   "jest": {
     "preset": "ts-jest",
