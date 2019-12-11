@@ -70,7 +70,7 @@ export class StackController {
     if (router.getCurrentNavigation) {
       currentNavigation = router.getCurrentNavigation();
 
-    // Angular < 7.2.0
+      // Angular < 7.2.0
     } else if (
       router.navigations &&
       router.navigations.value
@@ -191,6 +191,9 @@ export class StackController {
     return views.length > 0 ? views[views.length - 1] : undefined;
   }
 
+  /**
+   * @internal
+   */
   getRootUrl(stackId?: string) {
     const views = this.getStack(stackId);
     return views.length > 0 ? views[0] : undefined;

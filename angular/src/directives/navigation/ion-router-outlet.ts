@@ -244,6 +244,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
   /**
    * Returns the RouteView of the active page of each stack.
+   * @internal
    */
   getLastRouteView(stackId?: string): RouteView | undefined {
     return this.stackCtrl.getLastUrl(stackId);
@@ -251,6 +252,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
   /**
    * Returns the root view in the tab stack.
+   * @internal
    */
   getRootView(stackId?: string): RouteView | undefined {
     return this.stackCtrl.getRootUrl(stackId);
