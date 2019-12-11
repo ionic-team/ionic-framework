@@ -4,11 +4,12 @@ import { Location as HistoryLocation, UnregisterCallback } from 'history';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
+import { IonRouteAction } from './IonRouteAction';
 import { StackManager } from './StackManager';
 
 interface NavManagerProps extends RouteComponentProps {
   onNavigateBack: (defaultHref?: string) => void;
-  onNavigate: (type: 'push' | 'replace', path: string, state?: any) => void;
+  onNavigate: (ionRouteAction: IonRouteAction, path: string, state?: any) => void;
 }
 
 export class NavManager extends React.Component<NavManagerProps, NavContextState> {
@@ -24,8 +25,7 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
       getStackManager: this.getStackManager.bind(this),
       getPageManager: this.getPageManager.bind(this),
       currentPath: this.props.location.pathname,
-      registerIonPage: () => { return; }, // overridden in View for each IonPage
-      tabNavigate: this.tabNavigate.bind(this)
+      registerIonPage: () => { return; } // overridden in View for each IonPage
     };
 
     this.listenUnregisterCallback = this.props.history.listen((location: HistoryLocation) => {
@@ -53,12 +53,8 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
     this.props.onNavigateBack(defaultHref);
   }
 
-  navigate(path: string, direction?: RouterDirection | 'none') {
-    this.props.onNavigate('push', path, direction);
-  }
-
-  tabNavigate(path: string) {
-    this.props.onNavigate('replace', path, 'back');
+  navigate(path: string, direction?: RouterDirection | 'none', ionRouteAction: IonRouteAction = 'push') {
+    this.props.onNavigate(ionRouteAction, path, direction);
   }
 
   getPageManager() {
