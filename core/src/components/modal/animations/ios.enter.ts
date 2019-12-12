@@ -17,7 +17,7 @@ export const iosEnterAnimation = (
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelector('.modal-wrapper')!)
     .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', 'translateY(100%)', 'translateY(0%)');
+    .fromTo('transform', 'translateY(100%)', 'translateY(var(--ion-safe-area-top))');
 
   const baseAnimation = createAnimation()
     .addElement(baseEl)
@@ -27,10 +27,10 @@ export const iosEnterAnimation = (
     .addAnimation([backdropAnimation, wrapperAnimation]);
 
   if (presentingEl) {
-    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? 40 : 0;
+    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-40px' : 'var(--ion-safe-area-top)';
     const bodyEl = document.body;
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
-    const finalTransform = `translateY(${-modalTransform}px) scale(${toPresentingScale})`;
+    const finalTransform = `translateY(${modalTransform}) scale(${toPresentingScale})`;
 
     const presentingAnimation = createAnimation()
       .beforeStyles({
