@@ -14,10 +14,7 @@ export const handleScrollWhilePulling = (
 ) => {
   writeTask(() => {
     setSpinnerOpacity(spinner, opacity);
-
-    ticks.forEach((el, i) => {
-      el.style.setProperty('opacity', (i <= currentTickToShow) ? '0.99' : '0');
-    });
+    ticks.forEach((el, i) => el.style.setProperty('opacity', (i <= currentTickToShow) ? '0.99' : '0'));
   });
 };
 
@@ -45,8 +42,10 @@ export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, m
   );
 };
 
-export const translateElement = (el: HTMLElement, value?: string) => {
+export const translateElement = (el?: HTMLElement, value?: string) => {
   return new Promise(resolve => {
+    if (!el) { return resolve(); }
+
     transitionEnd(el, resolve);
 
     writeTask(() => {
