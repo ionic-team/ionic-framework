@@ -139,7 +139,22 @@ export class Segment implements ComponentInterface {
     detail.event.preventDefault();
     detail.event.stopImmediatePropagation();
 
-    const ripple = (detail.event!.target! as HTMLElement).shadowRoot!.querySelector('ion-ripple-effect');
+    if (detail.event) {
+      this.addRipple(detail);
+    }
+  }
+
+  /**
+   * The gesture blocks the segment button ripple. This
+   * function adds the ripple based on the checked segment
+   * and where the cursor ended.
+   */
+  private addRipple(detail: GestureDetail) {
+    const buttons = this.getButtons();
+    const checked = buttons.find(button => button.checked === true);
+
+    const ripple = checked!.shadowRoot!.querySelector('ion-ripple-effect');
+
     if (!ripple) { return; }
 
     const { x, y } = pointerCoord(detail.event);
