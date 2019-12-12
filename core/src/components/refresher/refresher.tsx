@@ -157,7 +157,7 @@ export class Refresher implements ComponentInterface {
   }
 
   private async setupNativeRefresher() {
-    if (this.scrollListenerCallback) {
+    if (this.scrollListenerCallback || this.nativeRefresher) {
       return;
     }
 
@@ -306,6 +306,18 @@ export class Refresher implements ComponentInterface {
         const refreshingCircle = refreshingSpinner.shadowRoot!.querySelector('circle')!;
         refreshingSpinner.style.setProperty('animation-delay', '-655ms');
         refreshingCircle.style.setProperty('animation-delay', '-655ms');
+
+        // TODO
+        const div = document.createElement('div');
+        div.classList.add('liam');
+
+        const icon = document.createElement('ion-icon');
+        icon.name = 'caret-back-sharp';
+        div.appendChild(icon);
+        pullingSpinner.shadowRoot!.appendChild(div);
+
+        icon.style.setProperty('font-size', '12px');
+
       });
 
       let animation: any;

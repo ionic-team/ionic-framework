@@ -21,6 +21,8 @@ export const createPullingAnimation = (type: RefresherAnimationType, pullingSpin
 const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
   const spinner = pullingRefresherIcon.querySelector('ion-spinner') as HTMLElement;
   const circle = spinner!.shadowRoot!.querySelector('circle') as any;
+  const arrowContainer = spinner!.shadowRoot!.querySelector('.liam') as any;
+  const arrow = arrowContainer.querySelector('ion-icon') as any;
 
   const baseAnimation = createAnimation()
     .duration(1000)
@@ -44,7 +46,32 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
       { offset: 1, opacity: '1', transform: 'rotate(210deg)' }
     ]);
 
-  return baseAnimation.addAnimation([circleInnerAnimation, circleOuterAnimation]);
+  const arrowContainerAnimation = createAnimation()
+    .addElement(arrowContainer)
+    .beforeStyles({
+      'width': '28px',
+      'height': '28px',
+      'position': 'absolute',
+      'top': '-2px',
+      'left': '-2px'
+    })
+    .keyframes([
+      { offset: 0, transform: 'rotate(-45deg)' },
+      { offset: 0.20, transform: 'rotate(-45deg)' },
+      { offset: 0.55, transform: 'rotate(190deg)' },
+      { offset: 1, transform: 'rotate(190deg)' }
+    ]);
+
+  const arrowAnimation = createAnimation()
+    .addElement(arrow)
+    .keyframes([
+      { offset: 0, transform: 'translate(6px, 1px) scale(0)' },
+      { offset: 0.25, transform: 'translate(6px, 1px) scale(0)' },
+      { offset: 0.55, transform: 'translate(-2px, 2px) scale(1)' },
+      { offset: 1, transform: 'translate(-2px, 2px) scale(1)' }
+    ]);
+
+  return baseAnimation.addAnimation([arrowContainerAnimation, arrowAnimation, circleInnerAnimation, circleOuterAnimation]);
 };
 
 const createScaleAnimation = (pullingRefresherIcon: HTMLElement) => {
