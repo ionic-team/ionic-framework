@@ -396,6 +396,8 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     } else {
       enteringEl.classList.remove('ion-page-invisible');
       enteringEl.style.zIndex = '101';
+      enteringEl.dispatchEvent(new Event('ionViewWillEnter'));
+      enteringEl.dispatchEvent(new Event('ionViewDidEnter'));
       this.firstRender = false;
     }
   }
