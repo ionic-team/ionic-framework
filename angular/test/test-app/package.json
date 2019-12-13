@@ -12,8 +12,10 @@
     "test.dev": "npm run sync && ng e2e",
     "lint": "ng lint",
     "postinstall": "npm run sync && ngcc",
-    "serve:ssr": "node dist/server/main.js",
-    "build:ssr": "ng build --prod && ng run test-app:server:production"
+    "serve:ssr": "node dist/test-app/server/main.js",
+    "build:ssr": "ng build --prod && ng run test-app:server:production",
+    "dev:ssr": "ng run test-app:serve-ssr",
+    "prerender": "ng run test-app:prerender"
   },
   "dependencies": {
     "@angular/animations": "^9.0.0-rc.2",
@@ -27,7 +29,7 @@
     "@angular/router": "^9.0.0-rc.2",
     "@ionic/angular": "^4.7.0",
     "@ionic/angular-server": "^0.0.2",
-    "@nguniversal/express-engine": "~9.0.0-next.6",
+    "@nguniversal/express-engine": "9.0.0-next.9",
     "core-js": "^2.6.2",
     "express": "^4.15.2",
     "rxjs": "^6.5.3",
@@ -39,6 +41,7 @@
     "@angular/cli": "^9.0.0-rc.2",
     "@angular/compiler-cli": "^9.0.0-rc.2",
     "@angular/language-service": "^9.0.0-rc.2",
+    "@nguniversal/builders": "^9.0.0-next.9",
     "@types/express": "^4.17.0",
     "@types/jasmine": "3.4.1",
     "@types/node": "^12.11.1",
