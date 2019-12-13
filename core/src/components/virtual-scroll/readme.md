@@ -82,7 +82,7 @@ how many items should be built. With "approx" property inputs, such as
 therefore allowing virtual scroll to decide how many items should be
 created.
 
-#### Changing dataset should use `virtualTrackBy`
+#### Changing dataset should use `trackBy`
 
 It is possible for the identities of elements in the iterator to change
 while the data does not. This can happen, for example, if the iterator

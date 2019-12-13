@@ -44,6 +44,10 @@
     "lint.fix": "tslint --project . --fix",
     "test": "jest --coverage --verbose"
   },
+  "dependencies": {
+    "@ionic/core": "^4.6.0",
+    "ionicons": "^5.0.0-13"
+  },
   "devDependencies": {
     "rollup": "^0.62.0",
     "rollup-plugin-terser": "^1.0.1",
@@ -56,9 +60,6 @@
     "vue": "^2.5.17",
     "vue-template-compiler": "^2.5.17",
     "vue-router": "^3.0.1"
-  },
-  "dependencies": {
-    "@ionic/core": "^4.6.0"
   },
   "peerDependencies": {
     "vue": "^2.5.17",

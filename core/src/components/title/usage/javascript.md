@@ -23,13 +23,13 @@
 Ionic provides a way to create the collapsible titles that exist on stock iOS apps. Getting this setup requires configuring your `ion-title`, `ion-header`, and (optionally) `ion-buttons` elements.
 
 ```html
-<ion-header>
+<ion-header translucent="true">
   <ion-toolbar>    
     <ion-title>Settings</ion-title>               
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen="true">
   <ion-header collapse="condense">              
     <ion-toolbar>      
       <ion-title size="large">Settings</ion-title>
@@ -47,7 +47,7 @@ Ionic provides a way to create the collapsible titles that exist on stock iOS ap
 In the example above, notice there are two `ion-header` elements. The first `ion-header` represents the "collapsed" state of your collapsible header, and the second `ion-header` represents the "expanded" state of your collapsible header. Notice that the second `ion-header` must have `collapse="condense"` and must exist within `ion-content`. Additionally, in order to get the large title styling, `ion-title` must have `size="large"`.
 
 ```html
-<ion-header>
+<ion-header translucent="true">
   <ion-toolbar>   
     <ion-buttons collapse="true">
       <ion-button>Click Me</ion-button>
@@ -56,7 +56,7 @@ In the example above, notice there are two `ion-header` elements. The first `ion
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen="true">
   <ion-header collapse="condense">              
     <ion-toolbar>      
       <ion-buttons collapse="true">
@@ -86,3 +86,5 @@ ion-title.large-title {
   font-size: 30px;
 }
 ```
+
+> When using collapsible large titles, it is required that `fullscreen="true"` be set on `ion-content` and `translucent="true"` be set on the main `ion-header`.
