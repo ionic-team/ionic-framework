@@ -33,22 +33,17 @@ ion-refresher.refresher-native {
 
   ion-spinner {
     @include margin(0, auto, 0, auto);
+    
     width: 24px;
     height: 24px;
 
-    color: #3073e8;
-  }
-
-  .refresher-refreshing-icon,
-  .refresher-pulling-icon {
-    display: flex;
+    color: $refresher-md-native-spinner-color;
   }
 
   &.refresher-pulling .refresher-pulling,
   &.refresher-pulling .refresher-pulling .refresher-pulling-icon,
   &.refresher-refreshing .refresher-refreshing,
   &.refresher-refreshing .refresher-refreshing .refresher-refreshing-icon,
-  
   &.refresher-completing .refresher-refreshing,
   &.refresher-completing .refresher-refreshing .refresher-refreshing-icon {
     display: flex;
@@ -64,10 +59,10 @@ ion-refresher.refresher-native {
     @include border-radius(100%);
     @include padding(8px, 8px, 8px, 8px);
 
-    border: 1px solid #ececec;
+    border: $refresher-md-native-spinner-border;
 
-    background: white;
+    background: $refresher-md-native-spinner-background;
 
-    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: $refresher-md-native-spinner-box-shadow;
   }
 }

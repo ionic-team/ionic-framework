@@ -75,7 +75,6 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
 };
 
 const createScaleAnimation = (pullingRefresherIcon: HTMLElement) => {
-  const baseAnimation = createBaseAnimation(pullingRefresherIcon);
   const spinnerAnimation = createAnimation()
     .addElement(pullingRefresherIcon)
     .keyframes([
@@ -83,13 +82,11 @@ const createScaleAnimation = (pullingRefresherIcon: HTMLElement) => {
       { offset: 1, transform: 'scale(1) translateY(100px)' }
     ]);
 
-  return baseAnimation.addAnimation([spinnerAnimation]);
+  return createBaseAnimation(pullingRefresherIcon).addAnimation([spinnerAnimation]);
 };
 
 const createTranslateAnimation = (pullingRefresherIcon: HTMLElement) => {
   const height = pullingRefresherIcon.clientHeight;
-  const baseAnimation = createBaseAnimation(pullingRefresherIcon);
-
   const spinnerAnimation = createAnimation()
     .addElement(pullingRefresherIcon)
     .keyframes([
@@ -97,7 +94,7 @@ const createTranslateAnimation = (pullingRefresherIcon: HTMLElement) => {
       { offset: 1, transform: 'translateY(100px)' }
     ]);
 
-  return baseAnimation.addAnimation([spinnerAnimation]);
+  return createBaseAnimation(pullingRefresherIcon).addAnimation([spinnerAnimation]);
 };
 
 export const createSnapBackAnimation = (pullingRefresherIcon: HTMLElement) => {
