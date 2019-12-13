@@ -57,10 +57,7 @@ import { IonContent, IonHeader, IonList, IonRefresher, IonRefresherContent, IonT
 export const RefresherExample: React.FC = () => (
   <IonContent>
     <IonRefresher slot="fixed" contentId="my-content" onIonRefresh={doRefresh}>
-      <IonRefresherContent
-        pullingIcon="lines"
-        refreshingSpinner="lines">
-      </IonRefresherContent>
+      <IonRefresherContent></IonRefresherContent>
     </IonRefresher>
     
     <div id="my-content">
@@ -81,7 +78,7 @@ export const RefresherExample: React.FC = () => (
 );
 ```
 
-Using the iOS native `IonRefresher` requires setting the `pullingIcon` property on `IonRefresherContent` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. The spinner tick marks will be progressively shown as the user pulls down on the page. Additionally, a `contentId` value must be provided to `IonRefresher`. This corresponds to all elements inside `IonContent` except for `IonRefresher`. This allows for consistent theming while still taking full advantage of the native refresher.
+Using the iOS native `IonRefresher` requires setting the `pullingIcon` property on `IonRefresherContent` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page. Additionally, a `contentId` value must be provided to `IonRefresher`. This corresponds to all elements inside `IonContent` except for `IonRefresher`. This allows for consistent theming while still taking full advantage of the native refresher.
 
 #### Android Usage
 
