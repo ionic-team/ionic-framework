@@ -82,4 +82,31 @@ Using the iOS native `IonRefresher` requires setting the `pullingIcon` property 
 
 #### Android Usage
 
-Coming soon!
+```html
+import React from 'react';
+import { IonContent, IonHeader, IonList, IonRefresher, IonRefresherContent, IonTitle, IonToolbar } from '@ionic/react';
+
+export const RefresherExample: React.FC = () => (
+  <IonContent>
+    <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+      <IonRefresherContent></IonRefresherContent>
+    </IonRefresher>
+    
+    <IonHeader collapse="condense">
+      <IonToolbar>
+        <IonTitle size="large">All Inboxes</IonTitle>
+      </IonToolbar>
+      <IonToolbarr>
+        <IonSearchbar></IonSearchbar>
+      </IonToolbar>
+    </IonHeader>
+
+    <IonList>
+    ...
+    </IonList>
+  </IonContent>
+);
+
+```
+
+Using the MD native `IonRefresher` requires setting the `pullingIcon` property on `IonRefresherContent` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.

@@ -100,7 +100,28 @@ Using the iOS native `ion-refresher` requires setting the `pullingIcon` property
 
 #### Android Usage
 
-Coming soon!
+```html
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">All Inboxes</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+  ...
+  </ion-list>
+</ion-content>
+```
+
+Using the MD native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
 
 
 ### Javascript
@@ -166,7 +187,28 @@ Using the iOS native `ion-refresher` requires setting the `pulling-icon` propert
 
 #### Android Usage
 
-Coming soon!
+```html
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">All Inboxes</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+  ...
+  </ion-list>
+</ion-content>
+```
+
+Using the MD native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
 
 
 ### React
@@ -255,7 +297,34 @@ Using the iOS native `IonRefresher` requires setting the `pullingIcon` property 
 
 #### Android Usage
 
-Coming soon!
+```html
+import React from 'react';
+import { IonContent, IonHeader, IonList, IonRefresher, IonRefresherContent, IonTitle, IonToolbar } from '@ionic/react';
+
+export const RefresherExample: React.FC = () => (
+  <IonContent>
+    <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+      <IonRefresherContent></IonRefresherContent>
+    </IonRefresher>
+    
+    <IonHeader collapse="condense">
+      <IonToolbar>
+        <IonTitle size="large">All Inboxes</IonTitle>
+      </IonToolbar>
+      <IonToolbarr>
+        <IonSearchbar></IonSearchbar>
+      </IonToolbar>
+    </IonHeader>
+
+    <IonList>
+    ...
+    </IonList>
+  </IonContent>
+);
+
+```
+
+Using the MD native `IonRefresher` requires setting the `pullingIcon` property on `IonRefresherContent` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
 
 
 ### Vue
@@ -340,7 +409,28 @@ Using the iOS native `ion-refresher` requires setting the `pulling-icon` propert
 
 #### Android Usage
 
-Coming soon!
+```html
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">All Inboxes</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+  ...
+  </ion-list>
+</ion-content>
+```
+
+Using the MD native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
 
 
 

@@ -59,4 +59,25 @@ Using the iOS native `ion-refresher` requires setting the `pulling-icon` propert
 
 #### Android Usage
 
-Coming soon!
+```html
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">All Inboxes</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+  ...
+  </ion-list>
+</ion-content>
+```
+
+Using the MD native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
