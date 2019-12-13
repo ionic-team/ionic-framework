@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getTimeGivenProgression } from '../../';
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
+import { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
@@ -29,6 +29,7 @@ export class Refresher implements ComponentInterface {
   private didRefresh = false;
   private lastVelocityY = 0;
   private elementToTransform?: HTMLElement;
+  private animations: Animation[] = [];
 
   @State() private nativeRefresher = false;
 
@@ -160,7 +161,7 @@ export class Refresher implements ComponentInterface {
   }
 
   private async setupNativeRefresher(contentEl: HTMLIonContentElement | null) {
-    if (this.scrollListenerCallback || !contentEl) {
+    if (this.scrollListenerCallback || !contentEl || this.nativeRefresher) {
       return;
     }
 
@@ -291,7 +292,6 @@ export class Refresher implements ComponentInterface {
       // TODO setup
       writeTask(() => {
         circle.style.setProperty('animation', 'none');
-        this.el.classList.add('refresher-native');
 
         const refreshingCircle = refreshingSpinner.shadowRoot!.querySelector('circle')!;
         refreshingSpinner.style.setProperty('animation-delay', '-655ms');
@@ -310,8 +310,6 @@ export class Refresher implements ComponentInterface {
 
       });
 
-      let animation: any;
-      let delta = 0;
       this.gesture = (await import('../../utils/gesture')).createGesture({
         el: this.scrollEl!,
         gestureName: 'refresher',
@@ -321,53 +319,51 @@ export class Refresher implements ComponentInterface {
         canStart: () => {
           return this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing;
         },
-        onStart: () => {
+        onStart: (ev: GestureDetail) => {
           this.state = RefresherState.Pulling;
           writeTask(() => {
             const animationType = getRefresherAnimationType(contentEl);
-            animation = createPullingAnimation(animationType, pullingRefresherIcon);
+            const animation = createPullingAnimation(animationType, pullingRefresherIcon);
+            ev.data = { animation, delta: 0 };
+
             animation.progressStart(false, 0);
-
             this.ionStart.emit();
-
             this.animations.push(animation);
           });
         },
-        onMove: ev => {
+        onMove: (ev: GestureDetail) => {
           // Since we are using an easing curve, slow the gesture tracking down a bit
           const MAX = 160;
-          delta = clamp(0, (ev.deltaY / MAX) * 0.5, 1);
+          ev.data.delta = clamp(0, (ev.deltaY / MAX) * 0.5, 1);
 
-          animation.progressStep(delta);
-
+          ev.data.animation.progressStep(ev.data.delta);
           this.ionPull.emit();
         },
-        onEnd: () => {
-          if (delta <= 0.4) {
-            animation.progressEnd(0, delta, 500);
-          } else {
-            const progress = getTimeGivenProgression([0, 0], [0, 0], [1, 1], [1, 1], delta)[0];
-            const snapBackAnimation = createSnapBackAnimation(pullingRefresherIcon);
-            this.animations.push(snapBackAnimation);
-            writeTask(async () => {
-              pullingRefresherIcon.style.setProperty('--ion-pulling-refresher-translate', `${(progress * 100)}px`);
-              animation.progressEnd();
-              await snapBackAnimation.play();
-
-              this.state = RefresherState.Refreshing;
-
-              animation.destroy();
-              this.ionRefresh.emit();
-            });
+        onEnd: (ev: GestureDetail) => {
+          if (ev.data.delta <= 0.4) {
+            ev.data.animation.progressEnd(0, ev.data.delta, 500);
+            return;
           }
+
+          const progress = getTimeGivenProgression([0, 0], [0, 0], [1, 1], [1, 1], ev.data.delta)[0];
+          const snapBackAnimation = createSnapBackAnimation(pullingRefresherIcon);
+          this.animations.push(snapBackAnimation);
+          writeTask(async () => {
+            pullingRefresherIcon.style.setProperty('--ion-pulling-refresher-translate', `${(progress * 100)}px`);
+            ev.data.animation.progressEnd();
+            await snapBackAnimation.play();
+
+            this.state = RefresherState.Refreshing;
+
+            ev.data.animation.destroy();
+            this.ionRefresh.emit();
+          });
         }
       });
 
       this.disabledChanged();
     }
   }
-
-  private animations: any[] = [];
 
   componentDidUpdate() {
     this.checkNativeRefresher();
