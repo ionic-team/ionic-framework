@@ -1,7 +1,9 @@
 import { config } from '../global/config';
-import { ActionSheetOptions, AlertOptions, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 let lastId = 0;
+
+export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
 
 const createController = <Opts extends object, HTMLElm extends any>(tagName: string) => {
   return {
@@ -140,7 +142,7 @@ export const dismiss = async (
   data: any | undefined,
   role: string | undefined,
   name: keyof IonicConfig,
-  iosLeaveAnimation: AnimationBuilder,
+  iosLeaveAnimation: AnimationBuilder | undefined,
   mdLeaveAnimation: AnimationBuilder,
   opts?: any
 ): Promise<boolean> => {
@@ -156,8 +158,12 @@ export const dismiss = async (
       ? overlay.leaveAnimation
       : config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-    await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
+    if (animationBuilder !== undefined) {
+      await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
+    }
     overlay.didDismiss.emit({ data, role });
+
+    activeAnimations.delete(overlay);
 
   } catch (err) {
     console.error(err);
@@ -177,19 +183,12 @@ const overlayAnimation = async (
   baseEl: any,
   opts: any
 ): Promise<boolean> => {
-  if (overlay.animation) {
-    overlay.animation.destroy();
-    overlay.animation = undefined;
-    return false;
-  }
   // Make overlay visible in case it's hidden
   baseEl.classList.remove('overlay-hidden');
 
   const aniRoot = baseEl.shadowRoot || overlay.el;
-
   const animation = animationBuilder(aniRoot, opts);
 
-  overlay.animation = animation;
   if (!overlay.animated || !config.getBoolean('animated', true)) {
     animation.duration(0);
   }
@@ -203,9 +202,11 @@ const overlayAnimation = async (
     });
   }
 
+  const activeAni = activeAnimations.get(overlay) || [];
+  activeAnimations.set(overlay, [...activeAni, animation]);
+
   await animation.play();
 
-  overlay.animation = undefined;
   return true;
 };
 
