@@ -165,6 +165,8 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
+    this.nativeRefresher = true;
+
     const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLElement;
     const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner') as HTMLElement;
 
@@ -175,7 +177,6 @@ export class Refresher implements ComponentInterface {
         return;
       }
 
-      this.nativeRefresher = true;
       const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
       const MAX_PULL = this.scrollEl!.clientHeight * 0.16;
       const NUM_TICKS = ticks.length;
@@ -275,21 +276,17 @@ export class Refresher implements ComponentInterface {
                 this.resetNativeRefresher(this.elementToTransform, RefresherState.Completing);
                 this.needsCompletion = false;
               } else if (this.didRefresh) {
-                readTask(() => {
-                  translateElement(this.elementToTransform, `${this.el.clientHeight}px`);
-                });
+                readTask(() => translateElement(this.elementToTransform, `${this.el.clientHeight}px`));
               }
             },
           });
 
       this.disabledChanged();
     } else {
-      this.nativeRefresher = true;
-
       const circle = pullingSpinner.shadowRoot!.querySelector('circle')!;
       const pullingRefresherIcon = this.el.querySelector('ion-refresher-content .refresher-pulling-icon') as HTMLElement;
 
-      // TODO setup
+      // TODO clean up this awful awful code
       writeTask(() => {
         circle.style.setProperty('animation', 'none');
 
@@ -297,17 +294,24 @@ export class Refresher implements ComponentInterface {
         refreshingSpinner.style.setProperty('animation-delay', '-655ms');
         refreshingCircle.style.setProperty('animation-delay', '-655ms');
 
-        // TODO
-        const div = document.createElement('div');
-        div.classList.add('liam');
+        // really what I need here is the caret-back-sharp ionicon
+        // inside of a div container that has been appended
+        // inside of the pulling spinner so that the arrow
+        // can fade in. It also might be possible to just have it sit inside
+        // of ion-refresher-content, but I haven't tried that yet
+        const container = document.createElement('div');
+        container.style.setProperty('width', '28px');
+        container.style.setProperty('height', '28px');
+        container.style.setProperty('position', 'absolute');
+        container.style.setProperty('top', '-2px');
+        container.style.setProperty('left', '-2px');
+        container.classList.add('arrow-container');
 
         const icon = document.createElement('ion-icon');
-        icon.name = 'caret-back-sharp';
-        div.appendChild(icon);
-        pullingSpinner.shadowRoot!.appendChild(div);
-
         icon.style.setProperty('font-size', '12px');
-
+        icon.name = 'caret-back-sharp';
+        container.appendChild(icon);
+        pullingSpinner.shadowRoot!.appendChild(container);
       });
 
       this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -333,9 +337,7 @@ export class Refresher implements ComponentInterface {
         },
         onMove: (ev: GestureDetail) => {
           // Since we are using an easing curve, slow the gesture tracking down a bit
-          const MAX = 160;
-          ev.data.delta = clamp(0, (ev.deltaY / MAX) * 0.5, 1);
-
+          ev.data.delta = clamp(0, (ev.deltaY / 180) * 0.5, 1);
           ev.data.animation.progressStep(ev.data.delta);
           this.ionPull.emit();
         },

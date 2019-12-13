@@ -21,8 +21,8 @@ export const createPullingAnimation = (type: RefresherAnimationType, pullingSpin
 const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
   const spinner = pullingRefresherIcon.querySelector('ion-spinner') as HTMLElement;
   const circle = spinner!.shadowRoot!.querySelector('circle') as any;
-  const arrowContainer = spinner!.shadowRoot!.querySelector('.liam') as any;
-  const arrow = arrowContainer.querySelector('ion-icon') as any;
+  const arrowContainer = spinner!.shadowRoot!.querySelector('.arrow-container') as HTMLElement;
+  const arrow = arrowContainer.querySelector('ion-icon') as HTMLIonIconElement;
 
   const baseAnimation = createAnimation()
     .duration(1000)
@@ -48,13 +48,6 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
 
   const arrowContainerAnimation = createAnimation()
     .addElement(arrowContainer)
-    .beforeStyles({
-      'width': '28px',
-      'height': '28px',
-      'position': 'absolute',
-      'top': '-2px',
-      'left': '-2px'
-    })
     .keyframes([
       { offset: 0, transform: 'rotate(-45deg)' },
       { offset: 0.20, transform: 'rotate(-45deg)' },
