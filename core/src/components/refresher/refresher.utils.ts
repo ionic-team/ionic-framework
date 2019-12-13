@@ -134,19 +134,6 @@ export const handleScrollWhileRefreshing = (
   });
 };
 
-export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, mode: string) => {
-  const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
-  const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
-
-  return (
-    pullingSpinner !== null &&
-    refreshingSpinner !== null &&
-    referenceEl.contentId !== undefined &&
-    mode === 'ios' &&
-    isPlatform('mobile')
-  );
-};
-
 export const translateElement = (el?: HTMLElement, value?: string) => {
   return new Promise(resolve => {
     if (!el) { return resolve(); }
