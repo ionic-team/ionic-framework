@@ -439,7 +439,7 @@ export class IonList {
 
 export declare interface IonListHeader extends Components.IonListHeader {}
 @ProxyCmp({inputs: ['color', 'lines', 'mode']})
-@Component({ selector: 'ion-list-header', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'mode'] })
+@Component({ selector: 'ion-list-header', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'lines', 'mode'] })
 export class IonListHeader {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
