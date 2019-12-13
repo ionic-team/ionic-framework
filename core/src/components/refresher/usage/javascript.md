@@ -35,7 +35,7 @@ Both iOS and Android modes provide refreshers that take advantage of properties 
 ```html
 <ion-content>
   <ion-refresher slot="fixed" content-id="my-content">
-    <ion-refresher-content pulling-icon="lines" refreshing-spinner="lines"></ion-refresher-content>
+    <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <div id="my-content">
@@ -55,7 +55,7 @@ Both iOS and Android modes provide refreshers that take advantage of properties 
 </ion-content>
 ```
 
-Using the iOS native `ion-refresher` requires setting the `pulling-icon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. The spinner tick marks will be progressively shown as the user pulls down on the page. Additionally, a `content-id` value must be provided to `ion-refresher`. This corresponds to all elements inside `ion-content` except for `ion-refresher`. This allows for consistent theming while still taking full advantage of the native refresher.
+Using the iOS native `ion-refresher` requires setting the `pulling-icon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pulling-icon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page. Additionally, a `content-id` value must be provided to `ion-refresher`. This corresponds to all elements inside `ion-content` except for `ion-refresher`. This allows for consistent theming while still taking full advantage of the native refresher.
 
 #### Android Usage
 
