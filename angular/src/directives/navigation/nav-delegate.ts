@@ -21,6 +21,6 @@ export class NavDelegate {
   ) {
     this.el = ref.nativeElement;
     ref.nativeElement.delegate = angularDelegate.create(resolver, injector, location);
-    proxyOutputs(this, this.el, ['ionNavDidChange' , 'ionNavWillChange' ])
+    proxyOutputs(this, this.el, ['ionNavDidChange' , 'ionNavWillChange' ]);
   }
 }
