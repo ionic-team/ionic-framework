@@ -5,7 +5,8 @@
     "flatModuleOutFile": "core.js",
     "flatModuleId": "@ionic/angular",
     "skipTemplateCodegen": true,
-    "fullTemplateTypeCheck": false
+    "fullTemplateTypeCheck": false,
+    "enableIvy": false
   },
   "compilerOptions": {
     "alwaysStrict": true,

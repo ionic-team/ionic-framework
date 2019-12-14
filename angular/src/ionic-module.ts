@@ -133,7 +133,7 @@ const DECLARATIONS = [
   imports: [CommonModule]
 })
 export class IonicModule {
-  static forRoot(config?: IonicConfig): ModuleWithProviders {
+  static forRoot(config?: IonicConfig): ModuleWithProviders<IonicModule> {
     return {
       ngModule: IonicModule,
       providers: [
