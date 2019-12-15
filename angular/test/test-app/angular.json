@@ -154,6 +154,6 @@
   },
   "defaultProject": "test-app",
   "cli": {
-    "analytics": "de9ff8d8-b1cf-40ad-9a28-80e7e8755d8e"
+    "analytics": false
   }
 }
