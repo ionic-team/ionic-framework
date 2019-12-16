@@ -72,16 +72,9 @@ Basic Usage
 </ion-item>
 
 <!-- Item as a Button -->
-<ion-item (click)="buttonClick()">
+<ion-item button (click)="buttonClick()">
   <ion-label>
     Button Item
-  </ion-label>
-</ion-item>
-
-<!-- Item as a Button with Ripple -->
-<ion-item (click)="buttonClick()" button>
-  <ion-label>
-    Button Item with Ripple
   </ion-label>
 </ion-item>
 
@@ -108,7 +101,7 @@ Detail Arrows
   </ion-label>
 </ion-item>
 
-<ion-item (click)="buttonClick()" detail>
+<ion-item button (click)="buttonClick()" detail>
   <ion-label>
     Button Item with Detail Arrow
   </ion-label>
@@ -225,7 +218,7 @@ Item Lines
 Media Items
 
 ```html
-<ion-item (click)="testClick()">
+<ion-item button (click)="testClick()">
   <ion-avatar slot="start">
     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
   </ion-avatar>
@@ -254,7 +247,7 @@ Media Items
   <ion-button fill="outline" slot="end">View</ion-button>
 </ion-item>
 
-<ion-item (click)="testClick()">
+<ion-item button (click)="testClick()">
   <ion-thumbnail slot="start">
     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
   </ion-thumbnail>
@@ -403,16 +396,9 @@ Basic Usage
 </ion-item>
 
 <!-- Item as a Button -->
-<ion-item onclick="buttonClick()">
+<ion-item button onclick="buttonClick()">
   <ion-label>
     Button Item
-  </ion-label>
-</ion-item>
-
-<!-- Item as a Button with Ripple -->
-<ion-item onclick="buttonClick()" button>
-  <ion-label>
-    Button Item with Ripple
   </ion-label>
 </ion-item>
 
@@ -439,7 +425,7 @@ Detail Arrows
   </ion-label>
 </ion-item>
 
-<ion-item onclick="buttonClick()" detail>
+<ion-item button onclick="buttonClick()" detail>
   <ion-label>
     Button Item with Detail Arrow
   </ion-label>
@@ -556,7 +542,7 @@ Item Lines
 Media Items
 
 ```html
-<ion-item onclick="testClick()">
+<ion-item button onclick="testClick()">
   <ion-avatar slot="start">
     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
   </ion-avatar>
@@ -585,7 +571,7 @@ Media Items
   <ion-button fill="outline" slot="end">View</ion-button>
 </ion-item>
 
-<ion-item onclick="testClick()">
+<ion-item button onclick="testClick()">
   <ion-thumbnail slot="start">
     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
   </ion-thumbnail>
@@ -738,14 +724,7 @@ const Example: React.FC<{}> = () => (
     </IonItem>
 
     {/*-- Item as a Button --*/}
-    <IonItem onClick={() => {}}>
-      <IonLabel>
-        Button Item
-      </IonLabel>
-    </IonItem>
-
-    {/*-- Item as a Button with Ripple --*/}
-    <IonItem onClick={() => {}} button>
+    <IonItem button onClick={() => {}}>
       <IonLabel>
         Button Item
       </IonLabel>
@@ -772,7 +751,7 @@ const Example: React.FC<{}> = () => (
       </IonLabel>
     </IonItem>
 
-    <IonItem onClick={() => {}} detail>
+    <IonItem button onClick={() => {}} detail>
       <IonLabel>
         Button Item with Detail Arrow
       </IonLabel>
@@ -880,7 +859,7 @@ const Example: React.FC<{}> = () => (
 
 
 
-    <IonItem onClick={() => {}}>
+    <IonItem button onClick={() => {}}>
       <IonAvatar slot="start">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
       </IonAvatar>
@@ -909,7 +888,7 @@ const Example: React.FC<{}> = () => (
       <IonButton fill="outline" slot="end">View</IonButton>
     </IonItem>
 
-    <IonItem onClick={() => {}}>
+    <IonItem button onClick={() => {}}>
       <IonThumbnail slot="start">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
       </IonThumbnail>
@@ -1056,16 +1035,9 @@ Basic Usage
   </ion-item>
 
   <!-- Item as a Button -->
-  <ion-item @click="buttonClick()">
+  <ion-item button @click="buttonClick()">
     <ion-label>
       Button Item
-    </ion-label>
-  </ion-item>
-
-  <!-- Item as a Button with Ripple -->
-  <ion-item @click="buttonClick()" button>
-    <ion-label>
-      Button Item with Ripple
     </ion-label>
   </ion-item>
 
@@ -1094,7 +1066,7 @@ Detail Arrows
     </ion-label>
   </ion-item>
 
-  <ion-item @click="buttonClick()" detail>
+  <ion-item button @click="buttonClick()" detail>
     <ion-label>
       Button Item with Detail Arrow
     </ion-label>
@@ -1217,7 +1189,7 @@ Media Items
 
 ```html
 <template>
-  <ion-item @click="testClick()">
+  <ion-item button @click="testClick()">
     <ion-avatar slot="start">
       <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </ion-avatar>
@@ -1246,7 +1218,7 @@ Media Items
     <ion-button fill="outline" slot="end">View</ion-button>
   </ion-item>
 
-  <ion-item @click="testClick()">
+  <ion-item button @click="testClick()">
     <ion-thumbnail slot="start">
       <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </ion-thumbnail>

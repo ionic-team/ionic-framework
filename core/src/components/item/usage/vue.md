@@ -10,16 +10,9 @@ Basic Usage
   </ion-item>
 
   <!-- Item as a Button -->
-  <ion-item @click="buttonClick()">
+  <ion-item button @click="buttonClick()">
     <ion-label>
       Button Item
-    </ion-label>
-  </ion-item>
-
-  <!-- Item as a Button with Ripple -->
-  <ion-item @click="buttonClick()" button>
-    <ion-label>
-      Button Item with Ripple
     </ion-label>
   </ion-item>
 
@@ -48,7 +41,7 @@ Detail Arrows
     </ion-label>
   </ion-item>
 
-  <ion-item @click="buttonClick()" detail>
+  <ion-item button @click="buttonClick()" detail>
     <ion-label>
       Button Item with Detail Arrow
     </ion-label>
@@ -171,7 +164,7 @@ Media Items
 
 ```html
 <template>
-  <ion-item @click="testClick()">
+  <ion-item button @click="testClick()">
     <ion-avatar slot="start">
       <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </ion-avatar>
@@ -200,7 +193,7 @@ Media Items
     <ion-button fill="outline" slot="end">View</ion-button>
   </ion-item>
 
-  <ion-item @click="testClick()">
+  <ion-item button @click="testClick()">
     <ion-thumbnail slot="start">
       <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </ion-thumbnail>
