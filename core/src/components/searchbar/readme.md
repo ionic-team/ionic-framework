@@ -8,7 +8,7 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 
 #### Android
 
-By default, tapping `ion-searchbar` will cause the keyboard to appear with a magnifying glass icon on the submit button. You can optionally set the `inputmode` property to `"search"`, which will change the icon from a magnifying glass to a carriage return.
+By default, tapping the input will cause the keyboard to appear with a magnifying glass icon on the submit button. You can optionally set the `inputmode` property to `"search"`, which will change the icon from a magnifying glass to a carriage return.
 
 #### iOS
 
