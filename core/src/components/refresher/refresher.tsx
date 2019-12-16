@@ -157,9 +157,6 @@ export class Refresher implements ComponentInterface {
     this.didRefresh = false;
     this.needsCompletion = false;
     this.pointerDown = false;
-    this.animations.forEach(ani => ani.destroy());
-    this.animations = [];
-
     this.state = RefresherState.Inactive;
   }
 
@@ -439,8 +436,19 @@ export class Refresher implements ComponentInterface {
     this.needsCompletion = true;
 
     // Do not reset scroll el until user removes pointer from screen
-    if (!this.pointerDown) {
+    if (this.pointerDown) { return; }
+
+    if (getIonMode(this) === 'ios') {
       this.resetNativeRefresher(this.elementToTransform, RefresherState.Completing);
+    } else {
+      // TODO
+      this.state = RefresherState.Completing;
+      this.animations.forEach(ani => ani.destroy());
+      this.animations = [];
+
+      setTimeout(() => {
+        this.state = RefresherState.Inactive;
+      }, 250);
     }
   }
 
