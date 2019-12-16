@@ -1500,9 +1500,17 @@ export namespace Components {
     */
     'present': () => Promise<void>;
     /**
+    * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other. Only applies in iOS mode.
+    */
+    'presentingElement'?: HTMLElement;
+    /**
     * If `true`, a backdrop will be displayed behind the modal.
     */
     'showBackdrop': boolean;
+    /**
+    * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+    */
+    'swipeToClose': boolean;
   }
   interface IonModalController {
     /**
@@ -4853,9 +4861,17 @@ declare namespace LocalJSX {
     */
     'onIonModalWillPresent'?: (event: CustomEvent<void>) => void;
     /**
+    * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other. Only applies in iOS mode.
+    */
+    'presentingElement'?: HTMLElement;
+    /**
     * If `true`, a backdrop will be displayed behind the modal.
     */
     'showBackdrop'?: boolean;
+    /**
+    * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+    */
+    'swipeToClose'?: boolean;
   }
   interface IonModalController {}
   interface IonNav {

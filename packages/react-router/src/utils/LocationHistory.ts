@@ -3,7 +3,7 @@ import { Location as HistoryLocation } from 'history';
 const RESTRICT_SIZE = 25;
 
 export class LocationHistory {
-  locationHistory: HistoryLocation[] = [];
+  private locationHistory: HistoryLocation[] = [];
 
   add(location: HistoryLocation) {
     this.locationHistory.push(location);
@@ -19,6 +19,10 @@ export class LocationHistory {
   replace(location: HistoryLocation) {
     this.locationHistory.pop();
     this.locationHistory.push(location);
+  }
+
+  clear() {
+    this.locationHistory = [];
   }
 
   findLastLocationByUrl(url: string) {

@@ -1,3 +1,29 @@
+import { AnimationKeyFrames } from './animation-interface';
+
+/**
+ * Web Animations requires hyphenated CSS properties
+ * to be written in camelCase when animating
+ */
+export const processKeyframes = (keyframes: AnimationKeyFrames) => {
+  keyframes.forEach(keyframe => {
+    for (const key in keyframe) {
+      if (keyframe.hasOwnProperty(key) && key.includes('-')) {
+        const value = keyframe[key];
+        const newKey = convertHyphenToCamelCase(key);
+
+        keyframe[newKey] = value;
+        delete keyframe[key];
+      }
+    }
+  });
+
+  return keyframes;
+};
+
+const convertHyphenToCamelCase = (str: string) => {
+  return str.replace(/-([a-z])/ig, g => g[1].toUpperCase());
+};
+
 let animationPrefix: string | null = null;
 
 export const getAnimationPrefix = (el: HTMLElement): string => {

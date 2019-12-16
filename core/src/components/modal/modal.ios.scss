@@ -18,3 +18,12 @@
   // hidden by default to prevent flickers, the animation will show it
   @include transform(translate3d(0, 100%, 0));
 }
+
+:host(.modal-card) {
+  align-items: flex-end;
+}
+
+:host(.modal-card) .modal-wrapper {
+  @include border-radius($modal-ios-border-radius, $modal-ios-border-radius, 0, 0);
+  height: calc(100% - 40px);
+}
