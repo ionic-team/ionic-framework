@@ -1,26 +1,22 @@
+let animationPrefix: string | null = null;
+
 export const getAnimationPrefix = (el: HTMLElement): string => {
-  const supportsUnprefixed = (el.style as any).animationName !== undefined;
-  const supportsWebkitPrefix = (el.style as any).webkitAnimationName !== undefined;
-
-  if (!supportsUnprefixed && supportsWebkitPrefix) {
-    return '-webkit-';
+  if (animationPrefix === null) {
+    const supportsUnprefixed = (el.style as any).animationName !== undefined;
+    const supportsWebkitPrefix = (el.style as any).webkitAnimationName !== undefined;
+    animationPrefix = (!supportsUnprefixed && supportsWebkitPrefix) ? '-webkit-' : '';
   }
-
-  return '';
+  return animationPrefix;
 };
 
 export const setStyleProperty = (element: HTMLElement, propertyName: string, value: string | null) => {
-  if (propertyName.startsWith('animation')) {
-    propertyName = getAnimationPrefix(element) + propertyName;
-  }
-  element.style.setProperty(propertyName, value);
+  const prefix = propertyName.startsWith('animation') ? getAnimationPrefix(element) : '';
+  element.style.setProperty(prefix + propertyName, value);
 };
 
 export const removeStyleProperty = (element: HTMLElement, propertyName: string) => {
-  if (propertyName.startsWith('animation')) {
-    propertyName = getAnimationPrefix(element) + propertyName;
-  }
-  element.style.removeProperty(propertyName);
+  const prefix = propertyName.startsWith('animation') ? getAnimationPrefix(element) : '';
+  element.style.removeProperty(prefix + propertyName);
 };
 
 export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
