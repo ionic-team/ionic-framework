@@ -319,10 +319,11 @@ export class Refresher implements ComponentInterface {
         threshold: 0,
         canStart: () => this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing && this.scrollEl!.scrollTop === 0,
         onStart: (ev: GestureDetail) => {
-          ev.data = { animation: undefined, didStart: false };
+          ev.data = { animation: undefined, didStart: false, cancelled: false };
         },
         onMove: (ev: GestureDetail) => {
-          if (ev.velocityY <= 0 && this.progress === 0) {
+          if ((ev.velocityY <= 0 && this.progress === 0) || ev.data.cancelled) {
+            ev.data.cancelled = true;
             return;
           }
 
@@ -448,6 +449,7 @@ export class Refresher implements ComponentInterface {
 
       setTimeout(() => {
         this.state = RefresherState.Inactive;
+        this.progress = 0;
       }, 250);
     }
   }
