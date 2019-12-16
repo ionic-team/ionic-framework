@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EmbeddedViewRef, IterableDiffer, IterableDiffers, NgZone, SimpleChanges, TrackByFunction } from '@angular/core';
 import { Cell, CellType, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn } from '@ionic/core';
 
-import { proxyInputs, proxyMethods } from '../proxies-utils';
+import { ProxyCmp } from '../proxies-utils';
 
 import { VirtualFooter } from './virtual-footer';
 import { VirtualHeader } from './virtual-header';
@@ -112,6 +112,10 @@ export declare interface IonVirtualScroll {
   'positionForItem': (index: number) => Promise<number>;
 }
 
+@ProxyCmp({
+  inputs: ['approxItemHeight', 'approxHeaderHeight', 'approxFooterHeight', 'headerFn', 'footerFn', 'items', 'itemHeight', 'headerHeight', 'footerHeight'],
+  methods: [  'checkEnd', 'checkRange', 'positionForItem' ]
+})
 @Component({
   selector: 'ion-virtual-scroll',
   template: '<ng-content></ng-content>',
@@ -215,21 +219,3 @@ const getElement = (view: EmbeddedViewRef<VirtualContext>): HTMLElement => {
   }
   throw new Error('virtual element was not created');
 };
-
-proxyInputs(IonVirtualScroll, [
-  'approxItemHeight',
-  'approxHeaderHeight',
-  'approxFooterHeight',
-  'headerFn',
-  'footerFn',
-  'items',
-  'itemHeight',
-  'headerHeight',
-  'footerHeight'
-]);
-
-proxyMethods(IonVirtualScroll, [
-  'checkEnd',
-  'checkRange',
-  'positionForItem'
-]);

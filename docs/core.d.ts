@@ -104,5 +104,6 @@ export interface StyleDoc {
     docs: string;
     annotation: 'prop';
 }
+
 declare const _default: JsonDocs;
 export default _default;
