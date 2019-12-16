@@ -79,11 +79,10 @@ const createScaleAnimation = (pullingRefresherIcon: HTMLElement) => {
 };
 
 const createTranslateAnimation = (pullingRefresherIcon: HTMLElement) => {
-  const height = pullingRefresherIcon.clientHeight;
   const spinnerAnimation = createAnimation()
     .addElement(pullingRefresherIcon)
     .keyframes([
-      { offset: 0, transform: `translateY(-${height + 20}px)` },
+      { offset: 0, transform: `translateY(calc(-100% - 20px))` },
       { offset: 1, transform: 'translateY(100px)' }
     ]);
 

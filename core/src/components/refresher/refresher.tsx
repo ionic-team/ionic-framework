@@ -157,6 +157,9 @@ export class Refresher implements ComponentInterface {
     this.didRefresh = false;
     this.needsCompletion = false;
     this.pointerDown = false;
+    this.animations.forEach(ani => ani.destroy());
+    this.animations = [];
+
     this.state = RefresherState.Inactive;
   }
 
@@ -317,36 +320,54 @@ export class Refresher implements ComponentInterface {
         gesturePriority: 10,
         direction: 'y',
         threshold: 0,
-        canStart: () => {
-          // TODO figure out why arrow if off centered in angular apps
-          // TODO refresher is starting even when user is scrolling
-          return this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing;
-        },
+        canStart: () => this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing && this.scrollEl!.scrollTop === 0,
         onStart: (ev: GestureDetail) => {
-          this.state = RefresherState.Pulling;
-          writeTask(() => {
-            const animationType = getRefresherAnimationType(contentEl);
-            const animation = createPullingAnimation(animationType, pullingRefresherIcon);
-            ev.data = { animation, delta: 0 };
-
-            animation.progressStart(false, 0);
-            this.ionStart.emit();
-            this.animations.push(animation);
-          });
+          ev.data = { animation: undefined, didStart: false };
         },
         onMove: (ev: GestureDetail) => {
-          // Since we are using an easing curve, slow the gesture tracking down a bit
-          ev.data.delta = clamp(0, (ev.deltaY / 180) * 0.5, 1);
-          ev.data.animation.progressStep(ev.data.delta);
-          this.ionPull.emit();
-        },
-        onEnd: (ev: GestureDetail) => {
-          if (ev.data.delta <= 0.4) {
-            ev.data.animation.progressEnd(0, ev.data.delta, 500);
+          if (ev.velocityY <= 0 && this.progress === 0) {
             return;
           }
 
-          const progress = getTimeGivenProgression([0, 0], [0, 0], [1, 1], [1, 1], ev.data.delta)[0];
+          if (!ev.data.didStart) {
+            ev.data.didStart = true;
+
+            this.state = RefresherState.Pulling;
+            const animationType = getRefresherAnimationType(contentEl);
+            const animation = createPullingAnimation(animationType, pullingRefresherIcon);
+            ev.data.animation = animation;
+
+            writeTask(() => {
+              this.scrollEl!.style.setProperty('--overflow', 'hidden');
+
+              animation.progressStart(false, 0);
+              this.ionStart.emit();
+              this.animations.push(animation);
+            });
+
+            return;
+          }
+
+          // Since we are using an easing curve, slow the gesture tracking down a bit
+          this.progress = clamp(0, (ev.deltaY / 180) * 0.5, 1);
+          ev.data.animation.progressStep(this.progress);
+          this.ionPull.emit();
+        },
+        onEnd: (ev: GestureDetail) => {
+          if (!ev.data.didStart) { return; }
+
+          writeTask(() => this.scrollEl!.style.removeProperty('--overflow'));
+          if (this.progress <= 0.4) {
+            ev.data.animation
+              .progressEnd(0, this.progress, 500)
+              .onFinish(() => {
+                this.animations.forEach(ani => ani.destroy());
+                this.animations = [];
+              });
+            return;
+          }
+
+          const progress = getTimeGivenProgression([0, 0], [0, 0], [1, 1], [1, 1], this.progress)[0];
           const snapBackAnimation = createSnapBackAnimation(pullingRefresherIcon);
           this.animations.push(snapBackAnimation);
           writeTask(async () => {
@@ -418,16 +439,8 @@ export class Refresher implements ComponentInterface {
     this.needsCompletion = true;
 
     // Do not reset scroll el until user removes pointer from screen
-    if (this.pointerDown) { return; }
-
-    if (getIonMode(this) === 'ios') {
+    if (!this.pointerDown) {
       this.resetNativeRefresher(this.elementToTransform, RefresherState.Completing);
-    } else {
-      this.animations.forEach(ani => ani.destroy());
-      this.state = RefresherState.Completing;
-      setTimeout(() => {
-        this.state = RefresherState.Inactive;
-      }, 250);
     }
   }
 
