@@ -17,7 +17,7 @@ Basic Usage
   </ion-item>
 
   <!-- Item as a Button with Ripple -->
-  <ion-item (click)="buttonClick()" button>
+  <ion-item @click="buttonClick()" button>
     <ion-label>
       Button Item with Ripple
     </ion-label>
