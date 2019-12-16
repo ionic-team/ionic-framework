@@ -58,10 +58,10 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
   const arrowAnimation = createAnimation()
     .addElement(arrow)
     .keyframes([
-      { offset: 0, transform: 'translate(6px, 1px) scale(0)' },
-      { offset: 0.25, transform: 'translate(6px, 1px) scale(0)' },
-      { offset: 0.55, transform: 'translate(-2px, 2px) scale(1)' },
-      { offset: 1, transform: 'translate(-2px, 2px) scale(1)' }
+      { offset: 0, transform: 'translate(6px, 0px) scale(0)' },
+      { offset: 0.25, transform: 'translate(6px, 0px) scale(0)' },
+      { offset: 0.55, transform: 'translate(-4px, 0px) scale(1)' },
+      { offset: 1, transform: 'translate(-4px, 0px) scale(1)' }
     ]);
 
   return baseAnimation.addAnimation([arrowContainerAnimation, arrowAnimation, circleInnerAnimation, circleOuterAnimation]);

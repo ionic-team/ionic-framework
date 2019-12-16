@@ -300,11 +300,8 @@ export class Refresher implements ComponentInterface {
         // can fade in. It also might be possible to just have it sit inside
         // of ion-refresher-content, but I haven't tried that yet
         const container = document.createElement('div');
-        container.style.setProperty('width', '28px');
-        container.style.setProperty('height', '28px');
-        container.style.setProperty('position', 'absolute');
-        container.style.setProperty('top', '-2px');
-        container.style.setProperty('left', '-2px');
+        container.style.setProperty('width', '100%');
+        container.style.setProperty('height', '100%');
         container.classList.add('arrow-container');
 
         const icon = document.createElement('ion-icon');
@@ -321,6 +318,8 @@ export class Refresher implements ComponentInterface {
         direction: 'y',
         threshold: 0,
         canStart: () => {
+          // TODO figure out why arrow if off centered in angular apps
+          // TODO refresher is starting even when user is scrolling
           return this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing;
         },
         onStart: (ev: GestureDetail) => {
@@ -358,7 +357,9 @@ export class Refresher implements ComponentInterface {
             this.state = RefresherState.Refreshing;
 
             ev.data.animation.destroy();
-            this.ionRefresh.emit();
+            this.ionRefresh.emit({
+              complete: this.complete.bind(this)
+            });
           });
         }
       });
