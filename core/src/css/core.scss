@@ -30,6 +30,14 @@ body.backdrop-no-scroll {
 //   --overflow: hidden;
 // }
 
+// Modal - Card Style
+// --------------------------------------------------
+// The card style does not reach all the way to
+// the top of the screen, so there does not need
+// to be any safe area padding added
+ion-modal.modal-card .ion-page > ion-header > ion-toolbar:first-child {
+  padding-top: 0px;
+}
 
 // Ionic Colors
 // --------------------------------------------------
