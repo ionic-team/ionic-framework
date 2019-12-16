@@ -138,7 +138,8 @@ function preparePackage(tasks, package, version, install) {
   }
 
   if (package !== 'docs') {
-    if (package !== 'core' || package !== 'packages/angular-server') {
+    console.log(package)
+    if (package !== 'core') {
       projectTasks.push({
         title: `${pkg.name}: npm link @ionic/core`,
         task: () => execa('npm', ['link', '@ionic/core'], { cwd: projectRoot })
