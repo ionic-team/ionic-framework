@@ -331,11 +331,12 @@ export class Refresher implements ComponentInterface {
             ev.data.didStart = true;
 
             this.state = RefresherState.Pulling;
-            const animationType = getRefresherAnimationType(contentEl);
-            const animation = createPullingAnimation(animationType, pullingRefresherIcon);
-            ev.data.animation = animation;
 
             writeTask(() => {
+              const animationType = getRefresherAnimationType(contentEl);
+              const animation = createPullingAnimation(animationType, pullingRefresherIcon);
+              ev.data.animation = animation;
+
               this.scrollEl!.style.setProperty('--overflow', 'hidden');
 
               animation.progressStart(false, 0);
