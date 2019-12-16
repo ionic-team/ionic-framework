@@ -12,7 +12,7 @@ By default, tapping `ion-searchbar` will cause the keyboard to appear with a mag
 
 #### iOS
 
-By default, tapping `ion-searchbar` will cause the keyboard to appear with the text "return" on a gray submit button. You can optionally set `inputmode="search"`, which will change the text from "return" to "go", and change the button color from gray to blue. Additionally, you can wrap the `ion-searchbar` in a `form` element with an `action` property. This will cause the keyboard to appear with a blue submit button that says "search".
+By default, tapping `ion-searchbar` will cause the keyboard to appear with the text "return" on a gray submit button. You can optionally set the `inputmode` property to `"search"`, which will change the text from "return" to "go", and change the button color from gray to blue. Alternatively, you can wrap the `ion-searchbar` in a `form` element with an `action` property. This will cause the keyboard to appear with a blue submit button that says "search".
 
 
 <!-- Auto Generated Below -->
