@@ -327,6 +327,8 @@ export class Refresher implements ComponentInterface {
             return;
           }
 
+          // TODO: moving refresher back up under header w/o letting go
+          // prevents you from pulling it back down again
           if (!ev.data.didStart) {
             ev.data.didStart = true;
 
@@ -357,11 +359,14 @@ export class Refresher implements ComponentInterface {
 
           writeTask(() => this.scrollEl!.style.removeProperty('--overflow'));
           if (this.progress <= 0.4) {
+            this.gesture!.enable(false);
+
             ev.data.animation
               .progressEnd(0, this.progress, 500)
               .onFinish(() => {
                 this.animations.forEach(ani => ani.destroy());
                 this.animations = [];
+                this.gesture!.enable(true);
               });
             return;
           }
