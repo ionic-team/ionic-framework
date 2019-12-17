@@ -6,7 +6,7 @@ import { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../i
 import { clamp } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
-import { createPullingAnimation, createSnapBackAnimation, getRefresherAnimationType, handleScrollWhilePulling, handleScrollWhileRefreshing, setSpinnerOpacity, shouldUseNativeRefresher, translateElement } from './refresher.utils';
+import { createPullingAnimation, createSnapBackAnimation, getRefresherAnimationType, handleScrollWhilePulling, handleScrollWhileRefreshing, setSpinnerOpacity, shouldUseNativeRefresher, transitionEndAsync, translateElement } from './refresher.utils';
 
 @Component({
   tag: 'ion-refresher',
@@ -150,13 +150,19 @@ export class Refresher implements ComponentInterface {
   private async resetNativeRefresher(el: HTMLElement | undefined, state: RefresherState) {
     this.state = state;
 
-    if (el !== undefined) {
+    if (getIonMode(this) === 'ios') {
       await translateElement(el, undefined);
+    } else {
+      await transitionEndAsync(this.el.querySelector('.refresher-refreshing-icon'));
     }
 
     this.didRefresh = false;
     this.needsCompletion = false;
     this.pointerDown = false;
+    this.animations.forEach(ani => ani.destroy());
+    this.animations = [];
+    this.progress = 0;
+
     this.state = RefresherState.Inactive;
   }
 
@@ -443,19 +449,7 @@ export class Refresher implements ComponentInterface {
     // Do not reset scroll el until user removes pointer from screen
     if (this.pointerDown) { return; }
 
-    if (getIonMode(this) === 'ios') {
-      this.resetNativeRefresher(this.elementToTransform, RefresherState.Completing);
-    } else {
-      // TODO
-      this.state = RefresherState.Completing;
-      this.animations.forEach(ani => ani.destroy());
-      this.animations = [];
-
-      setTimeout(() => {
-        this.state = RefresherState.Inactive;
-        this.progress = 0;
-      }, 250);
-    }
+    this.resetNativeRefresher(this.elementToTransform, RefresherState.Completing);
   }
 
   /**

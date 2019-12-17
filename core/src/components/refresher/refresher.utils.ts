@@ -128,20 +128,44 @@ export const handleScrollWhileRefreshing = (
 };
 
 export const translateElement = (el?: HTMLElement, value?: string) => {
+  if (!el) { return Promise.resolve(); }
+
+  const trans = transitionEndAsync(el);
+
+  writeTask(() => {
+    el.style.setProperty('transition', '0.2s all ease-out');
+
+    if (value === undefined) {
+      el.style.removeProperty('transform');
+    } else {
+      el.style.setProperty('transform', `translate3d(0px, ${value}, 0px)`);
+    }
+  });
+
+  return trans;
+};
+
+// Utils
+// -----------------------------
+
+export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, mode: string) => {
+  const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
+  const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
+
+  return (
+    pullingSpinner !== null &&
+    refreshingSpinner !== null &&
+    (
+      (mode === 'ios' && isPlatform('mobile') && referenceEl.contentId !== undefined) ||
+      mode === 'md'
+    )
+
+  );
+};
+
+export const transitionEndAsync = (el: HTMLElement | null) => {
   return new Promise(resolve => {
-    if (!el) { return resolve(); }
-
     transitionEnd(el, resolve);
-
-    writeTask(() => {
-      el.style.setProperty('transition', '0.2s all ease-out');
-
-      if (value === undefined) {
-        el.style.removeProperty('transform');
-      } else {
-        el.style.setProperty('transform', `translate3d(0px, ${value}, 0px)`);
-      }
-    });
   });
 };
 
@@ -173,22 +197,4 @@ const transitionEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) 
   }
 
   return unregister;
-};
-
-// Utils
-// -----------------------------
-
-export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, mode: string) => {
-  const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
-  const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
-
-  return (
-    pullingSpinner !== null &&
-    refreshingSpinner !== null &&
-    (
-      (mode === 'ios' && isPlatform('mobile') && referenceEl.contentId !== undefined) ||
-      mode === 'md'
-    )
-
-  );
 };
