@@ -48,8 +48,8 @@ export class Refresher implements ComponentInterface {
   /**
    * The minimum distance the user must pull down until the
    * refresher will go into the `refreshing` state.
-   * Does not apply when the refresher has a `contentId` and the refresher
-   * content uses a spinner, enabling the native refresher.
+   * Does not apply when the refresher content uses a spinner,
+   * enabling the native refresher.
    */
   @Prop() pullMin = 60;
 
@@ -57,22 +57,22 @@ export class Refresher implements ComponentInterface {
    * The maximum distance of the pull until the refresher
    * will automatically go into the `refreshing` state.
    * Defaults to the result of `pullMin + 60`.
-   * Does not apply when the refresher has a `contentId` and the refresher
-   * content uses a spinner, enabling the native refresher.
+   * Does not apply when  the refresher content uses a spinner,
+   * enabling the native refresher.
    */
   @Prop() pullMax: number = this.pullMin + 60;
 
   /**
    * Time it takes to close the refresher.
-   * Does not apply when the refresher has a `contentId` and the refresher
-   * content uses a spinner, enabling the native refresher.
+   * Does not apply when the refresher content uses a spinner,
+   * enabling the native refresher.
    */
   @Prop() closeDuration = '280ms';
 
   /**
    * Time it takes the refresher to to snap back to the `refreshing` state.
-   * Does not apply when the refresher has a `contentId` and the refresher
-   * content uses a spinner, enabling the native refresher.
+   * Does not apply when the refresher content uses a spinner,
+   * enabling the native refresher.
    */
   @Prop() snapbackDuration = '280ms';
 
@@ -87,16 +87,10 @@ export class Refresher implements ComponentInterface {
    * (an increase of 20 percent). If the value passed is `0.8`, the dragged amount
    * will be `8` pixels, less than the amount the cursor has moved.
    *
-   * Does not apply when the refresher has a `contentId` and the refresher
-   * content uses a spinner, enabling the native refresher.
+   * Does not apply when the refresher content uses a spinner,
+   * enabling the native refresher.
    */
   @Prop() pullFactor = 1;
-
-  /**
-   * The ID of the content to be refreshed. Only used with native refreshers
-   * where a spinner is passed to the content.
-   */
-  @Prop() contentId?: string;
 
   /**
    * If `true`, the refresher will be hidden.
@@ -166,12 +160,7 @@ export class Refresher implements ComponentInterface {
     const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLElement;
     const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner') as HTMLElement;
 
-    this.elementToTransform = contentEl.querySelector(`#${this.contentId}`) as HTMLElement | undefined;
-    if (this.elementToTransform === undefined) {
-      console.error('The native style refresher must have a contentId.');
-      return;
-    }
-
+    this.elementToTransform = this.scrollEl!.querySelector(`#scroll-content`) as HTMLElement | undefined;
     this.nativeRefresher = true;
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
     const MAX_PULL = this.scrollEl!.clientHeight * 0.16;

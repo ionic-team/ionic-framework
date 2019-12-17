@@ -36,7 +36,6 @@ export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, m
   return (
     pullingSpinner !== null &&
     refreshingSpinner !== null &&
-    referenceEl.contentId !== undefined &&
     mode === 'ios' &&
     isPlatform('mobile')
   );

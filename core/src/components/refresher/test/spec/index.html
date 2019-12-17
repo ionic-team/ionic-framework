@@ -30,25 +30,22 @@
     </ion-header>
 
     <ion-content>
-      <ion-refresher id="refresher" slot="fixed" content-id="my-content">
+      <ion-refresher id="refresher" slot="fixed">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <div id="my-content">
-        <ion-header collapse="condense">
-          <ion-toolbar>
-            <ion-title size="large">All Inboxes</ion-title>
-          </ion-toolbar>
-          <ion-toolbar>
-            <ion-searchbar></ion-searchbar>
-          </ion-toolbar>
-        </ion-header>
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">All Inboxes</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar></ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
 
-        <ion-list id="list"></ion-list>
-      </div>
+      <ion-list id="list"></ion-list>
     </ion-content>
   </ion-app>
-  <ion-menu-controller></ion-menu-controller>
 
   <script>
 
