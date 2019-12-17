@@ -24,10 +24,10 @@ const convertHyphenToCamelCase = (str: string) => {
   return str.replace(/-([a-z])/ig, g => g[1].toUpperCase());
 };
 
-let animationPrefix: string | null = null;
+let animationPrefix: string | undefined;
 
 export const getAnimationPrefix = (el: HTMLElement): string => {
-  if (animationPrefix === null) {
+  if (animationPrefix === undefined) {
     const supportsUnprefixed = (el.style as any).animationName !== undefined;
     const supportsWebkitPrefix = (el.style as any).webkitAnimationName !== undefined;
     animationPrefix = (!supportsUnprefixed && supportsWebkitPrefix) ? '-webkit-' : '';
