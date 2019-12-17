@@ -8,6 +8,14 @@ Data should be modified during the refresher's output events. Once the async
 operation has completed and the refreshing should end, call `complete()` on the
 refresher.
 
+### Native Refreshers
+
+Both iOS and Android platforms provide refreshers that take advantage of properties exposed by their respective devices that give pull to refresh a fluid, native-like feel. One of the limitations of this is that the refreshers only work on their respective platform devices. For example, the iOS native `ion-refresher` works on an iPhone in iOS mode, but does not work on an Android device in iOS mode.
+
+#### iOS Usage
+
+Using the iOS native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. The  `pullingIcon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page.
+
 
 
 <!-- Auto Generated Below -->
@@ -67,39 +75,6 @@ export class RefresherExample {
 }
 ```
 
-### Native Refreshers
-
-Both iOS and Android platforms provide refreshers that take advantage of properties exposed by their respective devices that give pull to refresh a fluid, native-like feel. One of the limitations of this is that the refreshers only work on their respective platform devices. For example, the iOS native `ion-refresher` works on an iPhone in iOS mode, but does not work on an Android device in iOS mode.
-
-#### iOS Usage
-
-```html
-<ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">All Inboxes</ion-title>
-    </ion-toolbar>
-    <ion-toolbar>
-      <ion-searchbar></ion-searchbar>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-list>
-  ...
-  </ion-list>
-</ion-content>
-```
-
-Using the iOS native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page.
-
-#### Android Usage
-
-Coming soon!
-
 
 ### Javascript
 
@@ -130,39 +105,6 @@ Coming soon!
   </ion-refresher>
 </ion-content>
 ```
-
-### Native Refreshers
-
-Both iOS and Android modes provide refreshers that take advantage of properties exposed by their respective devices that give pull to refresh a fluid, native-like feel. One of the limitations of this is that the refreshers only work on their respective platform devices. For example, the iOS native `ion-refresher` works on an iPhone in iOS mode, but does not work on an Android device in iOS mode.
-
-#### iOS Usage
-
-```html
-<ion-content>
-  <ion-refresher slot="fixed">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">All Inboxes</ion-title>
-    </ion-toolbar>
-    <ion-toolbar>
-      <ion-searchbar></ion-searchbar>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-list>
-  ...
-  </ion-list>
-</ion-content>
-```
-
-Using the iOS native `ion-refresher` requires setting the `pulling-icon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pulling-icon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page.
-
-#### Android Usage
-
-Coming soon!
 
 
 ### React
@@ -213,44 +155,6 @@ export const RefresherExample: React.FC = () => (
 
 ```
 
-### Native Refreshers
-
-Both iOS and Android modes provide refreshers that take advantage of properties exposed by their respective devices that give pull to refresh a fluid, native-like feel. One of the limitations of this is that the refreshers only work on their respective platform devices. For example, the iOS native `IonRefresher` works on an iPhone in iOS mode, but does not work on an Android device in iOS mode.
-
-#### iOS Usage
-
-```tsx
-import React from 'react';
-import { IonContent, IonHeader, IonList, IonRefresher, IonRefresherContent, IonTitle, IonToolbar } from '@ionic/react';
-
-export const RefresherExample: React.FC = () => (
-  <IonContent>
-    <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
-      <IonRefresherContent></IonRefresherContent>
-    </IonRefresher>
-    
-    <IonHeader collapse="condense">
-      <IonToolbar>
-        <IonTitle size="large">All Inboxes</IonTitle>
-      </IonToolbar>
-      <IonToolbarr>
-        <IonSearchbar></IonSearchbar>
-      </IonToolbar>
-    </IonHeader>
-
-    <IonList>
-    ...
-    </IonList>
-  </IonContent>
-);
-```
-
-Using the iOS native `IonRefresher` requires setting the `pullingIcon` property on `IonRefresherContent` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page.
-
-#### Android Usage
-
-Coming soon!
-
 
 ### Vue
 
@@ -300,39 +204,6 @@ Coming soon!
   }
 </script>
 ```
-
-### Native Refreshers
-
-Both iOS and Android modes provide refreshers that take advantage of properties exposed by their respective devices that give pull to refresh a fluid, native-like feel. One of the limitations of this is that the refreshers only work on their respective platform devices. For example, the iOS native `ion-refresher` works on an iPhone in iOS mode, but does not work on an Android device in iOS mode.
-
-#### iOS Usage
-
-```html
-<ion-content>
-  <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">All Inboxes</ion-title>
-    </ion-toolbar>
-    <ion-toolbar>
-      <ion-searchbar></ion-searchbar>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-list>
-  ...
-  </ion-list>
-</ion-content>
-```
-
-Using the iOS native `ion-refresher` requires setting the `pulling-icon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pulling-icon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page.
-
-#### Android Usage
-
-Coming soon!
 
 
 
