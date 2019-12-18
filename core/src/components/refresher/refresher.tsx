@@ -360,6 +360,7 @@ export class Refresher implements ComponentInterface {
                 this.animations.forEach(ani => ani.destroy());
                 this.animations = [];
                 this.gesture!.enable(true);
+                this.state = RefresherState.Inactive;
               });
             return;
           }
