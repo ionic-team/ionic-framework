@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { SpinnerTypes } from '../../interface';
+import { isPlatform } from '../../utils/platform';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { SPINNERS } from '../spinner/spinner-configs';
 
@@ -50,7 +51,7 @@ export class RefresherContent implements ComponentInterface {
       const mode = getIonMode(this);
       this.pullingIcon = config.get(
         'refreshingIcon',
-        mode === 'ios' ? config.get('spinner', 'lines') : 'circular'
+        mode === 'ios' && isPlatform('mobile') ? config.get('spinner', 'lines') : 'circular'
       );
     }
     if (this.refreshingSpinner === undefined) {

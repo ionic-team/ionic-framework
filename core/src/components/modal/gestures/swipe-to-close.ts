@@ -5,11 +5,7 @@ import { clamp } from '../../../utils/helpers';
 
 // Defaults for the card swipe animation
 export const SwipeToCloseDefaults = {
-  MIN_BACKDROP_OPACITY: 0.4,
-  MIN_PRESENTING_SCALE: 0.95,
-  MIN_Y_CARD: 44,
-  MIN_Y_FULLSCREEN: 0,
-  MIN_PRESENTING_Y: 0
+  MIN_PRESENTING_SCALE: 0.93,
 };
 
 export const createSwipeToCloseGesture = (
@@ -70,16 +66,20 @@ export const createSwipeToCloseGesture = (
     const duration = (shouldComplete) ? computeDuration(step * height, velocity) : computeDuration((1 - step) * height, velocity);
     isOpen = shouldComplete;
 
+    gesture.enable(false);
+
     animation
       .onFinish(() => {
         if (shouldComplete) {
           onDismiss();
+        } else {
+          gesture.enable(true);
         }
       })
       .progressEnd((shouldComplete) ? 1 : 0, newStepValue, duration);
   };
 
-  return createGesture({
+  const gesture = createGesture({
     el,
     gestureName: 'modalSwipeToClose',
     gesturePriority: 40,
@@ -90,8 +90,9 @@ export const createSwipeToCloseGesture = (
     onMove,
     onEnd
   });
+  return gesture;
 };
 
 const computeDuration = (remaining: number, velocity: number) => {
-  return clamp(100, remaining / Math.abs(velocity * 1.1), 400);
+  return clamp(400, remaining / Math.abs(velocity * 1.1), 500);
 };

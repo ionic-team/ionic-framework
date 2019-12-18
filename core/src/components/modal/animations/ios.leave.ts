@@ -18,7 +18,7 @@ export const iosLeaveAnimation = (
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelector('.modal-wrapper')!)
     .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', `translateY(0%)`, 'translateY(100%)');
+    .fromTo('transform', 'translateY(0%)', 'translateY(100%)');
 
   const baseAnimation = createAnimation()
     .addElement(baseEl)
@@ -27,7 +27,7 @@ export const iosLeaveAnimation = (
     .addAnimation([backdropAnimation, wrapperAnimation]);
 
   if (presentingEl) {
-    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? 40 : 0;
+    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-10px' : 'calc(var(--ion-safe-area-top) + 10px)';
     const bodyEl = document.body;
     const currentPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const presentingAnimation = createAnimation()
@@ -44,7 +44,7 @@ export const iosLeaveAnimation = (
         }
       })
       .keyframes([
-        { offset: 0, transform: `translateY(${-modalTransform}px) scale(${currentPresentingScale})`, 'border-radius': '10px 10px 0 0' },
+        { offset: 0, transform: `translateY(${modalTransform}) scale(${currentPresentingScale})`, 'border-radius': '10px 10px 0 0' },
         { offset: 1, transform: 'translateY(0px) scale(1)', 'border-radius': '0px' }
       ]);
 

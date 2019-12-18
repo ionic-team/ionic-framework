@@ -30,6 +30,7 @@
     </ion-header>
 
     <ion-content>
+<<<<<<< HEAD
       <ion-refresher id="refresher" slot="fixed" content-id="my-content">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
@@ -82,12 +83,34 @@
       }
     }
 
+=======
+      <ion-refresher id="refresher" slot="fixed">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">All Inboxes</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar></ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-list id="list"></ion-list>
+    </ion-content>
+  </ion-app>
+
+  <script>
+
+>>>>>>> origin/master
     let items = [];
     for (var i = 0; i < 30; i++) {
       items.push(i + 1);
     }
     const list = document.getElementById('list');
     const refresher = document.getElementById('refresher');
+<<<<<<< HEAD
 
     refresher.addEventListener('ionPull', () => {
       console.log('ionPull');
@@ -97,6 +120,17 @@
       console.log('ionStart');
     });
 
+=======
+    
+    refresher.addEventListener('ionPull', () => {
+      console.log('ionPull');
+    });
+    
+    refresher.addEventListener('ionStart', () => {
+      console.log('ionStart');
+    });
+    
+>>>>>>> origin/master
     refresher.addEventListener('ionRefresh', async function () {
       console.log('Loading data...');
       const data = await getAsyncData();
@@ -118,10 +152,17 @@
         setTimeout(() => {
           let data = [];
           for (var i = 0; i < 30; i++) {
+<<<<<<< HEAD
             //data.push(i);
           }
           resolve(data);
         }, 3000);
+=======
+            data.push(i);
+          }
+          resolve(data);
+        }, 5000);
+>>>>>>> origin/master
       });
     }
     render();

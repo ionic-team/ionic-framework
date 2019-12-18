@@ -8,6 +8,16 @@ Data should be modified during the refresher's output events. Once the async
 operation has completed and the refreshing should end, call `complete()` on the
 refresher.
 
+### Native Refreshers
+
+Both iOS and Android platforms provide refreshers that take advantage of properties exposed by their respective devices that give pull to refresh a fluid, native-like feel. One of the limitations of this is that the refreshers only work on their respective platform devices. For example, the iOS native `ion-refresher` works on an iPhone in iOS mode, but does not work on an Android device in iOS mode. In order for the refresher to work on an unsupported device, we provide a fallback refresher. This can also be set manually by overriding the `pullingIcon` property.
+
+Because much of the native refreshers are based on scrolling, certain properties such as `pullMin` and `snapbackDuration` are not compatible. See [ion-refresher Properties](#properties) for more information.
+
+#### iOS Usage
+
+Using the iOS native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](../spinner#properties) for accepted values. The  `pullingIcon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page. In order for the refresher to work on a device that isn't an iOS mobile device, the `pullingIcon` should be set to an icon.
+
 
 
 <!-- Auto Generated Below -->
@@ -67,62 +77,6 @@ export class RefresherExample {
 }
 ```
 
-### Native Refreshers
-
-Both iOS and Android platforms provide refreshers that take advantage of properties exposed by their respective devices that give pull to refresh a fluid, native-like feel. One of the limitations of this is that the refreshers only work on their respective platform devices. For example, the iOS native `ion-refresher` works on an iPhone in iOS mode, but does not work on an Android device in iOS mode.
-
-#### iOS Usage
-
-```html
-<ion-content>
-  <ion-refresher slot="fixed" contentId="my-content" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <div id="my-content">
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-title size="large">All Inboxes</ion-title>
-      </ion-toolbar>
-      <ion-toolbar>
-        <ion-searchbar></ion-searchbar>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-list>
-    ...
-    </ion-list>
-  </div>
-</ion-content>
-```
-
-Using the iOS native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page. Additionally, a `contentId` value must be provided to `ion-refresher`. This corresponds to all elements inside `ion-content` except for `ion-refresher`. This allows for consistent theming while still taking full advantage of the native refresher.
-
-#### Android Usage
-
-```html
-<ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">All Inboxes</ion-title>
-    </ion-toolbar>
-    <ion-toolbar>
-      <ion-searchbar></ion-searchbar>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-list>
-  ...
-  </ion-list>
-</ion-content>
-```
-
-Using the MD native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
-
 
 ### Javascript
 
@@ -153,62 +107,6 @@ Using the MD native `ion-refresher` requires setting the `pullingIcon` property 
   </ion-refresher>
 </ion-content>
 ```
-
-### Native Refreshers
-
-Both iOS and Android modes provide refreshers that take advantage of properties exposed by their respective devices that give pull to refresh a fluid, native-like feel. One of the limitations of this is that the refreshers only work on their respective platform devices. For example, the iOS native `ion-refresher` works on an iPhone in iOS mode, but does not work on an Android device in iOS mode.
-
-#### iOS Usage
-
-```html
-<ion-content>
-  <ion-refresher slot="fixed" content-id="my-content">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <div id="my-content">
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-title size="large">All Inboxes</ion-title>
-      </ion-toolbar>
-      <ion-toolbar>
-        <ion-searchbar></ion-searchbar>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-list>
-    ...
-    </ion-list>
-  </div>
-</ion-content>
-```
-
-Using the iOS native `ion-refresher` requires setting the `pulling-icon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pulling-icon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page. Additionally, a `content-id` value must be provided to `ion-refresher`. This corresponds to all elements inside `ion-content` except for `ion-refresher`. This allows for consistent theming while still taking full advantage of the native refresher.
-
-#### Android Usage
-
-```html
-<ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">All Inboxes</ion-title>
-    </ion-toolbar>
-    <ion-toolbar>
-      <ion-searchbar></ion-searchbar>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-list>
-  ...
-  </ion-list>
-</ion-content>
-```
-
-Using the MD native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
 
 
 ### React
@@ -256,75 +154,7 @@ export const RefresherExample: React.FC = () => (
     </IonContent>
   </IonContent>
 );
-
 ```
-
-### Native Refreshers
-
-Both iOS and Android modes provide refreshers that take advantage of properties exposed by their respective devices that give pull to refresh a fluid, native-like feel. One of the limitations of this is that the refreshers only work on their respective platform devices. For example, the iOS native `IonRefresher` works on an iPhone in iOS mode, but does not work on an Android device in iOS mode.
-
-#### iOS Usage
-
-```tsx
-import React from 'react';
-import { IonContent, IonHeader, IonList, IonRefresher, IonRefresherContent, IonTitle, IonToolbar } from '@ionic/react';
-
-export const RefresherExample: React.FC = () => (
-  <IonContent>
-    <IonRefresher slot="fixed" contentId="my-content" onIonRefresh={doRefresh}>
-      <IonRefresherContent></IonRefresherContent>
-    </IonRefresher>
-    
-    <div id="my-content">
-      <IonHeader collapse="condense">
-        <IonToolbar>
-          <IonTitle size="large">All Inboxes</IonTitle>
-        </IonToolbar>
-        <IonToolbarr>
-          <IonSearchbar></IonSearchbar>
-        </IonToolbar>
-      </IonHeader>
-  
-      <IonList>
-      ...
-      </IonList>
-    </div>
-  </IonContent>
-);
-```
-
-Using the iOS native `IonRefresher` requires setting the `pullingIcon` property on `IonRefresherContent` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page. Additionally, a `contentId` value must be provided to `IonRefresher`. This corresponds to all elements inside `IonContent` except for `IonRefresher`. This allows for consistent theming while still taking full advantage of the native refresher.
-
-#### Android Usage
-
-```html
-import React from 'react';
-import { IonContent, IonHeader, IonList, IonRefresher, IonRefresherContent, IonTitle, IonToolbar } from '@ionic/react';
-
-export const RefresherExample: React.FC = () => (
-  <IonContent>
-    <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
-      <IonRefresherContent></IonRefresherContent>
-    </IonRefresher>
-    
-    <IonHeader collapse="condense">
-      <IonToolbar>
-        <IonTitle size="large">All Inboxes</IonTitle>
-      </IonToolbar>
-      <IonToolbarr>
-        <IonSearchbar></IonSearchbar>
-      </IonToolbar>
-    </IonHeader>
-
-    <IonList>
-    ...
-    </IonList>
-  </IonContent>
-);
-
-```
-
-Using the MD native `IonRefresher` requires setting the `pullingIcon` property on `IonRefresherContent` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
 
 
 ### Vue
@@ -376,75 +206,19 @@ Using the MD native `IonRefresher` requires setting the `pullingIcon` property o
 </script>
 ```
 
-### Native Refreshers
-
-Both iOS and Android modes provide refreshers that take advantage of properties exposed by their respective devices that give pull to refresh a fluid, native-like feel. One of the limitations of this is that the refreshers only work on their respective platform devices. For example, the iOS native `ion-refresher` works on an iPhone in iOS mode, but does not work on an Android device in iOS mode.
-
-#### iOS Usage
-
-```html
-<ion-content>
-  <ion-refresher slot="fixed" content-id="my-content" @ionRefresh="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <div id="my-content">
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-title size="large">All Inboxes</ion-title>
-      </ion-toolbar>
-      <ion-toolbar>
-        <ion-searchbar></ion-searchbar>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-list>
-    ...
-    </ion-list>
-  </div>
-</ion-content>
-```
-
-Using the iOS native `ion-refresher` requires setting the `pulling-icon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pulling-icon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page. Additionally, a `content-id` value must be provided to `ion-refresher`. This corresponds to all elements inside `ion-content` except for `ion-refresher`. This allows for consistent theming while still taking full advantage of the native refresher.
-
-#### Android Usage
-
-```html
-<ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">All Inboxes</ion-title>
-    </ion-toolbar>
-    <ion-toolbar>
-      <ion-searchbar></ion-searchbar>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-list>
-  ...
-  </ion-list>
-</ion-content>
-```
-
-Using the MD native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
-
 
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Type                  | Default             |
-| ------------------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------------- |
-| `closeDuration`    | `close-duration`    | Time it takes to close the refresher. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `string`              | `'280ms'`           |
-| `contentId`        | `content-id`        | The ID of the content to be refreshed. Only used with native refreshers where a spinner is passed to the content.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string \| undefined` | `undefined`         |
-| `disabled`         | `disabled`          | If `true`, the refresher will be hidden.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `boolean`             | `false`             |
-| `pullFactor`       | `pull-factor`       | How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher. | `number`              | `1`                 |
-| `pullMax`          | `pull-max`          | The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.                                                                                                                                                                                                                                                                                                                                                                                                                                                      | `number`              | `this.pullMin + 60` |
-| `pullMin`          | `pull-min`          | The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `number`              | `60`                |
-| `snapbackDuration` | `snapback-duration` | Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher has a `contentId` and the refresher content uses a spinner, enabling the native refresher.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `string`              | `'280ms'`           |
+| Property           | Attribute           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Type                  | Default             |
+| ------------------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------------- |
+| `closeDuration`    | `close-duration`    | Time it takes to close the refresher. Does not apply when the refresher content uses a spinner, enabling the native refresher.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `string`              | `'280ms'`           |
+| `contentId`        | `content-id`        | The ID of the content to be refreshed. Only used with native refreshers where a spinner is passed to the content.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | `string \| undefined` | `undefined`         |
+| `disabled`         | `disabled`          | If `true`, the refresher will be hidden.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `boolean`             | `false`             |
+| `pullFactor`       | `pull-factor`       | How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher content uses a spinner, enabling the native refresher. | `number`              | `1`                 |
+| `pullMax`          | `pull-max`          | The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`. Does not apply when  the refresher content uses a spinner, enabling the native refresher.                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `number`              | `this.pullMin + 60` |
+| `pullMin`          | `pull-min`          | The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `number`              | `60`                |
+| `snapbackDuration` | `snapback-duration` | Time it takes the refresher to to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `string`              | `'280ms'`           |
 
 
 ## Events
