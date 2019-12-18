@@ -95,12 +95,6 @@ export class Refresher implements ComponentInterface {
   @Prop() pullFactor = 1;
 
   /**
-   * The ID of the content to be refreshed. Only used with native refreshers
-   * where a spinner is passed to the content.
-   */
-  @Prop() contentId?: string;
-
-  /**
    * If `true`, the refresher will be hidden.
    */
   @Prop() disabled = false;

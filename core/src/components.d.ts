@@ -1981,10 +1981,6 @@ export namespace Components {
     */
     'complete': () => Promise<void>;
     /**
-    * The ID of the content to be refreshed. Only used with native refreshers where a spinner is passed to the content.
-    */
-    'contentId'?: string;
-    /**
     * If `true`, the refresher will be hidden.
     */
     'disabled': boolean;
@@ -5221,10 +5217,6 @@ declare namespace LocalJSX {
     * Time it takes to close the refresher. Does not apply when the refresher content uses a spinner, enabling the native refresher.
     */
     'closeDuration'?: string;
-    /**
-    * The ID of the content to be refreshed. Only used with native refreshers where a spinner is passed to the content.
-    */
-    'contentId'?: string;
     /**
     * If `true`, the refresher will be hidden.
     */
