@@ -31,7 +31,7 @@
 
     <ion-content>
       <ion-refresher id="refresher" slot="fixed">
-        <ion-refresher-content pulling-text="asdasd'"></ion-refresher-content>
+        <ion-refresher-content\></ion-refresher-content>
       </ion-refresher>
 
       <ion-header collapse="condense">
@@ -48,6 +48,7 @@
   </ion-app>
 
   <script>
+    
     let items = [];
     for (var i = 0; i < 30; i++) {
       items.push(i + 1);
@@ -87,7 +88,7 @@
             data.push(i);
           }
           resolve(data);
-        }, 3000);
+        }, 5000);
       });
     }
     render();
