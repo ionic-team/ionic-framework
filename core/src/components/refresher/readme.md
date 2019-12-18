@@ -16,7 +16,7 @@ Because much of the native refreshers are based on scrolling, certain properties
 
 #### iOS Usage
 
-Using the iOS native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](https://ionicframework.com/docs/api/spinner#properties) for accepted values. The  `pullingIcon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page. In order for the refresher to work on a device that isn't an iOS mobile device, the `pullingIcon` should be set to an icon.
+Using the iOS native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](../spinner#properties) for accepted values. The  `pullingIcon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page. In order for the refresher to work on a device that isn't an iOS mobile device, the `pullingIcon` should be set to an icon.
 
 
 
