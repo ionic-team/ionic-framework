@@ -372,13 +372,8 @@ export class Refresher implements ComponentInterface {
             pullingRefresherIcon.style.setProperty('--ion-pulling-refresher-translate', `${(progress * 100)}px`);
             ev.data.animation.progressEnd();
             await snapBackAnimation.play();
-
-            this.state = RefresherState.Refreshing;
-
+            this.beginRefresh();
             ev.data.animation.destroy();
-            this.ionRefresh.emit({
-              complete: this.complete.bind(this)
-            });
           });
         }
       });
