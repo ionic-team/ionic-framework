@@ -49,14 +49,18 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
   } as HeaderIndex;
 };
 
-export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: HeaderIndex) => {
+export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: HeaderIndex, contentEl: HTMLElement) => {
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
     const scale = clamp(1, 1 + (-scrollTop / 500), 1.1);
 
-    writeTask(() => {
-      scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
-    });
+    // Native refresher should not cause titles to scale
+    const nativeRefresher = contentEl.querySelector('ion-refresher.refresher-native');
+    if (nativeRefresher === null) {
+      writeTask(() => {
+        scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
+      });
+    }
   });
 };
 

@@ -10,6 +10,8 @@ ion-refresher {
   width: 100%;
   height: $refresher-height;
 
+  pointer-events: none;
+
   z-index: $z-index-refresher;
 
   &.refresher-active {

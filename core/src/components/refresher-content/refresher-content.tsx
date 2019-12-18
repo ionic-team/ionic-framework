@@ -3,7 +3,9 @@ import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { SpinnerTypes } from '../../interface';
+import { isPlatform } from '../../utils/platform';
 import { sanitizeDOMString } from '../../utils/sanitization';
+import { SPINNERS } from '../spinner/spinner-configs';
 
 @Component({
   tag: 'ion-refresher-content'
@@ -11,9 +13,11 @@ import { sanitizeDOMString } from '../../utils/sanitization';
 export class RefresherContent implements ComponentInterface {
 
   /**
-   * A static icon to display when you begin to pull down
+   * A static icon or a spinner to display when you begin to pull down.
+   * A spinner name can be provided to gradually show tick marks
+   * when pulling down on iOS devices.
    */
-  @Prop({ mutable: true }) pullingIcon?: string | null;
+  @Prop({ mutable: true }) pullingIcon?: SpinnerTypes | string | null;
 
   /**
    * The text you want to display when you begin to pull down.
@@ -44,7 +48,11 @@ export class RefresherContent implements ComponentInterface {
 
   componentWillLoad() {
     if (this.pullingIcon === undefined) {
-      this.pullingIcon = config.get('refreshingIcon', 'arrow-down');
+      const mode = getIonMode(this);
+      this.pullingIcon = config.get(
+        'refreshingIcon',
+        mode === 'ios' && isPlatform('mobile') ? config.get('spinner', 'lines') : 'arrow-down'
+      );
     }
     if (this.refreshingSpinner === undefined) {
       const mode = getIonMode(this);
@@ -56,10 +64,17 @@ export class RefresherContent implements ComponentInterface {
   }
 
   render() {
+    const pullingIcon = this.pullingIcon;
+    const hasSpinner = pullingIcon != null && SPINNERS[pullingIcon] as any !== undefined;
     return (
       <Host class={getIonMode(this)}>
         <div class="refresher-pulling">
-          {this.pullingIcon &&
+          {this.pullingIcon && hasSpinner &&
+            <div class="refresher-pulling-icon">
+              <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
+            </div>
+          }
+          {this.pullingIcon && !hasSpinner &&
             <div class="refresher-pulling-icon">
               <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
             </div>
