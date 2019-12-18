@@ -237,10 +237,10 @@ export class Refresher implements ComponentInterface {
               if (!this.pointerDown) {
                 translateElement(this.elementToTransform, `${refresherHeight}px`);
               }
-            } else {
-              this.state = RefresherState.Pulling;
-              handleScrollWhilePulling(pullingSpinner, ticks, opacity, currentTickToShow);
             }
+          } else {
+            this.state = RefresherState.Pulling;
+            handleScrollWhilePulling(pullingSpinner, ticks, opacity, currentTickToShow);
           }
         });
       };
