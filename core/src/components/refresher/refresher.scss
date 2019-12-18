@@ -100,3 +100,12 @@ ion-refresher-content {
     transform: scale(0);
   }
 }
+
+// Refresher Native
+// --------------------------------------------------
+
+.refresher-native {
+  .refresher-pulling-text, .refresher-refreshing-text {
+    display: none;
+  }
+}

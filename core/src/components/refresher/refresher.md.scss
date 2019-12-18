@@ -39,15 +39,20 @@ ion-refresher.refresher-native {
 
     color: $refresher-md-native-spinner-color;
   }
-
-  // TODO clean this up
-  &.refresher-pulling .refresher-pulling,
-  &.refresher-pulling .refresher-pulling .refresher-pulling-icon,
-  &.refresher-refreshing .refresher-refreshing,
-  &.refresher-refreshing .refresher-refreshing .refresher-refreshing-icon,
-  &.refresher-completing .refresher-refreshing,
-  &.refresher-completing .refresher-refreshing .refresher-refreshing-icon {
-    display: flex;
+  
+  &.refresher-pulling ion-refresher-content,
+  &.refresher-ready ion-refresher-content {
+    .refresher-pulling {
+      display: flex;
+    }
+  }
+  
+  &.refresher-refreshing ion-refresher-content,
+  &.refresher-completing ion-refresher-content,
+  &.refresher-cancelling ion-refresher-content {
+    .refresher-refreshing {
+      display: flex;
+    }
   }
 
   .refresher-pulling-icon {
@@ -59,6 +64,8 @@ ion-refresher.refresher-native {
     @include margin(0, auto, 0, auto);
     @include border-radius(100%);
     @include padding(8px, 8px, 8px, 8px);
+    
+    display: flex;
 
     border: $refresher-md-native-spinner-border;
 
