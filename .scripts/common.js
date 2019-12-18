@@ -187,14 +187,13 @@ function preparePackage(tasks, package, version, install) {
 
     if (version) {
       projectTasks.push({
-         title: `${pkg.name}: update ionic/core dep to ${version}`,
-         task: () => {
-           updateDependency(pkg, '@ionic/core', version);
-           writePkg(package, pkg);
-         }
-       });
+        title: `${pkg.name}: update ionic/core dep to ${version}`,
+        task: () => {
+          updateDependency(pkg, '@ionic/core', version);
+          writePkg(package, pkg);
+        }
+      });
     }
-
   }
 
   // Add project tasks
