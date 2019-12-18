@@ -24,12 +24,25 @@ const convertHyphenToCamelCase = (str: string) => {
   return str.replace(/-([a-z])/ig, g => g[1].toUpperCase());
 };
 
+let animationPrefix: string | undefined;
+
+export const getAnimationPrefix = (el: HTMLElement): string => {
+  if (animationPrefix === undefined) {
+    const supportsUnprefixed = (el.style as any).animationName !== undefined;
+    const supportsWebkitPrefix = (el.style as any).webkitAnimationName !== undefined;
+    animationPrefix = (!supportsUnprefixed && supportsWebkitPrefix) ? '-webkit-' : '';
+  }
+  return animationPrefix;
+};
+
 export const setStyleProperty = (element: HTMLElement, propertyName: string, value: string | null) => {
-  element.style.setProperty(propertyName, value);
+  const prefix = propertyName.startsWith('animation') ? getAnimationPrefix(element) : '';
+  element.style.setProperty(prefix + propertyName, value);
 };
 
 export const removeStyleProperty = (element: HTMLElement, propertyName: string) => {
-  element.style.removeProperty(propertyName);
+  const prefix = propertyName.startsWith('animation') ? getAnimationPrefix(element) : '';
+  element.style.removeProperty(prefix + propertyName);
 };
 
 export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
@@ -94,6 +107,7 @@ export const getStyleContainer = (element: HTMLElement) => {
 
 export const createKeyframeStylesheet = (keyframeName: string, keyframeRules: string, element: HTMLElement): HTMLElement => {
   const styleContainer = getStyleContainer(element);
+  const keyframePrefix = getAnimationPrefix(element);
 
   const existingStylesheet = styleContainer.querySelector('#' + keyframeName);
   if (existingStylesheet) {
@@ -102,7 +116,7 @@ export const createKeyframeStylesheet = (keyframeName: string, keyframeRules: st
 
   const stylesheet = (element.ownerDocument || document).createElement('style');
   stylesheet.id = keyframeName;
-  stylesheet.textContent = `@keyframes ${keyframeName} { ${keyframeRules} } @keyframes ${keyframeName}-alt { ${keyframeRules} }`;
+  stylesheet.textContent = `@${keyframePrefix}keyframes ${keyframeName} { ${keyframeRules} } @${keyframePrefix}keyframes ${keyframeName}-alt { ${keyframeRules} }`;
 
   styleContainer.appendChild(stylesheet);
 
