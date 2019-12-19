@@ -294,6 +294,7 @@ export class Refresher implements ComponentInterface {
         // inside of the pulling spinner so that the arrow
         // can fade in. It also might be possible to just have it sit inside
         // of ion-refresher-content, but I haven't tried that yet
+/*
         const container = document.createElement('div');
         container.style.setProperty('width', '100%');
         container.style.setProperty('height', '100%');
@@ -304,6 +305,7 @@ export class Refresher implements ComponentInterface {
         icon.name = 'caret-back-sharp';
         container.appendChild(icon);
         pullingSpinner.shadowRoot!.appendChild(container);
+*/
       });
 
       this.gesture = (await import('../../utils/gesture')).createGesture({

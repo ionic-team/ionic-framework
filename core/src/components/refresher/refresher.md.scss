@@ -40,6 +40,23 @@ ion-refresher.refresher-native {
     color: $refresher-md-native-spinner-color;
   }
   
+  .spinner-arrow-container {
+    display: inherit;
+  }
+  
+  .arrow-container {
+    position: absolute;
+
+    width: 24px;
+    height: 24px;
+    ion-icon {
+      
+      color: $refresher-md-native-spinner-color;
+
+      font-size: 12px;
+    }
+  }
+  
   &.refresher-pulling ion-refresher-content,
   &.refresher-ready ion-refresher-content {
     .refresher-pulling {

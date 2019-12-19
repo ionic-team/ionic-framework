@@ -21,12 +21,23 @@ export const createPullingAnimation = (type: RefresherAnimationType, pullingSpin
 const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
   const spinner = pullingRefresherIcon.querySelector('ion-spinner') as HTMLElement;
   const circle = spinner!.shadowRoot!.querySelector('circle') as any;
-  const arrowContainer = spinner!.shadowRoot!.querySelector('.arrow-container') as HTMLElement;
-  const arrow = arrowContainer.querySelector('ion-icon') as HTMLIonIconElement;
+
+  const spinnerArrowContainer = pullingRefresherIcon.querySelector('.spinner-arrow-container') as HTMLElement;
+  const arrowContainer = pullingRefresherIcon!.querySelector('.arrow-container') as HTMLElement;
+  const arrow = arrowContainer!.querySelector('ion-icon') as HTMLElement;
 
   const baseAnimation = createAnimation()
     .duration(1000)
     .easing('ease-out');
+
+  const spinnerArrowContainerAnimation = createAnimation()
+    .addElement(spinnerArrowContainer)
+    .keyframes([
+      { offset: 0, opacity: '0.3' },
+      { offset: 0.45, opacity: '0.3' },
+      { offset: 0.55, opacity: '1' },
+      { offset: 1, opacity: '1' }
+    ]);
 
   const circleInnerAnimation = createAnimation()
     .addElement(circle)
@@ -40,31 +51,29 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
   const circleOuterAnimation = createAnimation()
     .addElement(spinner)
     .keyframes([
-      { offset: 0, opacity: '0.3', transform: 'rotate(-90deg)' },
-      { offset: 0.45, opacity: '0.3' },
-      { offset: 0.55, opacity: '1' },
-      { offset: 1, opacity: '1', transform: 'rotate(210deg)' }
+      { offset: 0, transform: 'rotate(-90deg)' },
+      { offset: 1, transform: 'rotate(210deg)' }
     ]);
 
   const arrowContainerAnimation = createAnimation()
     .addElement(arrowContainer)
     .keyframes([
-      { offset: 0, transform: 'rotate(-45deg)' },
-      { offset: 0.20, transform: 'rotate(-45deg)' },
-      { offset: 0.55, transform: 'rotate(190deg)' },
-      { offset: 1, transform: 'rotate(190deg)' }
+      { offset: 0, transform: 'rotate(0deg)' },
+      { offset: 0.30, transform: 'rotate(0deg)' },
+      { offset: 0.55, transform: 'rotate(280deg)' },
+      { offset: 1, transform: 'rotate(420deg)' }
     ]);
 
   const arrowAnimation = createAnimation()
     .addElement(arrow)
     .keyframes([
-      { offset: 0, transform: 'translate(6px, 0px) scale(0)' },
-      { offset: 0.25, transform: 'translate(6px, 0px) scale(0)' },
-      { offset: 0.55, transform: 'translate(-4px, 0px) scale(1)' },
-      { offset: 1, transform: 'translate(-4px, 0px) scale(1)' }
+      { offset: 0, opacity: 0, transform: 'translate(0px, 0px) scale(0)' },
+      { offset: 0.25, opacity: 0, transform: 'translate(0px, 0px) scale(0)' },
+      { offset: 0.55, opacity: 1, transform: 'translate(0px, 0px) scale(1)' },
+      { offset: 1, opacity: 1, transform: 'translate(0px, 0px) scale(1)' }
     ]);
 
-  return baseAnimation.addAnimation([arrowContainerAnimation, arrowAnimation, circleInnerAnimation, circleOuterAnimation]);
+  return baseAnimation.addAnimation([spinnerArrowContainerAnimation, arrowContainerAnimation, arrowAnimation, circleInnerAnimation, circleOuterAnimation]);
 };
 
 const createScaleAnimation = (pullingRefresherIcon: HTMLElement) => {
