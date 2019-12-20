@@ -160,6 +160,203 @@ export class Refresher implements ComponentInterface {
     this.state = RefresherState.Inactive;
   }
 
+  private async setupiOSNativeRefresher(pullingSpinner: HTMLIonSpinnerElement, refreshingSpinner: HTMLIonSpinnerElement) {
+    this.elementToTransform = this.scrollEl!.querySelector(`#scroll-content`) as HTMLElement | undefined;
+    const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
+    const MAX_PULL = this.scrollEl!.clientHeight * 0.16;
+    const NUM_TICKS = ticks.length;
+
+    writeTask(() => ticks.forEach(el => el.style.setProperty('animation', 'none')));
+
+    this.scrollListenerCallback = () => {
+      // If pointer is not on screen or refresher is not active, ignore scroll
+      if (!this.pointerDown && this.state === RefresherState.Inactive) { return; }
+
+      readTask(() => {
+        // PTR should only be active when overflow scrolling at the top
+        const scrollTop = this.scrollEl!.scrollTop;
+        const refresherHeight = this.el.clientHeight;
+
+        if (scrollTop > 0) {
+          /**
+           * If refresher is refreshing and user tries to scroll
+           * progressively fade refresher out/in
+           */
+          if (this.state === RefresherState.Refreshing) {
+            const ratio = clamp(0, scrollTop / (refresherHeight * 0.5), 1);
+            writeTask(() => setSpinnerOpacity(refreshingSpinner, 1 - ratio));
+            return;
+          }
+
+          writeTask(() => setSpinnerOpacity(pullingSpinner, 0));
+          return;
+        }
+
+        if (this.pointerDown) {
+          if (!this.didStart) {
+            this.didStart = true;
+            this.ionStart.emit();
+          }
+
+          // emit "pulling" on every move
+          if (this.pointerDown) {
+            this.ionPull.emit();
+          }
+        }
+
+        // delay showing the next tick marks until user has pulled 30px
+        const opacity = clamp(0, Math.abs(scrollTop) / refresherHeight, 0.99);
+        const pullAmount = this.progress = clamp(0, (Math.abs(scrollTop) - 30) / MAX_PULL, 1);
+        const currentTickToShow = clamp(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
+        const shouldShowRefreshingSpinner = this.state === RefresherState.Refreshing || currentTickToShow === NUM_TICKS - 1;
+
+        if (shouldShowRefreshingSpinner) {
+          if (this.pointerDown) {
+            handleScrollWhileRefreshing(refreshingSpinner, this.lastVelocityY);
+          }
+
+          if (!this.didRefresh) {
+            this.beginRefresh();
+            this.didRefresh = true;
+            hapticImpact({ style: 'light' });
+
+            /**
+             * Translate the content element otherwise when pointer is removed
+             * from screen the scroll content will bounce back over the refresher
+             */
+            if (!this.pointerDown) {
+              translateElement(this.elementToTransform, `${refresherHeight}px`);
+            }
+          }
+        } else {
+          this.state = RefresherState.Pulling;
+          handleScrollWhilePulling(pullingSpinner, ticks, opacity, currentTickToShow);
+        }
+      });
+    };
+
+    this.scrollEl!.addEventListener('scroll', this.scrollListenerCallback);
+
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+          el: this.scrollEl!,
+          gestureName: 'refresher',
+          gesturePriority: 10,
+          direction: 'y',
+          threshold: 0,
+          onStart: () => {
+            this.pointerDown = true;
+
+            if (!this.didRefresh) {
+              translateElement(this.elementToTransform, '0px');
+            }
+          },
+          onMove: ev => {
+            this.lastVelocityY = ev.velocityY;
+          },
+          onEnd: () => {
+            this.pointerDown = false;
+            this.didStart = false;
+
+            if (this.needsCompletion) {
+              this.resetNativeRefresher(this.elementToTransform, RefresherState.Completing);
+              this.needsCompletion = false;
+            } else if (this.didRefresh) {
+              readTask(() => translateElement(this.elementToTransform, `${this.el.clientHeight}px`));
+            }
+          },
+        });
+
+    this.disabledChanged();
+  }
+
+  private async setupMDNativeRefresher(contentEl: HTMLIonContentElement, pullingSpinner: HTMLIonSpinnerElement, refreshingSpinner: HTMLIonSpinnerElement) {
+    const circle = pullingSpinner.shadowRoot!.querySelector('circle');
+    const pullingRefresherIcon = this.el.querySelector('ion-refresher-content .refresher-pulling-icon') as HTMLElement;
+    const refreshingCircle = refreshingSpinner.shadowRoot!.querySelector('circle');
+
+    if (circle !== null && refreshingCircle !== null) {
+      writeTask(() => {
+        circle.style.setProperty('animation', 'none');
+        refreshingSpinner.style.setProperty('animation-delay', '-655ms');
+        refreshingCircle.style.setProperty('animation-delay', '-655ms');
+      });
+    }
+
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+      el: this.scrollEl!,
+      gestureName: 'refresher',
+      gesturePriority: 10,
+      direction: 'y',
+      threshold: 0,
+      canStart: () => this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing && this.scrollEl!.scrollTop === 0,
+      onStart: (ev: GestureDetail) => {
+        ev.data = { animation: undefined, didStart: false, cancelled: false };
+      },
+      onMove: (ev: GestureDetail) => {
+        if ((ev.velocityY <= 0 && this.progress === 0 && !ev.data.didStart) || ev.data.cancelled) {
+          ev.data.cancelled = true;
+          return;
+        }
+
+        if (!ev.data.didStart) {
+          ev.data.didStart = true;
+
+          this.state = RefresherState.Pulling;
+
+          writeTask(() => {
+            const animationType = getRefresherAnimationType(contentEl);
+            const animation = createPullingAnimation(animationType, pullingRefresherIcon);
+            ev.data.animation = animation;
+
+            this.scrollEl!.style.setProperty('--overflow', 'hidden');
+
+            animation.progressStart(false, 0);
+            this.ionStart.emit();
+            this.animations.push(animation);
+          });
+
+          return;
+        }
+
+        // Since we are using an easing curve, slow the gesture tracking down a bit
+        this.progress = clamp(0, (ev.deltaY / 180) * 0.5, 1);
+        ev.data.animation.progressStep(this.progress);
+        this.ionPull.emit();
+      },
+      onEnd: (ev: GestureDetail) => {
+        if (!ev.data.didStart) { return; }
+
+        writeTask(() => this.scrollEl!.style.removeProperty('--overflow'));
+        if (this.progress <= 0.4) {
+          this.gesture!.enable(false);
+
+          ev.data.animation
+            .progressEnd(0, this.progress, 500)
+            .onFinish(() => {
+              this.animations.forEach(ani => ani.destroy());
+              this.animations = [];
+              this.gesture!.enable(true);
+              this.state = RefresherState.Inactive;
+            });
+          return;
+        }
+
+        const progress = getTimeGivenProgression([0, 0], [0, 0], [1, 1], [1, 1], this.progress)[0];
+        const snapBackAnimation = createSnapBackAnimation(pullingRefresherIcon);
+        this.animations.push(snapBackAnimation);
+        writeTask(async () => {
+          pullingRefresherIcon.style.setProperty('--ion-pulling-refresher-translate', `${(progress * 100)}px`);
+          ev.data.animation.progressEnd();
+          await snapBackAnimation.play();
+          this.beginRefresh();
+          ev.data.animation.destroy();
+        });
+      }
+    });
+
+    this.disabledChanged();
+  }
+
   private async setupNativeRefresher(contentEl: HTMLIonContentElement | null) {
     if (this.scrollListenerCallback || !contentEl || this.nativeRefresher) {
       return;
@@ -167,202 +364,13 @@ export class Refresher implements ComponentInterface {
 
     this.nativeRefresher = true;
 
-    const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLElement;
-    const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner') as HTMLElement;
+    const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLIonSpinnerElement;
+    const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner') as HTMLIonSpinnerElement;
 
     if (getIonMode(this) === 'ios') {
-      this.elementToTransform = this.scrollEl!.querySelector(`#scroll-content`) as HTMLElement | undefined;
-      const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
-      const MAX_PULL = this.scrollEl!.clientHeight * 0.16;
-      const NUM_TICKS = ticks.length;
-
-      writeTask(() => ticks.forEach(el => el.style.setProperty('animation', 'none')));
-
-      this.scrollListenerCallback = () => {
-        // If pointer is not on screen or refresher is not active, ignore scroll
-        if (!this.pointerDown && this.state === RefresherState.Inactive) { return; }
-
-        readTask(() => {
-          // PTR should only be active when overflow scrolling at the top
-          const scrollTop = this.scrollEl!.scrollTop;
-          const refresherHeight = this.el.clientHeight;
-
-          if (scrollTop > 0) {
-            /**
-             * If refresher is refreshing and user tries to scroll
-             * progressively fade refresher out/in
-             */
-            if (this.state === RefresherState.Refreshing) {
-              const ratio = clamp(0, scrollTop / (refresherHeight * 0.5), 1);
-              writeTask(() => setSpinnerOpacity(refreshingSpinner, 1 - ratio));
-              return;
-            }
-
-            writeTask(() => setSpinnerOpacity(pullingSpinner, 0));
-            return;
-          }
-
-          if (this.pointerDown) {
-            if (!this.didStart) {
-              this.didStart = true;
-              this.ionStart.emit();
-            }
-
-            // emit "pulling" on every move
-            if (this.pointerDown) {
-              this.ionPull.emit();
-            }
-          }
-
-          // delay showing the next tick marks until user has pulled 30px
-          const opacity = clamp(0, Math.abs(scrollTop) / refresherHeight, 0.99);
-          const pullAmount = this.progress = clamp(0, (Math.abs(scrollTop) - 30) / MAX_PULL, 1);
-          const currentTickToShow = clamp(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
-          const shouldShowRefreshingSpinner = this.state === RefresherState.Refreshing || currentTickToShow === NUM_TICKS - 1;
-
-          if (shouldShowRefreshingSpinner) {
-            if (this.pointerDown) {
-              handleScrollWhileRefreshing(refreshingSpinner, this.lastVelocityY);
-            }
-
-            if (!this.didRefresh) {
-              this.beginRefresh();
-              this.didRefresh = true;
-              hapticImpact({ style: 'light' });
-
-              /**
-               * Translate the content element otherwise when pointer is removed
-               * from screen the scroll content will bounce back over the refresher
-               */
-              if (!this.pointerDown) {
-                translateElement(this.elementToTransform, `${refresherHeight}px`);
-              }
-            }
-          } else {
-            this.state = RefresherState.Pulling;
-            handleScrollWhilePulling(pullingSpinner, ticks, opacity, currentTickToShow);
-          }
-        });
-      };
-
-      this.scrollEl!.addEventListener('scroll', this.scrollListenerCallback);
-
-      this.gesture = (await import('../../utils/gesture')).createGesture({
-            el: this.scrollEl!,
-            gestureName: 'refresher',
-            gesturePriority: 10,
-            direction: 'y',
-            threshold: 0,
-            onStart: () => {
-              this.pointerDown = true;
-
-              if (!this.didRefresh) {
-                translateElement(this.elementToTransform, '0px');
-              }
-            },
-            onMove: ev => {
-              this.lastVelocityY = ev.velocityY;
-            },
-            onEnd: () => {
-              this.pointerDown = false;
-              this.didStart = false;
-
-              if (this.needsCompletion) {
-                this.resetNativeRefresher(this.elementToTransform, RefresherState.Completing);
-                this.needsCompletion = false;
-              } else if (this.didRefresh) {
-                readTask(() => translateElement(this.elementToTransform, `${this.el.clientHeight}px`));
-              }
-            },
-          });
-
-      this.disabledChanged();
+      this.setupiOSNativeRefresher(pullingSpinner, refreshingSpinner);
     } else {
-      const circle = pullingSpinner.shadowRoot!.querySelector('circle');
-      const pullingRefresherIcon = this.el.querySelector('ion-refresher-content .refresher-pulling-icon') as HTMLElement;
-      const refreshingCircle = refreshingSpinner.shadowRoot!.querySelector('circle');
-
-      if (circle !== null && refreshingCircle !== null) {
-        writeTask(() => {
-          circle.style.setProperty('animation', 'none');
-          refreshingSpinner.style.setProperty('animation-delay', '-655ms');
-          refreshingCircle.style.setProperty('animation-delay', '-655ms');
-        });
-      }
-
-      this.gesture = (await import('../../utils/gesture')).createGesture({
-        el: this.scrollEl!,
-        gestureName: 'refresher',
-        gesturePriority: 10,
-        direction: 'y',
-        threshold: 0,
-        canStart: () => this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing && this.scrollEl!.scrollTop === 0,
-        onStart: (ev: GestureDetail) => {
-          ev.data = { animation: undefined, didStart: false, cancelled: false };
-        },
-        onMove: (ev: GestureDetail) => {
-          if ((ev.velocityY <= 0 && this.progress === 0 && !ev.data.didStart) || ev.data.cancelled) {
-            ev.data.cancelled = true;
-            return;
-          }
-
-          if (!ev.data.didStart) {
-            ev.data.didStart = true;
-
-            this.state = RefresherState.Pulling;
-
-            writeTask(() => {
-              const animationType = getRefresherAnimationType(contentEl);
-              const animation = createPullingAnimation(animationType, pullingRefresherIcon);
-              ev.data.animation = animation;
-
-              this.scrollEl!.style.setProperty('--overflow', 'hidden');
-
-              animation.progressStart(false, 0);
-              this.ionStart.emit();
-              this.animations.push(animation);
-            });
-
-            return;
-          }
-
-          // Since we are using an easing curve, slow the gesture tracking down a bit
-          this.progress = clamp(0, (ev.deltaY / 180) * 0.5, 1);
-          ev.data.animation.progressStep(this.progress);
-          this.ionPull.emit();
-        },
-        onEnd: (ev: GestureDetail) => {
-          if (!ev.data.didStart) { return; }
-
-          writeTask(() => this.scrollEl!.style.removeProperty('--overflow'));
-          if (this.progress <= 0.4) {
-            this.gesture!.enable(false);
-
-            ev.data.animation
-              .progressEnd(0, this.progress, 500)
-              .onFinish(() => {
-                this.animations.forEach(ani => ani.destroy());
-                this.animations = [];
-                this.gesture!.enable(true);
-                this.state = RefresherState.Inactive;
-              });
-            return;
-          }
-
-          const progress = getTimeGivenProgression([0, 0], [0, 0], [1, 1], [1, 1], this.progress)[0];
-          const snapBackAnimation = createSnapBackAnimation(pullingRefresherIcon);
-          this.animations.push(snapBackAnimation);
-          writeTask(async () => {
-            pullingRefresherIcon.style.setProperty('--ion-pulling-refresher-translate', `${(progress * 100)}px`);
-            ev.data.animation.progressEnd();
-            await snapBackAnimation.play();
-            this.beginRefresh();
-            ev.data.animation.destroy();
-          });
-        }
-      });
-
-      this.disabledChanged();
+      this.setupMDNativeRefresher(contentEl, pullingSpinner, refreshingSpinner);
     }
   }
 
