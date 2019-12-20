@@ -278,35 +278,17 @@ export class Refresher implements ComponentInterface {
 
       this.disabledChanged();
     } else {
-      const circle = pullingSpinner.shadowRoot!.querySelector('circle')!;
+      const circle = pullingSpinner.shadowRoot!.querySelector('circle');
       const pullingRefresherIcon = this.el.querySelector('ion-refresher-content .refresher-pulling-icon') as HTMLElement;
+      const refreshingCircle = refreshingSpinner.shadowRoot!.querySelector('circle');
 
-      // TODO clean up this awful awful code
-      writeTask(() => {
-        circle.style.setProperty('animation', 'none');
-
-        const refreshingCircle = refreshingSpinner.shadowRoot!.querySelector('circle')!;
-        refreshingSpinner.style.setProperty('animation-delay', '-655ms');
-        refreshingCircle.style.setProperty('animation-delay', '-655ms');
-
-        // really what I need here is the caret-back-sharp ionicon
-        // inside of a div container that has been appended
-        // inside of the pulling spinner so that the arrow
-        // can fade in. It also might be possible to just have it sit inside
-        // of ion-refresher-content, but I haven't tried that yet
-/*
-        const container = document.createElement('div');
-        container.style.setProperty('width', '100%');
-        container.style.setProperty('height', '100%');
-        container.classList.add('arrow-container');
-
-        const icon = document.createElement('ion-icon');
-        icon.style.setProperty('font-size', '12px');
-        icon.name = 'caret-back-sharp';
-        container.appendChild(icon);
-        pullingSpinner.shadowRoot!.appendChild(container);
-*/
-      });
+      if (circle !== null && refreshingCircle !== null) {
+        writeTask(() => {
+          circle.style.setProperty('animation', 'none');
+          refreshingSpinner.style.setProperty('animation-delay', '-655ms');
+          refreshingCircle.style.setProperty('animation-delay', '-655ms');
+        });
+      }
 
       this.gesture = (await import('../../utils/gesture')).createGesture({
         el: this.scrollEl!,

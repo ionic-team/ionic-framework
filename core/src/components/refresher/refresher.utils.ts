@@ -61,16 +61,16 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
       { offset: 0, transform: 'rotate(0deg)' },
       { offset: 0.30, transform: 'rotate(0deg)' },
       { offset: 0.55, transform: 'rotate(280deg)' },
-      { offset: 1, transform: 'rotate(420deg)' }
+      { offset: 1, transform: 'rotate(400deg)' }
     ]);
 
   const arrowAnimation = createAnimation()
     .addElement(arrow)
     .keyframes([
-      { offset: 0, opacity: 0, transform: 'translate(0px, 0px) scale(0)' },
-      { offset: 0.25, opacity: 0, transform: 'translate(0px, 0px) scale(0)' },
-      { offset: 0.55, opacity: 1, transform: 'translate(0px, 0px) scale(1)' },
-      { offset: 1, opacity: 1, transform: 'translate(0px, 0px) scale(1)' }
+      { offset: 0, transform: 'translateX(2px) scale(0)' },
+      { offset: 0.30, transform: 'translateX(2px) scale(0)' },
+      { offset: 0.55, transform: 'translateX(-2px) scale(1)' },
+      { offset: 1, transform: 'translateX(-2px) scale(1)' }
     ]);
 
   return baseAnimation.addAnimation([spinnerArrowContainerAnimation, arrowContainerAnimation, arrowAnimation, circleInnerAnimation, circleOuterAnimation]);
