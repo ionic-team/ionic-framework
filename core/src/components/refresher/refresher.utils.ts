@@ -21,10 +21,9 @@ export const createPullingAnimation = (type: RefresherAnimationType, pullingSpin
 const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
   const spinner = pullingRefresherIcon.querySelector('ion-spinner') as HTMLElement;
   const circle = spinner!.shadowRoot!.querySelector('circle') as any;
-
   const spinnerArrowContainer = pullingRefresherIcon.querySelector('.spinner-arrow-container') as HTMLElement;
-  const arrowContainer = pullingRefresherIcon!.querySelector('.arrow-container') as HTMLElement;
-  const arrow = arrowContainer!.querySelector('ion-icon') as HTMLElement;
+  const arrowContainer = pullingRefresherIcon!.querySelector('.arrow-container');
+  const arrow = (arrowContainer) ? arrowContainer!.querySelector('ion-icon') as HTMLElement : null;
 
   const baseAnimation = createAnimation()
     .duration(1000)
@@ -55,25 +54,34 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
       { offset: 1, transform: 'rotate(210deg)' }
     ]);
 
-  const arrowContainerAnimation = createAnimation()
-    .addElement(arrowContainer)
-    .keyframes([
-      { offset: 0, transform: 'rotate(0deg)' },
-      { offset: 0.30, transform: 'rotate(0deg)' },
-      { offset: 0.55, transform: 'rotate(280deg)' },
-      { offset: 1, transform: 'rotate(400deg)' }
-    ]);
+  /**
+   * Only add arrow animation if present
+   * this allows users to customize the spinners
+   * without errors being thrown
+   */
+  if (arrowContainer && arrow) {
+    const arrowContainerAnimation = createAnimation()
+      .addElement(arrowContainer)
+      .keyframes([
+        { offset: 0, transform: 'rotate(0deg)' },
+        { offset: 0.30, transform: 'rotate(0deg)' },
+        { offset: 0.55, transform: 'rotate(280deg)' },
+        { offset: 1, transform: 'rotate(400deg)' }
+      ]);
 
-  const arrowAnimation = createAnimation()
-    .addElement(arrow)
-    .keyframes([
-      { offset: 0, transform: 'translateX(2px) scale(0)' },
-      { offset: 0.30, transform: 'translateX(2px) scale(0)' },
-      { offset: 0.55, transform: 'translateX(-2px) scale(1)' },
-      { offset: 1, transform: 'translateX(-2px) scale(1)' }
-    ]);
+    const arrowAnimation = createAnimation()
+      .addElement(arrow)
+      .keyframes([
+        { offset: 0, transform: 'translateX(2px) scale(0)' },
+        { offset: 0.30, transform: 'translateX(2px) scale(0)' },
+        { offset: 0.55, transform: 'translateX(-1.5px) scale(1)' },
+        { offset: 1, transform: 'translateX(-1.5px) scale(1)' }
+      ]);
 
-  return baseAnimation.addAnimation([spinnerArrowContainerAnimation, arrowContainerAnimation, arrowAnimation, circleInnerAnimation, circleOuterAnimation]);
+    baseAnimation.addAnimation([arrowContainerAnimation, arrowAnimation]);
+  }
+
+  return baseAnimation.addAnimation([spinnerArrowContainerAnimation, circleInnerAnimation, circleOuterAnimation]);
 };
 
 const createScaleAnimation = (pullingRefresherIcon: HTMLElement) => {

@@ -56,6 +56,10 @@ ion-refresher-content {
   text-align: center;
 }
 
+ion-refresher-content .arrow-container {
+  display: none;
+}
+
 // Refresher Content States
 // --------------------------------------------------
 

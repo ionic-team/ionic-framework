@@ -66,16 +66,20 @@ export class RefresherContent implements ComponentInterface {
   render() {
     const pullingIcon = this.pullingIcon;
     const hasSpinner = pullingIcon != null && SPINNERS[pullingIcon] as any !== undefined;
+    const mode = getIonMode(this);
+
     return (
-      <Host class={getIonMode(this)}>
+      <Host class={mode}>
         <div class="refresher-pulling">
           {this.pullingIcon && hasSpinner &&
             <div class="refresher-pulling-icon">
               <div class="spinner-arrow-container">
                 <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
-                <div class="arrow-container">
-                  <ion-icon name="caret-back-sharp"></ion-icon>
-                </div>
+                {mode === 'md' && this.pullingIcon === 'circular' &&
+                  <div class="arrow-container">
+                    <ion-icon name="caret-back-sharp"></ion-icon>
+                  </div>
+                }
               </div>
             </div>
           }

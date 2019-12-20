@@ -277,6 +277,8 @@ export class Refresher implements ComponentInterface {
     if (circle !== null && refreshingCircle !== null) {
       writeTask(() => {
         circle.style.setProperty('animation', 'none');
+
+        // This lines up the animation on the refreshing spinner with the pulling spinner
         refreshingSpinner.style.setProperty('animation-delay', '-655ms');
         refreshingCircle.style.setProperty('animation-delay', '-655ms');
       });
