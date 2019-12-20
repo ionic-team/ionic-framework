@@ -47,7 +47,6 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
       { offset: 1, 'stroke-dasharray': '100px, 200px' }
     ]);
 
-  console.log('hello', spinner);
   const circleOuterAnimation = createAnimation()
     .addElement(spinner)
     .keyframes([

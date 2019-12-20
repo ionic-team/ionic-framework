@@ -295,7 +295,7 @@ export class Refresher implements ComponentInterface {
         ev.data = { animation: undefined, didStart: false, cancelled: false };
       },
       onMove: (ev: GestureDetail) => {
-        if ((ev.velocityY <= 0 && this.progress === 0 && !ev.data.didStart) || ev.data.cancelled) {
+        if ((ev.velocityY < 0 && this.progress === 0 && !ev.data.didStart) || ev.data.cancelled) {
           ev.data.cancelled = true;
           return;
         }
