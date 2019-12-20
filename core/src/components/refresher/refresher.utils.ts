@@ -47,6 +47,7 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
       { offset: 1, 'stroke-dasharray': '100px, 200px' }
     ]);
 
+  console.log('hello', spinner);
   const circleOuterAnimation = createAnimation()
     .addElement(spinner)
     .keyframes([
@@ -85,10 +86,11 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
 };
 
 const createScaleAnimation = (pullingRefresherIcon: HTMLElement) => {
+  const height = pullingRefresherIcon.clientHeight;
   const spinnerAnimation = createAnimation()
     .addElement(pullingRefresherIcon)
     .keyframes([
-      { offset: 0, transform: `scale(0) translateY(0px)` },
+      { offset: 0, transform: `scale(0) translateY(-${height + 20}px)` },
       { offset: 1, transform: 'scale(1) translateY(100px)' }
     ]);
 
