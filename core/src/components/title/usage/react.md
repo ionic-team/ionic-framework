@@ -42,13 +42,13 @@ import {
 
 export const LargeTitleExample: React.FC = () => (
   <>
-    <IonHeader>
+    <IonHeader translucent="true">
       <IonToolbar>    
         <IonTitle>Settings</IonTitle>               
       </IonToolbar>
     </IonHeader>
     
-    <IonContent>
+    <IonContent fullscreen="true">
       <IonHeader collapse="condense">              
         <IonToolbar>      
           <IonTitle size="large">Settings</IonTitle>
@@ -81,7 +81,7 @@ import {
 
 export const LargeTitleExample: React.FC = () => (
   <>
-    <IonHeader>
+    <IonHeader translucent="true">
       <IonToolbar>   
         <IonButtons collapse="true">
           <IonButton>Click Me</IonButton>
@@ -90,7 +90,7 @@ export const LargeTitleExample: React.FC = () => (
       </IonToolbar>
     </IonHeader>
     
-    <IonContent>
+    <IonContent fullscreen="true">
       <IonHeader collapse="condense">              
         <IonToolbar>      
           <IonButtons collapse="true">
@@ -122,3 +122,5 @@ ion-title.large-title {
   font-size: 30px;
 }
 ```
+
+> When using collapsible large titles, it is required that `fullscreen="true"` be set on `IonContent` and `translucent="true"` be set on the main `IonHeader`.

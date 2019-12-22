@@ -6,7 +6,7 @@ import { IonRouterOutlet } from './ion-router-outlet';
 
 @Directive({
   selector: 'ion-back-button',
-  inputs: ['defaultHref']
+  inputs: ['defaultHref'],
 })
 export class IonBackButtonDelegate {
 

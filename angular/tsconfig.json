@@ -1,11 +1,13 @@
 {
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
-    "strictMetadataEmit" : true,
+    "strictMetadataEmit": true,
     "flatModuleOutFile": "core.js",
     "flatModuleId": "@ionic/angular",
     "skipTemplateCodegen": true,
-    "fullTemplateTypeCheck": false
+    "fullTemplateTypeCheck": false,
+    "enableResourceInlining": true,
+    "enableIvy": false
   },
   "compilerOptions": {
     "alwaysStrict": true,
@@ -32,12 +34,8 @@
     "target": "es2015",
     "baseUrl": ".",
     "paths": {
-      "@ionic/core/hydrate": [
-        "../core/hydrate"
-      ],
-      "@ionic/core": [
-        "../core"
-      ]
+      "@ionic/core/hydrate": ["../core/hydrate"],
+      "@ionic/core": ["../core"]
     }
   },
   "exclude": ["node_modules", "src/schematics"],

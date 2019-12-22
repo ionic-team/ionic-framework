@@ -49,14 +49,18 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
   } as HeaderIndex;
 };
 
-export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: HeaderIndex) => {
+export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: HeaderIndex, contentEl: HTMLElement) => {
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
     const scale = clamp(1, 1 + (-scrollTop / 500), 1.1);
 
-    writeTask(() => {
-      scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
-    });
+    // Native refresher should not cause titles to scale
+    const nativeRefresher = contentEl.querySelector('ion-refresher.refresher-native');
+    if (nativeRefresher === null) {
+      writeTask(() => {
+        scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
+      });
+    }
   });
 };
 
@@ -72,7 +76,10 @@ const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) 
   if (!ev[0].isIntersecting) { return; }
 
   const scale = ((1 - ev[0].intersectionRatio) * 100) / 75;
-  setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scale === 1) ? undefined : scale);
+
+  mainHeaderIndex.toolbars.forEach(toolbar => {
+    setToolbarBackgroundOpacity(toolbar, (scale === 1) ? undefined : scale);
+  });
 };
 
 /**

@@ -330,7 +330,9 @@ export class Content implements ComponentInterface {
           ref={el => this.scrollEl = el!}
           onScroll={ev => this.onScroll(ev)}
         >
-          <slot></slot>
+          <div id="scroll-content">
+            <slot></slot>
+          </div>
         </main>
 
         {transitionShadow ? (

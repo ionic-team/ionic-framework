@@ -13,7 +13,8 @@ const packages = [
   'docs',
   'angular',
   'packages/react',
-  'packages/react-router'
+  'packages/react-router',
+  'packages/angular-server'
 ];
 
 function readPkg(project) {
@@ -151,6 +152,7 @@ function preparePackage(tasks, package, version, install) {
       }
     }
 
+    // Lint, Test, Bump Core dependency
     if (version) {
       projectTasks.push({
         title: `${pkg.name}: lint`,
@@ -160,12 +162,22 @@ function preparePackage(tasks, package, version, install) {
         title: `${pkg.name}: test`,
         task: async () => await execa('npm', ['test'], { cwd: projectRoot })
       });
+      projectTasks.push({
+        title: `${pkg.name}: update ionic/core dep to ${version}`,
+        task: () => {
+          updateDependency(pkg, '@ionic/core', version);
+          writePkg(package, pkg);
+        }
+      });
     }
 
+    // Build
     projectTasks.push({
       title: `${pkg.name}: build`,
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
+
+    // Link core or react for sub projects
     if (package === 'core' || package === 'packages/react') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
@@ -236,7 +248,6 @@ function prepareDevPackage(tasks, package, version) {
 function updatePackageVersions(tasks, packages, version) {
   packages.forEach(package => {
     updatePackageVersion(tasks, package, version);
-
     tasks.push({
       title: `${package} update @ionic/core dependency, if present ${tc.dim(`(${version})`)}`,
       task: async () => {
@@ -261,7 +272,11 @@ function updatePackageVersions(tasks, packages, version) {
 }
 
 function updatePackageVersion(tasks, package, version) {
-  const projectRoot = projectPath(package);
+  let projectRoot = projectPath(package);
+
+  if (package === 'packages/angular-server' || package === 'angular') {
+    projectRoot = path.join(projectPath, 'dist')
+  }
 
   tasks.push({
     title: `${package}: update package.json ${tc.dim(`(${version})`)}`,
@@ -290,9 +305,13 @@ function publishPackages(tasks, packages, version, tag = 'latest') {
     });
   });
 
-  // next publish
+  // Publish
   packages.forEach(package => {
-    const projectRoot = projectPath(package);
+    let projectRoot = projectPath(package);
+
+    if (package === 'packages/angular-server' || package === 'angular') {
+      projectRoot = path.join(projectRoot, 'dist')
+    }
 
     tasks.push({
       title: `${package}: publish to ${tag} tag`,

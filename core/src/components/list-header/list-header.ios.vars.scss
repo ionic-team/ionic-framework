@@ -4,23 +4,20 @@
 // iOS List Header
 // --------------------------------------------------
 
-/// @prop - Padding start of the header in a list
-$list-ios-header-padding-start:       $item-ios-padding-start !default;
+/// @prop - Padding start of the list header
+$list-header-ios-padding-start:       $item-ios-padding-start !default;
 
-/// @prop - Font size of the header in a list
-$list-ios-header-font-size:           12px !default;
+/// @prop - Font size of the list header
+$list-header-ios-font-size:           22px !default;
 
-/// @prop - Font weight of the header in a list
-$list-ios-header-font-weight:         500 !default;
+/// @prop - Font weight of the list header
+$list-header-ios-font-weight:         700 !default;
 
-/// @prop - Letter spacing of the header in a list
-$list-ios-header-letter-spacing:      1px !default;
+/// @prop - Letter spacing of the list header
+$list-header-ios-letter-spacing:      0 !default;
 
-/// @prop - Text transform of the header in a list
-$list-ios-header-text-transform:      uppercase !default;
+/// @prop - Text color of the list header
+$list-header-ios-color:               $text-color-step-150 !default;
 
-/// @prop - Text color of the header in a list
-$list-ios-header-color:               $text-color-step-150 !default;
-
-/// @prop - Background color of the header in a list
-$list-ios-header-background-color:    transparent !default;
+/// @prop - Background color of the list header
+$list-header-ios-background-color:    transparent !default;

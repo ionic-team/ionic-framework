@@ -13,7 +13,7 @@ type Props = LocalJSX.IonRouterOutlet & {
 };
 
 type InternalProps = Props & {
-  forwardedRef: any;
+  forwardedRef?: React.RefObject<HTMLIonRouterOutletElement>;
 };
 
 const IonRouterOutletContainer = /*@__PURE__*/(() => class extends React.Component<InternalProps> {

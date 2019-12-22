@@ -13,7 +13,7 @@ const Example: React.FC<{}> = () => (
     </IonItem>
 
     {/*-- Item as a Button --*/}
-    <IonItem onClick={() => {}}>
+    <IonItem button onClick={() => {}}>
       <IonLabel>
         Button Item
       </IonLabel>
@@ -40,7 +40,7 @@ const Example: React.FC<{}> = () => (
       </IonLabel>
     </IonItem>
 
-    <IonItem onClick={() => {}} detail>
+    <IonItem button onClick={() => {}} detail>
       <IonLabel>
         Button Item with Detail Arrow
       </IonLabel>
@@ -148,7 +148,7 @@ const Example: React.FC<{}> = () => (
 
 
 
-    <IonItem onClick={() => {}}>
+    <IonItem button onClick={() => {}}>
       <IonAvatar slot="start">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
       </IonAvatar>
@@ -177,7 +177,7 @@ const Example: React.FC<{}> = () => (
       <IonButton fill="outline" slot="end">View</IonButton>
     </IonItem>
 
-    <IonItem onClick={() => {}}>
+    <IonItem button onClick={() => {}}>
       <IonThumbnail slot="start">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
       </IonThumbnail>

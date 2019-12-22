@@ -465,7 +465,7 @@ ion-item,shadow
 ion-item,prop,button,boolean,false,false,false
 ion-item,prop,color,string | undefined,undefined,false,false
 ion-item,prop,detail,boolean | undefined,undefined,false,false
-ion-item,prop,detailIcon,string,'ios-arrow-forward',false,false
+ion-item,prop,detailIcon,string,'chevron-forward',false,false
 ion-item,prop,disabled,boolean,false,false,false
 ion-item,prop,download,string | undefined,undefined,false,false
 ion-item,prop,href,string | undefined,undefined,false,false
@@ -566,9 +566,14 @@ ion-list,method,closeSlidingItems,closeSlidingItems() => Promise<boolean>
 
 ion-list-header,shadow
 ion-list-header,prop,color,string | undefined,undefined,false,false
+ion-list-header,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-list-header,prop,mode,"ios" | "md",undefined,false,false
 ion-list-header,css-prop,--background
+ion-list-header,css-prop,--border-color
+ion-list-header,css-prop,--border-style
+ion-list-header,css-prop,--border-width
 ion-list-header,css-prop,--color
+ion-list-header,css-prop,--inner-border-width
 
 ion-loading,scoped
 ion-loading,prop,animated,boolean,true,false,false
@@ -678,7 +683,9 @@ ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-modal,prop,keyboardClose,boolean,true,false,false
 ion-modal,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-modal,prop,mode,"ios" | "md",undefined,false,false
+ion-modal,prop,presentingElement,HTMLElement | undefined,undefined,false,false
 ion-modal,prop,showBackdrop,boolean,true,false,false
+ion-modal,prop,swipeToClose,boolean,false,false,false
 ion-modal,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-modal,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
 ion-modal,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
@@ -942,16 +949,16 @@ ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
 ion-searchbar,prop,autocomplete,"off" | "on",'off',false,false
 ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
-ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', 'md-arrow-back') as string,false,false
+ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', 'arrow-back-sharp') as string,false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,string | undefined,undefined,false,false
 ion-searchbar,prop,debounce,number,250,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
-ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url",'search',false,false
+ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
-ion-searchbar,prop,searchIcon,string,'search',false,false
+ion-searchbar,prop,searchIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,showCancelButton,"always" | "focus" | "never",'never',false,false
 ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
