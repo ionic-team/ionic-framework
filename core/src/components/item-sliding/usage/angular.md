@@ -73,7 +73,7 @@
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="start" name="more"></ion-icon>
+        <ion-icon slot="start" name="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -92,7 +92,7 @@
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="end" name="more"></ion-icon>
+        <ion-icon slot="end" name="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -111,7 +111,7 @@
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="top" name="more"></ion-icon>
+        <ion-icon slot="top" name="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -130,7 +130,7 @@
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="bottom" name="more"></ion-icon>
+        <ion-icon slot="bottom" name="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">

@@ -77,7 +77,7 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="start" name="more"></IonIcon>
+        <IonIcon slot="start" name="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -96,7 +96,7 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="end" name="more"></IonIcon>
+        <IonIcon slot="end" name="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -115,7 +115,7 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="top" name="more"></IonIcon>
+        <IonIcon slot="top" name="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -134,7 +134,7 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="bottom" name="more"></IonIcon>
+        <IonIcon slot="bottom" name="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
