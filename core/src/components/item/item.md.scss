@@ -13,7 +13,7 @@
   --background-hover: #{$item-md-background-hover};
   --border-color: #{$item-md-border-bottom-color};
   --color: #{$item-md-color};
-  --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
+  --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1), opacity 300ms cubic-bezier(.4, 0, .2, 1);
   --padding-start: #{$item-md-padding-start};
   --color: #{$item-md-color};
   --border-color: #{$item-md-border-bottom-color};

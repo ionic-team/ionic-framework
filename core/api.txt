@@ -486,6 +486,7 @@ ion-item,css-prop,--background
 ion-item,css-prop,--background-activated
 ion-item,css-prop,--background-focused
 ion-item,css-prop,--background-hover
+ion-item,css-prop,--background-hover-opacity
 ion-item,css-prop,--border-color
 ion-item,css-prop,--border-radius
 ion-item,css-prop,--border-style
