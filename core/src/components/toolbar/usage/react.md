@@ -43,7 +43,7 @@ export const ToolbarExample: React.FC = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="secondary">
-        <IonIcon slot="icon-only" name="ellipsis-vertical" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Default Buttons</IonTitle>
@@ -144,7 +144,7 @@ export const ToolbarExample: React.FC = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="primary">
-        <IonIcon slot="icon-only" name="ellipsis-vertical" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Secondary Toolbar</IonTitle>
@@ -161,7 +161,7 @@ export const ToolbarExample: React.FC = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="danger">
-        <IonIcon slot="icon-only" name="ellipsis-vertical" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Dark Toolbar</IonTitle>

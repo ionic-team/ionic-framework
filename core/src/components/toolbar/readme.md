@@ -58,7 +58,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="secondary">
-      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Default Buttons</ion-title>
@@ -167,7 +167,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="primary">
-      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Secondary Toolbar</ion-title>
@@ -184,7 +184,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="danger">
-      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Dark Toolbar</ion-title>
@@ -224,7 +224,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="secondary">
-      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Default Buttons</ion-title>
@@ -331,7 +331,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="primary">
-      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Secondary Toolbar</ion-title>
@@ -348,7 +348,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="danger">
-      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Dark Toolbar</ion-title>
@@ -403,7 +403,7 @@ export const ToolbarExample: React.FC = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="secondary">
-        <IonIcon slot="icon-only" name="ellipsis-vertical" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Default Buttons</IonTitle>
@@ -504,7 +504,7 @@ export const ToolbarExample: React.FC = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="primary">
-        <IonIcon slot="icon-only" name="ellipsis-vertical" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Secondary Toolbar</IonTitle>
@@ -521,7 +521,7 @@ export const ToolbarExample: React.FC = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="danger">
-        <IonIcon slot="icon-only" name="ellipsis-vertical" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Dark Toolbar</IonTitle>
@@ -563,7 +563,7 @@ export const ToolbarExample: React.FC = () => (
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button color="secondary">
-        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Default Buttons</ion-title>
@@ -672,7 +672,7 @@ export const ToolbarExample: React.FC = () => (
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button color="primary">
-        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Secondary Toolbar</ion-title>
@@ -689,7 +689,7 @@ export const ToolbarExample: React.FC = () => (
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button color="danger">
-        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Dark Toolbar</ion-title>

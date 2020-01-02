@@ -32,7 +32,7 @@ export const ButtonsExample: React.FC = () => (
       <IonTitle>Default Buttons</IonTitle>
       <IonButtons slot="primary">
         <IonButton color="secondary">
-          <IonIcon slot="icon-only" name="ellipsis-vertical" />
+          <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
         </IonButton>
       </IonButtons>
     </IonToolbar>

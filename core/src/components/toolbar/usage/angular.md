@@ -28,7 +28,7 @@
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="secondary">
-      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Default Buttons</ion-title>
@@ -137,7 +137,7 @@
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="primary">
-      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Secondary Toolbar</ion-title>
@@ -154,7 +154,7 @@
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="danger">
-      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Dark Toolbar</ion-title>

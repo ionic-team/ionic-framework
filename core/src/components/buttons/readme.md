@@ -39,7 +39,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
   <ion-title>Default Buttons</ion-title>
   <ion-buttons slot="primary">
     <ion-button color="secondary">
-      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-toolbar>
@@ -89,7 +89,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
   <ion-title>Default Buttons</ion-title>
   <ion-buttons slot="primary">
     <ion-button color="secondary">
-      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-toolbar>
@@ -157,7 +157,7 @@ export const ButtonsExample: React.FC = () => (
       <IonTitle>Default Buttons</IonTitle>
       <IonButtons slot="primary">
         <IonButton color="secondary">
-          <IonIcon slot="icon-only" name="ellipsis-vertical" />
+          <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
         </IonButton>
       </IonButtons>
     </IonToolbar>
@@ -210,7 +210,7 @@ export const ButtonsExample: React.FC = () => (
     <ion-title>Default Buttons</ion-title>
     <ion-buttons slot="primary">
       <ion-button color="secondary">
-        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
