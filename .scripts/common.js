@@ -248,6 +248,7 @@ function prepareDevPackage(tasks, package, version) {
 function updatePackageVersions(tasks, packages, version) {
   packages.forEach(package => {
     updatePackageVersion(tasks, package, version);
+
     tasks.push({
       title: `${package} update @ionic/core dependency, if present ${tc.dim(`(${version})`)}`,
       task: async () => {
@@ -258,6 +259,7 @@ function updatePackageVersions(tasks, packages, version) {
         }
       }
     });
+
     if (package === 'packages/react-router') {
       tasks.push({
         title: `${package} update @ionic/react dependency, if present ${tc.dim(`(${version})`)}`,
@@ -275,7 +277,7 @@ function updatePackageVersion(tasks, package, version) {
   let projectRoot = projectPath(package);
 
   if (package === 'packages/angular-server' || package === 'angular') {
-    projectRoot = path.join(projectPath, 'dist')
+    projectRoot = path.join(projectRoot, 'dist')
   }
 
   tasks.push({
