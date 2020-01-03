@@ -40,7 +40,7 @@
 // -----------------------------------------
 
 .radio-inner {
-  @include border-radius(var(--border-radius-checked));
+  @include border-radius(var(--inner-border-radius));
 
   width: calc(50% + var(--border-width));
   height: calc(50% + var(--border-width));
@@ -82,7 +82,7 @@
 // -----------------------------------------
 
 :host(.ion-focused) .radio-icon::after {
-  @include border-radius(var(--border-radius-checked));
+  @include border-radius(var(--inner-border-radius));
   @include position(-12px, null, null, -12px);
 
   display: block;
