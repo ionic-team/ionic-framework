@@ -44,11 +44,40 @@
       </ion-header>
 
       <ion-list id="list"></ion-list>
+      
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button onclick="toggleHeader()">
+          <ion-icon name="settings"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
     </ion-content>
   </ion-app>
 
   <script>
-
+    
+    const toggleHeader = () => {
+      const app = document.querySelector('ion-app');
+      const header = app.querySelector('ion-header');
+      
+      if (header) {
+        header.parentNode.removeChild(header);
+      } else {
+        app.insertAdjacentHTML("afterbegin", `
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button default-href="/" text="Mailboxes"></ion-back-button>
+              </ion-buttons>
+              <ion-title>All Inboxes</ion-title>
+              <ion-buttons slot="end">
+                <ion-button>Edit</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+        `);
+      }
+    }
+    
     let items = [];
     for (var i = 0; i < 30; i++) {
       items.push(i + 1);
@@ -94,5 +123,4 @@
     render();
   </script>
 </body>
-
 </html>
