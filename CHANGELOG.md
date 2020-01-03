@@ -1,3 +1,34 @@
+# [5.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v4.11.7...v5.0.0-beta.3) (2020-01-03)
+
+
+### Bug Fixes
+
+* **animation:** support css animation on older devices ([#20020](https://github.com/ionic-team/ionic/issues/20020)) ([49c394c](https://github.com/ionic-team/ionic/commit/49c394c3d335795fd100f54a5b29db009d413dff)), closes [#20017](https://github.com/ionic-team/ionic/issues/20017)
+* **icons:** fix the ellipsis fill in ionicons ([#20137](https://github.com/ionic-team/ionic/issues/20137)) ([9318d24](https://github.com/ionic-team/ionic/commit/9318d2418ec144bbce4a3b7ead33cf099d6ec25b))
+* **modal:** account for safe area on devices with a notch ([#20072](https://github.com/ionic-team/ionic/issues/20072)) ([1cabb53](https://github.com/ionic-team/ionic/commit/1cabb5365097d0675447a36223583824a58a140c))
+* **react:** fire lifecycle events on initial render, fixes [#20071](https://github.com/ionic-team/ionic/issues/20071) ([2dcf3ee](https://github.com/ionic-team/ionic/commit/2dcf3ee7b570be73be35c52f03ccfa09baf5d830))
+
+
+### Code Refactoring
+
+* **searchbar:** set inputmode default to undefined ([#20080](https://github.com/ionic-team/ionic/issues/20080)) ([6612604](https://github.com/ionic-team/ionic/commit/6612604733ac1b3e46546625f24ef6efa5be1538)), closes [#20074](https://github.com/ionic-team/ionic/issues/20074)
+
+
+### Features
+
+* **angular:** angular 9 support ([#19515](https://github.com/ionic-team/ionic/issues/19515)) ([2344d0b](https://github.com/ionic-team/ionic/commit/2344d0b272105e368c00ef611f28909215162f7c))
+* **checkbox:** add --checkmark-width variable ([#19933](https://github.com/ionic-team/ionic/issues/19933)) ([c32a7bc](https://github.com/ionic-team/ionic/commit/c32a7bcd202993056923857a5d9eed14f5be8580)), closes [#16803](https://github.com/ionic-team/ionic/issues/16803)
+* **radio:** add --border-radius and --inner-border-radius variables ([#20140](https://github.com/ionic-team/ionic/issues/20140)) ([a01c102](https://github.com/ionic-team/ionic/commit/a01c10267e18a48f30af2f552c556d31dad582e9))
+* **refresher:** add iOS native refresher ([#20037](https://github.com/ionic-team/ionic/issues/20037)) ([04e7c03](https://github.com/ionic-team/ionic/commit/04e7c031326ec551531af291ef1a03878d168378)), closes [#18664](https://github.com/ionic-team/ionic/issues/18664)
+* **toggle:** add --border-radius and --handle-border-radius variables ([#20141](https://github.com/ionic-team/ionic/issues/20141)) ([02a46a1](https://github.com/ionic-team/ionic/commit/02a46a1007dde820cb158d34d4e3f243c07251dc))
+
+
+### BREAKING CHANGES
+
+* **searchbar:** The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get the old behavior, set the `inputmode` property to `"search"`.
+
+
+
 
 ## [4.11.7](https://github.com/ionic-team/ionic/compare/v4.11.6...v4.11.7) (2019-12-12)
 
