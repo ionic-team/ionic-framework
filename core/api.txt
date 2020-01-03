@@ -1270,8 +1270,10 @@ ion-toggle,event,ionChange,ToggleChangeEventDetail,true
 ion-toggle,event,ionFocus,void,true
 ion-toggle,css-prop,--background
 ion-toggle,css-prop,--background-checked
+ion-toggle,css-prop,--border-radius
 ion-toggle,css-prop,--handle-background
 ion-toggle,css-prop,--handle-background-checked
+ion-toggle,css-prop,--handle-border-radius
 
 ion-toolbar,shadow
 ion-toolbar,prop,color,string | undefined,undefined,false,false
