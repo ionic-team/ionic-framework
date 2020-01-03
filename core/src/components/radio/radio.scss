@@ -7,7 +7,11 @@
   /**
    * @prop --color: Color of the radio
    * @prop --color-checked: Color of the checked radio
+   * @prop --border-radius: Border radius of the radio
+   * @prop --border-radius-checked: Border radius of the inner checked radio
    */
+  
+  --border-radius-checked: 50%;
 
   display: inline-block;
   position: relative;
