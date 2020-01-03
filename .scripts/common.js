@@ -158,17 +158,11 @@ function preparePackage(tasks, package, version, install) {
         title: `${pkg.name}: lint`,
         task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
       });
-      projectTasks.push({
-        title: `${pkg.name}: test`,
-        task: async () => await execa('npm', ['test'], { cwd: projectRoot })
-      });
-      projectTasks.push({
-        title: `${pkg.name}: update ionic/core dep to ${version}`,
-        task: () => {
-          updateDependency(pkg, '@ionic/core', version);
-          writePkg(package, pkg);
-        }
-      });
+      // TODO will not work due to https://github.com/ionic-team/ionic/issues/20136
+      // projectTasks.push({
+      //   title: `${pkg.name}: test`,
+      //   task: async () => await execa('npm', ['test'], { cwd: projectRoot })
+      // });
     }
 
     // Build
