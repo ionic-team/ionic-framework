@@ -9,6 +9,8 @@
   --background-checked: #{ion-color(primary, base, $toggle-md-track-background-color-alpha-on)};
   --handle-background: #{$toggle-md-handle-background-color-off};
   --handle-background-checked: #{ion-color(primary, base)};
+  --border-radius: #{$toggle-md-track-height};
+  --handle-border-radius: #{$toggle-md-handle-border-radius};
 
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
 
@@ -34,7 +36,7 @@
 // -----------------------------------------
 
 .toggle-icon {
-  @include border-radius($toggle-md-track-height);
+  @include border-radius(var(--border-radius));
 
   display: block;
   position: relative;
@@ -54,7 +56,7 @@
 
 .toggle-inner {
   @include position(($toggle-md-handle-height - $toggle-md-track-height) / -2, null, null, 0);
-  @include border-radius($toggle-md-handle-border-radius);
+  @include border-radius(var(--handle-border-radius));
 
   position: absolute;
 
