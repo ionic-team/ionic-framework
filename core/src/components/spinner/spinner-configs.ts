@@ -44,10 +44,10 @@ const spinners = {
     fn: () => {
       return {
         r: 20,
-        cx: 44,
-        cy: 44,
+        cx: 48,
+        cy: 48,
         fill: 'none',
-        viewBox: '22 22 44 44',
+        viewBox: '24 24 48 48',
         transform: 'translate(0,0)',
         style: {}
       };
