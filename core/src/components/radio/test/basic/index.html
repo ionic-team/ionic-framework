@@ -75,6 +75,13 @@
             <ion-radio id="dangerRadio" slot="end" color="danger" value="broccoli" checked></ion-radio>
           </ion-item>
         </ion-radio-group>
+        
+        <ion-radio-group allow-empty-selection>
+          <ion-item>
+            <ion-label>Custom</ion-label>
+            <ion-radio slot="end" color="danger" value="custom" style="--border-radius:2px;--inner-border-radius: 10px 0px 10px 0px;" checked></ion-radio>
+          </ion-item>
+        </ion-radio-group>
 
         <ion-item>
           <ion-button slot="start" onClick="toggleBoolean('grapeChecked', 'checked')" fill="outline" size="small">Checked</ion-button>
