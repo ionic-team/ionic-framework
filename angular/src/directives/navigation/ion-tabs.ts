@@ -42,15 +42,15 @@ import { StackEvent } from './stack-utils';
 })
 export class IonTabs {
 
-  @ViewChild('outlet', { read: IonRouterOutlet }) outlet: IonRouterOutlet;
-  @ContentChild(IonTabBar) tabBar: IonTabBar | undefined;
+  @ViewChild('outlet', { read: IonRouterOutlet, static: false }) outlet: IonRouterOutlet;
+  @ContentChild(IonTabBar, { static: false }) tabBar: IonTabBar | undefined;
 
-  @Output() ionTabsWillChange = new EventEmitter<{tab: string}>();
-  @Output() ionTabsDidChange = new EventEmitter<{tab: string}>();
+  @Output() ionTabsWillChange = new EventEmitter<{ tab: string }>();
+  @Output() ionTabsDidChange = new EventEmitter<{ tab: string }>();
 
   constructor(
     private navCtrl: NavController,
-  ) {}
+  ) { }
 
   /**
    * @internal
