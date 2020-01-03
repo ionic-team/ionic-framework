@@ -10,21 +10,21 @@
   <!-- fab placed to the bottom end -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
-      <ion-icon name="arrow-dropleft"></ion-icon>
+      <ion-icon name="arrow-forward-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <!-- fab placed to the top start -->
   <ion-fab vertical="top" horizontal="start" slot="fixed">
     <ion-fab-button>
-      <ion-icon name="arrow-dropright"></ion-icon>
+      <ion-icon name="arrow-back-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <!-- fab placed to the bottom start -->
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
     <ion-fab-button>
-      <ion-icon name="arrow-dropup"></ion-icon>
+      <ion-icon name="arrow-up-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
