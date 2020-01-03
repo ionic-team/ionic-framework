@@ -268,17 +268,29 @@ function updatePackageVersions(tasks, packages, version) {
 }
 
 function updatePackageVersion(tasks, package, version) {
-  let projectRoot = projectPath(package);
-
-  if (package === 'packages/angular-server' || package === 'angular') {
-    projectRoot = path.join(projectRoot, 'dist')
-  }
+  const projectRoot = projectPath(package);
 
   tasks.push({
     title: `${package}: update package.json ${tc.dim(`(${version})`)}`,
     task: async () => {
       await execa('npm', ['version', version], { cwd: projectRoot });
     }
+  });
+}
+
+function copyPackageToDist(tasks, packages) {
+  packages.forEach(package => {
+    const projectRoot = projectPath(package);
+
+    // angular and angular-server are the only packages that publish dist
+    if (package !== 'angular' && package !== 'packages/angular-server') {
+      return;
+    }
+
+    tasks.push({
+      title: `${package}: Copy package.json to dist`,
+      task: () => execa('node', ['copy-package.js', package], { cwd: path.join(rootDir, '.scripts') })
+    });
   });
 }
 
@@ -351,6 +363,7 @@ module.exports = {
   isValidVersion,
   isVersionGreater,
   copyCDNLoader,
+  copyPackageToDist,
   packages,
   packagePath,
   prepareDevPackage,
