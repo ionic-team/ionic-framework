@@ -10,7 +10,7 @@
   --border-width: #{$checkbox-md-icon-border-width};
   --border-style: #{$checkbox-md-icon-border-style};
   --border-color: #{$checkbox-md-icon-border-color-off};
-  --stroke-width: 3;
+  --checkmark-stroke-width: 3;
 
   // Background
   --background: #{$checkbox-md-icon-background-color-off};
@@ -28,7 +28,6 @@
 .checkbox-icon path {
   stroke-dasharray: 30;
   stroke-dashoffset: 30;
-  stroke-width: var(--stroke-width);
 }
 
 // Material Design Checkbox: Checked / Indeterminate
