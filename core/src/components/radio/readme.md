@@ -129,12 +129,10 @@ export const RadioExample: React.FC = () => (
 
 ## CSS Custom Properties
 
-| Name                      | Description                                             |
-| ------------------------- | ------------------------------------------------------- |
-| `--border-radius`         | Border radius of the outer radio                        |
-| `--border-radius-checked` | Border radius of the inner checked portion of the radio |
-| `--color`                 | Color of the radio                                      |
-| `--color-checked`         | Color of the checked radio                              |
+| Name              | Description                |
+| ----------------- | -------------------------- |
+| `--color`         | Color of the radio         |
+| `--color-checked` | Color of the checked radio |
 
 
 ## Dependencies
