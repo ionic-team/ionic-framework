@@ -23,7 +23,7 @@ export const ButtonsExample: React.FC = () => (
     <IonToolbar>
       <IonButtons slot="secondary">
         <IonButton>
-          <IonIcon slot="icon-only" name="contact" />
+          <IonIcon slot="icon-only" name="person-circle" />
         </IonButton>
         <IonButton>
           <IonIcon slot="icon-only" name="search" />
@@ -32,7 +32,7 @@ export const ButtonsExample: React.FC = () => (
       <IonTitle>Default Buttons</IonTitle>
       <IonButtons slot="primary">
         <IonButton color="secondary">
-          <IonIcon slot="icon-only" name="more" />
+          <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
         </IonButton>
       </IonButtons>
     </IonToolbar>
@@ -48,7 +48,7 @@ export const ButtonsExample: React.FC = () => (
         <IonMenuButton autoHide={false} />
       </IonButtons>
     </IonToolbar>
-    
+
     <IonToolbar>
       <IonButtons collapse="true">
         <IonButton>
