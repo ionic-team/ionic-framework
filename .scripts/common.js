@@ -254,6 +254,22 @@ function updatePackageVersions(tasks, packages, version) {
       }
     });
 
+    // angular & angular-server need to update their dist versions
+    if (package === 'angular' || package === 'packages/angular-server') {
+      const distPackage = path.join(package, 'dist');
+
+      updatePackageVersion(tasks, distPackage, version);
+
+      tasks.push({
+        title: `${package} update @ionic/core dependency, if present ${tc.dim(`(${version})`)}`,
+        task: async () => {
+          const pkg = readPkg(distPackage);
+          updateDependency(pkg, '@ionic/core', version);
+          writePkg(distPackage, pkg);
+        }
+      });
+    }
+
     if (package === 'packages/react-router') {
       tasks.push({
         title: `${package} update @ionic/react dependency, if present ${tc.dim(`(${version})`)}`,

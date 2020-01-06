@@ -113,9 +113,6 @@ async function preparePackages(packages, version, install) {
   // add update package.json of each project
   common.updatePackageVersions(tasks, packages, version);
 
-  // copy package.json to dist
-  common.copyPackageToDist(tasks, packages);
-
   // generate changelog
   generateChangeLog(tasks);
 
