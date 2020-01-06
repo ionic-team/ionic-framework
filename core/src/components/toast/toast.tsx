@@ -233,7 +233,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return (
       <div class={buttonGroupsClasses}>
         {buttons.map(b =>
-          <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)}>
+          <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)} part="button">
             <div class="toast-button-inner">
               {b.icon &&
                 <ion-icon
@@ -275,15 +275,15 @@ export class Toast implements ComponentInterface, OverlayInterface {
         onIonToastWillDismiss={this.dispatchCancelHandler}
       >
         <div class={wrapperClass}>
-          <div class="toast-container">
+          <div class="toast-container" part="container">
             {this.renderButtons(startButtons, 'start')}
 
             <div class="toast-content">
               {this.header !== undefined &&
-                <div class="toast-header">{this.header}</div>
+                <div class="toast-header" part="header">{this.header}</div>
               }
               {this.message !== undefined &&
-                <div class="toast-message" innerHTML={sanitizeDOMString(this.message)}></div>
+                <div class="toast-message" part="message" innerHTML={sanitizeDOMString(this.message)}></div>
               }
             </div>
 
