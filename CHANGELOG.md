@@ -1,3 +1,12 @@
+# [5.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v5.0.0-beta.3...v5.0.0-beta.4) (2020-01-06)
+
+
+### Features
+
+* **refresher:** add MD native refresher ([#20096](https://github.com/ionic-team/ionic/issues/20096)) ([5b81bdf](https://github.com/ionic-team/ionic/commit/5b81bdfcf18ed182bde14bbea4957b49ea886322)), closes [#17316](https://github.com/ionic-team/ionic/issues/17316)
+
+
+
 # [5.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v4.11.7...v5.0.0-beta.3) (2020-01-03)
 
 
