@@ -158,17 +158,11 @@ function preparePackage(tasks, package, version, install) {
         title: `${pkg.name}: lint`,
         task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
       });
-      projectTasks.push({
-        title: `${pkg.name}: test`,
-        task: async () => await execa('npm', ['test'], { cwd: projectRoot })
-      });
-      projectTasks.push({
-        title: `${pkg.name}: update ionic/core dep to ${version}`,
-        task: () => {
-          updateDependency(pkg, '@ionic/core', version);
-          writePkg(package, pkg);
-        }
-      });
+      // TODO will not work due to https://github.com/ionic-team/ionic/issues/20136
+      // projectTasks.push({
+      //   title: `${pkg.name}: test`,
+      //   task: async () => await execa('npm', ['test'], { cwd: projectRoot })
+      // });
     }
 
     // Build
@@ -260,6 +254,22 @@ function updatePackageVersions(tasks, packages, version) {
       }
     });
 
+    // angular & angular-server need to update their dist versions
+    if (package === 'angular' || package === 'packages/angular-server') {
+      const distPackage = path.join(package, 'dist');
+
+      updatePackageVersion(tasks, distPackage, version);
+
+      tasks.push({
+        title: `${package} update @ionic/core dependency, if present ${tc.dim(`(${version})`)}`,
+        task: async () => {
+          const pkg = readPkg(distPackage);
+          updateDependency(pkg, '@ionic/core', version);
+          writePkg(distPackage, pkg);
+        }
+      });
+    }
+
     if (package === 'packages/react-router') {
       tasks.push({
         title: `${package} update @ionic/react dependency, if present ${tc.dim(`(${version})`)}`,
@@ -274,17 +284,29 @@ function updatePackageVersions(tasks, packages, version) {
 }
 
 function updatePackageVersion(tasks, package, version) {
-  let projectRoot = projectPath(package);
-
-  if (package === 'packages/angular-server' || package === 'angular') {
-    projectRoot = path.join(projectRoot, 'dist')
-  }
+  const projectRoot = projectPath(package);
 
   tasks.push({
     title: `${package}: update package.json ${tc.dim(`(${version})`)}`,
     task: async () => {
       await execa('npm', ['version', version], { cwd: projectRoot });
     }
+  });
+}
+
+function copyPackageToDist(tasks, packages) {
+  packages.forEach(package => {
+    const projectRoot = projectPath(package);
+
+    // angular and angular-server are the only packages that publish dist
+    if (package !== 'angular' && package !== 'packages/angular-server') {
+      return;
+    }
+
+    tasks.push({
+      title: `${package}: Copy package.json to dist`,
+      task: () => execa('node', ['copy-package.js', package], { cwd: path.join(rootDir, '.scripts') })
+    });
   });
 }
 
@@ -357,6 +379,7 @@ module.exports = {
   isValidVersion,
   isVersionGreater,
   copyCDNLoader,
+  copyPackageToDist,
   packages,
   packagePath,
   prepareDevPackage,
