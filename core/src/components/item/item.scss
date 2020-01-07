@@ -113,13 +113,24 @@
 // --------------------------------------------------
 
 :host(.ion-focused) .item-native {
-  background: var(--background-focused);
   color: var(--color-focused);
 }
 
+:host(.ion-focused) .item-native::after {
+  background: var(--background-focused);
+
+  opacity: 1;
+}
+
+
 :host(.ion-color.ion-focused) .item-native {
-  background: current-color(shade);
   color: current-color(contrast);
+}
+
+:host(.ion-color.ion-focused) .item-native::after {
+  background: current-color(shade);
+
+  opacity: 1;
 }
 
 
@@ -138,8 +149,13 @@
     color: var(--color-hover);
   }
 
-  :host(.ion-color.ion-activatable:hover) .item-native {
+  :host(.ion-color.ion-activatable:hover) .item-native::after {
     background: #{current-color(tint)};
+
+    opacity: 1;
+  }
+
+  :host(.ion-color.ion-activatable:hover) .item-native {
     color: #{current-color(contrast)};
   }
 }
@@ -149,8 +165,13 @@
 // --------------------------------------------------
 
 :host(.ion-activated) .item-native {
-  background: var(--background-activated);
   color: var(--color-activated);
+}
+
+:host(.ion-activated) .item-native::after {
+  background: var(--background-activated);
+
+  opacity: 1;
 }
 
 
