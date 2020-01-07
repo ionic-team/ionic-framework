@@ -1,10 +1,15 @@
 # Breaking Changes
 
-- [5.0.0](#5.0.0)
-- [4.0.0](#4.0.0)
+This is a comprehensive list of the breaking changes introduced in the major version releases of Ionic Framework.
+
+## Versions
+
+- [Version 5.x](#version-5.x)
+- [Version 4.x](#version-4.x)
+- [Legacy](#legacy)
 
 
-## 5.0.0
+## Version 5.x
 
 - [CSS](#css)
   * [CSS Utilities](#css-utilities)
@@ -322,6 +327,10 @@ The table below outlines icons that were removed or renamed.
 
 --------------------------------------------------------------------------------------------------
 
-## 4.0.0
+## Version 4.x
 
 The list of the breaking changes introduced in Ionic Angular v4 can be found in [angular/BREAKING.md](https://github.com/ionic-team/ionic/blob/master/angular/BREAKING.md).
+
+## Legacy
+
+For the breaking changes of the older legacy versions (versions 2.x & 3.x) of Ionic Framework, see the [v3 changelog](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md).
