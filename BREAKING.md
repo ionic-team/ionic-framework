@@ -10,15 +10,15 @@
   * [CSS Utility Attributes](#css-utility-attributes)
   * [Display Classes](#display-classes)
   * [Activated, Focused, Hover States](#activated--focused--hover-states)
-- [Component Renames](#component-renames)
+- [Components](#components)
   * [Anchor](#anchor)
-  * [Nav Link](#nav-link)
-- [Property Removals](#property-removals)
-  * [Toast](#toast)
   * [Menu](#menu)
-  * [Skeleton Text](#skeleton-text)
+  * [Nav Link](#nav-link)
   * [Searchbar](#searchbar)
+  * [Segment](#segment)
+  * [Skeleton Text](#skeleton-text)
   * [Split Pane](#split-pane)
+  * [Toast](#toast)
 
 
 ### CSS
@@ -40,18 +40,59 @@ The `.activated` class that gets added has been renamed to `.ion-activated` for 
 <!-- TODO mention some of the changes to the hover values: https://github.com/ionic-team/ionic/pull/19440 -->
 
 
-### Component Renames
+### Components
 
 #### Anchor
 
 The `ion-anchor` component has been renamed to `ion-router-link` as this is a better description of which component it should be used with. This component should still only be used in vanilla and Stencil JavaScript projects. Angular projects should use an `<a>` and `routerLink` with the Angular router. See the [documentation for router-link](https://ionicframework.com/docs/api/router-link) for more information.
+
+
+#### Menu
+
+- The `swipeEnable()` function has been removed in Angular, use `swipeGesture()` instead.
+- The `side` values `left` and `right` have been removed, use `start` and `end` instead.
+- Removed the `main` attribute, use `content-id` instead.
+
 
 #### Nav Link
 
 The `ion-nav-push`, `ion-nav-back`, and `ion-nav-set-root` components have been removed in favor of using `ion-nav-link` with a `router-direction` property which accepts `”root”`, `“forward”`, and `“back”`. This reduces the need for maintaining multiple components when they all do the same thing with different transition directions. See the [documentation for nav-link](https://ionicframework.com/docs/api/nav-link) for more information.
 
 
-### Property Removals
+#### Searchbar
+
+The `show-cancel-button` property of the searchbar no longer accepts boolean values. Accepted values are strings: `"focus"`, `"always"`, `"never"`.
+
+```html
+<ion-searchbar show-cancel-button>
+<ion-searchbar show-cancel-button="true">
+<ion-searchbar show-cancel-button="false">
+```
+
+becomes
+
+```html
+<ion-searchbar show-cancel-button="focus">
+<ion-searchbar show-cancel-button="focus">
+<ion-searchbar show-cancel-button="never">
+```
+
+See the [Searchbar documentation](https://ionicframework.com/docs/api/searchbar#properties) for more information.
+
+
+#### Segment
+
+<!-- TODO https://gist.github.com/brandyscarney/e6cfe43c359bb2c932e12f8d615e1669 -->
+
+
+#### Skeleton Text
+
+The `width` property has been removed in favor of using CSS styling.
+
+
+#### Split Pane
+- Removed the `main` attribute, use `content-id` instead.
+
 
 #### Toast
 
@@ -87,39 +128,6 @@ async presentToast() {
   toast.present();
 }
 ```
-
-#### Menu
-
-- The `swipeEnable()` function has been removed in Angular, use `swipeGesture()` instead.
-- The `side` values `left` and `right` have been removed, use `start` and `end` instead.
-- Removed the `main` attribute, use `content-id` instead.
-
-#### Skeleton Text
-
-The `width` property has been removed in favor of using CSS styling.
-
-#### Searchbar
-
-The `show-cancel-button` property of the searchbar no longer accepts boolean values. Accepted values are strings: `"focus"`, `"always"`, `"never"`.
-
-```html
-<ion-searchbar show-cancel-button>
-<ion-searchbar show-cancel-button="true">
-<ion-searchbar show-cancel-button="false">
-```
-
-becomes
-
-```html
-<ion-searchbar show-cancel-button="focus">
-<ion-searchbar show-cancel-button="focus">
-<ion-searchbar show-cancel-button="never">
-```
-
-See the [Searchbar documentation](https://ionicframework.com/docs/api/searchbar#properties) for more information.
-
-#### Split Pane
-- Removed the `main` attribute, use `content-id` instead.
 
 
 --------------------------------------------------------------------------------------------------
