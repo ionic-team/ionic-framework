@@ -42,16 +42,18 @@
 @media (any-hover: hover) {
   :host(.ion-activated.ion-activatable:hover) .item-native {
     color: var(--color-activated);
-    &::after {
-      background: var(--background-activated);
-    }
+  }
+
+  :host(.ion-activated.ion-activatable:hover) .item-native::after {
+    background: var(--background-activated);
   }
 
   :host(.ion-activated.ion-color.ion-activatable:hover) .item-native {
     color: #{current-color(contrast)};
-    &::after {
-      background: #{current-color(shade)};
-    }
+  }
+
+  :host(.ion-activated.ion-color.ion-activatable:hover) .item-native::after {
+    background: #{current-color(shade)};
   }
 }
 

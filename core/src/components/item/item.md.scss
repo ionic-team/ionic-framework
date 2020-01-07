@@ -36,23 +36,26 @@
 
 :host(.ion-focused.ion-activated) .item-native {
   color: var(--color-focused);
-  &::after {
-    background: var(--background-focused);
-  }
+}
+
+:host(.ion-focused.ion-activated) .item-native::after {
+  background: var(--background-focused);
 }
 
 :host(.ion-color.ion-activated) .item-native {
   color: current-color(contrast);
-  &::after {
-    background: current-color(base);
-  }
+}
+
+:host(.ion-color.ion-activated) .item-native::after {
+  background: current-color(base);
 }
 
 :host(.ion-color.ion-focused.ion-activated) .item-native {
   color: current-color(contrast);
-  &::after {
-    background: current-color(shade);
-  }
+}
+
+:host(.ion-color.ion-focused.ion-activated) .item-native::after {
+  background: current-color(shade);
 }
 
 
