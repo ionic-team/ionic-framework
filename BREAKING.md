@@ -7,11 +7,16 @@
 ## 5.0.0
 
 - [CSS](#css)
-  * [CSS Utility Attributes](#css-utility-attributes)
+  * [CSS Utilities](#css-utilities)
   * [Display Classes](#display-classes)
   * [Activated, Focused, Hover States](#activated--focused--hover-states)
+  * [Distributed Sass](#distributed-sass)
 - [Components](#components)
   * [Anchor](#anchor)
+  * [Back Button](#back-button)
+  * [Card](#card)
+  * [Header / Footer](#header---footer)
+  * [List Header](#list-header)
   * [Menu](#menu)
   * [Nav Link](#nav-link)
   * [Searchbar](#searchbar)
@@ -20,14 +25,34 @@
   * [Split Pane](#split-pane)
   * [Toast](#toast)
 - [Colors](#colors)
+- [Events](#events)
+- [Mode](#mode)
 - [Ionicons](#ionicons)
 
 
 ### CSS
 
-#### CSS Utility Attributes
+#### CSS Utilities
 
-We originally added CSS attributes for styling components because it was a quick and easy way to wrap text or add padding to an element. Once we added support for multiple frameworks as part of our Ionic for everyone approach, we quickly determined there were problems with using CSS attributes with frameworks that use JSX and Typescript. In order to solve this we added CSS classes. Rather than support CSS attributes in certain frameworks and classes in others, we decided to remove the CSS attributes and support what works in all of them, classes, for consistency. In the latest version of Ionic 4, there are deprecation warnings printed in the console to show what the new classes are, and the documentation has been updated since support for classes was added to remove all references to attributes: https://ionicframework.com/docs/layout/css-utilities.
+We originally added CSS utility attributes for styling components because it was a quick and easy way to wrap text or add padding to an element. Once we added support for multiple frameworks as part of our Ionic for everyone approach, we quickly determined there were problems with using CSS attributes with frameworks that use JSX and Typescript. In order to solve this we added CSS classes. Rather than support CSS attributes in certain frameworks and classes in others, we decided to remove the CSS attributes and support what works in all of them, classes, for consistency. In the latest version of Ionic 4, there are deprecation warnings printed in the console to show what the new classes are, and the documentation has been updated since support for classes was added to remove all references to attributes: https://ionicframework.com/docs/layout/css-utilities.
+
+Some examples of what's changed are below. *This is not all-inclusive, see the documentation linked above for all of the available CSS utility classes.*
+
+```html
+<ion-header text-center></ion-header>
+<ion-content padding></ion-content>
+<ion-label text-wrap></ion-label>
+<ion-item wrap></ion-item>
+```
+
+becomes
+
+```html
+<ion-header class="ion-text-center"></ion-header>
+<ion-content class="ion-padding"></ion-content>
+<ion-label class="ion-text-wrap"></ion-label>
+<ion-item class="ion-wrap"></ion-item>
+```
 
 
 #### Display Classes
@@ -41,12 +66,34 @@ The `.activated` class that gets added has been renamed to `.ion-activated` for 
 
 <!-- TODO mention some of the changes to the hover values: https://github.com/ionic-team/ionic/pull/19440 -->
 
+#### Distributed Sass
+
+The `scss` files have been removed from `dist/`, CSS variables should be used to theme instead.
+
 
 ### Components
 
 #### Anchor
 
 The `ion-anchor` component has been renamed to `ion-router-link` as this is a better description of which component it should be used with. This component should still only be used in vanilla and Stencil JavaScript projects. Angular projects should use an `<a>` and `routerLink` with the Angular router. See the [documentation for router-link](https://ionicframework.com/docs/api/router-link) for more information.
+
+#### Back Button
+
+Converted `ion-back-button` to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+#### Card
+
+Converted `ion-card` to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+
+#### Header / Footer
+
+The `no-border` attribute has been removed, use `ion-no-border` class instead. See [CSS Utilities](#css-utilities) above for more information on why this change was made.
+
+
+#### List Header
+
+The list header has been redesigned to match the latest iOS spec. This may break the design of your application as the previous design had a small font size with uppercase text. The latest design includes a larger, bolder text. If the old look is desired, use custom CSS to achieve it.
 
 
 #### Menu
@@ -62,6 +109,8 @@ The `ion-nav-push`, `ion-nav-back`, and `ion-nav-set-root` components have been 
 
 
 #### Searchbar
+
+##### Show Cancel Button
 
 The `show-cancel-button` property of the searchbar no longer accepts boolean values. Accepted values are strings: `"focus"`, `"always"`, `"never"`.
 
@@ -81,6 +130,10 @@ becomes
 
 See the [Searchbar documentation](https://ionicframework.com/docs/api/searchbar#properties) for more information.
 
+##### Inputmode
+
+The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get the old behavior, set the inputmode property to `"search"`.
+
 
 #### Segment
 
@@ -93,8 +146,24 @@ The `width` property has been removed in favor of using CSS styling.
 
 
 #### Split Pane
+- Converted to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 - Removed the `main` attribute, use `content-id` instead.
 
+  ```html
+  <ion-split-pane>
+    ...
+    <div main>...</div>
+  </ion-split-pane>
+  ```
+
+  becomes
+
+  ```html
+  <ion-split-pane content-id="main-content">
+    ...
+    <div id="main-content">...</div>
+  </ion-split-pane>
+  ```
 
 #### Toast
 
@@ -150,6 +219,28 @@ dark:            #222428
 `primary`, `light` and `dark` have not changed. The contrast color for `warning` has been updated to `#000`.
 
 This will only be a breaking change in your app if you are not using one of our starters & not overriding the defaults. If you are overriding the defaults already these will need to be manually updated if desired.
+
+
+### Events
+
+The Events service has been removed.
+
+Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+Use "Redux" for advanced state management: https://ngrx.io
+
+
+### Mode
+
+Mode is now cascaded from the parent to the child component. Previously, if you wanted to update a component and its children to use the same mode, you'd have to set it on all components. For example, if you wanted to use a `md` segment no matter the mode, you'd have to write the following:
+
+```html
+<ion-segment mode="md">
+  <ion-segment-button mode="md">Button</ion-segment-button>
+  <ion-segment-button mode="md">Button</ion-segment-button>
+</ion-segment>
+```
+
+Now, the `mode` only needs to be set on the `ion-segment` and it will be inherited. If this behavior is not desired set a different mode on the child component.
 
 
 ### Ionicons
