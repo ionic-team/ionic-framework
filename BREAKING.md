@@ -4,8 +4,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Versions
 
-- [Version 5.x](#version-5.x)
-- [Version 4.x](#version-4.x)
+- [Version 5.x](#version-5x)
+- [Version 4.x](#version-4x)
 - [Legacy](#legacy)
 
 
