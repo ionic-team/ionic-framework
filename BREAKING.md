@@ -19,6 +19,8 @@
   * [Skeleton Text](#skeleton-text)
   * [Split Pane](#split-pane)
   * [Toast](#toast)
+- [Colors](#colors)
+- [Ionicons](#ionicons)
 
 
 ### CSS
@@ -52,7 +54,7 @@ The `ion-anchor` component has been renamed to `ion-router-link` as this is a be
 - The `swipeEnable()` function has been removed in Angular, use `swipeGesture()` instead.
 - The `side` values `left` and `right` have been removed, use `start` and `end` instead.
 - Removed the `main` attribute, use `content-id` instead.
-
+- The presentation type in `ios` now defaults to `"overlay"`.
 
 #### Nav Link
 
@@ -128,6 +130,31 @@ async presentToast() {
   toast.present();
 }
 ```
+
+### Colors
+
+The default Ionic colors have been updated to the following:
+
+```
+primary:         #3880ff
+secondary:       #3dc2ff
+tertiary:        #5260ff
+success:         #2dd36f
+warning:         #ffc409
+danger:          #eb445a
+light:           #f4f5f8
+medium:          #92949c
+dark:            #222428
+```
+
+`primary`, `light` and `dark` have not changed. The contrast color for `warning` has been updated to `#000`.
+
+This will only be a breaking change in your app if you are not using one of our starters & not overriding the defaults. If you are overriding the defaults already these will need to be manually updated if desired.
+
+
+### Ionicons
+
+<!-- TODO we need to document what was removed / renamed -->
 
 
 --------------------------------------------------------------------------------------------------
