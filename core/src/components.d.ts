@@ -34,7 +34,6 @@ import {
   OverlayEventDetail,
   PickerButton,
   PickerColumn,
-  PickerOptions,
   RadioChangeEventDetail,
   RadioGroupChangeEventDetail,
   RangeChangeEventDetail,
@@ -1682,24 +1681,6 @@ export namespace Components {
     */
     'col': PickerColumn;
   }
-  interface IonPickerController {
-    /**
-    * Create a picker overlay with picker options.
-    * @param options The options to use to create the picker.
-    */
-    'create': (options: PickerOptions) => Promise<HTMLIonPickerElement>;
-    /**
-    * Dismiss the open picker overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the picker. This can be useful in a button handler for determining which button was clicked to dismiss the picker. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the picker to dismiss. If an id is not provided, it will dismiss the most recently opened picker.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened picker overlay.
-    */
-    'getTop': () => Promise<HTMLIonPickerElement | undefined>;
-  }
   interface IonPopover {
     /**
     * If `true`, the popover will animate.
@@ -3082,12 +3063,6 @@ declare global {
     new (): HTMLIonPickerColumnElement;
   };
 
-  interface HTMLIonPickerControllerElement extends Components.IonPickerController, HTMLStencilElement {}
-  var HTMLIonPickerControllerElement: {
-    prototype: HTMLIonPickerControllerElement;
-    new (): HTMLIonPickerControllerElement;
-  };
-
   interface HTMLIonPopoverElement extends Components.IonPopover, HTMLStencilElement {}
   var HTMLIonPopoverElement: {
     prototype: HTMLIonPopoverElement;
@@ -3372,7 +3347,6 @@ declare global {
     'ion-note': HTMLIonNoteElement;
     'ion-picker': HTMLIonPickerElement;
     'ion-picker-column': HTMLIonPickerColumnElement;
-    'ion-picker-controller': HTMLIonPickerControllerElement;
     'ion-popover': HTMLIonPopoverElement;
     'ion-progress-bar': HTMLIonProgressBarElement;
     'ion-radio': HTMLIonRadioElement;
@@ -4863,7 +4837,6 @@ declare namespace LocalJSX {
     */
     'col': PickerColumn;
   }
-  interface IonPickerController {}
   interface IonPopover {
     /**
     * If `true`, the popover will animate.
@@ -6026,7 +5999,6 @@ declare namespace LocalJSX {
     'ion-note': IonNote;
     'ion-picker': IonPicker;
     'ion-picker-column': IonPickerColumn;
-    'ion-picker-controller': IonPickerController;
     'ion-popover': IonPopover;
     'ion-progress-bar': IonProgressBar;
     'ion-radio': IonRadio;
@@ -6125,7 +6097,6 @@ declare module "@stencil/core" {
       'ion-note': LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
       'ion-picker': LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
       'ion-picker-column': LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
-      'ion-picker-controller': LocalJSX.IonPickerController & JSXBase.HTMLAttributes<HTMLIonPickerControllerElement>;
       'ion-popover': LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
       'ion-progress-bar': LocalJSX.IonProgressBar & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
       'ion-radio': LocalJSX.IonRadio & JSXBase.HTMLAttributes<HTMLIonRadioElement>;

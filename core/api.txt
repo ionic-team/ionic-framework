@@ -765,11 +765,6 @@ ion-picker,css-prop,--min-height
 ion-picker,css-prop,--min-width
 ion-picker,css-prop,--width
 
-ion-picker-controller,none
-ion-picker-controller,method,create,create(options: PickerOptions) => Promise<HTMLIonPickerElement>
-ion-picker-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
-ion-picker-controller,method,getTop,getTop() => Promise<HTMLIonPickerElement | undefined>
-
 ion-popover,scoped
 ion-popover,prop,animated,boolean,true,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false
