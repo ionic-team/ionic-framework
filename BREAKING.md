@@ -20,6 +20,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Anchor](#anchor)
   * [Back Button](#back-button)
   * [Card](#card)
+  * [Controllers](#controllers)
   * [Header / Footer](#header---footer)
   * [List Header](#list-header)
   * [Menu](#menu)
@@ -116,6 +117,48 @@ Converted `ion-back-button` to use [shadow DOM](https://developer.mozilla.org/en
 #### Card
 
 Converted `ion-card` to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+
+### Controllers
+
+The controller components (`ion-action-sheet-controller`, `ion-alert-controller`, `ion-loading-controller`, `ion-menu-controller`, `ion-modal-controller`, `ion-picker-controller`, `ion-popover-controller`, `ion-toast-controller`) have been removed from Ionic core as elements. They should be imported from `@ionic/core` instead. This will not affect projects that use Angular or React. Below is an example of the loading controller change in a JavaScript project, but this change applies to all controller elements.
+
+
+```html
+<ion-loading-controller></ion-loading-controller>
+
+<script>
+  async function presentLoading() {
+    const loadingController = document.querySelector('ion-loading-controller');
+
+    const loading = await loadingController.create({
+      message: 'Hello',
+      duration: 2000
+    });
+    await loading.present();
+  }
+</script>
+
+```
+
+becomes
+
+```html
+<script type="module">
+  import { loadingController } from '@ionic/core';
+  window.loadingController = loadingController;
+</script>
+
+<script>
+  async function presentLoading() {
+    const loading = await loadingController.create({
+      message: 'Hello',
+      duration: 2000
+    });
+    await loading.present();
+  }
+</script>
+```
 
 
 #### Header / Footer
