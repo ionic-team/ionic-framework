@@ -73,7 +73,7 @@ The `.activated` class that gets added has been renamed to `.ion-activated` for 
 
 #### Distributed Sass
 
-The `scss` files have been removed from `dist/`, CSS variables should be used to theme instead.
+The `scss` files have been removed from `dist/`. CSS variables should be used to theme instead.
 
 
 ### Components
