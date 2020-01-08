@@ -35,7 +35,6 @@ import {
   PickerButton,
   PickerColumn,
   PickerOptions,
-  PopoverOptions,
   RadioChangeEventDetail,
   RadioGroupChangeEventDetail,
   RangeChangeEventDetail,
@@ -1772,24 +1771,6 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonPopoverController {
-    /**
-    * Create a popover overlay with popover options.
-    * @param options The options to use to create the popover.
-    */
-    'create': <T extends ComponentRef>(options: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>;
-    /**
-    * Dismiss the open popover overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the popover. This can be useful in a button handler for determining which button was clicked to dismiss the popover. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the popover to dismiss. If an id is not provided, it will dismiss the most recently opened popover.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened popover overlay.
-    */
-    'getTop': () => Promise<HTMLIonPopoverElement | undefined>;
-  }
   interface IonProgressBar {
     /**
     * If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].
@@ -3132,12 +3113,6 @@ declare global {
     new (): HTMLIonPopoverElement;
   };
 
-  interface HTMLIonPopoverControllerElement extends Components.IonPopoverController, HTMLStencilElement {}
-  var HTMLIonPopoverControllerElement: {
-    prototype: HTMLIonPopoverControllerElement;
-    new (): HTMLIonPopoverControllerElement;
-  };
-
   interface HTMLIonProgressBarElement extends Components.IonProgressBar, HTMLStencilElement {}
   var HTMLIonProgressBarElement: {
     prototype: HTMLIonProgressBarElement;
@@ -3424,7 +3399,6 @@ declare global {
     'ion-picker-column': HTMLIonPickerColumnElement;
     'ion-picker-controller': HTMLIonPickerControllerElement;
     'ion-popover': HTMLIonPopoverElement;
-    'ion-popover-controller': HTMLIonPopoverControllerElement;
     'ion-progress-bar': HTMLIonProgressBarElement;
     'ion-radio': HTMLIonRadioElement;
     'ion-radio-group': HTMLIonRadioGroupElement;
@@ -4982,7 +4956,6 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonPopoverController {}
   interface IonProgressBar {
     /**
     * If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].
@@ -6082,7 +6055,6 @@ declare namespace LocalJSX {
     'ion-picker-column': IonPickerColumn;
     'ion-picker-controller': IonPickerController;
     'ion-popover': IonPopover;
-    'ion-popover-controller': IonPopoverController;
     'ion-progress-bar': IonProgressBar;
     'ion-radio': IonRadio;
     'ion-radio-group': IonRadioGroup;
@@ -6183,7 +6155,6 @@ declare module "@stencil/core" {
       'ion-picker-column': LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
       'ion-picker-controller': LocalJSX.IonPickerController & JSXBase.HTMLAttributes<HTMLIonPickerControllerElement>;
       'ion-popover': LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
-      'ion-popover-controller': LocalJSX.IonPopoverController & JSXBase.HTMLAttributes<HTMLIonPopoverControllerElement>;
       'ion-progress-bar': LocalJSX.IonProgressBar & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
       'ion-radio': LocalJSX.IonRadio & JSXBase.HTMLAttributes<HTMLIonRadioElement>;
       'ion-radio-group': LocalJSX.IonRadioGroup & JSXBase.HTMLAttributes<HTMLIonRadioGroupElement>;

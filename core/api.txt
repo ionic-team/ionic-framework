@@ -801,11 +801,6 @@ ion-popover,css-prop,--min-height
 ion-popover,css-prop,--min-width
 ion-popover,css-prop,--width
 
-ion-popover-controller,none
-ion-popover-controller,method,create,create<T extends ComponentRef>(options: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>
-ion-popover-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
-ion-popover-controller,method,getTop,getTop() => Promise<HTMLIonPopoverElement | undefined>
-
 ion-progress-bar,shadow
 ion-progress-bar,prop,buffer,number,1,false,false
 ion-progress-bar,prop,color,string | undefined,undefined,false,false
