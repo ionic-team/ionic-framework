@@ -1,6 +1,7 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { generateE2EUrl } from '../../../utils/test/utils';
+
 import { menuController } from '../../../utils/menu-controller';
+import { generateE2EUrl } from '../../../utils/test/utils';
 
 export const testMenu = async (
   type: string,
