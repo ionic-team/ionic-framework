@@ -67,7 +67,7 @@ The responsive display classes found in the `display.css` file have had their me
 
 #### Activated, Focused, Hover States
 
-The `.activated` class that gets added has been renamed to `.ion-activated` for consistency with how we add focused to elements and to avoid conflicts in user’s CSS.
+The `.activated` class that gets added has been renamed to `.ion-activated` for consistency with how we add focused to elements and to avoid conflicts in users' CSS.
 
 <!-- TODO mention some of the changes to the hover values: https://github.com/ionic-team/ionic/pull/19440 -->
 
