@@ -78,9 +78,9 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-button expand="block" id="openFirst">Open Start Menu</ion-button>
-        <ion-button expand="block" id="openEnd">Open End Menu</ion-button>
-        <ion-button expand="block" id="openCustom">Open Custom Menu</ion-button>
+        <ion-button expand="block" onclick="openFirst()">Open Start Menu</ion-button>
+        <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
+        <ion-button expand="block" onclick="openCustom()">Open Custom Menu</ion-button>
       </ion-content>
     </div>
 
@@ -94,11 +94,10 @@
 
   <script type="module">
     import { menuController } from '../../../../dist/ionic/index.esm.js';
+    window.menuController = menuController;
+  </script>
 
-    document.querySelector('#openFirst').addEventListener('click', () => openFirst());
-    document.querySelector('#openEnd').addEventListener('click', () => openEnd());
-    document.querySelector('#openCustom').addEventListener('click', () => openCustom());
-
+  <script>
     async function openFirst() {
       await menuController.enable(true, 'first');
       await menuController.open('first');
