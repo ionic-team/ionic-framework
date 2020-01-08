@@ -641,20 +641,6 @@ ion-menu-button,css-prop,--padding-end
 ion-menu-button,css-prop,--padding-start
 ion-menu-button,css-prop,--padding-top
 
-ion-menu-controller,none
-ion-menu-controller,method,close,close(menu?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,enable,enable(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
-ion-menu-controller,method,get,get(menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
-ion-menu-controller,method,getMenus,getMenus() => Promise<HTMLIonMenuElement[]>
-ion-menu-controller,method,getOpen,getOpen() => Promise<HTMLIonMenuElement | undefined>
-ion-menu-controller,method,isAnimating,isAnimating() => Promise<boolean>
-ion-menu-controller,method,isEnabled,isEnabled(menu?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,isOpen,isOpen(menu?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,open,open(menu?: string | null | undefined) => Promise<boolean>
-ion-menu-controller,method,registerAnimation,registerAnimation(name: string, animation: AnimationBuilder) => Promise<void>
-ion-menu-controller,method,swipeGesture,swipeGesture(enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>
-ion-menu-controller,method,toggle,toggle(menu?: string | null | undefined) => Promise<boolean>
-
 ion-menu-toggle,shadow
 ion-menu-toggle,prop,autoHide,boolean,true,false,false
 ion-menu-toggle,prop,menu,string | undefined,undefined,false,false

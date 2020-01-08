@@ -16,6 +16,10 @@
       window.Animation = null;
     }
   </script>
+  <script type="module">
+    import { menuController } from '../../../../dist/ionic/index.esm.js';
+    window.menuController = menuController;
+  </script>
 </head>
 
 <body>
@@ -85,7 +89,6 @@
     </div>
 
   </ion-app>
-  <ion-menu-controller></ion-menu-controller>
 
   <style>
     .my-custom-menu {
@@ -93,21 +96,19 @@
     }
   </style>
 
-  <script type="module">
-    const menuCtrl = document.querySelector('ion-menu-controller');
-
+  <script>
     async function openFirst() {
-      await menuCtrl.enable(true, 'first');
-      await menuCtrl.open('first');
+      await window.menuController.enable(true, 'first');
+      await window.menuController.open('first');
     }
 
     async  function openEnd() {
-      await menuCtrl.open('end');
+      await window.menuController.open('end');
     }
 
     async function openCustom() {
-      await menuCtrl.enable(true, 'custom');
-      await menuCtrl.open('custom');
+      await window.menuController.enable(true, 'custom');
+      await window.menuController.open('custom');
     }
   </script>
 </body>
