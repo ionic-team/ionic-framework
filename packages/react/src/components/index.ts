@@ -22,6 +22,7 @@ export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
 export { IonBackButton } from './navigation/IonBackButton';
 export { IonRouterOutlet } from './IonRouterOutlet';
+export { IonIcon } from './IonIcon';
 
 // Utils
 export { isPlatform, getPlatforms, getConfig } from './utils';
