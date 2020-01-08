@@ -63,7 +63,6 @@ import {
   TextareaChangeEventDetail,
   TextFieldTypes,
   ToastButton,
-  ToastOptions,
   ToggleChangeEventDetail,
   TransitionDoneFn,
   TransitionInstruction,
@@ -2675,24 +2674,6 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonToastController {
-    /**
-    * Create a toast overlay with toast options.
-    * @param options The options to use to create the toast.
-    */
-    'create': (options?: ToastOptions | undefined) => Promise<HTMLIonToastElement>;
-    /**
-    * Dismiss the open toast overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the toast. For example, 'cancel' or 'backdrop'.
-    * @param id The id of the toast to dismiss. If an id is not provided, it will dismiss the most recently opened toast.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened toast overlay.
-    */
-    'getTop': () => Promise<HTMLIonToastElement | undefined>;
-  }
   interface IonToggle {
     /**
     * If `true`, the toggle is selected.
@@ -3323,12 +3304,6 @@ declare global {
     new (): HTMLIonToastElement;
   };
 
-  interface HTMLIonToastControllerElement extends Components.IonToastController, HTMLStencilElement {}
-  var HTMLIonToastControllerElement: {
-    prototype: HTMLIonToastControllerElement;
-    new (): HTMLIonToastControllerElement;
-  };
-
   interface HTMLIonToggleElement extends Components.IonToggle, HTMLStencilElement {}
   var HTMLIonToggleElement: {
     prototype: HTMLIonToggleElement;
@@ -3434,7 +3409,6 @@ declare global {
     'ion-thumbnail': HTMLIonThumbnailElement;
     'ion-title': HTMLIonTitleElement;
     'ion-toast': HTMLIonToastElement;
-    'ion-toast-controller': HTMLIonToastControllerElement;
     'ion-toggle': HTMLIonToggleElement;
     'ion-toolbar': HTMLIonToolbarElement;
     'ion-virtual-scroll': HTMLIonVirtualScrollElement;
@@ -5898,7 +5872,6 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonToastController {}
   interface IonToggle {
     /**
     * If `true`, the toggle is selected.
@@ -6090,7 +6063,6 @@ declare namespace LocalJSX {
     'ion-thumbnail': IonThumbnail;
     'ion-title': IonTitle;
     'ion-toast': IonToast;
-    'ion-toast-controller': IonToastController;
     'ion-toggle': IonToggle;
     'ion-toolbar': IonToolbar;
     'ion-virtual-scroll': IonVirtualScroll;
@@ -6190,7 +6162,6 @@ declare module "@stencil/core" {
       'ion-thumbnail': LocalJSX.IonThumbnail & JSXBase.HTMLAttributes<HTMLIonThumbnailElement>;
       'ion-title': LocalJSX.IonTitle & JSXBase.HTMLAttributes<HTMLIonTitleElement>;
       'ion-toast': LocalJSX.IonToast & JSXBase.HTMLAttributes<HTMLIonToastElement>;
-      'ion-toast-controller': LocalJSX.IonToastController & JSXBase.HTMLAttributes<HTMLIonToastControllerElement>;
       'ion-toggle': LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
       'ion-toolbar': LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
       'ion-virtual-scroll': LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;

@@ -1236,11 +1236,6 @@ ion-toast,css-prop,--min-width
 ion-toast,css-prop,--start
 ion-toast,css-prop,--width
 
-ion-toast-controller,none
-ion-toast-controller,method,create,create(options?: ToastOptions | undefined) => Promise<HTMLIonToastElement>
-ion-toast-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
-ion-toast-controller,method,getTop,getTop() => Promise<HTMLIonToastElement | undefined>
-
 ion-toggle,shadow
 ion-toggle,prop,checked,boolean,false,false,false
 ion-toggle,prop,color,string | undefined,undefined,false,false
