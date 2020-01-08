@@ -27,7 +27,17 @@ export const iosEnterAnimation = (
     .addAnimation([backdropAnimation, wrapperAnimation]);
 
   if (presentingEl) {
-    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-10px' : 'calc(var(--ion-safe-area-top) + 10px)';
+    const safeAreaTopVal = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-top'), 10);
+    let modalTranslateY = '';
+    if (safeAreaTopVal > 20) {
+      modalTranslateY = 'var(--ion-safe-area-top)';
+    } else if (safeAreaTopVal === 20) {
+      modalTranslateY = 'calc(var(--ion-safe-area-top) + 10px)';
+    } else {
+      modalTranslateY = '10px';
+    }
+
+    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-10px' : modalTranslateY;
     const bodyEl = document.body;
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const finalTransform = `translateY(${modalTransform}) scale(${toPresentingScale})`;
@@ -41,7 +51,7 @@ export const iosEnterAnimation = (
         'transform': finalTransform
       })
       .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
-      .addElement(presentingEl)
+     .addElement(presentingEl)
       .keyframes([
         { offset: 0, transform: 'translateY(0px) scale(1)', 'border-radius': '0px' },
         { offset: 1, transform: finalTransform, 'border-radius': '10px 10px 0 0' }

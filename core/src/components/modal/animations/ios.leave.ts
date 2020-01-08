@@ -9,7 +9,7 @@ export const iosLeaveAnimation = (
   baseEl: HTMLElement,
   presentingEl?: HTMLElement,
   duration = 500
-  ): Animation => {
+): Animation => {
 
   const backdropAnimation = createAnimation()
     .addElement(baseEl.querySelector('ion-backdrop')!)
@@ -27,7 +27,17 @@ export const iosLeaveAnimation = (
     .addAnimation([backdropAnimation, wrapperAnimation]);
 
   if (presentingEl) {
-    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-10px' : 'calc(var(--ion-safe-area-top) + 10px)';
+    const safeAreaTopVal = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-top'), 10);
+    let modalTranslateY = '';
+    if (safeAreaTopVal > 20) {
+      modalTranslateY = 'var(--ion-safe-area-top)';
+    } else if (safeAreaTopVal === 20) {
+      modalTranslateY = 'calc(var(--ion-safe-area-top) + 10px)';
+    } else {
+      modalTranslateY = '10px';
+    }
+
+    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-10px' : modalTranslateY;
     const bodyEl = document.body;
     const currentPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const presentingAnimation = createAnimation()
