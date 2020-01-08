@@ -62,7 +62,34 @@ becomes
 
 #### Display Classes
 
-The responsive display classes found in the `display.css` file have had their media queries updated to better reflect how they should work. Instead of using the maximum value of the breakpoint (for `.ion-hide-{breakpoint}-down` classes) the maximum of the media query will be the minimum of that breakpoint.
+The responsive display classes found in the `display.css` file have had their media queries updated to better reflect how they should work. Instead of using the maximum value of the breakpoint for `.ion-hide-{breakpoint}-down` classes it will use the minimum of that breakpoint.
+
+The [Ionic breakpoints](https://ionicframework.com/docs/layout/css-utilities#ionic-breakpoints) are the following:
+
+
+| Breakpoint Name | Width   |
+| ----------------| --------|
+| xs              | 0       |
+| sm              | 576px   |
+| md              | 768px   |
+| lg              | 992px   |
+| xl              | 1200px  |
+
+Previously, if you added the class `ion-hide-md-down` to an element, it would hide the element when the screen size was `991px` (the maximum of the `md` breakpoint) or smaller. Now, using this same class will hide the element when the maximum screen size is `768px`.
+
+Below is a table of how the media queries have changed for each class:
+
+| Class Name          | Ionic 4                      | Ionic 5                      |
+| --------------------| -----------------------------| -----------------------------|
+| `.ion-hide-down`    | `@media (max-width: 575px)`  | all screen sizes             |
+| `.ion-hide-sm-down` | `@media (max-width: 767px)`  | `@media (max-width: 576px)`  |
+| `.ion-hide-md-down` | `@media (max-width: 991px)`  | `@media (max-width: 768px)`  |
+| `.ion-hide-lg-down` | `@media (max-width: 1199px)` | `@media (max-width: 992px)`  |
+| `.ion-hide-xl-down` | all screen sizes             | `@media (max-width: 1200px)` |
+
+_Note that no changes were made to the `.ion-hide-{breakpoint}-up` classes._
+
+See the [CSS Utilities responsive display documentation](https://ionicframework.com/docs/layout/css-utilities#responsive-display-attributes) for more information.
 
 
 #### Activated, Focused, Hover States
