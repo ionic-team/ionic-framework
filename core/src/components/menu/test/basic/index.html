@@ -16,6 +16,10 @@
       window.Animation = null;
     }
   </script>
+  <script type="module">
+    import { menuController } from '../../../../dist/ionic/index.esm.js';
+    window.menuController = menuController;
+  </script>
 </head>
 
 <body>
@@ -91,11 +95,6 @@
       --width: 500px;
     }
   </style>
-
-  <script type="module">
-    import { menuController } from '../../../../dist/ionic/index.esm.js';
-    window.menuController = menuController;
-  </script>
 
   <script>
     async function openFirst() {
