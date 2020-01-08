@@ -9,10 +9,8 @@
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   ActionSheetButton,
-  ActionSheetOptions,
   AlertButton,
   AlertInput,
-  AlertOptions,
   AnimationBuilder,
   CheckboxChangeEventDetail,
   Color,
@@ -143,24 +141,6 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonActionSheetController {
-    /**
-    * Create an action sheet overlay with action sheet options.
-    * @param options The options to use to create the action sheet.
-    */
-    'create': (options: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>;
-    /**
-    * Dismiss the open action sheet overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the action sheet to dismiss. If an id is not provided, it will dismiss the most recently opened action sheet.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened action sheet overlay.
-    */
-    'getTop': () => Promise<HTMLIonActionSheetElement | undefined>;
-  }
   interface IonAlert {
     /**
     * If `true`, the alert will animate.
@@ -233,24 +213,6 @@ export namespace Components {
     * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
-  }
-  interface IonAlertController {
-    /**
-    * Create an alert overlay with alert options.
-    * @param options The options to use to create the alert.
-    */
-    'create': (options: AlertOptions) => Promise<HTMLIonAlertElement>;
-    /**
-    * Dismiss the open alert overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the alert to dismiss. If an id is not provided, it will dismiss the most recently opened alert.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened alert overlay.
-    */
-    'getTop': () => Promise<HTMLIonAlertElement | undefined>;
   }
   interface IonApp {}
   interface IonAvatar {}
@@ -2883,22 +2845,10 @@ declare global {
     new (): HTMLIonActionSheetElement;
   };
 
-  interface HTMLIonActionSheetControllerElement extends Components.IonActionSheetController, HTMLStencilElement {}
-  var HTMLIonActionSheetControllerElement: {
-    prototype: HTMLIonActionSheetControllerElement;
-    new (): HTMLIonActionSheetControllerElement;
-  };
-
   interface HTMLIonAlertElement extends Components.IonAlert, HTMLStencilElement {}
   var HTMLIonAlertElement: {
     prototype: HTMLIonAlertElement;
     new (): HTMLIonAlertElement;
-  };
-
-  interface HTMLIonAlertControllerElement extends Components.IonAlertController, HTMLStencilElement {}
-  var HTMLIonAlertControllerElement: {
-    prototype: HTMLIonAlertControllerElement;
-    new (): HTMLIonAlertControllerElement;
   };
 
   interface HTMLIonAppElement extends Components.IonApp, HTMLStencilElement {}
@@ -3448,9 +3398,7 @@ declare global {
   };
   interface HTMLElementTagNameMap {
     'ion-action-sheet': HTMLIonActionSheetElement;
-    'ion-action-sheet-controller': HTMLIonActionSheetControllerElement;
     'ion-alert': HTMLIonAlertElement;
-    'ion-alert-controller': HTMLIonAlertControllerElement;
     'ion-app': HTMLIonAppElement;
     'ion-avatar': HTMLIonAvatarElement;
     'ion-back-button': HTMLIonBackButtonElement;
@@ -3608,7 +3556,6 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonActionSheetController {}
   interface IonAlert {
     /**
     * If `true`, the alert will animate.
@@ -3679,7 +3626,6 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonAlertController {}
   interface IonApp {}
   interface IonAvatar {}
   interface IonBackButton {
@@ -6112,9 +6058,7 @@ declare namespace LocalJSX {
 
   interface IntrinsicElements {
     'ion-action-sheet': IonActionSheet;
-    'ion-action-sheet-controller': IonActionSheetController;
     'ion-alert': IonAlert;
-    'ion-alert-controller': IonAlertController;
     'ion-app': IonApp;
     'ion-avatar': IonAvatar;
     'ion-back-button': IonBackButton;
@@ -6216,9 +6160,7 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'ion-action-sheet': LocalJSX.IonActionSheet & JSXBase.HTMLAttributes<HTMLIonActionSheetElement>;
-      'ion-action-sheet-controller': LocalJSX.IonActionSheetController & JSXBase.HTMLAttributes<HTMLIonActionSheetControllerElement>;
       'ion-alert': LocalJSX.IonAlert & JSXBase.HTMLAttributes<HTMLIonAlertElement>;
-      'ion-alert-controller': LocalJSX.IonAlertController & JSXBase.HTMLAttributes<HTMLIonAlertControllerElement>;
       'ion-app': LocalJSX.IonApp & JSXBase.HTMLAttributes<HTMLIonAppElement>;
       'ion-avatar': LocalJSX.IonAvatar & JSXBase.HTMLAttributes<HTMLIonAvatarElement>;
       'ion-back-button': LocalJSX.IonBackButton & JSXBase.HTMLAttributes<HTMLIonBackButtonElement>;

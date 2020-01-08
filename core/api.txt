@@ -31,11 +31,6 @@ ion-action-sheet,css-prop,--min-height
 ion-action-sheet,css-prop,--min-width
 ion-action-sheet,css-prop,--width
 
-ion-action-sheet-controller,none
-ion-action-sheet-controller,method,create,create(options: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>
-ion-action-sheet-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
-ion-action-sheet-controller,method,getTop,getTop() => Promise<HTMLIonActionSheetElement | undefined>
-
 ion-alert,scoped
 ion-alert,prop,animated,boolean,true,false,false
 ion-alert,prop,backdropDismiss,boolean,true,false,false
@@ -66,11 +61,6 @@ ion-alert,css-prop,--max-width
 ion-alert,css-prop,--min-height
 ion-alert,css-prop,--min-width
 ion-alert,css-prop,--width
-
-ion-alert-controller,none
-ion-alert-controller,method,create,create(options: AlertOptions) => Promise<HTMLIonAlertElement>
-ion-alert-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
-ion-alert-controller,method,getTop,getTop() => Promise<HTMLIonAlertElement | undefined>
 
 ion-app,none
 
