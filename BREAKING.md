@@ -172,7 +172,7 @@ The `width` property has been removed in favor of using CSS styling.
 
 #### Toast
 
-The close button properties (`showCloseButton` and `closeButtonText`) have been removed, use the `buttons` array instead with `role: 'cancel'`. See the [usage documentation](https://ionicframework.com/docs/api/toast#usage) for more information.
+The close button properties (`showCloseButton` and `closeButtonText`) have been removed. Use the `buttons` array instead with `role: 'cancel'`. See the [usage documentation](https://ionicframework.com/docs/api/toast#usage) for more information.
 
 ```javascript
 async presentToast() {
