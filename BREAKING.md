@@ -105,7 +105,18 @@ The list header has been redesigned to match the latest iOS spec. This may break
 
 - The `swipeEnable()` function has been removed in Angular, use `swipeGesture()` instead.
 - The `side` values `left` and `right` have been removed, use `start` and `end` instead.
-- Removed the `main` attribute, use `content-id` instead.
+- Removed the `main` attribute, use `content-id` (for vanilla JS / Vue) and `contentId` (for Angular / React) instead.
+  ```html
+  <ion-menu>...</ion-menu>
+  <ion-content main>...</ion-content>
+  ```
+
+  becomes
+
+  ```html
+  <ion-menu content-id="main"></ion-menu>
+  <ion-content id="main">...</ion-content>
+  ```
 - The presentation type in `ios` now defaults to `"overlay"`.
 
 #### Nav Link
@@ -152,8 +163,7 @@ The `width` property has been removed in favor of using CSS styling.
 
 #### Split Pane
 - Converted to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
-- Removed the `main` attribute, use `content-id` instead.
-
+- Removed the `main` attribute, use `content-id` (for vanilla JS / Vue) and `contentId` (for Angular / React) instead.
   ```html
   <ion-split-pane>
     ...
@@ -164,9 +174,9 @@ The `width` property has been removed in favor of using CSS styling.
   becomes
 
   ```html
-  <ion-split-pane content-id="main-content">
+  <ion-split-pane content-id="main">
     ...
-    <div id="main-content">...</div>
+    <div id="main">...</div>
   </ion-split-pane>
   ```
 
@@ -228,7 +238,7 @@ This will only be a breaking change in your app if you are not using one of our 
 
 ### Events
 
-The Events service has been removed.
+The `@ionic/angular` Events service has been removed.
 
 Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
 Use "Redux" for advanced state management: https://ngrx.io
