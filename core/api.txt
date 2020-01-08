@@ -597,11 +597,6 @@ ion-loading,css-prop,--min-width
 ion-loading,css-prop,--spinner-color
 ion-loading,css-prop,--width
 
-ion-loading-controller,none
-ion-loading-controller,method,create,create(options?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>
-ion-loading-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
-ion-loading-controller,method,getTop,getTop() => Promise<HTMLIonLoadingElement | undefined>
-
 ion-menu,shadow
 ion-menu,prop,contentId,string | undefined,undefined,false,false
 ion-menu,prop,disabled,boolean,false,false,false

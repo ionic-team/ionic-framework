@@ -27,7 +27,6 @@ import {
   ItemHeightFn,
   ItemRenderFn,
   ItemReorderEventDetail,
-  LoadingOptions,
   MenuChangeEventDetail,
   ModalOptions,
   NavComponent,
@@ -1237,24 +1236,6 @@ export namespace Components {
     * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
-  }
-  interface IonLoadingController {
-    /**
-    * Create a loading overlay with loading options.
-    * @param options The options to use to create the loading.
-    */
-    'create': (options?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>;
-    /**
-    * Dismiss the open loading overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the loading to dismiss. If an id is not provided, it will dismiss the most recently opened loading.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened loading overlay.
-    */
-    'getTop': () => Promise<HTMLIonLoadingElement | undefined>;
   }
   interface IonMenu {
     /**
@@ -3073,12 +3054,6 @@ declare global {
     new (): HTMLIonLoadingElement;
   };
 
-  interface HTMLIonLoadingControllerElement extends Components.IonLoadingController, HTMLStencilElement {}
-  var HTMLIonLoadingControllerElement: {
-    prototype: HTMLIonLoadingControllerElement;
-    new (): HTMLIonLoadingControllerElement;
-  };
-
   interface HTMLIonMenuElement extends Components.IonMenu, HTMLStencilElement {}
   var HTMLIonMenuElement: {
     prototype: HTMLIonMenuElement;
@@ -3436,7 +3411,6 @@ declare global {
     'ion-list': HTMLIonListElement;
     'ion-list-header': HTMLIonListHeaderElement;
     'ion-loading': HTMLIonLoadingElement;
-    'ion-loading-controller': HTMLIonLoadingControllerElement;
     'ion-menu': HTMLIonMenuElement;
     'ion-menu-button': HTMLIonMenuButtonElement;
     'ion-menu-controller': HTMLIonMenuControllerElement;
@@ -4673,7 +4647,6 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonLoadingController {}
   interface IonMenu {
     /**
     * The content's id the menu should use.
@@ -6096,7 +6069,6 @@ declare namespace LocalJSX {
     'ion-list': IonList;
     'ion-list-header': IonListHeader;
     'ion-loading': IonLoading;
-    'ion-loading-controller': IonLoadingController;
     'ion-menu': IonMenu;
     'ion-menu-button': IonMenuButton;
     'ion-menu-controller': IonMenuController;
@@ -6198,7 +6170,6 @@ declare module "@stencil/core" {
       'ion-list': LocalJSX.IonList & JSXBase.HTMLAttributes<HTMLIonListElement>;
       'ion-list-header': LocalJSX.IonListHeader & JSXBase.HTMLAttributes<HTMLIonListHeaderElement>;
       'ion-loading': LocalJSX.IonLoading & JSXBase.HTMLAttributes<HTMLIonLoadingElement>;
-      'ion-loading-controller': LocalJSX.IonLoadingController & JSXBase.HTMLAttributes<HTMLIonLoadingControllerElement>;
       'ion-menu': LocalJSX.IonMenu & JSXBase.HTMLAttributes<HTMLIonMenuElement>;
       'ion-menu-button': LocalJSX.IonMenuButton & JSXBase.HTMLAttributes<HTMLIonMenuButtonElement>;
       'ion-menu-controller': LocalJSX.IonMenuController & JSXBase.HTMLAttributes<HTMLIonMenuControllerElement>;
