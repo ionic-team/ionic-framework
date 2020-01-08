@@ -693,11 +693,6 @@ ion-modal,css-prop,--min-height
 ion-modal,css-prop,--min-width
 ion-modal,css-prop,--width
 
-ion-modal-controller,none
-ion-modal-controller,method,create,create<T extends ComponentRef>(options: ModalOptions<T>) => Promise<HTMLIonModalElement>
-ion-modal-controller,method,dismiss,dismiss(data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>
-ion-modal-controller,method,getTop,getTop() => Promise<HTMLIonModalElement | undefined>
-
 ion-nav,shadow
 ion-nav,prop,animated,boolean,true,false,false
 ion-nav,prop,animation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false

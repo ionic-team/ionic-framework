@@ -28,7 +28,6 @@ import {
   ItemRenderFn,
   ItemReorderEventDetail,
   MenuChangeEventDetail,
-  ModalOptions,
   NavComponent,
   NavOptions,
   OverlayEventDetail,
@@ -1451,24 +1450,6 @@ export namespace Components {
     * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
     */
     'swipeToClose': boolean;
-  }
-  interface IonModalController {
-    /**
-    * Create a modal overlay with modal options.
-    * @param options The options to use to create the modal.
-    */
-    'create': <T extends ComponentRef>(options: ModalOptions<T>) => Promise<HTMLIonModalElement>;
-    /**
-    * Dismiss the open modal overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the modal. This can be useful in a button handler for determining which button was clicked to dismiss the modal. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the modal to dismiss. If an id is not provided, it will dismiss the most recently opened modal.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened modal overlay.
-    */
-    'getTop': () => Promise<HTMLIonModalElement | undefined>;
   }
   interface IonNav {
     /**
@@ -3027,12 +3008,6 @@ declare global {
     new (): HTMLIonModalElement;
   };
 
-  interface HTMLIonModalControllerElement extends Components.IonModalController, HTMLStencilElement {}
-  var HTMLIonModalControllerElement: {
-    prototype: HTMLIonModalControllerElement;
-    new (): HTMLIonModalControllerElement;
-  };
-
   interface HTMLIonNavElement extends Components.IonNav, HTMLStencilElement {}
   var HTMLIonNavElement: {
     prototype: HTMLIonNavElement;
@@ -3341,7 +3316,6 @@ declare global {
     'ion-menu-controller': HTMLIonMenuControllerElement;
     'ion-menu-toggle': HTMLIonMenuToggleElement;
     'ion-modal': HTMLIonModalElement;
-    'ion-modal-controller': HTMLIonModalControllerElement;
     'ion-nav': HTMLIonNavElement;
     'ion-nav-link': HTMLIonNavLinkElement;
     'ion-note': HTMLIonNoteElement;
@@ -4714,7 +4688,6 @@ declare namespace LocalJSX {
     */
     'swipeToClose'?: boolean;
   }
-  interface IonModalController {}
   interface IonNav {
     /**
     * If `true`, the nav should animate the transition of components.
@@ -5993,7 +5966,6 @@ declare namespace LocalJSX {
     'ion-menu-controller': IonMenuController;
     'ion-menu-toggle': IonMenuToggle;
     'ion-modal': IonModal;
-    'ion-modal-controller': IonModalController;
     'ion-nav': IonNav;
     'ion-nav-link': IonNavLink;
     'ion-note': IonNote;
@@ -6091,7 +6063,6 @@ declare module "@stencil/core" {
       'ion-menu-controller': LocalJSX.IonMenuController & JSXBase.HTMLAttributes<HTMLIonMenuControllerElement>;
       'ion-menu-toggle': LocalJSX.IonMenuToggle & JSXBase.HTMLAttributes<HTMLIonMenuToggleElement>;
       'ion-modal': LocalJSX.IonModal & JSXBase.HTMLAttributes<HTMLIonModalElement>;
-      'ion-modal-controller': LocalJSX.IonModalController & JSXBase.HTMLAttributes<HTMLIonModalControllerElement>;
       'ion-nav': LocalJSX.IonNav & JSXBase.HTMLAttributes<HTMLIonNavElement>;
       'ion-nav-link': LocalJSX.IonNavLink & JSXBase.HTMLAttributes<HTMLIonNavLinkElement>;
       'ion-note': LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;

@@ -12,6 +12,10 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <script type="module">
+    import { modalController } from '../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
   <style>
   :root {
     --ion-safe-area-top: 20px;
@@ -61,8 +65,6 @@
         <ion-list id="list"></ion-list>
       </ion-content>
     </div>
-    <ion-modal-controller></ion-modal-controller>
-
   </ion-app>
 
   <script>
@@ -382,15 +384,10 @@
     people.forEach(p => addFavorite(p));
 
     function handleAddFavorite (email) {
-      const modalController = document.querySelector('ion-modal-controller');
-      modalController.dismiss(email);
+      window.modalController.dismiss(email);
     }
 
     async function createModal(presentingEl) {
-      // initialize controller
-      const modalController = document.querySelector('ion-modal-controller');
-      await modalController.componentOnReady();
-
       const contactGroups = allContacts
       .sort((a, b) => {
         const aSplit = a.name.split(' ');
@@ -449,17 +446,17 @@
       // listen for close event
       const button = element.querySelector('ion-button.dismiss');
       button.addEventListener('click', () => {
-        modalController.dismiss();
+        window.modalController.dismiss();
       });
 
       const create = element.querySelector('ion-button.add');
       create.addEventListener('click', async () => {
-        const topModal = await modalController.getTop();
+        const topModal = await window.modalController.getTop();
 
         presentModal(topModal);
       });
       // present the modal
-      const modalElement = await modalController.create({
+      const modalElement = await window.modalController.create({
         presentingElement: presentingEl,
         component: element,
         swipeToClose: true
