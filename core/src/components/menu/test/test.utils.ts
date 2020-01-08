@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
-
 import { generateE2EUrl } from '../../../utils/test/utils';
+import { menuController } from '../../../utils/menu-controller';
 
 export const testMenu = async (
   type: string,
@@ -18,9 +18,7 @@ export const testMenu = async (
     const screenshotCompares = [];
 
     if (menuId.length > 0) {
-      const menuCtrl = await page.find('ion-menu-controller');
-      await page.waitFor(250);
-      await menuCtrl.callMethod('enable', true, menuId);
+      await menuController.enable(true, menuId);
     }
 
     const menu = await page.find(selector);
