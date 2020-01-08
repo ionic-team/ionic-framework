@@ -115,7 +115,7 @@
     window.addEventListener('ionToastWillDismiss', function (e) { console.log('willDismiss', e) })
 
     async function openToast(opts) {
-      const toast = await window.toastController.create(opts);
+      const toast = await toastController.create(opts);
       await toast.present();
     }
 

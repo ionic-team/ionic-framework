@@ -34,7 +34,7 @@
 
     async function presentSpec() {
       const mode = Ionic.mode;
-      const actionSheet = await window.actionSheetController.create({
+      const actionSheet = await actionSheetController.create({
         header: "Open in",
         buttons: [{
           text: 'Item 1',

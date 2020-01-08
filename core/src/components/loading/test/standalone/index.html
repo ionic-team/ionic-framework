@@ -12,7 +12,7 @@
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
   <script type="module">
     import { loadingController } from '../../../../dist/ionic/index.esm.js';
-    window.loadingController = loadingController;
+    loadingController = loadingController;
   </script>
 <body>
   <button id="basic-loading" onclick="openLoading({ message: 'Hellooo', duration: 5000 })">Show Loading</button>
@@ -37,7 +37,7 @@
 
   <script>
     async function openLoading(opts) {
-      const loading = await window.loadingController.create(opts);
+      const loading = await loadingController.create(opts);
       await loading.present();
     }
   </script>

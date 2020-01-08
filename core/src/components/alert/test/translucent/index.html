@@ -55,7 +55,7 @@
 
   <script>
     async function openAlert(opts) {
-      const alert = await window.alertController.create(opts);
+      const alert = await alertController.create(opts);
       await alert.present();
     }
     function presentAlert() {

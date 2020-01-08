@@ -47,7 +47,7 @@
     ]
 
     async function openPicker(numColumns = 1, numOptions = 5, columnOptions = defaultColumnOptions) {
-      const picker = await window.pickerController.create({
+      const picker = await pickerController.create({
         columns: this.getColumns(numColumns, numOptions, columnOptions),
         buttons: [
           {

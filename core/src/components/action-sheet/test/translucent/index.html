@@ -51,7 +51,7 @@
   <script>
     
     async function openActionSheet(opts) {
-      const actionSheet = await window.actionSheetController.create(opts);
+      const actionSheet = await actionSheetController.create(opts);
       await actionSheet.present();
     }
 

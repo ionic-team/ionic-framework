@@ -132,7 +132,7 @@
     }
 
     async function presentToastWithOptions(opts) {
-      const toast = await window.toastController.create(opts);
+      const toast = await toastController.create(opts);
       await toast.present();
     }
   </script>

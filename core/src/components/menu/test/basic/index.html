@@ -98,17 +98,17 @@
 
   <script>
     async function openFirst() {
-      await window.menuController.enable(true, 'first');
-      await window.menuController.open('first');
+      await menuController.enable(true, 'first');
+      await menuController.open('first');
     }
 
     async  function openEnd() {
-      await window.menuController.open('end');
+      await menuController.open('end');
     }
 
     async function openCustom() {
-      await window.menuController.enable(true, 'custom');
-      await window.menuController.open('custom');
+      await menuController.enable(true, 'custom');
+      await menuController.open('custom');
     }
   </script>
 </body>

@@ -62,7 +62,7 @@
   <script>
     window.addEventListener('ionActionSheetDidDismiss', function (e) { console.log('didDismiss', e) })
     async function openActionSheet(opts) {
-      const actionSheet = await window.actionSheetController.create(opts);
+      const actionSheet = await actionSheetController.create(opts);
       await actionSheet.present();
     }
     
@@ -119,7 +119,7 @@
               buttons: [{
                 text: 'Okay',
                 handler: async () => {
-                  await window.actionSheetController.dismiss();
+                  await actionSheetController.dismiss();
                   return false;
                 }
               }]
