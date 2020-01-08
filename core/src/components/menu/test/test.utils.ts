@@ -19,7 +19,6 @@ export const testMenu = async (
     const screenshotCompares = [];
 
     if (menuId.length > 0) {
-      await page.waitFor(250);
       await menuController.enable(true, menuId);
     }
 
