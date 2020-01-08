@@ -384,7 +384,7 @@
     people.forEach(p => addFavorite(p));
 
     function handleAddFavorite (email) {
-      window.modalController.dismiss(email);
+      modalController.dismiss(email);
     }
 
     async function createModal(presentingEl) {
@@ -446,17 +446,17 @@
       // listen for close event
       const button = element.querySelector('ion-button.dismiss');
       button.addEventListener('click', () => {
-        window.modalController.dismiss();
+        modalController.dismiss();
       });
 
       const create = element.querySelector('ion-button.add');
       create.addEventListener('click', async () => {
-        const topModal = await window.modalController.getTop();
+        const topModal = await modalController.getTop();
 
         presentModal(topModal);
       });
       // present the modal
-      const modalElement = await window.modalController.create({
+      const modalElement = await modalController.create({
         presentingElement: presentingEl,
         component: element,
         swipeToClose: true

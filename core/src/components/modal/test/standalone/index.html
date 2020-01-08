@@ -38,7 +38,7 @@
       }
     });
     async function presentModal() {
-      const modalElement = await window.modalController.create({
+      const modalElement = await modalController.create({
         component: 'page-one'
       });
       modalElement.present();
