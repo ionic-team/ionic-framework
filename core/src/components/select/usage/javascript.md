@@ -2,7 +2,11 @@
 
 ```html
 <ion-list>
-  <ion-list-header>Single Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Single Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Gender</ion-label>
@@ -29,7 +33,11 @@
 
 ```html
 <ion-list>
-  <ion-list-header>Multiple Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Multiple Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Toppings</ion-label>
@@ -63,7 +71,11 @@
 
 ```html
 <ion-list>
-  <ion-list-header>Objects as Values (compareWith)</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Objects as Values (compareWith)
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Users</ion-label>
@@ -97,13 +109,13 @@
 
   let objectSelectElement = document.getElementById('objectSelectCompareWith');
   objectSelectElement.compareWith = compareWithFn;
-  
+
   objectOptions.forEach((option, i) => {
     let selectOption = document.createElement('ion-select-option');
     selectOption.value = option;
     selectOption.textContent = option.first + ' ' + option.last;
     selectOption.selected = (i === 0);
-    
+
     objectSelectElement.appendChild(selectOption)
   });
 }
@@ -113,7 +125,11 @@
 
 ```html
 <ion-list>
-  <ion-list-header>Interface Options</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Interface Options
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Alert</ion-label>

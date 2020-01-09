@@ -50,7 +50,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 <ion-toolbar>
   <ion-buttons slot="secondary">
     <ion-button>
-      <ion-icon slot="icon-only" name="contact"></ion-icon>
+      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
     </ion-button>
     <ion-button>
       <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -58,7 +58,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="secondary">
-      <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Default Buttons</ion-title>
@@ -67,7 +67,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 <ion-toolbar>
   <ion-buttons slot="secondary">
     <ion-button fill="solid">
-      <ion-icon slot="start" name="contact"></ion-icon>
+      <ion-icon slot="start" name="person-circle"></ion-icon>
       Contact
     </ion-button>
   </ion-buttons>
@@ -159,7 +159,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 <ion-toolbar color="secondary">
   <ion-buttons slot="secondary">
     <ion-button>
-      <ion-icon slot="icon-only" name="contact"></ion-icon>
+      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
     </ion-button>
     <ion-button>
       <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -167,7 +167,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="primary">
-      <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Secondary Toolbar</ion-title>
@@ -176,7 +176,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 <ion-toolbar color="dark">
   <ion-buttons slot="secondary">
     <ion-button>
-      <ion-icon slot="icon-only" name="contact"></ion-icon>
+      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
     </ion-button>
     <ion-button>
       <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -184,7 +184,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="danger">
-      <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Dark Toolbar</ion-title>
@@ -216,7 +216,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 <ion-toolbar>
   <ion-buttons slot="secondary">
     <ion-button>
-      <ion-icon slot="icon-only" name="contact"></ion-icon>
+      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
     </ion-button>
     <ion-button>
       <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -224,7 +224,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="secondary">
-      <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Default Buttons</ion-title>
@@ -233,7 +233,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 <ion-toolbar>
   <ion-buttons slot="secondary">
     <ion-button fill="solid">
-      <ion-icon slot="start" name="contact"></ion-icon>
+      <ion-icon slot="start" name="person-circle"></ion-icon>
       Contact
     </ion-button>
   </ion-buttons>
@@ -323,7 +323,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 <ion-toolbar color="secondary">
   <ion-buttons slot="secondary">
     <ion-button>
-      <ion-icon slot="icon-only" name="contact"></ion-icon>
+      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
     </ion-button>
     <ion-button>
       <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -331,7 +331,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="primary">
-      <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Secondary Toolbar</ion-title>
@@ -340,7 +340,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 <ion-toolbar color="dark">
   <ion-buttons slot="secondary">
     <ion-button>
-      <ion-icon slot="icon-only" name="contact"></ion-icon>
+      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
     </ion-button>
     <ion-button>
       <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -348,7 +348,7 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button color="danger">
-      <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Dark Toolbar</ion-title>
@@ -395,7 +395,7 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar>
     <IonButtons slot="secondary">
       <IonButton>
-        <IonIcon slot="icon-only" name="contact" />
+        <IonIcon slot="icon-only" name="person-circle" />
       </IonButton>
       <IonButton>
         <IonIcon slot="icon-only" name="search" />
@@ -403,7 +403,7 @@ export const ToolbarExample: React.FC = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="secondary">
-        <IonIcon slot="icon-only" name="more" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Default Buttons</IonTitle>
@@ -412,7 +412,7 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar>
     <IonButtons slot="secondary">
       <IonButton fill="solid">
-        <IonIcon slot="start" name="contact" />
+        <IonIcon slot="start" name="person-circle" />
         Contact
       </IonButton>
     </IonButtons>
@@ -496,7 +496,7 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar color="secondary">
     <IonButtons slot="secondary">
       <IonButton>
-        <IonIcon slot="icon-only" name="contact" />
+        <IonIcon slot="icon-only" name="person-circle" />
       </IonButton>
       <IonButton>
         <IonIcon slot="icon-only" name="search" />
@@ -504,7 +504,7 @@ export const ToolbarExample: React.FC = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="primary">
-        <IonIcon slot="icon-only" name="more" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Secondary Toolbar</IonTitle>
@@ -513,7 +513,7 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar color="dark">
     <IonButtons slot="secondary">
       <IonButton>
-        <IonIcon slot="icon-only" name="contact" />
+        <IonIcon slot="icon-only" name="person-circle" />
       </IonButton>
       <IonButton>
         <IonIcon slot="icon-only" name="search" />
@@ -521,7 +521,7 @@ export const ToolbarExample: React.FC = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="danger">
-        <IonIcon slot="icon-only" name="more" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Dark Toolbar</IonTitle>
@@ -555,7 +555,7 @@ export const ToolbarExample: React.FC = () => (
   <ion-toolbar>
     <ion-buttons slot="secondary">
       <ion-button>
-        <ion-icon slot="icon-only" name="contact"></ion-icon>
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
       <ion-button>
         <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -563,7 +563,7 @@ export const ToolbarExample: React.FC = () => (
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button color="secondary">
-        <ion-icon slot="icon-only" name="more"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Default Buttons</ion-title>
@@ -572,7 +572,7 @@ export const ToolbarExample: React.FC = () => (
   <ion-toolbar>
     <ion-buttons slot="secondary">
       <ion-button fill="solid">
-        <ion-icon slot="start" name="contact"></ion-icon>
+        <ion-icon slot="start" name="person-circle"></ion-icon>
         Contact
       </ion-button>
     </ion-buttons>
@@ -664,7 +664,7 @@ export const ToolbarExample: React.FC = () => (
   <ion-toolbar color="secondary">
     <ion-buttons slot="secondary">
       <ion-button>
-        <ion-icon slot="icon-only" name="contact"></ion-icon>
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
       <ion-button>
         <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -672,7 +672,7 @@ export const ToolbarExample: React.FC = () => (
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button color="primary">
-        <ion-icon slot="icon-only" name="more"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Secondary Toolbar</ion-title>
@@ -681,7 +681,7 @@ export const ToolbarExample: React.FC = () => (
   <ion-toolbar color="dark">
     <ion-buttons slot="secondary">
       <ion-button>
-        <ion-icon slot="icon-only" name="contact"></ion-icon>
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
       <ion-button>
         <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -689,7 +689,7 @@ export const ToolbarExample: React.FC = () => (
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button color="danger">
-        <ion-icon slot="icon-only" name="more"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Dark Toolbar</ion-title>

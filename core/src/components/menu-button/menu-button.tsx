@@ -64,7 +64,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
   render() {
     const { color, disabled } = this;
     const mode = getIonMode(this);
-    const menuIcon = config.get('menuIcon', 'menu');
+    const menuIcon = config.get('menuIcon', mode === 'ios' ? 'menu-outline' : 'menu-sharp');
     const hidden = this.autoHide && !this.visible;
 
     const attrs = {

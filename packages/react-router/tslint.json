@@ -27,6 +27,11 @@
     "jsx-no-bind": false,
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
-    "jsx-wrap-multiline": false
+    "jsx-wrap-multiline": false,
+    "forin": false,
+    "strict-type-predicates": false,
+    "no-unused-expression": false,
+    "no-constant-condition": false,
+    "no-empty-interface": false
   }
 }

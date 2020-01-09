@@ -32,8 +32,6 @@
 .action-sheet-group {
   @include border-radius($action-sheet-ios-border-radius);
   @include margin(null, null, $action-sheet-ios-group-margin-bottom - 2, null);
-
-  overflow: hidden;
 }
 
 .action-sheet-group:first-child {

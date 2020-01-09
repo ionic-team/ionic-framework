@@ -1,3 +1,130 @@
+# [5.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v5.0.0-beta.3...v5.0.0-beta.4) (2020-01-06)
+
+
+### Features
+
+* **refresher:** add MD native refresher ([#20096](https://github.com/ionic-team/ionic/issues/20096)) ([5b81bdf](https://github.com/ionic-team/ionic/commit/5b81bdfcf18ed182bde14bbea4957b49ea886322)), closes [#17316](https://github.com/ionic-team/ionic/issues/17316)
+
+
+
+# [5.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v4.11.7...v5.0.0-beta.3) (2020-01-03)
+
+
+### Bug Fixes
+
+* **animation:** support css animation on older devices ([#20020](https://github.com/ionic-team/ionic/issues/20020)) ([49c394c](https://github.com/ionic-team/ionic/commit/49c394c3d335795fd100f54a5b29db009d413dff)), closes [#20017](https://github.com/ionic-team/ionic/issues/20017)
+* **icons:** fix the ellipsis fill in ionicons ([#20137](https://github.com/ionic-team/ionic/issues/20137)) ([9318d24](https://github.com/ionic-team/ionic/commit/9318d2418ec144bbce4a3b7ead33cf099d6ec25b))
+* **modal:** account for safe area on devices with a notch ([#20072](https://github.com/ionic-team/ionic/issues/20072)) ([1cabb53](https://github.com/ionic-team/ionic/commit/1cabb5365097d0675447a36223583824a58a140c))
+* **react:** fire lifecycle events on initial render, fixes [#20071](https://github.com/ionic-team/ionic/issues/20071) ([2dcf3ee](https://github.com/ionic-team/ionic/commit/2dcf3ee7b570be73be35c52f03ccfa09baf5d830))
+
+
+### Code Refactoring
+
+* **searchbar:** set inputmode default to undefined ([#20080](https://github.com/ionic-team/ionic/issues/20080)) ([6612604](https://github.com/ionic-team/ionic/commit/6612604733ac1b3e46546625f24ef6efa5be1538)), closes [#20074](https://github.com/ionic-team/ionic/issues/20074)
+
+
+### Features
+
+* **angular:** angular 9 support ([#19515](https://github.com/ionic-team/ionic/issues/19515)) ([2344d0b](https://github.com/ionic-team/ionic/commit/2344d0b272105e368c00ef611f28909215162f7c))
+* **checkbox:** add --checkmark-width variable ([#19933](https://github.com/ionic-team/ionic/issues/19933)) ([c32a7bc](https://github.com/ionic-team/ionic/commit/c32a7bcd202993056923857a5d9eed14f5be8580)), closes [#16803](https://github.com/ionic-team/ionic/issues/16803)
+* **radio:** add --border-radius and --inner-border-radius variables ([#20140](https://github.com/ionic-team/ionic/issues/20140)) ([a01c102](https://github.com/ionic-team/ionic/commit/a01c10267e18a48f30af2f552c556d31dad582e9))
+* **refresher:** add iOS native refresher ([#20037](https://github.com/ionic-team/ionic/issues/20037)) ([04e7c03](https://github.com/ionic-team/ionic/commit/04e7c031326ec551531af291ef1a03878d168378)), closes [#18664](https://github.com/ionic-team/ionic/issues/18664)
+* **toggle:** add --border-radius and --handle-border-radius variables ([#20141](https://github.com/ionic-team/ionic/issues/20141)) ([02a46a1](https://github.com/ionic-team/ionic/commit/02a46a1007dde820cb158d34d4e3f243c07251dc))
+
+
+### BREAKING CHANGES
+
+* **searchbar:** The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get the old behavior, set the `inputmode` property to `"search"`.
+
+
+
+
+## [4.11.7](https://github.com/ionic-team/ionic/compare/v4.11.6...v4.11.7) (2019-12-12)
+
+
+### Bug Fixes
+
+* **react:** fire lifecycle events on initial render, fixes [#20071](https://github.com/ionic-team/ionic/issues/20071) ([9ea75eb](https://github.com/ionic-team/ionic/commit/9ea75ebec7b1367fc0e319fe61c1f42516357e10))
+
+# [5.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v5.0.0-beta.1...v5.0.0-beta.2) (2019-12-11)
+
+
+### Bug Fixes
+
+* **animation:** convert hyphenated properties to camel case when using Web Animations ([#20059](https://github.com/ionic-team/ionic/issues/20059)) ([56f67bd](https://github.com/ionic-team/ionic/commit/56f67bd9a5c8c81768e310560b2605e44bf7a9f0)), closes [#20058](https://github.com/ionic-team/ionic/issues/20058)
+* **animation:** properly update Web Animation object ([#19964](https://github.com/ionic-team/ionic/issues/19964)) ([e766194](https://github.com/ionic-team/ionic/commit/e76619478c3c49469fcc22e264cc831d498abf8d))
+* **picker:** pass selected value to handler on dismiss ([#20042](https://github.com/ionic-team/ionic/issues/20042)) ([6e0b9c4](https://github.com/ionic-team/ionic/commit/6e0b9c45489889266620ee2ca38c33fdf8ce3f3b)), closes [#20036](https://github.com/ionic-team/ionic/issues/20036)
+* **tabs:** preserve route navigation extras when changing tabs ([#18493](https://github.com/ionic-team/ionic/issues/18493)) ([4c8f32f](https://github.com/ionic-team/ionic/commit/4c8f32fae99db4022aa9dc75187e2f161e8e678e)), closes [#18717](https://github.com/ionic-team/ionic/issues/18717)
+* **title:** add correct safe area to large title nav transition ([#20029](https://github.com/ionic-team/ionic/issues/20029)) ([300d543](https://github.com/ionic-team/ionic/commit/300d54356df925bb94f22b6805e48c88d1e56a26)), closes [#20028](https://github.com/ionic-team/ionic/issues/20028)
+
+
+
+### Features
+
+* **modal:** add card-style presentation with swipe to close gesture ([#19428](https://github.com/ionic-team/ionic/issues/19428)) ([b3b3312](https://github.com/ionic-team/ionic/commit/b3b33127115bb966980a1288a0005dfb09306881)), closes [#18660](https://github.com/ionic-team/ionic/issues/18660)
+
+
+## [4.11.6](https://github.com/ionic-team/ionic/compare/v4.11.5...v4.11.6) (2019-12-11)
+
+### Bug Fixes
+
+* **react:** don't show back button when not appropriate ([684293d](https://github.com/ionic-team/ionic/commit/684293ddbf1ad4edce590d56f7ff66fcd6c817a5))
+* **react:** first render performance improvements ([1c7d1e5](https://github.com/ionic-team/ionic/commit/1c7d1e5cf1ad7e53ebbee2566e8fa89f567f7fb5))
+* **react:** fix refs for controllers, overlays, ionpage, and ionrouteroutlet, fixes [#19924](https://github.com/ionic-team/ionic/issues/19924) ([#20012](https://github.com/ionic-team/ionic/issues/20012)) ([eef55bb](https://github.com/ionic-team/ionic/commit/eef55bb0072a9e54b1fd7d1c8c69e7fd43b2a5c5))
+* **react:** support for 'root' router direction, fixes [#19982](https://github.com/ionic-team/ionic/issues/19982) ([#20052](https://github.com/ionic-team/ionic/issues/20052)) ([e116712](https://github.com/ionic-team/ionic/commit/e1167122758b23221935e897bcd65839b75c59aa))
+* **react:** support navigating to same page and route updates in IonRouterOutlet, fixes [#19891](https://github.com/ionic-team/ionic/issues/19891), [#19892](https://github.com/ionic-team/ionic/issues/19892), [#19986](https://github.com/ionic-team/ionic/issues/19986) ([f9bf8db](https://github.com/ionic-team/ionic/commit/f9bf8dbe6f952ee53b6b213a4c0d043d25f49b93))
+
+### Upgrade Note
+
+If you run into a "Property 'translate' is missing in type" error building after updating to 4.11.6, update your React Typings library to the latest:
+
+npm i @types/react@latest @types/react-dom@latest
+
+# [5.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v5.0.0-beta.0...v5.0.0-beta.1) (2019-11-20)
+
+
+### Bug Fixes
+
+* **animation:** track correctly when updating CSS Animation ([#19813](https://github.com/ionic-team/ionic/issues/19813)) ([7bd4412](https://github.com/ionic-team/ionic/commit/7bd44128895b9fa4992142c0cc30cf75092cb794))
+* **card:** update background to use the same as item ([#19602](https://github.com/ionic-team/ionic/issues/19602)) ([1a8b7a4](https://github.com/ionic-team/ionic/commit/1a8b7a4559860b3efa4778a78c905e30f18587bf))
+* **content:** set fixed content to position absolute ([#19867](https://github.com/ionic-team/ionic/issues/19867)) ([fce3e24](https://github.com/ionic-team/ionic/commit/fce3e24600be6f04b285cda62fe2f21c49d809e2)), closes [#17754](https://github.com/ionic-team/ionic/issues/17754)
+* **gesture:** release gesture when disabling ([#19855](https://github.com/ionic-team/ionic/issues/19855)) ([21484f1](https://github.com/ionic-team/ionic/commit/21484f1f3a9ebe46096c979fe3f2035892a53a62)), closes [#19848](https://github.com/ionic-team/ionic/issues/19848)
+* **header:** avoid flicker on collapsible header load ([#19682](https://github.com/ionic-team/ionic/issues/19682)) ([0a7aae2](https://github.com/ionic-team/ionic/commit/0a7aae28a7eb0270cdcd100933c01850403b66db))
+* **header:** avoid flicker when collapsing ([#19850](https://github.com/ionic-team/ionic/issues/19850)) ([a3666dd](https://github.com/ionic-team/ionic/commit/a3666ddf0ccc44c696121a8d6107015dbe7aeabb)), closes [#19839](https://github.com/ionic-team/ionic/issues/19839)
+* **header:** support collapsible header with multiple toolbars ([#19909](https://github.com/ionic-team/ionic/issues/19909)) ([fc4bb2d](https://github.com/ionic-team/ionic/commit/fc4bb2db5c5715841347135bdfa1bf66718d647d))
+* **header:** translucent toolbars now work with collapsible header ([#19774](https://github.com/ionic-team/ionic/issues/19774)) ([b642b53](https://github.com/ionic-team/ionic/commit/b642b532e8846042f1317dc936191d0934b23945)), closes [#19773](https://github.com/ionic-team/ionic/issues/19773)
+* **title:** only animate large title if back button is in start slot ([#19846](https://github.com/ionic-team/ionic/issues/19846)) ([cace1b3](https://github.com/ionic-team/ionic/commit/cace1b357e5acd54d49f2b662ecee5de90add708)), closes [#19840](https://github.com/ionic-team/ionic/issues/19840)
+* **nav-params:** set generic type on navigation parameters get() ([#19195](https://github.com/ionic-team/ionic/issues/19195)) ([504051d](https://github.com/ionic-team/ionic/commit/504051d709c8afe08d588747866d2ee924baf804))
+* **picker:** pass data and role to dismiss ([#19787](https://github.com/ionic-team/ionic/issues/19787)) ([7988720](https://github.com/ionic-team/ionic/commit/7988720b1cf46a651d9c140f0fe95726d3feb48c)), closes [#18454](https://github.com/ionic-team/ionic/issues/18454)
+* **searchbar:** use back button config value for cancel icon ([#19353](https://github.com/ionic-team/ionic/issues/19353)) ([3d6f3b9](https://github.com/ionic-team/ionic/commit/ed6f3b9f3f42ef85f3f2d083fa7fe37a69b491c8))
+* **textarea:** remove padding from textarea placeholder ([#19694](https://github.com/ionic-team/ionic/issues/19694)) ([f63d37a](https://github.com/ionic-team/ionic/commit/f63d37a4c506801a19b9bf6e5ef05d415d680b0c)), closes [#19616](https://github.com/ionic-team/ionic/issues/19616)
+* **toast:** call button handler on cancel ([#19793](https://github.com/ionic-team/ionic/issues/19793)) ([420aa66](https://github.com/ionic-team/ionic/commit/420aa6639214e7d2e7b7413e699ace3d7fd35e40)), closes [#19791](https://github.com/ionic-team/ionic/issues/19791)
+
+
+
+### Features
+
+* **animation:** animation identifiers ([#19771](https://github.com/ionic-team/ionic/issues/19771)) ([7d41715](https://github.com/ionic-team/ionic/commit/7d417154c5f1ba89e0a30084807ff7e164dd6eba)), closes [#19550](https://github.com/ionic-team/ionic/issues/19550)
+* **animation:** cubic-bezier easing conversion utility (experimental) ([#19788](https://github.com/ionic-team/ionic/issues/19788)) ([96a5e60](https://github.com/ionic-team/ionic/commit/96a5e600e563489d93a26d5956d210f246f6fea5)), closes [#19789](https://github.com/ionic-team/ionic/issues/19789)
+* **alert:** add support for textarea inputs ([#16851](https://github.com/ionic-team/ionic/issues/16851)) ([b28cf02](https://github.com/ionic-team/ionic/commit/b28cf02ef3979c844c498a8e30ee977937984828)), closes [#14153](https://github.com/ionic-team/ionic/issues/14153)
+* **angular:** expose Ionic Animations via AnimationController ([#19745](https://github.com/ionic-team/ionic/issues/19745)) ([67a7e23](https://github.com/ionic-team/ionic/commit/67a7e232b9058620653feec5ed99e0ebf22b6620))
+* **angular:** expose Ionic Gestures via GestureController ([#19864](https://github.com/ionic-team/ionic/issues/19864)) ([48a7662](https://github.com/ionic-team/ionic/commit/48a766246d08170c709345bba235275eef0bd020))
+* **searchbar:** add --box-shadow variable to style searchbar input ([#19838](https://github.com/ionic-team/ionic/issues/19838)) ([1ab7066](https://github.com/ionic-team/ionic/commit/1ab7066aa085bc0185a6dd3d162439f7f82415fa))
+* **select:** add --placeholder-opacity and --placeholder-color, expose shadow parts ([#19893](https://github.com/ionic-team/ionic/issues/19893)) ([bef0f53](https://github.com/ionic-team/ionic/commit/bef0f53d0dcb15c58221c2dec8c4c274d3b5c77e)), closes [#17446](https://github.com/ionic-team/ionic/issues/17446)
+* **split-pane:** convert to shadow component, add width, max-width, and min-width vars ([#19754](https://github.com/ionic-team/ionic/issues/19754)) ([d80f455](https://github.com/ionic-team/ionic/commit/d80f45516d5dca62b77db1773206ef274d42f3ef)), closes [#17088](https://github.com/ionic-team/ionic/issues/17088)
+
+
+
+### Breaking Changes
+
+> We recommend updating to the latest version of 4.x before trying out version 5 in order to see deprecation warnings related to your app in the console.
+
+* **back-button:** convert back button to shadow ([#19411](https://github.com/ionic-team/ionic/pull/19411)) ([0d40d3f](https://github.com/ionic-team/ionic/commit/0d40d3f3b72aac7932ac71e6573d8bbb65a01515))
+* **ionicons:** update to Ionicons v5. See https://ionicons.com for more information. ([#19670](https://github.com/ionic-team/ionic/pull/19670)) ([69e10de](https://github.com/ionic-team/ionic/commit/69e10de718dcba4d43e82bd37aeacd2585dd9a79))
+* **list-header:** redesign list header to match latest iOS spec ([#19915](https://github.com/ionic-team/ionic/issues/19915)) ([5bbb95f](https://github.com/ionic-team/ionic/commit/5bbb95fae1e371021d6a0edc17fbb021a598b285))
+* **split-pane:** convert split-pane to shadow ([#19754](https://github.com/ionic-team/ionic/issues/19754)) ([d80f455](https://github.com/ionic-team/ionic/commit/d80f45516d5dca62b77db1773206ef274d42f3ef))
+
+
 ## [4.11.5](https://github.com/ionic-team/ionic/compare/v4.11.0...v4.11.5) (2019-11-14)
 
 

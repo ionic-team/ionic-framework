@@ -49,12 +49,12 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * The content's id the menu should use.
    */
-  @Prop() contentId?: string;
+  @Prop({ reflectToAttr: true }) contentId?: string;
 
   /**
    * An id for the menu.
    */
-  @Prop() menuId?: string;
+  @Prop({ reflectToAttr: true }) menuId?: string;
 
   /**
    * The display type of the menu.
