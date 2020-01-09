@@ -20,13 +20,12 @@ export const testMenu = async (
 
     if (menuId.length > 0) {
       await menuController.enable(true, menuId);
-      await page.waitFor(250);
     }
 
     const menu = await page.find(selector);
 
     await menu.callMethod('open');
-    await page.waitFor(250);
+    await page.waitFor(5000);
 
     screenshotCompares.push(await page.compareScreenshot());
 
