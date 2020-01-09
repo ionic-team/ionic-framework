@@ -11,7 +11,7 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
-<body onLoad="setLayout()">
+<body>
   <ion-app>
     <ion-header>
       <ion-toolbar color="tertiary">
@@ -215,6 +215,11 @@
           segmentButtons[i].layout = (mode === 'ios') ? 'icon-hide' : 'icon-top';
         }
       }
+      document.addEventListener('DOMContentLoaded', () => {
+        requestAnimationFrame(() => {
+          setLayout();
+        });
+      });
 
     </script>
   </ion-app>
