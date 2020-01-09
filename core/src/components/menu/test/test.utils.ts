@@ -25,7 +25,7 @@ export const testMenu = async (
     const menu = await page.find(selector);
 
     await menu.callMethod('open');
-    await page.waitFor(5000);
+    await page.waitFor(1000);
 
     screenshotCompares.push(await page.compareScreenshot());
 
