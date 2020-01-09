@@ -31,7 +31,7 @@ export class SplitPane implements ComponentInterface {
   /**
    * The content `id` of the split-pane's main content.
    */
-  @Prop() contentId?: string;
+  @Prop({ reflectToAttr: true }) contentId?: string;
 
   /**
    * If `true`, the split pane will be hidden.
