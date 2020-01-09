@@ -613,10 +613,10 @@ ion-loading-controller,method,dismiss,dismiss(data?: any, role?: string | undefi
 ion-loading-controller,method,getTop,getTop() => Promise<HTMLIonLoadingElement | undefined>
 
 ion-menu,shadow
-ion-menu,prop,contentId,string | undefined,undefined,false,false
+ion-menu,prop,contentId,string | undefined,undefined,false,true
 ion-menu,prop,disabled,boolean,false,false,false
 ion-menu,prop,maxEdgeStart,number,50,false,false
-ion-menu,prop,menuId,string | undefined,undefined,false,false
+ion-menu,prop,menuId,string | undefined,undefined,false,true
 ion-menu,prop,side,"end" | "start",'start',false,true
 ion-menu,prop,swipeGesture,boolean,true,false,false
 ion-menu,prop,type,string | undefined,undefined,false,false
@@ -1116,7 +1116,7 @@ ion-spinner,prop,paused,boolean,false,false,false
 ion-spinner,css-prop,--color
 
 ion-split-pane,shadow
-ion-split-pane,prop,contentId,string | undefined,undefined,false,false
+ion-split-pane,prop,contentId,string | undefined,undefined,false,true
 ion-split-pane,prop,disabled,boolean,false,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false,false
 ion-split-pane,event,ionSplitPaneVisible,{ visible: boolean; },true
