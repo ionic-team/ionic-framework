@@ -301,6 +301,7 @@ ion-datetime,prop,dayShortNames,string | string[] | undefined,undefined,false,fa
 ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,displayFormat,string,'MMM D, YYYY',false,false
+ion-datetime,prop,displayTimezone,string | undefined,undefined,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
 ion-datetime,prop,hourValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,max,string | undefined,undefined,false,false

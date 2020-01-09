@@ -31,12 +31,12 @@
           <ion-label>Default</ion-label>
           <ion-datetime></ion-datetime>
         </ion-item>
-        
+
         <ion-item>
           <ion-label position="floating">Default with floating label</ion-label>
           <ion-datetime></ion-datetime>
         </ion-item>
-        
+
         <ion-item>
           <ion-label position="floating">Placeholder with floating label</ion-label>
           <ion-datetime placeholder="Select a date"></ion-datetime>
@@ -139,6 +139,23 @@
         <ion-item>
           <ion-label>myDate</ion-label>
           <ion-datetime display-format="MMM DD, YYYY HH:mm"></ion-datetime>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-item>
+          <ion-label>Display UTC 00:00 in Local Timezone (default behavior)</ion-label>
+          <ion-datetime display-format="MMM DD, YYYY HH:mm" value="2020-01-01T00:00:00Z"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Display UTC 00:00 in UTC (display-timezone = 'utc')</ion-label>
+          <ion-datetime display-format="MMM DD, YYYY HH:mm" value="2020-01-01T00:00:00Z" display-timezone="utc"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Display UTC 00:00 in US Pacific Time (display-timezone = 'America/Los_Angeles')</ion-label>
+          <ion-datetime display-format="MMM DD, YYYY HH:mm" value="2020-01-01T00:00:00Z" display-timezone="America/Los_Angeles"></ion-datetime>
         </ion-item>
       </ion-list>
 
