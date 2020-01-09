@@ -20,6 +20,7 @@ export const testMenu = async (
 
     if (menuId.length > 0) {
       await menuController.enable(true, menuId);
+      await page.waitFor(250);
     }
 
     const menu = await page.find(selector);
