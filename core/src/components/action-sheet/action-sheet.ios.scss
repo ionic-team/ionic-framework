@@ -6,9 +6,9 @@
 
 :host {
   --background: #{$action-sheet-ios-background-color};
-  --background-selected: #{$action-sheet-ios-button-background-selected};
-  --background-activated: #{$action-sheet-ios-button-background-activated};
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
+  --button-background-selected: #{$action-sheet-ios-button-background-selected};
+  --button-background-activated: #{$action-sheet-ios-button-background-activated};
 
   text-align: $action-sheet-ios-text-align;
 }
@@ -75,7 +75,7 @@
   }
 
   :host(.action-sheet-translucent) .action-sheet-cancel {
-    background: var(--background-selected);
+    background: var(--button-background-selected);
   }
 }
 
@@ -126,7 +126,7 @@
 
   height: $action-sheet-ios-button-height;
 
-  color: var(--color, $action-sheet-ios-button-text-color);
+  color: var(--button-color, $action-sheet-ios-button-text-color);
 
   font-size: $action-sheet-ios-button-font-size;
 
@@ -144,7 +144,7 @@
 }
 
 .action-sheet-selected {
-  background: var(--background-selected);
+  background: var(--button-background-selected);
 
   font-weight: bold;
 }
@@ -154,7 +154,7 @@
 }
 
 .action-sheet-cancel {
-  background: var(--background-selected);
+  background: var(--button-background-selected);
 
   font-weight: $action-sheet-ios-button-cancel-font-weight;
 }

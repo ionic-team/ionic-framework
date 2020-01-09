@@ -6,10 +6,6 @@
 :host {
   /**
    * @prop --background: Background of the action sheet group
-   * @prop --background-activated: Background of the action sheet button when pressed
-   * @prop --background-hover: Background of the action sheet button on hover
-   * @prop --background-hover-opacity: Opacity of the action sheet button background on hover
-   * @prop --background-selected: Background of the selected action sheet button
    *
    * @prop --color: Color of the action sheet text
    *
@@ -22,9 +18,16 @@
    * @prop --max-height: Maximum height of the action sheet
    *
    * @prop --backdrop-opacity: Opacity of the backdrop
+   *
+   * @prop --button-background-activated: Background of the action sheet button when pressed
+   * @prop --button-background-hover: Background of the action sheet button on hover
+   * @prop --button-background-hover-opacity: Opacity of the action sheet button background on hover
+   * @prop --button-background-selected: Background of the selected action sheet button
+   *
+   * @prop --button-color-hover: Color of the action sheet button on hover
    */
-  --background-hover: #{$text-color};
-  --background-hover-opacity: 0.04;
+  --button-background-hover: #{$text-color};
+  --button-background-hover-opacity: 0.04;
   --color: initial;
   --min-width: auto;
   --width: #{$action-sheet-width};
@@ -91,7 +94,7 @@
 }
 
 .action-sheet-button.ion-activated {
-  background: var(--background-activated);
+  background: var(--button-background-activated);
 }
 
 .action-sheet-button-inner {
@@ -141,7 +144,7 @@
 }
 
 .action-sheet-selected {
-  background: var(--background-selected);
+  background: var(--button-background-selected);
 }
 
 // Action Sheet: Hover
@@ -151,12 +154,12 @@
 
 @media (any-hover: hover) {
   .action-sheet-button:hover {
-    // color: var(--color-hover);
+    color: var(--button-color-hover);
   }
 
   .action-sheet-button:hover::after {
-    background: var(--background-hover);
+    background: var(--button-background-hover);
 
-    opacity: var(--background-hover-opacity);
+    opacity: var(--button-background-hover-opacity);
   }
 }

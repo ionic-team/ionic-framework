@@ -319,21 +319,22 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                         | Description                                            |
-| ---------------------------- | ------------------------------------------------------ |
-| `--backdrop-opacity`         | Opacity of the backdrop                                |
-| `--background`               | Background of the action sheet group                   |
-| `--background-activated`     | Background of the action sheet button when pressed     |
-| `--background-hover`         | Background of the action sheet button on hover         |
-| `--background-hover-opacity` | Opacity of the action sheet button background on hover |
-| `--background-selected`      | Background of the selected action sheet button         |
-| `--color`                    | Color of the action sheet text                         |
-| `--height`                   | height of the action sheet                             |
-| `--max-height`               | Maximum height of the action sheet                     |
-| `--max-width`                | Maximum width of the action sheet                      |
-| `--min-height`               | Minimum height of the action sheet                     |
-| `--min-width`                | Minimum width of the action sheet                      |
-| `--width`                    | Width of the action sheet                              |
+| Name                                | Description                                            |
+| ----------------------------------- | ------------------------------------------------------ |
+| `--backdrop-opacity`                | Opacity of the backdrop                                |
+| `--background`                      | Background of the action sheet group                   |
+| `--button-background-activated`     | Background of the action sheet button when pressed     |
+| `--button-background-hover`         | Background of the action sheet button on hover         |
+| `--button-background-hover-opacity` | Opacity of the action sheet button background on hover |
+| `--button-background-selected`      | Background of the selected action sheet button         |
+| `--button-color-hover`              | Color of the action sheet button on hover              |
+| `--color`                           | Color of the action sheet text                         |
+| `--height`                          | height of the action sheet                             |
+| `--max-height`                      | Maximum height of the action sheet                     |
+| `--max-width`                       | Maximum width of the action sheet                      |
+| `--min-height`                      | Minimum height of the action sheet                     |
+| `--min-width`                       | Minimum width of the action sheet                      |
+| `--width`                           | Width of the action sheet                              |
 
 
 ## Dependencies

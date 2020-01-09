@@ -21,10 +21,11 @@ ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
 ion-action-sheet,css-prop,--backdrop-opacity
 ion-action-sheet,css-prop,--background
-ion-action-sheet,css-prop,--background-activated
-ion-action-sheet,css-prop,--background-hover
-ion-action-sheet,css-prop,--background-hover-opacity
-ion-action-sheet,css-prop,--background-selected
+ion-action-sheet,css-prop,--button-background-activated
+ion-action-sheet,css-prop,--button-background-hover
+ion-action-sheet,css-prop,--button-background-hover-opacity
+ion-action-sheet,css-prop,--button-background-selected
+ion-action-sheet,css-prop,--button-color-hover
 ion-action-sheet,css-prop,--color
 ion-action-sheet,css-prop,--height
 ion-action-sheet,css-prop,--max-height
