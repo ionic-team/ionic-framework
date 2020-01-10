@@ -31,8 +31,10 @@
   --color: initial;
   --color-focused: #{current-color(contrast)};
   --color-hover: #{current-color(contrast)};
+
+  --background-activated: #{current-color(contrast)};
+  --background-focused: #{current-color(contrast)};
   --background-hover: #{current-color(contrast)};
-  --background-focused: #{current-color(contrast, .24)};
 }
 
 :host-context(.ion-color)::slotted(*) .button-solid {
@@ -90,10 +92,13 @@
   --color: initial;
   --color-activated: currentColor;
   --color-focused: #{$toolbar-md-color};
+
   --background: transparent;
   --background-activated: transparent;
+  --background-focused: currentColor;
+  --background-hover: currentColor;
+
   --border-color: #{$toolbar-md-color};
-  --background-focused: rgba(66, 66, 66, 0.1);
 }
 
 
@@ -104,8 +109,11 @@
   --color: initial;
   --color-focused: #{$toolbar-md-color};
   --color-activated: currentColor;
+
   --background: transparent;
-  --background-focused: rgba(66, 66, 66, 0.1);
+  --background-activated: currentColor;
+  --background-focused: currentColor;
+  --background-hover: currentColor;
 }
 
 
