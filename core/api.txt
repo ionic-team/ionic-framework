@@ -156,7 +156,9 @@ ion-button,event,ionBlur,void,true
 ion-button,event,ionFocus,void,true
 ion-button,css-prop,--background
 ion-button,css-prop,--background-activated
+ion-button,css-prop,--background-activated-opacity
 ion-button,css-prop,--background-focused
+ion-button,css-prop,--background-focused-opacity
 ion-button,css-prop,--background-hover
 ion-button,css-prop,--background-hover-opacity
 ion-button,css-prop,--border-color
