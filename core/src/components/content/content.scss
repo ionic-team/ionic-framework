@@ -59,6 +59,10 @@
   --background: #{$background-color-step-50};
 }
 
+#scroll-content {
+  height: 100%;
+}
+
 .inner-scroll {
   @include position(calc(var(--offset-top) * -1), 0px,calc(var(--offset-bottom) * -1), 0px);
   @include padding(calc(var(--padding-top) + var(--offset-top)), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)), var(--padding-start));
