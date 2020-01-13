@@ -139,9 +139,7 @@ export class Segment implements ComponentInterface {
     detail.event.preventDefault();
     detail.event.stopImmediatePropagation();
 
-    if (detail.event) {
-      this.addRipple(detail);
-    }
+    this.addRipple(detail);
   }
 
   /**
