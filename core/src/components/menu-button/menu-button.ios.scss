@@ -5,7 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --background-focused: #{ion-color(primary, base, .1)};
+  --background-focused: currentColor;
+  --background-focused-opacity: .1;
   --border-radius: 4px;
   --color: #{ion-color(primary, base)};
   --padding-start: 5px;

@@ -11,6 +11,7 @@
    * @prop --background-hover: Background of the menu button on hover
    * @prop --background-hover-opacity: Opacity of the background on hover
    * @prop --background-focused: Background of the menu button when focused with the tab key
+   * @prop --background-focused-opacity: Opacity of the menu button background when focused with the tab key
    *
    * @prop --color: Color of the menu button
    * @prop --color-hover: Color of the menu button on hover
@@ -22,7 +23,7 @@
    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    */
   --background: transparent;
-  --color-focused: var(--color);
+  --color-focused: currentColor;
   --border-radius: initial;
   --padding-top: 0;
   --padding-bottom: 0;
@@ -120,13 +121,14 @@ ion-icon {
 }
 
 @media (any-hover: hover) {
-  // :host(:hover) .button-native {
-  //   color: var(--color-hover);
-  // }
-  :host(:hover) .button-native::after {
-    background: var(--background-hover);
+  :host(:hover) .button-native {
+    color: var(--color-hover);
 
-    opacity: var(--background-hover-opacity, 0);
+    &::after {
+      background: var(--background-hover);
+
+      opacity: var(--background-hover-opacity, 0);
+    }
   }
 }
 
@@ -135,8 +137,13 @@ ion-icon {
 // --------------------------------------------------
 
 :host(.ion-focused) .button-native {
-  background: var(--background-focused);
   color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+
+    opacity: var(--background-focused-opacity);
+  }
 }
 
 

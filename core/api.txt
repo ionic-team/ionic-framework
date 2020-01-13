@@ -659,6 +659,7 @@ ion-menu-button,prop,menu,string | undefined,undefined,false,false
 ion-menu-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-menu-button,css-prop,--background
 ion-menu-button,css-prop,--background-focused
+ion-menu-button,css-prop,--background-focused-opacity
 ion-menu-button,css-prop,--background-hover
 ion-menu-button,css-prop,--background-hover-opacity
 ion-menu-button,css-prop,--border-radius

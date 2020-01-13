@@ -5,9 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  --background-focused: rgba(66, 66, 66, 0.24);
-  --background-hover: #{$toolbar-md-color};
-  --background-hover-opacity: 0.04;
+  --background-focused: currentColor;
+  --background-focused-opacity: .12;
+  --background-hover: currentColor;
+  --background-hover-opacity: .04;
   --border-radius: 50%;
   --color: initial;
   --padding-start: 8px;
@@ -33,7 +34,6 @@
 // Menu Button Color: Focused
 // --------------------------------------------------
 
-:host(.ion-color.ion-focused) .button-native {
-  background: #{current-color(base, .24)};
-  color: #{current-color(base)};
+:host(.ion-color.ion-focused)::after {
+  background: #{current-color(base)};
 }

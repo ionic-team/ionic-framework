@@ -31,7 +31,6 @@
   --color: initial;
   --color-focused: #{current-color(contrast)};
   --color-hover: #{current-color(contrast)};
-
   --background-activated: #{current-color(contrast)};
   --background-focused: #{current-color(contrast)};
   --background-hover: #{current-color(contrast)};
@@ -80,8 +79,8 @@
   --color: #{$toolbar-md-background};
   --color-activated: #{$toolbar-md-background};
   --background: #{$toolbar-md-color};
-  --background-activated: #{$toolbar-md-color};
-  --background-focused: #{$toolbar-md-color-activated};
+  --background-activated: currentColor;
+  --background-focused: currentColor;
 }
 
 
@@ -92,12 +91,10 @@
   --color: initial;
   --color-activated: currentColor;
   --color-focused: #{$toolbar-md-color};
-
   --background: transparent;
   --background-activated: transparent;
   --background-focused: currentColor;
   --background-hover: currentColor;
-
   --border-color: #{$toolbar-md-color};
 }
 
@@ -109,7 +106,6 @@
   --color: initial;
   --color-focused: #{$toolbar-md-color};
   --color-activated: currentColor;
-
   --background: transparent;
   --background-activated: currentColor;
   --background-focused: currentColor;
