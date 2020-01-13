@@ -14,16 +14,20 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [CSS](#css)
   * [CSS Utilities](#css-utilities)
   * [Display Classes](#display-classes)
-  * [Activated, Focused, Hover States](#activated--focused--hover-states)
+  * [Activated, Focused, Hover States](#activated-focused-hover-states)
   * [Distributed Sass](#distributed-sass)
 - [Components](#components)
   * [Anchor](#anchor)
   * [Back Button](#back-button)
+  * [Button](#button)
   * [Card](#card)
   * [Controllers](#controllers)
+  * [FAB Button](#fab-button)
+  * [Item](#item)
   * [Header / Footer](#header---footer)
   * [List Header](#list-header)
   * [Menu](#menu)
+  * [Menu Button](#menu-button)
   * [Nav Link](#nav-link)
   * [Searchbar](#searchbar)
   * [Segment](#segment)
@@ -97,7 +101,55 @@ See the [CSS Utilities responsive display documentation](https://ionicframework.
 
 The `.activated` class that gets added has been renamed to `.ion-activated` for consistency with how we add focused to elements and to avoid conflicts in users' CSS.
 
-<!-- TODO mention some of the changes to the hover values: https://github.com/ionic-team/ionic/pull/19440 -->
+The way the CSS variables are used for targeting the activated, focused and hover backgrounds have been updated on the following components:
+
+- Back Button
+- Button
+- FAB Button
+- Item
+- Menu Button
+- Segment Button
+
+Previously, in order to update any of the background colors for the states you would have to know what the opacity was set to. Using the Material Design spec as an example, it would require you to know that the hover state uses a white overlay with an opacity of `.08`. This means that if we had the following set by default:
+
+```
+--background-hover: rgba(255, 255, 255, 0.08);
+```
+
+If you wanted to change the hover overlay to use black but still match the spec, you'd have to set it to:
+
+```
+--background-hover: rgba(0, 0, 0, 0.08);
+```
+
+The new way adds the following variables:
+
+```
+--background-activated-opacity
+--background-focused-opacity
+--background-hover-opacity
+```
+
+This allows you to still have the control over the opacity if desired, but when updating the state, you only have to set the main variables: `--background-activated-opacity`, `--background-focused-opacity`, `--background-hover-opacity` and the button will still match the spec. This is most important when changing the global theme, as updating the toolbar color will automatically update the hover states for all of the buttons in a toolbar, regardless of their fill & without having to know what each opacity is.
+
+##### Examples
+
+
+
+```css
+/* Setting the button background to solid red */
+ion-button {
+  --background-hover: red;
+  --background-hover-opacity: 1;
+}
+
+/* Setting the fab button background to use the text color with the default opacity on md */
+.md ion-fab-button {
+  --color: #222;
+  --background-hover: #222;
+}
+```
+
 
 #### Distributed Sass
 
@@ -112,14 +164,19 @@ The `ion-anchor` component has been renamed to `ion-router-link` as this is a be
 
 #### Back Button
 
-Converted `ion-back-button` to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+- Converted `ion-back-button` to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
+
+#### Button
+
+- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
 
 #### Card
 
 Converted `ion-card` to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 
-### Controllers
+#### Controllers
 
 The controller components (`ion-action-sheet-controller`, `ion-alert-controller`, `ion-loading-controller`, `ion-menu-controller`, `ion-modal-controller`, `ion-picker-controller`, `ion-popover-controller`, `ion-toast-controller`) have been removed from Ionic core as elements. They should be imported from `@ionic/core` instead. This will not affect projects that use Angular or React. Below is an example of the loading controller change in a JavaScript project, but this change applies to all controller elements.
 
@@ -160,6 +217,15 @@ becomes
 </script>
 ```
 
+#### FAB Button
+
+- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
+
+
+#### Item
+
+- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
+
 
 #### Header / Footer
 
@@ -188,6 +254,12 @@ The list header has been redesigned to match the latest iOS spec. This may break
   <ion-content id="main">...</ion-content>
   ```
 - The presentation type in `ios` now defaults to `"overlay"`.
+
+
+#### Menu Button
+
+- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
+
 
 #### Nav Link
 
@@ -224,6 +296,7 @@ The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get
 #### Segment
 
 <!-- TODO https://gist.github.com/brandyscarney/e6cfe43c359bb2c932e12f8d615e1669 -->
+- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
 
 
 #### Skeleton Text
