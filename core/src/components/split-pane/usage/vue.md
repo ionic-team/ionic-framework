@@ -1,8 +1,8 @@
 ```html
 <template>
-  <ion-split-pane contentId="menu-content">
+  <ion-split-pane content-id="main">
     <!--  our side menu  -->
-    <ion-menu contentId="menu-content">
+    <ion-menu content-id="main">
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu</ion-title>
@@ -11,7 +11,7 @@
     </ion-menu>
 
     <!-- the main content -->
-    <ion-router-outlet id="menu-content"></ion-router-outlet>
+    <ion-router-outlet id="main"></ion-router-outlet>
   </ion-split-pane>
 </template>
 ```

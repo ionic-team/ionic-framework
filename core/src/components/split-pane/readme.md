@@ -37,9 +37,9 @@ By default, the split pane will expand when the screen is larger than 992px. To 
 ### Angular
 
 ```html
-<ion-split-pane contentId="menu-content">
+<ion-split-pane contentId="main">
   <!--  our side menu  -->
-  <ion-menu contentId="menu-content">
+  <ion-menu contentId="main">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu</ion-title>
@@ -48,7 +48,7 @@ By default, the split pane will expand when the screen is larger than 992px. To 
   </ion-menu>
 
   <!-- the main content -->
-  <ion-router-outlet id="menu-content"></ion-router-outlet>
+  <ion-router-outlet id="main"></ion-router-outlet>
 </ion-split-pane>
 ```
 
@@ -56,9 +56,9 @@ By default, the split pane will expand when the screen is larger than 992px. To 
 ### Javascript
 
 ```html
-<ion-split-pane content-id="menu-content">
+<ion-split-pane content-id="main">
   <!--  our side menu  -->
-  <ion-menu content-id="menu-content">
+  <ion-menu content-id="main">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu</ion-title>
@@ -67,7 +67,7 @@ By default, the split pane will expand when the screen is larger than 992px. To 
   </ion-menu>
 
   <!-- the main content -->
-  <ion-content id="menu-content">
+  <ion-content id="main">
     <h1>Hello</h1>
   </ion-content>
 </ion-split-pane>
@@ -91,9 +91,9 @@ import {
 
 export const SplitPlaneExample: React.SFC<{}> = () => (
   <IonContent>
-    <IonSplitPane contentId="menuContent">
+    <IonSplitPane contentId="main">
       {/*--  our side menu  --*/}
-      <IonMenu contentId="menuContent">
+      <IonMenu contentId="main">
         <IonHeader>
           <IonToolbar>
             <IonTitle>Menu</IonTitle>
@@ -102,7 +102,7 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
       </IonMenu>
 
       {/*-- the main content --*/}
-      <IonPage id="menuContent"/>
+      <IonPage id="main"/>
     </IonSplitPane>
   </IonContent>
 );
@@ -113,9 +113,9 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
 
 ```html
 <template>
-  <ion-split-pane contentId="menu-content">
+  <ion-split-pane content-id="main">
     <!--  our side menu  -->
-    <ion-menu contentId="menu-content">
+    <ion-menu content-id="main">
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu</ion-title>
@@ -124,7 +124,7 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
     </ion-menu>
 
     <!-- the main content -->
-    <ion-router-outlet id="menu-content"></ion-router-outlet>
+    <ion-router-outlet id="main"></ion-router-outlet>
   </ion-split-pane>
 </template>
 ```
