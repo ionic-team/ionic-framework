@@ -16,7 +16,7 @@ These can be controlled from the templates, or programmatically using the MenuCo
 ### Angular
 
 ```html
-<ion-menu side="start" menuId="first">
+<ion-menu side="start" menuId="first" contentId="main">
   <ion-header>
     <ion-toolbar color="primary">
       <ion-title>Start Menu</ion-title>
@@ -33,7 +33,7 @@ These can be controlled from the templates, or programmatically using the MenuCo
   </ion-content>
 </ion-menu>
 
-<ion-menu side="start" menuId="custom" class="my-custom-menu">
+<ion-menu side="start" menuId="custom" contentId="main" class="my-custom-menu">
   <ion-header>
     <ion-toolbar color="tertiary">
       <ion-title>Custom Menu</ion-title>
@@ -50,7 +50,7 @@ These can be controlled from the templates, or programmatically using the MenuCo
   </ion-content>
 </ion-menu>
 
-<ion-menu side="end" type="push">
+<ion-menu side="end" type="push" contentId="main">
   <ion-header>
     <ion-toolbar color="danger">
       <ion-title>End Menu</ion-title>
@@ -67,7 +67,7 @@ These can be controlled from the templates, or programmatically using the MenuCo
   </ion-content>
 </ion-menu>
 
-<ion-router-outlet main></ion-router-outlet>
+<ion-router-outlet id="main"></ion-router-outlet>
 ```
 
 ```typescript
@@ -110,7 +110,7 @@ constructor(private menu: MenuController) { }
 
 ```html
 <ion-app>
-  <ion-menu side="start" menu-id="first">
+  <ion-menu side="start" menu-id="first" content-id="main">
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>Start Menu</ion-title>
@@ -127,7 +127,7 @@ constructor(private menu: MenuController) { }
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="start" menu-id="custom" class="my-custom-menu">
+  <ion-menu side="start" menu-id="custom" class="my-custom-menu" content-id="main">
     <ion-header>
       <ion-toolbar color="tertiary">
         <ion-title>Custom Menu</ion-title>
@@ -144,7 +144,7 @@ constructor(private menu: MenuController) { }
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="end" type="push">
+  <ion-menu side="end" type="push" content-id="main">
     <ion-header>
       <ion-toolbar color="danger">
         <ion-title>End Menu</ion-title>
@@ -161,7 +161,7 @@ constructor(private menu: MenuController) { }
     </ion-content>
   </ion-menu>
 
-  <div class="ion-page" main>
+  <div class="ion-page" id="main">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu - Basic</ion-title>
@@ -271,7 +271,7 @@ export const MenuExample: React.FC = () => (
 
 ```html
 <template>
-  <ion-menu side="start" menuId="first">
+  <ion-menu side="start" menu-id="first" content-id="main">
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>Start Menu</ion-title>
@@ -288,7 +288,7 @@ export const MenuExample: React.FC = () => (
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="start" menuId="custom" class="my-custom-menu">
+  <ion-menu side="start" menu-id="custom" class="my-custom-menu" content-id="main">
     <ion-header>
       <ion-toolbar color="tertiary">
         <ion-title>Custom Menu</ion-title>
@@ -305,7 +305,7 @@ export const MenuExample: React.FC = () => (
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="end" type="push">
+  <ion-menu side="end" type="push" content-id="main">
     <ion-header>
       <ion-toolbar color="danger">
         <ion-title>End Menu</ion-title>

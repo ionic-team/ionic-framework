@@ -1,3 +1,10 @@
+## [4.11.8](https://github.com/ionic-team/ionic/compare/v4.11.7...v4.11.8) (2020-01-13)
+
+* **react:** add missing react memory router ([8a5aba2](https://github.com/ionic-team/ionic/commit/8a5aba206865ce2af7f8bb85f4e7cd8dec37831d))
+* **react:** fixing type of icon in ToastOptions, ActionSheetOptions, fixes [#20100](https://github.com/ionic-team/ionic/issues/20100) ([857bab6](https://github.com/ionic-team/ionic/commit/857bab66419a851c6d189cd1456cd67c1c2d934c))
+* **react:** supporting ios and md props on icons ([#20170](https://github.com/ionic-team/ionic/issues/20170)) ([676cc19](https://github.com/ionic-team/ionic/commit/676cc19b89cd6374346aaac9cc3292872c7148fa))
+
+
 # [5.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v5.0.0-beta.3...v5.0.0-beta.4) (2020-01-06)
 
 

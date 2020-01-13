@@ -507,7 +507,7 @@ _In the following examples, `{breakpoint}` refers to the optional screen breakpo
 - `push-{breakpoint}-{value}` attributes have been renamed to `push-{breakpoint}=“{value}”`
 - `pull-{breakpoint}-{value}` attributes have been renamed to `pull-{breakpoint}=“{value}”`
 
-Customizing the padding and width of a grid should now be done with CSS variables. For more information, see [Grid Layout](https://github.com/ionic-team/ionic-docs/blob/master/src/content/layout/grid.md).
+Customizing the padding and width of a grid should now be done with CSS variables. For more information, see [Grid Layout](https://github.com/ionic-team/ionic-docs/blob/master/src/pages/layout/grid.md).
 
 ## Icon
 

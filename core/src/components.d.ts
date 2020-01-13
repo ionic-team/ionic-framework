@@ -680,6 +680,10 @@ export namespace Components {
     */
     'displayFormat': string;
     /**
+    * The timezone to use for display purposes only. See [Date.prototype.toLocaleString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString) for a list of supported timezones. If no value is provided, the component will default to displaying times in the user's local timezone.
+    */
+    'displayTimezone'?: string;
+    /**
     * The text to display on the picker's "Done" button.
     */
     'doneText': string;
@@ -4115,6 +4119,10 @@ declare namespace LocalJSX {
     * The display format of the date and time as text that shows within the item. When the `pickerFormat` input is not used, then the `displayFormat` is used for both display the formatted text, and determining the datetime picker's columns. See the `pickerFormat` input description for more info. Defaults to `MMM D, YYYY`.
     */
     'displayFormat'?: string;
+    /**
+    * The timezone to use for display purposes only. See [Date.prototype.toLocaleString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString) for a list of supported timezones. If no value is provided, the component will default to displaying times in the user's local timezone.
+    */
+    'displayTimezone'?: string;
     /**
     * The text to display on the picker's "Done" button.
     */

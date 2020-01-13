@@ -16,11 +16,15 @@
       window.Animation = null;
     }
   </script>
+  <script type="module">
+    import { menuController } from '../../../../dist/ionic/index.esm.js';
+    window.menuController = menuController;
+  </script>
 </head>
 
 <body>
   <ion-app>
-    <ion-menu side="start" menu-id="first" id="start-menu">
+    <ion-menu side="start" menu-id="first" id="start-menu" content-id="main">
       <ion-header>
         <ion-toolbar color="primary">
           <ion-title>Start Menu</ion-title>
@@ -37,7 +41,7 @@
       </ion-content>
     </ion-menu>
 
-    <ion-menu side="start" menu-id="custom" class="my-custom-menu" id="custom-menu">
+    <ion-menu side="start" menu-id="custom" class="my-custom-menu" id="custom-menu" content-id="main">
       <ion-header>
         <ion-toolbar color="tertiary">
           <ion-title>Custom Menu</ion-title>
@@ -54,7 +58,7 @@
       </ion-content>
     </ion-menu>
 
-    <ion-menu side="end" type="push" id="end-menu">
+    <ion-menu side="end" type="push" id="end-menu" content-id="main">
       <ion-header>
         <ion-toolbar color="danger">
           <ion-title>End Menu</ion-title>
@@ -71,7 +75,7 @@
       </ion-content>
     </ion-menu>
 
-    <div class="ion-page" main>
+    <div class="ion-page" id="main">
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu - Basic</ion-title>
@@ -85,7 +89,6 @@
     </div>
 
   </ion-app>
-  <ion-menu-controller></ion-menu-controller>
 
   <style>
     .my-custom-menu {
@@ -93,21 +96,19 @@
     }
   </style>
 
-  <script type="module">
-    const menuCtrl = document.querySelector('ion-menu-controller');
-
+  <script>
     async function openFirst() {
-      await menuCtrl.enable(true, 'first');
-      await menuCtrl.open('first');
+      await menuController.enable(true, 'first');
+      await menuController.open('first');
     }
 
     async  function openEnd() {
-      await menuCtrl.open('end');
+      await menuController.open('end');
     }
 
     async function openCustom() {
-      await menuCtrl.enable(true, 'custom');
-      await menuCtrl.open('custom');
+      await menuController.enable(true, 'custom');
+      await menuController.open('custom');
     }
   </script>
 </body>

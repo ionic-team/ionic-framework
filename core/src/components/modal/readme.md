@@ -384,7 +384,7 @@ export default {
 
 ```html
 <template>
-  <ion-page class="ion-page" main>
+  <ion-page class="ion-page">
     <ion-content class="ion-content" padding>
       <ion-button @click="openModal">Open Modal</ion-button>
     </ion-content>
