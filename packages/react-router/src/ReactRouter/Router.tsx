@@ -19,7 +19,7 @@ interface RouteManagerState extends RouteManagerContextState {
   action?: IonRouteAction;
 }
 
-class RouteManager extends React.Component<RouteComponentProps, RouteManagerState> {
+export class RouteManager extends React.Component<RouteComponentProps, RouteManagerState> {
   listenUnregisterCallback: UnregisterCallback | undefined;
   activeIonPageId?: string;
   currentIonRouteAction?: IonRouteAction;
