@@ -88,18 +88,34 @@
             <ion-title>Lists</ion-title>
 
             <ion-buttons slot="primary">
-              <ion-button color="secondary" fill="outline">Secondary Outline</ion-button>
+              <ion-back-button color="secondary" default-href="/"></ion-back-button>
+              <ion-menu-button color="secondary" auto-hide="false"></ion-menu-button>
+              <ion-button color="secondary">Default</ion-button>
+              <ion-button color="secondary" fill="solid">Solid</ion-button>
+              <ion-button color="secondary" fill="clear">Clear</ion-button>
+              <ion-button color="secondary" fill="outline">Outline</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-back-button class="ion-focused" default-href="/"></ion-back-button>
+              <ion-menu-button class="ion-focused" auto-hide="false"></ion-menu-button>
+              <ion-button class="ion-focused">Default</ion-button>
+              <ion-button class="ion-focused" fill="solid">Solid</ion-button>
+              <ion-button class="ion-focused" fill="clear">Clear</ion-button>
+              <ion-button class="ion-focused" fill="outline">Outline</ion-button>
             </ion-buttons>
 
-            <div slot="end" class="right-container">
-              <ion-label>Select a Theme:</ion-label>
-              <ion-select interface="popover" class="theme-picker">
-                <ion-select-option value="default" selected>Default</ion-select-option>
-                <ion-select-option value="oceanic">Oceanic</ion-select-option>
-                <ion-select-option value="vibrant">Vibrant</ion-select-option>
-                <ion-select-option value="dark">Dark</ion-select-option>
-              </ion-select>
-            </div>
+            <ion-title>Lists</ion-title>
+
+            <ion-buttons slot="primary">
+              <ion-back-button color="secondary" class="ion-focused" default-href="/"></ion-back-button>
+              <ion-menu-button color="secondary" class="ion-focused" auto-hide="false"></ion-menu-button>
+              <ion-button color="secondary" class="ion-focused">Default</ion-button>
+              <ion-button color="secondary" class="ion-focused" fill="solid">Solid</ion-button>
+              <ion-button color="secondary" class="ion-focused" fill="clear">Clear</ion-button>
+              <ion-button color="secondary" class="ion-focused" fill="outline">Outline</ion-button>
+            </ion-buttons>
           </ion-toolbar>
           <ion-toolbar>
             <ion-segment>
@@ -116,6 +132,16 @@
                 <ion-label>Active</ion-label>
               </ion-segment-button>
             </ion-segment>
+
+            <div slot="end" class="right-container">
+              <ion-label>Select a Theme:</ion-label>
+              <ion-select interface="popover" class="theme-picker">
+                <ion-select-option value="default" selected>Default</ion-select-option>
+                <ion-select-option value="oceanic">Oceanic</ion-select-option>
+                <ion-select-option value="vibrant">Vibrant</ion-select-option>
+                <ion-select-option value="dark">Dark</ion-select-option>
+              </ion-select>
+            </div>
           </ion-toolbar>
         </ion-header>
 

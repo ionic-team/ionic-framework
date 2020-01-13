@@ -7,6 +7,7 @@
  /**
    * @prop --background: Background of the button
    * @prop --background-focused: Background of the button when focused with the tab key
+   * @prop --background-focused-opacity: Opacity of the button background when focused with the tab key
    * @prop --background-hover: Background of the button on hover
    * @prop --background-hover-opacity: Opacity of the background on hover
    *
@@ -49,8 +50,8 @@
    * @prop --icon-font-weight: Font weight of the button icon
    */
   --background: transparent;
-  --color-focused: var(--color);
-  --color-hover: var(--color);
+  --color-focused: currentColor;
+  --color-hover: currentColor;
   --icon-margin-top: 0;
   --icon-margin-bottom: 0;
   --icon-padding-top: 0;
@@ -191,14 +192,14 @@ ion-icon {
 }
 
 @media (any-hover: hover) {
-  // :host(:hover) .button-native {
-  //   color: var(--color-hover);
-  // }
+  :host(:hover) .button-native {
+    color: var(--color-hover);
 
-  :host(:hover) .button-native::after {
-    background: var(--background-hover);
+    &::after {
+      background: var(--background-hover);
 
-    opacity: var(--background-hover-opacity);
+      opacity: var(--background-hover-opacity);
+    }
   }
 }
 
@@ -206,8 +207,13 @@ ion-icon {
 // --------------------------------------------------
 
 :host(.ion-focused) .button-native {
-  background: var(--background-focused);
   color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+
+    opacity: var(--background-focused-opacity);
+  }
 }
 
 
@@ -232,6 +238,6 @@ ion-icon {
 // Back Button in Toolbar: Global Theming
 // --------------------------------------------------
 
-:host-context(ion-toolbar:not(.ion-color)):not(.ion-color) {
+:host-context(ion-toolbar:not(.ion-color)) {
   color: #{var(--ion-toolbar-color, var(--color))};
 }
