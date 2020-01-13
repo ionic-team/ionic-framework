@@ -99,7 +99,7 @@ See the [CSS Utilities responsive display documentation](https://ionicframework.
 
 #### Activated, Focused, Hover States
 
-The `.activated` class that gets added has been renamed to `.ion-activated` for consistency with how we add focused to elements and to avoid conflicts in users' CSS.
+The `.activated` class that is automatically added to clickable components has been renamed to `.ion-activated` for consistency with how we add focused to elements and to avoid conflicts in users' CSS.
 
 The way the CSS variables are used for targeting the activated, focused and hover backgrounds have been updated on the following components:
 
