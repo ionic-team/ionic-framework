@@ -13,7 +13,7 @@ $fab-md-box-shadow-activated:                     0 7px 8px -4px rgba(0, 0, 0, .
 $fab-md-background-color:                         ion-color(primary, base) !default;
 
 /// @prop - Background color of the activated button
-$fab-md-background-color-activated:               ion-color(primary, shade) !default;
+$fab-md-background-color-activated:               ion-color(primary, contrast) !default;
 
 /// @prop - Text color of the button
 $fab-md-text-color:                               ion-color(primary, contrast) !default;

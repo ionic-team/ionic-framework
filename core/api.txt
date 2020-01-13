@@ -90,6 +90,7 @@ ion-back-button,prop,text,null | string | undefined,undefined,false,false
 ion-back-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-back-button,css-prop,--background
 ion-back-button,css-prop,--background-focused
+ion-back-button,css-prop,--background-focused-opacity
 ion-back-button,css-prop,--background-hover
 ion-back-button,css-prop,--background-hover-opacity
 ion-back-button,css-prop,--border-radius
@@ -362,7 +363,9 @@ ion-fab-button,event,ionBlur,void,true
 ion-fab-button,event,ionFocus,void,true
 ion-fab-button,css-prop,--background
 ion-fab-button,css-prop,--background-activated
+ion-fab-button,css-prop,--background-activated-opacity
 ion-fab-button,css-prop,--background-focused
+ion-fab-button,css-prop,--background-focused-opacity
 ion-fab-button,css-prop,--background-hover
 ion-fab-button,css-prop,--background-hover-opacity
 ion-fab-button,css-prop,--border-color

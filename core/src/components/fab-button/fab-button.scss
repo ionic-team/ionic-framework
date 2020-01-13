@@ -7,7 +7,9 @@
   /**
    * @prop --background: Background of the button
    * @prop --background-activated: Background of the button when pressed
+   * @prop --background-activated-opacity: Opacity of the button background when pressed
    * @prop --background-focused: Background of the button when focused with the tab key
+   * @prop --background-focused-opacity: Opacity of the button background when focused with the tab key
    * @prop --background-hover: Background of the button on hover
    * @prop --background-hover-opacity: Opacity of the button background on hover
    *
@@ -127,15 +129,6 @@
 }
 
 
-// FAB Button: Color
-// --------------------------------------------------
-
-:host(.ion-color) .button-native {
-  background: #{current-color(base)};
-  color: #{current-color(contrast)};
-}
-
-
 // FAB Button: Disabled
 // --------------------------------------------------
 
@@ -149,27 +142,15 @@
 // FAB Button: Hover
 // --------------------------------------------------
 
-// TODO color hover
-
 @media (any-hover: hover) {
   :host(:hover) .button-native {
-    // color: var(--color-hover);
-  }
+    color: var(--color-hover);
 
-  :host(:hover) .button-native::after {
-    background: var(--background-hover);
+    &::after {
+      background: var(--background-hover);
 
-    opacity: var(--background-hover-opacity);
-  }
-
-  :host(.ion-color:hover) .button-native {
-    // color: #{current-color(contrast)};
-  }
-
-  :host(.ion-color:hover) .button-native::after {
-    background: #{current-color(contrast)};
-
-    opacity: .08;
+      opacity: var(--background-hover-opacity);
+    }
   }
 }
 
@@ -178,27 +159,27 @@
 // --------------------------------------------------
 
 :host(.ion-focused) .button-native {
-  background: var(--background-focused);
   color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+
+    opacity: var(--background-focused-opacity);
+  }
 }
 
-:host(.ion-color.ion-focused) .button-native {
-  background: #{current-color(shade)};
-}
 
 // FAB Button: Activated
 // --------------------------------------------------
 
 :host(.ion-activated) .button-native {
-  background: var(--background-activated);
   color: var(--color-activated);
-}
 
-// Focused/Activated Button with Color
-:host(.ion-color.ion-focused) .button-native,
-:host(.ion-color.ion-activated) .button-native {
-  background: #{current-color(shade)};
-  color: #{current-color(contrast)};
+  &::after {
+    background: var(--background-activated);
+
+    opacity: var(--background-activated-opacity);
+  }
 }
 
 
@@ -268,4 +249,13 @@ ion-ripple-effect {
   :host(.fab-button-translucent) .button-native {
     backdrop-filter: var(--backdrop-filter);
   }
+}
+
+
+// FAB Button: Color
+// --------------------------------------------------
+
+:host(.ion-color) .button-native {
+  background: #{current-color(base)};
+  color: #{current-color(contrast)};
 }
