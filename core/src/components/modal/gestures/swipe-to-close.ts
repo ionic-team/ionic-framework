@@ -70,13 +70,15 @@ export const createSwipeToCloseGesture = (
 
     animation
       .onFinish(() => {
-        if (shouldComplete) {
-          onDismiss();
-        } else {
+        if (!shouldComplete) {
           gesture.enable(true);
         }
       })
       .progressEnd((shouldComplete) ? 1 : 0, newStepValue, duration);
+
+    if (shouldComplete) {
+      onDismiss();
+    }
   };
 
   const gesture = createGesture({
