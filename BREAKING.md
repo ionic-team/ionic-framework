@@ -112,29 +112,35 @@ The way the CSS variables are used for targeting the activated, focused and hove
 
 Previously, in order to update any of the background colors for the states you would have to know what the opacity was set to. Using the Material Design spec as an example, it would require you to know that the hover state uses a white overlay with an opacity of `.08`. This means that if we had the following set by default:
 
-```
+```css
 --background-hover: rgba(255, 255, 255, 0.08);
 ```
 
 If you wanted to change the hover overlay to use black but still match the spec, you'd have to set it to:
 
-```
+```css
 --background-hover: rgba(0, 0, 0, 0.08);
 ```
 
 The new way adds the following variables:
 
-```
+```css
 --background-activated-opacity
 --background-focused-opacity
 --background-hover-opacity
 ```
 
-This allows you to still have the control over the opacity if desired, but when updating the state, you only have to set the main variables: `--background-activated-opacity`, `--background-focused-opacity`, `--background-hover-opacity` and the button will still match the spec. This is most important when changing the global theme, as updating the toolbar color will automatically update the hover states for all of the buttons in a toolbar, regardless of their fill & without having to know what each opacity is.
+This allows you to still have the control over the opacity if desired, but when updating the state, you only have to set the main variables: `--background-activated`, `--background-focused`, `--background-hover` and the button will still match the spec. This is most important when changing the global theme, as updating the toolbar color will automatically update the hover states for all of the buttons in a toolbar, regardless of their fill & without having to know what each opacity is.
+
+As a result of these changes, the following global CSS variables will not change the opacity and as such should be treated the same as the `--background-{STATE}` variables:
+
+```css
+--ion-item-background-activated
+--ion-item-background-focused
+--ion-item-background-hover
+```
 
 ##### Examples
-
-
 
 ```css
 /* Setting the button background to solid red */
@@ -147,6 +153,18 @@ ion-button {
 .md ion-fab-button {
   --color: #222;
   --background-hover: #222;
+}
+
+/* Setting the theme background for items to use #000 (black) with the default theme opacity */
+:root {
+  /* is used in item as rgba(0, 0, 0, var(--background-activated-opacity)); */
+  --ion-item-background-activated: #000;
+
+  /* is used in item as rgba(0, 0, 0, var(--background-focused-opacity)); */
+  --ion-item-background-focused: #000;
+
+  /* is used in item as rgba(0, 0, 0, var(--background-hover-opacity)); */
+  --ion-item-background-hover: #000;
 }
 ```
 
