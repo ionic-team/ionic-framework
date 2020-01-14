@@ -32,7 +32,7 @@
    *
    * @prop --transition: Transition of the segment button
    *
-   * @prop --indicator-height: Height of the indicator (highlight) under the segment button
+   * @prop --indicator-height: Height of the indicator for the checked segment button
    * @prop --indicator-box-shadow: Box shadow on the indicator for the checked segment button
    * @prop --indicator-color: Color of the indicator for the checked segment button
    * @prop --indicator-transition: Transition of the indicator for the checked segment button
@@ -104,6 +104,8 @@
 
   contain: content;
   cursor: pointer;
+
+  z-index: 2;
 }
 
 
