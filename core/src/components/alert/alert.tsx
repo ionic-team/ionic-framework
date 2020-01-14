@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AlertButton, AlertInput, Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { AlertButton, AlertInput, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
@@ -30,7 +30,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private processedButtons: AlertButton[] = [];
 
   presented = false;
-  animation?: Animation;
   mode = getIonMode(this);
 
   @Element() el!: HTMLIonAlertElement;
@@ -373,25 +372,46 @@ export class Alert implements ComponentInterface, OverlayInterface {
     }
     return (
       <div class="alert-input-group" aria-labelledby={labelledby}>
-        { inputs.map(i => (
-          <div class="alert-input-wrapper">
-            <input
-              placeholder={i.placeholder}
-              value={i.value}
-              type={i.type}
-              min={i.min}
-              max={i.max}
-              onInput={e => i.value = (e.target as any).value}
-              id={i.id}
-              disabled={i.disabled}
-              tabIndex={0}
-              class={{
-                'alert-input': true,
-                'alert-input-disabled': i.disabled || false
-              }}
-            />
-          </div>
-        ))}
+        { inputs.map(i => {
+          if (i.type === 'textarea') {
+            return (
+              <div class="alert-input-wrapper">
+                <textarea
+                  placeholder={i.placeholder}
+                  value={i.value}
+                  onInput={e => i.value = (e.target as any).value}
+                  id={i.id}
+                  disabled={i.disabled}
+                  tabIndex={0}
+                  class={{
+                    'alert-input': true,
+                    'alert-input-disabled': i.disabled || false
+                  }}
+                />
+              </div>
+            );
+          } else {
+            return (
+              <div class="alert-input-wrapper">
+                <input
+                  placeholder={i.placeholder}
+                  value={i.value}
+                  type={i.type}
+                  min={i.min}
+                  max={i.max}
+                  onInput={e => i.value = (e.target as any).value}
+                  id={i.id}
+                  disabled={i.disabled}
+                  tabIndex={0}
+                  class={{
+                    'alert-input': true,
+                    'alert-input-disabled': i.disabled || false
+                  }}
+                />
+              </div>
+            );
+          }
+        })}
       </div>
     );
   }

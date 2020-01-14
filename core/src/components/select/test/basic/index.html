@@ -22,11 +22,15 @@
 
     <ion-content class="outer-content test-content">
       <ion-list>
-        <ion-list-header>Single Value Select</ion-list-header>
+        <ion-list-header>
+          <ion-label>
+            Single Value Select
+          </ion-label>
+        </ion-list-header>
 
         <ion-item>
           <ion-label>Gender</ion-label>
-          <ion-select id="gender" placeholder="Select One">
+          <ion-select id="gender" placeholder="Select One" class="custom-select">
             <ion-select-option value="fn">Female</ion-select-option>
             <ion-select-option value="ml">Male</ion-select-option>
           </ion-select>
@@ -56,7 +60,11 @@
       </ion-list>
 
       <ion-list>
-        <ion-list-header>Object Values with trackBy</ion-list-header>
+        <ion-list-header>
+          <ion-label>
+            Object Values with trackBy
+          </ion-label>
+        </ion-list-header>
 
         <ion-item>
           <ion-label>Users</ion-label>
@@ -65,7 +73,11 @@
       </ion-list>
 
       <ion-list>
-        <ion-list-header>Select - Custom Interface Options</ion-list-header>
+        <ion-list-header>
+          <ion-label>
+            Select - Custom Interface Options
+          </ion-label>
+        </ion-list-header>
 
         <ion-item color="danger">
           <ion-label>Alert</ion-label>
@@ -107,7 +119,11 @@
       </ion-list>
 
       <ion-list>
-        <ion-list-header>Popover Interface Select</ion-list-header>
+        <ion-list-header>
+          <ion-label>
+            Popover Interface Select
+          </ion-label>
+        </ion-list-header>
 
         <ion-item>
           <ion-label>Gender</ion-label>
@@ -164,7 +180,11 @@
 
 
       <ion-list>
-        <ion-list-header>Action Sheet Interface Select</ion-list-header>
+        <ion-list-header>
+          <ion-label>
+            Action Sheet Interface Select
+          </ion-label>
+        </ion-list-header>
 
         <ion-item>
           <ion-label>Mute Notifications</ion-label>
@@ -190,7 +210,11 @@
       </ion-list>
 
       <ion-list>
-        <ion-list-header>Multiple Value Select</ion-list-header>
+        <ion-list-header>
+          <ion-label>
+            Multiple Value Select
+          </ion-label>
+        </ion-list-header>
 
         <ion-item>
           <ion-label>Toppings</ion-label>
@@ -285,6 +309,9 @@
     <style>
       .outer-content {
         --background: #f2f2f2;
+      }
+      .custom-select {
+        --placeholder-opacity: 0.5;
       }
     </style>
 

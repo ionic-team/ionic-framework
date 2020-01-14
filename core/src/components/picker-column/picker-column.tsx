@@ -70,7 +70,7 @@ export class PickerColumnCmp implements ComponentInterface {
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
-    this.gesture.setDisabled(false);
+    this.gesture.enable();
     this.tmrId = setTimeout(() => {
       this.noAnimate = false;
       this.refresh(true);
@@ -313,6 +313,18 @@ export class PickerColumnCmp implements ComponentInterface {
 
     } else {
       this.y += detail.deltaY;
+
+      if (Math.abs(detail.velocityY) < 0.05) {
+        const isScrollingUp = detail.deltaY > 0;
+        const optHeightFraction = (Math.abs(this.y) % this.optHeight) / this.optHeight;
+
+        if (isScrollingUp && optHeightFraction > 0.5) {
+          this.velocity = Math.abs(this.velocity) * -1;
+        } else if (!isScrollingUp && optHeightFraction <= 0.5) {
+          this.velocity = Math.abs(this.velocity);
+        }
+      }
+
       this.decelerate();
     }
   }

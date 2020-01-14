@@ -19,7 +19,7 @@
     "no-invalid-template-strings": true,
     "ban-export-const-enum": true,
     "only-arrow-functions": false,
-    "strict-boolean-conditions": [true, "allow-null-union", "allow-undefined-union", "allow-boolean-or-undefined", "allow-string"],
+    "strict-boolean-conditions": [false],
     "jsx-key": false,
     "jsx-self-close": false,
     "jsx-curly-spacing": [true, "never"],
@@ -27,6 +27,11 @@
     "jsx-no-bind": false,
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
-    "jsx-wrap-multiline": false
+    "jsx-wrap-multiline": false,
+    "forin": false,
+    "strict-type-predicates": false,
+    "no-unused-expression": false,
+    "no-constant-condition": false,
+    "no-empty-interface": false
   }
 }

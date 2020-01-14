@@ -78,8 +78,8 @@
       <ion-route url="/page-3" component="page-three"> </ion-route>
     </ion-router>
 
-    <ion-split-pane>
-      <ion-menu>
+    <ion-split-pane content-id="main">
+      <ion-menu content-id="main">
         <ion-header>
           <ion-toolbar>
             <ion-title>Menu</ion-title>
@@ -97,7 +97,7 @@
           </ion-item>
         </ion-content>
       </ion-menu>
-      <ion-router-outlet main></ion-router-outlet>
+      <ion-router-outlet id="main"></ion-router-outlet>
     </ion-split-pane>
   </ion-app>
 </body>

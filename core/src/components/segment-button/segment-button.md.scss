@@ -5,6 +5,15 @@
 // --------------------------------------------------
 
 :host {
+  --background: #{$segment-button-md-background};
+  --background-checked: #{$segment-button-md-background-checked};
+  --background-hover: #{$segment-button-md-background-hover};
+  --color: #{$segment-button-md-text-color};
+  --color-checked: #{$segment-button-md-text-color-checked};
+  --indicator-box-shadow: none;
+  --indicator-color: var(--color-checked);
+  --indicator-transition: #{$segment-button-md-transition-animated};
+  --indicator-transform: none;
   --padding-top: #{$segment-button-md-padding-top};
   --padding-end: #{$segment-button-md-padding-end};
   --padding-bottom: #{$segment-button-md-padding-bottom};
@@ -16,6 +25,10 @@
   max-width: $segment-button-md-max-width;
   min-height: $segment-button-md-min-height;
 
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
   font-size: $segment-button-md-font-size;
   font-weight: $segment-button-md-font-weight;
 
@@ -26,15 +39,6 @@
   text-transform: uppercase;
 }
 
-// Segment Button: Checked
-// --------------------------------------------------
-
-:host(.activated),
-:host(.segment-button-checked) {
-  --border-color: #{$segment-button-md-border-bottom-color-activated};
-
-  opacity: $segment-button-md-opacity-activated;
-}
 
 // Segment Button: Disabled
 // --------------------------------------------------
@@ -93,20 +97,26 @@
   @include margin(12px, null, 12px, null);
 }
 
-
-// Segment: Checked & Activated
+// Segment Button: Indicator
 // --------------------------------------------------
 
-:host(.segment-button-checked.activated) {
-  color: var(--color-checked);
+.segment-button-indicator {
+  @include position(null, 0, 0, 0);
 }
 
+.segment-button-indicator-background {
+  height: 2px;
 
-// Segment Button: Hover
-// --------------------------------------------------
+  background: var(--indicator-color);
+}
 
-@media (any-hover: hover) {
-  :host(:hover) {
-    background: var(--background-hover);
-  }
+// Segment button indicator color should use the background checked variable with
+// a fallback to the default value of --indicator-color
+:host(.in-toolbar) .segment-button-indicator-background {
+  background: #{var(--ion-toolbar-segment-indicator-color, var(--indicator-color))};
+}
+
+// Do not use the global or local CSS variable if the toolbar has a color
+:host(.in-toolbar-color) .segment-button-indicator-background {
+  background: #{current-color(contrast)};
 }

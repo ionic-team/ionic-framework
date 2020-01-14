@@ -42,15 +42,15 @@ import { StackEvent } from './stack-utils';
 })
 export class IonTabs {
 
-  @ViewChild('outlet', { read: IonRouterOutlet }) outlet: IonRouterOutlet;
-  @ContentChild(IonTabBar) tabBar: IonTabBar | undefined;
+  @ViewChild('outlet', { read: IonRouterOutlet, static: false }) outlet: IonRouterOutlet;
+  @ContentChild(IonTabBar, { static: false }) tabBar: IonTabBar | undefined;
 
-  @Output() ionTabsWillChange = new EventEmitter<{tab: string}>();
-  @Output() ionTabsDidChange = new EventEmitter<{tab: string}>();
+  @Output() ionTabsWillChange = new EventEmitter<{ tab: string }>();
+  @Output() ionTabsDidChange = new EventEmitter<{ tab: string }>();
 
   constructor(
     private navCtrl: NavController,
-  ) {}
+  ) { }
 
   /**
    * @internal
@@ -66,18 +66,53 @@ export class IonTabs {
     }
   }
 
+  /**
+   * When a tab button is clicked, there are several scenarios:
+   * 1. If the selected tab is currently active (the tab button has been clicked
+   *    again), then it should go to the root view for that tab.
+   *
+   *   a. Get the saved root view from the router outlet. If the saved root view
+   *      matches the tabRootUrl, set the route view to this view including the
+   *      navigation extras.
+   *   b. If the saved root view from the router outlet does
+   *      not match, navigate to the tabRootUrl. No navigation extras are
+   *      included.
+   *
+   * 2. If the current tab tab is not currently selected, get the last route
+   *    view from the router outlet.
+   *
+   *   a. If the last route view exists, navigate to that view including any
+   *      navigation extras
+   *   b. If the last route view doesn't exist, then navigate
+   *      to the default tabRootUrl
+   */
   @HostListener('ionTabButtonClick', ['$event.detail.tab'])
   select(tab: string) {
     const alreadySelected = this.outlet.getActiveStackId() === tab;
-    const href = `${this.outlet.tabsPrefix}/${tab}`;
-    const url = alreadySelected
-      ? href
-      : this.outlet.getLastUrl(tab) || href;
+    const tabRootUrl = `${this.outlet.tabsPrefix}/${tab}`;
+    if (alreadySelected) {
+      const rootView = this.outlet.getRootView(tab);
+      const navigationExtras = rootView && tabRootUrl === rootView.url && rootView.savedExtras;
+      return this.navCtrl.navigateRoot(tabRootUrl, {
+        ...(navigationExtras),
+        animated: true,
+        animationDirection: 'back',
+      });
+    } else {
+      const lastRoute = this.outlet.getLastRouteView(tab);
+      /**
+       * If there is a lastRoute, goto that, otherwise goto the fallback url of the
+       * selected tab
+       */
+      const url = lastRoute && lastRoute.url || tabRootUrl;
+      const navigationExtras = lastRoute && lastRoute.savedExtras;
 
-    return this.navCtrl.navigateRoot(url, {
-      animated: true,
-      animationDirection: 'back'
-    });
+      return this.navCtrl.navigateRoot(url, {
+        ...(navigationExtras),
+        animated: true,
+        animationDirection: 'back',
+      });
+    }
   }
 
   getSelected(): string | undefined {

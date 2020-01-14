@@ -6,7 +6,6 @@ import { ViewItem } from './ViewItem';
 
 export interface ViewStack {
   id: string;
-  routerOutlet: HTMLIonRouterOutletElement;
   views: ViewItem[];
 }
 
@@ -58,10 +57,11 @@ export class ViewStacks {
         path: v.routeData.childProps.path || v.routeData.childProps.from,
         component: v.routeData.childProps.component
       };
-      match = matchPath(location.pathname, matchProps);
-      if (match) {
+      const myMatch: IonRouteData['match'] | null | undefined = matchPath(location.pathname, matchProps);
+      if (myMatch) {
         view = v;
-        return true;
+        match = myMatch;
+        return view.location === location.pathname;
       }
       return false;
     }
@@ -85,16 +85,4 @@ export class ViewStacks {
     return { view, viewStack };
   }
 
-  setHiddenViews() {
-    const keys = this.getKeys();
-    keys.forEach(key => {
-      const viewStack = this.viewStacks[key];
-      viewStack!.views.forEach(view => {
-        if (!view.routeData.match && !view.isIonRoute) {
-          view.show = false;
-          view.mount = false;
-        }
-      });
-    });
-  }
 }

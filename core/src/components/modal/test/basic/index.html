@@ -23,23 +23,26 @@
 <body>
   <ion-app>
 
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Modal - Basic</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <div class="ion-page">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-    <ion-content class="ion-padding">
-      <p>
-        <ion-button id="basic-modal" onclick="presentModal()">Present modal</ion-button>
-      </p>
-      <p>
-        <ion-button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal()">Present and close modal</ion-button>
-      </p>
-      <p>
-        <ion-button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal2()">Present and close modal (crash)</ion-button>
-      </p>
-    </ion-content>
+      <ion-content class="ion-padding">
+        <p>
+          <ion-button id="basic-modal" onclick="presentModal()">Present modal</ion-button>
+        </p>
+        <p>
+          <ion-button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal()">Present and close modal</ion-button>
+        </p>
+        <p>
+          <ion-button id="presentModal" class="e2ePresentModal" onclick="presentCloseModal2()">Present and close modal (crash)</ion-button>
+        </p>
+      </ion-content>
+    </div>
+    <ion-modal-controller></ion-modal-controller>
 
   </ion-app>
 
@@ -77,8 +80,9 @@
     }
 
     async function presentModal() {
+      const presentingEl = document.querySelectorAll('.ion-page')[1];
       const modal = createModal();
-      await modal.present();
+      await modal.present(presentingEl);
     }
     async function presentCloseModal() {
       const modal = createModal();

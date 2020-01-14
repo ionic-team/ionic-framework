@@ -14,21 +14,21 @@ export const FabExample: React.FC = () => (
     {/*-- fab placed to the bottom end --*/}
     <IonFab vertical="bottom" horizontal="end" slot="fixed">
       <IonFabButton>
-        <IonIcon name="arrow-dropleft" />
+        <IonIcon name="arrow-forward-circle" />
       </IonFabButton>
     </IonFab>
 
     {/*-- fab placed to the top start --*/}
     <IonFab vertical="top" horizontal="start" slot="fixed">
       <IonFabButton>
-        <IonIcon name="arrow-dropright" />
+        <IonIcon name="arrow-back-circle" />
       </IonFabButton>
     </IonFab>
 
     {/*-- fab placed to the bottom start --*/}
     <IonFab vertical="bottom" horizontal="start" slot="fixed">
       <IonFabButton>
-        <IonIcon name="arrow-dropup" />
+        <IonIcon name="arrow-up-circle" />
       </IonFabButton>
     </IonFab>
 

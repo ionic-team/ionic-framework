@@ -197,3 +197,8 @@
 .alert-checkbox-inner {
   box-sizing: border-box;
 }
+
+textarea.alert-input {
+  min-height: $alert-input-min-height;
+  resize: none;
+}

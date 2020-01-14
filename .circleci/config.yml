@@ -311,9 +311,6 @@ jobs:
           command: npm install
           working_directory: /tmp/workspace/angular/test/test-app
       - run:
-          command: npm run sync
-          working_directory: /tmp/workspace/angular/test/test-app
-      - run:
           command: npm test
           working_directory: /tmp/workspace/angular/test/test-app
 

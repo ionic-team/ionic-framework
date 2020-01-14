@@ -29,10 +29,9 @@
 // Toolbar: Segment
 // --------------------------------------------------
 
-:host(.toolbar-segment) {
-  --min-height: auto;
+:host(.toolbar-segment) .toolbar-content {
+  display: inline-flex;
 }
-
 
 // Toolbar: Searchbar
 // --------------------------------------------------

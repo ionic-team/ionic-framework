@@ -10,7 +10,7 @@
   <ion-toolbar>
     <ion-buttons slot="secondary">
       <ion-button>
-        <ion-icon slot="icon-only" name="contact"></ion-icon>
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
       <ion-button>
         <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -19,7 +19,7 @@
     <ion-title>Default Buttons</ion-title>
     <ion-buttons slot="primary">
       <ion-button color="secondary">
-        <ion-icon slot="icon-only" name="more"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -35,7 +35,7 @@
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
-  
+
   <ion-toolbar>
     <ion-buttons collapse="true">
       <ion-button>

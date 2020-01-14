@@ -1,9 +1,12 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "commonjs",
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    "plugins": [
+      { "name": "typescript-tslint-plugin" }
+    ]
   },
   "files": [
     "src/ionic-server-module.ts"
