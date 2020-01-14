@@ -14,12 +14,21 @@ import { RouteManagerContext, RouteManagerContextState } from './RouteManagerCon
 import { ViewItem } from './ViewItem';
 import { ViewStack, ViewStacks } from './ViewStacks';
 
-interface RouteManagerState extends RouteManagerContextState {
-  location?: HistoryLocation;
+export interface LocationState {
+  direction?: RouterDirection;
   action?: IonRouteAction;
 }
 
-export class RouteManager extends React.Component<RouteComponentProps, RouteManagerState> {
+interface RouteManagerProps extends RouteComponentProps<{}, {}, LocationState> {
+  location: HistoryLocation<LocationState>;
+}
+
+interface RouteManagerState extends RouteManagerContextState {
+  location?: HistoryLocation<LocationState>;
+  action?: IonRouteAction;
+}
+
+export class RouteManager extends React.Component<RouteManagerProps, RouteManagerState> {
   listenUnregisterCallback: UnregisterCallback | undefined;
   activeIonPageId?: string;
   currentIonRouteAction?: IonRouteAction;
@@ -30,7 +39,7 @@ export class RouteManager extends React.Component<RouteComponentProps, RouteMana
   routerOutlets: { [key: string]: HTMLIonRouterOutletElement; } = {};
   firstRender = true;
 
-  constructor(props: RouteComponentProps) {
+  constructor(props: RouteManagerProps) {
     super(props);
     this.listenUnregisterCallback = this.props.history.listen(this.historyChange.bind(this));
     this.handleNavigate = this.handleNavigate.bind(this);
@@ -87,7 +96,7 @@ export class RouteManager extends React.Component<RouteComponentProps, RouteMana
     }
   }
 
-  historyChange(location: HistoryLocation, action: HistoryAction) {
+  historyChange(location: HistoryLocation<LocationState>, action: HistoryAction) {
     const ionRouteAction = this.currentIonRouteAction === 'pop' ? 'pop' : action.toLowerCase() as IonRouteAction;
     let direction = this.currentRouteDirection;
 
@@ -115,7 +124,7 @@ export class RouteManager extends React.Component<RouteComponentProps, RouteMana
     this.currentIonRouteAction = undefined;
   }
 
-  setActiveView(location: HistoryLocation, action: IonRouteAction, viewStacks: ViewStacks) {
+  setActiveView(location: HistoryLocation<LocationState>, action: IonRouteAction, viewStacks: ViewStacks) {
     let direction: RouterDirection | undefined = (location.state && location.state.direction) || 'forward';
     let leavingView: ViewItem | undefined;
     const viewStackKeys = viewStacks.getKeys();
