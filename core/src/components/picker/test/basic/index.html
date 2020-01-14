@@ -10,7 +10,10 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { pickerController } from '../../../../dist/ionic/index.esm.js';
+    window.pickerController = pickerController;
+  </script>
 <body>
   <ion-app>
 
@@ -26,7 +29,6 @@
     </ion-content>
 
   </ion-app>
-  <ion-picker-controller></ion-picker-controller>
 
   <style>
     .my-custom-class {
@@ -45,7 +47,6 @@
 
   <script>
     async function presentPicker(customClass) {
-      const pickerController = document.querySelector('ion-picker-controller');
       const pickerElement = await pickerController.create({
         buttons: [{
           text: 'Cancel',
