@@ -32,7 +32,6 @@
    *
    * @prop --transition: Transition of the segment button
    *
-   * @prop --indicator-color: Color of the indicator (highlight) under the segment button
    * @prop --indicator-height: Height of the indicator (highlight) under the segment button
    * @prop --indicator-box-shadow: Box shadow on the indicator for the checked segment button
    * @prop --indicator-color: Color of the indicator for the checked segment button
@@ -105,22 +104,6 @@
 
   contain: content;
   cursor: pointer;
-
-// Segment Button: Indicator
-// --------------------------------------------------
-
-.segment-button-indicator {
-  align-self: flex-end;
-
-  width: 100%;
-
-  height: var(--indicator-height);
-
-  background-color: var(--indicator-color);
-
-  opacity: 1;
-
-  z-index: 2;
 }
 
 
@@ -246,7 +229,7 @@ ion-ripple-effect {
 
 .segment-button-indicator-background {
   width: 100%;
-  height: 100%;
+  height: var(--indicator-height);
 
   transform: var(--indicator-transform);
 
