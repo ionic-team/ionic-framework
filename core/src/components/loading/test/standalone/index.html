@@ -10,13 +10,16 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { loadingController } from '../../../../dist/ionic/index.esm.js';
+    window.loadingController = loadingController;
+  </script>
 <body>
-  <button id="basic-loading" onclick="presentLoading()">Show Loading</button>
-  <button id="long-content-loading" onclick="presentLoadingWithOptions({duration: 2000, content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long content</button>
-  <button id="no-spinner-loading" onclick="presentLoadingWithOptions({duration: 2000, content: 'Loading Please Wait...', spinner: null})">Show Loading with no spinner</button>
-  <button id="translucent-loading" onclick="presentLoadingWithOptions({duration: 5000, content: 'Loading Please Wait...', translucent: true})">Show Loading with translucent</button>
-  <button id="custom-class-loading" onclick="presentLoadingWithOptions({duration: 5000, content: 'Loading Please Wait...', translucent: true, cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</button>
+  <button id="basic-loading" onclick="openLoading({ message: 'Hellooo', duration: 5000 })">Show Loading</button>
+  <button id="long-content-loading" onclick="openLoading({duration: 2000, content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long content</button>
+  <button id="no-spinner-loading" onclick="openLoading({duration: 2000, content: 'Loading Please Wait...', spinner: null})">Show Loading with no spinner</button>
+  <button id="translucent-loading" onclick="openLoading({duration: 5000, content: 'Loading Please Wait...', translucent: true})">Show Loading with translucent</button>
+  <button id="custom-class-loading" onclick="openLoading({duration: 5000, content: 'Loading Please Wait...', translucent: true, cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</button>
 
   <style>
     body > button {
@@ -33,19 +36,9 @@
   </style>
 
   <script>
-    async function presentLoading() {
-      const loadingElement = Object.assign(document.createElement('ion-loading'), {
-        message: 'Hellooo',
-        duration: 5000
-      });
-      document.body.appendChild(loadingElement);
-      return loadingElement.present();
-    }
-
-    function presentLoadingWithOptions(opts) {
-      const loadingElement = Object.assign(document.createElement('ion-loading'), opts);
-      document.body.appendChild(loadingElement);
-      return loadingElement.present();
+    async function openLoading(opts) {
+      const loading = await loadingController.create(opts);
+      await loading.present();
     }
   </script>
 </body>

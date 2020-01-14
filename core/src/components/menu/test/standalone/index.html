@@ -9,7 +9,12 @@
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <style>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <script type="module">
+    import { menuController } from '../../../../dist/ionic/index.esm.js';
+    window.menuController = menuController;
+  </script>
+  <style>
     .ion-page ion-content {
       --padding-top: 16px;
       --padding-end: 16px;
@@ -65,18 +70,13 @@
         <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
       </ion-content>
     </div>
-
-  <ion-menu-controller></ion-menu-controller>
-
   <script>
     function openStart() {
-      document.querySelector('ion-menu-controller')
-        .open('start');
+      menuController.open('start');
     }
 
     function openEnd() {
-      document.querySelector('ion-menu-controller')
-        .open('end');
+      menuController.open('end');
     }
   </script>
 </body>

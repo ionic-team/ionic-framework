@@ -9,10 +9,8 @@
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   ActionSheetButton,
-  ActionSheetOptions,
   AlertButton,
   AlertInput,
-  AlertOptions,
   AnimationBuilder,
   CheckboxChangeEventDetail,
   Color,
@@ -29,16 +27,12 @@ import {
   ItemHeightFn,
   ItemRenderFn,
   ItemReorderEventDetail,
-  LoadingOptions,
   MenuChangeEventDetail,
-  ModalOptions,
   NavComponent,
   NavOptions,
   OverlayEventDetail,
   PickerButton,
   PickerColumn,
-  PickerOptions,
-  PopoverOptions,
   RadioChangeEventDetail,
   RadioGroupChangeEventDetail,
   RangeChangeEventDetail,
@@ -67,7 +61,6 @@ import {
   TextareaChangeEventDetail,
   TextFieldTypes,
   ToastButton,
-  ToastOptions,
   ToggleChangeEventDetail,
   TransitionDoneFn,
   TransitionInstruction,
@@ -143,24 +136,6 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonActionSheetController {
-    /**
-    * Create an action sheet overlay with action sheet options.
-    * @param options The options to use to create the action sheet.
-    */
-    'create': (options: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>;
-    /**
-    * Dismiss the open action sheet overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the action sheet to dismiss. If an id is not provided, it will dismiss the most recently opened action sheet.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened action sheet overlay.
-    */
-    'getTop': () => Promise<HTMLIonActionSheetElement | undefined>;
-  }
   interface IonAlert {
     /**
     * If `true`, the alert will animate.
@@ -233,24 +208,6 @@ export namespace Components {
     * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
-  }
-  interface IonAlertController {
-    /**
-    * Create an alert overlay with alert options.
-    * @param options The options to use to create the alert.
-    */
-    'create': (options: AlertOptions) => Promise<HTMLIonAlertElement>;
-    /**
-    * Dismiss the open alert overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the alert. This can be useful in a button handler for determining which button was clicked to dismiss the alert. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the alert to dismiss. If an id is not provided, it will dismiss the most recently opened alert.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened alert overlay.
-    */
-    'getTop': () => Promise<HTMLIonAlertElement | undefined>;
   }
   interface IonApp {}
   interface IonAvatar {}
@@ -1280,24 +1237,6 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonLoadingController {
-    /**
-    * Create a loading overlay with loading options.
-    * @param options The options to use to create the loading.
-    */
-    'create': (options?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>;
-    /**
-    * Dismiss the open loading overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the loading. This can be useful in a button handler for determining which button was clicked to dismiss the loading. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the loading to dismiss. If an id is not provided, it will dismiss the most recently opened loading.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened loading overlay.
-    */
-    'getTop': () => Promise<HTMLIonLoadingElement | undefined>;
-  }
   interface IonMenu {
     /**
     * Closes the menu. If the menu is already closed or it can't be closed, it returns `false`.
@@ -1373,68 +1312,6 @@ export namespace Components {
     * The type of the button.
     */
     'type': 'submit' | 'reset' | 'button';
-  }
-  interface IonMenuController {
-    /**
-    * Close the menu. If a menu is specified, it will close that menu. If no menu is specified, then it will close any menu that is open. If it does not find any open menus, it will return `false`.
-    * @param menu The menuId or side of the menu to close.
-    */
-    'close': (menu?: string | null | undefined) => Promise<boolean>;
-    /**
-    * Enable or disable a menu. Disabling a menu will not allow gestures for that menu or any calls to open it. This is useful when there are multiple menus on the same side and only one of them should be allowed to open. Enabling a menu will automatically disable all other menus on that side.
-    * @param enable If `true`, the menu should be enabled.
-    * @param menu The menuId or side of the menu to enable or disable.
-    */
-    'enable': (enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
-    /**
-    * Get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `start` or `end`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`.
-    * @param menu The menuId or side of the menu.
-    */
-    'get': (menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
-    /**
-    * Get all menu instances.
-    */
-    'getMenus': () => Promise<HTMLIonMenuElement[]>;
-    /**
-    * Get the instance of the opened menu. Returns `null` if a menu is not found.
-    */
-    'getOpen': () => Promise<HTMLIonMenuElement | undefined>;
-    /**
-    * Get whether or not a menu is animating. Returns `true` if any menu is currently animating.
-    */
-    'isAnimating': () => Promise<boolean>;
-    /**
-    * Get whether or not the menu is enabled. Returns `true` if the specified menu is enabled. Returns `false` if a menu is disabled or not found.
-    * @param menu The menuId or side of the menu that is being checked.
-    */
-    'isEnabled': (menu?: string | null | undefined) => Promise<boolean>;
-    /**
-    * Get whether or not the menu is open. Returns `true` if the specified menu is open. If a menu is not specified, it will return `true` if any menu is currently open.
-    * @param menu The menuId or side of the menu that is being checked.
-    */
-    'isOpen': (menu?: string | null | undefined) => Promise<boolean>;
-    /**
-    * Open the menu. If a menu is not provided then it will open the first menu found. If the specified menu is `start` or `end`, then it will open the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `false`.
-    * @param menu The menuId or side of the menu to open.
-    */
-    'open': (menu?: string | null | undefined) => Promise<boolean>;
-    /**
-    * Registers a new animation that can be used with any `ion-menu` by passing the name of the animation in its `type` property.
-    * @param name The name of the animation to register.
-    * @param animation The animation function to register.
-    */
-    'registerAnimation': (name: string, animation: AnimationBuilder) => Promise<void>;
-    /**
-    * Enable or disable the ability to swipe open the menu.
-    * @param enable If `true`, the menu swipe gesture should be enabled.
-    * @param menu The menuId or side of the menu to enable or disable the swipe gesture on.
-    */
-    'swipeGesture': (enable: boolean, menu?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
-    /**
-    * Toggle the menu open or closed. If the menu is already open, it will try to close the menu, otherwise it will try to open it. Returns `false` if a menu is not found.
-    * @param menu The menuId or side of the menu to toggle.
-    */
-    'toggle': (menu?: string | null | undefined) => Promise<boolean>;
   }
   interface IonMenuToggle {
     /**
@@ -1515,24 +1392,6 @@ export namespace Components {
     * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
     */
     'swipeToClose': boolean;
-  }
-  interface IonModalController {
-    /**
-    * Create a modal overlay with modal options.
-    * @param options The options to use to create the modal.
-    */
-    'create': <T extends ComponentRef>(options: ModalOptions<T>) => Promise<HTMLIonModalElement>;
-    /**
-    * Dismiss the open modal overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the modal. This can be useful in a button handler for determining which button was clicked to dismiss the modal. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the modal to dismiss. If an id is not provided, it will dismiss the most recently opened modal.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened modal overlay.
-    */
-    'getTop': () => Promise<HTMLIonModalElement | undefined>;
   }
   interface IonNav {
     /**
@@ -1745,24 +1604,6 @@ export namespace Components {
     */
     'col': PickerColumn;
   }
-  interface IonPickerController {
-    /**
-    * Create a picker overlay with picker options.
-    * @param options The options to use to create the picker.
-    */
-    'create': (options: PickerOptions) => Promise<HTMLIonPickerElement>;
-    /**
-    * Dismiss the open picker overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the picker. This can be useful in a button handler for determining which button was clicked to dismiss the picker. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the picker to dismiss. If an id is not provided, it will dismiss the most recently opened picker.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened picker overlay.
-    */
-    'getTop': () => Promise<HTMLIonPickerElement | undefined>;
-  }
   interface IonPopover {
     /**
     * If `true`, the popover will animate.
@@ -1832,24 +1673,6 @@ export namespace Components {
     * If `true`, the popover will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
     'translucent': boolean;
-  }
-  interface IonPopoverController {
-    /**
-    * Create a popover overlay with popover options.
-    * @param options The options to use to create the popover.
-    */
-    'create': <T extends ComponentRef>(options: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>;
-    /**
-    * Dismiss the open popover overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the popover. This can be useful in a button handler for determining which button was clicked to dismiss the popover. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
-    * @param id The id of the popover to dismiss. If an id is not provided, it will dismiss the most recently opened popover.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened popover overlay.
-    */
-    'getTop': () => Promise<HTMLIonPopoverElement | undefined>;
   }
   interface IonProgressBar {
     /**
@@ -2755,24 +2578,6 @@ export namespace Components {
     */
     'translucent': boolean;
   }
-  interface IonToastController {
-    /**
-    * Create a toast overlay with toast options.
-    * @param options The options to use to create the toast.
-    */
-    'create': (options?: ToastOptions | undefined) => Promise<HTMLIonToastElement>;
-    /**
-    * Dismiss the open toast overlay.
-    * @param data Any data to emit in the dismiss events.
-    * @param role The role of the element that is dismissing the toast. For example, 'cancel' or 'backdrop'.
-    * @param id The id of the toast to dismiss. If an id is not provided, it will dismiss the most recently opened toast.
-    */
-    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<boolean>;
-    /**
-    * Get the most recently opened toast overlay.
-    */
-    'getTop': () => Promise<HTMLIonToastElement | undefined>;
-  }
   interface IonToggle {
     /**
     * If `true`, the toggle is selected.
@@ -2887,22 +2692,10 @@ declare global {
     new (): HTMLIonActionSheetElement;
   };
 
-  interface HTMLIonActionSheetControllerElement extends Components.IonActionSheetController, HTMLStencilElement {}
-  var HTMLIonActionSheetControllerElement: {
-    prototype: HTMLIonActionSheetControllerElement;
-    new (): HTMLIonActionSheetControllerElement;
-  };
-
   interface HTMLIonAlertElement extends Components.IonAlert, HTMLStencilElement {}
   var HTMLIonAlertElement: {
     prototype: HTMLIonAlertElement;
     new (): HTMLIonAlertElement;
-  };
-
-  interface HTMLIonAlertControllerElement extends Components.IonAlertController, HTMLStencilElement {}
-  var HTMLIonAlertControllerElement: {
-    prototype: HTMLIonAlertControllerElement;
-    new (): HTMLIonAlertControllerElement;
   };
 
   interface HTMLIonAppElement extends Components.IonApp, HTMLStencilElement {}
@@ -3127,12 +2920,6 @@ declare global {
     new (): HTMLIonLoadingElement;
   };
 
-  interface HTMLIonLoadingControllerElement extends Components.IonLoadingController, HTMLStencilElement {}
-  var HTMLIonLoadingControllerElement: {
-    prototype: HTMLIonLoadingControllerElement;
-    new (): HTMLIonLoadingControllerElement;
-  };
-
   interface HTMLIonMenuElement extends Components.IonMenu, HTMLStencilElement {}
   var HTMLIonMenuElement: {
     prototype: HTMLIonMenuElement;
@@ -3145,12 +2932,6 @@ declare global {
     new (): HTMLIonMenuButtonElement;
   };
 
-  interface HTMLIonMenuControllerElement extends Components.IonMenuController, HTMLStencilElement {}
-  var HTMLIonMenuControllerElement: {
-    prototype: HTMLIonMenuControllerElement;
-    new (): HTMLIonMenuControllerElement;
-  };
-
   interface HTMLIonMenuToggleElement extends Components.IonMenuToggle, HTMLStencilElement {}
   var HTMLIonMenuToggleElement: {
     prototype: HTMLIonMenuToggleElement;
@@ -3161,12 +2942,6 @@ declare global {
   var HTMLIonModalElement: {
     prototype: HTMLIonModalElement;
     new (): HTMLIonModalElement;
-  };
-
-  interface HTMLIonModalControllerElement extends Components.IonModalController, HTMLStencilElement {}
-  var HTMLIonModalControllerElement: {
-    prototype: HTMLIonModalControllerElement;
-    new (): HTMLIonModalControllerElement;
   };
 
   interface HTMLIonNavElement extends Components.IonNav, HTMLStencilElement {}
@@ -3199,22 +2974,10 @@ declare global {
     new (): HTMLIonPickerColumnElement;
   };
 
-  interface HTMLIonPickerControllerElement extends Components.IonPickerController, HTMLStencilElement {}
-  var HTMLIonPickerControllerElement: {
-    prototype: HTMLIonPickerControllerElement;
-    new (): HTMLIonPickerControllerElement;
-  };
-
   interface HTMLIonPopoverElement extends Components.IonPopover, HTMLStencilElement {}
   var HTMLIonPopoverElement: {
     prototype: HTMLIonPopoverElement;
     new (): HTMLIonPopoverElement;
-  };
-
-  interface HTMLIonPopoverControllerElement extends Components.IonPopoverController, HTMLStencilElement {}
-  var HTMLIonPopoverControllerElement: {
-    prototype: HTMLIonPopoverControllerElement;
-    new (): HTMLIonPopoverControllerElement;
   };
 
   interface HTMLIonProgressBarElement extends Components.IonProgressBar, HTMLStencilElement {}
@@ -3427,12 +3190,6 @@ declare global {
     new (): HTMLIonToastElement;
   };
 
-  interface HTMLIonToastControllerElement extends Components.IonToastController, HTMLStencilElement {}
-  var HTMLIonToastControllerElement: {
-    prototype: HTMLIonToastControllerElement;
-    new (): HTMLIonToastControllerElement;
-  };
-
   interface HTMLIonToggleElement extends Components.IonToggle, HTMLStencilElement {}
   var HTMLIonToggleElement: {
     prototype: HTMLIonToggleElement;
@@ -3452,9 +3209,7 @@ declare global {
   };
   interface HTMLElementTagNameMap {
     'ion-action-sheet': HTMLIonActionSheetElement;
-    'ion-action-sheet-controller': HTMLIonActionSheetControllerElement;
     'ion-alert': HTMLIonAlertElement;
-    'ion-alert-controller': HTMLIonAlertControllerElement;
     'ion-app': HTMLIonAppElement;
     'ion-avatar': HTMLIonAvatarElement;
     'ion-back-button': HTMLIonBackButtonElement;
@@ -3492,21 +3247,16 @@ declare global {
     'ion-list': HTMLIonListElement;
     'ion-list-header': HTMLIonListHeaderElement;
     'ion-loading': HTMLIonLoadingElement;
-    'ion-loading-controller': HTMLIonLoadingControllerElement;
     'ion-menu': HTMLIonMenuElement;
     'ion-menu-button': HTMLIonMenuButtonElement;
-    'ion-menu-controller': HTMLIonMenuControllerElement;
     'ion-menu-toggle': HTMLIonMenuToggleElement;
     'ion-modal': HTMLIonModalElement;
-    'ion-modal-controller': HTMLIonModalControllerElement;
     'ion-nav': HTMLIonNavElement;
     'ion-nav-link': HTMLIonNavLinkElement;
     'ion-note': HTMLIonNoteElement;
     'ion-picker': HTMLIonPickerElement;
     'ion-picker-column': HTMLIonPickerColumnElement;
-    'ion-picker-controller': HTMLIonPickerControllerElement;
     'ion-popover': HTMLIonPopoverElement;
-    'ion-popover-controller': HTMLIonPopoverControllerElement;
     'ion-progress-bar': HTMLIonProgressBarElement;
     'ion-radio': HTMLIonRadioElement;
     'ion-radio-group': HTMLIonRadioGroupElement;
@@ -3542,7 +3292,6 @@ declare global {
     'ion-thumbnail': HTMLIonThumbnailElement;
     'ion-title': HTMLIonTitleElement;
     'ion-toast': HTMLIonToastElement;
-    'ion-toast-controller': HTMLIonToastControllerElement;
     'ion-toggle': HTMLIonToggleElement;
     'ion-toolbar': HTMLIonToolbarElement;
     'ion-virtual-scroll': HTMLIonVirtualScrollElement;
@@ -3612,7 +3361,6 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonActionSheetController {}
   interface IonAlert {
     /**
     * If `true`, the alert will animate.
@@ -3683,7 +3431,6 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonAlertController {}
   interface IonApp {}
   interface IonAvatar {}
   interface IonBackButton {
@@ -4735,7 +4482,6 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonLoadingController {}
   interface IonMenu {
     /**
     * The content's id the menu should use.
@@ -4804,7 +4550,6 @@ declare namespace LocalJSX {
     */
     'type'?: 'submit' | 'reset' | 'button';
   }
-  interface IonMenuController {}
   interface IonMenuToggle {
     /**
     * Automatically hides the content when the corresponding menu is not active.  By default, it's `true`. Change it to `false` in order to keep `ion-menu-toggle` always visible regardless the state of the menu.
@@ -4881,7 +4626,6 @@ declare namespace LocalJSX {
     */
     'swipeToClose'?: boolean;
   }
-  interface IonModalController {}
   interface IonNav {
     /**
     * If `true`, the nav should animate the transition of components.
@@ -5004,7 +4748,6 @@ declare namespace LocalJSX {
     */
     'col': PickerColumn;
   }
-  interface IonPickerController {}
   interface IonPopover {
     /**
     * If `true`, the popover will animate.
@@ -5071,7 +4814,6 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonPopoverController {}
   interface IonProgressBar {
     /**
     * If the buffer and value are smaller than 1, the buffer circles will show. The buffer should be between [0, 1].
@@ -6014,7 +5756,6 @@ declare namespace LocalJSX {
     */
     'translucent'?: boolean;
   }
-  interface IonToastController {}
   interface IonToggle {
     /**
     * If `true`, the toggle is selected.
@@ -6120,9 +5861,7 @@ declare namespace LocalJSX {
 
   interface IntrinsicElements {
     'ion-action-sheet': IonActionSheet;
-    'ion-action-sheet-controller': IonActionSheetController;
     'ion-alert': IonAlert;
-    'ion-alert-controller': IonAlertController;
     'ion-app': IonApp;
     'ion-avatar': IonAvatar;
     'ion-back-button': IonBackButton;
@@ -6160,21 +5899,16 @@ declare namespace LocalJSX {
     'ion-list': IonList;
     'ion-list-header': IonListHeader;
     'ion-loading': IonLoading;
-    'ion-loading-controller': IonLoadingController;
     'ion-menu': IonMenu;
     'ion-menu-button': IonMenuButton;
-    'ion-menu-controller': IonMenuController;
     'ion-menu-toggle': IonMenuToggle;
     'ion-modal': IonModal;
-    'ion-modal-controller': IonModalController;
     'ion-nav': IonNav;
     'ion-nav-link': IonNavLink;
     'ion-note': IonNote;
     'ion-picker': IonPicker;
     'ion-picker-column': IonPickerColumn;
-    'ion-picker-controller': IonPickerController;
     'ion-popover': IonPopover;
-    'ion-popover-controller': IonPopoverController;
     'ion-progress-bar': IonProgressBar;
     'ion-radio': IonRadio;
     'ion-radio-group': IonRadioGroup;
@@ -6210,7 +5944,6 @@ declare namespace LocalJSX {
     'ion-thumbnail': IonThumbnail;
     'ion-title': IonTitle;
     'ion-toast': IonToast;
-    'ion-toast-controller': IonToastController;
     'ion-toggle': IonToggle;
     'ion-toolbar': IonToolbar;
     'ion-virtual-scroll': IonVirtualScroll;
@@ -6224,9 +5957,7 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'ion-action-sheet': LocalJSX.IonActionSheet & JSXBase.HTMLAttributes<HTMLIonActionSheetElement>;
-      'ion-action-sheet-controller': LocalJSX.IonActionSheetController & JSXBase.HTMLAttributes<HTMLIonActionSheetControllerElement>;
       'ion-alert': LocalJSX.IonAlert & JSXBase.HTMLAttributes<HTMLIonAlertElement>;
-      'ion-alert-controller': LocalJSX.IonAlertController & JSXBase.HTMLAttributes<HTMLIonAlertControllerElement>;
       'ion-app': LocalJSX.IonApp & JSXBase.HTMLAttributes<HTMLIonAppElement>;
       'ion-avatar': LocalJSX.IonAvatar & JSXBase.HTMLAttributes<HTMLIonAvatarElement>;
       'ion-back-button': LocalJSX.IonBackButton & JSXBase.HTMLAttributes<HTMLIonBackButtonElement>;
@@ -6264,21 +5995,16 @@ declare module "@stencil/core" {
       'ion-list': LocalJSX.IonList & JSXBase.HTMLAttributes<HTMLIonListElement>;
       'ion-list-header': LocalJSX.IonListHeader & JSXBase.HTMLAttributes<HTMLIonListHeaderElement>;
       'ion-loading': LocalJSX.IonLoading & JSXBase.HTMLAttributes<HTMLIonLoadingElement>;
-      'ion-loading-controller': LocalJSX.IonLoadingController & JSXBase.HTMLAttributes<HTMLIonLoadingControllerElement>;
       'ion-menu': LocalJSX.IonMenu & JSXBase.HTMLAttributes<HTMLIonMenuElement>;
       'ion-menu-button': LocalJSX.IonMenuButton & JSXBase.HTMLAttributes<HTMLIonMenuButtonElement>;
-      'ion-menu-controller': LocalJSX.IonMenuController & JSXBase.HTMLAttributes<HTMLIonMenuControllerElement>;
       'ion-menu-toggle': LocalJSX.IonMenuToggle & JSXBase.HTMLAttributes<HTMLIonMenuToggleElement>;
       'ion-modal': LocalJSX.IonModal & JSXBase.HTMLAttributes<HTMLIonModalElement>;
-      'ion-modal-controller': LocalJSX.IonModalController & JSXBase.HTMLAttributes<HTMLIonModalControllerElement>;
       'ion-nav': LocalJSX.IonNav & JSXBase.HTMLAttributes<HTMLIonNavElement>;
       'ion-nav-link': LocalJSX.IonNavLink & JSXBase.HTMLAttributes<HTMLIonNavLinkElement>;
       'ion-note': LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
       'ion-picker': LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
       'ion-picker-column': LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
-      'ion-picker-controller': LocalJSX.IonPickerController & JSXBase.HTMLAttributes<HTMLIonPickerControllerElement>;
       'ion-popover': LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
-      'ion-popover-controller': LocalJSX.IonPopoverController & JSXBase.HTMLAttributes<HTMLIonPopoverControllerElement>;
       'ion-progress-bar': LocalJSX.IonProgressBar & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
       'ion-radio': LocalJSX.IonRadio & JSXBase.HTMLAttributes<HTMLIonRadioElement>;
       'ion-radio-group': LocalJSX.IonRadioGroup & JSXBase.HTMLAttributes<HTMLIonRadioGroupElement>;
@@ -6314,7 +6040,6 @@ declare module "@stencil/core" {
       'ion-thumbnail': LocalJSX.IonThumbnail & JSXBase.HTMLAttributes<HTMLIonThumbnailElement>;
       'ion-title': LocalJSX.IonTitle & JSXBase.HTMLAttributes<HTMLIonTitleElement>;
       'ion-toast': LocalJSX.IonToast & JSXBase.HTMLAttributes<HTMLIonToastElement>;
-      'ion-toast-controller': LocalJSX.IonToastController & JSXBase.HTMLAttributes<HTMLIonToastControllerElement>;
       'ion-toggle': LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
       'ion-toolbar': LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
       'ion-virtual-scroll': LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;

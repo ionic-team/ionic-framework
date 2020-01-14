@@ -10,7 +10,10 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { toastController } from '../../../../dist/ionic/index.esm.js';
+    window.toastController = toastController;
+  </script>
 <body>
   <ion-app>
     <ion-header>
@@ -37,8 +40,6 @@
       <ion-button id="longButton" expand="block" onclick="presentToastWithLongButton()">
         Really Long Button
       </ion-button>
-
-      <ion-toast-controller></ion-toast-controller>
     </ion-content>
 
   </ion-app>
@@ -131,9 +132,8 @@
     }
 
     async function presentToastWithOptions(opts) {
-      const toastController = document.querySelector('ion-toast-controller');
-      const toastElement = await toastController.create(opts);
-      return await toastElement.present();
+      const toast = await toastController.create(opts);
+      await toast.present();
     }
   </script>
 
