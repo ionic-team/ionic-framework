@@ -184,6 +184,20 @@ ion-icon {
 }
 
 
+// Back Button: Focused
+// --------------------------------------------------
+
+:host(.ion-focused) .button-native {
+  color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+
+    opacity: var(--background-focused-opacity);
+  }
+}
+
+
 // Back Button: Hover
 // --------------------------------------------------
 
@@ -203,17 +217,12 @@ ion-icon {
   }
 }
 
-// Back Button: Focused
+
+// Back Button Color: Focused
 // --------------------------------------------------
 
-:host(.ion-focused) .button-native {
-  color: var(--color-focused);
-
-  &::after {
-    background: var(--background-focused);
-
-    opacity: var(--background-focused-opacity);
-  }
+:host(.ion-color.ion-focused) .button-native {
+  color: #{current-color(base)};
 }
 
 
@@ -224,14 +233,6 @@ ion-icon {
   :host(.ion-color:hover) .button-native {
     color: #{current-color(base)};
   }
-}
-
-
-// Back Button Color: Focused
-// --------------------------------------------------
-
-:host(.ion-color.ion-focused) .button-native {
-  color: #{current-color(base)};
 }
 
 

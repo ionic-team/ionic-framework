@@ -82,6 +82,9 @@ Style the `ion-activated` class based on the spec for that element:
 }
 ```
 
+> Order is important! Activated should be before the focused & hover states.
+
+
 #### User Customization
 
 TODO
@@ -172,6 +175,8 @@ Style the `ion-focused` class based on the spec for that element:
 }
 ```
 
+> Order is important! Focused should be after the activated and before the hover state.
+
 
 #### User Customization
 
@@ -246,6 +251,8 @@ These styles should be set for the CSS to work properly:
   }
 }
 ```
+
+> Order is important! Hover should be after the activated and focused states.
 
 The `button-state()` mixin was created to automatically add the following styles:
 

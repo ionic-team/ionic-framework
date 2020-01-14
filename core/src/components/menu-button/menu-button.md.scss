@@ -21,6 +21,14 @@
 }
 
 
+// Menu Button Color: Focused
+// --------------------------------------------------
+
+:host(.ion-color.ion-focused)::after {
+  background: #{current-color(base)};
+}
+
+
 // Menu Button Color: Hover
 // --------------------------------------------------
 
@@ -28,12 +36,4 @@
   :host(.ion-color:hover) .button-native::after {
     background: #{current-color(base)};
   }
-}
-
-
-// Menu Button Color: Focused
-// --------------------------------------------------
-
-:host(.ion-color.ion-focused)::after {
-  background: #{current-color(base)};
 }

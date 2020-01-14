@@ -113,6 +113,20 @@ ion-icon {
 }
 
 
+// Menu Button: Focused
+// --------------------------------------------------
+
+:host(.ion-focused) .button-native {
+  color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+
+    opacity: var(--background-focused-opacity);
+  }
+}
+
+
 // Menu Button: Hover
 // --------------------------------------------------
 
@@ -129,20 +143,6 @@ ion-icon {
 
       opacity: var(--background-hover-opacity, 0);
     }
-  }
-}
-
-
-// Menu Button: Focused
-// --------------------------------------------------
-
-:host(.ion-focused) .button-native {
-  color: var(--color-focused);
-
-  &::after {
-    background: var(--background-focused);
-
-    opacity: var(--background-focused-opacity);
   }
 }
 

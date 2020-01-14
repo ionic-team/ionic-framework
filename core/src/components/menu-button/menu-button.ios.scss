@@ -17,14 +17,12 @@
   font-size: 31px;
 }
 
+
+// Menu Button: Activated
+// --------------------------------------------------
+
 :host(.ion-activated) {
   opacity: .4;
-}
-
-@media (any-hover: hover) {
-  :host(:hover) {
-    opacity: .6;
-  }
 }
 
 
@@ -33,4 +31,14 @@
 
 :host(.ion-color.ion-focused) .button-native {
   background: #{current-color(base, .1)};
+}
+
+
+// Menu Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    opacity: .6;
+  }
 }
