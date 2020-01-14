@@ -87,7 +87,14 @@ Style the `ion-activated` class based on the spec for that element:
 
 #### User Customization
 
-TODO
+Setting the activated state on the `::after` pseudo-element allows the user to customize the activated state without knowing what the default opacity is set at. A user can customize in the following ways to have a solid red background on press, or they can leave out `--background-activated-opacity` and the button will use the default activated opacity to match the spec.
+
+```css
+ion-button {
+  --background-activated: red;
+  --background-activated-opacity: 1;
+}
+```
 
 
 ### Disabled
@@ -180,7 +187,14 @@ Style the `ion-focused` class based on the spec for that element:
 
 #### User Customization
 
-TODO
+Setting the focused state on the `::after` pseudo-element allows the user to customize the focused state without knowing what the default opacity is set at. A user can customize in the following ways to have a solid red background on focus, or they can leave out `--background-focused-opacity` and the button will use the default focus opacity to match the spec.
+
+```css
+ion-button {
+  --background-focused: red;
+  --background-focused-opacity: 1;
+}
+```
 
 
 ### Hover
@@ -270,8 +284,7 @@ The `button-state()` mixin was created to automatically add the following styles
 
 #### User Customization
 
-
-Setting the hover state on the `::after` pseudo-element allows the user to customize the hover state without knowing what the default opacity is set at. A user can customize in the following ways to have a solid red background on hover, or they can leave out `--background-hover-opacity` and the button will use the default hover.
+Setting the hover state on the `::after` pseudo-element allows the user to customize the hover state without knowing what the default opacity is set at. A user can customize in the following ways to have a solid red background on hover, or they can leave out `--background-hover-opacity` and the button will use the default hover opacity to match the spec.
 
 ```css
 ion-button {
