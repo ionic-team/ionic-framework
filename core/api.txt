@@ -986,13 +986,14 @@ ion-searchbar,css-prop,--placeholder-font-style
 ion-searchbar,css-prop,--placeholder-font-weight
 ion-searchbar,css-prop,--placeholder-opacity
 
-ion-segment,scoped
+ion-segment,shadow
 ion-segment,prop,color,string | undefined,undefined,false,false
 ion-segment,prop,disabled,boolean,false,false,false
 ion-segment,prop,mode,"ios" | "md",undefined,false,false
 ion-segment,prop,scrollable,boolean,false,false,false
 ion-segment,prop,value,null | string | undefined,undefined,false,false
 ion-segment,event,ionChange,SegmentChangeEventDetail,true
+ion-segment,css-prop,--background
 
 ion-segment-button,shadow
 ion-segment-button,prop,checked,boolean,false,false,false
@@ -1003,20 +1004,21 @@ ion-segment-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-segment-button,prop,value,string,'ion-sb-' + (ids++),false,false
 ion-segment-button,event,ionSelect,void,true
 ion-segment-button,css-prop,--background
-ion-segment-button,css-prop,--background-activated
 ion-segment-button,css-prop,--background-checked
+ion-segment-button,css-prop,--background-disabled
 ion-segment-button,css-prop,--background-hover
 ion-segment-button,css-prop,--border-color
 ion-segment-button,css-prop,--border-radius
 ion-segment-button,css-prop,--border-style
 ion-segment-button,css-prop,--border-width
 ion-segment-button,css-prop,--color
-ion-segment-button,css-prop,--color-activated
 ion-segment-button,css-prop,--color-checked
-ion-segment-button,css-prop,--color-checked-disabled
 ion-segment-button,css-prop,--color-disabled
+ion-segment-button,css-prop,--color-hover
+ion-segment-button,css-prop,--indicator-box-shadow
 ion-segment-button,css-prop,--indicator-color
-ion-segment-button,css-prop,--indicator-color-checked
+ion-segment-button,css-prop,--indicator-transform
+ion-segment-button,css-prop,--indicator-transition
 ion-segment-button,css-prop,--margin-bottom
 ion-segment-button,css-prop,--margin-end
 ion-segment-button,css-prop,--margin-start

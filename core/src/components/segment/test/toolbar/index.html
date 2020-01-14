@@ -16,7 +16,7 @@
 
     <ion-header>
       <ion-toolbar>
-        <ion-title>Segment - Colors</ion-title>
+        <ion-title>Segment - Toolbar</ion-title>
       </ion-toolbar>
 
       <ion-toolbar>
@@ -110,6 +110,17 @@
           </ion-segment-button>
           <ion-segment-button value="rainy" checked>
             <ion-label>Rainy</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="primary">
+        <ion-segment color="light">
+          <ion-segment-button value="sunny">
+            Sunny
+          </ion-segment-button>
+          <ion-segment-button value="rainy" checked>
+            Rainy
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
@@ -264,13 +275,17 @@
       }
 
       .ios .themed {
-        --ion-toolbar-color-unchecked: #fff;
-        --ion-toolbar-color-checked: #3880ff;
+        --ion-toolbar-segment-background: rgba(255, 255, 255, 0.11);
+        --ion-toolbar-segment-color: #fff;
+
+        --ion-toolbar-segment-color-checked: #3880ff;
       }
 
       .md .themed {
-        --ion-toolbar-color-unchecked: rgba(255, 255, 255, 0.6);
-        --ion-toolbar-color-checked: #fff;
+        --ion-toolbar-segment-color: rgba(255, 255, 255, 0.6);
+        --ion-toolbar-segment-color-checked: #fff;
+
+        --ion-toolbar-segment-indicator-color: #fff;
       }
     </style>
 

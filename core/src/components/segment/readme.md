@@ -443,7 +443,7 @@ export const SegmentExample: React.FC = () => (
 | `color`      | `color`      | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
 | `disabled`   | `disabled`   | If `true`, the user cannot interact with the segment.                                                                                                                                                                                                                  | `boolean`                     | `false`     |
 | `mode`       | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
-| `scrollable` | `scrollable` | If `true`, the segment buttons will overflow and the user can swipe to see them.                                                                                                                                                                                       | `boolean`                     | `false`     |
+| `scrollable` | `scrollable` | If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.                                                         | `boolean`                     | `false`     |
 | `value`      | `value`      | the value of the segment.                                                                                                                                                                                                                                              | `null \| string \| undefined` | `undefined` |
 
 
@@ -452,6 +452,13 @@ export const SegmentExample: React.FC = () => (
 | Event       | Description                                  | Type                                    |
 | ----------- | -------------------------------------------- | --------------------------------------- |
 | `ionChange` | Emitted when the value property has changed. | `CustomEvent<SegmentChangeEventDetail>` |
+
+
+## CSS Custom Properties
+
+| Name           | Description                      |
+| -------------- | -------------------------------- |
+| `--background` | Background of the segment button |
 
 
 ----------------------------------------------

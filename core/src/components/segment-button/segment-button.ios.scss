@@ -5,24 +5,73 @@
 // --------------------------------------------------
 
 :host {
+  --background: #{$segment-button-ios-background-color};
+  --background-checked: #{$segment-button-ios-background-color-checked};
+  --background-hover: #{$segment-button-ios-background-color-hover};
   --border-radius: #{$segment-button-ios-border-radius};
   --border-width: #{$segment-button-ios-border-width};
+  --border-color: #{$segment-button-ios-border-color};
   --border-style: solid;
+  --indicator-box-shadow: #{$segment-button-ios-box-shadow-checked};
+  --indicator-color: #{$segment-button-ios-indicator-color};
+  --indicator-transition: #{$segment-button-ios-transition-animated};
+  --indicator-transform: none;
   --transition: #{$segment-button-ios-transition};
+  --padding-top: 0;
+  --padding-end: 13px;
+  --padding-bottom: 0;
+  --padding-start: 13px;
 
-  min-height: #{$segment-button-ios-height};
+  @include margin($segment-button-ios-margin, null, $segment-button-ios-margin, null);
+
+  position: relative;
+
+  flex-basis: 0;
+  flex-direction: row;
+
+  min-width: #{$segment-button-ios-min-width};
+
+  min-height: #{$segment-button-ios-min-height};
+
+  // Necessary for the z-index to work properly
+  transform: translate3d(0, 0, 0);
 
   font-size: #{$segment-button-ios-font-size};
+
+  font-weight: 450;
 
   line-height: #{$segment-button-ios-line-height};
 }
 
 
-// Segment Button: Indicator
+// Segment Button: Borders
 // --------------------------------------------------
 
-.segment-button-indicator {
-  display: none;
+:host::before {
+  @include margin(5px, 0);
+
+  transition: 160ms opacity ease-in-out;
+
+  transition-delay: 100ms;
+
+  border-left: var(--border-width) var(--border-style) var(--border-color);
+
+  content: "";
+  opacity: 1;
+
+  will-change: opacity;
+}
+
+:host(:first-of-type)::before {
+  border-left-color: transparent;
+}
+
+
+// Segment Button: Disabled
+// --------------------------------------------------
+
+:host(.segment-button-disabled) {
+  opacity: $segment-button-ios-opacity-disabled;
 }
 
 
@@ -48,28 +97,52 @@
 }
 
 
-// Segment Button: Hover
+// Segment Button: Checked Indicator
 // --------------------------------------------------
 
-@media (any-hover: hover) {
-  :host(:hover:not(.segment-button-checked)) {
-    background: var(--background-hover);
-  }
+.segment-button-indicator {
+  @include padding(null, $segment-button-ios-margin);
+  @include position(0, 0, 0, 0);
+}
+
+.segment-button-indicator-background {
+  @include border-radius($segment-button-ios-border-radius);
+
+  background: var(--indicator-color);
+}
+
+.segment-button-indicator-background {
+  transition: var(--indicator-transition);
 }
 
 
-// Segment Button: Activated
+// Segment Button: Checked Borders
 // --------------------------------------------------
 
-:host(.activated) {
-  background: var(--background-activated);
+:host(.segment-button-checked)::before,
+:host(.segment-button-after-checked)::before {
+  opacity: 0;
 }
 
 
-// Segment: Checked & Activated
+// Segment Button: Checked
 // --------------------------------------------------
 
-:host(.segment-button-checked.activated) {
-  background: var(--background-checked);
-  color: var(--color-checked);
+:host(.segment-button-checked) {
+  z-index: -1;
+}
+
+
+// Segment Button: Toolbar
+// --------------------------------------------------
+
+// Segment button indicator color should use the global variable with
+// a fallback to the local variable
+:host(.in-toolbar) .segment-button-indicator-background {
+  background: #{var(--ion-toolbar-segment-indicator-color, var(--indicator-color))};
+}
+
+// Do not use the global or local CSS variable if the toolbar has a color
+:host(.in-toolbar-color) .segment-button-indicator-background {
+  background: #fff;
 }

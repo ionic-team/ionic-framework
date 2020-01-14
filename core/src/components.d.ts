@@ -2231,7 +2231,7 @@ export namespace Components {
     */
     'mode'?: "ios" | "md";
     /**
-    * If `true`, the segment buttons will overflow and the user can swipe to see them.
+    * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
     */
     'scrollable': boolean;
     /**
@@ -5492,7 +5492,7 @@ declare namespace LocalJSX {
     */
     'onIonChange'?: (event: CustomEvent<SegmentChangeEventDetail>) => void;
     /**
-    * If `true`, the segment buttons will overflow and the user can swipe to see them.
+    * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
     */
     'scrollable'?: boolean;
     /**
