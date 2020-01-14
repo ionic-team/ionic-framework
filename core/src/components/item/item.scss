@@ -7,7 +7,9 @@
   /**
    * @prop --background: Background of the item
    * @prop --background-activated: Background of the item when pressed
+   * @prop --background-activated-opacity: Opacity of the item background when pressed
    * @prop --background-focused: Background of the item when focused with the tab key
+   * @prop --background-focused-opacity: Opacity of the item background when focused with the tab key
    * @prop --background-hover: Background of the item on hover
    * @prop --background-hover-opacity: Opacity of the background of the item on hover
    *
@@ -50,7 +52,6 @@
    * @prop --highlight-color-valid: The color of the highlight on the item when valid
    * @prop --highlight-color-invalid: The color of the highlight on the item when invalid
    */
-  --background-hover-opacity: 0.04;
   --border-radius: 0px;
   --border-width: 0px;
   --border-style: solid;
@@ -109,28 +110,47 @@
 }
 
 
+// Item: Activated
+// --------------------------------------------------
+
+:host(.ion-activated) .item-native {
+  color: var(--color-activated);
+
+  &::after {
+    background: var(--background-activated);
+
+    opacity: var(--background-activated-opacity);
+  }
+}
+
+:host(.ion-color.ion-activated) .item-native {
+  color: current-color(contrast);
+
+  &::after {
+    background: transparent;
+  }
+}
+
+
 // Item: Focused
 // --------------------------------------------------
 
 :host(.ion-focused) .item-native {
   color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+
+    opacity: var(--background-focused-opacity);
+  }
 }
-
-:host(.ion-focused) .item-native::after {
-  background: var(--background-focused);
-
-  opacity: 1;
-}
-
 
 :host(.ion-color.ion-focused) .item-native {
   color: current-color(contrast);
-}
 
-:host(.ion-color.ion-focused) .item-native::after {
-  background: current-color(shade);
-
-  opacity: 1;
+  &::after {
+    background: current-color(contrast);
+  }
 }
 
 
@@ -138,42 +158,24 @@
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  :host(.ion-activatable:hover) .item-native::after {
-    background: var(--background-hover);
-
-    opacity: var(--background-hover-opacity);
-
-  }
-
   :host(.ion-activatable:hover) .item-native {
     color: var(--color-hover);
-  }
 
-  :host(.ion-color.ion-activatable:hover) .item-native::after {
-    background: #{current-color(tint)};
+    &::after {
+      background: var(--background-hover);
 
-    opacity: 1;
+      opacity: var(--background-hover-opacity);
+    }
   }
 
   :host(.ion-color.ion-activatable:hover) .item-native {
     color: #{current-color(contrast)};
+
+    &::after {
+      background: #{current-color(contrast)};
+    }
   }
 }
-
-
-// Item: Activated
-// --------------------------------------------------
-
-:host(.ion-activated) .item-native {
-  color: var(--color-activated);
-}
-
-:host(.ion-activated) .item-native::after {
-  background: var(--background-activated);
-
-  opacity: 1;
-}
-
 
 // Item: Disabled
 // --------------------------------------------------
@@ -236,6 +238,7 @@
 
 .item-native::after {
   @include button-state();
+
   transition: var(--transition);
 
   z-index: -1;

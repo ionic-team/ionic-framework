@@ -492,7 +492,9 @@ ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background
 ion-item,css-prop,--background-activated
+ion-item,css-prop,--background-activated-opacity
 ion-item,css-prop,--background-focused
+ion-item,css-prop,--background-focused-opacity
 ion-item,css-prop,--background-hover
 ion-item,css-prop,--background-hover-opacity
 ion-item,css-prop,--border-color

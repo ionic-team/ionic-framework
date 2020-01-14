@@ -14,6 +14,9 @@
   --background-activated: #{$item-ios-background-activated};
   --background-focused: #{$item-ios-background-focused};
   --background-hover: #{$item-ios-background-hover};
+  --background-activated-opacity: .15;
+  --background-focused-opacity: .12;
+  --background-hover-opacity: .04;
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-color};
   --highlight-height: 0;
@@ -30,31 +33,6 @@
 
 :host(.ion-activated) {
   --transition: none;
-}
-
-:host(.ion-color.ion-activated) .item-native {
-  color: current-color(contrast);
-  &::after {
-    background: current-color(shade);
-  }
-}
-
-@media (any-hover: hover) {
-  :host(.ion-activated.ion-activatable:hover) .item-native {
-    color: var(--color-activated);
-  }
-
-  :host(.ion-activated.ion-activatable:hover) .item-native::after {
-    background: var(--background-activated);
-  }
-
-  :host(.ion-activated.ion-color.ion-activatable:hover) .item-native {
-    color: #{current-color(contrast)};
-  }
-
-  :host(.ion-activated.ion-color.ion-activatable:hover) .item-native::after {
-    background: #{current-color(shade)};
-  }
 }
 
 
