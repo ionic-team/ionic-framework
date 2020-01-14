@@ -78,4 +78,20 @@
   --ion-item-background: #fff;
   --ion-item-border-color: #5bff76;
   --ion-item-background-activated: #5bff76;
+
+  --ion-toolbar-color: #fff;
+}
+
+.ios {
+  --ion-toolbar-segment-background: var(--ion-color-danger);
+  --ion-toolbar-segment-color: var(--ion-color-danger-contrast);
+
+  --ion-toolbar-segment-indicator-color: var(--ion-color-danger-contrast);
+  --ion-toolbar-segment-color-checked: var(--ion-color-danger);
+}
+
+.md {
+  --ion-toolbar-segment-color: #fff;
+  --ion-toolbar-segment-color-checked: var(--ion-color-danger);
+  --ion-toolbar-segment-background-hover: rgba(var(--ion-color-danger-contrast-rgb), .04);
 }

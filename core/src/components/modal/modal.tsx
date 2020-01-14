@@ -30,6 +30,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
   // Reference to the user's provided modal content
   private usersElement?: HTMLElement;
 
+  // Whether or not modal is being dismissed via gesture
+  private gestureAnimationDismissing = false;
   presented = false;
   animation?: Animation;
   mode = getIonMode(this);
@@ -152,7 +154,23 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.gesture = createSwipeToCloseGesture(
         this.el,
         ani,
-        () => this.dismiss(undefined, 'gesture')
+        () => {
+          /**
+           * While the gesture animation is finishing
+           * it is possible for a user to tap the backdrop.
+           * This would result in the dismiss animation
+           * being played again. Typically this is avoided
+           * by setting `presented = false` on the overlay
+           * component; however, we cannot do that here as
+           * that would prevent the element from being
+           * removed from the DOM.
+           */
+          this.gestureAnimationDismissing = true;
+          this.animation!.onFinish(async () => {
+            await this.dismiss(undefined, 'gesture');
+            this.gestureAnimationDismissing = false;
+          });
+        },
       );
       this.gesture.enable(true);
     }
@@ -166,6 +184,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
+    if (this.gestureAnimationDismissing && role !== 'gesture') {
+      return false;
+    }
+
     const iosAni = (this.animation === undefined || (role === BACKDROP || role === undefined)) ? iosLeaveAnimation : undefined;
     const enteringAnimation = activeAnimations.get(this) || [];
     const dismissed = await dismiss(this, data, role, 'modalLeave', iosAni, mdLeaveAnimation, this.presentingElement);

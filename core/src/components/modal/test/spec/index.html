@@ -12,6 +12,10 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <script type="module">
+    import { modalController } from '../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
   <style>
   #modal-header {
     padding-top: 5px !important;
@@ -56,8 +60,6 @@
         <ion-list id="list"></ion-list>
       </ion-content>
     </div>
-    <ion-modal-controller></ion-modal-controller>
-
   </ion-app>
 
   <script>
@@ -377,15 +379,10 @@
     people.forEach(p => addFavorite(p));
 
     function handleAddFavorite (email) {
-      const modalController = document.querySelector('ion-modal-controller');
       modalController.dismiss(email);
     }
 
     async function createModal(presentingEl) {
-      // initialize controller
-      const modalController = document.querySelector('ion-modal-controller');
-      await modalController.componentOnReady();
-
       const contactGroups = allContacts
       .sort((a, b) => {
         const aSplit = a.name.split(' ');

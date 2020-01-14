@@ -10,7 +10,10 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { actionSheetController } from '../../../../dist/ionic/index.esm.js';
+    window.actionSheetController = actionSheetController;
+  </script>
 <body>
   <ion-app>
 
@@ -31,8 +34,7 @@
 
     async function presentSpec() {
       const mode = Ionic.mode;
-
-      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
+      const actionSheet = await actionSheetController.create({
         header: "Open in",
         buttons: [{
           text: 'Item 1',
@@ -66,8 +68,7 @@
           }
         }]
       });
-      document.body.appendChild(actionSheetElement);
-      await actionSheetElement.present();
+      await actionSheet.present();
     }
   </script>
 </body>

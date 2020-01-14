@@ -10,7 +10,10 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { popoverController } from '../../../../dist/ionic/index.esm.js';
+    window.popoverController = popoverController;
+  </script>
 <body>
   <ion-app>
 
@@ -31,8 +34,6 @@
       <ion-button id="long-list-popover" expand="block" color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</ion-button>
       <ion-button id="no-event-popover" expand="block" color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</ion-button>
       <ion-button id="custom-class-popover" expand="block" color="tertiary" onclick="presentPopover({ component: 'translucent-page', event: event, cssClass: 'my-custom-class' })">Custom Class Popover</ion-button>
-
-      <ion-popover-controller></ion-popover-controller>
     </ion-content>
 
     <ion-footer>
@@ -60,9 +61,8 @@
 
   <script>
     async function presentPopover(opts) {
-      const popoverController = document.querySelector('ion-popover-controller');
-      const popoverElement = await popoverController.create(opts);
-      return await popoverElement.present();
+      const popover = await popoverController.create(opts);
+      await popover.present();
     }
 
     class ProfilePage extends HTMLElement {
