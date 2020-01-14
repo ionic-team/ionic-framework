@@ -118,30 +118,23 @@
             </ion-buttons>
           </ion-toolbar>
           <ion-toolbar>
-            <ion-segment>
-              <ion-segment-button>
-                <ion-label>Favorites</ion-label>
+            <ion-segment value="default" class="theme-picker">
+              <ion-segment-button value="default">
+                <ion-label>Default</ion-label>
               </ion-segment-button>
-              <ion-segment-button>
-                <ion-label>All</ion-label>
+              <ion-segment-button value="oceanic">
+                <ion-label>Oceanic</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="vibrant">
+                <ion-label>Vibrant</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="dark">
+                <ion-label>Dark</ion-label>
               </ion-segment-button>
               <ion-segment-button disabled>
-                <ion-label>Disabled</ion-label>
-              </ion-segment-button>
-              <ion-segment-button checked>
-                <ion-label>Active</ion-label>
+                  <ion-label>Disabled</ion-label>
               </ion-segment-button>
             </ion-segment>
-
-            <div slot="end" class="right-container">
-              <ion-label>Select a Theme:</ion-label>
-              <ion-select interface="popover" class="theme-picker">
-                <ion-select-option value="default" selected>Default</ion-select-option>
-                <ion-select-option value="oceanic">Oceanic</ion-select-option>
-                <ion-select-option value="vibrant">Vibrant</ion-select-option>
-                <ion-select-option value="dark">Dark</ion-select-option>
-              </ion-select>
-            </div>
           </ion-toolbar>
         </ion-header>
 
@@ -182,14 +175,14 @@
                   Card Link Item 2
                 </ion-item>
 
-                <ion-item class="ion-activated">
+                <ion-item button class="ion-activated">
                   <ion-icon name="warning" slot="start"></ion-icon>
                   Card Button Item 1 activated
                 </ion-item>
 
-                <ion-item>
+                <ion-item button class="ion-focused">
                   <ion-icon name="walk" slot="start"></ion-icon>
-                  Card Button Item 2
+                  Card Button Item 2 focused
                 </ion-item>
               </ion-card>
             </section>
