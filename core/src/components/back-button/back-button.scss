@@ -239,6 +239,6 @@ ion-icon {
 // Back Button in Toolbar: Global Theming
 // --------------------------------------------------
 
-:host-context(ion-toolbar:not(.ion-color)) {
+:host(.in-toolbar) {
   color: #{var(--ion-toolbar-color, var(--color))};
 }
