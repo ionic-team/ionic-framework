@@ -1,30 +1,32 @@
 # Ionic Component Implementation Guide
 
 - [Button States](#button-states)
+  * [Component Structure](#component-structure)
+    + [JavaScript](#javascript)
+    + [CSS](#css)
   * [Example Components](#example-components)
   * [References](#references)
   * [Activated](#activated)
-    + [JavaScript](#javascript)
-    + [CSS](#css)
-    + [User Customization](#user-customization)
-  * [Disabled](#disabled)
     + [JavaScript](#javascript-1)
     + [CSS](#css-1)
-    + [User Customization](#user-customization-1)
-  * [Focused](#focused)
+    + [User Customization](#user-customization)
+  * [Disabled](#disabled)
     + [JavaScript](#javascript-2)
     + [CSS](#css-2)
-    + [User Customization](#user-customization-2)
-  * [Hover](#hover)
+    + [User Customization](#user-customization-1)
+  * [Focused](#focused)
     + [JavaScript](#javascript-3)
     + [CSS](#css-3)
+    + [User Customization](#user-customization-2)
+  * [Hover](#hover)
+    + [CSS](#css-4)
     + [User Customization](#user-customization-3)
   * [Ripple Effect](#ripple-effect)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
   * [Example Components](#example-components-1)
   * [JavaScript](#javascript-4)
 - [Converting Scoped to Shadow](#converting-scoped-to-shadow)
-  * [CSS](#css-4)
+  * [CSS](#css-5)
     + [Targeting host + slotted child](#targeting-host---slotted-child)
     + [Targeting host-context + host (with a :not)](#targeting-host-context---host--with-a--not-)
     + [Targeting host-context + host (with a :not) > slotted child](#targeting-host-context---host--with-a--not----slotted-child)
@@ -33,6 +35,71 @@
 ## Button States
 
 Any component that renders a button should have the following states: [`activated`](#activated), [`disabled`](#disabled), [`focused`](#focused), [`hover`](#hover).
+
+### Component Structure
+
+#### JavaScript
+
+A component that renders a native button should use the following structure:
+
+```jsx
+<Host>
+  <button class="button-native">
+    <span class="button-inner">
+      <slot></slot>
+    </span>
+  </button>
+</Host>
+```
+
+Any other attributes and classes that are included are irrelevant to the button states, but it's important that this structure is followed and the classes above exist. In some cases they may be named something else that makes more sense, such as in item.
+
+
+#### CSS
+
+A mixin called `button-state()` has been added to make it easier to setup the states in each component.
+
+```scss
+@mixin button-state() {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+
+  content: "";
+
+  opacity: 0;
+}
+```
+
+The following styles should be set for the CSS to work properly. Note that the `button-state()` mixin is included in the `::after` pseudo element of the native button.
+
+```scss
+.button-native {
+  /**
+   * All other CSS in this selector is irrelevant to hover
+   * but the following are required styles
+   */
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.button-native::after {
+  @include button-state();
+}
+
+.button-inner {
+  /**
+   * All other CSS in this selector is irrelevant to hover
+   * but the following are required styles
+   */
+
+  position: relative;
+
+  z-index: 1;
+}
+```
 
 ### Example Components
 
@@ -48,6 +115,8 @@ Any component that renders a button should have the following states: [`activate
 ### Activated
 
 The activated state should be enabled for elements with actions on "press". It usually changes the opacity or background of an element.
+
+> Make sure the component has the correct [component structure](#component-structure) before continuing.
 
 #### JavaScript
 
@@ -75,10 +144,15 @@ In addition to setting that class, `ion-activatable-instant` can be set in order
 
 Style the `ion-activated` class based on the spec for that element:
 
-```css
-:host(.ion-activated) {
-  background: var(--background-activated);
+```scss
+:host(.ion-activated) .button-native {
   color: var(--color-activated);
+
+  &::after {
+    background: var(--background-activated);
+
+    opacity: var(--background-activated-opacity);
+  }
 }
 ```
 
@@ -155,6 +229,8 @@ TODO
 
 The focused state should be enabled for elements with actions when tabbed to via the keyboard. This will only work inside of an `ion-app`. It usually changes the opacity or background of an element.
 
+> Make sure the component has the correct [component structure](#component-structure) before continuing.
+
 #### JavaScript
 
 The `ion-focusable` class needs to be set on an element that can be focused:
@@ -169,16 +245,21 @@ render() {
 }
 ```
 
-Once that is done, the element will get the `ion-focused` class added on press.
+Once that is done, the element will get the `ion-focused` class added when the element is tabbed to.
 
 #### CSS
 
 Style the `ion-focused` class based on the spec for that element:
 
-```css
-:host(.ion-focused) {
-  background: var(--background-focused);
+```scss
+:host(.ion-focused) .button-native {
   color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+
+    opacity: var(--background-focused-opacity);
+  }
 }
 ```
 
@@ -201,21 +282,7 @@ ion-button {
 
 The [hover state](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover) happens when a user moves their cursor on top of an element without pressing on it. It should not happen on mobile, only on desktop devices that support hover.
 
-#### JavaScript
-
-A native button should be rendered with the following structure:
-
-```jsx
-<Host>
-  <button class="button-native">
-    <span class="button-inner">
-      <slot></slot>
-    </span>
-  </button>
-</Host>
-```
-
-Any other attributes and classes that are included are irrelevant to hover, but it's important that this structure is followed and the classes above exist.
+> Make sure the component has the correct [component structure](#component-structure) before continuing.
 
 #### CSS
 
@@ -223,64 +290,28 @@ Components should be written to include the following hover variables for stylin
 
 ```css
  /**
+   * @prop --color-hover: Color of the button on hover
    * @prop --background-hover: Background of the button on hover
    * @prop --background-hover-opacity: Opacity of the background on hover
    */
 ```
 
-These styles should be set for the CSS to work properly:
-
 ```scss
-.button-native {
-  /**
-  * All other CSS in this selector is irrelevant to hover
-  * but the following are required styles
-  */
-
-  position: relative;
-
-  overflow: hidden;
-}
-
-.button-native::after {
-  @include button-state();
-}
-
-.button-inner {
-  /**
-    * All other CSS in this selector is irrelevant to hover
-    * but the following are required styles
-    */
-
-  position: relative;
-
-  z-index: 1;
-}
-
 @media (any-hover: hover) {
-  :host(:hover) .button-native::after {
-    background: var(--background-hover);
+  :host(:hover) .button-native {
+    color: var(--color-hover);
 
-    opacity: var(--background-hover-opacity);
+    &::after {
+      background: var(--background-hover);
+
+      opacity: var(--background-hover-opacity);
+    }
   }
 }
 ```
 
 > Order is important! Hover should be after the activated and focused states.
 
-The `button-state()` mixin was created to automatically add the following styles:
-
-```scss
-@mixin button-state() {
-  @include position(0, 0, 0, 0);
-
-  position: absolute;
-
-  content: "";
-
-  opacity: 0;
-}
-```
 
 #### User Customization
 
