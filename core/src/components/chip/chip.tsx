@@ -40,9 +40,7 @@ export class Chip implements ComponentInterface {
           'ion-activatable': true,
         }}
       >
-        <div class="chip-inner">
-          <slot></slot>
-        </div>
+        <slot></slot>
         {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </Host>
     );

@@ -3,14 +3,9 @@
 :host {
   /**
    * @prop --background: Background of the chip
-   * @prop --background-hover: Background of the chip on hover
-   * @prop --background-hover-opacity: Opacity of the chip background on hover
-   *
    * @prop --color: Color of the chip
    */
   --background: #{rgba($text-color-rgb, .12)};
-  --background-hover: #{$text-color};
-  --background-hover-opacity: .04;
   --color: #{rgba($text-color-rgb, .87)};
 
   @include border-radius(16px);
@@ -42,25 +37,6 @@
   box-sizing: border-box;
 }
 
-:host::after {
-  @include button-state();
-}
-
-.chip-inner {
-  display: flex;
-  position: relative;
-
-  flex-flow: row nowrap;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-
-  z-index: 1;
-}
-
 
 // Chip Colors
 // ---------------------------------------------
@@ -88,6 +64,7 @@
 }
 
 :host(.chip-outline) {
+
   border-color: rgba(0, 0, 0, .32);
 
   background: transparent;
@@ -166,18 +143,16 @@
 // Chip: Hover
 // ---------------------------------------------
 
-// TODO color hover
-
 @media (any-hover: hover) {
-  :host(:hover)::after {
-    background: var(--background-hover);
-
-    opacity: var(--background-hover-opacity);
+  :host(:hover) {
+    --background: #{rgba($text-color-rgb, .16)};
   }
 
-  :host(.ion-color:hover)::after {
-    background: current-color(base);
+  :host(.ion-color:hover) {
+    background: current-color(base, .12);
+  }
 
-    opacity: .04;
+  :host(.chip-outline:not(.ion-color):hover) {
+    background: rgba($text-color-rgb, .04);
   }
 }
