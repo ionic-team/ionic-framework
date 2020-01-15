@@ -72,19 +72,6 @@ export class Segment implements ComponentInterface {
     }
   }
 
-  @Listen('ionSelect')
-  segmentClick(ev: CustomEvent) {
-    const current = ev.target as HTMLIonSegmentButtonElement;
-    const previous = this.checked;
-    this.value = current.value;
-
-    if (previous && this.scrollable) {
-      this.checkButton(previous, current);
-    }
-
-    this.checked = current;
-  }
-
   connectedCallback() {
     this.emitStyle();
   }
@@ -310,14 +297,15 @@ export class Segment implements ComponentInterface {
   }
 
   private onClick = (ev: Event) => {
-    const selectedSegment = ev.target && (ev.target as HTMLElement).closest('ion-segment-button');
-    if (selectedSegment) {
-      const currentValue = this.value;
-      const newValue = selectedSegment.value;
-      if (newValue !== currentValue) {
-        this.value = newValue;
-      }
+    const current = ev.target as HTMLIonSegmentButtonElement;
+    const previous = this.checked;
+    this.value = current.value;
+
+    if (previous && this.scrollable) {
+      this.checkButton(previous, current);
     }
+
+    this.checked = current;
   }
 
   render() {
