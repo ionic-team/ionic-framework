@@ -6,7 +6,11 @@ export const RadioGroupExample: React.FC = () => (
   <IonContent>
     <IonList>
       <IonRadioGroup>
-        <IonListHeader>Auto Manufacturers</IonListHeader>
+        <IonListHeader>
+          <IonLabel>
+            Auto Manufacturers
+          </IonLabel>
+        </IonListHeader>
 
         <IonItem>
           <IonLabel>Cord</IonLabel>

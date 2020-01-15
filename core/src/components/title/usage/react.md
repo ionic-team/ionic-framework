@@ -42,13 +42,13 @@ import {
 
 export const LargeTitleExample: React.FC = () => (
   <>
-    <IonHeader>
+    <IonHeader translucent="true">
       <IonToolbar>    
         <IonTitle>Settings</IonTitle>               
       </IonToolbar>
     </IonHeader>
     
-    <IonContent>
+    <IonContent fullscreen="true">
       <IonHeader collapse="condense">              
         <IonToolbar>      
           <IonTitle size="large">Settings</IonTitle>
@@ -81,7 +81,7 @@ import {
 
 export const LargeTitleExample: React.FC = () => (
   <>
-    <IonHeader>
+    <IonHeader translucent="true">
       <IonToolbar>   
         <IonButtons collapse="true">
           <IonButton>Click Me</IonButton>
@@ -90,7 +90,7 @@ export const LargeTitleExample: React.FC = () => (
       </IonToolbar>
     </IonHeader>
     
-    <IonContent>
+    <IonContent fullscreen="true">
       <IonHeader collapse="condense">              
         <IonToolbar>      
           <IonButtons collapse="true">
@@ -113,3 +113,14 @@ export const LargeTitleExample: React.FC = () => (
 In this example, notice that we have added two sets of `IonButtons` both with `collapse="true"`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `IonTitle` element.
 
 `IonButtons` elements that do not have `collapse` set will always be visible, regardless of collapsed state.
+
+When styling the large title, you should target the large title globally as opposed to within the context of a particular page or tab, otherwise its styles will not be applied during the navigation animation.
+
+```css
+ion-title.large-title {
+  color: purple;
+  font-size: 30px;
+}
+```
+
+> When using collapsible large titles, it is required that `fullscreen="true"` be set on `IonContent` and `translucent="true"` be set on the main `IonHeader`.

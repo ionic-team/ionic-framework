@@ -17,21 +17,22 @@
       Element.prototype.animate = null;
     }
     
-    import { createAnimation } from '../../../../dist/index.mjs';
+    import { createAnimation } from '../../../../dist/ionic/index.esm.js';
 
     const squareA = document.querySelector('.square-a');
     
-    const rootAnimation = createAnimation();
+    const rootAnimation = createAnimation('root-animation-id');
     
     rootAnimation
       .addElement(squareA)
-      .duration(1000)
+      .duration(500)
+      .iterations(2)
       .easing('linear')
       .keyframes([
-        { background: 'rgba(255, 0, 0, 0.5)', offset: 0 },
-        { background: 'rgba(0, 255, 0, 0.5)', offset: 0.33 },
-        { background: 'rgba(0, 0, 255, 0.5)', offset: 0.66 },
-        { background: 'rgba(255, 0, 0, 0.5)', offset: 1 }
+        { background: 'rgba(255, 0, 0, 0.5)', offset: 0, 'border-radius': '0px' },
+        { background: 'rgba(0, 255, 0, 0.5)', offset: 0.33, 'border-radius': '10px' },
+        { background: 'rgba(0, 0, 255, 0.5)', offset: 0.66, 'border-radius': '20px' },
+        { background: 'rgba(255, 0, 0, 0.5)', offset: 1, 'border-radius': '30px' }
       ])
       .onFinish(() => {
         const ev = new CustomEvent('ionAnimationFinished');

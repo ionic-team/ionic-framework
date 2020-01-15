@@ -26,9 +26,9 @@ export const config: Config = {
     { components: ['ion-item', 'ion-item-divider', 'ion-item-group', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text', 'ion-note'] },
     { components: ['ion-item-sliding', 'ion-item-options', 'ion-item-option'] },
     { components: ['ion-loading'] },
-    { components: ['ion-menu', 'ion-menu-controller', 'ion-menu-toggle', 'ion-menu-button'] },
+    { components: ['ion-menu', 'ion-menu-toggle', 'ion-menu-button'] },
     { components: ['ion-modal'] },
-    { components: ['ion-nav', 'ion-nav-link', 'ion-nav-pop', 'ion-nav-push', 'ion-nav-set-root'] },
+    { components: ['ion-nav', 'ion-nav-link'] },
     { components: ['ion-img'] },
     { components: ['ion-popover'] },
     { components: ['ion-progress-bar'] },
@@ -50,18 +50,6 @@ export const config: Config = {
     { components: ['ion-toast'] },
     { components: ['ion-toggle'] },
     { components: ['ion-virtual-scroll'] },
-
-    // Deprecated
-    { components: [
-      'ion-anchor',
-      'ion-action-sheet-controller',
-      'ion-alert-controller',
-      'ion-loading-controller',
-      'ion-modal-controller',
-      'ion-popover-controller',
-      'ion-picker-controller',
-      'ion-toast-controller',
-    ]},
   ],
   plugins: [
     sass({
@@ -76,10 +64,7 @@ export const config: Config = {
     },
     {
       type: 'dist',
-      esmLoaderPath: '../loader',
-      copy: [
-        { src: '**/*.scss' }
-      ]
+      esmLoaderPath: '../loader'
     },
     // {
     //   type: 'experimental-dist-module',
@@ -112,23 +97,13 @@ export const config: Config = {
       excludeComponents: [
         // overlays
         'ion-action-sheet',
-        'ion-action-sheet-controller',
         'ion-alert',
-        'ion-alert-controller',
         'ion-loading',
-        'ion-loading-controller',
         'ion-modal',
-        'ion-modal-controller',
         'ion-picker',
-        'ion-picker-controller',
         'ion-popover',
-        'ion-popover-controller',
         'ion-toast',
-        'ion-toast-controller',
         'ion-toast',
-
-        // controllers
-        'ion-menu-controller',
 
         // navigation
         'ion-router',
@@ -136,7 +111,6 @@ export const config: Config = {
         'ion-route-redirect',
         'ion-router-link',
         'ion-router-outlet',
-        'ion-anchor',
 
         // tabs
         'ion-tabs',

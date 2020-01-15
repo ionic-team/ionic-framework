@@ -30,7 +30,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
 <ion-toolbar>
   <ion-buttons slot="secondary">
     <ion-button>
-      <ion-icon slot="icon-only" name="contact"></ion-icon>
+      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
     </ion-button>
     <ion-button>
       <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -39,7 +39,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
   <ion-title>Default Buttons</ion-title>
   <ion-buttons slot="primary">
     <ion-button color="secondary">
-      <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-toolbar>
@@ -80,7 +80,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
 <ion-toolbar>
   <ion-buttons slot="secondary">
     <ion-button>
-      <ion-icon slot="icon-only" name="contact"></ion-icon>
+      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
     </ion-button>
     <ion-button>
       <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -89,7 +89,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
   <ion-title>Default Buttons</ion-title>
   <ion-buttons slot="primary">
     <ion-button color="secondary">
-      <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-toolbar>
@@ -148,7 +148,7 @@ export const ButtonsExample: React.FC = () => (
     <IonToolbar>
       <IonButtons slot="secondary">
         <IonButton>
-          <IonIcon slot="icon-only" name="contact" />
+          <IonIcon slot="icon-only" name="person-circle" />
         </IonButton>
         <IonButton>
           <IonIcon slot="icon-only" name="search" />
@@ -157,7 +157,7 @@ export const ButtonsExample: React.FC = () => (
       <IonTitle>Default Buttons</IonTitle>
       <IonButtons slot="primary">
         <IonButton color="secondary">
-          <IonIcon slot="icon-only" name="more" />
+          <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
         </IonButton>
       </IonButtons>
     </IonToolbar>
@@ -173,7 +173,7 @@ export const ButtonsExample: React.FC = () => (
         <IonMenuButton autoHide={false} />
       </IonButtons>
     </IonToolbar>
-    
+
     <IonToolbar>
       <IonButtons collapse="true">
         <IonButton>
@@ -201,7 +201,7 @@ export const ButtonsExample: React.FC = () => (
   <ion-toolbar>
     <ion-buttons slot="secondary">
       <ion-button>
-        <ion-icon slot="icon-only" name="contact"></ion-icon>
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
       <ion-button>
         <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -210,7 +210,7 @@ export const ButtonsExample: React.FC = () => (
     <ion-title>Default Buttons</ion-title>
     <ion-buttons slot="primary">
       <ion-button color="secondary">
-        <ion-icon slot="icon-only" name="more"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -226,7 +226,7 @@ export const ButtonsExample: React.FC = () => (
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
-  
+
   <ion-toolbar>
     <ion-buttons collapse="true">
       <ion-button>

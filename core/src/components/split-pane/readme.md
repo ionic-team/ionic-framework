@@ -37,9 +37,9 @@ By default, the split pane will expand when the screen is larger than 992px. To 
 ### Angular
 
 ```html
-<ion-split-pane contentId="menu-content">
+<ion-split-pane contentId="main">
   <!--  our side menu  -->
-  <ion-menu contentId="menu-content">
+  <ion-menu contentId="main">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu</ion-title>
@@ -48,7 +48,7 @@ By default, the split pane will expand when the screen is larger than 992px. To 
   </ion-menu>
 
   <!-- the main content -->
-  <ion-router-outlet id="menu-content"></ion-router-outlet>
+  <ion-router-outlet id="main"></ion-router-outlet>
 </ion-split-pane>
 ```
 
@@ -56,9 +56,9 @@ By default, the split pane will expand when the screen is larger than 992px. To 
 ### Javascript
 
 ```html
-<ion-split-pane content-id="menu-content">
+<ion-split-pane content-id="main">
   <!--  our side menu  -->
-  <ion-menu content-id="menu-content">
+  <ion-menu content-id="main">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu</ion-title>
@@ -67,7 +67,7 @@ By default, the split pane will expand when the screen is larger than 992px. To 
   </ion-menu>
 
   <!-- the main content -->
-  <ion-content id="menu-content">
+  <ion-content id="main">
     <h1>Hello</h1>
   </ion-content>
 </ion-split-pane>
@@ -91,9 +91,9 @@ import {
 
 export const SplitPlaneExample: React.SFC<{}> = () => (
   <IonContent>
-    <IonSplitPane contentId="menuContent">
+    <IonSplitPane contentId="main">
       {/*--  our side menu  --*/}
-      <IonMenu contentId="menuContent">
+      <IonMenu contentId="main">
         <IonHeader>
           <IonToolbar>
             <IonTitle>Menu</IonTitle>
@@ -102,7 +102,7 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
       </IonMenu>
 
       {/*-- the main content --*/}
-      <IonPage id="menuContent"/>
+      <IonPage id="main"/>
     </IonSplitPane>
   </IonContent>
 );
@@ -113,9 +113,9 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
 
 ```html
 <template>
-  <ion-split-pane contentId="menu-content">
+  <ion-split-pane content-id="main">
     <!--  our side menu  -->
-    <ion-menu contentId="menu-content">
+    <ion-menu content-id="main">
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu</ion-title>
@@ -124,7 +124,7 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
     </ion-menu>
 
     <!-- the main content -->
-    <ion-router-outlet id="menu-content"></ion-router-outlet>
+    <ion-router-outlet id="main"></ion-router-outlet>
   </ion-split-pane>
 </template>
 ```
@@ -133,11 +133,11 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
 
 ## Properties
 
-| Property    | Attribute    | Description                                                                                                                                                    | Type                  | Default       |
-| ----------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------- |
-| `contentId` | `content-id` | The content `id` of the split-pane's main content. This property can be used instead of the `[main]` attribute to select the `main` content of the split-pane. | `string \| undefined` | `undefined`   |
-| `disabled`  | `disabled`   | If `true`, the split pane will be hidden.                                                                                                                      | `boolean`             | `false`       |
-| `when`      | `when`       | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.                          | `boolean \| string`   | `QUERY['lg']` |
+| Property    | Attribute    | Description                                                                                                                           | Type                  | Default       |
+| ----------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------- |
+| `contentId` | `content-id` | The content `id` of the split-pane's main content.                                                                                    | `string \| undefined` | `undefined`   |
+| `disabled`  | `disabled`   | If `true`, the split pane will be hidden.                                                                                             | `boolean`             | `false`       |
+| `when`      | `when`       | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression. | `boolean \| string`   | `QUERY['lg']` |
 
 
 ## Events
@@ -149,9 +149,12 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
 
 ## CSS Custom Properties
 
-| Name       | Description          |
-| ---------- | -------------------- |
-| `--border` | Border between panes |
+| Name               | Description                                                                  |
+| ------------------ | ---------------------------------------------------------------------------- |
+| `--border`         | Border between panes                                                         |
+| `--side-max-width` | Maximum width of the side pane. Does not apply when split pane is collapsed. |
+| `--side-min-width` | Minimum width of the side pane. Does not apply when split pane is collapsed. |
+| `--side-width`     | Width of the side pane. Does not apply when split pane is collapsed.         |
 
 
 ----------------------------------------------

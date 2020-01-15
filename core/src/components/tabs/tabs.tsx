@@ -46,7 +46,9 @@ export class Tabs implements NavOutlet {
     }
     if (!this.useRouter) {
       const tabs = this.tabs;
-      await this.select(tabs[0]);
+      if (tabs.length > 0) {
+        await this.select(tabs[0]);
+      }
     }
     this.ionNavWillLoad.emit();
   }
@@ -127,7 +129,8 @@ export class Tabs implements NavOutlet {
     this.leavingTab = this.selectedTab;
     this.selectedTab = selectedTab;
     this.ionTabsWillChange.emit({ tab: selectedTab.tab });
-    return selectedTab.setActive();
+    selectedTab.active = true;
+    return Promise.resolve();
   }
 
   private tabSwitch() {

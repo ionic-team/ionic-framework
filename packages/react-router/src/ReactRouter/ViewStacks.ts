@@ -1,19 +1,19 @@
 import { Location as HistoryLocation } from 'history';
-import { ViewItem } from './ViewItem';
-import { IonRouteData } from './IonRouteData';
 import { matchPath } from 'react-router-dom';
+
+import { IonRouteData } from './IonRouteData';
+import { ViewItem } from './ViewItem';
 
 export interface ViewStack {
   id: string;
-  routerOutlet: HTMLIonRouterOutletElement;
-  views: ViewItem[]
+  views: ViewItem[];
 }
 
 /**
  * The holistic view of all the Routes configured for an application inside of an IonRouterOutlet.
  */
 export class ViewStacks {
-  private viewStacks: { [key: string]: ViewStack } = {};
+  private viewStacks: { [key: string]: ViewStack | undefined } = {};
 
   get(key: string) {
     return this.viewStacks[key];
@@ -31,12 +31,12 @@ export class ViewStacks {
     delete this.viewStacks[key];
   }
 
-  findViewInfoByLocation(location: HistoryLocation, key?: string) {
+  findViewInfoByLocation(location: HistoryLocation, viewKey?: string) {
     let view: ViewItem<IonRouteData> | undefined;
-    let match: IonRouteData["match"] | null | undefined;
+    let match: IonRouteData['match'] | null | undefined;
     let viewStack: ViewStack | undefined;
-    if (key) {
-      viewStack = this.viewStacks[key];
+    if (viewKey) {
+      viewStack = this.viewStacks[viewKey];
       if (viewStack) {
         viewStack.views.some(matchView);
       }
@@ -44,7 +44,7 @@ export class ViewStacks {
       const keys = this.getKeys();
       keys.some(key => {
         viewStack = this.viewStacks[key];
-        return viewStack.views.some(matchView);
+        return viewStack!.views.some(matchView);
       });
     }
 
@@ -57,23 +57,24 @@ export class ViewStacks {
         path: v.routeData.childProps.path || v.routeData.childProps.from,
         component: v.routeData.childProps.component
       };
-      match = matchPath(location.pathname, matchProps)
-      if (match) {
+      const myMatch: IonRouteData['match'] | null | undefined = matchPath(location.pathname, matchProps);
+      if (myMatch) {
         view = v;
-        return true;
+        match = myMatch;
+        return view.location === location.pathname;
       }
       return false;
     }
 
   }
 
-  findViewInfoById(id: string = '') {
+  findViewInfoById(id = '') {
     let view: ViewItem<IonRouteData> | undefined;
     let viewStack: ViewStack | undefined;
     const keys = this.getKeys();
     keys.some(key => {
       const vs = this.viewStacks[key];
-      view = vs.views.find(x => x.id === id);
+      view = vs!.views.find(x => x.id === id);
       if (view) {
         viewStack = vs;
         return true;
@@ -84,17 +85,4 @@ export class ViewStacks {
     return { view, viewStack };
   }
 
-  setHiddenViews() {
-    const keys = this.getKeys();
-    keys.forEach(key => {
-      const viewStack = this.viewStacks[key];
-      viewStack.views.forEach(view => {
-        if(!view.routeData.match && !view.isIonRoute) {
-          view.show = false;
-          view.mount = false;
-        }
-      })
-    })
-  }
 }
-

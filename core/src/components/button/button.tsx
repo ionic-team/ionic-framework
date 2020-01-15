@@ -23,9 +23,9 @@ import { createColorClasses, openURL } from '../../utils/theme';
   shadow: true,
 })
 export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
-
-  private inToolbar = false;
   private inItem = false;
+  private inListHeader = false;
+  private inToolbar = false;
 
   @Element() el!: HTMLElement;
 
@@ -124,6 +124,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   componentWillLoad() {
     this.inToolbar = !!this.el.closest('ion-buttons');
+    this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
   }
 
@@ -189,7 +190,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
     let fill = this.fill;
     if (fill === undefined) {
-      fill = this.inToolbar ? 'clear' : 'solid';
+      fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
     }
     return (
       <Host

@@ -18,7 +18,11 @@ Skeleton Text is a component for rendering placeholder content. The element will
   </div>
 
   <ion-list>
-    <ion-list-header>Data</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Data
+      </ion-label>
+    </ion-list-header>
     <ion-item>
       <ion-avatar slot="start">
         <img src="./avatar.svg">
@@ -80,7 +84,9 @@ Skeleton Text is a component for rendering placeholder content. The element will
 
   <ion-list>
     <ion-list-header>
-      <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+      <ion-label>
+        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+      </ion-label>
     </ion-list-header>
     <ion-item>
       <ion-avatar slot="start">
@@ -179,7 +185,11 @@ export class SkeletonTextExample {
   </div>
 
   <ion-list>
-    <ion-list-header>Data</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Data
+      </ion-label>
+    </ion-list-header>
     <ion-item>
       <ion-avatar slot="start">
         <img src="./avatar.svg">
@@ -241,7 +251,9 @@ export class SkeletonTextExample {
 
   <ion-list>
     <ion-list-header>
-      <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+      <ion-label>
+        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+      </ion-label>
     </ion-list-header>
     <ion-item>
       <ion-avatar slot="start">
@@ -360,7 +372,11 @@ export const SkeletonTextExample: React.FC = () => {
           </div>
 
           <IonList>
-            <IonListHeader>Data</IonListHeader>
+            <IonListHeader>
+              <IonLabel>
+                Data
+              </IonLabel>
+            </IonListHeader>
             <IonItem>
               <IonAvatar slot="start">
                 <img src="./avatar.svg" />
@@ -403,7 +419,9 @@ export const SkeletonTextExample: React.FC = () => {
 
           <IonList>
             <IonListHeader>
-              <IonSkeletonText animated style={{ width: '20%' }} />
+              <IonLabel>
+                <IonSkeletonText animated style={{ width: '20%' }} />
+              </IonLabel>
             </IonListHeader>
             <IonItem>
               <IonAvatar slot="start">
@@ -482,7 +500,11 @@ export const SkeletonTextExample: React.FC = () => {
     </div>
 
     <ion-list>
-      <ion-list-header>Data</ion-list-header>
+      <ion-list-header>
+        <ion-label>
+          Data
+        </ion-label>
+      </ion-list-header>
       <ion-item>
         <ion-avatar slot="start">
           <img src="./avatar.svg">
@@ -544,7 +566,9 @@ export const SkeletonTextExample: React.FC = () => {
 
     <ion-list>
       <ion-list-header>
-        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+        <ion-label>
+          <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+        </ion-label>
       </ion-list-header>
       <ion-item>
         <ion-avatar slot="start">
@@ -631,10 +655,9 @@ export const SkeletonTextExample: React.FC = () => {
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                                             | Type                  | Default     |
-| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `animated` | `animated` | If `true`, the skeleton text will animate.                                                                                                              | `boolean`             | `false`     |
-| `width`    | `width`    | <span style="color:red">**[DEPRECATED]**</span> Use CSS instead. The width of the skeleton text. If supplied, it will override the CSS style.<br/><br/> | `string \| undefined` | `undefined` |
+| Property   | Attribute  | Description                                | Type      | Default |
+| ---------- | ---------- | ------------------------------------------ | --------- | ------- |
+| `animated` | `animated` | If `true`, the skeleton text will animate. | `boolean` | `false` |
 
 
 ## CSS Custom Properties

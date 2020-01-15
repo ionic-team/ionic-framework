@@ -12,7 +12,7 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <script type="module">
-    import { createAnimation, createGesture } from '../../../../dist/index.mjs';
+    import { createAnimation, createGesture } from '../../../../dist/ionic/index.esm.js';
         
     function clamp(val) {
       if (val > 1) {
@@ -63,7 +63,7 @@
       }
     });
     
-    gesture.setDisabled(false);
+    gesture.enable(true);
     
     animationA
       .addElement(squareA)

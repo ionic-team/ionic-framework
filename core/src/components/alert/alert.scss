@@ -14,6 +14,8 @@
    * @prop --min-height: Minimum height of the alert
    * @prop --height: Height of the alert
    * @prop --max-height: Maximum height of the alert
+   *
+   * @prop --backdrop-opacity: Opacity of the backdrop
    */
   --min-width: #{$alert-min-width};
   --width: auto;
@@ -194,4 +196,9 @@
 .alert-checkbox-icon,
 .alert-checkbox-inner {
   box-sizing: border-box;
+}
+
+textarea.alert-input {
+  min-height: $alert-input-min-height;
+  resize: none;
 }

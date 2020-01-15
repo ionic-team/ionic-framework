@@ -1,20 +1,20 @@
-import { IonicAnimation } from '../../../interface';
+import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * MD Action Sheet Enter Animation
  */
-export const mdEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
+export const mdEnterAnimation = (baseEl: HTMLElement): Animation => {
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop'))
-    .fromTo('opacity', 0.01, 0.32);
+    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.action-sheet-wrapper'))
+    .addElement(baseEl.querySelector('.action-sheet-wrapper')!)
     .fromTo('transform', 'translateY(100%)', 'translateY(0%)');
 
   return baseAnimation

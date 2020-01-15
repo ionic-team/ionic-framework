@@ -58,6 +58,13 @@ function presentAlertPrompt() {
       value: 'hello',
       placeholder: 'Placeholder 2'
     },
+    // multiline input.
+    {
+      name: 'paragraph',
+      id: 'paragraph',
+      type: 'textarea',
+      placeholder: 'Placeholder 3'
+    },
     {
       name: 'name3',
       value: 'http://ionicframework.com',

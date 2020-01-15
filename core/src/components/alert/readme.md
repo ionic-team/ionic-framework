@@ -17,7 +17,7 @@ Optionally, a `role` property can be added to a button, such as `cancel`. If a `
 
 ### Inputs
 
-Alerts can also include several different inputs whose data can be passed back to the app. Inputs can be used as a simple way to prompt users for information. Radios, checkboxes and text inputs are all accepted, but they cannot be mixed. For example, an alert could have all radio button inputs, or all checkbox inputs, but the same alert cannot mix radio and checkbox inputs. Do note however, different types of "text" inputs can be mixed, such as `url`, `email`, `text`, etc. If you require a complex form UI which doesn't fit within the guidelines of an alert then we recommend building the form within a modal instead.
+Alerts can also include several different inputs whose data can be passed back to the app. Inputs can be used as a simple way to prompt users for information. Radios, checkboxes and text inputs are all accepted, but they cannot be mixed. For example, an alert could have all radio button inputs, or all checkbox inputs, but the same alert cannot mix radio and checkbox inputs. Do note however, different types of "text" inputs can be mixed, such as `url`, `email`, `text`, `textarea` etc. If you require a complex form UI which doesn't fit within the guidelines of an alert then we recommend building the form within a modal instead.
 
 
 <!-- Auto Generated Below -->
@@ -101,6 +101,13 @@ export class AlertExample {
           id: 'name2-id',
           value: 'hello',
           placeholder: 'Placeholder 2'
+        },
+        // multiline input.
+        {
+          name: 'paragraph',
+          id: 'paragraph',
+          type: 'textarea',
+          placeholder: 'Placeholder 3'
         },
         {
           name: 'name3',
@@ -345,6 +352,13 @@ function presentAlertPrompt() {
       id: 'name2-id',
       value: 'hello',
       placeholder: 'Placeholder 2'
+    },
+    // multiline input.
+    {
+      name: 'paragraph',
+      id: 'paragraph',
+      type: 'textarea',
+      placeholder: 'Placeholder 3'
     },
     {
       name: 'name3',
@@ -1025,21 +1039,21 @@ export default {
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                                                                                                                                                                                                                                                                        | Type                                                                                   | Default     |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
-| `animated`        | `animated`         | If `true`, the alert will animate.                                                                                                                                                                                                                                                                                                 | `boolean`                                                                              | `true`      |
-| `backdropDismiss` | `backdrop-dismiss` | If `true`, the alert will be dismissed when the backdrop is clicked.                                                                                                                                                                                                                                                               | `boolean`                                                                              | `true`      |
-| `buttons`         | --                 | Array of buttons to be added to the alert.                                                                                                                                                                                                                                                                                         | `(string \| AlertButton)[]`                                                            | `[]`        |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                                                                                                                   | `string \| string[] \| undefined`                                                      | `undefined` |
-| `enterAnimation`  | --                 | Animation to use when the alert is presented.                                                                                                                                                                                                                                                                                      | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `header`          | `header`           | The main title in the heading of the alert.                                                                                                                                                                                                                                                                                        | `string \| undefined`                                                                  | `undefined` |
-| `inputs`          | --                 | Array of input to show in the alert.                                                                                                                                                                                                                                                                                               | `AlertInput[]`                                                                         | `[]`        |
-| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                                                                             | `boolean`                                                                              | `true`      |
-| `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                                                                                                                                                                                                                                      | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined` | `undefined` |
-| `message`         | `message`          | The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string \| undefined`                                                                  | `undefined` |
-| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                  | `"ios" \| "md"`                                                                        | `undefined` |
-| `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                                                                                                                                                                                                                                               | `string \| undefined`                                                                  | `undefined` |
-| `translucent`     | `translucent`      | If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                                                                               | `boolean`                                                                              | `false`     |
+| Property          | Attribute          | Description                                                                                                                                                                                                                                                                                                                        | Type                                                    | Default     |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ----------- |
+| `animated`        | `animated`         | If `true`, the alert will animate.                                                                                                                                                                                                                                                                                                 | `boolean`                                               | `true`      |
+| `backdropDismiss` | `backdrop-dismiss` | If `true`, the alert will be dismissed when the backdrop is clicked.                                                                                                                                                                                                                                                               | `boolean`                                               | `true`      |
+| `buttons`         | --                 | Array of buttons to be added to the alert.                                                                                                                                                                                                                                                                                         | `(string \| AlertButton)[]`                             | `[]`        |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                                                                                                                   | `string \| string[] \| undefined`                       | `undefined` |
+| `enterAnimation`  | --                 | Animation to use when the alert is presented.                                                                                                                                                                                                                                                                                      | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `header`          | `header`           | The main title in the heading of the alert.                                                                                                                                                                                                                                                                                        | `string \| undefined`                                   | `undefined` |
+| `inputs`          | --                 | Array of input to show in the alert.                                                                                                                                                                                                                                                                                               | `AlertInput[]`                                          | `[]`        |
+| `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                                                                             | `boolean`                                               | `true`      |
+| `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                                                                                                                                                                                                                                      | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `message`         | `message`          | The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string \| undefined`                                   | `undefined` |
+| `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                                  | `"ios" \| "md"`                                         | `undefined` |
+| `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                                                                                                                                                                                                                                               | `string \| undefined`                                   | `undefined` |
+| `translucent`     | `translucent`      | If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                                                                               | `boolean`                                               | `false`     |
 
 
 ## Events
@@ -1097,15 +1111,16 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name           | Description                 |
-| -------------- | --------------------------- |
-| `--background` | Background of the alert     |
-| `--height`     | Height of the alert         |
-| `--max-height` | Maximum height of the alert |
-| `--max-width`  | Maximum width of the alert  |
-| `--min-height` | Minimum height of the alert |
-| `--min-width`  | Minimum width of the alert  |
-| `--width`      | Width of the alert          |
+| Name                 | Description                 |
+| -------------------- | --------------------------- |
+| `--backdrop-opacity` | Opacity of the backdrop     |
+| `--background`       | Background of the alert     |
+| `--height`           | Height of the alert         |
+| `--max-height`       | Maximum height of the alert |
+| `--max-width`        | Maximum width of the alert  |
+| `--min-height`       | Minimum height of the alert |
+| `--min-width`        | Minimum width of the alert  |
+| `--width`            | Width of the alert          |
 
 
 ## Dependencies

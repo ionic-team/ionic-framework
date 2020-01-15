@@ -55,7 +55,11 @@ Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert
 
 ```html
 <ion-list>
-  <ion-list-header>Single Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Single Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Gender</ion-label>
@@ -82,7 +86,11 @@ Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert
 
 ```html
 <ion-list>
-  <ion-list-header>Multiple Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Multiple Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Toppings</ion-label>
@@ -116,8 +124,12 @@ Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert
 
 ```html
 <ion-list>
-  <ion-list-header>Objects as Values (compareWith)</ion-list-header>
-  
+  <ion-list-header>
+    <ion-label>
+      Objects as Values (compareWith)
+    </ion-label>
+  </ion-list-header>
+
   <ion-item>
     <ion-label>Users</ion-label>
     <ion-select [compareWith]="compareWith">
@@ -166,7 +178,11 @@ export class SelectExample {
 
 ```html
 <ion-list>
-  <ion-list-header>Interface Options</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Interface Options
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Alert</ion-label>
@@ -244,7 +260,11 @@ export class SelectExample {
 
 ```html
 <ion-list>
-  <ion-list-header>Single Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Single Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Gender</ion-label>
@@ -271,7 +291,11 @@ export class SelectExample {
 
 ```html
 <ion-list>
-  <ion-list-header>Multiple Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Multiple Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Toppings</ion-label>
@@ -305,7 +329,11 @@ export class SelectExample {
 
 ```html
 <ion-list>
-  <ion-list-header>Objects as Values (compareWith)</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Objects as Values (compareWith)
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Users</ion-label>
@@ -339,13 +367,13 @@ export class SelectExample {
 
   let objectSelectElement = document.getElementById('objectSelectCompareWith');
   objectSelectElement.compareWith = compareWithFn;
-  
+
   objectOptions.forEach((option, i) => {
     let selectOption = document.createElement('ion-select-option');
     selectOption.value = option;
     selectOption.textContent = option.first + ' ' + option.last;
     selectOption.selected = (i === 0);
-    
+
     objectSelectElement.appendChild(selectOption)
   });
 }
@@ -355,7 +383,11 @@ export class SelectExample {
 
 ```html
 <ion-list>
-  <ion-list-header>Interface Options</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Interface Options
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Alert</ion-label>
@@ -482,7 +514,11 @@ export const SelectExample: React.FC = () => (
   <IonContent>
     ## Single Selection
     <IonList>
-      <IonListHeader>Single Selection</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Single Selection
+        </IonLabel>
+      </IonListHeader>
 
       <IonItem>
         <IonLabel>Gender</IonLabel>
@@ -504,7 +540,11 @@ export const SelectExample: React.FC = () => (
     </IonList>
     ## Multiple Selection
     <IonList>
-      <IonListHeader>Multiple Selection</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Multiple Selection
+        </IonLabel>
+      </IonListHeader>
 
       <IonItem>
         <IonLabel>Toppings</IonLabel>
@@ -538,7 +578,11 @@ export const SelectExample: React.FC = () => (
     </IonList>
     ## Objects as Values
     <IonList>
-      <IonListHeader>Objects as Values (compareWith)</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Objects as Values (compareWith)
+        </IonLabel>
+      </IonListHeader>
       <IonItem>
         <IonLabel>Users</IonLabel>
         <IonSelect compareWith={compareWith}>
@@ -554,7 +598,11 @@ export const SelectExample: React.FC = () => (
     </IonList>
     ## Interface Options
     <IonList>
-      <IonListHeader>Interface Options</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Interface Options
+        </IonLabel>
+      </IonListHeader>
 
       <IonItem>
         <IonLabel>Alert</IonLabel>
@@ -614,7 +662,11 @@ export const SelectExample: React.FC = () => (
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Single Selection</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Single Selection
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Gender</ion-label>
@@ -643,7 +695,11 @@ export const SelectExample: React.FC = () => (
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Multiple Selection</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Multiple Selection
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Toppings</ion-label>
@@ -679,7 +735,11 @@ export const SelectExample: React.FC = () => (
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Interface Options</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Interface Options
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Alert</ion-label>
@@ -793,12 +853,14 @@ Type: `Promise<any>`
 
 ## CSS Custom Properties
 
-| Name               | Description                                                                                               |
-| ------------------ | --------------------------------------------------------------------------------------------------------- |
-| `--padding-bottom` | Bottom padding of the select                                                                              |
-| `--padding-end`    | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select |
-| `--padding-start`  | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the select |
-| `--padding-top`    | Top padding of the select                                                                                 |
+| Name                    | Description                                                                                               |
+| ----------------------- | --------------------------------------------------------------------------------------------------------- |
+| `--padding-bottom`      | Bottom padding of the select                                                                              |
+| `--padding-end`         | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select |
+| `--padding-start`       | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the select |
+| `--padding-top`         | Top padding of the select                                                                                 |
+| `--placeholder-color`   | Color of the select placeholder text                                                                      |
+| `--placeholder-opacity` | Opacity of the select placeholder text                                                                    |
 
 
 ----------------------------------------------

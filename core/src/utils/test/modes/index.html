@@ -14,12 +14,12 @@
 
 <body onLoad="load()">
   <ion-app>
-    <ion-split-pane>
-      <ion-menu>
+    <ion-split-pane content-id="main">
+      <ion-menu content-id="main">
 
       </ion-menu>
 
-      <div class="ion-page" main>
+      <div class="ion-page" id="main">
         <ion-header>
           <ion-toolbar>
             <ion-title>Components: Modes</ion-title>
@@ -33,7 +33,6 @@
         <ion-content>
           <ion-action-sheet></ion-action-sheet>
           <ion-alert></ion-alert>
-          <ion-anchor></ion-anchor>
           <ion-avatar></ion-avatar>
           <ion-backdrop></ion-backdrop>
           <ion-badge></ion-badge>
@@ -85,6 +84,7 @@
           <ion-reorder-group></ion-reorder-group>
           <ion-reorder></ion-reorder>
           <ion-ripple-effect></ion-ripple-effect>
+          <ion-router-link></ion-router-link>
           <ion-row></ion-row>
           <ion-searchbar></ion-searchbar>
           <ion-segment-button></ion-segment-button>

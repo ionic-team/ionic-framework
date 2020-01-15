@@ -11,7 +11,7 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
-<body onLoad="setLayout()">
+<body>
   <ion-app>
     <ion-header>
       <ion-toolbar color="tertiary">
@@ -38,7 +38,7 @@
 
     <ion-content>
       <!-- Label only -->
-      <ion-segment>
+      <ion-segment id="multi-color">
         <ion-segment-button checked>
           <ion-label>Item One</ion-label>
         </ion-segment-button>
@@ -96,7 +96,7 @@
       </ion-segment>
 
       <!-- Icon start -->
-      <ion-segment scrollable>
+      <ion-segment>
         <ion-segment-button checked layout="icon-start">
           <ion-label>Item One</ion-label>
           <ion-icon name="call"></ion-icon>
@@ -112,7 +112,7 @@
       </ion-segment>
 
       <!-- Icon end -->
-      <ion-segment scrollable>
+      <ion-segment>
         <ion-segment-button checked layout="icon-end">
           <ion-icon name="call"></ion-icon>
           <ion-label>Item One</ion-label>
@@ -144,7 +144,7 @@
       </ion-segment>
 
       <!-- Color -->
-      <ion-segment scrollable color="secondary">
+      <ion-segment color="secondary">
         <ion-segment-button checked layout="icon-end">
           <ion-icon name="call"></ion-icon>
           <ion-label>Item One</ion-label>
@@ -188,13 +188,29 @@
 
     <style>
       ion-content {
-        --background: #e5e5e5;
         --padding-top: 16px;
       }
 
       ion-content ion-segment {
-        background: white;
         margin-bottom: 12px;
+      }
+
+      .md ion-content {
+        --background: #e5e5e5;
+      }
+
+      .md ion-content ion-segment {
+        background: white;
+      }
+      
+      #multi-color ion-segment-button:first-of-type {
+        --indicator-color: rgba(255, 0, 0, 0.5);
+      }
+      #multi-color ion-segment-button:nth-of-type(2) {
+        --indicator-color: rgba(0, 255, 0, 0.5);
+      }
+      #multi-color ion-segment-button:nth-of-type(3) {
+        --indicator-color: rgba(0, 0, 255, 0.5);
       }
     </style>
 
@@ -209,6 +225,11 @@
           segmentButtons[i].layout = (mode === 'ios') ? 'icon-hide' : 'icon-top';
         }
       }
+      document.addEventListener('DOMContentLoaded', () => {
+        requestAnimationFrame(() => {
+          setLayout();
+        });
+      });
 
     </script>
   </ion-app>

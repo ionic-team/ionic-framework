@@ -6,7 +6,8 @@ import { IonTabBarInner } from '../inner-proxies';
 import { IonTabButton } from '../proxies';
 
 type Props = LocalJSX.IonTabBar & {
-  navigate?: (path: string, direction: 'back' | 'none') => void;
+  onIonTabsDidChange?: (event: CustomEvent<{ tab: string }>) => void;
+  onIonTabsWillChange?: (event: CustomEvent<{ tab: string }>) => void;
   currentPath?: string;
   slot?: 'bottom' | 'top';
 };
@@ -22,6 +23,7 @@ interface State {
 }
 
 const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Props, State> {
+  context!: React.ContextType<typeof NavContext>;
 
   constructor(props: Props) {
     super(props);
@@ -67,13 +69,22 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
   }
 
   private onTabButtonClick = (e: CustomEvent<{ href: string, selected: boolean, tab: string }>) => {
-    const { navigate } = this.props;
-    if (navigate) {
-      if (this.state.activeTab === e.detail.tab) {
-        navigate(this.state.tabs[e.detail.tab].originalHref, 'back');
+    const originalHref = this.state.tabs[e.detail.tab].originalHref;
+    const currentHref = this.state.tabs[e.detail.tab].currentHref;
+    if (this.state.activeTab === e.detail.tab) {
+      if (originalHref === currentHref) {
+        this.context.navigate(originalHref, 'none');
       } else {
-        navigate(this.state.tabs[e.detail.tab].currentHref, 'none');
+        this.context.navigate(originalHref, 'back', 'pop');
       }
+    } else {
+      if (this.props.onIonTabsWillChange) {
+        this.props.onIonTabsWillChange(new CustomEvent('ionTabWillChange', { detail: { tab: e.detail.tab } }));
+      }
+      if (this.props.onIonTabsDidChange) {
+        this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
+      }
+      this.context.navigate(currentHref, 'none');
     }
   }
 
@@ -96,6 +107,10 @@ const IonTabBarUnwrapped = /*@__PURE__*/(() => class extends React.Component<Pro
       </IonTabBarInner>
     );
   }
+
+  static get contextType() {
+    return NavContext;
+  }
 })();
 
 export const IonTabBar: React.FC<Props> = props => {
@@ -103,9 +118,6 @@ export const IonTabBar: React.FC<Props> = props => {
   return (
     <IonTabBarUnwrapped
       {...props as any}
-      navigate={props.navigate || ((path: string, direction: 'back' | 'none') => {
-        context.navigate(path, direction);
-      })}
       currentPath={props.currentPath || context.currentPath}
     >
       {props.children}

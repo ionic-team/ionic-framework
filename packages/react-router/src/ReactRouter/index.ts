@@ -1,3 +1,3 @@
-
-export { IonReactRouter } from './Router';
-export { ViewManager } from './ViewManager';
+export { IonReactRouter } from './IonReactRouter';
+export { IonReactHashRouter } from './IonReactHashRouter';
+export { IonReactMemoryRouter } from './IonReactMemoryRouter';

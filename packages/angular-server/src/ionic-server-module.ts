@@ -17,6 +17,7 @@ import { hydrateDocument } from '@ionic/core/hydrate';
 export class IonicServerModule {}
 
 // @dynamic
+// tslint:disable-next-line: only-arrow-functions
 export function hydrateIonicComponents(doc: any, appId: any) {
   return () => {
     return hydrateDocument(doc, {

@@ -8,6 +8,7 @@
   --background: #{$action-sheet-ios-background-color};
   --background-selected: #{$action-sheet-ios-button-background-selected};
   --background-activated: #{$action-sheet-ios-button-background-activated};
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
 
   text-align: $action-sheet-ios-text-align;
 }
@@ -31,8 +32,6 @@
 .action-sheet-group {
   @include border-radius($action-sheet-ios-border-radius);
   @include margin(null, null, $action-sheet-ios-group-margin-bottom - 2, null);
-
-  overflow: hidden;
 }
 
 .action-sheet-group:first-child {

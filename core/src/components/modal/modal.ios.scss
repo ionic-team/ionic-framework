@@ -4,6 +4,10 @@
 // iOS Modals
 // --------------------------------------------------
 
+:host {
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
+}
+
 @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
   :host {
     --border-radius: #{$modal-ios-border-radius};
@@ -13,4 +17,15 @@
 .modal-wrapper {
   // hidden by default to prevent flickers, the animation will show it
   @include transform(translate3d(0, 100%, 0));
+}
+
+:host(.modal-card) {
+  --backdrop-opacity: 0.15;
+  
+  align-items: flex-end;
+}
+
+:host(.modal-card) .modal-wrapper {
+  @include border-radius($modal-ios-border-radius, $modal-ios-border-radius, 0, 0);
+  height: calc(100% - max(30px, var(--ion-safe-area-top)) - 10px);
 }

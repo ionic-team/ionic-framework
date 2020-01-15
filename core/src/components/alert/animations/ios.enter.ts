@@ -1,23 +1,23 @@
-import { IonicAnimation } from '../../../interface';
+import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Alert Enter Animation
  */
-export const iosEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
+export const iosEnterAnimation = (baseEl: HTMLElement): Animation => {
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop'))
-    .fromTo('opacity', 0.01, 0.3);
+    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.alert-wrapper'))
+    .addElement(baseEl.querySelector('.alert-wrapper')!)
     .keyframes([
-      { offset: 0, opacity: 0.01, transform: 'scale(1.1)' },
-      { offset: 1, opacity: 1, transform: 'scale(1)' }
+      { offset: 0, opacity: '0.01', transform: 'scale(1.1)' },
+      { offset: 1, opacity: '1', transform: 'scale(1)' }
     ]);
 
   return baseAnimation

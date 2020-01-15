@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { rIC } from '../../utils/helpers.js';
 
 import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
 
@@ -142,7 +141,7 @@ export class Slides implements ComponentInterface {
       childList: true,
       subtree: true
     });
-    rIC(() => this.initSwiper());
+    this.el.componentOnReady().then(() => this.initSwiper());
   }
 
   async disconnectedCallback() {
