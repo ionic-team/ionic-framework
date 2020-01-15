@@ -19,7 +19,6 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 })
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
-  private didInit = false;
   private checked?: HTMLIonSegmentButtonElement;
 
   @Element() el!: HTMLIonSegmentElement;
@@ -95,7 +94,6 @@ export class Segment implements ComponentInterface {
   }
 
   async componentDidLoad() {
-    this.updateButtons();
     this.setCheckedClasses();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -110,8 +108,6 @@ export class Segment implements ComponentInterface {
     });
     this.gesture.enable(!this.scrollable);
     this.disabledChanged();
-
-    this.didInit = true;
   }
 
   onStart(detail: GestureDetail) {
@@ -133,6 +129,10 @@ export class Segment implements ComponentInterface {
     this.addRipple(detail);
   }
 
+  private getButtons() {
+    return Array.from(this.el.querySelectorAll('ion-segment-button'));
+  }
+
   /**
    * The gesture blocks the segment button ripple. This
    * function adds the ripple based on the checked segment
@@ -140,7 +140,7 @@ export class Segment implements ComponentInterface {
    */
   private addRipple(detail: GestureDetail) {
     const buttons = this.getButtons();
-    const checked = buttons.find(button => button.checked === true);
+    const checked = buttons.find(button => button.value === this.value);
 
     const ripple = checked!.shadowRoot!.querySelector('ion-ripple-effect');
 
@@ -154,7 +154,7 @@ export class Segment implements ComponentInterface {
   private activate(detail: GestureDetail) {
     const clicked = detail.event.target as HTMLIonSegmentButtonElement;
     const buttons = this.getButtons();
-    const checked = buttons.find(button => button.checked === true);
+    const checked = buttons.find(button => button.value === this.value);
 
     // Make sure we are only checking for activation on a segment button
     // since disabled buttons will get the click on the segment
@@ -164,12 +164,12 @@ export class Segment implements ComponentInterface {
 
     // If there are no checked buttons, set the current button to checked
     if (!checked) {
-      clicked.checked = true;
+      this.value = clicked.value;
     }
 
     // If the gesture began on the clicked button with the indicator
     // then we should activate the indicator
-    if (clicked.checked) {
+    if (this.value === clicked.value) {
       this.activated = true;
     }
   }
@@ -211,17 +211,17 @@ export class Segment implements ComponentInterface {
       currentIndicator.style.setProperty('transform', '');
     });
 
-    current.checked = true;
+    this.value = current.value;
     this.setCheckedClasses();
   }
 
   private setCheckedClasses() {
     const buttons = this.getButtons();
-    const index = buttons.findIndex(button => button.checked === true);
+    const index = buttons.findIndex(button => button.value === this.value);
     const next = index + 1;
 
     // Keep track of the currently checked button
-    this.checked = buttons.find(button => button.checked === true);
+    this.checked = buttons.find(button => button.value === this.value);
 
     for (const button of buttons) {
       button.classList.remove('segment-button-after-checked');
@@ -235,7 +235,7 @@ export class Segment implements ComponentInterface {
     const isRTL = document.dir === 'rtl';
     const activated = this.activated;
     const buttons = this.getButtons();
-    const index = buttons.findIndex(button => button.checked === true);
+    const index = buttons.findIndex(button => button.value === this.value);
     const previous = buttons[index];
     let current;
     let nextIndex;
