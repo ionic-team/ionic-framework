@@ -4,7 +4,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
-import { createColorClasses, openURL, hostContext } from '../../utils/theme';
+import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
