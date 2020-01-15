@@ -2,39 +2,19 @@
 
 - [Button States](#button-states)
   * [Component Structure](#component-structure)
-    + [JavaScript](#javascript)
-    + [CSS](#css)
+  * [Activated](#activated)
+  * [Disabled](#disabled)
+  * [Focused](#focused)
+  * [Hover](#hover)
+  * [Ripple Effect](#ripple-effect)
   * [Example Components](#example-components)
   * [References](#references)
-  * [Activated](#activated)
-    + [JavaScript](#javascript-1)
-    + [CSS](#css-1)
-    + [User Customization](#user-customization)
-  * [Disabled](#disabled)
-    + [JavaScript](#javascript-2)
-    + [CSS](#css-2)
-    + [User Customization](#user-customization-1)
-  * [Focused](#focused)
-    + [JavaScript](#javascript-3)
-    + [CSS](#css-3)
-    + [User Customization](#user-customization-2)
-  * [Hover](#hover)
-    + [CSS](#css-4)
-    + [User Customization](#user-customization-3)
-  * [Ripple Effect](#ripple-effect)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
-  * [Example Components](#example-components-1)
-  * [JavaScript](#javascript-4)
 - [Converting Scoped to Shadow](#converting-scoped-to-shadow)
-  * [CSS](#css-5)
-    + [Targeting host + slotted child](#targeting-host---slotted-child)
-    + [Targeting host-context + host (with a :not)](#targeting-host-context---host--with-a--not-)
-    + [Targeting host-context + host (with a :not) > slotted child](#targeting-host-context---host--with-a--not----slotted-child)
-
 
 ## Button States
 
-Any component that renders a button should have the following states: [`activated`](#activated), [`disabled`](#disabled), [`focused`](#focused), [`hover`](#hover).
+Any component that renders a button should have the following states: [`activated`](#activated), [`disabled`](#disabled), [`focused`](#focused), [`hover`](#hover). It should also have a [Ripple Effect](#ripple-effect) component added for Material Design.
 
 ### Component Structure
 
@@ -101,16 +81,6 @@ The following styles should be set for the CSS to work properly. Note that the `
 }
 ```
 
-### Example Components
-
-- [ion-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/button)
-- [ion-back-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/back-button)
-- [ion-menu-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/menu-button)
-
-### References
-
-- [Material Design States](https://material.io/design/interaction/states.html)
-- [iOS Buttons](https://developer.apple.com/design/human-interface-guidelines/ios/controls/buttons/)
 
 ### Activated
 
@@ -356,6 +326,18 @@ ion-ripple-effect {
   color: var(--ripple-color);
 }
 ```
+
+
+### Example Components
+
+- [ion-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/button)
+- [ion-back-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/back-button)
+- [ion-menu-button](https://github.com/ionic-team/ionic/tree/master/core/src/components/menu-button)
+
+### References
+
+- [Material Design States](https://material.io/design/interaction/states.html)
+- [iOS Buttons](https://developer.apple.com/design/human-interface-guidelines/ios/controls/buttons/)
 
 
 ## Rendering Anchor or Button
