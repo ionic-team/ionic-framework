@@ -10,6 +10,8 @@
   * [Example Components](#example-components)
   * [References](#references)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
+  * [Example Components](#example-components-1)
+  * [Component Structure](#component-structure-1)
 - [Converting Scoped to Shadow](#converting-scoped-to-shadow)
 
 ## Button States
@@ -352,7 +354,9 @@ Certain components can render an `<a>` or a `<button>` depending on the presence
 - [ion-item-option](https://github.com/ionic-team/ionic/tree/master/core/src/components/item-option)
 - [ion-item](https://github.com/ionic-team/ionic/tree/master/core/src/components/item)
 
-### JavaScript
+### Component Structure
+
+#### JavaScript
 
 In order to implement a component with a dynamic tag type, set the property that it uses to switch between them, we use `href`:
 
@@ -388,7 +392,7 @@ If the component can render an `<a>`, `<button>` or a `<div>` add in more proper
 
 There will be some CSS issues when converting to shadow. Below are some of the differences.
 
-#### Targeting host + slotted child
+**Targeting host + slotted child**
 
 ```css
 /* IN SCOPED */
@@ -398,7 +402,7 @@ There will be some CSS issues when converting to shadow. Below are some of the d
 :host(.ion-color) ::slotted(ion-segment-button)
 ```
 
-#### Targeting host-context + host (with a :not)
+**Targeting host-context + host (with a :not)**
 
 ```css
 /* IN SCOPED */
@@ -408,7 +412,7 @@ There will be some CSS issues when converting to shadow. Below are some of the d
 :host-context(ion-toolbar.ion-color):host(:not(.ion-color))  {
 ```
 
-#### Targeting host-context + host (with a :not) > slotted child
+**Targeting host-context + host (with a :not) > slotted child**
 
 ```css
 /* IN SCOPED */
