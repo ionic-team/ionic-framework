@@ -19,6 +19,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 })
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
+  private didInit = false;
   private checked?: HTMLIonSegmentButtonElement;
 
   @Element() el!: HTMLIonSegmentElement;
@@ -51,7 +52,9 @@ export class Segment implements ComponentInterface {
 
   @Watch('value')
   protected valueChanged(value: string | undefined) {
-    this.ionChange.emit({ value });
+    if (this.didInit) {
+      this.ionChange.emit({ value });
+    }
   }
 
   /**
@@ -95,6 +98,7 @@ export class Segment implements ComponentInterface {
     });
     this.gesture.enable(!this.scrollable);
     this.disabledChanged();
+    this.didInit = true;
   }
 
   onStart(detail: GestureDetail) {

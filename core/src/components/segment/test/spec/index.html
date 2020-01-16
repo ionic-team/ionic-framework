@@ -230,6 +230,9 @@
           setLayout();
         });
       });
+      document.querySelector('ion-segment').addEventListener('ionChange', (ev) => {
+        console.log('ionChange', ev);
+      });
 
     </script>
   </ion-app>
