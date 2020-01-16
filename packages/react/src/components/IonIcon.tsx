@@ -11,10 +11,10 @@ interface IonIconProps {
   ariaLabel?: string;
   color?: string;
   flipRtl?: boolean;
-  icon?: { ios: string; md: string; };
-  ios?: { ios: string; md: string; };
+  icon?: string;
+  ios?: string;
   lazy?: boolean;
-  md?: { ios: string; md: string; };
+  md?: string;
   mode?: 'ios' | 'md';
   name?: string;
   size?: string;
