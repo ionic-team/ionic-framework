@@ -803,7 +803,6 @@
     const selects = document.querySelectorAll('.theme-picker');
 
     for (let i = 0; i < selects.length; i++) {
-      console.log(selects);
       selects[i].addEventListener('ionChange', (ev) => {
         const theme = event.detail && event.detail.value;
         toggleTheme(theme);

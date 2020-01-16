@@ -56,7 +56,7 @@
           </ion-item>
         </ion-radio-group>
 
-        <ion-radio-group id="veggiesRadio" allow-empty-selection>
+        <ion-radio-group id="veggiesRadio" value="broccoli" allow-empty-selection>
           <ion-item-divider>
             <ion-label>Veggies (Group w/ allow empty)</ion-label>
           </ion-item-divider>
@@ -72,14 +72,14 @@
 
           <ion-item>
             <ion-label>Broccoli</ion-label>
-            <ion-radio id="dangerRadio" slot="end" color="danger" value="broccoli" checked></ion-radio>
+            <ion-radio id="dangerRadio" slot="end" color="danger" value="broccoli"></ion-radio>
           </ion-item>
         </ion-radio-group>
         
-        <ion-radio-group allow-empty-selection>
+        <ion-radio-group allow-empty-selection value="custom">
           <ion-item>
             <ion-label>Custom</ion-label>
-            <ion-radio slot="end" color="danger" value="custom" style="--border-radius:2px;--inner-border-radius: 10px 0px 10px 0px;" checked></ion-radio>
+            <ion-radio slot="end" color="danger" value="custom" style="--border-radius:2px;--inner-border-radius: 10px 0px 10px 0px;"></ion-radio>
           </ion-item>
         </ion-radio-group>
 
@@ -105,20 +105,26 @@
           <ion-radio slot="start" color="secondary"></ion-radio>
         </ion-item>
 
-        <ion-item>
-          <ion-label>Strawberry, (ionChange) checked="true"</ion-label>
-          <ion-radio slot="start" color="light" checked="true"></ion-radio>
-        </ion-item>
+        <ion-radio-group>
+          <ion-item>
+            <ion-label>Strawberry, (ionChange) checked="true"</ion-label>
+            <ion-radio slot="start" color="light"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
 
-        <ion-item>
-          <ion-label>Checkbox right, checked, really long text that should ellipsis</ion-label>
-          <ion-radio slot="end" color="danger" checked></ion-radio>
+        <ion-radio-group>
+          <ion-item>
+            <ion-label>Checkbox right, checked, really long text that should ellipsis</ion-label>
+            <ion-radio slot="end" color="danger"></ion-radio>
         </ion-item>
+        </ion-radio-group>
 
-        <ion-item>
-          <ion-label>Checkbox right side</ion-label>
-          <ion-radio slot="end" checked></ion-radio>
-        </ion-item>
+        <ion-radio-group>
+          <ion-item>
+            <ion-label>Checkbox right side</ion-label>
+            <ion-radio slot="end"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
 
         <ion-item>
           <ion-label>Button w/ right side default icon, really long text that should ellipsis</ion-label>
@@ -133,16 +139,19 @@
         <span id="standAloneCheckedSpan"></span>
       </p>
 
+      
       <ion-item>
         <ion-label>Checkbox / Toggle</ion-label>
         <ion-radio slot="start" id="checked"></ion-radio>
         <ion-toggle id="checked"></ion-toggle>
       </ion-item>
-      <ion-item>
-        <ion-label>Checked</ion-label>
-        <ion-radio slot="start" checked></ion-radio>
-        <ion-toggle checked></ion-toggle>
-      </ion-item>
+      <ion-radio-group>
+        <ion-item>
+          <ion-label>Checked</ion-label>
+          <ion-radio slot="start" checked></ion-radio>
+          <ion-toggle checked></ion-toggle>
+        </ion-item>
+      </ion-radio-group>
       <ion-item>
         <ion-label>Disabled</ion-label>
         <ion-radio slot="start" disabled></ion-radio>
