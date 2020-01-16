@@ -26,7 +26,7 @@ export class SelectPopover implements ComponentInterface {
   /** Array of options for the popover */
   @Prop() options: SelectPopoverOption[] = [];
 
-  @Listen('ionSelect')
+  @Listen('ionChange')
   onSelect(ev: any) {
     const option = this.options.find(o => o.value === ev.target.value);
     if (option) {
