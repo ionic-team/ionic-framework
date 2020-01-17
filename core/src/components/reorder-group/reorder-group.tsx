@@ -10,19 +10,19 @@ import {
   State,
   Watch,
   h
-} from '@stencil/core';
+} from "@stencil/core";
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode } from "../../global/ionic-global";
 import {
   Gesture,
   GestureDetail,
   ItemReorderEventDetail
-} from '../../interface';
+} from "../../interface";
 import {
   hapticSelectionChanged,
   hapticSelectionEnd,
   hapticSelectionStart
-} from '../../utils/haptic';
+} from "../../utils/haptic";
 
 const enum ReorderGroupState {
   Idle = 0,
@@ -31,8 +31,8 @@ const enum ReorderGroupState {
 }
 
 @Component({
-  tag: 'ion-reorder-group',
-  styleUrl: 'reorder-group.scss'
+  tag: "ion-reorder-group",
+  styleUrl: "reorder-group.scss"
 })
 export class ReorderGroup implements ComponentInterface {
   private selectedItemEl?: HTMLElement;
@@ -57,7 +57,7 @@ export class ReorderGroup implements ComponentInterface {
    * If `true`, the reorder will be hidden.
    */
   @Prop() disabled = true;
-  @Watch('disabled')
+  @Watch("disabled")
   disabledChanged() {
     if (this.gesture) {
       this.gesture.enable(!this.disabled);
@@ -73,17 +73,19 @@ export class ReorderGroup implements ComponentInterface {
   @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
 
   async connectedCallback() {
-    const contentEl:any = (this.context !== null) ? this.context : this.el.closest('ion-content');
-    }
+    const contentEl =
+      this.context !== undefined
+        ? this.context
+        : this.el.closest("ion-content");
     if (contentEl) {
       this.scrollEl = await contentEl.getScrollElement();
     }
-    this.gesture = (await import('../../utils/gesture')).createGesture({
+    this.gesture = (await import("../../utils/gesture")).createGesture({
       el: this.el,
-      gestureName: 'reorder',
+      gestureName: "reorder",
       gesturePriority: 110,
       threshold: 0,
-      direction: 'y',
+      direction: "y",
       passive: false,
       canStart: detail => this.canStart(detail),
       onStart: ev => this.onStart(ev),
@@ -125,7 +127,7 @@ export class ReorderGroup implements ComponentInterface {
       return false;
     }
     const target = ev.event.target as HTMLElement;
-    const reorderEl = target.closest('ion-reorder');
+    const reorderEl = target.closest("ion-reorder");
     if (!reorderEl) {
       return false;
     }
@@ -252,10 +254,10 @@ export class ReorderGroup implements ComponentInterface {
       }
 
       for (let i = 0; i < len; i++) {
-        children[i].style['transform'] = '';
+        children[i].style["transform"] = "";
       }
 
-      selectedItemEl.style.transition = '';
+      selectedItemEl.style.transition = "";
       selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
       this.selectedItemEl = undefined;
       this.state = ReorderGroupState.Idle;
@@ -284,13 +286,13 @@ export class ReorderGroup implements ComponentInterface {
     const children = this.el.children;
     for (let i = 0; i < children.length; i++) {
       const style = (children[i] as any).style;
-      let value = '';
+      let value = "";
       if (i > fromIndex && i <= toIndex) {
         value = `translateY(${-itemHeight}px)`;
       } else if (i < fromIndex && i >= toIndex) {
         value = `translateY(${itemHeight}px)`;
       }
-      style['transform'] = value;
+      style["transform"] = value;
     }
   }
 
@@ -317,8 +319,8 @@ export class ReorderGroup implements ComponentInterface {
       <Host
         class={{
           [mode]: true,
-          'reorder-enabled': !this.disabled,
-          'reorder-list-active': this.state !== ReorderGroupState.Idle
+          "reorder-enabled": !this.disabled,
+          "reorder-list-active": this.state !== ReorderGroupState.Idle
         }}
       ></Host>
     );
@@ -326,7 +328,7 @@ export class ReorderGroup implements ComponentInterface {
 }
 
 const indexForItem = (element: any): number => {
-  return element['$ionIndex'];
+  return element["$ionIndex"];
 };
 
 const findReorderItem = (
@@ -346,7 +348,7 @@ const findReorderItem = (
 
 const AUTO_SCROLL_MARGIN = 60;
 const SCROLL_JUMP = 10;
-const ITEM_REORDER_SELECTED = 'reorder-selected';
+const ITEM_REORDER_SELECTED = "reorder-selected";
 
 const reorderArray = (array: any[], from: number, to: number): any[] => {
   const element = array[from];

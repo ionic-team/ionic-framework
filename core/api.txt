@@ -863,7 +863,7 @@ ion-reorder,shadow
 
 ion-reorder-group,none
 ion-reorder-group,prop,disabled,boolean,true,false,false
-ion-reorder-group,prop,context,any,null,false,false
+ion-reorder-group,prop,context,HTMLElement | undefined,undefined,false,false
 ion-reorder-group,method,complete,complete(listOrReorder?: boolean | any[] | undefined) => Promise<any>
 ion-reorder-group,event,ionItemReorder,ItemReorderEventDetail,true
 
