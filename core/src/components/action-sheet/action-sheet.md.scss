@@ -7,8 +7,16 @@
 :host {
   --background: #{$action-sheet-md-background-color};
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.32);
-  --button-background-selected: #{var(--background, $action-sheet-md-button-background-selected)};
-  --button-background-activated: var(--background);
+  --button-background: transparent;
+  --button-background-selected: currentColor;
+  --button-background-selected-opacity: 0;
+  --button-background-activated: transparent;
+  --button-background-activated-opacity: 0;
+  --button-background-hover: currentColor;
+  --button-background-hover-opacity: .04;
+  --button-background-focused: currentColor;
+  --button-background-focused-opacity: .12;
+  --button-color: #{$action-sheet-md-button-text-color};
 }
 
 .action-sheet-title {
@@ -51,9 +59,6 @@
   position: relative;
 
   height: $action-sheet-md-button-height;
-
-  background: transparent;
-  color: var(--color, $action-sheet-md-button-text-color);
 
   font-size: $action-sheet-md-button-font-size;
 

@@ -226,7 +226,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                 </div>
               }
               {buttons.map(b =>
-                <button type="button" ion-activatable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
+                <button type="button" class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                   <span class="action-sheet-button-inner">
                     {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                     {b.text}
@@ -252,6 +252,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                       />}
                     {cancelButton.text}
                   </span>
+                  {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
                 </button>
               </div>
             }
@@ -266,6 +267,7 @@ const buttonClass = (button: ActionSheetButton): CssClassMap => {
   return {
     'action-sheet-button': true,
     'ion-activatable': true,
+    'ion-focusable': true,
     [`action-sheet-${button.role}`]: button.role !== undefined,
     ...getClassMap(button.cssClass),
   };

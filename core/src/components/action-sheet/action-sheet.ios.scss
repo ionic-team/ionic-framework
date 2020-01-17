@@ -7,8 +7,16 @@
 :host {
   --background: #{$action-sheet-ios-background-color};
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
+  --button-background: null;
+  --button-background-activated: #{$text-color};
+  --button-background-activated-opacity: .08;
+  --button-background-hover: currentColor;
+  --button-background-hover-opacity: .04;
+  --button-background-focused: currentColor;
+  --button-background-focused-opacity: .12;
   --button-background-selected: #{$action-sheet-ios-button-background-selected};
-  --button-background-activated: #{$action-sheet-ios-button-background-activated};
+  --button-background-selected-opacity: 1;
+  --button-color: #{$action-sheet-ios-button-text-color};
 
   text-align: $action-sheet-ios-text-align;
 }
@@ -124,8 +132,6 @@
 
   height: $action-sheet-ios-button-height;
 
-  color: var(--button-color, $action-sheet-ios-button-text-color);
-
   font-size: $action-sheet-ios-button-font-size;
 
   contain: strict;
@@ -142,17 +148,30 @@
 }
 
 .action-sheet-selected {
-  background: var(--button-background-selected);
-
   font-weight: bold;
 }
 
-.action-sheet-destructive {
+.action-sheet-cancel {
+  font-weight: $action-sheet-ios-button-cancel-font-weight;
+
+  &::after {
+    background: var(--button-background-selected);
+
+    opacity: var(--button-background-selected-opacity);
+  }
+}
+
+// iOS Action Sheet Button: Destructive
+// ---------------------------------------------------
+
+.action-sheet-destructive,
+.action-sheet-destructive.ion-activated,
+.action-sheet-destructive.ion-focused {
   color: $action-sheet-ios-button-destructive-text-color;
 }
 
-.action-sheet-cancel {
-  background: var(--button-background-selected);
-
-  font-weight: $action-sheet-ios-button-cancel-font-weight;
+@media (any-hover: hover) {
+  .action-sheet-destructive:hover {
+    color: $action-sheet-ios-button-destructive-text-color;
+  }
 }
