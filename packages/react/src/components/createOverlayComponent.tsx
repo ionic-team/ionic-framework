@@ -59,6 +59,10 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
     }
 
     async componentDidUpdate(prevProps: Props) {
+      if (this.overlay) {
+        attachProps(this.overlay, this.props, prevProps);
+      }
+
       if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === true) {
         this.present(prevProps);
       }
@@ -75,19 +79,19 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
         [dismissEventName]: this.handleDismiss
       };
 
-      const overlay = this.overlay = await controller.create({
+      this.overlay = await controller.create({
         ...elementProps,
         component: this.el,
         componentProps: {}
       });
 
       if (this.props.forwardedRef) {
-        (this.props.forwardedRef as any).current = overlay;
+        (this.props.forwardedRef as any).current = this.overlay;
       }
 
-      attachProps(overlay, elementProps, prevProps);
+      attachProps(this.overlay, elementProps, prevProps);
 
-      await overlay.present();
+      await this.overlay.present();
     }
 
     render() {
