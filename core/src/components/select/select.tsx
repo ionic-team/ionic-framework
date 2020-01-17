@@ -5,6 +5,7 @@ import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssCla
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
+import { watchForOptions } from '../../utils/watch-options';
 
 import { SelectCompareFn } from './select-interface';
 
@@ -25,6 +26,7 @@ export class Select implements ComponentInterface {
   private overlay?: OverlaySelect;
   private didInit = false;
   private buttonEl?: HTMLButtonElement;
+  private mutationO?: MutationObserver;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -123,7 +125,6 @@ export class Select implements ComponentInterface {
 
   @Watch('value')
   valueChanged() {
-    this.updateOverlayOptions();
     this.emitStyle();
     if (this.didInit) {
       this.ionChange.emit({
@@ -135,6 +136,17 @@ export class Select implements ComponentInterface {
   async connectedCallback() {
     this.updateOverlayOptions();
     this.emitStyle();
+
+    this.mutationO = watchForOptions<HTMLIonSelectOptionElement>(this.el, 'ion-select-option', async () => {
+      this.updateOverlayOptions();
+    });
+  }
+
+  disconnectedCallback() {
+    if (this.mutationO) {
+      this.mutationO.disconnect();
+      this.mutationO = undefined;
+    }
   }
 
   componentDidLoad() {
