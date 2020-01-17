@@ -295,7 +295,8 @@ Before
 </ion-select>
 ```
 
-New Usage
+After
+
 ```html
 <ion-select value="two">
   <ion-select-option value="one">One</ion-select-option>
