@@ -44,6 +44,7 @@ export class ReorderGroup implements ComponentInterface {
       this.gesture.enable(!this.disabled);
     }
   }
+  @Prop() context = null;
 
   /**
    * Event that needs to be listened to in order to complete the reorder action.
@@ -53,7 +54,9 @@ export class ReorderGroup implements ComponentInterface {
   @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
 
   async connectedCallback() {
-    const contentEl = this.el.closest('ion-content');
+    var contentEl;
+    if (this.context !== null) contentEl = this.context;
+    else contentEl = this.el.closest("ion-content");
     if (contentEl) {
       this.scrollEl = await contentEl.getScrollElement();
     }

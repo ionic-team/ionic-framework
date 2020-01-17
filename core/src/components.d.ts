@@ -1861,6 +1861,7 @@ export namespace Components {
     * If `true`, the reorder will be hidden.
     */
     'disabled': boolean;
+    'context':null
   }
   interface IonRippleEffect {
     /**
