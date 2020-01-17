@@ -6,7 +6,7 @@ export interface ToastButton extends Omit<ToastButtonCore, 'icon'> {
   icon?: {
     ios: string;
     md: string;
-  };
+  } | string;
 }
 
 export interface ToastOptions extends Omit<ToastOptionsCore, 'buttons'> {

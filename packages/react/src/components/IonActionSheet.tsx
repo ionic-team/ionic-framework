@@ -6,7 +6,7 @@ export interface ActionSheetButton extends Omit<ActionSheetButtonCore, 'icon'> {
   icon?: {
     ios: string;
     md: string;
-  };
+  } | string;
 }
 
 export interface ActionSheetOptions extends Omit<ActionSheetOptionsCore, 'buttons'> {

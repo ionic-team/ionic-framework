@@ -8,11 +8,11 @@ export * from './proxies';
 // createControllerComponent
 export { IonAlert } from './IonAlert';
 export { IonLoading } from './IonLoading';
-export { IonToast } from './IonToast';
+export * from './IonToast';
 export { IonPicker } from './IonPicker';
 
 // createOverlayComponent
-export { IonActionSheet } from './IonActionSheet';
+export * from './IonActionSheet';
 export { IonModal } from './IonModal';
 export { IonPopover } from './IonPopover';
 
