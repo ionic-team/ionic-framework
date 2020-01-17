@@ -552,8 +552,6 @@ ion-item-option,prop,rel,string | undefined,undefined,false,false
 ion-item-option,prop,target,string | undefined,undefined,false,false
 ion-item-option,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item-option,css-prop,--background
-ion-item-option,css-prop,--background-hover
-ion-item-option,css-prop,--background-hover-opacity
 ion-item-option,css-prop,--color
 
 ion-item-options,none
@@ -767,8 +765,6 @@ ion-picker,css-prop,--border-color
 ion-picker,css-prop,--border-radius
 ion-picker,css-prop,--border-style
 ion-picker,css-prop,--border-width
-ion-picker,css-prop,--button-background-hover
-ion-picker,css-prop,--button-background-hover-opacity
 ion-picker,css-prop,--height
 ion-picker,css-prop,--max-height
 ion-picker,css-prop,--max-width
