@@ -286,7 +286,8 @@ After
 
 The `selected` property has been removed. Developers should set the `value` property on the parent `ion-select` to match the desired selected option.
 
-Old Usage
+Before
+
 ```html
 <ion-select>
   <ion-select-option>One</ion-select-option>
