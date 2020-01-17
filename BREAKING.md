@@ -259,7 +259,7 @@ The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get
 
 #### Segment Button
 
-The `checked` property has been removed. Developers should set the `value` property on the respective `ion-segment` in order to managed checked status.
+The `checked` property has been removed. Developers should set the `value` property on the parent `ion-segment` to match the value of the desired checked segment button.
 
 Old Usage
 ```html
