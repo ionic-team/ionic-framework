@@ -78,6 +78,9 @@ export class Radio implements ComponentInterface {
     const radioGroup = this.radioGroup;
     if (radioGroup) {
       radioGroup.removeEventListener('ionChange', this.updateState);
+      if (radioGroup.value === this.value) {
+        radioGroup.value = undefined;
+      }
       this.radioGroup = null;
     }
   }
