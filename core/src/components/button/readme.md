@@ -255,7 +255,7 @@ export const ButtonExample: React.FC = () => (
 | Name                             | Description                                                                                               |
 | -------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | `--background`                   | Background of the button                                                                                  |
-| `--background-activated`         | Background of the button when pressed                                                                     |
+| `--background-activated`         | Background of the button when pressed. Note: setting this will interfere with the Material Design ripple. |
 | `--background-activated-opacity` | Opacity of the button when pressed                                                                        |
 | `--background-focused`           | Background of the button when focused with the tab key                                                    |
 | `--background-focused-opacity`   | Opacity of the button when focused with the tab key                                                       |

@@ -1395,7 +1395,7 @@ Item Inputs
 | Name                             | Description                                                                                                   |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `--background`                   | Background of the item                                                                                        |
-| `--background-activated`         | Background of the item when pressed                                                                           |
+| `--background-activated`         | Background of the item when pressed. Note: setting this will interfere with the Material Design ripple.       |
 | `--background-activated-opacity` | Opacity of the item background when pressed                                                                   |
 | `--background-focused`           | Background of the item when focused with the tab key                                                          |
 | `--background-focused-opacity`   | Opacity of the item background when focused with the tab key                                                  |
