@@ -123,6 +123,7 @@ export class Select implements ComponentInterface {
 
   @Watch('value')
   valueChanged() {
+    this.updateOverlayOptions();
     this.emitStyle();
     if (this.didInit) {
       this.ionChange.emit({
