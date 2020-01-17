@@ -271,7 +271,8 @@ Before
 </ion-segment>
 ```
 
-New Usage
+After
+
 ```html
 <ion-segment value="two">
   <ion-segment-button value="one">One</ion-segment-button>
