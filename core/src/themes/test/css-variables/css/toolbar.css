@@ -14,3 +14,11 @@
   --ion-toolbar-background: var(--ion-color-primary);
   --ion-toolbar-color: var(--ion-color-light);
 }
+
+.md {
+  --ion-toolbar-segment-color-checked: var(--ion-color-light);
+}
+
+.ios {
+  --ion-toolbar-segment-color-checked: var(--ion-color-primary);
+}
