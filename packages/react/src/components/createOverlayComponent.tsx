@@ -40,7 +40,7 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
     }
 
     componentDidMount() {
-      if (this.props.isOpen as boolean) {
+      if (this.props.isOpen) {
         this.present();
       }
     }
@@ -92,7 +92,7 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
 
     render() {
       return ReactDOM.createPortal(
-        this.props.children,
+        this.props.isOpen ? this.props.children : null,
         this.el
       );
     }
