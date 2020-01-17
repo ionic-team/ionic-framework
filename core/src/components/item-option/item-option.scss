@@ -6,14 +6,9 @@
 :host {
   /**
    * @prop --background: Background of the item option
-   * @prop --background-hover: Background of the button on hover
-   * @prop --background-hover-opacity: Opacity of the button background on hover
-   *
    * @prop --color: Color of the item option
    */
   --background: #{ion-color(primary, base)};
-  --background-hover: #{ion-color(primary, contrast)};
-  --background-hover-opacity: .08;
   --color: #{ion-color(primary, contrast)};
 
   background: var(--background);
@@ -60,18 +55,10 @@
   appearance: none;
 
   box-sizing: border-box;
-
-  overflow: hidden;
-}
-
-.button-native::after {
-  @include button-state();
 }
 
 .button-inner {
   display: flex;
-
-  position: relative;
 
   flex-flow: column nowrap;
   flex-shrink: 0;
@@ -80,8 +67,6 @@
 
   width: 100%;
   height: 100%;
-
-  z-index: 1;
 }
 
 .horizontal-wrapper {
@@ -133,34 +118,11 @@
 // --------------------------------------------------
 
 :host(.item-option-disabled) {
-  cursor: default;
-  opacity: .5;
   pointer-events: none;
 }
 
-// Item Option: Hover
-// --------------------------------------------------
-
-// TODO color hover
-
-@media (any-hover: hover) {
-  :host(:hover) .button-native {
-    // color: var(--color-hover);
-  }
-
-  :host(:hover) .button-native::after {
-    background: var(--background-hover);
-
-    opacity: var(--background-hover-opacity);
-  }
-
-  :host(.ion-color:hover) .button-native {
-    // color: #{current-color(contrast)};
-  }
-
-  :host(.ion-color:hover) .button-native::after {
-    background: #{current-color(contrast)};
-
-    opacity: .08;
-  }
+:host(.item-option-disabled) .button-native {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
 }
