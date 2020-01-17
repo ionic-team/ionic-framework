@@ -278,7 +278,7 @@ New Usage
 ```
 
 
-#### Select button
+#### Select Option
 
 The `selected` property has been removed. Developers should set the `value` property on the parent `ion-select` to match the desired selected option.
 
