@@ -17,6 +17,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Activated, Focused, Hover States](#activated-focused-hover-states)
   * [Distributed Sass](#distributed-sass)
 - [Components](#components)
+  * [Action Sheet](#action-sheet)
   * [Anchor](#anchor)
   * [Back Button](#back-button)
   * [Button](#button)
@@ -103,6 +104,7 @@ The `.activated` class that is automatically added to clickable components has b
 
 The way the CSS variables are used for targeting the activated, focused and hover backgrounds have been updated on the following components:
 
+- Action Sheet
 - Back Button
 - Button
 - FAB Button
@@ -130,6 +132,8 @@ The new way adds the following variables:
 --background-hover-opacity
 ```
 
+It also updates the Action Sheet component so that the variables will be prefixed with `button`. See the [Action Sheet](#action-sheet) section in this document for all of the variable names.
+
 This allows you to still have the control over the opacity if desired, but when updating the state, you only have to set the main variables: `--background-activated`, `--background-focused`, `--background-hover` and the button will still match the spec. This is most important when changing the global theme, as updating the toolbar color will automatically update the hover states for all of the buttons in a toolbar, regardless of their fill & without having to know what each opacity is.
 
 As a result of these changes, the following global CSS variables will not change the opacity and as such should be treated the same as the `--background-{STATE}` variables:
@@ -147,6 +151,12 @@ As a result of these changes, the following global CSS variables will not change
 ion-button {
   --background-hover: red;
   --background-hover-opacity: 1;
+}
+
+/* Setting the action sheet button background on hover to an opaque green */
+ion-action-sheet {
+  --button-background-hover: green;
+  --button-background-hover-opacity: 0.5;
 }
 
 /* Setting the fab button background to use the text color with the default opacity on md */
@@ -175,6 +185,31 @@ The `scss` files have been removed from `dist/`. CSS variables should be used to
 
 
 ### Components
+
+#### Action Sheet
+
+The following CSS variables have been renamed or added:
+
+| Old                      | New                                        |
+|--------------------------| -------------------------------------------|
+|                          | `--button-background`                      |
+| `--background-activated` | `--button-background-activated`            |
+|                          | `--button-background-activated-opacity`    |
+| `--background-selected`  | `--button-background-selected`             |
+|                          | `--button-background-focused`              |
+|                          | `--button-background-focused-opacity`      |
+|                          | `--button-background-hover`                |
+|                          | `--button-background-hover-opacity`        |
+|                          | `--button-background-selected`             |
+|                          | `--button-background-selected-opacity`     |
+|                          | `--button-color`                           |
+|                          | `--button-color-activated`                 |
+|                          | `--button-color-focused`                   |
+|                          | `--button-color-hover`                     |
+|                          | `--button-color-selected`                  |
+
+See the [Action Sheet CSS Custom Properties](https://ionicframework.com/docs/api/action-sheet#css-custom-properties) documentation for descriptions.
+
 
 #### Anchor
 
