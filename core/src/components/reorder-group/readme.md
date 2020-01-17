@@ -6,9 +6,7 @@ Once the user drags an item and drops it in a new position, the `ionItemReorder`
 
 The `detail` property of the `ionItemReorder` event includes all of the relevant information about the reorder operation, including the `from` and `to` indexes. In the context of reordering, an item moves `from` an index `to` a new index.
 
-
 <!-- Auto Generated Below -->
-
 
 ## Usage
 
@@ -86,13 +84,13 @@ The `detail` property of the `ionItemReorder` event includes all of the relevant
 ```
 
 ```javascript
-import { Component, ViewChild } from '@angular/core';
-import { IonReorderGroup } from '@ionic/angular';
+import { Component, ViewChild } from "@angular/core";
+import { IonReorderGroup } from "@ionic/angular";
 
 @Component({
-  selector: 'reorder-group-example',
-  templateUrl: 'reorder-group-example.html',
-  styleUrls: ['./reorder-group-example.css']
+  selector: "reorder-group-example",
+  templateUrl: "reorder-group-example.html",
+  styleUrls: ["./reorder-group-example.css"]
 })
 export class ReorderGroupExample {
   @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
@@ -102,7 +100,7 @@ export class ReorderGroupExample {
   doReorder(ev: any) {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
-    console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
+    console.log("Dragged from index", ev.detail.from, "to", ev.detail.to);
 
     // Finish the reorder and position the item in the DOM based on
     // where the gesture ended. This method can also be called directly
@@ -119,13 +117,13 @@ export class ReorderGroupExample {
 #### Updating Data
 
 ```javascript
-import { Component, ViewChild } from '@angular/core';
-import { IonReorderGroup } from '@ionic/angular';
+import { Component, ViewChild } from "@angular/core";
+import { IonReorderGroup } from "@ionic/angular";
 
 @Component({
-  selector: 'reorder-group-example',
-  templateUrl: 'reorder-group-example.html',
-  styleUrls: ['./reorder-group-example.css']
+  selector: "reorder-group-example",
+  templateUrl: "reorder-group-example.html",
+  styleUrls: ["./reorder-group-example.css"]
 })
 export class ReorderGroupExample {
   items = [1, 2, 3, 4, 5];
@@ -137,7 +135,7 @@ export class ReorderGroupExample {
   doReorder(ev: any) {
     // Before complete is called with the items they will remain in the
     // order before the drag
-    console.log('Before complete', this.items);
+    console.log("Before complete", this.items);
 
     // Finish the reorder and position the item in the DOM based on
     // where the gesture ended. Update the items variable to the
@@ -145,11 +143,10 @@ export class ReorderGroupExample {
     this.items = ev.detail.complete(this.items);
 
     // After complete is called the items will be in the new order
-    console.log('After complete', this.items);
+    console.log("After complete", this.items);
   }
 }
 ```
-
 
 ### Javascript
 
@@ -225,12 +222,12 @@ export class ReorderGroupExample {
 ```
 
 ```javascript
-const reorderGroup = document.querySelector('ion-reorder-group');
+const reorderGroup = document.querySelector("ion-reorder-group");
 
-reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
+reorderGroup.addEventListener("ionItemReorder", ({ detail }) => {
   // The `from` and `to` properties contain the index of the item
   // when the drag started and ended, respectively
-  console.log('Dragged from index', detail.from, 'to', detail.to);
+  console.log("Dragged from index", detail.from, "to", detail.to);
 
   // Finish the reorder and position the item in the DOM based on
   // where the gesture ended. This method can also be called directly
@@ -243,12 +240,12 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
 
 ```javascript
 const items = [1, 2, 3, 4, 5];
-const reorderGroup = document.querySelector('ion-reorder-group');
+const reorderGroup = document.querySelector("ion-reorder-group");
 
-reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
+reorderGroup.addEventListener("ionItemReorder", ({ detail }) => {
   // Before complete is called with the items they will remain in the
   // order before the drag
-  console.log('Before complete', items);
+  console.log("Before complete", items);
 
   // Finish the reorder and position the item in the DOM based on
   // where the gesture ended. Update the items variable to the
@@ -256,22 +253,28 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
   items = detail.complete(items);
 
   // After complete is called the items will be in the new order
-  console.log('After complete', items);
+  console.log("After complete", items);
 });
 ```
-
 
 ### React
 
 ```tsx
-import React from 'react';
-import { IonItem, IonLabel, IonReorder, IonReorderGroup, IonIcon, IonContent } from '@ionic/react';
-import { ItemReorderEventDetail } from '@ionic/core';
+import React from "react";
+import {
+  IonItem,
+  IonLabel,
+  IonReorder,
+  IonReorderGroup,
+  IonIcon,
+  IonContent
+} from "@ionic/react";
+import { ItemReorderEventDetail } from "@ionic/core";
 
 function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
   // The `from` and `to` properties contain the index of the item
   // when the drag started and ended, respectively
-  console.log('Dragged from index', event.detail.from, 'to', event.detail.to);
+  console.log("Dragged from index", event.detail.from, "to", event.detail.to);
 
   // Finish the reorder and position the item in the DOM based on
   // where the gesture ended. This method can also be called directly
@@ -345,7 +348,7 @@ const items = [1, 2, 3, 4, 5];
 function doReorder(event: CustomEvent) {
   // Before complete is called with the items they will remain in the
   // order before the drag
-  console.log('Before complete', this.items);
+  console.log("Before complete", this.items);
 
   // Finish the reorder and position the item in the DOM based on
   // where the gesture ended. Update the items variable to the
@@ -353,10 +356,9 @@ function doReorder(event: CustomEvent) {
   this.items = event.detail.complete(this.items);
 
   // After complete is called the items will be in the new order
-  console.log('After complete', this.items);
+  console.log("After complete", this.items);
 }
 ```
-
 
 ### Vue
 
@@ -433,15 +435,19 @@ function doReorder(event: CustomEvent) {
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue } from "vue-property-decorator";
 
   @Component()
   export default class Example extends Vue {
-
     doReorder(event) {
       // The `from` and `to` properties contain the index of the item
       // when the drag started and ended, respectively
-      console.log('Dragged from index', event.detail.from, 'to', event.detail.to);
+      console.log(
+        "Dragged from index",
+        event.detail.from,
+        "to",
+        event.detail.to
+      );
 
       // Finish the reorder and position the item in the DOM based on
       // where the gesture ended. This method can also be called directly
@@ -456,7 +462,7 @@ function doReorder(event: CustomEvent) {
 
 ```html
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue } from "vue-property-decorator";
 
   @Component()
   export default class Example extends Vue {
@@ -465,7 +471,7 @@ function doReorder(event: CustomEvent) {
     doReorder(event) {
       // Before complete is called with the items they will remain in the
       // order before the drag
-      console.log('Before complete', this.items);
+      console.log("Before complete", this.items);
 
       // Finish the reorder and position the item in the DOM based on
       // where the gesture ended. Update the items variable to the
@@ -473,27 +479,24 @@ function doReorder(event: CustomEvent) {
       this.items = event.detail.complete(this.items);
 
       // After complete is called the items will be in the new order
-      console.log('After complete', this.items);
+      console.log("After complete", this.items);
     }
   }
 </script>
 ```
 
-
-
 ## Properties
 
-| Property   | Attribute  | Description                            | Type      | Default |
-| ---------- | ---------- | -------------------------------------- | --------- | ------- |
-| `disabled` | `disabled` | If `true`, the reorder will be hidden. | `boolean` | `true`  |
-
+| Property   | Attribute  | Description                                         | Type      | Default |
+| ---------- | ---------- | --------------------------------------------------- | --------- | ------- |
+| `context`  | `context`  | Change autoScroll from 'content' to custom element. | `any`     | `null`  |
+| `disabled` | `disabled` | If `true`, the reorder will be hidden.              | `boolean` | `true`  |
 
 ## Events
 
 | Event            | Description                                                                                                                                                                                           | Type                                  |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
 | `ionItemReorder` | Event that needs to be listened to in order to complete the reorder action. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action. | `CustomEvent<ItemReorderEventDetail>` |
-
 
 ## Methods
 
@@ -512,9 +515,6 @@ the reorder will complete and the item will bounce back to its original position
 
 Type: `Promise<any>`
 
+---
 
-
-
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
