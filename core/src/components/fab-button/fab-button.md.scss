@@ -9,7 +9,7 @@
   --background-activated: transparent;
   --background-focused: currentColor;
   --background-hover: currentColor;
-  --background-activated-opacity: .24;
+  --background-activated-opacity: 0;
   --background-focused-opacity: .24;
   --background-hover-opacity: .08;
   --color: #{$fab-md-text-color};
@@ -43,8 +43,8 @@
   --color-activated: #{$fab-md-list-button-text-color};
   --color-focused: var(--color-activated);
   --background: #{$fab-md-list-button-background-color};
-  --background-activated: #{$fab-md-list-button-background-color-activated};
-  --background-focused: var(--background-activated);
+  --background-activated: transparent;
+  --background-focused: #{$fab-md-list-button-background-color-activated};
   --background-hover: #{$fab-md-list-button-background-color-hover};
 }
 

@@ -30,10 +30,10 @@
 // --------------------------------------------------
 
 :host(.button-solid) {
-  --background-activated: #{ion-color(primary, contrast)};
+  --background-activated: transparent;
   --background-hover: #{ion-color(primary, contrast)};
   --background-focused: #{ion-color(primary, contrast)};
-  --background-activated-opacity: .24;
+  --background-activated-opacity: 0;
   --background-focused-opacity: .24;
   --background-hover-opacity: .08;
   --box-shadow: #{$button-md-box-shadow};
@@ -50,10 +50,10 @@
   --border-width: 2px;
   --border-style: solid;
   --box-shadow: none;
-  --background-activated: #{ion-color(primary, base)};
+  --background-activated: transparent;
   --background-focused: #{ion-color(primary, base)};
   --background-hover: #{ion-color(primary, base)};
-  --background-activated-opacity: .12;
+  --background-activated-opacity: 0;
   --background-focused-opacity: .12;
   --background-hover-opacity: .04;
 }
@@ -67,10 +67,10 @@
 // --------------------------------------------------
 
 :host(.button-clear) {
-  --background-activated: #{ion-color(primary, base)};
+  --background-activated: transparent;
   --background-focused: #{ion-color(primary, base)};
   --background-hover: #{ion-color(primary, base)};
-  --background-activated-opacity: .12;
+  --background-activated-opacity: 0;
   --background-focused-opacity: .12;
   --background-hover-opacity: .04;
 }
