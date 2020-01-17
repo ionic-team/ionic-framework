@@ -493,7 +493,7 @@ const compareOptions = (currentValue: any, compareValue: any, compareWith?: stri
   } else if (typeof compareWith === 'string') {
     return currentValue[compareWith] === compareValue[compareWith];
   } else {
-    return currentValue === compareValue;
+    return Array.isArray(compareValue) ? compareValue.includes(currentValue) : currentValue === compareValue;
   }
 };
 
