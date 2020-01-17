@@ -201,7 +201,8 @@ The `ion-nav-push`, `ion-nav-back`, and `ion-nav-set-root` components have been 
 
 `ion-radio` must be used inside of an `ion-radio-group` even if there is only one `ion-radio`. Additionally, the `checked` property has been removed. Developers should set the `value` property on the respective `ion-radio-group` in order to managed checked status.
 
-Old Usage
+Before
+
 ```html
 <ion-radio checked>One</ion-radio>
 
