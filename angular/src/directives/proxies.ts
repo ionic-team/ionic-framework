@@ -534,17 +534,16 @@ export class IonProgressBar {
 }
 
 export declare interface IonRadio extends Components.IonRadio {}
-@ProxyCmp({inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']})
-@Component({ selector: 'ion-radio', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value'] })
+@ProxyCmp({inputs: ['color', 'disabled', 'mode', 'name', 'value']})
+@Component({ selector: 'ion-radio', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'disabled', 'mode', 'name', 'value'] })
 export class IonRadio {
-  ionSelect!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSelect', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
 
@@ -680,15 +679,13 @@ export class IonSegment {
 }
 
 export declare interface IonSegmentButton extends Components.IonSegmentButton {}
-@ProxyCmp({inputs: ['checked', 'disabled', 'layout', 'mode', 'type', 'value']})
-@Component({ selector: 'ion-segment-button', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['checked', 'disabled', 'layout', 'mode', 'type', 'value'] })
+@ProxyCmp({inputs: ['disabled', 'layout', 'mode', 'type', 'value']})
+@Component({ selector: 'ion-segment-button', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['disabled', 'layout', 'mode', 'type', 'value'] })
 export class IonSegmentButton {
-  ionSelect!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSelect']);
   }
 }
 
@@ -709,8 +706,8 @@ export class IonSelect {
 }
 
 export declare interface IonSelectOption extends Components.IonSelectOption {}
-@ProxyCmp({inputs: ['disabled', 'selected', 'value']})
-@Component({ selector: 'ion-select-option', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['disabled', 'selected', 'value'] })
+@ProxyCmp({inputs: ['disabled', 'value']})
+@Component({ selector: 'ion-select-option', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['disabled', 'value'] })
 export class IonSelectOption {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {

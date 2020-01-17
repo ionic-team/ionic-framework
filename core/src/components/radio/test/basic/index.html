@@ -21,7 +21,7 @@
 
     <ion-content id="content" class="radio-test outer-content">
       <ion-list>
-        <ion-radio-group id="fruitRadio">
+        <ion-radio-group id="fruitRadio" value="grape">
           <ion-item-divider>
             <ion-label>Fruits (Group w/ values)</ion-label>
           </ion-item-divider>
@@ -32,7 +32,7 @@
 
           <ion-item>
             <ion-label>Grape, checked, disabled</ion-label>
-            <ion-radio slot="start" id="grapeChecked" value="grape" checked disabled></ion-radio>
+            <ion-radio slot="start" id="grapeChecked" value="grape" disabled></ion-radio>
           </ion-item>
 
           <ion-item>
@@ -41,22 +41,22 @@
           </ion-item>
         </ion-radio-group>
 
-        <ion-radio-group id="pizzaRadio">
+        <ion-radio-group id="pizzaRadio" value="pepperoni">
           <ion-item-divider>
             <ion-label>Extra Pizza Topping (Group w/ no values)</ion-label>
           </ion-item-divider>
           <ion-item>
             <ion-label>Pepperoni</ion-label>
-            <ion-radio slot="end" name="pepperoni" checked id="pepperoni-radio"></ion-radio>
+            <ion-radio slot="end" name="pepperoni" value="pepperoni" id="pepperoni-radio"></ion-radio>
           </ion-item>
 
           <ion-item>
             <ion-label>Sausage</ion-label>
-            <ion-radio slot="end" color="danger" name="sausage"></ion-radio>
+            <ion-radio slot="end" color="danger" name="sausage" value="sausage"></ion-radio>
           </ion-item>
         </ion-radio-group>
 
-        <ion-radio-group id="veggiesRadio" allow-empty-selection>
+        <ion-radio-group id="veggiesRadio" value="broccoli" allow-empty-selection>
           <ion-item-divider>
             <ion-label>Veggies (Group w/ allow empty)</ion-label>
           </ion-item-divider>
@@ -72,14 +72,14 @@
 
           <ion-item>
             <ion-label>Broccoli</ion-label>
-            <ion-radio id="dangerRadio" slot="end" color="danger" value="broccoli" checked></ion-radio>
+            <ion-radio id="dangerRadio" slot="end" color="danger" value="broccoli"></ion-radio>
           </ion-item>
         </ion-radio-group>
         
-        <ion-radio-group allow-empty-selection>
+        <ion-radio-group allow-empty-selection value="custom">
           <ion-item>
             <ion-label>Custom</ion-label>
-            <ion-radio slot="end" color="danger" value="custom" style="--border-radius:2px;--inner-border-radius: 10px 0px 10px 0px;" checked></ion-radio>
+            <ion-radio slot="end" color="danger" value="custom" style="--border-radius:2px;--inner-border-radius: 10px 0px 10px 0px;"></ion-radio>
           </ion-item>
         </ion-radio-group>
 
@@ -106,18 +106,13 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>Strawberry, (ionChange) checked="true"</ion-label>
-          <ion-radio slot="start" color="light" checked="true"></ion-radio>
-        </ion-item>
-
-        <ion-item>
           <ion-label>Checkbox right, checked, really long text that should ellipsis</ion-label>
-          <ion-radio slot="end" color="danger" checked></ion-radio>
+          <ion-radio slot="end" color="danger"></ion-radio>
         </ion-item>
 
         <ion-item>
           <ion-label>Checkbox right side</ion-label>
-          <ion-radio slot="end" checked></ion-radio>
+          <ion-radio slot="end"></ion-radio>
         </ion-item>
 
         <ion-item>
@@ -133,16 +128,19 @@
         <span id="standAloneCheckedSpan"></span>
       </p>
 
+      
       <ion-item>
         <ion-label>Checkbox / Toggle</ion-label>
         <ion-radio slot="start" id="checked"></ion-radio>
         <ion-toggle id="checked"></ion-toggle>
       </ion-item>
-      <ion-item>
-        <ion-label>Checked</ion-label>
-        <ion-radio slot="start" checked></ion-radio>
-        <ion-toggle checked></ion-toggle>
-      </ion-item>
+      <ion-radio-group>
+        <ion-item>
+          <ion-label>Checked</ion-label>
+          <ion-radio slot="start" checked></ion-radio>
+          <ion-toggle checked></ion-toggle>
+        </ion-item>
+      </ion-radio-group>
       <ion-item>
         <ion-label>Disabled</ion-label>
         <ion-radio slot="start" disabled></ion-radio>

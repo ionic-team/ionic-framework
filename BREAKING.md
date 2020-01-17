@@ -25,8 +25,11 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [List Header](#list-header)
   * [Menu](#menu)
   * [Nav Link](#nav-link)
+  * [Radio](#radio)
   * [Searchbar](#searchbar)
   * [Segment](#segment)
+  * [Segment Button](#segment-button)
+  * [Select Option](#select-option)
   * [Skeleton Text](#skeleton-text)
   * [Split Pane](#split-pane)
   * [Toast](#toast)
@@ -194,6 +197,34 @@ The list header has been redesigned to match the latest iOS spec. This may break
 The `ion-nav-push`, `ion-nav-back`, and `ion-nav-set-root` components have been removed in favor of using `ion-nav-link` with a `router-direction` property which accepts `”root”`, `“forward”`, and `“back”`. This reduces the need for maintaining multiple components when they all do the same thing with different transition directions. See the [documentation for nav-link](https://ionicframework.com/docs/api/nav-link) for more information.
 
 
+#### Radio
+
+The `ion-radio` must be used inside of an `ion-radio-group` even if there is only one `ion-radio`. Additionally, the `checked` property has been removed. Developers should set the `value` property on the parent `ion-radio-group` to match the value of the desired checked radio button.
+
+Before
+
+```html
+<ion-radio checked>One</ion-radio>
+
+<ion-radio-group>
+  <ion-radio>One</ion-radio>
+  <ion-radio checked>Two</ion-radio>
+</ion-radio-group>
+```
+
+After
+
+```html
+<ion-radio-group value="one">
+  <ion-radio value="one">One</ion-radio>
+</ion-radio-group>
+
+<ion-radio-group value="two">
+  <ion-radio value="one">One</ion-radio>
+  <ion-radio value="two">Two</ion-radio>
+</ion-radio-group>
+```
+
 #### Searchbar
 
 ##### Show Cancel Button
@@ -224,6 +255,54 @@ The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get
 #### Segment
 
 <!-- TODO https://gist.github.com/brandyscarney/e6cfe43c359bb2c932e12f8d615e1669 -->
+
+
+#### Segment Button
+
+The `checked` property has been removed. Developers should set the `value` property on the parent `ion-segment` to match the value of the desired checked segment button.
+
+Before
+
+```html
+<ion-segment>
+  <ion-segment-button>One</ion-segment-button>
+  <ion-segment-button checked>Two</ion-segment-button>
+  <ion-segment-button>Three</ion-segment-button>
+</ion-segment>
+```
+
+After
+
+```html
+<ion-segment value="two">
+  <ion-segment-button value="one">One</ion-segment-button>
+  <ion-segment-button value="two">Two</ion-segment-button>
+  <ion-segment-button value="three">Three</ion-segment-button>
+</ion-segment>
+```
+
+
+#### Select Option
+
+The `selected` property has been removed. Developers should set the `value` property on the parent `ion-select` to match the desired selected option.
+
+Before
+
+```html
+<ion-select>
+  <ion-select-option>One</ion-select-option>
+  <ion-select-option selected>Two</ion-select-option>
+</ion-select>
+```
+
+After
+
+```html
+<ion-select value="two">
+  <ion-select-option value="one">One</ion-select-option>
+  <ion-select-option value="two">Two</ion-select-option>
+</ion-select>
+```
 
 
 #### Skeleton Text

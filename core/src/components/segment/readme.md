@@ -24,8 +24,8 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 </ion-segment>
 
 <!-- Disabled Segment -->
-<ion-segment (ionChange)="segmentChanged($event)" disabled>
-  <ion-segment-button value="sunny" checked>
+<ion-segment (ionChange)="segmentChanged($event)" disabled value="sunny">
+  <ion-segment-button value="sunny">
     <ion-label>Sunny</ion-label>
   </ion-segment-button>
   <ion-segment-button value="rainy">
@@ -44,26 +44,26 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 </ion-segment>
 
 <!-- Scrollable Segment -->
-<ion-segment scrollable>
-  <ion-segment-button>
+<ion-segment scrollable value="heart">
+  <ion-segment-button value="home">
     <ion-icon name="home"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked>
+  <ion-segment-button value="heart">
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="pin">
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="star">
     <ion-icon name="star"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="call">
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="globe">
     <ion-icon name="globe"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="basket">
     <ion-icon name="basket"></ion-icon>
   </ion-segment-button>
 </ion-segment>
@@ -134,8 +134,8 @@ export class SegmentExample {
 </ion-segment>
 
 <!-- Disabled Segment -->
-<ion-segment disabled>
-  <ion-segment-button value="sunny" checked>
+<ion-segment disabled value="sunny">
+  <ion-segment-button value="sunny">
     <ion-label>Sunny</ion-label>
   </ion-segment-button>
   <ion-segment-button value="rainy">
@@ -154,26 +154,26 @@ export class SegmentExample {
 </ion-segment>
 
 <!-- Scrollable Segment -->
-<ion-segment scrollable>
-  <ion-segment-button>
+<ion-segment scrollable value="heart">
+  <ion-segment-button value="home">
     <ion-icon name="home"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked>
+  <ion-segment-button value="heart">
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="pin">
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="star">
     <ion-icon name="star"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="call">
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="globe">
     <ion-icon name="globe"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="basket">
     <ion-icon name="basket"></ion-icon>
   </ion-segment-button>
 </ion-segment>
@@ -244,8 +244,8 @@ export const SegmentExample: React.FC = () => (
     </IonSegment>
 
     {/*-- Disabled Segment --*/}
-    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} disabled>
-      <IonSegmentButton value="sunny" checked>
+    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} disabled value="sunny">
+      <IonSegmentButton value="sunny">
         <IonLabel>Sunny</IonLabel>
       </IonSegmentButton>
       <IonSegmentButton value="rainy">
@@ -264,26 +264,26 @@ export const SegmentExample: React.FC = () => (
     </IonSegment>
 
     {/*-- Scrollable Segment --*/}
-    <IonSegment scrollable>
-      <IonSegmentButton>
+    <IonSegment scrollable value="heart">
+      <IonSegmentButton value="home">
         <IonIcon name="home" />
       </IonSegmentButton>
-      <IonSegmentButton checked>
+      <IonSegmentButton value="heart">
         <IonIcon name="heart" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="pin">
         <IonIcon name="pin" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="star">
         <IonIcon name="star" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="call">
         <IonIcon name="call" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="globe">
         <IonIcon name="globe" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="basket">
         <IonIcon name="basket" />
       </IonSegmentButton>
     </IonSegment>
@@ -342,8 +342,8 @@ export const SegmentExample: React.FC = () => (
   </ion-segment>
 
   <!-- Disabled Segment -->
-  <ion-segment @ionChange="segmentChanged($event)" disabled>
-    <ion-segment-button value="sunny" checked>
+  <ion-segment @ionChange="segmentChanged($event)" disabled value="sunny">
+    <ion-segment-button value="sunny">
       <ion-label>Sunny</ion-label>
     </ion-segment-button>
     <ion-segment-button value="rainy">
@@ -362,26 +362,26 @@ export const SegmentExample: React.FC = () => (
   </ion-segment>
 
   <!-- Scrollable Segment -->
-  <ion-segment scrollable>
-    <ion-segment-button>
+  <ion-segment scrollable value="heart">
+    <ion-segment-button value="home">
       <ion-icon name="home"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button checked>
+    <ion-segment-button value="heart">
       <ion-icon name="heart"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="pin">
       <ion-icon name="pin"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="star">
       <ion-icon name="star"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="call">
       <ion-icon name="call"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="globe">
       <ion-icon name="globe"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="basket">
       <ion-icon name="basket"></ion-icon>
     </ion-segment-button>
   </ion-segment>

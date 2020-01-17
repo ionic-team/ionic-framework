@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { SegmentButtonLayout } from '../../interface';
@@ -19,12 +19,14 @@ let ids = 0;
   shadow: true
 })
 export class SegmentButton implements ComponentInterface, ButtonInterface {
+  private segmentEl: HTMLIonSegmentElement | null = null;
+
   @Element() el!: HTMLElement;
 
   /**
    * If `true`, the segment button is selected.
    */
-  @Prop({ mutable: true }) checked = false;
+  @State() checked = false;
 
   /**
    * If `true`, the user cannot interact with the segment button.
@@ -46,17 +48,19 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() value: string = 'ion-sb-' + (ids++);
 
-  /**
-   * Emitted when the segment button is clicked.
-   */
-  @Event() ionSelect!: EventEmitter<void>;
+  connectedCallback() {
+    const segmentEl = this.segmentEl = this.el.closest('ion-segment');
+    if (segmentEl) {
+      this.updateState();
+      segmentEl.addEventListener('ionChange', this.updateState);
+    }
+  }
 
-  @Watch('checked')
-  checkedChanged(newValue: boolean, oldValue: boolean) {
-    // If the segment button is not already checked
-    // emit the ionSelect event
-    if (newValue && !oldValue) {
-      this.ionSelect.emit();
+  disconnectedCallback() {
+    const segmentEl = this.segmentEl;
+    if (segmentEl) {
+      segmentEl.removeEventListener('ionChange', this.updateState);
+      this.segmentEl = null;
     }
   }
 
@@ -68,8 +72,10 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
-  private onClick = () => {
-    this.checked = true;
+  private updateState = () => {
+    if (this.segmentEl) {
+      this.checked = this.segmentEl.value === this.value;
+    }
   }
 
   render() {
@@ -77,7 +83,6 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        onClick={this.onClick}
         aria-disabled={disabled ? 'true' : null}
         class={{
           [mode]: true,

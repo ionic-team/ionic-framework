@@ -93,8 +93,8 @@
 
             <div slot="end" class="right-container">
               <ion-label>Select a Theme:</ion-label>
-              <ion-select interface="popover" class="theme-picker">
-                <ion-select-option value="default" selected>Default</ion-select-option>
+              <ion-select interface="popover" class="theme-picker" value="default">
+                <ion-select-option value="default">Default</ion-select-option>
                 <ion-select-option value="oceanic">Oceanic</ion-select-option>
                 <ion-select-option value="vibrant">Vibrant</ion-select-option>
                 <ion-select-option value="dark">Dark</ion-select-option>
@@ -102,17 +102,17 @@
             </div>
           </ion-toolbar>
           <ion-toolbar>
-            <ion-segment>
-              <ion-segment-button>
+            <ion-segment value="active">
+              <ion-segment-button value="favorites">
                 <ion-label>Favorites</ion-label>
               </ion-segment-button>
-              <ion-segment-button>
+              <ion-segment-button value="all">
                 <ion-label>All</ion-label>
               </ion-segment-button>
-              <ion-segment-button disabled>
+              <ion-segment-button disabled value="disabled">
                 <ion-label>Disabled</ion-label>
               </ion-segment-button>
-              <ion-segment-button checked>
+              <ion-segment-button value="active">
                 <ion-label>Active</ion-label>
               </ion-segment-button>
             </ion-segment>
@@ -250,7 +250,7 @@
 
             <section>
               <ion-list>
-                <ion-radio-group id="fruitRadio">
+                <ion-radio-group id="fruitRadio" value="grape">
                   <ion-item-divider>
                     <ion-label>Fruits</ion-label>
                   </ion-item-divider>
@@ -261,7 +261,7 @@
 
                   <ion-item>
                     <ion-label>Grape, checked, disabled</ion-label>
-                    <ion-radio slot="start" id="grapeChecked" value="grape" checked disabled></ion-radio>
+                    <ion-radio slot="start" id="grapeChecked" value="grape" disabled></ion-radio>
                   </ion-item>
 
                   <ion-item>
@@ -272,7 +272,7 @@
               </ion-list>
 
               <ion-list>
-                <ion-radio-group id="fruitRadio">
+                <ion-radio-group id="fruitRadio" value="lettuce">
                   <ion-item-divider>
                     <ion-label>Veggies</ion-label>
                   </ion-item-divider>
@@ -283,7 +283,7 @@
 
                   <ion-item>
                     <ion-label>Lettuce, checked, disabled</ion-label>
-                    <ion-radio color="tertiary" slot="start" value="lettuce" checked disabled></ion-radio>
+                    <ion-radio color="tertiary" slot="start" value="lettuce" disabled></ion-radio>
                   </ion-item>
 
                   <ion-item>
