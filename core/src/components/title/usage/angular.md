@@ -49,7 +49,7 @@ In the example above, notice there are two `ion-header` elements. The first `ion
 ```html
 <ion-header translucent="true">
   <ion-toolbar>   
-    <ion-buttons collapse="true">
+    <ion-buttons collapse="true" slot="end">
       <ion-button>Click Me</ion-button>
     </ion-buttons> 
     <ion-title>Settings</ion-title>               
@@ -59,7 +59,7 @@ In the example above, notice there are two `ion-header` elements. The first `ion
 <ion-content fullscreen="true">
   <ion-header collapse="condense">              
     <ion-toolbar>      
-      <ion-buttons collapse="true">
+      <ion-buttons collapse="true" slot="end">
         <ion-button>Click Me</ion-button>
       </ion-buttons>
       <ion-title size="large">Settings</ion-title>
@@ -76,7 +76,7 @@ In the example above, notice there are two `ion-header` elements. The first `ion
 
 In this example, notice that we have added two sets of `ion-buttons` both with `collapse="true"`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `ion-title` element.
 
-`ion-buttons` elements that do not have `collapse` set will always be visible, regardless of collapsed state.
+`ion-buttons` elements that do not have `collapse` set will always be visible, regardless of collapsed state. When using the large title and `ion-buttons` elements inside of `ion-content`, the `ion-buttons` elements should always be placed in the `end` slot.
 
 When styling the large title, you should target the large title globally as opposed to within the context of a particular page or tab, otherwise its styles will not be applied during the navigation animation.
 

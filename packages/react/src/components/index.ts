@@ -1,7 +1,7 @@
 
 import { defineCustomElements } from '@ionic/core/loader';
 import { addIcons } from 'ionicons';
-import { arrowBackSharp, chevronBack, chevronForward, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
+import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
 export { AlertButton, AlertInput, setupConfig } from '@ionic/core';
 export * from './proxies';
 
@@ -31,6 +31,7 @@ export { RouterDirection } from './hrefprops';
 // Icons that are used by internal components
 addIcons({
   'arrow-back-sharp': arrowBackSharp,
+  'caret-back-sharp': caretBackSharp,
   'chevron-back': chevronBack,
   'chevron-forward': chevronForward,
   'close-circle': closeCircle,
