@@ -5,14 +5,14 @@ import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, Ion
 export const RadioExample: React.FC = () => (
   <IonContent>
     <IonList>
-      <IonRadioGroup>
+      <IonRadioGroup value="biff">
         <IonListHeader>
           <IonLabel>Name</IonLabel>
         </IonListHeader>
 
         <IonItem>
           <IonLabel>Biff</IonLabel>
-          <IonRadio slot="start" value="biff" checked />
+          <IonRadio slot="start" value="biff" />
         </IonItem>
 
         <IonItem>

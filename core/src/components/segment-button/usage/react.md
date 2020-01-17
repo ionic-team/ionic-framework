@@ -15,14 +15,14 @@ export const SegmentButtonExample: React.FC = () => (
     </IonSegment>
 
     {/*-- Segment buttons with the first checked and the last disabled --*/}
-    <IonSegment>
-      <IonSegmentButton checked>
+    <IonSegment value="paid">
+      <IonSegmentButton value="paid">
         <IonLabel>Paid</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="free">
         <IonLabel>Free</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton disabled>
+      <IonSegmentButton disabled value="top">
         <IonLabel>Top</IonLabel>
       </IonSegmentButton>
     </IonSegment>
@@ -51,90 +51,90 @@ export const SegmentButtonExample: React.FC = () => (
     </IonSegment>
 
     {/*-- Label only --*/}
-    <IonSegment>
-      <IonSegmentButton checked>
+    <IonSegment value="1">
+      <IonSegmentButton value="1">
         <IonLabel>Item One</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="2">
         <IonLabel>Item Two</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="3">
         <IonLabel>Item Three</IonLabel>
       </IonSegmentButton>
     </IonSegment>
 
     {/*-- Icon only --*/}
-    <IonSegment>
-      <IonSegmentButton>
+    <IonSegment value="heart">
+      <IonSegmentButton value="call">
         <IonIcon name="call" />
       </IonSegmentButton>
-      <IonSegmentButton checked>
+      <IonSegmentButton value="heart">
         <IonIcon name="heart" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="pin">
         <IonIcon name="pin" />
       </IonSegmentButton>
     </IonSegment>
 
     {/*-- Icon top --*/}
-    <IonSegment>
-      <IonSegmentButton>
+    <IonSegment value="2">
+      <IonSegmentButton value="1">
         <IonLabel>Item One</IonLabel>
         <IonIcon name="call" />
       </IonSegmentButton>
-      <IonSegmentButton checked>
+      <IonSegmentButton value="2">
         <IonLabel>Item Two</IonLabel>
         <IonIcon name="heart" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="3">
         <IonLabel>Item Three</IonLabel>
         <IonIcon name="pin" />
       </IonSegmentButton>
     </IonSegment>
 
     {/*-- Icon bottom --*/}
-    <IonSegment>
-      <IonSegmentButton checked layout="icon-bottom">
+    <IonSegment value="1">
+      <IonSegmentButton value="1" layout="icon-bottom">
         <IonIcon name="call" />
         <IonLabel>Item One</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton layout="icon-bottom">
+      <IonSegmentButton value="2" layout="icon-bottom">
         <IonIcon name="heart" />
         <IonLabel>Item Two</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton layout="icon-bottom">
+      <IonSegmentButton value="3" layout="icon-bottom">
         <IonIcon name="pin" />
         <IonLabel>Item Three</IonLabel>
       </IonSegmentButton>
     </IonSegment>
 
     {/*-- Icon start --*/}
-    <IonSegment>
-      <IonSegmentButton checked layout="icon-start">
+    <IonSegment value="1">
+      <IonSegmentButton value="1" layout="icon-start">
         <IonLabel>Item One</IonLabel>
         <IonIcon name="call" />
       </IonSegmentButton>
-      <IonSegmentButton layout="icon-start">
+      <IonSegmentButton value="2" layout="icon-start">
         <IonLabel>Item Two</IonLabel>
         <IonIcon name="heart" />
       </IonSegmentButton>
-      <IonSegmentButton layout="icon-start">
+      <IonSegmentButton value="3" layout="icon-start">
         <IonLabel>Item Three</IonLabel>
         <IonIcon name="pin" />
       </IonSegmentButton>
     </IonSegment>
 
     {/*-- Icon end --*/}
-    <IonSegment>
-      <IonSegmentButton checked layout="icon-end">
+    <IonSegment value="1">
+      <IonSegmentButton value="1" layout="icon-end">
         <IonIcon name="call" />
         <IonLabel>Item One</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton disabled layout="icon-end">
+      <IonSegmentButton value="2" disabled layout="icon-end">
         <IonIcon name="heart" />
         <IonLabel>Item Two</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton layout="icon-end">
+      <IonSegmentButton value="3" layout="icon-end">
         <IonIcon name="pin" />
         <IonLabel>Item Three</IonLabel>
       </IonSegmentButton>

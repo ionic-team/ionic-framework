@@ -30,8 +30,11 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Menu](#menu)
   * [Menu Button](#menu-button)
   * [Nav Link](#nav-link)
+  * [Radio](#radio)
   * [Searchbar](#searchbar)
   * [Segment](#segment)
+  * [Segment Button](#segment-button)
+  * [Select Option](#select-option)
   * [Skeleton Text](#skeleton-text)
   * [Split Pane](#split-pane)
   * [Toast](#toast)
@@ -319,6 +322,34 @@ The list header has been redesigned to match the latest iOS spec. This may break
 The `ion-nav-push`, `ion-nav-back`, and `ion-nav-set-root` components have been removed in favor of using `ion-nav-link` with a `router-direction` property which accepts `”root”`, `“forward”`, and `“back”`. This reduces the need for maintaining multiple components when they all do the same thing with different transition directions. See the [documentation for nav-link](https://ionicframework.com/docs/api/nav-link) for more information.
 
 
+#### Radio
+
+The `ion-radio` must be used inside of an `ion-radio-group` even if there is only one `ion-radio`. Additionally, the `checked` property has been removed. Developers should set the `value` property on the parent `ion-radio-group` to match the value of the desired checked radio button.
+
+Before
+
+```html
+<ion-radio checked>One</ion-radio>
+
+<ion-radio-group>
+  <ion-radio>One</ion-radio>
+  <ion-radio checked>Two</ion-radio>
+</ion-radio-group>
+```
+
+After
+
+```html
+<ion-radio-group value="one">
+  <ion-radio value="one">One</ion-radio>
+</ion-radio-group>
+
+<ion-radio-group value="two">
+  <ion-radio value="one">One</ion-radio>
+  <ion-radio value="two">Two</ion-radio>
+</ion-radio-group>
+```
+
 #### Searchbar
 
 ##### Show Cancel Button
@@ -350,6 +381,54 @@ The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get
 
 <!-- TODO https://gist.github.com/brandyscarney/e6cfe43c359bb2c932e12f8d615e1669 -->
 - [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
+
+
+#### Segment Button
+
+The `checked` property has been removed. Developers should set the `value` property on the parent `ion-segment` to match the value of the desired checked segment button.
+
+Before
+
+```html
+<ion-segment>
+  <ion-segment-button>One</ion-segment-button>
+  <ion-segment-button checked>Two</ion-segment-button>
+  <ion-segment-button>Three</ion-segment-button>
+</ion-segment>
+```
+
+After
+
+```html
+<ion-segment value="two">
+  <ion-segment-button value="one">One</ion-segment-button>
+  <ion-segment-button value="two">Two</ion-segment-button>
+  <ion-segment-button value="three">Three</ion-segment-button>
+</ion-segment>
+```
+
+
+#### Select Option
+
+The `selected` property has been removed. Developers should set the `value` property on the parent `ion-select` to match the desired selected option.
+
+Before
+
+```html
+<ion-select>
+  <ion-select-option>One</ion-select-option>
+  <ion-select-option selected>Two</ion-select-option>
+</ion-select>
+```
+
+After
+
+```html
+<ion-select value="two">
+  <ion-select-option value="one">One</ion-select-option>
+  <ion-select-option value="two">Two</ion-select-option>
+</ion-select>
+```
 
 
 #### Skeleton Text
@@ -456,78 +535,9 @@ Now, the `mode` only needs to be set on the `ion-segment` and it will be inherit
 
 ### Ionicons
 
-<!-- TODO verify / add link to site -->
+Ionicons 5 has been released! :tada: This brings many changes including a top to bottom re-draw of every icon, variants for each icon (filled, outline, and sharp), and the removal of auto-switching icons based on the platform.
 
-The table below outlines icons that were removed or renamed.
-
-
-| Icon Name                    |             | Status      | Notes                                                                 |
-| -----------------------------| ------------| ------------| ----------------------------------------------------------------------|
-| add-circle            	     | :x:         | deleted     | re-added as "circled" icon                                            |
-| add-circle-outline    	     | :x:         | deleted     | re-added as "circled" icon                                            |
-| appstore                     | :x:         | deleted     | added as google play & apple app store logos                          |
-| arrow-dropdown-circle        | :pencil2:   | renamed     | renamed to "arrow-down-circle"                                        |
-| arrow-dropdown               | :pencil2:   | renamed     | renamed to "arrow-down"                                               |
-| arrow-dropleft-circle        | :pencil2:   | renamed     | renamed to "arrow-back-circle"                                        |
-| arrow-dropleft               | :pencil2:   | renamed     | renamed to "arrow-back"                                               |
-| arrow-dropright-circle       | :pencil2:   | renamed     | renamed to "arrow-forward-circle"                                     |
-| arrow-dropright              | :pencil2:   | renamed     | renamed to "arrow-forward"                                            |
-| arrow-dropup-circle          | :pencil2:   | renamed     | renamed to "arrow-up-circle"                                          |
-| arrow-dropup                 | :pencil2:   | renamed     | renamed to "arrow-up"                                                 |
-| arrow-round-back             | :x:         | deleted     | becomes "arrow-back"                                                  |
-| arrow-round-down             | :x:         | deleted     | becomes "arrow-down"                                                  |
-| arrow-round-forward          | :x:         | deleted     | becomes "arrow-forward"                                               |
-| arrow-round-up               | :x:         | deleted     | becomes "arrow-up"                                                    |
-| bowtie                       | :x:         | deleted     |                                                                       |
-| chatboxes                    | :pencil2:   | renamed     | renamed to "chatbox"                                                  |
-| checkbox-outline             | :x:         | deleted     |                                                                       |
-| checkmark-circle-outline     | :x:         | deleted     |                                                                       |
-| clock                        | :x:         | deleted     |                                                                       |
-| close-circle-outline         | :x:         | deleted     |                                                                       |
-| cloud-outline                | :pencil2:   | renamed     | renamed to "cloud"                                                    |
-| contact                      | :pencil2:   | renamed     | renamed to "person-circle"                                            |
-| contacts                     | :pencil2:   | renamed     | renamed to "person-circle"                                            |
-| done-all                     | :pencil2:   | renamed     | renamed to "checkmark-done"                                           |
-| fastforward	                 | :pencil2:   | renamed     | renamed to "play-forward"                                             |
-| filing                       | :pencil2:   | renamed     | renamed to "file-tray"                                                |
-| freebsd-devil                | :x:         | deleted     |                                                                       |
-| game-controller-a            | :x:         | deleted     |                                                                       |
-| game-controller-b            | :x:         | deleted     | added as "game-controller"                                            |
-| googleplus                   | :x:         | deleted     |                                                                       |
-| hand                         | :x:         | deleted     | split into "hand-left" and "hand-right"                               |
-| heart-empty                  | :pencil2:   | renamed     | renamed to "heart"                                                    |
-| help-circle-outline          | :x:         | deleted     | exists as circled version                                             |
-| information-circle-outline   | :x:         | deleted     | exists as circled version                                             |
-| jet                          | :x:         | deleted     | use "airplane"                                                        |
-| list-box                     | :x:         | deleted     |                                                                       |
-| lock                         | :pencil2:   | renamed     | renamed to "lock-closed"                                              |
-| microphone                   | :x:         | deleted     |                                                                       |
-| model-s                      | :x:         | deleted     | added as "car-sport"                                                  |
-| more                         | :x:         | deleted     | use "ellipsis-horizontal" for `ios` and "ellipsis-vertical" for `md`  |
-| notifications-outline        | :x:         | deleted     | exists as circled version                                             |
-| outlet                       | :x:         | deleted     |                                                                       |
-| paper                        | :pencil2:   | renamed     | renamed to "newspaper"                                                |
-| pie                          | :pencil2:   | renamed     | renamed to "pie chart"                                                |
-| pint                         | :x:         | deleted     |                                                                       |
-| photos                       | :x:         | deleted     | use "image" or "images"                                               |
-| qr-scanner                   | :pencil2:   | renamed     | renamed to "scanner"                                                  |
-| quote                        | :x:         | deleted     |                                                                       |
-| redo                         | :pencil2:   | renamed     | renamed to "arrow-redo"                                               |
-| remove-circle-outline        | :x:         | deleted     | exists as circled version                                             |
-| reorder                      | :x:         | deleted     | added as reorder-two, reorder-three, reorder-four                     |
-| return-left                  | :pencil2:   | renamed     | renamed to "return-right-up/down-arrow"                               |
-| return-right                 | :pencil2:   | renamed     | renamed to "return-right-up/down-arrow"                               |
-| rewind                       | :pencil2:   | renamed     | renamed to "play-back"                                                |
-| reverse-camera               | :pencil2:   | renamed     | renamed to "camera-reverse"                                           |
-| share-alt                    | :x:         | deleted     |                                                                       |
-| skip-backward	               | :pencil2:   | renamed     | renamed to "play-skip-back"					                                 |
-| skip-forward	               | :pencil2:   | renamed     | renamed to "play-skip-forward"					                               |
-| star-outline                 | :pencil2:   | renamed     | renamed to "star"                                                     |
-| stats	                       | :pencil2:   | renamed     | renamed to "stats-chart"                                              |
-| swap                         | :x:         | deleted     | use "swap-horizontal" or "swap-vertical"                              |
-| text                         | :pencil2:   | renamed     | renamed to "chatbox-ellipsis"                                         |
-| undo                         | :pencil2:   | renamed     | renamed to "arrow-undo"	                                             |
-| unlock                       | :pencil2:   | renamed     | renamed to "lock-open"		                                             |
+For more information, check out the [Ionicons Changelog](https://github.com/ionic-team/ionicons/blob/master/CHANGELOG.md)!
 
 
 

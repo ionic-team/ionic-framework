@@ -15,8 +15,8 @@ export const SegmentExample: React.FC = () => (
     </IonSegment>
 
     {/*-- Disabled Segment --*/}
-    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} disabled>
-      <IonSegmentButton value="sunny" checked>
+    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} disabled value="sunny">
+      <IonSegmentButton value="sunny">
         <IonLabel>Sunny</IonLabel>
       </IonSegmentButton>
       <IonSegmentButton value="rainy">
@@ -35,26 +35,26 @@ export const SegmentExample: React.FC = () => (
     </IonSegment>
 
     {/*-- Scrollable Segment --*/}
-    <IonSegment scrollable>
-      <IonSegmentButton>
+    <IonSegment scrollable value="heart">
+      <IonSegmentButton value="home">
         <IonIcon name="home" />
       </IonSegmentButton>
-      <IonSegmentButton checked>
+      <IonSegmentButton value="heart">
         <IonIcon name="heart" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="pin">
         <IonIcon name="pin" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="star">
         <IonIcon name="star" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="call">
         <IonIcon name="call" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="globe">
         <IonIcon name="globe" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="basket">
         <IonIcon name="basket" />
       </IonSegmentButton>
     </IonSegment>
