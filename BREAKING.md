@@ -212,7 +212,8 @@ Before
 </ion-radio-group>
 ```
 
-New Usage
+After
+
 ```html
 <ion-radio-group value="one">
   <ion-radio value="one">One</ion-radio>
