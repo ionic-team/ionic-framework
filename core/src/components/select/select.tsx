@@ -224,7 +224,7 @@ export class Select implements ComponentInterface {
     const actionSheetButtons = data.map(option => {
       const value = getOptionValue(option);
       return {
-        role: (isSelected(value, selectValue) ? 'selected' : ''),
+        role: (isOptionSelected(value, selectValue, this.compareWith) ? 'selected' : ''),
         text: option.textContent,
         handler: () => {
           this.value = value;
@@ -251,7 +251,7 @@ export class Select implements ComponentInterface {
         type: inputType,
         label: o.textContent || '',
         value,
-        checked: isSelected(value, selectValue),
+        checked: isOptionSelected(value, selectValue, this.compareWith),
         disabled: o.disabled
       };
     });
@@ -263,7 +263,7 @@ export class Select implements ComponentInterface {
       return {
         text: o.textContent || '',
         value,
-        checked: isSelected(value, selectValue),
+        checked: isOptionSelected(value, selectValue, this.compareWith),
         disabled: o.disabled,
         handler: () => {
           this.value = value;
@@ -459,11 +459,15 @@ export class Select implements ComponentInterface {
   }
 }
 
-const isSelected = (value: any, selectValue: any) => {
-  if (Array.isArray(selectValue)) {
-    return selectValue.includes(value);
+const isOptionSelected = (currentValue: any[] | any, compareValue: any, compareWith?: string | SelectCompareFn | null) => {
+  if (currentValue === undefined) {
+    return false;
   }
-  return selectValue === value;
+  if (Array.isArray(currentValue)) {
+    return currentValue.some(val => compareOptions(val, compareValue, compareWith));
+  } else {
+    return compareOptions(currentValue, compareValue, compareWith);
+  }
 };
 
 const getOptionValue = (el: HTMLIonSelectOptionElement) => {

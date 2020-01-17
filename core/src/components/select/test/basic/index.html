@@ -348,6 +348,12 @@
 
         objectSelectElement.appendChild(selectOption)
       });
+      
+      objectSelectElement.value = {
+        id: 1,
+        first: 'Alice',
+        last: 'Smith',
+      };
 
       setTimeout(() => {
         objectSelectElement.value = {
