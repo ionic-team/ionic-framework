@@ -280,7 +280,7 @@ New Usage
 
 #### Select button
 
-The `selected` property has been removed. Developers should set the `value` property on the respective `ion-select` in order to managed selected status.
+The `selected` property has been removed. Developers should set the `value` property on the parent `ion-select` to match the desired selected option.
 
 Old Usage
 ```html
