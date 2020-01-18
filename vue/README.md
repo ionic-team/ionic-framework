@@ -7,6 +7,8 @@ To get started simply install `@ionic/vue` and `@ionic/core` with npm into your 
 ```ts
 import Vue from 'vue';
 import Ionic from '@ionic/vue';
+import "@ionic/core/css/core.css";
+import "@ionic/core/css/ionic.bundle.css";
 
 Vue.use(Ionic);
 
