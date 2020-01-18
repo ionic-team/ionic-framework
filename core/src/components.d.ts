@@ -1702,7 +1702,7 @@ export namespace Components {
   }
   interface IonRadio {
     /**
-    * * If `true`, the radio is selected.
+    * If `true`, the radio is selected.
     */
     'checked': boolean;
     /**
@@ -1857,10 +1857,7 @@ export namespace Components {
     * @param listOrReorder A list of items to be sorted and returned in the new order or a boolean of whether or not the reorder should reposition the item.
     */
     'complete': (listOrReorder?: boolean | any[] | undefined) => Promise<any>;
-    /**
-    * Change autoScroll from 'content' to custom element.
-    */
-    'context'?: HTMLElement;
+    'context': null;
     /**
     * If `true`, the reorder will be hidden.
     */
@@ -6051,4 +6048,5 @@ declare module "@stencil/core" {
     }
   }
 }
+
 

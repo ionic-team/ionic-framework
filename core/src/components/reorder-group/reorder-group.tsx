@@ -74,7 +74,7 @@ export class ReorderGroup implements ComponentInterface {
 
   async connectedCallback() {
     const contentEl =
-      this.context !== undefined
+      this.context !== null
         ? this.context
         : this.el.closest('ion-content');
     if (contentEl) {
@@ -322,7 +322,8 @@ export class ReorderGroup implements ComponentInterface {
           'reorder-enabled': !this.disabled,
           'reorder-list-active': this.state !== ReorderGroupState.Idle
         }}
-      ></Host>
+      >
+      </Host>
     );
   }
 }
