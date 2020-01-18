@@ -485,7 +485,7 @@ function doReorder(event: CustomEvent) {
 
 | Property   | Attribute  | Description                            | Type      | Default |
 | ---------- | ---------- | -------------------------------------- | --------- | ------- |
-| `context`  | --         |                                        | `null`    | `null`  |
+| `context`  | --         |                                        | `string`  | `null`  |
 | `disabled` | `disabled` | If `true`, the reorder will be hidden. | `boolean` | `true`  |
 
 
