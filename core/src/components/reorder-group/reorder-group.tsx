@@ -73,11 +73,8 @@ export class ReorderGroup implements ComponentInterface {
   @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
 
   async connectedCallback() {
-    const contextExists = this.context !== "" && this.context !== undefined;
-    const contentEl = 
-        contextExists
-        ? this.el.closest('#' + this.context)
-        : this.el.closest('ion-content');
+    const contextExists = this.context !== '' && this.context !== undefined;
+    const contentEl = contextExists ? this.el.closest('#' + this.context) : this.el.closest('ion-content');
     if (contextExists && contentEl) {
       this.scrollEl = await (contentEl as any).getScrollElement();
     }
