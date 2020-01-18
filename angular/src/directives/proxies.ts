@@ -706,7 +706,7 @@ export class IonSelect {
 }
 
 export declare interface IonSelectOption extends Components.IonSelectOption {}
-@ProxyCmp({inputs: ['disabled', 'value']})
+@ProxyCmp({inputs: ['disabled', 'value', 'selected']})
 @Component({ selector: 'ion-select-option', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['disabled', 'value'] })
 export class IonSelectOption {
   protected el: HTMLElement;
