@@ -481,13 +481,12 @@ function doReorder(event: CustomEvent) {
 
 
 
-
 ## Properties
 
-| Property   | Attribute  | Description                                         | Type          | Default     |
-| ---------- | ---------- | --------------------------------------------------- | ------------- | ----------- |
-| `context`  | `context`  | Change autoScroll from 'content' to custom element. | `HTMLElement` | `undefined` |
-| `disabled` | `disabled` | If `true`, the reorder will be hidden.              | `boolean`     | `true`      |
+| Property   | Attribute  | Description                            | Type      | Default |
+| ---------- | ---------- | -------------------------------------- | --------- | ------- |
+| `context`  | --         |                                        | `null`    | `null`  |
+| `disabled` | `disabled` | If `true`, the reorder will be hidden. | `boolean` | `true`  |
 
 
 ## Events
