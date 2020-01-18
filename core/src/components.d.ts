@@ -1857,7 +1857,7 @@ export namespace Components {
     * @param listOrReorder A list of items to be sorted and returned in the new order or a boolean of whether or not the reorder should reposition the item.
     */
     'complete': (listOrReorder?: boolean | any[] | undefined) => Promise<any>;
-    'context': null;
+    'context'?: string;
     /**
     * If `true`, the reorder will be hidden.
     */
@@ -5021,7 +5021,7 @@ declare namespace LocalJSX {
   }
   interface IonReorder {}
   interface IonReorderGroup {
-    'context'?: null;
+    'context'?: string;
     /**
     * If `true`, the reorder will be hidden.
     */
