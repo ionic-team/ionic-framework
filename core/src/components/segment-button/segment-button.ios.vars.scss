@@ -4,10 +4,10 @@
 // --------------------------------------------------
 
 /// @prop - Background of the segment button
-$segment-button-ios-background-color:                 transparent !default;
+$segment-button-ios-background:                       none !default;
 
 /// @prop - Background of the checked segment button
-$segment-button-ios-background-color-checked:         transparent !default;
+$segment-button-ios-background-checked:               $segment-button-ios-background !default;
 
 /// @prop - Background of the checked segment button indicator
 $segment-button-ios-indicator-color:                  var(--ion-color-step-350, $background-color) !default;
@@ -22,7 +22,7 @@ $segment-button-ios-opacity-hover:                    .5 !default;
 $segment-button-ios-opacity-disabled:                 .3 !default;
 
 /// @prop - Background of the segment button on hover
-$segment-button-ios-background-color-hover:           transparent !default;
+$segment-button-ios-background-hover:                 transparent !default;
 
 /// @prop - Box shadow of the checked segment button
 $segment-button-ios-box-shadow-checked:               0 0 5px rgba(0, 0, 0, 0.16) !default;
