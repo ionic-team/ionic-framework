@@ -1,4 +1,5 @@
 import { createAnimation } from '../animation';
+import { processKeyframes } from '../animation-utils';
 import { getTimeGivenProgression } from '../cubic-bezier';
 import { Animation } from '../animation-interface';
 
@@ -81,6 +82,18 @@ describe('Animation Class', () => {
       ]);
 
       expect(animation.getKeyframes().length).toEqual(3);
+    });
+    
+    it('should convert properties for CSS Animations', () => {
+      const processedKeyframes = processKeyframes([
+        { borderRadius: '0px', easing: 'ease-in' , offset: 0 },
+        { borderRadius: '4px', easing: 'ease-out', offset: 1 }
+      ]);
+
+      expect(processedKeyframes).toEqual([
+        { 'border-radius': '0px', 'animation-timing-function': 'ease-in', offset: 0 },
+        { 'border-radius': '4px', 'animation-timing-function': 'ease-out', offset: 1 }
+      ]);
     });
 
     it('should set the from keyframe properly', () => {
