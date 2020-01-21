@@ -7,12 +7,21 @@ import { AnimationKeyFrames } from './animation-interface';
 export const processKeyframes = (keyframes: AnimationKeyFrames) => {
   keyframes.forEach(keyframe => {
     for (const key in keyframe) {
-      if (keyframe.hasOwnProperty(key) && key.includes('-')) {
+      if (keyframe.hasOwnProperty(key)) {
         const value = keyframe[key];
-        const newKey = convertHyphenToCamelCase(key);
 
-        keyframe[newKey] = value;
-        delete keyframe[key];
+        if (key === 'easing') {
+          const newKey = 'animation-timing-function';
+          keyframe[newKey] = value;
+          delete keyframe[key];
+        } else {
+          const newKey = convertCamelCaseToHypen(key);
+
+          if (newKey !== key) {
+            keyframe[newKey] = value;
+            delete keyframe[key];
+          }
+        }
       }
     }
   });
@@ -20,8 +29,8 @@ export const processKeyframes = (keyframes: AnimationKeyFrames) => {
   return keyframes;
 };
 
-const convertHyphenToCamelCase = (str: string) => {
-  return str.replace(/-([a-z])/ig, g => g[1].toUpperCase());
+const convertCamelCaseToHypen = (str: string) => {
+  return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 };
 
 let animationPrefix: string | undefined;
