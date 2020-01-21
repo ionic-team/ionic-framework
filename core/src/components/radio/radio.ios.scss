@@ -50,7 +50,7 @@
 // -----------------------------------------
 
 :host(.ion-focused) .radio-icon::after {
-  @include border-radius(50%);
+  @include border-radius(var(--inner-border-radius));
   @include position(-8px, null, null, -9px);
 
   display: block;

@@ -104,12 +104,12 @@ export const SelectExample: React.FC = () => (
 
       <IonItem>
         <IonLabel>Pets</IonLabel>
-        <IonSelect multiple={true}>
-          <IonSelectOption value="bird" selected>
+        <IonSelect multiple={true} value={['bird', 'dog']}>
+          <IonSelectOption value="bird">
             Bird
           </IonSelectOption>
           <IonSelectOption value="cat">Cat</IonSelectOption>
-          <IonSelectOption value="dog" selected>
+          <IonSelectOption value="dog">
             Dog
           </IonSelectOption>
           <IonSelectOption value="honeybadger">Honey Badger</IonSelectOption>

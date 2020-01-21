@@ -10,14 +10,15 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { popoverController } from '../../../../dist/ionic/index.esm.js';
+    window.popoverController = popoverController;
+  </script>
 <body>
   <button id="basic-popover" onclick="presentPopover({ component: 'profile-page', event: event })">Show Popover</button>
   <button onclick="presentPopover({ component: 'translucent-page', event: event, translucent: true })">Show Translucent Popover</button>
   <button color="secondary" onclick="presentPopover({ component: 'list-page', event: event })">Show Long List Popover</button>
   <button color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</button>
-
-  <ion-popover-controller></ion-popover-controller>
 
   <style>
     body > button {
@@ -35,9 +36,8 @@
 
   <script>
     async function presentPopover(opts) {
-      const popoverController = document.querySelector('ion-popover-controller');
-      const popoverElement = await popoverController.create(opts);
-      return await popoverElement.present();
+      const popover = await popoverController.create(opts);
+      await popover.present();
     }
 
     class ProfilePage extends HTMLElement {

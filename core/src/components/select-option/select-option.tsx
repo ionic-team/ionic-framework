@@ -19,11 +19,6 @@ export class SelectOption implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * If `true`, the element is selected.
-   */
-  @Prop() selected = false;
-
-  /**
    * The text value of the option.
    */
   @Prop() value?: any | null;

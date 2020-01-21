@@ -10,7 +10,10 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { actionSheetController } from '../../../../dist/ionic/index.esm.js';
+    window.actionSheetController = actionSheetController;
+  </script>
 <body>
   <button id="basic" onclick="presentBasic()">Basic</button>
   <button id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</button>
@@ -37,8 +40,13 @@
 
   <script>
     window.addEventListener('ionActionSheetDidDismiss', function(e){console.log('didDismiss', e)})
+    async function openActionSheet(opts) {
+      const actionSheet = await actionSheetController.create(opts);
+      await actionSheet.present();
+    }
+    
     function presentBasic() {
-      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
+      openActionSheet({
         header: "Albums",
         buttons: [{
           text: 'Delete',
@@ -74,14 +82,10 @@
           }
         }]
       });
-      document.body.appendChild(actionSheetElement);
-      return actionSheetElement.present();
     }
 
     function presentIcons() {
-      const mode = Ionic.mode;
-
-      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
+      openActionSheet({
         header: "Albums",
         buttons: [{
           text: 'Delete',
@@ -117,12 +121,10 @@
           }
         }]
       });
-      document.body.appendChild(actionSheetElement);
-      return actionSheetElement.present();
     }
 
     function presentNoBackdropDismiss() {
-      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
+      openActionSheet({
         buttons: [{
           text: 'Archive',
           handler: () => {
@@ -142,12 +144,10 @@
           }
         }]
       });
-      document.body.appendChild(actionSheetElement);
-      return actionSheetElement.present();
     }
 
     function presentAlert() {
-      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
+      openActionSheet({
         buttons: [{
           text: 'Open Alert',
           handler: () => {
@@ -161,12 +161,10 @@
           }
         }]
       });
-      document.body.appendChild(actionSheetElement);
-      return actionSheetElement.present();
     }
 
     function presentScroll() {
-      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
+      openActionSheet({
         buttons: [
           {
             text: 'Add Reaction',
@@ -238,12 +236,10 @@
           }
         ]
       });
-      document.body.appendChild(actionSheetElement);
-      return actionSheetElement.present();
     }
 
     function presentScrollNoCancel() {
-      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
+      openActionSheet({
         buttons: [
           {
             text: 'Add Reaction',
@@ -309,12 +305,10 @@
           }
         ]
       });
-      document.body.appendChild(actionSheetElement);
-      return actionSheetElement.present();
     }
 
     function presentCancelOnly() {
-      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
+      openActionSheet({
         buttons: [
           {
             text: 'Cancel',
@@ -325,12 +319,10 @@
           }
         ]
       });
-      document.body.append(actionSheetElement);
-      return actionSheetElement.present();
     }
 
     function presentWithCssClass() {
-      const actionSheetElement = Object.assign(document.createElement('ion-action-sheet'), {
+      openActionSheet({
         header: "Custom Css Class",
         cssClass: "my-class my-custom-class",
         buttons: [
@@ -344,8 +336,6 @@
           }
         ]
       });
-      document.body.appendChild(actionSheetElement);
-      return actionSheetElement.present();
     }
 
   </script>

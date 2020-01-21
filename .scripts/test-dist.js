@@ -11,7 +11,22 @@ const fs = require('fs');
   },
   // angular
   {
-    files: ['../angular/dist/fesm5.cjs.js']
+    files: [
+      '../angular/dist/schematics/collection.json',
+      '../angular/dist/fesm5/ionic-angular.js',
+      '../angular/dist/fesm2015/ionic-angular.js',
+      '../angular/dist/ionic-angular.d.ts',
+      '../angular/dist/ionic-angular.metadata.json'
+    ]
+  },
+  // angular-server
+  {
+    files: [
+      '../packages/angular-server/dist/fesm5/ionic-angular-server.js',
+      '../packages/angular-server/dist/fesm2015/ionic-angular-server.js',
+      '../packages/angular-server/dist/ionic-angular-server.d.ts',
+      '../packages/angular-server/dist/ionic-angular-server.metadata.json'
+    ]
   },
   // react
   {

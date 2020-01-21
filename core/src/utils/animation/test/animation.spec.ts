@@ -397,6 +397,7 @@ describe('cubic-bezier conversion', () => {
       expect(getTimeGivenProgression(...equation, 1.32)).toEqual([]);
       expect(getTimeGivenProgression(...equation, -0.32)).toEqual([]);
     })
+    
   })
 });
 

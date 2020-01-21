@@ -6,15 +6,14 @@
 :host {
   /**
    * @prop --background: Background of the segment button
-   * @prop --background-hover: Background of the segment button on hover
-   * @prop --background-activated: Background of the segment button when pressed
    * @prop --background-checked: Background of the checked segment button
+   * @prop --background-disabled: Background of the disabled segment button
+   * @prop --background-hover: Background of the segment button on hover
    *
    * @prop --color: Color of the segment button
-   * @prop --color-activated: Color of the segment button when pressed
    * @prop --color-checked: Color of the checked segment button
    * @prop --color-disabled: Color of the disabled segment button
-   * @prop --color-checked-disabled: Color of the checked & disabled segment button
+   * @prop --color-hover: Color of the segment button on hover
    *
    * @prop --border-radius: Radius of the segment button border
    * @prop --border-color: Color of the segment button border
@@ -33,25 +32,30 @@
    *
    * @prop --transition: Transition of the segment button
    *
-   * @prop --indicator-color: Color of the indicator (highlight) under the segment button
-   * @prop --indicator-color-checked: Color of the indicator (highlight) under the checked segment button
-   *
+   * @prop --indicator-box-shadow: Box shadow on the indicator for the checked segment button
+   * @prop --indicator-color: Color of the indicator for the checked segment button
+   * @prop --indicator-transition: Transition of the indicator for the checked segment button
+   * @prop --indicator-transform: Transform of the indicator for the checked segment button
    */
+  --color: initial;
+  --color-hover: initial;
+  --color-checked: var(--color);
+  --color-disabled: var(--color);
   --padding-start: 0;
   --padding-end: 0;
   --padding-top: 0;
   --padding-bottom: 0;
 
+  @include border-radius(var(--border-radius));
+
   display: flex;
 
-  flex: 1 0 auto;
+  position: relative;
+
+  flex: 1 1 auto;
   flex-direction: column;
 
   height: auto;
-
-  border-width: var(--border-width);
-  border-style: var(--border-style);
-  border-color: var(--border-color);
 
   background: var(--background);
 
@@ -62,32 +66,15 @@
 
   white-space: nowrap;
 
-  overflow: hidden;
   font-kerning: none;
 }
 
-:host(:first-of-type) {
-  @include border-radius(var(--border-radius), 0, 0, var(--border-radius));
-}
-
-:host(:not(:first-of-type)) {
-  @include rtl() {
-    border-right-width: 0;
-    border-left-width: var(--border-width);
-  }
-
-  border-left-width: 0;
-}
-
-:host(:last-of-type) {
-  @include border-radius(0, var(--border-radius), var(--border-radius), 0);
-}
-
 .button-native {
-  @include border-radius(inherit);
+  @include border-radius(0);
   @include text-inherit();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include transform(translate3d(0,0,0));
 
   display: flex;
   position: relative;
@@ -116,22 +103,8 @@
 
   contain: content;
   cursor: pointer;
-}
 
-
-// Segment Button: Indicator
-// --------------------------------------------------
-
-.segment-button-indicator {
-  align-self: flex-end;
-
-  width: 100%;
-
-  height: 2px;
-
-  background-color: var(--indicator-color);
-
-  opacity: 1;
+  z-index: 2;
 }
 
 
@@ -143,30 +116,28 @@
   color: var(--color-checked);
 }
 
-:host(.segment-button-checked) .segment-button-indicator {
-  background-color: var(--indicator-color-checked, var(--color-checked));
-}
-
-// Segment Button: Activated
-// --------------------------------------------------
-
-:host(.activated) {
-  color: var(--color-activated, var(--color));
-}
-
 
 // Segment Button: Disabled
 // --------------------------------------------------
 
 :host(.segment-button-disabled) {
+  background: var(--background-disabled);
   color: var(--color-disabled);
 }
 
-// Segment Button: Checked & Disabled
+
+// Segment Button: Hover
 // --------------------------------------------------
 
-:host(.segment-button-disabled.segment-button-checked) {
-  color: var(--color-checked-disabled);
+@media (any-hover: hover) {
+  :host(:hover) {
+    background: var(--background-hover);
+    color: var(--color-hover, var(--color));
+  }
+
+  :host(.segment-button-checked:hover) {
+    color: var(--color-hover, var(--color-checked));
+  }
 }
 
 
@@ -174,7 +145,11 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
+  flex-shrink: 0;
+
   order: -1;
+
+  pointer-events: none;
 }
 
 
@@ -193,11 +168,18 @@
   white-space: nowrap;
 
   box-sizing: border-box;
+
+  pointer-events: none;
 }
 
 
 // Segment Button Layout
 // --------------------------------------------------
+
+// Layout: icon top
+:host(.segment-button-layout-icon-top) .button-native {
+  flex-direction: column;
+}
 
 // Layout: icon start
 :host(.segment-button-layout-icon-start) .button-native {
@@ -229,4 +211,50 @@
 
 ion-ripple-effect {
   color: var(--ripple-color, var(--color-checked));
+}
+
+// Segment Button: Indicator
+// --------------------------------------------------
+
+.segment-button-indicator {
+  @include transform-origin(left);
+
+  position: absolute;
+
+  opacity: 0;
+
+  box-sizing: border-box;
+
+  will-change: transform, opacity;
+}
+
+.segment-button-indicator-background {
+  width: 100%;
+  height: 100%;
+
+  transform: var(--indicator-transform);
+
+  box-shadow: var(--indicator-box-shadow);
+}
+
+.segment-button-indicator-animated {
+  transition: var(--indicator-transition);
+}
+
+:host(.segment-button-checked) .segment-button-indicator {
+  opacity: 1;
+}
+
+
+// Segment: Reduced Motion
+// --------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  .segment-button-indicator-background {
+    transform: none;
+  }
+
+  .segment-button-indicator-animated {
+    transition: none;
+  }
 }

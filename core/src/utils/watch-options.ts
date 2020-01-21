@@ -28,5 +28,5 @@ export const findCheckedOption = (el: any, tagName: string) => {
     ? [el]
     : Array.from(el.querySelectorAll(tagName));
 
-  return options.find((o: any) => o.checked === true);
+  return options.find((o: any) => o.value === el.value);
 };

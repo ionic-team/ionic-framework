@@ -10,11 +10,12 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { modalController } from '../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
 <body>
   <button id="basic-modal" onclick="presentModal()">Present Modal</button>
-
-  <ion-modal-controller></ion-modal-controller>
 
   <style>
     body > button {
@@ -37,7 +38,6 @@
       }
     });
     async function presentModal() {
-      const modalController = document.querySelector('ion-modal-controller');
       const modalElement = await modalController.create({
         component: 'page-one'
       });

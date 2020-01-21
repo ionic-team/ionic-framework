@@ -1,11 +1,7 @@
 import { JSX } from '@ionic/core';
-import { JSX as IoniconsJSX } from 'ionicons';
 
 import { createReactComponent } from './createComponent';
 import { HrefProps } from './hrefprops';
-
-// ionicons
-export const IonIcon = /*@__PURE__*/createReactComponent<IoniconsJSX.IonIcon, HTMLIonIconElement>('ion-icon');
 
 // ionic/core
 export const IonApp = /*@__PURE__*/createReactComponent<JSX.IonApp, HTMLIonAppElement>('ion-app');

@@ -32,7 +32,7 @@
 
         <!-- Provide a custom route to navigate to -->
         <ion-tab-button tab="speakers" :to="{ name: 'app.speakers' }">
-          <ion-icon name="contacts"></ion-icon>
+          <ion-icon name="person-circle"></ion-icon>
           <ion-label>Speakers</ion-label>
         </ion-tab-button>
 

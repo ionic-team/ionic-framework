@@ -51,14 +51,14 @@ export class RefresherContent implements ComponentInterface {
       const mode = getIonMode(this);
       this.pullingIcon = config.get(
         'refreshingIcon',
-        mode === 'ios' && isPlatform('mobile') ? config.get('spinner', 'lines') : 'arrow-down'
+        mode === 'ios' && isPlatform('mobile') ? config.get('spinner', 'lines') : 'circular'
       );
     }
     if (this.refreshingSpinner === undefined) {
       const mode = getIonMode(this);
       this.refreshingSpinner = config.get(
         'refreshingSpinner',
-        config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
+        config.get('spinner', mode === 'ios' ? 'lines' : 'circular')
       );
     }
   }
@@ -66,12 +66,21 @@ export class RefresherContent implements ComponentInterface {
   render() {
     const pullingIcon = this.pullingIcon;
     const hasSpinner = pullingIcon != null && SPINNERS[pullingIcon] as any !== undefined;
+    const mode = getIonMode(this);
+
     return (
-      <Host class={getIonMode(this)}>
+      <Host class={mode}>
         <div class="refresher-pulling">
           {this.pullingIcon && hasSpinner &&
             <div class="refresher-pulling-icon">
-              <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
+              <div class="spinner-arrow-container">
+                <ion-spinner name={this.pullingIcon as SpinnerTypes} paused></ion-spinner>
+                {mode === 'md' && this.pullingIcon === 'circular' &&
+                  <div class="arrow-container">
+                    <ion-icon name="caret-back-sharp"></ion-icon>
+                  </div>
+                }
+              </div>
             </div>
           }
           {this.pullingIcon && !hasSpinner &&

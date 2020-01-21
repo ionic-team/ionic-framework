@@ -4,22 +4,29 @@
 // --------------------------------------------------
 
 :host {
-  --indicator-color-checked: initial;
+  /**
+   * @prop --background: Background of the segment button
+   */
   --ripple-color: currentColor;
-  --color-activated: initial;
 
   @include font-smoothing();
 
   display: flex;
+
+  position: relative;
 
   align-items: stretch;
   justify-content: center;
 
   width: 100%;
 
+  background: var(--background);
+
   font-family: $font-family-base;
 
   text-align: center;
+
+  contain: paint;
 }
 
 
@@ -45,4 +52,20 @@
 
 :host(.segment-scrollable::-webkit-scrollbar) {
   display: none;
+}
+
+// Segment Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  // Default Segment, In a Default Toolbar, Hover
+  :host(.in-toolbar:not(.ion-color)) ::slotted(ion-segment-button:hover) {
+    background: var(--ion-toolbar-segment-background-hover, var(--background-hover));
+    color: var(--ion-toolbar-segment-color-hover, var(--color-hover, var(--ion-toolbar-segment-color, var(--color))));
+  }
+
+  // Default Segment, In a Default Toolbar, Checked / Hover
+  :host(.in-toolbar:not(.ion-color)) ::slotted(.segment-button-checked:hover) {
+    color: var(--ion-toolbar-segment-color-hover, var(--color-hover, var(--ion-toolbar-segment-color-checked, var(--color-checked))));
+  }
 }

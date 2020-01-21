@@ -56,6 +56,10 @@ ion-refresher-content {
   text-align: center;
 }
 
+ion-refresher-content .arrow-container {
+  display: none;
+}
+
 // Refresher Content States
 // --------------------------------------------------
 
@@ -98,5 +102,14 @@ ion-refresher-content {
 
   .refresher-refreshing-icon {
     transform: scale(0);
+  }
+}
+
+// Refresher Native
+// --------------------------------------------------
+
+.refresher-native {
+  .refresher-pulling-text, .refresher-refreshing-text {
+    display: none;
   }
 }

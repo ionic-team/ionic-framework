@@ -10,7 +10,10 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { loadingController } from '../../../../dist/ionic/index.esm.js';
+    window.loadingController = loadingController;
+  </script>
 <body>
   <ion-app>
 
@@ -21,14 +24,14 @@
     </ion-header>
 
     <ion-content class="ion-padding">
-      <ion-button id="basic-loading" expand="block" onclick="presentLoading()">Show Loading</ion-button>
-      <ion-button id="default" expand="block" onclick="presentLoadingWithOptions({duration: 2000, content: 'Please wait...'})">Show Default Loading</ion-button>
-      <ion-button id="long-content-loading" expand="block" onclick="presentLoadingWithOptions({duration: 2000, message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long message</ion-button>
-      <ion-button id="no-spinner-loading" expand="block" onclick="presentLoadingWithOptions({duration: 2000, message: 'Please wait...', spinner: null})">Show Loading with no spinner</ion-button>
-      <ion-button id="translucent-loading" expand="block" onclick="presentLoadingWithOptions({duration: 5000, message: 'Please wait...', translucent: true})">Show Loading with translucent</ion-button>
-      <ion-button id="custom-class-loading" expand="block" onclick="presentLoadingWithOptions({duration: 5000,message: 'Please wait...', cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</ion-button>
-      <ion-button id="backdrop-loading" expand="block" onclick="presentLoadingWithOptions({backdropDismiss: true})">Show Backdrop Click Loading</ion-button>
-      <ion-button id="html-content-loading" expand="block" onclick="presentLoadingWithOptions({cssClass: 'html-loading', duration: 5000, message: '<ion-button>Click impatiently to load faster</ion-button>'})">Show Loading with HTML content</ion-button>
+      <ion-button id="basic-loading" expand="block" onclick="openLoading({ message: 'Hellooo', duration: 2000 })">Show Loading</ion-button>
+      <ion-button id="default" expand="block" onclick="openLoading({duration: 2000, content: 'Please wait...'})">Show Default Loading</ion-button>
+      <ion-button id="long-content-loading" expand="block" onclick="openLoading({duration: 2000, message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long message</ion-button>
+      <ion-button id="no-spinner-loading" expand="block" onclick="openLoading({duration: 2000, message: 'Please wait...', spinner: null})">Show Loading with no spinner</ion-button>
+      <ion-button id="translucent-loading" expand="block" onclick="openLoading({duration: 5000, message: 'Please wait...', translucent: true})">Show Loading with translucent</ion-button>
+      <ion-button id="custom-class-loading" expand="block" onclick="openLoading({duration: 5000,message: 'Please wait...', cssClass: 'custom-class custom-loading'})">Show Loading with cssClass</ion-button>
+      <ion-button id="backdrop-loading" expand="block" onclick="openLoading({backdropDismiss: true})">Show Backdrop Click Loading</ion-button>
+      <ion-button id="html-content-loading" expand="block" onclick="openLoading({cssClass: 'html-loading', duration: 5000, message: '<ion-button>Click impatiently to load faster</ion-button>'})">Show Loading with HTML content</ion-button>
 
       <ion-grid>
         <ion-row>
@@ -62,19 +65,9 @@
 
   </ion-app>
   <script>
-    function presentLoading() {
-      const loadingElement = Object.assign(document.createElement('ion-loading'), {
-        message: 'Hellooo',
-        duration: 2000
-      });
-      document.body.appendChild(loadingElement);
-      return loadingElement.present();
-    }
-
-    function presentLoadingWithOptions(opts) {
-      const loadingElement = Object.assign(document.createElement('ion-loading'), opts);
-      document.body.appendChild(loadingElement);
-      return loadingElement.present();
+    async function openLoading(opts) {
+      const loading = await loadingController.create(opts);
+      await loading.present();
     }
   </script>
 

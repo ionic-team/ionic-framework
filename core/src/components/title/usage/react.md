@@ -83,7 +83,7 @@ export const LargeTitleExample: React.FC = () => (
   <>
     <IonHeader translucent="true">
       <IonToolbar>   
-        <IonButtons collapse="true">
+        <IonButtons collapse="true" slot="end">
           <IonButton>Click Me</IonButton>
         </IonButtons> 
         <IonTitle>Settings</IonTitle>               
@@ -93,7 +93,7 @@ export const LargeTitleExample: React.FC = () => (
     <IonContent fullscreen="true">
       <IonHeader collapse="condense">              
         <IonToolbar>      
-          <IonButtons collapse="true">
+          <IonButtons collapse="true" slot="end">
             <IonButton>Click Me</IonButton>
           </IonButtons>
           <IonTitle size="large">Settings</IonTitle>
@@ -112,7 +112,7 @@ export const LargeTitleExample: React.FC = () => (
 
 In this example, notice that we have added two sets of `IonButtons` both with `collapse="true"`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `IonTitle` element.
 
-`IonButtons` elements that do not have `collapse` set will always be visible, regardless of collapsed state.
+`IonButtons` elements that do not have `collapse` set will always be visible, regardless of collapsed state. When using the large title and `ion-buttons` elements inside of `ion-content`, the `ion-buttons` elements should always be placed in the `end` slot.
 
 When styling the large title, you should target the large title globally as opposed to within the context of a particular page or tab, otherwise its styles will not be applied during the navigation animation.
 

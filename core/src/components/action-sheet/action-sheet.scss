@@ -27,7 +27,7 @@
   --max-width: #{$action-sheet-max-width};
   --min-height: auto;
   --height: 100%;
-  --max-height: 100%;
+  --max-height: calc(100% - (var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
 
   @include font-smoothing();
   @include position(0, 0, 0, 0);

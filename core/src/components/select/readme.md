@@ -4,8 +4,7 @@ Selects are form controls to select an option, or options, from a set of options
 
 A select should be used with child `<ion-select-option>` elements. If the child option is not given a `value` attribute then its text will be used as the value.
 
-If `value` is set on the `<ion-select>`, the selected option will be chosen based on that value. Otherwise, the `selected` attribute can be used on the `<ion-select-option>`.
-
+If `value` is set on the `<ion-select>`, the selected option will be chosen based on that value.
 
 ## Interfaces
 
@@ -110,10 +109,10 @@ Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert
 
   <ion-item>
     <ion-label>Pets</ion-label>
-    <ion-select multiple="true">
-      <ion-select-option value="bird" selected>Bird</ion-select-option>
+    <ion-select multiple="true" [value]="['bird', 'dog']">
+      <ion-select-option value="bird">Bird</ion-select-option>
       <ion-select-option value="cat">Cat</ion-select-option>
-      <ion-select-option value="dog" selected>Dog</ion-select-option>
+      <ion-select-option value="dog">Dog</ion-select-option>
       <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
     </ion-select>
   </ion-item>
@@ -315,14 +314,19 @@ export class SelectExample {
 
   <ion-item>
     <ion-label>Pets</ion-label>
-    <ion-select multiple="true">
-      <ion-select-option value="bird" selected>Bird</ion-select-option>
+    <ion-select id="multiple" multiple="true">
+      <ion-select-option value="bird">Bird</ion-select-option>
       <ion-select-option value="cat">Cat</ion-select-option>
-      <ion-select-option value="dog" selected>Dog</ion-select-option>
+      <ion-select-option value="dog">Dog</ion-select-option>
       <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
     </ion-select>
   </ion-item>
 </ion-list>
+```
+
+```javascript
+const select = document.querySelector('multiple');
+select.value = ['bird', 'dog'];
 ```
 
 ## Objects as Values
@@ -372,10 +376,11 @@ export class SelectExample {
     let selectOption = document.createElement('ion-select-option');
     selectOption.value = option;
     selectOption.textContent = option.first + ' ' + option.last;
-    selectOption.selected = (i === 0);
 
     objectSelectElement.appendChild(selectOption)
   });
+  
+  objectSelectElement.value = objectOptions[0];
 }
 ```
 
@@ -564,12 +569,12 @@ export const SelectExample: React.FC = () => (
 
       <IonItem>
         <IonLabel>Pets</IonLabel>
-        <IonSelect multiple={true}>
-          <IonSelectOption value="bird" selected>
+        <IonSelect multiple={true} value={['bird', 'dog']}>
+          <IonSelectOption value="bird">
             Bird
           </IonSelectOption>
           <IonSelectOption value="cat">Cat</IonSelectOption>
-          <IonSelectOption value="dog" selected>
+          <IonSelectOption value="dog">
             Dog
           </IonSelectOption>
           <IonSelectOption value="honeybadger">Honey Badger</IonSelectOption>
@@ -719,10 +724,10 @@ export const SelectExample: React.FC = () => (
 
     <ion-item>
       <ion-label>Pets</ion-label>
-      <ion-select multiple="true">
-        <ion-select-option value="bird" selected>Bird</ion-select-option>
+      <ion-select multiple="true" :value=['bird', 'dog']>
+        <ion-select-option value="bird">Bird</ion-select-option>
         <ion-select-option value="cat">Cat</ion-select-option>
-        <ion-select-option value="dog" selected>Dog</ion-select-option>
+        <ion-select-option value="dog">Dog</ion-select-option>
         <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
       </ion-select>
     </ion-item>
@@ -769,7 +774,7 @@ export const SelectExample: React.FC = () => (
 
     <ion-item>
       <ion-label>Action Sheet</ion-label>
-      <ion-select :interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+      <ion-select :interfaceOptions="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
         <ion-select-option value="red">Red</ion-select-option>
         <ion-select-option value="purple">Purple</ion-select-option>
         <ion-select-option value="yellow">Yellow</ion-select-option>
