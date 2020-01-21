@@ -291,10 +291,9 @@ export class Segment implements ComponentInterface {
     if (current != null) {
 
       /**
-       * If current element is ion-segment
-       * then that means user tried to select
-       * a disable ion-segment-button and
-       * we should not update the ripple
+       * If current element is ion-segment then that means
+       * user tried to select a disabled ion-segment-button,
+       * and we should not update the ripple.
        */
       if (current.tagName === 'ION-SEGMENT') {
         return false;
