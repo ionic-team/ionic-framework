@@ -108,9 +108,9 @@
   contain: content;
   cursor: pointer;
 
-  z-index: 2;
-
   overflow: hidden;
+
+  z-index: 2;
 }
 
 .button-native::after {
