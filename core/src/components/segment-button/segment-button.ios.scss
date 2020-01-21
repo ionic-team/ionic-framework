@@ -133,16 +133,60 @@
 }
 
 
+// Segment: Color
+// --------------------------------------------------
+
+:host(.in-segment-color) .button-native {
+  color: #000;
+}
+
+@media (any-hover: hover) {
+  // Toolbar with Color, Default Segment, Checked, Hover
+  :host(.in-segment-color.segment-button-checked:hover) .button-native {
+    color: #000;
+  }
+}
+
+
+
 // Segment Button: Toolbar
 // --------------------------------------------------
 
-// Segment button indicator color should use the global variable with
-// a fallback to the local variable
-:host(.in-toolbar) .segment-button-indicator-background {
-  background: #{var(--ion-toolbar-segment-indicator-color, var(--indicator-color))};
+// Default Segment, In a Toolbar
+:host(.in-toolbar:not(.in-segment-color)) {
+  --background-checked: #{var(--ion-toolbar-segment-background-checked, $segment-button-ios-background-checked)};
+  --color: var(--ion-toolbar-segment-color, initial);
+  --color-checked: var(--ion-toolbar-segment-color-checked, initial);
+  --indicator-color: #{var(--ion-toolbar-segment-indicator-color, $segment-button-ios-indicator-color)};
 }
+
+
+// Segment Button: Toolbar w/ Color
+// --------------------------------------------------
 
 // Do not use the global or local CSS variable if the toolbar has a color
 :host(.in-toolbar-color) .segment-button-indicator-background {
   background: #fff;
+}
+
+// Toolbar with Color, Default Segment
+:host(.in-toolbar-color:not(.in-segment-color)) .button-native {
+  color: #{current-color(contrast)};
+}
+
+// Toolbar with Color, Default Segment, Checked
+:host(.in-toolbar-color.segment-button-checked:not(.in-segment-color)) .button-native {
+  color: #{current-color(base)};
+}
+
+@media (any-hover: hover) {
+  // Toolbar with Color, Default Segment, Hover
+  :host(.in-toolbar-color:not(.in-segment-color):hover) .button-native {
+    color: #{current-color(contrast)};
+  }
+
+  // Toolbar with Color, Default Segment, Checked / Hover
+  :host(.in-toolbar-color.segment-button-checked:not(.in-segment-color):hover) .button-native {
+    color: #{current-color(base)};
+  }
 }
