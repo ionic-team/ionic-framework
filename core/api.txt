@@ -982,15 +982,17 @@ ion-segment-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-segment-button,prop,value,string,'ion-sb-' + (ids++),false,false
 ion-segment-button,css-prop,--background
 ion-segment-button,css-prop,--background-checked
-ion-segment-button,css-prop,--background-disabled
+ion-segment-button,css-prop,--background-focused
+ion-segment-button,css-prop,--background-focused-opacity
 ion-segment-button,css-prop,--background-hover
+ion-segment-button,css-prop,--background-hover-opacity
 ion-segment-button,css-prop,--border-color
 ion-segment-button,css-prop,--border-radius
 ion-segment-button,css-prop,--border-style
 ion-segment-button,css-prop,--border-width
 ion-segment-button,css-prop,--color
 ion-segment-button,css-prop,--color-checked
-ion-segment-button,css-prop,--color-disabled
+ion-segment-button,css-prop,--color-focused
 ion-segment-button,css-prop,--color-hover
 ion-segment-button,css-prop,--indicator-box-shadow
 ion-segment-button,css-prop,--indicator-color

@@ -88,6 +88,8 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
+          'in-segment': hostContext('ion-segment', this.el),
+          'in-segment-color': hostContext('ion-segment[color]', this.el),
           'segment-button-has-label': hasLabel,
           'segment-button-has-icon': hasIcon,
           'segment-button-has-label-only': hasLabel && !hasIcon,
@@ -97,6 +99,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           [`segment-button-layout-${layout}`]: true,
           'ion-activatable': true,
           'ion-activatable-instant': true,
+          'ion-focusable': true,
         }}
       >
         <button
@@ -105,7 +108,9 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           class="button-native"
           disabled={disabled}
         >
-          <slot></slot>
+          <span class="button-inner">
+            <slot></slot>
+          </span>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>
         <div
