@@ -1,8 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-test('segment: basic', async () => {
+test('segment: colors', async () => {
   const page = await newE2EPage({
-    url: '/src/components/segment/test/basic?ionic:_testing=true'
+    url: '/src/components/segment/test/colors?ionic:_testing=true'
   });
 
   await page.waitFor(250);
@@ -11,9 +11,9 @@ test('segment: basic', async () => {
   expect(compare).toMatchScreenshot();
 });
 
-test('segment:rtl: basic', async () => {
+test('segment:rtl: colors', async () => {
   const page = await newE2EPage({
-    url: '/src/components/segment/test/basic?ionic:_testing=true&rtl=true'
+    url: '/src/components/segment/test/colors?ionic:_testing=true&rtl=true'
   });
 
   await page.waitFor(250);
