@@ -13,7 +13,7 @@ export interface ViewStack {
  * The holistic view of all the Routes configured for an application inside of an IonRouterOutlet.
  */
 export class ViewStacks {
-  private viewStacks: { [key: string]: ViewStack | undefined } = {};
+  private viewStacks: { [key: string]: ViewStack | undefined; } = {};
 
   get(key: string) {
     return this.viewStacks[key];
@@ -31,25 +31,34 @@ export class ViewStacks {
     delete this.viewStacks[key];
   }
 
-  findViewInfoByLocation(location: HistoryLocation, viewKey?: string) {
+  findViewInfoByLocation(location: HistoryLocation, viewKey: string) {
     let view: ViewItem<IonRouteData> | undefined;
     let match: IonRouteData['match'] | null | undefined;
     let viewStack: ViewStack | undefined;
-    if (viewKey) {
-      viewStack = this.viewStacks[viewKey];
-      if (viewStack) {
-        viewStack.views.some(matchView);
+
+    viewStack = this.viewStacks[viewKey];
+    if (viewStack) {
+      viewStack.views.some(matchView);
+
+      if (!view) {
+        viewStack.views.some(r => {
+          // try to find a route that doesn't have a path or from prop, that will be our not found route
+          if (!r.routeData.childProps.path && !r.routeData.childProps.from) {
+            match = {
+              path: location.pathname,
+              url: location.pathname,
+              isExact: true,
+              params: {}
+            };
+            view = r;
+            return true;
+          }
+          return false;
+        });
       }
-    } else {
-      const keys = this.getKeys();
-      keys.some(key => {
-        viewStack = this.viewStacks[key];
-        return viewStack!.views.some(matchView);
-      });
     }
 
-    const result = { view, viewStack, match };
-    return result;
+    return { view, viewStack, match };
 
     function matchView(v: ViewItem) {
       const matchProps = {
@@ -61,7 +70,7 @@ export class ViewStacks {
       if (myMatch) {
         view = v;
         match = myMatch;
-        return view.location === location.pathname;
+        return true;
       }
       return false;
     }
