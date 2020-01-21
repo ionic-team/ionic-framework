@@ -112,12 +112,14 @@ export class Segment implements ComponentInterface {
   onEnd(detail: GestureDetail) {
     this.activated = false;
 
-    this.setNextIndex(detail, true);
+    const checkedValidButton = this.setNextIndex(detail, true);
 
     detail.event.preventDefault();
     detail.event.stopImmediatePropagation();
 
-    this.addRipple(detail);
+    if (checkedValidButton) {
+      this.addRipple(detail);
+    }
   }
 
   private getButtons() {
@@ -285,13 +287,24 @@ export class Segment implements ComponentInterface {
       current = nextEl;
     }
 
-    if (!current) {
-      return;
+    /* tslint:disable-next-line */
+    if (current != null) {
+
+      /**
+       * If current element is ion-segment then that means
+       * user tried to select a disabled ion-segment-button,
+       * and we should not update the ripple.
+       */
+      if (current.tagName === 'ION-SEGMENT') {
+        return false;
+      }
+
+      if (previous !== current) {
+        this.checkButton(previous, current);
+      }
     }
 
-    if (previous !== current) {
-      this.checkButton(previous, current);
-    }
+    return true;
   }
 
   private emitStyle() {
