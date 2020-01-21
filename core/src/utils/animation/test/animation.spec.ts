@@ -84,7 +84,7 @@ describe('Animation Class', () => {
       expect(animation.getKeyframes().length).toEqual(3);
     });
     
-    it.only('should convert properties for CSS Animations', () => {
+    it('should convert properties for CSS Animations', () => {
       const processedKeyframes = processKeyframes([
         { borderRadius: '0px', easing: 'ease-in' , offset: 0 },
         { borderRadius: '4px', easing: 'ease-out', offset: 1 }
