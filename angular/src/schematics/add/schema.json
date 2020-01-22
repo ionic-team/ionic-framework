@@ -10,10 +10,6 @@
       "$default": {
         "$source": "projectName"
       }
-    },
-    "root": {
-      "type": "string",
-      "description": "The root of the project when it's a multiple application angular project"
     }
   },
   "required": []
