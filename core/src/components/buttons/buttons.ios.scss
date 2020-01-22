@@ -61,6 +61,8 @@
 :host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-clear {
   --color: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --color-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
+  --background-activated: #{var(--ion-toolbar-color, ion-color(primary, base))};
+  --background-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
 }
 
 
@@ -73,6 +75,7 @@
   --color-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --border-color: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --background-activated: #{var(--ion-toolbar-color, ion-color(primary, base))};
+  --background-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
 }
 
 
@@ -84,8 +87,12 @@
   --color-activated: #{$toolbar-ios-background};
   --color-focused: #{$toolbar-ios-background};
   --background: #{var(--ion-toolbar-color, ion-color(primary, base))};
-  --background-activated: #{var(--ion-toolbar-color-activated, ion-color(primary, shade))};
-  --background-focused: #{var(--ion-toolbar-color-activated, ion-color(primary, shade))};
+  --background-hover: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
+  --background-hover-opacity: 0.1;
+  --background-activated: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
+  --background-activated-opacity: 0.3;
+  --background-focused: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
+  --background-focused-opacity: 0.3;
 }
 
 
