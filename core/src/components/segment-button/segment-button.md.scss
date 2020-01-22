@@ -123,12 +123,8 @@
 
 // Default Segment, In a Toolbar with Color, Hover
 @media (any-hover: hover) {
-  :host(.in-toolbar-color:not(.in-segment-color)) .button-native {
-    // TODO color?
-
-    &::after {
-      background: #{current-color(contrast)};
-    }
+  :host(.in-toolbar-color:not(.in-segment-color)) .button-native::after {
+    background: #{current-color(contrast)};
   }
 }
 
