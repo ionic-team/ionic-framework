@@ -76,7 +76,8 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
 
     const props = this.props;
     for (const key in props) {
-      if (props.hasOwnProperty(key) && !['play', 'from', 'to', 'fromTo', 'onFinish'].includes(key)) {
+      if (props.hasOwnProperty(key) && !['children', 'play', 'from', 'to', 'fromTo', 'onFinish'].includes(key)) {
+        console.log(key as any, animation as any, props as any);
         (animation as any)[key]((props as any)[key]);
       }
     }
