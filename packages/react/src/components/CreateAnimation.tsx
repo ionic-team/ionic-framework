@@ -35,7 +35,10 @@ export interface CreateAnimationProps {
   to?: PartialPropertyValue;
   fromTo?: PropertyValue;
 
-  play: boolean;
+  play?: boolean;
+  pause?: boolean;
+  stop?: boolean;
+  destroy?: boolean;
 
   progressStart?: { forceLinearEasing: boolean, step?: number };
   progressStep?: { step: number };
@@ -44,10 +47,6 @@ export interface CreateAnimationProps {
 
 /**
  * TODO
- * play
- * pause
- * stop
- * destroy
  * progressStart
  * progressStep
  * progressEnd
@@ -78,6 +77,7 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
 
     const props = this.props;
     for (const key in props) {
+      // TODO
       if (props.hasOwnProperty(key) && !['children', 'progressStart', 'progressStep', 'progressEnd', 'play', 'from', 'to', 'fromTo', 'onFinish'].includes(key)) {
         console.log(key as any, animation as any, props as any);
         (animation as any)[key]((props as any)[key]);
@@ -107,10 +107,8 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
       const values = (Array.isArray(onFinishValues)) ? onFinishValues : [onFinishValues];
       values.forEach(val => animation.onFinish(val.callback, val.opts));
     }
-
-    if (this.props.play) {
-      animation.play();
-    }
+    
+    checkPlayback(animation, props);    
   }
 
   componentDidMount() {
@@ -120,22 +118,24 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
 
   componentDidUpdate(prevProps: any) {
     const animation = this.animation;
-
     if (animation === undefined) { return; }
 
-    const { progressStart, progressStep, progressEnd } = this.props;
-    console.log(this.props, prevProps);
-    if (prevProps.progressStart?.forceLinearEasing !== progressStart?.forceLinearEasing || prevProps.progressStart?.step !== progressStart?.step) {
+    const props = this.props;
+    const { progressStart, progressStep, progressEnd } = props;
+
+    if (progressStart && (prevProps.progressStart?.forceLinearEasing !== progressStart?.forceLinearEasing || prevProps.progressStart?.step !== progressStart?.step)) {
       animation.progressStart(progressStart.forceLinearEasing, progressStart.step);
     }
 
-    if (prevProps.progressStep?.step !== progressStep?.step) {
+    if (progressStep && prevProps.progressStep?.step !== progressStep?.step) {
       animation.progressStep(progressStep.step);
     }
 
-    if (prevProps.progressEnd?.playTo !== progressEnd?.playTo || prevProps.progressEnd?.step !== progressEnd?.step || prevProps?.dur !== progressEnd?.dur) {
+    if (progressEnd && (prevProps.progressEnd?.playTo !== progressEnd?.playTo || prevProps.progressEnd?.step !== progressEnd?.step || prevProps?.dur !== progressEnd?.dur)) {
       animation.progressEnd(progressEnd.playTo, progressEnd.step, progressEnd.dur);
     }
+    
+    checkPlayback(animation, props, prevProps);
   }
 
   render() {
@@ -147,4 +147,22 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
     );
   }
 
+}
+
+const checkPlayback = (animation: Animation, currentProps: any = {}, prevProps: any = {}, ) => {
+  if (!prevProps.play && currentProps.play) {
+    animation.play();
+  }
+  
+  if (!prevProps.pause && currentProps.pause) {
+    animation.pause();
+  }
+  
+  if (!prevProps.stop && currentProps.stop) {
+    animation.stop();
+  }
+  
+  if (!prevProps.destroy && currentProps.destroy) {
+    animation.destroy();
+  }
 }
