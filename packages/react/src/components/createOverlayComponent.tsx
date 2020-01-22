@@ -13,13 +13,19 @@ export interface ReactOverlayProps {
   children?: React.ReactNode;
   isOpen: boolean;
   onDidDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
+  onDidPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
+  onWillDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
+  onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
 }
 
 export const createOverlayComponent = <OverlayComponent extends object, OverlayType extends OverlayElement>(
   displayName: string,
   controller: { create: (options: any) => Promise<OverlayType>; }
 ) => {
-  const dismissEventName = `on${displayName}DidDismiss`;
+  const didDismissEventName = `on${displayName}DidDismiss`;
+  const didPresentEventName = `on${displayName}DidPresent`;
+  const willDismissEventName = `on${displayName}WillDismiss`;
+  const willPresentEventName = `on${displayName}WillPresent`;
 
   type Props = OverlayComponent & ReactOverlayProps & {
     forwardedRef?: React.RefObject<OverlayType>;
@@ -72,11 +78,14 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
     }
 
     async present(prevProps?: Props) {
-      const { children, isOpen, onDidDismiss, ...cProps } = this.props;
+      const { children, isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } = this.props;
       const elementProps = {
         ...cProps,
         ref: this.props.forwardedRef,
-        [dismissEventName]: this.handleDismiss
+        [didDismissEventName]: this.handleDismiss,
+        [didPresentEventName]: (e: CustomEvent) => this.props.onDidPresent && this.props.onDidPresent(e),
+        [willDismissEventName]: (e: CustomEvent) => this.props.onWillDismiss && this.props.onWillDismiss(e),
+        [willPresentEventName]: (e: CustomEvent) => this.props.onWillPresent && this.props.onWillPresent(e)
       };
 
       this.overlay = await controller.create({
