@@ -36,6 +36,10 @@ export interface CreateAnimationProps {
   fromTo?: PropertyValue;
 
   play: boolean;
+
+  progressStart?: { forceLinearEasing: boolean, step?: number };
+  progressStep?: { step: number };
+  progressEnd?: { playTo: 0 | 1 | undefined, step: number, dur?: number };
 }
 
 /**
@@ -63,7 +67,7 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
   animation?: Animation;
 
   updateAnimation() {
-    if (!this.animation) { return; }
+    if (this.animation === undefined) { return; }
 
     console.log(this);
     const animation = this.animation!;
@@ -74,7 +78,7 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
 
     const props = this.props;
     for (const key in props) {
-      if (props.hasOwnProperty(key) && !['children', 'play', 'from', 'to', 'fromTo', 'onFinish'].includes(key)) {
+      if (props.hasOwnProperty(key) && !['children', 'progressStart', 'progressStep', 'progressEnd', 'play', 'from', 'to', 'fromTo', 'onFinish'].includes(key)) {
         console.log(key as any, animation as any, props as any);
         (animation as any)[key]((props as any)[key]);
       }
@@ -112,6 +116,26 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
   componentDidMount() {
     this.animation = createAnimation();
     this.updateAnimation();
+  }
+
+  componentDidUpdate(prevProps: any) {
+    const animation = this.animation;
+
+    if (animation === undefined) { return; }
+
+    const { progressStart, progressStep, progressEnd } = this.props;
+    console.log(this.props, prevProps);
+    if (prevProps.progressStart?.forceLinearEasing !== progressStart?.forceLinearEasing || prevProps.progressStart?.step !== progressStart?.step) {
+      animation.progressStart(progressStart.forceLinearEasing, progressStart.step);
+    }
+
+    if (prevProps.progressStep?.step !== progressStep?.step) {
+      animation.progressStep(progressStep.step);
+    }
+
+    if (prevProps.progressEnd?.playTo !== progressEnd?.playTo || prevProps.progressEnd?.step !== progressEnd?.step || prevProps?.dur !== progressEnd?.dur) {
+      animation.progressEnd(progressEnd.playTo, progressEnd.step, progressEnd.dur);
+    }
   }
 
   render() {
