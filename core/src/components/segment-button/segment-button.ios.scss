@@ -155,15 +155,25 @@
 }
 
 
-// Segment: Color
+// Segment Button: Segment w/ Color
 // --------------------------------------------------
 
-:host(.in-segment-color) .button-native {
+// Default
+:host(.in-segment-color) {
+  background: none;
   color: #000;
 }
 
+// Indicator color on a Segment w/ color
+// should not change if the variable is set
+:host(.in-segment-color) .segment-button-indicator-background {
+  background: $segment-button-ios-indicator-color;
+}
+
 @media (any-hover: hover) {
+  // Toolbar with Color, Default Segment, Hover
   // Toolbar with Color, Default Segment, Checked, Hover
+  :host(.in-segment-color:hover) .button-native,
   :host(.in-segment-color.segment-button-checked:hover) .button-native {
     color: #000;
   }

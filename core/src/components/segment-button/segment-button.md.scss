@@ -55,10 +55,20 @@
 // Segment Button: Segment w/ Color
 // --------------------------------------------------
 
-// TODO override directly?
+// Default
 :host(.in-segment-color) {
-  --ripple-color: #{current-color(base)};
-  --indicator-color: #{current-color(base)};
+  background: none;
+  color: $segment-button-md-text-color;
+}
+
+// Indicator color and ripple on a Segment w/ color
+// should not change if the variables are set
+:host(.in-segment-color) ion-ripple-effect {
+  color: #{current-color(base)};
+}
+
+:host(.in-segment-color) .segment-button-indicator-background {
+  background: #{current-color(base)};
 }
 
 // Checked
@@ -72,8 +82,16 @@
 }
 
 @media (any-hover: hover) {
-  :host(.in-segment-color:hover) .button-native::after {
-    background: #{current-color(base)};
+  :host(.in-segment-color:hover) .button-native {
+    color: $segment-button-md-text-color;
+
+    &::after {
+      background: #{current-color(base)};
+    }
+  }
+
+  :host(.in-segment-color.segment-button-checked:hover) .button-native {
+    color: #{current-color(base)};
   }
 }
 
