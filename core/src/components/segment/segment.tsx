@@ -70,6 +70,15 @@ export class Segment implements ComponentInterface {
 
   @Watch('disabled')
   disabledChanged() {
+    this.gestureChanged();
+
+    const buttons = this.getButtons();
+    for (const button of buttons) {
+      button.disabled = this.disabled;
+    }
+  }
+
+  private gestureChanged() {
     if (this.gesture && !this.scrollable) {
       this.gesture.enable(!this.disabled);
     }
@@ -97,7 +106,11 @@ export class Segment implements ComponentInterface {
       onEnd: ev => this.onEnd(ev),
     });
     this.gesture.enable(!this.scrollable);
-    this.disabledChanged();
+    this.gestureChanged();
+
+    if (this.disabled) {
+      this.disabledChanged();
+    }
     this.didInit = true;
   }
 
