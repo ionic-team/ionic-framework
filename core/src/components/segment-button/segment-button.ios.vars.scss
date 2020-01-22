@@ -18,11 +18,14 @@ $segment-button-ios-margin:                           2px !default;
 /// @prop - Opacity of the segment button on hover
 $segment-button-ios-opacity-hover:                    .5 !default;
 
+/// @prop - Opacity of the segment button when focused
+$segment-button-ios-opacity-focused:                  .7 !default;
+
 /// @prop - Opacity of the disabled segment button
 $segment-button-ios-opacity-disabled:                 .3 !default;
 
 /// @prop - Background of the segment button on hover
-$segment-button-ios-background-hover:                 transparent !default;
+$segment-button-ios-background-hover:                 none !default;
 
 /// @prop - Box shadow of the checked segment button
 $segment-button-ios-box-shadow-checked:               0 0 5px rgba(0, 0, 0, 0.16) !default;
