@@ -13,6 +13,7 @@ export interface CreateAnimationProps {
   easing?: string;
   fill?: AnimationFill;
   iterations?: number;
+  id?: string;
 
   afterAddRead?: HookCallback;
   afterAddWrite?: HookCallback;
@@ -51,14 +52,16 @@ export interface CreateAnimationProps {
  * progressStep
  * progressEnd
  * addAnimation
+ * addElement
+ * make sure onFinish is working properly
+ * make sure destroy is working properly
+ * clean up code
  */
 
  /**
   * QUESTIONS
-  * How do I update props on the fly? (i.e. toggle play/pause)
   * Should the before/after hooks accept arrays of
   * callback in the core method?
-  * How do I accept multiples elements even if they aren't immediately nested?
   */
 
 export class CreateAnimation extends React.Component<CreateAnimationProps> {
@@ -112,7 +115,7 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
   }
 
   componentDidMount() {
-    this.animation = createAnimation();
+    this.animation = createAnimation(this.props.id);
     this.updateAnimation();
   }
 
