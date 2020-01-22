@@ -221,7 +221,7 @@ The `ion-anchor` component has been renamed to `ion-router-link` as this is a be
 #### Back Button
 
 - Converted `ion-back-button` to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
-- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
+- [Focused, Hover States](#activated-focused-hover-states) have been updated.
 
 #### Button
 
@@ -314,7 +314,7 @@ The list header has been redesigned to match the latest iOS spec. This may break
 
 #### Menu Button
 
-- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
+- [Focused, Hover States](#activated-focused-hover-states) have been updated.
 
 
 #### Nav Link
@@ -379,8 +379,78 @@ The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get
 
 #### Segment
 
-<!-- TODO https://gist.github.com/brandyscarney/e6cfe43c359bb2c932e12f8d615e1669 -->
-- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
+Segment was completely revamped to use the new iOS design including an all new gesture that applies for both Material Design & iOS. Due to these changes, some breaking changes were inevitably introduced in order to support the new design.
+
+##### Button States
+
+- The activated styles and properties have been removed. These are no longer being used in the latest spec as the indicator and ripple are used to show activation. Properties removed:
+  ```
+  --color-activated
+  --background-activated
+  ```
+- The [Focused & Hover States](#activated-focused-hover-states) have been updated.
+
+##### Indicator Color
+
+- `--indicator-color` now applies to the checked segment button (for both `ios` and `md`)
+- `--indicator-color-checked` has been removed
+- The Material Design spec does not include an indicator color on non-checked buttons: https://material.io/components/tabs/
+- In order to style the Segment to match the old spec, please use custom CSS. For example, to update Material Design to include a bottom line all of the time:
+  ```css
+  .md ion-segment::after {
+      position: absolute;
+      bottom: 0;
+      height: 2px;
+      width: 100%;
+      content: '';
+      background: rgba(0,0,0,0.5);
+      z-index: -1;
+  }
+  ```
+
+##### Background & Color
+
+A `--background` variable has been added to style the `ion-segment` component. As a result of this, the following background variables for a child segment button must now be set on the `ion-segment-button`:
+
+```
+--background: Background of the segment button
+--background-checked: Background of the checked segment button
+--background-disabled: Background of the disabled segment button
+--background-hover: Background of the segment button on hover
+```
+
+> Note: iOS no longer checks the button background, so setting the `--background-checked` variable may have an undesired outcome. It uses an indicator to slide between the buttons. See the previous section on the indicator color variables.
+
+The above variables *will not* be inherited in the button if set on the `ion-segment`. In addition to this, all color variables should also be set in the button for consistency:
+
+```
+--color: Color of the segment button
+--color-checked: Color of the checked segment button
+--color-disabled: Color of the disabled segment button
+--color-hover: Color of the segment button on hover
+```
+
+###### Removed variables
+
+The following variables were removed due to the current spec no longer using them.
+
+- `--color-checked-disabled`
+- `--background-disabled`
+- `--color-disabled`
+- `--background-activated`
+- `--color-activated`
+
+##### Global CSS Properties
+
+Some variables were renamed or added. See the chart below for the new names.
+
+| Old variable                            | Status  | New variable                              |
+| ----------------------------------------| --------|-------------------------------------------|
+| `--ion-toolbar-color-unchecked`         | renamed | `--ion-toolbar-segment-color`             |
+| `--ion-toolbar-color-checked`           | renamed | `--ion-toolbar-segment-color-checked`     |
+| `--ion-toolbar-background-unchecked`    | renamed | `--ion-toolbar-segment-background`        |
+| `--ion-toolbar-background-checked`      | renamed | `--ion-toolbar-segment-background-checked`|
+|                                         | added   | `--ion-toolbar-segment-indicator-color`   |
 
 
 #### Segment Button
