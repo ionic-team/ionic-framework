@@ -53,8 +53,6 @@ export interface CreateAnimationProps {
  /**
   * QUESTIONS
   * How do I update props on the fly? (i.e. toggle play/pause)
-  * Is there a better way to setup the animation
-  * other than individually checking each prop?
   * Should the before/after hooks accept arrays of
   * callback in the core method?
   * How do I accept multiples elements even if they aren't immediately nested?
