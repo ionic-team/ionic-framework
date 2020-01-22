@@ -65,7 +65,7 @@
       const actionSheet = await actionSheetController.create(opts);
       await actionSheet.present();
     }
-    
+
     async function presentBasic() {
       const mode = Ionic.mode;
       await openActionSheet({
@@ -152,7 +152,7 @@
       });
     }
 
-    async function presentWithCssClass(classList) {      
+    async function presentWithCssClass(classList) {
       await openActionSheet({
         header: "Custom Css Class",
         cssClass: classList ? classList : "my-color-class my-custom-class",

@@ -35,6 +35,7 @@
    * @prop --button-color-selected: Color of the selected action sheet button
    */
   --color: initial;
+  --button-color: var(--color);
   --button-color-activated: var(--button-color);
   --button-color-focused: var(--button-color);
   --button-color-hover: var(--button-color);
