@@ -181,6 +181,22 @@ ion-action-sheet {
 }
 ```
 
+##### Global CSS Properties
+
+Some variables were renamed, removed or added. See the chart below for the changes.
+
+| Old variable                            | Status  | New variable                              |
+| ----------------------------------------| --------|-------------------------------------------|
+| `--ion-toolbar-color-unchecked`         | renamed | `--ion-toolbar-segment-color`             |
+| `--ion-toolbar-color-checked`           | renamed | `--ion-toolbar-segment-color-checked`     |
+| `--ion-toolbar-background-unchecked`    | renamed | `--ion-toolbar-segment-background`        |
+| `--ion-toolbar-background-checked`      | renamed | `--ion-toolbar-segment-background-checked`|
+|                                         | added   | `--ion-toolbar-segment-indicator-color`   |
+| `--ion-toolbar-color-activated`         | removed |                                           |
+| `--ion-item-background-activated`       | removed |                                           |
+| `--ion-item-background-focused`         | removed |                                           |
+| `--ion-item-background-hover`           | removed |                                           |
+
 
 #### Distributed Sass
 

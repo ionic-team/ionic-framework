@@ -11,9 +11,9 @@
   --inner-padding-end: #{$item-ios-padding-end / 2};
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
   --background: #{$item-ios-background};
-  --background-activated: #{$item-ios-background-activated};
-  --background-focused: #{$item-ios-background-focused};
-  --background-hover: #{$item-ios-background-hover};
+  --background-activated: currentColor;
+  --background-focused: currentColor;
+  --background-hover: currentColor;
   --background-activated-opacity: .15;
   --background-focused-opacity: .12;
   --background-hover-opacity: .04;

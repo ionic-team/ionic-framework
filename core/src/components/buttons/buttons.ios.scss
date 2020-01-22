@@ -60,7 +60,6 @@
 
 :host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-clear {
   --color: #{var(--ion-toolbar-color, ion-color(primary, base))};
-  --color-activated: #{$toolbar-ios-color-activated};
   --color-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
 }
 
