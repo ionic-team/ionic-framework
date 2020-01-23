@@ -22,14 +22,14 @@ Segment buttons are groups of related buttons inside of a [Segment](../segment).
 </ion-segment>
 
 <!-- Segment buttons with the first checked and the last disabled -->
-<ion-segment>
-  <ion-segment-button checked>
+<ion-segment value="paid">
+  <ion-segment-button value="paid">
     <ion-label>Paid</ion-label>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="free">
     <ion-label>Free</ion-label>
   </ion-segment-button>
-  <ion-segment-button disabled>
+  <ion-segment-button disabled value="top">
     <ion-label>Top</ion-label>
   </ion-segment-button>
 </ion-segment>
@@ -58,90 +58,90 @@ Segment buttons are groups of related buttons inside of a [Segment](../segment).
 </ion-segment>
 
 <!-- Label only -->
-<ion-segment>
-  <ion-segment-button checked>
+<ion-segment value="1">
+  <ion-segment-button value="1">
     <ion-label>Item One</ion-label>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="2">
     <ion-label>Item Two</ion-label>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="3">
     <ion-label>Item Three</ion-label>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Icon only -->
-<ion-segment>
-  <ion-segment-button>
+<ion-segment value="heart">
+  <ion-segment-button value="call">
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked>
+  <ion-segment-button value="heart">
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="pin">
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Icon top -->
-<ion-segment>
-  <ion-segment-button>
+<ion-segment value="2">
+  <ion-segment-button value="1">
     <ion-label>Item One</ion-label>
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked>
+  <ion-segment-button value="2">
     <ion-label>Item Two</ion-label>
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="3">
     <ion-label>Item Three</ion-label>
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Icon bottom -->
-<ion-segment>
-  <ion-segment-button checked layout="icon-bottom">
+<ion-segment value="1">
+  <ion-segment-button value="1" layout="icon-bottom">
     <ion-icon name="call"></ion-icon>
     <ion-label>Item One</ion-label>
   </ion-segment-button>
-  <ion-segment-button layout="icon-bottom">
+  <ion-segment-button value="2" layout="icon-bottom">
     <ion-icon name="heart"></ion-icon>
     <ion-label>Item Two</ion-label>
   </ion-segment-button>
-  <ion-segment-button layout="icon-bottom">
+  <ion-segment-button value="3" layout="icon-bottom">
     <ion-icon name="pin"></ion-icon>
     <ion-label>Item Three</ion-label>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Icon start -->
-<ion-segment>
-  <ion-segment-button checked layout="icon-start">
+<ion-segment value="1">
+  <ion-segment-button value="1" layout="icon-start">
     <ion-label>Item One</ion-label>
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button layout="icon-start">
+  <ion-segment-button value="2" layout="icon-start">
     <ion-label>Item Two</ion-label>
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button layout="icon-start">
+  <ion-segment-button value="3" layout="icon-start">
     <ion-label>Item Three</ion-label>
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Icon end -->
-<ion-segment>
-  <ion-segment-button checked layout="icon-end">
+<ion-segment value="1">
+  <ion-segment-button value="1" layout="icon-end">
     <ion-icon name="call"></ion-icon>
     <ion-label>Item One</ion-label>
   </ion-segment-button>
-  <ion-segment-button disabled layout="icon-end">
+  <ion-segment-button value="2" disabled layout="icon-end">
     <ion-icon name="heart"></ion-icon>
     <ion-label>Item Two</ion-label>
   </ion-segment-button>
-  <ion-segment-button layout="icon-end">
+  <ion-segment-button value="3" layout="icon-end">
     <ion-icon name="pin"></ion-icon>
     <ion-label>Item Three</ion-label>
   </ion-segment-button>
@@ -178,14 +178,14 @@ export class SegmentButtonExample {
 </ion-segment>
 
 <!-- Segment buttons with the first checked and the last disabled -->
-<ion-segment>
-  <ion-segment-button checked>
+<ion-segment value="paid">
+  <ion-segment-button value="paid">
     <ion-label>Paid</ion-label>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="free">
     <ion-label>Free</ion-label>
   </ion-segment-button>
-  <ion-segment-button disabled>
+  <ion-segment-button disabled value="top">
     <ion-label>Top</ion-label>
   </ion-segment-button>
 </ion-segment>
@@ -214,90 +214,90 @@ export class SegmentButtonExample {
 </ion-segment>
 
 <!-- Label only -->
-<ion-segment>
-  <ion-segment-button checked>
+<ion-segment value="1">
+  <ion-segment-button value="1">
     <ion-label>Item One</ion-label>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="2">
     <ion-label>Item Two</ion-label>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="3">
     <ion-label>Item Three</ion-label>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Icon only -->
-<ion-segment>
-  <ion-segment-button>
+<ion-segment value="heart">
+  <ion-segment-button value="call">
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked>
+  <ion-segment-button value="heart">
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="pin">
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Icon top -->
-<ion-segment>
-  <ion-segment-button>
+<ion-segment value="2">
+  <ion-segment-button value="1">
     <ion-label>Item One</ion-label>
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked>
+  <ion-segment-button value="2">
     <ion-label>Item Two</ion-label>
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="3">
     <ion-label>Item Three</ion-label>
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Icon bottom -->
-<ion-segment>
-  <ion-segment-button checked layout="icon-bottom">
+<ion-segment value="1">
+  <ion-segment-button value="1" layout="icon-bottom">
     <ion-icon name="call"></ion-icon>
     <ion-label>Item One</ion-label>
   </ion-segment-button>
-  <ion-segment-button layout="icon-bottom">
+  <ion-segment-button value="2" layout="icon-bottom">
     <ion-icon name="heart"></ion-icon>
     <ion-label>Item Two</ion-label>
   </ion-segment-button>
-  <ion-segment-button layout="icon-bottom">
+  <ion-segment-button value="3" layout="icon-bottom">
     <ion-icon name="pin"></ion-icon>
     <ion-label>Item Three</ion-label>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Icon start -->
-<ion-segment>
-  <ion-segment-button checked layout="icon-start">
+<ion-segment value="1">
+  <ion-segment-button value="1" layout="icon-start">
     <ion-label>Item One</ion-label>
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button layout="icon-start">
+  <ion-segment-button value="2" layout="icon-start">
     <ion-label>Item Two</ion-label>
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button layout="icon-start">
+  <ion-segment-button value="3" layout="icon-start">
     <ion-label>Item Three</ion-label>
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
 </ion-segment>
 
 <!-- Icon end -->
-<ion-segment>
-  <ion-segment-button checked layout="icon-end">
+<ion-segment value="1">
+  <ion-segment-button value="1" layout="icon-end">
     <ion-icon name="call"></ion-icon>
     <ion-label>Item One</ion-label>
   </ion-segment-button>
-  <ion-segment-button disabled layout="icon-end">
+  <ion-segment-button value="2" disabled layout="icon-end">
     <ion-icon name="heart"></ion-icon>
     <ion-label>Item Two</ion-label>
   </ion-segment-button>
-  <ion-segment-button layout="icon-end">
+  <ion-segment-button value="3" layout="icon-end">
     <ion-icon name="pin"></ion-icon>
     <ion-label>Item Three</ion-label>
   </ion-segment-button>
@@ -334,14 +334,14 @@ export const SegmentButtonExample: React.FC = () => (
     </IonSegment>
 
     {/*-- Segment buttons with the first checked and the last disabled --*/}
-    <IonSegment>
-      <IonSegmentButton checked>
+    <IonSegment value="paid">
+      <IonSegmentButton value="paid">
         <IonLabel>Paid</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="free">
         <IonLabel>Free</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton disabled>
+      <IonSegmentButton disabled value="top">
         <IonLabel>Top</IonLabel>
       </IonSegmentButton>
     </IonSegment>
@@ -370,90 +370,90 @@ export const SegmentButtonExample: React.FC = () => (
     </IonSegment>
 
     {/*-- Label only --*/}
-    <IonSegment>
-      <IonSegmentButton checked>
+    <IonSegment value="1">
+      <IonSegmentButton value="1">
         <IonLabel>Item One</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="2">
         <IonLabel>Item Two</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="3">
         <IonLabel>Item Three</IonLabel>
       </IonSegmentButton>
     </IonSegment>
 
     {/*-- Icon only --*/}
-    <IonSegment>
-      <IonSegmentButton>
+    <IonSegment value="heart">
+      <IonSegmentButton value="call">
         <IonIcon name="call" />
       </IonSegmentButton>
-      <IonSegmentButton checked>
+      <IonSegmentButton value="heart">
         <IonIcon name="heart" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="pin">
         <IonIcon name="pin" />
       </IonSegmentButton>
     </IonSegment>
 
     {/*-- Icon top --*/}
-    <IonSegment>
-      <IonSegmentButton>
+    <IonSegment value="2">
+      <IonSegmentButton value="1">
         <IonLabel>Item One</IonLabel>
         <IonIcon name="call" />
       </IonSegmentButton>
-      <IonSegmentButton checked>
+      <IonSegmentButton value="2">
         <IonLabel>Item Two</IonLabel>
         <IonIcon name="heart" />
       </IonSegmentButton>
-      <IonSegmentButton>
+      <IonSegmentButton value="3">
         <IonLabel>Item Three</IonLabel>
         <IonIcon name="pin" />
       </IonSegmentButton>
     </IonSegment>
 
     {/*-- Icon bottom --*/}
-    <IonSegment>
-      <IonSegmentButton checked layout="icon-bottom">
+    <IonSegment value="1">
+      <IonSegmentButton value="1" layout="icon-bottom">
         <IonIcon name="call" />
         <IonLabel>Item One</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton layout="icon-bottom">
+      <IonSegmentButton value="2" layout="icon-bottom">
         <IonIcon name="heart" />
         <IonLabel>Item Two</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton layout="icon-bottom">
+      <IonSegmentButton value="3" layout="icon-bottom">
         <IonIcon name="pin" />
         <IonLabel>Item Three</IonLabel>
       </IonSegmentButton>
     </IonSegment>
 
     {/*-- Icon start --*/}
-    <IonSegment>
-      <IonSegmentButton checked layout="icon-start">
+    <IonSegment value="1">
+      <IonSegmentButton value="1" layout="icon-start">
         <IonLabel>Item One</IonLabel>
         <IonIcon name="call" />
       </IonSegmentButton>
-      <IonSegmentButton layout="icon-start">
+      <IonSegmentButton value="2" layout="icon-start">
         <IonLabel>Item Two</IonLabel>
         <IonIcon name="heart" />
       </IonSegmentButton>
-      <IonSegmentButton layout="icon-start">
+      <IonSegmentButton value="3" layout="icon-start">
         <IonLabel>Item Three</IonLabel>
         <IonIcon name="pin" />
       </IonSegmentButton>
     </IonSegment>
 
     {/*-- Icon end --*/}
-    <IonSegment>
-      <IonSegmentButton checked layout="icon-end">
+    <IonSegment value="1">
+      <IonSegmentButton value="1" layout="icon-end">
         <IonIcon name="call" />
         <IonLabel>Item One</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton disabled layout="icon-end">
+      <IonSegmentButton value="2" disabled layout="icon-end">
         <IonIcon name="heart" />
         <IonLabel>Item Two</IonLabel>
       </IonSegmentButton>
-      <IonSegmentButton layout="icon-end">
+      <IonSegmentButton value="3" layout="icon-end">
         <IonIcon name="pin" />
         <IonLabel>Item Three</IonLabel>
       </IonSegmentButton>
@@ -478,14 +478,14 @@ export const SegmentButtonExample: React.FC = () => (
   </ion-segment>
 
   <!-- Segment buttons with the first checked and the last disabled -->
-  <ion-segment>
-    <ion-segment-button checked>
+  <ion-segment value="paid">
+    <ion-segment-button value="paid">
       <ion-label>Paid</ion-label>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="free">
       <ion-label>Free</ion-label>
     </ion-segment-button>
-    <ion-segment-button disabled>
+    <ion-segment-button disabled value="top">
       <ion-label>Top</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -512,92 +512,92 @@ export const SegmentButtonExample: React.FC = () => (
       <ion-label>Shared Links</ion-label>
     </ion-segment-button>
   </ion-segment>
-
+  
   <!-- Label only -->
-  <ion-segment>
-    <ion-segment-button checked>
+  <ion-segment value="1">
+    <ion-segment-button value="1">
       <ion-label>Item One</ion-label>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="2">
       <ion-label>Item Two</ion-label>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="3">
       <ion-label>Item Three</ion-label>
     </ion-segment-button>
   </ion-segment>
-
+  
   <!-- Icon only -->
-  <ion-segment>
-    <ion-segment-button>
+  <ion-segment value="heart">
+    <ion-segment-button value="call">
       <ion-icon name="call"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button checked>
+    <ion-segment-button value="heart">
       <ion-icon name="heart"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="pin">
       <ion-icon name="pin"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-
+  
   <!-- Icon top -->
-  <ion-segment>
-    <ion-segment-button>
+  <ion-segment value="2">
+    <ion-segment-button value="1">
       <ion-label>Item One</ion-label>
       <ion-icon name="call"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button checked>
+    <ion-segment-button value="2">
       <ion-label>Item Two</ion-label>
       <ion-icon name="heart"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="3">
       <ion-label>Item Three</ion-label>
       <ion-icon name="pin"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-
+  
   <!-- Icon bottom -->
-  <ion-segment>
-    <ion-segment-button checked layout="icon-bottom">
+  <ion-segment value="1">
+    <ion-segment-button value="1" layout="icon-bottom">
       <ion-icon name="call"></ion-icon>
       <ion-label>Item One</ion-label>
     </ion-segment-button>
-    <ion-segment-button layout="icon-bottom">
+    <ion-segment-button value="2" layout="icon-bottom">
       <ion-icon name="heart"></ion-icon>
       <ion-label>Item Two</ion-label>
     </ion-segment-button>
-    <ion-segment-button layout="icon-bottom">
+    <ion-segment-button value="3" layout="icon-bottom">
       <ion-icon name="pin"></ion-icon>
       <ion-label>Item Three</ion-label>
     </ion-segment-button>
   </ion-segment>
-
+  
   <!-- Icon start -->
-  <ion-segment>
-    <ion-segment-button checked layout="icon-start">
+  <ion-segment value="1">
+    <ion-segment-button value="1" layout="icon-start">
       <ion-label>Item One</ion-label>
       <ion-icon name="call"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button layout="icon-start">
+    <ion-segment-button value="2" layout="icon-start">
       <ion-label>Item Two</ion-label>
       <ion-icon name="heart"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button layout="icon-start">
+    <ion-segment-button value="3" layout="icon-start">
       <ion-label>Item Three</ion-label>
       <ion-icon name="pin"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-
+  
   <!-- Icon end -->
-  <ion-segment>
-    <ion-segment-button checked layout="icon-end">
+  <ion-segment value="1">
+    <ion-segment-button value="1" layout="icon-end">
       <ion-icon name="call"></ion-icon>
       <ion-label>Item One</ion-label>
     </ion-segment-button>
-    <ion-segment-button disabled layout="icon-end">
+    <ion-segment-button value="2" disabled layout="icon-end">
       <ion-icon name="heart"></ion-icon>
       <ion-label>Item Two</ion-label>
     </ion-segment-button>
-    <ion-segment-button layout="icon-end">
+    <ion-segment-button value="3" layout="icon-end">
       <ion-icon name="pin"></ion-icon>
       <ion-label>Item Three</ion-label>
     </ion-segment-button>
@@ -622,19 +622,11 @@ export const SegmentButtonExample: React.FC = () => (
 
 | Property   | Attribute  | Description                                                  | Type                                                                                                    | Default               |
 | ---------- | ---------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | --------------------- |
-| `checked`  | `checked`  | If `true`, the segment button is selected.                   | `boolean`                                                                                               | `false`               |
 | `disabled` | `disabled` | If `true`, the user cannot interact with the segment button. | `boolean`                                                                                               | `false`               |
 | `layout`   | `layout`   | Set the layout of the text and icon in the segment.          | `"icon-bottom" \| "icon-end" \| "icon-hide" \| "icon-start" \| "icon-top" \| "label-hide" \| undefined` | `'icon-top'`          |
 | `mode`     | `mode`     | The mode determines which platform styles to use.            | `"ios" \| "md"`                                                                                         | `undefined`           |
 | `type`     | `type`     | The type of the button.                                      | `"button" \| "reset" \| "submit"`                                                                       | `'button'`            |
 | `value`    | `value`    | The value of the segment button.                             | `string`                                                                                                | `'ion-sb-' + (ids++)` |
-
-
-## Events
-
-| Event       | Description                                 | Type                |
-| ----------- | ------------------------------------------- | ------------------- |
-| `ionSelect` | Emitted when the segment button is clicked. | `CustomEvent<void>` |
 
 
 ## CSS Custom Properties

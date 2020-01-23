@@ -31,7 +31,7 @@ export * from './components/toggle/toggle-interface';
 export * from './components/virtual-scroll/virtual-scroll-interface';
 
 // Types from utils
-export { Animation, AnimationBuilder } from './utils/animation/animation-interface';
+export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle } from './utils/animation/animation-interface';
 export * from './utils/overlays-interface';
 export * from './global/config';
 export { Gesture, GestureConfig, GestureDetail } from './utils/gesture';

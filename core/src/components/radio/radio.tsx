@@ -1,7 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, RadioChangeEventDetail, StyleEventDetail } from '../../interface';
+import { Color, StyleEventDetail } from '../../interface';
 import { findItemLabel } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -19,8 +19,14 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 export class Radio implements ComponentInterface {
 
   private inputId = `ion-rb-${radioButtonIds++}`;
+  private radioGroup: HTMLIonRadioGroupElement | null = null;
 
   @Element() el!: HTMLElement;
+
+  /**
+   * If `true`, the radio is selected.
+   */
+  @State() checked = false;
 
   /**
    * The color to use from your application's color palette.
@@ -40,31 +46,15 @@ export class Radio implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * If `true`, the radio is selected.
-   */
-  @Prop({ mutable: true }) checked = false;
-
-  /**
    * the value of the radio.
    */
-  @Prop({ mutable: true }) value?: any | null;
+  @Prop() value?: any | null;
 
   /**
    * Emitted when the styles change.
    * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
-
-  /**
-   * Emitted when the radio button is selected.
-   */
-  @Event() ionSelect!: EventEmitter<RadioChangeEventDetail>;
-
-  /**
-   * Emitted when checked radio button is selected.
-   * @internal
-   */
-  @Event() ionDeselect!: EventEmitter<RadioChangeEventDetail>;
 
   /**
    * Emitted when the radio button has focus.
@@ -76,39 +66,43 @@ export class Radio implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  @Watch('color')
-  colorChanged() {
-    this.emitStyle();
-  }
-
-  @Watch('checked')
-  checkedChanged(isChecked: boolean) {
-    if (isChecked) {
-      this.ionSelect.emit({
-        checked: true,
-        value: this.value
-      });
+  connectedCallback() {
+    const radioGroup = this.radioGroup = this.el.closest('ion-radio-group');
+    if (radioGroup) {
+      this.updateState();
+      radioGroup.addEventListener('ionChange', this.updateState);
     }
-    this.emitStyle();
   }
 
-  @Watch('disabled')
-  disabledChanged() {
-    this.emitStyle();
+  disconnectedCallback() {
+    const radioGroup = this.radioGroup;
+    if (radioGroup) {
+      radioGroup.removeEventListener('ionChange', this.updateState);
+      if (this.checked) {
+        radioGroup.value = undefined;
+      }
+      this.radioGroup = null;
+    }
   }
 
   componentWillLoad() {
-    if (this.value === undefined) {
-      this.value = this.inputId;
-    }
     this.emitStyle();
   }
 
-  private emitStyle() {
+  @Watch('color')
+  @Watch('checked')
+  @Watch('disabled')
+  emitStyle() {
     this.ionStyle.emit({
       'radio-checked': this.checked,
       'interactive-disabled': this.disabled,
     });
+  }
+
+  private updateState = () => {
+    if (this.radioGroup) {
+      this.checked = this.radioGroup.value === this.value;
+    }
   }
 
   private onFocus = () => {
@@ -117,14 +111,6 @@ export class Radio implements ComponentInterface {
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
-
-  private onClick = () => {
-    if (this.checked) {
-      this.ionDeselect.emit();
-    } else {
-      this.checked = true;
-    }
   }
 
   render() {
@@ -137,7 +123,6 @@ export class Radio implements ComponentInterface {
     }
     return (
       <Host
-        onClick={this.onClick}
         role="radio"
         aria-disabled={disabled ? 'true' : null}
         aria-checked={`${checked}`}

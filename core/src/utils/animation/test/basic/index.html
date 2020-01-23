@@ -29,10 +29,10 @@
       .iterations(2)
       .easing('linear')
       .keyframes([
-        { background: 'rgba(255, 0, 0, 0.5)', offset: 0, 'border-radius': '0px' },
-        { background: 'rgba(0, 255, 0, 0.5)', offset: 0.33, 'border-radius': '10px' },
-        { background: 'rgba(0, 0, 255, 0.5)', offset: 0.66, 'border-radius': '20px' },
-        { background: 'rgba(255, 0, 0, 0.5)', offset: 1, 'border-radius': '30px' }
+        { background: 'rgba(255, 0, 0, 0.5)', offset: 0, borderRadius: '0px' },
+        { background: 'rgba(0, 255, 0, 0.5)', offset: 0.33, borderRadius: '10px' },
+        { background: 'rgba(0, 0, 255, 0.5)', offset: 0.66, borderRadius: '20px' },
+        { background: 'rgba(255, 0, 0, 0.5)', offset: 1, borderRadius: '30px' }
       ])
       .onFinish(() => {
         const ev = new CustomEvent('ionAnimationFinished');

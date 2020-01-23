@@ -39,7 +39,7 @@
         <ion-item>
           <ion-label>Hair Color</ion-label>
           <ion-select id="hairColor" value="brown" ok-text="Okay" cancel-text="Dismiss">
-            <ion-select-option value="brown" selected>Brown</ion-select-option>
+            <ion-select-option value="brown">Brown</ion-select-option>
             <ion-select-option value="blonde">Blonde</ion-select-option>
             <ion-select-option value="black">Black</ion-select-option>
             <ion-select-option value="red">Red</ion-select-option>
@@ -81,8 +81,8 @@
 
         <ion-item color="danger">
           <ion-label>Alert</ion-label>
-          <ion-select id="customAlertSelect" interface="alert" multiple="true" placeholder="Select One">
-            <ion-select-option value="bacon" selected>Bacon</ion-select-option>
+          <ion-select id="customAlertSelect" value="bacon" interface="alert" multiple="true" placeholder="Select One">
+            <ion-select-option value="bacon">Bacon</ion-select-option>
             <ion-select-option value="olives">Black Olives</ion-select-option>
             <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
             <ion-select-option value="peppers">Green Peppers</ion-select-option>
@@ -147,10 +147,10 @@
 
         <ion-item>
           <ion-label>Date</ion-label>
-          <ion-select placeholder="Month" interface="popover">
+          <ion-select placeholder="Month" value="03" interface="popover">
             <ion-select-option value="01">January</ion-select-option>
             <ion-select-option value="02">February</ion-select-option>
-            <ion-select-option value="03" selected="true">March</ion-select-option>
+            <ion-select-option value="03">March</ion-select-option>
             <ion-select-option value="04">April</ion-select-option>
             <ion-select-option value="05">May</ion-select-option>
             <ion-select-option value="06">June</ion-select-option>
@@ -161,18 +161,18 @@
             <ion-select-option value="11">November</ion-select-option>
             <ion-select-option value="12">December</ion-select-option>
           </ion-select>
-          <ion-select placeholder="Year" interface="popover">
-            <ion-select-option>1989</ion-select-option>
-            <ion-select-option>1990</ion-select-option>
-            <ion-select-option>1991</ion-select-option>
-            <ion-select-option>1992</ion-select-option>
-            <ion-select-option>1993</ion-select-option>
-            <ion-select-option selected="true">1994</ion-select-option>
-            <ion-select-option>1995</ion-select-option>
-            <ion-select-option>1996</ion-select-option>
-            <ion-select-option>1997</ion-select-option>
-            <ion-select-option>1998</ion-select-option>
-            <ion-select-option>1999</ion-select-option>
+          <ion-select placeholder="Year" value="94" interface="popover">
+            <ion-select-option value="89">1989</ion-select-option>
+            <ion-select-option value="90">1990</ion-select-option>
+            <ion-select-option value="91">1991</ion-select-option>
+            <ion-select-option value="92">1992</ion-select-option>
+            <ion-select-option value="93">1993</ion-select-option>
+            <ion-select-option value="94">1994</ion-select-option>
+            <ion-select-option value="95">1995</ion-select-option>
+            <ion-select-option value="96">1996</ion-select-option>
+            <ion-select-option value="97">1997</ion-select-option>
+            <ion-select-option value="98">1998</ion-select-option>
+            <ion-select-option value="99">1999</ion-select-option>
           </ion-select>
         </ion-item>
 
@@ -256,8 +256,8 @@
 
         <ion-item>
           <ion-label>Disabled</ion-label>
-          <ion-select multiple disabled="true">
-            <ion-select-option selected="true">Selected Text</ion-select-option>
+          <ion-select multiple value="text" disabled="true">
+            <ion-select-option value="text">Selected Text</ion-select-option>
           </ion-select>
         </ion-item>
 
@@ -272,10 +272,10 @@
 
         <ion-item>
           <ion-label position="stacked">Stacked: selected</ion-label>
-          <ion-select>
-            <ion-select-option>Default</ion-select-option>
-            <ion-select-option selected>Other</ion-select-option>
-            <ion-select-option>N/A</ion-select-option>
+          <ion-select value="other">
+            <ion-select-option value="default">Default</ion-select-option>
+            <ion-select-option value="other">Other</ion-select-option>
+            <ion-select-option value="na">N/A</ion-select-option>
           </ion-select>
         </ion-item>
 
@@ -290,10 +290,10 @@
 
         <ion-item>
           <ion-label position="floating">Floating: selected</ion-label>
-          <ion-select>
-            <ion-select-option selected="true">Default</ion-select-option>
-            <ion-select-option>Other</ion-select-option>
-            <ion-select-option>N/A</ion-select-option>
+          <ion-select value="default">
+            <ion-select-option value="default">Default</ion-select-option>
+            <ion-select-option value="other">Other</ion-select-option>
+            <ion-select-option value="na">N/A</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>
@@ -345,10 +345,15 @@
         let selectOption = document.createElement('ion-select-option');
         selectOption.value = option;
         selectOption.textContent = option.first + ' ' + option.last;
-        selectOption.selected = (i === 0);
 
         objectSelectElement.appendChild(selectOption)
       });
+      
+      objectSelectElement.value = {
+        id: 1,
+        first: 'Alice',
+        last: 'Smith',
+      };
 
       setTimeout(() => {
         objectSelectElement.value = {

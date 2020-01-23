@@ -104,22 +104,22 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-segment>
+        <ion-segment value="rainy">
           <ion-segment-button value="sunny">
             <ion-label>Sunny</ion-label>
           </ion-segment-button>
-          <ion-segment-button value="rainy" checked>
+          <ion-segment-button value="rainy">
             <ion-label>Rainy</ion-label>
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
 
       <ion-toolbar color="primary">
-        <ion-segment color="light">
+        <ion-segment color="light" value="rainy">
           <ion-segment-button value="sunny">
             Sunny
           </ion-segment-button>
-          <ion-segment-button value="rainy" checked>
+          <ion-segment-button value="rainy">
             Rainy
           </ion-segment-button>
         </ion-segment>
@@ -127,14 +127,14 @@
 
       <!-- Label only -->
       <ion-toolbar color="primary">
-        <ion-segment>
-          <ion-segment-button checked>
+        <ion-segment value="1">
+          <ion-segment-button value="1">
             <ion-label>Item One</ion-label>
           </ion-segment-button>
-          <ion-segment-button>
+          <ion-segment-button value="2">
             <ion-label>Item Two</ion-label>
           </ion-segment-button>
-          <ion-segment-button>
+          <ion-segment-button value="3">
             <ion-label>Item Three</ion-label>
           </ion-segment-button>
         </ion-segment>
@@ -142,14 +142,14 @@
 
       <!-- Icon only -->
       <ion-toolbar color="secondary">
-        <ion-segment>
-          <ion-segment-button>
+        <ion-segment value="heart">
+          <ion-segment-button value="call">
             <ion-icon name="call"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button checked>
+          <ion-segment-button value="heart">
             <ion-icon name="heart"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button>
+          <ion-segment-button value="pin">
             <ion-icon name="pin"></ion-icon>
           </ion-segment-button>
         </ion-segment>
@@ -157,16 +157,16 @@
 
       <!-- Icon top -->
       <ion-toolbar color="danger">
-        <ion-segment>
-          <ion-segment-button>
+        <ion-segment value="2">
+          <ion-segment-button value="1">
             <ion-label>Item One</ion-label>
             <ion-icon name="call"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button checked>
+          <ion-segment-button value="2">
             <ion-label>Item Two</ion-label>
             <ion-icon name="heart"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button>
+          <ion-segment-button value="3">
             <ion-label>Item Three</ion-label>
             <ion-icon name="pin"></ion-icon>
           </ion-segment-button>
@@ -175,16 +175,16 @@
 
       <!-- Icon bottom -->
       <ion-toolbar color="tertiary">
-        <ion-segment>
-          <ion-segment-button checked layout="icon-bottom">
+        <ion-segment value="1">
+          <ion-segment-button value="1" layout="icon-bottom">
             <ion-icon name="call"></ion-icon>
             <ion-label>Item One</ion-label>
           </ion-segment-button>
-          <ion-segment-button layout="icon-bottom">
+          <ion-segment-button value="2" layout="icon-bottom">
             <ion-icon name="heart"></ion-icon>
             <ion-label>Item Two</ion-label>
           </ion-segment-button>
-          <ion-segment-button layout="icon-bottom">
+          <ion-segment-button value="3" layout="icon-bottom">
             <ion-icon name="pin"></ion-icon>
             <ion-label>Item Three</ion-label>
           </ion-segment-button>
@@ -193,16 +193,16 @@
 
       <!-- Icon start -->
       <ion-toolbar color="dark">
-        <ion-segment>
-          <ion-segment-button checked layout="icon-start">
+        <ion-segment value="1">
+          <ion-segment-button value="1" layout="icon-start">
             <ion-label>Item One</ion-label>
             <ion-icon name="call"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button layout="icon-start">
+          <ion-segment-button value="2" layout="icon-start">
             <ion-label>Item Two</ion-label>
             <ion-icon name="heart"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button layout="icon-start">
+          <ion-segment-button value="3" layout="icon-start">
             <ion-label>Item Three</ion-label>
             <ion-icon name="pin"></ion-icon>
           </ion-segment-button>
@@ -211,16 +211,16 @@
 
       <!-- Icon end -->
       <ion-toolbar color="medium">
-        <ion-segment>
-          <ion-segment-button checked layout="icon-end">
+        <ion-segment value="1">
+          <ion-segment-button value="1" layout="icon-end">
             <ion-icon name="call"></ion-icon>
             <ion-label>Item One</ion-label>
           </ion-segment-button>
-          <ion-segment-button layout="icon-end">
+          <ion-segment-button value="2" layout="icon-end">
             <ion-icon name="heart"></ion-icon>
             <ion-label>Item Two</ion-label>
           </ion-segment-button>
-          <ion-segment-button layout="icon-end">
+          <ion-segment-button value="3" layout="icon-end">
             <ion-icon name="pin"></ion-icon>
             <ion-label>Item Three</ion-label>
           </ion-segment-button>
@@ -229,16 +229,16 @@
 
       <!-- Disabled -->
       <ion-toolbar color="success">
-        <ion-segment disabled>
-          <ion-segment-button checked layout="icon-end">
+        <ion-segment disabled value="1">
+          <ion-segment-button value="1" layout="icon-end">
             <ion-icon name="call"></ion-icon>
             <ion-label>Item One</ion-label>
           </ion-segment-button>
-          <ion-segment-button layout="icon-end">
+          <ion-segment-button value="2" layout="icon-end">
             <ion-icon name="heart"></ion-icon>
             <ion-label>Item Two</ion-label>
           </ion-segment-button>
-          <ion-segment-button layout="icon-end">
+          <ion-segment-button value="3" layout="icon-end">
             <ion-icon name="pin"></ion-icon>
             <ion-label>Item Three</ion-label>
           </ion-segment-button>
@@ -247,16 +247,16 @@
 
       <!-- Color -->
       <ion-toolbar color="light">
-        <ion-segment color="secondary">
-          <ion-segment-button checked layout="icon-end">
+        <ion-segment color="secondary" value="1">
+          <ion-segment-button value="1" layout="icon-end">
             <ion-icon name="call"></ion-icon>
             <ion-label>Item One</ion-label>
           </ion-segment-button>
-          <ion-segment-button layout="icon-end">
+          <ion-segment-button value="2" layout="icon-end">
             <ion-icon name="heart"></ion-icon>
             <ion-label>Item Two</ion-label>
           </ion-segment-button>
-          <ion-segment-button layout="icon-end">
+          <ion-segment-button value="3" layout="icon-end">
             <ion-icon name="pin"></ion-icon>
             <ion-label>Item Three</ion-label>
           </ion-segment-button>

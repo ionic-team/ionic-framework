@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
@@ -50,6 +50,13 @@ export class Segment implements ComponentInterface {
    */
   @Prop({ mutable: true }) value?: string | null;
 
+  @Watch('value')
+  protected valueChanged(value: string | undefined) {
+    if (this.didInit) {
+      this.ionChange.emit({ value });
+    }
+  }
+
   /**
    * Emitted when the value property has changed.
    */
@@ -61,14 +68,6 @@ export class Segment implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
-  @Watch('value')
-  protected valueChanged(value: string | undefined) {
-    if (this.didInit) {
-      this.updateButtons();
-      this.ionChange.emit({ value });
-    }
-  }
-
   @Watch('disabled')
   disabledChanged() {
     if (this.gesture && !this.scrollable) {
@@ -76,26 +75,7 @@ export class Segment implements ComponentInterface {
     }
   }
 
-  @Listen('ionSelect')
-  segmentClick(ev: CustomEvent) {
-    const current = ev.target as HTMLIonSegmentButtonElement;
-    const previous = this.checked;
-    this.value = current.value;
-
-    if (previous && this.scrollable) {
-      this.checkButton(previous, current);
-    }
-
-    this.checked = current;
-  }
-
   connectedCallback() {
-    if (this.value === undefined) {
-      const checked = this.getButtons().find(b => b.checked);
-      if (checked) {
-        this.value = checked.value;
-      }
-    }
     this.emitStyle();
   }
 
@@ -104,7 +84,6 @@ export class Segment implements ComponentInterface {
   }
 
   async componentDidLoad() {
-    this.updateButtons();
     this.setCheckedClasses();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -119,7 +98,6 @@ export class Segment implements ComponentInterface {
     });
     this.gesture.enable(!this.scrollable);
     this.disabledChanged();
-
     this.didInit = true;
   }
 
@@ -134,12 +112,18 @@ export class Segment implements ComponentInterface {
   onEnd(detail: GestureDetail) {
     this.activated = false;
 
-    this.setNextIndex(detail, true);
+    const checkedValidButton = this.setNextIndex(detail, true);
 
     detail.event.preventDefault();
     detail.event.stopImmediatePropagation();
 
-    this.addRipple(detail);
+    if (checkedValidButton) {
+      this.addRipple(detail);
+    }
+  }
+
+  private getButtons() {
+    return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
   /**
@@ -149,7 +133,7 @@ export class Segment implements ComponentInterface {
    */
   private addRipple(detail: GestureDetail) {
     const buttons = this.getButtons();
-    const checked = buttons.find(button => button.checked === true);
+    const checked = buttons.find(button => button.value === this.value);
 
     const ripple = checked!.shadowRoot!.querySelector('ion-ripple-effect');
 
@@ -163,7 +147,7 @@ export class Segment implements ComponentInterface {
   private activate(detail: GestureDetail) {
     const clicked = detail.event.target as HTMLIonSegmentButtonElement;
     const buttons = this.getButtons();
-    const checked = buttons.find(button => button.checked === true);
+    const checked = buttons.find(button => button.value === this.value);
 
     // Make sure we are only checking for activation on a segment button
     // since disabled buttons will get the click on the segment
@@ -173,12 +157,12 @@ export class Segment implements ComponentInterface {
 
     // If there are no checked buttons, set the current button to checked
     if (!checked) {
-      clicked.checked = true;
+      this.value = clicked.value;
     }
 
     // If the gesture began on the clicked button with the indicator
     // then we should activate the indicator
-    if (clicked.checked) {
+    if (this.value === clicked.value) {
       this.activated = true;
     }
   }
@@ -220,17 +204,17 @@ export class Segment implements ComponentInterface {
       currentIndicator.style.setProperty('transform', '');
     });
 
-    current.checked = true;
+    this.value = current.value;
     this.setCheckedClasses();
   }
 
   private setCheckedClasses() {
     const buttons = this.getButtons();
-    const index = buttons.findIndex(button => button.checked === true);
+    const index = buttons.findIndex(button => button.value === this.value);
     const next = index + 1;
 
     // Keep track of the currently checked button
-    this.checked = buttons.find(button => button.checked === true);
+    this.checked = buttons.find(button => button.value === this.value);
 
     for (const button of buttons) {
       button.classList.remove('segment-button-after-checked');
@@ -244,7 +228,7 @@ export class Segment implements ComponentInterface {
     const isRTL = document.dir === 'rtl';
     const activated = this.activated;
     const buttons = this.getButtons();
-    const index = buttons.findIndex(button => button.checked === true);
+    const index = buttons.findIndex(button => button.value === this.value);
     const previous = buttons[index];
     let current;
     let nextIndex;
@@ -303,13 +287,24 @@ export class Segment implements ComponentInterface {
       current = nextEl;
     }
 
-    if (!current) {
-      return;
+    /* tslint:disable-next-line */
+    if (current != null) {
+
+      /**
+       * If current element is ion-segment then that means
+       * user tried to select a disabled ion-segment-button,
+       * and we should not update the ripple.
+       */
+      if (current.tagName === 'ION-SEGMENT') {
+        return false;
+      }
+
+      if (previous !== current) {
+        this.checkButton(previous, current);
+      }
     }
 
-    if (previous !== current) {
-      this.checkButton(previous, current);
-    }
+    return true;
   }
 
   private emitStyle() {
@@ -318,15 +313,16 @@ export class Segment implements ComponentInterface {
     });
   }
 
-  private updateButtons() {
-    const value = this.value;
-    for (const button of this.getButtons()) {
-      button.checked = (button.value === value);
-    }
-  }
+  private onClick = (ev: Event) => {
+    const current = ev.target as HTMLIonSegmentButtonElement;
+    const previous = this.checked;
+    this.value = current.value;
 
-  private getButtons() {
-    return Array.from(this.el.querySelectorAll('ion-segment-button'));
+    if (previous && this.scrollable) {
+      this.checkButton(previous, current);
+    }
+
+    this.checked = current;
   }
 
   render() {
@@ -334,6 +330,7 @@ export class Segment implements ComponentInterface {
 
     return (
       <Host
+        onClick={this.onClick}
         class={{
           ...createColorClasses(this.color),
           [mode]: true,

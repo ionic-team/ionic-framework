@@ -33,7 +33,6 @@ import {
   OverlayEventDetail,
   PickerButton,
   PickerColumn,
-  RadioChangeEventDetail,
   RadioGroupChangeEventDetail,
   RangeChangeEventDetail,
   RangeValue,
@@ -1715,10 +1714,6 @@ export namespace Components {
   }
   interface IonRadio {
     /**
-    * If `true`, the radio is selected.
-    */
-    'checked': boolean;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -2077,10 +2072,6 @@ export namespace Components {
   }
   interface IonSegmentButton {
     /**
-    * If `true`, the segment button is selected.
-    */
-    'checked': boolean;
-    /**
     * If `true`, the user cannot interact with the segment button.
     */
     'disabled': boolean;
@@ -2161,10 +2152,6 @@ export namespace Components {
     * If `true`, the user cannot interact with the select option.
     */
     'disabled': boolean;
-    /**
-    * If `true`, the element is selected.
-    */
-    'selected': boolean;
     /**
     * The text value of the option.
     */
@@ -4879,10 +4866,6 @@ declare namespace LocalJSX {
   }
   interface IonRadio {
     /**
-    * If `true`, the radio is selected.
-    */
-    'checked'?: boolean;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -4906,10 +4889,6 @@ declare namespace LocalJSX {
     * Emitted when the radio button has focus.
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
-    /**
-    * Emitted when the radio button is selected.
-    */
-    'onIonSelect'?: (event: CustomEvent<RadioChangeEventDetail>) => void;
     /**
     * the value of the radio.
     */
@@ -5281,10 +5260,6 @@ declare namespace LocalJSX {
   }
   interface IonSegmentButton {
     /**
-    * If `true`, the segment button is selected.
-    */
-    'checked'?: boolean;
-    /**
     * If `true`, the user cannot interact with the segment button.
     */
     'disabled'?: boolean;
@@ -5296,10 +5271,6 @@ declare namespace LocalJSX {
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
-    /**
-    * Emitted when the segment button is clicked.
-    */
-    'onIonSelect'?: (event: CustomEvent<void>) => void;
     /**
     * The type of the button.
     */
@@ -5380,10 +5351,6 @@ declare namespace LocalJSX {
     * If `true`, the user cannot interact with the select option.
     */
     'disabled'?: boolean;
-    /**
-    * If `true`, the element is selected.
-    */
-    'selected'?: boolean;
     /**
     * The text value of the option.
     */
