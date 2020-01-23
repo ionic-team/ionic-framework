@@ -14,12 +14,21 @@ import { RouteManagerContext, RouteManagerContextState } from './RouteManagerCon
 import { ViewItem } from './ViewItem';
 import { ViewStack, ViewStacks } from './ViewStacks';
 
-interface RouteManagerState extends RouteManagerContextState {
-  location?: HistoryLocation;
+export interface LocationState {
+  direction?: RouterDirection;
   action?: IonRouteAction;
 }
 
-export class RouteManager extends React.Component<RouteComponentProps, RouteManagerState> {
+interface RouteManagerProps extends RouteComponentProps<{}, {}, LocationState> {
+  location: HistoryLocation<LocationState>;
+}
+
+interface RouteManagerState extends RouteManagerContextState {
+  location?: HistoryLocation<LocationState>;
+  action?: IonRouteAction;
+}
+
+export class RouteManager extends React.Component<RouteManagerProps, RouteManagerState> {
   listenUnregisterCallback: UnregisterCallback | undefined;
   activeIonPageId?: string;
   currentIonRouteAction?: IonRouteAction;
@@ -30,7 +39,7 @@ export class RouteManager extends React.Component<RouteComponentProps, RouteMana
   routerOutlets: { [key: string]: HTMLIonRouterOutletElement; } = {};
   firstRender = true;
 
-  constructor(props: RouteComponentProps) {
+  constructor(props: RouteManagerProps) {
     super(props);
     this.listenUnregisterCallback = this.props.history.listen(this.historyChange.bind(this));
     this.handleNavigate = this.handleNavigate.bind(this);
@@ -87,7 +96,7 @@ export class RouteManager extends React.Component<RouteComponentProps, RouteMana
     }
   }
 
-  historyChange(location: HistoryLocation, action: HistoryAction) {
+  historyChange(location: HistoryLocation<LocationState>, action: HistoryAction) {
     const ionRouteAction = this.currentIonRouteAction === 'pop' ? 'pop' : action.toLowerCase() as IonRouteAction;
     let direction = this.currentRouteDirection;
 
@@ -115,7 +124,7 @@ export class RouteManager extends React.Component<RouteComponentProps, RouteMana
     this.currentIonRouteAction = undefined;
   }
 
-  setActiveView(location: HistoryLocation, action: IonRouteAction, viewStacks: ViewStacks) {
+  setActiveView(location: HistoryLocation<LocationState>, action: IonRouteAction, viewStacks: ViewStacks) {
     let direction: RouterDirection | undefined = (location.state && location.state.direction) || 'forward';
     let leavingView: ViewItem | undefined;
     const viewStackKeys = viewStacks.getKeys();
@@ -145,7 +154,7 @@ export class RouteManager extends React.Component<RouteComponentProps, RouteMana
              * record the view that originally directed to the new view for back button purposes.
              */
             enteringView.prevId = leavingView.id;
-          } else if (action === 'pop' || action === 'replace') {
+          } else {
             leavingView.mount = false;
             this.removeOrphanedViews(enteringView, enteringViewStack);
           }
@@ -246,11 +255,22 @@ export class RouteManager extends React.Component<RouteComponentProps, RouteMana
     const views: ViewItem[] = [];
     let activeId: string | undefined;
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
+    let foundMatch = false;
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
       const routeId = generateId();
       this.routes[routeId] = child;
       views.push(createViewItem(child, routeId, this.props.history.location));
     });
+
+    if (!foundMatch) {
+      const notFoundRoute = views.find(r => {
+        // try to find a route that doesn't have a path or from prop, that will be our not found route
+        return !r.routeData.childProps.path && !r.routeData.childProps.from;
+      });
+      if (notFoundRoute) {
+        notFoundRoute.show = true;
+      }
+    }
 
     this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);
 
@@ -279,6 +299,9 @@ export class RouteManager extends React.Component<RouteComponentProps, RouteMana
       };
       if (match && view.isIonRoute) {
         activeId = viewId;
+      }
+      if (!foundMatch && match) {
+        foundMatch = true;
       }
       return view;
     }
@@ -351,7 +374,7 @@ export class RouteManager extends React.Component<RouteComponentProps, RouteMana
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
       for (const routeKey in this.routes) {
         const route = this.routes[routeKey];
-        if (route.props.path === child.props.path) {
+        if (typeof route.props.path !== 'undefined' && route.props.path === (child.props.path || child.props.from)) {
           this.routes[routeKey] = child;
         }
       }

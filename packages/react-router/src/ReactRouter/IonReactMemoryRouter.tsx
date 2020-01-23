@@ -2,10 +2,10 @@ import { MemoryHistory } from 'history';
 import React from 'react';
 import { MemoryRouter, MemoryRouterProps, matchPath } from 'react-router';
 
-import { RouteManager } from './Router';
+import { LocationState, RouteManager } from './Router';
 
 interface IonReactMemoryRouterProps extends MemoryRouterProps {
-  history: MemoryHistory;
+  history: MemoryHistory<LocationState>;
 }
 
 export class IonReactMemoryRouter extends React.Component<IonReactMemoryRouterProps> {

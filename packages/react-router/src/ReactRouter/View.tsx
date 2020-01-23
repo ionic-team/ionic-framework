@@ -65,6 +65,7 @@ export class View extends React.Component<ViewProps, {}> {
             ...value,
             registerIonPage: this.registerIonPage.bind(this)
           };
+
           return (
             <NavContext.Provider value={newProvider}>
               {this.props.children}
