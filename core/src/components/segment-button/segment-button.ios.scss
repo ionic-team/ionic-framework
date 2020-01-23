@@ -161,7 +161,7 @@
 // Default
 :host(.in-segment-color) {
   background: none;
-  color: #000;
+  color: $segment-button-ios-color;
 }
 
 // Indicator color on a Segment w/ color
@@ -175,7 +175,7 @@
   // Toolbar with Color, Default Segment, Checked, Hover
   :host(.in-segment-color:hover) .button-native,
   :host(.in-segment-color.segment-button-checked:hover) .button-native {
-    color: #000;
+    color: $segment-button-ios-color;
   }
 }
 
