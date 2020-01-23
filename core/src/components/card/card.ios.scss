@@ -20,6 +20,6 @@
   box-shadow: $card-ios-box-shadow;
 }
 
-:host(.activated) {
+:host(.ion-activated) {
   transform: #{$card-ios-transform-activated};
 }

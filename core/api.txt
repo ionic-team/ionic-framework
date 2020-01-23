@@ -21,8 +21,20 @@ ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
 ion-action-sheet,css-prop,--backdrop-opacity
 ion-action-sheet,css-prop,--background
-ion-action-sheet,css-prop,--background-activated
-ion-action-sheet,css-prop,--background-selected
+ion-action-sheet,css-prop,--button-background
+ion-action-sheet,css-prop,--button-background-activated
+ion-action-sheet,css-prop,--button-background-activated-opacity
+ion-action-sheet,css-prop,--button-background-focused
+ion-action-sheet,css-prop,--button-background-focused-opacity
+ion-action-sheet,css-prop,--button-background-hover
+ion-action-sheet,css-prop,--button-background-hover-opacity
+ion-action-sheet,css-prop,--button-background-selected
+ion-action-sheet,css-prop,--button-background-selected-opacity
+ion-action-sheet,css-prop,--button-color
+ion-action-sheet,css-prop,--button-color-activated
+ion-action-sheet,css-prop,--button-color-focused
+ion-action-sheet,css-prop,--button-color-hover
+ion-action-sheet,css-prop,--button-color-selected
 ion-action-sheet,css-prop,--color
 ion-action-sheet,css-prop,--height
 ion-action-sheet,css-prop,--max-height
@@ -77,7 +89,9 @@ ion-back-button,prop,text,null | string | undefined,undefined,false,false
 ion-back-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-back-button,css-prop,--background
 ion-back-button,css-prop,--background-focused
+ion-back-button,css-prop,--background-focused-opacity
 ion-back-button,css-prop,--background-hover
+ion-back-button,css-prop,--background-hover-opacity
 ion-back-button,css-prop,--border-radius
 ion-back-button,css-prop,--color
 ion-back-button,css-prop,--color-focused
@@ -142,8 +156,11 @@ ion-button,event,ionBlur,void,true
 ion-button,event,ionFocus,void,true
 ion-button,css-prop,--background
 ion-button,css-prop,--background-activated
+ion-button,css-prop,--background-activated-opacity
 ion-button,css-prop,--background-focused
+ion-button,css-prop,--background-focused-opacity
 ion-button,css-prop,--background-hover
+ion-button,css-prop,--background-hover-opacity
 ion-button,css-prop,--border-color
 ion-button,css-prop,--border-radius
 ion-button,css-prop,--border-style
@@ -344,8 +361,11 @@ ion-fab-button,event,ionBlur,void,true
 ion-fab-button,event,ionFocus,void,true
 ion-fab-button,css-prop,--background
 ion-fab-button,css-prop,--background-activated
+ion-fab-button,css-prop,--background-activated-opacity
 ion-fab-button,css-prop,--background-focused
+ion-fab-button,css-prop,--background-focused-opacity
 ion-fab-button,css-prop,--background-hover
+ion-fab-button,css-prop,--background-hover-opacity
 ion-fab-button,css-prop,--border-color
 ion-fab-button,css-prop,--border-radius
 ion-fab-button,css-prop,--border-style
@@ -469,8 +489,11 @@ ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item,css-prop,--background
 ion-item,css-prop,--background-activated
+ion-item,css-prop,--background-activated-opacity
 ion-item,css-prop,--background-focused
+ion-item,css-prop,--background-focused-opacity
 ion-item,css-prop,--background-hover
+ion-item,css-prop,--background-hover-opacity
 ion-item,css-prop,--border-color
 ion-item,css-prop,--border-radius
 ion-item,css-prop,--border-style
@@ -632,7 +655,9 @@ ion-menu-button,prop,menu,string | undefined,undefined,false,false
 ion-menu-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-menu-button,css-prop,--background
 ion-menu-button,css-prop,--background-focused
+ion-menu-button,css-prop,--background-focused-opacity
 ion-menu-button,css-prop,--background-hover
+ion-menu-button,css-prop,--background-hover-opacity
 ion-menu-button,css-prop,--border-radius
 ion-menu-button,css-prop,--color
 ion-menu-button,css-prop,--color-focused
@@ -957,15 +982,17 @@ ion-segment-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-segment-button,prop,value,string,'ion-sb-' + (ids++),false,false
 ion-segment-button,css-prop,--background
 ion-segment-button,css-prop,--background-checked
-ion-segment-button,css-prop,--background-disabled
+ion-segment-button,css-prop,--background-focused
+ion-segment-button,css-prop,--background-focused-opacity
 ion-segment-button,css-prop,--background-hover
+ion-segment-button,css-prop,--background-hover-opacity
 ion-segment-button,css-prop,--border-color
 ion-segment-button,css-prop,--border-radius
 ion-segment-button,css-prop,--border-style
 ion-segment-button,css-prop,--border-width
 ion-segment-button,css-prop,--color
 ion-segment-button,css-prop,--color-checked
-ion-segment-button,css-prop,--color-disabled
+ion-segment-button,css-prop,--color-focused
 ion-segment-button,css-prop,--color-hover
 ion-segment-button,css-prop,--indicator-box-shadow
 ion-segment-button,css-prop,--indicator-color
@@ -1106,7 +1133,9 @@ ion-tab-button,prop,tab,string | undefined,undefined,false,false
 ion-tab-button,prop,target,string | undefined,undefined,false,false
 ion-tab-button,css-prop,--background
 ion-tab-button,css-prop,--background-focused
+ion-tab-button,css-prop,--background-focused-opacity
 ion-tab-button,css-prop,--color
+ion-tab-button,css-prop,--color-focused
 ion-tab-button,css-prop,--color-selected
 ion-tab-button,css-prop,--padding-bottom
 ion-tab-button,css-prop,--padding-end

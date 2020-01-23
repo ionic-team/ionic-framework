@@ -7,7 +7,11 @@
 :host {
   --background: #{$segment-button-md-background};
   --background-checked: #{$segment-button-md-background-checked};
-  --background-hover: #{$segment-button-md-background-hover};
+  --background-hover: var(--color-checked);
+  --background-focused: var(--color-checked);
+  --background-activated-opacity: 0;
+  --background-focused-opacity: .12;
+  --background-hover-opacity: .04;
   --color: #{$segment-button-md-text-color};
   --color-checked: #{$segment-button-md-text-color-checked};
   --indicator-box-shadow: none;
@@ -47,6 +51,84 @@
 :host(.segment-button-disabled) {
   opacity: $segment-button-md-opacity-disabled;
 }
+
+
+// Segment Button: Segment w/ Color
+// --------------------------------------------------
+
+// Default
+:host(.in-segment-color) {
+  background: none;
+  color: $segment-button-md-text-color;
+}
+
+// Indicator color and ripple on a Segment w/ color
+// should not change if the variables are set
+:host(.in-segment-color) ion-ripple-effect {
+  color: #{current-color(base)};
+}
+
+:host(.in-segment-color) .segment-button-indicator-background {
+  background: #{current-color(base)};
+}
+
+// Checked
+:host(.in-segment-color.segment-button-checked) .button-native {
+  color: #{current-color(base)};
+}
+
+// Focused
+:host(.in-segment-color.ion-focused) .button-native::after {
+  background: #{current-color(base)};
+}
+
+@media (any-hover: hover) {
+  :host(.in-segment-color:hover) .button-native {
+    color: $segment-button-md-text-color;
+
+    &::after {
+      background: #{current-color(base)};
+    }
+  }
+
+  :host(.in-segment-color.segment-button-checked:hover) .button-native {
+    color: #{current-color(base)};
+  }
+}
+
+
+// Segment: Default Toolbar
+// --------------------------------------------------
+
+:host(.in-toolbar:not(.in-segment-color)) {
+  --background: #{var(--ion-toolbar-segment-background, $segment-button-md-background)};
+  --background-checked: #{var(--ion-toolbar-segment-background-checked, $segment-button-md-background-checked)};
+  --color: #{var(--ion-toolbar-segment-color, $segment-button-md-text-color)};
+  --color-checked: #{var(--ion-toolbar-segment-color-checked, $segment-button-md-text-color-checked)};
+  --indicator-color: #{var(--ion-toolbar-segment-color-checked, var(--color-checked))};
+}
+
+
+// Segment Button: Toolbar w/ Color
+// --------------------------------------------------
+
+// Default Segment, In a Toolbar with Color
+:host(.in-toolbar-color:not(.in-segment-color)) .button-native {
+  color: #{current-color(contrast, .6)};
+}
+
+// Default Segment, In a Toolbar with Color, Checked
+:host(.in-toolbar-color.segment-button-checked:not(.in-segment-color)) .button-native {
+  color: #{current-color(contrast)};
+}
+
+// Default Segment, In a Toolbar with Color, Hover
+@media (any-hover: hover) {
+  :host(.in-toolbar-color:not(.in-segment-color)) .button-native::after {
+    background: #{current-color(contrast)};
+  }
+}
+
 
 // Segment Button: Icon
 // --------------------------------------------------

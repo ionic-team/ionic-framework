@@ -1,11 +1,11 @@
-import { Component, ComponentInterface, Host, Listen, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
 import { menuController } from '../../utils/menu-controller';
-import { createColorClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 import { updateVisibility } from '../menu-toggle/menu-toggle-util';
 
 @Component({
@@ -17,6 +17,7 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
   shadow: true
 })
 export class MenuButton implements ComponentInterface, ButtonInterface {
+  @Element() el!: HTMLIonSegmentElement;
 
   @State() visible = false;
 
@@ -84,6 +85,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           'button': true,  // ion-buttons target .button
           'menu-button-hidden': hidden,
           'menu-button-disabled': disabled,
+          'in-toolbar': hostContext('ion-toolbar', this.el),
           'ion-activatable': true,
           'ion-focusable': true
         }}
@@ -93,9 +95,11 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           disabled={disabled}
           class="button-native"
         >
-          <slot>
-            <ion-icon icon={menuIcon} mode={mode} lazy={false}></ion-icon>
-          </slot>
+          <span class="button-inner">
+            <slot>
+              <ion-icon icon={menuIcon} mode={mode} lazy={false}></ion-icon>
+            </slot>
+          </span>
           {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </button>
       </Host>

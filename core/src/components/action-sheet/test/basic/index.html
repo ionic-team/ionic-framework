@@ -40,10 +40,10 @@
   <style>
     .my-color-class {
       --background: #292929;
-      --background-selected: #222222;
+      --button-background-selected: #222222;
 
       --color: #dfdfdf;
-      ;
+      --button-color: #dfdfdf;
     }
 
     .my-custom-class {
@@ -65,7 +65,7 @@
       const actionSheet = await actionSheetController.create(opts);
       await actionSheet.present();
     }
-    
+
     async function presentBasic() {
       const mode = Ionic.mode;
       await openActionSheet({
@@ -80,7 +80,7 @@
         }, {
           text: 'Share',
           icon: 'share',
-          cssClass: 'activated',
+          cssClass: 'ion-activated',
           handler: () => {
             console.log('Share clicked');
           }
@@ -152,7 +152,7 @@
       });
     }
 
-    async function presentWithCssClass(classList) {      
+    async function presentWithCssClass(classList) {
       await openActionSheet({
         header: "Custom Css Class",
         cssClass: classList ? classList : "my-color-class my-custom-class",
@@ -160,7 +160,7 @@
           {
             text: 'Add to Favorites',
             icon: 'star',
-            cssClass: 'my-custom-button customClass activated',
+            cssClass: 'my-custom-button customClass ion-activated',
             handler: () => {
               console.log('Add to Favorites clicked');
             }
@@ -272,7 +272,7 @@
             }
           }, {
             text: 'Copy Text',
-            cssClass: 'activated',
+            cssClass: 'ion-activated',
             handler: () => {
               console.log('Copy Text clicked');
             }

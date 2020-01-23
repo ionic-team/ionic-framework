@@ -5,9 +5,12 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$segment-button-ios-background-color};
-  --background-checked: #{$segment-button-ios-background-color-checked};
-  --background-hover: #{$segment-button-ios-background-color-hover};
+  --background: #{$segment-button-ios-background};
+  --background-checked: #{$segment-button-ios-background-checked};
+  --background-hover: #{$segment-button-ios-background-hover};
+  --background-hover-opacity: 0;
+  --background-focused: none;
+  --background-focused-opacity: 0;
   --border-radius: #{$segment-button-ios-border-radius};
   --border-width: #{$segment-button-ios-border-width};
   --border-color: #{$segment-button-ios-border-color};
@@ -134,16 +137,89 @@
 }
 
 
+// Segment: States
+// --------------------------------------------------
+
+:host(.ion-focused) .button-native {
+  opacity: $segment-button-ios-opacity-focused;
+}
+
+@media (any-hover: hover) {
+  // Default Segment, Hover
+  :host(:hover) .button-native {
+    opacity: $segment-button-ios-opacity-hover;
+  }
+
+  :host(.segment-button-checked:hover) .button-native {
+    opacity: 1;
+  }
+}
+
+
+// Segment Button: Segment w/ Color
+// --------------------------------------------------
+
+// Default
+:host(.in-segment-color) {
+  background: none;
+  color: $segment-button-ios-color;
+}
+
+// Indicator color on a Segment w/ color
+// should not change if the variable is set
+:host(.in-segment-color) .segment-button-indicator-background {
+  background: $segment-button-ios-indicator-color;
+}
+
+@media (any-hover: hover) {
+  // Toolbar with Color, Default Segment, Hover
+  // Toolbar with Color, Default Segment, Checked, Hover
+  :host(.in-segment-color:hover) .button-native,
+  :host(.in-segment-color.segment-button-checked:hover) .button-native {
+    color: $segment-button-ios-color;
+  }
+}
+
+
+
 // Segment Button: Toolbar
 // --------------------------------------------------
 
-// Segment button indicator color should use the global variable with
-// a fallback to the local variable
-:host(.in-toolbar) .segment-button-indicator-background {
-  background: #{var(--ion-toolbar-segment-indicator-color, var(--indicator-color))};
+// Default Segment, In a Toolbar
+:host(.in-toolbar:not(.in-segment-color)) {
+  --background-checked: #{var(--ion-toolbar-segment-background-checked, $segment-button-ios-background-checked)};
+  --color: var(--ion-toolbar-segment-color, var(--ion-toolbar-color), initial);
+  --color-checked: var(--ion-toolbar-segment-color-checked, var(--ion-toolbar-color), initial);
+  --indicator-color: #{var(--ion-toolbar-segment-indicator-color, $segment-button-ios-indicator-color)};
 }
+
+
+// Segment Button: Toolbar w/ Color
+// --------------------------------------------------
 
 // Do not use the global or local CSS variable if the toolbar has a color
 :host(.in-toolbar-color) .segment-button-indicator-background {
   background: #fff;
+}
+
+// Toolbar with Color, Default Segment
+:host(.in-toolbar-color:not(.in-segment-color)) .button-native {
+  color: #{current-color(contrast)};
+}
+
+// Toolbar with Color, Default Segment, Checked
+:host(.in-toolbar-color.segment-button-checked:not(.in-segment-color)) .button-native {
+  color: #{current-color(base)};
+}
+
+@media (any-hover: hover) {
+  // Toolbar with Color, Default Segment, Hover
+  :host(.in-toolbar-color:not(.in-segment-color):hover) .button-native {
+    color: #{current-color(contrast)};
+  }
+
+  // Toolbar with Color, Default Segment, Checked / Hover
+  :host(.in-toolbar-color.segment-button-checked:not(.in-segment-color):hover) .button-native {
+    color: #{current-color(base)};
+  }
 }

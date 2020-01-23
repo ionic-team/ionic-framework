@@ -85,6 +85,14 @@
         <ion-title>Success</ion-title>
       </ion-toolbar>
 
+      <ion-toolbar class="themed">
+        <ion-buttons slot="start">
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+          <ion-menu-button auto-hide="false" class="ion-focused"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Themed</ion-title>
+      </ion-toolbar>
+
       <ion-toolbar color="dark">
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
@@ -103,13 +111,18 @@
       display: inline-block;
     }
 
+    .themed {
+      --ion-toolbar-background: #222;
+      --ion-toolbar-color: #ddd;
+    }
+
     .custom {
       --color: hotpink;
     }
 
     .custom.md {
-      --background-hover: rgb(255, 105, 180, .08);
-      --background-focused: rgb(255, 105, 180, .24);
+      --background-hover: #ff69b4;
+      --background-focused: #ff69b4;
     }
 
     .custom-large {

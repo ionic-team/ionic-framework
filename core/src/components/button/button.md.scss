@@ -30,11 +30,16 @@
 // --------------------------------------------------
 
 :host(.button-solid) {
-  --background-activated: var(--background);
+  --background-activated: transparent;
+  --background-hover: #{ion-color(primary, contrast)};
+  --background-focused: #{ion-color(primary, contrast)};
+  --background-activated-opacity: 0;
+  --background-focused-opacity: .24;
+  --background-hover-opacity: .08;
   --box-shadow: #{$button-md-box-shadow};
 }
 
-:host(.button-solid.activated) {
+:host(.button-solid.ion-activated) {
   --box-shadow: #{$button-md-box-shadow-activated};
 }
 
@@ -46,12 +51,14 @@
   --border-style: solid;
   --box-shadow: none;
   --background-activated: transparent;
-  --background-focused: #{ion-color(primary, base, .1)};
-  --background-hover: #{ion-color(primary, base, .04)};
-  --color-activated: #{ion-color(primary, base)};
+  --background-focused: #{ion-color(primary, base)};
+  --background-hover: #{ion-color(primary, base)};
+  --background-activated-opacity: 0;
+  --background-focused-opacity: .12;
+  --background-hover-opacity: .04;
 }
 
-:host(.button-outline.activated.ion-color) .button-native {
+:host(.button-outline.ion-activated.ion-color) .button-native {
   background: transparent;
 }
 
@@ -61,10 +68,11 @@
 
 :host(.button-clear) {
   --background-activated: transparent;
-  --background-focused: #{ion-color(primary, base, .1)};
-  --background-hover: #{ion-color(primary, base, .04)};
-  --color-activated: #{ion-color(primary, base)};
-  --color-focused: #{ion-color(primary, base)};
+  --background-focused: #{ion-color(primary, base)};
+  --background-hover: #{ion-color(primary, base)};
+  --background-activated-opacity: 0;
+  --background-focused-opacity: .12;
+  --background-hover-opacity: .04;
 }
 
 
@@ -121,13 +129,33 @@
 // Material Design Button: Hover
 // --------------------------------------------------
 
+:host(.button-solid.ion-color.ion-activated) .button-native::after,
+:host(.button-solid.ion-color.ion-focused) .button-native::after {
+  background: #{current-color(contrast)};
+
+  opacity: .24;
+}
+
+:host(.button-clear.ion-color.ion-activated) .button-native::after,
+:host(.button-clear.ion-color.ion-focused) .button-native::after,
+:host(.button-outline.ion-color.ion-activated) .button-native::after,
+:host(.button-outline.ion-color.ion-focused) .button-native::after {
+  background: #{current-color(base)};
+
+  opacity: .12;
+}
+
 @media (any-hover: hover) {
-  :host(.button-solid.ion-color:hover) .button-native {
-    background: #{current-color(tint)};
+  :host(.button-solid.ion-color:hover) .button-native::after {
+    background: #{current-color(contrast)};
+
+    opacity: .08;
   }
 
-  :host(.button-clear.ion-color:hover) .button-native,
-  :host(.button-outline.ion-color:hover) .button-native {
-    background: #{current-color(base, .04)};
+  :host(.button-clear.ion-color:hover) .button-native::after,
+  :host(.button-outline.ion-color:hover) .button-native::after {
+    background: #{current-color(base)};
+
+    opacity: .04;
   }
 }
