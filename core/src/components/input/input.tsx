@@ -263,7 +263,8 @@ export class Input implements ComponentInterface {
   }
 
   private getValue(): string {
-    return (this.value || '').toString();
+    return typeof this.value === 'number' ? this.value.toString() :
+      (this.value || '').toString();
   }
 
   private emitStyle() {
