@@ -99,25 +99,25 @@ const checkConfig = (animation: Animation, currentProps: any = {}, prevProps: an
   }
 
   const fromValues = currentProps.from;
-  if (fromValues && fromValues.length !== (prevProps.from || []).length) {
+  if (fromValues && fromValues !== prevProps.from) {
     const values = (Array.isArray(fromValues)) ? fromValues : [fromValues];
     values.forEach(val => animation.from(val.property, val.value));
   }
 
   const toValues = currentProps.to;
-  if (toValues && toValues.length !== (prevProps.to || []).length) {
+  if (toValues && toValues !== prevProps.to) {
     const values = (Array.isArray(toValues)) ? toValues : [toValues];
     values.forEach(val => animation.to(val.property, val.value));
   }
 
   const fromToValues = currentProps.fromTo;
-  if (fromToValues && fromToValues.length !== (prevProps.fromTo || []).length) {
+  if (fromToValues && fromToValues !== prevProps.fromTo) {
     const values = (Array.isArray(fromToValues)) ? fromToValues : [fromToValues];
     values.forEach(val => animation.fromTo(val.property, val.fromValue, val.toValue));
   }
 
   const onFinishValues = currentProps.onFinish;
-  if (onFinishValues && onFinishValues.length !== (prevProps.onFinish || []).length) {
+  if (onFinishValues && onFinishValues !== prevProps.onFinish) {
     const values = (Array.isArray(onFinishValues)) ? onFinishValues : [onFinishValues];
     values.forEach(val => animation.onFinish(val.callback, val.opts));
   }
