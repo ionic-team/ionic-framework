@@ -11,13 +11,19 @@ interface OverlayBase extends HTMLElement {
 export interface ReactControllerProps {
   isOpen: boolean;
   onDidDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
+  onDidPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
+  onWillDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
+  onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
 }
 
 export const createControllerComponent = <OptionsType extends object, OverlayType extends OverlayBase>(
   displayName: string,
   controller: { create: (options: OptionsType) => Promise<OverlayType>; }
 ) => {
-  const dismissEventName = `on${displayName}DidDismiss`;
+  const didDismissEventName = `on${displayName}DidDismiss`;
+  const didPresentEventName = `on${displayName}DidPresent`;
+  const willDismissEventName = `on${displayName}WillDismiss`;
+  const willPresentEventName = `on${displayName}WillPresent`;
 
   type Props = OptionsType & ReactControllerProps & {
     forwardedRef?: React.RefObject<OverlayType>;
@@ -67,12 +73,15 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
     }
 
     async present(prevProps?: Props) {
-      const { isOpen, onDidDismiss, ...cProps } = this.props;
+      const { isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } = this.props;
       this.overlay = await controller.create({
         ...cProps as any
       });
       attachProps(this.overlay, {
-        [dismissEventName]: this.handleDismiss
+        [didDismissEventName]: this.handleDismiss,
+        [didPresentEventName]: (e: CustomEvent) => this.props.onDidPresent && this.props.onDidPresent(e),
+        [willDismissEventName]: (e: CustomEvent) => this.props.onWillDismiss && this.props.onWillDismiss(e),
+        [willPresentEventName]: (e: CustomEvent) => this.props.onWillPresent && this.props.onWillPresent(e)
       }, prevProps);
       // Check isOpen again since the value could have changed during the async call to controller.create
       // It's also possible for the component to have become unmounted.
