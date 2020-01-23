@@ -22,20 +22,31 @@
 
     <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
       <p>
-        <ion-calendar></ion-calendar>
-        <div id="date"></div>
+        <ion-calendar id="calendar-one"></ion-calendar>
+        <ion-calendar id="calendar-two" month="1" year="1988"></ion-calendar>
       </p>
-
+      <div id="date"></div>
     </ion-content>
 
   </ion-app>
 
   <script>
+    var selectedDates = [];
     function onLoad() {
-      var calendarEl = document.querySelector('ion-calendar');
-      calendarEl.addEventListener('ionSelectDate', e =>{
-        document.getElementById('date').innerHTML = e.detail.value;
-      })
+      var calendarOne = document.querySelector('#calendar-one');
+      calendarOne.addEventListener('ionSelectDate', e => {
+        const date = e.detail.value;
+        console.log('select date', date);
+        // document.getElementById('date').innerHTML = date;
+        // selectedDates = [...selectedDates, new Date(date)];
+        // console.log('dates', selectedDates);
+        // document.getElementById('date').innerHTML = '';
+        // selectedDates.map(d => document.getElementById('date').innerHTML += `${d}<br/>`);
+        // calendarEl.selectedDates = selectedDates;
+      });
+
+      var calendarTwo = document.querySelector('#calendar-two');
+      calendarTwo.selectedDates=[new Date(1988, 1, 25)];
     }
   </script>
 </body>

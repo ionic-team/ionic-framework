@@ -342,7 +342,9 @@ export namespace Components {
     * The mode determines which platform styles to use.
     */
     'mode'?: 'ios' | 'md';
-    'selectedDate': Date | null;
+    'month': number;
+    'selectedDates': Date[];
+    'year': number;
   }
   interface IonCard {
     /**
@@ -3594,11 +3596,13 @@ declare namespace LocalJSX {
     * The mode determines which platform styles to use.
     */
     'mode'?: 'ios' | 'md';
+    'month'?: number;
     /**
     * Emitted when the checked property has changed.
     */
     'onIonSelectDate'?: (event: CustomEvent<{ value: string }>) => void;
-    'selectedDate'?: Date | null;
+    'selectedDates'?: Date[];
+    'year'?: number;
   }
   interface IonCard {
     /**

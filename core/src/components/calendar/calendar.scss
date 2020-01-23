@@ -7,6 +7,8 @@
   position: relative;
 
   overflow: hidden;
+
+  user-select: none;
 }
 .months-wrapper {
   display: flex;
@@ -76,19 +78,7 @@
       padding-top: 100%;
     }
     .day-inner {
-      --padding-top: 0;
-      --padding-end: 0;
-      --padding-bottom: 0;
-      --padding-start: 0;
-      --border-radius: 50%;
-      --color: var(--ion-text-color);
-      --background: #{ion-color(primary, base)};
-      --background-activated: #{current-color(contrast)};
-      --background-focused: #{ion-color(primary, base, .1)};
-      --background-hover: #{ion-color(primary, base, .04)};
-      --color-activated: #{ion-color(primary, base)};
-      --color-focused: #{ion-color(primary, base)};
-
+      @include border-radius(500px);
       @include margin(0);
       @include position(8%, 8%, 8%, 8%);
 
@@ -102,18 +92,22 @@
       width: 84%;
       height: 84%;
 
+      cursor: pointer;
     }
     &.today {
       .day-inner {
-        --border-color: #{ion-color(primary, base)};
-        --border-style: solid;
-        --border-width: 1px;
-
+        border: #{ion-color(primary, base)} 1px solid;
         color: #{ion-color(primary, base)};
       }
     }
-    &.not-current-month:not(.active) {
+    &.not-current-month:not(.day-selected) {
       opacity: 0.3;
+    }
+    &.day-selected {
+      .day-inner {
+        background: #{ion-color(primary, base)};
+        color: #{ion-color(primary, contrast)};
+      }
     }
   }
 }
@@ -149,11 +143,7 @@
     width: 25%;
 
     .year-inner {
-      --padding-top: 0;
-      --padding-bottom: 0;
-      --border-radius: 500px;
-      --color: var(--ion-text-color);
-
+      @include border-radius(500px);
       @include position(4%, 4%, 4%, 4%);
       @include margin(0);
 
@@ -166,14 +156,21 @@
 
       width: 84%;
       height: 84%;
+
+      cursor: pointer;
     }
-    &.current-year {
+    &.year-current {
       .year-inner {
-        --border-color: #{ion-color(primary, base)};
-        --border-style: solid;
-        --border-width: 1px;
+
+        border: #{ion-color(primary, base)} 1px solid;
 
         color: #{ion-color(primary, base)};
+      }
+    }
+    &.year-selected {
+      .year-inner {
+        background: #{ion-color(primary, base)};
+        color: #{ion-color(primary, contrast)};
       }
     }
   }

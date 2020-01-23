@@ -31,10 +31,15 @@ export class Calendar implements ComponentInterface {
   @State()
   showYears = false;
   @State()
-  viewDate: Date = this.today;
+  viewDate!: Date;
 
-  @Prop({ mutable: true })
-  selectedDate: Date | null = null;
+  @Prop()
+  selectedDates: Date[] = [];
+  @Prop()
+  year: number = this.today.getFullYear();
+  @Prop()
+  month: number = this.today.getMonth();
+
   /**
    * If `true`, the user cannot interact with the sliding item.
    */
@@ -50,6 +55,10 @@ export class Calendar implements ComponentInterface {
    * Emitted when the checked property has changed.
    */
   @Event() ionSelectDate!: EventEmitter<{ value: string }>;
+
+  componentWillLoad() {
+    this.viewDate = new Date(this.year, this.month, new Date().getDate())
+  }
 
   async componentDidLoad() {
     this.monthsWrapper = this.el.shadowRoot?.querySelector(
@@ -192,7 +201,6 @@ export class Calendar implements ComponentInterface {
   }
 
   selectDate(date: Date) {
-    this.selectedDate = date;
     this.ionSelectDate.emit({ value: date.toISOString() });
   }
 
@@ -217,23 +225,24 @@ export class Calendar implements ComponentInterface {
     return viewMonth === date.getMonth();
   }
 
-  isSelectedDate(date: Date) {
-    if (!this.selectedDate) {
+  isDateSelected(date: Date) {
+    if (!this.selectedDates || !this.selectedDates.length) {
       return false;
     }
-    return (
-      this.selectedDate.getDate() === date.getDate() &&
-      this.selectedDate.getMonth() === date.getMonth() &&
-      this.selectedDate.getFullYear() === date.getFullYear()
-    );
+   return this.selectedDates.some((selectedDate) => (
+      selectedDate.getDate() === date.getDate() &&
+      selectedDate.getMonth() === date.getMonth() &&
+      selectedDate.getFullYear() === date.getFullYear()
+    ));
   }
 
-  isSelectedYear(year: number) {
+  isYearSelected(year: number) {
     return this.viewDate.getFullYear() === year;
   }
 
   isCurrentYear(year: number) {
-    return this.today.getFullYear() === year;
+    const thisYear = this.today.getFullYear();
+    return  thisYear === year;
   }
 
   onStart() {
@@ -358,20 +367,18 @@ export class Calendar implements ComponentInterface {
                         <div
                           class={{
                             'day-outer': true,
-                            active: this.isSelectedDate(day),
+                            'day-selected': this.isDateSelected(day),
                             today: this.isToday(day),
                             'not-current-month': !this.isCurrentMonth(day, month)
                           }}
                         >
                           <div>
-                            <ion-button
-                              fill={this.isSelectedDate(day) ? 'solid' : 'clear'}
-                              color={this.isSelectedDate(day) ? 'primary' : 'medium'}
+                            <div
                               onClick={() => this.selectDate(day)}
                               class="day-inner"
                             >
                               {day.getDate()}
-                            </ion-button>
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -383,17 +390,16 @@ export class Calendar implements ComponentInterface {
                         <div
                           class={{
                             'year-outer': true,
-                            'current-year': this.isCurrentYear(year)
+                            'year-current': this.isCurrentYear(year),
+                            'year-selected': this.isYearSelected(year)
                           }}
                         >
-                          <ion-button
-                            fill={this.isSelectedYear(year) ? 'solid' : 'clear'}
-                            color={this.isSelectedYear(year) ? 'primary' : 'medium'}
+                          <div
                             onClick={() => this.selectYear(year)}
                             class="year-inner"
                           >
                             {year}
-                          </ion-button>
+                          </div>
                         </div>
                       ))}
                     </div>
