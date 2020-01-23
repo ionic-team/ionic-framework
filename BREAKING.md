@@ -104,7 +104,7 @@ See the [CSS Utilities responsive display documentation](https://ionicframework.
 
 #### Activated, Focused, Hover States
 
-The `.activated` class that is automatically added to clickable components has been renamed to `.ion-activated` for consistency with how we add focused to elements and to avoid conflicts in users' CSS.
+The `.activated` class that is automatically added to clickable components has been renamed to `.ion-activated`.
 
 The way the CSS variables are used for targeting the activated, focused and hover backgrounds have been updated on the following components:
 
@@ -138,7 +138,7 @@ The new way adds the following variables:
 
 It also updates the Action Sheet component so that the variables will be prefixed with `button`. See the [Action Sheet](#action-sheet) section in this document for all of the variable names.
 
-This allows you to still have the control over the opacity if desired, but when updating the state, you only have to set the main variables: `--background-activated`, `--background-focused`, `--background-hover` and the button will still match the spec. This is most important when changing the global theme, as updating the toolbar color will automatically update the hover states for all of the buttons in a toolbar, regardless of their fill & without having to know what each opacity is.
+This allows you to still have control over the opacity if desired, but when updating the state, you only have to set the main variables: `--background-activated`, `--background-focused`, `--background-hover` and the button will still match the spec. This is most important when changing the global theme, as updating the toolbar color will automatically update the hover states for all of the buttons in a toolbar, regardless of their fill & without having to know what each opacity is.
 
 As a result of these changes, the following global CSS variables will not change the opacity and as such should be treated the same as the `--background-{STATE}` variables:
 
@@ -397,11 +397,11 @@ The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get
 
 #### Segment
 
-Segment was completely revamped to use the new iOS design including an all new gesture that applies for both Material Design & iOS. Due to these changes, some breaking changes were inevitably introduced in order to support the new design.
+Segment was completely revamped to use the new iOS design including an all new gesture that applies for both Material Design and iOS. Due to these changes, some breaking changes were inevitably introduced in order to support the new design.
 
 ##### Button States
 
-- The activated styles and properties have been removed. These are no longer being used in the latest spec as the indicator and ripple are used to show activation. Properties removed:
+- The activated styles and custom CSS properties have been removed. These are no longer being used in the latest spec as the indicator and ripple are used to show activation. Properties removed:
   ```
   --color-activated
   --background-activated
@@ -437,9 +437,9 @@ A `--background` variable has been added to style the `ion-segment` component. A
 --background-hover: Background of the segment button on hover
 ```
 
-> Note: iOS no longer checks the button background, so setting the `--background-checked` variable may have an undesired outcome. It uses an indicator to slide between the buttons. See the previous section on the indicator color variables.
+> Note: iOS no longer checks the button background, so setting the `--background-checked` variable may have an undesired outcome. Instead, Segment uses an indicator to slide between the buttons, showing which one is checked. See the previous section on the indicator color variables.
 
-The above variables *will not* be inherited in the button if set on the `ion-segment`. In addition to this, all color variables should also be set in the button for consistency:
+The above variables *will not* be inherited in the button if set on the `ion-segment`. In addition to this, all color variables should also be set on the button for consistency:
 
 ```
 --color: Color of the segment button
