@@ -154,7 +154,7 @@ export class RouteManager extends React.Component<RouteManagerProps, RouteManage
              * record the view that originally directed to the new view for back button purposes.
              */
             enteringView.prevId = leavingView.id;
-          } else if (action === 'pop' || action === 'replace') {
+          } else {
             leavingView.mount = false;
             this.removeOrphanedViews(enteringView, enteringViewStack);
           }
