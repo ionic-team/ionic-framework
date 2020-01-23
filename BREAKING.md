@@ -191,6 +191,7 @@ Some variables were renamed, removed or added. See the chart below for the chang
 | `--ion-toolbar-color-checked`           | renamed | `--ion-toolbar-segment-color-checked`     |
 | `--ion-toolbar-background-unchecked`    | renamed | `--ion-toolbar-segment-background`        |
 | `--ion-toolbar-background-checked`      | renamed | `--ion-toolbar-segment-background-checked`|
+| `--ion-tab-bar-color-activated`         | renamed | `--ion-tab-bar-color-selected`            |
 |                                         | added   | `--ion-toolbar-segment-indicator-color`   |
 | `--ion-toolbar-color-activated`         | removed |                                           |
 | `--ion-item-background-activated`       | removed |                                           |
@@ -540,6 +541,10 @@ The `width` property has been removed in favor of using CSS styling.
     <div id="main">...</div>
   </ion-split-pane>
   ```
+
+#### Tabs
+
+- [Focused State](#activated-focused-hover-states) have been updated.
 
 #### Toast
 
