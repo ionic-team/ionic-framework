@@ -65,37 +65,7 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
       animation.addElement(Array.from(this.nodes.values()));
     }
 
-    for (const key in props) {
-      // TODO
-      if (props.hasOwnProperty(key) && !['children', 'progressStart', 'progressStep', 'progressEnd', 'play', 'from', 'to', 'fromTo', 'onFinish'].includes(key)) {
-        (animation as any)[key]((props as any)[key]);
-      }
-    }
-
-    const fromValues = props.from;
-    if (fromValues) {
-      const values = (Array.isArray(fromValues)) ? fromValues : [fromValues];
-      values.forEach(val => animation.from(val.property, val.value));
-    }
-
-    const toValues = props.to;
-    if (toValues) {
-      const values = (Array.isArray(toValues)) ? toValues : [toValues];
-      values.forEach(val => animation.to(val.property, val.value));
-    }
-
-    const fromToValues = props.fromTo;
-    if (fromToValues) {
-      const values = (Array.isArray(fromToValues)) ? fromToValues : [fromToValues];
-      values.forEach(val => animation.fromTo(val.property, val.fromValue, val.toValue));
-    }
-
-    const onFinishValues = props.onFinish;
-    if (onFinishValues) {
-      const values = (Array.isArray(onFinishValues)) ? onFinishValues : [onFinishValues];
-      values.forEach(val => animation.onFinish(val.callback, val.opts));
-    }
-
+    checkConfig(animation, props);
     checkPlayback(animation, props);
   }
 
@@ -111,6 +81,7 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
 
     const props = this.props;
 
+    checkConfig(animation, props, prevProps);
     checkProgress(animation, props, prevProps);
     checkPlayback(animation, props, prevProps);
   }
@@ -124,6 +95,43 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
     );
   }
 }
+
+const checkConfig = (animation: Animation, currentProps: any = {}, prevProps: any = {}) => {
+  for (const key in currentProps) {
+    // TODO
+    if (
+      currentProps.hasOwnProperty(key) &&
+      !['children', 'progressStart', 'progressStep', 'progressEnd', 'play', 'from', 'to', 'fromTo', 'onFinish'].includes(key) &&
+      currentProps[key] !== prevProps[key]
+    ) {
+      (animation as any)[key]((currentProps as any)[key]);
+    }
+  }
+
+  const fromValues = currentProps.from;
+  if (fromValues && fromValues.length !== (prevProps.from || [])) {
+    const values = (Array.isArray(fromValues)) ? fromValues : [fromValues];
+    values.forEach(val => animation.from(val.property, val.value));
+  }
+
+  const toValues = currentProps.to;
+  if (toValues && toValues.length !== (prevProps.to || [])) {
+    const values = (Array.isArray(toValues)) ? toValues : [toValues];
+    values.forEach(val => animation.to(val.property, val.value));
+  }
+
+  const fromToValues = currentProps.fromTo;
+  if (fromToValues && fromToValues.length !== (prevProps.fromTo || [])) {
+    const values = (Array.isArray(fromToValues)) ? fromToValues : [fromToValues];
+    values.forEach(val => animation.fromTo(val.property, val.fromValue, val.toValue));
+  }
+
+  const onFinishValues = currentProps.onFinish;
+  if (onFinishValues && onFinishValues.length !== (prevProps.onFinish || [])) {
+    const values = (Array.isArray(onFinishValues)) ? onFinishValues : [onFinishValues];
+    values.forEach(val => animation.onFinish(val.callback, val.opts));
+  }
+};
 
 const checkProgress = (animation: Animation, currentProps: any = {}, prevProps: any = {}) => {
   const { progressStart, progressStep, progressEnd } = currentProps;
