@@ -44,12 +44,6 @@ export interface CreateAnimationProps {
   progressEnd?: { playTo: 0 | 1 | undefined, step: number, dur?: number };
 }
 
-/**
- * TODO
- * make sure destroy is working properly
- * clean up code
- */
-
 export class CreateAnimation extends React.Component<CreateAnimationProps> {
   private nodes: Map<number, HTMLElement> = new Map();
   animation?: Animation;
@@ -94,10 +88,11 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
 }
 
 const checkConfig = (animation: Animation, currentProps: any = {}, prevProps: any = {}) => {
+  const reservedProps = ['children', 'progressStart', 'progressStep', 'progressEnd', 'pause', 'stop', 'destroy', 'play', 'from', 'to', 'fromTo', 'onFinish'];
   for (const key in currentProps) {
     if (
       currentProps.hasOwnProperty(key) &&
-      !['children', 'progressStart', 'progressStep', 'progressEnd', 'play', 'from', 'to', 'fromTo', 'onFinish'].includes(key) &&
+      !reservedProps.includes(key) &&
       currentProps[key] !== prevProps[key]
     ) {
       (animation as any)[key]((currentProps as any)[key]);
@@ -158,7 +153,6 @@ const checkPlayback = (animation: Animation, currentProps: any = {}, prevProps: 
     animation.stop();
   }
 
-  console.log('prev', prevProps.destroy, 'current', currentProps.destroy);
   if (!prevProps.destroy && currentProps.destroy) {
     animation.destroy();
   }
