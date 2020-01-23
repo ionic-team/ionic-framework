@@ -44,7 +44,7 @@ export interface CreateAnimationProps {
   progressEnd?: { playTo: 0 | 1 | undefined, step: number, dur?: number };
 }
 
-export class CreateAnimation extends React.Component<CreateAnimationProps> {
+export class CreateAnimation extends React.PureComponent<CreateAnimationProps> {
   private nodes: Map<number, HTMLElement> = new Map();
   animation: Animation;
 
