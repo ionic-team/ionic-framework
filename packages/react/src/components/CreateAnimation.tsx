@@ -52,10 +52,10 @@ export class CreateAnimation extends React.PureComponent<CreateAnimationProps> {
     super(props);
 
     this.animation = createAnimation(props.id);
-    this.updateAnimation(props);
+    this.setupAnimation(props);
   }
 
-  updateAnimation(props: any) {
+  setupAnimation(props: any) {
     const animation = this.animation;
 
     if (this.nodes.size > 0) {
