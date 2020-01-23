@@ -1,8 +1,9 @@
 import { Animation, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, createAnimation } from '@ionic/core';
 import React from 'react';
 
-type LifecycleCallback = (callback: AnimationLifecycle, opts?: AnimationCallbackOptions) => void;
 type HookCallback = () => void;
+
+interface LifecycleCallback { callback: AnimationLifecycle; opts?: AnimationCallbackOptions; }
 interface PartialPropertyValue { property: string; value: any; }
 interface PropertyValue { property: string; fromValue: any; toValue: any; }
 
@@ -48,75 +49,60 @@ export interface CreateAnimationProps {
 
 /**
  * TODO
- * progressStart
- * progressStep
- * progressEnd
- * addAnimation
- * addElement
- * make sure onFinish is working properly
  * make sure destroy is working properly
  * clean up code
  */
-
- /**
-  * QUESTIONS
-  * Should the before/after hooks accept arrays of
-  * callback in the core method?
-  */
 
 export class CreateAnimation extends React.Component<CreateAnimationProps> {
   private nodes: Map<number, HTMLElement> = new Map();
   animation?: Animation;
 
-  updateAnimation() {
-    if (this.animation === undefined) { return; }
-
-    console.log(this);
-    const animation = this.animation!;
+  updateAnimation(props: any) {
+    const animation = this.animation;
+    if (animation === undefined) { return; }
 
     if (this.nodes.size > 0) {
       animation.addElement(Array.from(this.nodes.values()));
     }
 
-    const props = this.props;
     for (const key in props) {
       // TODO
       if (props.hasOwnProperty(key) && !['children', 'progressStart', 'progressStep', 'progressEnd', 'play', 'from', 'to', 'fromTo', 'onFinish'].includes(key)) {
-        console.log(key as any, animation as any, props as any);
         (animation as any)[key]((props as any)[key]);
       }
     }
 
-    const fromValues = this.props.from;
+    const fromValues = props.from;
     if (fromValues) {
       const values = (Array.isArray(fromValues)) ? fromValues : [fromValues];
       values.forEach(val => animation.from(val.property, val.value));
     }
 
-    const toValues = this.props.to;
+    const toValues = props.to;
     if (toValues) {
       const values = (Array.isArray(toValues)) ? toValues : [toValues];
       values.forEach(val => animation.to(val.property, val.value));
     }
 
-    const fromToValues = this.props.fromTo;
+    const fromToValues = props.fromTo;
     if (fromToValues) {
       const values = (Array.isArray(fromToValues)) ? fromToValues : [fromToValues];
       values.forEach(val => animation.fromTo(val.property, val.fromValue, val.toValue));
     }
 
-    const onFinishValues = this.props.onFinish;
+    const onFinishValues = props.onFinish;
     if (onFinishValues) {
       const values = (Array.isArray(onFinishValues)) ? onFinishValues : [onFinishValues];
       values.forEach(val => animation.onFinish(val.callback, val.opts));
     }
-    
-    checkPlayback(animation, props);    
+
+    checkPlayback(animation, props);
   }
 
   componentDidMount() {
-    this.animation = createAnimation(this.props.id);
-    this.updateAnimation();
+    const props = this.props;
+    this.animation = createAnimation(props.id);
+    this.updateAnimation(props);
   }
 
   componentDidUpdate(prevProps: any) {
@@ -124,20 +110,8 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
     if (animation === undefined) { return; }
 
     const props = this.props;
-    const { progressStart, progressStep, progressEnd } = props;
 
-    if (progressStart && (prevProps.progressStart?.forceLinearEasing !== progressStart?.forceLinearEasing || prevProps.progressStart?.step !== progressStart?.step)) {
-      animation.progressStart(progressStart.forceLinearEasing, progressStart.step);
-    }
-
-    if (progressStep && prevProps.progressStep?.step !== progressStep?.step) {
-      animation.progressStep(progressStep.step);
-    }
-
-    if (progressEnd && (prevProps.progressEnd?.playTo !== progressEnd?.playTo || prevProps.progressEnd?.step !== progressEnd?.step || prevProps?.dur !== progressEnd?.dur)) {
-      animation.progressEnd(progressEnd.playTo, progressEnd.step, progressEnd.dur);
-    }
-    
+    checkProgress(animation, props, prevProps);
     checkPlayback(animation, props, prevProps);
   }
 
@@ -149,23 +123,38 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
       </>
     );
   }
-
 }
 
-const checkPlayback = (animation: Animation, currentProps: any = {}, prevProps: any = {}, ) => {
+const checkProgress = (animation: Animation, currentProps: any = {}, prevProps: any = {}) => {
+  const { progressStart, progressStep, progressEnd } = currentProps;
+
+  if (progressStart && (prevProps.progressStart?.forceLinearEasing !== progressStart?.forceLinearEasing || prevProps.progressStart?.step !== progressStart?.step)) {
+    animation.progressStart(progressStart.forceLinearEasing, progressStart.step);
+  }
+
+  if (progressStep && prevProps.progressStep?.step !== progressStep?.step) {
+    animation.progressStep(progressStep.step);
+  }
+
+  if (progressEnd && (prevProps.progressEnd?.playTo !== progressEnd?.playTo || prevProps.progressEnd?.step !== progressEnd?.step || prevProps?.dur !== progressEnd?.dur)) {
+    animation.progressEnd(progressEnd.playTo, progressEnd.step, progressEnd.dur);
+  }
+};
+
+const checkPlayback = (animation: Animation, currentProps: any = {}, prevProps: any = {}) => {
   if (!prevProps.play && currentProps.play) {
     animation.play();
   }
-  
+
   if (!prevProps.pause && currentProps.pause) {
     animation.pause();
   }
-  
+
   if (!prevProps.stop && currentProps.stop) {
     animation.stop();
   }
-  
+
   if (!prevProps.destroy && currentProps.destroy) {
     animation.destroy();
   }
-}
+};
