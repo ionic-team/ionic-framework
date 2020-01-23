@@ -58,7 +58,7 @@ The following styles should be set for the CSS to work properly. Note that the `
 ```scss
 .button-native {
   /**
-   * All other CSS in this selector is irrelevant to hover
+   * All other CSS in this selector is irrelevant to button states
    * but the following are required styles
    */
 
@@ -73,7 +73,7 @@ The following styles should be set for the CSS to work properly. Note that the `
 
 .button-inner {
   /**
-   * All other CSS in this selector is irrelevant to hover
+   * All other CSS in this selector is irrelevant to button states
    * but the following are required styles
    */
 
@@ -113,6 +113,14 @@ In addition to setting that class, `ion-activatable-instant` can be set in order
 ```
 
 #### CSS
+
+```css
+ /**
+   * @prop --color-activated: Color of the button when pressed
+   * @prop --background-activated: Background of the button when pressed
+   * @prop --background-activated-opacity: Opacity of the background when pressed
+   */
+```
 
 Style the `ion-activated` class based on the spec for that element:
 
@@ -221,6 +229,16 @@ Once that is done, the element will get the `ion-focused` class added when the e
 
 #### CSS
 
+Components should be written to include the following focused variables for styling:
+
+```css
+ /**
+   * @prop --color-focused: Color of the button when tabbed to with the keyboard
+   * @prop --background-focused: Background of the button when tabbed to with the keyboard
+   * @prop --background-focused-opacity: Opacity of the background when tabbed to with the keyboard
+   */
+```
+
 Style the `ion-focused` class based on the spec for that element:
 
 ```scss
@@ -267,6 +285,8 @@ Components should be written to include the following hover variables for stylin
    * @prop --background-hover-opacity: Opacity of the background on hover
    */
 ```
+
+Style the `:hover` based on the spec for that element:
 
 ```scss
 @media (any-hover: hover) {
