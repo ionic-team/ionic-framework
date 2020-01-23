@@ -38,6 +38,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Skeleton Text](#skeleton-text)
   * [Split Pane](#split-pane)
   * [Toast](#toast)
+  * [Tabs](#tabs)
 - [Colors](#colors)
 - [Events](#events)
 - [Mode](#mode)
