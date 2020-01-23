@@ -125,10 +125,6 @@
 
 :host(.ion-color.ion-activated) .item-native {
   color: current-color(contrast);
-
-  &::after {
-    background: transparent;
-  }
 }
 
 

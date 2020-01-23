@@ -29,27 +29,25 @@
 :host-context(.ion-color)::slotted(*) .button {
   --color: initial;
   --border-color: initial;
-  --background-focused: #{current-color(contrast, .1)};
-
+  --background-focused: #{current-color(contrast)};
 }
 
 :host-context(.ion-color)::slotted(*) .button-solid {
   --background: #{current-color(contrast)};
-  --background-activated: #{current-color(contrast, .8)};
-  --background-focused: #{current-color(contrast, .6)};
+  --background-focused: #000;
+  --background-focused-opacity: .12;
+  --background-activated: #000;
+  --background-activated-opacity: .12;
   --color: #{current-color(base)};
   --color-focused: #{current-color(base)};
 }
 
 :host-context(.ion-color)::slotted(*) .button-clear {
-  --background-focused: #{current-color(contrast, .1)};
   --color-activated: #{current-color(contrast)};
   --color-focused: #{current-color(contrast)};
 }
 
 :host-context(.ion-color)::slotted(*) .button-outline {
-  --background-activated: #{current-color(contrast)};
-  --background-focused: #{current-color(contrast, .1)};
   --color-activated: #{current-color(base)};
   --color-focused: #{current-color(contrast)};
 }
@@ -58,10 +56,9 @@
 // iOS Toolbar Button Clear
 // --------------------------------------------------
 
-:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-clear {
+:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-clear:not(.ion-color) {
   --color: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --color-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
-  --background-activated: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --background-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
 }
 
@@ -69,12 +66,11 @@
 // iOS Toolbar Button Outline
 // --------------------------------------------------
 
-:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-outline {
+:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-outline:not(.ion-color) {
   --color: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --color-activated: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
   --color-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --border-color: #{var(--ion-toolbar-color, ion-color(primary, base))};
-  --background-activated: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --background-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
 }
 
@@ -82,17 +78,17 @@
 // iOS Toolbar Button Solid
 // --------------------------------------------------
 
-:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-solid {
+:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-solid:not(.ion-color) {
   --color: #{$toolbar-ios-background};
   --color-activated: #{$toolbar-ios-background};
   --color-focused: #{$toolbar-ios-background};
   --background: #{var(--ion-toolbar-color, ion-color(primary, base))};
   --background-hover: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
   --background-hover-opacity: 0.1;
-  --background-activated: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
-  --background-activated-opacity: 0.3;
-  --background-focused: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
-  --background-focused-opacity: 0.3;
+  --background-focused: #000;
+  --background-focused-opacity: .12;
+  --background-activated: #000;
+  --background-activated-opacity: .12;
 }
 
 

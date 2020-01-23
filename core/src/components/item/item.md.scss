@@ -34,7 +34,14 @@
 }
 
 
+// Material Design Item: States
+// --------------------------------------------------
 
+:host(.ion-color.ion-activated) .item-native {
+  &::after {
+    background: transparent;
+  }
+}
 
 
 // Material Design Item Lines
