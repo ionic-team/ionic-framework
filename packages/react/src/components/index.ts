@@ -28,6 +28,9 @@ export { IonIcon } from './IonIcon';
 export { isPlatform, getPlatforms, getConfig } from './utils';
 export { RouterDirection } from './hrefprops';
 
+// Ionic Animations
+export { CreateAnimation } from './CreateAnimation';
+
 // Icons that are used by internal components
 addIcons({
   'arrow-back-sharp': arrowBackSharp,
