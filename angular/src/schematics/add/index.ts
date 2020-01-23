@@ -1,6 +1,7 @@
 import { join, Path } from '@angular-devkit/core';
 import { apply, chain, mergeWith, move, Rule, SchematicContext, SchematicsException, template, Tree, url } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import { WorkspaceProject } from '@angular-devkit/core/src/experimental/workspace';
 import { addModuleImportToRootModule } from './../utils/ast';
 import { addArchitectBuilder, addStyle, getWorkspace, addAsset } from './../utils/config';
 import { addPackageToPackageJson } from './../utils/package';
@@ -25,7 +26,7 @@ function addIonicAngularToolkitToPackageJson(): Rule {
   };
 }
 
-function addIonicAngularModuleToAppModule(projectSourceRoot): Rule {
+function addIonicAngularModuleToAppModule(projectSourceRoot: Path): Rule {
   return (host: Tree) => {
     addModuleImportToRootModule(
       host,
@@ -37,7 +38,7 @@ function addIonicAngularModuleToAppModule(projectSourceRoot): Rule {
   };
 }
 
-function addIonicStyles(projectSourceRoot): Rule {
+function addIonicStyles(projectSourceRoot: Path): Rule {
   return (host: Tree) => {
     const ionicStyles = [
       'node_modules/@ionic/angular/css/normalize.css',
@@ -69,29 +70,29 @@ function addIonicons(): Rule {
   };
 }
 
-function addIonicBuilder(): Rule {
+function addIonicBuilder(project: WorkspaceProject): Rule {
   return (host: Tree) => {
     addArchitectBuilder(host, 'ionic-cordova-serve', {
       builder: '@ionic/angular-toolkit:cordova-serve',
       options: {
-        cordovaBuildTarget: 'app:ionic-cordova-build',
-        devServerTarget: 'app:serve'
+        cordovaBuildTarget: `${project}:ionic-cordova-build`,
+        devServerTarget: `${project}:serve`
       },
       configurations: {
         production: {
-          cordovaBuildTarget: 'app:ionic-cordova-build:production',
-          devServerTarget: 'app:serve:production'
+          cordovaBuildTarget: `${project}:ionic-cordova-build:production`,
+          devServerTarget: `${project}:serve:production`
         }
       }
     });
     addArchitectBuilder(host, 'ionic-cordova-build', {
       builder: '@ionic/angular-toolkit:cordova-build',
       options: {
-        browserTarget: 'app:build'
+        browserTarget: `${project}:build`
       },
       configurations: {
         production: {
-          browserTarget: 'app:build:production'
+          browserTarget: `${project}:build:production`
         }
       }
     });
@@ -100,7 +101,7 @@ function addIonicBuilder(): Rule {
 }
 
 function installNodeDeps() {
-  return (host: Tree, context: SchematicContext) => {
+  return (_host: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
   };
 }
@@ -127,7 +128,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicAngularToPackageJson(),
       addIonicAngularToolkitToPackageJson(),
       addIonicAngularModuleToAppModule(sourcePath),
-      addIonicBuilder(),
+      addIonicBuilder(project),
       addIonicStyles(sourcePath),
       addIonicons(),
       mergeWith(rootTemplateSource),
