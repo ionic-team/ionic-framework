@@ -120,7 +120,7 @@
 .years-wrapper {
   @include position(0, 0, 0, 0);
 
-  display: flex;
+  display: none;
 
   position: absolute;
 
@@ -129,8 +129,6 @@
   background: #fff;
 
   z-index: 1;
-
-  animation: slideIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   .year-outer {
     display: flex;
@@ -161,7 +159,6 @@
     }
     &.year-current {
       .year-inner {
-
         border: #{ion-color(primary, base)} 1px solid;
 
         color: #{ion-color(primary, base)};
@@ -177,22 +174,4 @@
 }
 .calendar-content {
   position: relative;
-  &.show-years {
-    .month {
-      transform: translateY(5px);
-    }
-  }
-}
-
-@keyframes slideIn {
-  0% {
-    transform: translateY(-15px);
-
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0px);
-
-    opacity: 1;
-  }
 }

@@ -110,8 +110,7 @@ export class Calendar implements ComponentInterface {
   selectYear(year: number) {
     const newDate = this.viewDate.setFullYear(year);
     this.viewDate = new Date(newDate);
-    this.showYears = false;
-    this.disabledChanged();
+    this.toggleYearView()
   }
 
   animateCalendar(direction: 'forward' | 'backward') {
@@ -148,7 +147,6 @@ export class Calendar implements ComponentInterface {
       toMonthAnimation
         .addElement([toMonth, toMonthTitle])
         .duration(duration)
-        .beforeStyles({ '--background': 'transparent', 'user-select': 'none' })
         .fromTo(
           'transform',
           direction === 'forward' ? 'translateX(-97%)' : 'translateX(97%)',
@@ -207,6 +205,51 @@ export class Calendar implements ComponentInterface {
 
   toggleYearView() {
     this.showYears = !this.showYears;
+    const yearsWrapper = this.el.shadowRoot?.querySelector(
+      '.current-month .years-wrapper'
+    ) as HTMLElement;
+    const monthWrapper = this.el.shadowRoot?.querySelector(
+      '.current-month .month'
+    ) as HTMLElement;
+    const duration = 150;
+    const yearsAnimation = createAnimation();
+    yearsAnimation
+      .addElement(yearsWrapper)
+      .fromTo(
+        'transform',
+        this.showYears ? 'translateY(-5px)' : 'translateY(0)',
+        this.showYears ? 'translateY(0)' : 'translateY(-5px)'
+      )
+      .fromTo(
+        'opacity',
+        this.showYears ? '0' : '1',
+        this.showYears ? '1' : '0'
+      )
+      .duration(duration)
+      .beforeStyles({ display: 'flex' })
+      .afterStyles(
+        this.showYears
+          ? { display: 'flex', opacity: 1 }
+          : { display: 'none', opacity: 0 }
+      )
+      .delay(this.showYears ? duration: 0)
+      .play();
+    const monthAnimation = createAnimation();
+    monthAnimation
+      .addElement(monthWrapper)
+      .fromTo(
+        'transform',
+        this.showYears ? 'translateY(0px)' : 'translateY(5px)',
+        this.showYears ? 'translateY(5px)' : 'translateY(0px)'
+      )
+      .fromTo(
+        'opacity',
+        this.showYears ? '1' : '0',
+        this.showYears ? '0' : '1'
+      )
+      .delay(this.showYears ? 0 : duration)
+      .duration(duration)
+      .play();
     if (this.showYears) {
       this.calendarYears = this.getCalendarYearsFromDate(this.viewDate);
     }
@@ -399,7 +442,7 @@ export class Calendar implements ComponentInterface {
                       ))}
                     </div>
                   </div>
-                  {this.showYears && month === 0 ? (
+                  {month === 0 ? (
                     <div class="years-wrapper">
                       {this.calendarYears.map(year => (
                         <div

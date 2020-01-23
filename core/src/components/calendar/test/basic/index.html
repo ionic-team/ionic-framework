@@ -37,12 +37,13 @@
       calendarOne.addEventListener('ionSelectDate', e => {
         const date = e.detail.value;
         console.log('select date', date);
+        selectedDates = [new Date(date)];
         // document.getElementById('date').innerHTML = date;
         // selectedDates = [...selectedDates, new Date(date)];
         // console.log('dates', selectedDates);
         // document.getElementById('date').innerHTML = '';
         // selectedDates.map(d => document.getElementById('date').innerHTML += `${d}<br/>`);
-        // calendarEl.selectedDates = selectedDates;
+        calendarOne.selectedDates = selectedDates;
       });
 
       var calendarTwo = document.querySelector('#calendar-two');
