@@ -1132,7 +1132,9 @@ ion-tab-button,prop,tab,string | undefined,undefined,false,false
 ion-tab-button,prop,target,string | undefined,undefined,false,false
 ion-tab-button,css-prop,--background
 ion-tab-button,css-prop,--background-focused
+ion-tab-button,css-prop,--background-focused-opacity
 ion-tab-button,css-prop,--color
+ion-tab-button,css-prop,--color-focused
 ion-tab-button,css-prop,--color-selected
 ion-tab-button,css-prop,--padding-bottom
 ion-tab-button,css-prop,--padding-end
