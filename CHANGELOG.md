@@ -1,3 +1,41 @@
+# [5.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v4.11.9...v5.0.0-beta.6) (2020-01-23)
+
+
+### Features
+
+* **components:** improve button states and add new css properties ([#19440](https://github.com/ionic-team/ionic/issues/19440)) ([9415929](https://github.com/ionic-team/ionic/commit/94159291b27ddf1a859c8f3f87a0d6e54a8b5f13)), closes [#20213](https://github.com/ionic-team/ionic/issues/20213) [#19965](https://github.com/ionic-team/ionic/issues/19965)
+* **segment-button:** add --indicator-height property to segment button ([#19653](https://github.com/ionic-team/ionic/issues/19653)) ([d76a503](https://github.com/ionic-team/ionic/commit/d76a5031c4c96b5fdf691a56ed61d3dcc4e4dafb))
+
+
+### BREAKING CHANGES
+
+*Activated Class*
+
+The `activated` class that is automatically added to buttons on press has been renamed to `ion-activated`. This will be more consistent with our `ion-focused` class we add and also will reduce conflicts with users' CSS.
+
+*CSS Variables*
+
+The `--background-hover`, `--background-focused` and `--background-activated` CSS variables on components that render native buttons will now have an opacity automatically set. If you are setting any of these like the following:
+
+```
+--background-hover: rgba(44, 44, 44, 0.08);
+```
+
+You will likely not see a hover state anymore. It should be updated to only set the desired color:
+
+```
+--background-hover: rgba(44, 44, 44);
+```
+
+If the opacity desired is something other than what the spec asks for, use:
+
+```
+--background-hover: rgba(44, 44, 44);
+--background-hover-opacity: 1;
+```
+
+
+
 ## [4.11.9](https://github.com/ionic-team/ionic/compare/v4.11.8...v4.11.9) (2020-01-23)
 
 ### Bug Fixes
