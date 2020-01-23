@@ -12,6 +12,7 @@
   --color-checked: #{$segment-button-md-text-color-checked};
   --indicator-box-shadow: none;
   --indicator-color: var(--color-checked);
+  --indicator-height: 2px;
   --indicator-transition: #{$segment-button-md-transition-animated};
   --indicator-transform: none;
   --padding-top: #{$segment-button-md-padding-top};
@@ -105,8 +106,6 @@
 }
 
 .segment-button-indicator-background {
-  height: 2px;
-
   background: var(--indicator-color);
 }
 

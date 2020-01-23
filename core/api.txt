@@ -969,6 +969,7 @@ ion-segment-button,css-prop,--color-disabled
 ion-segment-button,css-prop,--color-hover
 ion-segment-button,css-prop,--indicator-box-shadow
 ion-segment-button,css-prop,--indicator-color
+ion-segment-button,css-prop,--indicator-height
 ion-segment-button,css-prop,--indicator-transform
 ion-segment-button,css-prop,--indicator-transition
 ion-segment-button,css-prop,--margin-bottom

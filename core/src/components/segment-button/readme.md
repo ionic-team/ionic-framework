@@ -647,6 +647,7 @@ export const SegmentButtonExample: React.FC = () => (
 | `--color-hover`          | Color of the segment button on hover                                                                              |
 | `--indicator-box-shadow` | Box shadow on the indicator for the checked segment button                                                        |
 | `--indicator-color`      | Color of the indicator for the checked segment button                                                             |
+| `--indicator-height`     | Height of the indicator for the checked segment button                                                            |
 | `--indicator-transform`  | Transform of the indicator for the checked segment button                                                         |
 | `--indicator-transition` | Transition of the indicator for the checked segment button                                                        |
 | `--margin-bottom`        | Bottom margin of the segment button                                                                               |

@@ -32,6 +32,7 @@
    *
    * @prop --transition: Transition of the segment button
    *
+   * @prop --indicator-height: Height of the indicator for the checked segment button
    * @prop --indicator-box-shadow: Box shadow on the indicator for the checked segment button
    * @prop --indicator-color: Color of the indicator for the checked segment button
    * @prop --indicator-transition: Transition of the indicator for the checked segment button
@@ -230,7 +231,7 @@ ion-ripple-effect {
 
 .segment-button-indicator-background {
   width: 100%;
-  height: 100%;
+  height: var(--indicator-height);
 
   transform: var(--indicator-transform);
 

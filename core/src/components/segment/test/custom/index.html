@@ -197,24 +197,27 @@
    * This tests that the colors are able to be overridden on
    * a segment inside of a toolbar
    *
-   * Indicator color / ripple color can be set on ion-segment
+   * Ripple color can be set on ion-segment
    *
    * Backgrounds / colors for the button must be set on the
    * ion-segment-button
    */
   .custom-checked {
     --ripple-color: purple;
-    --indicator-color: purple;
   }
 
   .ios .custom-checked ion-segment-button {
-    --color-checked: white;
+    --color-checked: magenta;
+    --indicator-color: red;
+    --indicator-height: 50%;
   }
 
   .md .custom-checked ion-segment-button {
     --background-hover: rgba(17, 228, 10, 0.5);
     --color-checked: purple;
     --color-hover: blue;
+    --indicator-color: red;
+    --indicator-height: 5px;
   }
 
   /*
