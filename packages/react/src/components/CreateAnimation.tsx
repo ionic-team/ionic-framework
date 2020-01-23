@@ -1,9 +1,6 @@
 import { Animation, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, createAnimation } from '@ionic/core';
 import React from 'react';
 
-type HookCallback = () => void;
-
-interface LifecycleCallback { callback: AnimationLifecycle; opts?: AnimationCallbackOptions; }
 interface PartialPropertyValue { property: string; value: any; }
 interface PropertyValue { property: string; fromValue: any; toValue: any; }
 
@@ -16,21 +13,21 @@ export interface CreateAnimationProps {
   iterations?: number;
   id?: string;
 
-  afterAddRead?: HookCallback;
-  afterAddWrite?: HookCallback;
+  afterAddRead?: () => void;
+  afterAddWrite?: () => void;
   afterClearStyles?: string[];
   afterStyles?: { [property: string]: any };
   afterAddClass?: string | string[];
   afterRemoveClass?: string | string[];
 
-  beforeAddRead?: HookCallback;
-  beforeAddWrite?: HookCallback;
+  beforeAddRead?: () => void;
+  beforeAddWrite?: () => void;
   beforeClearStyles?: string[];
   beforeStyles?: { [property: string]: any };
   beforeAddClass?: string | string[];
   beforeRemoveClass?: string | string[];
 
-  onFinish?: LifecycleCallback;
+  onFinish?: { callback: AnimationLifecycle; opts?: AnimationCallbackOptions; };
 
   keyframes?: AnimationKeyFrames;
   from?: PartialPropertyValue;
@@ -98,7 +95,6 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
 
 const checkConfig = (animation: Animation, currentProps: any = {}, prevProps: any = {}) => {
   for (const key in currentProps) {
-    // TODO
     if (
       currentProps.hasOwnProperty(key) &&
       !['children', 'progressStart', 'progressStep', 'progressEnd', 'play', 'from', 'to', 'fromTo', 'onFinish'].includes(key) &&
@@ -162,6 +158,7 @@ const checkPlayback = (animation: Animation, currentProps: any = {}, prevProps: 
     animation.stop();
   }
 
+  console.log('prev', prevProps.destroy, 'current', currentProps.destroy);
   if (!prevProps.destroy && currentProps.destroy) {
     animation.destroy();
   }
