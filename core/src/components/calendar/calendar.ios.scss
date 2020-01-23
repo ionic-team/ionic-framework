@@ -1,0 +1,24 @@
+@import "./calendar";
+@import "./calendar.ios.vars";
+
+// iOS calendar
+// --------------------------------------------------
+
+.month-title {
+  @include position(50%, null, null, 50%);
+
+  position: absolute;
+
+  transform: translate(-50%, -50%);
+}
+.calendar-header {
+  .previous {
+    order: 1;
+  }
+  > div {
+    order: 2;
+  }
+  .next {
+    order: 3;
+  }
+}

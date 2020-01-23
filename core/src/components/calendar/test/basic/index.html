@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Calendar - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body onLoad="onLoad()">
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Calendar - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
+      <p>
+        <ion-calendar></ion-calendar>
+        <div id="date"></div>
+      </p>
+
+    </ion-content>
+
+  </ion-app>
+
+  <script>
+    function onLoad() {
+      var calendarEl = document.querySelector('ion-calendar');
+      calendarEl.addEventListener('ionSelectDate', e =>{
+        document.getElementById('date').innerHTML = e.detail.value;
+      })
+    }
+  </script>
+</body>
+
+</html>

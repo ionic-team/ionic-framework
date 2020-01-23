@@ -1,0 +1,201 @@
+@import "../../themes/ionic.globals";
+
+// Calendar
+// --------------------------------------------------
+
+:host {
+  position: relative;
+
+  overflow: hidden;
+}
+.months-wrapper {
+  display: flex;
+
+  width: 100%;
+}
+.month-wrapper {
+  flex: 1 0 auto;
+
+  width: 100%;
+
+  transform: translateX(-100%);
+}
+.calendar-header {
+  display: flex;
+
+  position: relative;
+
+  text-align: left;
+
+  .calendar-title-wrapper {
+    @include position(0, 0, 0, 0);
+    position: absolute;
+    .month-title {
+      @include margin(0);
+    }
+  }
+  > div {
+    flex-grow: 1;
+  }
+  > ion-button {
+    --padding-top: 12px;
+    --padding-end: 12px;
+    --padding-bottom: 12px;
+    --padding-start: 12px;
+    --border-radius: 50%;
+
+    @include margin(0);
+
+    width: 44px;
+    height: 44px;
+  }
+}
+.week-days {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  opacity: 0.5;
+  > div {
+    width: calc(100% / 7);
+  }
+}
+.month-days {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  .day-outer {
+    width: calc(100% / 7);
+    > div {
+      position: relative;
+
+      padding-top: 100%;
+    }
+    .day-inner {
+      --padding-top: 0;
+      --padding-end: 0;
+      --padding-bottom: 0;
+      --padding-start: 0;
+      --border-radius: 50%;
+      --color: var(--ion-text-color);
+      --background: #{ion-color(primary, base)};
+      --background-activated: #{current-color(contrast)};
+      --background-focused: #{ion-color(primary, base, .1)};
+      --background-hover: #{ion-color(primary, base, .04)};
+      --color-activated: #{ion-color(primary, base)};
+      --color-focused: #{ion-color(primary, base)};
+
+      @include margin(0);
+      @include position(8%, 8%, 8%, 8%);
+
+      display: flex;
+
+      position: absolute;
+
+      align-items: center;
+      justify-content: center;
+
+      width: 84%;
+      height: 84%;
+
+    }
+    &.today {
+      .day-inner {
+        --border-color: #{ion-color(primary, base)};
+        --border-style: solid;
+        --border-width: 1px;
+
+        color: #{ion-color(primary, base)};
+      }
+    }
+    &.not-current-month:not(.active) {
+      opacity: 0.3;
+    }
+  }
+}
+
+.month {
+  transform: translateY(0px);
+
+  transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s all;
+}
+.years-wrapper {
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+
+  position: absolute;
+
+  flex-wrap: wrap;
+
+  background: #fff;
+
+  z-index: 1;
+
+  animation: slideIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  .year-outer {
+    display: flex;
+
+    position: relative;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 25%;
+
+    .year-inner {
+      --padding-top: 0;
+      --padding-bottom: 0;
+      --border-radius: 500px;
+      --color: var(--ion-text-color);
+
+      @include position(4%, 4%, 4%, 4%);
+      @include margin(0);
+
+      display: flex;
+
+      position: absolute;
+
+      align-items: center;
+      justify-content: center;
+
+      width: 84%;
+      height: 84%;
+    }
+    &.current-year {
+      .year-inner {
+        --border-color: #{ion-color(primary, base)};
+        --border-style: solid;
+        --border-width: 1px;
+
+        color: #{ion-color(primary, base)};
+      }
+    }
+  }
+}
+.calendar-content {
+  position: relative;
+  &.show-years {
+    .month {
+      transform: translateY(5px);
+    }
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-15px);
+
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+
+    opacity: 1;
+  }
+}

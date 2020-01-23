@@ -333,6 +333,17 @@ export namespace Components {
     */
     'collapse': boolean;
   }
+  interface IonCalendar {
+    /**
+    * If `true`, the user cannot interact with the sliding item.
+    */
+    'disabled': boolean;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: 'ios' | 'md';
+    'selectedDate': Date | null;
+  }
   interface IonCard {
     /**
     * If `true`, a button tag will be rendered and the card will be tappable.
@@ -2740,6 +2751,12 @@ declare global {
     new (): HTMLIonButtonsElement;
   };
 
+  interface HTMLIonCalendarElement extends Components.IonCalendar, HTMLStencilElement {}
+  var HTMLIonCalendarElement: {
+    prototype: HTMLIonCalendarElement;
+    new (): HTMLIonCalendarElement;
+  };
+
   interface HTMLIonCardElement extends Components.IonCard, HTMLStencilElement {}
   var HTMLIonCardElement: {
     prototype: HTMLIonCardElement;
@@ -3217,6 +3234,7 @@ declare global {
     'ion-badge': HTMLIonBadgeElement;
     'ion-button': HTMLIonButtonElement;
     'ion-buttons': HTMLIonButtonsElement;
+    'ion-calendar': HTMLIonCalendarElement;
     'ion-card': HTMLIonCardElement;
     'ion-card-content': HTMLIonCardContentElement;
     'ion-card-header': HTMLIonCardHeaderElement;
@@ -3566,6 +3584,21 @@ declare namespace LocalJSX {
     * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
     */
     'collapse'?: boolean;
+  }
+  interface IonCalendar {
+    /**
+    * If `true`, the user cannot interact with the sliding item.
+    */
+    'disabled'?: boolean;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: 'ios' | 'md';
+    /**
+    * Emitted when the checked property has changed.
+    */
+    'onIonSelectDate'?: (event: CustomEvent<{ value: string }>) => void;
+    'selectedDate'?: Date | null;
   }
   interface IonCard {
     /**
@@ -5869,6 +5902,7 @@ declare namespace LocalJSX {
     'ion-badge': IonBadge;
     'ion-button': IonButton;
     'ion-buttons': IonButtons;
+    'ion-calendar': IonCalendar;
     'ion-card': IonCard;
     'ion-card-content': IonCardContent;
     'ion-card-header': IonCardHeader;
@@ -5965,6 +5999,7 @@ declare module "@stencil/core" {
       'ion-badge': LocalJSX.IonBadge & JSXBase.HTMLAttributes<HTMLIonBadgeElement>;
       'ion-button': LocalJSX.IonButton & JSXBase.HTMLAttributes<HTMLIonButtonElement>;
       'ion-buttons': LocalJSX.IonButtons & JSXBase.HTMLAttributes<HTMLIonButtonsElement>;
+      'ion-calendar': LocalJSX.IonCalendar & JSXBase.HTMLAttributes<HTMLIonCalendarElement>;
       'ion-card': LocalJSX.IonCard & JSXBase.HTMLAttributes<HTMLIonCardElement>;
       'ion-card-content': LocalJSX.IonCardContent & JSXBase.HTMLAttributes<HTMLIonCardContentElement>;
       'ion-card-header': LocalJSX.IonCardHeader & JSXBase.HTMLAttributes<HTMLIonCardHeaderElement>;

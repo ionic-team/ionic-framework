@@ -87,6 +87,19 @@ export class IonButtons {
   }
 }
 
+export declare interface IonCalendar extends Components.IonCalendar {}
+@ProxyCmp({inputs: ['disabled', 'mode', 'selectedDate']})
+@Component({ selector: 'ion-calendar', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['disabled', 'mode', 'selectedDate'] })
+export class IonCalendar {
+  ionSelectDate!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionSelectDate']);
+  }
+}
+
 export declare interface IonCard extends Components.IonCard {}
 @ProxyCmp({inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerDirection', 'target', 'type']})
 @Component({ selector: 'ion-card', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerDirection', 'target', 'type'] })

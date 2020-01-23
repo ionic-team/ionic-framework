@@ -30,6 +30,7 @@
     "loader/"
   ],
   "dependencies": {
+    "date-fns": "^2.9.0",
     "ionicons": "5.0.0-15",
     "tslib": "^1.10.0"
   },
