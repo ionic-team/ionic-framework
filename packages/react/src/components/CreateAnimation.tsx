@@ -105,25 +105,25 @@ const checkConfig = (animation: Animation, currentProps: any = {}, prevProps: an
   }
 
   const fromValues = currentProps.from;
-  if (fromValues && fromValues.length !== (prevProps.from || [])) {
+  if (fromValues && fromValues.length !== (prevProps.from || []).length) {
     const values = (Array.isArray(fromValues)) ? fromValues : [fromValues];
     values.forEach(val => animation.from(val.property, val.value));
   }
 
   const toValues = currentProps.to;
-  if (toValues && toValues.length !== (prevProps.to || [])) {
+  if (toValues && toValues.length !== (prevProps.to || []).length) {
     const values = (Array.isArray(toValues)) ? toValues : [toValues];
     values.forEach(val => animation.to(val.property, val.value));
   }
 
   const fromToValues = currentProps.fromTo;
-  if (fromToValues && fromToValues.length !== (prevProps.fromTo || [])) {
+  if (fromToValues && fromToValues.length !== (prevProps.fromTo || []).length) {
     const values = (Array.isArray(fromToValues)) ? fromToValues : [fromToValues];
     values.forEach(val => animation.fromTo(val.property, val.fromValue, val.toValue));
   }
 
   const onFinishValues = currentProps.onFinish;
-  if (onFinishValues && onFinishValues.length !== (prevProps.onFinish || [])) {
+  if (onFinishValues && onFinishValues.length !== (prevProps.onFinish || []).length) {
     const values = (Array.isArray(onFinishValues)) ? onFinishValues : [onFinishValues];
     values.forEach(val => animation.onFinish(val.callback, val.opts));
   }
