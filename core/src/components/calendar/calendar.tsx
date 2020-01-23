@@ -58,7 +58,7 @@ export class Calendar implements ComponentInterface {
   @Event() ionSelectDate!: EventEmitter<{ value: string }>;
 
   componentWillLoad() {
-    this.viewDate = new Date(this.year, this.month, new Date().getDate())
+    this.viewDate = new Date(this.year, this.month, new Date().getDate());
   }
 
   async componentDidLoad() {
@@ -110,7 +110,7 @@ export class Calendar implements ComponentInterface {
   selectYear(year: number) {
     const newDate = this.viewDate.setFullYear(year);
     this.viewDate = new Date(newDate);
-    this.toggleYearView()
+    this.toggleYearView();
   }
 
   animateCalendar(direction: 'forward' | 'backward') {
@@ -232,7 +232,7 @@ export class Calendar implements ComponentInterface {
           ? { display: 'flex', opacity: 1 }
           : { display: 'none', opacity: 0 }
       )
-      .delay(this.showYears ? duration: 0)
+      .delay(this.showYears ? duration : 0)
       .play();
     const monthAnimation = createAnimation();
     monthAnimation
@@ -270,10 +270,10 @@ export class Calendar implements ComponentInterface {
   }
 
   isDateSelected(date: Date) {
-    if (!this.selectedDates || !this.selectedDates.length) {
+    if (this.selectedDates.length === 0) {
       return false;
     }
-   return this.selectedDates.some((selectedDate) => (
+    return this.selectedDates.some(selectedDate => (
       selectedDate.getDate() === date.getDate() &&
       selectedDate.getMonth() === date.getMonth() &&
       selectedDate.getFullYear() === date.getFullYear()
@@ -286,7 +286,7 @@ export class Calendar implements ComponentInterface {
 
   isCurrentYear(year: number) {
     const thisYear = this.today.getFullYear();
-    return  thisYear === year;
+    return thisYear === year;
   }
 
   onStart() {
@@ -333,13 +333,13 @@ export class Calendar implements ComponentInterface {
     if (this.dragging) {
       window.addEventListener('click', this.captureClick, true);
     }
-  };
+  }
 
   captureClick = (e: MouseEvent) => {
     e.stopPropagation();
     // Stop the click from being propagated after dragging/mouseup.
     window.removeEventListener('click', this.captureClick, true);
-  };
+  }
 
   render() {
     const mode = getIonMode(this);

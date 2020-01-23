@@ -97,6 +97,7 @@
     &.today {
       .day-inner {
         border: #{ion-color(primary, base)} 1px solid;
+
         color: #{ion-color(primary, base)};
       }
     }
