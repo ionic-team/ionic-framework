@@ -52,7 +52,6 @@ export class CreateAnimation extends React.PureComponent<CreateAnimationProps> {
     super(props);
 
     this.animation = createAnimation(props.id);
-    this.setupAnimation(props);
   }
 
   setupAnimation(props: any) {
@@ -64,6 +63,11 @@ export class CreateAnimation extends React.PureComponent<CreateAnimationProps> {
 
     checkConfig(animation, props);
     checkPlayback(animation, props);
+  }
+
+  componentDidMount() {
+    const props = this.props;
+    this.setupAnimation(props);
   }
 
   componentDidUpdate(prevProps: any) {
