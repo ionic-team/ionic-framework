@@ -22,6 +22,7 @@ export class Calendar implements ComponentInterface {
   private monthsWrapper!: HTMLElement;
   private today: Date = new Date();
   private gesture?: Gesture;
+  private dragging = false;
 
   @Element()
   el!: HTMLElement;
@@ -246,8 +247,8 @@ export class Calendar implements ComponentInterface {
   }
 
   onStart() {
+    this.dragging = true;
     this.monthsWrapper.style.transition = 'none';
-    this.monthsWrapper.cloneNode();
   }
 
   onMove(ev: GestureDetail) {
@@ -255,6 +256,7 @@ export class Calendar implements ComponentInterface {
   }
 
   onEnd(ev: GestureDetail) {
+    this.dragging = false;
     this.monthsWrapper.style.transition = '0.3s ease-out';
     const threshold = 60;
     if (ev.deltaX > threshold) {
@@ -284,10 +286,23 @@ export class Calendar implements ComponentInterface {
     return false;
   }
 
+  handleMouseUp = () => {
+    if (this.dragging) {
+      window.addEventListener('click', this.captureClick, true);
+    }
+  };
+
+  captureClick = (e: MouseEvent) => {
+    e.stopPropagation();
+    // Stop the click from being propagated after dragging/mouseup.
+    window.removeEventListener('click', this.captureClick, true);
+  };
+
   render() {
     const mode = getIonMode(this);
     return (
       <Host
+        onMouseUp={this.handleMouseUp}
         class={{
           [mode]: true,
           // Used internally for styling
