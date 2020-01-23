@@ -46,11 +46,17 @@ export interface CreateAnimationProps {
 
 export class CreateAnimation extends React.Component<CreateAnimationProps> {
   private nodes: Map<number, HTMLElement> = new Map();
-  animation?: Animation;
+  animation: Animation;
+
+  constructor(props: any) {
+    super(props);
+
+    this.animation = createAnimation(props.id);
+    this.updateAnimation(props);
+  }
 
   updateAnimation(props: any) {
     const animation = this.animation;
-    if (animation === undefined) { return; }
 
     if (this.nodes.size > 0) {
       animation.addElement(Array.from(this.nodes.values()));
@@ -60,15 +66,8 @@ export class CreateAnimation extends React.Component<CreateAnimationProps> {
     checkPlayback(animation, props);
   }
 
-  componentDidMount() {
-    const props = this.props;
-    this.animation = createAnimation(props.id);
-    this.updateAnimation(props);
-  }
-
   componentDidUpdate(prevProps: any) {
     const animation = this.animation;
-    if (animation === undefined) { return; }
 
     const props = this.props;
 
