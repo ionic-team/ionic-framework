@@ -1037,7 +1037,7 @@ export namespace Components {
     /**
     * The value of the input.
     */
-    'value'?: string | null;
+    'value'?: string | number | null;
   }
   interface IonItem {
     /**
@@ -4576,7 +4576,7 @@ declare namespace LocalJSX {
     /**
     * The value of the input.
     */
-    'value'?: string | null;
+    'value'?: string | number | null;
   }
   interface IonItem {
     /**
