@@ -49,7 +49,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 #### CSS Utilities
 
-We originally added CSS utility attributes for styling components because it was a quick and easy way to wrap text or add padding to an element. Once we added support for multiple frameworks as part of our "Ionic for everyone" approach, we quickly determined there were problems with using CSS attributes with frameworks that use JSX and Typescript. In order to solve this we added CSS classes. Rather than support CSS attributes in certain frameworks and classes in others, we decided to remove the CSS attributes and support what works in all of them, classes, for consistency. In addition to this, changing to classes prefixed with `ion` avoids conflict with native attributes & user's CSS. In the latest version of Ionic 4, there are deprecation warnings printed in the console to show what the new classes are, and the documentation has been updated since support for classes was added to remove all references to attributes: https://ionicframework.com/docs/layout/css-utilities.
+We originally added CSS utility attributes for styling components because it was a quick and easy way to wrap text or add padding to an element. Once we added support for multiple frameworks as part of our "Ionic for everyone" approach, we quickly determined there were problems with using CSS attributes with frameworks that use JSX and Typescript. In order to solve this we added CSS classes. Rather than support CSS attributes in certain frameworks and classes in others, we decided to remove the CSS attributes and support what works in all of them, classes, for consistency. In addition to this, changing to classes prefixed with `ion` avoids conflict with native attributes and user's CSS. In the latest version of Ionic 4, there are deprecation warnings printed in the console to show what the new classes are, and the documentation has been updated since support for classes was added to remove all references to attributes: https://ionicframework.com/docs/layout/css-utilities.
 
 Some examples of what's changed are below. *This is not all-inclusive, see the documentation linked above for all of the available CSS utility classes.*
 
@@ -138,7 +138,7 @@ The new way adds the following variables:
 
 It also updates the Action Sheet component so that the variables will be prefixed with `button`. See the [Action Sheet](#action-sheet) section in this document for all of the variable names.
 
-This allows you to still have control over the opacity if desired, but when updating the state, you only have to set the main variables: `--background-activated`, `--background-focused`, `--background-hover` and the button will still match the spec. This is most important when changing the global theme, as updating the toolbar color will automatically update the hover states for all of the buttons in a toolbar, regardless of their fill & without having to know what each opacity is.
+This allows you to still have control over the opacity if desired, but when updating the state, you only have to set the main variables: `--background-activated`, `--background-focused`, `--background-hover` and the button will still match the spec. This is most important when changing the global theme, as updating the toolbar color will automatically update the hover states for all of the buttons in a toolbar, regardless of their fill and without having to know what each opacity is.
 
 As a result of these changes, the following global CSS variables will not change the opacity and as such should be treated the same as the `--background-{STATE}` variables:
 
@@ -600,7 +600,7 @@ dark:            #222428
 
 `primary`, `light` and `dark` have not changed. The contrast color for `warning` has been updated to `#000`.
 
-This will only be a breaking change in your app if you are not using one of our starters & not overriding the defaults. If you are overriding the defaults already these will need to be manually updated if desired.
+This will only be a breaking change in your app if you are not using one of our starters and not overriding the defaults. If you are overriding the defaults already these will need to be manually updated if desired.
 
 
 ### Events
