@@ -154,7 +154,7 @@ export class RouteManager extends React.Component<RouteManagerProps, RouteManage
              * record the view that originally directed to the new view for back button purposes.
              */
             enteringView.prevId = leavingView.id;
-          } else if (action === 'pop' || action === 'replace') {
+          } else {
             leavingView.mount = false;
             this.removeOrphanedViews(enteringView, enteringViewStack);
           }
@@ -255,11 +255,22 @@ export class RouteManager extends React.Component<RouteManagerProps, RouteManage
     const views: ViewItem[] = [];
     let activeId: string | undefined;
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
+    let foundMatch = false;
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
       const routeId = generateId();
       this.routes[routeId] = child;
       views.push(createViewItem(child, routeId, this.props.history.location));
     });
+
+    if (!foundMatch) {
+      const notFoundRoute = views.find(r => {
+        // try to find a route that doesn't have a path or from prop, that will be our not found route
+        return !r.routeData.childProps.path && !r.routeData.childProps.from;
+      });
+      if (notFoundRoute) {
+        notFoundRoute.show = true;
+      }
+    }
 
     this.registerViewStack(id, activeId, views, routerOutlet, this.props.location);
 
@@ -288,6 +299,9 @@ export class RouteManager extends React.Component<RouteManagerProps, RouteManage
       };
       if (match && view.isIonRoute) {
         activeId = viewId;
+      }
+      if (!foundMatch && match) {
+        foundMatch = true;
       }
       return view;
     }
@@ -360,7 +374,7 @@ export class RouteManager extends React.Component<RouteManagerProps, RouteManage
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
       for (const routeKey in this.routes) {
         const route = this.routes[routeKey];
-        if (route.props.path === child.props.path) {
+        if (typeof route.props.path !== 'undefined' && route.props.path === (child.props.path || child.props.from)) {
           this.routes[routeKey] = child;
         }
       }

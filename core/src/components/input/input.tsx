@@ -169,7 +169,7 @@ export class Input implements ComponentInterface {
   /**
    * The value of the input.
    */
-  @Prop({ mutable: true }) value?: string | null = '';
+  @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
    * Update the native input element when the value changes
@@ -177,7 +177,7 @@ export class Input implements ComponentInterface {
   @Watch('value')
   protected valueChanged() {
     this.emitStyle();
-    this.ionChange.emit({ value: this.value });
+    this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
   }
 
   /**
@@ -263,7 +263,8 @@ export class Input implements ComponentInterface {
   }
 
   private getValue(): string {
-    return this.value || '';
+    return typeof this.value === 'number' ? this.value.toString() :
+      (this.value || '').toString();
   }
 
   private emitStyle() {
