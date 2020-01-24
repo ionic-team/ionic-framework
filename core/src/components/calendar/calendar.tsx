@@ -287,6 +287,7 @@ export class Calendar implements ComponentInterface {
       return false;
     }
     return this.selectedDates.some(selectedDate => (
+      selectedDate && 
       selectedDate.getDate() === date.getDate() &&
       selectedDate.getMonth() === date.getMonth() &&
       selectedDate.getFullYear() === date.getFullYear()
