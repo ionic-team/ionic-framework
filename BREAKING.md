@@ -53,6 +53,8 @@ We originally added CSS utility attributes for styling components because it was
 
 Some examples of what's changed are below. *This is not all-inclusive, see the documentation linked above for all of the available CSS utility classes.*
 
+**Before**
+
 ```html
 <ion-header text-center></ion-header>
 <ion-content padding></ion-content>
@@ -60,7 +62,7 @@ Some examples of what's changed are below. *This is not all-inclusive, see the d
 <ion-item wrap></ion-item>
 ```
 
-becomes
+**After**
 
 ```html
 <ion-header class="ion-text-center"></ion-header>
@@ -254,6 +256,7 @@ Converted `ion-card` to use [shadow DOM](https://developer.mozilla.org/en-US/doc
 
 The controller components (`ion-action-sheet-controller`, `ion-alert-controller`, `ion-loading-controller`, `ion-menu-controller`, `ion-modal-controller`, `ion-picker-controller`, `ion-popover-controller`, `ion-toast-controller`) have been removed from Ionic core as elements. They should be imported from `@ionic/core` instead. This will not affect projects that use Angular or React. Below is an example of the loading controller change in a JavaScript project, but this change applies to all controller elements.
 
+**Before**
 
 ```html
 <ion-loading-controller></ion-loading-controller>
@@ -272,7 +275,7 @@ The controller components (`ion-action-sheet-controller`, `ion-alert-controller`
 
 ```
 
-becomes
+**After**
 
 ```html
 <script type="module">
@@ -308,7 +311,31 @@ The `no-border` attribute has been removed, use `ion-no-border` class instead. S
 
 #### List Header
 
-The list header has been redesigned to match the latest iOS spec. This may break the design of your application as the previous design had a small font size with uppercase text. The latest design includes a larger, bolder text. If the old look is desired, use custom CSS to achieve it.
+The list header has been redesigned to match the latest iOS spec. This may break the design of your application as the previous design had a small font size with uppercase text. The latest design includes a larger, bolder text.
+
+In addition, any text content inside of an `<ion-list-header>` should be wrapped in an `<ion-label>` in order to get the proper styling of the new design. If the label is missing, the button alignment in the list header may look off.
+
+**Before**
+
+```html
+<ion-list-header>
+  New This Week
+  <ion-button>See All</ion-button>
+</ion-list-header>
+```
+
+**After**
+
+```html
+<ion-list-header>
+  <ion-label>New This Week</ion-label>
+  <ion-button>See All</ion-button>
+</ion-list-header>
+```
+
+The button has also been updated to default to `fill="clear"` and `size="small"` when inside of a list header. If the old look of the list header or buttons is desired, use custom CSS or button properties to achieve it.
+
+For more information see the [List Header usage](https://ionicframework.com/docs/api/list-header#usage).
 
 
 #### Menu
@@ -316,12 +343,14 @@ The list header has been redesigned to match the latest iOS spec. This may break
 - The `swipeEnable()` function has been removed in Angular, use `swipeGesture()` instead.
 - The `side` values `left` and `right` have been removed, use `start` and `end` instead.
 - Removed the `main` attribute, use `content-id` (for vanilla JS / Vue) and `contentId` (for Angular / React) instead.
+  **Before**
+
   ```html
   <ion-menu>...</ion-menu>
   <ion-content main>...</ion-content>
   ```
 
-  becomes
+  **After**
 
   ```html
   <ion-menu content-id="main"></ion-menu>
@@ -344,7 +373,7 @@ The `ion-nav-push`, `ion-nav-back`, and `ion-nav-set-root` components have been 
 
 The `ion-radio` must be used inside of an `ion-radio-group` even if there is only one `ion-radio`. Additionally, the `checked` property has been removed. Developers should set the `value` property on the parent `ion-radio-group` to match the value of the desired checked radio button.
 
-Before
+**Before**
 
 ```html
 <ion-radio checked>One</ion-radio>
@@ -355,7 +384,7 @@ Before
 </ion-radio-group>
 ```
 
-After
+**After**
 
 ```html
 <ion-radio-group value="one">
@@ -374,13 +403,15 @@ After
 
 The `show-cancel-button` property of the searchbar no longer accepts boolean values. Accepted values are strings: `"focus"`, `"always"`, `"never"`.
 
+**Before**
+
 ```html
 <ion-searchbar show-cancel-button>
 <ion-searchbar show-cancel-button="true">
 <ion-searchbar show-cancel-button="false">
 ```
 
-becomes
+**After**
 
 ```html
 <ion-searchbar show-cancel-button="focus">
@@ -415,7 +446,7 @@ Segment was completely revamped to use the new iOS design including an all new g
 - The Material Design spec does not include an indicator color on non-checked buttons: https://material.io/components/tabs/
 - In order to style the Segment to match the old spec, please use custom CSS. For example, to update Material Design to include a bottom line all of the time:
   ```css
-  .md ion-segment::after {
+  .md ion-segment::**after {**
       position: absolute;
       bottom: 0;
       height: 2px;
@@ -475,7 +506,7 @@ Some variables were renamed or added. See the chart below for the new names.
 
 The `checked` property has been removed. Developers should set the `value` property on the parent `ion-segment` to match the value of the desired checked segment button.
 
-Before
+**Before**
 
 ```html
 <ion-segment>
@@ -485,7 +516,7 @@ Before
 </ion-segment>
 ```
 
-After
+**After**
 
 ```html
 <ion-segment value="two">
@@ -500,7 +531,7 @@ After
 
 The `selected` property has been removed. Developers should set the `value` property on the parent `ion-select` to match the desired selected option.
 
-Before
+**Before**
 
 ```html
 <ion-select>
@@ -509,7 +540,7 @@ Before
 </ion-select>
 ```
 
-After
+**After**
 
 ```html
 <ion-select value="two">
@@ -527,6 +558,8 @@ The `width` property has been removed in favor of using CSS styling.
 #### Split Pane
 - Converted to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 - Removed the `main` attribute, use `content-id` (for vanilla JS / Vue) and `contentId` (for Angular / React) instead.
+  **Before**
+
   ```html
   <ion-split-pane>
     ...
@@ -534,7 +567,7 @@ The `width` property has been removed in favor of using CSS styling.
   </ion-split-pane>
   ```
 
-  becomes
+  **After**
 
   ```html
   <ion-split-pane content-id="main">
@@ -551,6 +584,8 @@ The `width` property has been removed in favor of using CSS styling.
 
 The close button properties (`showCloseButton` and `closeButtonText`) have been removed. Use the `buttons` array instead with `role: 'cancel'`. See the [usage documentation](https://ionicframework.com/docs/api/toast#usage) for more information.
 
+**Before**
+
 ```javascript
 async presentToast() {
   const toast = await this.toastController.create({
@@ -562,7 +597,7 @@ async presentToast() {
 }
 ```
 
-becomes
+**After**
 
 ```javascript
 async presentToast() {
