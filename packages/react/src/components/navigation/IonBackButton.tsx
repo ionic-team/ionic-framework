@@ -9,7 +9,7 @@ type Props = Omit<LocalJSX.IonBackButton, 'icon'> & IonicReactProps & {
   icon?: {
     ios: string;
     md: string;
-  };
+  } | string;
   ref?: React.RefObject<HTMLIonBackButtonElement>;
 };
 

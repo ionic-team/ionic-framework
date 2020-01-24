@@ -35,6 +35,16 @@
   color: inherit;
 }
 
+@mixin button-state() {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+
+  content: "";
+
+  opacity: 0;
+}
+
 // Font smoothing
 // --------------------------------------------------
 

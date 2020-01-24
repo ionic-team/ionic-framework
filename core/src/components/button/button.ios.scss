@@ -23,20 +23,19 @@
   letter-spacing: #{$button-ios-letter-spacing};
 }
 
+
 // iOS Solid Button
 // --------------------------------------------------
 
 :host(.button-solid) {
   --background-activated: #{ion-color(primary, shade)};
+  --background-focused: #{ion-color(primary, shade)};
+  --background-hover: #{ion-color(primary, tint)};
+  --background-activated-opacity: 1;
+  --background-focused-opacity: 1;
+  --background-hover-opacity: 1;
 }
 
-:host(.button-solid.activated) {
-  --opacity: #{$button-ios-opacity-activated};
-}
-
-:host(.button-solid.activated.ion-color) .button-native {
-  background: current-color(shade);
-}
 
 // iOS Outline Button
 // --------------------------------------------------
@@ -46,28 +45,21 @@
   --border-width: #{$button-ios-outline-border-width};
   --border-style: #{$button-ios-outline-border-style};
   --background-activated: #{ion-color(primary, base)};
-  --background-focused: #{ion-color(primary, base, .1)};
+  --background-focused: #{ion-color(primary, base)};
+  --background-hover: transparent;
+  --background-focused-opacity: .1;
   --color-activated: #{ion-color(primary, contrast)};
-}
-
-:host(.button-outline.activated.ion-color) .button-native {
-  background: current-color(base);
-  color: current-color(contrast);
 }
 
 
 // iOS Clear Button
 // --------------------------------------------------
 
-:host(.button-clear.activated) {
-  --opacity: #{$button-ios-clear-opacity-activated};
-}
-
 :host(.button-clear) {
   --background-activated: transparent;
-  --background-focused: #{ion-color(primary, base, .1)};
-  --color-activated: #{ion-color(primary, base)};
-  --color-focused: #{ion-color(primary, base)};
+  --background-focused: #{ion-color(primary, base)};
+  --background-hover: transparent;
+  --background-focused-opacity: .1;
 
   font-size: #{$button-ios-clear-font-size};
   font-weight: #{$button-ios-clear-font-weight};
@@ -124,29 +116,63 @@
 }
 
 
-// iOS Button Focus
+// iOS Button Activated
+// --------------------------------------------------
+
+:host(.button-clear.ion-activated) {
+  opacity: #{$button-ios-clear-opacity-activated};
+}
+
+:host(.button-outline.ion-activated.ion-color) .button-native {
+  color: current-color(contrast);
+
+  &::after {
+    background: current-color(base);
+  }
+}
+
+:host(.button-solid.ion-color.ion-activated) .button-native::after {
+  background: #{current-color(shade)};
+}
+
+// iOS Button Focused
+// --------------------------------------------------
+
+:host(.button-outline.ion-focused.ion-color) .button-native,
+:host(.button-clear.ion-focused.ion-color) .button-native {
+  color: current-color(base);
+
+  &::after {
+    background: current-color(base);
+  }
+}
+
+:host(.button-solid.ion-color.ion-focused) .button-native::after {
+  background: #{current-color(shade)};
+}
+
+// iOS Button Hover
 // --------------------------------------------------
 
 @media (any-hover: hover) {
-  :host(.button-solid:hover) {
-    --opacity: #{$button-ios-opacity-hover};
-  }
-
+  // Clear and outline buttons use opacity so set
+  // background to transparent
   :host(.button-clear:hover),
   :host(.button-outline:hover) {
-    --opacity: #{$button-ios-clear-opacity-hover};
+    opacity: #{$button-ios-clear-opacity-hover};
   }
 
-  // Since iOS changes the opacity on hover,
-  // we want to keep the background if focused
-  // or activated
-  :host(.ion-focused:hover) {
-    --background-hover: var(--background-focused);
-    --color-hover: var(--color-focused);
+  :host(.button-clear.ion-color:hover) .button-native,
+  :host(.button-outline.ion-color:hover) .button-native {
+    color: #{current-color(base)};
+
+    &::after {
+      background: transparent;
+    }
   }
 
-  :host(.activated:hover) {
-    --background-hover: var(--background-activated);
-    --color-hover: var(--color-activated);
+  // Solid buttons use the tint background
+  :host(.button-solid.ion-color:hover) .button-native::after {
+    background: #{current-color(tint)};
   }
 }

@@ -9,23 +9,20 @@ $segment-button-md-opacity:                           .6 !default;
 /// @prop - Text color of the segment button
 $segment-button-md-text-color:                        rgba($text-color-rgb, $segment-button-md-opacity) !default;
 
+/// @prop - Text color of the checked segment button
+$segment-button-md-text-color-checked:                ion-color(primary, base) !default;
+
 /// @prop - Background of the segment button
 $segment-button-md-background:                        none !default;
 
 /// @prop - Background of the checked segment button
 $segment-button-md-background-checked:                $segment-button-md-background !default;
 
-/// @prop - Background of the hovered segment button
-$segment-button-md-background-hover:                  ion-color(primary, base, .04) !default;
-
 /// @prop - Width of the bottom border on the segment button
 $segment-button-md-border-bottom-width:               2px !default;
 
 /// @prop - Color of the bottom border on the segment button
 $segment-button-md-border-bottom-color:               transparent !default;
-
-/// @prop - Text color of the checked segment button
-$segment-button-md-text-color-checked:              ion-color(primary, base) !default;
 
 /// @prop - Opacity of the disabled segment button
 $segment-button-md-opacity-disabled:                  .3 !default;

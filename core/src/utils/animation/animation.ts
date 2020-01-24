@@ -566,7 +566,7 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const setAnimationStep = (step: number) => {
-    step = Math.min(Math.max(step, 0), 0.999);
+    step = Math.min(Math.max(step, 0), 0.9999);
     if (supportsWebAnimations) {
       webAnimations.forEach(animation => {
         animation.currentTime = animation.effect.getComputedTiming().delay + (getDuration() * step);

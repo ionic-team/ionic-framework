@@ -4,7 +4,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
-import { createColorClasses, openURL } from '../../utils/theme';
+import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -113,6 +113,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'button': true, // ion-buttons target .button
           'back-button-disabled': disabled,
           'back-button-has-icon-only': hasIconOnly,
+          'in-toolbar': hostContext('ion-toolbar', this.el),
           'ion-activatable': true,
           'ion-focusable': true,
           'show-back-button': showBackButton

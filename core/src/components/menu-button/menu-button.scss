@@ -9,7 +9,9 @@
    *
    * @prop --background: Background of the menu button
    * @prop --background-hover: Background of the menu button on hover
+   * @prop --background-hover-opacity: Opacity of the background on hover
    * @prop --background-focused: Background of the menu button when focused with the tab key
+   * @prop --background-focused-opacity: Opacity of the menu button background when focused with the tab key
    *
    * @prop --color: Color of the menu button
    * @prop --color-hover: Color of the menu button on hover
@@ -21,7 +23,7 @@
    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    */
   --background: transparent;
-  --color-focused: var(--color);
+  --color-focused: currentColor;
   --border-radius: initial;
   --padding-top: 0;
   --padding-bottom: 0;
@@ -65,9 +67,26 @@
   line-height: 1;
 
   cursor: pointer;
+
+  overflow: hidden;
   user-select: none;
   z-index: 0;
   appearance: none;
+}
+
+.button-inner {
+  display: flex;
+  position: relative;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
 }
 
 ion-icon {
@@ -94,23 +113,37 @@ ion-icon {
 }
 
 
-// Menu Button: Hover
-// --------------------------------------------------
-
-@media (any-hover: hover) {
-  :host(:hover) .button-native {
-    background: var(--background-hover);
-    color: var(--color-hover);
-  }
-}
-
-
 // Menu Button: Focused
 // --------------------------------------------------
 
 :host(.ion-focused) .button-native {
-  background: var(--background-focused);
   color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+
+    opacity: var(--background-focused-opacity);
+  }
+}
+
+
+// Menu Button: Hover
+// --------------------------------------------------
+
+.button-native::after {
+  @include button-state();
+}
+
+@media (any-hover: hover) {
+  :host(:hover) .button-native {
+    color: var(--color-hover);
+
+    &::after {
+      background: var(--background-hover);
+
+      opacity: var(--background-hover-opacity, 0);
+    }
+  }
 }
 
 
@@ -125,7 +158,6 @@ ion-icon {
 // Menu Button in Toolbar: Global Theming
 // --------------------------------------------------
 
-// TODO this will not work in Safari - component is shadow not scoped
-:host-context(ion-toolbar:not(.ion-color)) {
+:host(.in-toolbar) {
   color: #{var(--ion-toolbar-color, var(--color))};
 }

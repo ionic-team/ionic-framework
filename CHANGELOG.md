@@ -1,3 +1,67 @@
+# [5.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v5.0.0-beta.6...v5.0.0-rc.0) (2020-01-23)
+
+Release Candidate is here! :tada:
+
+
+# [5.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v4.11.9...v5.0.0-beta.6) (2020-01-23)
+
+### Bug Fixes
+
+* **animation:** add property conversions for CSS Animations ([#20252](https://github.com/ionic-team/ionic/issues/20252)), fixes [#20251](https://github.com/ionic-team/ionic/issues/20251) ([32a7401](https://github.com/ionic-team/ionic/commit/32a7401576a9c91fdee66d2cede06b6a16884d35))
+* **content:** set min-height to allow for sticky headers ([#20265](https://github.com/ionic-team/ionic/issues/20252)), fixes [#20258](https://github.com/ionic-team/ionic/issues/20258) ([e613f63](https://github.com/ionic-team/ionic/commit/e613f63590f3d6a4fa4f3a361811224394ba0be2))
+* **modal:** card-style modal now opens at full width on larger devices ([#20256](https://github.com/ionic-team/ionic/issues/20256)), fixes [#20255](https://github.com/ionic-team/ionic/issues/20255) ([443cbd9](https://github.com/ionic-team/ionic/commit/443cbd9eb273767d8405b6a05ffabee037e9f3b7))
+* **segment:** clicking disabled button no longer adds ripple to active button ([#20254](https://github.com/ionic-team/ionic/issues/20254)), fixes [#20253](https://github.com/ionic-team/ionic/issues/20253) ([f896821](https://github.com/ionic-team/ionic/commit/f8968217533ff60948047510064d2f15d01c249c))
+
+
+### Features
+
+* **components:** improve button states and add new css properties ([#19440](https://github.com/ionic-team/ionic/issues/19440)) ([9415929](https://github.com/ionic-team/ionic/commit/94159291b27ddf1a859c8f3f87a0d6e54a8b5f13)), closes [#20213](https://github.com/ionic-team/ionic/issues/20213) [#19965](https://github.com/ionic-team/ionic/issues/19965)
+* **react:** add Ionic Animations wrapper (experimental) ([#20273](https://github.com/ionic-team/ionic/issues/20273)) ([b59d764](https://github.com/ionic-team/ionic/commit/b59d7647fd6f9a645a4ec0fe9aca526ea5eda4e0))
+* **segment-button:** add --indicator-height property to segment button ([#19653](https://github.com/ionic-team/ionic/issues/19653)) ([d76a503](https://github.com/ionic-team/ionic/commit/d76a5031c4c96b5fdf691a56ed61d3dcc4e4dafb))
+
+
+### BREAKING CHANGES
+
+*Activated Class*
+
+The `activated` class that is automatically added to buttons on press has been renamed to `ion-activated`. This will be more consistent with our `ion-focused` class we add and also will reduce conflicts with users' CSS.
+
+*CSS Variables*
+
+The `--background-hover`, `--background-focused` and `--background-activated` CSS variables on components that render native buttons will now have an opacity automatically set. If you are setting any of these like the following:
+
+```
+--background-hover: rgba(44, 44, 44, 0.08);
+```
+
+You will likely not see a hover state anymore. It should be updated to only set the desired color:
+
+```
+--background-hover: rgba(44, 44, 44);
+```
+
+If the opacity desired is something other than what the spec asks for, use:
+
+```
+--background-hover: rgba(44, 44, 44);
+--background-hover-opacity: 1;
+```
+
+
+
+## [4.11.9](https://github.com/ionic-team/ionic/compare/v4.11.8...v4.11.9) (2020-01-23)
+
+### Bug Fixes
+
+* **core:** updating type of input value to accept numbers, fixes [#20173](https://github.com/ionic-team/ionic/issues/20173) ([#20267](https://github.com/ionic-team/ionic/issues/20267)) ([7080205](https://github.com/ionic-team/ionic/commit/708020551f9c51ca3b32d7b49bf4572db3dda12e))
+* **react:** adding missing overlay component events, fixes [#19923](https://github.com/ionic-team/ionic/issues/19923) ([#20266](https://github.com/ionic-team/ionic/issues/20266)) ([ec6a8dd](https://github.com/ionic-team/ionic/commit/ec6a8dd86f3854edba367f79a6ebac7d60eed839))
+* **react:** Don't render overlay children if isOpen is false, fixes [#20225](https://github.com/ionic-team/ionic/issues/20225) ([#20226](https://github.com/ionic-team/ionic/issues/20226)) ([aff9612](https://github.com/ionic-team/ionic/commit/aff9612d1197dca48eab6eff9d749032c380cf82))
+* **react:** re attach props on update, fixes 20192 ([#20228](https://github.com/ionic-team/ionic/issues/20228)) ([9e35ebe](https://github.com/ionic-team/ionic/commit/9e35ebed4a1590ef2521f5f8c393bdd9dea32a04))
+* **react:** remove leaving view when routerdirection is back, fixes [#20124](https://github.com/ionic-team/ionic/issues/20124) ([#20268](https://github.com/ionic-team/ionic/issues/20268)) ([63d4e87](https://github.com/ionic-team/ionic/commit/63d4e877fb18c90d70c4cbd5f66ffccb8ee6489c))
+* **react:** support routes without a path for notfound routes, fixes [#20259](https://github.com/ionic-team/ionic/issues/20259) ([#20261](https://github.com/ionic-team/ionic/issues/20261)) ([2f8c13b](https://github.com/ionic-team/ionic/commit/2f8c13b6960f9bcfb941c36fa6e1742b96f80ba9))
+* **react:** update icon types to be a string as well, fixes [#20229](https://github.com/ionic-team/ionic/issues/20229) ([#20230](https://github.com/ionic-team/ionic/issues/20230)) ([1411d8a](https://github.com/ionic-team/ionic/commit/1411d8a173bfefd7db5241218fd5641b7e9da823))
+
+
 # [5.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v4.11.8...v5.0.0-beta.5) (2020-01-17)
 
 

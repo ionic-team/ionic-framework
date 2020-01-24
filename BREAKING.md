@@ -14,16 +14,21 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [CSS](#css)
   * [CSS Utilities](#css-utilities)
   * [Display Classes](#display-classes)
-  * [Activated, Focused, Hover States](#activated--focused--hover-states)
+  * [Activated, Focused, Hover States](#activated-focused-hover-states)
   * [Distributed Sass](#distributed-sass)
 - [Components](#components)
+  * [Action Sheet](#action-sheet)
   * [Anchor](#anchor)
   * [Back Button](#back-button)
+  * [Button](#button)
   * [Card](#card)
   * [Controllers](#controllers)
+  * [FAB Button](#fab-button)
+  * [Item](#item)
   * [Header / Footer](#header---footer)
   * [List Header](#list-header)
   * [Menu](#menu)
+  * [Menu Button](#menu-button)
   * [Nav Link](#nav-link)
   * [Radio](#radio)
   * [Searchbar](#searchbar)
@@ -33,6 +38,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Skeleton Text](#skeleton-text)
   * [Split Pane](#split-pane)
   * [Toast](#toast)
+  * [Tabs](#tabs)
 - [Colors](#colors)
 - [Events](#events)
 - [Mode](#mode)
@@ -43,7 +49,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 #### CSS Utilities
 
-We originally added CSS utility attributes for styling components because it was a quick and easy way to wrap text or add padding to an element. Once we added support for multiple frameworks as part of our "Ionic for everyone" approach, we quickly determined there were problems with using CSS attributes with frameworks that use JSX and Typescript. In order to solve this we added CSS classes. Rather than support CSS attributes in certain frameworks and classes in others, we decided to remove the CSS attributes and support what works in all of them, classes, for consistency. In addition to this, changing to classes prefixed with `ion` avoids conflict with native attributes & user's CSS. In the latest version of Ionic 4, there are deprecation warnings printed in the console to show what the new classes are, and the documentation has been updated since support for classes was added to remove all references to attributes: https://ionicframework.com/docs/layout/css-utilities.
+We originally added CSS utility attributes for styling components because it was a quick and easy way to wrap text or add padding to an element. Once we added support for multiple frameworks as part of our "Ionic for everyone" approach, we quickly determined there were problems with using CSS attributes with frameworks that use JSX and Typescript. In order to solve this we added CSS classes. Rather than support CSS attributes in certain frameworks and classes in others, we decided to remove the CSS attributes and support what works in all of them, classes, for consistency. In addition to this, changing to classes prefixed with `ion` avoids conflict with native attributes and user's CSS. In the latest version of Ionic 4, there are deprecation warnings printed in the console to show what the new classes are, and the documentation has been updated since support for classes was added to remove all references to attributes: https://ionicframework.com/docs/layout/css-utilities.
 
 Some examples of what's changed are below. *This is not all-inclusive, see the documentation linked above for all of the available CSS utility classes.*
 
@@ -98,9 +104,101 @@ See the [CSS Utilities responsive display documentation](https://ionicframework.
 
 #### Activated, Focused, Hover States
 
-The `.activated` class that gets added has been renamed to `.ion-activated` for consistency with how we add focused to elements and to avoid conflicts in users' CSS.
+The `.activated` class that is automatically added to clickable components has been renamed to `.ion-activated`.
 
-<!-- TODO mention some of the changes to the hover values: https://github.com/ionic-team/ionic/pull/19440 -->
+The way the CSS variables are used for targeting the activated, focused and hover backgrounds have been updated on the following components:
+
+- Action Sheet
+- Back Button
+- Button
+- FAB Button
+- Item
+- Menu Button
+- Segment Button
+
+Previously, in order to update any of the background colors for the states you would have to know what the opacity was set to. Using the Material Design spec as an example, it would require you to know that the hover state uses a white overlay with an opacity of `.08`. This means that if we had the following set by default:
+
+```css
+--background-hover: rgba(255, 255, 255, 0.08);
+```
+
+If you wanted to change the hover overlay to use black but still match the spec, you'd have to set it to:
+
+```css
+--background-hover: rgba(0, 0, 0, 0.08);
+```
+
+The new way adds the following variables:
+
+```css
+--background-activated-opacity
+--background-focused-opacity
+--background-hover-opacity
+```
+
+It also updates the Action Sheet component so that the variables will be prefixed with `button`. See the [Action Sheet](#action-sheet) section in this document for all of the variable names.
+
+This allows you to still have control over the opacity if desired, but when updating the state, you only have to set the main variables: `--background-activated`, `--background-focused`, `--background-hover` and the button will still match the spec. This is most important when changing the global theme, as updating the toolbar color will automatically update the hover states for all of the buttons in a toolbar, regardless of their fill and without having to know what each opacity is.
+
+As a result of these changes, the following global CSS variables will not change the opacity and as such should be treated the same as the `--background-{STATE}` variables:
+
+```css
+--ion-item-background-activated
+--ion-item-background-focused
+--ion-item-background-hover
+```
+
+##### Examples
+
+```css
+/* Setting the button background to solid red */
+ion-button {
+  --background-hover: red;
+  --background-hover-opacity: 1;
+}
+
+/* Setting the action sheet button background on hover to an opaque green */
+ion-action-sheet {
+  --button-background-hover: green;
+  --button-background-hover-opacity: 0.5;
+}
+
+/* Setting the fab button background to use the text color with the default opacity on md */
+.md ion-fab-button {
+  --color: #222;
+  --background-hover: #222;
+}
+
+/* Setting the theme background for items to use #000 (black) with the default theme opacity */
+:root {
+  /* is used in item as rgba(0, 0, 0, var(--background-activated-opacity)); */
+  --ion-item-background-activated: #000;
+
+  /* is used in item as rgba(0, 0, 0, var(--background-focused-opacity)); */
+  --ion-item-background-focused: #000;
+
+  /* is used in item as rgba(0, 0, 0, var(--background-hover-opacity)); */
+  --ion-item-background-hover: #000;
+}
+```
+
+##### Global CSS Properties
+
+Some variables were renamed, removed or added. See the chart below for the changes.
+
+| Old variable                            | Status  | New variable                              |
+| ----------------------------------------| --------|-------------------------------------------|
+| `--ion-toolbar-color-unchecked`         | renamed | `--ion-toolbar-segment-color`             |
+| `--ion-toolbar-color-checked`           | renamed | `--ion-toolbar-segment-color-checked`     |
+| `--ion-toolbar-background-unchecked`    | renamed | `--ion-toolbar-segment-background`        |
+| `--ion-toolbar-background-checked`      | renamed | `--ion-toolbar-segment-background-checked`|
+| `--ion-tab-bar-color-activated`         | renamed | `--ion-tab-bar-color-selected`            |
+|                                         | added   | `--ion-toolbar-segment-indicator-color`   |
+| `--ion-toolbar-color-activated`         | removed |                                           |
+| `--ion-item-background-activated`       | removed |                                           |
+| `--ion-item-background-focused`         | removed |                                           |
+| `--ion-item-background-hover`           | removed |                                           |
+
 
 #### Distributed Sass
 
@@ -109,20 +207,50 @@ The `scss` files have been removed from `dist/`. CSS variables should be used to
 
 ### Components
 
+#### Action Sheet
+
+The following CSS variables have been renamed or added:
+
+| Old                      | New                                        |
+|--------------------------| -------------------------------------------|
+|                          | `--button-background`                      |
+| `--background-activated` | `--button-background-activated`            |
+|                          | `--button-background-activated-opacity`    |
+| `--background-selected`  | `--button-background-selected`             |
+|                          | `--button-background-focused`              |
+|                          | `--button-background-focused-opacity`      |
+|                          | `--button-background-hover`                |
+|                          | `--button-background-hover-opacity`        |
+|                          | `--button-background-selected`             |
+|                          | `--button-background-selected-opacity`     |
+|                          | `--button-color`                           |
+|                          | `--button-color-activated`                 |
+|                          | `--button-color-focused`                   |
+|                          | `--button-color-hover`                     |
+|                          | `--button-color-selected`                  |
+
+See the [Action Sheet CSS Custom Properties](https://ionicframework.com/docs/api/action-sheet#css-custom-properties) documentation for descriptions.
+
+
 #### Anchor
 
 The `ion-anchor` component has been renamed to `ion-router-link` as this is a better description of which component it should be used with. This component should still only be used in vanilla and Stencil JavaScript projects. Angular projects should use an `<a>` and `routerLink` with the Angular router. See the [documentation for router-link](https://ionicframework.com/docs/api/router-link) for more information.
 
 #### Back Button
 
-Converted `ion-back-button` to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+- Converted `ion-back-button` to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+- [Focused, Hover States](#activated-focused-hover-states) have been updated.
+
+#### Button
+
+- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
 
 #### Card
 
 Converted `ion-card` to use [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
 
 
-### Controllers
+#### Controllers
 
 The controller components (`ion-action-sheet-controller`, `ion-alert-controller`, `ion-loading-controller`, `ion-menu-controller`, `ion-modal-controller`, `ion-picker-controller`, `ion-popover-controller`, `ion-toast-controller`) have been removed from Ionic core as elements. They should be imported from `@ionic/core` instead. This will not affect projects that use Angular or React. Below is an example of the loading controller change in a JavaScript project, but this change applies to all controller elements.
 
@@ -163,6 +291,15 @@ becomes
 </script>
 ```
 
+#### FAB Button
+
+- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
+
+
+#### Item
+
+- [Activated, Focused, Hover States](#activated-focused-hover-states) have been updated.
+
 
 #### Header / Footer
 
@@ -191,6 +328,12 @@ The list header has been redesigned to match the latest iOS spec. This may break
   <ion-content id="main">...</ion-content>
   ```
 - The presentation type in `ios` now defaults to `"overlay"`.
+
+
+#### Menu Button
+
+- [Focused, Hover States](#activated-focused-hover-states) have been updated.
+
 
 #### Nav Link
 
@@ -254,7 +397,78 @@ The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get
 
 #### Segment
 
-<!-- TODO https://gist.github.com/brandyscarney/e6cfe43c359bb2c932e12f8d615e1669 -->
+Segment was completely revamped to use the new iOS design including an all new gesture that applies for both Material Design and iOS. Due to these changes, some breaking changes were inevitably introduced in order to support the new design.
+
+##### Button States
+
+- The activated styles and custom CSS properties have been removed. These are no longer being used in the latest spec as the indicator and ripple are used to show activation. Properties removed:
+  ```
+  --color-activated
+  --background-activated
+  ```
+- The [Focused & Hover States](#activated-focused-hover-states) have been updated.
+
+##### Indicator Color
+
+- `--indicator-color` now applies to the checked segment button (for both `ios` and `md`)
+- `--indicator-color-checked` has been removed
+- The Material Design spec does not include an indicator color on non-checked buttons: https://material.io/components/tabs/
+- In order to style the Segment to match the old spec, please use custom CSS. For example, to update Material Design to include a bottom line all of the time:
+  ```css
+  .md ion-segment::after {
+      position: absolute;
+      bottom: 0;
+      height: 2px;
+      width: 100%;
+      content: '';
+      background: rgba(0,0,0,0.5);
+      z-index: -1;
+  }
+  ```
+
+##### Background & Color
+
+A `--background` variable has been added to style the `ion-segment` component. As a result of this, the following background variables for a child segment button must now be set on the `ion-segment-button`:
+
+```
+--background: Background of the segment button
+--background-checked: Background of the checked segment button
+--background-disabled: Background of the disabled segment button
+--background-hover: Background of the segment button on hover
+```
+
+> Note: iOS no longer checks the button background, so setting the `--background-checked` variable may have an undesired outcome. Instead, Segment uses an indicator to slide between the buttons, showing which one is checked. See the previous section on the indicator color variables.
+
+The above variables *will not* be inherited in the button if set on the `ion-segment`. In addition to this, all color variables should also be set on the button for consistency:
+
+```
+--color: Color of the segment button
+--color-checked: Color of the checked segment button
+--color-disabled: Color of the disabled segment button
+--color-hover: Color of the segment button on hover
+```
+
+###### Removed variables
+
+The following variables were removed due to the current spec no longer using them.
+
+- `--color-checked-disabled`
+- `--background-disabled`
+- `--color-disabled`
+- `--background-activated`
+- `--color-activated`
+
+##### Global CSS Properties
+
+Some variables were renamed or added. See the chart below for the new names.
+
+| Old variable                            | Status  | New variable                              |
+| ----------------------------------------| --------|-------------------------------------------|
+| `--ion-toolbar-color-unchecked`         | renamed | `--ion-toolbar-segment-color`             |
+| `--ion-toolbar-color-checked`           | renamed | `--ion-toolbar-segment-color-checked`     |
+| `--ion-toolbar-background-unchecked`    | renamed | `--ion-toolbar-segment-background`        |
+| `--ion-toolbar-background-checked`      | renamed | `--ion-toolbar-segment-background-checked`|
+|                                         | added   | `--ion-toolbar-segment-indicator-color`   |
 
 
 #### Segment Button
@@ -329,6 +543,10 @@ The `width` property has been removed in favor of using CSS styling.
   </ion-split-pane>
   ```
 
+#### Tabs
+
+- [Focused State](#activated-focused-hover-states) have been updated.
+
 #### Toast
 
 The close button properties (`showCloseButton` and `closeButtonText`) have been removed. Use the `buttons` array instead with `role: 'cancel'`. See the [usage documentation](https://ionicframework.com/docs/api/toast#usage) for more information.
@@ -382,7 +600,7 @@ dark:            #222428
 
 `primary`, `light` and `dark` have not changed. The contrast color for `warning` has been updated to `#000`.
 
-This will only be a breaking change in your app if you are not using one of our starters & not overriding the defaults. If you are overriding the defaults already these will need to be manually updated if desired.
+This will only be a breaking change in your app if you are not using one of our starters and not overriding the defaults. If you are overriding the defaults already these will need to be manually updated if desired.
 
 
 ### Events

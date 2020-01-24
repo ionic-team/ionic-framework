@@ -14,20 +14,12 @@
   z-index: 0;
 }
 
-:host(.segment-disabled) {
-  opacity: $segment-button-ios-opacity-disabled;
-}
-
 
 // Segment: Color
 // --------------------------------------------------
 
 :host(.ion-color) {
   background: #{current-color(base, 0.065)};
-}
-
-:host(.ion-color) ::slotted(.segment-button-checked) {
-  color: #000;
 }
 
 
@@ -51,12 +43,6 @@
 // Default Segment, In a Toolbar
 :host(.in-toolbar:not(.ion-color)) {
   background: var(--ion-toolbar-segment-background, $segment-ios-background-color);
-  color: var(--ion-toolbar-segment-color, var(--color));
-}
-
-// Default Segment, In a Toolbar, Checked
-:host(.in-toolbar:not(.ion-color)) ::slotted(.segment-button-checked) {
-  color: var(--ion-toolbar-segment-color-checked, var(--color-checked));
 }
 
 
@@ -66,17 +52,4 @@
 // Toolbar with Color, Default Segment
 :host(.in-toolbar-color:not(.ion-color)) {
   background: #{current-color(contrast, 0.11)};
-  color: #{current-color(contrast)};
-}
-
-// Toolbar with Color, Default Segment, Checked
-:host(.in-toolbar-color:not(.ion-color)) ::slotted(.segment-button-checked) {
-  color: #{current-color(base)};
-}
-
-@media (any-hover: hover) {
-  // Toolbar with Color, Default Segment, Checked / Hover
-  :host(.in-toolbar-color:not(.ion-color)) ::slotted(.segment-button-checked:hover) {
-    color: #{current-color(base)};
-  }
 }
