@@ -452,7 +452,7 @@ AFTER:
      * to the new easing curve, as `stepValue` is going to be given
      * in terms of a linear curve.
      */
-    newStepValue += getTimeGivenProgression([0, 0], [0.4, 0], [0.6, 1], [1, 1], clamp(0, adjustedStepValue, 1))[0] || 0;
+    newStepValue += getTimeGivenProgression([0, 0], [0.4, 0], [0.6, 1], [1, 1], clamp(0, adjustedStepValue, 0.9999))[0] || 0;
 
     const playTo = (this._isOpen) ? !shouldComplete : shouldComplete;
 
