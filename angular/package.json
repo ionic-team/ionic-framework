@@ -74,7 +74,7 @@
     "typescript": "3.4.5",
     "zone.js": "^0.8.28"
   },
-  "schematics": "schematics/collection.json",
+  "schematics": "./schematics/collection.json",
   "ngPackage": {
     "lib": {
       "entryFile": "src/index.ts"
