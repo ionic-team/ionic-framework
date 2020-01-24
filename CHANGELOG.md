@@ -1,3 +1,12 @@
+## [4.11.10](https://github.com/ionic-team/ionic/compare/v4.11.9...v4.11.10) (2020-01-24)
+
+
+### Bug Fixes
+
+* **input:** revert previous type change ([db1fd1d](https://github.com/ionic-team/ionic/commit/db1fd1d72a8a0ade824ad2309d1adb2953731f37))
+
+
+
 ## [4.11.9](https://github.com/ionic-team/ionic/compare/v4.11.8...v4.11.9) (2020-01-23)
 
 

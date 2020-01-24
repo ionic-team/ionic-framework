@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "4.11.9",
+  "version": "4.11.10",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -49,7 +49,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "4.11.9",
+    "@ionic/core": "4.11.10",
     "tslib": "^1.9.3"
   },
   "peerDependencies": {
