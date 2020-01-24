@@ -84,7 +84,19 @@ export class CreateAnimation extends React.PureComponent<CreateAnimationProps> {
     const { children } = this.props;
     return (
       <>
-        {React.Children.map(children, ((child, id) => React.cloneElement(child as any, { ref: (el: any) => this.nodes.set(id, el) })))}
+        {React.Children.map(children, ((child, id) => {
+          React.cloneElement(child as any, {
+            ref: (el: any) => {
+              // Preserve refs if user sets them
+              const { ref } = child as any;
+              if (typeof ref === 'function') {
+                ref(el);
+              }
+  
+              this.nodes.set(id, el);
+            }
+          });
+        }))}
       </>
     );
   }
