@@ -45,7 +45,7 @@ export interface CreateAnimationProps {
 }
 
 export class CreateAnimation extends React.PureComponent<CreateAnimationProps> {
-  private nodes: Map<number, HTMLElement> = new Map();
+  nodes: Map<number, HTMLElement> = new Map();
   animation: Animation;
 
   constructor(props: any) {
