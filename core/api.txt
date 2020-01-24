@@ -164,6 +164,14 @@ ion-button,css-prop,--transition
 ion-buttons,scoped
 ion-buttons,prop,collapse,boolean,false,false,false
 
+ion-calendar,shadow
+ion-calendar,prop,disabled,boolean,false,false,false
+ion-calendar,prop,mode,'ios' | 'md',undefined,false,false
+ion-calendar,prop,month,number,this.today.getMonth(),false,false
+ion-calendar,prop,selectedDates,Date[],[],false,false
+ion-calendar,prop,year,number,this.today.getFullYear(),false,false
+ion-calendar,event,ionSelectDate,{ value: string; },true
+
 ion-card,shadow
 ion-card,prop,button,boolean,false,false,false
 ion-card,prop,color,string | undefined,undefined,false,false

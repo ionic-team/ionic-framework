@@ -34,15 +34,28 @@ export class Calendar implements ComponentInterface {
   @State()
   viewDate!: Date;
 
+  /**
+   * An array of javascript dates that are shown as selected on the page.
+   * e.g. [new Date()]
+   */
   @Prop()
   selectedDates: Date[] = [];
+
+  /**
+   * Year to display on the calendar, defaults to current year.
+   */
   @Prop()
   year: number = this.today.getFullYear();
+
+  /**
+   * Month index to display on the calendar, defaults to current month.
+   * e.g. January is 0, February is 1
+   */
   @Prop()
   month: number = this.today.getMonth();
 
   /**
-   * If `true`, the user cannot interact with the sliding item.
+   * If `true`, the user cannot interact with the calendar.
    */
   @Prop() disabled = false;
   @Watch('disabled')
@@ -53,7 +66,7 @@ export class Calendar implements ComponentInterface {
   }
 
   /**
-   * Emitted when the checked property has changed.
+   * Emitted when a date is tapped/clicked on. Value is emitted as an ISO String date
    */
   @Event() ionSelectDate!: EventEmitter<{ value: string }>;
 

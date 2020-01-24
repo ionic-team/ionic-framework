@@ -334,15 +334,24 @@ export namespace Components {
   }
   interface IonCalendar {
     /**
-    * If `true`, the user cannot interact with the sliding item.
+    * If `true`, the user cannot interact with the calendar.
     */
     'disabled': boolean;
     /**
     * The mode determines which platform styles to use.
     */
     'mode'?: 'ios' | 'md';
+    /**
+    * Month index to display on the calendar, defaults to current month. e.g. January is 0, February is 1
+    */
     'month': number;
+    /**
+    * An array of javascript dates that are shown as selected on the page. e.g. [new Date()]
+    */
     'selectedDates': Date[];
+    /**
+    * Year to display on the calendar, defaults to current year.
+    */
     'year': number;
   }
   interface IonCard {
@@ -3576,19 +3585,28 @@ declare namespace LocalJSX {
   }
   interface IonCalendar {
     /**
-    * If `true`, the user cannot interact with the sliding item.
+    * If `true`, the user cannot interact with the calendar.
     */
     'disabled'?: boolean;
     /**
     * The mode determines which platform styles to use.
     */
     'mode'?: 'ios' | 'md';
+    /**
+    * Month index to display on the calendar, defaults to current month. e.g. January is 0, February is 1
+    */
     'month'?: number;
     /**
-    * Emitted when the checked property has changed.
+    * Emitted when a date is tapped/clicked on. Value is emitted as an ISO String date
     */
     'onIonSelectDate'?: (event: CustomEvent<{ value: string }>) => void;
+    /**
+    * An array of javascript dates that are shown as selected on the page. e.g. [new Date()]
+    */
     'selectedDates'?: Date[];
+    /**
+    * Year to display on the calendar, defaults to current year.
+    */
     'year'?: number;
   }
   interface IonCard {
