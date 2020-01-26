@@ -63,8 +63,12 @@
         Translucent Toast
       </ion-button>
 
-      <ion-button expand="block" id="color-toast" onclick="openToast({message: 'click to close', buttons: ['Close'], color: 'danger'})">
+      <ion-button expand="block" id="color-toast" onclick="openToast({message: 'click to close', buttons: [{text: 'Close'}, {icon: 'close', role: 'cancel'}], color: 'danger'})">
         Color Toast
+      </ion-button>
+
+      <ion-button expand="block" id="light-color-toast" onclick="openToast({message: 'click to close', buttons: [{text: 'Close'}, {icon: 'close', role: 'cancel'}], color: 'light'})">
+        Light Color Toast
       </ion-button>
 
       <ion-button expand="block" id="custom-class-toast" onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'my-custom-class'})">
