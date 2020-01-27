@@ -118,7 +118,7 @@ $action-sheet-ios-button-border-color:                            rgba($text-col
 $action-sheet-ios-button-background:                              linear-gradient(0deg, $action-sheet-ios-button-border-color, $action-sheet-ios-button-border-color 50%, transparent 50%) bottom / 100% 1px no-repeat transparent !default;
 
 /// @prop - Background color of the activated action sheet button
-$action-sheet-ios-button-background-activated:                    $background-color-step-150 !default;
+$action-sheet-ios-button-background-activated:                    $text-color !default;
 
 /// @prop - Background color of the selected action sheet button
 $action-sheet-ios-button-background-selected:                     $background-color !default;
