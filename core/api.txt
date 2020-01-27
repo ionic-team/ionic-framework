@@ -182,7 +182,12 @@ ion-buttons,scoped
 ion-buttons,prop,collapse,boolean,false,false,false
 
 ion-calendar,shadow
+ion-calendar,prop,availableDates,Date[] | undefined,[],false,false
 ion-calendar,prop,disabled,boolean,false,false,false
+ion-calendar,prop,disabledAfterDate,Date | undefined,undefined,false,false
+ion-calendar,prop,disabledBeforeDate,Date | undefined,undefined,false,false
+ion-calendar,prop,disabledDates,Date[] | undefined,undefined,false,false
+ion-calendar,prop,disabledDays,(0 | 1 | 2 | 3 | 4 | 5 | 6)[] | undefined,undefined,false,false
 ion-calendar,prop,mode,'ios' | 'md',undefined,false,false
 ion-calendar,prop,month,number,this.today.getMonth(),false,false
 ion-calendar,prop,selectedDates,Date[],[],false,false

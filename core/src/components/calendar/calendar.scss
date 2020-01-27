@@ -96,6 +96,12 @@
 
       cursor: pointer;
     }
+    &.disabled {
+      opacity: 0.5;
+      .day-inner {
+        cursor: not-allowed;
+      }
+    }
     &.today {
       .day-inner {
         border: #{ion-color(primary, base)} 1px solid;

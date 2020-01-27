@@ -35,6 +35,42 @@ export class Calendar implements ComponentInterface {
   viewDate!: Date;
 
   /**
+   * An array of javascript dates that are available for selection.
+   * e.g. [new Date()] this would only allow today to be selected.
+   * for large dater date sets, consider using disabledBeforeDate and disabledAfterDate
+   */
+  @Prop()
+  availableDates?: Date[] = [];
+
+  /**
+   * Disables any date before the date entered
+   * e.g. passing new Date() would mean users could not select anything after today
+   */
+  @Prop()
+  disabledAfterDate?: Date;
+
+  /**
+   * Disables any date after the date entered
+   * e.g. passing new Date() would mean users could not select anything before today
+   */
+  @Prop()
+  disabledBeforeDate?: Date;
+
+  /**
+   * Dates that users will not be able to select
+   * e.g. [new Date()] would mean users could not select today
+   */
+  @Prop()
+  disabledDates?: Date[];
+
+  /**
+   * Weekdays that users will not be able to select (optional)
+   * e.g. [0,6] would mean users could not select Sunday or Saturday
+   */
+  @Prop()
+  disabledDays?: (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
+
+  /**
    * An array of javascript dates that are shown as selected on the page.
    * e.g. [new Date()]
    */
@@ -286,11 +322,15 @@ export class Calendar implements ComponentInterface {
     if (this.selectedDates.length === 0) {
       return false;
     }
-    return this.selectedDates.some(selectedDate => (
-      selectedDate && 
-      selectedDate.getDate() === date.getDate() &&
-      selectedDate.getMonth() === date.getMonth() &&
-      selectedDate.getFullYear() === date.getFullYear()
+    return this.isDateInArray(date, this.selectedDates);
+  }
+
+  isDateInArray(date: Date, dateArray: Date[]) {
+    return dateArray.some(d => (
+      d &&
+      d.getDate() === date.getDate() &&
+      d.getMonth() === date.getMonth() &&
+      d.getFullYear() === date.getFullYear()
     ));
   }
 
@@ -353,6 +393,52 @@ export class Calendar implements ComponentInterface {
     e.stopPropagation();
     // Stop the click from being propagated after dragging/mouseup.
     window.removeEventListener('click', this.captureClick, true);
+  }
+
+  isDateDisabled(date: Date) {
+    if (this.disabled) {
+      return true;
+    }
+    let disabled = false;
+    if (this.availableDates && this.availableDates.length > 0) {
+      disabled = !this.isDateInArray(date, this.availableDates);
+    }
+    if (!disabled && this.disabledDates && this.disabledDates.length > 0) {
+      disabled = this.isDateInArray(date, this.disabledDates);
+    }
+    if (!disabled && this.disabledBeforeDate) {
+      disabled = date < this.disabledBeforeDate;
+    }
+    if (!disabled && this.disabledAfterDate) {
+      disabled = date > this.disabledAfterDate;
+    }
+    if (!disabled && this.disabledDays && this.disabledDays.length > 0) {
+      const weekday = date.getDay() as 0 | 1 | 2 | 3 | 4 | 5 | 6;
+      disabled = this.disabledDays.indexOf(weekday) !== -1;
+    }
+    return disabled;
+  }
+
+  getDayView(day: Date, month: -1 | 0 | 1) {
+    const disabled = this.isDateDisabled(day);
+    return (
+      <div
+        class={{
+          'day-outer': true,
+          'day-selected': this.isDateSelected(day),
+          today: this.isToday(day),
+          'not-current-month': !this.isCurrentMonth(day, month),
+          'disabled': disabled
+        }}
+      >
+        <div>
+          <div onClick={() => disabled ? null : this.selectDate(day)} class="day-inner">
+            {day.getDate()}
+            <ion-ripple-effect />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   render() {
@@ -435,25 +521,7 @@ export class Calendar implements ComponentInterface {
                       ))}
                     </div>
                     <div class="month-days">
-                      {this.getViewDays(month).map(day => (
-                        <div
-                          class={{
-                            'day-outer': true,
-                            'day-selected': this.isDateSelected(day),
-                            today: this.isToday(day),
-                            'not-current-month': !this.isCurrentMonth(day, month)
-                          }}
-                        >
-                          <div>
-                            <div
-                              onClick={() => this.selectDate(day)}
-                              class="day-inner"
-                            >
-                              {day.getDate()}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+                      {this.getViewDays(month).map(day => this.getDayView(day, month))}
                     </div>
                   </div>
                   {month === 0 ? (

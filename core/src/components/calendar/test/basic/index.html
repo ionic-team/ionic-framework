@@ -21,9 +21,29 @@
     </ion-header>
 
     <ion-content class="ion-padding ion-text-center" id="content" no-bounce>
+      <h3>Default Calendar (this month)</h3>
       <p>
         <ion-calendar id="calendar-one"></ion-calendar>
+      </p>
+      <h3>Month and Year passed in (selectedDates=[new Date(1988, 1, 25)])</h3>
+      <p>
         <ion-calendar id="calendar-two" month="1" year="1988"></ion-calendar>
+      </p>
+      <h3>disabledDates=[new Date(1988, 1, 25), new Date(1988, 1, 27)]</h3>
+      <p>
+        <ion-calendar id="calendar-three" month="1" year="1988"></ion-calendar>
+      </p>
+      <h3>disabledBeforeDate=new Date(2020, 0, 3) disabledAfterDate=new Date(2020, 0, 13)</h3>
+      <p>
+        <ion-calendar id="calendar-four" month="0" year="2020"></ion-calendar>
+      </p>
+      <h3>Disabled weekends: disabledDays=[0,6]</h3>
+      <p>
+        <ion-calendar id="calendar-five" month="0" year="2020"></ion-calendar>
+      </p>
+      <h3>availableDates=[new Date(2020, 0, 7), new Date(2020, 0, 14), new Date(2020, 0, 21), new Date(2020, 0, 28)]</h3>
+      <p>
+        <ion-calendar id="calendar-six" month="0" year="2020"></ion-calendar>
       </p>
       <div id="date"></div>
     </ion-content>
@@ -47,7 +67,20 @@
       });
 
       var calendarTwo = document.querySelector('#calendar-two');
-      calendarTwo.selectedDates=[new Date(1988, 1, 25)];
+      calendarTwo.selectedDates = [new Date(1988, 1, 25)];
+
+      var calendarThree = document.querySelector('#calendar-three');
+      calendarThree.disabledDates = [new Date(1988, 1, 25), new Date(1988, 1, 27)];
+
+      var calendarFour = document.querySelector('#calendar-four');
+      calendarFour.disabledBeforeDate = new Date(2020, 0, 3);
+      calendarFour.disabledAfterDate = new Date(2020, 0, 13);
+
+      var calendarFive = document.querySelector('#calendar-five');
+      calendarFive.disabledDays = [0,6];
+
+      var calendarSix = document.querySelector('#calendar-six');
+      calendarSix.availableDates=[new Date(2020, 0, 7), new Date(2020, 0, 14), new Date(2020, 0, 21), new Date(2020, 0, 28)];
     }
   </script>
 </body>

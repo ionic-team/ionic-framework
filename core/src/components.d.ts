@@ -334,9 +334,29 @@ export namespace Components {
   }
   interface IonCalendar {
     /**
+    * An array of javascript dates that are available for selection. e.g. [new Date()] this would only allow today to be selected. for large dater date sets, consider using disabledBeforeDate and disabledAfterDate
+    */
+    'availableDates'?: Date[];
+    /**
     * If `true`, the user cannot interact with the calendar.
     */
     'disabled': boolean;
+    /**
+    * Disables any date before the date entered e.g. passing new Date() would mean users could not select anything after today
+    */
+    'disabledAfterDate'?: Date;
+    /**
+    * Disables any date after the date entered e.g. passing new Date() would mean users could not select anything before today
+    */
+    'disabledBeforeDate'?: Date;
+    /**
+    * Dates that users will not be able to select e.g. [new Date()] would mean users could not select today
+    */
+    'disabledDates'?: Date[];
+    /**
+    * Weekdays that users will not be able to select (optional) e.g. [0,6] would mean users could not select Sunday or Saturday
+    */
+    'disabledDays'?: (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
     /**
     * The mode determines which platform styles to use.
     */
@@ -3585,9 +3605,29 @@ declare namespace LocalJSX {
   }
   interface IonCalendar {
     /**
+    * An array of javascript dates that are available for selection. e.g. [new Date()] this would only allow today to be selected. for large dater date sets, consider using disabledBeforeDate and disabledAfterDate
+    */
+    'availableDates'?: Date[];
+    /**
     * If `true`, the user cannot interact with the calendar.
     */
     'disabled'?: boolean;
+    /**
+    * Disables any date before the date entered e.g. passing new Date() would mean users could not select anything after today
+    */
+    'disabledAfterDate'?: Date;
+    /**
+    * Disables any date after the date entered e.g. passing new Date() would mean users could not select anything before today
+    */
+    'disabledBeforeDate'?: Date;
+    /**
+    * Dates that users will not be able to select e.g. [new Date()] would mean users could not select today
+    */
+    'disabledDates'?: Date[];
+    /**
+    * Weekdays that users will not be able to select (optional) e.g. [0,6] would mean users could not select Sunday or Saturday
+    */
+    'disabledDays'?: (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
     /**
     * The mode determines which platform styles to use.
     */

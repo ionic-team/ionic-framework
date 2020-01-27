@@ -156,6 +156,7 @@ Type: `Promise<() => void>`
  - [ion-alert](../alert)
  - [ion-back-button](../back-button)
  - [ion-button](../button)
+ - [ion-calendar](../calendar)
  - [ion-card](../card)
  - [ion-chip](../chip)
  - [ion-fab-button](../fab-button)
@@ -173,6 +174,7 @@ graph TD;
   ion-alert --> ion-ripple-effect
   ion-back-button --> ion-ripple-effect
   ion-button --> ion-ripple-effect
+  ion-calendar --> ion-ripple-effect
   ion-card --> ion-ripple-effect
   ion-chip --> ion-ripple-effect
   ion-fab-button --> ion-ripple-effect
