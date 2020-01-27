@@ -1,3 +1,11 @@
+## [4.11.10](https://github.com/ionic-team/ionic/compare/v4.11.9...v4.11.10) (2020-01-24)
+
+
+### Bug Fixes
+
+* **input:** revert previous type change ([db1fd1d](https://github.com/ionic-team/ionic/commit/db1fd1d72a8a0ade824ad2309d1adb2953731f37))
+
+
 # [5.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v5.0.0-beta.6...v5.0.0-rc.0) (2020-01-23)
 
 Release Candidate is here! :tada:
