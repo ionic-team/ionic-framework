@@ -722,7 +722,7 @@ export const ToolbarExample: React.FC = () => (
 
 | Name                | Description                                                                                                |
 | ------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `--backdrop-filter` | Any backdrop filter to be applied on the toolbar background. Only applies in iOS mode.                     |
+| `--backdrop-filter` | Backdrop filter of the toolbar. Only applies in iOS mode.                                                  |
 | `--background`      | Background of the toolbar                                                                                  |
 | `--border-color`    | Color of the toolbar border                                                                                |
 | `--border-style`    | Style of the toolbar border                                                                                |
