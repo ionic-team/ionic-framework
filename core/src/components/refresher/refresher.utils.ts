@@ -41,10 +41,10 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
   const circleInnerAnimation = createAnimation()
     .addElement(circle)
     .keyframes([
-      { offset: 0, 'stroke-dasharray': '1px, 200px' },
-      { offset: 0.20, 'stroke-dasharray': '1px, 200px' },
-      { offset: 0.55, 'stroke-dasharray': '100px, 200px' },
-      { offset: 1, 'stroke-dasharray': '100px, 200px' }
+      { offset: 0, strokeDasharray: '1px, 200px' },
+      { offset: 0.20, strokeDasharray: '1px, 200px' },
+      { offset: 0.55, strokeDasharray: '100px, 200px' },
+      { offset: 1, strokeDasharray: '100px, 200px' }
     ]);
 
   const circleOuterAnimation = createAnimation()
