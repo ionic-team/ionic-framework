@@ -345,7 +345,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
         enteringToolBarBg
           .beforeClearStyles([OPACITY])
-          .fromTo(OPACITY, 0.01, 1);
+          .fromTo('transform', (isRTL ? 'translateX(-100%)' : 'translateX(100%)'), 'translateX(0)');
 
         // forward direction, entering page has a back button
         if (!forward) {
@@ -484,7 +484,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           // should just slide out, no fading out
           leavingToolBarBg
             .beforeClearStyles([OPACITY])
-            .fromTo(OPACITY, 1, 0.01);
+            .fromTo('transform', 'translateX(0)', (isRTL ? 'translateX(-100%)' : 'translateX(100%)'));
 
           if (backButtonEl && !backward) {
             const leavingBackBtnText = createAnimation();
