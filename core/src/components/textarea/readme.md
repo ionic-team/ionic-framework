@@ -174,7 +174,7 @@ export const TextAreaExample: React.FC = () => (
   <!-- Textarea that clears the value on edit -->
   <ion-item>
     <ion-label>Comment</ion-label>
-    <ion-textarea clearOnEdit="true"></ion-textarea>
+    <ion-textarea clear-on-edit="true"></ion-textarea>
   </ion-item>
 
   <!-- Textarea with custom number of rows and cols -->
