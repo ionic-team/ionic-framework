@@ -358,6 +358,8 @@ button, a {
   position: absolute;
 
   background: var(--highlight-background);
+
+  z-index: 1;
 }
 
 .item-highlight {

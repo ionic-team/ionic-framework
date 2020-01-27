@@ -129,16 +129,13 @@
 // Material Design Button: Hover
 // --------------------------------------------------
 
-:host(.button-solid.ion-color.ion-activated) .button-native::after,
 :host(.button-solid.ion-color.ion-focused) .button-native::after {
   background: #{current-color(contrast)};
 
   opacity: .24;
 }
 
-:host(.button-clear.ion-color.ion-activated) .button-native::after,
 :host(.button-clear.ion-color.ion-focused) .button-native::after,
-:host(.button-outline.ion-color.ion-activated) .button-native::after,
 :host(.button-outline.ion-color.ion-focused) .button-native::after {
   background: #{current-color(base)};
 
