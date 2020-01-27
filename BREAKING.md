@@ -373,6 +373,8 @@ The `ion-nav-push`, `ion-nav-back`, and `ion-nav-set-root` components have been 
 
 The `ion-radio` must be used inside of an `ion-radio-group` even if there is only one `ion-radio`. Additionally, the `checked` property has been removed. Developers should set the `value` property on the parent `ion-radio-group` to match the value of the desired checked radio button.
 
+`ion-radio` no longer emits an `ionSelect` event. Developers should listen for an `ionChange` event to be emitted on `ion-radio-group` instead.
+
 **Before**
 
 ```html
