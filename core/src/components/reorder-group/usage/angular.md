@@ -83,7 +83,7 @@ export class ReorderGroupExample {
 
   constructor() {}
 
-  doReorder(ev: any) => {
+  doReorder(ev: any) {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
     console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
@@ -92,7 +92,7 @@ export class ReorderGroupExample {
     // where the gesture ended. This method can also be called directly
     // by the reorder group
     ev.detail.complete();
-  });
+  }
 
   toggleReorderGroup() {
     this.reorderGroup.disabled = !this.reorderGroup.disabled;
@@ -118,7 +118,7 @@ export class ReorderGroupExample {
 
   constructor() {}
 
-  doReorder(ev: any) => {
+  doReorder(ev: any) {
     // Before complete is called with the items they will remain in the
     // order before the drag
     console.log('Before complete', this.items);
@@ -130,6 +130,6 @@ export class ReorderGroupExample {
 
     // After complete is called the items will be in the new order
     console.log('After complete', this.items);
-  });
+  }
 }
 ```

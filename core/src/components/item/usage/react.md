@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonItem, IonLabel, IonList, IonText, IonAvatar, IonThumbnail, IonButton, IonIcon, IonSelect, IonSelectOption, IonDatetime, IonToggle, IonInput, IonCheckbox, IonRange } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FC<{}> = () => (
   <>
     {/*-- Default Item --*/}
     <IonItem>
@@ -13,7 +13,7 @@ const Example: React.SFC<{}> = () => (
     </IonItem>
 
     {/*-- Item as a Button --*/}
-    <IonItem onClick={() => {}}>
+    <IonItem button onClick={() => {}}>
       <IonLabel>
         Button Item
       </IonLabel>
@@ -40,7 +40,7 @@ const Example: React.SFC<{}> = () => (
       </IonLabel>
     </IonItem>
 
-    <IonItem onClick={() => {}} detail>
+    <IonItem button onClick={() => {}} detail>
       <IonLabel>
         Button Item with Detail Arrow
       </IonLabel>
@@ -67,14 +67,14 @@ const Example: React.SFC<{}> = () => (
       </IonItem>
 
       <IonItem>
-        <IonLabel text-wrap>
+        <IonLabel class="ion-text-wrap">
         Multiline text that should wrap when it is too long
         to fit on one line in the item.
         </IonLabel>
       </IonItem>
 
       <IonItem>
-        <IonLabel text-wrap>
+        <IonLabel class="ion-text-wrap">
           <IonText color="primary">
             <h3>H3 Primary Title</h3>
           </IonText>
@@ -148,7 +148,7 @@ const Example: React.SFC<{}> = () => (
 
 
 
-    <IonItem onClick={() => {}}>
+    <IonItem button onClick={() => {}}>
       <IonAvatar slot="start">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
       </IonAvatar>
@@ -177,7 +177,7 @@ const Example: React.SFC<{}> = () => (
       <IonButton fill="outline" slot="end">View</IonButton>
     </IonItem>
 
-    <IonItem onClick={() => {}}>
+    <IonItem button onClick={() => {}}>
       <IonThumbnail slot="start">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
       </IonThumbnail>

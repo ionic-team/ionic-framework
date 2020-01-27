@@ -1,10 +1,8 @@
 ```tsx
 import React from 'react';
-
 import { IonContent, IonFab, IonFabButton, IonIcon, IonFabList } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
-
+export const FabExample: React.FC = () => (
   <IonContent>
     {/*-- fab placed to the top end --*/}
     <IonFab vertical="top" horizontal="end" slot="fixed">
@@ -16,21 +14,21 @@ const Example: React.SFC<{}> = () => (
     {/*-- fab placed to the bottom end --*/}
     <IonFab vertical="bottom" horizontal="end" slot="fixed">
       <IonFabButton>
-        <IonIcon name="arrow-dropleft" />
+        <IonIcon name="arrow-forward-circle" />
       </IonFabButton>
     </IonFab>
 
     {/*-- fab placed to the top start --*/}
     <IonFab vertical="top" horizontal="start" slot="fixed">
       <IonFabButton>
-        <IonIcon name="arrow-dropright" />
+        <IonIcon name="arrow-back-circle" />
       </IonFabButton>
     </IonFab>
 
     {/*-- fab placed to the bottom start --*/}
     <IonFab vertical="bottom" horizontal="start" slot="fixed">
       <IonFabButton>
-        <IonIcon name="arrow-dropup" />
+        <IonIcon name="arrow-up-circle" />
       </IonFabButton>
     </IonFab>
 
@@ -85,6 +83,4 @@ const Example: React.SFC<{}> = () => (
     </IonFab>
   </IonContent>
 );
-
-export default Example;
 ```

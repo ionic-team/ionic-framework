@@ -54,23 +54,11 @@
 }
 
 .picker-opts-left {
-  @include ltr() {
-    justify-content: flex-start;
-  }
-
-  @include rtl() {
-    justify-content: flex-end;
-  }
+  justify-content: flex-start;
 }
 
 .picker-opts-right {
-  @include ltr() {
-    justify-content: flex-end;
-  }
-
-  @include rtl() {
-    justify-content: flex-start;
-  }
+  justify-content: flex-end;
 }
 
 .picker-opt {

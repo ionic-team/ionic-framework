@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -25,8 +25,12 @@
         <ion-label>a[ion-item]</ion-label>
       </ion-item>
 
-      <ion-item class="custom activated" href="#" onclick="testClick(event)">
+      <ion-item class="custom ion-activated" href="#" onclick="testClick(event)">
         <ion-label>a[ion-item].activated</ion-label>
+      </ion-item>
+
+      <ion-item class="custom-hover" href="#" onclick="testClick(event)">
+        <ion-label>custom hover</ion-label>
       </ion-item>
 
       <ion-item color="secondary" href="#" onclick="testClick(event)">
@@ -41,21 +45,21 @@
         <ion-label>button[ion-item] type="submit"</ion-label>
       </ion-item>
 
-      <ion-item class="activated" onClick="testClick(event)">
+      <ion-item button class="ion-activated" onClick="testClick(event)">
         <ion-label>button[ion-item].activated</ion-label>
       </ion-item>
 
-      <ion-item color="danger" onclick="testClick(event)">
+      <ion-item button color="danger" onClick="testClick(event)">
         <ion-label>button[ion-item] danger</ion-label>
       </ion-item>
 
-      <ion-item onclick="testClickOutsize(event)">
+      <ion-item button onclick="testClickOutsize(event)">
         <ion-button slot="start" onclick="testClick(event)">Default</ion-button>
         <ion-label>Inner Buttons</ion-label>
         <ion-button fill="outline" slot="end" onclick="testClick(event)">Outline</ion-button>
       </ion-item>
 
-      <ion-item disabled>
+      <ion-item button disabled>
         <ion-button slot="start" onclick="testClick(event)">
           <ion-icon slot="start" name="home"></ion-icon>
           Left Icon
@@ -113,7 +117,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label text-wrap>
+        <ion-label class="ion-text-wrap">
           This is multiline text that has a long description of about how the text is really long and a
           <a href="#" onclick="testClick(event)">link</a>.
         </ion-label>
@@ -148,6 +152,12 @@
   <style>
     .custom {
       --ripple-color: pink;
+    }
+
+    .custom-hover {
+      --background-hover: green;
+      --background-hover-opacity: 1;
+      --color-hover: purple;
     }
   </style>
 

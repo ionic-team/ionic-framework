@@ -26,6 +26,10 @@ test('loading: backdrop standalone', async () => {
   await testLoading(DIRECTORY, '#backdrop-loading');
 });
 
+test('loading: html content basic', async () => {
+  await testLoading(DIRECTORY, '#html-content-loading');
+});
+
 /**
  * RTL Tests
  */
@@ -52,4 +56,8 @@ test('loading:rtl: custom class basic', async () => {
 
 test('loading:rtl: backdrop standalone', async () => {
   await testLoading(DIRECTORY, '#backdrop-loading', true);
+});
+
+test('loading:rtl: html content basic', async () => {
+  await testLoading(DIRECTORY, '#html-content-loading', true);
 });

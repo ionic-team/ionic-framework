@@ -1,7 +1,7 @@
 import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interface';
 import { parsePath } from './path';
 
-export function readRedirects(root: Element): RouteRedirect[] {
+export const readRedirects = (root: Element): RouteRedirect[] => {
   return (Array.from(root.children) as HTMLIonRouteRedirectElement[])
     .filter(el => el.tagName === 'ION-ROUTE-REDIRECT')
     .map(el => {
@@ -11,13 +11,13 @@ export function readRedirects(root: Element): RouteRedirect[] {
         to: to == null ? undefined : parsePath(to),
       };
     });
-}
+};
 
-export function readRoutes(root: Element): RouteChain[] {
+export const readRoutes = (root: Element): RouteChain[] => {
   return flattenRouterTree(readRouteNodes(root));
-}
+};
 
-export function readRouteNodes(root: Element, node = root): RouteTree {
+export const readRouteNodes = (root: Element, node = root): RouteTree => {
   return (Array.from(node.children) as HTMLIonRouteElement[])
     .filter(el => el.tagName === 'ION-ROUTE' && el.component)
     .map(el => {
@@ -32,9 +32,9 @@ export function readRouteNodes(root: Element, node = root): RouteTree {
         children: readRouteNodes(root, el)
       };
     });
-}
+};
 
-export function readProp(el: HTMLElement, prop: string): string | null | undefined {
+export const readProp = (el: HTMLElement, prop: string): string | null | undefined => {
   if (prop in el) {
     return (el as any)[prop];
   }
@@ -42,17 +42,17 @@ export function readProp(el: HTMLElement, prop: string): string | null | undefin
     return el.getAttribute(prop);
   }
   return null;
-}
+};
 
-export function flattenRouterTree(nodes: RouteTree): RouteChain[] {
+export const flattenRouterTree = (nodes: RouteTree): RouteChain[] => {
   const routes: RouteChain[] = [];
   for (const node of nodes) {
     flattenNode([], routes, node);
   }
   return routes;
-}
+};
 
-function flattenNode(chain: RouteChain, routes: RouteChain[], node: RouteNode) {
+const flattenNode = (chain: RouteChain, routes: RouteChain[], node: RouteNode) => {
   const s = chain.slice();
   s.push({
     id: node.id,
@@ -67,4 +67,4 @@ function flattenNode(chain: RouteChain, routes: RouteChain[], node: RouteNode) {
   for (const sub of node.children) {
     flattenNode(s, routes, sub);
   }
-}
+};

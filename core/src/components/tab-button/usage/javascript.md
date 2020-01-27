@@ -8,7 +8,7 @@
     </ion-tab-button>
 
     <ion-tab-button tab="speakers" href="/app/tabs/(speakers:speakers)">
-      <ion-icon name="contacts"></ion-icon>
+      <ion-icon name="person-circle"></ion-icon>
       <ion-label>Speakers</ion-label>
     </ion-tab-button>
 

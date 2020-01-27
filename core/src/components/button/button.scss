@@ -6,12 +6,17 @@
 :host {
   /**
    * @prop --background: Background of the button
-   * @prop --background-activated: Background of the button when activated
-   * @prop --background-focused: Background of the button when focused
+   * @prop --background-activated: Background of the button when pressed. Note: setting this will interfere with the Material Design ripple.
+   * @prop --background-activated-opacity: Opacity of the button when pressed
+   * @prop --background-focused: Background of the button when focused with the tab key
+   * @prop --background-focused-opacity: Opacity of the button when focused with the tab key
+   * @prop --background-hover: Background of the button on hover
+   * @prop --background-hover-opacity: Opacity of the background on hover
    *
    * @prop --color: Text color of the button
-   * @prop --color-activated: Text color of the button when activated
-   * @prop --color-focused: Text color of the button when focused
+   * @prop --color-activated: Text color of the button when pressed
+   * @prop --color-focused: Text color of the button when focused with the tab key
+   * @prop --color-hover: Text color of the button when hover
    *
    * @prop --transition: Transition of the button
    *
@@ -25,16 +30,19 @@
    * @prop --box-shadow: Box shadow of the button
    * @prop --opacity: Opacity of the button
    *
-   * @prop --padding-top: Padding top of the button
-   * @prop --padding-end: Padding end of the button
-   * @prop --padding-bottom: Padding bottom of the button
-   * @prop --padding-start: Padding start of the button
+   * @prop --padding-top: Top padding of the button
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
+   * @prop --padding-bottom: Bottom padding of the button
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    */
   --overflow: hidden;
   --ripple-color: currentColor;
   --border-width: initial;
   --border-color: initial;
   --border-style: initial;
+  --color-activated: var(--color);
+  --color-focused: var(--color);
+  --color-hover: var(--color);
   --box-shadow: none;
 
   display: inline-block;
@@ -60,10 +68,6 @@
 }
 
 :host(.button-disabled) {
-  pointer-events: none;
-}
-
-:host(.button-disabled) .button-native {
   cursor: default;
   opacity: .5;
   pointer-events: none;
@@ -75,21 +79,7 @@
 // Default Solid Color
 :host(.button-solid) {
   --background: #{ion-color(primary, base)};
-  --background-focused: #{ion-color(primary, shade)};
   --color: #{ion-color(primary, contrast)};
-  --color-activated: #{ion-color(primary, contrast)};
-  --color-focused: #{ion-color(primary, contrast)};
-}
-
-// Solid Button with Color
-:host(.button-solid.ion-color) .button-native {
-  background: current-color(base);
-  color: current-color(contrast);
-}
-
-// Focused/Activated Solid Button with Color
-:host(.button-solid.ion-color.ion-focused) .button-native {
-  background: #{current-color(shade)};
 }
 
 
@@ -101,20 +91,6 @@
   --border-color: #{ion-color(primary, base)};
   --background: transparent;
   --color: #{ion-color(primary, base)};
-  --color-focused: #{ion-color(primary, base)};
-}
-
-// Outline Button with Color
-:host(.button-outline.ion-color) .button-native {
-  border-color: current-color(base);
-
-  background: transparent;
-  color: current-color(base);
-}
-
-:host(.button-outline.ion-focused.ion-color) .button-native {
-  background: current-color(base, .1);
-  color: current-color(base);
 }
 
 
@@ -126,23 +102,6 @@
   --border-width: 0;
   --background: transparent;
   --color: #{ion-color(primary, base)};
-}
-
-// Clear Button with Color
-:host(.button-clear.ion-color) .button-native {
-  background: transparent;
-  color: current-color(base);
-}
-
-// Focused Clear Button with Color
-:host(.button-clear.ion-focused.ion-color) .button-native {
-  background: current-color(base, .1);
-  color: current-color(base);
-}
-
-// Activated Clear Button with Color
-:host(.button-clear.activated.ion-color) .button-native {
-  background: transparent;
 }
 
 
@@ -225,6 +184,8 @@
   opacity: var(--opacity);
   overflow: var(--overflow);
 
+  overflow: hidden;
+
   z-index: 0;
   box-sizing: border-box;
   appearance: none;
@@ -234,23 +195,9 @@
   border: 0;
 }
 
-:host(.ion-focused) .button-native {
-  background: var(--background-focused);
-  color: var(--color-focused);
-}
-
-:host(.activated) .button-native {
-  background: var(--background-activated);
-  color: var(--color-activated);
-}
-
-
-// .button > .button-container:hover {
-//   opacity: var(--opacity-hover);
-// }
-
 .button-inner {
   display: flex;
+  position: relative;
 
   flex-flow: row nowrap;
   flex-shrink: 0;
@@ -259,6 +206,8 @@
 
   width: 100%;
   height: 100%;
+
+  z-index: 1;
 }
 
 
@@ -288,4 +237,71 @@
 
 ion-ripple-effect {
   color: var(--ripple-color);
+}
+
+
+// Button: States
+// --------------------------------------------------
+
+.button-native::after {
+  @include button-state();
+}
+
+// Button Activated
+:host(.ion-activated) {
+  color: var(--color-activated);
+}
+
+:host(.ion-activated) .button-native::after {
+  background: var(--background-activated);
+
+  opacity: var(--background-activated-opacity);
+}
+
+// Button Focused
+:host(.ion-focused) {
+  color: var(--color-focused);
+}
+
+:host(.ion-focused) .button-native::after {
+  background: var(--background-focused);
+
+  opacity: var(--background-focused-opacity);
+}
+
+// Button Hover
+@media (any-hover: hover) {
+  :host(:hover) {
+    color: var(--color-hover);
+  }
+
+  :host(:hover) .button-native::after {
+    background: var(--background-hover);
+
+    opacity: var(--background-hover-opacity);
+  }
+}
+
+
+// Button Colors
+// --------------------------------------------------
+
+// Solid Button with Color
+:host(.button-solid.ion-color) .button-native {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+// Outline Button with Color
+:host(.button-outline.ion-color) .button-native {
+  border-color: current-color(base);
+
+  background: transparent;
+  color: current-color(base);
+}
+
+// Clear Button with Color
+:host(.button-clear.ion-color) .button-native {
+  background: transparent;
+  color: current-color(base);
 }

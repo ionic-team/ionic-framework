@@ -1,35 +1,32 @@
 ```tsx
 import React from 'react';
+import { IonSpinner, IonContent } from '@ionic/react';
 
-import { IonSpinner } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const SpinnerExample: React.FC = () => (
+  <IonContent>
     {/*-- Default Spinner --*/}
-    <IonSpinner></IonSpinner>
+    <IonSpinner />
 
     {/*-- Lines --*/}
-    <IonSpinner name="lines"></IonSpinner>
+    <IonSpinner name="lines" />
 
     {/*-- Lines Small --*/}
-    <IonSpinner name="lines-small"></IonSpinner>
+    <IonSpinner name="lines-small" />
 
     {/*-- Dots --*/}
-    <IonSpinner name="dots"></IonSpinner>
+    <IonSpinner name="dots" />
 
     {/*-- Bubbles --*/}
-    <IonSpinner name="bubbles"></IonSpinner>
+    <IonSpinner name="bubbles" />
 
     {/*-- Circles --*/}
-    <IonSpinner name="circles"></IonSpinner>
+    <IonSpinner name="circles" />
 
     {/*-- Crescent --*/}
-    <IonSpinner name="crescent"></IonSpinner>
+    <IonSpinner name="crescent" />
 
     {/*-- Paused Default Spinner --*/}
-    <IonSpinner paused></IonSpinner>
-  </>
+    <IonSpinner paused />
+  </IonContent>
 );
-
-export default Example;
 ```

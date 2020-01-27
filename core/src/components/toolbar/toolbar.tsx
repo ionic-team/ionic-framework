@@ -1,9 +1,12 @@
-import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, h } from '@stencil/core';
 
-import { Color, Config, CssClassMap, Mode, StyleEventDetail } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, CssClassMap, StyleEventDetail } from '../../interface';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the toolbar text in LTR, and to the right in RTL.
  * @slot secondary - Content is placed to the left of the toolbar text in `ios` mode, and directly to the right in `md` mode.
@@ -21,9 +24,7 @@ import { createColorClasses } from '../../utils/theme';
 export class Toolbar implements ComponentInterface {
   private childrenStyles = new Map<string, CssClassMap>();
 
-  @Element() el!: HTMLStencilElement;
-
-  @Prop({ context: 'config' }) config!: Config;
+  @Element() el!: HTMLIonToolbarElement;
 
   /**
    * The color to use from your application's color palette.
@@ -32,10 +33,25 @@ export class Toolbar implements ComponentInterface {
    */
   @Prop() color?: Color;
 
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
+  componentWillLoad() {
+    const buttons = Array.from(this.el.querySelectorAll('ion-buttons'));
+
+    const firstButtons = buttons.find(button => {
+      return button.slot === 'start';
+    });
+    if (firstButtons) {
+      firstButtons.classList.add('buttons-first-slot');
+    }
+
+    const buttonsReversed = buttons.reverse();
+    const lastButtons =
+      buttonsReversed.find(button => button.slot === 'end') ||
+      buttonsReversed.find(button => button.slot === 'primary') ||
+      buttonsReversed.find(button => button.slot === 'secondary');
+    if (lastButtons) {
+      lastButtons.classList.add('buttons-last-slot');
+    }
+  }
 
   @Listen('ionStyle')
   childrenStyle(ev: CustomEvent<StyleEventDetail>) {
@@ -64,34 +80,32 @@ export class Toolbar implements ComponentInterface {
     }
   }
 
-  hostData() {
+  render() {
+    const mode = getIonMode(this);
     const childStyles = {};
     this.childrenStyles.forEach(value => {
       Object.assign(childStyles, value);
     });
-
-    return {
-      class: {
-        [`${this.mode}`]: true,
-
-        ...childStyles,
-        ...createColorClasses(this.color),
-      }
-    };
-  }
-
-  render() {
-    return [
-      <div class="toolbar-background"></div>,
-      <div class="toolbar-container">
-        <slot name="start"></slot>
-        <slot name="secondary"></slot>
-        <div class="toolbar-content">
-          <slot></slot>
+    return (
+      <Host
+        class={{
+          'in-toolbar': hostContext('ion-toolbar', this.el),
+          [mode]: true,
+          ...childStyles,
+          ...createColorClasses(this.color),
+        }}
+      >
+        <div class="toolbar-background"></div>
+        <div class="toolbar-container">
+          <slot name="start"></slot>
+          <slot name="secondary"></slot>
+          <div class="toolbar-content">
+            <slot></slot>
+          </div>
+          <slot name="primary"></slot>
+          <slot name="end"></slot>
         </div>
-        <slot name="primary"></slot>
-        <slot name="end"></slot>
-      </div>
-    ];
+      </Host>
+    );
   }
 }

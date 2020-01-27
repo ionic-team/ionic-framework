@@ -10,7 +10,7 @@ Thumbnails can be used by themselves or inside of any element. If placed inside 
 
 ## Usage
 
-### Javascript
+### Angular / javascript
 
 ```html
 <ion-thumbnail>
@@ -30,11 +30,10 @@ Thumbnails can be used by themselves or inside of any element. If placed inside 
 
 ```tsx
 import React from 'react';
+import { IonThumbnail, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonThumbnail, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const ThumbnailExample: React.FC = () => (
+  <IonContent>
     <IonThumbnail>
       <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
     </IonThumbnail>
@@ -45,10 +44,26 @@ const Example: React.SFC<{}> = () => (
       </IonThumbnail>
       <IonLabel>Item Thumbnail</IonLabel>
     </IonItem>
-  </>
+  </IonContent>
 );
+```
 
-export default Example;
+
+### Vue
+
+```html
+<template>
+  <ion-thumbnail>
+    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+  </ion-thumbnail>
+
+  <ion-item>
+    <ion-thumbnail slot="start">
+      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+    </ion-thumbnail>
+    <ion-label>Item Thumbnail</ion-label>
+  </ion-item>
+</template>
 ```
 
 

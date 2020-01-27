@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -55,22 +55,36 @@
 
             <ion-buttons slot="start">
               <ion-menu-button></ion-menu-button>
+              <ion-menu-button auto-hide="false"></ion-menu-button>
             </ion-buttons>
 
             <ion-title>Navigation</ion-title>
           </ion-toolbar>
         </ion-header>
 
-        <ion-content padding>
+        <ion-content class="ion-padding">
           <h1>Page 1</h1>
-          <ion-button onclick="push()">Push</ion-button>
           <ion-button onclick="menu()">Disable/enable menu</ion-button>
           <f></f>
           <f></f>
           <f></f>
           <f></f>
+          
+          <ion-item>
+            <ion-label>Toggle Side Min Width</ion-label>
+            <ion-toggle id="side-min-width"></ion-toggle>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label>Toggle Side Max Width</ion-label>
+            <ion-toggle id="side-max-width"></ion-toggle>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label>Toggle Side Fixed Width</ion-label>
+            <ion-toggle id="side-width"></ion-toggle>
+          </ion-item>
         </ion-content>
-
       </div>
     </ion-split-pane>
 
@@ -78,12 +92,19 @@
   <ion-menu-controller></ion-menu-controller>
 
   <script>
+    const sideMinWidth = document.querySelector('ion-toggle#side-min-width');
+    const sideMaxWidth = document.querySelector('ion-toggle#side-max-width');
+    const sideWidth = document.querySelector('ion-toggle#side-width');
+
+    const splitPane = document.querySelector('ion-split-pane');
+    
+    sideMinWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-min-width'));    
+    sideMaxWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-max-width'));    
+    sideWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-width')); 
+
     const menuCtrl = document.querySelector('ion-menu-controller');
     function openStart() {
       menuCtrl.open('start');
-    }
-
-    function push() {
     }
 
     async function menu() {
@@ -92,6 +113,20 @@
   </script>
 
   <style>
+    .side-width {
+      --side-width: 150px;
+      --side-min-width: 150px;
+    }
+    
+    .side-min-width {
+      --side-min-width: 500px;
+    }
+    
+    .side-max-width {
+      --side-max-width: 75px;
+      --side-min-width: 0px;
+    }
+    
     f {
       display: block;
       height: 150px;

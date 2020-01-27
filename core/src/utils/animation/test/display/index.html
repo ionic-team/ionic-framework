@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Animation - Display</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <script type="module">
+    const forceCSSAnimations = new URLSearchParams(window.location.search).get('ionic:_forceCSSAnimations');
+    if (forceCSSAnimations) {
+      Element.prototype.animate = null;
+    }
+    
+    import { createAnimation } from '../../../../dist/ionic/index.esm.js';
+    
+    const squareA = document.querySelector('.square-a');
+    const squareBText = document.querySelectorAll('.square-b .text');
+    
+    const rootAnimation = createAnimation();
+    const animationA = createAnimation();
+    const animationB = createAnimation();
+    
+    squareA.addEventListener('ionAnimationFinished', (e) => {
+      console.log(e.detail);
+    })
+    
+    animationA
+      .addElement(squareA)
+      .duration(250)
+      .delay(500)
+      .iterations(1)
+      .keyframes([
+        { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 0 },
+        { transform: 'scale(1.5) rotate(45deg)', opacity: 0.5, offset: 0.5 },
+        { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 1 }
+      ])
+      .onFinish(() => {
+        const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationAFinished' });
+        squareA.dispatchEvent(ev);
+      });
+      
+    animationB
+      .addElement(squareBText)
+      .duration(250)
+      .delay(250)
+      .iterations(1)
+      .keyframes([
+        { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 0 },
+        { transform: 'scale(0.5) rotate(-45deg)', opacity: 0.5, offset: 0.5 },
+        { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 1 }
+      ])
+      .onFinish(() => {
+        const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationBFinished' });
+        squareA.dispatchEvent(ev);
+      });
+      
+    rootAnimation
+      .addAnimation([animationA, animationB])
+      .onFinish(() => {
+        const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationRootFinished' });
+        squareA.dispatchEvent(ev);
+      });
+        
+    document.querySelector('.play').addEventListener('click', () => {
+      rootAnimation.play();
+    });
+    
+    document.querySelector('.pause').addEventListener('click', () => {
+      rootAnimation.pause();
+    });
+    
+    document.querySelector('.destroy').addEventListener('click', () => {
+      rootAnimation.destroy();
+    });
+    
+    document.querySelector('.stop').addEventListener('click', () => {
+      rootAnimation.stop();
+    });
+  </script>
+  
+  <style>
+    .square {
+      width: 100px;
+      height: 100px;
+      background: rgba(0, 0, 255, 0.5);
+      text-align: center;
+      line-height: 100px;
+      margin-left: 25px;
+      margin-top: 25px;
+      margin-bottom: 25px;
+      position: relative;
+      display: none;
+    }
+  </style>
+  </head>
+
+<body
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Animations</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+      <div class="ion-padding">
+        <ion-button class="play">Play</ion-button>
+        <ion-button class="pause">Pause</ion-button>
+        <ion-button class="stop">Stop</ion-button>
+        <ion-button class="destroy">Destroy</ion-button>
+        
+        <div class="square square-a">
+          <div class="text">Hello</div>
+        </div>
+        
+        <div class="square square-b">
+          <div class="text">Hello</div>
+        </div>
+      </div>
+    </ion-content>
+  </ion-app>
+</body>
+
+</html>
+

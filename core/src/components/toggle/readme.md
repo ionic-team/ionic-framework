@@ -91,48 +91,45 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 
 ```tsx
 import React from 'react';
+import { IonToggle, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonToggle, IonList, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const ToggleExample: React.FC = () => (
+  <IonContent>
     {/*-- Default Toggle --*/}
-    <IonToggle></IonToggle>
+    <IonToggle />
 
     {/*-- Disabled Toggle --*/}
-    <IonToggle disabled></IonToggle>
+    <IonToggle disabled />
 
     {/*-- Checked Toggle --*/}
-    <IonToggle checked></IonToggle>
+    <IonToggle checked />
 
     {/*-- Toggle Colors --*/}
-    <IonToggle color="primary"></IonToggle>
-    <IonToggle color="secondary"></IonToggle>
-    <IonToggle color="danger"></IonToggle>
-    <IonToggle color="light"></IonToggle>
-    <IonToggle color="dark"></IonToggle>
+    <IonToggle color="primary" />
+    <IonToggle color="secondary" />
+    <IonToggle color="danger" />
+    <IonToggle color="light" />
+    <IonToggle color="dark" />
 
     {/*-- Toggles in a List --*/}
     <IonList>
       <IonItem>
         <IonLabel>Pepperoni</IonLabel>
-        <IonToggle value="pepperoni" onChange={() => {}}></IonToggle>
+        <IonToggle value="pepperoni" onIonChange={() => {}} />
       </IonItem>
 
       <IonItem>
         <IonLabel>Sausage</IonLabel>
-        <IonToggle value="sausage" onChange={() => {}} disabled={true}></IonToggle>
+        <IonToggle value="sausage" onIonChange={() => {}} disabled={true} />
       </IonItem>
 
       <IonItem>
         <IonLabel>Mushrooms</IonLabel>
-        <IonToggle value="mushrooms" onChange={() => {}}></IonToggle>
+        <IonToggle value="mushrooms" onIonChange={() => {}} />
       </IonItem>
     </IonList>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -160,17 +157,30 @@ export default Example;
   <ion-list>
     <ion-item>
       <ion-label>Pepperoni</ion-label>
-      <ion-toggle @ionChange="toppings.push($event.target.value)" value="pepperoni" v-bind:checked="toppings.indexOf('pepperoni') !== -1"></ion-toggle>
+      <ion-toggle
+        @ionChange="toppings.push($event.target.value)"
+        value="pepperoni"
+        :checked="toppings.indexOf('pepperoni') !== -1">
+      </ion-toggle>
     </ion-item>
 
     <ion-item>
       <ion-label>Sausage</ion-label>
-      <ion-toggle @ionChange="toppings.push($event.target.value)" value="sausage" v-bind:checked="toppings.indexOf('pepperoni') !== -1" disabled="true"></ion-toggle>
+      <ion-toggle
+        @ionChange="toppings.push($event.target.value)"
+        value="sausage"
+        :checked="toppings.indexOf('pepperoni') !== -1"
+        disabled="true">
+      </ion-toggle>
     </ion-item>
 
     <ion-item>
       <ion-label>Mushrooms</ion-label>
-      <ion-toggle @ionChange="toppings.push($event.target.value)" value="mushrooms" v-bind:checked="toppings.indexOf('pepperoni') !== -1"></ion-toggle>
+      <ion-toggle
+        @ionChange="toppings.push($event.target.value)"
+        value="mushrooms"
+        :checked="toppings.indexOf('pepperoni') !== -1">
+      </ion-toggle>
     </ion-item>
   </ion-list>
 </template>
@@ -205,8 +215,10 @@ export default Example;
 | ----------------------------- | -------------------------------------------- |
 | `--background`                | Background of the toggle                     |
 | `--background-checked`        | Background of the toggle when checked        |
+| `--border-radius`             | Border radius of the toggle track            |
 | `--handle-background`         | Background of the toggle handle              |
 | `--handle-background-checked` | Background of the toggle handle when checked |
+| `--handle-border-radius`      | Border radius of the toggle handle           |
 
 
 ----------------------------------------------

@@ -1,6 +1,6 @@
-import { Component, ComponentInterface } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-buttons',
@@ -11,13 +11,31 @@ import { Mode } from '../../interface';
   scoped: true,
 })
 export class Buttons implements ComponentInterface {
-  mode!: Mode;
 
-  hostData() {
-    return {
-      class: {
-        [`${this.mode}`]: true
-      }
-    };
+  /**
+   * If true, buttons will disappear when its
+   * parent toolbar has fully collapsed if the toolbar
+   * is not the first toolbar. If the toolbar is the
+   * first toolbar, the buttons will be hidden and will
+   * only be shown once all toolbars have fully collapsed.
+   *
+   * Only applies in `ios` mode with `collapse` set to
+   * `true` on `ion-header`.
+   *
+   * Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
+   */
+  @Prop() collapse = false;
+
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+          ['buttons-collapse']: this.collapse
+        }}
+      >
+      </Host>
+    );
   }
 }

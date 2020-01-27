@@ -1,6 +1,6 @@
 # ion-item-group
 
-Item groups are containers that organize similar items together. They can contain item dividers to divide the items into multiple sections.
+Item groups are containers that organize similar items together. They can contain item dividers to divide the items into multiple sections. They can also be used to group sliding items.
 
 
 
@@ -124,7 +124,7 @@ import React from 'react';
 
 import { IonItemGroup, IonItemDivider, IonLabel, IonItem, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
+const Example: React.FC<{}> = () => (
   <>
     <IonItemGroup>
       <IonItemDivider>

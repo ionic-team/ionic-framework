@@ -8,60 +8,21 @@
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
+  <ion-fab-button href="https://ionicframework.com">
+    <ion-icon name="logo-ionitron"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-button href="https://ionicframework.com" target="_blank">
+    <ion-icon name="logo-ionitron"></ion-icon>
+  </ion-fab-button>
 
-  <ion-fab vertical="bottom" horizontal="end" id="fab2" slot="fixed">
-    <ion-fab-button onclick="clickMainFAB('fab2')" color="dark" class="e2eFabBottomRight"><ion-icon name="arrow-dropleft"></ion-icon></ion-fab-button>
-    <ion-fab-list side="start">
-      <ion-fab-button onclick="openSocial('facebook', 'fab2')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('twitter', 'fab2')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('vimeo', 'fab2')"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('instagram', 'fab2')"><ion-icon name="logo-instagram"></ion-icon></ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
+  <ion-button href="https://ionicframework.com" target="_blank">
+    <ion-icon name="logo-ionitron"></ion-icon>
+  </ion-button>
 
-  <ion-fab vertical="top" horizontal="start" id="fab3" slot="fixed">
-    <ion-fab-button onclick="clickMainFAB('fab3')" color="secondary" class="activated e2eFabTopLeft"><ion-icon name="arrow-dropright"></ion-icon></ion-fab-button>
-    <ion-fab-list side="end">
-      <ion-fab-button onclick="openSocial('facebook', 'fab3')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('twitter', 'fab3')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('vimeo', 'fab3')"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('instagram', 'fab3')"><ion-icon name="logo-instagram"></ion-icon></ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-
-  <ion-fab vertical="bottom" horizontal="start" id="fab4" slot="fixed">
-    <ion-fab-button onclick="clickMainFAB('fab4')" color="light" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button onclick="openSocial('facebook', 'fab4')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('twitter', 'fab4')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('vimeo', 'fab4')"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openSocial('instagram', 'fab4')"><ion-icon name="logo-instagram"></ion-icon></ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-
-  <ion-fab vertical="center" horizontal="center" id="fab5" slot="fixed">
-    <ion-fab-button onclick="clickMainFAB('fab5')" class="e2eFabCenter"><ion-icon name="md-share"></ion-icon></ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button onclick="openSocial('vimeo', 'fab5')" color="primary"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
-    </ion-fab-list>
-    <ion-fab-list side="bottom">
-      <ion-fab-button onclick="openSocial('facebook', 'fab5')" color="secondary"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
-    </ion-fab-list>
-    <ion-fab-list side="start">
-      <ion-fab-button onclick="openSocial('instagram', 'fab5')" color="light"><ion-icon name="logo-instagram"></ion-icon></ion-fab-button>
-    </ion-fab-list>
-    <ion-fab-list side="end">
-      <ion-fab-button onclick="openSocial('twitter', 'fab5')" color="dark"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-
-  <ion-fab horizontal="end" vertical="center" slot="fixed">
-    <ion-fab-button color="danger" onclick="add()"><ion-icon name="add"></ion-icon></ion-fab-button>
-  </ion-fab>
 
   <script>
     function insertAfter(el, referenceNode) {

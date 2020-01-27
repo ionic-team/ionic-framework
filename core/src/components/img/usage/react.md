@@ -1,26 +1,25 @@
 ```tsx
 import React from 'react';
-
-import { IonList, IonItem, IonThumbnail, IonImg, IonLabel } from '@ionic/react';
+import { IonList, IonItem, IonThumbnail, IonImg, IonLabel, IonContent } from '@ionic/react';
 
 type Item = {
   src: string;
-  text: string
+  text: string;
 };
-const items: Item[] = [];
+const items: Item[] = [{ src: 'http://placekitten.com/g/200/300', text: 'a picture of a cat' }];
 
-const Example: React.SFC<{}> = () => (
-
-  <IonList>
-    {items.map(({src, text}) =>
-      <IonItem>
-        <IonThumbnail slot="start">
-          <IonImg src={src}></IonImg>
-        </IonThumbnail>
-        <IonLabel>{text}}</IonLabel>
-      </IonItem>
-    )}
-  </IonList>
+export const ImgExample: React.FC = () => (
+  <IonContent>
+    <IonList>
+      {items.map((image, i) => (
+        <IonItem key={i}>
+          <IonThumbnail slot="start">
+            <IonImg src={image.src} />
+          </IonThumbnail>
+          <IonLabel>{image.text}</IonLabel>
+        </IonItem>
+      ))}
+    </IonList>
+  </IonContent>
 );
-
-export default Example
+```

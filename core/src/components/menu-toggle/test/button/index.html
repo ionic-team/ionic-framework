@@ -8,12 +8,12 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
-    <ion-menu side="start" class="e2eLeftMenu">
+    <ion-menu side="start" class="e2eLeftMenu" content-id="main">
 
       <ion-header>
         <ion-toolbar color="secondary">
@@ -46,7 +46,7 @@
 
     </ion-menu>
 
-    <div class="ion-page" main>
+    <div class="ion-page" id="main">
 
       <ion-header>
         <ion-toolbar>
@@ -54,7 +54,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content padding>
+      <ion-content class="ion-padding">
         <ion-menu-toggle>
           <ion-button>Toggle Menu</ion-button>
         </ion-menu-toggle>
@@ -63,7 +63,6 @@
     </div>
 
   </ion-app>
-  <ion-menu-controller></ion-menu-controller>
 </body>
 
 </html>

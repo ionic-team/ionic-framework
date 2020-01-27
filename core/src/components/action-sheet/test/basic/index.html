@@ -8,21 +8,22 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module">
+    import { actionSheetController } from '../../../../dist/ionic/index.esm.js';
+    window.actionSheetController = actionSheetController;
+  </script>
 
 <body>
   <ion-app>
-    <ion-action-sheet-controller></ion-action-sheet-controller>
-    <ion-alert-controller></ion-alert-controller>
-
     <ion-header>
       <ion-toolbar>
         <ion-title>Action Sheet - Basic</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content class="ion-padding">
       <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
       <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
       <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
@@ -31,6 +32,7 @@
       <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
       <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
       <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
+      <ion-button expand="block" id="customBackdrop" onclick="presentWithCssClass('custom-backdrop')">Custom Backdrop Opacity</ion-button>
     </ion-content>
 
   </ion-app>
@@ -38,10 +40,10 @@
   <style>
     .my-color-class {
       --background: #292929;
-      --background-selected: #222222;
+      --button-background-selected: #222222;
 
       --color: #dfdfdf;
-      ;
+      --button-color: #dfdfdf;
     }
 
     .my-custom-class {
@@ -52,16 +54,21 @@
       --height: 325px;
     }
 
+    .custom-backdrop {
+      --ion-backdrop-opacity: 1;
+    }
+
   </style>
   <script>
     window.addEventListener('ionActionSheetDidDismiss', function (e) { console.log('didDismiss', e) })
+    async function openActionSheet(opts) {
+      const actionSheet = await actionSheetController.create(opts);
+      await actionSheet.present();
+    }
 
     async function presentBasic() {
       const mode = Ionic.mode;
-
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         header: "Albums",
         buttons: [{
           text: 'Delete',
@@ -73,13 +80,13 @@
         }, {
           text: 'Share',
           icon: 'share',
-          cssClass: 'activated',
+          cssClass: 'ion-activated',
           handler: () => {
             console.log('Share clicked');
           }
         }, {
           text: 'Play (open modal)',
-          icon: 'arrow-dropright-circle',
+          icon: 'chevron-forward-circle',
           handler: () => {
             console.log('Play clicked');
           }
@@ -98,30 +105,26 @@
           }
         }]
       });
-      await actionSheetElement.present();
     }
 
     async function presentAlert() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         buttons: [{
           text: 'Open Alert',
           handler: async () => {
-            const alertController = document.querySelector('ion-alert-controller');
-            await alertController.componentOnReady();
-            const alert = await alertController.create({
+            const alert = Object.assign(document.createElement('ion-alert'), {
               header: 'Alert from Action Sheet',
               subHeader: 'Subtitle',
               message: 'This is an alert message.',
               buttons: [{
                 text: 'Okay',
                 handler: async () => {
-                  await actionSheetElement.dismiss();
+                  await actionSheetController.dismiss();
                   return false;
                 }
               }]
             });
+            document.body.appendChild(alert);
             await alert.present();
             return false;
           }
@@ -133,13 +136,10 @@
           }
         }]
       });
-      await actionSheetElement.present();
     }
 
     async function presentCancelOnly() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         buttons: [
           {
             text: 'Cancel',
@@ -150,20 +150,17 @@
           }
         ]
       });
-      await actionSheetElement.present();
     }
 
-    async function presentWithCssClass() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
-      const actionSheetElement = await actionSheetController.create({
+    async function presentWithCssClass(classList) {
+      await openActionSheet({
         header: "Custom Css Class",
-        cssClass: "my-color-class my-custom-class",
+        cssClass: classList ? classList : "my-color-class my-custom-class",
         buttons: [
           {
             text: 'Add to Favorites',
             icon: 'star',
-            cssClass: 'my-custom-button customClass activated',
+            cssClass: 'my-custom-button customClass ion-activated',
             handler: () => {
               console.log('Add to Favorites clicked');
             }
@@ -199,15 +196,10 @@
           }
         ]
       });
-      await actionSheetElement.present();
     }
 
     async function presentIcons() {
-      const mode = Ionic.mode;
-
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         header: "Albums",
         buttons: [{
           text: 'Delete',
@@ -224,7 +216,7 @@
           }
         }, {
           text: 'Play (open modal)',
-          icon: 'arrow-dropright-circle',
+          icon: 'chevron-forward-circle',
           handler: () => {
             console.log('Play clicked');
           }
@@ -243,14 +235,11 @@
             console.log('Cancel clicked');
           }
         }]
-      })
-      await actionSheetElement.present();
+      });
     }
 
     async function presentNoBackdropDismiss() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         backdropDismiss: false,
         buttons: [{
           text: 'Archive',
@@ -271,13 +260,10 @@
           }
         }]
       });
-      await actionSheetElement.present();
     }
 
     async function presentScroll() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         buttons: [
           {
             text: 'Add Reaction',
@@ -286,7 +272,7 @@
             }
           }, {
             text: 'Copy Text',
-            cssClass: 'activated',
+            cssClass: 'ion-activated',
             handler: () => {
               console.log('Copy Text clicked');
             }
@@ -365,13 +351,10 @@
           }
         ]
       });
-      await actionSheetElement.present();
     }
 
     async function presentScrollNoCancel() {
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
-      const actionSheetElement = await actionSheetController.create({
+      await openActionSheet({
         buttons: [
           {
             text: 'Add Reaction',
@@ -437,7 +420,6 @@
           }
         ]
       });
-      await actionSheetElement.present();
     }
   </script>
 </body>

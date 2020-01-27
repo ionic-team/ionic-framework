@@ -1,16 +1,14 @@
 ```tsx
 import React from 'react';
+import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonNote } from '@ionic/react';
 
-import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-
+export const ItemSlidingExample: React.FC = () => (
 <IonList>
   {/* Sliding item with text options on both sides */}
   <IonItemSliding>
     <IonItemOptions side="start">
-      <IonItemOption onClick={favorite(item)}>Favorite</IonItemOption>
-      <IonItemOption color="danger" onClick={share(item)}>Share</IonItemOption>
+      <IonItemOption onClick={() => console.log('favorite clicked')}>Favorite</IonItemOption>
+      <IonItemOption color="danger" onClick={() => console.log('share clicked')}>Share</IonItemOption>
     </IonItemOptions>
 
     <IonItem>
@@ -18,7 +16,7 @@ const Example: React.SFC<{}> = () => (
     </IonItem>
 
     <IonItemOptions side="end">
-      <IonItemOption onClick={unread(item)}>Unread</IonItemOption>
+      <IonItemOption onClick={() => console.log('unread clicked')}>Unread</IonItemOption>
     </IonItemOptions>
   </IonItemSliding>
 
@@ -79,7 +77,7 @@ const Example: React.SFC<{}> = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="start" name="more"></IonIcon>
+        <IonIcon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -98,7 +96,7 @@ const Example: React.SFC<{}> = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="end" name="more"></IonIcon>
+        <IonIcon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -117,7 +115,7 @@ const Example: React.SFC<{}> = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="top" name="more"></IonIcon>
+        <IonIcon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -136,7 +134,7 @@ const Example: React.SFC<{}> = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="bottom" name="more"></IonIcon>
+        <IonIcon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -146,8 +144,5 @@ const Example: React.SFC<{}> = () => (
     </IonItemOptions>
   </IonItemSliding>
 </IonList>
-
 );
-
-export default Example;
 ```

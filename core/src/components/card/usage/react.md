@@ -1,10 +1,9 @@
 ```tsx
 import React from 'react';
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonIcon, IonItem, IonLabel } from '@ionic/react';
 
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const CardExample: React.FC = () => (
+  <IonContent>
     <IonCard>
       <IonCardHeader>
         <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
@@ -31,9 +30,9 @@ const Example: React.SFC<{}> = () => (
     </IonCard>
 
     <IonCard>
-      <IonItem href="#" class="activated">
+      <IonItem href="#" class="ion-activated">
         <IonIcon name="wifi" slot="start" />
-        <IonLabel>Card Link Item 1 .activated</IonLabel>
+        <IonLabel>Card Link Item 1 activated</IonLabel>
       </IonItem>
 
       <IonItem href="#">
@@ -41,9 +40,9 @@ const Example: React.SFC<{}> = () => (
         <IonLabel>Card Link Item 2</IonLabel>
       </IonItem>
 
-      <IonItem class="activated">
+      <IonItem class="ion-activated">
         <IonIcon name="warning" slot="start" />
-        <IonLabel>Card Button Item 1 .activated</IonLabel>
+        <IonLabel>Card Button Item 1 activated</IonLabel>
       </IonItem>
 
       <IonItem>
@@ -51,8 +50,6 @@ const Example: React.SFC<{}> = () => (
         <IonLabel>Card Button Item 2</IonLabel>
       </IonItem>
     </IonCard>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```

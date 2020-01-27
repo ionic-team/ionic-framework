@@ -8,9 +8,12 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
-
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module">
+    import { pickerController } from '../../../../dist/ionic/index.esm.js';
+    window.pickerController = pickerController;
+  </script>
 <body>
   <ion-app>
 
@@ -20,13 +23,12 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content class="ion-padding">
       <ion-button id="basic" expand="block" onclick="presentPicker()">Show Picker</ion-button>
       <ion-button id="custom" expand="block" onclick="presentPicker('my-custom-class')">Show Custom Picker</ion-button>
     </ion-content>
 
   </ion-app>
-  <ion-picker-controller></ion-picker-controller>
 
   <style>
     .my-custom-class {
@@ -45,10 +47,12 @@
 
   <script>
     async function presentPicker(customClass) {
-      const pickerController = document.querySelector('ion-picker-controller');
-      await pickerController.componentOnReady();
       const pickerElement = await pickerController.create({
         buttons: [{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => console.log('Clicked Cancel!')
+        }, {
           text: 'Save',
           handler: () => console.log('Clicked Save!')
         }, {
@@ -113,7 +117,12 @@
         }],
         cssClass: customClass
       });
-      return await pickerElement.present();
+
+      await pickerElement.present();
+
+      const { data, role } = await pickerElement.onDidDismiss();
+
+      console.log('Picker dismissed!', data, role);
     }
   </script>
 </body>

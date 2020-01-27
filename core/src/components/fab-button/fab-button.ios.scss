@@ -7,7 +7,11 @@
 :host {
   --background: #{$fab-ios-background-color};
   --background-activated: #{$fab-ios-background-color-activated};
-  --background-focused: var(--background-activated);
+  --background-focused: #{ion-color(primary, shade)};
+  --background-hover: #{ion-color(primary, tint)};
+  --background-activated-opacity: 1;
+  --background-focused-opacity: 1;
+  --background-hover-opacity: 1;
   --color: #{$fab-ios-text-color};
   --color-activated: #{$fab-ios-text-color};
   --color-focused: var(--color-activated);
@@ -15,7 +19,7 @@
   --transition: #{$fab-ios-transition};
 }
 
-:host(.activated) {
+:host(.ion-activated) {
   --box-shadow: #{$fab-ios-box-shadow-activated};
   --transform: #{$fab-ios-transform};
   --transition: #{$fab-ios-transition-activated};
@@ -33,6 +37,7 @@
   --background: #{$fab-ios-list-button-background-color};
   --background-activated: #{$fab-ios-list-button-background-color-activated};
   --background-focused: var(--background-activated);
+  --background-hover: #{$fab-ios-list-button-background-color-hover};
   --color: #{$fab-ios-list-button-text-color};
   --color-activated: #{$fab-ios-list-button-text-color};
   --color-focused: var(--color-activated);
@@ -45,26 +50,68 @@
 }
 
 
+// FAB Button: Color
+// --------------------------------------------------
+
+:host(.ion-color.ion-focused) .button-native::after {
+  background: #{current-color(shade)};
+}
+
+// Focused/Activated Button with Color
+:host(.ion-color.ion-focused) .button-native,
+:host(.ion-color.ion-activated) .button-native {
+  color: #{current-color(contrast)};
+
+  &::after {
+    background: #{current-color(shade)};
+  }
+}
+
+@media (any-hover: hover) {
+  :host(.ion-color:hover) .button-native {
+    color: #{current-color(contrast)};
+
+    &::after {
+      background: #{current-color(tint)};
+    }
+  }
+}
+
+
 // Translucent FAB buttons
 // --------------------------------------------------
 
-:host(.fab-button-translucent) {
-  --background: #{$fab-ios-translucent-background-color};
-  --backdrop-filter: #{$fab-ios-translucent-filter};
-}
+@supports (backdrop-filter: blur(0)) {
+  :host(.fab-button-translucent) {
+    --background: #{ion-color(primary, base, $fab-ios-translucent-background-alpha)};
+    --background-hover: #{ion-color(primary, base, $fab-ios-translucent-background-alpha-hover)};
+    --background-focused: #{ion-color(primary, base, $fab-ios-translucent-background-alpha-focused)};
+    --backdrop-filter: #{$fab-ios-translucent-filter};
+  }
 
-:host(.fab-button-translucent-in-list) {
-  --background: #{$fab-ios-list-button-translucent-background-color};
+  :host(.fab-button-translucent-in-list) {
+    --background: #{ion-color(light, base, $fab-ios-translucent-background-alpha)};
+    --background-hover: #{ion-color(light, base, $fab-ios-translucent-background-alpha-hover)};
+    --background-focused: #{ion-color(light, base, $fab-ios-translucent-background-alpha-focused)};
+  }
 }
 
 // Translucent FAB buttons with color
 // --------------------------------------------------
 
-:host(.ion-color.fab-button-translucent) .button-native {
-  background: #{current-color(base, $fab-ios-translucent-background-color-alpha)};
-}
+@supports (backdrop-filter: blur(0)) {
+  @media (any-hover: hover) {
+    :host(.fab-button-translucent.ion-color:hover) .button-native {
+      background: #{current-color(base, $fab-ios-translucent-background-alpha-hover)};
+    }
+  }
 
-:host(.ion-color.ion-focused.fab-button-translucent) .button-native,
-:host(.ion-color.activated.fab-button-translucent) .button-native {
-  background: #{current-color(base)};
+  :host(.ion-color.fab-button-translucent) .button-native {
+    background: #{current-color(base, $fab-ios-translucent-background-alpha)};
+  }
+
+  :host(.ion-color.ion-focused.fab-button-translucent) .button-native,
+  :host(.ion-color.ion-activated.fab-button-translucent) .button-native {
+    background: #{current-color(base)};
+  }
 }

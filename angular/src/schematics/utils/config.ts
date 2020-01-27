@@ -89,6 +89,7 @@ export function addArchitectBuilder(host: Tree, builderName: string, builderOpts
 }
 
 export type WorkspaceSchema = experimental.workspace.WorkspaceSchema;
+export type WorkspaceProject = experimental.workspace.WorkspaceProject;
 
 export function getWorkspacePath(host: Tree): string {
   const possibleFiles = ['/angular.json', '/.angular.json'];

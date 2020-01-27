@@ -1,7 +1,10 @@
-import { Component, ComponentInterface, Element, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Method, Prop, h } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-list',
   styleUrls: {
@@ -12,11 +15,6 @@ import { Mode } from '../../interface';
 export class List implements ComponentInterface {
 
   @Element() el!: HTMLElement;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * How the bottom border should be displayed on all items.
@@ -43,18 +41,23 @@ export class List implements ComponentInterface {
     return false;
   }
 
-  hostData() {
-    return {
-      class: {
-        [`${this.mode}`]: true,
+  render() {
+    const mode = getIonMode(this);
+    const { lines, inset } = this;
+    return (
+      <Host
+        class={{
+          [mode]: true,
 
-        // Used internally for styling
-        [`list-${this.mode}`]: true,
+          // Used internally for styling
+          [`list-${mode}`]: true,
 
-        'list-inset': this.inset,
-        [`list-lines-${this.lines}`]: this.lines !== undefined,
-        [`list-${this.mode}-lines-${this.lines}`]: this.lines !== undefined
-      }
-    };
+          'list-inset': inset,
+          [`list-lines-${lines}`]: lines !== undefined,
+          [`list-${mode}-lines-${lines}`]: lines !== undefined
+        }}
+      >
+      </Host>
+    );
   }
 }

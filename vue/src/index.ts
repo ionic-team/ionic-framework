@@ -7,3 +7,5 @@ export default {
 
 export { Controllers } from './ionic';
 export { default as IonicVueRouter } from './router';
+
+export * from './components/inputs';

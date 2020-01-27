@@ -1,4 +1,5 @@
-import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
+import { Location } from '@angular/common';
+import { Attribute, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
@@ -15,6 +16,8 @@ import { RouteView, getUrl } from './stack-utils';
   inputs: ['animated', 'swipeGesture']
 })
 export class IonRouterOutlet implements OnDestroy, OnInit {
+  nativeEl: HTMLIonRouterOutletElement;
+
   private activated: ComponentRef<any> | null = null;
   private activatedView: RouteView | null = null;
 
@@ -22,7 +25,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   private _swipeGesture?: boolean;
   private name: string;
   private stackCtrl: StackController;
-  private nativeEl: HTMLIonRouterOutletElement;
 
   // Maintain map of activated route proxies for each component instance
   private proxyMap = new WeakMap<any, ActivatedRoute>();
@@ -56,9 +58,9 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     private resolver: ComponentFactoryResolver,
     @Attribute('name') name: string,
     @Optional() @Attribute('tabs') tabs: string,
-    private changeDetector: ChangeDetectorRef,
     private config: Config,
     private navCtrl: NavController,
+    commonLocation: Location,
     elementRef: ElementRef,
     router: Router,
     zone: NgZone,
@@ -68,7 +70,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     this.nativeEl = elementRef.nativeElement;
     this.name = name || PRIMARY_OUTLET;
     this.tabsPrefix = tabs === 'true' ? getUrl(router, activatedRoute) : undefined;
-    this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, navCtrl, zone);
+    this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, navCtrl, zone, commonLocation);
     parentContexts.onChildOutletCreated(this.name, this as any);
   }
 
@@ -92,7 +94,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     if ((this.nativeEl as any).componentOnReady) {
       this.nativeEl.componentOnReady().then(() => {
         if (this._swipeGesture === undefined) {
-          this.swipeGesture = this.config.getBoolean('swipeBackEnabled', this.nativeEl.mode === 'ios');
+          this.swipeGesture = this.config.getBoolean('swipeBackEnabled', (this.nativeEl as any).mode === 'ios');
         }
       });
     }
@@ -141,6 +143,20 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     if (this.activated) {
       if (this.activatedView) {
         this.activatedView.savedData = new Map(this.getContext()!.children['contexts']);
+
+        /**
+         * Ensure we are saving the NavigationExtras
+         * data otherwise it will be lost
+         */
+        this.activatedView.savedExtras = {};
+        const context = this.getContext()!;
+
+        if (context.route) {
+          const contextSnapshot = context.route.snapshot;
+
+          this.activatedView.savedExtras.queryParams = contextSnapshot.queryParams;
+          this.activatedView.savedExtras.fragment = contextSnapshot.fragment;
+        }
       }
       const c = this.component;
       this.activatedView = null;
@@ -194,8 +210,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       // Store references to the proxy by component
       this.proxyMap.set(cmpRef.instance, activatedRouteProxy);
       this.currentActivatedRoute$.next({ component: cmpRef.instance, activatedRoute });
-
-      this.changeDetector.markForCheck();
     }
 
     this.activatedView = enteringView;
@@ -226,6 +240,22 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   getLastUrl(stackId?: string): string | undefined {
     const active = this.stackCtrl.getLastUrl(stackId);
     return active ? active.url : undefined;
+  }
+
+  /**
+   * Returns the RouteView of the active page of each stack.
+   * @internal
+   */
+  getLastRouteView(stackId?: string): RouteView | undefined {
+    return this.stackCtrl.getLastUrl(stackId);
+  }
+
+  /**
+   * Returns the root view in the tab stack.
+   * @internal
+   */
+  getRootView(stackId?: string): RouteView | undefined {
+    return this.stackCtrl.getRootUrl(stackId);
   }
 
   /**
@@ -301,7 +331,7 @@ class OutletInjector implements Injector {
     private route: ActivatedRoute,
     private childContexts: ChildrenOutletContexts,
     private parent: Injector
-  ) {}
+  ) { }
 
   get(token: any, notFoundValue?: any): any {
     if (token === ActivatedRoute) {

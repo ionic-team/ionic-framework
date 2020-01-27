@@ -1,19 +1,18 @@
 ```tsx
 import React from 'react';
+import { IonNote, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonNote, IonList, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const NoteExample: React.FC = () => (
+  <IonContent>
     {/*-- Default Note --*/}
-    <IonNote>Default Note</IonNote>
+    <IonNote>Default Note</IonNote><br />
 
     {/*-- Note Colors --*/}
-    <IonNote color="primary">Primary Note</IonNote>
-    <IonNote color="secondary">Secondary Note</IonNote>
-    <IonNote color="danger">Danger Note</IonNote>
-    <IonNote color="light">Light Note</IonNote>
-    <IonNote color="dark">Dark Note</IonNote>
+    <IonNote color="primary">Primary Note</IonNote><br />
+    <IonNote color="secondary">Secondary Note</IonNote><br />
+    <IonNote color="danger">Danger Note</IonNote><br />
+    <IonNote color="light">Light Note</IonNote><br />
+    <IonNote color="dark">Dark Note</IonNote><br />
 
     {/*-- Notes in a List --*/}
     <IonList>
@@ -27,7 +26,6 @@ const Example: React.SFC<{}> = () => (
         <IonLabel>Note (Start)</IonLabel>
       </IonItem>
     </IonList>
-  </>
+  </IonContent>
 );
-
-export default Example
+```

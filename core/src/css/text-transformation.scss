@@ -1,3 +1,4 @@
+@import "../themes/ionic.skip-warns.scss";
 @import "../themes/ionic.globals";
 @import "../themes/ionic.mixins";
 
@@ -9,22 +10,19 @@
   $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
 
   @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
-    // Provide `[text-{bp}]` attributes for transforming the text based
+    // Provide `.ion-text-{bp}` classes for transforming the text based
     // on the breakpoint
-    .ion-text#{$infix}-uppercase,
-    [text#{$infix}-uppercase] {
+    .ion-text#{$infix}-uppercase {
       /* stylelint-disable-next-line declaration-no-important */
       text-transform: uppercase !important;
     }
 
-    .ion-text#{$infix}-lowercase,
-    [text#{$infix}-lowercase] {
+    .ion-text#{$infix}-lowercase {
       /* stylelint-disable-next-line declaration-no-important */
       text-transform: lowercase !important;
     }
 
-    .ion-text#{$infix}-capitalize,
-    [text#{$infix}-capitalize] {
+    .ion-text#{$infix}-capitalize {
       /* stylelint-disable-next-line declaration-no-important */
       text-transform: capitalize !important;
     }

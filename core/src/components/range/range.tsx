@@ -1,10 +1,13 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { Color, Gesture, GestureDetail, KnobName, Mode, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
-import { clamp, debounceEvent } from '../../utils/helpers';
+import { getIonMode } from '../../global/ionic-global';
+import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeValue, StyleEventDetail } from '../../interface';
+import { clamp, debounceEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
  */
@@ -24,10 +27,7 @@ export class Range implements ComponentInterface {
   private rangeSlider?: HTMLElement;
   private gesture?: Gesture;
 
-  @Element() el!: HTMLStencilElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'document' }) doc!: Document;
+  @Element() el!: HTMLIonRangeElement;
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
@@ -39,11 +39,6 @@ export class Range implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * How long, in milliseconds, to wait to trigger the
@@ -118,7 +113,7 @@ export class Range implements ComponentInterface {
   @Watch('disabled')
   protected disabledChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
     this.emitStyle();
   }
@@ -174,48 +169,32 @@ export class Range implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  @Listen('focusout')
-  onBlur() {
-    if (this.hasFocus) {
-      this.hasFocus = false;
-      this.ionBlur.emit();
-      this.emitStyle();
-    }
-  }
-
-  @Listen('focusin')
-  onFocus() {
-    if (!this.hasFocus) {
-      this.hasFocus = true;
-      this.ionFocus.emit();
-      this.emitStyle();
-    }
-  }
-
-  componentWillLoad() {
+  connectedCallback() {
     this.updateRatio();
     this.debounceChanged();
-    this.emitStyle();
+    this.disabledChanged();
   }
 
-  async componentDidLoad() {
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.rangeSlider!,
-      queue: this.queue,
-      gestureName: 'range',
-      gesturePriority: 100,
-      threshold: 0,
-      onStart: ev => this.onStart(ev),
-      onMove: ev => this.onMove(ev),
-      onEnd: ev => this.onEnd(ev),
-    });
-    this.gesture.setDisabled(this.disabled);
-  }
-
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
+    }
+  }
+
+  async componentDidLoad() {
+    const rangeSlider = this.rangeSlider;
+    if (rangeSlider) {
+      this.gesture = (await import('../../utils/gesture')).createGesture({
+        el: rangeSlider,
+        gestureName: 'range',
+        gesturePriority: 100,
+        threshold: 0,
+        onStart: ev => this.onStart(ev),
+        onMove: ev => this.onMove(ev),
+        onEnd: ev => this.onEnd(ev),
+      });
+      this.gesture.enable(!this.disabled);
     }
   }
 
@@ -265,7 +244,7 @@ export class Range implements ComponentInterface {
 
     // figure out which knob they started closer to
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    if (this.doc.dir === 'rtl') {
+    if (document.dir === 'rtl') {
       ratio = 1 - ratio;
     }
 
@@ -295,7 +274,7 @@ export class Range implements ComponentInterface {
     // update the knob being interacted with
     const rect = this.rect;
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    if (this.doc.dir === 'rtl') {
+    if (document.dir === 'rtl') {
       ratio = 1 - ratio;
     }
 
@@ -375,29 +354,44 @@ export class Range implements ComponentInterface {
     }
   }
 
-  hostData() {
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [`${this.mode}`]: true,
-        'in-item': hostContext('ion-item', this.el),
-        'range-disabled': this.disabled,
-        'range-pressed': this.pressedKnob !== undefined,
-        'range-has-pin': this.pin
-      }
-    };
+  private onBlur = () => {
+    if (this.hasFocus) {
+      this.hasFocus = false;
+      this.ionBlur.emit();
+      this.emitStyle();
+    }
+  }
+
+  private onFocus = () => {
+    if (!this.hasFocus) {
+      this.hasFocus = true;
+      this.ionFocus.emit();
+      this.emitStyle();
+    }
   }
 
   render() {
-    const { min, max, step, ratioLower, ratioUpper } = this;
+    const { min, max, step, el, handleKeyboard, pressedKnob, disabled, pin, ratioLower, ratioUpper } = this;
 
+    const mode = getIonMode(this);
     const barStart = `${ratioLower * 100}%`;
     const barEnd = `${100 - ratioUpper * 100}%`;
 
-    const doc = this.doc;
+    const doc = document;
     const isRTL = doc.dir === 'rtl';
     const start = isRTL ? 'right' : 'left';
     const end = isRTL ? 'left' : 'right';
+
+    const tickStyle = (tick: any) => {
+      return {
+        [start]: tick[start]
+      };
+    };
+
+    const barStyle = {
+      [start]: barStart,
+      [end]: barEnd
+    };
 
     const ticks = [];
     if (this.snaps && this.ticks) {
@@ -415,70 +409,69 @@ export class Range implements ComponentInterface {
       }
     }
 
-    const tickStyle = (tick: any) => {
-      const style: any = {};
+    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 
-      style[start] = tick[start];
+    return (
+      <Host
+        onFocusin={this.onFocus}
+        onFocusout={this.onBlur}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'range-disabled': disabled,
+          'range-pressed': pressedKnob !== undefined,
+          'range-has-pin': pin
+        }}
+      >
 
-      return style;
-    };
+        <slot name="start"></slot>
+        <div class="range-slider" ref={rangeEl => this.rangeSlider = rangeEl}>
+          {ticks.map(tick => (
+            <div
+              style={tickStyle(tick)}
+              role="presentation"
+              class={{
+                'range-tick': true,
+                'range-tick-active': tick.active
+              }}
+            />
+          ))}
 
-    const barStyle = () => {
-      const style: any = {};
-
-      style[start] = barStart;
-      style[end] = barEnd;
-
-      return style;
-    };
-
-    return [
-      <slot name="start"></slot>,
-      <div class="range-slider" ref={el => this.rangeSlider = el}>
-        {ticks.map(tick => (
+          <div class="range-bar" role="presentation" />
           <div
-            style={tickStyle(tick)}
+            class="range-bar range-bar-active"
             role="presentation"
-            class={{
-              'range-tick': true,
-              'range-tick-active': tick.active
-            }}
+            style={barStyle}
           />
-        ))}
 
-        <div class="range-bar" role="presentation" />
-        <div
-          class="range-bar range-bar-active"
-          role="presentation"
-          style={barStyle()}
-        />
+          { renderKnob(isRTL, {
+            knob: 'A',
+            pressed: pressedKnob === 'A',
+            value: this.valA,
+            ratio: this.ratioA,
+            pin,
+            disabled,
+            handleKeyboard,
+            min,
+            max
+          })}
 
-        { renderKnob(isRTL, {
-          knob: 'A',
-          pressed: this.pressedKnob === 'A',
-          value: this.valA,
-          ratio: this.ratioA,
-          pin: this.pin,
-          disabled: this.disabled,
-          handleKeyboard: this.handleKeyboard,
-          min,
-          max
-        })}
-
-        { this.dualKnobs && renderKnob(isRTL, {
-          knob: 'B',
-          pressed: this.pressedKnob === 'B',
-          value: this.valB,
-          ratio: this.ratioB,
-          pin: this.pin,
-          disabled: this.disabled,
-          handleKeyboard: this.handleKeyboard,
-          min,
-          max
-        })}
-      </div>,
-      <slot name="end"></slot>
-    ];
+          { this.dualKnobs && renderKnob(isRTL, {
+            knob: 'B',
+            pressed: pressedKnob === 'B',
+            value: this.valB,
+            ratio: this.ratioB,
+            pin,
+            disabled,
+            handleKeyboard,
+            min,
+            max
+          })}
+        </div>
+        <slot name="end"></slot>
+      </Host>
+    );
   }
 }
 
@@ -495,7 +488,7 @@ interface RangeKnob {
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
-function renderKnob(isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
+const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) => {
   const start = isRTL ? 'right' : 'left';
 
   const knobStyle = () => {
@@ -541,21 +534,21 @@ function renderKnob(isRTL: boolean, { knob, value, ratio, min, max, disabled, pr
       <div class="range-knob" role="presentation" />
     </div>
   );
-}
+};
 
-function ratioToValue(
+const ratioToValue = (
   ratio: number,
   min: number,
   max: number,
   step: number
-): number {
+): number => {
   let value = (max - min) * ratio;
   if (step > 0) {
     value = Math.round(value / step) * step + min;
   }
   return clamp(min, value, max);
-}
+};
 
-function valueToRatio(value: number, min: number, max: number): number {
+const valueToRatio = (value: number, min: number, max: number): number => {
   return clamp(0, (value - min) / (max - min), 1);
-}
+};

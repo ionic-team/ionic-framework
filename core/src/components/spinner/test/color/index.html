@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -22,40 +22,41 @@
 
     <ion-content id="content">
       <ion-list>
-        <ion-list-header>
-          Spinner Loading Indicators
-        </ion-list-header>
         <ion-item>
           <ion-spinner slot="start"></ion-spinner>
-          Show Default Spinner
+          Platform Default Spinner
         </ion-item>
         <ion-item>
           <ion-spinner color="primary" slot="start" name="lines"></ion-spinner>
-          Show Lines (Primary)
+          <code>lines</code> (primary)
         </ion-item>
         <ion-item>
-          <ion-spinner color="secondary" slot="start" name="ios-small"></ion-spinner>
-          Show Lines Small (Secondary)
+          <ion-spinner color="secondary" slot="start" name="lines-small"></ion-spinner>
+          <code>lines-small</code> (secondary)
         </ion-item>
         <ion-item>
-          <ion-spinner color="danger" slot="start" name="dots"></ion-spinner>
-          Show Dots (Danger)
+          <ion-spinner color="tertiary" slot="start" name="circular"></ion-spinner>
+          <code>circular</code> (tertiary)
         </ion-item>
         <ion-item>
-          <ion-spinner color="light" slot="start" name="bubbles"></ion-spinner>
-          Show Bubbles (Light)
+          <ion-spinner color="success" slot="start" name="dots"></ion-spinner>
+          <code>dots</code> (success)
         </ion-item>
         <ion-item>
-          <ion-spinner color="dark" slot="start" name="circles"></ion-spinner>
-          Show Circles (Dark)
+          <ion-spinner color="warning" slot="start" name="bubbles"></ion-spinner>
+          <code>bubbles</code> (warning)
         </ion-item>
         <ion-item>
-          <ion-spinner color="primary" slot="start" name="crescent"></ion-spinner>
-          Show Crescent (Primary)
+          <ion-spinner color="danger" slot="start" name="circles"></ion-spinner>
+          <code>circles</code> (danger)
         </ion-item>
         <ion-item>
-          <ion-spinner color="secondary" slot="start" paused></ion-spinner>
-          Show Paused Default Spinner (Secondary)
+          <ion-spinner color="dark" slot="start" name="crescent"></ion-spinner>
+          <code>crescent</code> (dark)
+        </ion-item>
+        <ion-item>
+          <ion-spinner color="medium" slot="start" name="lines" paused></ion-spinner>
+          <code>lines</code> (paused, medium)
         </ion-item>
       </ion-list>
     </ion-content>

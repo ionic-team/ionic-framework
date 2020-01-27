@@ -1,25 +1,41 @@
 ```tsx
 import React from 'react';
+import {
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonBackButton,
+  IonButton,
+  IonIcon,
+  IonMenuButton,
+  IonSearchbar,
+  IonSegment,
+  IonSegmentButton,
+} from '@ionic/react';
 
-import { IonToolbar, IonTitle, IonButtons, IonBackButton, IonButton, IonIcon, IonMenuButton, IonSearchbar, IonSegment, IonSegmentButton } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const ToolbarExample: React.FC = () => (
   <IonToolbar>
     <IonTitle>Title Only</IonTitle>
   </IonToolbar>
 
   <IonToolbar>
     <IonButtons slot="start">
-      <IonBackButton goBack={() => {}} />
+      <IonBackButton defaultHref="/" />
     </IonButtons>
     <IonTitle>Back Button</IonTitle>
   </IonToolbar>
 
   <IonToolbar>
+    <IonTitle size="small">Small Title above a Default Title</IonTitle>
+  </IonToolbar>
+  <IonToolbar>
+    <IonTitle>Default Title</IonTitle>
+  </IonToolbar>
+
+  <IonToolbar>
     <IonButtons slot="secondary">
       <IonButton>
-        <IonIcon slot="icon-only" name="contact" />
+        <IonIcon slot="icon-only" name="person-circle" />
       </IonButton>
       <IonButton>
         <IonIcon slot="icon-only" name="search" />
@@ -27,7 +43,7 @@ const Example: React.SFC<{}> = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="secondary">
-        <IonIcon slot="icon-only" name="more" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Default Buttons</IonTitle>
@@ -36,7 +52,7 @@ const Example: React.SFC<{}> = () => (
   <IonToolbar>
     <IonButtons slot="secondary">
       <IonButton fill="solid">
-        <IonIcon slot="start" name="contact" />
+        <IonIcon slot="start" name="person-circle" />
         Contact
       </IonButton>
     </IonButtons>
@@ -67,22 +83,17 @@ const Example: React.SFC<{}> = () => (
 
   <IonToolbar>
     <IonButtons slot="secondary">
-      <IonButton>
-        Account
-      </IonButton>
+      <IonButton>Account</IonButton>
     </IonButtons>
     <IonButtons slot="primary">
-      <IonButton color="danger">
-        Edit
-      </IonButton>
+      <IonButton color="danger">Edit</IonButton>
     </IonButtons>
     <IonTitle>Text Only Buttons</IonTitle>
   </IonToolbar>
 
   <IonToolbar>
     <IonButtons slot="start">
-      <IonMenuButton autoHide={false}></IonMenuButton>
-
+      <IonMenuButton autoHide={false} />
     </IonButtons>
     <IonButtons slot="secondary">
       <IonButton>
@@ -100,8 +111,7 @@ const Example: React.SFC<{}> = () => (
     </IonButtons>
     <IonTitle>Right side menu toggle</IonTitle>
     <IonButtons slot="end">
-      <IonMenuButton autoHide={false}></IonMenuButton>
-
+      <IonMenuButton autoHide={false} />
     </IonButtons>
   </IonToolbar>
 
@@ -111,7 +121,7 @@ const Example: React.SFC<{}> = () => (
         <IonIcon slot="icon-only" name="search" />
       </IonButton>
     </IonButtons>
-    <IonSearchbar placeholder="Search Favorites"></IonSearchbar>
+    <IonSearchbar placeholder="Search Favorites" />
   </IonToolbar>
 
   <IonToolbar>
@@ -119,16 +129,14 @@ const Example: React.SFC<{}> = () => (
       <IonSegmentButton value="all" checked>
         All
       </IonSegmentButton>
-      <IonSegmentButton value="favorites">
-        Favorites
-      </IonSegmentButton>
+      <IonSegmentButton value="favorites">Favorites</IonSegmentButton>
     </IonSegment>
   </IonToolbar>
 
   <IonToolbar color="secondary">
     <IonButtons slot="secondary">
       <IonButton>
-        <IonIcon slot="icon-only" name="contact" />
+        <IonIcon slot="icon-only" name="person-circle" />
       </IonButton>
       <IonButton>
         <IonIcon slot="icon-only" name="search" />
@@ -136,7 +144,7 @@ const Example: React.SFC<{}> = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="primary">
-        <IonIcon slot="icon-only" name="more" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Secondary Toolbar</IonTitle>
@@ -145,7 +153,7 @@ const Example: React.SFC<{}> = () => (
   <IonToolbar color="dark">
     <IonButtons slot="secondary">
       <IonButton>
-        <IonIcon slot="icon-only" name="contact" />
+        <IonIcon slot="icon-only" name="person-circle" />
       </IonButton>
       <IonButton>
         <IonIcon slot="icon-only" name="search" />
@@ -153,13 +161,10 @@ const Example: React.SFC<{}> = () => (
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="danger">
-        <IonIcon slot="icon-only" name="more" />
+        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
       </IonButton>
     </IonButtons>
     <IonTitle>Dark Toolbar</IonTitle>
   </IonToolbar>
-  </>
 );
-
-export default Example;
 ```

@@ -6,13 +6,17 @@
 
 :host {
   --min-height: #{$item-ios-min-height};
-  --transition: background-color 200ms linear;
+  --transition: background-color 200ms linear, opacity 200ms linear;
   --padding-start: #{$item-ios-padding-start};
   --inner-padding-end: #{$item-ios-padding-end / 2};
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
   --background: #{$item-ios-background};
-  --background-activated: #{$item-ios-background-activated};
-  --background-focused: #{$item-ios-background-activated};
+  --background-activated: #000;
+  --background-focused: #000;
+  --background-hover: currentColor;
+  --background-activated-opacity: .12;
+  --background-focused-opacity: .15;
+  --background-hover-opacity: .04;
   --border-color: #{$item-ios-border-bottom-color};
   --color: #{$item-ios-color};
   --highlight-height: 0;
@@ -23,8 +27,26 @@
   font-size: $item-ios-font-size;
 }
 
-:host(.activated) {
+
+// iOS Item: States
+// --------------------------------------------------
+
+:host(.ion-activated) {
   --transition: none;
+}
+
+:host(.ion-color.ion-focused) .item-native::after {
+  background: #000;
+
+  opacity: .15;
+}
+
+:host(.ion-color.ion-activated) .item-native {
+  &::after {
+    background: #000;
+
+    opacity: .12;
+  }
 }
 
 

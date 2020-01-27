@@ -99,11 +99,10 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 ```tsx
 import React from 'react';
+import { IonTextarea, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-import { IonTextarea, IonItem, IonLabel } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const TextAreaExample: React.FC = () => (
+  <IonContent>
     {/*-- Default textarea --*/}
     <IonTextarea></IonTextarea>
 
@@ -139,10 +138,8 @@ const Example: React.SFC<{}> = () => (
       <IonLabel>Notes</IonLabel>
       <IonTextarea rows={6} cols={20} placeholder="Enter any notes here..."></IonTextarea>
     </IonItem>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -177,7 +174,7 @@ export default Example;
   <!-- Textarea that clears the value on edit -->
   <ion-item>
     <ion-label>Comment</ion-label>
-    <ion-textarea clearOnEdit="true"></ion-textarea>
+    <ion-textarea clear-on-edit="true"></ion-textarea>
   </ion-item>
 
   <!-- Textarea with custom number of rows and cols -->
@@ -222,7 +219,7 @@ export default Example;
 | `ionBlur`   | Emitted when the input loses focus.       | `CustomEvent<void>`                      |
 | `ionChange` | Emitted when the input value has changed. | `CustomEvent<TextareaChangeEventDetail>` |
 | `ionFocus`  | Emitted when the input has focus.         | `CustomEvent<void>`                      |
-| `ionInput`  | Emitted when a keyboard input ocurred.    | `CustomEvent<KeyboardEvent>`             |
+| `ionInput`  | Emitted when a keyboard input occurred.   | `CustomEvent<KeyboardEvent>`             |
 
 
 ## Methods
@@ -237,33 +234,33 @@ Type: `Promise<HTMLTextAreaElement>`
 
 
 
-### `setFocus() => void`
+### `setFocus() => Promise<void>`
 
 Sets focus on the specified `ion-textarea`. Use this method instead of the global
 `input.focus()`.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
 
 ## CSS Custom Properties
 
-| Name                        | Description                     |
-| --------------------------- | ------------------------------- |
-| `--background`              | Background of the textarea      |
-| `--border-radius`           | Border radius of the textarea   |
-| `--color`                   | Color of the text               |
-| `--padding-bottom`          | Bottom padding of the textarea  |
-| `--padding-end`             | End padding of the textarea     |
-| `--padding-start`           | Start padding of the textarea   |
-| `--padding-top`             | Top padding of the textarea     |
-| `--placeholder-color`       | Color of the placeholder text   |
-| `--placeholder-font-style`  | Style of the placeholder text   |
-| `--placeholder-font-weight` | Weight of the placeholder text  |
-| `--placeholder-opacity`     | Opacity of the placeholder text |
+| Name                        | Description                                                                                                 |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `--background`              | Background of the textarea                                                                                  |
+| `--border-radius`           | Border radius of the textarea                                                                               |
+| `--color`                   | Color of the text                                                                                           |
+| `--padding-bottom`          | Bottom padding of the textarea                                                                              |
+| `--padding-end`             | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the textarea |
+| `--padding-start`           | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the textarea |
+| `--padding-top`             | Top padding of the textarea                                                                                 |
+| `--placeholder-color`       | Color of the placeholder text                                                                               |
+| `--placeholder-font-style`  | Style of the placeholder text                                                                               |
+| `--placeholder-font-weight` | Weight of the placeholder text                                                                              |
+| `--placeholder-opacity`     | Opacity of the placeholder text                                                                             |
 
 
 ----------------------------------------------

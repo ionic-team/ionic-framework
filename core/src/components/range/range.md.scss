@@ -102,8 +102,12 @@
 
   &::before {
     @include position(3px, null, null, 50%);
-    @include border-radius(50%, 50%, 50%, 0);
     @include margin-horizontal(-13px, null);
+
+    @include multi-dir() {
+      /* stylelint-disable-next-line property-blacklist */
+      border-radius: 50% 50% 50% 0;
+    }
 
     @include rtl() {
       /* stylelint-disable-next-line property-blacklist */

@@ -1,7 +1,14 @@
 ```tsx
 import React from 'react';
-
-import { IonList, IonListHeader, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/react';
+import {
+  IonList,
+  IonListHeader,
+  IonItem,
+  IonLabel,
+  IonSelect,
+  IonSelectOption,
+  IonContent
+} from '@ionic/react';
 
 const customAlertOptions = {
   header: 'Pizza Toppings',
@@ -43,13 +50,15 @@ const compareWith = (o1: any, o2: any) => {
   return o1 && o2 ? o1.id === o2.id : o1 === o2;
 };
 
-const Example: React.SFC<{}> = () => (
-  <>
+export const SelectExample: React.FC = () => (
+  <IonContent>
     ## Single Selection
-
-
     <IonList>
-      <IonListHeader>Single Selection</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Single Selection
+        </IonLabel>
+      </IonListHeader>
 
       <IonItem>
         <IonLabel>Gender</IonLabel>
@@ -69,13 +78,13 @@ const Example: React.SFC<{}> = () => (
         </IonSelect>
       </IonItem>
     </IonList>
-
-
     ## Multiple Selection
-
-
     <IonList>
-      <IonListHeader>Multiple Selection</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Multiple Selection
+        </IonLabel>
+      </IonListHeader>
 
       <IonItem>
         <IonLabel>Toppings</IonLabel>
@@ -95,39 +104,54 @@ const Example: React.SFC<{}> = () => (
 
       <IonItem>
         <IonLabel>Pets</IonLabel>
-        <IonSelect multiple={true}>
-          <IonSelectOption value="bird" selected>Bird</IonSelectOption>
+        <IonSelect multiple={true} value={['bird', 'dog']}>
+          <IonSelectOption value="bird">
+            Bird
+          </IonSelectOption>
           <IonSelectOption value="cat">Cat</IonSelectOption>
-          <IonSelectOption value="dog" selected>Dog</IonSelectOption>
+          <IonSelectOption value="dog">
+            Dog
+          </IonSelectOption>
           <IonSelectOption value="honeybadger">Honey Badger</IonSelectOption>
         </IonSelect>
       </IonItem>
     </IonList>
-    
     ## Objects as Values
-    
     <IonList>
-      <IonListHeader>Objects as Values (compareWith)</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Objects as Values (compareWith)
+        </IonLabel>
+      </IonListHeader>
       <IonItem>
         <IonLabel>Users</IonLabel>
         <IonSelect compareWith={compareWith}>
           {objectOptions.map((object, i) => {
-            return <IonSelectOption key={object.id} value={object.id}>{object.first} {object.last}</IonSelectOption>
+            return (
+              <IonSelectOption key={object.id} value={object.id}>
+                {object.first} {object.last}
+              </IonSelectOption>
+            );
           })}
         </IonSelect>
       </IonItem>
     </IonList>
-
-
     ## Interface Options
-
-
     <IonList>
-      <IonListHeader>Interface Options</IonListHeader>
+      <IonListHeader>
+        <IonLabel>
+          Interface Options
+        </IonLabel>
+      </IonListHeader>
 
       <IonItem>
         <IonLabel>Alert</IonLabel>
-        <IonSelect interfaceOptions={customAlertOptions} interface="alert" multiple={true} placeholder="Select One">
+        <IonSelect
+          interfaceOptions={customAlertOptions}
+          interface="alert"
+          multiple={true}
+          placeholder="Select One"
+        >
           <IonSelectOption value="bacon">Bacon</IonSelectOption>
           <IonSelectOption value="olives">Black Olives</IonSelectOption>
           <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
@@ -153,7 +177,11 @@ const Example: React.SFC<{}> = () => (
 
       <IonItem>
         <IonLabel>Action Sheet</IonLabel>
-        <IonSelect interfaceOptions={customActionSheetOptions} interface="action-sheet" placeholder="Select One">
+        <IonSelect
+          interfaceOptions={customActionSheetOptions}
+          interface="action-sheet"
+          placeholder="Select One"
+        >
           <IonSelectOption value="red">Red</IonSelectOption>
           <IonSelectOption value="purple">Purple</IonSelectOption>
           <IonSelectOption value="yellow">Yellow</IonSelectOption>
@@ -162,8 +190,6 @@ const Example: React.SFC<{}> = () => (
         </IonSelect>
       </IonItem>
     </IonList>
-  </>
+  </IonContent>
 );
-
-export default Example;
 ```

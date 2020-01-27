@@ -1,72 +1,83 @@
 # ion-route-redirect
 
-A redirect router can only be used in the scope of `ion-router` as a direct children of it.
+A route redirect can only be used with an `ion-router` as a direct child of it.
 
-> Note: this is only meant for vanilla JavaScript project. For Angular projects, use `ion-router-outlet` and the Angular router.
+> Note: this component should only be used with vanilla and Stencil JavaScript projects. For Angular projects, use [`ion-router-outlet`](../router-outlet) and the Angular router.
 
-This route has only two configurable values:
+The route redirect has two configurable properties:
  - `from`
  - `to`
 
-Their meaning is obvious under the context of a redirection, that occurs `from` a given URL `to` another given URL.
+It redirects "from" a URL "to" another URL. When the defined `ion-route-redirect` rule matches, the router will redirect from the path specified in the `from` property to the path in the `to` property. In order for a redirect to occur the `from` path needs to be an exact match to the navigated URL.
 
-In other for a redirection to occurs the `from` path needs to be an exact match of the navigated URL.
 
-## Redirection evaluation
+## Multiple Route Redirects
 
 An arbitrary number of redirect routes can be defined inside an `ion-router`, but only one can match.
 
-Also, a redirection route WILL never redirect to another redirection router, since this could lead to infinity loops.
+A route redirect will never call another redirect after its own redirect, since this could lead to infinite loops.
 
-Let's say we have this two redirection rules:
+Take the following two redirects:
 
 ```html
 <ion-router>
-  <ion-route-redirect from="/admin" to="/login"/>
-  <ion-route-redirect from="/login" to="/admin"/>
+  <ion-route-redirect from="/admin" to="/login"></ion-route-redirect>
+  <ion-route-redirect from="/login" to="/admin"></ion-route-redirect>
 </ion-router>
 ```
 
-And the user navigates to `/admin`. The router will then redirect to `/login` and stop there.
+If the user navigates to `/admin` the router will redirect to `/login` and stop there. It will never evaluate more than one redirect.
 
-It WILL NOT never evaluate more than one redirection rule in a roll.
-
-
-## Examples
-
-### Simple path
-
-```html
-<ion-route-redirect from="/admin" to="/login">
-```
-
-This route will apply (redirect) when the user navigates to: `/admin` but it will NOT apply if the user navigates to `/admin/posts`.
-
-In order to match any subpath of admin, the wildcard character (`*`) needs to be used.
-
-```html
-<ion-route-redirect from="/admin/*" to="/login">
-```
-
-### Redirect all routes to login
-
-Redirection routes can work as guards, since that can prevent user to navigate to areas to your application based in a given condition, for example, if the user is authenticated or not.
-
-
-```tsx
-{!this.isLoggedIn &&
-  <ion-route-redirect from="*" to="/login"/> }
-```
-
-A router can be added and removed dynamically to redirect (or guard) some routes from being accessed.
-
-Another approach is to modify the value of `to`, since given `to` the value of `null` or `undefined` makes disables the redirection.
-
-```tsx
- <ion-route-redirect from="*" to={this.isLoggedin ? undefined : '/login'}/>
-```
 
 <!-- Auto Generated Below -->
+
+
+## Usage
+
+### Javascript
+
+```html
+<!-- Redirects when the user navigates to `/admin` but
+will NOT redirect if the user navigates to `/admin/posts` -->
+<ion-route-redirect from="/admin" to="/login"></ion-route-redirect>
+
+<!-- By adding the wilcard character (*), the redirect will match
+any subpath of admin -->
+<ion-route-redirect from="/admin/*" to="/login"></ion-route-redirect>
+```
+
+### Route Redirects as Guards
+
+Redirection routes can work as guards to prevent users from navigating to certain areas of an application based on a given condition, such as if the user is authenticated or not.
+
+A route redirect can be added and removed dynamically to redirect (or guard) some routes from being accessed. In the following example, all urls `*` will be redirected to the `/login` url if `isLoggedIn` is `false`.
+
+```tsx
+const isLoggedIn = false;
+
+const router = document.querySelector('ion-router');
+const routeRedirect = document.createElement('ion-route-redirect');
+routeRedirect.setAttribute('from', '*');
+routeRedirect.setAttribute('to', '/login');
+
+if (!isLoggedIn) {
+  router.appendChild(routeRedirect);
+}
+```
+
+Alternatively, the value of `to` can be modified based on a condition. In the following example, the route redirect will check if the user is logged in and redirect to the `/login` url if not.
+
+```html
+<ion-route-redirect id="tutorialRedirect" from="*"></ion-route-redirect>
+```
+
+```javascript
+const isLoggedIn = false;
+const routeRedirect = document.querySelector('#tutorialRedirect');
+
+routeRedirect.setAttribute('to', isLoggedIn ? undefined : '/login');
+```
+
 
 
 ## Properties
@@ -79,9 +90,9 @@ Another approach is to modify the value of `to`, since given `to` the value of `
 
 ## Events
 
-| Event                     | Description                                                                                                                                                                                                               | Type                |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `ionRouteRedirectChanged` | Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules. | `CustomEvent<void>` |
+| Event                     | Description                                                                                                                                                                                                               | Type               |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `ionRouteRedirectChanged` | Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules. | `CustomEvent<any>` |
 
 
 ----------------------------------------------

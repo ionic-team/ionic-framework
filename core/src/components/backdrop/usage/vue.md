@@ -10,13 +10,13 @@
   <ion-backdrop visible="false"></ion-backdrop>
 
   <!-- Backdrop with propagation -->
-  <ion-backdrop stopPropagation="false"></ion-backdrop>
+  <ion-backdrop stop-propagation="false"></ion-backdrop>
 
   <!-- Backdrop that sets dynamic properties -->
   <ion-backdrop
     :tappable="enableBackdropDismiss"
     :visible="showBackdrop"
-    :stopPropagation="shouldPropagate">
+    :stop-propagation="shouldPropagate">
   </ion-backdrop>
 </template>
 

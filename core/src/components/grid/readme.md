@@ -5,7 +5,7 @@ The grid is a powerful mobile-first flexbox system for building custom layouts.
 
 It is composed of three units — a grid, [row(s)](../row) and [column(s)](../col). Columns will expand to fill the row, and will resize to fit additional columns. It is based on a 12 column layout with different breakpoints based on the screen size. The number of columns can be customized using CSS.
 
-See [Grid Layout](/docs/layout/grid) for more information.
+See the [Responsive Grid documentation](/docs/layout/grid) for more information.
 
 <!-- Auto Generated Below -->
 
@@ -86,13 +86,13 @@ See [Grid Layout](/docs/layout/grid) for more information.
   </ion-row>
 
   <ion-row>
-    <ion-col align-self-start>
+    <ion-col class="ion-align-self-start">
       ion-col [start]
     </ion-col>
-    <ion-col align-self-center>
+    <ion-col class="ion-align-self-center">
       ion-col [center]
     </ion-col>
-    <ion-col align-self-end>
+    <ion-col class="ion-align-self-end">
       ion-col [end]
     </ion-col>
     <ion-col>
@@ -102,14 +102,14 @@ See [Grid Layout](/docs/layout/grid) for more information.
     </ion-col>
   </ion-row>
 
-  <ion-row align-items-start>
+  <ion-row class="ion-align-items-start">
     <ion-col>
       [start] ion-col
     </ion-col>
     <ion-col>
       [start] ion-col
     </ion-col>
-    <ion-col align-self-end>
+    <ion-col class="ion-align-self-end">
       [start] ion-col [end]
     </ion-col>
     <ion-col>
@@ -119,7 +119,7 @@ See [Grid Layout](/docs/layout/grid) for more information.
     </ion-col>
   </ion-row>
 
-  <ion-row align-items-center>
+  <ion-row class="ion-align-items-center">
     <ion-col>
       [center] ion-col
     </ion-col>
@@ -136,11 +136,11 @@ See [Grid Layout](/docs/layout/grid) for more information.
     </ion-col>
   </ion-row>
 
-  <ion-row align-items-end>
+  <ion-row class="ion-align-items-end">
     <ion-col>
       [end] ion-col
     </ion-col>
-    <ion-col align-self-start>
+    <ion-col class="ion-align-self-start">
       [end] ion-col [start]
     </ion-col>
     <ion-col>
@@ -199,190 +199,141 @@ See [Grid Layout](/docs/layout/grid) for more information.
 
 ```tsx
 import React from 'react';
+import { IonGrid, IonRow, IonCol, IonContent } from '@ionic/react';
 
-import { IonGrid, IonRow, IonCol } from '@ionic/react';
+export const GridExample: React.FC = () => (
+  <IonContent>
+    <IonGrid>
+      <IonRow>
+        <IonCol>ion-col</IonCol>
+        <IonCol>ion-col</IonCol>
+        <IonCol>ion-col</IonCol>
+        <IonCol>ion-col</IonCol>
+      </IonRow>
 
-const Example: React.SFC<{}> = () => (
-  <IonGrid>
-    <IonRow>
-      <IonCol>
-        ion-col
-      </IonCol>
-      <IonCol>
-        ion-col
-      </IonCol>
-      <IonCol>
-        ion-col
-      </IonCol>
-      <IonCol>
-        ion-col
-      </IonCol>
-    </IonRow>
+      <IonRow>
+        <IonCol size="6">ion-col size="6"</IonCol>
+        <IonCol>ion-col</IonCol>
+        <IonCol>ion-col</IonCol>
+      </IonRow>
 
-    <IonRow>
-      <IonCol size="6">
-        ion-col size="6"
-      </IonCol>
-      <IonCol>
-        ion-col
-      </IonCol>
-      <IonCol>
-        ion-col
-      </IonCol>
-    </IonRow>
+      <IonRow>
+        <IonCol size="3">ion-col size="3"</IonCol>
+        <IonCol>ion-col</IonCol>
+        <IonCol size="3">ion-col size="3"</IonCol>
+      </IonRow>
 
-    <IonRow>
-      <IonCol size="3">
-        ion-col size="3"
-      </IonCol>
-      <IonCol>
-        ion-col
-      </IonCol>
-      <IonCol size="3">
-        ion-col size="3"
-      </IonCol>
-    </IonRow>
+      <IonRow>
+        <IonCol size="3">ion-col size="3"</IonCol>
+        <IonCol size="3" offset="3">
+          ion-col size="3" offset="3"
+        </IonCol>
+      </IonRow>
 
-    <IonRow>
-      <IonCol size="3">
-        ion-col size="3"
-      </IonCol>
-      <IonCol size="3" offset="3">
-        ion-col size="3" offset="3"
-      </IonCol>
-    </IonRow>
+      <IonRow>
+        <IonCol>ion-col</IonCol>
+        <IonCol>
+          ion-col
+          <br />#
+        </IonCol>
+        <IonCol>
+          ion-col
+          <br />#
+          <br />#
+        </IonCol>
+        <IonCol>
+          ion-col
+          <br />#
+          <br />#
+          <br />#
+        </IonCol>
+      </IonRow>
 
-    <IonRow>
-      <IonCol>
-        ion-col
-      </IonCol>
-      <IonCol>
-        ion-col
-        <br/>#
-      </IonCol>
-      <IonCol>
-        ion-col
-        <br/>#
-        <br/>#
-      </IonCol>
-      <IonCol>
-        ion-col
-        <br/>#
-        <br/>#
-        <br/>#
-      </IonCol>
-    </IonRow>
+      <IonRow>
+        <IonCol class="ion-align-self-start">ion-col start</IonCol>
+        <IonCol class="ion-align-self-center">ion-col center</IonCol>
+        <IonCol class="ion-align-self-end">ion-col end</IonCol>
+        <IonCol>
+          ion-col
+          <br />#
+          <br />#
+        </IonCol>
+      </IonRow>
 
-    <IonRow>
-      <IonCol align-self-start>
-        ion-col start
-      </IonCol>
-      <IonCol align-self-center>
-        ion-col center
-      </IonCol>
-      <IonCol align-self-end>
-        ion-col end
-      </IonCol>
-      <IonCol>
-        ion-col
-        <br/>#
-        <br/>#
-      </IonCol>
-    </IonRow>
+      <IonRow class="ion-align-items-start">
+        <IonCol>start ion-col</IonCol>
+        <IonCol>start ion-col</IonCol>
+        <IonCol class="ion-align-self-end">start ion-col end</IonCol>
+        <IonCol>
+          ion-col
+          <br />#
+          <br />#
+        </IonCol>
+      </IonRow>
 
-    <IonRow align-items-start>
-      <IonCol>
-        start ion-col
-      </IonCol>
-      <IonCol>
-        start ion-col
-      </IonCol>
-      <IonCol align-self-end>
-        start ion-col end
-      </IonCol>
-      <IonCol>
-        ion-col
-        <br/>#
-        <br/>#
-      </IonCol>
-    </IonRow>
+      <IonRow class="ion-align-items-center">
+        <IonCol>center ion-col</IonCol>
+        <IonCol>center ion-col</IonCol>
+        <IonCol>center ion-col</IonCol>
+        <IonCol>
+          ion-col
+          <br />#
+          <br />#
+        </IonCol>
+      </IonRow>
 
-    <IonRow align-items-center>
-      <IonCol>
-        center ion-col
-      </IonCol>
-      <IonCol>
-        center ion-col
-      </IonCol>
-      <IonCol>
-        center ion-col
-      </IonCol>
-      <IonCol>
-        ion-col
-        <br/>#
-        <br/>#
-      </IonCol>
-    </IonRow>
+      <IonRow class="ion-align-items-end">
+        <IonCol>end ion-col</IonCol>
+        <IonCol class="ion-align-self-start">end ion-col start</IonCol>
+        <IonCol>end ion-col</IonCol>
+        <IonCol>
+          ion-col
+          <br />#
+          <br />#
+        </IonCol>
+      </IonRow>
 
-    <IonRow align-items-end>
-      <IonCol>
-        end ion-col
-      </IonCol>
-      <IonCol align-self-start>
-        end ion-col start
-      </IonCol>
-      <IonCol>
-        end ion-col
-      </IonCol>
-      <IonCol>
-        ion-col
-        <br/>#
-        <br/>#
-      </IonCol>
-    </IonRow>
+      <IonRow>
+        <IonCol size="12" size-sm>
+          ion-col size="12" size-sm
+        </IonCol>
+        <IonCol size="12" size-sm>
+          ion-col size="12" size-sm
+        </IonCol>
+        <IonCol size="12" size-sm>
+          ion-col size="12" size-sm
+        </IonCol>
+        <IonCol size="12" size-sm>
+          ion-col size="12" size-sm
+        </IonCol>
+      </IonRow>
 
-    <IonRow>
-      <IonCol size="12" size-sm>
-        ion-col size="12" size-sm
-      </IonCol>
-      <IonCol size="12" size-sm>
-        ion-col size="12" size-sm
-      </IonCol>
-      <IonCol size="12" size-sm>
-        ion-col size="12" size-sm
-      </IonCol>
-      <IonCol size="12" size-sm>
-        ion-col size="12" size-sm
-      </IonCol>
-    </IonRow>
+      <IonRow>
+        <IonCol size="12" size-md>
+          ion-col size="12" size-md
+        </IonCol>
+        <IonCol size="12" size-md>
+          ion-col size="12" size-md
+        </IonCol>
+        <IonCol size="12" size-md>
+          ion-col size="12" size-md
+        </IonCol>
+        <IonCol size="12" size-md>
+          ion-col size="12" size-md
+        </IonCol>
+      </IonRow>
 
-    <IonRow>
-      <IonCol size="12" size-md>
-        ion-col size="12" size-md
-      </IonCol>
-      <IonCol size="12" size-md>
-        ion-col size="12" size-md
-      </IonCol>
-      <IonCol size="12" size-md>
-        ion-col size="12" size-md
-      </IonCol>
-      <IonCol size="12" size-md>
-        ion-col size="12" size-md
-      </IonCol>
-    </IonRow>
-
-    <IonRow>
-      <IonCol size="6" size-lg offset="3">
-        ion-col size="6" size-lg offset="3"
-      </IonCol>
-      <IonCol size="3" size-lg>
-        ion-col size="3" size-lg
-      </IonCol>
-    </IonRow>
-  </IonGrid>
+      <IonRow>
+        <IonCol size="6" size-lg offset="3">
+          ion-col size="6" size-lg offset="3"
+        </IonCol>
+        <IonCol size="3" size-lg>
+          ion-col size="3" size-lg
+        </IonCol>
+      </IonRow>
+    </IonGrid>
+  </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -461,13 +412,13 @@ export default Example;
     </ion-row>
 
     <ion-row>
-      <ion-col align-self-start>
+      <ion-col class="ion-align-self-start">
         ion-col [start]
       </ion-col>
-      <ion-col align-self-center>
+      <ion-col class="ion-align-self-center">
         ion-col [center]
       </ion-col>
-      <ion-col align-self-end>
+      <ion-col class="ion-align-self-end">
         ion-col [end]
       </ion-col>
       <ion-col>
@@ -477,14 +428,14 @@ export default Example;
       </ion-col>
     </ion-row>
 
-    <ion-row align-items-start>
+    <ion-row class="ion-align-items-start">
       <ion-col>
         [start] ion-col
       </ion-col>
       <ion-col>
         [start] ion-col
       </ion-col>
-      <ion-col align-self-end>
+      <ion-col class="ion-align-self-end">
         [start] ion-col [end]
       </ion-col>
       <ion-col>
@@ -494,7 +445,7 @@ export default Example;
       </ion-col>
     </ion-row>
 
-    <ion-row align-items-center>
+    <ion-row class="ion-align-items-center">
       <ion-col>
         [center] ion-col
       </ion-col>
@@ -511,11 +462,11 @@ export default Example;
       </ion-col>
     </ion-row>
 
-    <ion-row align-items-end>
+    <ion-row class="ion-align-items-end">
       <ion-col>
         [end] ion-col
       </ion-col>
-      <ion-col align-self-start>
+      <ion-col class="ion-align-self-start">
         [end] ion-col [start]
       </ion-col>
       <ion-col>

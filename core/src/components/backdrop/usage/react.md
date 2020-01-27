@@ -1,10 +1,9 @@
 ```tsx
 import React from 'react';
+import { IonBackdrop, IonContent } from '@ionic/react';
 
-import { IonBackdrop } from '@ionic/react';
-
-const Example: React.SFC<{}> = () => (
-  <>
+export const BackdropExample: React.FC = () => (
+  <IonContent>
     {/*-- Default backdrop --*/}
     <IonBackdrop />
 
@@ -17,13 +16,7 @@ const Example: React.SFC<{}> = () => (
     {/*-- Backdrop with propagation --*/}
     <IonBackdrop stopPropagation={false} />
 
-    <IonBackdrop
-      tappable={true}
-      visible={true}
-      stopPropagation={true}
-    />
-  </>
+    <IonBackdrop tappable={true} visible={true} stopPropagation={true} />
+  </IonContent>
 );
-
-export default Example;
 ```

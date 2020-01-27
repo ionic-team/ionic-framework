@@ -4,8 +4,7 @@ const path = require('path');
 
 const cleanDirs = [
   'dist',
-  'css',
-  '.stencil'
+  'css'
 ];
 
 cleanDirs.forEach(dir => {

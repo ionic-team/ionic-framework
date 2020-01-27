@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -64,27 +64,27 @@
       </ion-item>
 
       <ion-item>
-        <ion-label text-wrap>
+        <ion-label class="ion-text-wrap">
           Multiline text that should wrap when it is too long to fit on one line in the item. Attribute on .item
         </ion-label>
       </ion-item>
 
       <ion-item color="secondary">
-        <ion-label text-wrap>
+        <ion-label class="ion-text-wrap">
           <h1>H1 Title Text</h1>
           <p>Paragraph line 1</p>
         </ion-label>
       </ion-item>
 
       <ion-item>
-        <ion-label text-wrap>
+        <ion-label class="ion-text-wrap">
           <h2>H2 Title Text</h2>
           <p>Paragraph line 1</p>
         </ion-label>
       </ion-item>
 
       <ion-item>
-        <ion-label text-wrap>
+        <ion-label class="ion-text-wrap">
           <ion-text color="primary">
             <h3>H3 Title Text</h3>
           </ion-text>
@@ -96,7 +96,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label text-wrap>
+        <ion-label class="ion-text-wrap">
           <h4>H4 Title Text</h4>
           <p>Paragraph line 1</p>
           <p>Paragraph line 2</p>

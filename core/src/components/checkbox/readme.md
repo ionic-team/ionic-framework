@@ -99,8 +99,7 @@ export class HomePage {
 
 ```tsx
 import React from 'react';
-
-import { IonCheckbox, IonList, IonItem, IonLabel } from '@ionic/react';
+import { IonCheckbox, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
 
 const form = [
   { val: 'Pepperoni', isChecked: true },
@@ -108,8 +107,8 @@ const form = [
   { val: 'Mushroom', isChecked: false }
 ];
 
-const CheckboxExample: React.SFC<{}> = () => (
-  <>
+export const CheckboxExample: React.FC = () => (
+  <IonContent>
     {/*-- Default Checkbox --*/}
     <IonCheckbox />
 
@@ -130,15 +129,14 @@ const CheckboxExample: React.SFC<{}> = () => (
     <IonList>
       { form.map(({val, isChecked}) => (
         <IonItem key={val}>
-          <IonLabel>{{val}}</IonLabel>
+          <IonLabel>{val}</IonLabel>
           <IonCheckbox slot="end" value={val} checked={isChecked} />
         </IonItem>
       )) }
     </IonList>
-  </>
+  </IonContent>
 );
-
-export default CheckboxExample;
+```
 
 
 ### Vue
@@ -165,7 +163,11 @@ export default CheckboxExample;
   <ion-list>
     <ion-item v-for="entry in form">
       <ion-label>{{entry.val}}</ion-label>
-      <ion-checkbox slot="end" v-on:input="entry.checked = $event.target.value" v-bind:value="entry.isChecked"></ion-checkbox>
+      <ion-checkbox
+        slot="end"
+        @input="entry.checked = $event.target.value"
+        :value="entry.isChecked">
+      </ion-checkbox>
     </ion-item>
   </ion-list>
 </template>
@@ -220,6 +222,7 @@ export default CheckboxExample;
 | `--border-style`         | Border style of the checkbox icon              |
 | `--border-width`         | Border width of the checkbox icon              |
 | `--checkmark-color`      | Color of the checkbox checkmark when checked   |
+| `--checkmark-width`      | Stroke width of the checkbox checkmark         |
 | `--size`                 | Size of the checkbox icon                      |
 | `--transition`           | Transition of the checkbox icon                |
 

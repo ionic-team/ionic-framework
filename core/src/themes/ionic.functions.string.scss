@@ -1,9 +1,10 @@
+@import "./ionic.deprecation";
 
-// String Util Functions
-// --------------------------------------------------
+// String Utility Functions
+// --------------------------------------------------------------------------------
 
 // String Replace Function
-// --------------------------------------------------
+// --------------------------------------------------------------------------------
 
 @function str-replace($string, $search, $replace: "") {
   $index: str-index($string, $search);
@@ -16,7 +17,8 @@
 }
 
 // String Split Function
-// --------------------------------------------------
+// --------------------------------------------------------------------------------
+
 
 @function str-split($string, $separator) {
   // empty array/list
@@ -41,8 +43,8 @@
 }
 
 
-// Str Extract Function
-// --------------------------------------------------
+// String Extract Function
+// --------------------------------------------------------------------------------
 
 @function str-extract($string, $start, $end) {
   $start-index: str-index($string, $start);
@@ -60,8 +62,8 @@
 }
 
 
-// Str Contains Function
-// --------------------------------------------------
+// String Contains Function
+// --------------------------------------------------------------------------------
 
 @function str-contains($string, $needle) {
   @if (type-of($string) == string) {
@@ -73,7 +75,7 @@
 
 
 // URL Encode Function
-// --------------------------------------------------
+// --------------------------------------------------------------------------------
 
 @function url-encode($val) {
   $spaces: str-replace($val, " ", "%20");
@@ -82,28 +84,68 @@
 }
 
 
-// Add Selector
-// --------------------------------------------------
-// Used to cleanly add selectors to :host and :host()
+// Add Root Selector
+// --------------------------------------------------------------------------------
+// Adds a root selector using host-context based on the selector passed
+//
+// Examples
+// --------------------------------------------------------------------------------
+// @include add-root-selector("[dir=rtl]", ":host")
+// --> :host-context([dir=rtl])
+//
+// @include add-root-selector("[dir=rtl]", ":host(.fixed)")
+// --> :host-context([dir=rtl]):host(.fixed)
+// --> :host-context([dir=rtl]).fixed
+//
+// @include add-root-selector("[dir=rtl]", ":host(.tab-layout-icon-hide) ::slotted(ion-badge)")
+// --> :host-context([dir=rtl]).tab-layout-icon-hide ::slotted(ion-badge)
+//
+// @include add-root-selector("[dir=rtl]", ".shadow")
+// --> [dir=rtl] .shadow
+// --> :host-context([dir=rtl]) .shadow
+// --------------------------------------------------------------------------------
 
-@function add-root-selector($root, $addHostSelector, $shadowDom: false) {
+@function add-root-selector($root, $addHostSelector) {
   $selectors: str-split($root, ",");
 
   $list: ();
 
   @each $selector in $selectors {
+    // If the selector contains :host( it means it is targeting a class on the host
+    // element so we need to change how we target it
     @if str-contains($selector, ":host(") {
-      $updated-host: str-replace($selector, ":host(", ":host(#{$addHostSelector}");
-      $list: append($list, $updated-host, comma);
+      $shadow-element: str-replace($selector, ":host(", ":host-context(#{$addHostSelector}):host(");
+      $list: append($list, $shadow-element, comma);
 
+      $new-element: ();
+      $elements: str-split($selector, " ");
+
+      @each $element in $elements {
+        @if str-contains($element, ":host(") {
+          $scoped-element: $element;
+
+          @if str-contains($element, "))") {
+            $scoped-element: str-replace($scoped-element, "))", ")");
+          } @else {
+            $scoped-element: str-replace($scoped-element, ")", "");
+          }
+          $scoped-element: str-replace($scoped-element, ":host(", ":host-context(#{$addHostSelector})");
+
+          $new-element: append($new-element, $scoped-element, space);
+        } @else {
+          $new-element: append($new-element, $element, space);
+        }
+      }
+
+      $list: append($list, $new-element, comma);
+    // If the selector contains :host it means it is targeting just the host
+    // element so we can change it to look for host-context
     } @else if str-contains($selector, ":host") {
-      $list: append($list, ":host(#{$addHostSelector}) + b", comma);
-
-    } @else if $shadowDom == true {
-      $list: append($list, ":host(#{$addHostSelector}) #{$selector}", comma);
-
+      $list: append($list, ":host-context(#{$addHostSelector})", comma);
+    // If the selector does not contain host at all it is either a shadow
+    // or normal element so append both the dir check and host-context
     } @else {
-      // TODO host-context should be for scoped only
+      $list: append($list, "#{$addHostSelector} #{$selector}", comma);
       $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
     }
   }

@@ -21,21 +21,21 @@ Fabs are container elements that contain one or more fab buttons. They should be
   <!-- fab placed to the bottom end -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
-      <ion-icon name="arrow-dropleft"></ion-icon>
+      <ion-icon name="arrow-forward-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <!-- fab placed to the top start -->
   <ion-fab vertical="top" horizontal="start" slot="fixed">
     <ion-fab-button>
-      <ion-icon name="arrow-dropright"></ion-icon>
+      <ion-icon name="arrow-back-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <!-- fab placed to the bottom start -->
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
     <ion-fab-button>
-      <ion-icon name="arrow-dropup"></ion-icon>
+      <ion-icon name="arrow-up-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
@@ -96,11 +96,9 @@ Fabs are container elements that contain one or more fab buttons. They should be
 
 ```tsx
 import React from 'react';
-
 import { IonContent, IonFab, IonFabButton, IonIcon, IonFabList } from '@ionic/react';
 
-const Example: React.SFC<{}> = () => (
-
+export const FabExample: React.FC = () => (
   <IonContent>
     {/*-- fab placed to the top end --*/}
     <IonFab vertical="top" horizontal="end" slot="fixed">
@@ -112,21 +110,21 @@ const Example: React.SFC<{}> = () => (
     {/*-- fab placed to the bottom end --*/}
     <IonFab vertical="bottom" horizontal="end" slot="fixed">
       <IonFabButton>
-        <IonIcon name="arrow-dropleft" />
+        <IonIcon name="arrow-forward-circle" />
       </IonFabButton>
     </IonFab>
 
     {/*-- fab placed to the top start --*/}
     <IonFab vertical="top" horizontal="start" slot="fixed">
       <IonFabButton>
-        <IonIcon name="arrow-dropright" />
+        <IonIcon name="arrow-back-circle" />
       </IonFabButton>
     </IonFab>
 
     {/*-- fab placed to the bottom start --*/}
     <IonFab vertical="bottom" horizontal="start" slot="fixed">
       <IonFabButton>
-        <IonIcon name="arrow-dropup" />
+        <IonIcon name="arrow-up-circle" />
       </IonFabButton>
     </IonFab>
 
@@ -181,8 +179,6 @@ const Example: React.SFC<{}> = () => (
     </IonFab>
   </IonContent>
 );
-
-export default Example;
 ```
 
 
@@ -201,21 +197,21 @@ export default Example;
     <!-- fab placed to the bottom end -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button>
-        <ion-icon name="arrow-dropleft"></ion-icon>
+        <ion-icon name="arrow-forward-circle"></ion-icon>
       </ion-fab-button>
     </ion-fab>
 
     <!-- fab placed to the top start -->
     <ion-fab vertical="top" horizontal="start" slot="fixed">
       <ion-fab-button>
-        <ion-icon name="arrow-dropright"></ion-icon>
+        <ion-icon name="arrow-back-circle"></ion-icon>
       </ion-fab-button>
     </ion-fab>
 
     <!-- fab placed to the bottom start -->
     <ion-fab vertical="bottom" horizontal="start" slot="fixed">
       <ion-fab-button>
-        <ion-icon name="arrow-dropup"></ion-icon>
+        <ion-icon name="arrow-up-circle"></ion-icon>
       </ion-fab-button>
     </ion-fab>
 
@@ -286,13 +282,13 @@ export default Example;
 
 ## Methods
 
-### `close() => void`
+### `close() => Promise<void>`
 
 Close an active FAB list container.
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

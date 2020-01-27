@@ -29,11 +29,12 @@
   color: current-color(base);
 }
 
+:host(.ion-text-wrap),
 :host([text-wrap]) {
   white-space: normal;
 }
 
-:host-context(.item-interactive-disabled) {
+:host-context(.item-interactive-disabled:not(.item-multiple-inputs)) {
   cursor: default;
   opacity: .3;
   pointer-events: none;

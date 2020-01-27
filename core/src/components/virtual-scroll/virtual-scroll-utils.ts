@@ -1,7 +1,7 @@
 import { Cell, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM, NODE_CHANGE_CELL, NODE_CHANGE_NONE, NODE_CHANGE_POSITION } from './constants';
-import { CellType } from './virtual-scroll-interface';
+import { CellType, FooterHeightFn, HeaderHeightFn } from './virtual-scroll-interface';
 
 export interface Viewport {
   top: number;
@@ -15,7 +15,7 @@ export interface Range {
 
 const MIN_READS = 2;
 
-export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: Cell[], range: Range) {
+export const updateVDom = (dom: VirtualNode[], heightIndex: Uint32Array, cells: Cell[], range: Range) => {
   // reset dom
   for (const node of dom) {
     node.change = NODE_CHANGE_NONE;
@@ -63,19 +63,19 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
     }
   }
   dom
-  .filter(n => n.d && n.top !== -9999)
-  .forEach(n => {
-    n.change = NODE_CHANGE_POSITION;
-    n.top = -9999;
-  });
-}
+    .filter(n => n.d && n.top !== -9999)
+    .forEach(n => {
+      n.change = NODE_CHANGE_POSITION;
+      n.top = -9999;
+    });
+};
 
-export function doRender(
+export const doRender = (
   el: HTMLElement,
   nodeRender: ItemRenderFn,
   dom: VirtualNode[],
   updateCellHeight: (cell: Cell, node: HTMLElement) => void
-) {
+) => {
   const children = Array.from(el.children).filter(n => n.tagName !== 'TEMPLATE');
   const childrenNu = children.length;
   let child: HTMLElement;
@@ -121,32 +121,32 @@ export function doRender(
       cell.reads--;
     }
   }
-}
+};
 
-function createNode(el: HTMLElement, type: CellType): HTMLElement | null {
+const createNode = (el: HTMLElement, type: CellType): HTMLElement | null => {
   const template = getTemplate(el, type);
   if (template && el.ownerDocument) {
     return el.ownerDocument.importNode(template.content, true).children[0] as HTMLElement;
   }
   return null;
-}
+};
 
-function getTemplate(el: HTMLElement, type: CellType): HTMLTemplateElement | null {
+const getTemplate = (el: HTMLElement, type: CellType): HTMLTemplateElement | null => {
   switch (type) {
     case CELL_TYPE_ITEM: return el.querySelector('template:not([name])');
     case CELL_TYPE_HEADER: return el.querySelector('template[name=header]');
     case CELL_TYPE_FOOTER: return el.querySelector('template[name=footer]');
   }
-}
+};
 
-export function getViewport(scrollTop: number, vierportHeight: number, margin: number): Viewport {
+export const getViewport = (scrollTop: number, vierportHeight: number, margin: number): Viewport => {
   return {
     top: Math.max(scrollTop - margin, 0),
     bottom: scrollTop + vierportHeight + margin
   };
-}
+};
 
-export function getRange(heightIndex: Uint32Array, viewport: Viewport, buffer: number): Range {
+export const getRange = (heightIndex: Uint32Array, viewport: Viewport, buffer: number): Range => {
   const topPos = viewport.top;
   const bottomPos = viewport.bottom;
 
@@ -169,19 +169,19 @@ export function getRange(heightIndex: Uint32Array, viewport: Viewport, buffer: n
   const end = Math.min(i + buffer, heightIndex.length);
   const length = end - offset;
   return { offset, length };
-}
+};
 
-export function getShouldUpdate(dirtyIndex: number, currentRange: Range, range: Range) {
+export const getShouldUpdate = (dirtyIndex: number, currentRange: Range, range: Range) => {
   const end = range.offset + range.length;
   return (
     dirtyIndex <= end ||
     currentRange.offset !== range.offset ||
     currentRange.length !== range.length
   );
-}
+};
 
-export function findCellIndex(cells: Cell[], index: number): number {
-  const max = cells[cells.length - 1].index || 0;
+export const findCellIndex = (cells: Cell[], index: number): number => {
+  const max = cells.length > 0 ? cells[cells.length - 1].index : 0;
   if (index === 0) {
     return 0;
   } else if (index === max + 1) {
@@ -189,9 +189,9 @@ export function findCellIndex(cells: Cell[], index: number): number {
   } else {
     return cells.findIndex(c => c.index === index);
   }
-}
+};
 
-export function inplaceUpdate(dst: Cell[], src: Cell[], offset: number) {
+export const inplaceUpdate = (dst: Cell[], src: Cell[], offset: number) => {
   if (offset === 0 && src.length >= dst.length) {
     return src;
   }
@@ -199,12 +199,14 @@ export function inplaceUpdate(dst: Cell[], src: Cell[], offset: number) {
     dst[i + offset] = src[i];
   }
   return dst;
-}
+};
 
-export function calcCells(
+export const calcCells = (
   items: any[],
 
   itemHeight: ItemHeightFn | undefined,
+  headerHeight: HeaderHeightFn | undefined,
+  footerHeight: FooterHeightFn | undefined,
   headerFn: HeaderFn | undefined,
   footerFn: HeaderFn | undefined,
 
@@ -215,7 +217,7 @@ export function calcCells(
   j: number,
   offset: number,
   len: number
-): Cell[] {
+): Cell[] => {
   const cells: Cell[] = [];
   const end = len + offset;
   for (let i = offset; i < end; i++) {
@@ -228,9 +230,9 @@ export function calcCells(
           type: CELL_TYPE_HEADER,
           value,
           index: i,
-          height: approxHeaderHeight,
-          reads: MIN_READS,
-          visible: false,
+          height: headerHeight ? headerHeight(value, i) : approxHeaderHeight,
+          reads: headerHeight ? 0 : MIN_READS,
+          visible: !!headerHeight,
         });
       }
     }
@@ -253,26 +255,26 @@ export function calcCells(
           type: CELL_TYPE_FOOTER,
           value,
           index: i,
-          height: approxFooterHeight,
-          reads: 2,
-          visible: false,
+          height: footerHeight ? footerHeight(value, i) : approxFooterHeight,
+          reads: footerHeight ? 0 : MIN_READS,
+          visible: !!footerHeight,
         });
       }
     }
   }
   return cells;
-}
+};
 
-export function calcHeightIndex(buf: Uint32Array, cells: Cell[], index: number): number {
+export const calcHeightIndex = (buf: Uint32Array, cells: Cell[], index: number): number => {
   let acum = buf[index];
   for (let i = index; i < buf.length; i++) {
     buf[i] = acum;
     acum += cells[i].height;
   }
   return acum;
-}
+};
 
-export function resizeBuffer(buf: Uint32Array | undefined, len: number) {
+export const resizeBuffer = (buf: Uint32Array | undefined, len: number) => {
   if (!buf) {
     return new Uint32Array(len);
   }
@@ -285,12 +287,12 @@ export function resizeBuffer(buf: Uint32Array | undefined, len: number) {
   } else {
     return buf.subarray(0, len);
   }
-}
+};
 
-export function positionForIndex(index: number, cells: Cell[], heightIndex: Uint32Array): number {
+export const positionForIndex = (index: number, cells: Cell[], heightIndex: Uint32Array): number => {
   const cell = cells.find(c => c.type === CELL_TYPE_ITEM && c.index === index);
   if (cell) {
     return heightIndex[cell.i];
   }
   return -1;
-}
+};

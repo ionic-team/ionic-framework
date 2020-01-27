@@ -1,9 +1,15 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@stencil/core';
 
-import { Mode, SegmentButtonLayout } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
+import { SegmentButtonLayout } from '../../interface';
+import { ButtonInterface } from '../../utils/element-interface';
+import { hostContext } from '../../utils/theme';
 
 let ids = 0;
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-segment-button',
   styleUrls: {
@@ -12,19 +18,15 @@ let ids = 0;
   },
   shadow: true
 })
-export class SegmentButton implements ComponentInterface {
+export class SegmentButton implements ComponentInterface, ButtonInterface {
+  private segmentEl: HTMLIonSegmentElement | null = null;
 
   @Element() el!: HTMLElement;
 
   /**
-   * The mode determines which platform styles to use.
-   */
-  @Prop() mode!: Mode;
-
-  /**
    * If `true`, the segment button is selected.
    */
-  @Prop({ mutable: true }) checked = false;
+  @State() checked = false;
 
   /**
    * If `true`, the user cannot interact with the segment button.
@@ -37,25 +39,29 @@ export class SegmentButton implements ComponentInterface {
   @Prop() layout?: SegmentButtonLayout = 'icon-top';
 
   /**
+   * The type of the button.
+   */
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+
+  /**
    * The value of the segment button.
    */
   @Prop() value: string = 'ion-sb-' + (ids++);
 
-  /**
-   * Emitted when the segment button is clicked.
-   */
-  @Event() ionSelect!: EventEmitter<void>;
-
-  @Watch('checked')
-  checkedChanged(checked: boolean, prev: boolean) {
-    if (checked && !prev) {
-      this.ionSelect.emit();
+  connectedCallback() {
+    const segmentEl = this.segmentEl = this.el.closest('ion-segment');
+    if (segmentEl) {
+      this.updateState();
+      segmentEl.addEventListener('ionChange', this.updateState);
     }
   }
 
-  @Listen('click')
-  onClick() {
-    this.checked = true;
+  disconnectedCallback() {
+    const segmentEl = this.segmentEl;
+    if (segmentEl) {
+      segmentEl.removeEventListener('ionChange', this.updateState);
+      this.segmentEl = null;
+    }
   }
 
   private get hasLabel() {
@@ -66,37 +72,58 @@ export class SegmentButton implements ComponentInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
-  hostData() {
-    const { checked, disabled, hasIcon, hasLabel, layout } = this;
-    return {
-      'aria-disabled': disabled ? 'true' : null,
-      class: {
-        [`${this.mode}`]: true,
-        'segment-button-has-label': hasLabel,
-        'segment-button-has-icon': hasIcon,
-        'segment-button-has-label-only': hasLabel && !hasIcon,
-        'segment-button-has-icon-only': hasIcon && !hasLabel,
-        'segment-button-disabled': disabled,
-        'segment-button-checked': checked,
-        [`segment-button-layout-${layout}`]: true,
-        'ion-activatable': true,
-        'ion-activatable-instant': true,
-      }
-    };
+  private updateState = () => {
+    if (this.segmentEl) {
+      this.checked = this.segmentEl.value === this.value;
+    }
   }
 
   render() {
-    return [
-      <button
-        type="button"
-        aria-pressed={this.checked ? 'true' : null}
-        class="button-native"
-        disabled={this.disabled}
+    const { checked, type, disabled, hasIcon, hasLabel, layout } = this;
+    const mode = getIonMode(this);
+    return (
+      <Host
+        aria-disabled={disabled ? 'true' : null}
+        class={{
+          [mode]: true,
+          'in-toolbar': hostContext('ion-toolbar', this.el),
+          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
+          'in-segment': hostContext('ion-segment', this.el),
+          'in-segment-color': hostContext('ion-segment[color]', this.el),
+          'segment-button-has-label': hasLabel,
+          'segment-button-has-icon': hasIcon,
+          'segment-button-has-label-only': hasLabel && !hasIcon,
+          'segment-button-has-icon-only': hasIcon && !hasLabel,
+          'segment-button-disabled': disabled,
+          'segment-button-checked': checked,
+          [`segment-button-layout-${layout}`]: true,
+          'ion-activatable': true,
+          'ion-activatable-instant': true,
+          'ion-focusable': true,
+        }}
       >
-        <slot></slot>
-        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-      </button>,
-      <div class="segment-button-indicator"></div>
-    ];
+        <button
+          type={type}
+          aria-pressed={checked ? 'true' : null}
+          class="button-native"
+          disabled={disabled}
+        >
+          <span class="button-inner">
+            <slot></slot>
+          </span>
+          {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+        </button>
+        <div
+          part="indicator"
+          class={{
+            'segment-button-indicator': true,
+            'segment-button-indicator-animated': true
+          }}
+        >
+          <div part="indicator-background" class="segment-button-indicator-background"></div>
+        </div>
+
+      </Host>
+    );
   }
 }

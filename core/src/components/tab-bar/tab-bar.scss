@@ -33,12 +33,6 @@
   box-sizing: content-box !important;
 }
 
-:host(.ion-color),
-:host(.ion-color) ::slotted(ion-tab-button) {
-  background: #{current-color(base)};
-  color: #{current-color(contrast, .7)};
-}
-
 :host(.ion-color) ::slotted(ion-tab-button) {
   --background-focused: #{current-color(shade)};
   --color-selected: #{current-color(contrast)};
@@ -46,6 +40,25 @@
 
 :host(.ion-color) ::slotted(.tab-selected) {
   color: #{current-color(contrast)};;
+}
+
+:host(.ion-color),
+:host(.ion-color) ::slotted(ion-tab-button) {
+  color: #{current-color(contrast, .7)};
+}
+
+:host(.ion-color),
+:host(.ion-color) ::slotted(ion-tab-button) {
+  background: #{current-color(base)};
+}
+
+:host(.ion-color) ::slotted(ion-tab-button.ion-focused),
+:host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused) {
+  background: var(--background-focused)
+}
+
+:host(.tab-bar-translucent) ::slotted(ion-tab-button) {
+  background: transparent;
 }
 
 :host([slot="top"]) {

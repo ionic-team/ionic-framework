@@ -9,7 +9,9 @@
   --background-checked: #{ion-color(primary, base)};
   --handle-background: #{$toggle-ios-handle-background-color};
   --handle-background-checked: #{$toggle-ios-handle-background-color};
-
+  --border-radius: #{$toggle-ios-border-radius};
+  --handle-border-radius: #{$toggle-ios-handle-border-radius};
+  
   box-sizing: content-box;
 
   position: relative;
@@ -29,7 +31,7 @@
 // -----------------------------------------
 
 .toggle-icon {
-  @include border-radius($toggle-ios-border-radius);
+  @include border-radius(var(--border-radius));
 
   display: block;
   position: relative;
@@ -43,29 +45,10 @@
 
   transition: background-color $toggle-ios-transition-duration;
 
-  background-color: $toggle-ios-border-color-off;
+  background: var(--background);
 
   overflow: hidden;
   pointer-events: none;
-}
-
-
-// iOS Toggle Background Oval: Unchecked
-// -----------------------------------------
-
-.toggle-icon::before {
-  @include position($toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width);
-  @include border-radius($toggle-ios-border-radius);
-
-  position: absolute;
-
-  transform: scale3d(1, 1, 1);
-
-  transition: transform $toggle-ios-transition-duration;
-
-  background: var(--background);
-
-  content: "";
 }
 
 
@@ -74,7 +57,7 @@
 
 .toggle-inner {
   @include position($toggle-ios-border-width, null, null, $toggle-ios-border-width);
-  @include border-radius($toggle-ios-handle-border-radius);
+  @include border-radius(var(--handle-border-radius));
 
   position: absolute;
 

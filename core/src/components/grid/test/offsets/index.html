@@ -8,8 +8,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-</head>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
   <ion-app>
@@ -21,7 +21,7 @@
     </ion-header>
 
     <ion-content id="content" class="grid-demo">
-      <h2 padding-start>Push</h2>
+      <h2 class="ion-padding-start">Push</h2>
       <ion-grid>
         <ion-row>
           <ion-col size="auto" push="1">
@@ -37,7 +37,7 @@
         </ion-row>
       </ion-grid>
 
-      <h2 padding-start>Push and Pull</h2>
+      <h2 class="ion-padding-start">Push and Pull</h2>
       <ion-grid>
         <ion-row>
           <ion-col size="9" push="3">
@@ -68,7 +68,7 @@
         </ion-row>
       </ion-grid>
 
-      <h2 padding-start>Offset</h2>
+      <h2 class="ion-padding-start">Offset</h2>
       <ion-grid>
         <ion-row>
           <ion-col offset="5">

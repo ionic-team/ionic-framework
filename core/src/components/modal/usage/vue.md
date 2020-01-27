@@ -6,7 +6,7 @@
         <ion-title>{{ title }}</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content padding>
+    <ion-content class="ion-padding">
       {{ content }}
     </ion-content>
   </div>
@@ -29,8 +29,8 @@ export default {
 
 ```html
 <template>
-  <ion-page class="ion-page" main>
-    <ion-content class="ion-content" padding>
+  <ion-page class="ion-page">
+    <ion-content class="ion-content ion-padding">
       <ion-button @click="openModal">Open Modal</ion-button>
     </ion-content>
   </ion-page>

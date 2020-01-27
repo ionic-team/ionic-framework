@@ -64,7 +64,7 @@ If the issue is a support question, the submitter should be redirected to our [f
 
 ### Incomplete Template
 
-If the issue template has not been filled out completely, the issue should be closed and locked. The submitter should be informed top re-submit the issue making sure they fill the form out completely. Use the `ionitron: missing template` label to accomplish this.
+If the issue template has not been filled out completely, the issue should be closed and locked. The submitter should be informed to re-submit the issue making sure they fill the form out completely. Use the `ionitron: missing template` label to accomplish this.
 
 ### Issues with Open Questions
 
@@ -77,7 +77,7 @@ NOTE: be sure to perform those actions in the order stated. If you add the comme
 
 If there is a response to the question, the bot will remove the `needs: reply` and apply the `triage` label. The issue will then go through the triage handling again.
 
-if there is no response within 30 days, the issue will be closed and locked.
+If there is no response within 30 days, the issue will be closed and locked.
 
 ## Workflow
 
@@ -221,9 +221,11 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
 
 ## Releasing
 
-1. Create the release branch from `master`, for example: `release-4.1.0`.
+1. Create the release branch from `master`, for example: `release-4.5.0`.
 
-1. Submit a pull request from the release branch into `stable`. Do not merge this pull request yet.
+1. For major or minor releases, create a version branch based off the latest version branch. For example, if releasing 4.5.0, create a branch called `4.5.x` based off `4.4.x`.
+
+1. Submit a pull request from the release branch into the version branch. Do not merge this pull request yet.
 
 1. Verify all tests are passing, fix any bugs if needed and make sure no undesired commits are in.
 
@@ -235,7 +237,10 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
     - Select the version based on the type of commits and the [Ionic Versioning](https://ionicframework.com/docs/intro/versioning)
     - After the process completes, verify the version number in all packages (`core`, `docs`, `angular`)
     - Verify the changelog commits are accurate and follow the [proper format]((https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format))
-    - Commit these changes with the version number as the message, e.g. `git commit -m "4.1.0"`
+    - For major or minor releases, ensure that the version number has an associated title (for example: `4.5.0 Boron`)
+    - Commit these changes with the version number as the message, e.g. `git commit -m "4.5.0"`
+
+1. *(Optional)* Run `npm run release -- --dry-run` to run the release without publishing and verify the version.
 
 1. Run `npm run release`
 
@@ -243,10 +248,6 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
 
     <img width="191" alt="Merge pull request button" src="https://user-images.githubusercontent.com/236501/47032669-8be1b980-d138-11e8-9a90-d1518c223184.png">
 
-1. Rewrite the commit message to `merge release-4.1.0` with the proper release branch. For example, if this release is for `4.3.1`, the message would be `merge release-4.3.1`.
+1. Rewrite the commit message to `merge release-[VERSION]` with the proper release branch. For example, if this release is for `4.5.0`, the message would be `merge release-4.5.0`.
 
-1. Submit a pull request from the `stable` branch into `master`. Merge this pull request using the same commit format in the last step, to ensure any changes made on the release branch get added to future releases.
-
-1. Merge the release branch into its corresponding version branch.
-    - If this is a major or minor release, create the version branch off the latest `stable`. For example, if this release was `4.2.0`, create a branch called `4.2.x` off of `stable`.
-    - If this is a patch release, merge the release branch into the version branch. For example, if this release is `4.2.1`, merge the release branch into the `4.2.x` branch.
+1. Submit a pull request from the release branch into `master`. Merge this pull request using the same commit format in the last step, to ensure any changes made on the release branch get added to future releases.

@@ -9,8 +9,8 @@
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic.js"></script>
-
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <style>
     ion-slides {
       height: 100%;
@@ -42,9 +42,9 @@
     <ion-content>
       <ion-slides class="slides">
         <ion-slide>
-          <img src="https://images.unsplash.com/photo-1490718687940-0ecadf414600?auto=format&fit=crop&w=1352&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D"
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB8AQAAAACDZekTAAABMElEQVR4AWLABZjQBdjRBfgb0ATkD6AJ2D9AE6j/gCbw/weAyzk2IwAKwBgIixvNKPaA+P7yXplUZ1/7OO79DkYdjHrIqKeMeskoISXkWkLuBWSMkhGQMYCMAWQMISVkDCBjDCKjZAAZA8gYQMYAUkLGaBAZg8goGYPIGATGIDAGgTEIjEFgDCKjZAwiYxAYg8AYBMYgMAaBMYiMkjGIjEHGSMgYQErIGEDGAAKjZAwyhpAxgIwB5F9nvVsBCAUgDC3Zf2MGuCe1+r6QyBuMwSysg5WyF3bLeXBinCmnzr1wc9wtt08+SBAZI4XklCSTddpAX2gUnaOV9JZm033oAD8gDAyCUnAM0sFCaAlPIS5MhtpwHfLjBuyBXzAQjsJieE4T6kptqm81ss7W6ss/gwMyz60frEbR8QAAAABJRU5ErkJggg=="
             class="slide-image" />
-          <div padding>
+          <div class="ion-padding">
             <h2 class="slide-title">
               Welcome to
               <b>ICA</b>
@@ -58,9 +58,9 @@
         </ion-slide>
 
         <ion-slide>
-          <img src="https://images.unsplash.com/photo-1504703500545-4c4ee081b155?auto=format&fit=crop&w=1350&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D"
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB8AQAAAACDZekTAAABMElEQVR4AWLABZjQBdjRBfgb0ATkD6AJ2D9AE6j/gCbw/weAyzk2IwAKwBgIixvNKPaA+P7yXplUZ1/7OO79DkYdjHrIqKeMeskoISXkWkLuBWSMkhGQMYCMAWQMISVkDCBjDCKjZAAZA8gYQMYAUkLGaBAZg8goGYPIGATGIDAGgTEIjEFgDCKjZAwiYxAYg8AYBMYgMAaBMYiMkjGIjEHGSMgYQErIGEDGAAKjZAwyhpAxgIwB5F9nvVsBCAUgDC3Zf2MGuCe1+r6QyBuMwSysg5WyF3bLeXBinCmnzr1wc9wtt08+SBAZI4XklCSTddpAX2gUnaOV9JZm033oAD8gDAyCUnAM0sFCaAlPIS5MhtpwHfLjBuyBXzAQjsJieE4T6kptqm81ss7W6ss/gwMyz60frEbR8QAAAABJRU5ErkJggg=="
             class="slide-image" />
-          <div padding>
+          <div class="ion-padding">
             <h2 class="slide-title">What is Ionic?</h2>
             <p>
               <b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web
@@ -69,9 +69,9 @@
         </ion-slide>
 
         <ion-slide>
-          <img src="https://images.unsplash.com/photo-1501879779179-4576bae71d8d?auto=format&fit=crop&w=1350&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D"
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB8AQAAAACDZekTAAABMElEQVR4AWLABZjQBdjRBfgb0ATkD6AJ2D9AE6j/gCbw/weAyzk2IwAKwBgIixvNKPaA+P7yXplUZ1/7OO79DkYdjHrIqKeMeskoISXkWkLuBWSMkhGQMYCMAWQMISVkDCBjDCKjZAAZA8gYQMYAUkLGaBAZg8goGYPIGATGIDAGgTEIjEFgDCKjZAwiYxAYg8AYBMYgMAaBMYiMkjGIjEHGSMgYQErIGEDGAAKjZAwyhpAxgIwB5F9nvVsBCAUgDC3Zf2MGuCe1+r6QyBuMwSysg5WyF3bLeXBinCmnzr1wc9wtt08+SBAZI4XklCSTddpAX2gUnaOV9JZm033oAD8gDAyCUnAM0sFCaAlPIS5MhtpwHfLjBuyBXzAQjsJieE4T6kptqm81ss7W6ss/gwMyz60frEbR8QAAAABJRU5ErkJggg=="
             class="slide-image" />
-          <div padding>
+          <div class="ion-padding">
             <h2 class="slide-title">What is Ionic Pro?</h2>
             <p>
               <b>Ionic Pro</b> is a powerful set of services and features built on top of Ionic Framework that brings a totally
@@ -80,7 +80,7 @@
         </ion-slide>
 
         <ion-slide>
-          <img src="https://images.unsplash.com/photo-1485832329521-e944d75fa65e?auto=format&fit=crop&w=1350&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D"
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB8AQAAAACDZekTAAABMElEQVR4AWLABZjQBdjRBfgb0ATkD6AJ2D9AE6j/gCbw/weAyzk2IwAKwBgIixvNKPaA+P7yXplUZ1/7OO79DkYdjHrIqKeMeskoISXkWkLuBWSMkhGQMYCMAWQMISVkDCBjDCKjZAAZA8gYQMYAUkLGaBAZg8goGYPIGATGIDAGgTEIjEFgDCKjZAwiYxAYg8AYBMYgMAaBMYiMkjGIjEHGSMgYQErIGEDGAAKjZAwyhpAxgIwB5F9nvVsBCAUgDC3Zf2MGuCe1+r6QyBuMwSysg5WyF3bLeXBinCmnzr1wc9wtt08+SBAZI4XklCSTddpAX2gUnaOV9JZm033oAD8gDAyCUnAM0sFCaAlPIS5MhtpwHfLjBuyBXzAQjsJieE4T6kptqm81ss7W6ss/gwMyz60frEbR8QAAAABJRU5ErkJggg=="
             class="slide-image" />
           <ion-button onclick="toStart()">
             Back to the start

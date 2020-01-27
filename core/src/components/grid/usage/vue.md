@@ -71,13 +71,13 @@
     </ion-row>
 
     <ion-row>
-      <ion-col align-self-start>
+      <ion-col class="ion-align-self-start">
         ion-col [start]
       </ion-col>
-      <ion-col align-self-center>
+      <ion-col class="ion-align-self-center">
         ion-col [center]
       </ion-col>
-      <ion-col align-self-end>
+      <ion-col class="ion-align-self-end">
         ion-col [end]
       </ion-col>
       <ion-col>
@@ -87,14 +87,14 @@
       </ion-col>
     </ion-row>
 
-    <ion-row align-items-start>
+    <ion-row class="ion-align-items-start">
       <ion-col>
         [start] ion-col
       </ion-col>
       <ion-col>
         [start] ion-col
       </ion-col>
-      <ion-col align-self-end>
+      <ion-col class="ion-align-self-end">
         [start] ion-col [end]
       </ion-col>
       <ion-col>
@@ -104,7 +104,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row align-items-center>
+    <ion-row class="ion-align-items-center">
       <ion-col>
         [center] ion-col
       </ion-col>
@@ -121,11 +121,11 @@
       </ion-col>
     </ion-row>
 
-    <ion-row align-items-end>
+    <ion-row class="ion-align-items-end">
       <ion-col>
         [end] ion-col
       </ion-col>
-      <ion-col align-self-start>
+      <ion-col class="ion-align-self-start">
         [end] ion-col [start]
       </ion-col>
       <ion-col>
