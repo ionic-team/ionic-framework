@@ -2,7 +2,7 @@
 import { defineCustomElements } from '@ionic/core/loader';
 import { addIcons } from 'ionicons';
 import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
-export { AlertButton, AlertInput, setupConfig } from '@ionic/core';
+export { createAnimation, createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, setupConfig } from '@ionic/core';
 export * from './proxies';
 
 // createControllerComponent
