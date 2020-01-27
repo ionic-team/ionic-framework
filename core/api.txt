@@ -1260,6 +1260,7 @@ ion-toggle,css-prop,--handle-border-radius
 ion-toolbar,shadow
 ion-toolbar,prop,color,string | undefined,undefined,false,false
 ion-toolbar,prop,mode,"ios" | "md",undefined,false,false
+ion-toolbar,css-prop,--backdrop-filter
 ion-toolbar,css-prop,--background
 ion-toolbar,css-prop,--border-color
 ion-toolbar,css-prop,--border-style
