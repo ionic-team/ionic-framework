@@ -223,7 +223,7 @@ export const ButtonsExample: React.FC = () => (
     </ion-buttons>
     <ion-title>Right side menu toggle</ion-title>
     <ion-buttons slot="end">
-      <ion-menu-button autoHide="false"></ion-menu-button>
+      <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 

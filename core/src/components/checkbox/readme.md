@@ -163,7 +163,11 @@ export const CheckboxExample: React.FC = () => (
   <ion-list>
     <ion-item v-for="entry in form">
       <ion-label>{{entry.val}}</ion-label>
-      <ion-checkbox slot="end" v-on:input="entry.checked = $event.target.value" v-bind:value="entry.isChecked"></ion-checkbox>
+      <ion-checkbox
+        slot="end"
+        @input="entry.checked = $event.target.value"
+        :value="entry.isChecked">
+      </ion-checkbox>
     </ion-item>
   </ion-list>
 </template>
