@@ -51,9 +51,9 @@ export const GridExample: React.FC = () => (
       </IonRow>
 
       <IonRow>
-        <IonCol align-self-start>ion-col start</IonCol>
-        <IonCol align-self-center>ion-col center</IonCol>
-        <IonCol align-self-end>ion-col end</IonCol>
+        <IonCol class="ion-align-self-start">ion-col start</IonCol>
+        <IonCol class="ion-align-self-center">ion-col center</IonCol>
+        <IonCol class="ion-align-self-end">ion-col end</IonCol>
         <IonCol>
           ion-col
           <br />#
@@ -61,10 +61,10 @@ export const GridExample: React.FC = () => (
         </IonCol>
       </IonRow>
 
-      <IonRow align-items-start>
+      <IonRow class="ion-align-items-start">
         <IonCol>start ion-col</IonCol>
         <IonCol>start ion-col</IonCol>
-        <IonCol align-self-end>start ion-col end</IonCol>
+        <IonCol class="ion-align-self-end">start ion-col end</IonCol>
         <IonCol>
           ion-col
           <br />#
@@ -72,7 +72,7 @@ export const GridExample: React.FC = () => (
         </IonCol>
       </IonRow>
 
-      <IonRow align-items-center>
+      <IonRow class="ion-align-items-center">
         <IonCol>center ion-col</IonCol>
         <IonCol>center ion-col</IonCol>
         <IonCol>center ion-col</IonCol>
@@ -83,9 +83,9 @@ export const GridExample: React.FC = () => (
         </IonCol>
       </IonRow>
 
-      <IonRow align-items-end>
+      <IonRow class="ion-align-items-end">
         <IonCol>end ion-col</IonCol>
-        <IonCol align-self-start>end ion-col start</IonCol>
+        <IonCol class="ion-align-self-start">end ion-col start</IonCol>
         <IonCol>end ion-col</IonCol>
         <IonCol>
           ion-col
