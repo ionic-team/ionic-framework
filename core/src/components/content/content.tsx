@@ -320,6 +320,7 @@ export class Content implements ComponentInterface {
           '--offset-bottom': `${this.cBottom}px`,
         }}
       >
+        <div id="background-content"></div>
         <main
           class={{
             'inner-scroll': true,
@@ -330,9 +331,7 @@ export class Content implements ComponentInterface {
           ref={el => this.scrollEl = el!}
           onScroll={ev => this.onScroll(ev)}
         >
-          <div id="scroll-content">
-            <slot></slot>
-          </div>
+          <slot></slot>
         </main>
 
         {transitionShadow ? (

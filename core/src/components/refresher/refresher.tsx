@@ -161,7 +161,7 @@ export class Refresher implements ComponentInterface {
   }
 
   private async setupiOSNativeRefresher(pullingSpinner: HTMLIonSpinnerElement, refreshingSpinner: HTMLIonSpinnerElement) {
-    this.elementToTransform = this.scrollEl!.querySelector(`#scroll-content`) as HTMLElement | undefined;
+    this.elementToTransform = this.scrollEl!;
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
     const MAX_PULL = this.scrollEl!.clientHeight * 0.16;
     const NUM_TICKS = ticks.length;
