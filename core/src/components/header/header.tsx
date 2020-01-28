@@ -143,7 +143,6 @@ export class Header implements ComponentInterface {
   render() {
     const { translucent } = this;
     const mode = getIonMode(this);
-    console.log('mode', mode, translucent);
     const collapse = this.collapse || 'none';
     return (
       <Host
