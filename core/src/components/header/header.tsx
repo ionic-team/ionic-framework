@@ -141,7 +141,9 @@ export class Header implements ComponentInterface {
   }
 
   render() {
+    const { translucent } = this;
     const mode = getIonMode(this);
+    console.log('mode', mode, translucent);
     const collapse = this.collapse || 'none';
     return (
       <Host
@@ -157,6 +159,10 @@ export class Header implements ComponentInterface {
           [`header-translucent-${mode}`]: this.translucent,
         }}
       >
+        { mode === 'ios' && translucent &&
+          <div class="header-background"></div>
+        }
+        <slot></slot>
       </Host>
     );
   }

@@ -6,7 +6,6 @@
 :host {
   /**
    * @prop --background: Background of the toolbar
-   * @prop --backdrop-filter: Backdrop filter of the toolbar. Only applies in iOS mode.
    *
    * @prop --border-color: Color of the toolbar border
    * @prop --border-style: Style of the toolbar border
@@ -51,9 +50,7 @@
 }
 
 :host(.ion-color) .toolbar-background {
-  &::after {
-    background: current-color(base);
-  }
+  background: current-color(base);
 }
 
 .toolbar-container {
@@ -91,18 +88,12 @@
   border-style: var(--border-style);
   border-color: var(--border-color);
 
+  background: var(--background);
+
   contain: strict;
+  opacity: var(--opacity);
   z-index: $z-index-toolbar-background;
   pointer-events: none;
-
-  &::after {
-    @include button-state();
-
-    background: var(--background);
-
-    opacity: var(--opacity)
-
-  }
 }
 
 

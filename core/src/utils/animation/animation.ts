@@ -720,7 +720,7 @@ export const createAnimation = (animationId?: string): Animation => {
       });
 
       if (!parentAnimation) {
-        play();
+        // play();
       }
     }
 
