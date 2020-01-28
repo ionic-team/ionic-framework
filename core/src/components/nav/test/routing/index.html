@@ -9,83 +9,18 @@
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-  <style>
-    f {
-      display: block;
-      height: 200px;
-    }
-
-    .red {
-      background-color: #ea445a;
-    }
-
-    .green {
-      background-color: #76d672;
-    }
-
-    .blue {
-      background-color: #3478f6;
-    }
-
-    .yellow {
-      background-color: #ffff80;
-    }
-
-    .pink {
-      background-color: #ff6b86;
-    }
-
-    .purple {
-      background-color: #7e34f6;
-    }
-
-    .black {
-      background-color: #000;
-    }
-
-    .orange {
-      background-color: #f69234;
-    }
-
-  </style>
-    <script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <script>
     class PageRoot extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-          <ion-header translucent>
+          <ion-header>
             <ion-toolbar>
               <ion-title>Root</ion-title>
             </ion-toolbar>
-            <ion-toolbar>
-              <ion-searchbar></ion-searchbar>
-            </ion-toolbar>
           </ion-header>
-          <ion-content class="ion-padding" fullscreen>
+          <ion-content class="ion-padding">
             <h1>Root</h1>
-            <ion-grid>
-              <ion-row>
-                <ion-col size="6">
-                  <f class="red"></f>
-                </ion-col>
-                <ion-col size="6">
-                  <f class="green"></f>
-                </ion-col>
-                <ion-col size="6">
-                  <f class="blue"></f>
-                </ion-col>
-                <ion-col size="6">
-                  <f class="yellow"></f>
-                </ion-col>
-                <ion-col size="6">
-                  <f class="pink"></f>
-                </ion-col>
-                <ion-col size="6">
-                  <f class="purple"></f>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-             <div>
+            <div>
               <ion-nav-link router-direction="forward" component="page-one">
                 <ion-button class="next">Go to Page One</ion-button>
               </ion-nav-link>
@@ -97,42 +32,16 @@
     class PageOne extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-          <ion-header translucent>
+          <ion-header>
             <ion-toolbar>
               <ion-buttons slot="start">
                 <ion-back-button></ion-back-button>
               </ion-buttons>
               <ion-title>Page One</ion-title>
             </ion-toolbar>
-            <ion-toolbar>
-              <ion-searchbar></ion-searchbar>
-            </ion-toolbar>
           </ion-header>
-          <ion-content class="ion-padding" fullscreen>
+          <ion-content class="ion-padding">
             <h1>Page One</h1>
-            
-             <ion-grid>
-              <ion-row>
-                <ion-col size="6">
-                  <f class="red"></f>
-                </ion-col>
-                <ion-col size="6">
-                  <f class="green"></f>
-                </ion-col>
-                <ion-col size="6">
-                  <f class="blue"></f>
-                </ion-col>
-                <ion-col size="6">
-                  <f class="yellow"></f>
-                </ion-col>
-                <ion-col size="6">
-                  <f class="pink"></f>
-                </ion-col>
-                <ion-col size="6">
-                  <f class="purple"></f>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
             <ion-nav-link router-direction="forward" component="page-two">
               <ion-button class="next">Go to Page Two</ion-button>
             </ion-nav-link>
@@ -143,7 +52,7 @@
     class PageTwo extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-          <ion-header >
+          <ion-header>
             <ion-toolbar>
               <ion-buttons slot="start">
                 <ion-back-button></ion-back-button>
@@ -151,7 +60,7 @@
               <ion-title>Page Two</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content class="ion-padding" >
+          <ion-content class="ion-padding">
             <h1>Page Two</h1>
             <div>
               <ion-nav-link router-direction="forward" component="page-three">
