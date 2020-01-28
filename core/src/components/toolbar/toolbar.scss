@@ -51,7 +51,9 @@
 }
 
 :host(.ion-color) .toolbar-background {
-  background: current-color(base);
+  &::after {
+    background: current-color(base);
+  }
 }
 
 .toolbar-container {
