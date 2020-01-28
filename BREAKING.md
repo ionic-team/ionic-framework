@@ -343,6 +343,7 @@ For more information see the [List Header usage](https://ionicframework.com/docs
 - The `swipeEnable()` function has been removed in Angular, use `swipeGesture()` instead.
 - The `side` values `left` and `right` have been removed, use `start` and `end` instead.
 - Removed the `main` attribute, use `content-id` (for vanilla JS / Vue) and `contentId` (for Angular / React) instead.
+  
   **Before**
 
   ```html
@@ -448,7 +449,7 @@ Segment was completely revamped to use the new iOS design including an all new g
 - The Material Design spec does not include an indicator color on non-checked buttons: https://material.io/components/tabs/
 - In order to style the Segment to match the old spec, please use custom CSS. For example, to update Material Design to include a bottom line all of the time:
   ```css
-  .md ion-segment::**after {**
+  .md ion-segment::after {
       position: absolute;
       bottom: 0;
       height: 2px;
