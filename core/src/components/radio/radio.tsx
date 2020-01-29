@@ -67,6 +67,9 @@ export class Radio implements ComponentInterface {
   @Event() ionBlur!: EventEmitter<void>;
 
   connectedCallback() {
+    if (this.value === undefined) {
+      this.value = this.inputId;
+    }
     const radioGroup = this.radioGroup = this.el.closest('ion-radio-group');
     if (radioGroup) {
       this.updateState();
