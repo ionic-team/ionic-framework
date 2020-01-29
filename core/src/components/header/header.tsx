@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Host, Prop, h, readTask, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -106,29 +106,24 @@ export class Header implements ComponentInterface {
       setToolbarBackgroundOpacity(toolbar, 0);
     });
 
-    readTask(() => {
-        const mainHeaderHeight = mainHeaderIndex.el.clientHeight;
+    /**
+     * Handle interaction between toolbar collapse and
+     * showing/hiding content in the primary ion-header
+     * as well as progressively showing/hiding the main header
+     * border as the top-most toolbar collapses or expands.
+     */
+    const toolbarIntersection = (ev: any) => { handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex); };
 
-        /**
-         * Handle interaction between toolbar collapse and
-         * showing/hiding content in the primary ion-header
-         * as well as progressively showing/hiding the main header
-         * border as the top-most toolbar collapses or expands.
-         */
-        const toolbarIntersection = (ev: any) => { handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex); };
+    this.intersectionObserver = new IntersectionObserver(toolbarIntersection, { root: contentEl, threshold: [0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] });
+    this.intersectionObserver.observe(scrollHeaderIndex.toolbars[scrollHeaderIndex.toolbars.length - 1].el);
 
-        // Subtracting 1 pixel gives us some wiggle room for ensuring everything is reset in different edge cases
-        this.intersectionObserver = new IntersectionObserver(toolbarIntersection, { threshold: [0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], rootMargin: `-${mainHeaderHeight - 1}px 0px 0px 0px` });
-        this.intersectionObserver.observe(scrollHeaderIndex.toolbars[scrollHeaderIndex.toolbars.length - 1].el);
-
-      /**
-       * Handle scaling of large iOS titles and
-       * showing/hiding border on last toolbar
-       * in primary header
-       */
-        this.contentScrollCallback = () => { handleContentScroll(this.scrollEl!, scrollHeaderIndex, contentEl); };
-        this.scrollEl!.addEventListener('scroll', this.contentScrollCallback);
-    });
+    /**
+     * Handle scaling of large iOS titles and
+     * showing/hiding border on last toolbar
+     * in primary header
+     */
+    this.contentScrollCallback = () => { handleContentScroll(this.scrollEl!, scrollHeaderIndex, contentEl); };
+    this.scrollEl!.addEventListener('scroll', this.contentScrollCallback);
 
     writeTask(() => {
       cloneElement('ion-title');
