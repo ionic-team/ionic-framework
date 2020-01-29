@@ -174,7 +174,7 @@ export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, m
     pullingSpinner !== null &&
     refreshingSpinner !== null &&
     (
-      (mode === 'ios' && isPlatform('mobile')) ||
+      (mode === 'ios' && isPlatform('mobile') && (referenceEl.style as any).webkitOverflowScrolling !== undefined) ||
       mode === 'md'
     )
 

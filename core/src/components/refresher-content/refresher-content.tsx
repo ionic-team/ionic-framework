@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -11,6 +11,8 @@ import { SPINNERS } from '../spinner/spinner-configs';
   tag: 'ion-refresher-content'
 })
 export class RefresherContent implements ComponentInterface {
+
+  @Element() el!: HTMLIonRefresherContentElement;
 
   /**
    * A static icon or a spinner to display when you begin to pull down.
@@ -49,9 +51,10 @@ export class RefresherContent implements ComponentInterface {
   componentWillLoad() {
     if (this.pullingIcon === undefined) {
       const mode = getIonMode(this);
+      const overflowRefresher = (this.el.style as any).webkitOverflowScrolling !== undefined ? 'lines' : 'arrow-down';
       this.pullingIcon = config.get(
         'refreshingIcon',
-        mode === 'ios' && isPlatform('mobile') ? config.get('spinner', 'lines') : 'circular'
+        mode === 'ios' && isPlatform('mobile') ? config.get('spinner', overflowRefresher) : 'circular'
       );
     }
     if (this.refreshingSpinner === undefined) {
