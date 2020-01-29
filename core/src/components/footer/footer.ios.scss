@@ -9,13 +9,15 @@
 }
 
 @supports (backdrop-filter: blur(0)) {
-  .footer-translucent-ios {
+  .footer-background {
+    @include position(0, 0, 0, 0);
+
+    position: absolute;
+
     backdrop-filter: $footer-ios-translucent-filter;
   }
-
   .footer-translucent-ios ion-toolbar {
     --opacity: .8;
-    --backdrop-filter: #{$footer-ios-translucent-filter};
   }
 }
 
