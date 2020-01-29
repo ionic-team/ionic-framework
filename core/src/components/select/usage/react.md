@@ -1,58 +1,11 @@
+## Single Selection
+
 ```tsx
 import React from 'react';
-import {
-  IonList,
-  IonListHeader,
-  IonItem,
-  IonLabel,
-  IonSelect,
-  IonSelectOption,
-  IonContent
-} from '@ionic/react';
-
-const customAlertOptions = {
-  header: 'Pizza Toppings',
-  subHeader: 'Select your toppings',
-  message: '$1.00 per topping',
-  translucent: true
-};
-
-const customPopoverOptions = {
-  header: 'Hair Color',
-  subHeader: 'Select your hair color',
-  message: 'Only select your dominant hair color'
-};
-
-const customActionSheetOptions = {
-  header: 'Colors',
-  subHeader: 'Select your favorite color'
-};
-
-const objectOptions = [
-  {
-    id: 1,
-    first: 'Alice',
-    last: 'Smith'
-  },
-  {
-    id: 2,
-    first: 'Bob',
-    last: 'Davis'
-  },
-  {
-    id: 3,
-    first: 'Charlie',
-    last: 'Rosenburg'
-  }
-];
-
-const compareWith = (o1: any, o2: any) => {
-  return o1 && o2 ? o1.id === o2.id : o1 === o2;
-};
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption } from '@ionic/react';
 
 export const SelectExample: React.FC = () => (
   <IonContent>
-    ## Single Selection
     <IonList>
       <IonListHeader>
         <IonLabel>
@@ -78,7 +31,19 @@ export const SelectExample: React.FC = () => (
         </IonSelect>
       </IonItem>
     </IonList>
-    ## Multiple Selection
+  </IonContent>
+);
+```
+
+
+## Multiple Selection
+
+```tsx
+import React from 'react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption } from '@ionic/react';
+
+export const SelectExample: React.FC = () => (
+  <IonContent>
     <IonList>
       <IonListHeader>
         <IonLabel>
@@ -116,7 +81,41 @@ export const SelectExample: React.FC = () => (
         </IonSelect>
       </IonItem>
     </IonList>
-    ## Objects as Values
+  </IonContent>
+);
+```
+
+
+## Objects as Values
+
+```tsx
+import React from 'react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption } from '@ionic/react';
+
+const objectOptions = [
+  {
+    id: 1,
+    first: 'Alice',
+    last: 'Smith'
+  },
+  {
+    id: 2,
+    first: 'Bob',
+    last: 'Davis'
+  },
+  {
+    id: 3,
+    first: 'Charlie',
+    last: 'Rosenburg'
+  }
+];
+
+const compareWith = (o1: any, o2: any) => {
+  return o1 && o2 ? o1.id === o2.id : o1 === o2;
+};
+
+export const SelectExample: React.FC = () => (
+  <IonContent>
     <IonList>
       <IonListHeader>
         <IonLabel>
@@ -136,7 +135,37 @@ export const SelectExample: React.FC = () => (
         </IonSelect>
       </IonItem>
     </IonList>
-    ## Interface Options
+  </IonContent>
+);
+```
+
+
+## Interface Options
+
+```tsx
+import React from 'react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption } from '@ionic/react';
+
+const customAlertOptions = {
+  header: 'Pizza Toppings',
+  subHeader: 'Select your toppings',
+  message: '$1.00 per topping',
+  translucent: true
+};
+
+const customPopoverOptions = {
+  header: 'Hair Color',
+  subHeader: 'Select your hair color',
+  message: 'Only select your dominant hair color'
+};
+
+const customActionSheetOptions = {
+  header: 'Colors',
+  subHeader: 'Select your favorite color'
+};
+
+export const SelectExample: React.FC = () => (
+  <IonContent>
     <IonList>
       <IonListHeader>
         <IonLabel>
