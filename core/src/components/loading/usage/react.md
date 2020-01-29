@@ -15,7 +15,7 @@ export const LoadingExample: React.FC = () => {
       <IonLoading
         isOpen={showLoading}
         onDidDismiss={() => setShowLoading(false)}
-        message={'Loading...'}
+        message={'Please wait...'}
         duration={5000}
       />
     </IonContent>
