@@ -20,17 +20,30 @@
   <ion-list>
     <ion-item>
       <ion-label>Pepperoni</ion-label>
-      <ion-toggle @ionChange="toppings.push($event.target.value)" value="pepperoni" v-bind:checked="toppings.indexOf('pepperoni') !== -1"></ion-toggle>
+      <ion-toggle
+        @ionChange="toppings.push($event.target.value)"
+        value="pepperoni"
+        :checked="toppings.indexOf('pepperoni') !== -1">
+      </ion-toggle>
     </ion-item>
 
     <ion-item>
       <ion-label>Sausage</ion-label>
-      <ion-toggle @ionChange="toppings.push($event.target.value)" value="sausage" v-bind:checked="toppings.indexOf('pepperoni') !== -1" disabled="true"></ion-toggle>
+      <ion-toggle
+        @ionChange="toppings.push($event.target.value)"
+        value="sausage"
+        :checked="toppings.indexOf('pepperoni') !== -1"
+        disabled="true">
+      </ion-toggle>
     </ion-item>
 
     <ion-item>
       <ion-label>Mushrooms</ion-label>
-      <ion-toggle @ionChange="toppings.push($event.target.value)" value="mushrooms" v-bind:checked="toppings.indexOf('pepperoni') !== -1"></ion-toggle>
+      <ion-toggle
+        @ionChange="toppings.push($event.target.value)"
+        value="mushrooms"
+        :checked="toppings.indexOf('pepperoni') !== -1">
+      </ion-toggle>
     </ion-item>
   </ion-list>
 </template>

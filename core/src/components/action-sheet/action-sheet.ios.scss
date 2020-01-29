@@ -8,7 +8,7 @@
   --background: #{$action-sheet-ios-background-color};
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
   --button-background: #{$action-sheet-ios-button-background};
-  --button-background-activated: #{$text-color};
+  --button-background-activated: #{$action-sheet-ios-button-background-activated};
   --button-background-activated-opacity: .08;
   --button-background-hover: currentColor;
   --button-background-hover-opacity: .04;

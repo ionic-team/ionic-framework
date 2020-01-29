@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "5.0.0-rc.0",
+  "version": "5.0.0-rc.1",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "date-fns": "^2.9.0",
-    "ionicons": "5.0.0-15",
+    "ionicons": "5.0.0-17",
     "tslib": "^1.10.0"
   },
   "devDependencies": {

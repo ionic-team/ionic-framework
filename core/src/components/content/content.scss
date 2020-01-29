@@ -59,8 +59,12 @@
   --background: #{$background-color-step-50};
 }
 
-#scroll-content {
-  min-height: 100%;
+#background-content {
+  @include position(calc(var(--offset-top) * -1), 0px,calc(var(--offset-bottom) * -1), 0px);
+
+  position: absolute;
+
+  background: var(--background);
 }
 
 .inner-scroll {
@@ -69,7 +73,6 @@
 
   position: absolute;
 
-  background: var(--background);
   color: var(--color);
 
   box-sizing: border-box;
@@ -124,7 +127,7 @@
 }
 
 .transition-effect {
-  
+
   display: none;
   position: absolute;
 

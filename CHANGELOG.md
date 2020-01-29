@@ -1,3 +1,26 @@
+# [5.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v4.11.10...v5.0.0-rc.1) (2020-01-27)
+
+
+### Bug Fixes
+
+* **components:** use proper colors for button states and add back input highlight ([#20278](https://github.com/ionic-team/ionic/issues/20278)) ([628db18](https://github.com/ionic-team/ionic/commit/628db18a97293731ecfee8e4d2f0d8c1cf672c96)), closes [#20276](https://github.com/ionic-team/ionic/issues/20276)
+* **components:** inherit text indent in all components with text inherit ([#20300](https://github.com/ionic-team/ionic/issues/20300)) ([767b005](https://github.com/ionic-team/ionic/commit/767b005eacf00b640973bfb381de4dcedf083399)), closes [#17786](https://github.com/ionic-team/ionic/issues/17786)
+* **content:** resolve height inheritance issues ([#20309](https://github.com/ionic-team/ionic/issues/20309)) ([09bef71](https://github.com/ionic-team/ionic/commit/09bef71ccd5a261233180bc19023bc562b905764)), closes [#20305](https://github.com/ionic-team/ionic/issues/20305)
+* **picker:** include showBackdrop in interface ([#20301](https://github.com/ionic-team/ionic/issues/20301)) ([33186ba](https://github.com/ionic-team/ionic/commit/33186ba716de77edc92ae8e7d307f90fff8b8ed1)), closes [#18893](https://github.com/ionic-team/ionic/issues/18893)
+* **react:** export proper types of animations and gestures ([#20311](https://github.com/ionic-team/ionic/issues/20311)) ([0034088](https://github.com/ionic-team/ionic/commit/00340885fb031d3dbc7c458fddeed9d28a2deda4))
+* **refresher:** update animation for dashed property values ([#20310](https://github.com/ionic-team/ionic/issues/20310)) ([44211c1](https://github.com/ionic-team/ionic/commit/44211c11ee929b9966d5e67e99fb6a495380432c))
+* **toast:** inherit color in cancel button for a toast with color ([#20299](https://github.com/ionic-team/ionic/issues/20299)) ([7b44ae2](https://github.com/ionic-team/ionic/commit/7b44ae2a400bb0c0616012e9c42bfc67edbfc793)), closes [#20139](https://github.com/ionic-team/ionic/issues/20139)
+
+
+
+## [4.11.10](https://github.com/ionic-team/ionic/compare/v4.11.9...v4.11.10) (2020-01-24)
+
+
+### Bug Fixes
+
+* **input:** revert previous type change ([db1fd1d](https://github.com/ionic-team/ionic/commit/db1fd1d72a8a0ade824ad2309d1adb2953731f37))
+
+
 # [5.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v5.0.0-beta.6...v5.0.0-rc.0) (2020-01-23)
 
 Release Candidate is here! :tada:
@@ -21,6 +44,8 @@ Release Candidate is here! :tada:
 
 
 ### BREAKING CHANGES
+
+> We recommend updating to the latest version of 4.x before trying out version 5 in order to see deprecation warnings related to your app [in the developer console](https://javascript.info/devtools).
 
 *Activated Class*
 
@@ -90,7 +115,8 @@ If the opacity desired is something other than what the spec asks for, use:
 
 
 ### BREAKING CHANGES
-> We recommend updating to the latest version of 4.x before trying out version 5 in order to see deprecation warnings related to your app in the console.
+
+> We recommend updating to the latest version of 4.x before trying out version 5 in order to see deprecation warnings related to your app [in the developer console](https://javascript.info/devtools).
 
 * The following components have been updated to remove the checked or selected properties:
 
@@ -155,6 +181,8 @@ import { modalController } from '@ionic/core';
 
 
 ### BREAKING CHANGES
+
+> We recommend updating to the latest version of 4.x before trying out version 5 in order to see deprecation warnings related to your app [in the developer console](https://javascript.info/devtools).
 
 * **searchbar:** The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get the old behavior, set the `inputmode` property to `"search"`.
 
@@ -239,7 +267,7 @@ npm i @types/react@latest @types/react-dom@latest
 
 ### Breaking Changes
 
-> We recommend updating to the latest version of 4.x before trying out version 5 in order to see deprecation warnings related to your app in the console.
+> We recommend updating to the latest version of 4.x before trying out version 5 in order to see deprecation warnings related to your app [in the developer console](https://javascript.info/devtools).
 
 * **back-button:** convert back button to shadow ([#19411](https://github.com/ionic-team/ionic/pull/19411)) ([0d40d3f](https://github.com/ionic-team/ionic/commit/0d40d3f3b72aac7932ac71e6573d8bbb65a01515))
 * **ionicons:** update to Ionicons v5. See https://ionicons.com for more information. ([#19670](https://github.com/ionic-team/ionic/pull/19670)) ([69e10de](https://github.com/ionic-team/ionic/commit/69e10de718dcba4d43e82bd37aeacd2585dd9a79))
@@ -329,7 +357,7 @@ npm i @types/react@latest @types/react-dom@latest
 
 ### Breaking Changes
 
-> We recommend updating to the latest version of 4.x before trying out version 5 in order to see deprecation warnings related to your app in the console.
+> We recommend updating to the latest version of 4.x before trying out version 5 in order to see deprecation warnings related to your app [in the developer console](https://javascript.info/devtools).
 
 * **all:** mode is now cascaded from parent to child component. If this is not desired set a different mode on the child component. ([#19369](https://github.com/ionic-team/ionic/issues/19369)) ([55462d7](https://github.com/ionic-team/ionic/commit/55462d7a0935f57b6855f9bd1bf788bfcf532bc3))
 * **anchor:** remove `ion-anchor`, use `ion-router-link` instead. ([#18935](https://github.com/ionic-team/ionic/issues/18935)) ([e7cd197](https://github.com/ionic-team/ionic/commit/e7cd197af79cdf87f04bc769e0367c7e93c0aa0b))

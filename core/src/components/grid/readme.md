@@ -5,7 +5,7 @@ The grid is a powerful mobile-first flexbox system for building custom layouts.
 
 It is composed of three units — a grid, [row(s)](../row) and [column(s)](../col). Columns will expand to fill the row, and will resize to fit additional columns. It is based on a 12 column layout with different breakpoints based on the screen size. The number of columns can be customized using CSS.
 
-See [Grid Layout](/docs/layout/grid) for more information.
+See the [Responsive Grid documentation](/docs/layout/grid) for more information.
 
 <!-- Auto Generated Below -->
 
@@ -86,13 +86,13 @@ See [Grid Layout](/docs/layout/grid) for more information.
   </ion-row>
 
   <ion-row>
-    <ion-col align-self-start>
+    <ion-col class="ion-align-self-start">
       ion-col [start]
     </ion-col>
-    <ion-col align-self-center>
+    <ion-col class="ion-align-self-center">
       ion-col [center]
     </ion-col>
-    <ion-col align-self-end>
+    <ion-col class="ion-align-self-end">
       ion-col [end]
     </ion-col>
     <ion-col>
@@ -102,14 +102,14 @@ See [Grid Layout](/docs/layout/grid) for more information.
     </ion-col>
   </ion-row>
 
-  <ion-row align-items-start>
+  <ion-row class="ion-align-items-start">
     <ion-col>
       [start] ion-col
     </ion-col>
     <ion-col>
       [start] ion-col
     </ion-col>
-    <ion-col align-self-end>
+    <ion-col class="ion-align-self-end">
       [start] ion-col [end]
     </ion-col>
     <ion-col>
@@ -119,7 +119,7 @@ See [Grid Layout](/docs/layout/grid) for more information.
     </ion-col>
   </ion-row>
 
-  <ion-row align-items-center>
+  <ion-row class="ion-align-items-center">
     <ion-col>
       [center] ion-col
     </ion-col>
@@ -136,11 +136,11 @@ See [Grid Layout](/docs/layout/grid) for more information.
     </ion-col>
   </ion-row>
 
-  <ion-row align-items-end>
+  <ion-row class="ion-align-items-end">
     <ion-col>
       [end] ion-col
     </ion-col>
-    <ion-col align-self-start>
+    <ion-col class="ion-align-self-start">
       [end] ion-col [start]
     </ion-col>
     <ion-col>
@@ -250,9 +250,9 @@ export const GridExample: React.FC = () => (
       </IonRow>
 
       <IonRow>
-        <IonCol align-self-start>ion-col start</IonCol>
-        <IonCol align-self-center>ion-col center</IonCol>
-        <IonCol align-self-end>ion-col end</IonCol>
+        <IonCol class="ion-align-self-start">ion-col start</IonCol>
+        <IonCol class="ion-align-self-center">ion-col center</IonCol>
+        <IonCol class="ion-align-self-end">ion-col end</IonCol>
         <IonCol>
           ion-col
           <br />#
@@ -260,10 +260,10 @@ export const GridExample: React.FC = () => (
         </IonCol>
       </IonRow>
 
-      <IonRow align-items-start>
+      <IonRow class="ion-align-items-start">
         <IonCol>start ion-col</IonCol>
         <IonCol>start ion-col</IonCol>
-        <IonCol align-self-end>start ion-col end</IonCol>
+        <IonCol class="ion-align-self-end">start ion-col end</IonCol>
         <IonCol>
           ion-col
           <br />#
@@ -271,7 +271,7 @@ export const GridExample: React.FC = () => (
         </IonCol>
       </IonRow>
 
-      <IonRow align-items-center>
+      <IonRow class="ion-align-items-center">
         <IonCol>center ion-col</IonCol>
         <IonCol>center ion-col</IonCol>
         <IonCol>center ion-col</IonCol>
@@ -282,9 +282,9 @@ export const GridExample: React.FC = () => (
         </IonCol>
       </IonRow>
 
-      <IonRow align-items-end>
+      <IonRow class="ion-align-items-end">
         <IonCol>end ion-col</IonCol>
-        <IonCol align-self-start>end ion-col start</IonCol>
+        <IonCol class="ion-align-self-start">end ion-col start</IonCol>
         <IonCol>end ion-col</IonCol>
         <IonCol>
           ion-col
@@ -412,13 +412,13 @@ export const GridExample: React.FC = () => (
     </ion-row>
 
     <ion-row>
-      <ion-col align-self-start>
+      <ion-col class="ion-align-self-start">
         ion-col [start]
       </ion-col>
-      <ion-col align-self-center>
+      <ion-col class="ion-align-self-center">
         ion-col [center]
       </ion-col>
-      <ion-col align-self-end>
+      <ion-col class="ion-align-self-end">
         ion-col [end]
       </ion-col>
       <ion-col>
@@ -428,14 +428,14 @@ export const GridExample: React.FC = () => (
       </ion-col>
     </ion-row>
 
-    <ion-row align-items-start>
+    <ion-row class="ion-align-items-start">
       <ion-col>
         [start] ion-col
       </ion-col>
       <ion-col>
         [start] ion-col
       </ion-col>
-      <ion-col align-self-end>
+      <ion-col class="ion-align-self-end">
         [start] ion-col [end]
       </ion-col>
       <ion-col>
@@ -445,7 +445,7 @@ export const GridExample: React.FC = () => (
       </ion-col>
     </ion-row>
 
-    <ion-row align-items-center>
+    <ion-row class="ion-align-items-center">
       <ion-col>
         [center] ion-col
       </ion-col>
@@ -462,11 +462,11 @@ export const GridExample: React.FC = () => (
       </ion-col>
     </ion-row>
 
-    <ion-row align-items-end>
+    <ion-row class="ion-align-items-end">
       <ion-col>
         [end] ion-col
       </ion-col>
-      <ion-col align-self-start>
+      <ion-col class="ion-align-self-start">
         [end] ion-col [start]
       </ion-col>
       <ion-col>

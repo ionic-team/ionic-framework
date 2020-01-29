@@ -124,10 +124,11 @@ export class Refresher implements ComponentInterface {
   @Event() ionStart!: EventEmitter<void>;
 
   private checkNativeRefresher() {
-    if (shouldUseNativeRefresher(this.el, getIonMode(this))) {
+    const useNativeRefresher = shouldUseNativeRefresher(this.el, getIonMode(this));
+    if (useNativeRefresher && !this.nativeRefresher) {
       const contentEl = this.el.closest('ion-content');
       this.setupNativeRefresher(contentEl);
-    } else {
+    } else if (!useNativeRefresher) {
       this.destroyNativeRefresher();
     }
   }
@@ -161,7 +162,7 @@ export class Refresher implements ComponentInterface {
   }
 
   private async setupiOSNativeRefresher(pullingSpinner: HTMLIonSpinnerElement, refreshingSpinner: HTMLIonSpinnerElement) {
-    this.elementToTransform = this.scrollEl!.querySelector(`#scroll-content`) as HTMLElement | undefined;
+    this.elementToTransform = this.scrollEl!;
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
     const MAX_PULL = this.scrollEl!.clientHeight * 0.16;
     const NUM_TICKS = ticks.length;
@@ -360,7 +361,7 @@ export class Refresher implements ComponentInterface {
   }
 
   private async setupNativeRefresher(contentEl: HTMLIonContentElement | null) {
-    if (this.scrollListenerCallback || !contentEl || this.nativeRefresher) {
+    if (this.scrollListenerCallback || !contentEl || this.nativeRefresher || !this.scrollEl) {
       return;
     }
 
