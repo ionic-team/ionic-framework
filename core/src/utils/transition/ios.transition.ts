@@ -342,10 +342,14 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         }
 
         enteringToolBarItems.fromTo('transform', `translateX(${OFF_RIGHT})`, `translateX(${CENTER})`);
+        enteringToolBarBg.beforeClearStyles([OPACITY, 'transform']);
 
-        enteringToolBarBg
-          .beforeClearStyles([OPACITY])
-          .fromTo(OPACITY, 0.01, 1);
+        const translucentHeader = parentHeader?.translucent;
+        if (!translucentHeader) {
+          enteringToolBarBg.fromTo(OPACITY, 0.01, 1);
+        } else {
+          enteringToolBarBg.fromTo('transform', (isRTL ? 'translateX(-100%)' : 'translateX(100%)'), 'translateX(0px)');
+        }
 
         // forward direction, entering page has a back button
         if (!forward) {
@@ -479,12 +483,15 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           }
 
           leavingToolBarItems.fromTo('transform', `translateX(${CENTER})`, (isRTL ? 'translateX(-100%)' : 'translateX(100%)'));
-
+          leavingToolBarBg.beforeClearStyles([OPACITY, 'transform']);
           // leaving toolbar, back direction, and there's no entering toolbar
           // should just slide out, no fading out
-          leavingToolBarBg
-            .beforeClearStyles([OPACITY])
-            .fromTo(OPACITY, 1, 0.01);
+          const translucentHeader = parentHeader?.translucent;
+          if (!translucentHeader) {
+            leavingToolBarBg.fromTo(OPACITY, 0.99, 0);
+          } else {
+            leavingToolBarBg.fromTo('transform', 'translateX(0px)', (isRTL ? 'translateX(-100%)' : 'translateX(100%)'));
+          }
 
           if (backButtonEl && !backward) {
             const leavingBackBtnText = createAnimation();
