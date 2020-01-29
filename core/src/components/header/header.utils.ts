@@ -75,7 +75,13 @@ export const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity?: num
 const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) => {
   if (!ev[0].isIntersecting) { return; }
 
-  const scale = ((1 - ev[0].intersectionRatio) * 100) / 75;
+  /**
+   * There is a bug in Safari where overflow scrolling on a non-body element
+   * does not always reset the scrollTop position to 0 when letting go. It will
+   * set to 1 once the rubber band effect has ended. This causes the background to
+   * appear slightly on certain app setups.
+   */
+  const scale = (ev[0].intersectionRatio > 0.9) ? 0 : ((1 - ev[0].intersectionRatio) * 100) / 75;
 
   mainHeaderIndex.toolbars.forEach(toolbar => {
     setToolbarBackgroundOpacity(toolbar, (scale === 1) ? undefined : scale);
