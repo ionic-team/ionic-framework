@@ -24,71 +24,59 @@ export class Calendar implements ComponentInterface {
   private gesture?: Gesture;
   private dragging = false;
 
-  @Element()
-  el!: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @State()
-  calendarYears: number[] = [];
-  @State()
-  showYears = false;
-  @State()
-  viewDate!: Date;
+  @State() calendarYears: number[] = [];
+  @State() showYears = false;
+  @State() viewDate!: Date;
 
   /**
    * An array of javascript dates that are available for selection.
    * e.g. [new Date()] this would only allow today to be selected.
    * for large dater date sets, consider using disabledBeforeDate and disabledAfterDate
    */
-  @Prop()
-  availableDates?: Date[] = [];
+  @Prop() availableDates?: Date[] = [];
 
   /**
    * Disables any date before the date entered
    * e.g. passing new Date() would mean users could not select anything after today
    */
-  @Prop()
-  disabledAfterDate?: Date;
+  @Prop() disabledAfterDate?: Date;
 
   /**
    * Disables any date after the date entered
    * e.g. passing new Date() would mean users could not select anything before today
    */
-  @Prop()
-  disabledBeforeDate?: Date;
+  @Prop() disabledBeforeDate?: Date;
 
   /**
    * Dates that users will not be able to select
    * e.g. [new Date()] would mean users could not select today
    */
-  @Prop()
-  disabledDates?: Date[];
+  @Prop() disabledDates?: Date[];
 
   /**
    * Weekdays that users will not be able to select (optional)
    * e.g. [0,6] would mean users could not select Sunday or Saturday
    */
-  @Prop()
-  disabledDays?: (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
+  @Prop() disabledDays?: (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
 
   /**
    * An array of javascript dates that are shown as selected on the page.
    * e.g. [new Date()]
    */
-  @Prop()
-  selectedDates: Date[] = [];
+  @Prop() selectedDates: Date[] = [];
 
   /**
    * Year to display on the calendar, defaults to current year.
    */
-  @Prop()
-  year: number = this.today.getFullYear();
+  @Prop() year: number = this.today.getFullYear();
 
   /**
    * Month index to display on the calendar, defaults to current month.
    * e.g. January is 0, February is 1
    */
-  @Prop()
-  month: number = this.today.getMonth();
+  @Prop() month: number = this.today.getMonth();
 
   /**
    * If `true`, the user cannot interact with the calendar.
