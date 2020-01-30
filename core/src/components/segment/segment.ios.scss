@@ -42,7 +42,7 @@
 
 // Default Segment, In a Toolbar
 :host(.in-toolbar:not(.ion-color)) {
-  background: var(--ion-toolbar-segment-background, $segment-ios-background-color);
+  background: var(--ion-toolbar-segment-background, var(--background));
 }
 
 

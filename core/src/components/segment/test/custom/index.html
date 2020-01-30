@@ -4,12 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Segment - Custom</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
 
 <body>
   <ion-app>
@@ -88,9 +90,9 @@
             <ion-label>Disabled</ion-label>
           </ion-segment-button>
         </ion-segment>
-    </ion-toolbar>
+      </ion-toolbar>
 
-    <ion-toolbar>
+      <ion-toolbar>
         <ion-segment class="custom-states-background" value="checked">
           <ion-segment-button value="checked">
             <ion-label>Checked</ion-label>
@@ -102,7 +104,41 @@
             <ion-label>Disabled</ion-label>
           </ion-segment-button>
         </ion-segment>
-    </ion-toolbar>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-segment class="custom-color" value="dining">
+          <ion-segment-button value="dining">
+            <ion-label>Dining</ion-label>
+            <ion-icon name="cafe"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="travel">
+            <ion-label>Travel</ion-label>
+            <ion-icon name="airplane"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="entertainment">
+            <ion-label>Entertainment</ion-label>
+            <ion-icon name="radio"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-segment class="custom-color" color="danger" value="dining">
+          <ion-segment-button value="dining">
+            <ion-label>Dining</ion-label>
+            <ion-icon name="cafe"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="travel">
+            <ion-label>Travel</ion-label>
+            <ion-icon name="airplane"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="entertainment">
+            <ion-label>Entertainment</ion-label>
+            <ion-icon name="radio"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
     </ion-header>
 
     <ion-content class="ion-padding-top">
@@ -131,6 +167,21 @@
         <ion-segment-button class="segment-button-slack" value="slack">
           <ion-label>Slack</ion-label>
           <ion-icon name="logo-slack"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-segment class="custom-color" value="dining">
+        <ion-segment-button value="dining">
+          <ion-label>Dining</ion-label>
+          <ion-icon name="cafe"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="travel">
+          <ion-label>Travel</ion-label>
+          <ion-icon name="airplane"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="entertainment">
+          <ion-label>Entertainment</ion-label>
+          <ion-icon name="radio"></ion-icon>
         </ion-segment-button>
       </ion-segment>
 
@@ -341,6 +392,7 @@
   .custom-states-background ion-segment-button:hover {
     opacity: 1;
   }
+
 </style>
 
 </html>
