@@ -1,3 +1,17 @@
+# [5.0.0-rc.2](https://github.com/ionic-team/ionic/compare/v5.0.0-rc.1...v5.0.0-rc.2) (2020-01-30)
+
+
+### Bug Fixes
+
+* **header:** fix race condition in collapsible header ([#20334](https://github.com/ionic-team/ionic/issues/20334)) ([215d55f](https://github.com/ionic-team/ionic/commit/215d55f1ebeb93988b513c5869faae14d1d51919))
+* **ios:** translucent toolbar blur no longer obscures entering page toolbar content ([#20314](https://github.com/ionic-team/ionic/issues/20314)) ([e580b88](https://github.com/ionic-team/ionic/commit/e580b884770a086ee5d8acf61588ea50181786e6)), closes [#19158](https://github.com/ionic-team/ionic/issues/19158)
+* **radio:** do not clear radio group value from radio ([#20343](https://github.com/ionic-team/ionic/issues/20343)) ([ff78e6e](https://github.com/ionic-team/ionic/commit/ff78e6e8ca8ae4dc2a6d401b377dd3977c48824a)), closes [#20323](https://github.com/ionic-team/ionic/issues/20323)
+* **radio:** set default radio value if undefined ([#20329](https://github.com/ionic-team/ionic/issues/20329)) ([eb57723](https://github.com/ionic-team/ionic/commit/eb57723785ce5b05585bf48bf9c8ae1b62235ba2))
+* **refresher:** add correct fallbacks for native refreshers ([#20333](https://github.com/ionic-team/ionic/issues/20333)) ([fd55427](https://github.com/ionic-team/ionic/commit/fd55427991e94488d86971aaa10acb13d7fa1c23))
+* **refresher:** resolve undefined issues when updating component ([#20322](https://github.com/ionic-team/ionic/issues/20322)) ([59d8687](https://github.com/ionic-team/ionic/commit/59d86873a2ab913358b084bb05180ba176893a8f)), closes [#20320](https://github.com/ionic-team/ionic/issues/20320)
+
+
+
 # [5.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v4.11.10...v5.0.0-rc.1) (2020-01-27)
 
 
