@@ -418,7 +418,7 @@ The `show-cancel-button` property of the searchbar no longer accepts boolean val
 
 ```html
 <ion-searchbar show-cancel-button="focus">
-<ion-searchbar show-cancel-button="focus">
+<ion-searchbar show-cancel-button="always">
 <ion-searchbar show-cancel-button="never">
 ```
 
