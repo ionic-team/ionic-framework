@@ -117,6 +117,7 @@ The way the CSS variables are used for targeting the activated, focused and hove
 - Item
 - Menu Button
 - Segment Button
+- Tab Button
 
 Previously, in order to update any of the background colors for the states you would have to know what the opacity was set to. Using the Material Design spec as an example, it would require you to know that the hover state uses a white overlay with an opacity of `.08`. This means that if we had the following set by default:
 
@@ -138,49 +139,33 @@ The new way adds the following variables:
 --background-hover-opacity
 ```
 
-It also updates the Action Sheet component so that the variables will be prefixed with `button`. See the [Action Sheet](#action-sheet) section in this document for all of the variable names.
+It also updates the Action Sheet component so that the variables will be prefixed with `button`. See the [Action Sheet](#action-sheet) section in this document for all of the new variable names.
 
 This allows you to still have control over the opacity if desired, but when updating the state, you only have to set the main variables: `--background-activated`, `--background-focused`, `--background-hover` and the button will still match the spec. This is most important when changing the global theme, as updating the toolbar color will automatically update the hover states for all of the buttons in a toolbar, regardless of their fill and without having to know what each opacity is.
 
-As a result of these changes, the following global CSS variables will not change the opacity and as such should be treated the same as the `--background-{STATE}` variables:
-
-```css
---ion-item-background-activated
---ion-item-background-focused
---ion-item-background-hover
-```
 
 ##### Examples
 
 ```css
-/* Setting the button background to solid red */
+/* Setting the button background on hover to solid red */
 ion-button {
   --background-hover: red;
   --background-hover-opacity: 1;
 }
 
-/* Setting the action sheet button background on hover to an opaque green */
+/* Setting the action sheet button background on focus to an opaque green */
 ion-action-sheet {
-  --button-background-hover: green;
-  --button-background-hover-opacity: 0.5;
+  --button-background-focus: green;
+  --button-background-focus-opacity: 0.5;
 }
 
-/* Setting the fab button background to use the text color with the default opacity on md */
+/*
+ * Setting the fab button background on hover to match the text color with
+ * the default --background-hover-opacity on md
+ */
 .md ion-fab-button {
   --color: #222;
   --background-hover: #222;
-}
-
-/* Setting the theme background for items to use #000 (black) with the default theme opacity */
-:root {
-  /* is used in item as rgba(0, 0, 0, var(--background-activated-opacity)); */
-  --ion-item-background-activated: #000;
-
-  /* is used in item as rgba(0, 0, 0, var(--background-focused-opacity)); */
-  --ion-item-background-focused: #000;
-
-  /* is used in item as rgba(0, 0, 0, var(--background-hover-opacity)); */
-  --ion-item-background-hover: #000;
 }
 ```
 
@@ -343,7 +328,7 @@ For more information see the [List Header usage](https://ionicframework.com/docs
 - The `swipeEnable()` function has been removed in Angular, use `swipeGesture()` instead.
 - The `side` values `left` and `right` have been removed, use `start` and `end` instead.
 - Removed the `main` attribute, use `content-id` (for vanilla JS / Vue) and `contentId` (for Angular / React) instead.
-  
+
   **Before**
 
   ```html

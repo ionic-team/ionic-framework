@@ -74,7 +74,7 @@
   --color-activated: var(--color);
   --color-focused: var(--color);
   --color-hover: var(--color);
-  --ripple-color: var(--ion-item-background-activated, currentColor);
+  --ripple-color: currentColor;
 
   @include font-smoothing();
 
