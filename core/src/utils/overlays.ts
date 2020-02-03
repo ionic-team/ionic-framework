@@ -48,7 +48,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
     Object.assign(element, opts);
 
     // append the overlay element to the document body
-    getAppRoot(doc).appendChild(element);
+    getDocumentBody(doc).appendChild(element);
 
     return element.componentOnReady() as any;
   });
@@ -173,8 +173,8 @@ export const dismiss = async (
   return true;
 };
 
-const getAppRoot = (doc: Document) => {
-  return doc.querySelector('ion-app') || doc.body;
+const getDocumentBody = (doc: Document) => {
+  return doc.querySelector('body') || doc.body;
 };
 
 const overlayAnimation = async (
