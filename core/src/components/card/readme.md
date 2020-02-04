@@ -97,7 +97,7 @@ export const CardExample: React.FC = () => (
     </IonCard>
 
     <IonCard>
-      <IonItem href="#" class="ion-activated">
+      <IonItem href="#" className="ion-activated">
         <IonIcon name="wifi" slot="start" />
         <IonLabel>Card Link Item 1 activated</IonLabel>
       </IonItem>
@@ -107,7 +107,7 @@ export const CardExample: React.FC = () => (
         <IonLabel>Card Link Item 2</IonLabel>
       </IonItem>
 
-      <IonItem class="ion-activated">
+      <IonItem className="ion-activated">
         <IonIcon name="warning" slot="start" />
         <IonLabel>Card Button Item 1 activated</IonLabel>
       </IonItem>
