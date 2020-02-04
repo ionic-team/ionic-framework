@@ -153,10 +153,10 @@ export class Header implements ComponentInterface {
           [`header-translucent-${mode}`]: this.translucent,
         }}
       >
+        <slot></slot>
         { mode === 'ios' && translucent &&
           <div class="header-background"></div>
         }
-        <slot></slot>
       </Host>
     );
   }

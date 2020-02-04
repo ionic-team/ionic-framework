@@ -4,7 +4,7 @@
 // iOS Header
 // --------------------------------------------------
 
-.header-ios ion-toolbar:last-child {
+.header-ios ion-toolbar:last-of-type {
   --border-width: 0 0 #{$hairlines-width};
 }
 
@@ -21,7 +21,7 @@
   }
 }
 
-.header-ios.ion-no-border ion-toolbar:last-child {
+.header-ios.ion-no-border ion-toolbar:last-of-type {
   --border-width: 0;
 }
 
@@ -36,7 +36,7 @@
   top: 0;
 }
 
-.header-collapse-condense ion-toolbar:first-child {
+.header-collapse-condense ion-toolbar:first-of-type {
   padding-top: 7px;
 
   z-index: 1;
