@@ -4,7 +4,7 @@
 // iOS Footer
 // --------------------------------------------------
 
-.footer-ios ion-toolbar:first-child {
+.footer-ios ion-toolbar:first-of-type {
   --border-width: #{$hairlines-width} 0 0;
 }
 
@@ -21,6 +21,6 @@
   }
 }
 
-.footer-ios.ion-no-border ion-toolbar:first-child {
+.footer-ios.ion-no-border ion-toolbar:first-of-type {
   --border-width: 0;
 }
