@@ -21,6 +21,7 @@ export class Refresher implements ComponentInterface {
   private didStart = false;
   private progress = 0;
   private scrollEl?: HTMLElement;
+  private backgroundContentEl?: HTMLElement;
   private scrollListenerCallback?: any;
   private gesture?: Gesture;
 
@@ -394,6 +395,8 @@ export class Refresher implements ComponentInterface {
     }
 
     this.scrollEl = await contentEl.getScrollElement();
+    this.backgroundContentEl = contentEl.shadowRoot!.querySelector('#background-content') as HTMLElement;
+
     if (shouldUseNativeRefresher(this.el, getIonMode(this))) {
       this.setupNativeRefresher(contentEl);
     } else {
@@ -652,12 +655,13 @@ export class Refresher implements ComponentInterface {
 
     this.appliedStyles = (y > 0);
     writeTask(() => {
-      if (this.scrollEl) {
-        const style = this.scrollEl.style;
-        style.transform = ((y > 0) ? `translateY(${y}px) translateZ(0px)` : 'translateZ(0px)');
-        style.transitionDuration = duration;
-        style.transitionDelay = delay;
-        style.overflow = (overflowVisible ? 'hidden' : '');
+      if (this.scrollEl && this.backgroundContentEl) {
+        const scrollStyle = this.scrollEl.style;
+        const backgroundStyle = this.backgroundContentEl.style;
+        scrollStyle.transform = backgroundStyle.transform = ((y > 0) ? `translateY(${y}px) translateZ(0px)` : 'translateZ(0px)');
+        scrollStyle.transitionDuration = backgroundStyle.transitionDuration = duration;
+        scrollStyle.transitionDelay = backgroundStyle.transitionDelay = delay;
+        scrollStyle.overflow = (overflowVisible ? 'hidden' : '');
       }
     });
   }
