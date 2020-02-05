@@ -14,6 +14,6 @@ ion-header {
   z-index: $z-index-toolbar;
 }
 
-ion-header ion-toolbar:first-child {
+ion-header ion-toolbar:first-of-type {
   padding-top: var(--ion-safe-area-top, 0);
 }
