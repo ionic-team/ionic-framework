@@ -243,7 +243,7 @@ export class Refresher implements ComponentInterface {
           gestureName: 'refresher',
           gesturePriority: 10,
           direction: 'y',
-          threshold: 0,
+          threshold: 5,
           onStart: () => {
             this.pointerDown = true;
 
@@ -290,7 +290,7 @@ export class Refresher implements ComponentInterface {
       gestureName: 'refresher',
       gesturePriority: 10,
       direction: 'y',
-      threshold: 0,
+      threshold: 5,
       canStart: () => this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing && this.scrollEl!.scrollTop === 0,
       onStart: (ev: GestureDetail) => {
         ev.data = { animation: undefined, didStart: false, cancelled: false };
