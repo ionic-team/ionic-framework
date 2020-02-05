@@ -19,6 +19,14 @@
   .header-translucent-ios ion-toolbar {
     --opacity: .8;
   }
+  
+  /**
+   * Disable the saturation otherwise it distorts the content
+   * background color when large header is not collapsed
+   */
+  .header-collapse-condense-inactive .header-background {
+    backdrop-filter: blur($header-ios-blur);
+  }
 }
 
 .header-ios.ion-no-border ion-toolbar:last-of-type {
@@ -29,14 +37,6 @@
 // --------------------------------------------------
 .header-collapse-condense {
   z-index: 9;
-}
-
-/**
- * Disable the saturation otherwise it distorts the content
- * background color when large header is not collapsed
- */
-.header-collapse-condense-inactive .header-background {
-  backdrop-filter: blur($header-ios-blur);
 }
 
 .header-collapse-condense ion-toolbar {
