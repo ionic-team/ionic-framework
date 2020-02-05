@@ -171,7 +171,7 @@ export class Router implements ComponentInterface {
 
     if (state > lastState) {
       return ROUTER_INTENT_FORWARD;
-    } else if (state < lastState) {
+    } else if (state <= lastState) {
       return ROUTER_INTENT_BACK;
     } else {
       return ROUTER_INTENT_NONE;
