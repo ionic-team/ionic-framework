@@ -31,6 +31,14 @@
   z-index: 9;
 }
 
+/**
+ * Disable the saturation otherwise it distorts the content
+ * background color when large header is not collapsed
+ */
+.header-collapse-condense-inactive .header-background {
+  backdrop-filter: blur($header-ios-blur);
+}
+
 .header-collapse-condense ion-toolbar {
   position: sticky;
   top: 0;
