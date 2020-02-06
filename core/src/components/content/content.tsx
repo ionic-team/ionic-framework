@@ -329,7 +329,7 @@ export class Content implements ComponentInterface {
             'overscroll': (scrollX || scrollY) && forceOverscroll
           }}
           ref={el => this.scrollEl = el!}
-          onScroll={ev => this.onScroll(ev)}
+          onScroll={(this.scrollEvents) ? ev => this.onScroll(ev) : undefined}
         >
           <slot></slot>
         </main>
