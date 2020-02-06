@@ -123,7 +123,7 @@ export class Segment implements ComponentInterface {
   }
 
   onEnd(detail: GestureDetail) {
-    this.activated = false;
+    this.setActivated(false);
 
     const checkedValidButton = this.setNextIndex(detail, true);
 
@@ -157,6 +157,23 @@ export class Segment implements ComponentInterface {
     ripple.addRipple(x, y).then(remove => remove());
   }
 
+  /*
+   * Activate both the segment and the buttons
+   * due to a bug with ::slotted in Safari
+   */
+  private setActivated(activated: boolean) {
+    const buttons = this.getButtons();
+
+    buttons.forEach(button => {
+      if (activated) {
+        button.classList.add('segment-button-activated');
+      } else {
+        button.classList.remove('segment-button-activated');
+      }
+    });
+    this.activated = activated;
+  }
+
   private activate(detail: GestureDetail) {
     const clicked = detail.event.target as HTMLIonSegmentButtonElement;
     const buttons = this.getButtons();
@@ -176,7 +193,7 @@ export class Segment implements ComponentInterface {
     // If the gesture began on the clicked button with the indicator
     // then we should activate the indicator
     if (this.value === clicked.value) {
-      this.activated = true;
+      this.setActivated(true);
     }
   }
 
