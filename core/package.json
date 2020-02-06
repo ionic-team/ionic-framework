@@ -30,7 +30,7 @@
     "loader/"
   ],
   "dependencies": {
-    "ionicons": "5.0.0-17",
+    "ionicons": "^5.0.0",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
