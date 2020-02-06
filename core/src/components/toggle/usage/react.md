@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonToggle, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-export const ToggleExample: React.FunctionComponent = () => (
+export const ToggleExample: React.FC = () => (
   <IonContent>
     {/*-- Default Toggle --*/}
     <IonToggle />
@@ -24,17 +24,17 @@ export const ToggleExample: React.FunctionComponent = () => (
     <IonList>
       <IonItem>
         <IonLabel>Pepperoni</IonLabel>
-        <IonToggle value="pepperoni" onChange={() => {}} />
+        <IonToggle value="pepperoni" onIonChange={() => {}} />
       </IonItem>
 
       <IonItem>
         <IonLabel>Sausage</IonLabel>
-        <IonToggle value="sausage" onChange={() => {}} disabled={true} />
+        <IonToggle value="sausage" onIonChange={() => {}} disabled={true} />
       </IonItem>
 
       <IonItem>
         <IonLabel>Mushrooms</IonLabel>
-        <IonToggle value="mushrooms" onChange={() => {}} />
+        <IonToggle value="mushrooms" onIonChange={() => {}} />
       </IonItem>
     </IonList>
   </IonContent>

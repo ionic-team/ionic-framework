@@ -40,9 +40,9 @@ sub-components to reflect this. Please see `ion-card-content`,
 </ion-card>
 
 <ion-card>
-  <ion-item href="#" class="activated">
+  <ion-item href="#" class="ion-activated">
     <ion-icon name="wifi" slot="start"></ion-icon>
-    <ion-label>Card Link Item 1 .activated</ion-label>
+    <ion-label>Card Link Item 1 activated</ion-label>
   </ion-item>
 
   <ion-item href="#">
@@ -50,9 +50,9 @@ sub-components to reflect this. Please see `ion-card-content`,
     <ion-label>Card Link Item 2</ion-label>
   </ion-item>
 
-  <ion-item class="activated">
+  <ion-item class="ion-activated">
     <ion-icon name="warning" slot="start"></ion-icon>
-    <ion-label>Card Button Item 1 .activated</ion-label>
+    <ion-label>Card Button Item 1 activated</ion-label>
   </ion-item>
 
   <ion-item>
@@ -69,7 +69,7 @@ sub-components to reflect this. Please see `ion-card-content`,
 import React from 'react';
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonIcon, IonItem, IonLabel } from '@ionic/react';
 
-export const CardExample: React.FunctionComponent = () => (
+export const CardExample: React.FC = () => (
   <IonContent>
     <IonCard>
       <IonCardHeader>
@@ -97,9 +97,9 @@ export const CardExample: React.FunctionComponent = () => (
     </IonCard>
 
     <IonCard>
-      <IonItem href="#" class="activated">
+      <IonItem href="#" className="ion-activated">
         <IonIcon name="wifi" slot="start" />
-        <IonLabel>Card Link Item 1 .activated</IonLabel>
+        <IonLabel>Card Link Item 1 activated</IonLabel>
       </IonItem>
 
       <IonItem href="#">
@@ -107,9 +107,9 @@ export const CardExample: React.FunctionComponent = () => (
         <IonLabel>Card Link Item 2</IonLabel>
       </IonItem>
 
-      <IonItem class="activated">
+      <IonItem className="ion-activated">
         <IonIcon name="warning" slot="start" />
-        <IonLabel>Card Button Item 1 .activated</IonLabel>
+        <IonLabel>Card Button Item 1 activated</IonLabel>
       </IonItem>
 
       <IonItem>
@@ -152,9 +152,9 @@ export const CardExample: React.FunctionComponent = () => (
   </ion-card>
 
   <ion-card>
-    <ion-item href="#" class="activated">
+    <ion-item href="#" class="ion-activated">
       <ion-icon name="wifi" slot="start"></ion-icon>
-      <ion-label>Card Link Item 1 .activated</ion-label>
+      <ion-label>Card Link Item 1 activated</ion-label>
     </ion-item>
 
     <ion-item href="#">
@@ -162,9 +162,9 @@ export const CardExample: React.FunctionComponent = () => (
       <ion-label>Card Link Item 2</ion-label>
     </ion-item>
 
-    <ion-item class="activated">
+    <ion-item class="ion-activated">
       <ion-icon name="warning" slot="start"></ion-icon>
-      <ion-label>Card Button Item 1 .activated</ion-label>
+      <ion-label>Card Button Item 1 activated</ion-label>
     </ion-item>
 
     <ion-item>

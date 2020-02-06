@@ -8,9 +8,16 @@ import { NavComponent } from '../nav/nav.component';
 })
 export class AlertComponent {
 
+  changes = 0;
+
   constructor(
     private alertCtrl: AlertController
   ) { }
+
+  counter() {
+    this.changes++;
+    return Math.floor(this.changes / 2);
+  }
 
   async openAlert() {
     const alert = await this.alertCtrl.create({
@@ -21,6 +28,7 @@ export class AlertComponent {
           role: 'cancel',
           text: 'Cancel',
           handler: () => {
+            console.log(NgZone.isInAngularZone());
             NgZone.assertInAngularZone();
           }
         }

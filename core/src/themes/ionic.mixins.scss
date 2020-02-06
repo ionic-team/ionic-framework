@@ -1,3 +1,4 @@
+@import "./ionic.deprecation";
 
 @mixin input-cover() {
   @include position(0, null, null, 0);
@@ -27,11 +28,22 @@
   font-weight: inherit;
   letter-spacing: inherit;
   text-decoration: inherit;
+  text-indent: inherit;
   text-overflow: inherit;
   text-transform: inherit;
   text-align: inherit;
   white-space: inherit;
   color: inherit;
+}
+
+@mixin button-state() {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+
+  content: "";
+
+  opacity: 0;
 }
 
 // Font smoothing
@@ -110,14 +122,14 @@
   @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
 }
 
-// Maximum breakpoint width. Null for the largest (last) breakpoint.
-// The maximum value is calculated as the minimum of the next one less 0.1.
+// Maximum breakpoint width. Null for the smallest (first) breakpoint.
+// The maximum value is calculated as the minimum of the current one.
 //
 //    >> breakpoint-max(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
-//    767px
+//    576px
 @function breakpoint-max($name, $breakpoints: $screen-breakpoints) {
-  $next: breakpoint-next($name, $breakpoints);
-  @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
+  $min: breakpoint-min($name, $breakpoints);
+  @return if($min, breakpoint-min($name, $breakpoints), null);
 }
 
 // Media of at most the maximum breakpoint width. No query for the largest breakpoint.

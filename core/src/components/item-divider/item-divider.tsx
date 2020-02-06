@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
@@ -39,27 +39,25 @@ export class ItemDivider implements ComponentInterface {
    */
   @Prop() sticky = false;
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [mode]: true,
-        'item-divider-sticky': this.sticky,
-        'item': true,
-      }
-    };
-  }
-
   render() {
-    return [
-      <slot name="start"></slot>,
-      <div class="item-divider-inner">
-        <div class="item-divider-wrapper">
-          <slot></slot>
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'item-divider-sticky': this.sticky,
+          'item': true,
+        }}
+      >
+        <slot name="start"></slot>
+        <div class="item-divider-inner">
+          <div class="item-divider-wrapper">
+            <slot></slot>
+          </div>
+          <slot name="end"></slot>
         </div>
-        <slot name="end"></slot>
-      </div>
-    ];
+      </Host>
+    );
   }
 }

@@ -5,6 +5,10 @@
 // Material Design Modals
 // --------------------------------------------------
 
+:host {
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.32);
+}
+
 @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
   :host {
     --border-radius: 2px;

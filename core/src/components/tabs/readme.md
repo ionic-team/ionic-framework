@@ -27,7 +27,7 @@ The `ion-tab-bar` needs a slot defined in order to be projected to the right pla
     </ion-tab-button>
 
     <ion-tab-button tab="speakers">
-      <ion-icon name="contacts"></ion-icon>
+      <ion-icon name="person-circle"></ion-icon>
       <ion-label>Speakers</ion-label>
     </ion-tab-button>
 
@@ -118,7 +118,7 @@ const routes: Routes = [
     </ion-tab-button>
 
     <ion-tab-button tab="tab-speaker">
-      <ion-icon name="contacts"></ion-icon>
+      <ion-icon name="person-circle"></ion-icon>
       <ion-label>Speakers</ion-label>
     </ion-tab-button>
 
@@ -179,7 +179,7 @@ will match the following tab:
 import React from 'react';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/react';
 
-export const TabsExample: React.FunctionComponent = () => (
+export const TabsExample: React.FC = () => (
   <IonTabs>
     <IonTabBar slot="bottom">
       <IonTabButton tab="schedule">
@@ -189,7 +189,7 @@ export const TabsExample: React.FunctionComponent = () => (
       </IonTabButton>
 
       <IonTabButton tab="speakers">
-        <IonIcon name="contacts" />
+        <IonIcon name="person-circle" />
         <IonLabel>Speakers</IonLabel>
       </IonTabButton>
 
@@ -244,7 +244,7 @@ export const TabsExample: React.FunctionComponent = () => (
 
         <!-- Provide a custom route to navigate to -->
         <ion-tab-button tab="speakers" :to="{ name: 'app.speakers' }">
-          <ion-icon name="contacts"></ion-icon>
+          <ion-icon name="person-circle"></ion-icon>
           <ion-label>Speakers</ion-label>
         </ion-tab-button>
 

@@ -11,7 +11,7 @@ import {
   IonContent
 } from '@ionic/react';
 
-export const ButtonsExample: React.FunctionComponent = () => (
+export const ButtonsExample: React.FC = () => (
   <IonContent>
     <IonToolbar>
       <IonButtons slot="start">
@@ -23,7 +23,7 @@ export const ButtonsExample: React.FunctionComponent = () => (
     <IonToolbar>
       <IonButtons slot="secondary">
         <IonButton>
-          <IonIcon slot="icon-only" name="contact" />
+          <IonIcon slot="icon-only" name="person-circle" />
         </IonButton>
         <IonButton>
           <IonIcon slot="icon-only" name="search" />
@@ -32,7 +32,7 @@ export const ButtonsExample: React.FunctionComponent = () => (
       <IonTitle>Default Buttons</IonTitle>
       <IonButtons slot="primary">
         <IonButton color="secondary">
-          <IonIcon slot="icon-only" name="more" />
+          <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
         </IonButton>
       </IonButtons>
     </IonToolbar>
@@ -47,6 +47,15 @@ export const ButtonsExample: React.FunctionComponent = () => (
       <IonButtons slot="end">
         <IonMenuButton autoHide={false} />
       </IonButtons>
+    </IonToolbar>
+
+    <IonToolbar>
+      <IonButtons collapse="true">
+        <IonButton>
+          <IonIcon slot="icon-only" name="star" />
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Collapsible Buttons</IonTitle>
     </IonToolbar>
   </IonContent>
 );

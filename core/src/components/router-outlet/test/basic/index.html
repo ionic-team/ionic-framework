@@ -39,9 +39,9 @@
           <ion-content class="ion-padding">
             <h1>Page Two</h1>
             <div>
-              <ion-nav-push component="page-three">
+              <ion-nav-link router-direction="forward" component="page-three">
                 <ion-button href="#/page-3">Go to Page Two</ion-button>
-              </ion-nav-push>
+              </ion-nav-link>
             </div>
           </ion-content>
         `;
@@ -78,8 +78,8 @@
       <ion-route url="/page-3" component="page-three"> </ion-route>
     </ion-router>
 
-    <ion-split-pane>
-      <ion-menu>
+    <ion-split-pane content-id="main">
+      <ion-menu content-id="main">
         <ion-header>
           <ion-toolbar>
             <ion-title>Menu</ion-title>
@@ -97,7 +97,7 @@
           </ion-item>
         </ion-content>
       </ion-menu>
-      <ion-router-outlet main></ion-router-outlet>
+      <ion-router-outlet id="main"></ion-router-outlet>
     </ion-split-pane>
   </ion-app>
 </body>

@@ -46,7 +46,17 @@
           <ion-card-title>Card Title</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          This is Card Content
+          Custom background, color=secondary on ion-card-header
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card color="danger">
+        <ion-card-header>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          <ion-card-title>Card Title</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          color=danger on ion-card-header
         </ion-card-content>
       </ion-card>
 
@@ -65,6 +75,10 @@
 
     .custom-color {
       --color: hotpink;
+    }
+
+    body {
+      --ion-item-background: #1a1b1e;
     }
 
   </style>

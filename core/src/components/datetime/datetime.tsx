@@ -6,7 +6,7 @@ import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { pickerController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 
-import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, getTimezoneOffset, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -80,6 +80,14 @@ export class Datetime implements ComponentInterface {
    * more info. Defaults to `MMM D, YYYY`.
    */
   @Prop() displayFormat = 'MMM D, YYYY';
+
+  /**
+   * The timezone to use for display purposes only. See
+   * [Date.prototype.toLocaleString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString)
+   * for a list of supported timezones. If no value is provided, the
+   * component will default to displaying times in the user's local timezone.
+   */
+  @Prop() displayTimezone?: string;
 
   /**
    * The format of the date and time picker columns the user selects.
@@ -271,13 +279,8 @@ export class Datetime implements ComponentInterface {
       };
 
       this.updateDatetimeValue(changeData);
-      const columns = this.generateColumns();
-
-      picker.columns = columns;
-
-      await this.validate(picker);
+      picker.columns = this.generateColumns();
     });
-    await this.validate(picker);
     await picker.present();
   }
 
@@ -292,7 +295,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private updateDatetimeValue(value: any) {
-    updateDate(this.datetimeValue, value);
+    updateDate(this.datetimeValue, value, this.displayTimezone);
   }
 
   private generatePickerOptions(): PickerOptions {
@@ -331,7 +334,11 @@ export class Datetime implements ComponentInterface {
              * there can be 1 hr difference when dealing w/ DST
              */
             const date = new Date(convertDataToISO(this.datetimeValue));
-            this.datetimeValue.tzOffset = date.getTimezoneOffset() * -1;
+
+            // If a custom display timezone is provided, use that tzOffset value instead
+            this.datetimeValue.tzOffset = (this.displayTimezone !== undefined && this.displayTimezone.length > 0)
+              ? ((getTimezoneOffset(date, this.displayTimezone)) / 1000 / 60) * -1
+              : date.getTimezoneOffset() * -1;
 
             this.value = convertDataToISO(this.datetimeValue);
           }
@@ -406,14 +413,14 @@ export class Datetime implements ComponentInterface {
         max[name] = 0;
       });
 
-    return divyColumns(columns);
+    return this.validateColumns(divyColumns(columns));
   }
 
-  private async validate(picker: HTMLIonPickerElement) {
+  private validateColumns(columns: PickerColumn[]) {
     const today = new Date();
     const minCompareVal = dateDataSortValue(this.datetimeMin);
     const maxCompareVal = dateDataSortValue(this.datetimeMax);
-    const yearCol = await picker.getColumn('year');
+    const yearCol = columns.find(c => c.name === 'year');
 
     let selectedYear: number = today.getFullYear();
     if (yearCol) {
@@ -432,7 +439,7 @@ export class Datetime implements ComponentInterface {
       }
     }
 
-    const selectedMonth = await this.validateColumn(picker,
+    const selectedMonth = this.validateColumn(columns,
       'month', 1,
       minCompareVal, maxCompareVal,
       [selectedYear, 0, 0, 0, 0],
@@ -440,26 +447,28 @@ export class Datetime implements ComponentInterface {
     );
 
     const numDaysInMonth = daysInMonth(selectedMonth, selectedYear);
-    const selectedDay = await this.validateColumn(picker,
+    const selectedDay = this.validateColumn(columns,
       'day', 2,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, 0, 0, 0],
       [selectedYear, selectedMonth, numDaysInMonth, 23, 59]
     );
 
-    const selectedHour = await this.validateColumn(picker,
+    const selectedHour = this.validateColumn(columns,
       'hour', 3,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, selectedDay, 0, 0],
       [selectedYear, selectedMonth, selectedDay, 23, 59]
     );
 
-    await this.validateColumn(picker,
+    this.validateColumn(columns,
       'minute', 4,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, selectedDay, selectedHour, 0],
       [selectedYear, selectedMonth, selectedDay, selectedHour, 59]
     );
+
+    return columns;
   }
 
   private calcMinMax() {
@@ -514,8 +523,8 @@ export class Datetime implements ComponentInterface {
     }
   }
 
-  private async validateColumn(picker: HTMLIonPickerElement, name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): Promise<number> {
-    const column = await picker.getColumn(name);
+  private validateColumn(columns: PickerColumn[], name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): number {
+    const column = columns.find(c => c.name === name);
     if (!column) {
       return 0;
     }

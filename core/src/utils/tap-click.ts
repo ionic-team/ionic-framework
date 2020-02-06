@@ -109,14 +109,20 @@ export const startTapClick = (config: Config) => {
 
     const rippleEffect = useRippleEffect && getRippleEffect(el);
     if (rippleEffect && rippleEffect.addRipple) {
+      removeRipple();
       activeRipple = rippleEffect.addRipple(x, y);
     }
   };
 
-  const removeActivated = (smooth: boolean) => {
+  const removeRipple = () => {
     if (activeRipple !== undefined) {
       activeRipple.then(remove => remove());
+      activeRipple = undefined;
     }
+  };
+
+  const removeActivated = (smooth: boolean) => {
+    removeRipple();
     const active = activatableEle;
     if (!active) {
       return;
@@ -179,7 +185,7 @@ const getRippleEffect = (el: HTMLElement) => {
   return el.querySelector('ion-ripple-effect');
 };
 
-const ACTIVATED = 'activated';
+const ACTIVATED = 'ion-activated';
 const ADD_ACTIVATED_DEFERS = 200;
 const CLEAR_STATE_DEFERS = 200;
 const MOUSE_WAIT = 2500;

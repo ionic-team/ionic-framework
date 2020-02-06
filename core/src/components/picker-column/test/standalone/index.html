@@ -10,13 +10,15 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module">
+    import { pickerController } from '../../../../dist/ionic/index.esm.js';
+    window.pickerController = pickerController;
+  </script>
 
 <body>
-  <ion-picker-controller></ion-picker-controller>
   <ion-button onclick="openPicker()" id="single-column-button">Open Single Column Picker</ion-button>
   <ion-button onclick="openPicker(2, 5, multiColumnOptions)" id="multiple-column-button">Open Multi Column Picker</ion-button>
   <script>
-    const pickerController = document.querySelector('ion-picker-controller');
     const defaultColumnOptions = [
       [
         'Dog',
@@ -55,7 +57,7 @@
           {
             text: 'Confirm',
             handler: (value) => {
-              console.log(`Got Value ${value}`);
+              console.log('Got Value', value);
             }
           }
         ]

@@ -11,8 +11,8 @@
   </ion-segment>
 
   <!-- Disabled Segment -->
-  <ion-segment @ionChange="segmentChanged($event)" disabled>
-    <ion-segment-button value="sunny" checked>
+  <ion-segment @ionChange="segmentChanged($event)" disabled value="sunny">
+    <ion-segment-button value="sunny">
       <ion-label>Sunny</ion-label>
     </ion-segment-button>
     <ion-segment-button value="rainy">
@@ -31,26 +31,26 @@
   </ion-segment>
 
   <!-- Scrollable Segment -->
-  <ion-segment scrollable>
-    <ion-segment-button>
+  <ion-segment scrollable value="heart">
+    <ion-segment-button value="home">
       <ion-icon name="home"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button checked>
+    <ion-segment-button value="heart">
       <ion-icon name="heart"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="pin">
       <ion-icon name="pin"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="star">
       <ion-icon name="star"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="call">
       <ion-icon name="call"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="globe">
       <ion-icon name="globe"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="basket">
       <ion-icon name="basket"></ion-icon>
     </ion-segment-button>
   </ion-segment>

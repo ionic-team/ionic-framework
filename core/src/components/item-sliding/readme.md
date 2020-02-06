@@ -12,7 +12,7 @@ By default, the buttons are placed on the `"end"` side. This means that options 
 
 By default if an icon is placed with text in the [item option](../item-option), it will display the icon on top of the text, but the icon slot can be changed to any of the following to position it in the option.
 
-| Slot        | description                                                              |
+| Slot        | Description                                                              |
 | ----------- | ------------------------------------------------------------------------ |
 | `start`     | In LTR, start is the left side of the button, and in RTL it is the right |
 | `top`       | The icon is above the text                                               |
@@ -108,7 +108,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="start" name="more"></ion-icon>
+        <ion-icon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -127,7 +127,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="end" name="more"></ion-icon>
+        <ion-icon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -146,7 +146,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="top" name="more"></ion-icon>
+        <ion-icon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -165,7 +165,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="bottom" name="more"></ion-icon>
+        <ion-icon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -255,7 +255,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="start" name="more"></ion-icon>
+        <ion-icon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -274,7 +274,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="end" name="more"></ion-icon>
+        <ion-icon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -293,7 +293,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="top" name="more"></ion-icon>
+        <ion-icon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -312,7 +312,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="bottom" name="more"></ion-icon>
+        <ion-icon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -331,7 +331,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
 import React from 'react';
 import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonNote } from '@ionic/react';
 
-export const ItemSlidingExample: React.FunctionComponent = () => (
+export const ItemSlidingExample: React.FC = () => (
 <IonList>
   {/* Sliding item with text options on both sides */}
   <IonItemSliding>
@@ -406,7 +406,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="start" name="more"></IonIcon>
+        <IonIcon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -425,7 +425,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="end" name="more"></IonIcon>
+        <IonIcon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -444,7 +444,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="top" name="more"></IonIcon>
+        <IonIcon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -463,7 +463,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="bottom" name="more"></IonIcon>
+        <IonIcon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -555,7 +555,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="start" name="more"></ion-icon>
+          <ion-icon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">
@@ -574,7 +574,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="end" name="more"></ion-icon>
+          <ion-icon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">
@@ -593,7 +593,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="top" name="more"></ion-icon>
+          <ion-icon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">
@@ -612,7 +612,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="bottom" name="more"></ion-icon>
+          <ion-icon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">

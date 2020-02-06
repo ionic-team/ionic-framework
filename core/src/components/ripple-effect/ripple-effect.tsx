@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Method, Prop, readTask, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Method, Prop, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -77,15 +77,18 @@ export class RippleEffect implements ComponentInterface {
     return this.type === 'unbounded';
   }
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-    return {
-      role: 'presentation',
-      class: {
-        [mode]: true,
-        'unbounded': this.unbounded
-      }
-    };
+    return (
+      <Host
+        role="presentation"
+        class={{
+          [mode]: true,
+          'unbounded': this.unbounded
+        }}
+      >
+      </Host>
+    );
   }
 }
 

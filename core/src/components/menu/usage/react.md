@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonRouterOutlet } from '@ionic/react';
 
-export const MenuExample: React.FunctionComponent = () => (
+export const MenuExample: React.FC = () => (
   <>
     <IonMenu side="start" menuId="first">
       <IonHeader>
@@ -21,7 +21,7 @@ export const MenuExample: React.FunctionComponent = () => (
       </IonContent>
     </IonMenu>
 
-    <IonMenu side="start" menuId="custom" class="my-custom-menu">
+    <IonMenu side="start" menuId="custom" className="my-custom-menu">
       <IonHeader>
         <IonToolbar color="tertiary">
           <IonTitle>Custom Menu</IonTitle>

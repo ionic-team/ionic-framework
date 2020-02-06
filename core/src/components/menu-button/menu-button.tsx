@@ -1,11 +1,12 @@
-import { Component, ComponentInterface, Host, Listen, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
-import { createColorClasses } from '../../utils/theme';
-import { toggleMenu, updateVisibility } from '../menu-toggle/menu-toggle-util';
+import { menuController } from '../../utils/menu-controller';
+import { createColorClasses, hostContext } from '../../utils/theme';
+import { updateVisibility } from '../menu-toggle/menu-toggle-util';
 
 @Component({
   tag: 'ion-menu-button',
@@ -16,6 +17,7 @@ import { toggleMenu, updateVisibility } from '../menu-toggle/menu-toggle-util';
   shadow: true
 })
 export class MenuButton implements ComponentInterface, ButtonInterface {
+  @Element() el!: HTMLIonSegmentElement;
 
   @State() visible = false;
 
@@ -46,28 +48,24 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-  async componentDidLoad() {
-    await this.setVisibility();
+  componentDidLoad() {
+    this.visibilityChanged();
   }
 
   @Listen('ionMenuChange', { target: 'body' })
   @Listen('ionSplitPaneVisible', { target: 'body' })
   async visibilityChanged() {
-    await this.setVisibility();
-  }
-
-  private setVisibility = async () => {
     this.visible = await updateVisibility(this.menu);
   }
 
   private onClick = async () => {
-    await toggleMenu(this.menu);
+    return menuController.toggle(this.menu);
   }
 
   render() {
     const { color, disabled } = this;
     const mode = getIonMode(this);
-    const menuIcon = config.get('menuIcon', 'menu');
+    const menuIcon = config.get('menuIcon', mode === 'ios' ? 'menu-outline' : 'menu-sharp');
     const hidden = this.autoHide && !this.visible;
 
     const attrs = {
@@ -87,18 +85,21 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           'button': true,  // ion-buttons target .button
           'menu-button-hidden': hidden,
           'menu-button-disabled': disabled,
+          'in-toolbar': hostContext('ion-toolbar', this.el),
           'ion-activatable': true,
           'ion-focusable': true
         }}
       >
         <button
           {...attrs}
-          disabled={this.disabled}
+          disabled={disabled}
           class="button-native"
         >
-          <slot>
-            <ion-icon icon={menuIcon} mode={mode} lazy={false}></ion-icon>
-          </slot>
+          <span class="button-inner">
+            <slot>
+              <ion-icon icon={menuIcon} mode={mode} lazy={false}></ion-icon>
+            </slot>
+          </span>
           {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </button>
       </Host>

@@ -2,8 +2,8 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
-import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
+import { AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
+import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
@@ -27,10 +27,9 @@ export class Loading implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
   presented = false;
-  animation?: Animation;
   mode = getIonMode(this);
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonLoadingElement;
 
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -83,6 +82,8 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, the loading indicator will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 
@@ -110,6 +111,10 @@ export class Loading implements ComponentInterface, OverlayInterface {
    * Emitted after the loading has dismissed.
    */
   @Event({ eventName: 'ionLoadingDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+
+  constructor() {
+    prepareOverlay(this.el);
+  }
 
   componentWillLoad() {
     if (this.spinner === undefined) {

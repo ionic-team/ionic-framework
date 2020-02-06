@@ -92,15 +92,11 @@ export class Toggle implements ComponentInterface {
   disabledChanged() {
     this.emitStyle();
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
   }
 
-  componentWillLoad() {
-    this.emitStyle();
-  }
-
-  async componentDidLoad() {
+  async connectedCallback() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'toggle',
@@ -114,11 +110,15 @@ export class Toggle implements ComponentInterface {
     this.disabledChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
     }
+  }
+
+  componentWillLoad() {
+    this.emitStyle();
   }
 
   private emitStyle() {

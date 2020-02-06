@@ -2,17 +2,17 @@
 import React from 'react';
 import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonContent } from '@ionic/react';
 
-export const RadioExample: React.FunctionComponent = () => (
+export const RadioExample: React.FC = () => (
   <IonContent>
     <IonList>
-      <IonRadioGroup>
+      <IonRadioGroup value="biff">
         <IonListHeader>
           <IonLabel>Name</IonLabel>
         </IonListHeader>
 
         <IonItem>
           <IonLabel>Biff</IonLabel>
-          <IonRadio slot="start" value="biff" checked />
+          <IonRadio slot="start" value="biff" />
         </IonItem>
 
         <IonItem>

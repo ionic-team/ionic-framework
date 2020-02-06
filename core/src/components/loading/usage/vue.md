@@ -16,14 +16,14 @@ export default {
     presentLoading() {
       return this.$ionic.loadingController
         .create({
-          message: 'Loading',
+          message: 'Please wait...',
           duration: this.timeout,
         })
-        .then(l => {
+        .then(loading => {
           setTimeout(function() {
-            l.dismiss()
+            loading.dismiss()
           }, this.timeout)
-          return l.present()
+          return loading.present()
         })
     },
     presentLoadingWithOptions() {
@@ -31,15 +31,16 @@ export default {
         .create({
           spinner: null,
           duration: this.timeout,
-          message: 'Please wait...',
+          message: 'Click the backdrop to dismiss early...',
           translucent: true,
           cssClass: 'custom-class custom-loading',
+          backdropDismiss: true
         })
-        .then(l => {
+        .then(loading=> {
           setTimeout(function() {
-            l.dismiss()
+            loading.dismiss()
           }, this.timeout)
-          return l.present()
+          return loading.present()
         })
     },
   },

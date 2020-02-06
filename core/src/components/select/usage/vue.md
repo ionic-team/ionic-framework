@@ -3,7 +3,11 @@
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Single Selection</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Single Selection
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Gender</ion-label>
@@ -15,7 +19,7 @@
 
     <ion-item>
       <ion-label>Hair Color</ion-label>
-      <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+      <ion-select value="brown" ok-text="Okay" cancel-text="Dismiss">
         <ion-select-option value="brown">Brown</ion-select-option>
         <ion-select-option value="blonde">Blonde</ion-select-option>
         <ion-select-option value="black">Black</ion-select-option>
@@ -32,11 +36,15 @@
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Multiple Selection</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Multiple Selection
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Toppings</ion-label>
-      <ion-select multiple="true" cancelText="Nah" okText="Okay!">
+      <ion-select multiple="true" cancel-text="Nah" ok-text="Okay!">
         <ion-select-option value="bacon">Bacon</ion-select-option>
         <ion-select-option value="olives">Black Olives</ion-select-option>
         <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
@@ -52,10 +60,10 @@
 
     <ion-item>
       <ion-label>Pets</ion-label>
-      <ion-select multiple="true">
-        <ion-select-option value="bird" selected>Bird</ion-select-option>
+      <ion-select multiple="true" :value=['bird', 'dog']>
+        <ion-select-option value="bird">Bird</ion-select-option>
         <ion-select-option value="cat">Cat</ion-select-option>
-        <ion-select-option value="dog" selected>Dog</ion-select-option>
+        <ion-select-option value="dog">Dog</ion-select-option>
         <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
       </ion-select>
     </ion-item>
@@ -68,11 +76,15 @@
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Interface Options</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Interface Options
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Alert</ion-label>
-      <ion-select :interfaceOptions="customAlertOptions" interface="alert" multiple="true" placeholder="Select One">
+      <ion-select :interface-options="customAlertOptions" interface="alert" multiple="true" placeholder="Select One">
         <ion-select-option value="bacon">Bacon</ion-select-option>
         <ion-select-option value="olives">Black Olives</ion-select-option>
         <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
@@ -88,7 +100,7 @@
 
     <ion-item>
       <ion-label>Popover</ion-label>
-      <ion-select :interfaceOptions="customPopoverOptions" interface="popover" placeholder="Select One">
+      <ion-select :interface-options="customPopoverOptions" interface="popover" placeholder="Select One">
         <ion-select-option value="brown">Brown</ion-select-option>
         <ion-select-option value="blonde">Blonde</ion-select-option>
         <ion-select-option value="black">Black</ion-select-option>
@@ -98,7 +110,7 @@
 
     <ion-item>
       <ion-label>Action Sheet</ion-label>
-      <ion-select :interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+      <ion-select :interface-options="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
         <ion-select-option value="red">Red</ion-select-option>
         <ion-select-option value="purple">Purple</ion-select-option>
         <ion-select-option value="yellow">Yellow</ion-select-option>
