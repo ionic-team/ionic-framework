@@ -305,9 +305,8 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { scrollX, scrollY } = this;
+    const { scrollX, scrollY, scrollStylesProvided } = this;
     const mode = getIonMode(this);
-    const { scrollX, scrollY, forceOverscroll, scrollStylesProvided } = this;
     const forceOverscroll = this.shouldForceOverscroll();
     const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', true));
 
