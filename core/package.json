@@ -42,6 +42,7 @@
     "@types/swiper": "4.4.4",
     "aws-sdk": "^2.497.0",
     "clean-css-cli": "^4.1.11",
+    "cupertino-pane": "^1.0.9",
     "domino": "^2.1.3",
     "fs-extra": "^8.0.1",
     "jest": "24.9.0",

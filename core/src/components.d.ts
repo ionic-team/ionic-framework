@@ -708,6 +708,48 @@ export namespace Components {
     */
     'yearValues'?: number[] | number | string;
   }
+  interface IonDrawer {
+    /**
+    * Remove pane from DOM and clear styles
+    */
+    'destroy': (conf?: {}) => Promise<void>;
+    /**
+    * Use this to access the full Drawer API.
+    */
+    'getDrawer': () => Promise<any>;
+    /**
+    * Dissappear pane from screen, still keep pane in DOM
+    */
+    'hide': () => Promise<void>;
+    /**
+    * Determinate if drawer position was moved out of screen, but pane still exist in DOM.
+    */
+    'isHidden': () => Promise<boolean | null>;
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: "ios" | "md";
+    /**
+    * Will change pane position with animation to selected breakpoint
+    */
+    'moveToBreak': (val: "top" | "middle" | "bottom") => Promise<void>;
+    /**
+    * Options to pass to the drawer instance. See https://github.com/roman-rr/cupertino-pane/ for valid options
+    */
+    'options': any;
+    /**
+    * Render and show Drawer pane from ion-drawer component
+    */
+    'present': (conf?: {}) => Promise<void>;
+    /**
+    * If `true`, show the drawer right after component loaded.
+    */
+    'presentDefault': boolean;
+    /**
+    * Update the underlying Drawer implementation.
+    */
+    'update': () => Promise<void>;
+  }
   interface IonFab {
     /**
     * If `true`, both the `ion-fab-button` and all `ion-fab-list` inside `ion-fab` will become active. That means `ion-fab-button` will become a `close` icon and `ion-fab-list` will become visible.
@@ -2787,6 +2829,12 @@ declare global {
     new (): HTMLIonDatetimeElement;
   };
 
+  interface HTMLIonDrawerElement extends Components.IonDrawer, HTMLStencilElement {}
+  var HTMLIonDrawerElement: {
+    prototype: HTMLIonDrawerElement;
+    new (): HTMLIonDrawerElement;
+  };
+
   interface HTMLIonFabElement extends Components.IonFab, HTMLStencilElement {}
   var HTMLIonFabElement: {
     prototype: HTMLIonFabElement;
@@ -3214,6 +3262,7 @@ declare global {
     'ion-col': HTMLIonColElement;
     'ion-content': HTMLIonContentElement;
     'ion-datetime': HTMLIonDatetimeElement;
+    'ion-drawer': HTMLIonDrawerElement;
     'ion-fab': HTMLIonFabElement;
     'ion-fab-button': HTMLIonFabButtonElement;
     'ion-fab-list': HTMLIonFabListElement;
@@ -3937,6 +3986,44 @@ declare namespace LocalJSX {
     * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
     */
     'yearValues'?: number[] | number | string;
+  }
+  interface IonDrawer {
+    /**
+    * The mode determines which platform styles to use.
+    */
+    'mode'?: "ios" | "md";
+    /**
+    * Emitted after pane will dissapeared
+    */
+    'onIonDrawerDidDismiss'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when detect user drag event on pane
+    */
+    'onIonDrawerDragStart'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted executes on each new pane position
+    */
+    'onIonDrawerOnDrag'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted after pane will present
+    */
+    'onIonDrawerTransitionEnd'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted before pane will dissapeared
+    */
+    'onIonDrawerWillDismiss'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted before panel will present
+    */
+    'onIonDrawerWillPresent'?: (event: CustomEvent<void>) => void;
+    /**
+    * Options to pass to the drawer instance. See https://github.com/roman-rr/cupertino-pane/ for valid options
+    */
+    'options'?: any;
+    /**
+    * If `true`, show the drawer right after component loaded.
+    */
+    'presentDefault'?: boolean;
   }
   interface IonFab {
     /**
@@ -5846,6 +5933,7 @@ declare namespace LocalJSX {
     'ion-col': IonCol;
     'ion-content': IonContent;
     'ion-datetime': IonDatetime;
+    'ion-drawer': IonDrawer;
     'ion-fab': IonFab;
     'ion-fab-button': IonFabButton;
     'ion-fab-list': IonFabList;
@@ -5942,6 +6030,7 @@ declare module "@stencil/core" {
       'ion-col': LocalJSX.IonCol & JSXBase.HTMLAttributes<HTMLIonColElement>;
       'ion-content': LocalJSX.IonContent & JSXBase.HTMLAttributes<HTMLIonContentElement>;
       'ion-datetime': LocalJSX.IonDatetime & JSXBase.HTMLAttributes<HTMLIonDatetimeElement>;
+      'ion-drawer': LocalJSX.IonDrawer & JSXBase.HTMLAttributes<HTMLIonDrawerElement>;
       'ion-fab': LocalJSX.IonFab & JSXBase.HTMLAttributes<HTMLIonFabElement>;
       'ion-fab-button': LocalJSX.IonFabButton & JSXBase.HTMLAttributes<HTMLIonFabButtonElement>;
       'ion-fab-list': LocalJSX.IonFabList & JSXBase.HTMLAttributes<HTMLIonFabListElement>;

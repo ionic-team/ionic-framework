@@ -1,0 +1,13 @@
+@import "../../themes/ionic.globals.md";
+
+// Drawer
+// --------------------------------------------------
+ion-drawer {
+  @include padding(0, 20px, 0, 20px);
+
+  display: none;
+}
+
+.pane > ion-drawer {
+  display: block;
+}

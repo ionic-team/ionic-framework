@@ -320,7 +320,7 @@ ion-datetime,prop,monthShortNames,string | string[] | undefined,undefined,false,
 ion-datetime,prop,monthValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,pickerFormat,string | undefined,undefined,false,false
-ion-datetime,prop,pickerOptions,undefined | { columns?: PickerColumn[] | undefined; buttons?: PickerButton[] | undefined; cssClass?: string | string[] | undefined; backdropDismiss?: boolean | undefined; animated?: boolean | undefined; mode?: "ios" | "md" | undefined; keyboardClose?: boolean | undefined; id?: string | undefined; enterAnimation?: AnimationBuilder | undefined; leaveAnimation?: AnimationBuilder | undefined; },undefined,false,false
+ion-datetime,prop,pickerOptions,undefined | { columns?: PickerColumn[] | undefined; buttons?: PickerButton[] | undefined; cssClass?: string | string[] | undefined; showBackdrop?: boolean | undefined; backdropDismiss?: boolean | undefined; animated?: boolean | undefined; mode?: "ios" | "md" | undefined; keyboardClose?: boolean | undefined; id?: string | undefined; enterAnimation?: AnimationBuilder | undefined; leaveAnimation?: AnimationBuilder | undefined; },undefined,false,false
 ion-datetime,prop,placeholder,null | string | undefined,undefined,false,false
 ion-datetime,prop,readonly,boolean,false,false,false
 ion-datetime,prop,value,null | string | undefined,undefined,false,false
@@ -335,6 +335,24 @@ ion-datetime,css-prop,--padding-end
 ion-datetime,css-prop,--padding-start
 ion-datetime,css-prop,--padding-top
 ion-datetime,css-prop,--placeholder-color
+
+ion-drawer,none
+ion-drawer,prop,mode,"ios" | "md",undefined,false,false
+ion-drawer,prop,options,any,{},false,false
+ion-drawer,prop,presentDefault,boolean,false,false,false
+ion-drawer,method,destroy,destroy(conf?: {}) => Promise<void>
+ion-drawer,method,getDrawer,getDrawer() => Promise<any>
+ion-drawer,method,hide,hide() => Promise<void>
+ion-drawer,method,isHidden,isHidden() => Promise<boolean | null>
+ion-drawer,method,moveToBreak,moveToBreak(val: "top" | "middle" | "bottom") => Promise<void>
+ion-drawer,method,present,present(conf?: {}) => Promise<void>
+ion-drawer,method,update,update() => Promise<void>
+ion-drawer,event,ionDrawerDidDismiss,void,true
+ion-drawer,event,ionDrawerDragStart,void,true
+ion-drawer,event,ionDrawerOnDrag,void,true
+ion-drawer,event,ionDrawerTransitionEnd,void,true
+ion-drawer,event,ionDrawerWillDismiss,void,true
+ion-drawer,event,ionDrawerWillPresent,void,true
 
 ion-fab,shadow
 ion-fab,prop,activated,boolean,false,false,false

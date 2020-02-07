@@ -1,0 +1,30 @@
+@import "./drawer";
+
+// Material Design Drawer
+// --------------------------------------------------
+/* stylelint-disable */
+.drawer-md .pane {
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+
+    box-shadow: 0 3px 5px -1px rgba(184, 153, 153, 0.2), 
+                0 6px 10px 0 rgba(0,0,0,.17), 
+                0 1px 18px 0 rgba(0,0,0,.2) !important;
+
+    .draggable {
+        @include margin(3px, 0, 3px, 0);
+    }
+
+    .draggable .move {
+        width: 28px !important;
+
+        background: rgba(192, 192, 192, 0.55) !important;
+    }
+
+    .close-button {
+        top: 10px !important;
+        right: 10px !important;
+
+        background: #e0e0e0 !important;
+    }
+}

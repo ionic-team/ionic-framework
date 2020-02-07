@@ -210,6 +210,24 @@ export class IonDatetime {
   }
 }
 
+export declare interface IonDrawer extends Components.IonDrawer {}
+@ProxyCmp({inputs: ['mode', 'options', 'presentDefault'], 'methods': ['update', 'present', 'destroy', 'moveToBreak', 'hide', 'isHidden', 'getDrawer']})
+@Component({ selector: 'ion-drawer', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['mode', 'options', 'presentDefault'] })
+export class IonDrawer {
+  ionDrawerDidDismiss!: EventEmitter<CustomEvent>;
+  ionDrawerWillDismiss!: EventEmitter<CustomEvent>;
+  ionDrawerTransitionEnd!: EventEmitter<CustomEvent>;
+  ionDrawerWillPresent!: EventEmitter<CustomEvent>;
+  ionDrawerDragStart!: EventEmitter<CustomEvent>;
+  ionDrawerOnDrag!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionDrawerDidDismiss', 'ionDrawerWillDismiss', 'ionDrawerTransitionEnd', 'ionDrawerWillPresent', 'ionDrawerDragStart', 'ionDrawerOnDrag']);
+  }
+}
+
 export declare interface IonFab extends Components.IonFab {}
 @ProxyCmp({inputs: ['activated', 'edge', 'horizontal', 'vertical'], 'methods': ['close']})
 @Component({ selector: 'ion-fab', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['activated', 'edge', 'horizontal', 'vertical'] })
