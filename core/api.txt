@@ -498,7 +498,6 @@ ion-item,css-prop,--border-color
 ion-item,css-prop,--border-radius
 ion-item,css-prop,--border-style
 ion-item,css-prop,--border-width
-ion-item,css-prop,--box-shadow
 ion-item,css-prop,--color
 ion-item,css-prop,--color-activated
 ion-item,css-prop,--color-focused
