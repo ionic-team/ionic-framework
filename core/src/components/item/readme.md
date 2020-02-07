@@ -1405,7 +1405,6 @@ Item Inputs
 | `--border-radius`                | Radius of the item border                                                                                     |
 | `--border-style`                 | Style of the item border                                                                                      |
 | `--border-width`                 | Width of the item border                                                                                      |
-| `--box-shadow`                   | Box shadow of the item                                                                                        |
 | `--color`                        | Color of the item                                                                                             |
 | `--color-activated`              | Color of the item when pressed                                                                                |
 | `--color-focused`                | Color of the item when focused with the tab key                                                               |

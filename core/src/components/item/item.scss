@@ -18,8 +18,6 @@
    * @prop --border-style: Style of the item border
    * @prop --border-width: Width of the item border
    *
-   * @prop --box-shadow: Box shadow of the item
-   *
    * @prop --color: Color of the item
    * @prop --color-activated: Color of the item when pressed
    * @prop --color-focused: Color of the item when focused with the tab key
@@ -59,7 +57,6 @@
   --padding-bottom: 0px;
   --padding-end: 0px;
   --padding-start: 0px;
-  --box-shadow: none;
   --inner-border-width: 0px;
   --inner-padding-top: 0px;
   --inner-padding-bottom: 0px;
@@ -221,7 +218,6 @@
 
   background: var(--background);
 
-  box-shadow: var(--box-shadow);
   overflow: inherit;
   box-sizing: border-box;
 
