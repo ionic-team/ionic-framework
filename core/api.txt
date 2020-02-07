@@ -320,7 +320,7 @@ ion-datetime,prop,monthShortNames,string | string[] | undefined,undefined,false,
 ion-datetime,prop,monthValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,pickerFormat,string | undefined,undefined,false,false
-ion-datetime,prop,pickerOptions,undefined | { columns?: PickerColumn[] | undefined; buttons?: PickerButton[] | undefined; cssClass?: string | string[] | undefined; backdropDismiss?: boolean | undefined; animated?: boolean | undefined; mode?: "ios" | "md" | undefined; keyboardClose?: boolean | undefined; id?: string | undefined; enterAnimation?: AnimationBuilder | undefined; leaveAnimation?: AnimationBuilder | undefined; },undefined,false,false
+ion-datetime,prop,pickerOptions,undefined | { columns?: PickerColumn[] | undefined; buttons?: PickerButton[] | undefined; cssClass?: string | string[] | undefined; showBackdrop?: boolean | undefined; backdropDismiss?: boolean | undefined; animated?: boolean | undefined; mode?: "ios" | "md" | undefined; keyboardClose?: boolean | undefined; id?: string | undefined; enterAnimation?: AnimationBuilder | undefined; leaveAnimation?: AnimationBuilder | undefined; },undefined,false,false
 ion-datetime,prop,placeholder,null | string | undefined,undefined,false,false
 ion-datetime,prop,readonly,boolean,false,false,false
 ion-datetime,prop,value,null | string | undefined,undefined,false,false
