@@ -21,7 +21,7 @@
 
     const squareA = document.querySelector('.square-a');
     
-    const rootAnimation = createAnimation();
+    const rootAnimation = createAnimation('root-animation-id');
     
     rootAnimation
       .addElement(squareA)
@@ -29,10 +29,10 @@
       .iterations(2)
       .easing('linear')
       .keyframes([
-        { background: 'rgba(255, 0, 0, 0.5)', offset: 0 },
-        { background: 'rgba(0, 255, 0, 0.5)', offset: 0.33 },
-        { background: 'rgba(0, 0, 255, 0.5)', offset: 0.66 },
-        { background: 'rgba(255, 0, 0, 0.5)', offset: 1 }
+        { background: 'rgba(255, 0, 0, 0.5)', offset: 0, borderRadius: '0px' },
+        { background: 'rgba(0, 255, 0, 0.5)', offset: 0.33, borderRadius: '10px' },
+        { background: 'rgba(0, 0, 255, 0.5)', offset: 0.66, borderRadius: '20px' },
+        { background: 'rgba(255, 0, 0, 0.5)', offset: 1, borderRadius: '30px' }
       ])
       .onFinish(() => {
         const ev = new CustomEvent('ionAnimationFinished');

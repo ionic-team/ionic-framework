@@ -34,13 +34,12 @@ export class LoadingExample {
 
   async presentLoading() {
     const loading = await this.loadingController.create({
-      message: 'Hellooo',
+      message: 'Please wait...',
       duration: 2000
     });
     await loading.present();
-    
+
     const { role, data } = await loading.onDidDismiss();
-    
     console.log('Loading dismissed!');
   }
 
@@ -48,11 +47,15 @@ export class LoadingExample {
     const loading = await this.loadingController.create({
       spinner: null,
       duration: 5000,
-      message: 'Please wait...',
+      message: 'Click the backdrop to dismiss early...',
       translucent: true,
-      cssClass: 'custom-class custom-loading'
+      cssClass: 'custom-class custom-loading',
+      backdropDismiss: true
     });
-    return await loading.present();
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed with role:', role);
   }
 }
 ```
@@ -63,27 +66,31 @@ export class LoadingExample {
 ```javascript
 async function presentLoading() {
   const loading = document.createElement('ion-loading');
-  loading.message: 'Hellooo',
-  loading.duration: 2000;
+  loading.message = 'Please wait...';
+  loading.duration = 2000;
 
   document.body.appendChild(loading);
   await loading.present();
 
   const { role, data } = await loading.onDidDismiss();
-
   console.log('Loading dismissed!');
 }
 
-function presentLoadingWithOptions() {
+async function presentLoadingWithOptions() {
   const loading = document.createElement('ion-loading');
+
   loading.spinner = null;
   loading.duration = 5000;
-  loading.message = 'Please wait...';
+  loading.message = 'Click the backdrop to dismiss early...';
   loading.translucent = true;
   loading.cssClass = 'custom-class custom-loading';
+  loading.backdropDismiss = true;
 
   document.body.appendChild(loading);
-  return loading.present();
+  await loading.present();
+
+  const { role, data } = await loading.onDidDismiss();
+  console.log('Loading dismissed with role:', role);
 }
 ```
 
@@ -107,7 +114,7 @@ export const LoadingExample: React.FC = () => {
       <IonLoading
         isOpen={showLoading}
         onDidDismiss={() => setShowLoading(false)}
-        message={'Loading...'}
+        message={'Please wait...'}
         duration={5000}
       />
     </IonContent>
@@ -136,14 +143,14 @@ export default {
     presentLoading() {
       return this.$ionic.loadingController
         .create({
-          message: 'Loading',
+          message: 'Please wait...',
           duration: this.timeout,
         })
-        .then(l => {
+        .then(loading => {
           setTimeout(function() {
-            l.dismiss()
+            loading.dismiss()
           }, this.timeout)
-          return l.present()
+          return loading.present()
         })
     },
     presentLoadingWithOptions() {
@@ -151,15 +158,16 @@ export default {
         .create({
           spinner: null,
           duration: this.timeout,
-          message: 'Please wait...',
+          message: 'Click the backdrop to dismiss early...',
           translucent: true,
           cssClass: 'custom-class custom-loading',
+          backdropDismiss: true
         })
-        .then(l => {
+        .then(loading=> {
           setTimeout(function() {
-            l.dismiss()
+            loading.dismiss()
           }, this.timeout)
-          return l.present()
+          return loading.present()
         })
     },
   },
@@ -177,9 +185,9 @@ export default {
 | `backdropDismiss` | `backdrop-dismiss` | If `true`, the loading indicator will be dismissed when the backdrop is clicked.                                                                                                                                                 | `boolean`                                                                                                       | `false`     |
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                 | `string \| string[] \| undefined`                                                                               | `undefined` |
 | `duration`        | `duration`         | Number of milliseconds to wait before dismissing the loading indicator.                                                                                                                                                          | `number`                                                                                                        | `0`         |
-| `enterAnimation`  | --                 | Animation to use when the loading indicator is presented.                                                                                                                                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined`                          | `undefined` |
+| `enterAnimation`  | --                 | Animation to use when the loading indicator is presented.                                                                                                                                                                        | `((baseEl: any, opts?: any) => Animation) \| undefined`                                                         | `undefined` |
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                           | `boolean`                                                                                                       | `true`      |
-| `leaveAnimation`  | --                 | Animation to use when the loading indicator is dismissed.                                                                                                                                                                        | `((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) \| undefined`                          | `undefined` |
+| `leaveAnimation`  | --                 | Animation to use when the loading indicator is dismissed.                                                                                                                                                                        | `((baseEl: any, opts?: any) => Animation) \| undefined`                                                         | `undefined` |
 | `message`         | `message`          | Optional text content to display in the loading indicator.                                                                                                                                                                       | `string \| undefined`                                                                                           | `undefined` |
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                | `"ios" \| "md"`                                                                                                 | `undefined` |
 | `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the loading indicator.                                                                                                                                                            | `boolean`                                                                                                       | `true`      |

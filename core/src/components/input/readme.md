@@ -172,7 +172,7 @@ export const InputExample: React.FC = () => (
   <ion-input placeholder="Enter Input"></ion-input>
 
   <!-- Input with clear button when there is a value -->
-  <ion-input clearInput value="clear me"></ion-input>
+  <ion-input clear-input value="clear me"></ion-input>
 
   <!-- Number type input -->
   <ion-input type="number" value="333"></ion-input>
@@ -238,17 +238,17 @@ export const InputExample: React.FC = () => (
 | `spellcheck`     | `spellcheck`     | If `true`, the element will have its spelling and grammar checked.                                                                                                                                                                                                                                                                                   | `boolean`                                                                                          | `false`        |
 | `step`           | `step`           | Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.                                                                                                                                                                                         | `string \| undefined`                                                                              | `undefined`    |
 | `type`           | `type`           | The type of control to display. The default type is text.                                                                                                                                                                                                                                                                                            | `"date" \| "email" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "time" \| "url"`    | `'text'`       |
-| `value`          | `value`          | The value of the input.                                                                                                                                                                                                                                                                                                                              | `null \| string \| undefined`                                                                      | `''`           |
+| `value`          | `value`          | The value of the input.                                                                                                                                                                                                                                                                                                                              | `null \| number \| string \| undefined`                                                            | `''`           |
 
 
 ## Events
 
-| Event       | Description                            | Type                                  |
-| ----------- | -------------------------------------- | ------------------------------------- |
-| `ionBlur`   | Emitted when the input loses focus.    | `CustomEvent<void>`                   |
-| `ionChange` | Emitted when the value has changed.    | `CustomEvent<InputChangeEventDetail>` |
-| `ionFocus`  | Emitted when the input has focus.      | `CustomEvent<void>`                   |
-| `ionInput`  | Emitted when a keyboard input ocurred. | `CustomEvent<KeyboardEvent>`          |
+| Event       | Description                             | Type                                  |
+| ----------- | --------------------------------------- | ------------------------------------- |
+| `ionBlur`   | Emitted when the input loses focus.     | `CustomEvent<void>`                   |
+| `ionChange` | Emitted when the value has changed.     | `CustomEvent<InputChangeEventDetail>` |
+| `ionFocus`  | Emitted when the input has focus.       | `CustomEvent<void>`                   |
+| `ionInput`  | Emitted when a keyboard input occurred. | `CustomEvent<KeyboardEvent>`          |
 
 
 ## Methods

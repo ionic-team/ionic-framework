@@ -1,10 +1,10 @@
-import { IonicAnimation } from '../../../interface';
+import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Popover Leave Animation
  */
-export const iosLeaveAnimation = (baseEl: HTMLElement): IonicAnimation => {
+export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();

@@ -24,17 +24,17 @@ export const ToggleExample: React.FC = () => (
     <IonList>
       <IonItem>
         <IonLabel>Pepperoni</IonLabel>
-        <IonToggle value="pepperoni" onChange={() => {}} />
+        <IonToggle value="pepperoni" onIonChange={() => {}} />
       </IonItem>
 
       <IonItem>
         <IonLabel>Sausage</IonLabel>
-        <IonToggle value="sausage" onChange={() => {}} disabled={true} />
+        <IonToggle value="sausage" onIonChange={() => {}} disabled={true} />
       </IonItem>
 
       <IonItem>
         <IonLabel>Mushrooms</IonLabel>
-        <IonToggle value="mushrooms" onChange={() => {}} />
+        <IonToggle value="mushrooms" onIonChange={() => {}} />
       </IonItem>
     </IonList>
   </IonContent>

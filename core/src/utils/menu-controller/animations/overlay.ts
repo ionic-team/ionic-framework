@@ -1,4 +1,4 @@
-import { IonicAnimation, MenuI } from '../../../interface';
+import { Animation, MenuI } from '../../../interface';
 import { createAnimation } from '../../animation/animation';
 
 import { baseAnimation } from './base';
@@ -8,7 +8,7 @@ import { baseAnimation } from './base';
  * The menu slides over the content. The content
  * itself, which is under the menu, does not move.
  */
-export const menuOverlayAnimation = (menu: MenuI): IonicAnimation => {
+export const menuOverlayAnimation = (menu: MenuI): Animation => {
   let closedX: string;
   let openedX: string;
   const width = menu.width + 8;

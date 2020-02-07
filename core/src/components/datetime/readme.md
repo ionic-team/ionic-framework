@@ -58,9 +58,24 @@ above can be passed in to the display format in any combination.
 | `YYYY, MMMM`          | `2005, June`            |
 | `MMM DD, YYYY HH:mm`  | `Jun 17, 2005 11:06`    |
 
-**Important**: `ion-datetime` will always display values relative to the user's timezone.
+**Important**: `ion-datetime` will by default display values relative to the user's timezone.
 Given a value of `09:00:00+01:00`, the datetime component will
 display it as `04:00:00-04:00` for users in a `-04:00` timezone offset.
+To change the display to use a different timezone, use the displayTimezone property described below.
+
+### Display Timezone
+
+The `displayTimezone` property allows you to change the default behavior
+of displaying values relative to the user's local timezone. In addition to "UTC" valid
+time zone values are determined by the browser, and in most cases follow the time zone names
+of the [IANA time zone database](https://www.iana.org/time-zones), such as "Asia/Shanghai",
+"Asia/Kolkata", "America/New_York". In the following example:
+
+```html
+<ion-datetime value="2019-10-01T15:43:40.394Z" display-timezone="utc"></ion-datetime>
+```
+
+The displayed value will not be converted and will be displayed as provided (UTC).
 
 
 ### Picker Format
@@ -528,80 +543,80 @@ export const DateTimeExample: React.FC = () => (
 <template>
   <ion-item>
     <ion-label>MMMM</ion-label>
-    <ion-datetime displayFormat="MMMM" value="2012-12-15T13:47:20.789"></ion-datetime>
+    <ion-datetime display-format="MMMM" value="2012-12-15T13:47:20.789"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>MM DD YY</ion-label>
-    <ion-datetime displayFormat="MM DD YY" placeholder="Select Date"></ion-datetime>
+    <ion-datetime display-format="MM DD YY" placeholder="Select Date"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>Disabled</ion-label>
-    <ion-datetime id="dynamicDisabled" displayFormat="MM DD YY" disabled value="1994-12-15"></ion-datetime>
+    <ion-datetime id="dynamicDisabled" display-format="MM DD YY" disabled value="1994-12-15"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>YYYY</ion-label>
-    <ion-datetime :pickerOptions="customPickerOptions" placeholder="Custom Options" displayFormat="YYYY" min="1981" max="2002"></ion-datetime>
+    <ion-datetime :picker-options="customPickerOptions" placeholder="Custom Options" display-format="YYYY" min="1981" max="2002"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label position="stacked">MMMM YY</ion-label>
-    <ion-datetime displayFormat="MMMM YY" min="1989-06-04" max="2004-08-23" value="1994-12-15T13:47:20.789"></ion-datetime>
+    <ion-datetime display-format="MMMM YY" min="1989-06-04" max="2004-08-23" value="1994-12-15T13:47:20.789"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">MM/DD/YYYY</ion-label>
-    <ion-datetime displayFormat="MM/DD/YYYY" min="1994-03-14" max="2012-12-09" value="2002-09-23T15:03:46.789"></ion-datetime>
+    <ion-datetime display-format="MM/DD/YYYY" min="1994-03-14" max="2012-12-09" value="2002-09-23T15:03:46.789"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">MM/DD/YYYY</ion-label>
-    <ion-datetime displayFormat="MM/DD/YYYY" min="1994-03-14" max="2012-12-09"></ion-datetime>
+    <ion-datetime display-format="MM/DD/YYYY" min="1994-03-14" max="2012-12-09"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>DDD. MMM DD, YY (custom locale)</ion-label>
     <ion-datetime value="1995-04-15" min="1990-02" max="2000"
-      :dayShortNames="customDayShortNames"
-      displayFormat="DDD. MMM DD, YY"
-      monthShortNames="jan, feb, mar, apr, mai, jun, jul, aug, sep, okt, nov, des"></ion-datetime>
+      :day-short-names="customDayShortNames"
+      display-format="DDD. MMM DD, YY"
+      month-short-names="jan, feb, mar, apr, mai, jun, jul, aug, sep, okt, nov, des"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>D MMM YYYY H:mm</ion-label>
-    <ion-datetime displayFormat="D MMM YYYY H:mm" min="1997" max="2010" value="2005-06-17T11:06Z"></ion-datetime>
+    <ion-datetime display-format="D MMM YYYY H:mm" min="1997" max="2010" value="2005-06-17T11:06Z"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>DDDD MMM D, YYYY</ion-label>
-    <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2005" max="2016" value="2008-09-02"></ion-datetime>
+    <ion-datetime display-format="DDDD MMM D, YYYY" min="2005" max="2016" value="2008-09-02"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>HH:mm</ion-label>
-    <ion-datetime displayFormat="HH:mm"></ion-datetime>
+    <ion-datetime display-format="HH:mm"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>h:mm a</ion-label>
-    <ion-datetime displayFormat="h:mm a"></ion-datetime>
+    <ion-datetime display-format="h:mm a"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>hh:mm A (15 min steps)</ion-label>
-    <ion-datetime displayFormat="h:mm A" minuteValues="0,15,30,45"></ion-datetime>
+    <ion-datetime display-format="h:mm A" minute-values="0,15,30,45"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>Leap years, summer months</ion-label>
-    <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" monthValues="6,7,8" :yearValues="customYearValues"></ion-datetime>
+    <ion-datetime display-format="MM/YYYY" picker-format="MMMM YYYY" month-values="6,7,8" :year-values="customYearValues"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>Specific days/months/years</ion-label>
-    <ion-datetime monthValues="6,7,8" yearValues="2014,2015" dayValues="01,02,03,04,05,06,08,09,10, 11, 12, 13, 14" displayFormat="DD/MMM/YYYY"></ion-datetime>
+    <ion-datetime month-values="6,7,8" year-values="2014,2015" day-values="01,02,03,04,05,06,08,09,10, 11, 12, 13, 14" display-format="DD/MMM/YYYY"></ion-datetime>
   </ion-item>
 </template>
 
@@ -650,6 +665,7 @@ export const DateTimeExample: React.FC = () => (
 | `dayValues`       | `day-values`        | Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.                                    | `number \| number[] \| string \| undefined`                                                                                                                                                                                                                                                                                                                                                                              | `undefined`     |
 | `disabled`        | `disabled`          | If `true`, the user cannot interact with the datetime.                                                                                                                                                                                                                                                                                                                                                                                                                                            | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                | `false`         |
 | `displayFormat`   | `display-format`    | The display format of the date and time as text that shows within the item. When the `pickerFormat` input is not used, then the `displayFormat` is used for both display the formatted text, and determining the datetime picker's columns. See the `pickerFormat` input description for more info. Defaults to `MMM D, YYYY`.                                                                                                                                                                    | `string`                                                                                                                                                                                                                                                                                                                                                                                                                 | `'MMM D, YYYY'` |
+| `displayTimezone` | `display-timezone`  | The timezone to use for display purposes only. See [Date.prototype.toLocaleString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString) for a list of supported timezones. If no value is provided, the component will default to displaying times in the user's local timezone.                                                                                                                                                               | `string \| undefined`                                                                                                                                                                                                                                                                                                                                                                                                    | `undefined`     |
 | `doneText`        | `done-text`         | The text to display on the picker's "Done" button.                                                                                                                                                                                                                                                                                                                                                                                                                                                | `string`                                                                                                                                                                                                                                                                                                                                                                                                                 | `'Done'`        |
 | `hourValues`      | `hour-values`       | Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.                                                                                                                                                                                         | `number \| number[] \| string \| undefined`                                                                                                                                                                                                                                                                                                                                                                              | `undefined`     |
 | `max`             | `max`               | The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.                                                                                                                                                                  | `string \| undefined`                                                                                                                                                                                                                                                                                                                                                                                                    | `undefined`     |

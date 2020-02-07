@@ -108,7 +108,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="start" name="more"></ion-icon>
+        <ion-icon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -127,7 +127,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="end" name="more"></ion-icon>
+        <ion-icon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -146,7 +146,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="top" name="more"></ion-icon>
+        <ion-icon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -165,7 +165,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="bottom" name="more"></ion-icon>
+        <ion-icon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -255,7 +255,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="start" name="more"></ion-icon>
+        <ion-icon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -274,7 +274,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="end" name="more"></ion-icon>
+        <ion-icon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -293,7 +293,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="top" name="more"></ion-icon>
+        <ion-icon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -312,7 +312,7 @@ Options can be expanded to take up the full width of the item if you swipe past 
     </ion-item>
     <ion-item-options>
       <ion-item-option color="primary">
-        <ion-icon slot="bottom" name="more"></ion-icon>
+        <ion-icon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         More
       </ion-item-option>
       <ion-item-option color="secondary">
@@ -406,7 +406,7 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="start" name="more"></IonIcon>
+        <IonIcon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -425,7 +425,7 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="end" name="more"></IonIcon>
+        <IonIcon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -444,7 +444,7 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="top" name="more"></IonIcon>
+        <IonIcon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -463,7 +463,7 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="bottom" name="more"></IonIcon>
+        <IonIcon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -555,7 +555,7 @@ export const ItemSlidingExample: React.FC = () => (
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="start" name="more"></ion-icon>
+          <ion-icon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">
@@ -574,7 +574,7 @@ export const ItemSlidingExample: React.FC = () => (
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="end" name="more"></ion-icon>
+          <ion-icon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">
@@ -593,7 +593,7 @@ export const ItemSlidingExample: React.FC = () => (
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="top" name="more"></ion-icon>
+          <ion-icon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">
@@ -612,7 +612,7 @@ export const ItemSlidingExample: React.FC = () => (
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="bottom" name="more"></ion-icon>
+          <ion-icon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">

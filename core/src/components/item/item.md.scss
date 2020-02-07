@@ -8,12 +8,15 @@
 :host {
   --min-height: #{$item-md-min-height};
   --background: #{$item-md-background};
-  --background-activated: var(--background);
-  --background-focused: #{$item-md-background-focused};
-  --background-hover: #{$item-md-background-hover};
+  --background-activated: transparent;
+  --background-focused: currentColor;
+  --background-hover: currentColor;
+  --background-activated-opacity: 0;
+  --background-focused-opacity: .12;
+  --background-hover-opacity: .04;
   --border-color: #{$item-md-border-bottom-color};
   --color: #{$item-md-color};
-  --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
+  --transition: opacity 15ms linear, background-color 15ms linear;
   --padding-start: #{$item-md-padding-start};
   --color: #{$item-md-color};
   --border-color: #{$item-md-border-bottom-color};
@@ -31,22 +34,13 @@
 }
 
 
-// Material Design Item: Focused & Activated
+// Material Design Item: States
 // --------------------------------------------------
 
-:host(.ion-focused.activated) .item-native {
-  background: var(--background-focused);
-  color: var(--color-focused);
-}
-
-:host(.ion-color.activated) .item-native {
-  background: current-color(base);
-  color: current-color(contrast);
-}
-
-:host(.ion-color.ion-focused.activated) .item-native {
-  background: current-color(shade);
-  color: current-color(contrast);
+:host(.ion-color.ion-activated) .item-native {
+  &::after {
+    background: transparent;
+  }
 }
 
 

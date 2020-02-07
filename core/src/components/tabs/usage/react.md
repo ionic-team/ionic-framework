@@ -12,7 +12,7 @@ export const TabsExample: React.FC = () => (
       </IonTabButton>
 
       <IonTabButton tab="speakers">
-        <IonIcon name="contacts" />
+        <IonIcon name="person-circle" />
         <IonLabel>Speakers</IonLabel>
       </IonTabButton>
 

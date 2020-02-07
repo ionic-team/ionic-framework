@@ -21,7 +21,7 @@
   <ion-toolbar>
     <ion-buttons slot="secondary">
       <ion-button>
-        <ion-icon slot="icon-only" name="contact"></ion-icon>
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
       <ion-button>
         <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -29,7 +29,7 @@
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button color="secondary">
-        <ion-icon slot="icon-only" name="more"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Default Buttons</ion-title>
@@ -38,7 +38,7 @@
   <ion-toolbar>
     <ion-buttons slot="secondary">
       <ion-button fill="solid">
-        <ion-icon slot="start" name="contact"></ion-icon>
+        <ion-icon slot="start" name="person-circle"></ion-icon>
         Contact
       </ion-button>
     </ion-buttons>
@@ -83,7 +83,7 @@
 
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button autoHide="false"></ion-menu-button>
+      <ion-menu-button auto-hide="false"></ion-menu-button>
 
     </ion-buttons>
     <ion-buttons slot="secondary">
@@ -102,7 +102,7 @@
     </ion-buttons>
     <ion-title>Right side menu toggle</ion-title>
     <ion-buttons slot="end">
-      <ion-menu-button autoHide="false"></ion-menu-button>
+      <ion-menu-button auto-hide="false"></ion-menu-button>
 
     </ion-buttons>
   </ion-toolbar>
@@ -130,7 +130,7 @@
   <ion-toolbar color="secondary">
     <ion-buttons slot="secondary">
       <ion-button>
-        <ion-icon slot="icon-only" name="contact"></ion-icon>
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
       <ion-button>
         <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -138,7 +138,7 @@
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button color="primary">
-        <ion-icon slot="icon-only" name="more"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Secondary Toolbar</ion-title>
@@ -147,7 +147,7 @@
   <ion-toolbar color="dark">
     <ion-buttons slot="secondary">
       <ion-button>
-        <ion-icon slot="icon-only" name="contact"></ion-icon>
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
       <ion-button>
         <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -155,7 +155,7 @@
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button color="danger">
-        <ion-icon slot="icon-only" name="more"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Dark Toolbar</ion-title>

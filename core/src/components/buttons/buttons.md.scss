@@ -31,15 +31,16 @@
   --color: initial;
   --color-focused: #{current-color(contrast)};
   --color-hover: #{current-color(contrast)};
-  --background-hover: #{current-color(contrast, .08)};
-  --background-focused: #{current-color(contrast, .24)};
+  --background-activated: transparent;
+  --background-focused: #{current-color(contrast)};
+  --background-hover: #{current-color(contrast)};
 }
 
 :host-context(.ion-color)::slotted(*) .button-solid {
   --background: #{current-color(contrast)};
-  --background-activated: #{current-color(contrast)};
+  --background-activated: transparent;
   --background-focused: #{current-color(shade)};
-  --background-hover: #{current-color(tint)};
+  --background-hover: #{current-color(base)};
   --color: #{current-color(base)};
   --color-focused: #{current-color(base)};
   --color-hover: #{current-color(base)};
@@ -68,7 +69,7 @@
 
 
 ::slotted(*) .button {
-  --background-hover: rgba(66, 66, 66, 0.08);
+  --background-hover: currentColor;
 }
 
 // Material Design Toolbar Solid Button
@@ -78,9 +79,8 @@
   --color: #{$toolbar-md-background};
   --color-activated: #{$toolbar-md-background};
   --background: #{$toolbar-md-color};
-  --background-activated: #{$toolbar-md-color};
-  --background-focused: #{$toolbar-md-color-activated};
-  --background-hover: rgba(66, 66, 66, 0.92);
+  --background-activated: transparent;
+  --background-focused: currentColor;
 }
 
 
@@ -93,8 +93,9 @@
   --color-focused: #{$toolbar-md-color};
   --background: transparent;
   --background-activated: transparent;
+  --background-focused: currentColor;
+  --background-hover: currentColor;
   --border-color: #{$toolbar-md-color};
-  --background-focused: rgba(66, 66, 66, 0.1);
 }
 
 
@@ -106,7 +107,9 @@
   --color-focused: #{$toolbar-md-color};
   --color-activated: currentColor;
   --background: transparent;
-  --background-focused: rgba(66, 66, 66, 0.1);
+  --background-activated: transparent;
+  --background-focused: currentColor;
+  --background-hover: currentColor;
 }
 
 

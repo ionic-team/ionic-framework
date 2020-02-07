@@ -13,9 +13,9 @@ import {
 
 export const SplitPlaneExample: React.SFC<{}> = () => (
   <IonContent>
-    <IonSplitPane contentId="menuContent">
+    <IonSplitPane contentId="main">
       {/*--  our side menu  --*/}
-      <IonMenu contentId="menuContent">
+      <IonMenu contentId="main">
         <IonHeader>
           <IonToolbar>
             <IonTitle>Menu</IonTitle>
@@ -24,7 +24,7 @@ export const SplitPlaneExample: React.SFC<{}> = () => (
       </IonMenu>
 
       {/*-- the main content --*/}
-      <IonPage id="menuContent"/>
+      <IonPage id="main"/>
     </IonSplitPane>
   </IonContent>
 );

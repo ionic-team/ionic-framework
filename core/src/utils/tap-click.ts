@@ -185,7 +185,7 @@ const getRippleEffect = (el: HTMLElement) => {
   return el.querySelector('ion-ripple-effect');
 };
 
-const ACTIVATED = 'activated';
+const ACTIVATED = 'ion-activated';
 const ADD_ACTIVATED_DEFERS = 200;
 const CLEAR_STATE_DEFERS = 200;
 const MOUSE_WAIT = 2500;

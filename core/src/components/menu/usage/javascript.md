@@ -1,6 +1,6 @@
 ```html
 <ion-app>
-  <ion-menu side="start" menu-id="first">
+  <ion-menu side="start" menu-id="first" content-id="main">
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>Start Menu</ion-title>
@@ -17,7 +17,7 @@
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="start" menu-id="custom" class="my-custom-menu">
+  <ion-menu side="start" menu-id="custom" class="my-custom-menu" content-id="main">
     <ion-header>
       <ion-toolbar color="tertiary">
         <ion-title>Custom Menu</ion-title>
@@ -34,7 +34,7 @@
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="end" type="push">
+  <ion-menu side="end" type="push" content-id="main">
     <ion-header>
       <ion-toolbar color="danger">
         <ion-title>End Menu</ion-title>
@@ -51,7 +51,7 @@
     </ion-content>
   </ion-menu>
 
-  <div class="ion-page" main>
+  <div class="ion-page" id="main">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu - Basic</ion-title>

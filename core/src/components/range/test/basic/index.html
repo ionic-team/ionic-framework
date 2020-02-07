@@ -23,7 +23,9 @@
     <ion-content id="content">
       <ion-list>
         <ion-list-header>
-          Range color
+          <ion-label>
+            Range color
+          </ion-label>
         </ion-list-header>
         <ion-item>
           <ion-range value="20"></ion-range>
@@ -36,12 +38,12 @@
         </ion-item>
         <ion-item>
           <ion-range pin="true" color="secondary" value="86">
-            <ion-icon small name="ios-sunny" slot="start"></ion-icon>
-            <ion-icon name="ios-sunny" slot="end"></ion-icon>
+            <ion-icon small name="sunny" slot="start"></ion-icon>
+            <ion-icon name="sunny" slot="end"></ion-icon>
           </ion-range>
           <ion-range pin="true" color="danger" value="54">
-            <ion-icon small name="ios-thermometer" slot="start"></ion-icon>
-            <ion-icon name="ios-thermometer" slot="end"></ion-icon>
+            <ion-icon small name="thermometer" slot="start"></ion-icon>
+            <ion-icon name="thermometer" slot="end"></ion-icon>
           </ion-range>
         </ion-item>
         <ion-item>
@@ -54,7 +56,9 @@
 
       <ion-list>
         <ion-list-header>
-          Dynamic Value
+          <ion-label>
+            Dynamic Value
+          </ion-label>
         </ion-list-header>
         <ion-item>
           <ion-range pin="true" step="0" color="secondary" id="progressValue"></ion-range>
@@ -75,7 +79,9 @@
 
       <ion-list>
         <ion-list-header>
-          Mode
+          <ion-label>
+            Mode
+          </ion-label>
         </ion-list-header>
         <ion-item>
           <ion-range value="50" mode="md"></ion-range>
@@ -87,7 +93,9 @@
 
       <ion-list>
         <ion-list-header>
-          Options
+          <ion-label>
+            Options
+          </ion-label>
         </ion-list-header>
         <ion-item>
           <ion-range pin="true"></ion-range>
@@ -113,7 +121,9 @@
 
       <ion-list>
         <ion-list-header>
-          Coupled sliders
+          <ion-label>
+            Coupled sliders
+          </ion-label>
         </ion-list-header>
         <ion-item>
           <ion-range min="0" value="0" max="50" id="minRange"></ion-range>

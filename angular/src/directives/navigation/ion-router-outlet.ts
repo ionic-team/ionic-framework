@@ -16,6 +16,8 @@ import { RouteView, getUrl } from './stack-utils';
   inputs: ['animated', 'swipeGesture']
 })
 export class IonRouterOutlet implements OnDestroy, OnInit {
+  nativeEl: HTMLIonRouterOutletElement;
+
   private activated: ComponentRef<any> | null = null;
   private activatedView: RouteView | null = null;
 
@@ -23,7 +25,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   private _swipeGesture?: boolean;
   private name: string;
   private stackCtrl: StackController;
-  private nativeEl: HTMLIonRouterOutletElement;
 
   // Maintain map of activated route proxies for each component instance
   private proxyMap = new WeakMap<any, ActivatedRoute>();
@@ -242,6 +243,22 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   }
 
   /**
+   * Returns the RouteView of the active page of each stack.
+   * @internal
+   */
+  getLastRouteView(stackId?: string): RouteView | undefined {
+    return this.stackCtrl.getLastUrl(stackId);
+  }
+
+  /**
+   * Returns the root view in the tab stack.
+   * @internal
+   */
+  getRootView(stackId?: string): RouteView | undefined {
+    return this.stackCtrl.getRootUrl(stackId);
+  }
+
+  /**
    * Returns the active stack ID. In the context of ion-tabs, it means the active tab.
    */
   getActiveStackId(): string | undefined {
@@ -314,7 +331,7 @@ class OutletInjector implements Injector {
     private route: ActivatedRoute,
     private childContexts: ChildrenOutletContexts,
     private parent: Injector
-  ) {}
+  ) { }
 
   get(token: any, notFoundValue?: any): any {
     if (token === ActivatedRoute) {
