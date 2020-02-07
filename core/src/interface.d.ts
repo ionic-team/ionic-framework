@@ -35,6 +35,7 @@ export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirecti
 export * from './utils/overlays-interface';
 export * from './global/config';
 export { Gesture, GestureConfig, GestureDetail } from './utils/gesture';
+export { IonicSafeString } from './utils/sanitization';
 
 export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time';
 export type Side = 'start' | 'end';

@@ -3,8 +3,9 @@
  * in an untrusted string
  */
 
-export const sanitizeDOMString = (untrustedString: string | undefined): string | undefined => {
+export const sanitizeDOMString = (untrustedString: IonicSafeString | string | undefined): string | undefined => {
   try {
+    if (untrustedString instanceof IonicSafeString) { return untrustedString.value; }
     if (typeof untrustedString !== 'string' || untrustedString === '') { return untrustedString; }
 
     /**
@@ -124,3 +125,7 @@ const getElementChildren = (el: any) => {
 
 const allowedAttributes = ['class', 'id', 'href', 'src', 'name', 'slot'];
 const blockedTags = ['script', 'style', 'iframe', 'meta', 'link', 'object', 'embed'];
+
+export class IonicSafeString {
+  constructor(public value: string) {}
+}

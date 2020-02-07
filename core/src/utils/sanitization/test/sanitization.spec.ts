@@ -1,6 +1,11 @@
-import { sanitizeDOMString } from "..";
+import { IonicSafeString, sanitizeDOMString } from "..";
 
 describe('sanitizeDOMString', () => {
+
+  it('bypass sanitizer', () => {
+    expect(sanitizeDOMString(new IonicSafeString('<img src="x" onerror="alert(document.cookie);">')))
+      .toEqual('<img src="x" onerror="alert(document.cookie);">');
+  });
 
   it('filter onerror', () => {
     expect(sanitizeDOMString('<img src="x" onerror="alert(document.cookie);">'))
