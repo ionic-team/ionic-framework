@@ -3,5 +3,8 @@
 // iOS Header
 // --------------------------------------------------
 
+/// @prop - Blur value for backdrop-filter
+$header-ios-blur:                                  20px;
+
 /// @prop - Filter of the translucent header
-$header-ios-translucent-filter:                    saturate(180%) blur(20px) !default;
+$header-ios-translucent-filter:                    saturate(180%) blur($header-ios-blur) !default;

@@ -49,7 +49,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The icon to use when `detail` is set to `true`.
    */
-  @Prop() detailIcon = 'ios-arrow-forward';
+  @Prop() detailIcon = 'chevron-forward';
 
   /**
    * If `true`, the user cannot interact with the item.
@@ -136,9 +136,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // input cover on top of those interfering with their clicks
     const inputs = this.el.querySelectorAll('ion-input, ion-range, ion-searchbar, ion-segment, ion-textarea, ion-toggle');
 
+    // The following elements should also stay clickable when an input with cover is present
+    const clickables = this.el.querySelectorAll('ion-anchor, ion-button, a, button');
+
     // Check for multiple inputs to change the position of the input cover to relative
     // for all of the covered inputs above
-    this.multipleInputs = covers.length + inputs.length > 1;
+    this.multipleInputs = covers.length + inputs.length > 1
+      || covers.length + clickables.length > 1
+      || covers.length > 0 && this.isClickable();
   }
 
   // If the item contains an input including a checkbox, datetime, select, or radio

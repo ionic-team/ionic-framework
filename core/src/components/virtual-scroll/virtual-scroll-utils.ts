@@ -1,7 +1,7 @@
 import { Cell, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM, NODE_CHANGE_CELL, NODE_CHANGE_NONE, NODE_CHANGE_POSITION } from './constants';
-import { CellType } from './virtual-scroll-interface';
+import { CellType, FooterHeightFn, HeaderHeightFn } from './virtual-scroll-interface';
 
 export interface Viewport {
   top: number;
@@ -205,6 +205,8 @@ export const calcCells = (
   items: any[],
 
   itemHeight: ItemHeightFn | undefined,
+  headerHeight: HeaderHeightFn | undefined,
+  footerHeight: FooterHeightFn | undefined,
   headerFn: HeaderFn | undefined,
   footerFn: HeaderFn | undefined,
 
@@ -228,9 +230,9 @@ export const calcCells = (
           type: CELL_TYPE_HEADER,
           value,
           index: i,
-          height: approxHeaderHeight,
-          reads: MIN_READS,
-          visible: false,
+          height: headerHeight ? headerHeight(value, i) : approxHeaderHeight,
+          reads: headerHeight ? 0 : MIN_READS,
+          visible: !!headerHeight,
         });
       }
     }
@@ -253,9 +255,9 @@ export const calcCells = (
           type: CELL_TYPE_FOOTER,
           value,
           index: i,
-          height: approxFooterHeight,
-          reads: 2,
-          visible: false,
+          height: footerHeight ? footerHeight(value, i) : approxFooterHeight,
+          reads: footerHeight ? 0 : MIN_READS,
+          visible: !!footerHeight,
         });
       }
     }

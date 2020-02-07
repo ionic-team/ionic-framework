@@ -30,7 +30,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
 <ion-toolbar>
   <ion-buttons slot="secondary">
     <ion-button>
-      <ion-icon slot="icon-only" name="contact"></ion-icon>
+      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
     </ion-button>
     <ion-button>
       <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -39,7 +39,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
   <ion-title>Default Buttons</ion-title>
   <ion-buttons slot="primary">
     <ion-button color="secondary">
-      <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-toolbar>
@@ -54,6 +54,15 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
   <ion-buttons slot="end">
     <ion-menu-button autoHide="false"></ion-menu-button>
   </ion-buttons>
+</ion-toolbar>
+
+<ion-toolbar>
+  <ion-buttons collapse="true">
+    <ion-button>
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Collapsible Buttons</ion-title>
 </ion-toolbar>
 ```
 
@@ -71,7 +80,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
 <ion-toolbar>
   <ion-buttons slot="secondary">
     <ion-button>
-      <ion-icon slot="icon-only" name="contact"></ion-icon>
+      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
     </ion-button>
     <ion-button>
       <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -80,7 +89,7 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
   <ion-title>Default Buttons</ion-title>
   <ion-buttons slot="primary">
     <ion-button color="secondary">
-      <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-toolbar>
@@ -100,6 +109,15 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
     </ion-menu-toggle>
   </ion-buttons>
 </ion-toolbar>
+
+<ion-toolbar>
+  <ion-buttons collapse="true">
+    <ion-button>
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Collapsible Buttons</ion-title>
+</ion-toolbar>
 ```
 
 
@@ -118,7 +136,7 @@ import {
   IonContent
 } from '@ionic/react';
 
-export const ButtonsExample: React.FunctionComponent = () => (
+export const ButtonsExample: React.FC = () => (
   <IonContent>
     <IonToolbar>
       <IonButtons slot="start">
@@ -130,7 +148,7 @@ export const ButtonsExample: React.FunctionComponent = () => (
     <IonToolbar>
       <IonButtons slot="secondary">
         <IonButton>
-          <IonIcon slot="icon-only" name="contact" />
+          <IonIcon slot="icon-only" name="person-circle" />
         </IonButton>
         <IonButton>
           <IonIcon slot="icon-only" name="search" />
@@ -139,7 +157,7 @@ export const ButtonsExample: React.FunctionComponent = () => (
       <IonTitle>Default Buttons</IonTitle>
       <IonButtons slot="primary">
         <IonButton color="secondary">
-          <IonIcon slot="icon-only" name="more" />
+          <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
         </IonButton>
       </IonButtons>
     </IonToolbar>
@@ -154,6 +172,15 @@ export const ButtonsExample: React.FunctionComponent = () => (
       <IonButtons slot="end">
         <IonMenuButton autoHide={false} />
       </IonButtons>
+    </IonToolbar>
+
+    <IonToolbar>
+      <IonButtons collapse="true">
+        <IonButton>
+          <IonIcon slot="icon-only" name="star" />
+        </IonButton>
+      </IonButtons>
+      <IonTitle>Collapsible Buttons</IonTitle>
     </IonToolbar>
   </IonContent>
 );
@@ -174,7 +201,7 @@ export const ButtonsExample: React.FunctionComponent = () => (
   <ion-toolbar>
     <ion-buttons slot="secondary">
       <ion-button>
-        <ion-icon slot="icon-only" name="contact"></ion-icon>
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
       <ion-button>
         <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -183,7 +210,7 @@ export const ButtonsExample: React.FunctionComponent = () => (
     <ion-title>Default Buttons</ion-title>
     <ion-buttons slot="primary">
       <ion-button color="secondary">
-        <ion-icon slot="icon-only" name="more"></ion-icon>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -196,12 +223,28 @@ export const ButtonsExample: React.FunctionComponent = () => (
     </ion-buttons>
     <ion-title>Right side menu toggle</ion-title>
     <ion-buttons slot="end">
-      <ion-menu-button autoHide="false"></ion-menu-button>
+      <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-buttons collapse="true">
+      <ion-button>
+        <ion-icon slot="icon-only" name="star"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Collapsible Buttons</ion-title>
   </ion-toolbar>
 </template>
 ```
 
+
+
+## Properties
+
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                       | Type      | Default |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| `collapse` | `collapse` | If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles) | `boolean` | `false` |
 
 
 ----------------------------------------------

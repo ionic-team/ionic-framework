@@ -97,7 +97,7 @@ left or right of the range.
 import React from 'react';
 import { IonList, IonItem, IonRange, IonLabel, IonIcon, IonContent } from '@ionic/react';
 
-export const RangeExample: React.FunctionComponent = () => (
+export const RangeExample: React.FC = () => (
   <IonContent>
     <IonList>
       <IonItem>
@@ -233,6 +233,8 @@ export default {
 | `--knob-border-radius`    | Border radius of the range knob    |
 | `--knob-box-shadow`       | Box shadow of the range knob       |
 | `--knob-size`             | Size of the range knob             |
+| `--pin-background`        | Background of the range pin        |
+| `--pin-color`             | Color of the range pin             |
 
 
 ----------------------------------------------

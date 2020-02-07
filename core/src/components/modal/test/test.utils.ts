@@ -7,36 +7,44 @@ export const testModal = async (
   selector: string,
   rtl = false
 ) => {
-  try {
-    const pageUrl = generateE2EUrl('modal', type, rtl);
+  const pageUrl = generateE2EUrl('modal', type, rtl);
 
-    const page = await newE2EPage({
-      url: pageUrl
-    });
+  const page = await newE2EPage({
+    url: pageUrl
+  });
 
-    const screenshotCompares = [];
+  const screenshotCompares = [];
+  const ionModalWillPresent = await page.spyOnEvent('ionModalWillPresent');
+  const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+  const ionModalWillDismiss = await page.spyOnEvent('ionModalWillDismiss');
+  const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
-    await page.click(selector);
-    await page.waitForSelector(selector);
+  await page.click(selector);
 
-    let modal = await page.find('ion-modal');
-    await modal.waitForVisible();
+  await ionModalWillPresent.next();
+  await ionModalDidPresent.next();
 
-    screenshotCompares.push(await page.compareScreenshot());
+  await page.waitForSelector(selector);
 
-    await modal.callMethod('dismiss');
-    await modal.waitForNotVisible();
+  let modal = await page.find('ion-modal');
+  await modal.waitForVisible();
+  await page.waitFor(100);
 
-    screenshotCompares.push(await page.compareScreenshot('dismiss'));
+  screenshotCompares.push(await page.compareScreenshot());
 
-    modal = await page.find('ion-modal');
-    expect(modal).toBeNull();
+  await modal.callMethod('dismiss');
 
-    for (const screenshotCompare of screenshotCompares) {
-      expect(screenshotCompare).toMatchScreenshot();
-    }
+  await ionModalWillDismiss.next();
+  await ionModalDidDismiss.next();
 
-  } catch (err) {
-    throw err;
+  await modal.waitForNotVisible();
+
+  screenshotCompares.push(await page.compareScreenshot('dismiss'));
+
+  modal = await page.find('ion-modal');
+  expect(modal).toBeNull();
+
+  for (const screenshotCompare of screenshotCompares) {
+    expect(screenshotCompare).toMatchScreenshot();
   }
 };

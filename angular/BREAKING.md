@@ -62,7 +62,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 
 ## Action Sheet
 
-The `title`, `subTitle` and `enableBackdropDismiss` properties has been renamed to `header`, `subHeader` and `backdropDismiss` respectively.
+The `title`, `subTitle` and `enableBackdropDismiss` properties have been renamed to `header`, `subHeader` and `backdropDismiss` respectively.
 
 **Old Usage Example:**
 
@@ -89,7 +89,7 @@ await actionSheet.present();
 
 ## Alert
 
-The `title`, `subTitle` and `enableBackdropDismiss` properties has been renamed to `header`, `subHeader` and `backdropDismiss` respectively.
+The `title`, `subTitle` and `enableBackdropDismiss` properties have been renamed to `header`, `subHeader` and `backdropDismiss` respectively.
 
 **Old Usage Example:**
 
@@ -498,7 +498,7 @@ The `<ion-fab>` container was previously placed inside of the fixed content by d
 
 ### Markup Changed
 
-The Grid has been refactored in order to support css variables and a dynamic number of columns. The following column attributes have been changed.
+The Grid has been refactored in order to support CSS variables and a dynamic number of columns. The following column attributes have been changed.
 
 _In the following examples, `{breakpoint}` refers to the optional screen breakpoint (xs, sm, md, lg, xl) and `{value}` refers to the number of columns (`auto` or a number between `1` and `12`)._
 
@@ -507,7 +507,7 @@ _In the following examples, `{breakpoint}` refers to the optional screen breakpo
 - `push-{breakpoint}-{value}` attributes have been renamed to `push-{breakpoint}=“{value}”`
 - `pull-{breakpoint}-{value}` attributes have been renamed to `pull-{breakpoint}=“{value}”`
 
-Customizing the padding and width of a grid should now be done with css variables. For more information, see [Grid Layout](https://github.com/ionic-team/ionic-docs/blob/master/src/content/layout/grid.md).
+Customizing the padding and width of a grid should now be done with CSS variables. For more information, see [Grid Layout](https://github.com/ionic-team/ionic-docs/blob/master/src/pages/layout/grid.md).
 
 ## Icon
 
@@ -1092,7 +1092,7 @@ openLoading() {
 ```javascript
 async openLoading() {
   let loading = this.loadingCtrl.create({
-    content: 'Loading...'
+    message: 'Loading...'
   });
 
   await loading.present();
@@ -1798,7 +1798,7 @@ To include the stylesheet for testing such as in a Plunker, Codepen, or anywhere
 
 #### Production
 
-To use the css in production, we recommend importing it into a global file, such as `app/global.scss`:
+To use the CSS in production, we recommend importing it into a global file, such as `app/global.scss`:
 
 ```css
 /** Basic CSS for Ionic Apps */

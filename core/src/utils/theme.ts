@@ -40,7 +40,6 @@ export const openURL = async (url: string | undefined | null, ev: Event | undefi
       if (ev != null) {
         ev.preventDefault();
       }
-      await router.componentOnReady();
       return router.push(url, direction);
     }
   }

@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonIcon, IonItem, IonLabel } from '@ionic/react';
 
-export const CardExample: React.FunctionComponent = () => (
+export const CardExample: React.FC = () => (
   <IonContent>
     <IonCard>
       <IonCardHeader>
@@ -30,9 +30,9 @@ export const CardExample: React.FunctionComponent = () => (
     </IonCard>
 
     <IonCard>
-      <IonItem href="#" class="activated">
+      <IonItem href="#" className="ion-activated">
         <IonIcon name="wifi" slot="start" />
-        <IonLabel>Card Link Item 1 .activated</IonLabel>
+        <IonLabel>Card Link Item 1 activated</IonLabel>
       </IonItem>
 
       <IonItem href="#">
@@ -40,9 +40,9 @@ export const CardExample: React.FunctionComponent = () => (
         <IonLabel>Card Link Item 2</IonLabel>
       </IonItem>
 
-      <IonItem class="activated">
+      <IonItem className="ion-activated">
         <IonIcon name="warning" slot="start" />
-        <IonLabel>Card Button Item 1 .activated</IonLabel>
+        <IonLabel>Card Button Item 1 activated</IonLabel>
       </IonItem>
 
       <IonItem>

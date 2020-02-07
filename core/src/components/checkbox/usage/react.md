@@ -8,7 +8,7 @@ const form = [
   { val: 'Mushroom', isChecked: false }
 ];
 
-export const CheckboxExample: React.FunctionComponent = () => (
+export const CheckboxExample: React.FC = () => (
   <IonContent>
     {/*-- Default Checkbox --*/}
     <IonCheckbox />

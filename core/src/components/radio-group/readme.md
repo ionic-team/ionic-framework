@@ -19,7 +19,9 @@ radio button within the same group.
 <ion-list>
   <ion-radio-group>
     <ion-list-header>
-      Auto Manufacturers
+      <ion-label>
+        Auto Manufacturers
+      </ion-label>
     </ion-list-header>
 
     <ion-item>
@@ -57,11 +59,15 @@ radio button within the same group.
 import React from 'react';
 import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonRadio, IonItem, IonContent } from '@ionic/react';
 
-export const RadioGroupExample: React.FunctionComponent = () => (
+export const RadioGroupExample: React.FC = () => (
   <IonContent>
     <IonList>
       <IonRadioGroup>
-        <IonListHeader>Auto Manufacturers</IonListHeader>
+        <IonListHeader>
+          <IonLabel>
+            Auto Manufacturers
+          </IonLabel>
+        </IonListHeader>
 
         <IonItem>
           <IonLabel>Cord</IonLabel>
@@ -101,7 +107,9 @@ export const RadioGroupExample: React.FunctionComponent = () => (
   <ion-list>
     <ion-radio-group>
       <ion-list-header>
-        Auto Manufacturers
+        <ion-label>
+          Auto Manufacturers
+        </ion-label>
       </ion-list-header>
 
       <ion-item>

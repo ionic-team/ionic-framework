@@ -12,7 +12,7 @@ function doRefresh(event: CustomEvent<RefresherEventDetail>) {
   }, 2000);
 }
 
-export const RefresherExample: React.FunctionComponent = () => (
+export const RefresherExample: React.FC = () => (
   <IonContent>
     {/*-- Default Refresher --*/}
     <IonContent>
@@ -41,5 +41,4 @@ export const RefresherExample: React.FunctionComponent = () => (
     </IonContent>
   </IonContent>
 );
-
 ```

@@ -51,7 +51,7 @@ npm start
 
 You should be able to navigate to `http://localhost:3333` which will look like a file browser.
 
-E2E tests are located inside the `src/component` folder, in the following way: `http://localhost:3333/src/components/{COMPONENT}/test/`
+E2E tests are located inside the `src/components` folder, in the following way: `http://localhost:3333/src/components/{COMPONENT}/test/`
 
 
 **Path examples:**

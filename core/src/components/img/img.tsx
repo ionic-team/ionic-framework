@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -25,7 +25,7 @@ export class Img implements ComponentInterface {
   @Prop() alt?: string;
 
   /**
-   * The image URL. This attribute is mandatory for the <img> element.
+   * The image URL. This attribute is mandatory for the `<img>` element.
    */
   @Prop() src?: string;
   @Watch('src')
@@ -90,24 +90,17 @@ export class Img implements ComponentInterface {
     }
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true,
-      }
-    };
-  }
-
   render() {
     return (
-      <img
-        src={this.loadSrc}
-        alt={this.alt}
-        decoding="async"
-        onLoad={this.onLoad}
-        onError={this.loadError}
-      />
+      <Host class={getIonMode(this)}>
+        <img
+          decoding="async"
+          src={this.loadSrc}
+          alt={this.alt}
+          onLoad={this.onLoad}
+          onError={this.loadError}
+        />
+      </Host>
     );
   }
 }

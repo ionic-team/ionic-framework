@@ -14,7 +14,7 @@ const customDayShortNames = [
   'l\u00f8r'
 ];
 
-export const DateTimeExample: React.FunctionComponent = () => (
+export const DateTimeExample: React.FC = () => (
   <IonContent>
     <IonItem>
       <IonLabel>MMMM</IonLabel>

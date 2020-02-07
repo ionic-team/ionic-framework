@@ -1,7 +1,7 @@
 ```html
-<ion-split-pane content-id="menu-content">
+<ion-split-pane content-id="main">
   <!--  our side menu  -->
-  <ion-menu content-id="menu-content">
+  <ion-menu content-id="main">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu</ion-title>
@@ -10,7 +10,7 @@
   </ion-menu>
 
   <!-- the main content -->
-  <ion-content id="menu-content">
+  <ion-content id="main">
     <h1>Hello</h1>
   </ion-content>
 </ion-split-pane>

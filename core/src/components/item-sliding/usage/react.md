@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonNote } from '@ionic/react';
 
-export const ItemSlidingExample: React.FunctionComponent = () => (
+export const ItemSlidingExample: React.FC = () => (
 <IonList>
   {/* Sliding item with text options on both sides */}
   <IonItemSliding>
@@ -77,7 +77,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="start" name="more"></IonIcon>
+        <IonIcon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -96,7 +96,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="end" name="more"></IonIcon>
+        <IonIcon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -115,7 +115,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="top" name="more"></IonIcon>
+        <IonIcon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
@@ -134,7 +134,7 @@ export const ItemSlidingExample: React.FunctionComponent = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="bottom" name="more"></IonIcon>
+        <IonIcon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">

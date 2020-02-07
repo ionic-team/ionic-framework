@@ -4,19 +4,81 @@
 // iOS Header
 // --------------------------------------------------
 
-.header-ios ion-toolbar:last-child {
+.header-ios ion-toolbar:last-of-type {
   --border-width: 0 0 #{$hairlines-width};
 }
 
-.header-ios[no-border] ion-toolbar:last-child {
+@supports (backdrop-filter: blur(0)) {
+  .header-background {
+    @include position(0, 0, 0, 0);
+
+    position: absolute;
+
+    backdrop-filter: $header-ios-translucent-filter;
+  }
+  .header-translucent-ios ion-toolbar {
+    --opacity: .8;
+  }
+  
+  /**
+   * Disable the saturation otherwise it distorts the content
+   * background color when large header is not collapsed
+   */
+  .header-collapse-condense-inactive .header-background {
+    backdrop-filter: blur($header-ios-blur);
+  }
+}
+
+.header-ios.ion-no-border ion-toolbar:last-of-type {
   --border-width: 0;
 }
 
-.header-translucent-ios {
-  backdrop-filter: $header-ios-translucent-filter;
+// iOS Header - Collapse
+// --------------------------------------------------
+.header-collapse-condense {
+  z-index: 9;
 }
 
-.header-translucent-ios ion-toolbar {
-  --opacity: .8;
-  --backdrop-filter: #{$header-ios-translucent-filter};
+.header-collapse-condense ion-toolbar {
+  position: sticky;
+  top: 0;
+}
+
+.header-collapse-condense ion-toolbar:first-of-type {
+  padding-top: 7px;
+
+  z-index: 1;
+}
+
+.header-collapse-condense ion-toolbar {
+  z-index: 0;
+}
+
+.header-collapse-condense ion-toolbar ion-searchbar {
+  height: 48px;
+
+  padding-top: 0px;
+  padding-bottom: 13px;
+}
+
+.header-collapse-main ion-toolbar.in-toolbar ion-title,
+.header-collapse-main ion-toolbar.in-toolbar ion-buttons {
+  transition: all 0.2s ease-in-out;
+}
+
+.header-collapse-condense-inactive:not(.header-collapse-condense) ion-toolbar.in-toolbar ion-title,
+.header-collapse-condense-inactive:not(.header-collapse-condense) ion-toolbar.in-toolbar ion-buttons.buttons-collapse {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/**
+ * There is a bug in Safari where changing
+ * the opacity of an element in a scrollable container
+ * while rubber-banding causes the scroll position
+ * to jump to the top
+ */
+.header-collapse-condense-inactive.header-collapse-condense ion-toolbar.in-toolbar ion-title,
+.header-collapse-condense-inactive.header-collapse-condense ion-toolbar.in-toolbar ion-buttons.buttons-collapse {
+  visibility: hidden;
 }

@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "module": "commonjs",
+    "rootDir": "src",
+    "outDir": "dist",
+    "plugins": [
+      { "name": "typescript-tslint-plugin" }
+    ]
+  },
+  "files": [
+    "src/ionic-server-module.ts"
+  ],
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit" : true,
+    "flatModuleOutFile": "./index.js",
+    "flatModuleId": "@ionic/angular-server",
+    "skipTemplateCodegen": true,
+    "fullTemplateTypeCheck": false
+  }
+}

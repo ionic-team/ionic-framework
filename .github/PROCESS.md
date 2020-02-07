@@ -64,7 +64,7 @@ If the issue is a support question, the submitter should be redirected to our [f
 
 ### Incomplete Template
 
-If the issue template has not been filled out completely, the issue should be closed and locked. The submitter should be informed top re-submit the issue making sure they fill the form out completely. Use the `ionitron: missing template` label to accomplish this.
+If the issue template has not been filled out completely, the issue should be closed and locked. The submitter should be informed to re-submit the issue making sure they fill the form out completely. Use the `ionitron: missing template` label to accomplish this.
 
 ### Issues with Open Questions
 
@@ -77,7 +77,7 @@ NOTE: be sure to perform those actions in the order stated. If you add the comme
 
 If there is a response to the question, the bot will remove the `needs: reply` and apply the `triage` label. The issue will then go through the triage handling again.
 
-if there is no response within 30 days, the issue will be closed and locked.
+If there is no response within 30 days, the issue will be closed and locked.
 
 ## Workflow
 
@@ -239,6 +239,8 @@ Hotfixes bypass `master` and should only be used for urgent fixes that can't wai
     - Verify the changelog commits are accurate and follow the [proper format]((https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format))
     - For major or minor releases, ensure that the version number has an associated title (for example: `4.5.0 Boron`)
     - Commit these changes with the version number as the message, e.g. `git commit -m "4.5.0"`
+
+1. *(Optional)* Run `npm run release -- --dry-run` to run the release without publishing and verify the version.
 
 1. Run `npm run release`
 

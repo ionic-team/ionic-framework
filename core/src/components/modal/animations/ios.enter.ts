@@ -1,90 +1,54 @@
 import { Animation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
+import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
 /**
- * iOS Modal Enter Animation
+ * iOS Modal Enter Animation for the Card presentation style
  */
-export const iosEnterAnimation = (AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> => {
-  const baseAnimation = new AnimationC();
+export const iosEnterAnimation = (
+    baseEl: HTMLElement,
+    presentingEl?: HTMLElement,
+  ): Animation => {
+  // The top translate Y for the presenting element
+  const backdropAnimation = createAnimation()
+    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
 
-  const backdropAnimation = new AnimationC();
-  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
+  const wrapperAnimation = createAnimation()
+    .addElement(baseEl.querySelector('.modal-wrapper')!)
+    .beforeStyles({ 'opacity': 1 })
+    .fromTo('transform', 'translateY(100%)', 'translateY(0%)');
 
-  const wrapperAnimation = new AnimationC();
-  wrapperAnimation.addElement(baseEl.querySelector('.modal-wrapper'));
-
-  wrapperAnimation.beforeStyles({ 'opacity': 1 })
-    .fromTo('translateY', '100%', '0%');
-
-  backdropAnimation.fromTo('opacity', 0.01, 0.4);
-
-  return Promise.resolve(baseAnimation
+  const baseAnimation = createAnimation()
     .addElement(baseEl)
-    .easing('cubic-bezier(0.36,0.66,0.04,1)')
-    .duration(400)
+    .easing('cubic-bezier(0.32,0.72,0,1)')
+    .duration(500)
     .beforeAddClass('show-modal')
-    .add(backdropAnimation)
-    .add(wrapperAnimation));
+    .addAnimation([backdropAnimation, wrapperAnimation]);
+
+  if (presentingEl) {
+    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-10px' : 'max(30px, var(--ion-safe-area-top))';
+    const bodyEl = document.body;
+    const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
+    const finalTransform = `translateY(${modalTransform}) scale(${toPresentingScale})`;
+
+    const presentingAnimation = createAnimation()
+      .beforeStyles({
+        'transform': 'translateY(0)',
+        'transform-origin': 'top center'
+      })
+      .afterStyles({
+        'transform': finalTransform
+      })
+      .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
+      .addElement(presentingEl)
+      .keyframes([
+        { offset: 0, transform: 'translateY(0px) scale(1)', borderRadius: '0px' },
+        { offset: 1, transform: finalTransform, borderRadius: '10px 10px 0 0' }
+      ]);
+
+    baseAnimation.addAnimation(presentingAnimation);
+  }
+
+  return baseAnimation;
 };
-
-/**
- * Animations for modals
- */
-// export function modalSlideIn(rootEl: HTMLElement) {
-
-// }
-
-// export class ModalSlideOut {
-//   constructor(el: HTMLElement) {
-//     let backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
-//     let wrapperEle = <HTMLElement>el.querySelector('.modal-wrapper');
-//     let wrapperEleRect = wrapperEle.getBoundingClientRect();
-//     let wrapper = new Animation(this.plt, wrapperEle);
-
-//     // height of the screen - top of the container tells us how much to scoot it down
-//     // so it's off-screen
-//     wrapper.fromTo('translateY', '0px', `${this.plt.height() - wrapperEleRect.top}px`);
-//     backdrop.fromTo('opacity', 0.4, 0.0);
-
-//     this
-//       .element(this.leavingView.pageRef())
-//       .easing('ease-out')
-//       .duration(250)
-//       .add(backdrop)
-//       .add(wrapper);
-//   }
-// }
-
-// export class ModalMDSlideIn {
-//   constructor(el: HTMLElement) {
-//     const backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
-//     const wrapper = new Animation(this.plt, el.querySelector('.modal-wrapper'));
-
-//     backdrop.fromTo('opacity', 0.01, 0.4);
-//     wrapper.fromTo('translateY', '40px', '0px');
-//     wrapper.fromTo('opacity', 0.01, 1);
-
-//     const DURATION = 280;
-//     const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
-//     this.element(this.enteringView.pageRef()).easing(EASING).duration(DURATION)
-//       .add(backdrop)
-//       .add(wrapper);
-//   }
-// }
-
-// export class ModalMDSlideOut {
-//   constructor(el: HTMLElement) {
-//     const backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
-//     const wrapper = new Animation(this.plt, el.querySelector('.modal-wrapper'));
-
-//     backdrop.fromTo('opacity', 0.4, 0.0);
-//     wrapper.fromTo('translateY', '0px', '40px');
-//     wrapper.fromTo('opacity', 0.99, 0);
-
-//     this
-//       .element(this.leavingView.pageRef())
-//       .duration(200)
-//       .easing('cubic-bezier(0.47,0,0.745,0.715)')
-//       .add(wrapper)
-//       .add(backdrop);
-//   }
-// }

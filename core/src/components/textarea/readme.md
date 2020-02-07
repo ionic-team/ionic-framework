@@ -101,7 +101,7 @@ The textarea component accepts the [native textarea attributes](https://develope
 import React from 'react';
 import { IonTextarea, IonItem, IonLabel, IonContent } from '@ionic/react';
 
-export const TextAreaExample: React.FunctionComponent = () => (
+export const TextAreaExample: React.FC = () => (
   <IonContent>
     {/*-- Default textarea --*/}
     <IonTextarea></IonTextarea>
@@ -174,7 +174,7 @@ export const TextAreaExample: React.FunctionComponent = () => (
   <!-- Textarea that clears the value on edit -->
   <ion-item>
     <ion-label>Comment</ion-label>
-    <ion-textarea clearOnEdit="true"></ion-textarea>
+    <ion-textarea clear-on-edit="true"></ion-textarea>
   </ion-item>
 
   <!-- Textarea with custom number of rows and cols -->
@@ -219,7 +219,7 @@ export const TextAreaExample: React.FunctionComponent = () => (
 | `ionBlur`   | Emitted when the input loses focus.       | `CustomEvent<void>`                      |
 | `ionChange` | Emitted when the input value has changed. | `CustomEvent<TextareaChangeEventDetail>` |
 | `ionFocus`  | Emitted when the input has focus.         | `CustomEvent<void>`                      |
-| `ionInput`  | Emitted when a keyboard input ocurred.    | `CustomEvent<KeyboardEvent>`             |
+| `ionInput`  | Emitted when a keyboard input occurred.   | `CustomEvent<KeyboardEvent>`             |
 
 
 ## Methods

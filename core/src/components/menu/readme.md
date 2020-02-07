@@ -16,7 +16,7 @@ These can be controlled from the templates, or programmatically using the MenuCo
 ### Angular
 
 ```html
-<ion-menu side="start" menuId="first">
+<ion-menu side="start" menuId="first" contentId="main">
   <ion-header>
     <ion-toolbar color="primary">
       <ion-title>Start Menu</ion-title>
@@ -33,7 +33,7 @@ These can be controlled from the templates, or programmatically using the MenuCo
   </ion-content>
 </ion-menu>
 
-<ion-menu side="start" menuId="custom" class="my-custom-menu">
+<ion-menu side="start" menuId="custom" contentId="main" class="my-custom-menu">
   <ion-header>
     <ion-toolbar color="tertiary">
       <ion-title>Custom Menu</ion-title>
@@ -50,7 +50,7 @@ These can be controlled from the templates, or programmatically using the MenuCo
   </ion-content>
 </ion-menu>
 
-<ion-menu side="end" type="push">
+<ion-menu side="end" type="push" contentId="main">
   <ion-header>
     <ion-toolbar color="danger">
       <ion-title>End Menu</ion-title>
@@ -67,7 +67,7 @@ These can be controlled from the templates, or programmatically using the MenuCo
   </ion-content>
 </ion-menu>
 
-<ion-router-outlet main></ion-router-outlet>
+<ion-router-outlet id="main"></ion-router-outlet>
 ```
 
 ```typescript
@@ -110,7 +110,7 @@ constructor(private menu: MenuController) { }
 
 ```html
 <ion-app>
-  <ion-menu side="start" menu-id="first">
+  <ion-menu side="start" menu-id="first" content-id="main">
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>Start Menu</ion-title>
@@ -127,7 +127,7 @@ constructor(private menu: MenuController) { }
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="start" menu-id="custom" class="my-custom-menu">
+  <ion-menu side="start" menu-id="custom" class="my-custom-menu" content-id="main">
     <ion-header>
       <ion-toolbar color="tertiary">
         <ion-title>Custom Menu</ion-title>
@@ -144,7 +144,7 @@ constructor(private menu: MenuController) { }
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="end" type="push">
+  <ion-menu side="end" type="push" content-id="main">
     <ion-header>
       <ion-toolbar color="danger">
         <ion-title>End Menu</ion-title>
@@ -161,13 +161,13 @@ constructor(private menu: MenuController) { }
     </ion-content>
   </ion-menu>
 
-  <div class="ion-page" main>
+  <div class="ion-page" id="main">
     <ion-header>
       <ion-toolbar>
         <ion-title>Menu - Basic</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content padding>
+    <ion-content class="ion-padding">
       <ion-button expand="block" onclick="openFirst()">Open Start Menu</ion-button>
       <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
       <ion-button expand="block" onclick="openCustom()">Open Custom Menu</ion-button>
@@ -209,7 +209,7 @@ function openCustom() {
 import React from 'react';
 import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonRouterOutlet } from '@ionic/react';
 
-export const MenuExample: React.FunctionComponent = () => (
+export const MenuExample: React.FC = () => (
   <>
     <IonMenu side="start" menuId="first">
       <IonHeader>
@@ -228,7 +228,7 @@ export const MenuExample: React.FunctionComponent = () => (
       </IonContent>
     </IonMenu>
 
-    <IonMenu side="start" menuId="custom" class="my-custom-menu">
+    <IonMenu side="start" menuId="custom" className="my-custom-menu">
       <IonHeader>
         <IonToolbar color="tertiary">
           <IonTitle>Custom Menu</IonTitle>
@@ -271,7 +271,7 @@ export const MenuExample: React.FunctionComponent = () => (
 
 ```html
 <template>
-  <ion-menu side="start" menuId="first">
+  <ion-menu side="start" menu-id="first" content-id="main">
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>Start Menu</ion-title>
@@ -288,7 +288,7 @@ export const MenuExample: React.FunctionComponent = () => (
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="start" menuId="custom" class="my-custom-menu">
+  <ion-menu side="start" menu-id="custom" class="my-custom-menu" content-id="main">
     <ion-header>
       <ion-toolbar color="tertiary">
         <ion-title>Custom Menu</ion-title>
@@ -305,7 +305,7 @@ export const MenuExample: React.FunctionComponent = () => (
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="end" type="push">
+  <ion-menu side="end" type="push" content-id="main">
     <ion-header>
       <ion-toolbar color="danger">
         <ion-title>End Menu</ion-title>
@@ -466,13 +466,11 @@ Type: `Promise<boolean>`
 ### Depends on
 
 - [ion-backdrop](../backdrop)
-- [ion-menu-controller](../menu-controller)
 
 ### Graph
 ```mermaid
 graph TD;
   ion-menu --> ion-backdrop
-  ion-menu --> ion-menu-controller
   style ion-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

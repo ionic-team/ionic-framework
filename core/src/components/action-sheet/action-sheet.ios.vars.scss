@@ -105,20 +105,8 @@ $action-sheet-ios-button-icon-font-size:                          28px !default;
 /// @prop - Padding right of the action sheet button icon
 $action-sheet-ios-button-icon-padding-right:                      .1em !default;
 
-/// @prop - Height of the action sheet button icon
-$action-sheet-ios-button-icon-height:                             .7em !default;
-
-/// @prop - Margin top of the action sheet button icon
-$action-sheet-ios-button-icon-margin-top:                         -10px !default;
-
 /// @prop - Font size of the action sheet button
 $action-sheet-ios-button-font-size:                               20px !default;
-
-/// @prop - Border width of the action sheet button
-$action-sheet-ios-button-border-width:                            $hairlines-width !default;
-
-/// @prop - Border style of the action sheet button
-$action-sheet-ios-button-border-style:                            solid !default;
 
 /// @prop - Border color alpha of the action sheet button
 $action-sheet-ios-button-border-color-alpha:                      .08 !default;
@@ -127,13 +115,10 @@ $action-sheet-ios-button-border-color-alpha:                      .08 !default;
 $action-sheet-ios-button-border-color:                            rgba($text-color-rgb, $action-sheet-ios-button-border-color-alpha) !default;
 
 /// @prop - Background color of the action sheet button
-$action-sheet-ios-button-background:                              transparent !default;
-
-/// @prop - Background color alpha of the activated action sheet button
-$action-sheet-ios-button-background-alpha-activated:              .08 !default;
+$action-sheet-ios-button-background:                              linear-gradient(0deg, $action-sheet-ios-button-border-color, $action-sheet-ios-button-border-color 50%, transparent 50%) bottom / 100% 1px no-repeat transparent !default;
 
 /// @prop - Background color of the activated action sheet button
-$action-sheet-ios-button-background-activated:                    rgba($text-color-rgb, $action-sheet-ios-button-background-alpha-activated) !default;
+$action-sheet-ios-button-background-activated:                    $text-color !default;
 
 /// @prop - Background color of the selected action sheet button
 $action-sheet-ios-button-background-selected:                     $background-color !default;

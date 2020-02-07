@@ -1,7 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { rIC } from '../../utils/helpers.js';
 
 import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
 
@@ -20,8 +19,8 @@ export class Slides implements ComponentInterface {
 
   private scrollbarEl?: HTMLElement;
   private paginationEl?: HTMLElement;
-  private didInit = false;
-
+  private swiperReady = false;
+  private mutationO?: MutationObserver;
   private readySwiper!: (swiper: SwiperInterface) => void;
   private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
 
@@ -35,7 +34,7 @@ export class Slides implements ComponentInterface {
 
   @Watch('options')
   async optionsChanged() {
-    if (this.didInit) {
+    if (this.swiperReady) {
       const swiper = await this.getSwiper();
       Object.assign(swiper.params, this.options);
       await this.update();
@@ -132,20 +131,28 @@ export class Slides implements ComponentInterface {
    */
   @Event() ionSlideTouchEnd!: EventEmitter<void>;
 
-  componentDidLoad() {
-    rIC(() => this.initSwiper());
+  connectedCallback() {
+    const mut = this.mutationO = new MutationObserver(() => {
+      if (this.swiperReady) {
+        this.update();
+      }
+    });
+    mut.observe(this.el, {
+      childList: true,
+      subtree: true
+    });
+    this.el.componentOnReady().then(() => this.initSwiper());
   }
 
-  async componentDidUnload() {
+  async disconnectedCallback() {
+    if (this.mutationO) {
+      this.mutationO.disconnect();
+      this.mutationO = undefined;
+    }
     const swiper = await this.getSwiper();
     swiper.destroy(true, true);
-  }
-
-  @Listen('ionSlideChanged')
-  onSlideChanged() {
-    if (this.didInit) {
-      this.update();
-    }
+    this.swiper = new Promise(resolve => { this.readySwiper = resolve; });
+    this.swiperReady = false;
   }
 
   /**
@@ -154,7 +161,10 @@ export class Slides implements ComponentInterface {
    */
   @Method()
   async update() {
-    const swiper = await this.getSwiper();
+    const [swiper] = await Promise.all([
+      this.getSwiper(),
+      waitForSlides(this.el)
+    ]);
     swiper.update();
   }
 
@@ -309,19 +319,26 @@ export class Slides implements ComponentInterface {
     swiper.allowTouchMove = !lock;
   }
 
+  /**
+   * Get the Swiper instance.
+   * Use this to access the full Swiper API.
+   * See https://idangero.us/swiper/api/ for all API options.
+   */
+  @Method()
+  async getSwiper(): Promise<any> {
+    return this.swiper;
+  }
+
   private async initSwiper() {
     const finalOptions = this.normalizeOptions();
 
     // init swiper core
     // @ts-ignore
     const { Swiper } = await import('./swiper/swiper.bundle.js');
+    await waitForSlides(this.el);
     const swiper = new Swiper(this.el, finalOptions);
-    this.didInit = true;
+    this.swiperReady = true;
     this.readySwiper(swiper);
-  }
-
-  private getSwiper() {
-    return this.swiper;
   }
 
   private normalizeOptions(): SwiperOptions {
@@ -463,28 +480,31 @@ export class Slides implements ComponentInterface {
     return { ...swiperOptions, ...this.options, ...mergedEventOptions };
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-
-    return {
-      class: {
-        [`${mode}`]: true,
-
-        // Used internally for styling
-        [`slides-${mode}`]: true,
-
-        'swiper-container': true
-      }
-    };
-  }
-
   render() {
-    return [
-      <div class="swiper-wrapper">
-        <slot></slot>
-      </div>,
-      this.pager && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>,
-      this.scrollbar && <div class="swiper-scrollbar" ref={el => this.scrollbarEl = el}></div>
-    ];
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [`${mode}`]: true,
+
+          // Used internally for styling
+          [`slides-${mode}`]: true,
+
+          'swiper-container': true
+        }}
+      >
+        <div class="swiper-wrapper">
+          <slot></slot>
+        </div>
+        {this.pager && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>}
+        {this.scrollbar && <div class="swiper-scrollbar" ref={el => this.scrollbarEl = el}></div>}
+      </Host>
+    );
   }
 }
+
+const waitForSlides = (el: HTMLElement) => {
+  return Promise.all(
+    Array.from(el.querySelectorAll('ion-slide')).map(s => s.componentOnReady())
+  );
+};

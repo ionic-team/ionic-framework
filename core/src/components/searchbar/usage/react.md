@@ -2,17 +2,17 @@
 import React from 'react';
 import { IonSearchbar, IonToolbar, IonContent } from '@ionic/react';
 
-export const SearchbarExample: React.FunctionComponent = () => (
+export const SearchbarExample: React.FC = () => (
   <IonContent>
     {/*-- Default Searchbar --*/}
     <IonSearchbar></IonSearchbar>
-    
+
     {/*-- Searchbar with cancel button always shown --*/}
     <IonSearchbar showCancelButton="always"></IonSearchbar>
-    
+
     {/*-- Searchbar with cancel button never shown --*/}
     <IonSearchbar showCancelButton="never"></IonSearchbar>
-    
+
     {/*-- Searchbar with cancel button shown on focus --*/}
     <IonSearchbar showCancelButton="focus"></IonSearchbar>
 
@@ -24,6 +24,9 @@ export const SearchbarExample: React.FunctionComponent = () => (
 
     {/*-- Searchbar with telephone type --*/}
     <IonSearchbar type="tel"></IonSearchbar>
+
+    {/*-- Searchbar with numeric inputmode --*/}
+    <IonSearchbar inputmode="numeric"></IonSearchbar>
 
     {/*-- Searchbar disabled  --*/}
     <IonSearchbar disabled={true}></IonSearchbar>
