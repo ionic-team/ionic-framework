@@ -140,6 +140,10 @@
 // Segment: States
 // --------------------------------------------------
 
+:host(.segment-button-activated) {
+  --indicator-transform: scale(0.95);
+}
+
 :host(.ion-focused) .button-native {
   opacity: $segment-button-ios-opacity-focused;
 }

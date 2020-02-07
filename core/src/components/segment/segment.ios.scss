@@ -23,14 +23,6 @@
 }
 
 
-// Segment: Activated
-// --------------------------------------------------
-
-:host(.segment-activated) ::slotted(ion-segment-button) {
-  --indicator-transform: scale(0.95);
-}
-
-
 // Segment: Default Toolbar
 // --------------------------------------------------
 

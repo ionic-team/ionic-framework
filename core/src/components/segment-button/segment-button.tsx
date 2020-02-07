@@ -23,9 +23,6 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
   @Element() el!: HTMLElement;
 
-  /**
-   * If `true`, the segment button is selected.
-   */
   @State() checked = false;
 
   /**
