@@ -175,25 +175,29 @@ constructor(private menu: MenuController) { }
   </div>
 
 </ion-app>
-<ion-menu-controller></ion-menu-controller>
 ```
 
 ```javascript
-const menuCtrl = document.querySelector('ion-menu-controller');
-
-function openFirst() {
-  menuCtrl.enable(true, 'first');
-  menuCtrl.open('first');
-}
-
-function openEnd() {
-  menuCtrl.open('end');
-}
-
-function openCustom() {
-  menuCtrl.enable(true, 'custom');
-  menuCtrl.open('custom');
-}
+<script type="module">
+    import { menuController } from '@ionic/core';
+    window.menuController = menuController;
+</script>
+  
+<script>
+  function openFirst() {
+    menuController.enable(true, 'first');
+    menuController.open('first');
+  }
+  
+  function openEnd() {
+    menuController.open('end');
+  }
+  
+  function openCustom() {
+    menuController.enable(true, 'custom');
+    menuController.open('custom');
+  }
+</script>
 ```
 
 ```css
