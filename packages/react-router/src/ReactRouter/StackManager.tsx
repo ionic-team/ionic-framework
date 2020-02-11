@@ -32,7 +32,7 @@ class StackManagerInner extends React.Component<StackManagerProps, StackManagerS
   }
 
   static getDerivedStateFromProps(props: StackManagerProps, state: StackManagerState) {
-    props.routeManager.syncRoute('', props.children);
+    props.routeManager.syncRoute(props.children);
     return state;
   }
 

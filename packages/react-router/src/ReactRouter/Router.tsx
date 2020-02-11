@@ -368,13 +368,17 @@ export class RouteManager extends React.Component<RouteManagerProps, RouteManage
     }
   }
 
-  syncRoute(_id: string, routerOutlet: any) {
+  syncRoute(routerOutlet: any) {
     const ionRouterOutlet = React.Children.only(routerOutlet) as React.ReactElement;
 
     React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
       for (const routeKey in this.routes) {
         const route = this.routes[routeKey];
-        if (typeof route.props.path !== 'undefined' && route.props.path === (child.props.path || child.props.from)) {
+        if (
+          ((route.props.path || route.props.from) === (child.props.path || child.props.from)) &&
+          (route.props.exact === child.props.exact) &&
+          (route.props.to === child.props.to)
+        ) {
           this.routes[routeKey] = child;
         }
       }
