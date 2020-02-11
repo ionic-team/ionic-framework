@@ -1,3 +1,12 @@
+# [5.0.0-rc.5](https://github.com/ionic-team/ionic/compare/v5.0.0-rc.4...v5.0.0-rc.5) (2020-02-11)
+
+
+### Bug Fixes
+
+* **angular:** correct path for angular projects ([#20436](https://github.com/ionic-team/ionic/issues/20436)) ([fd9c7a9](https://github.com/ionic-team/ionic/commit/fd9c7a9601e7f21b74c76be1f8bb305bf008915c)), closes [#20435](https://github.com/ionic-team/ionic/issues/20435)
+
+
+
 # [5.0.0-rc.4](https://github.com/ionic-team/ionic/compare/v5.0.0-rc.3...v5.0.0-rc.4) (2020-02-10)
 
 
