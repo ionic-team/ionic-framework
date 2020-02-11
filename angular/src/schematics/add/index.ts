@@ -117,7 +117,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
         `Ionic Add requires a project type of "application".`
       );
     }
-    const sourcePath: Path = join(project.root as Path, project.sourceRoot as Path);
+    const sourcePath: Path = join(project.sourceRoot as Path);
     const rootTemplateSource = apply(url('./files/root'), [
       template({ ...options }),
       move(sourcePath)
