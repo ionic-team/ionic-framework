@@ -1,3 +1,27 @@
+# [5.0.0 Magnesium](https://github.com/ionic-team/ionic/compare/v4.11.10...v5.0.0) (2020-02-11)
+
+Enjoy! :fire:
+
+> We recommend updating to version `4.11.10` before updating to this version in order to see deprecation warnings related to your app [in the developer console](https://javascript.info/devtools).
+
+Run the following commands based on your project type:
+
+```
+# for an angular app
+npm i @ionic/angular@latest --save --save-exact
+
+# for a react app
+npm i @ionic/react@latest --save --save-exact
+npm i @ionic/react-router@latest --save --save-exact
+npm i ionicons@latest --save --save-exact
+
+# for a stencil / vanilla JS app
+npm i @ionic/core@latest --save --save-exact
+```
+
+Then take a look at the [Breaking Changes](./BREAKING.md) file for API changes.
+
+
 # [5.0.0-rc.5](https://github.com/ionic-team/ionic/compare/v5.0.0-rc.4...v5.0.0-rc.5) (2020-02-11)
 
 
