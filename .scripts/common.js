@@ -42,7 +42,7 @@ async function askTag() {
       type: 'list',
       name: 'tag',
       message: 'Select npm tag or specify a new tag',
-      choices: ['latest', 'next']
+      choices: ['latest', 'next', 'v4-lts']
         .concat([
           new inquirer.Separator(),
           {
