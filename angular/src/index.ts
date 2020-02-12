@@ -38,3 +38,6 @@ export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
 
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
+
+// UTILS
+export { IonicSafeString } '@ionic/core';
