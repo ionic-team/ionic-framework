@@ -8,15 +8,15 @@ Run the following commands based on your project type:
 
 ```
 # for an angular app
-npm i @ionic/angular@latest --save --save-exact
+npm i @ionic/angular@latest --save
 
 # for a react app
-npm i @ionic/react@latest --save --save-exact
-npm i @ionic/react-router@latest --save --save-exact
-npm i ionicons@latest --save --save-exact
+npm i @ionic/react@latest --save
+npm i @ionic/react-router@latest --save
+npm i ionicons@latest --save
 
 # for a stencil / vanilla JS app
-npm i @ionic/core@latest --save --save-exact
+npm i @ionic/core@latest --save
 ```
 
 Then take a look at the [Breaking Changes](./BREAKING.md) file for API changes.
