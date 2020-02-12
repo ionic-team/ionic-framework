@@ -65,7 +65,7 @@
 
   outline: none;
 
-  background: var(--background);
+  background: inherit;
 }
 
 .card-native::-moz-focus-inner {
