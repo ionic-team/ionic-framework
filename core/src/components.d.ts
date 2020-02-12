@@ -184,7 +184,7 @@ export namespace Components {
     /**
     * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
-    'message'?: string;
+    'message'?: string | IonicSafeString;
     /**
     * The mode determines which platform styles to use.
     */
@@ -2541,7 +2541,7 @@ export namespace Components {
     /**
     * Message to be shown in the toast.
     */
-    'message'?: string;
+    'message'?: string | IonicSafeString;
     /**
     * The mode determines which platform styles to use.
     */
@@ -3391,7 +3391,7 @@ declare namespace LocalJSX {
     /**
     * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
-    'message'?: string;
+    'message'?: string | IonicSafeString;
     /**
     * The mode determines which platform styles to use.
     */
@@ -5696,7 +5696,7 @@ declare namespace LocalJSX {
     /**
     * Message to be shown in the toast.
     */
-    'message'?: string;
+    'message'?: string | IonicSafeString;
     /**
     * The mode determines which platform styles to use.
     */

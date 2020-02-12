@@ -1,5 +1,5 @@
-import { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
 import { IonicSafeString } from '../../';
+import { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
 
 export interface AlertOptions {
   header?: string;
