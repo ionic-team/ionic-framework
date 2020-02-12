@@ -40,4 +40,4 @@ export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
 export { IonicModule } from './ionic-module';
 
 // UTILS
-export { IonicSafeString } '@ionic/core';
+export { IonicSafeString } from '@ionic/core';
