@@ -127,10 +127,10 @@ const isSanitizerEnabled = (): boolean => {
   const win = window as any;
   const config = win && win.Ionic && win.Ionic.config;
   if (config) {
-    if (config.sanitizerEnabled) {
-      return config.sanitizerEnabled === true || config.sanitizerEnabled === undefined;
-    } else {
+    if (config.get) {
       return config.get('sanitizerEnabled', true);
+    } else {
+      return config.sanitizerEnabled === true || config.sanitizerEnabled === undefined;
     }
   }
   return true;
