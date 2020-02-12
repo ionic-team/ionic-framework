@@ -30,7 +30,11 @@
 // --------------------------------------------------
 
 :host(.toolbar-segment) .toolbar-content {
+  @include position(null, 0, null, 0);
+
   display: inline-flex;
+
+  position: absolute;
 }
 
 // Toolbar: Searchbar
