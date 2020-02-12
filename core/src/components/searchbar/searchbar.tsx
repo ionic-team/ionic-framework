@@ -98,7 +98,7 @@ export class Searchbar implements ComponentInterface {
    *
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
-  @Prop() placeholder = 'Search';
+  @Prop() placeholder: string = 'Search';
 
   /**
    * The icon to use as the search icon. Defaults to `"search-outline"` in

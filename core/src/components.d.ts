@@ -66,6 +66,9 @@ import {
   ViewController,
 } from './interface';
 import {
+  IonicSafeString,
+} from '.';
+import {
   SelectCompareFn,
 } from './components/select/select-interface';
 
@@ -860,7 +863,7 @@ export namespace Components {
     /**
     * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
-    'loadingText'?: string;
+    'loadingText'?: string | IonicSafeString;
   }
   interface IonInput {
     /**
@@ -1205,7 +1208,7 @@ export namespace Components {
     /**
     * Optional text content to display in the loading indicator.
     */
-    'message'?: string;
+    'message'?: string | IonicSafeString;
     /**
     * The mode determines which platform styles to use.
     */
@@ -1835,7 +1838,7 @@ export namespace Components {
     /**
     * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
-    'pullingText'?: string;
+    'pullingText'?: string | IonicSafeString;
     /**
     * An animated SVG spinner that shows when refreshing begins
     */
@@ -1843,7 +1846,7 @@ export namespace Components {
     /**
     * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
-    'refreshingText'?: string;
+    'refreshingText'?: string | IonicSafeString;
   }
   interface IonReorder {}
   interface IonReorderGroup {
@@ -4106,7 +4109,7 @@ declare namespace LocalJSX {
     /**
     * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
-    'loadingText'?: string;
+    'loadingText'?: string | IonicSafeString;
   }
   interface IonInput {
     /**
@@ -4435,7 +4438,7 @@ declare namespace LocalJSX {
     /**
     * Optional text content to display in the loading indicator.
     */
-    'message'?: string;
+    'message'?: string | IonicSafeString;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4987,7 +4990,7 @@ declare namespace LocalJSX {
     /**
     * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
-    'pullingText'?: string;
+    'pullingText'?: string | IonicSafeString;
     /**
     * An animated SVG spinner that shows when refreshing begins
     */
@@ -4995,7 +4998,7 @@ declare namespace LocalJSX {
     /**
     * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
-    'refreshingText'?: string;
+    'refreshingText'?: string | IonicSafeString;
   }
   interface IonReorder {}
   interface IonReorderGroup {

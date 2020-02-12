@@ -6,12 +6,7 @@
 export const sanitizeDOMString = (untrustedString: IonicSafeString | string | undefined): string | undefined => {
   try {
     if (untrustedString instanceof IonicSafeString) { return untrustedString.value; }
-
-    const win = window as any;
-    const config = win && win.Ionic && win.Ionic.config || {};
-    const sanitizerEnabled = config.sanitizerEnabled === true || config.sanitizerEnabled === undefined;
-
-    if (!sanitizerEnabled || typeof untrustedString !== 'string' || untrustedString === '') { return untrustedString; }
+    if (!isSanitizerEnabled() || typeof untrustedString !== 'string' || untrustedString === '') { return untrustedString; }
 
     /**
      * Create a document fragment
@@ -126,6 +121,19 @@ const sanitizeElement = (element: any) => {
  */
 const getElementChildren = (el: any) => {
   return (el.children != null) ? el.children : el.childNodes;
+};
+
+const isSanitizerEnabled = (): boolean => {
+  const win = window as any;
+  const config = win && win.Ionic && win.Ionic.config;
+  if (config) {
+    if (config.sanitizerEnabled) {
+      return config.sanitizerEnabled === true || config.sanitizerEnabled === undefined;
+    } else {
+      return config.get('sanitizerEnabled', true);
+    }
+  }
+  return true;
 };
 
 const allowedAttributes = ['class', 'id', 'href', 'src', 'name', 'slot'];

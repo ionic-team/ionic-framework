@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
+import { IonicSafeString } from '../../';
 import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
@@ -52,7 +53,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   /**
    * Optional text content to display in the loading indicator.
    */
-  @Prop() message?: string;
+  @Prop() message?: string | IonicSafeString;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
