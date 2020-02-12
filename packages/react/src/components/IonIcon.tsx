@@ -34,25 +34,6 @@ class IonIconContainer extends React.PureComponent<InternalProps> {
     }
   }
 
-  setIcon() {
-    const { icon, ios, md } = this.props;
-    if (ios || md) {
-      if (isPlatform('ios')) {
-        this.setState({
-          icon: ios ?? md ?? icon
-        });
-      } else if (isPlatform('android')) {
-        this.setState({
-          icon: md ?? ios ?? icon
-        });
-      }
-    } else {
-      this.setState({
-        icon
-      });
-    }
-  }
-
   render() {
     const { icon, ios, md, ...rest } = this.props;
 
@@ -61,7 +42,7 @@ class IonIconContainer extends React.PureComponent<InternalProps> {
     if (ios || md) {
       if (isPlatform('ios')) {
         iconToUse = ios ?? md ?? icon;
-      } else if (isPlatform('android')) {
+      } else {
         iconToUse = md ?? ios ?? icon;
       }
     } else {
