@@ -6,7 +6,12 @@
 export const sanitizeDOMString = (untrustedString: IonicSafeString | string | undefined): string | undefined => {
   try {
     if (untrustedString instanceof IonicSafeString) { return untrustedString.value; }
-    if (typeof untrustedString !== 'string' || untrustedString === '') { return untrustedString; }
+
+    const win = window as any;
+    const config = win && win.Ionic && win.Ionic.config || {};
+    const sanitizerEnabled = config.sanitizerEnabled === true || config.sanitizerEnabled === undefined;
+
+    if (!sanitizerEnabled || typeof untrustedString !== 'string' || untrustedString === '') { return untrustedString; }
 
     /**
      * Create a document fragment

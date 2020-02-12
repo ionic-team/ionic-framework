@@ -1,6 +1,17 @@
 import { IonicSafeString, sanitizeDOMString } from "..";
 
 describe('sanitizeDOMString', () => {
+  it('disable sanitizer', () => {
+    enableSanitizer(false);
+    expect(sanitizeDOMString('<img src="x" onerror="alert(document.cookie);">'))
+      .toEqual('<img src="x" onerror="alert(document.cookie);">');
+  })
+
+  it('disable sanitizer while bypassing sanitizer', () => {
+    enableSanitizer(false);
+    expect(sanitizeDOMString(new IonicSafeString('<img src="x" onerror="alert(document.cookie);">')))
+      .toEqual('<img src="x" onerror="alert(document.cookie);">');
+  })
 
   it('bypass sanitizer', () => {
     expect(sanitizeDOMString(new IonicSafeString('<img src="x" onerror="alert(document.cookie);">')))
@@ -47,3 +58,9 @@ describe('sanitizeDOMString', () => {
       .toEqual('<ion-item><ion-label>Hello!</ion-label><ion-button>Click me</ion-button></ion-item>');
   });
 });
+
+const enableSanitizer = (enable: boolean = true) => {
+  window.Ionic = {};
+  window.Ionic.config = {};
+  window.Ionic.config.sanitizerEnabled = enable;
+}
