@@ -40,7 +40,7 @@ export const iosEnterAnimation = (
       .afterStyles({
         'transform': finalTransform
       })
-      .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
+      .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black', 'important'))
       .addElement(presentingEl)
       .keyframes([
         { offset: 0, transform: 'translateY(0px) scale(1)', borderRadius: '0px' },
