@@ -38,6 +38,8 @@ export const iosLeaveAnimation = (
         // only reset background color if this is the last card-style modal
         if (currentStep !== 1) { return; }
 
+        presentingEl.style.setProperty('overflow', '');
+
         const numModals = Array.from(bodyEl.querySelectorAll('ion-modal')).filter(m => m.presentingElement !== undefined).length;
         if (numModals <= 1) {
           bodyEl.style.setProperty('background-color', '');

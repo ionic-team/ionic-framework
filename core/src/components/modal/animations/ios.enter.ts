@@ -35,7 +35,8 @@ export const iosEnterAnimation = (
     const presentingAnimation = createAnimation()
       .beforeStyles({
         'transform': 'translateY(0)',
-        'transform-origin': 'top center'
+        'transform-origin': 'top center',
+        'overflow': 'hidden'
       })
       .afterStyles({
         'transform': finalTransform
