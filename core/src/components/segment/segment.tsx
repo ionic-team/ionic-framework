@@ -21,6 +21,10 @@ export class Segment implements ComponentInterface {
   private gesture?: Gesture;
   private didInit = false;
   private checked?: HTMLIonSegmentButtonElement;
+  private pointerDown = false;
+
+  // Value to be emitted when gesture ends
+  private valueAfterGesture?: any;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -53,14 +57,26 @@ export class Segment implements ComponentInterface {
   @Watch('value')
   protected valueChanged(value: string | undefined) {
     if (this.didInit) {
-      this.ionChange.emit({ value });
+      this.ionSelect.emit({ value });
+      if (!this.pointerDown) {
+        this.ionChange.emit({ value });
+      } else {
+        this.valueAfterGesture = value;
+      }
     }
   }
 
   /**
-   * Emitted when the value property has changed.
+   * Emitted when the value property has changed and any
+   * dragging pointer has been released from `ion-segment`.
    */
   @Event() ionChange!: EventEmitter<SegmentChangeEventDetail>;
+
+  /**
+   * Emitted when user has dragged over a new button
+   * @internal
+   */
+  @Event() ionSelect!: EventEmitter<SegmentChangeEventDetail>;
 
   /**
    * Emitted when the styles change.
@@ -115,6 +131,7 @@ export class Segment implements ComponentInterface {
   }
 
   onStart(detail: GestureDetail) {
+    this.pointerDown = true;
     this.activate(detail);
   }
 
@@ -123,6 +140,7 @@ export class Segment implements ComponentInterface {
   }
 
   onEnd(detail: GestureDetail) {
+    this.pointerDown = false;
     this.setActivated(false);
 
     const checkedValidButton = this.setNextIndex(detail, true);
@@ -132,6 +150,12 @@ export class Segment implements ComponentInterface {
 
     if (checkedValidButton) {
       this.addRipple(detail);
+    }
+
+    const value = this.valueAfterGesture;
+    if (value !== undefined) {
+      this.ionChange.emit({ value });
+      this.valueAfterGesture = undefined;
     }
   }
 
