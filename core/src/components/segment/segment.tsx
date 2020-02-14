@@ -146,9 +146,10 @@ export class Segment implements ComponentInterface {
    */
   private addRipple(detail: GestureDetail) {
     const buttons = this.getButtons();
-    const checked = buttons.find(button => button.value === this.value);
+    const checked = buttons.find(button => button.value === this.value)!;
 
-    const ripple = checked!.shadowRoot!.querySelector('ion-ripple-effect');
+    const root = checked.shadowRoot || checked;
+    const ripple = root.querySelector('ion-ripple-effect');
 
     if (!ripple) { return; }
 
@@ -198,7 +199,8 @@ export class Segment implements ComponentInterface {
   }
 
   private getIndicator(button: HTMLIonSegmentButtonElement): HTMLDivElement | null {
-    return button.shadowRoot && button.shadowRoot.querySelector('.segment-button-indicator');
+    const root = button.shadowRoot || button;
+    return root.querySelector('.segment-button-indicator');
   }
 
   private checkButton(previous: HTMLIonSegmentButtonElement, current: HTMLIonSegmentButtonElement) {

@@ -65,6 +65,7 @@
   background: var(--background);
 
   color: var(--color);
+  cursor: pointer;
 
   text-decoration: none;
   text-overflow: ellipsis;
@@ -107,7 +108,7 @@
   background: transparent;
 
   contain: content;
-  cursor: pointer;
+  pointer-events: none;
 
   overflow: hidden;
 
