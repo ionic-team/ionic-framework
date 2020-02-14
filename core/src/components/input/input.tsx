@@ -302,10 +302,11 @@ export class Input implements ComponentInterface {
     this.ionFocus.emit();
   }
 
-  private onKeydown = () => {
+  private onKeydown = (ev: KeyboardEvent) => {
     if (this.shouldClearOnEdit()) {
       // Did the input value change after it was blurred and edited?
-      if (this.didBlurAfterEdit && this.hasValue()) {
+      // Do not clear if user is hitting Enter to submit form
+      if (this.didBlurAfterEdit && this.hasValue() && ev.key !== 'Enter') {
         // Clear the input
         this.clearTextInput();
       }
