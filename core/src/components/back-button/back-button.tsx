@@ -96,7 +96,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     if (nav && await nav.canGoBack()) {
       return nav.pop({ skipIfBusy: true });
     }
-    return openURL(this.defaultHref, ev, 'back');
+    return openURL(this.defaultHref || config.get('backButtonDefaultHref'), ev, 'back');
   }
 
   render() {

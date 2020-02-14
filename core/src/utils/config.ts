@@ -41,6 +41,11 @@ export interface IonicConfig {
   backButtonText?: string;
 
   /**
+   * Overrides the default defaultHref in all `<ion-back-button>` components.
+   */
+  backButtonDefaultHref?: string;
+
+  /**
    * Overrides the default icon in all `<ion-menu-button>` components.
    */
   menuIcon?: string;
