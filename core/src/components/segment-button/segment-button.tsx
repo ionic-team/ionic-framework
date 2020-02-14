@@ -76,7 +76,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   }
 
   render() {
-    const { checked, type, disabled, hasIcon, hasLabel, layout } = this;
+    const { checked, type, disabled, hasIcon, hasLabel, layout, value } = this;
     const mode = getIonMode(this);
     return (
       <Host

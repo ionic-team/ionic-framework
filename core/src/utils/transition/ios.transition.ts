@@ -277,7 +277,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
     const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-condense');
 
     const { forward, backward } = createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
-
+    console.log('enteringl',enteringEl,'leavingel',leavingEl);
     enteringToolBarEls.forEach(enteringToolBarEl => {
       const enteringToolBar = createAnimation();
       enteringToolBar.addElement(enteringToolBarEl);
