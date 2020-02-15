@@ -75,6 +75,10 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     return this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
   }
 
+  get backButtonDefaultHref() {
+    return this.defaultHref || config.get('backButtonDefaultHref');
+  }
+
   get hasIconOnly() {
     return this.backButtonIcon && !this.backButtonText;
   }
@@ -96,12 +100,12 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     if (nav && await nav.canGoBack()) {
       return nav.pop({ skipIfBusy: true });
     }
-    return openURL(this.defaultHref || config.get('backButtonDefaultHref'), ev, 'back');
+    return openURL(this.backButtonDefaultHref, ev, 'back');
   }
 
   render() {
-    const { color, defaultHref, disabled, type, mode, hasIconOnly, backButtonIcon, backButtonText } = this;
-    const showBackButton = defaultHref !== undefined;
+    const { color, disabled, type, mode, hasIconOnly, backButtonIcon, backButtonText, backButtonDefaultHref } = this;
+    const showBackButton = backButtonDefaultHref !== undefined;
 
     return (
       <Host

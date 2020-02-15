@@ -56,4 +56,28 @@ describe('back button', () => {
 
   });
 
+  describe('backButtonDefaultHref', () => {
+
+    it('set custom defaultHref on the instance, override config', () => {
+      bb.defaultHref = 'custom-default-href';
+      config.reset({
+        backButtonDefaultHref: 'custom-default-href-config'
+      });
+      expect(bb.backButtonDefaultHref).toBe('custom-default-href');
+    });
+
+    it('set custom defaultHref in the config', () => {
+      config.reset({
+        backButtonDefaultHref: 'custom-default-href-config'
+      });
+      expect(bb.backButtonDefaultHref).toBe('custom-default-href-config');
+    });
+
+    it('set custom defaultHref on the instance', () => {
+      bb.defaultHref = 'custom-default-href';
+      expect(bb.backButtonDefaultHref).toBe('custom-default-href');
+    });
+
+  });
+
 });
