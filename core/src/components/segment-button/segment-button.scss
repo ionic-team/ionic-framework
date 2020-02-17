@@ -72,6 +72,8 @@
   white-space: nowrap;
 
   font-kerning: none;
+
+  cursor: pointer;
 }
 
 .button-native {
@@ -107,7 +109,7 @@
   background: transparent;
 
   contain: content;
-  cursor: pointer;
+  pointer-events: none;
 
   overflow: hidden;
 
@@ -130,7 +132,6 @@
   height: 100%;
 
   z-index: 1;
-  pointer-events: none;
 }
 
 
