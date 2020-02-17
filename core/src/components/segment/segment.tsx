@@ -21,7 +21,6 @@ export class Segment implements ComponentInterface {
   private gesture?: Gesture;
   private didInit = false;
   private checked?: HTMLIonSegmentButtonElement;
-  private pointerDown = false;
 
   // Value to be emitted when gesture ends
   private valueAfterGesture?: any;
@@ -58,7 +57,7 @@ export class Segment implements ComponentInterface {
   protected valueChanged(value: string | undefined) {
     if (this.didInit) {
       this.ionSelect.emit({ value });
-      if (!this.pointerDown) {
+      if (!this.activated) {
         this.ionChange.emit({ value });
       } else {
         this.valueAfterGesture = value;
@@ -131,7 +130,6 @@ export class Segment implements ComponentInterface {
   }
 
   onStart(detail: GestureDetail) {
-    this.pointerDown = true;
     this.activate(detail);
   }
 
@@ -140,7 +138,6 @@ export class Segment implements ComponentInterface {
   }
 
   onEnd(detail: GestureDetail) {
-    this.pointerDown = false;
     this.setActivated(false);
 
     const checkedValidButton = this.setNextIndex(detail, true);
