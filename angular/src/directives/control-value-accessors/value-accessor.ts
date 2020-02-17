@@ -12,7 +12,7 @@ export class ValueAccessor implements ControlValueAccessor {
   constructor(protected el: ElementRef) {}
 
   writeValue(value: any) {
-    this.el.nativeElement.value = this.lastValue = value == null ? '' : value;
+    this.el.nativeElement.value = this.lastValue = value;
     setIonicClasses(this.el);
   }
 
