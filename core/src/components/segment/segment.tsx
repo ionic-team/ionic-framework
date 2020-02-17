@@ -56,7 +56,7 @@ export class Segment implements ComponentInterface {
   @Watch('value')
   protected valueChanged(value: string | undefined, oldValue: string | undefined | null) {
     this.ionSelect.emit({ value });
-    if (oldValue !== null || this.didInit) {
+    if (oldValue !== '' || this.didInit) {
       if (!this.activated) {
         this.ionChange.emit({ value });
       } else {
