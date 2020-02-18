@@ -30,12 +30,17 @@
 // --------------------------------------------------
 
 :host(.toolbar-segment) .toolbar-content {
-  @include position(null, 0, null, 0);
-
   display: inline-flex;
+}
+
+:host(.toolbar-segment) ::slotted(ion-segment) {
+  @include position(50%, null, null, 50%);
 
   position: absolute;
+
+  transform: translateX(-50%) translateY(-50%);
 }
+
 
 // Toolbar: Searchbar
 // --------------------------------------------------
