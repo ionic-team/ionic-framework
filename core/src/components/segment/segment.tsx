@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import { config } from '../../global/config';
 import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
 import { Gesture, GestureDetail } from '../../utils/gesture';
 import { pointerCoord } from '../../utils/helpers';
@@ -145,6 +146,9 @@ export class Segment implements ComponentInterface {
    * and where the cursor ended.
    */
   private addRipple(detail: GestureDetail) {
+    const shouldAddRipple = config.get('rippleEffect', true);
+    if (!shouldAddRipple) { return; }
+
     const buttons = this.getButtons();
     const checked = buttons.find(button => button.value === this.value);
 
