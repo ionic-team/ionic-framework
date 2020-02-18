@@ -418,7 +418,7 @@ The `inputmode` property for `ion-searchbar` now defaults to `undefined`. To get
 
 Segment was completely revamped to use the new iOS design including an all new gesture that applies for both Material Design and iOS. Due to these changes, some breaking changes were inevitably introduced in order to support the new design.
 
-##### Events
+##### Renamed Events
 
 `ion-segment` no longer emits an `ionSelect` event. Developers should listen for an `ionChange` event to be emitted on `ion-segment` instead.
 
