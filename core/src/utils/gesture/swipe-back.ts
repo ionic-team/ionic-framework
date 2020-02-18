@@ -1,5 +1,6 @@
-import { Gesture, GestureDetail, createGesture } from './index';
 import { clamp } from '../helpers';
+
+import { Gesture, GestureDetail, createGesture } from './index';
 
 export const createSwipeBackGesture = (
   el: HTMLElement,
