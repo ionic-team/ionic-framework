@@ -146,8 +146,8 @@ export class Segment implements ComponentInterface {
    * and where the cursor ended.
    */
   private addRipple(detail: GestureDetail) {
-    const shouldAddRipple = config.get('rippleEffect', true);
-    if (!shouldAddRipple) { return; }
+    const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
+    if (!useRippleEffect) { return; }
 
     const buttons = this.getButtons();
     const checked = buttons.find(button => button.value === this.value);
