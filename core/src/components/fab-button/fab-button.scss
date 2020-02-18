@@ -34,7 +34,9 @@
    * @prop --padding-bottom: Bottom padding of the button
    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
    */
-  --color-hover: #{var(--color)};
+  --color-activated: var(--color);
+  --color-focused: var(--color);
+  --color-hover: var(--color);
   --background-hover: #{ion-color(primary, contrast)};
   --background-hover-opacity: .08;
   --transition: background-color, opacity 100ms linear;
@@ -221,6 +223,8 @@
   transition-property: transform, opacity;
 
   opacity: 0;
+
+  z-index: 1;
 }
 
 // FAB Animation

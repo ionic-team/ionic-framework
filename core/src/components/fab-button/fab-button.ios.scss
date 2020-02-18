@@ -13,8 +13,6 @@
   --background-focused-opacity: 1;
   --background-hover-opacity: 1;
   --color: #{$fab-ios-text-color};
-  --color-activated: #{$fab-ios-text-color};
-  --color-focused: var(--color-activated);
   --box-shadow: #{$fab-ios-box-shadow};
   --transition: #{$fab-ios-transition};
 }
