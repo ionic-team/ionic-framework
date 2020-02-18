@@ -896,7 +896,7 @@ const Example: React.FC<{}> = () => (
         <h3>H3 Title Text</h3>
         <p>Icon on right</p>
       </IonLabel>
-      <IonIcon name="close-circle" slot="end" />
+      <IonIcon icon="close-circle" slot="end" />
     </IonItem>
 
 
@@ -916,22 +916,22 @@ const Example: React.FC<{}> = () => (
     <IonItem>
       <IonButton slot="start">
         Start Icon
-        <IonIcon name="home" slot="end" />
+        <IonIcon icon="home" slot="end" />
       </IonButton>
       <IonLabel>Buttons with Icons</IonLabel>
       <IonButton slot="end">
-        <IonIcon name="star" slot="end" />
+        <IonIcon icon="star" slot="end" />
         End Icon
       </IonButton>
     </IonItem>
 
     <IonItem>
       <IonButton slot="start">
-        <IonIcon slot="icon-only" name="navigate" />
+        <IonIcon slot="icon-only" icon="navigate" />
       </IonButton>
       <IonLabel>Icon only Buttons</IonLabel>
       <IonButton slot="end">
-        <IonIcon slot="icon-only" name="star" />
+        <IonIcon slot="icon-only" icon="star" />
       </IonButton>
     </IonItem>
 
@@ -940,25 +940,25 @@ const Example: React.FC<{}> = () => (
       <IonLabel>
         Icon End
       </IonLabel>
-      <IonIcon name="information-circle" slot="end" />
+      <IonIcon icon="information-circle" slot="end" />
     </IonItem>
 
     <IonItem>
       <IonLabel>
         Large Icon End
       </IonLabel>
-      <IonIcon name="information-circle" size="large" slot="end" />
+      <IonIcon icon="information-circle" size="large" slot="end" />
     </IonItem>
 
     <IonItem>
       <IonLabel>
         Small Icon End
       </IonLabel>
-      <IonIcon name="information-circle" size="small" slot="end" />
+      <IonIcon icon="information-circle" size="small" slot="end" />
     </IonItem>
 
     <IonItem>
-      <IonIcon name="star" slot="start" />
+      <IonIcon icon="star" slot="start" />
       <IonLabel>
         Icon Start
       </IonLabel>
@@ -968,8 +968,8 @@ const Example: React.FC<{}> = () => (
       <IonLabel>
         Two Icons End
       </IonLabel>
-      <IonIcon name="checkmark-circle" slot="end" />
-      <IonIcon name="shuffle" slot="end" />
+      <IonIcon icon="checkmark-circle" slot="end" />
+      <IonIcon icon="shuffle" slot="end" />
     </IonItem>
 
     <IonItem>
