@@ -449,9 +449,9 @@ export const SegmentExample: React.FC = () => (
 
 ## Events
 
-| Event       | Description                                  | Type                                    |
-| ----------- | -------------------------------------------- | --------------------------------------- |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<SegmentChangeEventDetail>` |
+| Event       | Description                                                                                                | Type                                    |
+| ----------- | ---------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| `ionChange` | Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`. | `CustomEvent<SegmentChangeEventDetail>` |
 
 
 ## CSS Custom Properties
