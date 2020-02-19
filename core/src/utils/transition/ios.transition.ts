@@ -25,7 +25,15 @@ const getLargeTitle = (refEl: any) => {
 };
 
 const getBackButton = (refEl: any, backDirection: boolean) => {
-  const buttonsList = refEl.querySelectorAll('ion-buttons');
+  const tabs = (refEl.tagName === 'ION-TABS') ? refEl : refEl.querySelector('ion-tabs');
+  let buttonsList = [];
+
+  if (tabs != null) {
+    const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
+    buttonsList = activeTab.querySelectorAll('ion-buttons');
+  } else {
+    buttonsList = refEl.querySelectorAll('ion-buttons');
+  }
 
   for (const buttons of buttonsList) {
     const parentHeader = buttons.closest('ion-header');
