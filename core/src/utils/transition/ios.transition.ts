@@ -17,7 +17,7 @@ const getLargeTitle = (refEl: any) => {
   const query = 'ion-header:not(.header-collapse-condense-inactive) ion-title[size=large]';
 
   if (tabs != null) {
-    const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden)');
+    const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
     return activeTab.querySelector(query);
   }
 
