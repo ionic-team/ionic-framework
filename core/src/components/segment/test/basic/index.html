@@ -164,6 +164,18 @@
           </ion-segment-button>
         </ion-segment>
 
+        <ion-segment>
+          <ion-segment-button value="active">
+            <div class="square red"></div>
+          </ion-segment-button>
+          <ion-segment-button name="dynamicAttrDisable">
+            <div class="square green"></div>
+          </ion-segment-button>
+          <ion-segment-button value="inactive">
+            <div class="square blue"></div>
+          </ion-segment-button>
+        </ion-segment>
+
         <!-- Dynamic Buttons -->
         <ion-segment id="dynamicButtons"></ion-segment>
       </div>
@@ -236,6 +248,24 @@
     </ion-content>
 
     <style>
+      .square {
+        width: 20px;
+        height: 20px;
+        background: black;
+      }
+
+      .square.red {
+        background: red;
+      }
+
+      .square.green {
+        background: green;
+      }
+
+      .square.blue {
+        background: blue;
+      }
+
       ion-content ion-segment {
         margin-bottom: 10px;
       }

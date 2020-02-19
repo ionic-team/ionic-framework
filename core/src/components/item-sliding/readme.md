@@ -645,7 +645,7 @@ export const ItemSlidingExample: React.FC = () => (
 
 ### `close() => Promise<void>`
 
-Close the sliding item. Items can also be closed from the [List](../../list/List).
+Close the sliding item. Items can also be closed from the [List](../list).
 
 #### Returns
 
@@ -655,7 +655,7 @@ Type: `Promise<void>`
 
 ### `closeOpened() => Promise<boolean>`
 
-Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
+Close all of the sliding items in the list. Items can also be closed from the [List](../list).
 
 #### Returns
 

@@ -13,8 +13,6 @@
   --background-focused-opacity: .24;
   --background-hover-opacity: .08;
   --color: #{$fab-md-text-color};
-  --color-activated: #{$fab-md-text-color};
-  --color-focused: var(--color-activated);
   --box-shadow: #{$fab-md-box-shadow};
   --transition: #{
     box-shadow 280ms cubic-bezier(.4, 0, .2, 1),

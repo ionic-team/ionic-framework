@@ -11,6 +11,9 @@
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   <style>
+  :root {
+    --ion-safe-area-bottom: 40px;
+  }
   </style>
 </head>
 
@@ -25,16 +28,16 @@
             <ion-title>Tab One</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content>
-          <ion-header collapse="condense">
-            <ion-toolbar>
-              <ion-title size="large">Tab One</ion-title>
-            </ion-toolbar>
-          </ion-header>
-          
-          <ion-nav-link router-direction="forward" component="page-one">
-              <ion-button mode="md" class="next">Go to Page Two</ion-button>
-            </ion-nav-link>
+        <ion-content class="ion-padding">
+          <h1>Tab One</h1>
+          <ion-button expand="block" onclick="updateBadgeCount()">Update Badge Count</ion-button>
+          <ion-button color="secondary" expand="block" onclick="updateBadgeColor()">Update Badge Color</ion-button>
+
+          <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+            <ion-fab-button class="custom-white">
+              <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
         </ion-content>
       </ion-tab>
 
@@ -44,12 +47,8 @@
             <ion-title>Tab Two</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content>
-          <ion-header collapse="condense">
-            <ion-toolbar>
-              <ion-title size="large">Tab Two</ion-title>
-            </ion-toolbar>
-          </ion-header>
+        <ion-content class="ion-padding">
+          <h1>Tab Two</h1>
         </ion-content>
       </ion-tab>
 
@@ -128,6 +127,20 @@
     customElements.define('page-one', PageOne);
 
   </script>
+
+  <style>
+    .custom-white {
+      --background: white;
+      --background-hover: #888;
+      --background-focused: #444;
+
+      --color: #3880ff;
+    }
+
+    .ios .custom-white {
+      --background-activated: #ddd;
+    }
+  </style>
 </body>
 
 </html>

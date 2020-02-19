@@ -40,7 +40,7 @@ The below chart details the item slots and where it will place the element insid
 
 ### Text Alignment
 
-Items left align text and add an ellipsis when the text is wider than the item. See the [Utility Attributes Documentation](/docs/layout/css-utilities) for attributes that can be added to `<ion-item>` to transform the text.
+Items left align text and add an ellipsis when the text is wider than the item. See the [CSS Utilities Documentation](/docs/layout/css-utilities) for classes that can be added to `<ion-item>` to transform the text.
 
 
 ## Input Highlight

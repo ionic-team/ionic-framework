@@ -13,7 +13,15 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
 };
 
 const getLargeTitle = (refEl: any) => {
-  return refEl.querySelector('ion-header:not(.header-collapse-condense-inactive) ion-title[size=large]');
+  const tabs = (refEl.tagName === 'ION-TABS') ? refEl : refEl.querySelector('ion-tabs');
+  const query = 'ion-header:not(.header-collapse-condense-inactive) ion-title[size=large]';
+
+  if (tabs != null) {
+    const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden)');
+    return activeTab.querySelector(query);
+  }
+
+  return refEl.querySelector(query);
 };
 
 const getBackButton = (refEl: any, backDirection: boolean) => {
@@ -277,7 +285,6 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
     const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-condense');
 
     const { forward, backward } = createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
-    console.log('enteringl',enteringEl,'leavingel',leavingEl);
     enteringToolBarEls.forEach(enteringToolBarEl => {
       const enteringToolBar = createAnimation();
       enteringToolBar.addElement(enteringToolBarEl);

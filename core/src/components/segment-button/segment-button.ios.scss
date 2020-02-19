@@ -110,7 +110,7 @@
 }
 
 .segment-button-indicator-background {
-  @include border-radius($segment-button-ios-border-radius);
+  @include border-radius(var(--border-radius));
 
   background: var(--indicator-color);
 }

@@ -1,5 +1,6 @@
 import { IonLifeCycleContext, NavContext } from '@ionic/react';
 import React from 'react';
+import { Redirect } from 'react-router';
 
 import { isDevMode } from '../utils';
 
@@ -18,6 +19,21 @@ interface ViewProps extends React.HTMLAttributes<HTMLElement> {
 export class View extends React.Component<ViewProps, {}> {
   context!: React.ContextType<typeof IonLifeCycleContext>;
   ionPage?: HTMLElement;
+
+  componentDidMount() {
+    /**
+     * If we can tell if view is a redirect, hide it so it will work again in future
+     */
+    const { view, route } = this.props;
+    if (route.type === Redirect) {
+      this.props.onHideView(view.id);
+    } else if (route.props.render && !view.isIonRoute) {
+      // Test the render to see if it returns a redirect
+      if (route.props.render().type === Redirect) {
+        this.props.onHideView(view.id);
+      }
+    }
+  }
 
   componentWillUnmount() {
     if (this.ionPage) {
