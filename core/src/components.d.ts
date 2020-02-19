@@ -1096,11 +1096,11 @@ export namespace Components {
   }
   interface IonItemSliding {
     /**
-    * Close the sliding item. Items can also be closed from the [List](../../list/List).
+    * Close the sliding item. Items can also be closed from the [List](../list).
     */
     'close': () => Promise<void>;
     /**
-    * Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
+    * Close all of the sliding items in the list. Items can also be closed from the [List](../list).
     */
     'closeOpened': () => Promise<boolean>;
     /**
@@ -5209,7 +5209,7 @@ declare namespace LocalJSX {
     */
     'mode'?: "ios" | "md";
     /**
-    * Emitted when the value property has changed.
+    * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.
     */
     'onIonChange'?: (event: CustomEvent<SegmentChangeEventDetail>) => void;
     /**

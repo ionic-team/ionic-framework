@@ -16,6 +16,26 @@
 <body>
   <ion-app>
     <ion-content>
+      <ion-fab slot="fixed" horizontal="end">
+        <ion-fab-button>
+          <ion-icon name="share-social"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="bottom">
+          <ion-fab-button>
+            <ion-icon name="logo-vimeo"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button>
+            <ion-icon name="logo-instagram"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button>
+            <ion-icon name="logo-twitter"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button>
+            <ion-icon name="logo-facebook"></ion-icon>
+          </ion-fab-button>
+        </ion-fab-list>
+      </ion-fab>
+
       <h3>Default</h3>
       <p>
         <ion-fab-button>
@@ -132,10 +152,16 @@
         <ion-fab-button color="secondary" class="custom">
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
+        <ion-fab-button class="custom-white">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
         <ion-fab-button class="custom ion-focused">
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
         <ion-fab-button color="secondary" class="custom ion-focused">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button class="custom-white ion-focused">
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
       </p>
@@ -194,6 +220,18 @@
     .themed {
       --ion-toolbar-background: #222;
       --ion-toolbar-color: #ddd;
+    }
+
+    .custom-white {
+      --background: white;
+      --background-hover: #888;
+      --background-focused: #444;
+
+      --color: #3880ff;
+    }
+
+    .ios .custom-white {
+      --background-activated: #ddd;
     }
   </style>
 </body>

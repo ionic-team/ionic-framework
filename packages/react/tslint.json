@@ -28,6 +28,7 @@
     "jsx-no-multiline-js": false,
     "jsx-wrap-multiline": false,
     "no-empty-interface": false,
-    "no-unbound-method": false
+    "no-unbound-method": false,
+    "prefer-conditional-expression": false
   }
 }
