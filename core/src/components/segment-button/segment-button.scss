@@ -65,12 +65,13 @@
   background: var(--background);
 
   color: var(--color);
-  cursor: pointer;
 
   text-decoration: none;
   text-overflow: ellipsis;
 
   white-space: nowrap;
+
+  cursor: pointer;
 
   font-kerning: none;
 }

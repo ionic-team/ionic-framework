@@ -279,7 +279,9 @@ export class Segment implements ComponentInterface {
     // gesture event and the Y coordinate of the starting element, since the gesture
     // can move up and down off of the segment
     const currentX = detail.currentX;
-    const previousY = rect.y;
+
+    // rect.y does not exist in older versions of Chrome
+    const previousY = ((rect as any).y !== undefined) ? rect.y : rect.top + (rect.height / 2);
     const nextEl = document.elementFromPoint(currentX, previousY) as HTMLIonSegmentButtonElement;
 
     const decreaseIndex = isRTL ? currentX > (left + width) : currentX < left;
