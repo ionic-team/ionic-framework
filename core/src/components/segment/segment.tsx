@@ -305,8 +305,7 @@ export class Segment implements ComponentInterface {
     // can move up and down off of the segment
     const currentX = detail.currentX;
 
-    // rect.y does not exist in older versions of Chrome
-    const previousY = ((rect as any).y !== undefined) ? rect.y : rect.top + (rect.height / 2);
+    const previousY = rect.top + (rect.height / 2);
     const nextEl = document.elementFromPoint(currentX, previousY) as HTMLIonSegmentButtonElement;
 
     const decreaseIndex = isRTL ? currentX > (left + width) : currentX < left;
