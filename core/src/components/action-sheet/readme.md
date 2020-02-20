@@ -123,6 +123,7 @@ async function presentActionSheet() {
 ```typescript
 import React, { useState } from 'react'
 import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
+import { trash, share, playCircleOutline, heart, close } from 'ionicons/icons';
 
 export const ActionSheetExample: React.FC = () => {
 
@@ -137,31 +138,31 @@ export const ActionSheetExample: React.FC = () => {
         buttons={[{
           text: 'Delete',
           role: 'destructive',
-          icon: 'trash',
+          icon: trash,
           handler: () => {
             console.log('Delete clicked');
           }
         }, {
           text: 'Share',
-          icon: 'share',
+          icon: share,
           handler: () => {
             console.log('Share clicked');
           }
         }, {
           text: 'Play (open modal)',
-          icon: 'arrow-dropright-circle',
+          icon: playCircleOutline,
           handler: () => {
             console.log('Play clicked');
           }
         }, {
           text: 'Favorite',
-          icon: 'heart',
+          icon: heart,
           handler: () => {
             console.log('Favorite clicked');
           }
         }, {
           text: 'Cancel',
-          icon: 'close',
+          icon: close,
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
