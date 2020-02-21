@@ -151,7 +151,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       // All of the elements needed for the swipe gesture
       // should be in the DOM and referenced by now, except
       // for the presenting el
-      const animationBuilder = (this.leaveAnimation) ? this.leaveAnimation : config.get('modalLeave', iosLeaveAnimation);
+      const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
       const ani = this.animation = animationBuilder(this.el, this.presentingElement);
       this.gesture = createSwipeToCloseGesture(
         this.el,
