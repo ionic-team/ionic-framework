@@ -5,10 +5,10 @@ import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 /**
  * iOS Modal Enter Animation for the Card presentation style
  */
-export const iosEnterAnimation = (
-    baseEl: HTMLElement,
-    presentingEl?: HTMLElement,
-  ): Animation => {
+export const iosDefaultEnterAnimation = (
+  baseEl: HTMLElement,
+  presentingEl?: HTMLElement,
+): Animation => {
   // The top translate Y for the presenting element
   const backdropAnimation = createAnimation()
     .addElement(baseEl.querySelector('ion-backdrop')!)

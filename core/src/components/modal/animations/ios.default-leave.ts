@@ -5,7 +5,7 @@ import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 /**
  * iOS Modal Leave Animation
  */
-export const iosLeaveAnimation = (
+export const iosDefaultLeaveAnimation = (
   baseEl: HTMLElement,
   presentingEl?: HTMLElement,
   duration = 500

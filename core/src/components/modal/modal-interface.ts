@@ -10,6 +10,7 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   delegate?: FrameworkDelegate;
   animated?: boolean;
   swipeToClose?: boolean;
+  swipe?: boolean;
 
   mode?: Mode;
   keyboardClose?: boolean;

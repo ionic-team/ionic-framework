@@ -1388,6 +1388,10 @@ export namespace Components {
     */
     'showBackdrop': boolean;
     /**
+    * If `true`, the modal can be swiped.
+    */
+    'swipe': boolean;
+    /**
     * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
     */
     'swipeToClose': boolean;
@@ -4608,6 +4612,10 @@ declare namespace LocalJSX {
     * If `true`, a backdrop will be displayed behind the modal.
     */
     'showBackdrop'?: boolean;
+    /**
+    * If `true`, the modal can be swiped.
+    */
+    'swipe'?: boolean;
     /**
     * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
     */
