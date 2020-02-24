@@ -54,6 +54,8 @@ button {
 
 .select-icon {
   position: relative;
+
+  opacity: .33;
 }
 
 .select-text {
@@ -85,7 +87,7 @@ button {
 
   color: currentColor;
 
-  opacity: .33;
+  opacity: inherit;
 
   pointer-events: none;
 }
