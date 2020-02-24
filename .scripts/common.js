@@ -36,11 +36,11 @@ function projectPath(project) {
   return path.join(rootDir, project);
 }
 
-async function askTag() {
+async function askNpmTag(version) {
   const prompts = [
     {
       type: 'list',
-      name: 'tag',
+      name: 'npmTag',
       message: 'Select npm tag or specify a new tag',
       choices: ['latest', 'next', 'v4-lts']
         .concat([
@@ -55,13 +55,13 @@ async function askTag() {
       type: 'confirm',
       name: 'confirm',
       message: answers => {
-        return `Will publish to ${tc.cyan(answers.tag)}. Continue?`;
+        return `Will publish ${tc.cyan(version)} to ${tc.cyan(answers.npmTag)}. Continue?`;
       }
     }
   ];
 
-  const { tag, confirm } = await inquirer.prompt(prompts);
-  return { tag, confirm };
+  const { npmTag, confirm } = await inquirer.prompt(prompts);
+  return { npmTag, confirm };
 }
 
 function checkGit(tasks) {
@@ -310,7 +310,7 @@ function copyPackageToDist(tasks, packages) {
   });
 }
 
-function publishPackages(tasks, packages, version, tag = 'latest') {
+function publishPackages(tasks, packages, version, npmTag = 'latest') {
   // first verify version
   packages.forEach(package => {
     if (package === 'core') {
@@ -338,9 +338,9 @@ function publishPackages(tasks, packages, version, tag = 'latest') {
     }
 
     tasks.push({
-      title: `${package}: publish to ${tag} tag`,
+      title: `${package}: publish to ${npmTag} tag`,
       task: async () => {
-        await execa('npm', ['publish', '--tag', tag], { cwd: projectRoot });
+        await execa('npm', ['publish', '--tag', npmTag], { cwd: projectRoot });
       }
     });
   });
@@ -375,7 +375,7 @@ function copyCDNLoader(tasks, version) {
 module.exports = {
   checkTestDist,
   checkGit,
-  askTag,
+  askNpmTag,
   isValidVersion,
   isVersionGreater,
   copyCDNLoader,
