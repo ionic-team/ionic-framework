@@ -6,7 +6,7 @@ const tc = require('turbocolor');
 const execa = require('execa');
 const Listr = require('listr');
 const path = require('path');
-const { Octokit } = require("@octokit/rest");
+const { Octokit } = require('@octokit/rest');
 const common = require('./common');
 const fs = require('fs-extra');
 
