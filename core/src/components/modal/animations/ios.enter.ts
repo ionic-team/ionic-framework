@@ -10,6 +10,10 @@ export const iosEnterAnimation = (
     presentingEl?: HTMLElement,
   ): Animation => {
   // The top translate Y for the presenting element
+  const backdropAnimation = createAnimation()
+    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
+
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelector('.modal-wrapper')!)
     .beforeStyles({ 'opacity': 1 })
@@ -20,7 +24,7 @@ export const iosEnterAnimation = (
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(500)
     .beforeAddClass('show-modal')
-    .addAnimation([wrapperAnimation]);
+    .addAnimation([backdropAnimation, wrapperAnimation]);
 
   if (presentingEl) {
     const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-10px' : 'max(30px, var(--ion-safe-area-top))';
