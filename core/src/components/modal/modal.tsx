@@ -255,7 +255,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         aria-modal="true"
         class={{
           [mode]: true,
-          [`modal-card`]: this.presentingElement !== undefined,
+          [`modal-card`]: this.presentingElement !== undefined && mode === 'ios',
           ...getClassMap(this.cssClass)
         }}
         style={{
