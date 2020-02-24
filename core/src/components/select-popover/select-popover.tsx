@@ -26,7 +26,7 @@ export class SelectPopover implements ComponentInterface {
   /** Array of options for the popover */
   @Prop() options: SelectPopoverOption[] = [];
 
-  @Listen('ionSelect')
+  @Listen('ionChange')
   onSelect(ev: any) {
     const option = this.options.find(o => o.value === ev.target.value);
     if (option) {
@@ -35,6 +35,8 @@ export class SelectPopover implements ComponentInterface {
   }
 
   render() {
+    const checkedOption = this.options.find(o => o.checked);
+    const checkedValue = checkedOption ? checkedOption.value : undefined;
     return (
       <Host class={getIonMode(this)}>
         <ion-list>
@@ -47,14 +49,13 @@ export class SelectPopover implements ComponentInterface {
               </ion-label>
             </ion-item>
           }
-          <ion-radio-group>
+          <ion-radio-group value={checkedValue}>
             {this.options.map(option =>
               <ion-item>
                 <ion-label>
                   {option.text}
                 </ion-label>
                 <ion-radio
-                  checked={option.checked}
                   value={option.value}
                   disabled={option.disabled}
                 >

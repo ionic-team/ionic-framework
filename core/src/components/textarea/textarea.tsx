@@ -149,7 +149,7 @@ export class Textarea implements ComponentInterface {
   @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
-   * Emitted when a keyboard input ocurred.
+   * Emitted when a keyboard input occurred.
    */
   @Event() ionInput!: EventEmitter<KeyboardEvent>;
 

@@ -27,7 +27,7 @@ The `ion-tab-bar` needs a slot defined in order to be projected to the right pla
     </ion-tab-button>
 
     <ion-tab-button tab="speakers">
-      <ion-icon name="contacts"></ion-icon>
+      <ion-icon name="person-circle"></ion-icon>
       <ion-label>Speakers</ion-label>
     </ion-tab-button>
 
@@ -118,7 +118,7 @@ const routes: Routes = [
     </ion-tab-button>
 
     <ion-tab-button tab="tab-speaker">
-      <ion-icon name="contacts"></ion-icon>
+      <ion-icon name="person-circle"></ion-icon>
       <ion-label>Speakers</ion-label>
     </ion-tab-button>
 
@@ -178,28 +178,30 @@ will match the following tab:
 ```tsx
 import React from 'react';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/react';
+import { calendar, personCircle, map, informationCircle } from 'ionicons/icons';
+
 
 export const TabsExample: React.FC = () => (
   <IonTabs>
     <IonTabBar slot="bottom">
       <IonTabButton tab="schedule">
-        <IonIcon name="calendar" />
+        <IonIcon icon={calendar} />
         <IonLabel>Schedule</IonLabel>
         <IonBadge>6</IonBadge>
       </IonTabButton>
 
       <IonTabButton tab="speakers">
-        <IonIcon name="contacts" />
+        <IonIcon icon={personCircle} />
         <IonLabel>Speakers</IonLabel>
       </IonTabButton>
 
       <IonTabButton tab="map">
-        <IonIcon name="map" />
+        <IonIcon icon={map} />
         <IonLabel>Map</IonLabel>
       </IonTabButton>
 
       <IonTabButton tab="about">
-        <IonIcon name="information-circle" />
+        <IonIcon icon={informationCircle} />
         <IonLabel>About</IonLabel>
       </IonTabButton>
     </IonTabBar>
@@ -244,7 +246,7 @@ export const TabsExample: React.FC = () => (
 
         <!-- Provide a custom route to navigate to -->
         <ion-tab-button tab="speakers" :to="{ name: 'app.speakers' }">
-          <ion-icon name="contacts"></ion-icon>
+          <ion-icon name="person-circle"></ion-icon>
           <ion-label>Speakers</ion-label>
         </ion-tab-button>
 

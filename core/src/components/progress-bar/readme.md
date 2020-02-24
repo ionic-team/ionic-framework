@@ -8,7 +8,7 @@ ion-progress-bar is a horizontal progress bar to visualize the progression of an
 
 If the percentage of an operation is known, you should use the determinate type. This is the default type and the progress is represented by the `value` property.
 
-A buffer shows circles as animation to indicate some activity. If the `buffer` property is smaller than 1 you can show the addditional buffering progress.
+A buffer shows circles as animation to indicate some activity. If the `buffer` property is smaller than 1 you can show the additional buffering progress.
 
 ### Indeterminate
 
@@ -21,7 +21,7 @@ If you add `reversed="true"`, you receive a query which is used to indicate pre-
 
 ## Usage
 
-### Javascript
+### Angular / javascript
 
 ```html
 <!-- Default Progressbar -->
@@ -65,6 +65,28 @@ export const ProgressbarExample: React.FC = () => (
     <IonProgressBar type="indeterminate" reversed={true}></IonProgressBar><br />
   </IonContent>
 );
+```
+
+
+### Vue
+
+```html
+<template>
+  <!-- Default Progressbar -->
+  <ion-progress-bar></ion-progress-bar>
+
+  <!-- Default Progressbar with 50 percent -->
+  <ion-progress-bar value="0.5"></ion-progress-bar>
+
+  <!-- Colorize Progressbar -->
+  <ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
+  <ion-progress-bar color="secondary" value="0.5"></ion-progress-bar>
+
+  <!-- Other types -->
+  <ion-progress-bar value="0.25" buffer="0.5"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+</template>
 ```
 
 

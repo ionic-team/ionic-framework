@@ -34,13 +34,13 @@
 Ionic provides a way to create the collapsible titles that exist on stock iOS apps. Getting this setup requires configuring your `ion-title`, `ion-header`, and (optionally) `ion-buttons` elements.
 
 ```html
-<ion-header>
+<ion-header translucent="true">
   <ion-toolbar>    
     <ion-title>Settings</ion-title>               
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen="true">
   <ion-header collapse="condense">              
     <ion-toolbar>      
       <ion-title size="large">Settings</ion-title>
@@ -58,19 +58,19 @@ Ionic provides a way to create the collapsible titles that exist on stock iOS ap
 In the example above, notice there are two `ion-header` elements. The first `ion-header` represents the "collapsed" state of your collapsible header, and the second `ion-header` represents the "expanded" state of your collapsible header. Notice that the second `ion-header` must have `collapse="condense"` and must exist within `ion-content`. Additionally, in order to get the large title styling, `ion-title` must have `size="large"`.
 
 ```html
-<ion-header>
+<ion-header translucent="true">
   <ion-toolbar>   
-    <ion-buttons collapse="true">
+    <ion-buttons collapse="true" slot="end">
       <ion-button>Click Me</ion-button>
     </ion-buttons> 
     <ion-title>Settings</ion-title>               
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen="true">
   <ion-header collapse="condense">              
     <ion-toolbar>      
-      <ion-buttons collapse="true">
+      <ion-buttons collapse="true" slot="end">
         <ion-button>Click Me</ion-button>
       </ion-buttons>
       <ion-title size="large">Settings</ion-title>
@@ -87,7 +87,7 @@ In the example above, notice there are two `ion-header` elements. The first `ion
 
 In this example, notice that we have added two sets of `ion-buttons` both with `collapse="true"`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `ion-title` element.
 
-`ion-buttons` elements that do not have `collapse` set will always be visible, regardless of collapsed state.
+`ion-buttons` elements that do not have `collapse` set will always be visible, regardless of collapsed state. When using the large title and `ion-buttons` elements inside of `ion-content`, the `ion-buttons` elements should always be placed in the `end` slot.
 
 When styling the large title, you should target the large title globally as opposed to within the context of a particular page or tab, otherwise its styles will not be applied during the navigation animation.
 
@@ -97,6 +97,8 @@ ion-title.large-title {
   font-size: 30px;
 }
 ```
+
+> When using collapsible large titles, it is required that `fullscreen="true"` be set on `ion-content` and `translucent="true"` be set on the main `ion-header`.
 
 
 ### React
@@ -145,13 +147,13 @@ import {
 
 export const LargeTitleExample: React.FC = () => (
   <>
-    <IonHeader>
+    <IonHeader translucent="true">
       <IonToolbar>    
         <IonTitle>Settings</IonTitle>               
       </IonToolbar>
     </IonHeader>
     
-    <IonContent>
+    <IonContent fullscreen="true">
       <IonHeader collapse="condense">              
         <IonToolbar>      
           <IonTitle size="large">Settings</IonTitle>
@@ -184,19 +186,19 @@ import {
 
 export const LargeTitleExample: React.FC = () => (
   <>
-    <IonHeader>
+    <IonHeader translucent="true">
       <IonToolbar>   
-        <IonButtons collapse="true">
+        <IonButtons collapse="true" slot="end">
           <IonButton>Click Me</IonButton>
         </IonButtons> 
         <IonTitle>Settings</IonTitle>               
       </IonToolbar>
     </IonHeader>
     
-    <IonContent>
+    <IonContent fullscreen="true">
       <IonHeader collapse="condense">              
         <IonToolbar>      
-          <IonButtons collapse="true">
+          <IonButtons collapse="true" slot="end">
             <IonButton>Click Me</IonButton>
           </IonButtons>
           <IonTitle size="large">Settings</IonTitle>
@@ -215,7 +217,7 @@ export const LargeTitleExample: React.FC = () => (
 
 In this example, notice that we have added two sets of `IonButtons` both with `collapse="true"`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `IonTitle` element.
 
-`IonButtons` elements that do not have `collapse` set will always be visible, regardless of collapsed state.
+`IonButtons` elements that do not have `collapse` set will always be visible, regardless of collapsed state. When using the large title and `ion-buttons` elements inside of `ion-content`, the `ion-buttons` elements should always be placed in the `end` slot.
 
 When styling the large title, you should target the large title globally as opposed to within the context of a particular page or tab, otherwise its styles will not be applied during the navigation animation.
 
@@ -225,6 +227,8 @@ ion-title.large-title {
   font-size: 30px;
 }
 ```
+
+> When using collapsible large titles, it is required that `fullscreen="true"` be set on `IonContent` and `translucent="true"` be set on the main `IonHeader`.
 
 
 ### Vue
@@ -257,13 +261,13 @@ Ionic provides a way to create the collapsible titles that exist on stock iOS ap
 
 ```html
 <template>
-  <ion-header>
+  <ion-header translucent="true">
     <ion-toolbar>    
       <ion-title>Settings</ion-title>               
     </ion-toolbar>
   </ion-header>
   
-  <ion-content>
+  <ion-content fullscreen="true">
     <ion-header collapse="condense">              
       <ion-toolbar>      
         <ion-title size="large">Settings</ion-title>
@@ -283,19 +287,19 @@ In the example above, notice there are two `ion-header` elements. The first `ion
 
 ```html
 <template>
-  <ion-header>
+  <ion-header translucent="true">
     <ion-toolbar>   
-      <ion-buttons collapse="true">
+      <ion-buttons collapse="true" slot="end">
         <ion-button>Click Me</ion-button>
       </ion-buttons> 
       <ion-title>Settings</ion-title>               
     </ion-toolbar>
   </ion-header>
   
-  <ion-content>
+  <ion-content fullscreen="true">
     <ion-header collapse="condense">              
       <ion-toolbar>      
-        <ion-buttons collapse="true">
+        <ion-buttons collapse="true" slot="end">
           <ion-button>Click Me</ion-button>
         </ion-buttons>
         <ion-title size="large">Settings</ion-title>
@@ -313,7 +317,7 @@ In the example above, notice there are two `ion-header` elements. The first `ion
 
 In this example, notice that we have added two sets of `ion-buttons` both with `collapse="true"`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `ion-title` element.
 
-`ion-buttons` elements that do not have `collapse` set will always be visible, regardless of collapsed state.
+`ion-buttons` elements that do not have `collapse` set will always be visible, regardless of collapsed state. When using the large title and `ion-buttons` elements inside of `ion-content`, the `ion-buttons` elements should always be placed in the `end` slot.
 
 When styling the large title, you should target the large title globally as opposed to within the context of a particular page or tab, otherwise its styles will not be applied during the navigation animation.
 
@@ -323,6 +327,8 @@ ion-title.large-title {
   font-size: 30px;
 }
 ```
+
+> When using collapsible large titles, it is required that `fullscreen="true"` be set on `ion-content` and `translucent="true"` be set on the main `ion-header`.
 
 
 

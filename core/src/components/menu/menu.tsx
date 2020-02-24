@@ -49,12 +49,12 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * The content's id the menu should use.
    */
-  @Prop() contentId?: string;
+  @Prop({ reflectToAttr: true }) contentId?: string;
 
   /**
    * An id for the menu.
    */
-  @Prop() menuId?: string;
+  @Prop({ reflectToAttr: true }) menuId?: string;
 
   /**
    * The display type of the menu.
@@ -360,7 +360,9 @@ AFTER:
   }
 
   private canStart(detail: GestureDetail): boolean {
-    if (!this.canSwipe()) {
+    // Do not allow swipe gesture if a modal is open
+    const isModalPresented = !!document.querySelector('ion-modal.show-modal');
+    if (isModalPresented || !this.canSwipe()) {
       return false;
     }
     if (this._isOpen) {
@@ -442,7 +444,7 @@ AFTER:
      * for the cubic bezier curve (at least with web animations)
      * Not sure if the negative step value is an error or not
      */
-    const adjustedStepValue = (stepValue <= 0) ? 0.01 : stepValue;
+    const adjustedStepValue = (stepValue < 0) ? 0.01 : stepValue;
 
     /**
      * Animation will be reversed here, so need to
@@ -452,7 +454,7 @@ AFTER:
      * to the new easing curve, as `stepValue` is going to be given
      * in terms of a linear curve.
      */
-    newStepValue += getTimeGivenProgression([0, 0], [0.4, 0], [0.6, 1], [1, 1], clamp(0, adjustedStepValue, 1))[0];
+    newStepValue += getTimeGivenProgression([0, 0], [0.4, 0], [0.6, 1], [1, 1], clamp(0, adjustedStepValue, 0.9999))[0] || 0;
 
     const playTo = (this._isOpen) ? !shouldComplete : shouldComplete;
 

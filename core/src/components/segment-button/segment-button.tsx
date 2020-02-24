@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { SegmentButtonLayout } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
+import { hostContext } from '../../utils/theme';
 
 let ids = 0;
 
@@ -18,13 +19,11 @@ let ids = 0;
   shadow: true
 })
 export class SegmentButton implements ComponentInterface, ButtonInterface {
+  private segmentEl: HTMLIonSegmentElement | null = null;
 
   @Element() el!: HTMLElement;
 
-  /**
-   * If `true`, the segment button is selected.
-   */
-  @Prop({ mutable: true }) checked = false;
+  @State() checked = false;
 
   /**
    * If `true`, the user cannot interact with the segment button.
@@ -46,15 +45,19 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() value: string = 'ion-sb-' + (ids++);
 
-  /**
-   * Emitted when the segment button is clicked.
-   */
-  @Event() ionSelect!: EventEmitter<void>;
+  connectedCallback() {
+    const segmentEl = this.segmentEl = this.el.closest('ion-segment');
+    if (segmentEl) {
+      this.updateState();
+      segmentEl.addEventListener('ionSelect', this.updateState);
+    }
+  }
 
-  @Watch('checked')
-  checkedChanged(checked: boolean, prev: boolean) {
-    if (checked && !prev) {
-      this.ionSelect.emit();
+  disconnectedCallback() {
+    const segmentEl = this.segmentEl;
+    if (segmentEl) {
+      segmentEl.removeEventListener('ionSelect', this.updateState);
+      this.segmentEl = null;
     }
   }
 
@@ -66,8 +69,10 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
-  private onClick = () => {
-    this.checked = true;
+  private updateState = () => {
+    if (this.segmentEl) {
+      this.checked = this.segmentEl.value === this.value;
+    }
   }
 
   render() {
@@ -75,10 +80,13 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        onClick={this.onClick}
         aria-disabled={disabled ? 'true' : null}
         class={{
           [mode]: true,
+          'in-toolbar': hostContext('ion-toolbar', this.el),
+          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
+          'in-segment': hostContext('ion-segment', this.el),
+          'in-segment-color': hostContext('ion-segment[color]', this.el),
           'segment-button-has-label': hasLabel,
           'segment-button-has-icon': hasIcon,
           'segment-button-has-label-only': hasLabel && !hasIcon,
@@ -88,6 +96,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           [`segment-button-layout-${layout}`]: true,
           'ion-activatable': true,
           'ion-activatable-instant': true,
+          'ion-focusable': true,
         }}
       >
         <button
@@ -96,10 +105,21 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           class="button-native"
           disabled={disabled}
         >
-          <slot></slot>
+          <span class="button-inner">
+            <slot></slot>
+          </span>
           {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         </button>
-        <div class="segment-button-indicator"></div>
+        <div
+          part="indicator"
+          class={{
+            'segment-button-indicator': true,
+            'segment-button-indicator-animated': true
+          }}
+        >
+          <div part="indicator-background" class="segment-button-indicator-background"></div>
+        </div>
+
       </Host>
     );
   }

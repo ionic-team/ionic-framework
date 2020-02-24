@@ -4,31 +4,29 @@
 // --------------------------------------------------
 
 :host {
-  --indicator-color-checked: initial;
+  /**
+   * @prop --background: Background of the segment button
+   */
   --ripple-color: currentColor;
-  --color-activated: initial;
 
   @include font-smoothing();
 
   display: flex;
+
+  position: relative;
 
   align-items: stretch;
   justify-content: center;
 
   width: 100%;
 
+  background: var(--background);
+
   font-family: $font-family-base;
 
   text-align: center;
-}
 
-
-// Segment: Disabled
-// --------------------------------------------------
-
-:host(.segment-disabled),
-::slotted(.segment-button-disabled) {
-  pointer-events: none;
+  contain: paint;
 }
 
 

@@ -41,5 +41,4 @@ export const RefresherExample: React.FC = () => (
     </IonContent>
   </IonContent>
 );
-
 ```

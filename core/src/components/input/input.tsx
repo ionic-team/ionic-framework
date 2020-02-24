@@ -169,7 +169,7 @@ export class Input implements ComponentInterface {
   /**
    * The value of the input.
    */
-  @Prop({ mutable: true }) value?: string | null = '';
+  @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
    * Update the native input element when the value changes
@@ -177,11 +177,11 @@ export class Input implements ComponentInterface {
   @Watch('value')
   protected valueChanged() {
     this.emitStyle();
-    this.ionChange.emit({ value: this.value });
+    this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
   }
 
   /**
-   * Emitted when a keyboard input ocurred.
+   * Emitted when a keyboard input occurred.
    */
   @Event() ionInput!: EventEmitter<KeyboardEvent>;
 
@@ -263,7 +263,8 @@ export class Input implements ComponentInterface {
   }
 
   private getValue(): string {
-    return this.value || '';
+    return typeof this.value === 'number' ? this.value.toString() :
+      (this.value || '').toString();
   }
 
   private emitStyle() {
@@ -301,10 +302,11 @@ export class Input implements ComponentInterface {
     this.ionFocus.emit();
   }
 
-  private onKeydown = () => {
+  private onKeydown = (ev: KeyboardEvent) => {
     if (this.shouldClearOnEdit()) {
       // Did the input value change after it was blurred and edited?
-      if (this.didBlurAfterEdit && this.hasValue()) {
+      // Do not clear if user is hitting Enter to submit form
+      if (this.didBlurAfterEdit && this.hasValue() && ev.key !== 'Enter') {
         // Clear the input
         this.clearTextInput();
       }

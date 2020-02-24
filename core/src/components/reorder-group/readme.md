@@ -267,6 +267,7 @@ reorderGroup.addEventListener('ionItemReorder', ({detail}) => {
 import React from 'react';
 import { IonItem, IonLabel, IonReorder, IonReorderGroup, IonIcon, IonContent } from '@ionic/react';
 import { ItemReorderEventDetail } from '@ionic/core';
+import { pizza } from 'ionicons/icons';
 
 function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
   // The `from` and `to` properties contain the index of the item
@@ -309,14 +310,14 @@ export const ReorderGroupExample: React.FC = () => (
       <IonItem>
         <IonLabel>Item 5</IonLabel>
         <IonReorder slot="end">
-          <IonIcon name="pizza" />
+          <IonIcon icon={pizza} />
         </IonReorder>
       </IonItem>
 
       <IonItem>
         <IonLabel>Item 6</IonLabel>
         <IonReorder slot="end">
-          <IonIcon name="pizza" />
+          <IonIcon icon={pizza} />
         </IonReorder>
       </IonItem>
 

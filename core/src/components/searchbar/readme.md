@@ -4,6 +4,15 @@ Searchbars represent a text field that can be used to search through a collectio
 
 A Searchbar should be used instead of an input to search lists. A clear button is displayed upon entering input in the searchbar's text field. Clicking on the clear button will erase the text field and the input will remain focused. A cancel button can be enabled which will clear the input and lose the focus upon click.
 
+### Keyboard Display
+
+#### Android
+
+By default, tapping the input will cause the keyboard to appear with a magnifying glass icon on the submit button. You can optionally set the `inputmode` property to `"search"`, which will change the icon from a magnifying glass to a carriage return.
+
+#### iOS
+
+By default, tapping the input will cause the keyboard to appear with the text "return" on a gray submit button. You can optionally set the `inputmode` property to `"search"`, which will change the text from "return" to "go", and change the button color from gray to blue. Alternatively, you can wrap the `ion-searchbar` in a `form` element with an `action` property. This will cause the keyboard to appear with a blue submit button that says "search".
 
 
 <!-- Auto Generated Below -->
@@ -112,56 +121,69 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 ### React
 
 ```tsx
-import React from 'react';
-import { IonSearchbar, IonToolbar, IonContent } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFooter } from '@ionic/react';
 
-export const SearchbarExample: React.FC = () => (
-  <IonContent>
-    {/*-- Default Searchbar --*/}
-    <IonSearchbar></IonSearchbar>
+export const SearchBarExamples: React.FC = () => {
+  const [searchText, setSearchText] = useState('');
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>IonSearchBar Examples</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <p>Default Searchbar</p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)}></IonSearchbar>
 
-    {/*-- Searchbar with cancel button always shown --*/}
-    <IonSearchbar showCancelButton="always"></IonSearchbar>
+        <p>Searchbar with cancel button always shown</p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} showCancelButton="always"></IonSearchbar>
 
-    {/*-- Searchbar with cancel button never shown --*/}
-    <IonSearchbar showCancelButton="never"></IonSearchbar>
+        <p>Searchbar with cancel button never shown</p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} showCancelButton="never"></IonSearchbar>
 
-    {/*-- Searchbar with cancel button shown on focus --*/}
-    <IonSearchbar showCancelButton="focus"></IonSearchbar>
+        <p>Searchbar with cancel button shown on focus</p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} showCancelButton="focus"></IonSearchbar>
 
-    {/*-- Searchbar with danger color --*/}
-    <IonSearchbar color="danger"></IonSearchbar>
+        <p>Searchbar with danger color</p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} color="danger"></IonSearchbar>
 
-    {/*-- Searchbar with value --*/}
-    <IonSearchbar value="Ionic"></IonSearchbar>
+        <p>Searchbar with telephone type</p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} type="tel"></IonSearchbar>
 
-    {/*-- Searchbar with telephone type --*/}
-    <IonSearchbar type="tel"></IonSearchbar>
+        <p>Searchbar with numeric inputmode</p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} inputmode="numeric"></IonSearchbar>
 
-    {/*-- Searchbar with numeric inputmode --*/}
-    <IonSearchbar inputmode="numeric"></IonSearchbar>
+        <p>Searchbar disabled </p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} disabled={true}></IonSearchbar>
 
-    {/*-- Searchbar disabled  --*/}
-    <IonSearchbar disabled={true}></IonSearchbar>
+        <p>Searchbar with a cancel button and custom cancel button text</p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} showCancelButton="focus" cancelButtonText="Custom Cancel"></IonSearchbar>
 
-    {/*-- Searchbar with a cancel button and custom cancel button text --*/}
-    <IonSearchbar showCancelButton="focus" cancelButtonText="Custom Cancel"></IonSearchbar>
+        <p>Searchbar with a custom debounce - Note: debounce only works on onIonChange event</p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} debounce={1000}></IonSearchbar>
 
-    {/*-- Searchbar with a custom debounce --*/}
-    <IonSearchbar debounce={500}></IonSearchbar>
+        <p>Animated Searchbar</p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} animated></IonSearchbar>
 
-    {/*-- Animated Searchbar --*/}
-    <IonSearchbar animated></IonSearchbar>
+        <p>Searchbar with a placeholder</p>
+        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)} placeholder="Filter Schedules"></IonSearchbar>
 
-    {/*-- Searchbar with a placeholder --*/}
-    <IonSearchbar placeholder="Filter Schedules"></IonSearchbar>
+        <p>Searchbar in a Toolbar</p>
+        <IonToolbar>
+          <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value!)}></IonSearchbar>
+        </IonToolbar>
 
-    {/*-- Searchbar in a Toolbar --*/}
-    <IonToolbar>
-      <IonSearchbar></IonSearchbar>
-    </IonToolbar>
-  </IonContent>
-);
+      </IonContent>
+      <IonFooter>
+        <IonToolbar>
+          Search Text: {searchText ?? '(none)'}
+        </IonToolbar>
+      </IonFooter>
+    </IonPage>
+  );
+};
 ```
 
 
@@ -219,25 +241,25 @@ export const SearchbarExample: React.FC = () => (
 
 ## Properties
 
-| Property           | Attribute            | Description                                                                                                                                                                                                                                                                                                          | Type                                                                                  | Default                                                   |
-| ------------------ | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `animated`         | `animated`           | If `true`, enable searchbar animation.                                                                                                                                                                                                                                                                               | `boolean`                                                                             | `false`                                                   |
-| `autocomplete`     | `autocomplete`       | Set the input's autocomplete property.                                                                                                                                                                                                                                                                               | `"off" \| "on"`                                                                       | `'off'`                                                   |
-| `autocorrect`      | `autocorrect`        | Set the input's autocorrect property.                                                                                                                                                                                                                                                                                | `"off" \| "on"`                                                                       | `'off'`                                                   |
-| `cancelButtonIcon` | `cancel-button-icon` | Set the cancel button icon. Only applies to `md` mode.                                                                                                                                                                                                                                                               | `string`                                                                              | `config.get('backButtonIcon', 'md-arrow-back') as string` |
-| `cancelButtonText` | `cancel-button-text` | Set the the cancel button text. Only applies to `ios` mode.                                                                                                                                                                                                                                                          | `string`                                                                              | `'Cancel'`                                                |
-| `clearIcon`        | `clear-icon`         | Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.                                                                                                                                                                                                                                   | `string \| undefined`                                                                 | `undefined`                                               |
-| `color`            | `color`              | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).                                               | `string \| undefined`                                                                 | `undefined`                                               |
-| `debounce`         | `debounce`           | Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.                                                                                                                                                                                                              | `number`                                                                              | `250`                                                     |
-| `disabled`         | `disabled`           | If `true`, the user cannot interact with the input.                                                                                                                                                                                                                                                                  | `boolean`                                                                             | `false`                                                   |
-| `inputmode`        | `inputmode`          | A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.                                                                                                                                                     | `"decimal" \| "email" \| "none" \| "numeric" \| "search" \| "tel" \| "text" \| "url"` | `'search'`                                                |
-| `mode`             | `mode`               | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                    | `"ios" \| "md"`                                                                       | `undefined`                                               |
-| `placeholder`      | `placeholder`        | Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string`                                                                              | `'Search'`                                                |
-| `searchIcon`       | `search-icon`        | The icon to use as the search icon.                                                                                                                                                                                                                                                                                  | `string`                                                                              | `'search'`                                                |
-| `showCancelButton` | `show-cancel-button` | Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.                                                                        | `"always" \| "focus" \| "never"`                                                      | `'never'`                                                 |
-| `spellcheck`       | `spellcheck`         | If `true`, enable spellcheck on the input.                                                                                                                                                                                                                                                                           | `boolean`                                                                             | `false`                                                   |
-| `type`             | `type`               | Set the type of the input.                                                                                                                                                                                                                                                                                           | `"email" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "url"`           | `'search'`                                                |
-| `value`            | `value`              | the value of the searchbar.                                                                                                                                                                                                                                                                                          | `null \| string \| undefined`                                                         | `''`                                                      |
+| Property           | Attribute            | Description                                                                                                                                                                                                                                                                                                          | Type                                                                                               | Default                                                      |
+| ------------------ | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `animated`         | `animated`           | If `true`, enable searchbar animation.                                                                                                                                                                                                                                                                               | `boolean`                                                                                          | `false`                                                      |
+| `autocomplete`     | `autocomplete`       | Set the input's autocomplete property.                                                                                                                                                                                                                                                                               | `"off" \| "on"`                                                                                    | `'off'`                                                      |
+| `autocorrect`      | `autocorrect`        | Set the input's autocorrect property.                                                                                                                                                                                                                                                                                | `"off" \| "on"`                                                                                    | `'off'`                                                      |
+| `cancelButtonIcon` | `cancel-button-icon` | Set the cancel button icon. Only applies to `md` mode. Defaults to `"arrow-back-sharp"`.                                                                                                                                                                                                                             | `string`                                                                                           | `config.get('backButtonIcon', 'arrow-back-sharp') as string` |
+| `cancelButtonText` | `cancel-button-text` | Set the the cancel button text. Only applies to `ios` mode.                                                                                                                                                                                                                                                          | `string`                                                                                           | `'Cancel'`                                                   |
+| `clearIcon`        | `clear-icon`         | Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.                                                                                                                                                                                                                             | `string \| undefined`                                                                              | `undefined`                                                  |
+| `color`            | `color`              | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).                                               | `string \| undefined`                                                                              | `undefined`                                                  |
+| `debounce`         | `debounce`           | Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.                                                                                                                                                                                                              | `number`                                                                                           | `250`                                                        |
+| `disabled`         | `disabled`           | If `true`, the user cannot interact with the input.                                                                                                                                                                                                                                                                  | `boolean`                                                                                          | `false`                                                      |
+| `inputmode`        | `inputmode`          | A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.                                                                                                                                                     | `"decimal" \| "email" \| "none" \| "numeric" \| "search" \| "tel" \| "text" \| "url" \| undefined` | `undefined`                                                  |
+| `mode`             | `mode`               | The mode determines which platform styles to use.                                                                                                                                                                                                                                                                    | `"ios" \| "md"`                                                                                    | `undefined`                                                  |
+| `placeholder`      | `placeholder`        | Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string`                                                                                           | `'Search'`                                                   |
+| `searchIcon`       | `search-icon`        | The icon to use as the search icon. Defaults to `"search-outline"` in `ios` mode and `"search-sharp"` in `md` mode.                                                                                                                                                                                                  | `string \| undefined`                                                                              | `undefined`                                                  |
+| `showCancelButton` | `show-cancel-button` | Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.                                                                        | `"always" \| "focus" \| "never"`                                                                   | `'never'`                                                    |
+| `spellcheck`       | `spellcheck`         | If `true`, enable spellcheck on the input.                                                                                                                                                                                                                                                                           | `boolean`                                                                                          | `false`                                                      |
+| `type`             | `type`               | Set the type of the input.                                                                                                                                                                                                                                                                                           | `"email" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "url"`                        | `'search'`                                                   |
+| `value`            | `value`              | the value of the searchbar.                                                                                                                                                                                                                                                                                          | `null \| string \| undefined`                                                                      | `''`                                                         |
 
 
 ## Events
@@ -249,7 +271,7 @@ export const SearchbarExample: React.FC = () => (
 | `ionChange` | Emitted when the value has changed.             | `CustomEvent<SearchbarChangeEventDetail>` |
 | `ionClear`  | Emitted when the clear input button is clicked. | `CustomEvent<void>`                       |
 | `ionFocus`  | Emitted when the input has focus.               | `CustomEvent<void>`                       |
-| `ionInput`  | Emitted when a keyboard input ocurred.          | `CustomEvent<KeyboardEvent>`              |
+| `ionInput`  | Emitted when a keyboard input occurred.         | `CustomEvent<KeyboardEvent>`              |
 
 
 ## Methods

@@ -1,6 +1,7 @@
 ```tsx
 import React from 'react';
 import { IonIcon, IonItem, IonLabel, IonReorder, IonContent } from '@ionic/react';
+import { pizza } from 'ionicons/icons';
 
 export const ReorderExample: React.FC = () => (
   <IonContent>
@@ -30,14 +31,14 @@ export const ReorderExample: React.FC = () => (
     <IonItem>
       <IonLabel>Item 5</IonLabel>
       <IonReorder slot="end">
-        <IonIcon name="pizza" />
+        <IonIcon icon={pizza} />
       </IonReorder>
     </IonItem>
 
     <IonItem>
       <IonLabel>Item 6</IonLabel>
       <IonReorder slot="end">
-        <IonIcon name="pizza" />
+        <IonIcon icon={pizza} />
       </IonReorder>
     </IonItem>
 

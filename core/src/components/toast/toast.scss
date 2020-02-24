@@ -65,6 +65,10 @@
   color: #{current-color(contrast)};
 }
 
+:host(.ion-color) .toast-button-cancel {
+  color: inherit;
+}
+
 :host(.ion-color) .toast-wrapper {
   background: #{current-color(base)};
 }

@@ -96,7 +96,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
             newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], step)[0];
           }
 
-          (this.ani as Animation).progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
+          this.ani.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
 
         }
       }

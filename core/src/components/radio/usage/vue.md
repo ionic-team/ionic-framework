@@ -1,14 +1,14 @@
 ```html
 <template>
   <ion-list>
-    <ion-radio-group>
+    <ion-radio-group value="biff">
       <ion-list-header>
         <ion-label>Name</ion-label>
       </ion-list-header>
 
       <ion-item>
         <ion-label>Biff</ion-label>
-        <ion-radio slot="start" value="biff" checked></ion-radio>
+        <ion-radio slot="start" value="biff"></ion-radio>
       </ion-item>
 
       <ion-item>

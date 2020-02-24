@@ -1,8 +1,8 @@
 # ion-radio
 
-Radios are generally used as a set of related options inside of a group, but they can also be used alone. Pressing on a radio will check it. They can also be checked programmatically by setting the `checked` property.
+Radios should be used inside of an [`ion-radio-group`](../radio-group). Pressing on a radio will check it. They can also be checked programmatically by setting the value property of the parent `ion-radio-group` to the value of the radio.
 
-An `ion-radio-group` can be used to group a set of radios. When radios are inside of a [radio group](../radio-group), only one radio in the group will be checked at any time. Pressing a radio will check it and uncheck the previously selected radio, if there is one. If a radio is not in a group with another radio, then both radios will have the ability to be checked at the same time.
+When radios are inside of a radio group, only one radio in the group will be checked at any time. Pressing a radio will check it and uncheck the previously selected radio, if there is one. If a radio is not in a group with another radio, then both radios will have the ability to be checked at the same time.
 
 
 
@@ -16,14 +16,14 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 ```html
 <ion-list>
-  <ion-radio-group>
+  <ion-radio-group value="biff">
     <ion-list-header>
       <ion-label>Name</ion-label>
     </ion-list-header>
 
     <ion-item>
       <ion-label>Biff</ion-label>
-      <ion-radio slot="start" value="biff" checked></ion-radio>
+      <ion-radio slot="start" value="biff"></ion-radio>
     </ion-item>
 
     <ion-item>
@@ -43,35 +43,47 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 ### React
 
 ```tsx
-import React from 'react';
-import { IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonContent } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonItemDivider } from '@ionic/react';
 
-export const RadioExample: React.FC = () => (
-  <IonContent>
-    <IonList>
-      <IonRadioGroup>
-        <IonListHeader>
-          <IonLabel>Name</IonLabel>
-        </IonListHeader>
+export const RadioExamples: React.FC = () => {
+  const [selected, setSelected] = useState<string>('biff');
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Radio Examples</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonList>
+          <IonRadioGroup value={selected} onIonChange={e => setSelected(e.detail.value)}>
+            <IonListHeader>
+              <IonLabel>Name</IonLabel>
+            </IonListHeader>
 
-        <IonItem>
-          <IonLabel>Biff</IonLabel>
-          <IonRadio slot="start" value="biff" checked />
-        </IonItem>
+            <IonItem>
+              <IonLabel>Biff</IonLabel>
+              <IonRadio slot="start" value="biff" />
+            </IonItem>
 
-        <IonItem>
-          <IonLabel>Griff</IonLabel>
-          <IonRadio slot="start" value="griff" />
-        </IonItem>
+            <IonItem>
+              <IonLabel>Griff</IonLabel>
+              <IonRadio slot="start" value="griff" />
+            </IonItem>
 
-        <IonItem>
-          <IonLabel>Buford</IonLabel>
-          <IonRadio slot="start" value="buford" />
-        </IonItem>
-      </IonRadioGroup>
-    </IonList>
-  </IonContent>
-);
+            <IonItem>
+              <IonLabel>Buford</IonLabel>
+              <IonRadio slot="start" value="buford" />
+            </IonItem>
+          </IonRadioGroup>
+          <IonItemDivider>Your Selection</IonItemDivider>
+          <IonItem>{selected ?? '(none selected'}</IonItem>
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
 ```
 
 
@@ -80,14 +92,14 @@ export const RadioExample: React.FC = () => (
 ```html
 <template>
   <ion-list>
-    <ion-radio-group>
+    <ion-radio-group value="biff">
       <ion-list-header>
         <ion-label>Name</ion-label>
       </ion-list-header>
 
       <ion-item>
         <ion-label>Biff</ion-label>
-        <ion-radio slot="start" value="biff" checked></ion-radio>
+        <ion-radio slot="start" value="biff"></ion-radio>
       </ion-item>
 
       <ion-item>
@@ -110,7 +122,6 @@ export const RadioExample: React.FC = () => (
 
 | Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                  | Default        |
 | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | -------------- |
-| `checked`  | `checked`  | If `true`, the radio is selected.                                                                                                                                                                                                                                      | `boolean`             | `false`        |
 | `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined`    |
 | `disabled` | `disabled` | If `true`, the user cannot interact with the radio.                                                                                                                                                                                                                    | `boolean`             | `false`        |
 | `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined`    |
@@ -120,19 +131,20 @@ export const RadioExample: React.FC = () => (
 
 ## Events
 
-| Event       | Description                                | Type                                  |
-| ----------- | ------------------------------------------ | ------------------------------------- |
-| `ionBlur`   | Emitted when the radio button loses focus. | `CustomEvent<void>`                   |
-| `ionFocus`  | Emitted when the radio button has focus.   | `CustomEvent<void>`                   |
-| `ionSelect` | Emitted when the radio button is selected. | `CustomEvent<RadioChangeEventDetail>` |
+| Event      | Description                                | Type                |
+| ---------- | ------------------------------------------ | ------------------- |
+| `ionBlur`  | Emitted when the radio button loses focus. | `CustomEvent<void>` |
+| `ionFocus` | Emitted when the radio button has focus.   | `CustomEvent<void>` |
 
 
 ## CSS Custom Properties
 
-| Name              | Description                |
-| ----------------- | -------------------------- |
-| `--color`         | Color of the radio         |
-| `--color-checked` | Color of the checked radio |
+| Name                    | Description                              |
+| ----------------------- | ---------------------------------------- |
+| `--border-radius`       | Border radius of the radio               |
+| `--color`               | Color of the radio                       |
+| `--color-checked`       | Color of the checked radio               |
+| `--inner-border-radius` | Border radius of the inner checked radio |
 
 
 ## Dependencies

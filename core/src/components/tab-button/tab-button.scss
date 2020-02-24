@@ -4,8 +4,10 @@
   /**
    * @prop --background: Background of the tab button
    * @prop --background-focused: Background of the tab button when focused with the tab key
+   * @prop --background-focused-opacity: Opacity of the tab button background when focused with the tab key
    *
    * @prop --color: Color of the tab button
+   * @prop --color-focused: Color of the tab button when focused with the tab key
    * @prop --color-selected: Color of the selected tab button
    *
    * @prop --padding-top: Top padding of the tab button
@@ -16,6 +18,7 @@
    * @prop --ripple-color: Color of the button ripple effect
    */
   --ripple-color: var(--color-selected);
+  --background-focused-opacity: 1;
 
   flex: 1;
 
@@ -34,7 +37,8 @@
 // Tab Button: Native
 // --------------------------------------------------
 
-a {
+.button-native {
+  @include border-radius(inherit);
   @include margin(0);
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
@@ -63,8 +67,35 @@ a {
   -webkit-user-drag: none;
 }
 
-:host(.ion-focused) {
-  background: var(--background-focused);
+.button-native::after {
+  @include button-state();
+}
+
+.button-inner {
+  display: flex;
+  position: relative;
+
+  flex-flow: inherit;
+  align-items: inherit;
+  justify-content: inherit;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+}
+
+// Tab Button: States
+// --------------------------------------------------
+
+:host(.ion-focused) .button-native {
+  color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+
+    opacity: var(--background-focused-opacity);
+  }
 }
 
 @media (any-hover: hover) {
@@ -72,10 +103,6 @@ a {
     color: var(--color-selected);
   }
 }
-
-
-// Tab Button: States
-// --------------------------------------------------
 
 :host(.tab-selected) {
   color: var(--color-selected);

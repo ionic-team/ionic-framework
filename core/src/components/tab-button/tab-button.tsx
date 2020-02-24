@@ -161,8 +161,10 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           'ion-focusable': true
         }}
       >
-        <a {...attrs} tabIndex={-1}>
-          <slot></slot>
+        <a {...attrs} tabIndex={-1} class="button-native">
+          <span class="button-inner">
+            <slot></slot>
+          </span>
           {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
         </a>
       </Host>

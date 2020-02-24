@@ -39,7 +39,7 @@
 }
 
 .picker-button,
-.picker-button.activated {
+.picker-button.ion-activated {
   @include margin(0);
   @include padding($picker-ios-button-padding-top, $picker-ios-button-padding-end, $picker-ios-button-padding-bottom, $picker-ios-button-padding-start);
 

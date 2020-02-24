@@ -25,8 +25,12 @@
         <ion-label>a[ion-item]</ion-label>
       </ion-item>
 
-      <ion-item class="custom activated" href="#" onclick="testClick(event)">
+      <ion-item class="custom ion-activated" href="#" onclick="testClick(event)">
         <ion-label>a[ion-item].activated</ion-label>
+      </ion-item>
+
+      <ion-item class="custom-hover" href="#" onclick="testClick(event)">
+        <ion-label>custom hover</ion-label>
       </ion-item>
 
       <ion-item color="secondary" href="#" onclick="testClick(event)">
@@ -41,7 +45,7 @@
         <ion-label>button[ion-item] type="submit"</ion-label>
       </ion-item>
 
-      <ion-item button class="activated" onClick="testClick(event)">
+      <ion-item button class="ion-activated" onClick="testClick(event)">
         <ion-label>button[ion-item].activated</ion-label>
       </ion-item>
 
@@ -148,6 +152,12 @@
   <style>
     .custom {
       --ripple-color: pink;
+    }
+
+    .custom-hover {
+      --background-hover: green;
+      --background-hover-opacity: 1;
+      --color-hover: purple;
     }
   </style>
 

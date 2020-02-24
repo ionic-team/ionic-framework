@@ -4,8 +4,7 @@ Selects are form controls to select an option, or options, from a set of options
 
 A select should be used with child `<ion-select-option>` elements. If the child option is not given a `value` attribute then its text will be used as the value.
 
-If `value` is set on the `<ion-select>`, the selected option will be chosen based on that value. Otherwise, the `selected` attribute can be used on the `<ion-select-option>`.
-
+If `value` is set on the `<ion-select>`, the selected option will be chosen based on that value.
 
 ## Interfaces
 
@@ -55,7 +54,11 @@ Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert
 
 ```html
 <ion-list>
-  <ion-list-header>Single Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Single Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Gender</ion-label>
@@ -82,7 +85,11 @@ Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert
 
 ```html
 <ion-list>
-  <ion-list-header>Multiple Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Multiple Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Toppings</ion-label>
@@ -102,10 +109,10 @@ Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert
 
   <ion-item>
     <ion-label>Pets</ion-label>
-    <ion-select multiple="true">
-      <ion-select-option value="bird" selected>Bird</ion-select-option>
+    <ion-select multiple="true" [value]="['bird', 'dog']">
+      <ion-select-option value="bird">Bird</ion-select-option>
       <ion-select-option value="cat">Cat</ion-select-option>
-      <ion-select-option value="dog" selected>Dog</ion-select-option>
+      <ion-select-option value="dog">Dog</ion-select-option>
       <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
     </ion-select>
   </ion-item>
@@ -116,8 +123,12 @@ Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert
 
 ```html
 <ion-list>
-  <ion-list-header>Objects as Values (compareWith)</ion-list-header>
-  
+  <ion-list-header>
+    <ion-label>
+      Objects as Values (compareWith)
+    </ion-label>
+  </ion-list-header>
+
   <ion-item>
     <ion-label>Users</ion-label>
     <ion-select [compareWith]="compareWith">
@@ -166,7 +177,11 @@ export class SelectExample {
 
 ```html
 <ion-list>
-  <ion-list-header>Interface Options</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Interface Options
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Alert</ion-label>
@@ -244,7 +259,11 @@ export class SelectExample {
 
 ```html
 <ion-list>
-  <ion-list-header>Single Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Single Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Gender</ion-label>
@@ -271,7 +290,11 @@ export class SelectExample {
 
 ```html
 <ion-list>
-  <ion-list-header>Multiple Selection</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Multiple Selection
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Toppings</ion-label>
@@ -291,21 +314,30 @@ export class SelectExample {
 
   <ion-item>
     <ion-label>Pets</ion-label>
-    <ion-select multiple="true">
-      <ion-select-option value="bird" selected>Bird</ion-select-option>
+    <ion-select id="multiple" multiple="true">
+      <ion-select-option value="bird">Bird</ion-select-option>
       <ion-select-option value="cat">Cat</ion-select-option>
-      <ion-select-option value="dog" selected>Dog</ion-select-option>
+      <ion-select-option value="dog">Dog</ion-select-option>
       <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
     </ion-select>
   </ion-item>
 </ion-list>
 ```
 
+```javascript
+const select = document.querySelector('multiple');
+select.value = ['bird', 'dog'];
+```
+
 ## Objects as Values
 
 ```html
 <ion-list>
-  <ion-list-header>Objects as Values (compareWith)</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Objects as Values (compareWith)
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Users</ion-label>
@@ -339,15 +371,16 @@ export class SelectExample {
 
   let objectSelectElement = document.getElementById('objectSelectCompareWith');
   objectSelectElement.compareWith = compareWithFn;
-  
+
   objectOptions.forEach((option, i) => {
     let selectOption = document.createElement('ion-select-option');
     selectOption.value = option;
     selectOption.textContent = option.first + ' ' + option.last;
-    selectOption.selected = (i === 0);
-    
+
     objectSelectElement.appendChild(selectOption)
   });
+  
+  objectSelectElement.value = objectOptions[0];
 }
 ```
 
@@ -355,7 +388,11 @@ export class SelectExample {
 
 ```html
 <ion-list>
-  <ion-list-header>Interface Options</ion-list-header>
+  <ion-list-header>
+    <ion-label>
+      Interface Options
+    </ion-label>
+  </ion-list-header>
 
   <ion-item>
     <ion-label>Alert</ion-label>
@@ -426,17 +463,183 @@ customActionSheetSelect.interfaceOptions = customActionSheetOptions;
 
 ### React
 
+## Single Selection
+
 ```tsx
-import React from 'react';
-import {
-  IonList,
-  IonListHeader,
-  IonItem,
-  IonLabel,
-  IonSelect,
-  IonSelectOption,
-  IonContent
-} from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption, IonPage, IonItemDivider } from '@ionic/react';
+
+export const SingleSelection: React.FC = () => {
+
+  const [gender, setGender] = useState<string>();
+  const [hairColor, setHairColor] = useState<string>('brown');
+
+  return (
+    <IonPage>
+      <IonContent>
+        <IonList>
+          <IonListHeader>
+            <IonLabel>
+              Single Selection
+            </IonLabel>
+          </IonListHeader>
+
+          <IonItem>
+            <IonLabel>Gender</IonLabel>
+            <IonSelect value={gender} placeholder="Select One" onIonChange={e => setGender(e.detail.value)}>
+              <IonSelectOption value="female">Female</IonSelectOption>
+              <IonSelectOption value="male">Male</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+
+          <IonItem>
+            <IonLabel>Hair Color</IonLabel>
+            <IonSelect value={hairColor} okText="Okay" cancelText="Dismiss" onIonChange={e => setHairColor(e.detail.value)}>
+              <IonSelectOption value="brown">Brown</IonSelectOption>
+              <IonSelectOption value="blonde">Blonde</IonSelectOption>
+              <IonSelectOption value="black">Black</IonSelectOption>
+              <IonSelectOption value="red">Red</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+          <IonItemDivider>Your Selections</IonItemDivider>
+          <IonItem>Gender: {gender ?? '(none selected)'}</IonItem>
+          <IonItem>Hair Color: {hairColor}</IonItem>
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+
+## Multiple Selection
+
+```tsx
+import React, { useState } from 'react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption, IonPage, IonItemDivider } from '@ionic/react';
+
+export const MultipleSelection: React.FC = () => {
+
+  const [toppings, setToppings] = useState<string[]>([]);
+  const [pets, setPets] = useState<string[]>(['bird', 'dog']);
+
+  return (
+    <IonPage>
+      <IonContent>
+        <IonList>
+          <IonListHeader>
+            <IonLabel>
+              Multiple Selection
+        </IonLabel>
+          </IonListHeader>
+
+          <IonItem>
+            <IonLabel>Toppings</IonLabel>
+            <IonSelect value={toppings} multiple={true} cancelText="Nah" okText="Okay!" onIonChange={e => setToppings(e.detail.value)}>
+              <IonSelectOption value="bacon">Bacon</IonSelectOption>
+              <IonSelectOption value="olives">Black Olives</IonSelectOption>
+              <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
+              <IonSelectOption value="peppers">Green Peppers</IonSelectOption>
+              <IonSelectOption value="mushrooms">Mushrooms</IonSelectOption>
+              <IonSelectOption value="onions">Onions</IonSelectOption>
+              <IonSelectOption value="pepperoni">Pepperoni</IonSelectOption>
+              <IonSelectOption value="pineapple">Pineapple</IonSelectOption>
+              <IonSelectOption value="sausage">Sausage</IonSelectOption>
+              <IonSelectOption value="Spinach">Spinach</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+
+          <IonItem>
+            <IonLabel>Pets</IonLabel>
+            <IonSelect multiple={true} value={pets} onIonChange={e => setPets(e.detail.value)}>
+              <IonSelectOption value="bird">Bird</IonSelectOption>
+              <IonSelectOption value="cat">Cat</IonSelectOption>
+              <IonSelectOption value="dog">Dog</IonSelectOption>
+              <IonSelectOption value="honeybadger">Honey Badger</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+          <IonItemDivider>Your Selections</IonItemDivider>
+          <IonItem>Toppings: {toppings.length ? toppings.reduce((curr, prev) => prev + ', ' + curr, '') : '(none selected)'}</IonItem>
+          <IonItem>Pets: {pets.length ? pets.reduce((curr, prev) => prev + ', ' + curr, '') : '(none selected)'}</IonItem>
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+
+## Objects as Values
+
+```tsx
+import React, { useState } from 'react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption, IonPage, IonItemDivider } from '@ionic/react';
+
+const users = [
+  {
+    id: 1,
+    first: 'Alice',
+    last: 'Smith'
+  },
+  {
+    id: 2,
+    first: 'Bob',
+    last: 'Davis'
+  },
+  {
+    id: 3,
+    first: 'Charlie',
+    last: 'Rosenburg',
+  }
+];
+
+type User = typeof users[number];
+
+const compareWith = (o1: User, o2: User) => {
+  return o1 && o2 ? o1.id === o2.id : o1 === o2;
+};
+
+export const ObjectSelection: React.FC = () => {
+
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+
+  return (
+    <IonPage>
+      <IonContent>
+        <IonList>
+          <IonListHeader>
+            <IonLabel>
+              Objects as Values (compareWith)
+            </IonLabel>
+          </IonListHeader>
+          <IonItem>
+            <IonLabel>Users</IonLabel>
+            <IonSelect compareWith={compareWith} value={selectedUsers} multiple onIonChange={e => setSelectedUsers(e.detail.value)}>
+              {users.map(user => (
+                <IonSelectOption key={user.id} value={user}>
+                  {user.first} {user.last}
+                </IonSelectOption>
+              ))}
+            </IonSelect>
+          </IonItem>
+          <IonItemDivider>Selected Users</IonItemDivider>
+          {selectedUsers.length ?
+            selectedUsers.map(user => <IonItem key={user.id}>{user.first} {user.last}</IonItem>) :
+            <IonItem>(none selected)</IonItem>
+          }
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+
+## Interface Options
+
+```tsx
+import React, { useState } from 'react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption, IonPage, IonItemDivider } from '@ionic/react';
 
 const customAlertOptions = {
   header: 'Pizza Toppings',
@@ -456,154 +659,86 @@ const customActionSheetOptions = {
   subHeader: 'Select your favorite color'
 };
 
-const objectOptions = [
-  {
-    id: 1,
-    first: 'Alice',
-    last: 'Smith'
-  },
-  {
-    id: 2,
-    first: 'Bob',
-    last: 'Davis'
-  },
-  {
-    id: 3,
-    first: 'Charlie',
-    last: 'Rosenburg'
-  }
-];
+export const InterfaceOptionsSelection: React.FC = () => {
 
-const compareWith = (o1: any, o2: any) => {
-  return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  const [toppings, setToppings] = useState<string[]>([]);
+  const [hairColor, setHairColor] = useState<string>('brown');
+  const [color, setColor] = useState<string>();
+
+  return (
+    <IonPage>
+      <IonContent>
+        <IonList>
+          <IonListHeader>
+            <IonLabel>
+              Interface Options
+            </IonLabel>
+          </IonListHeader>
+
+          <IonItem>
+            <IonLabel>Alert</IonLabel>
+            <IonSelect
+              interfaceOptions={customAlertOptions}
+              interface="alert"
+              multiple={true}
+              placeholder="Select One"
+              onIonChange={e => setToppings(e.detail.value)}
+              value={toppings}
+            >
+              <IonSelectOption value="bacon">Bacon</IonSelectOption>
+              <IonSelectOption value="olives">Black Olives</IonSelectOption>
+              <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
+              <IonSelectOption value="peppers">Green Peppers</IonSelectOption>
+              <IonSelectOption value="mushrooms">Mushrooms</IonSelectOption>
+              <IonSelectOption value="onions">Onions</IonSelectOption>
+              <IonSelectOption value="pepperoni">Pepperoni</IonSelectOption>
+              <IonSelectOption value="pineapple">Pineapple</IonSelectOption>
+              <IonSelectOption value="sausage">Sausage</IonSelectOption>
+              <IonSelectOption value="Spinach">Spinach</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+
+          <IonItem>
+            <IonLabel>Popover</IonLabel>
+            <IonSelect 
+              interfaceOptions={customPopoverOptions} 
+              interface="popover" 
+              placeholder="Select One"
+              onIonChange={e => setHairColor(e.detail.value)}
+              value={hairColor}>
+              <IonSelectOption value="brown">Brown</IonSelectOption>
+              <IonSelectOption value="blonde">Blonde</IonSelectOption>
+              <IonSelectOption value="black">Black</IonSelectOption>
+              <IonSelectOption value="red">Red</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+
+          <IonItem>
+            <IonLabel>Action Sheet</IonLabel>
+            <IonSelect
+              interfaceOptions={customActionSheetOptions}
+              interface="action-sheet"
+              placeholder="Select One"
+              onIonChange={e => setColor(e.detail.value)}
+              value={color}
+            >
+              <IonSelectOption value="red">Red</IonSelectOption>
+              <IonSelectOption value="purple">Purple</IonSelectOption>
+              <IonSelectOption value="yellow">Yellow</IonSelectOption>
+              <IonSelectOption value="orange">Orange</IonSelectOption>
+              <IonSelectOption value="green">Green</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+
+          <IonItemDivider>Your Selections</IonItemDivider>
+          <IonItem>Toppings: {toppings.length ? toppings.reduce((curr, prev) => prev + ', ' + curr, '') : '(none selected)'}</IonItem>
+          <IonItem>Hair Color: {hairColor}</IonItem>
+          <IonItem>Color: {color ?? '(none selected)'}</IonItem>
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
 };
-
-export const SelectExample: React.FC = () => (
-  <IonContent>
-    ## Single Selection
-    <IonList>
-      <IonListHeader>Single Selection</IonListHeader>
-
-      <IonItem>
-        <IonLabel>Gender</IonLabel>
-        <IonSelect placeholder="Select One">
-          <IonSelectOption value="f">Female</IonSelectOption>
-          <IonSelectOption value="m">Male</IonSelectOption>
-        </IonSelect>
-      </IonItem>
-
-      <IonItem>
-        <IonLabel>Hair Color</IonLabel>
-        <IonSelect value="brown" okText="Okay" cancelText="Dismiss">
-          <IonSelectOption value="brown">Brown</IonSelectOption>
-          <IonSelectOption value="blonde">Blonde</IonSelectOption>
-          <IonSelectOption value="black">Black</IonSelectOption>
-          <IonSelectOption value="red">Red</IonSelectOption>
-        </IonSelect>
-      </IonItem>
-    </IonList>
-    ## Multiple Selection
-    <IonList>
-      <IonListHeader>Multiple Selection</IonListHeader>
-
-      <IonItem>
-        <IonLabel>Toppings</IonLabel>
-        <IonSelect multiple={true} cancelText="Nah" okText="Okay!">
-          <IonSelectOption value="bacon">Bacon</IonSelectOption>
-          <IonSelectOption value="olives">Black Olives</IonSelectOption>
-          <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
-          <IonSelectOption value="peppers">Green Peppers</IonSelectOption>
-          <IonSelectOption value="mushrooms">Mushrooms</IonSelectOption>
-          <IonSelectOption value="onions">Onions</IonSelectOption>
-          <IonSelectOption value="pepperoni">Pepperoni</IonSelectOption>
-          <IonSelectOption value="pineapple">Pineapple</IonSelectOption>
-          <IonSelectOption value="sausage">Sausage</IonSelectOption>
-          <IonSelectOption value="Spinach">Spinach</IonSelectOption>
-        </IonSelect>
-      </IonItem>
-
-      <IonItem>
-        <IonLabel>Pets</IonLabel>
-        <IonSelect multiple={true}>
-          <IonSelectOption value="bird" selected>
-            Bird
-          </IonSelectOption>
-          <IonSelectOption value="cat">Cat</IonSelectOption>
-          <IonSelectOption value="dog" selected>
-            Dog
-          </IonSelectOption>
-          <IonSelectOption value="honeybadger">Honey Badger</IonSelectOption>
-        </IonSelect>
-      </IonItem>
-    </IonList>
-    ## Objects as Values
-    <IonList>
-      <IonListHeader>Objects as Values (compareWith)</IonListHeader>
-      <IonItem>
-        <IonLabel>Users</IonLabel>
-        <IonSelect compareWith={compareWith}>
-          {objectOptions.map((object, i) => {
-            return (
-              <IonSelectOption key={object.id} value={object.id}>
-                {object.first} {object.last}
-              </IonSelectOption>
-            );
-          })}
-        </IonSelect>
-      </IonItem>
-    </IonList>
-    ## Interface Options
-    <IonList>
-      <IonListHeader>Interface Options</IonListHeader>
-
-      <IonItem>
-        <IonLabel>Alert</IonLabel>
-        <IonSelect
-          interfaceOptions={customAlertOptions}
-          interface="alert"
-          multiple={true}
-          placeholder="Select One"
-        >
-          <IonSelectOption value="bacon">Bacon</IonSelectOption>
-          <IonSelectOption value="olives">Black Olives</IonSelectOption>
-          <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
-          <IonSelectOption value="peppers">Green Peppers</IonSelectOption>
-          <IonSelectOption value="mushrooms">Mushrooms</IonSelectOption>
-          <IonSelectOption value="onions">Onions</IonSelectOption>
-          <IonSelectOption value="pepperoni">Pepperoni</IonSelectOption>
-          <IonSelectOption value="pineapple">Pineapple</IonSelectOption>
-          <IonSelectOption value="sausage">Sausage</IonSelectOption>
-          <IonSelectOption value="Spinach">Spinach</IonSelectOption>
-        </IonSelect>
-      </IonItem>
-
-      <IonItem>
-        <IonLabel>Popover</IonLabel>
-        <IonSelect interfaceOptions={customPopoverOptions} interface="popover" placeholder="Select One">
-          <IonSelectOption value="brown">Brown</IonSelectOption>
-          <IonSelectOption value="blonde">Blonde</IonSelectOption>
-          <IonSelectOption value="black">Black</IonSelectOption>
-          <IonSelectOption value="red">Red</IonSelectOption>
-        </IonSelect>
-      </IonItem>
-
-      <IonItem>
-        <IonLabel>Action Sheet</IonLabel>
-        <IonSelect
-          interfaceOptions={customActionSheetOptions}
-          interface="action-sheet"
-          placeholder="Select One"
-        >
-          <IonSelectOption value="red">Red</IonSelectOption>
-          <IonSelectOption value="purple">Purple</IonSelectOption>
-          <IonSelectOption value="yellow">Yellow</IonSelectOption>
-          <IonSelectOption value="orange">Orange</IonSelectOption>
-          <IonSelectOption value="green">Green</IonSelectOption>
-        </IonSelect>
-      </IonItem>
-    </IonList>
-  </IonContent>
-);
 ```
 
 
@@ -614,7 +749,11 @@ export const SelectExample: React.FC = () => (
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Single Selection</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Single Selection
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Gender</ion-label>
@@ -626,7 +765,7 @@ export const SelectExample: React.FC = () => (
 
     <ion-item>
       <ion-label>Hair Color</ion-label>
-      <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+      <ion-select value="brown" ok-text="Okay" cancel-text="Dismiss">
         <ion-select-option value="brown">Brown</ion-select-option>
         <ion-select-option value="blonde">Blonde</ion-select-option>
         <ion-select-option value="black">Black</ion-select-option>
@@ -643,11 +782,15 @@ export const SelectExample: React.FC = () => (
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Multiple Selection</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Multiple Selection
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Toppings</ion-label>
-      <ion-select multiple="true" cancelText="Nah" okText="Okay!">
+      <ion-select multiple="true" cancel-text="Nah" ok-text="Okay!">
         <ion-select-option value="bacon">Bacon</ion-select-option>
         <ion-select-option value="olives">Black Olives</ion-select-option>
         <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
@@ -663,10 +806,10 @@ export const SelectExample: React.FC = () => (
 
     <ion-item>
       <ion-label>Pets</ion-label>
-      <ion-select multiple="true">
-        <ion-select-option value="bird" selected>Bird</ion-select-option>
+      <ion-select multiple="true" :value=['bird', 'dog']>
+        <ion-select-option value="bird">Bird</ion-select-option>
         <ion-select-option value="cat">Cat</ion-select-option>
-        <ion-select-option value="dog" selected>Dog</ion-select-option>
+        <ion-select-option value="dog">Dog</ion-select-option>
         <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
       </ion-select>
     </ion-item>
@@ -679,11 +822,15 @@ export const SelectExample: React.FC = () => (
 ```html
 <template>
   <ion-list>
-    <ion-list-header>Interface Options</ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        Interface Options
+      </ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Alert</ion-label>
-      <ion-select :interfaceOptions="customAlertOptions" interface="alert" multiple="true" placeholder="Select One">
+      <ion-select :interface-options="customAlertOptions" interface="alert" multiple="true" placeholder="Select One">
         <ion-select-option value="bacon">Bacon</ion-select-option>
         <ion-select-option value="olives">Black Olives</ion-select-option>
         <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
@@ -699,7 +846,7 @@ export const SelectExample: React.FC = () => (
 
     <ion-item>
       <ion-label>Popover</ion-label>
-      <ion-select :interfaceOptions="customPopoverOptions" interface="popover" placeholder="Select One">
+      <ion-select :interface-options="customPopoverOptions" interface="popover" placeholder="Select One">
         <ion-select-option value="brown">Brown</ion-select-option>
         <ion-select-option value="blonde">Blonde</ion-select-option>
         <ion-select-option value="black">Black</ion-select-option>
@@ -709,7 +856,7 @@ export const SelectExample: React.FC = () => (
 
     <ion-item>
       <ion-label>Action Sheet</ion-label>
-      <ion-select :interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+      <ion-select :interface-options="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
         <ion-select-option value="red">Red</ion-select-option>
         <ion-select-option value="purple">Purple</ion-select-option>
         <ion-select-option value="yellow">Yellow</ion-select-option>
@@ -793,12 +940,14 @@ Type: `Promise<any>`
 
 ## CSS Custom Properties
 
-| Name               | Description                                                                                               |
-| ------------------ | --------------------------------------------------------------------------------------------------------- |
-| `--padding-bottom` | Bottom padding of the select                                                                              |
-| `--padding-end`    | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select |
-| `--padding-start`  | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the select |
-| `--padding-top`    | Top padding of the select                                                                                 |
+| Name                    | Description                                                                                               |
+| ----------------------- | --------------------------------------------------------------------------------------------------------- |
+| `--padding-bottom`      | Bottom padding of the select                                                                              |
+| `--padding-end`         | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select |
+| `--padding-start`       | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the select |
+| `--padding-top`         | Top padding of the select                                                                                 |
+| `--placeholder-color`   | Color of the select placeholder text                                                                      |
+| `--placeholder-opacity` | Opacity of the select placeholder text                                                                    |
 
 
 ----------------------------------------------

@@ -24,8 +24,8 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 </ion-segment>
 
 <!-- Disabled Segment -->
-<ion-segment (ionChange)="segmentChanged($event)" disabled>
-  <ion-segment-button value="sunny" checked>
+<ion-segment (ionChange)="segmentChanged($event)" disabled value="sunny">
+  <ion-segment-button value="sunny">
     <ion-label>Sunny</ion-label>
   </ion-segment-button>
   <ion-segment-button value="rainy">
@@ -44,26 +44,26 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 </ion-segment>
 
 <!-- Scrollable Segment -->
-<ion-segment scrollable>
-  <ion-segment-button>
+<ion-segment scrollable value="heart">
+  <ion-segment-button value="home">
     <ion-icon name="home"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked>
+  <ion-segment-button value="heart">
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="pin">
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="star">
     <ion-icon name="star"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="call">
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="globe">
     <ion-icon name="globe"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="basket">
     <ion-icon name="basket"></ion-icon>
   </ion-segment-button>
 </ion-segment>
@@ -134,8 +134,8 @@ export class SegmentExample {
 </ion-segment>
 
 <!-- Disabled Segment -->
-<ion-segment disabled>
-  <ion-segment-button value="sunny" checked>
+<ion-segment disabled value="sunny">
+  <ion-segment-button value="sunny">
     <ion-label>Sunny</ion-label>
   </ion-segment-button>
   <ion-segment-button value="rainy">
@@ -154,26 +154,26 @@ export class SegmentExample {
 </ion-segment>
 
 <!-- Scrollable Segment -->
-<ion-segment scrollable>
-  <ion-segment-button>
+<ion-segment scrollable value="heart">
+  <ion-segment-button value="home">
     <ion-icon name="home"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button checked>
+  <ion-segment-button value="heart">
     <ion-icon name="heart"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="pin">
     <ion-icon name="pin"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="star">
     <ion-icon name="star"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="call">
     <ion-icon name="call"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="globe">
     <ion-icon name="globe"></ion-icon>
   </ion-segment-button>
-  <ion-segment-button>
+  <ion-segment-button value="basket">
     <ion-icon name="basket"></ion-icon>
   </ion-segment-button>
 </ion-segment>
@@ -229,101 +229,112 @@ for (let i = 0; i < segments.length; i++) {
 
 ```tsx
 import React from 'react';
-import { IonSegment, IonSegmentButton, IonLabel, IonIcon, IonToolbar, IonContent } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSegment, IonSegmentButton, IonLabel, IonIcon } from '@ionic/react';
+import { call, home, heart, pin, star, globe, basket, camera, bookmark } from 'ionicons/icons';
 
-export const SegmentExample: React.FC = () => (
-  <IonContent>
-    {/*-- Default Segment --*/}
-    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)}>
-      <IonSegmentButton value="friends">
-        <IonLabel>Friends</IonLabel>
-      </IonSegmentButton>
-      <IonSegmentButton value="enemies">
-        <IonLabel>Enemies</IonLabel>
-      </IonSegmentButton>
-    </IonSegment>
+export const SegmentExamples: React.FC = () => {
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>SegmentExamples</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        {/*-- Default Segment --*/}
+        <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)}>
+          <IonSegmentButton value="friends">
+            <IonLabel>Friends</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="enemies">
+            <IonLabel>Enemies</IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
 
-    {/*-- Disabled Segment --*/}
-    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} disabled>
-      <IonSegmentButton value="sunny" checked>
-        <IonLabel>Sunny</IonLabel>
-      </IonSegmentButton>
-      <IonSegmentButton value="rainy">
-        <IonLabel>Rainy</IonLabel>
-      </IonSegmentButton>
-    </IonSegment>
+        {/*-- Disabled Segment --*/}
+        <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} disabled value="sunny">
+          <IonSegmentButton value="sunny">
+            <IonLabel>Sunny</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="rainy">
+            <IonLabel>Rainy</IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
 
-    {/*-- Segment with anchors --*/}
-    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)}>
-      <IonSegmentButton value="dogs">
-        <IonLabel>Dogs</IonLabel>
-      </IonSegmentButton>
-      <IonSegmentButton value="cats">
-        <IonLabel>Cats</IonLabel>
-      </IonSegmentButton>
-    </IonSegment>
+        {/*-- Segment with anchors --*/}
+        <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)}>
+          <IonSegmentButton value="dogs">
+            <IonLabel>Dogs</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="cats">
+            <IonLabel>Cats</IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
 
-    {/*-- Scrollable Segment --*/}
-    <IonSegment scrollable>
-      <IonSegmentButton>
-        <IonIcon name="home" />
-      </IonSegmentButton>
-      <IonSegmentButton checked>
-        <IonIcon name="heart" />
-      </IonSegmentButton>
-      <IonSegmentButton>
-        <IonIcon name="pin" />
-      </IonSegmentButton>
-      <IonSegmentButton>
-        <IonIcon name="star" />
-      </IonSegmentButton>
-      <IonSegmentButton>
-        <IonIcon name="call" />
-      </IonSegmentButton>
-      <IonSegmentButton>
-        <IonIcon name="globe" />
-      </IonSegmentButton>
-      <IonSegmentButton>
-        <IonIcon name="basket" />
-      </IonSegmentButton>
-    </IonSegment>
+        {/*-- Scrollable Segment --*/}
+        <IonSegment scrollable value="heart">
+          <IonSegmentButton value="home">
+            <IonIcon icon={home} />
+          </IonSegmentButton>
+          <IonSegmentButton value="heart">
+            <IonIcon icon={heart} />
+          </IonSegmentButton>
+          <IonSegmentButton value="pin">
+            <IonIcon icon={pin} />
+          </IonSegmentButton>
+          <IonSegmentButton value="star">
+            <IonIcon icon={star} />
+          </IonSegmentButton>
+          <IonSegmentButton value="call">
+            <IonIcon icon={call} />
+          </IonSegmentButton>
+          <IonSegmentButton value="globe">
+            <IonIcon icon={globe} />
+          </IonSegmentButton>
+          <IonSegmentButton value="basket">
+            <IonIcon icon={basket} />
+          </IonSegmentButton>
+        </IonSegment>
 
-    {/*-- Segment with secondary color --*/}
-    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} color="secondary">
-      <IonSegmentButton value="standard">
-        <IonLabel>Standard</IonLabel>
-      </IonSegmentButton>
-      <IonSegmentButton value="hybrid">
-        <IonLabel>Hybrid</IonLabel>
-      </IonSegmentButton>
-      <IonSegmentButton value="sat">
-        <IonLabel>Satellite</IonLabel>
-      </IonSegmentButton>
-    </IonSegment>
+        {/*-- Segment with secondary color --*/}
+        <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} color="secondary">
+          <IonSegmentButton value="standard">
+            <IonLabel>Standard</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="hybrid">
+            <IonLabel>Hybrid</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="sat">
+            <IonLabel>Satellite</IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
 
-    {/*-- Segment in a toolbar --*/}
-    <IonToolbar>
-      <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)}>
-        <IonSegmentButton value="camera">
-          <IonIcon name="camera" />
-        </IonSegmentButton>
-        <IonSegmentButton value="bookmark">
-          <IonIcon name="bookmark" />
-        </IonSegmentButton>
-      </IonSegment>
-    </IonToolbar>
+        {/*-- Segment in a toolbar --*/}
+        <IonToolbar>
+          <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)}>
+            <IonSegmentButton value="camera">
+              <IonIcon icon={camera} />
+            </IonSegmentButton>
+            <IonSegmentButton value="bookmark">
+              <IonIcon icon={bookmark} />
+            </IonSegmentButton>
+          </IonSegment>
+        </IonToolbar>
 
-    {/*-- Segment with default selection --*/}
-    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} value="javascript">
-      <IonSegmentButton value="python">
-        <IonLabel>Python</IonLabel>
-      </IonSegmentButton>
-      <IonSegmentButton value="javascript">
-        <IonLabel>Javascript</IonLabel>
-      </IonSegmentButton>
-    </IonSegment>
-  </IonContent>
-);
+        {/*-- Segment with default selection --*/}
+        <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} value="javascript">
+          <IonSegmentButton value="python">
+            <IonLabel>Python</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="javascript">
+            <IonLabel>Javascript</IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
+      </IonContent>
+    </IonPage>
+  );
+};
+
 ```
 
 
@@ -342,8 +353,8 @@ export const SegmentExample: React.FC = () => (
   </ion-segment>
 
   <!-- Disabled Segment -->
-  <ion-segment @ionChange="segmentChanged($event)" disabled>
-    <ion-segment-button value="sunny" checked>
+  <ion-segment @ionChange="segmentChanged($event)" disabled value="sunny">
+    <ion-segment-button value="sunny">
       <ion-label>Sunny</ion-label>
     </ion-segment-button>
     <ion-segment-button value="rainy">
@@ -362,26 +373,26 @@ export const SegmentExample: React.FC = () => (
   </ion-segment>
 
   <!-- Scrollable Segment -->
-  <ion-segment scrollable>
-    <ion-segment-button>
+  <ion-segment scrollable value="heart">
+    <ion-segment-button value="home">
       <ion-icon name="home"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button checked>
+    <ion-segment-button value="heart">
       <ion-icon name="heart"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="pin">
       <ion-icon name="pin"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="star">
       <ion-icon name="star"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="call">
       <ion-icon name="call"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="globe">
       <ion-icon name="globe"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button>
+    <ion-segment-button value="basket">
       <ion-icon name="basket"></ion-icon>
     </ion-segment-button>
   </ion-segment>
@@ -443,15 +454,22 @@ export const SegmentExample: React.FC = () => (
 | `color`      | `color`      | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
 | `disabled`   | `disabled`   | If `true`, the user cannot interact with the segment.                                                                                                                                                                                                                  | `boolean`                     | `false`     |
 | `mode`       | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
-| `scrollable` | `scrollable` | If `true`, the segment buttons will overflow and the user can swipe to see them.                                                                                                                                                                                       | `boolean`                     | `false`     |
+| `scrollable` | `scrollable` | If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.                                                         | `boolean`                     | `false`     |
 | `value`      | `value`      | the value of the segment.                                                                                                                                                                                                                                              | `null \| string \| undefined` | `undefined` |
 
 
 ## Events
 
-| Event       | Description                                  | Type                                    |
-| ----------- | -------------------------------------------- | --------------------------------------- |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<SegmentChangeEventDetail>` |
+| Event       | Description                                                                                                | Type                                    |
+| ----------- | ---------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| `ionChange` | Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`. | `CustomEvent<SegmentChangeEventDetail>` |
+
+
+## CSS Custom Properties
+
+| Name           | Description                      |
+| -------------- | -------------------------------- |
+| `--background` | Background of the segment button |
 
 
 ----------------------------------------------

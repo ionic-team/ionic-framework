@@ -2,12 +2,6 @@
 
 An overlay that can be used to indicate activity while blocking user interaction. The loading indicator appears on top of the app's content, and can be dismissed by the app to resume user interaction with the app. It includes an optional backdrop, which can be disabled by setting `showBackdrop: false` upon creation.
 
-
-### Creating
-
-Loading indicators can be created using a [Loading Controller](../loading-controller). They can be customized by passing loading options in the loading controller's `create()` method. The spinner name should be passed in the `spinner` property. If a value is not passed to `spinner` the loading indicator will use the spinner specified by the platform.
-
-
 ### Dismissing
 
 The loading indicator can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the loading options. To dismiss the loading indicator after creation, call the `dismiss()` method on the loading instance. The `onDidDismiss` function can be called to perform an action after the loading indicator is dismissed.
@@ -34,13 +28,12 @@ export class LoadingExample {
 
   async presentLoading() {
     const loading = await this.loadingController.create({
-      message: 'Hellooo',
+      message: 'Please wait...',
       duration: 2000
     });
     await loading.present();
-    
+
     const { role, data } = await loading.onDidDismiss();
-    
     console.log('Loading dismissed!');
   }
 
@@ -48,11 +41,15 @@ export class LoadingExample {
     const loading = await this.loadingController.create({
       spinner: null,
       duration: 5000,
-      message: 'Please wait...',
+      message: 'Click the backdrop to dismiss early...',
       translucent: true,
-      cssClass: 'custom-class custom-loading'
+      cssClass: 'custom-class custom-loading',
+      backdropDismiss: true
     });
-    return await loading.present();
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed with role:', role);
   }
 }
 ```
@@ -63,27 +60,31 @@ export class LoadingExample {
 ```javascript
 async function presentLoading() {
   const loading = document.createElement('ion-loading');
-  loading.message: 'Hellooo',
-  loading.duration: 2000;
+  loading.message = 'Please wait...';
+  loading.duration = 2000;
 
   document.body.appendChild(loading);
   await loading.present();
 
   const { role, data } = await loading.onDidDismiss();
-
   console.log('Loading dismissed!');
 }
 
-function presentLoadingWithOptions() {
+async function presentLoadingWithOptions() {
   const loading = document.createElement('ion-loading');
+
   loading.spinner = null;
   loading.duration = 5000;
-  loading.message = 'Please wait...';
+  loading.message = 'Click the backdrop to dismiss early...';
   loading.translucent = true;
   loading.cssClass = 'custom-class custom-loading';
+  loading.backdropDismiss = true;
 
   document.body.appendChild(loading);
-  return loading.present();
+  await loading.present();
+
+  const { role, data } = await loading.onDidDismiss();
+  console.log('Loading dismissed with role:', role);
 }
 ```
 
@@ -107,7 +108,7 @@ export const LoadingExample: React.FC = () => {
       <IonLoading
         isOpen={showLoading}
         onDidDismiss={() => setShowLoading(false)}
-        message={'Loading...'}
+        message={'Please wait...'}
         duration={5000}
       />
     </IonContent>
@@ -136,14 +137,14 @@ export default {
     presentLoading() {
       return this.$ionic.loadingController
         .create({
-          message: 'Loading',
+          message: 'Please wait...',
           duration: this.timeout,
         })
-        .then(l => {
+        .then(loading => {
           setTimeout(function() {
-            l.dismiss()
+            loading.dismiss()
           }, this.timeout)
-          return l.present()
+          return loading.present()
         })
     },
     presentLoadingWithOptions() {
@@ -151,15 +152,16 @@ export default {
         .create({
           spinner: null,
           duration: this.timeout,
-          message: 'Please wait...',
+          message: 'Click the backdrop to dismiss early...',
           translucent: true,
           cssClass: 'custom-class custom-loading',
+          backdropDismiss: true
         })
-        .then(l => {
+        .then(loading=> {
           setTimeout(function() {
-            l.dismiss()
+            loading.dismiss()
           }, this.timeout)
-          return l.present()
+          return loading.present()
         })
     },
   },

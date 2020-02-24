@@ -1,6 +1,6 @@
 import { RouteProps, match } from 'react-router-dom';
 
 export interface IonRouteData {
-  match: match<{ tab: string }> | null;
+  match: match | null;
   childProps: RouteProps;
 }

@@ -4,22 +4,32 @@
 // iOS Header
 // --------------------------------------------------
 
-.header-ios ion-toolbar:last-child {
+.header-ios ion-toolbar:last-of-type {
   --border-width: 0 0 #{$hairlines-width};
 }
 
 @supports (backdrop-filter: blur(0)) {
-  .header-translucent-ios {
+  .header-background {
+    @include position(0, 0, 0, 0);
+
+    position: absolute;
+
     backdrop-filter: $header-ios-translucent-filter;
   }
-  
   .header-translucent-ios ion-toolbar {
     --opacity: .8;
-    --backdrop-filter: #{$header-ios-translucent-filter};
+  }
+  
+  /**
+   * Disable the saturation otherwise it distorts the content
+   * background color when large header is not collapsed
+   */
+  .header-collapse-condense-inactive .header-background {
+    backdrop-filter: blur($header-ios-blur);
   }
 }
 
-.header-ios.ion-no-border ion-toolbar:last-child {
+.header-ios.ion-no-border ion-toolbar:last-of-type {
   --border-width: 0;
 }
 
@@ -34,7 +44,7 @@
   top: 0;
 }
 
-.header-collapse-condense ion-toolbar:first-child {
+.header-collapse-condense ion-toolbar:first-of-type {
   padding-top: 7px;
 
   z-index: 1;

@@ -2,7 +2,7 @@ import { join, Path } from '@angular-devkit/core';
 import { apply, chain, mergeWith, move, Rule, SchematicContext, SchematicsException, template, Tree, url } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { addModuleImportToRootModule } from './../utils/ast';
-import { addArchitectBuilder, addStyle, getWorkspace, addAsset } from './../utils/config';
+import { addArchitectBuilder, addStyle, getWorkspace, addAsset, WorkspaceProject, WorkspaceSchema } from './../utils/config';
 import { addPackageToPackageJson } from './../utils/package';
 import { Schema as IonAddOptions } from './schema';
 
@@ -25,7 +25,7 @@ function addIonicAngularToolkitToPackageJson(): Rule {
   };
 }
 
-function addIonicAngularModuleToAppModule(projectSourceRoot): Rule {
+function addIonicAngularModuleToAppModule(projectSourceRoot: Path): Rule {
   return (host: Tree) => {
     addModuleImportToRootModule(
       host,
@@ -37,7 +37,7 @@ function addIonicAngularModuleToAppModule(projectSourceRoot): Rule {
   };
 }
 
-function addIonicStyles(): Rule {
+function addIonicStyles(projectSourceRoot: Path): Rule {
   return (host: Tree) => {
     const ionicStyles = [
       'node_modules/@ionic/angular/css/normalize.css',
@@ -49,7 +49,7 @@ function addIonicStyles(): Rule {
       'node_modules/@ionic/angular/css/text-alignment.css',
       'node_modules/@ionic/angular/css/text-transformation.css',
       'node_modules/@ionic/angular/css/flex-utils.css',
-      'src/theme/variables.css'
+      `${projectSourceRoot}/theme/variables.css`
     ].forEach(entry => {
       addStyle(host, entry);
     });
@@ -69,29 +69,29 @@ function addIonicons(): Rule {
   };
 }
 
-function addIonicBuilder(): Rule {
+function addIonicBuilder(projectName: string): Rule {
   return (host: Tree) => {
     addArchitectBuilder(host, 'ionic-cordova-serve', {
       builder: '@ionic/angular-toolkit:cordova-serve',
       options: {
-        cordovaBuildTarget: 'app:ionic-cordova-build',
-        devServerTarget: 'app:serve'
+        cordovaBuildTarget: `${projectName}:ionic-cordova-build`,
+        devServerTarget: `${projectName}:serve`
       },
       configurations: {
         production: {
-          cordovaBuildTarget: 'app:ionic-cordova-build:production',
-          devServerTarget: 'app:serve:production'
+          cordovaBuildTarget: `${projectName}:ionic-cordova-build:production`,
+          devServerTarget: `${projectName}:serve:production`
         }
       }
     });
     addArchitectBuilder(host, 'ionic-cordova-build', {
       builder: '@ionic/angular-toolkit:cordova-build',
       options: {
-        browserTarget: 'app:build'
+        browserTarget: `${projectName}:build`
       },
       configurations: {
         production: {
-          browserTarget: 'app:build:production'
+          browserTarget: `${projectName}:build:production`
         }
       }
     });
@@ -100,25 +100,24 @@ function addIonicBuilder(): Rule {
 }
 
 function installNodeDeps() {
-  return (host: Tree, context: SchematicContext) => {
+  return (_host: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
   };
 }
 
 export default function ngAdd(options: IonAddOptions): Rule {
   return (host: Tree) => {
-    const workspace = getWorkspace(host);
+    const workspace: WorkspaceSchema = getWorkspace(host);
     if (!options.project) {
       options.project = Object.keys(workspace.projects)[0];
     }
-    const project = workspace.projects[options.project];
+    const project: WorkspaceProject = workspace.projects[options.project];
     if (project.projectType !== 'application') {
       throw new SchematicsException(
         `Ionic Add requires a project type of "application".`
       );
     }
-
-    const sourcePath = join(project.root as Path, 'src');
+    const sourcePath: Path = join(project.sourceRoot as Path);
     const rootTemplateSource = apply(url('./files/root'), [
       template({ ...options }),
       move(sourcePath)
@@ -128,8 +127,8 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicAngularToPackageJson(),
       addIonicAngularToolkitToPackageJson(),
       addIonicAngularModuleToAppModule(sourcePath),
-      addIonicBuilder(),
-      addIonicStyles(),
+      addIonicBuilder(options.project),
+      addIonicStyles(sourcePath),
       addIonicons(),
       mergeWith(rootTemplateSource),
       // install freshly added dependencies

@@ -25,3 +25,67 @@
 .refresher-ios .refresher-refreshing .spinner-dots circle {
   fill: $refresher-ios-icon-color;
 }
+
+ion-refresher.refresher-native {
+  display: block;
+
+  z-index: 1;
+  
+  ion-spinner {
+    @include margin(0, auto, 0, auto);
+  }
+}
+
+.refresher-native {
+  .refresher-refreshing ion-spinner {
+    --refreshing-rotation-duration: 2s;
+    display: none;
+    animation: var(--refreshing-rotation-duration) ease-out refresher-rotate forwards;
+  }
+  .refresher-refreshing {
+    display: none;
+    animation: 250ms linear refresher-pop forwards;
+  }
+}
+
+.refresher-native.refresher-refreshing,
+.refresher-native.refresher-completing {
+  .refresher-pulling ion-spinner {
+    display: none;
+  }
+  .refresher-refreshing ion-spinner {
+    display: block;
+  }
+}
+
+.refresher-native.refresher-pulling {
+  .refresher-pulling ion-spinner {
+    display: block;
+  }
+  .refresher-refreshing ion-spinner {
+    display: none;
+  }
+}
+
+@keyframes refresher-pop {
+  0% {
+    transform: scale(1);
+    animation-timing-function: ease-in;
+  }
+  50% {
+    transform: scale(1.2);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes refresher-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
