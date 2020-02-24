@@ -44,8 +44,8 @@ export const iosEnterAnimation = (
       .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
       .addElement(presentingEl)
       .keyframes([
-        { offset: 0, transform: 'translateY(0px) scale(1)', borderRadius: '0px' },
-        { offset: 1, transform: finalTransform, borderRadius: '10px 10px 0 0' }
+        { offset: 0, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: '0px' },
+        { offset: 1, filter: 'contrast(0.85)', transform: finalTransform, borderRadius: '10px 10px 0 0' }
       ]);
 
     baseAnimation.addAnimation(presentingAnimation);
