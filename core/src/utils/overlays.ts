@@ -142,7 +142,7 @@ export const dismiss = async (
   data: any | undefined,
   role: string | undefined,
   name: keyof IonicConfig,
-  iosLeaveAnimation: AnimationBuilder | undefined,
+  iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
   opts?: any
 ): Promise<boolean> => {
@@ -158,7 +158,8 @@ export const dismiss = async (
       ? overlay.leaveAnimation
       : config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-    if (animationBuilder !== undefined) {
+    // If dismissed via gesture, no need to play leaving animation again
+    if (role !== 'gesture') {
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     }
     overlay.didDismiss.emit({ data, role });

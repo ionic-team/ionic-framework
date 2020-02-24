@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
@@ -150,7 +151,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       // All of the elements needed for the swipe gesture
       // should be in the DOM and referenced by now, except
       // for the presenting el
-      const ani = this.animation = iosLeaveAnimation(this.el, this.presentingElement);
+      const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
+      const ani = this.animation = animationBuilder(this.el, this.presentingElement);
       this.gesture = createSwipeToCloseGesture(
         this.el,
         ani,
@@ -188,9 +190,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return false;
     }
 
-    const iosAni = (this.animation === undefined || (role === BACKDROP || role === undefined)) ? iosLeaveAnimation : undefined;
     const enteringAnimation = activeAnimations.get(this) || [];
-    const dismissed = await dismiss(this, data, role, 'modalLeave', iosAni, mdLeaveAnimation, this.presentingElement);
+    const dismissed = await dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, this.presentingElement);
 
     if (dismissed) {
       await detachComponent(this.delegate, this.usersElement);
