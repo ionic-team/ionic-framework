@@ -11,12 +11,12 @@ Segment buttons are groups of related buttons inside of a [Segment](../segment).
 ### Angular
 
 ```html
-<!-- Segment buttons with text and click listeners -->
-<ion-segment>
-  <ion-segment-button (ionSelect)="segmentButtonClicked($event)">
+<!-- Segment buttons with text and click listener -->
+<ion-segment (ionChange)="segmentChanged($event)">
+  <ion-segment-button>
     <ion-label>Friends</ion-label>
   </ion-segment-button>
-  <ion-segment-button (ionSelect)="segmentButtonClicked($event)">
+  <ion-segment-button>
     <ion-label>Enemies</ion-label>
   </ion-segment-button>
 </ion-segment>
@@ -157,8 +157,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./segment-button-example.css'],
 })
 export class SegmentButtonExample {
-  segmentButtonClicked(ev: any) {
-    console.log('Segment button clicked', ev);
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
   }
 }
 ```
@@ -305,13 +305,11 @@ export class SegmentButtonExample {
 ```
 
 ```javascript
-// Listen for ionClick on all segment buttons
-const segmentButtons = document.querySelectorAll('ion-segment-button')
-for (let i = 0; i < segmentButtons.length; i++) {
-  segmentButtons[i].addEventListener('ionSelect', (ev) => {
-    console.log('Segment button clicked', ev);
-  })
-}
+// Listen for ionChange on segment
+const segment = document.querySelector('ion-segment');
+segment.addEventListener('ionChange', (ev) => {
+  console.log('Segment changed', ev);
+})
 ```
 
 
@@ -331,7 +329,7 @@ export const SegmentButtonExamples: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {/*-- Segment buttons with text and click listeners --*/}
+        {/*-- Segment buttons with text and click listener --*/}
         <IonSegment onIonChange={(e) => console.log(`${e.detail.value} segment selected`)}>
           <IonSegmentButton value="Friends">
             <IonLabel>Friends</IonLabel>
@@ -477,12 +475,12 @@ export const SegmentButtonExamples: React.FC = () => {
 
 ```html
 <template>
-  <!-- Segment buttons with text and click listeners -->
-  <ion-segment>
-    <ion-segment-button @ionSelect="segmentButtonClicked($event)">
+  <!-- Segment buttons with text and click listener -->
+  <ion-segment @ionChange="segmentChanged($event)">
+    <ion-segment-button>
       <ion-label>Friends</ion-label>
     </ion-segment-button>
-    <ion-segment-button @ionSelect="segmentButtonClicked($event)">
+    <ion-segment-button>
       <ion-label>Enemies</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -619,8 +617,8 @@ export const SegmentButtonExamples: React.FC = () => {
 
   @Component()
   export default class Example extends Vue {
-    segmentButtonClicked(ev: any) {
-      console.log('Segment button clicked', ev);
+    segmentChanged(ev: any) {
+      console.log('Segment changed', ev);
     }
   }
 </script>
