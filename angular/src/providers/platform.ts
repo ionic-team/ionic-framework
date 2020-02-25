@@ -47,7 +47,7 @@ export class Platform {
       this.win = doc.defaultView;
       this.backButton.subscribeWithPriority = function(priority, callback) {
         return this.subscribe(ev => {
-          return ev.register(priority, (processNextHandler) => zone.run(() => callback(processNextHandler)));
+          return ev.register(priority, processNextHandler => zone.run(() => callback(processNextHandler)));
         });
       };
 

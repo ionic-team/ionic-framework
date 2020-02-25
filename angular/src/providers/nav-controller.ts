@@ -45,7 +45,7 @@ export class NavController {
     }
 
     // Subscribe to backButton events
-    platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+    platform.backButton.subscribeWithPriority(0, processNextHandler => {
       this.pop();
       processNextHandler();
     });
