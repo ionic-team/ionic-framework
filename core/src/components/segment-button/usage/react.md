@@ -12,7 +12,7 @@ export const SegmentButtonExamples: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {/*-- Segment buttons with text and click listeners --*/}
+        {/*-- Segment buttons with text and click listener --*/}
         <IonSegment onIonChange={(e) => console.log(`${e.detail.value} segment selected`)}>
           <IonSegmentButton value="Friends">
             <IonLabel>Friends</IonLabel>
