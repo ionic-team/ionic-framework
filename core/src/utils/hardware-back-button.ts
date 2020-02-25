@@ -31,7 +31,7 @@ export const startHardwareBackButton = () => {
 
     const executeAction = async (handlerRegister: HandlerRegister | undefined) => {
       try {
-        if (handlerRegister) {
+        if (handlerRegister && handlerRegister.handler) {
           const result = handlerRegister.handler(processHandlers);
           if (result != null) {
             await result;
@@ -46,7 +46,7 @@ export const startHardwareBackButton = () => {
       if (handlers.length > 0) {
         let selectedHandler: HandlerRegister = {
           priority: Number.MIN_SAFE_INTEGER,
-          handler: undefined,
+          handler: () => undefined,
           id: -1
         };
         handlers.forEach(handler => {
