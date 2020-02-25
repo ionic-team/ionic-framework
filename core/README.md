@@ -24,7 +24,7 @@ Easiest way to start using Ionic Core is by adding a script tag to the CDN:
 
 ```html
 <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
-<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core@5.0.1/dist/ionic/ionic.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/@ionic/core@5.0.1/css/ionic.bundle.css" rel="stylesheet">
 ```
 
