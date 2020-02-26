@@ -658,7 +658,7 @@ export class Refresher implements ComponentInterface {
       if (this.scrollEl && this.backgroundContentEl) {
         const scrollStyle = this.scrollEl.style;
         const backgroundStyle = this.backgroundContentEl.style;
-        scrollStyle.transform = backgroundStyle.transform = ((y > 0) ? `translateY(${y}px) translateZ(0px)` : 'translateZ(0px)');
+        scrollStyle.transform = backgroundStyle.transform = ((y > 0) ? `translateY(${y}px) translateZ(0px)` : '');
         scrollStyle.transitionDuration = backgroundStyle.transitionDuration = duration;
         scrollStyle.transitionDelay = backgroundStyle.transitionDelay = delay;
         scrollStyle.overflow = (overflowVisible ? 'hidden' : '');
