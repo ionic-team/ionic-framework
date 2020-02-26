@@ -114,6 +114,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'back-button-disabled': disabled,
           'back-button-has-icon-only': hasIconOnly,
           'in-toolbar': hostContext('ion-toolbar', this.el),
+          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'ion-activatable': true,
           'ion-focusable': true,
           'show-back-button': showBackButton
