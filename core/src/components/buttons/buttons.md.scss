@@ -90,12 +90,12 @@
 ::slotted(*) .button-outline {
   --color: initial;
   --color-activated: currentColor;
-  --color-focused: #{$toolbar-md-color};
+  --color-focused: currentColor;
   --background: transparent;
   --background-activated: transparent;
   --background-focused: currentColor;
   --background-hover: currentColor;
-  --border-color: #{$toolbar-md-color};
+  --border-color: currentColor;
 }
 
 
@@ -104,7 +104,7 @@
 
 ::slotted(*) .button-clear {
   --color: initial;
-  --color-focused: #{$toolbar-md-color};
+  --color-focused: currentColor;
   --color-activated: currentColor;
   --background: transparent;
   --background-activated: transparent;
