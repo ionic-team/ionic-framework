@@ -207,6 +207,7 @@ const createMenuController = () => {
   registerAnimation('push', menuPushAnimation);
   registerAnimation('overlay', menuOverlayAnimation);
 
+  /* tslint:disable-next-line */
   if (typeof document !== 'undefined') {
     const doc: Document = document;
     doc.addEventListener('ionBackButton', (ev: any) => {
