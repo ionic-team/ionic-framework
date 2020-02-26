@@ -1,3 +1,21 @@
+## [5.0.2](https://github.com/ionic-team/ionic/compare/v5.0.1...v5.0.2) (2020-02-26)
+
+
+### Bug Fixes
+
+* **ios:** large title transition works properly in tabbed applications ([#20555](https://github.com/ionic-team/ionic/issues/20555)) ([7187541](https://github.com/ionic-team/ionic/commit/71875417f207d26bd7115655f239251460a1e3d8)), closes [#20482](https://github.com/ionic-team/ionic/issues/20482)
+* **menu:** hardware back button now dismisses side menu if open in Cordova/Capacitor app ([#20558](https://github.com/ionic-team/ionic/issues/20558)) ([6b2a929](https://github.com/ionic-team/ionic/commit/6b2a929cd7e70b16383cb3336b399a1aee2d6101)), closes [#20559](https://github.com/ionic-team/ionic/issues/20559)
+* **modal:** allow swipe to close animation to be overridden ([#20585](https://github.com/ionic-team/ionic/issues/20585)) ([8d3ce8d](https://github.com/ionic-team/ionic/commit/8d3ce8d29c9abd89ce47c882e0d7b2ac0f861966)), closes [#20577](https://github.com/ionic-team/ionic/issues/20577)
+* **modal:** card style modal now adds appropriate contrast ([#20604](https://github.com/ionic-team/ionic/issues/20604)) ([b5310ef](https://github.com/ionic-team/ionic/commit/b5310effe3f9b47459f22221da1853a55dbb0279))
+* **modal:** allow swipeable modal background to be overridden ([#20584](https://github.com/ionic-team/ionic/issues/20584)) ([ad6fac8](https://github.com/ionic-team/ionic/commit/ad6fac83cb7c4acb377b4b1620ab1a3f852bc6d3)), closes [#20572](https://github.com/ionic-team/ionic/issues/20572)
+* **modal:** swipeable modal styles only apply to ios ([#20571](https://github.com/ionic-team/ionic/issues/20571)) ([3a2d828](https://github.com/ionic-team/ionic/commit/3a2d82814b22a3987a5abfe4412d83a93a97b6b7)), closes [#20569](https://github.com/ionic-team/ionic/issues/20569)
+* **refresher:** ensure that translate is cleaned up to avoid stacking context ([#20621](https://github.com/ionic-team/ionic/issues/20621)) ([e3e5c69](https://github.com/ionic-team/ionic/commit/e3e5c69681f376cbc4b1305f719fc6895b21a9b7)), closes [#17949](https://github.com/ionic-team/ionic/issues/17949)
+* **segment:** segment functions properly on older versions of Android ([#20554](https://github.com/ionic-team/ionic/issues/20554)) ([0224bed](https://github.com/ionic-team/ionic/commit/0224bed0c9f91bcb54bb4b3064df56928cf5ed8a)), closes [#20466](https://github.com/ionic-team/ionic/issues/20466)
+* **select:** properly align text, add icon-inner and placeholder part ([#20605](https://github.com/ionic-team/ionic/issues/20605)) ([926ac3f](https://github.com/ionic-team/ionic/commit/926ac3fb47228be19146ccdfab92a05cf6677ff4))
+* **slides:** set height to 100% for vertical slides ([#20603](https://github.com/ionic-team/ionic/issues/20603)) ([20af652](https://github.com/ionic-team/ionic/commit/20af652a1be5e1aff2836422489642c8baed6939)), closes [#17341](https://github.com/ionic-team/ionic/issues/17341)
+
+
+
 ## [5.0.1](https://github.com/ionic-team/ionic/compare/v5.0.0...v5.0.1) (2020-02-19)
 
 
