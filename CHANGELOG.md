@@ -1,3 +1,12 @@
+## [5.0.3](https://github.com/ionic-team/ionic/compare/v5.0.2...v5.0.3) (2020-02-26)
+
+
+### Bug Fixes
+
+* **menu:** allow ssr to work properly with hardware back button updates ([#20629](https://github.com/ionic-team/ionic/issues/20629)) ([fe8d74d](https://github.com/ionic-team/ionic/commit/fe8d74d08cb919ed1c685262f0aed4a544c3a7e1))
+
+
+
 ## [5.0.2](https://github.com/ionic-team/ionic/compare/v5.0.1...v5.0.2) (2020-02-26)
 
 
