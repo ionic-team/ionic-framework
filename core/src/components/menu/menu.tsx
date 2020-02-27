@@ -390,6 +390,13 @@ AFTER:
       return;
     }
 
+    // Blur any active inputs when opening the menu
+    // Added undefined check for older browser versions that do not support this
+    const activeElement = document.activeElement as HTMLElement | undefined | null;
+    if (activeElement != null && activeElement.blur) {
+      activeElement.blur();
+    }
+
     // the cloned animation should not use an easing curve during seek
     (this.animation as Animation).progressStart(true, (this._isOpen) ? 1 : 0);
   }
