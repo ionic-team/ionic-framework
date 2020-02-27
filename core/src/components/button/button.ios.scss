@@ -175,4 +175,12 @@
   :host(.button-solid.ion-color:hover) .button-native::after {
     background: #{current-color(tint)};
   }
+
+  // Solid buttons inside of a toolbar should use the toolbar background to
+  // appear opaque
+  :host(:hover.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native::after {
+    background: #{var(--ion-toolbar-background, var(--background, var(--background-hover)))};
+
+    opacity: 0.45;
+  }
 }
