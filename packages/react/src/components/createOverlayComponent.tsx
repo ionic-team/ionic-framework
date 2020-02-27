@@ -37,7 +37,9 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
 
     constructor(props: Props) {
       super(props);
-      this.el = document.createElement('div');
+      if (typeof document !== 'undefined') {
+        this.el = document.createElement('div');
+      }
       this.handleDismiss = this.handleDismiss.bind(this);
     }
 
