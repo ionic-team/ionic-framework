@@ -305,3 +305,19 @@ ion-ripple-effect {
   background: transparent;
   color: current-color(base);
 }
+
+// Button in Toolbar
+// --------------------------------------------------
+
+:host(.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+  color: #{var(--ion-toolbar-color, var(--color))};
+}
+
+:host(.button-outline.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+  border-color: #{var(--ion-toolbar-color, var(--color, var(--border-color)))};
+}
+
+:host(.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+  background: #{var(--ion-toolbar-color, var(--background))};
+  color: #{var(--ion-toolbar-background, var(--color))};
+}

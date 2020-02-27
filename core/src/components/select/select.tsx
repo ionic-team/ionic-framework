@@ -11,6 +11,11 @@ import { SelectCompareFn } from './select-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part placeholder - The text displayed in the select when there is no value.
+ * @part text - The displayed value of the select.
+ * @part icon - The select icon container.
+ * @part icon-inner - The select icon.
  */
 @Component({
   tag: 'ion-select',
@@ -426,6 +431,8 @@ export class Select implements ComponentInterface {
       'select-placeholder': addPlaceholderClass
     };
 
+    const textPart = addPlaceholderClass ? 'placeholder' : 'text';
+
     return (
       <Host
         onClick={this.onClick}
@@ -440,11 +447,11 @@ export class Select implements ComponentInterface {
           'select-disabled': disabled,
         }}
       >
-        <div class={selectTextClasses} part="text">
+        <div class={selectTextClasses} part={textPart}>
           {selectText}
         </div>
         <div class="select-icon" role="presentation" part="icon">
-          <div class="select-icon-inner"></div>
+          <div class="select-icon-inner" part="icon-inner"></div>
         </div>
         <button
           type="button"

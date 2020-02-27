@@ -49,14 +49,14 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     const segmentEl = this.segmentEl = this.el.closest('ion-segment');
     if (segmentEl) {
       this.updateState();
-      segmentEl.addEventListener('ionChange', this.updateState);
+      segmentEl.addEventListener('ionSelect', this.updateState);
     }
   }
 
   disconnectedCallback() {
     const segmentEl = this.segmentEl;
     if (segmentEl) {
-      segmentEl.removeEventListener('ionChange', this.updateState);
+      segmentEl.removeEventListener('ionSelect', this.updateState);
       this.segmentEl = null;
     }
   }

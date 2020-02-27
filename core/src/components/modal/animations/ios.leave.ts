@@ -38,14 +38,16 @@ export const iosLeaveAnimation = (
         // only reset background color if this is the last card-style modal
         if (currentStep !== 1) { return; }
 
+        presentingEl.style.setProperty('overflow', '');
+
         const numModals = Array.from(bodyEl.querySelectorAll('ion-modal')).filter(m => m.presentingElement !== undefined).length;
         if (numModals <= 1) {
           bodyEl.style.setProperty('background-color', '');
         }
       })
       .keyframes([
-        { offset: 0, transform: `translateY(${modalTransform}) scale(${currentPresentingScale})`, borderRadius: '10px 10px 0 0' },
-        { offset: 1, transform: 'translateY(0px) scale(1)', borderRadius: '0px' }
+        { offset: 0, filter: 'contrast(0.85)', transform: `translateY(${modalTransform}) scale(${currentPresentingScale})`, borderRadius: '10px 10px 0 0' },
+        { offset: 1, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: '0px' }
       ]);
 
     baseAnimation.addAnimation(presentingAnimation);

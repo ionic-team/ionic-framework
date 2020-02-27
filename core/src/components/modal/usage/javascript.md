@@ -60,7 +60,7 @@ customElements.define('modal-page', class extends HTMLElement {
 
 ### Dismissing a Modal
 
-A modal can be dismissed by calling the dismiss method on the modal controller and optionally passing any data from the modal.
+A modal can be dismissed by calling the dismiss method and optionally passing any data from the modal.
 
 ```javascript
 async function dismissModal() {
