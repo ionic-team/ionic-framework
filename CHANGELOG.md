@@ -1,3 +1,13 @@
+## [5.0.4](https://github.com/ionic-team/ionic/compare/v5.0.3...v5.0.4) (2020-02-27)
+
+
+### Bug Fixes
+
+* **animation:** reset all temporary flags when interrupting an animation ([#20627](https://github.com/ionic-team/ionic/issues/20627)) ([0e0e401](https://github.com/ionic-team/ionic/commit/0e0e401d86dabaa1dc804656e4d384154d6fdd05)), closes [#20602](https://github.com/ionic-team/ionic/issues/20602)
+* **buttons:** use proper button colors based on CSS variables when inside of a toolbar ([#20633](https://github.com/ionic-team/ionic/issues/20633)) ([c1d7bf2](https://github.com/ionic-team/ionic/commit/c1d7bf229d10d0a12f90b6d2730d6d8ac78b48cd))
+
+
+
 ## [5.0.3](https://github.com/ionic-team/ionic/compare/v5.0.2...v5.0.3) (2020-02-26)
 
 
