@@ -192,6 +192,7 @@ AFTER:
       gestureName: 'menu-swipe',
       gesturePriority: 30,
       threshold: 10,
+      blurOnStart: true,
       canStart: ev => this.canStart(ev),
       onWillStart: () => this.onWillStart(),
       onStart: () => this.onStart(),
@@ -388,13 +389,6 @@ AFTER:
     if (!this.isAnimating || !this.animation) {
       assert(false, 'isAnimating has to be true');
       return;
-    }
-
-    // Blur any active inputs when opening the menu
-    // Added undefined check for older browser versions that do not support this
-    const activeElement = document.activeElement as HTMLElement | undefined | null;
-    if (activeElement != null && activeElement.blur) {
-      activeElement.blur();
     }
 
     // the cloned animation should not use an easing curve during seek
