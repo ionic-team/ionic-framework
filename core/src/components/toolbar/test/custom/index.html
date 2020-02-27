@@ -88,6 +88,42 @@
         <ion-title>Color</ion-title>
       </ion-toolbar>
 
+      <ion-toolbar color="tertiary" class="themed-colors">
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/" text=""></ion-back-button>
+          <ion-menu-button auto-hide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Color: Themed</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="tertiary" class="themed-colors">
+        <ion-buttons slot="secondary">
+          <ion-button fill="clear">
+            <ion-icon slot="icon-only" ios="list-outline" md="list"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="primary">
+          <ion-button fill="solid">
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button fill="outline">
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Color: Themed</ion-title>
+      </ion-toolbar>
+
       <ion-toolbar class="themed-colors">
         <ion-buttons slot="start">
           <ion-back-button default-href="/" text=""></ion-back-button>
@@ -237,7 +273,7 @@
   <style>
     .themed-colors {
       --ion-toolbar-background: #d9fae0;
-      --ion-toolbar-color: #105f10;
+      --ion-toolbar-color: #b68928;
     }
 
     .component-colors {
@@ -247,13 +283,13 @@
     .component-colors,
     .component-colors ion-back-button,
     .component-colors ion-menu-button,
-    .component-colors ion-button[fill="clear"],
-    .component-colors ion-button[fill="outline"] {
+    .component-colors ion-button {
       --color: #aa3723;
     }
 
     .component-colors ion-button[fill="solid"] {
       --background: #aa3723;
+      --color: #fff;
     }
 
   </style>
