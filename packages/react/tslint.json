@@ -29,6 +29,7 @@
     "jsx-wrap-multiline": false,
     "no-empty-interface": false,
     "no-unbound-method": false,
-    "prefer-conditional-expression": false
+    "prefer-conditional-expression": false,
+    "strict-type-predicates": false
   }
 }

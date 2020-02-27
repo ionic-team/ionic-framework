@@ -54,13 +54,15 @@ export class RouteManager extends React.Component<RouteManagerProps, RouteManage
       getRoute: this.getRoute.bind(this)
     };
 
-    this.locationHistory.add({
-      hash: window.location.hash,
-      key: generateId(),
-      pathname: window.location.pathname,
-      search: window.location.search,
-      state: {}
-    });
+    if (typeof window !== 'undefined') {
+      this.locationHistory.add({
+        hash: window.location.hash,
+        key: generateId(),
+        pathname: window.location.pathname,
+        search: window.location.search,
+        state: {}
+      });
+    }
   }
 
   componentDidUpdate(_prevProps: RouteComponentProps, prevState: RouteManagerState) {
@@ -396,15 +398,17 @@ export class RouteManager extends React.Component<RouteManagerProps, RouteManage
         // If a page is transitioning to another version of itself
         // we clone it so we can have an animation to show
         const newLeavingElement = clonePageElement(leavingViewHtml);
-        ionRouterOutlet.appendChild(newLeavingElement);
-        await ionRouterOutlet.commit(enteringEl, newLeavingElement, {
-          deepWait: true,
-          duration: direction === undefined ? 0 : undefined,
-          direction,
-          showGoBack,
-          progressAnimation: false
-        });
-        ionRouterOutlet.removeChild(newLeavingElement);
+        if (newLeavingElement) {
+          ionRouterOutlet.appendChild(newLeavingElement);
+          await ionRouterOutlet.commit(enteringEl, newLeavingElement, {
+            deepWait: true,
+            duration: direction === undefined ? 0 : undefined,
+            direction,
+            showGoBack,
+            progressAnimation: false
+          });
+          ionRouterOutlet.removeChild(newLeavingElement);
+        }
       } else {
         await ionRouterOutlet.commit(enteringEl, leavingEl, {
           deepWait: true,
@@ -500,16 +504,19 @@ export class RouteManager extends React.Component<RouteManagerProps, RouteManage
 }
 
 function clonePageElement(leavingViewHtml: string) {
-  const newEl = document.createElement('div');
-  newEl.innerHTML = leavingViewHtml;
-  newEl.classList.add('ion-page-hidden');
-  newEl.style.zIndex = '';
-  // Remove an existing back button so the new element doesn't get two of them
-  const ionBackButton = newEl.getElementsByTagName('ion-back-button');
-  if (ionBackButton[0]) {
-    ionBackButton[0].innerHTML = '';
+  if (document) {
+    const newEl = document.createElement('div');
+    newEl.innerHTML = leavingViewHtml;
+    newEl.classList.add('ion-page-hidden');
+    newEl.style.zIndex = '';
+    // Remove an existing back button so the new element doesn't get two of them
+    const ionBackButton = newEl.getElementsByTagName('ion-back-button');
+    if (ionBackButton[0]) {
+      ionBackButton[0].innerHTML = '';
+    }
+    return newEl.firstChild as HTMLElement;
   }
-  return newEl.firstChild as HTMLElement;
+  return undefined;
 }
 
 async function waitUntilRouterOutletReady(ionRouterOutlet: HTMLIonRouterElement) {
