@@ -17,11 +17,10 @@
   font-weight: 400;
 }
 
-
-
 ::slotted(*) ion-button:not(.button-round) {
   --border-radius: #{$toolbar-ios-button-border-radius};
 }
+
 
 // iOS Toolbar with Color: Default Buttons
 // --------------------------------------------------
@@ -38,6 +37,8 @@
   --background-focused-opacity: .12;
   --background-activated: #000;
   --background-activated-opacity: .12;
+  --background-hover: #{current-color(base)};
+  --background-hover-opacity: 0.45;
   --color: #{current-color(base)};
   --color-focused: #{current-color(base)};
 }
@@ -53,38 +54,21 @@
 }
 
 
-// iOS Toolbar Button Clear
+// iOS Toolbar Button Clear / Outline
 // --------------------------------------------------
 
-:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-clear:not(.ion-color) {
-  --color: #{var(--ion-toolbar-color, ion-color(primary, base))};
-  --color-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
-  --background-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
-}
-
-
-// iOS Toolbar Button Outline
-// --------------------------------------------------
-
-:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-outline:not(.ion-color) {
-  --color: #{var(--ion-toolbar-color, ion-color(primary, base))};
-  --color-activated: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
-  --color-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
-  --border-color: #{var(--ion-toolbar-color, ion-color(primary, base))};
-  --background-focused: #{var(--ion-toolbar-color, ion-color(primary, base))};
+::slotted(*) .button-clear,
+::slotted(*) .button-outline {
+  --background-activated: transparent;
+  --background-focused: currentColor;
+  --background-hover: transparent;
 }
 
 
 // iOS Toolbar Button Solid
 // --------------------------------------------------
 
-:host-context(ion-toolbar:not(.ion-color))::slotted(*) .button-solid:not(.ion-color) {
-  --color: #{$toolbar-ios-background};
-  --color-activated: #{$toolbar-ios-background};
-  --color-focused: #{$toolbar-ios-background};
-  --background: #{var(--ion-toolbar-color, ion-color(primary, base))};
-  --background-hover: #{var(--ion-toolbar-background, ion-color(primary, contrast))};
-  --background-hover-opacity: 0.1;
+::slotted(*) .button-solid:not(.ion-color) {
   --background-focused: #000;
   --background-focused-opacity: .12;
   --background-activated: #000;
@@ -121,25 +105,3 @@
 
   line-height: .67;
 }
-
-
-// iOS Toolbar Menu Toggle
-// --------------------------------------------------
-
-// .button-menutoggle-ios {
-//   order: map-get($toolbar-order-ios, menu-toggle-start);
-
-//   min-width: 36px;
-
-//   --padding-top: 0;
-//   --padding-bottom: 0;
-//   --padding-start: 0;
-//   --padding-end: 0;
-
-//   ion-icon {
-//     @include padding(0, 6px);
-
-//     font-size: 28px;
-//   }
-// }
-

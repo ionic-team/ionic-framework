@@ -4,7 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Color, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { hasShadowDom } from '../../utils/helpers';
-import { createColorClasses, openURL } from '../../utils/theme';
+import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -208,7 +208,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [`${buttonType}-${shape}`]: shape !== undefined,
           [`${buttonType}-${fill}`]: true,
           [`${buttonType}-strong`]: strong,
-
+          'in-toolbar': hostContext('ion-toolbar', this.el),
+          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'button-has-icon-only': hasIconOnly,
           'button-disabled': disabled,
           'ion-activatable': true,
