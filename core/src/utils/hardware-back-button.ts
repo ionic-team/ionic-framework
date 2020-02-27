@@ -55,3 +55,6 @@ const executeAction = async (handler: Handler | undefined) => {
     console.error(e);
   }
 };
+
+export const OVERLAY_BACK_BUTTON_PRIORITY = 100;
+export const MENU_BACK_BUTTON_PRIORITY = 99; // 1 less than overlay priority since menu is displayed behind overlays

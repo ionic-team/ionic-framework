@@ -171,9 +171,10 @@ export class Segment implements ComponentInterface {
     if (!useRippleEffect) { return; }
 
     const buttons = this.getButtons();
-    const checked = buttons.find(button => button.value === this.value);
+    const checked = buttons.find(button => button.value === this.value)!;
 
-    const ripple = checked!.shadowRoot!.querySelector('ion-ripple-effect');
+    const root = checked.shadowRoot || checked;
+    const ripple = root.querySelector('ion-ripple-effect');
 
     if (!ripple) { return; }
 
@@ -223,7 +224,8 @@ export class Segment implements ComponentInterface {
   }
 
   private getIndicator(button: HTMLIonSegmentButtonElement): HTMLDivElement | null {
-    return button.shadowRoot && button.shadowRoot.querySelector('.segment-button-indicator');
+    const root = button.shadowRoot || button;
+    return root.querySelector('.segment-button-indicator');
   }
 
   private checkButton(previous: HTMLIonSegmentButtonElement, current: HTMLIonSegmentButtonElement) {
@@ -302,7 +304,8 @@ export class Segment implements ComponentInterface {
     // gesture event and the Y coordinate of the starting element, since the gesture
     // can move up and down off of the segment
     const currentX = detail.currentX;
-    const previousY = rect.y;
+
+    const previousY = rect.top + (rect.height / 2);
     const nextEl = document.elementFromPoint(currentX, previousY) as HTMLIonSegmentButtonElement;
 
     const decreaseIndex = isRTL ? currentX > (left + width) : currentX < left;

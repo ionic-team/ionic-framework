@@ -12,15 +12,6 @@
   font-size: $tab-button-ios-font-size;
 }
 
-:host(.tab-has-label-only) ::slotted(ion-label) {
-  @include margin(2px, 0);
-
-  font-size: $tab-button-ios-font-size + 2;
-  font-size: 14px;
-
-  line-height: 1.1;
-}
-
 
 // iOS Tab Button: Badge
 // --------------------------------------------------
@@ -41,7 +32,7 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-  @include margin(4px, null, null, null);
+  @include margin(2px, null, 2px, null);
 
   font-size: $tab-button-ios-icon-size;
 }
@@ -58,6 +49,21 @@
   @include margin(0, null, 1px, null);
 
   min-height: $tab-button-ios-font-size + 1;
+
+  font-weight: 500;
+}
+
+
+// iOS Tab Button Label Only
+// --------------------------------------------------
+
+:host(.tab-has-label-only) ::slotted(ion-label) {
+  @include margin(2px, 0);
+
+  font-size: $tab-button-ios-font-size + 2;
+  font-size: 14px;
+
+  line-height: 1.1;
 }
 
 

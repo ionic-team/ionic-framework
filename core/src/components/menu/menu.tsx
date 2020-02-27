@@ -360,7 +360,9 @@ AFTER:
   }
 
   private canStart(detail: GestureDetail): boolean {
-    if (!this.canSwipe()) {
+    // Do not allow swipe gesture if a modal is open
+    const isModalPresented = !!document.querySelector('ion-modal.show-modal');
+    if (isModalPresented || !this.canSwipe()) {
       return false;
     }
     if (this._isOpen) {

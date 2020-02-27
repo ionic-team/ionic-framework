@@ -1,6 +1,8 @@
 import { config } from '../global/config';
 import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
+import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
+
 let lastId = 0;
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
@@ -72,7 +74,7 @@ export const connectListeners = (doc: Document) => {
     doc.addEventListener('ionBackButton', ev => {
       const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss) {
-        (ev as BackButtonEvent).detail.register(100, () => {
+        (ev as BackButtonEvent).detail.register(OVERLAY_BACK_BUTTON_PRIORITY, () => {
           return lastOverlay.dismiss(undefined, BACKDROP);
         });
       }
@@ -142,7 +144,7 @@ export const dismiss = async (
   data: any | undefined,
   role: string | undefined,
   name: keyof IonicConfig,
-  iosLeaveAnimation: AnimationBuilder | undefined,
+  iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
   opts?: any
 ): Promise<boolean> => {
@@ -158,7 +160,8 @@ export const dismiss = async (
       ? overlay.leaveAnimation
       : config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-    if (animationBuilder !== undefined) {
+    // If dismissed via gesture, no need to play leaving animation again
+    if (role !== 'gesture') {
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     }
     overlay.didDismiss.emit({ data, role });

@@ -1,10 +1,10 @@
 ```html
-<!-- Segment buttons with text and click listeners -->
-<ion-segment>
-  <ion-segment-button (ionSelect)="segmentButtonClicked($event)">
+<!-- Segment buttons with text and click listener -->
+<ion-segment (ionChange)="segmentChanged($event)">
+  <ion-segment-button>
     <ion-label>Friends</ion-label>
   </ion-segment-button>
-  <ion-segment-button (ionSelect)="segmentButtonClicked($event)">
+  <ion-segment-button>
     <ion-label>Enemies</ion-label>
   </ion-segment-button>
 </ion-segment>
@@ -145,8 +145,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./segment-button-example.css'],
 })
 export class SegmentButtonExample {
-  segmentButtonClicked(ev: any) {
-    console.log('Segment button clicked', ev);
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
   }
 }
 ```

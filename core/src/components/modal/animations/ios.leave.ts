@@ -46,8 +46,8 @@ export const iosLeaveAnimation = (
         }
       })
       .keyframes([
-        { offset: 0, transform: `translateY(${modalTransform}) scale(${currentPresentingScale})`, borderRadius: '10px 10px 0 0' },
-        { offset: 1, transform: 'translateY(0px) scale(1)', borderRadius: '0px' }
+        { offset: 0, filter: 'contrast(0.85)', transform: `translateY(${modalTransform}) scale(${currentPresentingScale})`, borderRadius: '10px 10px 0 0' },
+        { offset: 1, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: '0px' }
       ]);
 
     baseAnimation.addAnimation(presentingAnimation);
