@@ -419,7 +419,6 @@ export class Refresher implements ComponentInterface {
 
   disconnectedCallback() {
     this.destroyNativeRefresher();
-    this.scrollEl = undefined;
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
