@@ -143,7 +143,8 @@ export const createGesture = (config: GestureConfig): Gesture => {
   };
 
   const blurActiveElement = () => {
-    if (typeof document !== "undefined") {
+    /* tslint:disable-next-line */
+    if (typeof document !== 'undefined') {
       const activeElement = document.activeElement as HTMLElement | null;
       if (activeElement !== null && activeElement.blur) {
         activeElement.blur();
