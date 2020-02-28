@@ -151,14 +151,22 @@
 }
 
 :host(.io-labeled) .toggle-label-container {
+  @include margin(0, $toggle-io-label-margin);
+
   display: flex;
-  justify-content: space-between;
-  padding: 0 15%;
-  height: 100%;
+  
   align-items: center;
+
+  justify-content: space-between;
+
+  height: 100%;
+
 }
 
 :host(.io-labeled) i {
-  font-style: normal;
+  
   color: #ffffff;
+
+  font-style: normal;
+
 }
