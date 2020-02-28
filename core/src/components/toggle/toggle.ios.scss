@@ -149,3 +149,16 @@
 :host(.in-item[slot="start"]) {
   @include padding($toggle-ios-item-start-padding-top, $toggle-ios-item-start-padding-end, $toggle-ios-item-start-padding-bottom, $toggle-ios-item-start-padding-start);
 }
+
+:host(.io-labeled) .toggle-label-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15%;
+  height: 100%;
+  align-items: center;
+}
+
+:host(.io-labeled) i {
+  font-style: normal;
+  color: #ffffff;
+}
