@@ -86,6 +86,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           'menu-button-hidden': hidden,
           'menu-button-disabled': disabled,
           'in-toolbar': hostContext('ion-toolbar', this.el),
+          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'ion-activatable': true,
           'ion-focusable': true
         }}

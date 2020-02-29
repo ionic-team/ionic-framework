@@ -466,98 +466,116 @@ customActionSheetSelect.interfaceOptions = customActionSheetOptions;
 ## Single Selection
 
 ```tsx
-import React from 'react';
-import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption, IonPage, IonItemDivider } from '@ionic/react';
 
-export const SelectExample: React.FC = () => (
-  <IonContent>
-    <IonList>
-      <IonListHeader>
-        <IonLabel>
-          Single Selection
-        </IonLabel>
-      </IonListHeader>
+export const SingleSelection: React.FC = () => {
 
-      <IonItem>
-        <IonLabel>Gender</IonLabel>
-        <IonSelect placeholder="Select One">
-          <IonSelectOption value="f">Female</IonSelectOption>
-          <IonSelectOption value="m">Male</IonSelectOption>
-        </IonSelect>
-      </IonItem>
+  const [gender, setGender] = useState<string>();
+  const [hairColor, setHairColor] = useState<string>('brown');
 
-      <IonItem>
-        <IonLabel>Hair Color</IonLabel>
-        <IonSelect value="brown" okText="Okay" cancelText="Dismiss">
-          <IonSelectOption value="brown">Brown</IonSelectOption>
-          <IonSelectOption value="blonde">Blonde</IonSelectOption>
-          <IonSelectOption value="black">Black</IonSelectOption>
-          <IonSelectOption value="red">Red</IonSelectOption>
-        </IonSelect>
-      </IonItem>
-    </IonList>
-  </IonContent>
-);
+  return (
+    <IonPage>
+      <IonContent>
+        <IonList>
+          <IonListHeader>
+            <IonLabel>
+              Single Selection
+            </IonLabel>
+          </IonListHeader>
+
+          <IonItem>
+            <IonLabel>Gender</IonLabel>
+            <IonSelect value={gender} placeholder="Select One" onIonChange={e => setGender(e.detail.value)}>
+              <IonSelectOption value="female">Female</IonSelectOption>
+              <IonSelectOption value="male">Male</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+
+          <IonItem>
+            <IonLabel>Hair Color</IonLabel>
+            <IonSelect value={hairColor} okText="Okay" cancelText="Dismiss" onIonChange={e => setHairColor(e.detail.value)}>
+              <IonSelectOption value="brown">Brown</IonSelectOption>
+              <IonSelectOption value="blonde">Blonde</IonSelectOption>
+              <IonSelectOption value="black">Black</IonSelectOption>
+              <IonSelectOption value="red">Red</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+          <IonItemDivider>Your Selections</IonItemDivider>
+          <IonItem>Gender: {gender ?? '(none selected)'}</IonItem>
+          <IonItem>Hair Color: {hairColor}</IonItem>
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
 ```
 
 
 ## Multiple Selection
 
 ```tsx
-import React from 'react';
-import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption, IonPage, IonItemDivider } from '@ionic/react';
 
-export const SelectExample: React.FC = () => (
-  <IonContent>
-    <IonList>
-      <IonListHeader>
-        <IonLabel>
-          Multiple Selection
+export const MultipleSelection: React.FC = () => {
+
+  const [toppings, setToppings] = useState<string[]>([]);
+  const [pets, setPets] = useState<string[]>(['bird', 'dog']);
+
+  return (
+    <IonPage>
+      <IonContent>
+        <IonList>
+          <IonListHeader>
+            <IonLabel>
+              Multiple Selection
         </IonLabel>
-      </IonListHeader>
+          </IonListHeader>
 
-      <IonItem>
-        <IonLabel>Toppings</IonLabel>
-        <IonSelect multiple={true} cancelText="Nah" okText="Okay!">
-          <IonSelectOption value="bacon">Bacon</IonSelectOption>
-          <IonSelectOption value="olives">Black Olives</IonSelectOption>
-          <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
-          <IonSelectOption value="peppers">Green Peppers</IonSelectOption>
-          <IonSelectOption value="mushrooms">Mushrooms</IonSelectOption>
-          <IonSelectOption value="onions">Onions</IonSelectOption>
-          <IonSelectOption value="pepperoni">Pepperoni</IonSelectOption>
-          <IonSelectOption value="pineapple">Pineapple</IonSelectOption>
-          <IonSelectOption value="sausage">Sausage</IonSelectOption>
-          <IonSelectOption value="Spinach">Spinach</IonSelectOption>
-        </IonSelect>
-      </IonItem>
+          <IonItem>
+            <IonLabel>Toppings</IonLabel>
+            <IonSelect value={toppings} multiple={true} cancelText="Nah" okText="Okay!" onIonChange={e => setToppings(e.detail.value)}>
+              <IonSelectOption value="bacon">Bacon</IonSelectOption>
+              <IonSelectOption value="olives">Black Olives</IonSelectOption>
+              <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
+              <IonSelectOption value="peppers">Green Peppers</IonSelectOption>
+              <IonSelectOption value="mushrooms">Mushrooms</IonSelectOption>
+              <IonSelectOption value="onions">Onions</IonSelectOption>
+              <IonSelectOption value="pepperoni">Pepperoni</IonSelectOption>
+              <IonSelectOption value="pineapple">Pineapple</IonSelectOption>
+              <IonSelectOption value="sausage">Sausage</IonSelectOption>
+              <IonSelectOption value="Spinach">Spinach</IonSelectOption>
+            </IonSelect>
+          </IonItem>
 
-      <IonItem>
-        <IonLabel>Pets</IonLabel>
-        <IonSelect multiple={true} value={['bird', 'dog']}>
-          <IonSelectOption value="bird">
-            Bird
-          </IonSelectOption>
-          <IonSelectOption value="cat">Cat</IonSelectOption>
-          <IonSelectOption value="dog">
-            Dog
-          </IonSelectOption>
-          <IonSelectOption value="honeybadger">Honey Badger</IonSelectOption>
-        </IonSelect>
-      </IonItem>
-    </IonList>
-  </IonContent>
-);
+          <IonItem>
+            <IonLabel>Pets</IonLabel>
+            <IonSelect multiple={true} value={pets} onIonChange={e => setPets(e.detail.value)}>
+              <IonSelectOption value="bird">Bird</IonSelectOption>
+              <IonSelectOption value="cat">Cat</IonSelectOption>
+              <IonSelectOption value="dog">Dog</IonSelectOption>
+              <IonSelectOption value="honeybadger">Honey Badger</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+          <IonItemDivider>Your Selections</IonItemDivider>
+          <IonItem>Toppings: {toppings.length ? toppings.reduce((curr, prev) => prev + ', ' + curr, '') : '(none selected)'}</IonItem>
+          <IonItem>Pets: {pets.length ? pets.reduce((curr, prev) => prev + ', ' + curr, '') : '(none selected)'}</IonItem>
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
 ```
 
 
 ## Objects as Values
 
 ```tsx
-import React from 'react';
-import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption, IonPage, IonItemDivider } from '@ionic/react';
 
-const objectOptions = [
+const users = [
   {
     id: 1,
     first: 'Alice',
@@ -571,45 +589,57 @@ const objectOptions = [
   {
     id: 3,
     first: 'Charlie',
-    last: 'Rosenburg'
+    last: 'Rosenburg',
   }
 ];
 
-const compareWith = (o1: any, o2: any) => {
+type User = typeof users[number];
+
+const compareWith = (o1: User, o2: User) => {
   return o1 && o2 ? o1.id === o2.id : o1 === o2;
 };
 
-export const SelectExample: React.FC = () => (
-  <IonContent>
-    <IonList>
-      <IonListHeader>
-        <IonLabel>
-          Objects as Values (compareWith)
-        </IonLabel>
-      </IonListHeader>
-      <IonItem>
-        <IonLabel>Users</IonLabel>
-        <IonSelect compareWith={compareWith}>
-          {objectOptions.map((object, i) => {
-            return (
-              <IonSelectOption key={object.id} value={object.id}>
-                {object.first} {object.last}
-              </IonSelectOption>
-            );
-          })}
-        </IonSelect>
-      </IonItem>
-    </IonList>
-  </IonContent>
-);
+export const ObjectSelection: React.FC = () => {
+
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+
+  return (
+    <IonPage>
+      <IonContent>
+        <IonList>
+          <IonListHeader>
+            <IonLabel>
+              Objects as Values (compareWith)
+            </IonLabel>
+          </IonListHeader>
+          <IonItem>
+            <IonLabel>Users</IonLabel>
+            <IonSelect compareWith={compareWith} value={selectedUsers} multiple onIonChange={e => setSelectedUsers(e.detail.value)}>
+              {users.map(user => (
+                <IonSelectOption key={user.id} value={user}>
+                  {user.first} {user.last}
+                </IonSelectOption>
+              ))}
+            </IonSelect>
+          </IonItem>
+          <IonItemDivider>Selected Users</IonItemDivider>
+          {selectedUsers.length ?
+            selectedUsers.map(user => <IonItem key={user.id}>{user.first} {user.last}</IonItem>) :
+            <IonItem>(none selected)</IonItem>
+          }
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
 ```
 
 
 ## Interface Options
 
 ```tsx
-import React from 'react';
-import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonSelect, IonSelectOption, IonPage, IonItemDivider } from '@ionic/react';
 
 const customAlertOptions = {
   header: 'Pizza Toppings',
@@ -629,63 +659,86 @@ const customActionSheetOptions = {
   subHeader: 'Select your favorite color'
 };
 
-export const SelectExample: React.FC = () => (
-  <IonContent>
-    <IonList>
-      <IonListHeader>
-        <IonLabel>
-          Interface Options
-        </IonLabel>
-      </IonListHeader>
+export const InterfaceOptionsSelection: React.FC = () => {
 
-      <IonItem>
-        <IonLabel>Alert</IonLabel>
-        <IonSelect
-          interfaceOptions={customAlertOptions}
-          interface="alert"
-          multiple={true}
-          placeholder="Select One"
-        >
-          <IonSelectOption value="bacon">Bacon</IonSelectOption>
-          <IonSelectOption value="olives">Black Olives</IonSelectOption>
-          <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
-          <IonSelectOption value="peppers">Green Peppers</IonSelectOption>
-          <IonSelectOption value="mushrooms">Mushrooms</IonSelectOption>
-          <IonSelectOption value="onions">Onions</IonSelectOption>
-          <IonSelectOption value="pepperoni">Pepperoni</IonSelectOption>
-          <IonSelectOption value="pineapple">Pineapple</IonSelectOption>
-          <IonSelectOption value="sausage">Sausage</IonSelectOption>
-          <IonSelectOption value="Spinach">Spinach</IonSelectOption>
-        </IonSelect>
-      </IonItem>
+  const [toppings, setToppings] = useState<string[]>([]);
+  const [hairColor, setHairColor] = useState<string>('brown');
+  const [color, setColor] = useState<string>();
 
-      <IonItem>
-        <IonLabel>Popover</IonLabel>
-        <IonSelect interfaceOptions={customPopoverOptions} interface="popover" placeholder="Select One">
-          <IonSelectOption value="brown">Brown</IonSelectOption>
-          <IonSelectOption value="blonde">Blonde</IonSelectOption>
-          <IonSelectOption value="black">Black</IonSelectOption>
-          <IonSelectOption value="red">Red</IonSelectOption>
-        </IonSelect>
-      </IonItem>
+  return (
+    <IonPage>
+      <IonContent>
+        <IonList>
+          <IonListHeader>
+            <IonLabel>
+              Interface Options
+            </IonLabel>
+          </IonListHeader>
 
-      <IonItem>
-        <IonLabel>Action Sheet</IonLabel>
-        <IonSelect
-          interfaceOptions={customActionSheetOptions}
-          interface="action-sheet"
-          placeholder="Select One"
-        >
-          <IonSelectOption value="red">Red</IonSelectOption>
-          <IonSelectOption value="purple">Purple</IonSelectOption>
-          <IonSelectOption value="yellow">Yellow</IonSelectOption>
-          <IonSelectOption value="orange">Orange</IonSelectOption>
-          <IonSelectOption value="green">Green</IonSelectOption>
-        </IonSelect>
-      </IonItem>
-    </IonList>
-  </IonContent>
-);
+          <IonItem>
+            <IonLabel>Alert</IonLabel>
+            <IonSelect
+              interfaceOptions={customAlertOptions}
+              interface="alert"
+              multiple={true}
+              placeholder="Select One"
+              onIonChange={e => setToppings(e.detail.value)}
+              value={toppings}
+            >
+              <IonSelectOption value="bacon">Bacon</IonSelectOption>
+              <IonSelectOption value="olives">Black Olives</IonSelectOption>
+              <IonSelectOption value="xcheese">Extra Cheese</IonSelectOption>
+              <IonSelectOption value="peppers">Green Peppers</IonSelectOption>
+              <IonSelectOption value="mushrooms">Mushrooms</IonSelectOption>
+              <IonSelectOption value="onions">Onions</IonSelectOption>
+              <IonSelectOption value="pepperoni">Pepperoni</IonSelectOption>
+              <IonSelectOption value="pineapple">Pineapple</IonSelectOption>
+              <IonSelectOption value="sausage">Sausage</IonSelectOption>
+              <IonSelectOption value="Spinach">Spinach</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+
+          <IonItem>
+            <IonLabel>Popover</IonLabel>
+            <IonSelect 
+              interfaceOptions={customPopoverOptions} 
+              interface="popover" 
+              placeholder="Select One"
+              onIonChange={e => setHairColor(e.detail.value)}
+              value={hairColor}>
+              <IonSelectOption value="brown">Brown</IonSelectOption>
+              <IonSelectOption value="blonde">Blonde</IonSelectOption>
+              <IonSelectOption value="black">Black</IonSelectOption>
+              <IonSelectOption value="red">Red</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+
+          <IonItem>
+            <IonLabel>Action Sheet</IonLabel>
+            <IonSelect
+              interfaceOptions={customActionSheetOptions}
+              interface="action-sheet"
+              placeholder="Select One"
+              onIonChange={e => setColor(e.detail.value)}
+              value={color}
+            >
+              <IonSelectOption value="red">Red</IonSelectOption>
+              <IonSelectOption value="purple">Purple</IonSelectOption>
+              <IonSelectOption value="yellow">Yellow</IonSelectOption>
+              <IonSelectOption value="orange">Orange</IonSelectOption>
+              <IonSelectOption value="green">Green</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+
+          <IonItemDivider>Your Selections</IonItemDivider>
+          <IonItem>Toppings: {toppings.length ? toppings.reduce((curr, prev) => prev + ', ' + curr, '') : '(none selected)'}</IonItem>
+          <IonItem>Hair Color: {hairColor}</IonItem>
+          <IonItem>Color: {color ?? '(none selected)'}</IonItem>
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
 ```
 
 

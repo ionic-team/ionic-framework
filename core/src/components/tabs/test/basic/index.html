@@ -32,6 +32,12 @@
           <h1>Tab One</h1>
           <ion-button expand="block" onclick="updateBadgeCount()">Update Badge Count</ion-button>
           <ion-button color="secondary" expand="block" onclick="updateBadgeColor()">Update Badge Color</ion-button>
+
+          <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+            <ion-fab-button class="custom-white">
+              <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
         </ion-content>
       </ion-tab>
 
@@ -121,6 +127,20 @@
     customElements.define('page-one', PageOne);
 
   </script>
+
+  <style>
+    .custom-white {
+      --background: white;
+      --background-hover: #888;
+      --background-focused: #444;
+
+      --color: #3880ff;
+    }
+
+    .ios .custom-white {
+      --background-activated: #ddd;
+    }
+  </style>
 </body>
 
 </html>

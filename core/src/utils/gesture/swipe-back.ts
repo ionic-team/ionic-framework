@@ -1,3 +1,5 @@
+import { clamp } from '../helpers';
+
 import { Gesture, GestureDetail, createGesture } from './index';
 
 export const createSwipeBackGesture = (
@@ -38,12 +40,11 @@ export const createSwipeBackGesture = (
     }
 
     /**
-     * TODO: stepValue can sometimes return a negative
-     * value, but you can't have a negative time value
-     * for the cubic bezier curve (at least with web animations)
-     * Not sure if the negative step value is an error or not
+     * TODO: stepValue can sometimes return negative values
+     * or values greater than 1 which should not be possible.
+     * Need to investigate more to find where the issue is.
      */
-    onEndHandler(shouldComplete, (stepValue <= 0) ? 0.01 : stepValue, realDur);
+    onEndHandler(shouldComplete, (stepValue <= 0) ? 0.01 : clamp(0, stepValue, 0.9999), realDur);
   };
 
   return createGesture({

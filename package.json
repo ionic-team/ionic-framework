@@ -9,7 +9,7 @@
     "changelog": "conventional-changelog -p angular -i ./CHANGELOG.md -k core -s"
   },
   "devDependencies": {
-    "@octokit/rest": "^15.2.6",
+    "@octokit/rest": "^17.0.0",
     "conventional-changelog-cli": "^2.0.1",
     "execa": "^0.10.0",
     "fs-extra": "^7.0.0",

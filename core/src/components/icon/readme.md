@@ -6,112 +6,33 @@ Icons can be used on their own as a standalone component, or inside of another c
 
 By default, Ionicons will use the same icon for each platform (iOS or Material Design). In previous versions of Ionicons, icons would automatically update based on the platform. As of Ionicons 5.0, apps will have to handle this on a per-icon basis, if needed.
 
-To use different icons depending on platform, set the `ios` and `md` properties or attributes. In the example below, when the app has the `ios` mode applied, it'll show the `logo-apple` icon. When using `md`, it'll show the `logo-android` icon.
+To use different icons depending on platform, set the `ios` and `md` properties or attributes. In the example below, when the app has the `ios` mode applied, it will show the `logo-apple` icon. When using `md`, it will show the `logo-android` icon.
 
-```
+```html
 <ion-icon ios="logo-apple" md="logo-android"></ion-icon>
 ```
 
 For a full list of available icons and more usage explanations, please check out the [Ionicons documentation](https://ionicons.com/).
+
 
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-#### ariaLabel
-
-string
-
-Specifies the label to use for accessibility. Defaults to the icon name.
-
-
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"dark"`, `"medium"`, `"light"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### ios
-
-string
-
-Specifies which icon to use on `ios` mode.
-
-
-#### md
-
-string
-
-Specifies which icon to use on `md` mode.
-
-
-#### name
-
-string
-
-Specifies which icon to use. The appropriate icon will be used based on the mode.
-For more information, see [Ionicons](https://github.com/ionic-team/ionicons).
-
-
-#### size
-
-string
-
-The size of the icon.
-Available options are: `"small"` and `"large"`.
-
-
-## Attributes
-
-#### aria-label
-
-string
-
-Specifies the label to use for accessibility. Defaults to the icon name.
-
-
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"dark"`, `"medium"`, `"light"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### ios
-
-string
-
-Specifies which icon to use on `ios` mode.
-
-
-#### md
-
-string
-
-Specifies which icon to use on `md` mode.
-
-
-#### name
-
-string
-
-Specifies which icon to use. The appropriate icon will be used based on the mode.
-For more information, see [Ionicons](https://github.com/ionic-team/ionicons).
-
-
-#### size
-
-string
-
-The size of the icon.
-Available options are: `"small"` and `"large"`.
-
+| Property    | Attribute    | Description                                                                                                                                                                    | Type                   | Default        |
+| ----------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | -------------- |
+| `ariaLabel` | `aria-label` | Specifies the label to use for accessibility. Defaults to the icon name.                                                                                                       | `string \| undefined`  | `undefined`    |
+| `color`     | `color`      | The color to use for the background of the item.                                                                                                                               | `string \| undefined`  | `undefined`    |
+| `flipRtl`   | `flip-rtl`   | Specifies whether the icon should horizontally flip when `dir` is `"rtl"`.                                                                                                     | `boolean \| undefined` | `undefined`    |
+| `icon`      | `icon`       | A combination of both `name` and `src`. If a `src` url is detected it will set the `src` property. Otherwise it assumes it's a built-in named SVG and set the `name` property. | `any`                  | `undefined`    |
+| `ios`       | `ios`        | Specifies which icon to use on `ios` mode.                                                                                                                                     | `string \| undefined`  | `undefined`    |
+| `lazy`      | `lazy`       | If enabled, ion-icon will be loaded lazily when it's visible in the viewport. Default, `false`.                                                                                | `boolean`              | `false`        |
+| `md`        | `md`         | Specifies which icon to use on `md` mode.                                                                                                                                      | `string \| undefined`  | `undefined`    |
+| `mode`      | `mode`       | The mode determines which platform styles to use.                                                                                                                              | `string`               | `getIonMode()` |
+| `name`      | `name`       | Specifies which icon to use from the built-in set of icons.                                                                                                                    | `string \| undefined`  | `undefined`    |
+| `size`      | `size`       | The size of the icon. Available options are: `"small"` and `"large"`.                                                                                                          | `string \| undefined`  | `undefined`    |
+| `src`       | `src`        | Specifies the exact `src` of an SVG file to use.                                                                                                                               | `string \| undefined`  | `undefined`    |
 
 
 ----------------------------------------------
