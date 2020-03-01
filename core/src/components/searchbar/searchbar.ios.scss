@@ -45,7 +45,7 @@
 
 .searchbar-input {
   @include padding(0, 28px);
-  @include border-radius($searchbar-ios-input-border-radius);
+  @include border-radius(var(--border-radius, $searchbar-ios-input-border-radius));
 
   height: 100%;
 
