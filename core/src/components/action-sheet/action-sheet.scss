@@ -155,6 +155,12 @@
   @include button-state();
 }
 
+.action-sheet-button-disabled {
+  pointer-events: none;
+
+  opacity: .5;
+}
+
 
 // Action Sheet: Selected
 // --------------------------------------------------
