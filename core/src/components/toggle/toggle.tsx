@@ -53,7 +53,7 @@ export class Toggle implements ComponentInterface {
   /**
    * If `true`, enabling On / Off labels for IOS toggles only.
    */
-  @Prop() ioLabels = true;
+  @Prop() ioIOSLabels = false;
 
   /**
    * The value of the toggle does not mean if it's checked or not, use the `checked`
@@ -201,14 +201,14 @@ export class Toggle implements ComponentInterface {
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
-          'io-labeled': this.ioLabels,
+          'io-labeled': this.ioIOSLabels,
           'interactive': true
         }}
       >
         <div class="toggle-icon">
           <div class="toggle-inner"/>
           {
-          this.ioLabels ?
+          this.ioIOSLabels ?
             <div class="toggle-label-container">
               <i class="toggle-i-label">I</i>
               <i class="toggle-o-label">O</i>
