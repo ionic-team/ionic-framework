@@ -22,6 +22,10 @@ Chips represent complex entities in small blocks, such as a contact. A chip can 
   <ion-label color="dark">Secondary w/ Dark label</ion-label>
 </ion-chip>
 
+<ion-chip disabled="true">
+  <ion-label>Disabled Chip</ion-label>
+</ion-chip>
+
 <ion-chip>
   <ion-icon name="pin"></ion-icon>
   <ion-label>Default</ion-label>
@@ -81,6 +85,10 @@ export const ChipExamples: React.FC = () => {
           <IonLabel color="dark">Secondary w/ Dark label</IonLabel>
         </IonChip>
 
+        <IonChip disabled="true">
+          <IonLabel>Disabled Chip</IonLabel>
+        </IonChip>
+
         <IonChip>
           <IonIcon icon={pin} />
           <IonLabel>Default</IonLabel>
@@ -133,6 +141,10 @@ export const ChipExamples: React.FC = () => {
     <ion-label color="dark">Secondary w/ Dark label</ion-label>
   </ion-chip>
 
+  <ion-chip disabled="true">
+    <ion-label>Disabled Chip</ion-label>
+  </ion-chip>
+
   <ion-chip>
     <ion-icon name="pin"></ion-icon>
     <ion-label>Default</ion-label>
@@ -168,11 +180,12 @@ export const ChipExamples: React.FC = () => {
 
 ## Properties
 
-| Property  | Attribute | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
-| --------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `color`   | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
-| `mode`    | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
-| `outline` | `outline` | Display an outline style button.                                                                                                                                                                                                                                       | `boolean`             | `false`     |
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the chip.                                                                                                                                                                                                                     | `boolean`             | `false`     |
+| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
+| `outline`  | `outline`  | Display an outline style button.                                                                                                                                                                                                                                       | `boolean`             | `false`     |
 
 
 ## CSS Custom Properties
