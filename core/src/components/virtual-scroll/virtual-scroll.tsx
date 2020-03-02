@@ -443,7 +443,7 @@ export class VirtualScroll implements ComponentInterface {
   }
 }
 
-const VirtualProxy: FunctionalComponent<{dom: VirtualNode[], minIHeight: MinimumItemHeightFn | undefined}> = ({ dom, minimumItemHeight }, children, utils) => {
+const VirtualProxy: FunctionalComponent<{dom: VirtualNode[], minIHeight: MinimumItemHeightFn | undefined}> = ({ dom, minIHeight }, children, utils) => {
   return utils.map(children, (child, i) => {
     const node = dom[i];
     const vattrs = child.vattrs || {};
@@ -453,9 +453,9 @@ const VirtualProxy: FunctionalComponent<{dom: VirtualNode[], minIHeight: Minimum
     if (!node.visible) {
       classes += 'virtual-loading';
     }
-    if(minimumItemHeight !== undefined && shift > 0 && shift < minimumItemHeight){
-      //minimumItemHeight prevents content stacking
-      shift = minimumItemHeight;
+    if(minIHeight !== undefined && shift > 0 && shift < minIHeight){
+      //minIHeight prevents content stacking
+      shift = minIHeight;
     }
     return {
       ...child,
