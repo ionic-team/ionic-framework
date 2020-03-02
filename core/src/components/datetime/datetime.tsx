@@ -501,11 +501,11 @@ export class Datetime implements ComponentInterface {
     min.day = min.day || 1;
     max.day = max.day || 31;
     min.hour = min.hour || 0;
-    max.hour = max.hour || 23;
+    max.hour = max.hour === undefined ? 23 : max.hour;
     min.minute = min.minute || 0;
-    max.minute = max.minute || 59;
+    max.minute = max.minute === undefined ? 59 : max.minute;
     min.second = min.second || 0;
-    max.second = max.second || 59;
+    max.second = max.second === undefined ? 59 : max.second;
 
     // Ensure min/max constraints
     if (min.year > max.year) {
