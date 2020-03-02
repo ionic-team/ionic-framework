@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, FunctionalComponent, Host, Listen, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
-import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import { Cell, DomRenderFn, FooterHeightFn, MinimumItemHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
@@ -117,7 +117,7 @@ export class VirtualScroll implements ComponentInterface {
   /**
    * An optional parameter that prevents content-stacking and forces items to have a minimum height.
    */
-  @Prop() minimumItemHeight?: number;
+  @Prop() minimumItemHeight?: MinimumItemHeightFn;
 
   /**
    * NOTE: only JSX API for stencil.
@@ -443,7 +443,7 @@ export class VirtualScroll implements ComponentInterface {
   }
 }
 
-const VirtualProxy: FunctionalComponent<{dom: VirtualNode[], minimumItemHeight: number | undefined}> = ({ dom, minimumItemHeight }, children, utils) => {
+const VirtualProxy: FunctionalComponent<{dom: VirtualNode[], minimumItemHeight: MinimumItemHeightFn}> = ({ dom, minimumItemHeight }, children, utils) => {
   return utils.map(children, (child, i) => {
     const node = dom[i];
     const vattrs = child.vattrs || {};
@@ -453,7 +453,7 @@ const VirtualProxy: FunctionalComponent<{dom: VirtualNode[], minimumItemHeight: 
     if (!node.visible) {
       classes += 'virtual-loading';
     }
-    if(minimumItemHeight && shift > 0 && shift < minimumItemHeight){
+    if(minimumItemHeight !== undefined && shift > 0 && shift < minimumItemHeight){
       //minimumItemHeight prevents content stacking
       shift = minimumItemHeight;
     }

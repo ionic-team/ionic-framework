@@ -20,6 +20,7 @@ import {
   DatetimeOptions,
   DomRenderFn,
   FooterHeightFn,
+  MinimumItemHeightFn,
   FrameworkDelegate,
   HeaderFn,
   HeaderHeightFn,
@@ -2631,6 +2632,10 @@ export namespace Components {
     * An optional function that maps each item footer within their height.
     */
     'footerHeight'?: FooterHeightFn;
+    /**
+    * An optional function that forces minimum item height.
+    */
+    'minimumItemHeight'?: MinimumItemHeightFn;
     /**
     * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
     */
@@ -5792,6 +5797,10 @@ declare namespace LocalJSX {
     * An optional function that maps each item footer within their height.
     */
     'footerHeight'?: FooterHeightFn;
+    /**
+    * An optional function that forces minimum item height.
+    */
+    'minimumItemHeight'?: MinimumItemHeightFn;
     /**
     * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
     */
