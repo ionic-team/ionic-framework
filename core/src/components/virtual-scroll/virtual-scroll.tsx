@@ -434,7 +434,7 @@ export class VirtualScroll implements ComponentInterface {
         }}
       >
         {this.renderItem && (
-          <VirtualProxy dom={this.virtualDom} minimumItemHeight={this.minimumItemHeight}>
+          <VirtualProxy dom={this.virtualDom} minIHeight={this.minimumItemHeight}>
             {this.virtualDom.map(node => this.renderVirtualNode(node))}
           </VirtualProxy>
         )}
@@ -443,7 +443,7 @@ export class VirtualScroll implements ComponentInterface {
   }
 }
 
-const VirtualProxy: FunctionalComponent<{dom: VirtualNode[], minimumItemHeight: MinimumItemHeightFn}> = ({ dom, minimumItemHeight }, children, utils) => {
+const VirtualProxy: FunctionalComponent<{dom: VirtualNode[], minIHeight: number | undefined}> = ({ dom, minimumItemHeight }, children, utils) => {
   return utils.map(children, (child, i) => {
     const node = dom[i];
     const vattrs = child.vattrs || {};
