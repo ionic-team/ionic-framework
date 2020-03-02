@@ -115,6 +115,11 @@ export class VirtualScroll implements ComponentInterface {
   @Prop() footerHeight?: FooterHeightFn;
 
   /**
+   * An optional parameter that prevents content-stacking and forces items to have a minimum height.
+   */
+  @Prop() minimumItemHeight?: number;
+
+  /**
    * NOTE: only JSX API for stencil.
    *
    * Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
@@ -429,7 +434,7 @@ export class VirtualScroll implements ComponentInterface {
         }}
       >
         {this.renderItem && (
-          <VirtualProxy dom={this.virtualDom}>
+          <VirtualProxy dom={this.virtualDom} minimumItemHeight={this.minimumItemHeight}>
             {this.virtualDom.map(node => this.renderVirtualNode(node))}
           </VirtualProxy>
         )}
@@ -438,14 +443,19 @@ export class VirtualScroll implements ComponentInterface {
   }
 }
 
-const VirtualProxy: FunctionalComponent<{dom: VirtualNode[]}> = ({ dom }, children, utils) => {
+const VirtualProxy: FunctionalComponent<{dom: VirtualNode[], minimumItemHeight: number}> = ({ dom, minimumItemHeight }, children, utils) => {
   return utils.map(children, (child, i) => {
     const node = dom[i];
     const vattrs = child.vattrs || {};
     let classes = vattrs.class || '';
+    let shift = node.top;
     classes += 'virtual-item ';
     if (!node.visible) {
       classes += 'virtual-loading';
+    }
+    if(minimumItemHeight && shift > 0 && shift < approxItemHeight){
+      //minimumItemHeight prevents content stacking
+      shift = approxItemHeight;
     }
     return {
       ...child,
@@ -454,7 +464,7 @@ const VirtualProxy: FunctionalComponent<{dom: VirtualNode[]}> = ({ dom }, childr
         class: classes,
         style: {
           ...vattrs.style,
-          transform: `translate3d(0,${node.top}px,0)`
+          transform: `translate3d(0,${shift}px,0)`
         }
       }
     };
