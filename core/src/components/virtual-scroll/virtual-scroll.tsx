@@ -453,9 +453,9 @@ const VirtualProxy: FunctionalComponent<{dom: VirtualNode[], minimumItemHeight: 
     if (!node.visible) {
       classes += 'virtual-loading';
     }
-    if(minimumItemHeight && shift > 0 && shift < approxItemHeight){
+    if(minimumItemHeight && shift > 0 && shift < minimumItemHeight){
       //minimumItemHeight prevents content stacking
-      shift = approxItemHeight;
+      shift = minimumItemHeight;
     }
     return {
       ...child,
