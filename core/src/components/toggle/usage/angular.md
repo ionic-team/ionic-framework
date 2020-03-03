@@ -9,7 +9,7 @@
 <ion-toggle checked></ion-toggle>
 
 <!-- IO Labeled Toggle -->
-<ion-toggle ioLabels ></ion-toggle>
+<ion-toggle ioIOSLabels ></ion-toggle>
 
 <!-- Toggle Colors -->
 <ion-toggle color="primary"></ion-toggle>
@@ -37,7 +37,7 @@
 
   <ion-item>
     <ion-label>Tuna</ion-label>
-    <ion-toggle [(ngModel)]="tuna" ioLabels ></ion-toggle>
+    <ion-toggle [(ngModel)]="tuna" ioIOSLabels ></ion-toggle>
   </ion-item>
 </ion-list>
 ```

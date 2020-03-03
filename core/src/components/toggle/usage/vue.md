@@ -10,7 +10,7 @@
   <ion-toggle checked></ion-toggle>
   
   <!-- IO Labeled Toggle-->
-  <ion-toggle ioLabels ></ion-toggle>
+  <ion-toggle ioIOSLabels ></ion-toggle>
 
   <!-- Toggle Colors -->
   <ion-toggle color="primary"></ion-toggle>
@@ -54,7 +54,7 @@
       <ion-toggle
         @ionChange="toppings.push($event.target.value)"
         value="mushrooms"
-        :ioLabels="true">
+        :ioIOSLabels="true">
       </ion-toggle>
     </ion-item>
   </ion-list>
