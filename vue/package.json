@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@ionic/core": "^4.6.0",
-    "ionicons": "^5.0.0-13"
+    "ionicons": "^5.0.1"
   },
   "devDependencies": {
     "rollup": "^0.62.0",
