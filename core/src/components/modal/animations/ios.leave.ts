@@ -18,7 +18,7 @@ export const iosLeaveAnimation = (
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelector('.modal-wrapper')!)
     .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', 'translateY(0%)', 'translateY(100%)');
+    .fromTo('transform', 'translateY(0vh)', 'translateY(100vh)');
 
   const baseAnimation = createAnimation()
     .addElement(baseEl)
