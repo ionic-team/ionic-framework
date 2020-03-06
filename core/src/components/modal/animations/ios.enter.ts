@@ -21,7 +21,7 @@ export const iosEnterAnimation = (
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelector('.modal-wrapper')!)
     .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', 'translateY(100%)', 'translateY(0%)');
+    .fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
 
   const baseAnimation = createAnimation()
     .addElement(baseEl)
