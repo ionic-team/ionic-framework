@@ -11,7 +11,11 @@ export const mdEnterAnimation = (baseEl: HTMLElement): Animation => {
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
+    .beforeStyles({
+      'pointer-events': 'none'
+    })
+    .afterClearStyles(['pointer-events']);
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.modal-wrapper')!)
