@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Modal - Spec</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <script type="module">
+    import { modalController, createAnimation } from '../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+    window.createAnimation = createAnimation;
+  </script>
+  <style>
+  #modal-header {
+    padding-top: 5px !important;
+    height: 55px;
+  }
+  #modal-header ion-title {
+    padding-top: 5px;
+  }
+
+  #modal-header ion-note {
+    display: block;
+    width: 100%;
+    height: 15px;
+    text-align: center;
+    font-size: 11px;
+    color: #111;
+  }
+
+  ion-list ion-icon {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .show-modal-btn {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+
+    <div class="ion-page liam">
+      <ion-content>
+        <ion-button fill="clear" class="show-modal-btn" onclick="presentModal(document.querySelector('.liam'))">Show Modal</ion-button>
+      </ion-content>
+    </div>
+  </ion-app>
+
+  <script>
+    window.addEventListener("ionModalDidDismiss", function (e) { console.log('DidDismiss', e) })
+    window.addEventListener("ionModalWillDismiss", function (e) { console.log('WillDismiss', e) })
+
+    async function createModal(presentingEl) {
+      // create component to open
+      const element = document.createElement('div');
+      element.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Title</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-button fill="clear" class="show-modal-btn">Show Modal</ion-button>
+        </ion-content>
+      `;
+
+      // listen for close event
+      const button = element.querySelector('.show-modal-btn');
+      button.addEventListener('click', async () => {
+        const topModal = await modalController.getTop();
+        presentModal(topModal);
+      });
+
+
+      // present the modal
+      const modalElement = await modalController.create({
+        presentingElement: presentingEl,
+        component: element,
+        swipeToClose: true,
+      });
+      return modalElement;
+    }
+
+    async function presentModal(presentingEl) {
+      const modal = await createModal(presentingEl);
+      await modal.present();
+    }
+  </script>
+</body>
+
+</html>

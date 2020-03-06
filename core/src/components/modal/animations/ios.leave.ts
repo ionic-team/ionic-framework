@@ -24,14 +24,13 @@ export const iosLeaveAnimation = (
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(duration)
-    .addAnimation([backdropAnimation, wrapperAnimation]);
+    .addAnimation(wrapperAnimation);
 
   if (presentingEl) {
-    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-10px' : 'max(30px, var(--ion-safe-area-top))';
-    const bodyEl = document.body;
-    const currentPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
+    const isMobile = window.innerWidth < 768;
+    const hasCardModal = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined);
+
     const presentingAnimation = createAnimation()
-      .addElement(presentingEl)
       .beforeClearStyles(['transform'])
       .afterClearStyles(['transform'])
       .onFinish(currentStep => {
@@ -44,13 +43,43 @@ export const iosLeaveAnimation = (
         if (numModals <= 1) {
           bodyEl.style.setProperty('background-color', '');
         }
-      })
-      .keyframes([
-        { offset: 0, filter: 'contrast(0.85)', transform: `translateY(${modalTransform}) scale(${currentPresentingScale})`, borderRadius: '10px 10px 0 0' },
-        { offset: 1, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: '0px' }
-      ]);
+      });
 
-    baseAnimation.addAnimation(presentingAnimation);
+    const bodyEl = document.body;
+
+    if (isMobile) {
+      const modalTransform = hasCardModal ? '-10px' : 'max(30px, var(--ion-safe-area-top))';
+      const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
+      const finalTransform = `translateY(${modalTransform}) scale(${toPresentingScale})`;
+
+      presentingAnimation
+        .addElement(presentingEl)
+        .keyframes([
+          { offset: 0, filter: 'contrast(0.85)', transform: finalTransform, borderRadius: '10px 10px 0 0' },
+          { offset: 1, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: '0px' }
+        ]);
+
+      baseAnimation.addAnimation(presentingAnimation);
+    } else {
+      if (!hasCardModal) {
+        wrapperAnimation.fromTo('opacity', '1', '0');
+        baseAnimation.addAnimation(backdropAnimation);
+      } else {
+        const toPresentingScale = (hasCardModal) ? SwipeToCloseDefaults.MIN_PRESENTING_SCALE : 1;
+        const finalTransform = `translateY(-10px) scale(${toPresentingScale})`;
+
+        presentingAnimation
+          .addElement(presentingEl.querySelector('.modal-wrapper')!)
+          .keyframes([
+            { offset: 0, filter: 'contrast(0.85)', transform: finalTransform },
+            { offset: 1, filter: 'contrast(1)', transform: 'translateY(0) scale(1)' }
+          ]);
+
+        baseAnimation.addAnimation(presentingAnimation);
+      }
+    }
+  } else {
+    baseAnimation.addAnimation(backdropAnimation);
   }
 
   return baseAnimation;
