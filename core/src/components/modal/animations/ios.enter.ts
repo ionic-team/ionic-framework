@@ -32,7 +32,7 @@ export const iosEnterAnimation = (
      * No need to wrry about statusbar padding since engines like Gecko
      * are not used as the engine for standlone Cordova/Capacitor apps
      */
-    const transformOffset = (!CSS.supports || !CSS.supports('width', 'max(0px, 1px)')) ? '30px' : 'max(30px, var(--ion-safe-area-top))';
+    const transformOffset = (CSS.supports === undefined || !CSS.supports('width', 'max(0px, 1px)')) ? '30px' : 'max(30px, var(--ion-safe-area-top))';
     const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-10px' : transformOffset;
     const bodyEl = document.body;
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;

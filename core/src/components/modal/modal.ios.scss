@@ -28,8 +28,7 @@
 
 :host(.modal-card) .modal-wrapper {
   @include border-radius($modal-ios-border-radius, $modal-ios-border-radius, 0, 0);
-  // height should be 10px less than the presenting element transform
-  height: calc(100% - 20px);
+  height: calc(100% - 40px);
 }
 
 @supports (width: max(0px, 1px)) {
