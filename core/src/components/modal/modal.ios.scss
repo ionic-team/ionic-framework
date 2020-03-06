@@ -29,19 +29,30 @@
   
   :host(.modal-card) .modal-wrapper {
     @include border-radius($modal-ios-border-radius, $modal-ios-border-radius, 0, 0);
-    height: calc(100% - max(30px, var(--ion-safe-area-top)) - 10px);
+    height: calc(100% - 40px);
+  }
+  
+  @supports (width: max(0px, 1px)) {
+    :host(.modal-card) .modal-wrapper {
+      height: calc(100% - max(30px, var(--ion-safe-area-top)) - 10px);
+    }
   }
 }
 
 @media screen and (min-width: 768px) {
   :host(.modal-card) {
-    --backdrop-opacity: 0.15;
+    --backdrop-opacity: 0.18;
+    
+    transition: all 0.5s ease-in-out;
   }
 
-  :host(.modal-card) .modal-wrapper {
+  :host(.modal-card) .modal-wrapper,
+  :host(.modal-card) .modal-shadow {
     --width: calc(100% - 120px);
-    --height: calc(100% - (120px + var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
+    --height: calc(100% - (120px + var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));  
+  }
   
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  :host(.modal-card) .modal-shadow {
+    box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.1);
   }
 }

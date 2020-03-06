@@ -16,7 +16,7 @@ export const iosLeaveAnimation = (
     .fromTo('opacity', 'var(--backdrop-opacity)', 0.0);
 
   const wrapperAnimation = createAnimation()
-    .addElement(baseEl.querySelector('.modal-wrapper')!)
+    .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
     .beforeStyles({ 'opacity': 1 })
     .fromTo('transform', 'translateY(0vh)', 'translateY(100vh)');
 
@@ -48,7 +48,8 @@ export const iosLeaveAnimation = (
     const bodyEl = document.body;
 
     if (isMobile) {
-      const modalTransform = hasCardModal ? '-10px' : 'max(30px, var(--ion-safe-area-top))';
+      const transformOffset = (!CSS.supports('width', 'max(0px, 1px)')) ? '30px' : 'max(30px, var(--ion-safe-area-top))';
+      const modalTransform = hasCardModal ? '-10px' : transformOffset;
       const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
       const finalTransform = `translateY(${modalTransform}) scale(${toPresentingScale})`;
 
@@ -74,8 +75,15 @@ export const iosLeaveAnimation = (
             { offset: 0, filter: 'contrast(0.85)', transform: finalTransform },
             { offset: 1, filter: 'contrast(1)', transform: 'translateY(0) scale(1)' }
           ]);
+          
+        const shadowAnimation = createAnimation()
+          .addElement(presentingEl.querySelector('.modal-shadow')!)
+          .keyframes([
+            { offset: 0, opacity: '0', transform: finalTransform },
+            { offset: 1, opacity: '1', transform: 'translateY(0) scale(1)' }
+          ]);
 
-        baseAnimation.addAnimation(presentingAnimation);
+        baseAnimation.addAnimation([presentingAnimation, shadowAnimation]);
       }
     }
   } else {

@@ -10,7 +10,7 @@ export const iosEnterAnimation = (
     presentingEl?: HTMLElement,
   ): Animation => {
   const wrapperAnimation = createAnimation()
-    .addElement(baseEl.querySelector('.modal-wrapper')!)
+    .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
     .beforeStyles({ 'opacity': 1 })
     .fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
 
@@ -26,8 +26,7 @@ export const iosEnterAnimation = (
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
     .beforeStyles({
       'pointer-events': 'none'
-    })
-    .afterClearStyles(['pointer-events']);
+    });
 
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;
@@ -43,7 +42,13 @@ export const iosEnterAnimation = (
     const bodyEl = document.body;
 
     if (isMobile) {
-      const modalTransform = hasCardModal ? '-10px' : 'max(30px, var(--ion-safe-area-top))';
+      /**
+       * Fallback for browsers that does not support `max()` (ex: Firefox)
+       * No need to wrry about statusbar padding since engines like Gecko
+       * are not used as the engine for standlone Cordova/Capacitor apps
+       */
+      const transformOffset = (!CSS.supports('width', 'max(0px, 1px)')) ? '30px' : 'max(30px, var(--ion-safe-area-top))';
+      const modalTransform = hasCardModal ? '-10px' : transformOffset;
       const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
       const finalTransform = `translateY(${modalTransform}) scale(${toPresentingScale})`;
 
@@ -76,11 +81,22 @@ export const iosEnterAnimation = (
             { offset: 0, filter: 'contrast(1)', transform: 'translateY(0) scale(1)' },
             { offset: 1, filter: 'contrast(0.85)', transform: finalTransform }
           ]);
+          
+        const shadowAnimation = createAnimation()
+          .afterStyles({
+            'transform': finalTransform
+          })
+          .addElement(presentingEl.querySelector('.modal-shadow')!)
+          .keyframes([
+            { offset: 0, opacity: '1', transform: 'translateY(0) scale(1)' },
+            { offset: 1, opacity: '0', transform: finalTransform }
+          ]);
 
-        baseAnimation.addAnimation(presentingAnimation);
+        baseAnimation.addAnimation([presentingAnimation, shadowAnimation]);
       }
     }
   } else {
+    backdropAnimation.afterClearStyles(['pointer-events']);
     baseAnimation.addAnimation(backdropAnimation);
   }
 
