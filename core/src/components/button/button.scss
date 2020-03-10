@@ -179,12 +179,12 @@
   line-height: 1;
 
   box-shadow: var(--box-shadow);
+
   contain: layout style;
   cursor: pointer;
+
   opacity: var(--opacity);
   overflow: var(--overflow);
-
-  overflow: hidden;
 
   z-index: 0;
   box-sizing: border-box;
