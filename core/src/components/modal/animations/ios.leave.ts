@@ -10,7 +10,6 @@ export const iosLeaveAnimation = (
   presentingEl?: HTMLElement,
   duration = 500
 ): Animation => {
-
   const backdropAnimation = createAnimation()
     .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 'var(--backdrop-opacity)', 0.0);
@@ -62,9 +61,10 @@ export const iosLeaveAnimation = (
 
       baseAnimation.addAnimation(presentingAnimation);
     } else {
+      baseAnimation.addAnimation(backdropAnimation);
+
       if (!hasCardModal) {
         wrapperAnimation.fromTo('opacity', '1', '0');
-        baseAnimation.addAnimation(backdropAnimation);
       } else {
         const toPresentingScale = (hasCardModal) ? SwipeToCloseDefaults.MIN_PRESENTING_SCALE : 1;
         const finalTransform = `translateY(-10px) scale(${toPresentingScale})`;

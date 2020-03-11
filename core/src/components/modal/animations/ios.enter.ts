@@ -9,6 +9,13 @@ export const iosEnterAnimation = (
     baseEl: HTMLElement,
     presentingEl?: HTMLElement,
   ): Animation => {
+  const backdropAnimation = createAnimation()
+    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
+    .beforeStyles({
+      'pointer-events': 'none'
+    });
+
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
     .beforeStyles({ 'opacity': 1 })
@@ -20,13 +27,6 @@ export const iosEnterAnimation = (
     .duration(500)
     .beforeAddClass('show-modal')
     .addAnimation(wrapperAnimation);
-
-  const backdropAnimation = createAnimation()
-    .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
-    .beforeStyles({
-      'pointer-events': 'none'
-    });
 
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;
