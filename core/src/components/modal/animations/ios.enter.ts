@@ -44,7 +44,7 @@ export const iosEnterAnimation = (
     if (isMobile) {
       /**
        * Fallback for browsers that does not support `max()` (ex: Firefox)
-       * No need to wrry about statusbar padding since engines like Gecko
+       * No need to worry about statusbar padding since engines like Gecko
        * are not used as the engine for standlone Cordova/Capacitor apps
        */
       const transformOffset = (!CSS.supports('width', 'max(0px, 1px)')) ? '30px' : 'max(30px, var(--ion-safe-area-top))';
