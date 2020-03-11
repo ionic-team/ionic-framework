@@ -1,3 +1,24 @@
+## [5.0.5](https://github.com/ionic-team/ionic/compare/v5.0.4...v5.0.5) (2020-03-11)
+
+
+### Bug Fixes
+
+* **button:** allow overflow to be overridden by the CSS variable ([#20738](https://github.com/ionic-team/ionic/issues/20738)) ([7ecde36](https://github.com/ionic-team/ionic/commit/7ecde36f9d31327a45f7b5023ed533edbb9cc709)), closes [#20726](https://github.com/ionic-team/ionic/issues/20726)
+* **datetime:** account for max property when hour, minute, or second is set to 0 ([#20665](https://github.com/ionic-team/ionic/issues/20665)) ([2177461](https://github.com/ionic-team/ionic/commit/21774612d8d70ab7eda3eab0e6e9ac039b5c87d8)), closes [#20652](https://github.com/ionic-team/ionic/issues/20652)
+* **header:** collapsable header should default to using content background ([#20736](https://github.com/ionic-team/ionic/issues/20736)) ([f6c3ba7](https://github.com/ionic-team/ionic/commit/f6c3ba7e5af2af9e32f75306cde7704509e82263)), closes [#20691](https://github.com/ionic-team/ionic/issues/20691)
+* **header:** resolve undefined error on collapsible header when navigating quickly ([#20728](https://github.com/ionic-team/ionic/issues/20728)) ([87a2721](https://github.com/ionic-team/ionic/commit/87a27216d011f1d02ac0fc0aeb3ae0400ecfbd8c)), closes [#20725](https://github.com/ionic-team/ionic/issues/20725)
+* **ios:** large title animation now works properly in a modal ([#20703](https://github.com/ionic-team/ionic/issues/20703)) ([ec4878a](https://github.com/ionic-team/ionic/commit/ec4878ac085d8ff92cb8b2ea0852523f174ab01b)), closes [#20696](https://github.com/ionic-team/ionic/issues/20696)
+* **item:** apply proper margin left for slotted icon in RTL ([#20684](https://github.com/ionic-team/ionic/issues/20684)) ([d53595e](https://github.com/ionic-team/ionic/commit/d53595eb1629e0d60f7e832414e84c544e184346)), closes [#20653](https://github.com/ionic-team/ionic/issues/20653)
+* **label:** text overflow for slotted headings ([#20690](https://github.com/ionic-team/ionic/issues/20690)) ([4d34ce6](https://github.com/ionic-team/ionic/commit/4d34ce6a31eaa19859699646cc614f5be6239e10)), closes [#17087](https://github.com/ionic-team/ionic/issues/17087)
+* **modal:** leave animation transitions modal completely out of viewport on ipad ([#20702](https://github.com/ionic-team/ionic/issues/20702)) ([22d5256](https://github.com/ionic-team/ionic/commit/22d52568100d8096ee36e3a61a19614f0d63d45f)), closes [#20697](https://github.com/ionic-team/ionic/issues/20697)
+* **angular** exclude components from ssr ([#20674](https://github.com/ionic-team/ionic/issues/20674)) ([f64b142](https://github.com/ionic-team/ionic/commit/f64b1420aead39b9056dc25cfdbcf95bc4f6f621))
+* **modal:** swipeable modal now works in firefox ([#20714](https://github.com/ionic-team/ionic/issues/20714)) ([7d260b9](https://github.com/ionic-team/ionic/commit/7d260b96a73958709fa93a4fe58f816a445471ee)), closes [#20706](https://github.com/ionic-team/ionic/issues/20706)
+* **overlays:** prevent accidental dismiss of overlays when tapping screen twice ([#20683](https://github.com/ionic-team/ionic/issues/20683)) ([b6c2a77](https://github.com/ionic-team/ionic/commit/b6c2a77deb1c09eb1fd414f7737794e208ab5081)), closes [#20608](https://github.com/ionic-team/ionic/issues/20608)
+* **segment:** allow routerLink to work on segment buttons ([#20682](https://github.com/ionic-team/ionic/issues/20682)) ([314dbb1](https://github.com/ionic-team/ionic/commit/314dbb1a4d970327fcbb2f3fbdec0627c626fe4d)), closes [#20678](https://github.com/ionic-team/ionic/issues/20678)
+* **segment:** iOS mode segment now works on older Android devices ([#20673](https://github.com/ionic-team/ionic/issues/20673)) ([44993b7](https://github.com/ionic-team/ionic/commit/44993b7987031b6618409675fdbb1f15ec4ea343)), closes [#20648](https://github.com/ionic-team/ionic/issues/20648)
+
+
+
 ## [5.0.4](https://github.com/ionic-team/ionic/compare/v5.0.3...v5.0.4) (2020-02-27)
 
 
