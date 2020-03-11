@@ -12,12 +12,16 @@ export const iosEnterAnimation = (
   // The top translate Y for the presenting element
   const backdropAnimation = createAnimation()
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
+    .beforeStyles({
+      'pointer-events': 'none'
+    })
+    .afterClearStyles(['pointer-events']);
 
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelector('.modal-wrapper')!)
     .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', 'translateY(100%)', 'translateY(0%)');
+    .fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
 
   const baseAnimation = createAnimation()
     .addElement(baseEl)
@@ -27,7 +31,13 @@ export const iosEnterAnimation = (
     .addAnimation([backdropAnimation, wrapperAnimation]);
 
   if (presentingEl) {
-    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-10px' : 'max(30px, var(--ion-safe-area-top))';
+    /**
+     * Fallback for browsers that does not support `max()` (ex: Firefox)
+     * No need to wrry about statusbar padding since engines like Gecko
+     * are not used as the engine for standlone Cordova/Capacitor apps
+     */
+    const transformOffset = (!CSS.supports('width', 'max(0px, 1px)')) ? '30px' : 'max(30px, var(--ion-safe-area-top))';
+    const modalTransform = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined) ? '-10px' : transformOffset;
     const bodyEl = document.body;
     const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
     const finalTransform = `translateY(${modalTransform}) scale(${toPresentingScale})`;

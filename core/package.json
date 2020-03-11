@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -30,7 +30,7 @@
     "loader/"
   ],
   "dependencies": {
-    "ionicons": "^5.0.0",
+    "ionicons": "^5.0.1",
     "tslib": "^1.10.0"
   },
   "devDependencies": {

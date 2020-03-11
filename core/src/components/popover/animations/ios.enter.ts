@@ -104,7 +104,11 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation =>
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
+    .beforeStyles({
+      'pointer-events': 'none'
+    })
+    .afterClearStyles(['pointer-events']);
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.popover-wrapper')!)
