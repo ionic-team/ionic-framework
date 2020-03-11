@@ -143,7 +143,6 @@ export class Segment implements ComponentInterface {
 
     const checkedValidButton = this.setNextIndex(detail, true);
 
-    detail.event.preventDefault();
     detail.event.stopImmediatePropagation();
 
     if (checkedValidButton) {
