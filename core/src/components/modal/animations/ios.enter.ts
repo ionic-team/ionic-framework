@@ -65,9 +65,10 @@ export const iosEnterAnimation = (
 
       baseAnimation.addAnimation(presentingAnimation);
     } else {
+      baseAnimation.addAnimation(backdropAnimation);
+
       if (!hasCardModal) {
         wrapperAnimation.fromTo('opacity', '0', '1');
-        baseAnimation.addAnimation(backdropAnimation);
       } else {
         const toPresentingScale = (hasCardModal) ? SwipeToCloseDefaults.MIN_PRESENTING_SCALE : 1;
         const finalTransform = `translateY(-10px) scale(${toPresentingScale})`;
@@ -81,7 +82,7 @@ export const iosEnterAnimation = (
             { offset: 0, filter: 'contrast(1)', transform: 'translateY(0) scale(1)' },
             { offset: 1, filter: 'contrast(0.85)', transform: finalTransform }
           ]);
-          
+
         const shadowAnimation = createAnimation()
           .afterStyles({
             'transform': finalTransform

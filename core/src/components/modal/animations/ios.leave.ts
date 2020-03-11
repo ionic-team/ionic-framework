@@ -75,7 +75,7 @@ export const iosLeaveAnimation = (
             { offset: 0, filter: 'contrast(0.85)', transform: finalTransform },
             { offset: 1, filter: 'contrast(1)', transform: 'translateY(0) scale(1)' }
           ]);
-          
+
         const shadowAnimation = createAnimation()
           .addElement(presentingEl.querySelector('.modal-shadow')!)
           .keyframes([
