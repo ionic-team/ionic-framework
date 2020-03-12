@@ -21,7 +21,7 @@ function isAngularBrowserProject(projectConfig: any) {
   return false;
 }
 
-export function getAngularAppName(config: any): string | null {
+export function getDefaultAngularAppName(config: any): string {
   const projects = config.projects;
   const projectNames = Object.keys(projects);
 
@@ -32,7 +32,7 @@ export function getAngularAppName(config: any): string | null {
     }
   }
 
-  return null;
+  return projectNames[0];
 }
 
 export function getAngularAppConfig(config: any): any | null {

@@ -2,7 +2,7 @@ import { join, Path } from '@angular-devkit/core';
 import { apply, chain, mergeWith, move, Rule, SchematicContext, SchematicsException, template, Tree, url } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { addModuleImportToRootModule } from './../utils/ast';
-import { addArchitectBuilder, addStyle, getWorkspace, addAsset, WorkspaceProject, WorkspaceSchema } from './../utils/config';
+import { addArchitectBuilder, addAsset, addStyle, getDefaultAngularAppName, getWorkspace, WorkspaceProject, WorkspaceSchema } from './../utils/config';
 import { addPackageToPackageJson } from './../utils/package';
 import { Schema as IonAddOptions } from './schema';
 
@@ -109,7 +109,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
   return (host: Tree) => {
     const workspace: WorkspaceSchema = getWorkspace(host);
     if (!options.project) {
-      options.project = Object.keys(workspace.projects)[0];
+      options.project = getDefaultAngularAppName(workspace);
     }
     const project: WorkspaceProject = workspace.projects[options.project];
     if (project.projectType !== 'application') {
