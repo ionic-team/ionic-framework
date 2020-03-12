@@ -35,12 +35,9 @@ export function getDefaultAngularAppName(config: any): string {
   return projectNames[0];
 }
 
-export function getAngularAppConfig(config: any): any | null {
-  const projects = config.projects;
-  const projectNames = Object.keys(projects);
-
-  for (const projectName of projectNames) {
-    const projectConfig = projects[projectName];
+export function getAngularAppConfig(config: any, projectName: string): any | null {
+  if (config.projects.hasOwnProperty(projectName)) {
+    const projectConfig = config.projects[projectName];
     if (isAngularBrowserProject(projectConfig)) {
       return projectConfig;
     }
@@ -49,9 +46,9 @@ export function getAngularAppConfig(config: any): any | null {
   return null;
 }
 
-export function addStyle(host: Tree, stylePath: string) {
+export function addStyle(host: Tree, projectName: string, stylePath: string) {
   const config = readConfig(host);
-  const appConfig = getAngularAppConfig(config);
+  const appConfig = getAngularAppConfig(config, projectName);
 
   if (appConfig) {
     appConfig.architect.build.options.styles.push({
@@ -64,9 +61,9 @@ export function addStyle(host: Tree, stylePath: string) {
   }
 }
 
-export function addAsset(host: Tree, asset: string | {glob: string; input: string; output: string}) {
+export function addAsset(host: Tree, projectName: string, asset: string | {glob: string; input: string; output: string}) {
   const config = readConfig(host);
-  const appConfig = getAngularAppConfig(config);
+  const appConfig = getAngularAppConfig(config, projectName);
 
   if (appConfig) {
     appConfig.architect.build.options.assets.push(asset);
@@ -76,9 +73,9 @@ export function addAsset(host: Tree, asset: string | {glob: string; input: strin
   }
 }
 
-export function addArchitectBuilder(host: Tree, builderName: string, builderOpts: any){
+export function addArchitectBuilder(host: Tree, projectName: string, builderName: string, builderOpts: any): void | never {
   const config = readConfig(host);
-  const appConfig = getAngularAppConfig(config);
+  const appConfig = getAngularAppConfig(config, projectName);
 
   if (appConfig) {
     appConfig.architect[builderName] = builderOpts;

@@ -37,7 +37,7 @@ function addIonicAngularModuleToAppModule(projectSourceRoot: Path): Rule {
   };
 }
 
-function addIonicStyles(projectSourceRoot: Path): Rule {
+function addIonicStyles(projectName: string, projectSourceRoot: Path): Rule {
   return (host: Tree) => {
     const ionicStyles = [
       'node_modules/@ionic/angular/css/normalize.css',
@@ -51,27 +51,27 @@ function addIonicStyles(projectSourceRoot: Path): Rule {
       'node_modules/@ionic/angular/css/flex-utils.css',
       `${projectSourceRoot}/theme/variables.css`
     ].forEach(entry => {
-      addStyle(host, entry);
+      addStyle(host, projectName, entry);
     });
     return host;
   };
 }
 
-function addIonicons(): Rule {
+function addIonicons(projectName: string): Rule {
   return (host: Tree) => {
     const ioniconsGlob = {
       glob: '**/*.svg',
       input: 'node_modules/ionicons/dist/ionicons/svg',
       output: './svg'
     };
-    addAsset(host, ioniconsGlob);
+    addAsset(host, projectName, ioniconsGlob);
     return host;
   };
 }
 
 function addIonicBuilder(projectName: string): Rule {
   return (host: Tree) => {
-    addArchitectBuilder(host, 'ionic-cordova-serve', {
+    addArchitectBuilder(host, projectName, 'ionic-cordova-serve', {
       builder: '@ionic/angular-toolkit:cordova-serve',
       options: {
         cordovaBuildTarget: `${projectName}:ionic-cordova-build`,
@@ -84,7 +84,7 @@ function addIonicBuilder(projectName: string): Rule {
         }
       }
     });
-    addArchitectBuilder(host, 'ionic-cordova-build', {
+    addArchitectBuilder(host, projectName, 'ionic-cordova-build', {
       builder: '@ionic/angular-toolkit:cordova-build',
       options: {
         browserTarget: `${projectName}:build`
@@ -128,8 +128,8 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicAngularToolkitToPackageJson(),
       addIonicAngularModuleToAppModule(sourcePath),
       addIonicBuilder(options.project),
-      addIonicStyles(sourcePath),
-      addIonicons(),
+      addIonicStyles(options.project, sourcePath),
+      addIonicons(options.project),
       mergeWith(rootTemplateSource),
       // install freshly added dependencies
       installNodeDeps()
