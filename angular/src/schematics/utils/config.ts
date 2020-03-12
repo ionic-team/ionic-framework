@@ -81,7 +81,7 @@ export function addArchitectBuilder(host: Tree, builderName: string, builderOpts
   const appConfig = getAngularAppConfig(config);
 
   if (appConfig) {
-    appConfig.architect[builderName] = builderOpts
+    appConfig.architect[builderName] = builderOpts;
     writeConfig(host, config);
   } else {
     throw new SchematicsException(`Cannot find valid app`);
