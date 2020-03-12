@@ -4,6 +4,7 @@ import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
+import { AnimationBuilder } from '../../';
 import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
 
@@ -13,7 +14,7 @@ import { RouteView, getUrl } from './stack-utils';
 @Directive({
   selector: 'ion-router-outlet',
   exportAs: 'outlet',
-  inputs: ['animated', 'swipeGesture']
+  inputs: ['animated', 'animation', 'swipeGesture']
 })
 export class IonRouterOutlet implements OnDestroy, OnInit {
   nativeEl: HTMLIonRouterOutletElement;
@@ -37,6 +38,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   @Output() stackEvents = new EventEmitter<any>();
   @Output('activate') activateEvents = new EventEmitter<any>();
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
+
+  set animation(animation: AnimationBuilder) {
+    this.nativeEl.animation = animation;
+  }
 
   set animated(animated: boolean) {
     this.nativeEl.animated = animated;
