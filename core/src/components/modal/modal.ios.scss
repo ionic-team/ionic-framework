@@ -43,6 +43,11 @@
 }
 
 @media screen and (min-width: 768px) {
+  :host {
+    --width: calc(100% - 120px);
+    --height: calc(100% - (120px + var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
+  }
+
   :host(.modal-card) {
     --backdrop-opacity: 0;
 
@@ -51,12 +56,6 @@
     &:first-of-type {
       --backdrop-opacity: 0.18;
     }
-  }
-
-  :host(.modal-card) .modal-wrapper,
-  :host(.modal-card) .modal-shadow {
-    --width: calc(100% - 120px);
-    --height: calc(100% - (120px + var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
   }
 
   :host(.modal-card) .modal-shadow {

@@ -14,7 +14,8 @@ export const iosEnterAnimation = (
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
     .beforeStyles({
       'pointer-events': 'none'
-    });
+    })
+    .afterClearStyles(['pointer-events']);
 
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
@@ -97,7 +98,6 @@ export const iosEnterAnimation = (
       }
     }
   } else {
-    backdropAnimation.afterClearStyles(['pointer-events']);
     baseAnimation.addAnimation(backdropAnimation);
   }
 
