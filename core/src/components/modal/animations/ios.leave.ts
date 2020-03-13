@@ -71,6 +71,9 @@ export const iosLeaveAnimation = (
 
         presentingAnimation
           .addElement(presentingEl.querySelector('.modal-wrapper')!)
+          .afterStyles({
+            'transform': 'translate3d(0, 0, 0)'
+          })
           .keyframes([
             { offset: 0, filter: 'contrast(0.85)', transform: finalTransform },
             { offset: 1, filter: 'contrast(1)', transform: 'translateY(0) scale(1)' }
@@ -78,6 +81,9 @@ export const iosLeaveAnimation = (
 
         const shadowAnimation = createAnimation()
           .addElement(presentingEl.querySelector('.modal-shadow')!)
+          .afterStyles({
+            'transform': 'translateY(0) scale(1)'
+          })
           .keyframes([
             { offset: 0, opacity: '0', transform: finalTransform },
             { offset: 1, opacity: '1', transform: 'translateY(0) scale(1)' }
