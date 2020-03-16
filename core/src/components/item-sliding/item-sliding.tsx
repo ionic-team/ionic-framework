@@ -231,7 +231,9 @@ export class ItemSliding implements ComponentInterface {
      * do not open left side so swipe to go
      * back will still work.
      */
-    if (gesture.startX < 15) {
+    const rtl = document.dir === 'rtl';
+    const atEdge = (rtl) ? (window.innerWidth - gesture.startX) < 15 : gesture.startX < 15;
+    if (atEdge) {
       return false;
     }
 
