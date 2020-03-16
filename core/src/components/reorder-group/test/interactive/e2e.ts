@@ -1,11 +1,10 @@
-import * as pd from '@stencil/core/dist/testing/puppeteer/puppeteer-declarations';
-import { newE2EPage } from '@stencil/core/testing';
+import * as pd from '@stencil/core/testing';
 
 import { getElementProperty, queryDeep } from '../../../../utils/test/utils';
 import { moveReorderItem } from '../test.utils';
 
 test('reorder: interactive', async () => {
-  const page = await newE2EPage({
+  const page = await pd.newE2EPage({
     url: '/src/components/reorder-group/test/interactive?ionic:_testing=true'
   });
 
