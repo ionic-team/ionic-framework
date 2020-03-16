@@ -132,6 +132,7 @@ export class Slides implements ComponentInterface {
   @Event() ionSlideTouchEnd!: EventEmitter<void>;
 
   connectedCallback() {
+    // tslint:disable-next-line: strict-type-predicates
     if (typeof MutationObserver !== 'undefined') {
       const mut = this.mutationO = new MutationObserver(() => {
         if (this.swiperReady) {
