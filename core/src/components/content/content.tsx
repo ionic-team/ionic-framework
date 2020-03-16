@@ -110,7 +110,7 @@ export class Content implements ComponentInterface {
 
   componentDidLoad() {
     /* tslint:disable-next-line */
-    if (typeof document !== 'undefined') {
+    if (typeof document !== 'undefined' && !document.documentElement.classList.contains('hydrated')) {
       this.mutationObserver = new MutationObserver(() => {
         if (document.documentElement.classList.contains('hydrated')) {
           this.resize();
