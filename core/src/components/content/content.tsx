@@ -25,6 +25,7 @@ export class Content implements ComponentInterface {
   private cBottom = -1;
   private scrollEl!: HTMLElement;
   private mode = getIonMode(this);
+  private mutationObserver?: MutationObserver;
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
   // V8 will be able to inline any read/write to it since it's a monomorphic class.
@@ -108,7 +109,30 @@ export class Content implements ComponentInterface {
   }
 
   componentDidLoad() {
+    /* tslint:disable-next-line */
+    if (typeof document !== 'undefined') {
+      this.mutationObserver = new MutationObserver(() => {
+        if (document.documentElement.classList.contains('hydrated')) {
+          this.resize();
+          this.disconnectMutationObserver();
+        }
+      });
+
+      this.mutationObserver.observe(document.documentElement, { attributes: true });
+    }
+
     this.resize();
+  }
+
+  componentDidUnload() {
+    this.disconnectMutationObserver();
+  }
+
+  private disconnectMutationObserver() {
+    if (this.mutationObserver !== undefined) {
+      this.mutationObserver.disconnect();
+      this.mutationObserver = undefined;
+    }
   }
 
   @Listen('click', { capture: true })
@@ -128,7 +152,7 @@ export class Content implements ComponentInterface {
 
   private resize() {
     if (this.fullscreen) {
-      readTask(this.readDimensions.bind(this));
+      readTask(() => this.readDimensions());
     } else if (this.cTop !== 0 || this.cBottom !== 0) {
       this.cTop = this.cBottom = 0;
       this.el.forceUpdate();
