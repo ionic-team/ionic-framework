@@ -26,6 +26,10 @@
   align-items: flex-end;
 }
 
+:host(.modal-card) ion-backdrop {
+  pointer-events: none;
+}
+
 :host(.modal-card) .modal-wrapper {
   @include border-radius($modal-ios-border-radius, $modal-ios-border-radius, 0, 0);
   height: calc(100% - 40px);
