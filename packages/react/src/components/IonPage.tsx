@@ -32,10 +32,18 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
   render() {
     const { className, children, forwardedRef, ...props } = this.props;
 
+    const PageManager = this.context.getPageManager();
+
     return (
+      this.context.hasIonicRouter() ? (
+        <PageManager className={className}>
+          {children}
+        </PageManager>
+      ) : (
       <div className={className ? `ion-page ${className}` : 'ion-page'} ref={this.ref} {...props}>
         {children}
       </div>
+      )
     );
   }
 

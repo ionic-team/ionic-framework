@@ -9,6 +9,7 @@ import { IonRouterOutletInner } from './inner-proxies';
 import { createForwardRef } from './utils';
 
 type Props = LocalJSX.IonRouterOutlet & {
+  ionPageContainer?: boolean;
   ref?: React.RefObject<any>;
 };
 
@@ -26,7 +27,7 @@ const IonRouterOutletContainer = /*@__PURE__*/(() => class extends React.Compone
     return (
       this.context.hasIonicRouter() ? (
         <StackManager>
-          <IonRouterOutletInner ref={this.props.forwardedRef} {...this.props}>
+          <IonRouterOutletInner {...this.props}>
             {this.props.children}
           </IonRouterOutletInner>
         </StackManager>

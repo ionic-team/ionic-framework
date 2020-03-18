@@ -33,7 +33,7 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
 
   class Overlay extends React.Component<Props> {
     overlay?: OverlayType;
-    el: HTMLDivElement;
+    el!: HTMLDivElement;
 
     constructor(props: Props) {
       super(props);

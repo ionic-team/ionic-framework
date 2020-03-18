@@ -12,6 +12,7 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   routerLink?: string;
   ref?: React.Ref<any>;
   routerDirection?: RouterDirection;
+  routerOptions?: any;
 }
 
 export const createReactComponent = <PropType, ElementType>(
@@ -36,10 +37,10 @@ export const createReactComponent = <PropType, ElementType>(
     }
 
     private handleClick = (e: React.MouseEvent<PropType>) => {
-      const { routerLink, routerDirection } = this.props;
+      const { routerLink, routerDirection, routerOptions } = this.props;
       if (routerLink !== undefined) {
         e.preventDefault();
-        this.context.navigate(routerLink, routerDirection);
+        this.context.navigate(routerLink, routerDirection, undefined, routerOptions);
       }
     }
 

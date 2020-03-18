@@ -20,6 +20,7 @@ export { IonPopover } from './IonPopover';
 export { IonPage } from './IonPage';
 export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
+export { IonTabButton } from './navigation/IonTabButton';
 export { IonBackButton } from './navigation/IonBackButton';
 export { IonRouterOutlet } from './IonRouterOutlet';
 export { IonIcon } from './IonIcon';

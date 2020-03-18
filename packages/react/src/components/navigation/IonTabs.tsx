@@ -58,7 +58,6 @@ export class IonTabs extends React.Component<Props> {
       throw new Error('IonTabs must contain an IonRouterOutlet');
     }
     if (!tabBar) {
-      // TODO, this is not required
       throw new Error('IonTabs needs a IonTabBar');
     }
 
