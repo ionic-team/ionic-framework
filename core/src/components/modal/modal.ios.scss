@@ -4,7 +4,7 @@
 // iOS Modals
 // --------------------------------------------------
 
-:host {
+:host:first-of-type {
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
 }
 
@@ -45,6 +45,10 @@
 
   :host(.modal-card) .modal-shadow {
     display: none;
+  }
+
+  :host(.modal-card) ion-backdrop {
+    pointer-events: none;
   }
 }
 
