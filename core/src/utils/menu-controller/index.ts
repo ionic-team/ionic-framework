@@ -207,15 +207,17 @@ const createMenuController = () => {
   registerAnimation('push', menuPushAnimation);
   registerAnimation('overlay', menuOverlayAnimation);
 
-  const doc: Document = document;
-  doc.addEventListener('ionBackButton', (ev: any) => {
-    const openMenu = _getOpenSync();
-    if (openMenu) {
-      (ev as BackButtonEvent).detail.register(MENU_BACK_BUTTON_PRIORITY, () => {
-        return openMenu.close();
-      });
-    }
-  });
+  /* tslint:disable-next-line */
+  if (typeof document !== 'undefined') {
+    document.addEventListener('ionBackButton', (ev: any) => {
+      const openMenu = _getOpenSync();
+      if (openMenu) {
+        (ev as BackButtonEvent).detail.register(MENU_BACK_BUTTON_PRIORITY, () => {
+          return openMenu.close();
+        });
+      }
+    });
+  }
 
   return {
     registerAnimation,

@@ -102,6 +102,18 @@ export const createAnimation = (animationId?: string): Animation => {
     cleanUpStyleSheets();
   };
 
+  const resetFlags = () => {
+    shouldForceLinearEasing = false;
+    shouldForceSyncPlayback = false;
+    shouldCalculateNumAnimations = true;
+    forceDirectionValue = undefined;
+    forceDurationValue = undefined;
+    forceDelayValue = undefined;
+    numAnimationsRunning = 0;
+    finished = false;
+    willComplete = true;
+  };
+
   const onFinish = (callback: AnimationLifecycle, opts?: AnimationCallbackOptions) => {
     const callbacks = (opts && opts.oneTimeCallback) ? onFinishOneTimeCallbacks : onFinishCallbacks;
     callbacks.push({ c: callback, o: opts });
@@ -886,6 +898,8 @@ export const createAnimation = (animationId?: string): Animation => {
       cleanUpElements();
       initialized = false;
     }
+
+    resetFlags();
   };
 
   const from = (property: string, value: any) => {

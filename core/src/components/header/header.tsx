@@ -129,7 +129,9 @@ export class Header implements ComponentInterface {
       cloneElement('ion-title');
       cloneElement('ion-back-button');
 
-      this.collapsibleMainHeader!.classList.add('header-collapse-main');
+      if (this.collapsibleMainHeader !== undefined) {
+        this.collapsibleMainHeader.classList.add('header-collapse-main');
+      }
     });
 
     this.collapsibleHeaderInitialized = true;
