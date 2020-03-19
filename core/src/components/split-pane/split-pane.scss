@@ -60,10 +60,6 @@
   flex-shrink: 0;
 }
 
-::slotted(.split-pane-side:not(ion-menu)) {
-  display: none;
-}
-
 :host(.split-pane-visible) ::slotted(.split-pane-side) {
   order: -1;
 }

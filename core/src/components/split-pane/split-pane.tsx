@@ -118,8 +118,8 @@ export class SplitPane implements ComponentInterface {
     if (!this.visible) {
       return false;
     }
-    return element.parentElement === this.el
-      && element.classList.contains(SPLIT_PANE_SIDE);
+    return element.closest('ion-split-pane') === this.el
+      && element.closest(`.${SPLIT_PANE_SIDE}`) !== null;
   }
 
   private styleChildren() {

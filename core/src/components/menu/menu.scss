@@ -35,6 +35,11 @@
   display: block;
 }
 
+:host(.menu-enabled) {
+  display: flex;
+
+  flex-shrink: 0;
+}
 
 .menu-inner {
   @include position(0, auto, 0, 0);
