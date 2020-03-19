@@ -1,8 +1,8 @@
+import { getIonMode } from '../../../global/ionic-global';
 import { Animation, MenuI } from '../../../interface';
 import { createAnimation } from '../../animation/animation';
 
 import { baseAnimation } from './base';
-import { getIonMode } from '../../../global/ionic-global';
 
 /**
  * Menu Push Type
