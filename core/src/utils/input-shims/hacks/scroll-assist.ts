@@ -61,15 +61,32 @@ const jsSetFocus = (
   relocateInput(componentEl, inputEl, true, scrollData.inputSafeY);
   inputEl.focus();
 
-  // scroll the input into place
-  contentEl.scrollByPoint(0, scrollData.scrollAmount, scrollData.scrollDuration).then(() => {
-    // the scroll view is in the correct position now
-    // give the native text input focus
-    relocateInput(componentEl, inputEl, false, scrollData.inputSafeY);
+  /* tslint:disable-next-line */
+  if (typeof window !== 'undefined') {
+    let scrollContentTimeout: any;
+    const scrollContent = async () => {
+      // clean up listeners and timeouts
+      if (scrollContentTimeout !== undefined) {
+        clearTimeout(scrollContentTimeout);
+      }
+      window.removeEventListener('resize', scrollContent);
 
-    // ensure this is the focused input
-    inputEl.focus();
-  });
+      // scroll the input into place
+      await contentEl.scrollByPoint(0, scrollData.scrollAmount, scrollData.scrollDuration);
+
+      // the scroll view is in the correct position now
+      // give the native text input focus
+      relocateInput(componentEl, inputEl, false, scrollData.inputSafeY);
+
+      // ensure this is the focused input
+      inputEl.focus();
+    };
+
+    window.addEventListener('resize', scrollContent);
+
+    // fallback in case resize never fires
+    scrollContentTimeout = setTimeout(scrollContent, 1000);
+  }
 };
 
 const hasPointerMoved = (threshold: number, startCoord: PointerCoordinates | undefined, endCoord: PointerCoordinates | undefined) => {
