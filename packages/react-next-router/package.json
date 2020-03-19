@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-next-router",
-  "version": "5.0.1",
+  "version": "5.0.5-nextjs-alpha.0",
   "description": "React Next Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
