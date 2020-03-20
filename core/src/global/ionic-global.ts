@@ -49,11 +49,14 @@ export default () => {
     config.set('animated', false);
   }
 
+  const isIonicElement = (elm: any) =>
+        elm.tagName && elm.tagName.startsWith('ION-');
+
   setMode((elm: any) => {
     while (elm) {
       const elmMode = (elm as any).mode || elm.getAttribute('mode');
 
-      if (elmMode) {
+      if (elmMode && isIonicElement(elm)) {
         return elmMode;
       }
 
