@@ -52,11 +52,14 @@ export default () => {
   const isIonicElement = (elm: any) =>
         elm.tagName && elm.tagName.startsWith('ION-');
 
+  const isAllowedIonicModeValue = (elmMode: any) =>
+      ['ios', 'md'].includes(elmMode);
+
   setMode((elm: any) => {
     while (elm) {
       const elmMode = (elm as any).mode || elm.getAttribute('mode');
 
-      if (elmMode && isIonicElement(elm)) {
+      if (elmMode && (isIonicElement(elm) || isAllowedIonicModeValue(elmMode))) {
         return elmMode;
       }
 

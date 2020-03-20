@@ -69,8 +69,10 @@ test('component: modes', async () => {
   for (const tag of ancestorTags) {
     await page.waitForSelector(tag);
     const ancestor = await page.find(tag);
+    const mode = ancestor.getAttribute('mode');
+    const expectedMode = ['ios', 'md'].includes(mode) ? mode : globalMode!;
     const el = await ancestor.find(childTag);
-    await checkModeClasses(el, globalMode!);
+    await checkModeClasses(el, expectedMode);
   }
 
 });
