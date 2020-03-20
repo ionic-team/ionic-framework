@@ -61,15 +61,15 @@ test('component: modes', async () => {
 
   // Fifth test: {mode} attribute on non-ionic ancestor element
   // ----------------------------------------------------------------
-  // components that need to have the mode class
-  // added for external / user styling
-  // e.g. <ion-badge class="md">
-  tags = ['p[mode]'];
+  // non-ionic ancestor components with a mode attribute
+  // e.g. <p mode="foo">
+  const ancestorTags = ['p[mode]'];
+  const childTag = 'ion-label';
 
-  for (const tag of tags) {
+  for (const tag of ancestorTags) {
     await page.waitForSelector(tag);
     const ancestor = await page.find(tag);
-    const el = await ancestor.find('ion-label');
+    const el = await ancestor.find(childTag);
     await checkModeClasses(el, globalMode!);
   }
 
