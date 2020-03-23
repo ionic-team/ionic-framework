@@ -4,6 +4,9 @@
 // Material Design Item Divider
 // --------------------------------------------------
 
+/// @prop - Minimum height for the divider
+$item-divider-md-min-height:         30px !default;
+
 /// @prop - Color for the divider
 $item-divider-md-color:              $text-color-step-600 !default;
 

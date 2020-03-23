@@ -10,6 +10,8 @@
   --padding-start: #{$item-divider-md-padding-start};
   --inner-padding-end: #{$item-divider-md-padding-end};
 
+  min-height: $item-divider-md-min-height;
+
   border-bottom: $item-divider-md-border-bottom;
 
   font-size: $item-divider-md-font-size;
