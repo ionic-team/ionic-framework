@@ -1,6 +1,6 @@
 import { EventEmitter } from '@stencil/core';
 
-import { AnimationBuilder, HTMLStencilElement } from '../interface';
+import { AnimationBuilder, HTMLStencilElement, Mode } from '../interface';
 
 export interface OverlayEventDetail<T = any> {
   data?: T;
@@ -8,6 +8,7 @@ export interface OverlayEventDetail<T = any> {
 }
 
 export interface OverlayInterface {
+  mode: Mode;
   el: HTMLElement;
   animated: boolean;
   keyboardClose: boolean;

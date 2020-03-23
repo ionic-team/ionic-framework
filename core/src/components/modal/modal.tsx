@@ -35,6 +35,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private gestureAnimationDismissing = false;
   presented = false;
   animation?: Animation;
+  mode = getIonMode(this);
 
   @Element() el!: HTMLIonModalElement;
 

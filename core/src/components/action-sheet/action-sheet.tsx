@@ -25,6 +25,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation?: any;
+  mode = getIonMode(this);
 
   @Element() el!: HTMLIonActionSheetElement;
 

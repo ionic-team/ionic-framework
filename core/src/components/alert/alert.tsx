@@ -30,6 +30,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private processedButtons: AlertButton[] = [];
 
   presented = false;
+  mode = getIonMode(this);
 
   @Element() el!: HTMLIonAlertElement;
 
