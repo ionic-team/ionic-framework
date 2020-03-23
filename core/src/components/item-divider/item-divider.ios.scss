@@ -5,16 +5,16 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$item-ios-divider-background};
-  --color: #{$item-ios-divider-color};
-  --padding-start: #{$item-ios-divider-padding-start};
-  --inner-padding-end: #{$item-ios-divider-padding-end / 2};
+  --background: #{$item-divider-ios-background};
+  --color: #{$item-divider-ios-color};
+  --padding-start: #{$item-divider-ios-padding-start};
+  --inner-padding-end: #{$item-divider-ios-padding-end / 2};
 
   @include border-radius(0);
 
   position: relative;
 
-  font-size: $item-ios-divider-font-size;
+  font-size: $item-divider-ios-font-size;
 }
 
 
