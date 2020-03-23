@@ -13,5 +13,5 @@
 // --------------------------------------------------
 
 :host(.segment-scrollable) ::slotted(ion-segment-button) {
-  min-width: $segment-button-md-min-width;
+  min-width: auto;
 }

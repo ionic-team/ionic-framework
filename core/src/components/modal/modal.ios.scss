@@ -4,7 +4,7 @@
 // iOS Modals
 // --------------------------------------------------
 
-:host {
+:host:first-of-type {
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
 }
 
@@ -24,6 +24,10 @@
   --width: 100%;
   
   align-items: flex-end;
+}
+
+:host(.modal-card) ion-backdrop {
+  pointer-events: none;
 }
 
 :host(.modal-card) .modal-wrapper {
