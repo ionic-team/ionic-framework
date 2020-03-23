@@ -1,4 +1,5 @@
 import { config } from '../global/config';
+import { getIonMode } from '../global/ionic-global';
 import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
@@ -128,7 +129,7 @@ export const present = async (
   overlay.presented = true;
   overlay.willPresent.emit();
 
-  const mode = overlay.mode;;
+  const mode = getIonMode(overlay);
   // get the user's animation fn if one was provided
   const animationBuilder = (overlay.enterAnimation)
     ? overlay.enterAnimation
@@ -156,7 +157,7 @@ export const dismiss = async (
 
   try {
     overlay.willDismiss.emit({ data, role });
-    const mode = overlay.mode;
+    const mode = getIonMode(overlay);
     const animationBuilder = (overlay.leaveAnimation)
       ? overlay.leaveAnimation
       : config.get(name, mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
