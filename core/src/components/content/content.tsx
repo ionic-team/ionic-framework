@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, h, readTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -24,7 +24,6 @@ export class Content implements ComponentInterface {
   private cTop = -1;
   private cBottom = -1;
   private scrollEl!: HTMLElement;
-  private mode = getIonMode(this);
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
   // V8 will be able to inline any read/write to it since it's a monomorphic class.
@@ -120,7 +119,8 @@ export class Content implements ComponentInterface {
   }
 
   private shouldForceOverscroll() {
-    const { forceOverscroll, mode } = this;
+    const { forceOverscroll } = this;
+    const mode = getIonMode(this);
     return forceOverscroll === undefined
       ? mode === 'ios' && isPlatform('ios')
       : forceOverscroll;
@@ -131,7 +131,7 @@ export class Content implements ComponentInterface {
       readTask(this.readDimensions.bind(this));
     } else if (this.cTop !== 0 || this.cBottom !== 0) {
       this.cTop = this.cBottom = 0;
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
@@ -143,7 +143,7 @@ export class Content implements ComponentInterface {
     if (dirty) {
       this.cTop = top;
       this.cBottom = bottom;
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
