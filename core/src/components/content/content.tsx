@@ -106,7 +106,8 @@ export class Content implements ComponentInterface {
     this.onScrollEnd();
   }
 
-  componentDidLoad() {
+  @Listen('appload', { target: 'window' })
+  onAppLoad() {
     this.resize();
   }
 
@@ -128,7 +129,7 @@ export class Content implements ComponentInterface {
 
   private resize() {
     if (this.fullscreen) {
-      readTask(this.readDimensions.bind(this));
+      readTask(() => this.readDimensions());
     } else if (this.cTop !== 0 || this.cBottom !== 0) {
       this.cTop = this.cBottom = 0;
       forceUpdate(this);
