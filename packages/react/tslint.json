@@ -17,7 +17,7 @@
     "no-floating-promises": false,
     "no-invalid-template-strings": true,
     "ban-export-const-enum": true,
-    "only-arrow-functions": true,
+    "only-arrow-functions": false,
     "strict-boolean-conditions": [false],
     "jsx-key": false,
     "jsx-self-close": false,

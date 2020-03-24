@@ -1,4 +1,4 @@
-import { RouterDirection } from '@ionic/react';
+import { RouterDirection } from '../../components/hrefprops';
 
 import { RouteAction } from './IonRouteAction';
 

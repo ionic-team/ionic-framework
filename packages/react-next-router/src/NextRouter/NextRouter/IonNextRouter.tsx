@@ -1,14 +1,8 @@
 import { RouterDirection } from '@ionic/react';
+import { LocationHistory, NavManager, RouteAction, RouteInfo, RouteManagerContext, RouteManagerContextState } from '@ionic/react/dist/routing';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { Router, withRouter } from 'next/router';
 import React from 'react';
-
-import { RouteAction } from '../models/IonRouteAction';
-import { RouteInfo } from '../models/RouteInfo';
-import { LocationHistory } from '../utils/LocationHistory';
-
-import { NavManager } from './NavManager';
-import { RouteManagerContext, RouteManagerContextState } from './RouteManagerContext';
 
 class IonNextRouterInner extends React.Component<WithRouterProps, RouteManagerContextState> {
 

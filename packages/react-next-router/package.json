@@ -30,8 +30,8 @@
     "tsc": "tsc -p .",
     "test.spec": "jest --ci"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist/"
@@ -40,15 +40,15 @@
     "tslib": "*"
   },
   "peerDependencies": {
-    "@ionic/core": "5.0.1",
-    "@ionic/react": "5.0.1",
+    "@ionic/core": "5.0.5",
+    "@ionic/react": "5.0.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "next": "^9.3.1"
   },
   "devDependencies": {
-    "@ionic/core": "5.0.1",
-    "@ionic/react": "file:../react/ionic-react-5.0.1.tgz",
+    "@ionic/core": "5.0.5",
+    "@ionic/react": "file:../react/ionic-react-5.0.5-nextjs-alpha.0.tgz",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",

@@ -1,4 +1,4 @@
-import { RouteInfo } from '../models/RouteInfo';
+import { RouteInfo } from './models/RouteInfo';
 
 // const RESTRICT_SIZE = 100;
 
@@ -29,6 +29,7 @@ export class LocationHistory {
     routeInfos.push(routeInfo);
     this.locationHistory.push(routeInfo);
 
+    // Todo: re-add restricting size
     // this.locationHistory.push(routeInfo);
     // if (this.locationHistory.length > RESTRICT_SIZE) {
     //   this.locationHistory.splice(0, 10);
@@ -117,11 +118,6 @@ export class LocationHistory {
   }
 
   current() {
-    // const routeInfos = this.getRouteInfosByKey(routeInfo.tab);
-    // const ri = routeInfos[routeInfos.length - 1];
-    // if(ri) {
-    //   return ri;
-    // }
     return this.locationHistory[this.locationHistory.length - 1];
   }
 }

@@ -1,10 +1,11 @@
-import { DefaultIonLifeCycleContext } from '@ionic/react';
+
 import React, { ReactElement, ReactNode } from 'react';
 
-import { RouteInfo } from '../models/RouteInfo';
+import { DefaultIonLifeCycleContext } from '../contexts/IonLifeCycleContext';
 
 import { RouteManagerContext } from './RouteManagerContext';
 import { ViewLifeCycleManager } from './ViewLifeCycleManager';
+import { RouteInfo } from './models/RouteInfo';
 
 export interface StackContextState {
   registerIonPage: (page: HTMLElement) => void;

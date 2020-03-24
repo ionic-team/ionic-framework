@@ -1,5 +1,7 @@
-import { DefaultIonLifeCycleContext, IonLifeCycleContext } from '@ionic/react';
+
 import React from 'react';
+
+import { DefaultIonLifeCycleContext, IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
 
 interface ViewTransitionManagerProps { }
 

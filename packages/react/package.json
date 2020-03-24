@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "npm run clean && npm run copy && npm run compile",
-    "clean": "rm -rf dist && rm -rf dist-transpiled",
+    "clean": "rm -rf dist && rm -rf dist-transpiled && rm -rf routing",
     "compile": "npm run tsc && rollup -c",
     "release": "np --any-branch --yolo --no-release-draft",
     "lint": "tslint --project .",
@@ -48,6 +48,8 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
+    "@rollup/plugin-json": "^4.0.2",
+    "@rollup/plugin-multi-entry": "^3.0.0",
     "@types/jest": "^23.3.9",
     "@types/node": "^12.12.14",
     "@types/react": "^16.9.2",

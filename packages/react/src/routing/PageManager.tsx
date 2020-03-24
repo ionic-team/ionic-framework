@@ -1,5 +1,7 @@
-import { IonLifeCycleContext } from '@ionic/react';
+
 import React from 'react';
+
+import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
 
 import { StackContext } from './StackManager';
 

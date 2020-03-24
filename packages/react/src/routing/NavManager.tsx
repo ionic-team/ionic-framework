@@ -1,12 +1,13 @@
-import { NavContext, NavContextState } from '@ionic/react';
+
 import React from 'react';
 
-import { RouteAction } from '../models/IonRouteAction';
-import { RouteInfo } from '../models/RouteInfo';
+import { NavContext, NavContextState } from '../contexts/NavContext';
 
 import PageManager from './PageManager';
-import { RouterDirection } from './RouterDirection';
 import StackManager from './StackManager';
+import { RouteAction } from './models/IonRouteAction';
+import { RouteInfo } from './models/RouteInfo';
+import { RouterDirection } from './models/RouterDirection';
 
 interface NavManagerProps {
   pathname: string;

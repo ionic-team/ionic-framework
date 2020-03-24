@@ -78,11 +78,6 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
       }
     });
     const { activeTab: prevActiveTab } = state;
-    // Not:
-    // if the activeTab is not defined (first time through?)
-    // OR
-    // activeTab == prevActive Tab (if the tabs didnt change) and prevActivetab href equals currentPath
-    // if (!(activeTab === undefined || (activeTab === prevActiveTab && state.tabs[prevActiveTab].currentHref === props.currentPath))) {
     if (activeTab && prevActiveTab) {
       const prevHref = state.tabs[prevActiveTab].currentHref;
       const prevRouteOptions = state.tabs[prevActiveTab].currentRouteOptions;
@@ -164,6 +159,7 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
 }
 
 export const IonTabBar: React.FC<Props> = React.memo<Props>(props => {
+  debugger;
   const context = useContext(NavContext);
   return (
     <IonTabBarUnwrapped
