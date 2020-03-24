@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
@@ -123,7 +123,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
     if (hasStyleChange) {
       this.itemStyles.set(tagName, newStyles);
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
