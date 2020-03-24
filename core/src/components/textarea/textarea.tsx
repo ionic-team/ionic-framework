@@ -170,21 +170,29 @@ export class Textarea implements ComponentInterface {
    */
   @Event() ionFocus!: EventEmitter<void>;
 
+  /**
+   * Emitted when the textarea has been created.
+   * @internal
+   */
+  @Event() ionInputDidLoad!: EventEmitter<HTMLElement>;
+
+  /**
+   * Emitted when the textarea has been removed.
+   * @internal
+   */
+  @Event() ionInputDidUnload!: EventEmitter<HTMLElement>;
+
   connectedCallback() {
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
-      this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
-        detail: this.el
-      }));
+      this.ionInputDidLoad.emit(this.el);
     }
   }
 
   disconnectedCallback() {
     if (Build.isBrowser) {
-      document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
-        detail: this.el
-      }));
+      this.ionInputDidUnload.emit(this.el);
     }
   }
 
