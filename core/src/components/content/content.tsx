@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, h, readTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -24,8 +24,6 @@ export class Content implements ComponentInterface {
   private cTop = -1;
   private cBottom = -1;
   private scrollEl!: HTMLElement;
-  private mode = getIonMode(this);
-  private mutationObserver?: MutationObserver;
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
   // V8 will be able to inline any read/write to it since it's a monomorphic class.
@@ -108,31 +106,9 @@ export class Content implements ComponentInterface {
     this.onScrollEnd();
   }
 
-  componentDidLoad() {
-    /* tslint:disable-next-line */
-    if (typeof document !== 'undefined' && !document.documentElement.classList.contains('hydrated')) {
-      this.mutationObserver = new MutationObserver(() => {
-        if (document.documentElement.classList.contains('hydrated')) {
-          this.resize();
-          this.disconnectMutationObserver();
-        }
-      });
-
-      this.mutationObserver.observe(document.documentElement, { attributes: true });
-    }
-
+  @Listen('appload', { target: 'window' })
+  onAppLoad() {
     this.resize();
-  }
-
-  componentDidUnload() {
-    this.disconnectMutationObserver();
-  }
-
-  private disconnectMutationObserver() {
-    if (this.mutationObserver !== undefined) {
-      this.mutationObserver.disconnect();
-      this.mutationObserver = undefined;
-    }
   }
 
   @Listen('click', { capture: true })
@@ -144,7 +120,8 @@ export class Content implements ComponentInterface {
   }
 
   private shouldForceOverscroll() {
-    const { forceOverscroll, mode } = this;
+    const { forceOverscroll } = this;
+    const mode = getIonMode(this);
     return forceOverscroll === undefined
       ? mode === 'ios' && isPlatform('ios')
       : forceOverscroll;
@@ -155,7 +132,7 @@ export class Content implements ComponentInterface {
       readTask(() => this.readDimensions());
     } else if (this.cTop !== 0 || this.cBottom !== 0) {
       this.cTop = this.cBottom = 0;
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
@@ -167,7 +144,7 @@ export class Content implements ComponentInterface {
     if (dirty) {
       this.cTop = top;
       this.cBottom = bottom;
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
