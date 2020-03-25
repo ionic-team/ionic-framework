@@ -62,7 +62,7 @@ export default () => {
         if (isAllowedIonicModeValue(elmMode)) {
           return elmMode;
         } else if (isIonicElement(elmMode)) {
-          console.warn('Invalid ionic mode: "' + elmMode + '"; expected: "ios" or "md"');
+          console.warn('Invalid ionic mode: "' + elmMode + '", expected: "ios" or "md"');
         }
       }
       elm = elm.parentElement;
