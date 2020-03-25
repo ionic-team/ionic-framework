@@ -174,7 +174,7 @@ export class Textarea implements ComponentInterface {
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
-      this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
+      document.dispatchEvent(new CustomEvent('ionInputDidLoad', {
         detail: this.el
       }));
     }
