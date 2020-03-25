@@ -57,5 +57,5 @@
 }
 
 :host(.title-large.ion-cloned-element) {
-  --color: var(--ion-toolbar-color, --ion-text-color, #fff);
+  --color: #{$text-color};
 }
