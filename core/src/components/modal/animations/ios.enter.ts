@@ -26,7 +26,6 @@ export const iosEnterAnimation = (
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(500)
-    .beforeAddClass('show-modal')
     .addAnimation(wrapperAnimation);
 
   if (presentingEl) {
