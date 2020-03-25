@@ -67,8 +67,7 @@ export const config: Config = {
       esmLoaderPath: '../loader'
     },
     // {
-    //   type: 'experimental-dist-module',
-    //   externalRuntime: true,
+    //   type: 'dist-custom-elements-bundle',
     // },
     {
       type: 'docs-readme',
@@ -83,7 +82,7 @@ export const config: Config = {
     },
     apiSpecGenerator({
       file: 'api.txt'
-    }),
+    }) as any,
     // {
     //   type: 'stats',
     //   file: 'stats.json'

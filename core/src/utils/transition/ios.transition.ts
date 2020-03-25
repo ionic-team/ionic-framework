@@ -14,7 +14,7 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
 
 const getLargeTitle = (refEl: any) => {
   const tabs = (refEl.tagName === 'ION-TABS') ? refEl : refEl.querySelector('ion-tabs');
-  const query = 'ion-header:not(.header-collapse-condense-inactive) ion-title[size=large]';
+  const query = 'ion-header:not(.header-collapse-condense-inactive) ion-title.title-large';
 
   if (tabs != null) {
     const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
