@@ -25,13 +25,13 @@
       height: calc(100% - max(30px, var(--ion-safe-area-top)) - 10px);
     }
   }
-  
+
   @supports not (width: max(0px, 1px)) {
     :host(.modal-card) .modal-wrapper {
       height: calc(100% - 40px);
     }
   }
-  
+
   :host(.modal-card) .modal-wrapper {
     @include border-radius($modal-ios-border-radius, $modal-ios-border-radius, 0, 0);
   }
@@ -56,6 +56,8 @@
   :host {
     --width: calc(100% - 120px);
     --height: calc(100% - (120px + var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
+    --max-width: 720px;
+    --max-height: 1000px;
   }
 
   :host(.modal-card) {
