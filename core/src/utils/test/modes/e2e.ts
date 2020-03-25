@@ -58,4 +58,21 @@ test('component: modes', async () => {
     const el = await page.find(tag);
     await checkModeClasses(el, globalMode!);
   }
+
+  // Fifth test: {mode} attribute on non-ionic ancestor element
+  // ----------------------------------------------------------------
+  // non-ionic ancestor components with a mode attribute
+  // e.g. <p mode="foo">
+  const ancestorTags = ['p[mode]'];
+  const childTag = 'ion-label';
+
+  for (const tag of ancestorTags) {
+    await page.waitForSelector(tag);
+    const ancestor = await page.find(tag);
+    const mode = ancestor.getAttribute('mode');
+    const expectedMode = ['ios', 'md'].includes(mode) ? mode : globalMode!;
+    const el = await ancestor.find(childTag);
+    await checkModeClasses(el, expectedMode);
+  }
+
 });
