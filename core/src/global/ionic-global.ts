@@ -58,11 +58,13 @@ export default () => {
   setMode((elm: any) => {
     while (elm) {
       const elmMode = (elm as any).mode || elm.getAttribute('mode');
-
-      if (elmMode && (isIonicElement(elm) || isAllowedIonicModeValue(elmMode))) {
-        return elmMode;
+      if (elmMode) {
+        if (isAllowedIonicModeValue(elmMode)) {
+          return elmMode;
+        } else if (isIonicElement(elmMode)) {
+          console.warn('Invalid ionic mode: "' + elmMode + '"; expected: "ios" or "md"');
+        }
       }
-
       elm = elm.parentElement;
     }
     return defaultMode;
