@@ -39,6 +39,14 @@ html.ios ion-modal.modal-card .ion-page > ion-header > ion-toolbar:first-of-type
   padding-top: 0px;
 }
 
+// .ion-page needs to explicitly inherit
+// the border radius in safari otherwise
+// a card modal with ion-content[fullscreen=true]
+// will not show border radius properly
+html.ios ion-modal.modal-card .ion-page {
+  border-radius: inherit;
+}
+
 // Ionic Colors
 // --------------------------------------------------
 // Generates the color classes and variables based on the
