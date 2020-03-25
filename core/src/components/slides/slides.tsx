@@ -47,6 +47,11 @@ export class Slides implements ComponentInterface {
   @Prop() pager = false;
 
   /**
+   * If `true`, show the pagination and make it clickable.
+   */
+  @Prop() paginationClickable = false;
+
+  /**
    * If `true`, show the scrollbar.
    */
   @Prop() scrollbar = false;
@@ -439,6 +444,15 @@ export class Slides implements ComponentInterface {
         hideOnClick: false,
       };
     }
+    
+     if (this.paginationClickable) {
+      swiperOptions.pagination = {
+        el: this.paginationEl!,
+        type: 'bullets',
+        clickable: true,
+        hideOnClick: false,
+      };
+    }
 
     if (this.scrollbar) {
       swiperOptions.scrollbar = {
@@ -499,7 +513,7 @@ export class Slides implements ComponentInterface {
         <div class="swiper-wrapper">
           <slot></slot>
         </div>
-        {this.pager && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>}
+        {(this.pager || this.paginationClickable) && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>}
         {this.scrollbar && <div class="swiper-scrollbar" ref={el => this.scrollbarEl = el}></div>}
       </Host>
     );
