@@ -23,8 +23,12 @@ export const startInputShims = (config: Config) => {
   const hideCaretMap = new WeakMap<HTMLElement, () => void>();
   const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
 
-  const registerInput = (componentEl: HTMLElement) => {
-    const inputEl = (componentEl.shadowRoot || componentEl).querySelector('input') || (componentEl.shadowRoot || componentEl).querySelector('textarea');
+  const registerInput = async (componentEl: HTMLElement) => {
+    if ((componentEl as any).componentOnReady) {
+      await (componentEl as any).componentOnReady();
+    }
+    const inputRoot = componentEl.shadowRoot || componentEl;
+    const inputEl = inputRoot.querySelector('input') || inputRoot.querySelector('textarea');
     const scrollEl = componentEl.closest('ion-content');
 
     if (!inputEl) {

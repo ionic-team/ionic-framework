@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -39,20 +39,20 @@
     "tslib": "*"
   },
   "peerDependencies": {
-    "@ionic/core": "5.0.5",
-    "@ionic/react": "5.0.5",
+    "@ionic/core": "5.0.6",
+    "@ionic/react": "5.0.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
-    "@ionic/core": "5.0.5",
-    "@ionic/react": "5.0.5",
+    "@ionic/core": "5.0.6",
+    "@ionic/react": "5.0.6",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.23",
+    "@types/jest": "^24.9.0",
     "@types/node": "^12.12.14",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",

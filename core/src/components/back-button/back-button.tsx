@@ -19,7 +19,6 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 })
 export class BackButton implements ComponentInterface, ButtonInterface {
 
-  mode = getIonMode(this);
   @Element() el!: HTMLElement;
 
   /**
@@ -61,7 +60,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
       return icon;
     }
 
-    if (this.mode === 'ios') {
+    if (getIonMode(this) === 'ios') {
       // default ios back button icon
       return config.get('backButtonIcon', 'chevron-back');
     }
@@ -71,7 +70,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   }
 
   get backButtonText() {
-    const defaultBackButtonText = this.mode === 'ios' ? 'Back' : null;
+    const defaultBackButtonText = getIonMode(this) === 'ios' ? 'Back' : null;
     return this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
   }
 
@@ -100,8 +99,9 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   }
 
   render() {
-    const { color, defaultHref, disabled, type, mode, hasIconOnly, backButtonIcon, backButtonText } = this;
+    const { color, defaultHref, disabled, type, hasIconOnly, backButtonIcon, backButtonText } = this;
     const showBackButton = defaultHref !== undefined;
+    const mode = getIonMode(this);
 
     return (
       <Host

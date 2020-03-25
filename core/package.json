@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -34,9 +34,9 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@stencil/core": "1.8.11",
-    "@stencil/sass": "1.0.1",
-    "@types/jest": "24.0.21",
+    "@stencil/core": "1.11.2",
+    "@stencil/sass": "1.1.1",
+    "@types/jest": "24.9.0",
     "@types/node": "12.12.3",
     "@types/puppeteer": "1.19.1",
     "@types/swiper": "4.4.4",
@@ -49,7 +49,7 @@
     "np": "^5.0.3",
     "pixelmatch": "4.0.2",
     "puppeteer": "1.20.0",
-    "rollup": "1.19.4",
+    "rollup": "1.32.0",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-virtual": "^1.0.1",
     "sass": "^1.22.9",

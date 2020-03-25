@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -39,7 +39,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "5.0.5",
+    "@ionic/core": "5.0.6",
     "ionicons": "^5.0.1",
     "tslib": "*"
   },
@@ -48,12 +48,12 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.9",
+    "@types/jest": "^24.9.0",
     "@types/node": "^12.12.14",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "fs-extra": "^8.1.0",
-    "jest": "^24.8.0",
+    "jest": "^24.9.0",
     "jest-dom": "^3.4.0",
     "np": "^5.0.1",
     "react": "^16.9.0",
