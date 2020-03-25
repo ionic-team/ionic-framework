@@ -40,4 +40,4 @@ export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
 export { IonicModule } from './ionic-module';
 
 // CORE TYPES
-export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, Gesture, GestureConfig, GestureDetail } from '@ionic/core';
+export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, Gesture, GestureConfig, GestureDetail, mdTransitionAnimation, iosTransitionAnimation } from '@ionic/core';
