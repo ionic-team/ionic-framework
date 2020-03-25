@@ -1,3 +1,34 @@
+## [5.0.6](https://github.com/ionic-team/ionic/compare/v5.0.5...v5.0.6) (2020-03-25)
+
+
+### Bug Fixes
+
+
+* **all** only warn invalid mode if used on an ionic component ([#20828](https://github.com/ionic-team/ionic/issues/20828)) ([6ed1c51](https://github.com/ionic-team/ionic/commit/6ed1c51321d781ff92efbf623790af91cb16a5af)), closes [#20055](https://github.com/ionic-team/ionic/issues/20055)
+* **all** properly scroll to input with scroll assist ([#20742](https://github.com/ionic-team/ionic/issues/20742)) ([e24060e](https://github.com/ionic-team/ionic/commit/e24060ecd9d803ece4bbb9c6beae23e761d7fb5e)), closes [#19589](https://github.com/ionic-team/ionic/issues/19589)
+* **angular:** export Animation and Gesture related types ([#20766](https://github.com/ionic-team/ionic/issues/20766)) ([2ece194](https://github.com/ionic-team/ionic/commit/2ece194a085742b919cc68f643b1b365f7d85594))
+* **angular:** respect animation property for ion-router-outlet ([#20767](https://github.com/ionic-team/ionic/issues/20767)) ([f2dbe1f](https://github.com/ionic-team/ionic/commit/f2dbe1ff3be44e6697b791de392a9ef46dbf27e8)), closes [#20764](https://github.com/ionic-team/ionic/issues/20764)
+* **content:** apply --offset-top and --offset-bottom values correctly ([#20790](https://github.com/ionic-team/ionic/issues/20790)) ([2707289](https://github.com/ionic-team/ionic/commit/2707289b36883ae495f86cfb2f2b6c84e090551b)), closes [#20735](https://github.com/ionic-team/ionic/issues/20735)
+* **content:** set overscroll-behavior based on the scroll direction ([#20011](https://github.com/ionic-team/ionic/issues/20011)) ([a3fc77b](https://github.com/ionic-team/ionic/commit/a3fc77be91ead6edc3f07c6127879753a063bd18)), closes [#20010](https://github.com/ionic-team/ionic/issues/20010)
+* **item-divider:** update design to match native iOS ([#20854](https://github.com/ionic-team/ionic/issues/20854)) ([d91e22d](https://github.com/ionic-team/ionic/commit/d91e22d820f170ecfdfad835ca56701ad70e6f3d))
+* **item-sliding:** account for swipe to go back gesture when opening item-options ([#20777](https://github.com/ionic-team/ionic/issues/20777)) ([f23ac44](https://github.com/ionic-team/ionic/commit/f23ac44c9a6646129762bb861cae6145690ca5a1)), closes [#20773](https://github.com/ionic-team/ionic/issues/20773)
+* **list:** show bottom border on last item in a list followed by a list ([#20798](https://github.com/ionic-team/ionic/issues/20798)) ([7bc5191](https://github.com/ionic-team/ionic/commit/7bc51911f6c538be8b91d1e569675b19832cb000))
+* **modal:** backdrop and box shadows no longer stack when opening multiple modals ([#20801](https://github.com/ionic-team/ionic/issues/20801)) ([253cd96](https://github.com/ionic-team/ionic/commit/253cd96164914a803f6bb42ff95ca74880c940d0)), closes [#20800](https://github.com/ionic-team/ionic/issues/20800)
+* **modal:** backdrop is no longer tappable on card-style modal on smaller screens ([#20802](https://github.com/ionic-team/ionic/issues/20802)) ([12932dd](https://github.com/ionic-team/ionic/commit/12932dd20212bec7d780650166c70819d125f75a)), closes [#20783](https://github.com/ionic-team/ionic/issues/20783)
+* **modal:** properly apply border radius on card-style modal ([#20852](https://github.com/ionic-team/ionic/issues/20852)) ([dff3816](https://github.com/ionic-team/ionic/commit/dff3816c049a1c051f94d3176c8b903a69603912)), closes [#20851](https://github.com/ionic-team/ionic/issues/20851)
+* **modal:** properly remove safe area padding on card-modal ([#20853](https://github.com/ionic-team/ionic/issues/20853)) ([71f1182](https://github.com/ionic-team/ionic/commit/71f118201b0918f60c1a078d55afd10b39f17e86)), closes [#20799](https://github.com/ionic-team/ionic/issues/20799)
+* **modal:** respect card-style modal spec for iPadOS ([#20750](https://github.com/ionic-team/ionic/issues/20750)) ([75bae40](https://github.com/ionic-team/ionic/commit/75bae403e917b20645675343734440ee95d31634)), closes [#20700](https://github.com/ionic-team/ionic/issues/20700)
+* **react:** expose correct type for CreateAnimation ([#20775](https://github.com/ionic-team/ionic/issues/20775)) ([0897c3f](https://github.com/ionic-team/ionic/commit/0897c3f9c2591442b3f80d28a25ec4471da3c9d7)), closes [#20771](https://github.com/ionic-team/ionic/issues/20771)
+* **refresher:** properly dismiss refresher when completed synchronously ([#20815](https://github.com/ionic-team/ionic/issues/20815)) ([b1a87c8](https://github.com/ionic-team/ionic/commit/b1a87c88923201fd0b31bf55d81b97acc09ddf1c)), closes [#20803](https://github.com/ionic-team/ionic/issues/20803)
+* **segment:** automatically expand width for scrollable segment buttons ([#20763](https://github.com/ionic-team/ionic/issues/20763)) ([cdfd50b](https://github.com/ionic-team/ionic/commit/cdfd50b554d1d8f89c3d9948c7613ce75ede1e52)), closes [#20566](https://github.com/ionic-team/ionic/issues/20566)
+* **segment:** scrollable segments only show scrollbar if they overflow ([#20760](https://github.com/ionic-team/ionic/issues/20760)) ([ab146c9](https://github.com/ionic-team/ionic/commit/ab146c96ec5cbc962eed629c30b2c5c446f3098d)), closes [#20758](https://github.com/ionic-team/ionic/issues/20758)
+* **slides:** check that mutation observer is defined for ssr ([#20791](https://github.com/ionic-team/ionic/issues/20791)) ([2d5d251](https://github.com/ionic-team/ionic/commit/2d5d2515be86496a280d93847185ab332e5d47a2))
+* **textarea:** properly adjust auto-grow textarea in scrolled content ([#19776](https://github.com/ionic-team/ionic/issues/19776)) ([8bd5bac](https://github.com/ionic-team/ionic/commit/8bd5bace73670dfe351b3734b51cbf3aa87517dc)), closes [#19193](https://github.com/ionic-team/ionic/issues/19193)
+* **title:** improve reliability of large title ios nav transition ([#20861](https://github.com/ionic-team/ionic/issues/20861)) ([3bd6b5d](https://github.com/ionic-team/ionic/commit/3bd6b5def2877f6a918c587de25a10ccc82f88f1))
+* **title:** large title now inherits global color styling during nav transition ([#20862](https://github.com/ionic-team/ionic/issues/20862)) ([321140f](https://github.com/ionic-team/ionic/commit/321140ff736b46d2631a9e87a7b070009c5e1b2c))
+
+
+
 ## [5.0.5](https://github.com/ionic-team/ionic/compare/v5.0.4...v5.0.5) (2020-03-11)
 
 
