@@ -201,18 +201,6 @@ export class Input implements ComponentInterface {
   @Event() ionFocus!: EventEmitter<void>;
 
   /**
-   * Emitted when the input has been created.
-   * @internal
-   */
-  @Event() ionInputDidLoad!: EventEmitter<HTMLElement>;
-
-  /**
-   * Emitted when the input has been removed.
-   * @internal
-   */
-  @Event() ionInputDidUnload!: EventEmitter<HTMLElement>;
-
-  /**
    * Emitted when the styles change.
    * @internal
    */
@@ -222,13 +210,17 @@ export class Input implements ComponentInterface {
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
-      this.ionInputDidLoad.emit(this.el);
+      document.dispatchEvent(new CustomEvent('ionInputDidLoad', {
+        detail: this.el
+      }));
     }
   }
 
   disconnectedCallback() {
     if (Build.isBrowser) {
-      this.ionInputDidUnload.emit(this.el);
+      document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
+        detail: this.el
+      }));
     }
   }
 
