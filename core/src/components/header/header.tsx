@@ -127,7 +127,7 @@ export class Header implements ComponentInterface {
 
     writeTask(() => {
       const title = cloneElement('ion-title') as HTMLIonTitleElement;
-      title.size = "large";
+      title.size = 'large';
       cloneElement('ion-back-button');
 
       if (this.collapsibleMainHeader !== undefined) {
