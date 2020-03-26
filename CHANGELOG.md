@@ -1,3 +1,12 @@
+## [5.0.7](https://github.com/ionic-team/ionic/compare/v5.0.6...v5.0.7) (2020-03-26)
+
+
+### Bug Fixes
+
+* **modal:** properly target card modal for iPadOS styles ([#20884](https://github.com/ionic-team/ionic/issues/20884)) ([5816cf5](https://github.com/ionic-team/ionic/commit/5816cf52a779acc4613c2d2da28b97c511360cc2))
+
+
+
 ## [5.0.6](https://github.com/ionic-team/ionic/compare/v5.0.5...v5.0.6) (2020-03-25)
 
 
