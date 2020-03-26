@@ -53,7 +53,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  :host {
+  :host(.modal-card) {
     --width: calc(100% - 120px);
     --height: calc(100% - (120px + var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
     --max-width: 720px;
