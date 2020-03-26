@@ -1,6 +1,7 @@
 ```tsx
 import React from 'react';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonContent } from '@ionic/react';
+import { call, person, settings } from 'ionicons/icons';
 
 export const TabBarExample: React.FC = () => (
   <IonContent>
@@ -8,13 +9,13 @@ export const TabBarExample: React.FC = () => (
       {/*-- Tab bar --*/}
       <IonTabBar slot="bottom">
         <IonTabButton tab="account">
-          <IonIcon name="person" />
+          <IonIcon icon={person} />
         </IonTabButton>
         <IonTabButton tab="contact">
-          <IonIcon name="call" />
+          <IonIcon icon={call} />
         </IonTabButton>
         <IonTabButton tab="settings">
-          <IonIcon name="settings" />
+          <IonIcon icon={settings} />
         </IonTabButton>
       </IonTabBar>
     </IonTabs>

@@ -22,8 +22,6 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
-  mode = getIonMode(this);
-
   @Element() el!: HTMLIonPickerElement;
 
   @State() presented = false;

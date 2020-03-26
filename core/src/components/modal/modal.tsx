@@ -1,5 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h, writeTask } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
@@ -34,7 +35,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private gestureAnimationDismissing = false;
   presented = false;
   animation?: Animation;
-  mode = getIonMode(this);
 
   @Element() el!: HTMLIonModalElement;
 
@@ -143,6 +143,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], componentProps);
     await deepReady(this.usersElement);
+
+    writeTask(() => this.el.classList.add('show-modal'));
+
     await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
     const mode = getIonMode(this);
@@ -150,7 +153,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       // All of the elements needed for the swipe gesture
       // should be in the DOM and referenced by now, except
       // for the presenting el
-      const ani = this.animation = iosLeaveAnimation(this.el, this.presentingElement);
+      const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
+      const ani = this.animation = animationBuilder(this.el, this.presentingElement);
       this.gesture = createSwipeToCloseGesture(
         this.el,
         ani,
@@ -188,9 +192,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return false;
     }
 
-    const iosAni = (this.animation === undefined || (role === BACKDROP || role === undefined)) ? iosLeaveAnimation : undefined;
     const enteringAnimation = activeAnimations.get(this) || [];
-    const dismissed = await dismiss(this, data, role, 'modalLeave', iosAni, mdLeaveAnimation, this.presentingElement);
+    const dismissed = await dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, this.presentingElement);
 
     if (dismissed) {
       await detachComponent(this.delegate, this.usersElement);
@@ -255,7 +258,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         aria-modal="true"
         class={{
           [mode]: true,
-          [`modal-card`]: this.presentingElement !== undefined,
+          [`modal-card`]: this.presentingElement !== undefined && mode === 'ios',
           ...getClassMap(this.cssClass)
         }}
         style={{
@@ -269,6 +272,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
         onIonModalDidDismiss={this.onLifecycle}
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>
+
+        {mode === 'ios' && <div class="modal-shadow"></div>}
         <div
           role="dialog"
           class="modal-wrapper"

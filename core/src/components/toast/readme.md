@@ -2,10 +2,6 @@
 
 A Toast is a subtle notification commonly used in modern applications. It can be used to provide feedback about an operation or to display a system message. The toast appears on top of the app's content, and can be dismissed by the app to resume user interaction with the app.
 
-### Creating
-
-All of the toast options should be passed in the create method. The message to display should be passed in the `message` property. A button with a role of `"cancel"` can be added in order to display a close button on the toast. See the properties below for all available options.
-
 ### Positioning
 
 Toasts can be positioned at the top, bottom or middle of the viewport. The position can be passed upon creation. The possible values are `top`, `bottom` and `middle`. If the position is not specified, the toast will be displayed at the bottom of the viewport.

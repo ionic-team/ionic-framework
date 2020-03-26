@@ -137,11 +137,9 @@
 ```
 
 ```javascript
-// Listen for ionClick on all segment buttons
-const segmentButtons = document.querySelectorAll('ion-segment-button')
-for (let i = 0; i < segmentButtons.length; i++) {
-  segmentButtons[i].addEventListener('ionSelect', (ev) => {
-    console.log('Segment button clicked', ev);
-  })
-}
+// Listen for ionChange on segment
+const segment = document.querySelector('ion-segment');
+segment.addEventListener('ionChange', (ev) => {
+  console.log('Segment changed', ev);
+})
 ```

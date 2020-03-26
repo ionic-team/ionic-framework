@@ -17,7 +17,7 @@
   <ion-app>
     <ion-header>
       <ion-toolbar>
-        <ion-segment value="Free">
+        <ion-segment value="Free" id="custom-radius">
           <ion-segment-button value="Paid">
             <ion-label>Paid</ion-label>
           </ion-segment-button>
@@ -240,6 +240,12 @@
 
   ion-toolbar ion-segment {
     margin-bottom: 0;
+  }
+
+  #custom-radius ion-segment-button {
+    --background: rgba(0, 0, 255, 0.1);
+    --background-checked: rgba(0, 0, 255, 0.3);
+    --border-radius: 10px;
   }
 
   /*

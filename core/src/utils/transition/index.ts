@@ -1,4 +1,4 @@
-import { writeTask } from '@stencil/core';
+import { Build, writeTask } from '@stencil/core';
 
 import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../../components/nav/constants';
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
@@ -44,7 +44,7 @@ const beforeTransition = (opts: TransitionOptions) => {
 const runTransition = async (opts: TransitionOptions): Promise<TransitionResult> => {
   const animationBuilder = await getAnimationBuilder(opts);
 
-  const ani = (animationBuilder)
+  const ani = (animationBuilder && Build.isBrowser)
     ? animation(animationBuilder, opts)
     : noAnimation(opts); // fast path for no animation
 

@@ -13,11 +13,27 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
 };
 
 const getLargeTitle = (refEl: any) => {
-  return refEl.querySelector('ion-header:not(.header-collapse-condense-inactive) ion-title[size=large]');
+  const tabs = (refEl.tagName === 'ION-TABS') ? refEl : refEl.querySelector('ion-tabs');
+  const query = 'ion-header:not(.header-collapse-condense-inactive) ion-title.title-large';
+
+  if (tabs != null) {
+    const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
+    return activeTab.querySelector(query);
+  }
+
+  return refEl.querySelector(query);
 };
 
 const getBackButton = (refEl: any, backDirection: boolean) => {
-  const buttonsList = refEl.querySelectorAll('ion-buttons');
+  const tabs = (refEl.tagName === 'ION-TABS') ? refEl : refEl.querySelector('ion-tabs');
+  let buttonsList = [];
+
+  if (tabs != null) {
+    const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
+    buttonsList = activeTab.querySelectorAll('ion-buttons');
+  } else {
+    buttonsList = refEl.querySelectorAll('ion-buttons');
+  }
 
   for (const buttons of buttonsList) {
     const parentHeader = buttons.closest('ion-header');
@@ -141,7 +157,7 @@ const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection
 };
 
 const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, largeTitleEl: any, largeTitleBox: DOMRect, backButtonBox: DOMRect) => {
-  const TITLE_START_OFFSET = (rtl) ? `calc(100% - ${largeTitleEl.right}px)` : `${largeTitleEl.left}px`;
+  const TITLE_START_OFFSET = (rtl) ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
   const START_TRANSLATE = (rtl) ? '-18px' : '18px';
   const ORIGIN_X = (rtl) ? 'right' : 'left';
 
@@ -277,7 +293,6 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
     const enteringContentHasLargeTitle = enteringEl.querySelector('ion-header.header-collapse-condense');
 
     const { forward, backward } = createLargeTitleTransition(rootAnimation, isRTL, backDirection, enteringEl, leavingEl);
-
     enteringToolBarEls.forEach(enteringToolBarEl => {
       const enteringToolBar = createAnimation();
       enteringToolBar.addElement(enteringToolBarEl);

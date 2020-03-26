@@ -28,7 +28,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
   presented = false;
-  mode = getIonMode(this);
 
   @Element() el!: HTMLIonLoadingElement;
 

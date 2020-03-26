@@ -1,8 +1,8 @@
 
 import { defineCustomElements } from '@ionic/core/loader';
 import { addIcons } from 'ionicons';
-import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
-export { createAnimation, createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, IonicSafeString, setupConfig } from '@ionic/core';
+import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
+export { createAnimation, createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, iosTransitionAnimation, IonicSafeString, mdTransitionAnimation, setupConfig } from '@ionic/core';
 export * from './proxies';
 
 // createControllerComponent
@@ -37,6 +37,7 @@ addIcons({
   'caret-back-sharp': caretBackSharp,
   'chevron-back': chevronBack,
   'chevron-forward': chevronForward,
+  'close': close,
   'close-circle': closeCircle,
   'close-sharp': closeSharp,
   'menu-outline': menuOutline,
