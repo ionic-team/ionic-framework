@@ -30,8 +30,8 @@
     "tsc": "tsc -p .",
     "test.spec": "jest --ci"
   },
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist/"

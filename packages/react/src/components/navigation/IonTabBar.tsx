@@ -159,7 +159,6 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
 }
 
 export const IonTabBar: React.FC<Props> = React.memo<Props>(props => {
-  debugger;
   const context = useContext(NavContext);
   return (
     <IonTabBarUnwrapped

@@ -27,7 +27,7 @@ export { IonIcon } from './IonIcon';
 
 // Utils
 export { isPlatform, getPlatforms, getConfig } from './utils';
-export { RouterDirection } from './hrefprops';
+export * from './hrefprops';
 
 // Ionic Animations
 export { CreateAnimation } from './CreateAnimation';

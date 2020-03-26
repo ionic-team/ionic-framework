@@ -1,1 +1,1 @@
-export declare type RouterDirection = 'forward' | 'back' | 'root' | 'none';
+export type RouterDirection = 'forward' | 'back' | 'root' | 'none';

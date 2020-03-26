@@ -69,7 +69,7 @@
     "tslint": "^5.18.0",
     "tslint-ionic-rules": "0.0.21",
     "tslint-react": "^4.0.0",
-    "typescript": "^3.7.2"
+    "typescript": "^3.8.3"
   },
   "jest": {
     "preset": "ts-jest",

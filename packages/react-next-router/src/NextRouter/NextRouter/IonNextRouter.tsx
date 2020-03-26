@@ -1,5 +1,4 @@
-import { RouterDirection } from '@ionic/react';
-import { LocationHistory, NavManager, RouteAction, RouteInfo, RouteManagerContext, RouteManagerContextState } from '@ionic/react/dist/routing';
+import { LocationHistory, NavManager, RouteAction, RouteInfo, RouteManagerContext, RouteManagerContextState, RouterDirection } from '@ionic/react';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { Router, withRouter } from 'next/router';
 import React from 'react';

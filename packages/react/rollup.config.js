@@ -1,11 +1,11 @@
 import resolve from 'rollup-plugin-node-resolve';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import json from '@rollup/plugin-json';
+// import json from '@rollup/plugin-json';
 
 export default {
   input: {
     'index': 'dist-transpiled/index',
-    'routing/index': 'dist-transpiled/routing/index'
+    // 'routing/index': 'dist-transpiled/routing/index'
   },
   output: [
     {
@@ -26,6 +26,6 @@ export default {
   plugins: [
     resolve(),
     sourcemaps(),
-    json()
+    // json()
   ]
 };
