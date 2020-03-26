@@ -171,9 +171,7 @@ export interface IonicConfig {
   experimentalTransitionShadow?: boolean;
 
   /**
-   * Global switch that disables or enables Ionic's built in DOM sanitizer.
-   * This is only used on components that accept HTML strings such as ion-toast and ion-alert.
-   * Enabled by default.
+   * If `true`, Ionic will enable a basic DOM sanitizer on component properties that accept custom HTML.
    */
   sanitizerEnabled?: boolean;
 
