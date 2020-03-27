@@ -24,6 +24,7 @@ export class Slides implements ComponentInterface {
   private readySwiper!: (swiper: SwiperInterface) => void;
   private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
   private syncSwiper?: SwiperInterface;
+  private didInit = false;
 
   @Element() el!: HTMLIonSlidesElement;
 
@@ -144,7 +145,13 @@ export class Slides implements ComponentInterface {
         childList: true,
         subtree: true
       });
-      this.el.componentOnReady().then(() => this.initSwiper());
+
+      this.el.componentOnReady().then(() => {
+        if (!this.didInit) {
+          this.didInit = true;
+          this.initSwiper();
+        }
+      });
     }
   }
 
@@ -168,6 +175,8 @@ export class Slides implements ComponentInterface {
       this.swiperReady = false;
       this.syncSwiper = undefined;
     }
+
+    this.didInit = false;
   }
 
   /**
