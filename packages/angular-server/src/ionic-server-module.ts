@@ -21,7 +21,33 @@ export class IonicServerModule {}
 export function hydrateIonicComponents(doc: any, appId: any) {
   return () => {
     return hydrateDocument(doc, {
-      clientHydrateAnnotations: false
+      clientHydrateAnnotations: false,
+      excludeComponents: [
+        // overlays
+        'ion-action-sheet',
+        'ion-alert',
+        'ion-loading',
+        'ion-modal',
+        'ion-picker',
+        'ion-popover',
+        'ion-toast',
+        'ion-toast',
+
+        // navigation
+        'ion-router',
+        'ion-route',
+        'ion-route-redirect',
+        'ion-router-link',
+        'ion-router-outlet',
+
+        // tabs
+        'ion-tabs',
+        'ion-tab',
+
+        // auxiliar
+        'ion-picker-column',
+        'ion-virtual-scroll'
+      ]
     })
     .then(hydrateResults => {
       hydrateResults.diagnostics.forEach(d => {

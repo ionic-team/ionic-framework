@@ -132,16 +132,19 @@ export class Slides implements ComponentInterface {
   @Event() ionSlideTouchEnd!: EventEmitter<void>;
 
   connectedCallback() {
-    const mut = this.mutationO = new MutationObserver(() => {
-      if (this.swiperReady) {
-        this.update();
-      }
-    });
-    mut.observe(this.el, {
-      childList: true,
-      subtree: true
-    });
-    this.el.componentOnReady().then(() => this.initSwiper());
+    // tslint:disable-next-line: strict-type-predicates
+    if (typeof MutationObserver !== 'undefined') {
+      const mut = this.mutationO = new MutationObserver(() => {
+        if (this.swiperReady) {
+          this.update();
+        }
+      });
+      mut.observe(this.el, {
+        childList: true,
+        subtree: true
+      });
+      this.el.componentOnReady().then(() => this.initSwiper());
+    }
   }
 
   async disconnectedCallback() {
