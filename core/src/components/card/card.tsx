@@ -7,6 +7,8 @@ import { createColorClasses, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @TODOpart card-button - The clickable part of the card. Only applies when `button="true"` or when an `href` is provided.
  */
 @Component({
   tag: 'ion-card',
@@ -99,6 +101,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     return (
       <TagType
         {...attrs}
+        part="card-button"
         class="card-native"
         disabled={this.disabled}
         onClick={(ev: Event) => openURL(href, ev, routerDirection)}

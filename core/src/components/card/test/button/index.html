@@ -23,7 +23,7 @@
 
     <ion-content id="content">
 
-      <ion-card button>
+      <ion-card button id="card-part">
         <ion-card-header>
           <ion-card-subtitle>
             Subtitle
@@ -108,6 +108,9 @@
       background: #e5e5e5;
     }
 
+    ion-card#card-part::part(card-button) {
+      background: lightpink;
+    }
   </style>
 </body>
 
