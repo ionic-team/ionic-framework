@@ -28,11 +28,6 @@ export class Menu implements ComponentInterface, MenuI {
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
 
-  mode = getIonMode(this);
-
-  private easing: string = this.mode === 'ios' ? iosEasing : mdEasing;
-  private easingReverse: string = this.mode === 'ios' ? iosEasingReverse : mdEasingReverse;
-
   isAnimating = false;
   width!: number; // TODO
   _isOpen = false;
@@ -335,9 +330,12 @@ AFTER:
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const isReversed = !shouldOpen;
+    const mode = getIonMode(this);
+    const easing = mode === 'ios' ? iosEasing : mdEasing;
+    const easingReverse = mode === 'ios' ? iosEasingReverse : mdEasingReverse;
     const ani = (this.animation as Animation)!
       .direction((isReversed) ? 'reverse' : 'normal')
-      .easing((isReversed) ? this.easingReverse : this.easing)
+      .easing((isReversed) ? easingReverse : easing)
       .onFinish(() => {
         if (ani.getDirection() === 'reverse') {
           ani.direction('normal');
@@ -360,7 +358,9 @@ AFTER:
   }
 
   private canStart(detail: GestureDetail): boolean {
-    if (!this.canSwipe()) {
+    // Do not allow swipe gesture if a modal is open
+    const isModalPresented = !!document.querySelector('ion-modal.show-modal');
+    if (isModalPresented || !this.canSwipe()) {
       return false;
     }
     if (this._isOpen) {
@@ -552,7 +552,8 @@ AFTER:
   }
 
   render() {
-    const { isEndSide, type, disabled, mode, isPaneVisible } = this;
+    const { isEndSide, type, disabled, isPaneVisible } = this;
+    const mode = getIonMode(this);
 
     return (
       <Host

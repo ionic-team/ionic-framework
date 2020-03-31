@@ -72,6 +72,8 @@
   white-space: nowrap;
 
   font-kerning: none;
+
+  cursor: pointer;
 }
 
 .button-native {
@@ -107,7 +109,7 @@
   background: transparent;
 
   contain: content;
-  cursor: pointer;
+  pointer-events: none;
 
   overflow: hidden;
 
@@ -269,6 +271,8 @@ ion-ripple-effect {
   box-sizing: border-box;
 
   will-change: transform, opacity;
+
+  pointer-events: none;
 }
 
 .segment-button-indicator-background {
@@ -278,6 +282,8 @@ ion-ripple-effect {
   transform: var(--indicator-transform);
 
   box-shadow: var(--indicator-box-shadow);
+
+  pointer-events: none;
 }
 
 .segment-button-indicator-animated {

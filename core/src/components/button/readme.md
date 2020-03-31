@@ -97,6 +97,7 @@ This attribute specifies the size of the button. Setting this attribute will cha
 import React from 'react';
 
 import { IonButton, IonIcon, IonContent } from '@ionic/react';
+import { star } from 'ionicons/icons';
 
 export const ButtonExample: React.FC = () => (
   <IonContent>
@@ -131,17 +132,17 @@ export const ButtonExample: React.FC = () => (
 
     {/*-- Icons --*/}
     <IonButton>
-      <IonIcon slot="start" name="star" />
+      <IonIcon slot="start" icon={star} />
       Left Icon
     </IonButton>
 
     <IonButton>
       Right Icon
-      <IonIcon slot="end" name="star" />
+      <IonIcon slot="end" icon={star} />
     </IonButton>
 
     <IonButton>
-      <IonIcon slot="icon-only" name="star" />
+      <IonIcon slot="icon-only" icon={star} />
     </IonButton>
 
     {/*-- Sizes --*/}

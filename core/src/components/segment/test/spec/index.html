@@ -45,7 +45,7 @@
         <ion-segment-button value="two">
           <ion-label>Item Two</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="three"> 
+        <ion-segment-button value="three">
           <ion-label>Item Three</ion-label>
         </ion-segment-button>
       </ion-segment>
@@ -184,6 +184,31 @@
         </ion-segment-button>
       </ion-segment>
 
+      <!-- Scrollable text -->
+      <ion-segment scrollable color="tertiary" value="heart">
+        <ion-segment-button value="home">
+          This is some long text
+        </ion-segment-button>
+        <ion-segment-button value="heart">
+          Short text
+        </ion-segment-button>
+        <ion-segment-button value="pin">
+          This is some long text
+        </ion-segment-button>
+        <ion-segment-button value="star">
+          Short text
+        </ion-segment-button>
+        <ion-segment-button value="call">
+          Short text
+        </ion-segment-button>
+        <ion-segment-button value="globe">
+          Medium long text
+        </ion-segment-button>
+        <ion-segment-button value="basket">
+          Medium long text
+        </ion-segment-button>
+      </ion-segment>
+
     </ion-content>
 
     <style>
@@ -202,7 +227,7 @@
       .md ion-content ion-segment {
         background: white;
       }
-      
+
       #multi-color ion-segment-button:first-of-type {
         --indicator-color: rgba(255, 0, 0, 0.5);
       }

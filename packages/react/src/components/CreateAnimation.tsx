@@ -30,9 +30,9 @@ export interface CreateAnimationProps {
   onFinish?: { callback: AnimationLifecycle; opts?: AnimationCallbackOptions; };
 
   keyframes?: AnimationKeyFrames;
-  from?: PartialPropertyValue;
-  to?: PartialPropertyValue;
-  fromTo?: PropertyValue;
+  from?: PartialPropertyValue[] | PartialPropertyValue;
+  to?: PartialPropertyValue[] | PartialPropertyValue;
+  fromTo?: PropertyValue[] | PropertyValue;
 
   play?: boolean;
   pause?: boolean;

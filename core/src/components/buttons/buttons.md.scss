@@ -77,7 +77,6 @@
 
 ::slotted(*) .button-solid {
   --color: #{$toolbar-md-background};
-  --color-activated: #{$toolbar-md-background};
   --background: #{$toolbar-md-color};
   --background-activated: transparent;
   --background-focused: currentColor;
@@ -89,13 +88,11 @@
 
 ::slotted(*) .button-outline {
   --color: initial;
-  --color-activated: currentColor;
-  --color-focused: #{$toolbar-md-color};
   --background: transparent;
   --background-activated: transparent;
   --background-focused: currentColor;
   --background-hover: currentColor;
-  --border-color: #{$toolbar-md-color};
+  --border-color: currentColor;
 }
 
 
@@ -104,8 +101,6 @@
 
 ::slotted(*) .button-clear {
   --color: initial;
-  --color-focused: #{$toolbar-md-color};
-  --color-activated: currentColor;
   --background: transparent;
   --background-activated: transparent;
   --background-focused: currentColor;

@@ -21,6 +21,8 @@
   display: flex;
   position: relative;
 
+  align-items: center;
+
   font-family: $font-family-base;
 
   overflow: hidden;
@@ -54,6 +56,8 @@ button {
 
 .select-icon {
   position: relative;
+
+  opacity: .33;
 }
 
 .select-text {
@@ -84,8 +88,6 @@ button {
   border-left: 5px solid transparent;
 
   color: currentColor;
-
-  opacity: .33;
 
   pointer-events: none;
 }

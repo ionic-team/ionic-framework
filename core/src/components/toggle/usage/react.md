@@ -1,42 +1,56 @@
 ```tsx
-import React from 'react';
-import { IonToggle, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonToggle, IonList, IonItem, IonLabel, IonItemDivider } from '@ionic/react';
 
-export const ToggleExample: React.FC = () => (
-  <IonContent>
-    {/*-- Default Toggle --*/}
-    <IonToggle />
+export const ToggleExamples: React.FC = () => {
+  const [checked, setChecked] = useState(false);
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>ToggleExamples</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonList>
 
-    {/*-- Disabled Toggle --*/}
-    <IonToggle disabled />
+          <IonItemDivider>Default Toggle</IonItemDivider>
+          <IonItem>
+            <IonLabel>Checked: {JSON.stringify(checked)}</IonLabel>
+            <IonToggle checked={checked} onIonChange={e => setChecked(e.detail.checked)} />
+          </IonItem>
 
-    {/*-- Checked Toggle --*/}
-    <IonToggle checked />
+          <IonItemDivider>Disabled Toggle</IonItemDivider>
+          <IonItem><IonToggle disabled /></IonItem>
 
-    {/*-- Toggle Colors --*/}
-    <IonToggle color="primary" />
-    <IonToggle color="secondary" />
-    <IonToggle color="danger" />
-    <IonToggle color="light" />
-    <IonToggle color="dark" />
+          <IonItemDivider>Checked Toggle</IonItemDivider>
+          <IonItem><IonToggle checked /></IonItem>
 
-    {/*-- Toggles in a List --*/}
-    <IonList>
-      <IonItem>
-        <IonLabel>Pepperoni</IonLabel>
-        <IonToggle value="pepperoni" onIonChange={() => {}} />
-      </IonItem>
+          <IonItemDivider>Toggle Colors</IonItemDivider>
+          <IonItem><IonToggle color="primary" /></IonItem>
+          <IonItem><IonToggle color="secondary" /></IonItem>
+          <IonItem><IonToggle color="danger" /></IonItem>
+          <IonItem><IonToggle color="light" /></IonItem>
+          <IonItem><IonToggle color="dark" /></IonItem>
 
-      <IonItem>
-        <IonLabel>Sausage</IonLabel>
-        <IonToggle value="sausage" onIonChange={() => {}} disabled={true} />
-      </IonItem>
+          <IonItemDivider>Toggles in a List</IonItemDivider>
+          <IonItem>
+            <IonLabel>Pepperoni</IonLabel>
+            <IonToggle value="pepperoni" />
+          </IonItem>
 
-      <IonItem>
-        <IonLabel>Mushrooms</IonLabel>
-        <IonToggle value="mushrooms" onIonChange={() => {}} />
-      </IonItem>
-    </IonList>
-  </IonContent>
-);
+          <IonItem>
+            <IonLabel>Sausage</IonLabel>
+            <IonToggle value="sausage" disabled={true} />
+          </IonItem>
+
+          <IonItem>
+            <IonLabel>Mushrooms</IonLabel>
+            <IonToggle value="mushrooms" />
+          </IonItem>
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
 ```

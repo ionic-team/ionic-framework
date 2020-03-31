@@ -4,21 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <title>List - Icons</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/core.css" rel="stylesheet">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
 
 <body>
   <ion-app>
     <ion-header>
-      <ion-toolbar color="tertiary">
-        <ion-title>Topics</ion-title>
+      <ion-toolbar>
+        <ion-title>Trip</ion-title>
         <ion-buttons slot="end">
           <ion-button>
-            <ion-icon slot="icon-only" name="search"></ion-icon>
+            <ion-icon slot="icon-only" name="search-outline"></ion-icon>
           </ion-button>
           <ion-button>
             <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
@@ -27,83 +29,87 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-list lines="none">
-        <ion-item>
-          <ion-icon name="film" slot="start"></ion-icon>
+      <ion-list>
+        <ion-list-header lines="full">
+          <ion-label>
+            Categories
+          </ion-label>
+        </ion-list-header>
+        <ion-item button>
+          <ion-icon name="film-outline" slot="start"></ion-icon>
           <ion-label>
             Attractions
           </ion-label>
         </ion-item>
-        <ion-item>
-          <ion-icon name="beer" slot="start"></ion-icon>
+        <ion-item button>
+          <ion-icon name="restaurant-outline" slot="start"></ion-icon>
           <ion-label>
             Dining
           </ion-label>
         </ion-item>
-        <ion-item>
-          <ion-icon name="create" slot="start"></ion-icon>
+        <ion-item button>
+          <ion-icon name="create-outline" slot="start"></ion-icon>
           <ion-label>
             Education
           </ion-label>
         </ion-item>
-        <ion-item>
-          <ion-icon name="heart" slot="start"></ion-icon>
-          <ion-label>
-            Health
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="people" slot="start"></ion-icon>
-          <ion-label>
-            Family
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="cut" slot="start"></ion-icon>
-          <ion-label>
-            Office
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="pricetag" slot="start"></ion-icon>
-          <ion-label>
-            Promotions
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="radio" slot="start"></ion-icon>
-          <ion-label>
-            Radio
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="pizza" slot="start"></ion-icon>
-          <ion-label>
-            Food
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="basketball" slot="start"></ion-icon>
-          <ion-label>
-            Sports
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="airplane" slot="start"></ion-icon>
+        <ion-item button lines="full">
+          <ion-icon name="airplane-outline" slot="start"></ion-icon>
           <ion-label>
             Travel
           </ion-label>
         </ion-item>
       </ion-list>
+
+      <ion-list>
+        <ion-list-header lines="full">
+          <ion-label>
+            Information
+          </ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-icon name="people-outline" slot="start"></ion-icon>
+          <ion-label>
+            Attendees
+          </ion-label>
+          <ion-select slot="end" value="1">
+            <ion-select-option value="1">1</ion-select-option>
+            <ion-select-option value="2">2</ion-select-option>
+            <ion-select-option value="3">3</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-icon name="repeat-outline" slot="start"></ion-icon>
+          <ion-label>
+            Round-trip
+          </ion-label>
+          <ion-toggle checked></ion-toggle>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header lines="full">
+          <ion-label>
+            Contact
+          </ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label>
+            Name
+          </ion-label>
+          <ion-input placeholder="xxxxx"></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-icon name="call-outline" slot="start"></ion-icon>
+          <ion-label>
+            Phone Number
+          </ion-label>
+          <ion-input placeholder="(xxx) xxx-xxxx" type="number"></ion-input>
+        </ion-item>
+      </ion-list>
     </ion-content>
   </ion-app>
-
-  <style>
-    body {
-      margin: 0;
-    }
-
-  </style>
 </body>
 
 </html>
