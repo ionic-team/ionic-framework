@@ -25,7 +25,7 @@
 
     <div style="display: flex; flex: 1">
       <ion-content class="ion-padding" style="text-align: center; flex: 2" id="content">
-        <ion-content>
+        <ion-content id="content-part">
         <f style="height: 50%"></f>
         <ion-button onclick="toggleFullscreen()">Toggle content.fullscreen</ion-button>
         <p>
@@ -148,6 +148,10 @@
 
       f:last-of-type {
         background: yellow;
+      }
+
+      ion-content#content-part::part(background) {
+        background: #eee;
       }
 
     </style>

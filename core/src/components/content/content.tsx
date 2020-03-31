@@ -9,6 +9,11 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 /**
  * @slot - Content is placed in the scrollable area if provided without a slot.
  * @slot fixed - Should be used for fixed content that should not scroll.
+ *
+ * @TODOpart background - The background of the content.
+ * @TODOpart scroll - The scrollable container of the content.
+ * @TODOpart transition-cover - The backdrop that appears when transitioning to another page. Only applies in iOS mode.
+ * @TODOpart transition-shadow - The shadow that appears when transitioning to another page. Only applies in iOS mode.
  */
 @Component({
   tag: 'ion-content',
@@ -321,7 +326,7 @@ export class Content implements ComponentInterface {
           '--offset-bottom': `${this.cBottom}px`,
         }}
       >
-        <div id="background-content"></div>
+        <div id="background-content" part="background"></div>
         <main
           class={{
             'inner-scroll': true,
@@ -331,14 +336,15 @@ export class Content implements ComponentInterface {
           }}
           ref={el => this.scrollEl = el!}
           onScroll={(this.scrollEvents) ? ev => this.onScroll(ev) : undefined}
+          part="scroll"
         >
           <slot></slot>
         </main>
 
         {transitionShadow ? (
           <div class="transition-effect">
-            <div class="transition-cover"></div>
-            <div class="transition-shadow"></div>
+            <div class="transition-cover" part="transition-cover"></div>
+            <div class="transition-shadow" part="transition-shadow"></div>
           </div>
         ) : null}
 
