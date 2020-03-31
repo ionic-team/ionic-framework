@@ -613,7 +613,7 @@ export class Datetime implements ComponentInterface {
       : text;
 
     const datetimeTextPart = text === undefined
-      ? (placeholder != null ? 'placeholder' : '')
+      ? (placeholder != null ? 'placeholder' : undefined)
       : 'text';
 
     if (label) {
