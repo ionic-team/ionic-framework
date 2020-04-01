@@ -70,8 +70,14 @@
   <ion-fab-button class="fab-button-in-list custom-border ion-activated">Border</ion-fab-button>
   <ion-fab-button class="fab-button-in-list custom-border"><ion-icon name="star"></ion-icon></ion-fab-button>
   <ion-fab-button class="fab-button-in-list custom-border ion-activated"><ion-icon name="star"></ion-icon></ion-fab-button>
+  <ion-fab-button class="fab-button-part"><ion-icon name="star"></ion-icon></ion-fab-button>
 
   <style>
+    ion-fab-button.fab-button-part::part(button) {
+      background: green;
+      border-radius: 4px;
+    }
+
     ion-fab-button {
       display: inline-block;
       margin-bottom: 5px;

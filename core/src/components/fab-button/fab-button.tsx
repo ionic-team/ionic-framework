@@ -7,6 +7,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @TODOpart button - The inner clickable button or link.
  */
 @Component({
   tag: 'ion-fab-button',
@@ -143,6 +145,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
 
         <TagType
           {...attrs}
+          part="button"
           class="button-native"
           disabled={disabled}
           onFocus={this.onFocus}
