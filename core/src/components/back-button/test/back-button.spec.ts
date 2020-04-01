@@ -72,7 +72,8 @@ describe('back button', () => {
 
   describe('backButtonDefaultHref', () => {
 
-    it('set custom defaultHref on the instance, override config', () => {
+    it('set custom defaultHref on the instance, override config', async () => {
+      const bb = await newBackButton();
       bb.defaultHref = 'custom-default-href';
       config.reset({
         backButtonDefaultHref: 'custom-default-href-config'
@@ -80,14 +81,16 @@ describe('back button', () => {
       expect(bb.backButtonDefaultHref).toBe('custom-default-href');
     });
 
-    it('set custom defaultHref in the config', () => {
+    it('set custom defaultHref in the config', async () => {
+      const bb = await newBackButton();
       config.reset({
         backButtonDefaultHref: 'custom-default-href-config'
       });
       expect(bb.backButtonDefaultHref).toBe('custom-default-href-config');
     });
 
-    it('set custom defaultHref on the instance', () => {
+    it('set custom defaultHref on the instance', async () => {
+      const bb = await newBackButton();
       bb.defaultHref = 'custom-default-href';
       expect(bb.backButtonDefaultHref).toBe('custom-default-href');
     });
