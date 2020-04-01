@@ -103,8 +103,9 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   }
 
   render() {
-    const { color, disabled, type, mode, hasIconOnly, backButtonIcon, backButtonText, backButtonDefaultHref } = this;
+    const { color, disabled, type, hasIconOnly, backButtonIcon, backButtonText, backButtonDefaultHref } = this;
     const showBackButton = backButtonDefaultHref !== undefined;
+    const mode = getIonMode(this);
 
     return (
       <Host
