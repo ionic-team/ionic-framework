@@ -1,6 +1,6 @@
-import { RouterDirection } from '../../components/hrefprops';
 
 import { RouteAction } from './IonRouteAction';
+import { RouterDirection } from './RouterDirection';
 
 export interface RouteInfo {
   currentRoute: string;

@@ -2,10 +2,10 @@
 import React, { ReactElement, ReactNode } from 'react';
 
 import { DefaultIonLifeCycleContext } from '../contexts/IonLifeCycleContext';
+import { RouteInfo } from '../models/RouteInfo';
 
 import { RouteManagerContext } from './RouteManagerContext';
 import { ViewLifeCycleManager } from './ViewLifeCycleManager';
-import { RouteInfo } from './models/RouteInfo';
 
 export interface StackContextState {
   registerIonPage: (page: HTMLElement) => void;

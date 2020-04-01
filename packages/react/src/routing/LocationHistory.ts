@@ -1,4 +1,4 @@
-import { RouteInfo } from './models/RouteInfo';
+import { RouteInfo } from '../models/RouteInfo';
 
 // const RESTRICT_SIZE = 100;
 

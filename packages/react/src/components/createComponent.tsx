@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 import { NavContext } from '../contexts/NavContext';
+import { RouterDirection } from '../models/RouterDirection';
 
-import { RouterDirection } from './hrefprops';
-import { attachProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
+import { attachProps, camelToDashCase, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.Ref<ElementType>;
@@ -53,6 +53,8 @@ export const createReactComponent = <PropType, ElementType>(
           if (isCoveredByReact(eventName)) {
             (acc as any)[name] = (cProps as any)[name];
           }
+        } else if (typeof (cProps as any)[name] === 'string') {
+          (acc as any)[camelToDashCase(name)] = (cProps as any)[name];
         }
         return acc;
       }, {});

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RouteInfo } from './models/RouteInfo';
+import { RouteInfo } from '../models/RouteInfo';
 
 export interface RouteManagerContextState {
   routerInfo: RouteInfo;

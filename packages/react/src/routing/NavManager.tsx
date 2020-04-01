@@ -2,12 +2,12 @@
 import React from 'react';
 
 import { NavContext, NavContextState } from '../contexts/NavContext';
+import { RouteAction } from '../models/IonRouteAction';
+import { RouteInfo } from '../models/RouteInfo';
+import { RouterDirection } from '../models/RouterDirection';
 
 import PageManager from './PageManager';
 import StackManager from './StackManager';
-import { RouteAction } from './models/IonRouteAction';
-import { RouteInfo } from './models/RouteInfo';
-import { RouterDirection } from './models/RouterDirection';
 
 interface NavManagerProps {
   pathname: string;

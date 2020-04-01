@@ -2,7 +2,6 @@ import { LocationHistory, NavManager, RouteAction, RouteInfo, RouteManagerContex
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { Router, withRouter } from 'next/router';
 import React from 'react';
-
 class IonNextRouterInner extends React.Component<WithRouterProps, RouteManagerContextState> {
 
   routeInfo: RouteInfo;
