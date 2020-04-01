@@ -1237,6 +1237,7 @@ ion-toast,css-prop,--max-width
 ion-toast,css-prop,--min-height
 ion-toast,css-prop,--min-width
 ion-toast,css-prop,--start
+ion-toast,css-prop,--white-space
 ion-toast,css-prop,--width
 
 ion-toggle,shadow

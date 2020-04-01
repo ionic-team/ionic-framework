@@ -23,6 +23,8 @@ export class Slides implements ComponentInterface {
   private mutationO?: MutationObserver;
   private readySwiper!: (swiper: SwiperInterface) => void;
   private swiper: Promise<SwiperInterface> = new Promise(resolve => { this.readySwiper = resolve; });
+  private syncSwiper?: SwiperInterface;
+  private didInit = false;
 
   @Element() el!: HTMLIonSlidesElement;
 
@@ -143,19 +145,38 @@ export class Slides implements ComponentInterface {
         childList: true,
         subtree: true
       });
-      this.el.componentOnReady().then(() => this.initSwiper());
+
+      this.el.componentOnReady().then(() => {
+        if (!this.didInit) {
+          this.didInit = true;
+          this.initSwiper();
+        }
+      });
     }
   }
 
-  async disconnectedCallback() {
+  disconnectedCallback() {
     if (this.mutationO) {
       this.mutationO.disconnect();
       this.mutationO = undefined;
     }
-    const swiper = await this.getSwiper();
-    swiper.destroy(true, true);
-    this.swiper = new Promise(resolve => { this.readySwiper = resolve; });
-    this.swiperReady = false;
+
+    /**
+     * We need to synchronously destroy
+     * swiper otherwise it is possible
+     * that it will be left in a
+     * destroyed state if connectedCallback
+     * is called multiple times
+     */
+    const swiper = this.syncSwiper;
+    if (swiper !== undefined) {
+      swiper.destroy(true, true);
+      this.swiper = new Promise(resolve => { this.readySwiper = resolve; });
+      this.swiperReady = false;
+      this.syncSwiper = undefined;
+    }
+
+    this.didInit = false;
   }
 
   /**
@@ -341,6 +362,7 @@ export class Slides implements ComponentInterface {
     await waitForSlides(this.el);
     const swiper = new Swiper(this.el, finalOptions);
     this.swiperReady = true;
+    this.syncSwiper = swiper;
     this.readySwiper(swiper);
   }
 

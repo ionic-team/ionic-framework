@@ -1,4 +1,4 @@
-import * as pd from '@stencil/core/dist/testing/puppeteer/puppeteer-declarations';
+import * as pd from '@stencil/core/testing';
 
 import { dragElementBy, queryDeep } from '../../../utils/test/utils';
 

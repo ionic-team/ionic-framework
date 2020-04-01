@@ -21,6 +21,7 @@ export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-input-${textareaIds++}`;
   private didBlurAfterEdit = false;
+  private textareaWrapper?: HTMLElement;
 
   @Element() el!: HTMLElement;
 
@@ -173,7 +174,7 @@ export class Textarea implements ComponentInterface {
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
-      this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
+      document.dispatchEvent(new CustomEvent('ionInputDidLoad', {
         detail: this.el
       }));
     }
@@ -191,13 +192,15 @@ export class Textarea implements ComponentInterface {
     this.runAutoGrow();
   }
 
-  // TODO: performance hit, this cause layout thrashing
   private runAutoGrow() {
     const nativeInput = this.nativeInput;
     if (nativeInput && this.autoGrow) {
       readTask(() => {
-        nativeInput.style.height = 'inherit';
+        nativeInput.style.height = 'auto';
         nativeInput.style.height = nativeInput.scrollHeight + 'px';
+        if (this.textareaWrapper) {
+          this.textareaWrapper.style.height = nativeInput.scrollHeight + 'px';
+        }
       });
     }
   }
@@ -310,29 +313,34 @@ export class Textarea implements ComponentInterface {
           [mode]: true,
         }}
       >
-        <textarea
-          class="native-textarea"
-          ref={el => this.nativeInput = el}
-          autoCapitalize={this.autocapitalize}
-          autoFocus={this.autofocus}
-          disabled={this.disabled}
-          maxLength={this.maxlength}
-          minLength={this.minlength}
-          name={this.name}
-          placeholder={this.placeholder || ''}
-          readOnly={this.readonly}
-          required={this.required}
-          spellCheck={this.spellcheck}
-          cols={this.cols}
-          rows={this.rows}
-          wrap={this.wrap}
-          onInput={this.onInput}
-          onBlur={this.onBlur}
-          onFocus={this.onFocus}
-          onKeyDown={this.onKeyDown}
+        <div
+          class="textarea-wrapper"
+          ref={el => this.textareaWrapper = el}
         >
-          {value}
-        </textarea>
+          <textarea
+            class="native-textarea"
+            ref={el => this.nativeInput = el}
+            autoCapitalize={this.autocapitalize}
+            autoFocus={this.autofocus}
+            disabled={this.disabled}
+            maxLength={this.maxlength}
+            minLength={this.minlength}
+            name={this.name}
+            placeholder={this.placeholder || ''}
+            readOnly={this.readonly}
+            required={this.required}
+            spellCheck={this.spellcheck}
+            cols={this.cols}
+            rows={this.rows}
+            wrap={this.wrap}
+            onInput={this.onInput}
+            onBlur={this.onBlur}
+            onFocus={this.onFocus}
+            onKeyDown={this.onKeyDown}
+          >
+            {value}
+          </textarea>
+        </div>
       </Host>
     );
   }

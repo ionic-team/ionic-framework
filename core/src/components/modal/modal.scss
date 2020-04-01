@@ -52,7 +52,8 @@
   display: none;
 }
 
-.modal-wrapper {
+.modal-wrapper,
+.modal-shadow {
   @include border-radius(var(--border-radius));
 
   width: var(--width);
@@ -72,6 +73,12 @@
   box-shadow: var(--box-shadow);
   overflow: var(--overflow);
   z-index: 10;
+}
+
+.modal-shadow {
+  position: absolute;
+  
+  background: transparent;
 }
 
 @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {

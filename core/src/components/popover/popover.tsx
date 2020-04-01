@@ -28,7 +28,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
   private usersElement?: HTMLElement;
 
   presented = false;
-  mode = getIonMode(this);
 
   @Element() el!: HTMLIonPopoverElement;
 

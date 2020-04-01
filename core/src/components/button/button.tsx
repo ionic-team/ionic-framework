@@ -14,8 +14,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
  * @slot start - Content is placed to the left of the button text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the button text in LTR, and to the left in RTL.
  *
- * @part button - The native button or anchor tag that is rendered.
- * @part button-inner - The span inside of the native button or anchor.
+ * @TODOpart button - The native button or anchor tag that is rendered.
+ * @TODOpart button-inner - The span inside of the native button or anchor.
  */
 @Component({
   tag: 'ion-button',
