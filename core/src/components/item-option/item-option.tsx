@@ -14,6 +14,8 @@ import { createColorClasses } from '../../utils/theme';
  * @slot icon-only - Should be used on an icon in an option that has no text.
  * @slot bottom - Content is placed below the option text.
  * @slot end - Content is placed to the right of the option text in LTR, and to the left in RTL.
+ *
+ * @TODOpart button - The inner clickable button or link.
  */
 @Component({
   tag: 'ion-item-option',
@@ -111,6 +113,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
           {...attrs}
           class="button-native"
           disabled={disabled}
+          part="button"
         >
           <span class="button-inner">
             <slot name="top"></slot>

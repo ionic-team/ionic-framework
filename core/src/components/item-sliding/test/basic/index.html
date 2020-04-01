@@ -10,7 +10,11 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <style>
+    ion-item-option.option-part::part(button) {
+      background: green;
+    }
+  </style>
 <body>
   <ion-app>
 
@@ -88,7 +92,7 @@
                 <ion-icon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                 <span class="more-text"></span>
               </ion-item-option>
-              <ion-item-option color="secondary" onclick="archive('item6')">
+              <ion-item-option class="option-part" onclick="archive('item6')">
                 <ion-icon slot="start" name="archive"></ion-icon>
                 <span class="archive-text"></span>
               </ion-item-option>
