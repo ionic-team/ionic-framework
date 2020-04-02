@@ -1,18 +1,28 @@
+import { newSpecPage } from '@stencil/core/testing';
 import { BackButton } from "../back-button";
 import { config } from "../../../global/config";
+import { setMode } from '@stencil/core';
 
 
 describe('back button', () => {
-  let bb: BackButton;
-
   beforeEach(() => {
     config.reset({});
-    bb = new BackButton();
   });
+
+  const newBackButton = async (mode: string = 'md'): Promise<BackButton> => {
+    setMode(() => mode);
+    const { rootInstance } = await newSpecPage({
+      components: [BackButton],
+      html: `<ion-back-button></ion-back-button>`
+    })
+    return rootInstance;
+  };
+
 
   describe('backButtonIcon', () => {
 
-    it('set custom icon on the instance, override config', () => {
+    it('set custom icon on the instance, override config', async () => {
+      const bb = await newBackButton();
       bb.icon = 'custom-icon-instance';
       config.reset({
         backButtonIcon: 'custom-icon-config'
@@ -20,24 +30,27 @@ describe('back button', () => {
       expect(bb.backButtonIcon).toBe('custom-icon-instance');
     });
 
-    it('set custom icon in the config', () => {
+    it('set custom icon in the config', async () => {
+      const bb = await newBackButton();
       config.reset({
         backButtonIcon: 'custom-icon-config'
       });
       expect(bb.backButtonIcon).toBe('custom-icon-config');
     });
 
-    it('set custom icon on the instance', () => {
+    it('set custom icon on the instance', async () => {
+      const bb = await newBackButton();
       bb.icon = 'custom-icon-instance';
       expect(bb.backButtonIcon).toBe('custom-icon-instance');
     });
 
-    it('default icon for ios mode', () => {
-      bb.mode = 'ios';
+    it('default icon for ios mode', async () => {
+      const bb = await newBackButton('ios');
       expect(bb.backButtonIcon).toBe('chevron-back');
     });
 
-    it('default icon', () => {
+    it('default icon', async () => {
+      const bb = await newBackButton();
       expect(bb.backButtonIcon).toBe('arrow-back-sharp');
     });
 
@@ -45,12 +58,13 @@ describe('back button', () => {
 
   describe('backButtonText', () => {
 
-    it('default text for ios mode', () => {
-      bb.mode = 'ios';
+    it('default text for ios mode', async () => {
+      const bb = await newBackButton('ios');
       expect(bb.backButtonText).toBe('Back');
     });
 
-    it('default text', () => {
+    it('default text', async () => {
+      const bb = await newBackButton();
       expect(bb.backButtonText).toBe(null);
     });
 

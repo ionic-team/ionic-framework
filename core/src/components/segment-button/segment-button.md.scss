@@ -44,6 +44,10 @@
   text-transform: uppercase;
 }
 
+.button-native {
+  min-width: $segment-button-md-min-width;
+}
+
 
 // Segment Button: Disabled
 // --------------------------------------------------

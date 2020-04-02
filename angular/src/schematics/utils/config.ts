@@ -21,7 +21,7 @@ function isAngularBrowserProject(projectConfig: any) {
   return false;
 }
 
-export function getAngularAppName(config: any): string | null {
+export function getDefaultAngularAppName(config: any): string {
   const projects = config.projects;
   const projectNames = Object.keys(projects);
 
@@ -32,60 +32,48 @@ export function getAngularAppName(config: any): string | null {
     }
   }
 
-  return null;
+  return projectNames[0];
 }
 
-export function getAngularAppConfig(config: any): any | null {
-  const projects = config.projects;
-  const projectNames = Object.keys(projects);
-
-  for (const projectName of projectNames) {
-    const projectConfig = projects[projectName];
-    if (isAngularBrowserProject(projectConfig)) {
-      return projectConfig;
-    }
+export function getAngularAppConfig(config: any, projectName: string): any | never {
+  if (!config.projects.hasOwnProperty(projectName)) {
+    throw new SchematicsException(`Could not find project: ${projectName}`);
   }
 
-  return null;
-}
+  const projectConfig = config.projects[projectName];
+  if (isAngularBrowserProject(projectConfig)) {
+    return projectConfig;
+  }
 
-export function addStyle(host: Tree, stylePath: string) {
-  const config = readConfig(host);
-  const appConfig = getAngularAppConfig(config);
-
-  if (appConfig) {
-    appConfig.architect.build.options.styles.push({
-      input: stylePath
-    });
-
-    writeConfig(host, config);
+  if (config.projectType !== 'application') {
+    throw new SchematicsException(`Invalid projectType for ${projectName}: ${config.projectType}`);
   } else {
-    throw new SchematicsException(`Cannot find valid app`);
+    const buildConfig = projectConfig.architect.build;
+    throw new SchematicsException(`Invalid builder for ${projectName}: ${buildConfig.builder}`);
   }
 }
 
-export function addAsset(host: Tree, asset: string | {glob: string; input: string; output: string}) {
+export function addStyle(host: Tree, projectName: string, stylePath: string) {
   const config = readConfig(host);
-  const appConfig = getAngularAppConfig(config);
-
-  if (appConfig) {
-    appConfig.architect.build.options.assets.push(asset);
-    writeConfig(host, config);
-  } else {
-    throw new SchematicsException(`Cannot find valid app`);
-  }
+  const appConfig = getAngularAppConfig(config, projectName);
+  appConfig.architect.build.options.styles.push({
+    input: stylePath
+  });
+  writeConfig(host, config);
 }
 
-export function addArchitectBuilder(host: Tree, builderName: string, builderOpts: any){
+export function addAsset(host: Tree, projectName: string, asset: string | {glob: string; input: string; output: string}) {
   const config = readConfig(host);
-  const appConfig = getAngularAppConfig(config);
+  const appConfig = getAngularAppConfig(config, projectName);
+  appConfig.architect.build.options.assets.push(asset);
+  writeConfig(host, config);
+}
 
-  if (appConfig) {
-    appConfig.architect[builderName] = builderOpts
-    writeConfig(host, config);
-  } else {
-    throw new SchematicsException(`Cannot find valid app`);
-  }
+export function addArchitectBuilder(host: Tree, projectName: string, builderName: string, builderOpts: any): void | never {
+  const config = readConfig(host);
+  const appConfig = getAngularAppConfig(config, projectName);
+  appConfig.architect[builderName] = builderOpts;
+  writeConfig(host, config);
 }
 
 export type WorkspaceSchema = experimental.workspace.WorkspaceSchema;

@@ -271,6 +271,8 @@ ion-ripple-effect {
   box-sizing: border-box;
 
   will-change: transform, opacity;
+
+  pointer-events: none;
 }
 
 .segment-button-indicator-background {
@@ -280,6 +282,8 @@ ion-ripple-effect {
   transform: var(--indicator-transform);
 
   box-shadow: var(--indicator-box-shadow);
+
+  pointer-events: none;
 }
 
 .segment-button-indicator-animated {

@@ -35,6 +35,7 @@
   --border-color: transparent;
   --background: #{$background-color};
   --box-shadow: none;
+  --backdrop-opacity: 0;
 
   @include position(0, 0, 0, 0);
 
@@ -51,7 +52,8 @@
   display: none;
 }
 
-.modal-wrapper {
+.modal-wrapper,
+.modal-shadow {
   @include border-radius(var(--border-radius));
 
   width: var(--width);
@@ -71,6 +73,12 @@
   box-shadow: var(--box-shadow);
   overflow: var(--overflow);
   z-index: 10;
+}
+
+.modal-shadow {
+  position: absolute;
+  
+  background: transparent;
 }
 
 @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {

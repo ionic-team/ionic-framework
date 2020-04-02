@@ -12,10 +12,10 @@ import { SelectCompareFn } from './select-interface';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @part placeholder - The text displayed in the select when there is no value.
- * @part text - The displayed value of the select.
- * @part icon - The select icon container.
- * @part icon-inner - The select icon.
+ * @TODOpart placeholder - The text displayed in the select when there is no value.
+ * @TODOpart text - The displayed value of the select.
+ * @TODOpart icon - The select icon container.
+ * @TODOpart icon-inner - The select icon.
  */
 @Component({
   tag: 'ion-select',

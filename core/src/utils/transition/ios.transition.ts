@@ -14,11 +14,11 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
 
 const getLargeTitle = (refEl: any) => {
   const tabs = (refEl.tagName === 'ION-TABS') ? refEl : refEl.querySelector('ion-tabs');
-  const query = 'ion-header:not(.header-collapse-condense-inactive) ion-title[size=large]';
+  const query = 'ion-header:not(.header-collapse-condense-inactive) ion-title.title-large';
 
   if (tabs != null) {
     const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
-    return activeTab.querySelector(query);
+    return (activeTab != null) ? activeTab.querySelector(query) : null;
   }
 
   return refEl.querySelector(query);
@@ -30,7 +30,9 @@ const getBackButton = (refEl: any, backDirection: boolean) => {
 
   if (tabs != null) {
     const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
-    buttonsList = activeTab.querySelectorAll('ion-buttons');
+    if (activeTab != null) {
+      buttonsList = activeTab.querySelectorAll('ion-buttons');
+    }
   } else {
     buttonsList = refEl.querySelectorAll('ion-buttons');
   }
@@ -157,7 +159,7 @@ const animateBackButton = (rootAnimation: Animation, rtl: boolean, backDirection
 };
 
 const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection: boolean, largeTitleEl: any, largeTitleBox: DOMRect, backButtonBox: DOMRect) => {
-  const TITLE_START_OFFSET = (rtl) ? `calc(100% - ${largeTitleEl.right}px)` : `${largeTitleEl.left}px`;
+  const TITLE_START_OFFSET = (rtl) ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
   const START_TRANSLATE = (rtl) ? '-18px' : '18px';
   const ORIGIN_X = (rtl) ? 'right' : 'left';
 

@@ -27,8 +27,10 @@ export interface JsonDocsComponent {
     props: JsonDocsProp[];
     methods: JsonDocsMethod[];
     events: JsonDocsEvent[];
+    listeners: JsonDocsListener[];
     styles: JsonDocsStyle[];
     slots: JsonDocsSlot[];
+    parts: JsonDocsPart[];
     dependents: string[];
     dependencies: string[];
     dependencyGraph: JsonDocsDependencyGraph;
@@ -95,7 +97,17 @@ export interface JsonDocsStyle {
     docs: string;
     annotation: string;
 }
+export interface JsonDocsListener {
+    event: string;
+    target?: string;
+    capture: boolean;
+    passive: boolean;
+}
 export interface JsonDocsSlot {
+    name: string;
+    docs: string;
+}
+export interface JsonDocsPart {
     name: string;
     docs: string;
 }
