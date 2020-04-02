@@ -6,6 +6,7 @@ import { apiSpecGenerator } from './scripts/api-spec-generator';
 
 export const config: Config = {
   namespace: 'Ionic',
+  taskQueue: 'async',
   bundles: [
     { components: ['ion-action-sheet'] },
     { components: ['ion-alert'] },
