@@ -68,11 +68,24 @@
           <ion-button>See All</ion-button>
         </ion-list-header>
       </ion-list>
+      <ion-list>
+        <ion-list-header class="list-header-part">
+          <ion-label>List Header ::part</ion-label>
+        </ion-list-header>
+      </ion-list>
     </ion-content>
   </ion-app>
 
   <style>
-
+    .list-header-part {
+      padding-left: 0px;
+    }
+    .list-header-part::part(inner) {
+      border-radius: 20px;
+      border: 1px solid #333;
+      padding: 10px;
+      margin: 10px;
+    }
   </style>
 
 </body>

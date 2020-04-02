@@ -6,6 +6,8 @@ import { createColorClasses } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @TODOpart inner - The inner element of the list header that wraps your content.
  */
 @Component({
   tag: 'ion-list-header',
@@ -41,7 +43,7 @@ export class ListHeader implements ComponentInterface {
           [`list-header-lines-${lines}`]: lines !== undefined,
         }}
       >
-        <div class="list-header-inner">
+        <div class="list-header-inner" part="inner">
           <slot></slot>
         </div>
       </Host>
