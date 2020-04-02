@@ -1,9 +1,9 @@
-import { RenderToStringOptions, renderToString } from '@ionic/core/hydrate';
+import { SerializeDocumentOptions, renderToString } from '@ionic/core/hydrate';
 
-export async function ionRenderToString(html: string, userAgent: string, options: RenderToStringOptions = {}) {
+export async function ionRenderToString(html: string, userAgent: string, options: SerializeDocumentOptions = {}) {
 
   const renderToStringOptions = Object.assign({}, {
-    clientHydrateAnnotations: true,
+    clientHydrateAnnotations: false,
     excludeComponents: [
       // overlays
       'ion-action-sheet',
