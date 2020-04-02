@@ -18,7 +18,7 @@ const getLargeTitle = (refEl: any) => {
 
   if (tabs != null) {
     const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
-    return activeTab.querySelector(query);
+    return (activeTab != null) ? activeTab.querySelector(query) : null;
   }
 
   return refEl.querySelector(query);
@@ -30,7 +30,9 @@ const getBackButton = (refEl: any, backDirection: boolean) => {
 
   if (tabs != null) {
     const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
-    buttonsList = activeTab.querySelectorAll('ion-buttons');
+    if (activeTab != null) {
+      buttonsList = activeTab.querySelectorAll('ion-buttons');
+    }
   } else {
     buttonsList = refEl.querySelectorAll('ion-buttons');
   }
