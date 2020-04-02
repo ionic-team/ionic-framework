@@ -60,7 +60,6 @@
 
 .searchbar-input {
   @include padding(6px, 55px);
-  @include border-radius(var(--border-radius));
   @include background-position(start, 8px, center);
 
   height: $searchbar-md-input-height;

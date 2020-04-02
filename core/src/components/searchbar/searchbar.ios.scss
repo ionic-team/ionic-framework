@@ -46,7 +46,6 @@
 
 .searchbar-input {
   @include padding(0, 28px);
-  @include border-radius(var(--border-radius));
 
   height: 100%;
 

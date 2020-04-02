@@ -69,6 +69,7 @@
 
 .searchbar-input {
   @include text-inherit();
+  @include border-radius(var(--border-radius));
 
   display: block;
 
