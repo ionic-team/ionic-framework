@@ -79,3 +79,17 @@
 :host(.label-no-animate.label-floating) {
   transition: none;
 }
+
+// Headings
+// --------------------------------------------------
+
+::slotted(*) h1,
+::slotted(*) h2,
+::slotted(*) h3,
+::slotted(*) h4,
+::slotted(*) h5,
+::slotted(*) h6 {
+  text-overflow: inherit;
+
+  overflow: inherit;
+}

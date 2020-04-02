@@ -73,7 +73,7 @@ export class ItemSliding implements ComponentInterface {
       gestureName: 'item-swipe',
       gesturePriority: 100,
       threshold: 5,
-      canStart: () => this.canStart(),
+      canStart: ev => this.canStart(ev),
       onStart: () => this.onStart(),
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
@@ -225,7 +225,18 @@ export class ItemSliding implements ComponentInterface {
     this.sides = sides;
   }
 
-  private canStart(): boolean {
+  private canStart(gesture: GestureDetail): boolean {
+    /**
+     * If very close to start of the screen
+     * do not open left side so swipe to go
+     * back will still work.
+     */
+    const rtl = document.dir === 'rtl';
+    const atEdge = (rtl) ? (window.innerWidth - gesture.startX) < 15 : gesture.startX < 15;
+    if (atEdge) {
+      return false;
+    }
+
     const selected = openSlidingItem;
     if (selected && selected !== this.el) {
       this.closeOpened();

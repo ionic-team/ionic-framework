@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -179,7 +179,7 @@ export class Searchbar implements ComponentInterface {
   protected showCancelButtonChanged() {
     requestAnimationFrame(() => {
       this.positionElements();
-      this.el.forceUpdate();
+      forceUpdate(this);
     });
   }
 

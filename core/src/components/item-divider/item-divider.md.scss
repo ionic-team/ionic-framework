@@ -5,14 +5,16 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$item-md-divider-background};
-  --color: #{$item-md-divider-color};
-  --padding-start: #{$item-md-divider-padding-start};
-  --inner-padding-end: #{$item-md-divider-padding-end};
+  --background: #{$item-divider-md-background};
+  --color: #{$item-divider-md-color};
+  --padding-start: #{$item-divider-md-padding-start};
+  --inner-padding-end: #{$item-divider-md-padding-end};
 
-  border-bottom: $item-md-divider-border-bottom;
+  min-height: $item-divider-md-min-height;
 
-  font-size: $item-md-divider-font-size;
+  border-bottom: $item-divider-md-border-bottom;
+
+  font-size: $item-divider-md-font-size;
 }
 
 
