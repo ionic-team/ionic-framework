@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { getTimeGivenProgression } from '../../';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
-import { clamp } from '../../utils/helpers';
+import { clamp, raf } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
 import { createPullingAnimation, createSnapBackAnimation, getRefresherAnimationType, handleScrollWhilePulling, handleScrollWhileRefreshing, setSpinnerOpacity, shouldUseNativeRefresher, transitionEndAsync, translateElement } from './refresher.utils';
@@ -442,7 +442,7 @@ export class Refresher implements ComponentInterface {
 
       // Do not reset scroll el until user removes pointer from screen
       if (!this.pointerDown) {
-        this.resetNativeRefresher(this.elementToTransform, RefresherState.Completing);
+        raf(() => raf(() => this.resetNativeRefresher(this.elementToTransform, RefresherState.Completing)));
       }
     } else {
       this.close(RefresherState.Completing, '120ms');
@@ -457,7 +457,7 @@ export class Refresher implements ComponentInterface {
     if (this.nativeRefresher) {
       // Do not reset scroll el until user removes pointer from screen
       if (!this.pointerDown) {
-        this.resetNativeRefresher(this.elementToTransform, RefresherState.Cancelling);
+        raf(() => raf(() => this.resetNativeRefresher(this.elementToTransform, RefresherState.Cancelling)));
       }
     } else {
       this.close(RefresherState.Cancelling, '');

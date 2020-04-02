@@ -126,10 +126,13 @@ export class Header implements ComponentInterface {
     this.scrollEl!.addEventListener('scroll', this.contentScrollCallback);
 
     writeTask(() => {
-      cloneElement('ion-title');
+      const title = cloneElement('ion-title') as HTMLIonTitleElement;
+      title.size = 'large';
       cloneElement('ion-back-button');
 
-      this.collapsibleMainHeader!.classList.add('header-collapse-main');
+      if (this.collapsibleMainHeader !== undefined) {
+        this.collapsibleMainHeader.classList.add('header-collapse-main');
+      }
     });
 
     this.collapsibleHeaderInitialized = true;

@@ -55,3 +55,7 @@
 
   text-align: start;
 }
+
+:host(.title-large.ion-cloned-element) {
+  --color: #{$text-color};
+}

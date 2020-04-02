@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 .list-ios {
-  @include margin(-1px, $list-ios-margin-end, $list-ios-margin-bottom, $list-ios-margin-start);
+  @include margin($list-ios-margin-top, $list-ios-margin-end, $list-ios-margin-bottom, $list-ios-margin-start);
 
   background: $item-ios-background;
 }

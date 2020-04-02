@@ -50,7 +50,13 @@
   z-index: 1;
 }
 
+/**
+ * Large title toolbar should just use the content background
+ * since it needs to blend in with the header above it.
+ */
 .header-collapse-condense ion-toolbar {
+  --background: var(--ion-background-color, #fff);
+  
   z-index: 0;
 }
 

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, FunctionalComponent, Host, Listen, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, FunctionalComponent, Host, Listen, Method, Prop, State, Watch, forceUpdate, h, readTask, writeTask } from '@stencil/core';
 
 import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
@@ -310,7 +310,7 @@ export class VirtualScroll implements ComponentInterface {
     } else if (this.domRender) {
       this.domRender(this.virtualDom);
     } else if (this.renderItem) {
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
