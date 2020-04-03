@@ -10,6 +10,13 @@ import { createColorClasses, hostContext } from '../../utils/theme';
  *
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
+ *
+ * @TODOpart tick - An inactive tick mark.
+ * @TODOpart tick-active - An active tick mark.
+ * @TODOpart pin - The counter that appears above a knob.
+ * @TODOpart knob - The handle that is used to drag the range.
+ * @TODOpart bar - The inactive part of the bar.
+ * @TODOpart bar-active - The active part of the bar.
  */
 @Component({
   tag: 'ion-range',
@@ -435,14 +442,16 @@ export class Range implements ComponentInterface {
                 'range-tick': true,
                 'range-tick-active': tick.active
               }}
+              part={tick.active ? 'tick-active' : 'tick'}
             />
           ))}
 
-          <div class="range-bar" role="presentation" />
+          <div class="range-bar" role="presentation" part="bar" />
           <div
             class="range-bar range-bar-active"
             role="presentation"
             style={barStyle}
+            part="bar-active"
           />
 
           { renderKnob(isRTL, {
@@ -530,8 +539,8 @@ const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pr
       aria-disabled={disabled ? 'true' : null}
       aria-valuenow={value}
     >
-      {pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
-      <div class="range-knob" role="presentation" />
+      {pin && <div class="range-pin" role="presentation" part="pin">{Math.round(value)}</div>}
+      <div class="range-knob" role="presentation" part="knob" />
     </div>
   );
 };
