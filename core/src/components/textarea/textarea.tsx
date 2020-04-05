@@ -189,7 +189,9 @@ export class Textarea implements ComponentInterface {
   }
 
   componentDidLoad() {
-    this.runAutoGrow();
+    setTimeout(() => {
+      this.runAutoGrow();
+    })
   }
 
   private runAutoGrow() {
