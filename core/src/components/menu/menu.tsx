@@ -13,6 +13,10 @@ const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
 const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
 const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
 
+/**
+ * @TODOpart inner - The inner div of the menu.
+ * @TODOpart backdrop - The ion-backdrop of the menu.
+ */
 @Component({
   tag: 'ion-menu',
   styleUrls: {
@@ -569,6 +573,7 @@ AFTER:
       >
         <div
           class="menu-inner"
+          part="inner"
           ref={el => this.menuInnerEl = el}
         >
           <slot></slot>
@@ -579,6 +584,7 @@ AFTER:
           class="menu-backdrop"
           tappable={false}
           stopPropagation={false}
+          part="backdrop"
         />
       </Host>
     );
