@@ -58,7 +58,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
 };
 
 const focusFirstFocusableElement = async (ref: HTMLElement) => {
-  const firstInput = ref.querySelector('ion-input, ion-textarea, ion-button, input:not([type="hidden"])), textarea, button, select, [contenteditable]') as HTMLElement | null;
+  const firstInput = ref.querySelector('ion-input, ion-textarea, ion-button, input:not([type="hidden"]), textarea, button, select, [contenteditable]') as HTMLElement | null;
   if (!firstInput) { return; }
 
   if (firstInput.tagName.includes('ION-')) {
