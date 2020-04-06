@@ -57,6 +57,27 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
   });
 };
 
+const focusFirstFocusableElement = async (ref: HTMLElement) => {
+  const firstInput = ref.querySelector('ion-input, ion-textarea, ion-button, input:not([type="hidden"])), textarea, button, select, [contenteditable]') as HTMLElement | null;
+  if (!firstInput) { return; }
+
+  if (firstInput.tagName.includes('ION-')) {
+
+    if ((firstInput as any).componentOnReady) {
+      await (firstInput as any).componentOnReady();
+    }
+
+    const root = firstInput.shadowRoot || firstInput;
+    const nativeEl = root.querySelector('input, textarea, button') as HTMLElement | null;
+
+    if (nativeEl) {
+      nativeEl.focus();
+    }
+  } else {
+    firstInput.focus();
+  }
+};
+
 export const connectListeners = (doc: Document) => {
   if (lastId === 0) {
     lastId = 1;
@@ -64,10 +85,7 @@ export const connectListeners = (doc: Document) => {
     doc.addEventListener('focusin', ev => {
       const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss && !isDescendant(lastOverlay, ev.target as HTMLElement)) {
-        const firstInput = lastOverlay.querySelector('input,button') as HTMLElement | null;
-        if (firstInput) {
-          firstInput.focus();
-        }
+        focusFirstFocusableElement(lastOverlay);
       }
     });
 
@@ -139,6 +157,8 @@ export const present = async (
   if (completed) {
     overlay.didPresent.emit();
   }
+
+  focusFirstFocusableElement(overlay.el);
 };
 
 export const dismiss = async (
