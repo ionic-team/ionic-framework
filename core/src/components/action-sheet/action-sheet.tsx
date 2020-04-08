@@ -226,7 +226,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                 </div>
               }
               {buttons.map(b =>
-                <button type="button" class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
+                <button type="button" class={buttonClass(b)} onClick={() => this.buttonClick(b)} role={b.role}>
                   <span class="action-sheet-button-inner">
                     {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                     {b.text}

@@ -64,10 +64,11 @@ const focusFirstFocusableElement = async (ref: HTMLElement) => {
    * 3. If there are none, look for any buttons, regardless of role.
    * 4. If there are none, focus the reference element.
    */
+  const refRoot = ref.shadowRoot || ref;
   const firstInput = (
-    ref.querySelector('ion-input, ion-textarea, input:not([type="hidden"]), textarea, select, [contenteditable]') ||
-    ref.querySelector('ion-button[role="cancel"], button[role="cancel"]') ||
-    ref.querySelector('ion-button, button')
+    refRoot.querySelector('ion-input, ion-textarea, input:not([type="hidden"]), textarea, select, [contenteditable]') ||
+    refRoot.querySelector('ion-button[role="cancel"], button[role="cancel"]') ||
+    refRoot.querySelector('ion-button, button')
   ) as HTMLElement | null;
 
   if (!firstInput) {
