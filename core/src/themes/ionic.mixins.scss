@@ -324,6 +324,16 @@
   bottom: $bottom;
 }
 
+// Add border for all directions
+// @param {string} $top
+// @param {string} $end
+// @param {string} $bottom
+// @param {string} $start
+// ----------------------------------------------------------
+@mixin border($top, $end: $top, $bottom: $top, $start: $end) {
+  @include property(border, $top, $end, $bottom, $start);
+}
+
 // Add border radius for all directions
 // @param {string} $top-start
 // @param {string} $top-end
