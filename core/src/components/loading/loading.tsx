@@ -183,6 +183,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
     return (
       <Host
         onIonBackdropTap={this.onBackdropTap}
+        tabindex="-1"
         style={{
           zIndex: `${40000 + this.overlayIndex}`
         }}

@@ -57,6 +57,18 @@ test('overlay: focus:popover', async () => {
   expect(activeEl.id).toEqual('close');
 });
 
+test('overlay: focus:alert', async () => {
+  const page = await newE2EPage({
+    url: '/src/utils/test/overlay-focus?ionic:_testing=true'
+  });
+  const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+  await page.click("#open-alert");
+  await ionAlertDidPresent.next();
+  const activeEl = await getActiveElement(page);
+  expect(activeEl.tagName).toEqual('ION-ALERT');
+});
+
 const getActiveElement = async (page: E2EPage) => {
   const el = await page.evaluateHandle(() => {
     const { tagName, id } = document.activeElement;

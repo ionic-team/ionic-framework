@@ -11,11 +11,12 @@
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <script type="module">
-      import { modalController, actionSheetController, popoverController } from '../../../../dist/ionic/index.esm.js';
+      import { modalController, actionSheetController, alertController, popoverController } from '../../../../dist/ionic/index.esm.js';
 
       window.modalController = modalController;
       window.actionSheetController = actionSheetController;
       window.popoverController = popoverController;
+      window.alertController = alertController;
     </script>
   </head>
 
@@ -35,6 +36,8 @@
         <ion-button expand="block" id="open-action-sheet" onclick="openActionSheet()">Open Action Sheet</ion-button>
 
         <ion-button expand="block" id="open-popover" onclick="openPopover()">Open Popover</ion-button>
+
+        <ion-button expand="block" id="open-alert" onclick="openAlert()">Open Alert</ion-button>
       </ion-content>
     </ion-app>
 
@@ -118,6 +121,15 @@
         });
 
         return await popover.present();
+      }
+
+      const openAlert = async () => {
+        const alert = await alertController.create({
+          header: 'Alert',
+          message: 'This is an alert'
+        });
+
+        return await alert.present();
       }
     </script>
   </body>
