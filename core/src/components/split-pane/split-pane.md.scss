@@ -11,6 +11,11 @@
 }
 
 :host(.split-pane-visible) ::slotted(.split-pane-side) {
+  @include rtl() {
+    border-right: 0;
+    border-left: var(--border);
+  }
+
   min-width: var(--side-min-width);
   max-width: var(--side-max-width);
 
@@ -19,6 +24,11 @@
 }
 
 :host(.split-pane-visible) ::slotted(.split-pane-side[side=end]) {
+  @include rtl() {
+    border-right: var(--border);
+    border-left: 0;
+  }
+  
   min-width: var(--side-min-width);
   max-width: var(--side-max-width);
 
