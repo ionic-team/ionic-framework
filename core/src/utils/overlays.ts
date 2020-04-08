@@ -72,6 +72,7 @@ const focusFirstFocusableElement = async (ref: HTMLElement) => {
   ) as HTMLElement | null;
 
   if (!firstInput) {
+    console.log('focus toast');
     ref.focus();
     return ;
   }

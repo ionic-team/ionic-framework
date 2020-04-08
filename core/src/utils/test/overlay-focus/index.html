@@ -11,12 +11,14 @@
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <script type="module">
-      import { modalController, actionSheetController, alertController, popoverController } from '../../../../dist/ionic/index.esm.js';
+      import { modalController, actionSheetController, alertController, pickerController, popoverController, toastController } from '../../../../dist/ionic/index.esm.js';
 
       window.modalController = modalController;
       window.actionSheetController = actionSheetController;
       window.popoverController = popoverController;
       window.alertController = alertController;
+      window.pickerController = pickerController;
+      window.toastController = toastController;
     </script>
   </head>
 
@@ -38,6 +40,10 @@
         <ion-button expand="block" id="open-popover" onclick="openPopover()">Open Popover</ion-button>
 
         <ion-button expand="block" id="open-alert" onclick="openAlert()">Open Alert</ion-button>
+
+        <ion-button expand="block" id="open-picker" onclick="openPicker()">Open Picker</ion-button>
+
+        <ion-button expand="block" id="open-toast" onclick="openToast()">Open Toast</ion-button>
       </ion-content>
     </ion-app>
 
@@ -130,6 +136,27 @@
         });
 
         return await alert.present();
+      }
+
+      const openPicker = async () => {
+        const picker = await pickerController.create({
+          buttons: [
+            { text: 'Destroy', role: 'destructive' },
+            { text: 'Cancel', role: 'cancel' }
+          ]
+        });
+
+        return await picker.present();
+      }
+
+      const openToast = async () => {
+        const toast = await toastController.create({
+          header: 'Toast',
+          message: 'Input: <ion-input></ion-input>',
+          duration: 5000
+        });
+
+        return await toast.present();
       }
     </script>
   </body>

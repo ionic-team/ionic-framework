@@ -232,7 +232,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return (
       <div class={buttonGroupsClasses}>
         {buttons.map(b =>
-          <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)} part="button">
+          <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)} part="button" role={b.role}>
             <div class="toast-button-inner">
               {b.icon &&
                 <ion-icon
