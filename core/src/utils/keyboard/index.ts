@@ -1,5 +1,5 @@
-const KEYBOARD_DID_OPEN = 'ionKeyboardDidOpen';
-const KEYBOARD_DID_CLOSE = 'ionKeyboardDidClose';
+export const KEYBOARD_DID_OPEN = 'ionKeyboardDidOpen';
+export const KEYBOARD_DID_CLOSE = 'ionKeyboardDidClose';
 const KEYBOARD_THRESHOLD = 150;
 
 let previousVisualViewport: any = {};
