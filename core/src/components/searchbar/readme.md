@@ -303,6 +303,7 @@ Type: `Promise<void>`
 | Name                        | Description                              |
 | --------------------------- | ---------------------------------------- |
 | `--background`              | Background of the searchbar input        |
+| `--border-radius`           | Border radius of the searchbar input     |
 | `--box-shadow`              | Box shadow of the searchbar input        |
 | `--cancel-button-color`     | Color of the searchbar cancel button     |
 | `--clear-button-color`      | Color of the searchbar clear button      |

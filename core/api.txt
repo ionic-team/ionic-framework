@@ -954,6 +954,7 @@ ion-searchbar,event,ionClear,void,true
 ion-searchbar,event,ionFocus,void,true
 ion-searchbar,event,ionInput,KeyboardEvent,true
 ion-searchbar,css-prop,--background
+ion-searchbar,css-prop,--border-radius
 ion-searchbar,css-prop,--box-shadow
 ion-searchbar,css-prop,--cancel-button-color
 ion-searchbar,css-prop,--clear-button-color
@@ -1237,6 +1238,7 @@ ion-toast,css-prop,--max-width
 ion-toast,css-prop,--min-height
 ion-toast,css-prop,--min-width
 ion-toast,css-prop,--start
+ion-toast,css-prop,--white-space
 ion-toast,css-prop,--width
 
 ion-toggle,shadow
