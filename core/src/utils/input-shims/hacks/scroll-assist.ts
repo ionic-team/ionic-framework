@@ -6,7 +6,8 @@ import { getScrollData } from './scroll-data';
 export const enableScrollAssist = (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
-  contentEl: HTMLIonContentElement,
+  contentEl: HTMLIonContentElement | null,
+  footerEl: HTMLIonFooterElement | null,
   keyboardHeight: number
 ) => {
   let coord: any;
@@ -29,7 +30,7 @@ export const enableScrollAssist = (
       ev.stopPropagation();
 
       // begin the input focus process
-      jsSetFocus(componentEl, inputEl, contentEl, keyboardHeight);
+      jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight);
     }
   };
   componentEl.addEventListener('touchstart', touchStart, true);
@@ -44,11 +45,14 @@ export const enableScrollAssist = (
 const jsSetFocus = (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
-  contentEl: HTMLIonContentElement,
+  contentEl: HTMLIonContentElement | null,
+  footerEl: HTMLIonFooterElement | null,
   keyboardHeight: number
 ) => {
-  const scrollData = getScrollData(componentEl, contentEl, keyboardHeight);
-  if (Math.abs(scrollData.scrollAmount) < 4) {
+  if (!contentEl && !footerEl) { return; }
+  const scrollData = getScrollData(componentEl, (contentEl || footerEl)!, keyboardHeight);
+
+  if (contentEl && Math.abs(scrollData.scrollAmount) < 4) {
     // the text input is in a safe position that doesn't
     // require it to be scrolled into view, just set focus now
     inputEl.focus();
@@ -73,7 +77,9 @@ const jsSetFocus = (
       window.removeEventListener('keyboardWillShow', scrollContent);
 
       // scroll the input into place
-      await contentEl.scrollByPoint(0, scrollData.scrollAmount, scrollData.scrollDuration);
+      if (contentEl) {
+        await contentEl.scrollByPoint(0, scrollData.scrollAmount, scrollData.scrollDuration);
+      }
 
       // the scroll view is in the correct position now
       // give the native text input focus
