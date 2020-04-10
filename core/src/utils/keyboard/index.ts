@@ -1,8 +1,5 @@
-export enum KeyboardLifeCycle {
-  Open = 'ionKeyboardDidOpen',
-  Close = 'ionKeyboardDidClose'
-}
-
+const KEYBOARD_DID_OPEN = 'ionKeyboardDidOpen';
+const KEYBOARD_DID_CLOSE = 'ionKeyboardDidClose';
 const KEYBOARD_THRESHOLD = 150;
 
 let previousVisualViewport: any = {};
@@ -109,7 +106,7 @@ const layoutViewportDidChange = (): boolean => {
  * Dispatch a keyboard open event
  */
 const fireKeyboardOpenEvent = (win: Window): void => {
-  const ev = new CustomEvent(KeyboardLifeCycle.Open, {
+  const ev = new CustomEvent(KEYBOARD_DID_OPEN, {
     detail: { keyboardHeight: win.innerHeight - currentVisualViewport.height }
   });
 
@@ -120,7 +117,7 @@ const fireKeyboardOpenEvent = (win: Window): void => {
  * Dispatch a keyboard close event
  */
 const fireKeyboardCloseEvent = (win: Window): void => {
-  const ev = new CustomEvent(KeyboardLifeCycle.Close);
+  const ev = new CustomEvent(KEYBOARD_DID_CLOSE);
   win.dispatchEvent(ev);
 };
 
