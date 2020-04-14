@@ -52,7 +52,6 @@ export const createSwipeBackGesture = (
     gestureName: 'goback-swipe',
     gesturePriority: 40,
     threshold: 10,
-    passive: true,
     canStart,
     onStart: onStartHandler,
     onMove,

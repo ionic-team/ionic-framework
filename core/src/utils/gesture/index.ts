@@ -26,6 +26,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
   const notCaptured = finalConfig.notCaptured;
   const onMove = finalConfig.onMove;
   const threshold = finalConfig.threshold;
+  const passive = finalConfig.passive;
 
   const detail = {
     type: 'pan',
@@ -190,6 +191,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
     pointerUp,
     {
       capture: false,
+      passive
     }
   );
 
