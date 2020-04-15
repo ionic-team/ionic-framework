@@ -2,12 +2,14 @@
 import React from 'react';
 
 import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
+import { RouteInfo } from '../models';
 
-import { StackContext } from './StackManager';
+import { StackContext } from './StackContext';
 
 interface PageManagerProps {
   className?: string;
   forwardedRef?: React.RefObject<HTMLDivElement>;
+  routeInfo?: RouteInfo;
 }
 
 export class PageManager extends React.Component<PageManagerProps> {
@@ -22,7 +24,7 @@ export class PageManager extends React.Component<PageManagerProps> {
 
   componentDidMount() {
     if (this.ionPageElementRef.current) {
-      this.context.registerIonPage(this.ionPageElementRef.current);
+      this.context.registerIonPage(this.ionPageElementRef.current, this.props.routeInfo!);
       this.ionPageElementRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
       this.ionPageElementRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
       this.ionPageElementRef.current.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
@@ -56,17 +58,18 @@ export class PageManager extends React.Component<PageManagerProps> {
   }
 
   render() {
-    const { className, children } = this.props;
+    const { className, children, routeInfo, ...props } = this.props;
     return (
       <IonLifeCycleContext.Consumer>
         {context => {
           this.ionLifeCycleContext = context;
           return (
-            <div className={className ? `ion-page ion-page-invisible ${className}` : 'ion-page ion-page-invisible'} ref={this.ionPageElementRef}>
+            <div className={className ? `ion-page ion-page-invisible ${className}` : 'ion-page ion-page-invisible'} ref={this.ionPageElementRef} {...props}>
               {children}
             </div>
           );
         }}
+
       </IonLifeCycleContext.Consumer>
     );
   }

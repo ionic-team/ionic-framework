@@ -25,8 +25,8 @@ const IonRouterOutletContainer = /*@__PURE__*/(() => class extends React.Compone
     const StackManager = this.context.getStackManager();
 
     return (
-      this.context.hasIonicRouter() ? (
-        <StackManager>
+      this.context.hasIonicRouter() && this.props.ionPageContainer ? (
+        <StackManager routeInfo={this.context.routeInfo}>
           <IonRouterOutletInner {...this.props}>
             {this.props.children}
           </IonRouterOutletInner>

@@ -7,14 +7,13 @@ import { RouteInfo } from '../models/RouteInfo';
 import { RouterDirection } from '../models/RouterDirection';
 
 import PageManager from './PageManager';
-import StackManager from './StackManager';
 
 interface NavManagerProps {
-  pathname: string;
   routeInfo: RouteInfo;
   onNavigateBack: (defaultHref?: string) => void;
   onNavigate: (path: string, action: RouteAction, direction?: RouterDirection, options?: any, tab?: string) => void;
   onSetCurrentTab: (tab?: string) => void;
+  stackManager: any;
 }
 
 export class NavManager extends React.Component<NavManagerProps, NavContextState> {
@@ -27,10 +26,9 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
       navigate: this.navigate.bind(this),
       getStackManager: this.getStackManager.bind(this),
       getPageManager: this.getPageManager.bind(this),
-      currentPath: this.props.pathname,
       routeInfo: this.props.routeInfo,
       setCurrentTab: this.props.onSetCurrentTab,
-      registerIonPage: () => { return; } // overridden in View for each IonPage
+      // registerIonPage: () => { return; } // overridden in View for each IonPage
     };
 
     if (typeof document !== 'undefined') {
@@ -55,12 +53,12 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
   }
 
   getStackManager() {
-    return StackManager;
+    return this.props.stackManager;
   }
 
   render() {
     return (
-      <NavContext.Provider value={{ ...this.state, currentPath: this.props.pathname, routeInfo: this.props.routeInfo }}>
+      <NavContext.Provider value={{ ...this.state, routeInfo: this.props.routeInfo }}>
         {this.props.children}
       </NavContext.Provider>
     );

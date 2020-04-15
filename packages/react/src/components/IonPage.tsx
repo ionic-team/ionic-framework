@@ -14,20 +14,20 @@ interface IonPageInternalProps extends IonPageProps {
 
 class IonPageInternal extends React.Component<IonPageInternalProps> {
   context!: React.ContextType<typeof NavContext>;
-  ref: React.RefObject<HTMLDivElement>;
+  // ref: React.RefObject<HTMLDivElement>;
 
   constructor(props: IonPageInternalProps) {
     super(props);
-    this.ref = this.props.forwardedRef || React.createRef();
+    // this.ref = this.props.forwardedRef || React.createRef();
   }
 
-  componentDidMount() {
-    if (this.context && this.ref && this.ref.current) {
-      if (this.context.hasIonicRouter()) {
-        this.context.registerIonPage(this.ref.current);
-      }
-    }
-  }
+  // componentDidMount() {
+  //   if (this.context && this.ref && this.ref.current) {
+  //     if (this.context.hasIonicRouter()) {
+  //       this.context.registerIonPage(this.ref.current);
+  //     }
+  //   }
+  // }
 
   render() {
     const { className, children, forwardedRef, ...props } = this.props;
@@ -36,11 +36,12 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
 
     return (
       this.context.hasIonicRouter() ? (
-        <PageManager className={className}>
+        <PageManager className={className} routeInfo={this.context.routeInfo} {...props}>
           {children}
         </PageManager>
       ) : (
-      <div className={className ? `ion-page ${className}` : 'ion-page'} ref={this.ref} {...props}>
+      // <div className={className ? `ion-page ${className}` : 'ion-page'} ref={this.ref} {...props}>
+      <div className={className ? `ion-page ${className}` : 'ion-page'} {...props}>
         {children}
       </div>
       )

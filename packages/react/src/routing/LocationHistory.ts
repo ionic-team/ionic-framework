@@ -112,9 +112,8 @@ export class LocationHistory {
     return undefined;
   }
 
-  previous(routeInfo: RouteInfo) {
-    const routeInfos = this.getRouteInfosByKey(routeInfo.tab);
-    return routeInfos[routeInfos.length - 2];
+  previous() {
+    return this.locationHistory[this.locationHistory.length - 2] || this.locationHistory[this.locationHistory.length - 1];
   }
 
   current() {

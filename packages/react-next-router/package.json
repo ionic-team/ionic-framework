@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-next-router",
-  "version": "5.0.5-nextjs-alpha.0",
+  "version": "5.0.7-nextjs-alpha.1",
   "description": "React Next Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -47,8 +47,8 @@
     "next": "^9.3.1"
   },
   "devDependencies": {
-    "@ionic/core": "5.0.5",
-    "@ionic/react": "file:../react/ionic-react-5.0.5-nextjs-alpha.0.tgz",
+    "@ionic/core": "5.0.7",
+    "@ionic/react": "file:../react/ionic-react-5.0.7-nextjs-alpha.1.tgz",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",

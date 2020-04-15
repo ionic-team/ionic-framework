@@ -1,17 +1,16 @@
 import { RouterDirection } from '@ionic/core';
 import React from 'react';
 
+import { RouteInfo } from '../models';
+
 export interface NavContextState {
   getPageManager: () => any;
   getStackManager: () => any;
   goBack: (defaultHref?: string) => void;
   navigate: (path: string, direction?: RouterDirection | 'none', ionRouteAction?: 'push' | 'replace' | 'pop', options?: any, tab?: string) => void;
   hasIonicRouter: () => boolean;
-  registerIonPage: (page: HTMLElement) => void;
-  currentPath: string | undefined;
-  routeInfo?: {
-    routeOptions?: unknown
-  };
+  // registerIonPage: (page: HTMLElement) => void;
+  routeInfo?: RouteInfo;
   setCurrentTab: (tab?: string) => void;
 }
 
@@ -27,8 +26,7 @@ export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
   },
   navigate: (path: string) => { window.location.pathname = path; },
   hasIonicRouter: () => false,
-  registerIonPage: () => undefined,
-  currentPath: undefined,
+  // registerIonPage: () => undefined,
   routeInfo: undefined,
   setCurrentTab: () => undefined
 });

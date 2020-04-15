@@ -2,6 +2,7 @@ import { JSX as LocalJSX } from '@ionic/core';
 import React, { useContext } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
+import { RouteInfo } from '../../models';
 import { IonTabBarInner } from '../inner-proxies';
 
 import { IonTabButton } from './IonTabButton';
@@ -10,11 +11,9 @@ type Props = LocalJSX.IonTabBar & {
   onIonTabsDidChange?: (event: CustomEvent<{ tab: string; }>) => void;
   onIonTabsWillChange?: (event: CustomEvent<{ tab: string; }>) => void;
   onSetCurrentTab?: (tab?: string) => void;
-  currentPath?: string;
-  routeInfo?: {
-    routeOptions?: unknown;
-  };
+  routeInfo?: RouteInfo;
   slot?: 'bottom' | 'top';
+  style?: { [key: string]: string; };
 };
 
 interface TabUrls {
@@ -40,8 +39,8 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
         tabs[child.props.tab] = {
           originalHref: child.props.href,
           currentHref: child.props.href,
-          originalRouteOptions: child.props.href === props.currentPath ? props.routeInfo?.routeOptions : undefined,
-          currentRouteOptions: child.props.href === props.currentPath ? props.routeInfo?.routeOptions : undefined,
+          originalRouteOptions: child.props.href === props.routeInfo?.pathname ? props.routeInfo?.routeOptions : undefined,
+          currentRouteOptions: child.props.href === props.routeInfo?.pathname ? props.routeInfo?.routeOptions : undefined,
         };
       }
     });
@@ -60,7 +59,7 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
     const activeTab = Object.keys(state.tabs)
       .find(key => {
         const href = state.tabs[key].originalHref;
-        return props.currentPath!.startsWith(href);
+        return props.routeInfo!.pathname.startsWith(href);
       });
 
     // Check to see if the tab button href has changed, and if so, update it in the tabs state
@@ -81,11 +80,11 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
     if (activeTab && prevActiveTab) {
       const prevHref = state.tabs[prevActiveTab].currentHref;
       const prevRouteOptions = state.tabs[prevActiveTab].currentRouteOptions;
-      if (activeTab !== prevActiveTab || (prevHref !== props.currentPath || prevRouteOptions !== props.routeInfo?.routeOptions)) {
+      if (activeTab !== prevActiveTab || (prevHref !== props.routeInfo?.pathname || prevRouteOptions !== props.routeInfo?.routeOptions)) {
         // if (!(activeTab === undefined || (activeTab === state.activeTab))) {
         tabs[activeTab] = {
           originalHref: tabs[activeTab].originalHref,
-          currentHref: props.currentPath!,
+          currentHref: props.routeInfo!.currentRoute,
           originalRouteOptions: tabs[activeTab].originalRouteOptions,
           currentRouteOptions: props.routeInfo?.routeOptions
         };
@@ -122,7 +121,7 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
       if (this.props.onIonTabsDidChange) {
         this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
       }
-      this.context.navigate(currentHref, 'none', 'replace', currentRouteOptions, e.detail.tab);
+      this.context.navigate(currentHref, 'none', 'push', currentRouteOptions, e.detail.tab);
     }
   }
 
@@ -130,7 +129,7 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
 
     return (child: (React.ReactElement<LocalJSX.IonTabButton & { onClick: (e: any) => void; routeOptions?: unknown; }>) | null | undefined) => {
       if (child != null && child.props && child.type === IonTabButton) {
-        const href = (child.props.tab === activeTab) ? this.props.currentPath : (this.state.tabs[child.props.tab!].currentHref);
+        const href = (child.props.tab === activeTab) ? this.props.routeInfo?.pathname : (this.state.tabs[child.props.tab!].currentHref);
         const routeOptions = (child.props.tab === activeTab) ? this.props.routeInfo?.routeOptions : (this.state.tabs[child.props.tab!].currentRouteOptions);
 
         return React.cloneElement(child, {
@@ -163,7 +162,6 @@ export const IonTabBar: React.FC<Props> = React.memo<Props>(props => {
   return (
     <IonTabBarUnwrapped
       {...props as any}
-      currentPath={props.currentPath || context.currentPath}
       routeInfo={props.routeInfo || context.routeInfo}
       onSetCurrentTab={context.setCurrentTab}
     >
