@@ -30,9 +30,31 @@ In order to place elements outside of the scrollable area, `slot="fixed"` can be
     <div slot="fixed">
       <h1>Fixed Content</h1>
     </div>
+  
+    <!-- ... -->
+  
+    <ion-button (click)="scrollToTop()" expand="block" fill="outline">Scroll To Top</ion-button>
 </ion-content>
 ```
 
+```javascript
+import { Component, ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
+
+@Component({
+  selector: 'my-component',
+  templateUrl: './my.component.html',
+  styleUrls: ['./my.component.scss'],
+})
+export class MyComponent implements OnInit {
+  
+  @ViewChild(IonContent, {static: true}) content: IonContent;
+  
+  scrollToTop() {
+    this.content.scrollToTop();
+  }
+}
+```
 
 ### Javascript
 
