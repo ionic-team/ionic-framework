@@ -96,6 +96,13 @@ export class Input implements ComponentInterface {
   @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
 
   /**
+   * A hint to the browser for which enter key to display.
+   * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
+   * `"previous"`, `"search"`, and `"send"`.
+   */
+  @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+
+  /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
    */
   @Prop() max?: string;
@@ -362,6 +369,7 @@ export class Input implements ComponentInterface {
           autoComplete={this.autocomplete}
           autoCorrect={this.autocorrect}
           autoFocus={this.autofocus}
+          enterKeyHint={this.enterkeyhint}
           inputMode={this.inputmode}
           min={this.min}
           max={this.max}

@@ -24,23 +24,21 @@ export class ModalExample {
 
 ```typescript
 import { Component, Input } from '@angular/core';
-import { NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'modal-page',
 })
 export class ModalPage {
 
-  constructor() {
-
-  }
+  constructor() {}
 
 }
 ```
 
 ### Passing Data
 
-During creation of a modal, data can be passed in through the `componentProps`. The previous example can be written to include data:
+During creation of a modal, data can be passed in through the `componentProps`.
+The previous example can be written to include data:
 
 ```typescript
 async presentModal() {
@@ -56,7 +54,7 @@ async presentModal() {
 }
 ```
 
-To get the data passed into the `componentProps`, either set it as an `@Input` or access it via `NavParams` on the `ModalPage`:
+To get the data passed into the `componentProps`, set it as an `@Input`:
 
 ```typescript
 export class ModalPage {
@@ -65,11 +63,6 @@ export class ModalPage {
   @Input() firstName: string;
   @Input() lastName: string;
   @Input() middleInitial: string;
-
-  constructor(navParams: NavParams) {
-    // componentProps can also be accessed at construction time using NavParams
-    console.log(navParams.get('firstName'));
-  }
 
 }
 ```

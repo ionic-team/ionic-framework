@@ -7,6 +7,7 @@
   /**
    * @prop --background: Background of the searchbar input
    * @prop --box-shadow: Box shadow of the searchbar input
+   * @prop --border-radius: Border radius of the searchbar input
    * @prop --cancel-button-color: Color of the searchbar cancel button
    * @prop --clear-button-color: Color of the searchbar clear button
    * @prop --color: Color of the searchbar text
@@ -68,6 +69,7 @@
 
 .searchbar-input {
   @include text-inherit();
+  @include border-radius(var(--border-radius));
 
   display: block;
 

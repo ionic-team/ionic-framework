@@ -27,7 +27,7 @@ export interface Animation {
   /**
    * Destroy the animation and all child animations.
    */
-  destroy(): void;
+  destroy(clearStyleSheets?: boolean): void;
 
   progressStart(forceLinearEasing: boolean, step?: number): void;
   progressStep(step: number): void;
