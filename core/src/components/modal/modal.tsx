@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h, writeTask } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -35,7 +35,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private gestureAnimationDismissing = false;
   presented = false;
   animation?: Animation;
-  mode = getIonMode(this);
 
   @Element() el!: HTMLIonModalElement;
 
@@ -144,6 +143,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], componentProps);
     await deepReady(this.usersElement);
+
+    writeTask(() => this.el.classList.add('show-modal'));
+
     await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
     const mode = getIonMode(this);
@@ -270,6 +272,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
         onIonModalDidDismiss={this.onLifecycle}
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>
+
+        {mode === 'ios' && <div class="modal-shadow"></div>}
         <div
           role="dialog"
           class="modal-wrapper"

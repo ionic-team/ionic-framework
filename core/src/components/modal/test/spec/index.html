@@ -78,7 +78,7 @@
         .fromTo('opacity', '0.01', '0.4');
 
       const wrapperAnimation = createAnimation()
-        .addElement(baseEl.querySelector('.modal-wrapper'))
+        .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow'))
         .keyframes([
           { offset: 0, opacity: '0', transform: 'scale(0)' },
           { offset: 1, opacity: '0.99', transform: 'scale(1)' }
@@ -97,7 +97,7 @@
         .fromTo('opacity', '0.4', '0.01');
 
       const wrapperAnimation = createAnimation()
-        .addElement(baseEl.querySelector('.modal-wrapper'))
+        .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow'))
         .keyframes([
           { offset: 0, opacity: '0.99', transform: 'scale(1)' },
           { offset: 1, opacity: '0', transform: 'scale(0)' }

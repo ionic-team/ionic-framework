@@ -250,6 +250,7 @@ Type: `Promise<void>`
 | `--min-height`    | Minimum height of the toast                                                                            |
 | `--min-width`     | Minimum width of the toast                                                                             |
 | `--start`         | Position from the left if direction is left-to-right, and from the right if direction is right-to-left |
+| `--white-space`   | White space of the toast message                                                                       |
 | `--width`         | Width of the toast                                                                                     |
 
 

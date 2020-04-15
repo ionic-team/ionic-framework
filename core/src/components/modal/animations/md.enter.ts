@@ -28,6 +28,5 @@ export const mdEnterAnimation = (baseEl: HTMLElement): Animation => {
     .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(280)
-    .beforeAddClass('show-modal')
     .addAnimation([backdropAnimation, wrapperAnimation]);
 };

@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -87,6 +87,13 @@ export class Searchbar implements ComponentInterface {
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
    */
   @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+
+  /**
+   * A hint to the browser for which enter key to display.
+   * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
+   * `"previous"`, `"search"`, and `"send"`.
+   */
+  @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
    * Set the input's placeholder.
@@ -179,7 +186,7 @@ export class Searchbar implements ComponentInterface {
   protected showCancelButtonChanged() {
     requestAnimationFrame(() => {
       this.positionElements();
-      this.el.forceUpdate();
+      forceUpdate(this);
     });
   }
 
@@ -460,6 +467,7 @@ export class Searchbar implements ComponentInterface {
             ref={el => this.nativeInput = el}
             class="searchbar-input"
             inputMode={this.inputmode}
+            enterKeyHint={this.enterkeyhint}
             onInput={this.onInput}
             onBlur={this.onBlur}
             onFocus={this.onFocus}
