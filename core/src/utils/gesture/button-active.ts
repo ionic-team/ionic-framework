@@ -1,4 +1,4 @@
-import { raf } from '../helpers';
+import { writeTask } from '@stencil/core';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../native/haptic';
 
 import { Gesture, createGesture } from './index';
@@ -25,14 +25,16 @@ export const createButtonActiveGesture = (
 
   const setActiveButton = (button: HTMLElement, hapticFeedbackFn: () => void) => {
     touchedButton = button;
-    raf(() => touchedButton!.classList.add('ion-activated'));
+    const buttonToModify = touchedButton;
+    writeTask(() => buttonToModify.classList.add('ion-activated'));
     hapticFeedbackFn();
   };
 
   const clearActiveButton = (dispatchClick = false) => {
     if (!touchedButton) { return; }
 
-    touchedButton!.classList.remove('ion-activated');
+    const buttonToModify = touchedButton;
+    writeTask(() => buttonToModify.classList.remove('ion-activated'));
 
     if (dispatchClick) {
       touchedButton.click();

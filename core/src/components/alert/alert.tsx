@@ -195,7 +195,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
       (refEl: HTMLElement) => refEl.classList.contains('alert-button')
     );
     this.gesture.enable(true);
-    console.log(this.gesture, this.wrapperEl);
   }
 
   /**
