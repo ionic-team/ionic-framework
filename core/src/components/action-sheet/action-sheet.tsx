@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
@@ -28,6 +28,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   presented = false;
   animation?: any;
   private wrapperEl?: HTMLElement;
+  private groupEl?: HTMLElement;
   private gesture?: Gesture;
 
   @Element() el!: HTMLIonActionSheetElement;
@@ -210,13 +211,19 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
      * 2. App is running in MD mode
      * 3. A wrapper ref does not exist
      */
-    if (this.gesture || getIonMode(this) === 'md' || !this.wrapperEl) { return; }
+    const { groupEl, wrapperEl } = this;
+    if (this.gesture || getIonMode(this) === 'md' || !wrapperEl || !groupEl) { return; }
 
-    this.gesture = createButtonActiveGesture(
-      this.wrapperEl,
-      (refEl: HTMLElement) => refEl.classList.contains('action-sheet-button')
-    );
-    this.gesture.enable(true);
+    readTask(() => {
+      const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
+      if (!isScrollable) {
+        this.gesture = createButtonActiveGesture(
+          wrapperEl,
+          (refEl: HTMLElement) => refEl.classList.contains('action-sheet-button')
+        );
+        this.gesture.enable(true);
+      }
+    });
   }
 
   render() {
@@ -244,7 +251,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         <ion-backdrop tappable={this.backdropDismiss}/>
         <div class="action-sheet-wrapper" role="dialog" ref={el => this.wrapperEl = el}>
           <div class="action-sheet-container">
-            <div class="action-sheet-group">
+            <div class="action-sheet-group" ref={el => this.groupEl = el}>
               {this.header !== undefined &&
                 <div class="action-sheet-title">
                   {this.header}

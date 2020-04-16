@@ -1,4 +1,5 @@
 import { writeTask } from '@stencil/core';
+
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../native/haptic';
 
 import { Gesture, createGesture } from './index';
