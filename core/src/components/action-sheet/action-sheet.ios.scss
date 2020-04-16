@@ -134,6 +134,8 @@
   @include margin-horizontal(null, $action-sheet-ios-button-icon-padding-right);
 
   font-size: $action-sheet-ios-button-icon-font-size;
+
+  pointer-events: none;
 }
 
 .action-sheet-button:last-child {

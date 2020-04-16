@@ -4,6 +4,9 @@ import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
+import { raf } from '../../utils/helpers'
+import { createGesture, Gesture } from '../../utils/gesture';
+import { hapticImpact } from '../../utils/native/haptic';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -25,6 +28,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation?: any;
+  wrapperEl?: HTMLElement;
 
   @Element() el!: HTMLIonActionSheetElement;
 
@@ -192,6 +196,58 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     }
   }
 
+  private gesture?: Gesture;
+  private touchedButton?: HTMLElement;
+
+  private clearActiveButton(dispatchClick: boolean = false) {
+    const { touchedButton } = this;
+    if (!touchedButton) { return; }
+
+    raf(() => touchedButton.classList.remove('ion-activated'));
+
+    if (dispatchClick) {
+      touchedButton.click();
+    }
+
+    this.touchedButton = undefined;
+  }
+
+  private setActiveButton(button: HTMLElement) {
+    this.touchedButton = button;
+    raf(() => this.touchedButton!.classList.add('ion-activated'));
+    hapticImpact({ style: 'light' });
+  }
+
+  componentDidLoad() {
+    if (!this.wrapperEl) { return; }
+
+    this.gesture = createGesture({
+      el: this.wrapperEl,
+      gestureName: 'pointerDrag',
+      gesturePriority: 100,
+      threshold: 0,
+      onMove: (ev) => {
+        const target = document.elementFromPoint(ev.currentX, ev.currentY) as HTMLElement | null;
+        const { touchedButton } = this;
+        if (!target) {
+          this.clearActiveButton();
+        } else {
+          if (target.classList.contains('action-sheet-button')) {
+            if (target !== touchedButton) {
+              this.clearActiveButton();
+              this.setActiveButton(target);
+            }
+          } else {
+            this.clearActiveButton();
+          }
+        }
+      },
+      onEnd: () => { this.clearActiveButton(true) }
+    });
+
+    this.gesture.enable(true);
+  }
+
   render() {
     const mode = getIonMode(this);
     const allButtons = this.getButtons();
@@ -215,7 +271,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         onIonBackdropTap={this.onBackdropTap}
       >
         <ion-backdrop tappable={this.backdropDismiss}/>
-        <div class="action-sheet-wrapper" role="dialog">
+        <div class="action-sheet-wrapper" role="dialog" ref={el => this.wrapperEl = el}>
           <div class="action-sheet-container">
             <div class="action-sheet-group">
               {this.header !== undefined &&
