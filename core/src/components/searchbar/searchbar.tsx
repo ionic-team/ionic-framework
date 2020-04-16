@@ -425,12 +425,16 @@ export class Searchbar implements ComponentInterface {
     const mode = getIonMode(this);
     const clearIcon = this.clearIcon || (mode === 'ios' ? 'close-circle' : 'close-sharp');
     const searchIcon = this.searchIcon || (mode === 'ios' ? 'search-outline' : 'search-sharp');
+    const shouldShowCancelButton = this.shouldShowCancelButton();
 
     const cancelButton = (this.showCancelButton !== 'never') && (
       <button
         aria-label={cancelButtonText}
+
+        // Screen readers should not announce button if it is not visible on screen
+        aria-hidden={shouldShowCancelButton ? undefined : 'true'}
         type="button"
-        tabIndex={mode === 'ios' && !this.shouldShowCancelButton() ? -1 : undefined}
+        tabIndex={mode === 'ios' && !shouldShowCancelButton ? -1 : undefined}
         onMouseDown={this.onCancelSearchbar}
         onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"
