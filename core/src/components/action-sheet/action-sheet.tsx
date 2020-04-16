@@ -2,11 +2,10 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Gesture } from '../../utils/gesture';
+import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
-import { raf } from '../../utils/helpers'
-import { createGesture, Gesture } from '../../utils/gesture';
-import { hapticImpact } from '../../utils/native/haptic';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -28,7 +27,8 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation?: any;
-  wrapperEl?: HTMLElement;
+  private wrapperEl?: HTMLElement;
+  private gesture?: Gesture;
 
   @Element() el!: HTMLIonActionSheetElement;
 
@@ -196,55 +196,26 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     }
   }
 
-  private gesture?: Gesture;
-  private touchedButton?: HTMLElement;
-
-  private clearActiveButton(dispatchClick: boolean = false) {
-    const { touchedButton } = this;
-    if (!touchedButton) { return; }
-
-    raf(() => touchedButton.classList.remove('ion-activated'));
-
-    if (dispatchClick) {
-      touchedButton.click();
+  componentDidUnload() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
     }
-
-    this.touchedButton = undefined;
-  }
-
-  private setActiveButton(button: HTMLElement) {
-    this.touchedButton = button;
-    raf(() => this.touchedButton!.classList.add('ion-activated'));
-    hapticImpact({ style: 'light' });
   }
 
   componentDidLoad() {
-    if (!this.wrapperEl) { return; }
+    /**
+     * Do not create gesture if:
+     * 1. A gesture already exists
+     * 2. App is running in MD mode
+     * 3. A wrapper ref does not exist
+     */
+    if (this.gesture || getIonMode(this) === 'md' || !this.wrapperEl) { return; }
 
-    this.gesture = createGesture({
-      el: this.wrapperEl,
-      gestureName: 'pointerDrag',
-      gesturePriority: 100,
-      threshold: 0,
-      onMove: (ev) => {
-        const target = document.elementFromPoint(ev.currentX, ev.currentY) as HTMLElement | null;
-        const { touchedButton } = this;
-        if (!target) {
-          this.clearActiveButton();
-        } else {
-          if (target.classList.contains('action-sheet-button')) {
-            if (target !== touchedButton) {
-              this.clearActiveButton();
-              this.setActiveButton(target);
-            }
-          } else {
-            this.clearActiveButton();
-          }
-        }
-      },
-      onEnd: () => { this.clearActiveButton(true) }
-    });
-
+    this.gesture = createButtonActiveGesture(
+      this.wrapperEl,
+      (refEl: HTMLElement) => refEl.classList.contains('action-sheet-button')
+    );
     this.gesture.enable(true);
   }
 
