@@ -201,7 +201,9 @@ export class Toggle implements ComponentInterface {
         }}
       >
         <div class="toggle-icon">
-          <div class="toggle-inner"/>
+          <div class="toggle-icon-wrapper">
+            <div class="toggle-inner"/>
+          </div>
         </div>
         <button
           type="button"
