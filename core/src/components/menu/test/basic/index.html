@@ -15,10 +15,14 @@
     if (forceCSSAnimations) {
       window.Animation = null;
     }
+    window.modulesLoaded = new Promise(resolve => { window.readyModules = resolve; });
   </script>
   <script type="module">
     import { menuController } from '../../../../dist/ionic/index.esm.js';
+
     window.menuController = menuController;
+    window.modulesLoaded = true;
+    window.readyModules(window.modulesLoaded);
   </script>
 </head>
 
@@ -98,15 +102,18 @@
 
   <script>
     async function openFirst() {
+      await modulesLoaded;
       await menuController.enable(true, 'first');
       await menuController.open('first');
     }
 
     async  function openEnd() {
+      await modulesLoaded;
       await menuController.open('end');
     }
 
     async function openCustom() {
+      await modulesLoaded;
       await menuController.enable(true, 'custom');
       await menuController.open('custom');
     }
