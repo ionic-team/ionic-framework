@@ -24,6 +24,8 @@ export const testMenu = async (
 
     const menu = await page.find(selector);
 
+    await waitForModules(page);
+
     await menu.callMethod('open');
     await page.waitFor(1000);
 
@@ -41,3 +43,7 @@ export const testMenu = async (
     throw err;
   }
 };
+
+const waitForModules = async (page) => {
+  return await page.evaluate(() => modulesLoaded;);
+}
