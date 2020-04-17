@@ -122,9 +122,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Event({ eventName: 'ionModalDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   @Watch('swipeToClose')
-  swipeToCloseChanged(newValue: boolean) {
+  swipeToCloseChanged(enable: boolean) {
     if (this.gesture) {
-      this.gesture.enable(newValue);
+      this.gesture.enable(enable);
+    } else if (enable) {
+      this.initSwipeToClose();
     }
   }
 
@@ -157,34 +159,38 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const mode = getIonMode(this);
     if (this.swipeToClose && mode === 'ios') {
-      // All of the elements needed for the swipe gesture
-      // should be in the DOM and referenced by now, except
-      // for the presenting el
-      const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-      const ani = this.animation = animationBuilder(this.el, this.presentingElement);
-      this.gesture = createSwipeToCloseGesture(
-        this.el,
-        ani,
-        () => {
-          /**
-           * While the gesture animation is finishing
-           * it is possible for a user to tap the backdrop.
-           * This would result in the dismiss animation
-           * being played again. Typically this is avoided
-           * by setting `presented = false` on the overlay
-           * component; however, we cannot do that here as
-           * that would prevent the element from being
-           * removed from the DOM.
-           */
-          this.gestureAnimationDismissing = true;
-          this.animation!.onFinish(async () => {
-            await this.dismiss(undefined, 'gesture');
-            this.gestureAnimationDismissing = false;
-          });
-        },
-      );
-      this.gesture.enable(true);
+      this.initSwipeToClose();
     }
+  }
+
+  private initSwipeToClose() {
+    // All of the elements needed for the swipe gesture
+    // should be in the DOM and referenced by now, except
+    // for the presenting el
+    const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
+    const ani = this.animation = animationBuilder(this.el, this.presentingElement);
+    this.gesture = createSwipeToCloseGesture(
+      this.el,
+      ani,
+      () => {
+        /**
+         * While the gesture animation is finishing
+         * it is possible for a user to tap the backdrop.
+         * This would result in the dismiss animation
+         * being played again. Typically this is avoided
+         * by setting `presented = false` on the overlay
+         * component; however, we cannot do that here as
+         * that would prevent the element from being
+         * removed from the DOM.
+         */
+        this.gestureAnimationDismissing = true;
+        this.animation!.onFinish(async () => {
+          await this.dismiss(undefined, 'gesture');
+          this.gestureAnimationDismissing = false;
+        });
+      },
+    );
+    this.gesture.enable(true);
   }
 
   /**
