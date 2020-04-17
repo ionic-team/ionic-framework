@@ -36,7 +36,7 @@ export const writePath = (history: History, root: string, useHash: boolean, path
   if (useHash) {
     url = '#' + url;
   }
-  if (queryString) {
+  if (queryString !== undefined) {
     url = url + '?' + queryString;
   }
   if (direction === ROUTER_INTENT_FORWARD) {
