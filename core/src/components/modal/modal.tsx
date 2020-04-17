@@ -157,13 +157,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
-    const mode = getIonMode(this);
-    if (this.swipeToClose && mode === 'ios') {
+    if (this.swipeToClose) {
       this.initSwipeToClose();
     }
   }
 
   private initSwipeToClose() {
+    if (getIonMode(this) !== 'ios') { return; }
+
     // All of the elements needed for the swipe gesture
     // should be in the DOM and referenced by now, except
     // for the presenting el
