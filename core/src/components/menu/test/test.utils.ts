@@ -45,5 +45,5 @@ export const testMenu = async (
 };
 
 const waitForModules = async (page) => {
-  return await page.evaluate(() => modulesLoaded;);
+  return await page.evaluate(() => modulesLoaded);
 }
