@@ -91,13 +91,13 @@ export class IonTabs {
     const alreadySelected = this.outlet.getActiveStackId() === tab;
     const tabRootUrl = `${this.outlet.tabsPrefix}/${tab}`;
     if (alreadySelected) {
-      const rootView = this.outlet.getRootView(tab);
       const activeStackId = this.outlet.getActiveStackId();
       const activeView = this.outlet.getLastRouteView(activeStackId);
 
       // If on root tab, do not navigate to root tab again
-      if (activeView === rootView) { return; }
+      if (activeView.url === tabRootUrl) { return; }
 
+      const rootView = this.outlet.getRootView(tab);
       const navigationExtras = rootView && tabRootUrl === rootView.url && rootView.savedExtras;
       return this.navCtrl.navigateRoot(tabRootUrl, {
         ...(navigationExtras),
