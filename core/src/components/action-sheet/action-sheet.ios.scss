@@ -82,7 +82,7 @@
   }
 
   :host(.action-sheet-translucent) .action-sheet-cancel {
-    background: var(--button-background-selected);
+    background: var(--button-background);
   }
 }
 
@@ -148,9 +148,9 @@
   font-weight: $action-sheet-ios-button-cancel-font-weight;
 
   &::after {
-    background: var(--button-background-selected);
+    background: var(--button-background);
 
-    opacity: var(--button-background-selected-opacity);
+    opacity: var(--button-background-opacity);
   }
 }
 
