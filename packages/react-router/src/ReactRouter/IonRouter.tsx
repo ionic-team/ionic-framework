@@ -39,7 +39,6 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
     super(props);
 
     this.routeInfo = {
-      currentRoute: this.props.location.pathname,
       pathname: this.props.location.pathname,
       search: this.props.location.search
     };
@@ -97,8 +96,7 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
       const isPushed = (this.incomingRouteParams.routeAction === 'push' && this.incomingRouteParams.routeDirection === 'forward');
       this.routeInfo = {
         ...this.incomingRouteParams,
-        currentRoute: location.pathname,
-        lastRoute: leavingLocationInfo.currentRoute,
+        lastPathname: leavingLocationInfo.pathname,
         pathname: location.pathname,
         search: location.search,
         tab: isPushed ? leavingLocationInfo.tab : this.currentTab,
@@ -151,7 +149,7 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = this.locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
-        this.handleNavigate(prevInfo.currentRoute, 'pop', 'back');
+        this.handleNavigate(prevInfo.pathname, 'pop', 'back');
       } else {
         this.handleNavigate(path, 'pop', 'back');
       }

@@ -7,11 +7,11 @@ export interface NavContextState {
   getPageManager: () => any;
   getStackManager: () => any;
   goBack: (defaultHref?: string) => void;
-  navigate: (path: string, direction?: RouterDirection | 'none', ionRouteAction?: 'push' | 'replace' | 'pop', options?: any, tab?: string) => void;
+  navigate: (path: string, direction?: RouterDirection | 'none', ionRouteAction?: 'push' | 'replace' | 'pop', options?: any) => void;
   hasIonicRouter: () => boolean;
   // registerIonPage: (page: HTMLElement) => void;
   routeInfo?: RouteInfo;
-  setCurrentTab: (tab?: string) => void;
+  setCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
 }
 
 export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({

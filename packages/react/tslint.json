@@ -10,6 +10,7 @@
     "no-conditional-assignment": false,
     "no-non-null-assertion": false,
     "no-unnecessary-type-assertion": false,
+    "no-unused-expression": false,
     "no-import-side-effect": false,
     "trailing-comma": false,
     "no-null-keyword": false,

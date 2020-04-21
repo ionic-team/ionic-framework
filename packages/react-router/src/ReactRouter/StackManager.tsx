@@ -163,7 +163,7 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
   async transitionPage(routeInfo: RouteInfo) {
 
     const { viewItem: enteringViewItem, match } = findViewItemByRoute(this.viewItems, routeInfo.pathname);
-    const { viewItem: leavingViewItem } = findViewItemByRoute(this.viewItems, routeInfo.lastRoute);
+    const { viewItem: leavingViewItem } = findViewItemByRoute(this.viewItems, routeInfo.lastPathname);
 
     if (!enteringViewItem || !enteringViewItem.ionPageElement) {
       if (enteringViewItem) {
@@ -176,9 +176,9 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
 
     if (enteringViewItem.ionRoute) {
 
-      if (routeInfo.lastRoute && !leavingViewItem) {
-        console.log('missing view ' + routeInfo.lastRoute);
-        this.context.exitViewFromOtherOutlet(routeInfo.lastRoute);
+      if (routeInfo.lastPathname && !leavingViewItem) {
+        console.log('missing view ' + routeInfo.lastPathname);
+        this.context.exitViewFromOtherOutlet(routeInfo.lastPathname);
       }
 
       if (routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward') {

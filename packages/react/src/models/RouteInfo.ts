@@ -2,12 +2,12 @@
 import { RouteAction } from './IonRouteAction';
 import { RouterDirection } from './RouterDirection';
 
-export interface RouteInfo {
-  currentRoute: string;
-  lastRoute?: string;
+export interface RouteInfo<TOptions = any> {
+  id: string;
+  lastPathname?: string;
   routeAction?: RouteAction;
   routeDirection?: RouterDirection;
-  routeOptions?: any;
+  routeOptions?: TOptions;
   params?: {[key: string]: string | string[]};
   pushedByRoute?: string;
   pathname: string;

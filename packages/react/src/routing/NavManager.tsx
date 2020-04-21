@@ -12,7 +12,7 @@ interface NavManagerProps {
   routeInfo: RouteInfo;
   onNavigateBack: (defaultHref?: string) => void;
   onNavigate: (path: string, action: RouteAction, direction?: RouterDirection, options?: any, tab?: string) => void;
-  onSetCurrentTab: (tab?: string) => void;
+  onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   stackManager: any;
 }
 
@@ -27,8 +27,7 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
       getStackManager: this.getStackManager.bind(this),
       getPageManager: this.getPageManager.bind(this),
       routeInfo: this.props.routeInfo,
-      setCurrentTab: this.props.onSetCurrentTab,
-      // registerIonPage: () => { return; } // overridden in View for each IonPage
+      setCurrentTab: this.props.onSetCurrentTab
     };
 
     if (typeof document !== 'undefined') {
