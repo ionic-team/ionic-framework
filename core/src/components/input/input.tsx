@@ -96,6 +96,13 @@ export class Input implements ComponentInterface {
   @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
 
   /**
+   * A hint to the browser for which enter key to display.
+   * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
+   * `"previous"`, `"search"`, and `"send"`.
+   */
+  @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+
+  /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
    */
   @Prop() max?: string;
@@ -126,7 +133,7 @@ export class Input implements ComponentInterface {
   @Prop() name: string = this.inputId;
 
   /**
-   * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+   * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, `"date"`, or `"password"`, otherwise it is ignored. When the type attribute is `"date"`, `pattern` will only be used in browsers that do not support the `"date"` input type natively. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date for more information.
    */
   @Prop() pattern?: string;
 
@@ -362,6 +369,7 @@ export class Input implements ComponentInterface {
           autoComplete={this.autocomplete}
           autoCorrect={this.autocorrect}
           autoFocus={this.autofocus}
+          enterKeyHint={this.enterkeyhint}
           inputMode={this.inputmode}
           min={this.min}
           max={this.max}
