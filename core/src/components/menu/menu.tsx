@@ -14,8 +14,8 @@ const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
 const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
 
 /**
- * @TODOpart container - The container for the menu content. 
- * @TODOpart backdrop - The backdrop that appears over the main content when the menu is open.
+ * @part container - The container for the menu content.
+ * @part backdrop - The backdrop that appears over the main content when the menu is open.
  */
 @Component({
   tag: 'ion-menu',
