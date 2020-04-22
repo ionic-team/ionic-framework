@@ -9,7 +9,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @TODOpart icon - The outer radio icon.
- * @TODOpart icon-inner - The inner checked dot of the radio icon.
+ * @TODOpart mark - The inner checked dot of the radio icon.
  */
 @Component({
   tag: 'ion-radio',
@@ -140,7 +140,7 @@ export class Radio implements ComponentInterface {
         }}
       >
         <div class="radio-icon" part="icon">
-          <div class="radio-inner" part="icon-inner" />
+          <div class="radio-inner" part="mark" />
         </div>
         <button
           type="button"
