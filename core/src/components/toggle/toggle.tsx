@@ -9,8 +9,8 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @TODOpart bar - The main track of the toggle.
- * @TODOpart knob - The handle of the toggle.
+ * @TODOpart track - The main track of the toggle.
+ * @TODOpart handle - The handle of the toggle.
  */
 @Component({
   tag: 'ion-toggle',
@@ -203,8 +203,8 @@ export class Toggle implements ComponentInterface {
           'interactive': true
         }}
       >
-        <div class="toggle-icon" part="bar">
-          <div class="toggle-inner" part="knob" />
+        <div class="toggle-icon" part="track">
+          <div class="toggle-inner" part="handle" />
         </div>
         <button
           type="button"
