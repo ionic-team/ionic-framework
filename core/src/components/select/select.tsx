@@ -15,7 +15,6 @@ import { SelectCompareFn } from './select-interface';
  * @TODOpart placeholder - The text displayed in the select when there is no value.
  * @TODOpart text - The displayed value of the select.
  * @TODOpart icon - The select icon container.
- * @TODOpart icon-inner - The select icon.
  */
 @Component({
   tag: 'ion-select',
@@ -451,7 +450,7 @@ export class Select implements ComponentInterface {
           {selectText}
         </div>
         <div class="select-icon" role="presentation" part="icon">
-          <div class="select-icon-inner" part="icon-inner"></div>
+          <div class="select-icon-inner"></div>
         </div>
         <button
           type="button"
