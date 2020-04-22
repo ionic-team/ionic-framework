@@ -8,7 +8,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @TODOpart icon - The checkbox icon.
+ * @TODOpart container - The checkbox icon.
  * @TODOpart mark - The inner checkmark in the checkbox icon.
  */
 @Component({
@@ -165,7 +165,7 @@ export class Checkbox implements ComponentInterface {
           'interactive': true
         }}
       >
-        <svg class="checkbox-icon" viewBox="0 0 24 24" part="icon">
+        <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}
         </svg>
         <button
