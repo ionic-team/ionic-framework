@@ -11,8 +11,8 @@ import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convert
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @TODOpart text - The value of the datetime.
- * @TODOpart placeholder - The placeholder of the datetime.
+ * @part text - The value of the datetime.
+ * @part placeholder - The placeholder of the datetime.
  */
 @Component({
   tag: 'ion-datetime',

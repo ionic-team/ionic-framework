@@ -725,6 +725,14 @@ Type: `Promise<void>`
 
 
 
+## Shadow Parts
+
+| Part            | Description                      |
+| --------------- | -------------------------------- |
+| `"placeholder"` | The placeholder of the datetime. |
+| `"text"`        | The value of the datetime.       |
+
+
 ## CSS Custom Properties
 
 | Name                  | Description                                                                                                 |
