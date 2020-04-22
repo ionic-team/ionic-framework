@@ -9,7 +9,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @TODOpart track - The main track of the toggle.
+ * @TODOpart track - The background track of the toggle.
  * @TODOpart handle - The handle of the toggle.
  */
 @Component({
