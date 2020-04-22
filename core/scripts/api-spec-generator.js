@@ -35,6 +35,9 @@ function generateComponent(component, content) {
   component.styles.forEach(prop => {
     content.push(`${component.tag},css-prop,${prop.name}`);
   });
+  component.parts.forEach(part => {
+    content.push(`${component.tag},part,${part.name}`);
+  });
 }
 
 exports.apiSpecGenerator = apiSpecGenerator;

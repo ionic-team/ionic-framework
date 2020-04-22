@@ -70,6 +70,7 @@ const jsSetFocus = (
         clearTimeout(scrollContentTimeout);
       }
       window.removeEventListener('resize', scrollContent);
+      window.removeEventListener('keyboardWillShow', scrollContent);
 
       // scroll the input into place
       await contentEl.scrollByPoint(0, scrollData.scrollAmount, scrollData.scrollDuration);
@@ -83,9 +84,10 @@ const jsSetFocus = (
     };
 
     window.addEventListener('resize', scrollContent);
+    window.addEventListener('keyboardWillShow', scrollContent);
 
     // fallback in case resize never fires
-    scrollContentTimeout = setTimeout(scrollContent, 1000);
+    scrollContentTimeout = setTimeout(scrollContent, 300);
   }
 };
 
