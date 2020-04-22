@@ -1035,6 +1035,9 @@ ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
 ion-select,css-prop,--placeholder-color
 ion-select,css-prop,--placeholder-opacity
+ion-select,part,icon
+ion-select,part,placeholder
+ion-select,part,text
 
 ion-select-option,shadow
 ion-select-option,prop,disabled,boolean,false,false,false
