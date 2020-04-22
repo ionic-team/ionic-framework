@@ -8,7 +8,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @TODOpart icon - The outer radio icon.
+ * @TODOpart container - The outer radio icon.
  * @TODOpart mark - The inner checked dot of the radio icon.
  */
 @Component({
@@ -139,7 +139,7 @@ export class Radio implements ComponentInterface {
           'radio-disabled': disabled,
         }}
       >
-        <div class="radio-icon" part="icon">
+        <div class="radio-icon" part="container">
           <div class="radio-inner" part="mark" />
         </div>
         <button
