@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 import { getIonMode } from '../../global/ionic-global';
 
 /**
- * @TODOpart image - The inner `img` element.
+ * @part image - The inner `img` element.
  */
 @Component({
   tag: 'ion-img',
