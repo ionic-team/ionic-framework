@@ -14,7 +14,7 @@ const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
 const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
 
 /**
- * @TODOpart inner - The inner div of the menu.
+ * @TODOpart container - The inner div of the menu.
  * @TODOpart backdrop - The ion-backdrop of the menu.
  */
 @Component({
@@ -573,7 +573,7 @@ AFTER:
       >
         <div
           class="menu-inner"
-          part="inner"
+          part="container"
           ref={el => this.menuInnerEl = el}
         >
           <slot></slot>
