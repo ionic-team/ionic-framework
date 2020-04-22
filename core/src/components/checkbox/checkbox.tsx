@@ -8,8 +8,8 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @TODOpart container - The container for the checkbox mark.
- * @TODOpart mark - The checkmark used to indicate the checked state.
+ * @part container - The container for the checkbox mark.
+ * @part mark - The checkmark used to indicate the checked state.
  */
 @Component({
   tag: 'ion-checkbox',
