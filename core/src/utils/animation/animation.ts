@@ -1,5 +1,3 @@
-// TODO: Add more tests. until then, be sure to manually test menu and swipe to go back/routing transitions
-
 import { raf } from '../helpers';
 
 import { Animation, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrame, AnimationKeyFrameEdge, AnimationKeyFrames, AnimationLifecycle, AnimationPlayOptions } from './animation-interface';
@@ -72,12 +70,12 @@ export const createAnimation = (animationId?: string): Animation => {
     return webAnimations;
   };
 
-  const destroy = () => {
+  const destroy = (clearStyleSheets?: boolean) => {
     childAnimations.forEach(childAnimation => {
-      childAnimation.destroy();
+      childAnimation.destroy(clearStyleSheets);
     });
 
-    cleanUp();
+    cleanUp(clearStyleSheets);
 
     elements.length = 0;
     childAnimations.length = 0;
@@ -97,9 +95,12 @@ export const createAnimation = (animationId?: string): Animation => {
    * animation's elements, and removes the
    * animation's stylesheets from the DOM.
    */
-  const cleanUp = () => {
+  const cleanUp = (clearStyleSheets?: boolean) => {
     cleanUpElements();
-    cleanUpStyleSheets();
+
+    if (clearStyleSheets) {
+      cleanUpStyleSheets();
+    }
   };
 
   const resetFlags = () => {
