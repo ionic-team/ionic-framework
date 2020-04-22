@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Host, Listen, h } from '@stencil/core';
 import { getIonMode } from '../../global/ionic-global';
 
 /**
- * @TODOpart icon - The icon of the reorder handle.
+ * @part icon - The icon of the reorder handle.
  */
 @Component({
   tag: 'ion-reorder',
