@@ -10,10 +10,10 @@ import { createColorClasses, hostContext } from '../../utils/theme';
  * @slot - Content is placed in the scrollable area if provided without a slot.
  * @slot fixed - Should be used for fixed content that should not scroll.
  *
- * @TODOpart background - The background of the content.
- * @TODOpart scroll - The scrollable container of the content.
- * @TODOpart transition-cover - The backdrop that appears when transitioning to another page. Only applies in iOS mode.
- * @TODOpart transition-shadow - The shadow that appears when transitioning to another page. Only applies in iOS mode.
+ * @part background - The background of the content.
+ * @part scroll - The scrollable container of the content.
+ * @part transition-cover - The backdrop that appears when transitioning to another page. Only applies in iOS mode.
+ * @part transition-shadow - The shadow that appears when transitioning to another page. Only applies in iOS mode.
  */
 @Component({
   tag: 'ion-content',

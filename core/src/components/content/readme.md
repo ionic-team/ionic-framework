@@ -184,6 +184,16 @@ Type: `Promise<void>`
 | `"fixed"` | Should be used for fixed content that should not scroll.             |
 
 
+## Shadow Parts
+
+| Part                  | Description                                                                             |
+| --------------------- | --------------------------------------------------------------------------------------- |
+| `"background"`        | The background of the content.                                                          |
+| `"scroll"`            | The scrollable container of the content.                                                |
+| `"transition-cover"`  | The backdrop that appears when transitioning to another page. Only applies in iOS mode. |
+| `"transition-shadow"` | The shadow that appears when transitioning to another page. Only applies in iOS mode.   |
+
+
 ## CSS Custom Properties
 
 | Name                | Description                                                                                                |
