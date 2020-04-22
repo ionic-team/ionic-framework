@@ -18,7 +18,7 @@ const getLargeTitle = (refEl: any) => {
 
   if (tabs != null) {
     const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
-    return activeTab.querySelector(query);
+    return (activeTab != null) ? activeTab.querySelector(query) : null;
   }
 
   return refEl.querySelector(query);
@@ -30,7 +30,9 @@ const getBackButton = (refEl: any, backDirection: boolean) => {
 
   if (tabs != null) {
     const activeTab = tabs.querySelector('ion-tab:not(.tab-hidden), .ion-page:not(.ion-page-hidden)');
-    buttonsList = activeTab.querySelectorAll('ion-buttons');
+    if (activeTab != null) {
+      buttonsList = activeTab.querySelectorAll('ion-buttons');
+    }
   } else {
     buttonsList = refEl.querySelectorAll('ion-buttons');
   }
@@ -384,12 +386,18 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
     // setup leaving view
     if (leavingEl) {
-
       const leavingContent = createAnimation();
       const leavingContentEl = leavingEl.querySelector(':scope > ion-content');
+      const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
+      const leavingHeaderEls = leavingEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *');
 
-      leavingContent.addElement(leavingContentEl!); // REVIEW
-      leavingContent.addElement(leavingEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *'));
+      if (!leavingContentEl && leavingToolBarEls.length === 0 && leavingHeaderEls.length === 0) {
+        leavingContent.addElement(leavingEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs')!);  // REVIEW
+      } else {
+        leavingContent.addElement(leavingContentEl!);  // REVIEW
+        leavingContent.addElement(leavingHeaderEls);
+      }
+
       rootAnimation.addAnimation(leavingContent);
 
       if (backDirection) {
@@ -443,7 +451,6 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         }
       }
 
-      const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
       leavingToolBarEls.forEach(leavingToolBarEl => {
         const leavingToolBar = createAnimation();
         leavingToolBar.addElement(leavingToolBarEl);
