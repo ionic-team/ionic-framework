@@ -148,9 +148,9 @@
   font-weight: $action-sheet-ios-button-cancel-font-weight;
 
   &::after {
-    background: var(--button-background);
+    background: var(--button-background-selected);
 
-    opacity: var(--button-background-opacity);
+    opacity: var(--button-background-selected-opacity);
   }
 }
 
