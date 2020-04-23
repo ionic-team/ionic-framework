@@ -54,11 +54,11 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 
 A code reproduction is a small application that is built to demonstrate a particular issue. The code reproduction should contain the minimum amount of code needed to recreate the issue and should focus on a single issue.
 
-### Why should you create a reproduction?
+### Why should you create a repro?
 
 A code reproduction of the issue you are experiencing helps us better isolate the cause of the problem. This is an important first step to getting any bug fixed! 
 
-Without a reliable code reproduction, it is unlikely we will be able to address the issue. In other words, creating a code reproduction of the issue helps us help you faster.
+Without a reliable code reproduction, it is unlikely we will be able to address the issue. Issues that do not have a code reproduction may be closed. In other words, creating a code reproduction of the issue helps us help you faster.
 
 ### How to create a reproduction
 
