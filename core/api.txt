@@ -651,6 +651,8 @@ ion-menu,css-prop,--max-width
 ion-menu,css-prop,--min-height
 ion-menu,css-prop,--min-width
 ion-menu,css-prop,--width
+ion-menu,part,backdrop
+ion-menu,part,container
 
 ion-menu-button,shadow
 ion-menu-button,prop,autoHide,boolean,true,false,false
