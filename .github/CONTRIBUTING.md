@@ -50,24 +50,24 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 
 ## Creating a Good Code Reproduction
 
-### What is a code reproduction?
+### What is a Code Reproduction?
 
 A code reproduction is a small application that is built to demonstrate a particular issue. The code reproduction should contain the minimum amount of code needed to recreate the issue and should focus on a single issue.
 
-### Why should you create a repro?
+### Why Should You Create a Reproduction?
 
 A code reproduction of the issue you are experiencing helps us better isolate the cause of the problem. This is an important first step to getting any bug fixed! 
 
-Without a reliable code reproduction, it is unlikely we will be able to address the issue. Issues that do not have a code reproduction may be closed. In other words, creating a code reproduction of the issue helps us help you faster.
+Without a reliable code reproduction, it is unlikely we will be able to resolve the issue, leading to it being closed. In other words, creating a code reproduction of the issue helps us help you.
 
-### How to create a reproduction
+### How to Create a Reproduction
 
 * Create a new Ionic application using one of our starter templates. The `blank` starter application is a great choice for this. You can create one using the following Ionic CLI command: `ionic start myApp blank`
 * Add the minimum amount of code needed to recreate the issue you are experiencing. Do not include anything that is not required to reproduce the issue. This includes any 3rd party plugins you have installed.
 * Publish the application on GitHub and include a link to it when [creating an issue](https://github.com/ionic-team/ionic/issues/new/choose).
 * Be sure to include steps to reproduce the issue. These steps should be clear and easy to follow.
 
-### Benefits of creating a reproduction
+### Benefits of Creating a Reproduction
 
 * **Uses the latest version of Ionic:** By creating a new Ionic application, you are ensuring that you are testing against the latest version of the framework. Sometimes the issues you are experiencing have already been resolved in a newer version of the framework!
 * **Minimal surface area:** By removing code that is not needed in order to reproduce the issue, it makes it easier to identify the cause of the issue.
