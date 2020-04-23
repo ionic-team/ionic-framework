@@ -250,6 +250,18 @@ export default {
 | `"start"` | Content is placed to the left of the range slider in LTR, and to the right in RTL. |
 
 
+## Shadow Parts
+
+| Part            | Description                                |
+| --------------- | ------------------------------------------ |
+| `"bar"`         | The inactive part of the bar.              |
+| `"bar-active"`  | The active part of the bar.                |
+| `"knob"`        | The handle that is used to drag the range. |
+| `"pin"`         | The counter that appears above a knob.     |
+| `"tick"`        | An inactive tick mark.                     |
+| `"tick-active"` | An active tick mark.                       |
+
+
 ## CSS Custom Properties
 
 | Name                      | Description                        |
