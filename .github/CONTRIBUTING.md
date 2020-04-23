@@ -47,31 +47,32 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 
 * Next, [create a new issue](https://github.com/ionic-team/ionic/issues/new/choose) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
 
-### Creating a Good Code Reproduction
 
-#### What is a code reproduction?
+## Creating a Good Code Reproduction
 
-A code reproduction is a small application that is built to demonstrate a particular issue. The code reproduction should contain the minimal amount of code needed to recreate the issue you are experiencing.
+### What is a code reproduction?
 
-#### Why should you create a reproduction?
+A code reproduction is a small application that is built to demonstrate a particular issue. The code reproduction should contain the minimum amount of code needed to recreate the issue and should focus on a single issue.
+
+### Why should you create a reproduction?
 
 A code reproduction of the issue you are experiencing helps us better isolate the cause of the problem. This is an important first step to getting any bug fixed! 
 
 Without a reliable code reproduction, it is unlikely we will be able to address the issue. In other words, creating a code reproduction of the issue helps us help you faster.
 
-#### How to create a reproduction
+### How to create a reproduction
 
 * Create a new Ionic application using one of our starter templates. The `blank` starter application is a great choice for this. You can create one using the following Ionic CLI command: `ionic start myApp blank`
-* Add the minimal amount of code needed to recreate the issue you are experiencing. Do not include anything that is not required to reproduce the issue. This includes any 3rd party plugins you have installed.
+* Add the minimum amount of code needed to recreate the issue you are experiencing. Do not include anything that is not required to reproduce the issue. This includes any 3rd party plugins you have installed.
 * Publish the application on GitHub and include a link to it when [creating an issue](https://github.com/ionic-team/ionic/issues/new/choose).
 * Be sure to include steps to reproduce the issue. These steps should be clear and easy to follow.
 
-#### Benefits of Creating a Reproduction
+### Benefits of creating a reproduction
 
-* Uses the latest version of Ionic: By creating a new Ionic application, you are ensuring that you are testing against the latest version of the framework. Sometimes the issues you are experiencing have already been resolved in a newer version of the framework!
-* Minimal surface area: By removing code that is not needed in order to reproduce the issue, it makes it easier to identify the cause of the issue.
-* No secret code needed: Creating a minimal reproduction of the issue prevents you from having to publish any proprietary code used in your project.
-* Get help fixing the issue: If we can reliably reproduce an issue, there is a good chance we will be able to address it.
+* **Uses the latest version of Ionic:** By creating a new Ionic application, you are ensuring that you are testing against the latest version of the framework. Sometimes the issues you are experiencing have already been resolved in a newer version of the framework!
+* **Minimal surface area:** By removing code that is not needed in order to reproduce the issue, it makes it easier to identify the cause of the issue.
+* **No secret code needed:** Creating a minimal reproduction of the issue prevents you from having to publish any proprietary code used in your project.
+* **Get help fixing the issue:** If we can reliably reproduce an issue, there is a good chance we will be able to address it.
 
 
 ## Creating a Pull Request
