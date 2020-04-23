@@ -235,6 +235,8 @@ ion-checkbox,css-prop,--checkmark-color
 ion-checkbox,css-prop,--checkmark-width
 ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
+ion-checkbox,part,container
+ion-checkbox,part,mark
 
 ion-chip,shadow
 ion-chip,prop,color,string | undefined,undefined,false,false
