@@ -10,6 +10,9 @@ import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convert
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part text - The value of the datetime.
+ * @part placeholder - The placeholder of the datetime.
  */
 @Component({
   tag: 'ion-datetime',
@@ -609,6 +612,10 @@ export class Datetime implements ComponentInterface {
       ? (placeholder != null ? placeholder : '')
       : text;
 
+    const datetimeTextPart = text === undefined
+      ? (placeholder != null ? 'placeholder' : undefined)
+      : 'text';
+
     if (label) {
       label.id = labelId;
     }
@@ -631,7 +638,7 @@ export class Datetime implements ComponentInterface {
           'in-item': hostContext('ion-item', el)
         }}
       >
-        <div class="datetime-text">{datetimeText}</div>
+        <div class="datetime-text" part={datetimeTextPart}>{datetimeText}</div>
         <button
           type="button"
           onFocus={this.onFocus}

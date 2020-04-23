@@ -337,6 +337,8 @@ ion-datetime,css-prop,--padding-end
 ion-datetime,css-prop,--padding-start
 ion-datetime,css-prop,--padding-top
 ion-datetime,css-prop,--placeholder-color
+ion-datetime,part,placeholder
+ion-datetime,part,text
 
 ion-fab,shadow
 ion-fab,prop,activated,boolean,false,false,false
