@@ -420,24 +420,29 @@ export class Searchbar implements ComponentInterface {
   }
 
   render() {
+    const { cancelButtonText } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const mode = getIonMode(this);
     const clearIcon = this.clearIcon || (mode === 'ios' ? 'close-circle' : 'close-sharp');
     const searchIcon = this.searchIcon || (mode === 'ios' ? 'search-outline' : 'search-sharp');
+    const shouldShowCancelButton = this.shouldShowCancelButton();
 
     const cancelButton = (this.showCancelButton !== 'never') && (
       <button
-        aria-label="cancel"
+        aria-label={cancelButtonText}
+
+        // Screen readers should not announce button if it is not visible on screen
+        aria-hidden={shouldShowCancelButton ? undefined : 'true'}
         type="button"
-        tabIndex={mode === 'ios' && !this.shouldShowCancelButton() ? -1 : undefined}
+        tabIndex={mode === 'ios' && !shouldShowCancelButton ? -1 : undefined}
         onMouseDown={this.onCancelSearchbar}
         onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"
       >
-        <div>
+        <div aria-hidden="true">
           { mode === 'md'
             ? <ion-icon aria-hidden="true" mode={mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
-            : this.cancelButtonText
+            : cancelButtonText
           }
         </div>
       </button>
@@ -481,7 +486,7 @@ export class Searchbar implements ComponentInterface {
 
           {mode === 'md' && cancelButton}
 
-          <ion-icon mode={mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
+          <ion-icon aria-hidden="true" mode={mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
           <button
             aria-label="reset"
