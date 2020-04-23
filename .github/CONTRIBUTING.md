@@ -49,7 +49,7 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 
 ### Creating a Good Code Reproduction
 
-####What is a code reproduction?
+#### What is a code reproduction?
 
 A code reproduction is a small Ionic Framework application that is built to demonstrate a particular issue. The code reproduction should contain the minimal amount of code needed to recreate the issue you are experiencing. In addition, the code reproduction should be reliable. This means that we should be able to reproduce the issue every  time we follow your steps to reproduce. Code reproductions that do not reproduce the issue every time are not considered reliable.
 
