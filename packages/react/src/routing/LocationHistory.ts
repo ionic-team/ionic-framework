@@ -24,6 +24,16 @@ export class LocationHistory {
     }
   }
 
+  clearTabStack(tab: string) {
+    const routeInfos = this._getRouteInfosByKey(tab);
+    if (routeInfos) {
+      routeInfos.forEach(ri => {
+        this.locationHistory = this.locationHistory.filter(x => x.id !== ri.id);
+      });
+      this.tabHistory[tab] = [];
+    }
+  }
+
   update(routeInfo: RouteInfo) {
     const locationIndex = this.locationHistory.findIndex(x => x.id === routeInfo.id);
     if (locationIndex > -1) {
@@ -44,9 +54,14 @@ export class LocationHistory {
 
   private _add(routeInfo: RouteInfo) {
     const routeInfos = this._getRouteInfosByKey(routeInfo.tab);
-    routeInfos && routeInfos.push(routeInfo);
+    if (routeInfos) {
+      // If the latest routeInfo is the same (going back and forth between tabs), replace it
+      if (routeInfos[routeInfos.length - 1]?.id === routeInfo.id) {
+        routeInfos.pop();
+      }
+      routeInfos.push(routeInfo);
+    }
     this.locationHistory.push(routeInfo);
-
     // Todo: re-add restricting size
     // this.locationHistory.push(routeInfo);
     // if (this.locationHistory.length > RESTRICT_SIZE) {
@@ -60,22 +75,23 @@ export class LocationHistory {
     if (routeInfos) {
       // Pop all routes until we are back
       ri = routeInfos[routeInfos.length - 1];
-      while (ri && !areRouteInfosEqual(ri, routeInfo)) {
+      while (ri && ri.id !== routeInfo.id) {
         routeInfos.pop();
         ri = routeInfos[routeInfos.length - 1];
       }
-      if (routeInfos.length === 0) {
-        routeInfos.push(routeInfo);
-      }
+      // Replace with updated route
+      routeInfos.pop();
+      routeInfos.push(routeInfo);
     }
+
     ri = this.locationHistory[this.locationHistory.length - 1];
-    while (ri && !areRouteInfosEqual(ri, routeInfo)) {
+    while (ri && ri.id !== routeInfo.id) {
       this.locationHistory.pop();
       ri = this.locationHistory[this.locationHistory.length - 1];
     }
-    if (this.locationHistory.length === 0) {
-      this.locationHistory.push(routeInfo);
-    }
+    // Replace with updated route
+    this.locationHistory.pop();
+    this.locationHistory.push(routeInfo);
   }
 
   private _replace(routeInfo: RouteInfo) {
@@ -100,6 +116,14 @@ export class LocationHistory {
       }
     }
     return routeInfos;
+  }
+
+  getFirstRouteInfoForTab(tab: string) {
+    const routeInfos = this._getRouteInfosByKey(tab);
+    if (routeInfos) {
+      return routeInfos[0];
+    }
+    return undefined;
   }
 
   getCurrentRouteInfoForTab(tab?: string) {
@@ -140,13 +164,4 @@ export class LocationHistory {
   current() {
     return this.locationHistory[this.locationHistory.length - 1];
   }
-}
-
-function areRouteInfosEqual(r1: RouteInfo, r2: RouteInfo) {
-  if (r1.pathname.toLowerCase() === r2.pathname.toLowerCase()) {
-    if (JSON.stringify(r1.routeOptions || '').toLowerCase() === JSON.stringify(r2.routeOptions || '').toLowerCase()) {
-      return true;
-    }
-  }
-  return false;
 }

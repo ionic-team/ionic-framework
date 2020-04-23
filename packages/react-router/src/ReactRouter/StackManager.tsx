@@ -1,15 +1,13 @@
 import {
-  // DefaultIonLifeCycleContext,
   RouteInfo,
   RouteManagerContext,
   StackContext,
   ViewItem,
-  ViewLifeCycleManager
+  ViewLifeCycleManager,
+  generateId
 } from '@ionic/react';
 import React from 'react';
 import { matchPath } from 'react-router-dom';
-
-import { generateId } from '../utils';
 
 interface StackManagerProps {
   routeInfo: RouteInfo;
@@ -20,10 +18,8 @@ interface StackManagerState { }
 export class StackManager extends React.Component<StackManagerProps, StackManagerState> {
   context!: React.ContextType<typeof RouteManagerContext>;
   viewItems: ViewItem[] = [];
-  // leavingElement: HTMLElement | undefined;
   ionRouterOutlet?: React.ReactElement;
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
-  //  isIonPageContainer = false;
   firstRender = true;
   routerContextSubscriptions: (() => void)[] = [];
 
@@ -36,7 +32,6 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
 
     this.state = {};
 
-    // this.ionRouterOutlet = React.Children.only(this.props.children) as React.ReactElement;
   }
 
   componentDidMount() {
@@ -276,7 +271,7 @@ function clonePageElement(leavingViewHtml: string) {
 
 function createViewItem(reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement) {
   const viewItem: ViewItem = {
-    id: generateId(),
+    id: generateId('viewItem'),
     ionPageElement: page,
     reactElement,
     mount: true,

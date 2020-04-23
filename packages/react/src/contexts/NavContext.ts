@@ -6,27 +6,43 @@ import { RouteInfo } from '../models';
 export interface NavContextState {
   getPageManager: () => any;
   getStackManager: () => any;
-  goBack: (defaultHref?: string) => void;
-  navigate: (path: string, direction?: RouterDirection | 'none', ionRouteAction?: 'push' | 'replace' | 'pop', options?: any) => void;
+  goBack: (route?: string | RouteInfo) => void;
+  navigate: (path: string, direction?: RouterDirection | 'none', ionRouteAction?: 'push' | 'replace' | 'pop', options?: any, tab?: string) => void;
   hasIonicRouter: () => boolean;
-  // registerIonPage: (page: HTMLElement) => void;
   routeInfo?: RouteInfo;
   setCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
+  changeTab: (tab: string, path: string, routeOptions?: any) => void;
+  resetTab: (tab: string, originalHref: string, originalRouteOptions?: any) => void;
 }
 
 export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
   getPageManager: () => undefined,
   getStackManager: () => undefined,
-  goBack: (defaultHref?: string) => {
-    if (defaultHref !== undefined) {
-      window.location.pathname = defaultHref;
-    } else {
-      window.history.back();
+  goBack: (route?: string | RouteInfo) => {
+    if (typeof window !== 'undefined') {
+      if (typeof (route) === 'string') {
+        window.location.pathname = route;
+      } else {
+        window.history.back();
+      }
     }
   },
-  navigate: (path: string) => { window.location.pathname = path; },
+  navigate: (path: string) => {
+    if (typeof window !== 'undefined') {
+      window.location.pathname = path;
+    }
+  },
   hasIonicRouter: () => false,
-  // registerIonPage: () => undefined,
   routeInfo: undefined,
-  setCurrentTab: () => undefined
+  setCurrentTab: () => undefined,
+  changeTab: (_tab: string, path: string) => {
+    if (typeof window !== 'undefined') {
+      window.location.pathname = path;
+    }
+  },
+  resetTab: (_tab: string, path: string) => {
+    if (typeof window !== 'undefined') {
+      window.location.pathname = path;
+    }
+  }
 });

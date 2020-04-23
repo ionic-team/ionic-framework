@@ -8,63 +8,62 @@ import {
   RouterDirection,
   generateId
 } from '@ionic/react';
-import { Action as HistoryAction, Location as HistoryLocation } from 'history';
+import { WithRouterProps } from 'next/dist/client/with-router';
+import { Router, withRouter } from 'next/router';
 import React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 
+import { NextRouteInfo, NextRouteOptions } from './NextRouteInfo';
 import StackManager from './StackManager';
 
-export interface LocationState {
-  // direction?: RouterDirection;
-  // action?: RouteAction;
+interface IonNextRouterState {
 }
 
-interface IonRouteProps extends RouteComponentProps<{}, {}, LocationState> {
-  registerHistoryListener: (cb: (location: HistoryLocation<any>, action: HistoryAction) => void) => void;
-}
-
-interface IonRouteState {
-  location?: HistoryLocation<LocationState>;
-  action?: RouteAction;
-}
-
-class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
+class IonNextRouterInner extends React.Component<WithRouterProps, IonNextRouterState> {
   currentPathname: string | undefined;
   currentTab?: string;
   exitViewFromOtherOutletHandlers: ((pathname: string) => void)[] = [];
   incomingRouteParams?: Partial<RouteInfo>;
   locationHistory = new LocationHistory();
   routeChangedHandlers: ((routeInfo: RouteInfo) => void)[] = [];
-  routeInfo: RouteInfo;
+  routeInfo: NextRouteInfo;
   routeMangerContextState: RouteManagerContextState = {
     exitViewFromOtherOutlet: this.exitViewFromOtherOutlet.bind(this),
     onRouteChange: this.registerRouteChangeHandler.bind(this),
     onExitViewFromOtherOutlet: this.registerExitViewFromOtherOutletHandler.bind(this)
   };
-  pendingRouteChange?: RouteInfo;
 
-  constructor(props: IonRouteProps) {
+  constructor(props: WithRouterProps) {
     super(props);
 
+    const asPathParts = this.props.router.asPath.split('?');
     this.routeInfo = {
       id: generateId('routeInfo'),
-      pathname: this.props.location.pathname,
-      search: this.props.location.search
+      pathname: asPathParts[0],
+      search: asPathParts[1] ? '?' + asPathParts[1] : '',
+      routeOptions: {
+        routePath: this.props.router.pathname,
+        as: this.props.router.asPath
+      }
     };
 
     this.locationHistory.add(this.routeInfo);
-
     this.handleChangeTab = this.handleChangeTab.bind(this);
-    this.handleResetTab = this.handleResetTab.bind(this);
     this.handleNavigate = this.handleNavigate.bind(this);
     this.handleNavigateBack = this.handleNavigateBack.bind(this);
-    this.props.registerHistoryListener(this.handleHistoryChange.bind(this));
+    this.handleHistoryChange = this.handleHistoryChange.bind(this);
+    this.handleResetTab = this.handleResetTab.bind(this);
     this.handleSetCurrentTab = this.handleSetCurrentTab.bind(this);
+    this.registerRouteChangeHandler = this.registerRouteChangeHandler.bind(this);
 
+    this.props.router.beforePopState(({ as }) => {
+      this.routeInfo = { ...this.routeInfo, pathname: as, lastPathname: this.currentPathname, routeAction: 'replace', routeDirection: 'back' };
+      return true;
+    });
   }
 
   componentDidMount() {
     this.routeInfo.tab = this.currentTab;
+    Router.events.on('routeChangeComplete', this.handleHistoryChange);
   }
 
   shouldComponentUpdate() {
@@ -81,54 +80,63 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
     const routeInfo = this.locationHistory.getCurrentRouteInfoForTab(tab);
     if (routeInfo) {
       this.incomingRouteParams = { ...routeInfo, routeAction: 'push', routeDirection: 'none' };
-      this.props.history.push(routeInfo.pathname + (routeInfo.search || ''));
+      this.props.router.push(routeInfo.routeOptions?.routePath || path, routeOptions?.as);
     } else {
       this.handleNavigate(path, 'push', 'none', routeOptions, tab);
     }
   }
 
-  handleHistoryChange(location: HistoryLocation<LocationState>, action: HistoryAction) {
+  handleHistoryChange(enteringUrl: string) {
 
-    let leavingLocationInfo: RouteInfo;
+    const router = this.props.router;
+    let leavingLocationInfo: NextRouteInfo;
     if (this.incomingRouteParams) {
       if (this.incomingRouteParams.routeAction === 'replace') {
         leavingLocationInfo = this.locationHistory.previous();
       } else {
         leavingLocationInfo = this.locationHistory.current();
       }
-    } else if (action === 'REPLACE') {
-      leavingLocationInfo = this.locationHistory.previous();
     } else {
       leavingLocationInfo = this.locationHistory.current();
     }
-
     const leavingUrl = leavingLocationInfo.pathname + leavingLocationInfo.search;
 
-    if (leavingUrl !== location.pathname) {
+    if (leavingUrl !== enteringUrl) {
 
       if (!this.incomingRouteParams) {
         this.incomingRouteParams = {
-          routeAction: action === 'REPLACE' ? 'replace' : 'push',
-          routeDirection: action === 'REPLACE' ? 'none' : 'forward',
-          tab: this.currentTab
+          routeAction: 'push',
+          routeDirection: 'forward',
+          routeOptions: { as: router.asPath, routePath: router.pathname },
         };
       }
 
       if (this.incomingRouteParams?.id) {
         this.routeInfo = {
           ...this.incomingRouteParams as RouteInfo,
-          lastPathname: leavingLocationInfo.pathname
+          lastPathname: leavingLocationInfo.pathname,
+          routeOptions: {
+            as: router.asPath,
+            routePath: router.pathname,
+            lastRoutePath: leavingLocationInfo.routeOptions?.routePath
+          }
         };
         this.locationHistory.add(this.routeInfo);
       } else {
+        const asPathParts = router.asPath.split('?');
         const isPushed = (this.incomingRouteParams.routeAction === 'push' && this.incomingRouteParams.routeDirection === 'forward');
         this.routeInfo = {
           id: generateId('routeInfo'),
           ...this.incomingRouteParams,
           lastPathname: leavingLocationInfo.pathname,
-          pathname: location.pathname,
-          search: location.search,
-          params: this.props.match.params
+          pathname: asPathParts[0],
+          search: asPathParts[1] ? '?' + asPathParts[1] : '',
+          params: router.query,
+          routeOptions: {
+            as: router.asPath,
+            routePath: router.pathname,
+            lastRoutePath: leavingLocationInfo.routeOptions?.routePath
+          }
         };
         if (isPushed) {
           this.routeInfo.tab = leavingLocationInfo.tab;
@@ -141,28 +149,21 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
           const lastRoute = this.locationHistory.getCurrentRouteInfoForTab(this.routeInfo.tab);
           this.routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
         }
-
         this.locationHistory.add(this.routeInfo);
       }
+
     }
 
     this.forceUpdate();
 
-    if (this.routeChangedHandlers.length === 0) {
-      this.pendingRouteChange = this.routeInfo;
-    }
     this.routeChangedHandlers.forEach(h => h(this.routeInfo));
 
-    this.currentPathname = location.pathname;
+    this.currentPathname = router.pathname;
     this.incomingRouteParams = undefined;
 
-    // TODO: this state needed?
-    this.setState({
-      location
-    });
   }
 
-  handleNavigate(path: string, routeAction: RouteAction, routeDirection?: RouterDirection, routeOptions?: any, tab?: string) {
+  handleNavigate(pathname: string, routeAction: RouteAction, routeDirection?: RouterDirection, routeOptions?: NextRouteOptions, tab?: string) {
     this.incomingRouteParams = {
       routeAction,
       routeDirection,
@@ -171,35 +172,37 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
     };
 
     if (routeAction === 'push') {
-      this.props.history.push(path);
+      this.props.router.push(routeOptions?.routePath || pathname, routeOptions?.as);
     } else {
-      this.props.history.replace(path);
+      this.props.router.replace(routeOptions?.routePath || pathname, routeOptions?.as);
     }
   }
 
-  handleNavigateBack(path: string | RouteInfo = '/') {
-    const routeInfo = this.locationHistory.current();
-    if (routeInfo && routeInfo.pushedByRoute) {
-      const prevInfo = this.locationHistory.findLastLocation(routeInfo);
-      if (prevInfo) {
-        this.incomingRouteParams = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
-        this.props.history.replace(prevInfo.pathname + (prevInfo.search || ''));
+  handleNavigateBack(route: string | RouteInfo = '/') {
+    if (typeof route === 'string') {
+      const routeInfo = this.locationHistory.current();
+      if (routeInfo && routeInfo.pushedByRoute) {
+        const prevInfo = this.locationHistory.findLastLocation(routeInfo);
+        if (prevInfo) {
+          this.incomingRouteParams = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
+          this.props.router.push(prevInfo.routeOptions?.routePath || route, prevInfo.routeOptions?.as);
+        } else {
+          this.handleNavigate(route, 'pop', 'back');
+        }
       } else {
-        this.handleNavigate(path as string, 'pop', 'back');
+        this.handleNavigate(route, 'pop', 'back');
       }
-    } else {
-      this.handleNavigate(path as string, 'pop', 'back');
     }
   }
 
-  handleResetTab(tab: string, originalHref: string, originalRouteOptions: any) {
+  handleResetTab(tab: string, originalHref: string, originalRouteOptions: NextRouteOptions) {
     const routeInfo = this.locationHistory.getFirstRouteInfoForTab(tab);
     if (routeInfo) {
       const newRouteInfo = { ...routeInfo };
       newRouteInfo.pathname = originalHref;
       newRouteInfo.routeOptions = originalRouteOptions;
       this.incomingRouteParams = { ...newRouteInfo, routeAction: 'pop', routeDirection: 'back' };
-      this.props.history.push(newRouteInfo.pathname + (newRouteInfo.search || ''));
+      this.props.router.push(newRouteInfo.routeOptions?.routePath || newRouteInfo.pathname, newRouteInfo.routeOptions?.as);
     }
   }
 
@@ -234,10 +237,10 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
         <NavManager
           stackManager={StackManager}
           routeInfo={this.routeInfo}
+          onChangeTab={this.handleChangeTab}
           onNavigateBack={this.handleNavigateBack}
           onNavigate={this.handleNavigate}
           onSetCurrentTab={this.handleSetCurrentTab}
-          onChangeTab={this.handleChangeTab}
           onResetTab={this.handleResetTab}
         >
           {this.props.children}
@@ -247,5 +250,5 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
   }
 }
 
-export const IonRouter = withRouter(IonRouterInner);
-IonRouter.displayName = 'IonRouter';
+export const IonNextRouter = withRouter(IonNextRouterInner);
+IonNextRouter.displayName = 'IonNextRouter';

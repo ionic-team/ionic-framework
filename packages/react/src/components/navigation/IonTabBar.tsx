@@ -116,17 +116,13 @@ class IonTabBarUnwrapped extends React.PureComponent<IonTabBarUnwrappedProps, St
   private onTabButtonClick(e: CustomEvent<{ href: string, selected: boolean, tab: string; routeOptions: unknown; }>) {
     const tappedTab = this.state.tabs[e.detail.tab];
     const originalHref = tappedTab.originalHref;
-    const originalRouteOptions = tappedTab.originalRouteOptions;
     const currentHref = e.detail.href;
-    const currentRouteOptions = e.detail.routeOptions;
     const { activeTab: prevActiveTab } = this.state;
     // this.props.onSetCurrentTab(e.detail.tab, this.props.routeInfo);
     // Clicking the current tab will bring you back to the original href
     if (prevActiveTab === e.detail.tab) {
-      if (originalHref === currentHref) {
-        this.context.navigate(originalHref, 'none', 'replace', originalRouteOptions);
-      } else {
-        this.context.navigate(originalHref, 'back', 'pop', originalRouteOptions);
+      if (originalHref !== currentHref) {
+        this.context.resetTab(e.detail.tab, originalHref, tappedTab.originalRouteOptions);
       }
     } else {
       if (this.props.onIonTabsWillChange) {
@@ -135,7 +131,7 @@ class IonTabBarUnwrapped extends React.PureComponent<IonTabBarUnwrappedProps, St
       if (this.props.onIonTabsDidChange) {
         this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
       }
-      this.context.navigate(currentHref, 'none', 'push', currentRouteOptions);
+      this.context.changeTab(e.detail.tab, currentHref, e.detail.routeOptions);
     }
   }
 
@@ -172,7 +168,7 @@ class IonTabBarUnwrapped extends React.PureComponent<IonTabBarUnwrappedProps, St
 }
 
 interface IonTabBarProps extends Omit<IonTabBarUnwrappedProps, 'onSetCurrentTab' | 'routeInfo'> {
- routeInfo?: RouteInfo;
+  routeInfo?: RouteInfo;
 }
 
 export const IonTabBar: React.FC<IonTabBarProps> = React.memo<IonTabBarProps>(props => {
