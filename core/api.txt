@@ -889,6 +889,7 @@ ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" 
 ion-refresher-content,prop,refreshingText,string | undefined,undefined,false,false
 
 ion-reorder,shadow
+ion-reorder,part,icon
 
 ion-reorder-group,none
 ion-reorder-group,prop,disabled,boolean,true,false,false

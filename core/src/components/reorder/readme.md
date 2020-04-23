@@ -218,6 +218,13 @@ export const ReorderExample: React.FC = () => (
 
 
 
+## Shadow Parts
+
+| Part     | Description                     |
+| -------- | ------------------------------- |
+| `"icon"` | The icon of the reorder handle. |
+
+
 ## Dependencies
 
 ### Depends on
