@@ -26,7 +26,7 @@ comment:
         Thanks for the issue! This issue has been labeled as `needs reproduction`. This label
         is added to issues that need a code reproduction.
 
-        Please provide a reproduction with the minimal amount of code required to reproduce the issue. Without a reproduction
+        Please provide a reproduction with the minimum amount of code required to reproduce the issue. Without a reproduction
         we are unable to fix any issues that you may be experiencing.
 
         For a guide on how to create a good reproduction, see [How to Create a Good Code Reproduction](https://ionicframework.com/docs/contributing/how-to-contribute#creating-a-good-code-reproduction).
