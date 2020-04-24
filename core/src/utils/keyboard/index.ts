@@ -46,9 +46,9 @@ export const startKeyboardAssist = (win: Window) => {
  * in one place.
  */
 const startNativeListeners = (win: Window) => {
-  win.addEventListener('keyboardDidShow', (ev) => setKeyboardOpen(win, ev));
+  win.addEventListener('keyboardDidShow', ev => setKeyboardOpen(win, ev));
   win.addEventListener('keyboardDidHide', () => setKeyboardClose(win));
-}
+};
 
 export const setKeyboardOpen = (win: Window, ev?: any) => {
   fireKeyboardOpenEvent(win, ev);
@@ -118,7 +118,7 @@ const layoutViewportDidChange = (): boolean => {
  * Dispatch a keyboard open event
  */
 const fireKeyboardOpenEvent = (win: Window, nativeEv?: any): void => {
-  const keyboardHeight = nativeEv ? nativeEv.keyboardHeight ? win.innerHeight - currentVisualViewport.height;
+  const keyboardHeight = nativeEv ? nativeEv.keyboardHeight : win.innerHeight - currentVisualViewport.height;
   const ev = new CustomEvent(KEYBOARD_DID_OPEN, {
     detail: { keyboardHeight }
   });
