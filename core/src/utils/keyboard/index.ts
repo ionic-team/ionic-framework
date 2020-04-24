@@ -22,6 +22,8 @@ export const resetKeyboardAssist = () => {
 };
 
 export const startKeyboardAssist = (win: Window) => {
+  startNativeListeners(win);
+
   if (!(win as any).visualViewport) { return; }
 
   currentVisualViewport = copyVisualViewport((win as any).visualViewport);
@@ -38,8 +40,18 @@ export const startKeyboardAssist = (win: Window) => {
   };
 };
 
-export const setKeyboardOpen = (win: Window) => {
-  fireKeyboardOpenEvent(win);
+/**
+ * Listen for events fired by native keyboard plugin
+ * in Capacitor/Cordova so devs only need to listen
+ * in one place.
+ */
+const startNativeListeners = (win: Window) => {
+  win.addEventListener('keyboardDidShow', (ev) => setKeyboardOpen(win, ev));
+  win.addEventListener('keyboardDidHide', () => setKeyboardClose(win));
+}
+
+export const setKeyboardOpen = (win: Window, ev?: any) => {
+  fireKeyboardOpenEvent(win, ev);
   keyboardOpen = true;
 };
 
@@ -105,9 +117,10 @@ const layoutViewportDidChange = (): boolean => {
 /**
  * Dispatch a keyboard open event
  */
-const fireKeyboardOpenEvent = (win: Window): void => {
+const fireKeyboardOpenEvent = (win: Window, nativeEv?: any): void => {
+  const keyboardHeight = nativeEv ? nativeEv.keyboardHeight ? win.innerHeight - currentVisualViewport.height;
   const ev = new CustomEvent(KEYBOARD_DID_OPEN, {
-    detail: { keyboardHeight: win.innerHeight - currentVisualViewport.height }
+    detail: { keyboardHeight }
   });
 
   win.dispatchEvent(ev);
