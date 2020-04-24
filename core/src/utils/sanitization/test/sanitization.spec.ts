@@ -7,12 +7,6 @@ describe('sanitizeDOMString', () => {
       .toEqual('<img src="x" onerror="alert(document.cookie);">');
   })
 
-  it('disable sanitizer while bypassing sanitizer', () => {
-    enableSanitizer(false);
-    expect(sanitizeDOMString(new IonicSafeString('<img src="x" onerror="alert(document.cookie);">')))
-      .toEqual('<img src="x" onerror="alert(document.cookie);">');
-  })
-
   it('bypass sanitizer', () => {
     expect(sanitizeDOMString(new IonicSafeString('<img src="x" onerror="alert(document.cookie);">')))
       .toEqual('<img src="x" onerror="alert(document.cookie);">');
