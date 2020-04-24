@@ -81,7 +81,7 @@ ion-avatar,css-prop,--border-radius
 
 ion-back-button,shadow
 ion-back-button,prop,color,string | undefined,undefined,false,false
-ion-back-button,prop,defaultHref,string | undefined,undefined,false,false
+ion-back-button,prop,defaultHref,string | undefined,undefined,false,true
 ion-back-button,prop,disabled,boolean,false,false,true
 ion-back-button,prop,icon,null | string | undefined,undefined,false,false
 ion-back-button,prop,mode,"ios" | "md",undefined,false,false

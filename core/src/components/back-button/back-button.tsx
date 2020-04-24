@@ -31,7 +31,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   /**
    * The url to navigate back to by default when there is no history.
    */
-  @Prop() defaultHref?: string;
+  @Prop({ mutable: true }) defaultHref?: string;
 
   /**
    * If `true`, the user cannot interact with the button.
@@ -53,6 +53,12 @@ export class BackButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
+  componentWillLoad() {
+    if (this.defaultHref === undefined) {
+      this.defaultHref = config.get('backButtonDefaultHref');
+    }
+  }
+
   get backButtonIcon() {
     const icon = this.icon;
     if (icon != null) {
@@ -72,10 +78,6 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   get backButtonText() {
     const defaultBackButtonText = getIonMode(this) === 'ios' ? 'Back' : null;
     return this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
-  }
-
-  get backButtonDefaultHref() {
-    return this.defaultHref || config.get('backButtonDefaultHref');
   }
 
   get hasIconOnly() {
@@ -99,12 +101,12 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     if (nav && await nav.canGoBack()) {
       return nav.pop({ skipIfBusy: true });
     }
-    return openURL(this.backButtonDefaultHref, ev, 'back');
+    return openURL(this.defaultHref, ev, 'back');
   }
 
   render() {
-    const { color, disabled, type, hasIconOnly, backButtonIcon, backButtonText, backButtonDefaultHref } = this;
-    const showBackButton = backButtonDefaultHref !== undefined;
+    const { color, defaultHref, disabled, type, hasIconOnly, backButtonIcon, backButtonText } = this;
+    const showBackButton = defaultHref !== undefined;
     const mode = getIonMode(this);
 
     return (
