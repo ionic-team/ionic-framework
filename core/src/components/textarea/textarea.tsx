@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
-import { debounceEvent, findItemLabel } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -189,9 +189,7 @@ export class Textarea implements ComponentInterface {
   }
 
   componentDidLoad() {
-    setTimeout(() => {
-      this.runAutoGrow();
-    });
+    raf(() => this.runAutoGrow());
   }
 
   private runAutoGrow() {
