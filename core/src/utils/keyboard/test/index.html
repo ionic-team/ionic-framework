@@ -50,13 +50,13 @@
   <script>
     const input = document.querySelector('ion-footer');
 
-    window.addEventListener('ionKeyboardDidOpen', (e) => {
-      console.log('ionKeyboardDidOpen');
+    window.addEventListener('ionKeyboardDidShow', (e) => {
+      console.log('ionKeyboardDidShow');
       setInputOffset(e.detail.keyboardHeight);
     });
 
-    window.addEventListener('ionKeyboardDidClose', () => {
-      console.log('ionKeyboardDidClose');
+    window.addEventListener('ionKeyboardDidHide', () => {
+      console.log('ionKeyboardDidHide');
       setInputOffset(0);
     });
 
