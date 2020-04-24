@@ -303,6 +303,12 @@ export class Datetime implements ComponentInterface {
 
   private generatePickerOptions(): PickerOptions {
     const mode = getIonMode(this);
+    this.locale = {
+      monthNames: convertToArrayOfStrings(this.monthNames, 'monthNames'),
+      monthShortNames: convertToArrayOfStrings(this.monthShortNames, 'monthShortNames'),
+      dayNames: convertToArrayOfStrings(this.dayNames, 'dayNames'),
+      dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
+    };
     const pickerOptions: PickerOptions = {
       mode,
       ...this.pickerOptions,

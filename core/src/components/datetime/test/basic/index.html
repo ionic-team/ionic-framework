@@ -95,6 +95,14 @@
         </ion-item>
 
         <ion-item>
+          <ion-label>DDD. MMM DD, YY (English/French switch)</ion-label>
+          <ion-datetime id="customMonthShortNames" value="1995-04-15" min="1990-02" max="2000"
+            display-format="DDD. MMM DD, YY"></ion-datetime>
+          <ion-button slot="end" onclick="toggleLanguage()">Language Selected: <span id="selectedLang">en</span>
+          </ion-button>
+        </ion-item>
+
+        <ion-item>
           <ion-label>D MMM YYYY H:mm</ion-label>
           <ion-datetime display-format="D MMM YYYY H:mm" min="1997" max="2010" value="2005-06-17T11:06Z"></ion-datetime>
         </ion-item>
@@ -226,6 +234,24 @@
         var isTrue = el[prop] ? false : true;
         el[prop] = isTrue;
         console.log('in toggleBoolean, setting', prop, 'to', isTrue);
+      }
+
+      var monthShortNamesEnglish = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      var monthShortNamesFrench = ["jan", "fév", "mar", "avr", "mai", "jui", "jui", "aou", "sep", "oct", "nov", "déc"];
+
+      var selectedLang = "en";
+      var customDayShortNames = document.getElementById('customMonthShortNames');
+      customDayShortNames.monthShortNames = monthShortNamesEnglish;
+      
+      function toggleLanguage() {
+        selectedLang = selectedLang === 'en' ? 'fr' : 'en';
+        
+        var customMonthShortNames = document.getElementById('customMonthShortNames');
+        var el = document.getElementById('selectedLang');
+
+        el.innerText = selectedLang;
+        if (selectedLang === 'en') { customMonthShortNames.monthShortNames = monthShortNamesEnglish; }
+        else { customMonthShortNames.monthShortNames = monthShortNamesFrench; }
       }
     </script>
   </ion-app>
