@@ -2,10 +2,11 @@ import { JSX as LocalJSX } from '@ionic/core';
 import React, { useContext } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
+import { IonicReactProps } from '../IonicReactProps';
 import { IonTabBarInner } from '../inner-proxies';
 import { IonTabButton } from '../proxies';
 
-type Props = LocalJSX.IonTabBar & {
+type Props = LocalJSX.IonTabBar & IonicReactProps & {
   onIonTabsDidChange?: (event: CustomEvent<{ tab: string }>) => void;
   onIonTabsWillChange?: (event: CustomEvent<{ tab: string }>) => void;
   currentPath?: string;
