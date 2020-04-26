@@ -50,4 +50,4 @@ addIcons({
 
 // TODO: defineCustomElements() is asyncronous
 // We need to use the promise
-defineCustomElements(window);
+defineCustomElements();
