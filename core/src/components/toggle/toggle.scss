@@ -11,6 +11,7 @@
    *
    * @prop --handle-background: Background of the toggle handle
    * @prop --handle-background-checked: Background of the toggle handle when checked
+   *
    * @prop --handle-border-radius: Border radius of the toggle handle
    * @prop --handle-box-shadow: Box shadow of the toggle handle
    * @prop --handle-height: Height of the toggle handle
@@ -96,6 +97,7 @@ button {
   transition: var(--handle-transition);
 
   background: var(--handle-background);
+
   box-shadow: var(--handle-box-shadow);
 
   contain: strict;
