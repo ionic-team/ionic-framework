@@ -79,7 +79,10 @@ export class Router implements ComponentInterface {
 
   @Listen('ionBackButton', { target: 'document' })
   protected onBackButton(ev: BackButtonEvent) {
-    ev.detail.register(0, () => this.back());
+    ev.detail.register(0, processNextHandler => {
+      this.back();
+      processNextHandler();
+    });
   }
 
   /**
