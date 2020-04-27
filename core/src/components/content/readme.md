@@ -186,12 +186,10 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part                  | Description                                                                             |
-| --------------------- | --------------------------------------------------------------------------------------- |
-| `"background"`        | The background of the content.                                                          |
-| `"scroll"`            | The scrollable container of the content.                                                |
-| `"transition-cover"`  | The backdrop that appears when transitioning to another page. Only applies in iOS mode. |
-| `"transition-shadow"` | The shadow that appears when transitioning to another page. Only applies in iOS mode.   |
+| Part           | Description                              |
+| -------------- | ---------------------------------------- |
+| `"background"` | The background of the content.           |
+| `"scroll"`     | The scrollable container of the content. |
 
 
 ## CSS Custom Properties

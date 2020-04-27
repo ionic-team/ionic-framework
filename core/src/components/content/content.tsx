@@ -12,8 +12,6 @@ import { createColorClasses, hostContext } from '../../utils/theme';
  *
  * @part background - The background of the content.
  * @part scroll - The scrollable container of the content.
- * @part transition-cover - The backdrop that appears when transitioning to another page. Only applies in iOS mode.
- * @part transition-shadow - The shadow that appears when transitioning to another page. Only applies in iOS mode.
  */
 @Component({
   tag: 'ion-content',
@@ -343,8 +341,8 @@ export class Content implements ComponentInterface {
 
         {transitionShadow ? (
           <div class="transition-effect">
-            <div class="transition-cover" part="transition-cover"></div>
-            <div class="transition-shadow" part="transition-shadow"></div>
+            <div class="transition-cover"></div>
+            <div class="transition-shadow"></div>
           </div>
         ) : null}
 
