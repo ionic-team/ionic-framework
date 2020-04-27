@@ -528,6 +528,7 @@ ion-item,css-prop,--padding-start
 ion-item,css-prop,--padding-top
 ion-item,css-prop,--ripple-color
 ion-item,css-prop,--transition
+ion-item,part,detail-icon
 
 ion-item-divider,shadow
 ion-item-divider,prop,color,string | undefined,undefined,false,false
