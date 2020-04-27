@@ -98,8 +98,8 @@
               break;
             case "button":
               innerHTML = `
-                <ion-button role="destructive" color="danger">Destroy</ion-button>
-                <ion-button role="cancel">Cancel</ion-input>
+                <ion-button color="danger">Destroy</ion-button>
+                <ion-button>Cancel</ion-input>
               `;
               break;
             default:
@@ -114,8 +114,8 @@
         const actionSheet = await actionSheetController.create({
           header: "Action Sheet",
           buttons: [
-            { text: "Delete", role: "destructive" },
-            { text: "Cancel", role: "cancel" }
+            { text: "Delete" },
+            { text: "Cancel" }
           ]
         });
 
@@ -141,8 +141,8 @@
       const openPicker = async () => {
         const picker = await pickerController.create({
           buttons: [
-            { text: 'Destroy', role: 'destructive' },
-            { text: 'Cancel', role: 'cancel' }
+            { text: 'Destroy' },
+            { text: 'Cancel' }
           ]
         });
 

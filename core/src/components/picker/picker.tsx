@@ -244,7 +244,6 @@ export class Picker implements ComponentInterface, OverlayInterface {
                   type="button"
                   onClick={() => this.buttonClick(b)}
                   class={buttonClass(b)}
-                  role={b.role}
                 >
                   {b.text}
                 </button>

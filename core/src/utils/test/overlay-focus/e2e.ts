@@ -28,7 +28,7 @@ test('overlay: focus:modal', async () => {
   await ionModalDidPresent.next();
   const activeElButton = await getActiveElement(page);
   expect(activeElButton.tagName).toEqual('ION-BUTTON');
-  expect(activeElButton.role).toEqual('cancel');
+  expect(activeElButton.text).toEqual('Close');
 });
 
 test('overlay: focus:action-sheet', async () => {
@@ -41,7 +41,7 @@ test('overlay: focus:action-sheet', async () => {
   await ionActionSheetDidPresent.next();
   const activeEl = await getActiveElement(page);
   expect(activeEl.tagName).toEqual('BUTTON');
-  expect(activeEl.role).toEqual('cancel');
+  expect(activeEl.text).toEqual('Delete');
 });
 
 test('overlay: focus:popover', async () => {
@@ -79,7 +79,7 @@ test('overlay: focus:picker', async () => {
   await ionPickerDidPresent.next();
   const activeEl = await getActiveElement(page);
   expect(activeEl.tagName).toEqual('BUTTON');
-  expect(activeEl.role).toEqual('cancel');
+  expect(activeEl.text).toEqual('Destroy');
 });
 
 test('overlay: focus:toast', async () => {
@@ -100,7 +100,7 @@ test('overlay: focus:toast', async () => {
 const getActiveElement = async (page: E2EPage) => {
   const el = await page.evaluateHandle(() => {
     const { tagName, id } = document.activeElement;
-    return { tagName, id, role: document.activeElement.getAttribute('role') };
+    return { tagName, id, text: document.activeElement.textContent };
   });
   return await el.jsonValue();
 }
@@ -109,7 +109,7 @@ const getShadowRootActiveElement = async (page: E2EPage, selector: string) => {
   const el = await page.evaluateHandle((selector: string) => {
     const el = document.querySelector(selector);
     const { tagName, id } = el.shadowRoot.activeElement;
-    return { tagName, id, role: el.shadowRoot.activeElement.getAttribute('role') };
+    return { tagName, id, text: el.shadowRoot.activeElement.textContent };
   }, selector);
   return await el.jsonValue();
 }

@@ -60,19 +60,16 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
 const focusFirstFocusableElement = async (ref: HTMLElement) => {
   /**
    * 1. Prioritize all inputs and selects to focus first.
-   * 2. If there are none, look for any buttons that have role="cancel".
-   * 3. If there are none, look for any buttons, regardless of role.
-   * 4. If there are none, focus the reference element.
+   * 2. If there are none, look for any buttons.
+   * 3. If there are none, focus the reference element.
    */
   const refRoot = ref.shadowRoot || ref;
   const firstInput = (
     refRoot.querySelector('ion-input, ion-textarea, input:not([type="hidden"]), textarea, select, [contenteditable]') ||
-    refRoot.querySelector('ion-button[role="cancel"], button[role="cancel"]') ||
     refRoot.querySelector('ion-button, button')
   ) as HTMLElement | null;
 
   if (!firstInput) {
-    console.log('focus toast');
     ref.focus();
     return ;
   }
