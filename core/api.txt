@@ -302,6 +302,8 @@ ion-content,css-prop,--padding-bottom
 ion-content,css-prop,--padding-end
 ion-content,css-prop,--padding-start
 ion-content,css-prop,--padding-top
+ion-content,part,background
+ion-content,part,scroll
 
 ion-datetime,shadow
 ion-datetime,prop,cancelText,string,'Cancel',false,false
