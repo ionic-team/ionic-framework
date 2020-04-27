@@ -97,18 +97,17 @@
   width: calc(var(--handle-width) + 6px);
 }
 
+
 // iOS Toggle Inner Knob: Activated and Checked
 // ----------------------------------------------------------
 
-:host(.toggle-activated.toggle-checked) .toggle-inner {
-  // when pressing down on the toggle and IS checked
-  // make the knob wider and move it left a bit
-  @include position-horizontal(calc(var(--handle-width) - 6px), null);
+// when pressing down on the toggle and it IS checked
+// the knob is wider so move it left by 6px in the transform
+:host(.toggle-activated.toggle-checked) .toggle-icon-wrapper {
+  // transform by 100% - handle width - 6px (width addition on activated) - spacing amount
+  transform: translate3d(calc(100% - var(--handle-width) - 6px - (#{$toggle-ios-border-width} * 2)), 0, 0);
 }
 
-:host(.toggle-activated.toggle-checked) .toggle-icon-wrapper {
-  transform: translate3d(calc((-#{$toggle-ios-border-width} / 2) - 6px), 0, 0);
-}
 
 // iOS Toggle: Disabled
 // ----------------------------------------------------------
