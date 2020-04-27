@@ -7,6 +7,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part container - The container for the checkbox mark.
+ * @part mark - The checkmark used to indicate the checked state.
  */
 @Component({
   tag: 'ion-checkbox',
@@ -136,13 +139,13 @@ export class Checkbox implements ComponentInterface {
     renderHiddenInput(true, el, this.name, (checked ? value : ''), disabled);
 
     let path = indeterminate
-      ? <path d="M6 12L18 12"/>
-      : <path d="M5.9,12.5l3.8,3.8l8.8-8.8" />;
+      ? <path d="M6 12L18 12" part="mark" />
+      : <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />;
 
     if (mode === 'md') {
       path = indeterminate
-        ? <path d="M2 12H22"/>
-        : <path d="M1.73,12.91 8.1,19.28 22.79,4.59"/>;
+        ? <path d="M2 12H22" part="mark" />
+        : <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />;
     }
 
     return (
@@ -162,7 +165,7 @@ export class Checkbox implements ComponentInterface {
           'interactive': true
         }}
       >
-        <svg class="checkbox-icon" viewBox="0 0 24 24">
+        <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}
         </svg>
         <button

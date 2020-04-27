@@ -184,6 +184,14 @@ Type: `Promise<void>`
 | `"fixed"` | Should be used for fixed content that should not scroll.             |
 
 
+## Shadow Parts
+
+| Part           | Description                              |
+| -------------- | ---------------------------------------- |
+| `"background"` | The background of the content.           |
+| `"scroll"`     | The scrollable container of the content. |
+
+
 ## CSS Custom Properties
 
 | Name                | Description                                                                                                |

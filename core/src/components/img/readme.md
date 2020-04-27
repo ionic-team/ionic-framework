@@ -85,6 +85,13 @@ export const ImgExample: React.FC = () => (
 | `ionImgWillLoad` | Emitted when the img src has been set       | `CustomEvent<void>` |
 
 
+## Shadow Parts
+
+| Part      | Description              |
+| --------- | ------------------------ |
+| `"image"` | The inner `img` element. |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

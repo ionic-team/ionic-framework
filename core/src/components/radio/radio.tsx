@@ -7,6 +7,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part container - The container for the radio mark.
+ * @part mark - The checkmark or dot used to indicate the checked state.
  */
 @Component({
   tag: 'ion-radio',
@@ -136,8 +139,8 @@ export class Radio implements ComponentInterface {
           'radio-disabled': disabled,
         }}
       >
-        <div class="radio-icon">
-          <div class="radio-inner"/>
+        <div class="radio-icon" part="container">
+          <div class="radio-inner" part="mark" />
         </div>
         <button
           type="button"

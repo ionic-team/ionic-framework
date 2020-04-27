@@ -6,6 +6,7 @@ export { mdTransitionAnimation } from './utils/transition/md.transition';
 export { getTimeGivenProgression } from './utils/animation/cubic-bezier';
 export { createGesture } from './utils/gesture';
 export { isPlatform, Platforms, getPlatforms } from './utils/platform';
+export { IonicSafeString } from './utils/sanitization';
 
 export * from './utils/config';
 export * from './components/nav/constants';

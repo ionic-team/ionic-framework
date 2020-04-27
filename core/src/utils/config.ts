@@ -41,6 +41,11 @@ export interface IonicConfig {
   backButtonText?: string;
 
   /**
+   * Overrides the default defaultHref in all `<ion-back-button>` components.
+   */
+  backButtonDefaultHref?: string;
+
+  /**
    * Overrides the default icon in all `<ion-menu-button>` components.
    */
   menuIcon?: string;
@@ -169,6 +174,11 @@ export interface IonicConfig {
    * EXPERIMENTAL: Adds a page shadow to transitioning pages on iOS. Disabled by default.
    */
   experimentalTransitionShadow?: boolean;
+
+  /**
+   * If `true`, Ionic will enable a basic DOM sanitizer on component properties that accept custom HTML.
+   */
+  sanitizerEnabled?: boolean;
 
   // PRIVATE configs
   keyboardHeight?: number;

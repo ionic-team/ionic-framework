@@ -37,7 +37,10 @@ export default class Router extends VueRouter {
 
     // Listen to Ionic's back button event
     document.addEventListener('ionBackButton', (e: Event) => {
-      (e as BackButtonEvent).detail.register(0, () => this.back());
+      (e as BackButtonEvent).detail.register(0, processNextHandler => {
+        this.back();
+        processNextHandler();
+      });
     });
   }
 

@@ -53,6 +53,13 @@
         <ion-label>button[ion-item] danger</ion-label>
       </ion-item>
 
+      <ion-item button detail class="item-part">
+        <ion-label>
+          <h1>button[ion-item] detail</h1>
+          <h2>Footnote</h2>
+        </ion-label>
+      </ion-item>
+
       <ion-item button onclick="testClickOutsize(event)">
         <ion-button slot="start" onclick="testClick(event)">Default</ion-button>
         <ion-label>Inner Buttons</ion-label>
@@ -158,6 +165,27 @@
       --background-hover: green;
       --background-hover-opacity: 1;
       --color-hover: purple;
+    }
+
+    .item-part h1 {
+      font-size: 18px;
+      font-weight: 500;
+
+      color: #333;
+    }
+
+    .item-part h2 {
+      font-size: 14px;
+
+      color: #888;
+    }
+
+    .item-part::part(detail-icon) {
+      margin-top: -18px;
+
+      color: red;
+
+      opacity: 1;
     }
   </style>
 

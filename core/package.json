@@ -55,7 +55,7 @@
     "sass": "^1.22.9",
     "stylelint": "10.1.0",
     "stylelint-order": "3.0.1",
-    "swiper": "5.3.6",
+    "swiper": "5.3.7",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.21",
     "tslint-react": "^3.6.0"

@@ -223,6 +223,14 @@ export const ToggleExamples: React.FC = () => {
 | `ionFocus`  | Emitted when the toggle has focus.           | `CustomEvent<void>`                    |
 
 
+## Shadow Parts
+
+| Part       | Description                                                   |
+| ---------- | ------------------------------------------------------------- |
+| `"handle"` | The toggle handle, or knob, used to change the checked state. |
+| `"track"`  | The background track of the toggle.                           |
+
+
 ## CSS Custom Properties
 
 | Name                          | Description                                  |

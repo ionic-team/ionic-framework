@@ -10,7 +10,45 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <style>
+    .range-part::part(bar) {
+      background: red;
+    }
 
+    .range-part::part(tick) {
+      background: purple;
+    }
+
+    .range-part::part(bar-active) {
+      background: green;
+    }
+
+    .range-part::part(tick-active) {
+      background: orange;
+    }
+
+    .range-part::part(knob) {
+      background: hotpink;
+    }
+
+    .ios.range-part::part(pin) {
+      background: orange;
+
+      top: -13px;
+
+      height: 20px;
+
+      line-height: 4px;
+      border-radius: 4px;
+
+      transform: translate(0, 0, 0);
+    }
+
+    .md.range-part::part(pin),
+    .md.range-part::part(pin)::before {
+      background: orange;
+    }
+  </style>
 <body>
   <ion-app>
 
@@ -97,6 +135,9 @@
             Options
           </ion-label>
         </ion-list-header>
+        <ion-item>
+          <ion-range class="range-part" min="-200" max="200" step="10" snaps="true" pin="true" dual-knobs="true"></ion-range>
+        </ion-item>
         <ion-item>
           <ion-range pin="true"></ion-range>
         </ion-item>
@@ -216,6 +257,12 @@
     maxRange.addEventListener('ionChange', function(ev) {
       targetRange.max = ev.detail.value;
     })
+
+    const rangePart = document.querySelector('.range-part');
+    rangePart.value = {
+      lower: '-100',
+      upper: '100'
+    }
   </script>
 </body>
 

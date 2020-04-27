@@ -4,7 +4,7 @@ import { BackButtonEventDetail, Platforms, getPlatforms, isPlatform } from '@ion
 import { Subject, Subscription } from 'rxjs';
 
 export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
-  subscribeWithPriority(priority: number, callback: () => Promise<any> | void): Subscription;
+  subscribeWithPriority(priority: number, callback: (processNextHandler: () => void) => Promise<any> | void): Subscription;
 }
 
 @Injectable({
@@ -46,9 +46,9 @@ export class Platform {
     zone.run(() => {
       this.win = doc.defaultView;
       this.backButton.subscribeWithPriority = function(priority, callback) {
-        return this.subscribe(ev => (
-          ev.register(priority, () => zone.run(callback))
-        ));
+        return this.subscribe(ev => {
+          return ev.register(priority, processNextHandler => zone.run(() => callback(processNextHandler)));
+        });
       };
 
       proxyEvent(this.pause, doc, 'pause');
