@@ -191,6 +191,7 @@ AFTER:
       gestureName: 'menu-swipe',
       gesturePriority: 30,
       threshold: 10,
+      blurOnStart: true,
       canStart: ev => this.canStart(ev),
       onWillStart: () => this.onWillStart(),
       onStart: () => this.onStart(),
