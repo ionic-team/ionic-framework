@@ -224,6 +224,14 @@ export const CheckboxExamples: React.FC = () => {
 | `ionFocus`  | Emitted when the toggle has focus.             | `CustomEvent<void>`                      |
 
 
+## Shadow Parts
+
+| Part          | Description                                       |
+| ------------- | ------------------------------------------------- |
+| `"container"` | The container for the checkbox mark.              |
+| `"mark"`      | The checkmark used to indicate the checked state. |
+
+
 ## CSS Custom Properties
 
 | Name                     | Description                                    |

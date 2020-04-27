@@ -50,6 +50,11 @@ export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): 
     const leavingPage = createAnimation();
     leavingPage
       .addElement(getIonPageElement(leavingEl))
+      .onFinish(currentStep => {
+        if (currentStep === 1 && leavingPage.elements.length > 0) {
+          leavingPage.elements[0].style.setProperty('display', 'none');
+        }
+      })
       .afterStyles({ 'display': 'none' })
       .fromTo('transform', `translateY(${CENTER})`, `translateY(${OFF_BOTTOM})`)
       .fromTo('opacity', 1, 0);

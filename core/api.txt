@@ -235,6 +235,8 @@ ion-checkbox,css-prop,--checkmark-color
 ion-checkbox,css-prop,--checkmark-width
 ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
+ion-checkbox,part,container
+ion-checkbox,part,mark
 
 ion-chip,shadow
 ion-chip,prop,color,string | undefined,undefined,false,false
@@ -335,6 +337,8 @@ ion-datetime,css-prop,--padding-end
 ion-datetime,css-prop,--padding-start
 ion-datetime,css-prop,--padding-top
 ion-datetime,css-prop,--placeholder-color
+ion-datetime,part,placeholder
+ion-datetime,part,text
 
 ion-fab,shadow
 ion-fab,prop,activated,boolean,false,false,false
@@ -416,6 +420,7 @@ ion-img,prop,src,string | undefined,undefined,false,false
 ion-img,event,ionError,void,true
 ion-img,event,ionImgDidLoad,void,true
 ion-img,event,ionImgWillLoad,void,true
+ion-img,part,image
 
 ion-infinite-scroll,none
 ion-infinite-scroll,prop,disabled,boolean,false,false,false
@@ -439,6 +444,7 @@ ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
 ion-input,prop,color,string | undefined,undefined,false,false
 ion-input,prop,debounce,number,0,false,false
 ion-input,prop,disabled,boolean,false,false,false
+ion-input,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-input,prop,max,string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
@@ -645,6 +651,8 @@ ion-menu,css-prop,--max-width
 ion-menu,css-prop,--min-height
 ion-menu,css-prop,--min-width
 ion-menu,css-prop,--width
+ion-menu,part,backdrop
+ion-menu,part,container
 
 ion-menu-button,shadow
 ion-menu-button,prop,autoHide,boolean,true,false,false
@@ -825,6 +833,8 @@ ion-radio,css-prop,--border-radius
 ion-radio,css-prop,--color
 ion-radio,css-prop,--color-checked
 ion-radio,css-prop,--inner-border-radius
+ion-radio,part,container
+ion-radio,part,mark
 
 ion-radio-group,none
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
@@ -860,6 +870,12 @@ ion-range,css-prop,--knob-box-shadow
 ion-range,css-prop,--knob-size
 ion-range,css-prop,--pin-background
 ion-range,css-prop,--pin-color
+ion-range,part,bar
+ion-range,part,bar-active
+ion-range,part,knob
+ion-range,part,pin
+ion-range,part,tick
+ion-range,part,tick-active
 
 ion-refresher,none
 ion-refresher,prop,closeDuration,string,'280ms',false,false
@@ -882,6 +898,7 @@ ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" 
 ion-refresher-content,prop,refreshingText,string | undefined,undefined,false,false
 
 ion-reorder,shadow
+ion-reorder,part,icon
 
 ion-reorder-group,none
 ion-reorder-group,prop,disabled,boolean,true,false,false
@@ -937,6 +954,7 @@ ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,string | undefined,undefined,false,false
 ion-searchbar,prop,debounce,number,250,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
+ion-searchbar,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
@@ -1033,6 +1051,9 @@ ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
 ion-select,css-prop,--placeholder-color
 ion-select,css-prop,--placeholder-opacity
+ion-select,part,icon
+ion-select,part,placeholder
+ion-select,part,text
 
 ion-select-option,shadow
 ion-select-option,prop,disabled,boolean,false,false,false
@@ -1163,6 +1184,8 @@ ion-textarea,prop,color,string | undefined,undefined,false,false
 ion-textarea,prop,cols,number | undefined,undefined,false,false
 ion-textarea,prop,debounce,number,0,false,false
 ion-textarea,prop,disabled,boolean,false,false,false
+ion-textarea,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
+ion-textarea,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-textarea,prop,maxlength,number | undefined,undefined,false,false
 ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false
@@ -1257,6 +1280,8 @@ ion-toggle,css-prop,--border-radius
 ion-toggle,css-prop,--handle-background
 ion-toggle,css-prop,--handle-background-checked
 ion-toggle,css-prop,--handle-border-radius
+ion-toggle,part,handle
+ion-toggle,part,track
 
 ion-toolbar,shadow
 ion-toolbar,prop,color,string | undefined,undefined,false,false

@@ -137,6 +137,14 @@ export const RadioExamples: React.FC = () => {
 | `ionFocus` | Emitted when the radio button has focus.   | `CustomEvent<void>` |
 
 
+## Shadow Parts
+
+| Part          | Description                                              |
+| ------------- | -------------------------------------------------------- |
+| `"container"` | The container for the radio mark.                        |
+| `"mark"`      | The checkmark or dot used to indicate the checked state. |
+
+
 ## CSS Custom Properties
 
 | Name                    | Description                              |

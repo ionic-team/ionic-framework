@@ -196,7 +196,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
         <div class="loading-wrapper" role="dialog">
           {spinner && (
             <div class="loading-spinner">
-              <ion-spinner name={spinner} />
+              <ion-spinner name={spinner} aria-hidden="true" />
             </div>
           )}
 

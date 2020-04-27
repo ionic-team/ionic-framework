@@ -27,6 +27,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
   const onMove = finalConfig.onMove;
   const threshold = finalConfig.threshold;
   const passive = finalConfig.passive;
+  const blurOnStart = finalConfig.blurOnStart;
 
   const detail = {
     type: 'pan',
@@ -142,7 +143,20 @@ export const createGesture = (config: GestureConfig): Gesture => {
     return true;
   };
 
+  const blurActiveElement = () => {
+    /* tslint:disable-next-line */
+    if (typeof document !== 'undefined') {
+      const activeElement = document.activeElement as HTMLElement | null;
+      if (activeElement !== null && activeElement.blur) {
+        activeElement.blur();
+      }
+    }
+  };
+
   const fireOnStart = () => {
+    if (blurOnStart) {
+      blurActiveElement();
+    }
     if (onStart) {
       onStart(detail);
     }
@@ -303,6 +317,7 @@ export interface GestureConfig {
   passive?: boolean;
   maxAngle?: number;
   threshold?: number;
+  blurOnStart?: boolean;
 
   canStart?: GestureCallback;
   onWillStart?: (_: GestureDetail) => Promise<void>;

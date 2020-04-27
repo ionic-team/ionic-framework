@@ -24,7 +24,7 @@
 
 <body>
   <ion-app>
-    <ion-menu side="start" menu-id="first" id="start-menu" content-id="main">
+    <ion-menu side="start" menu-id="first" id="start-menu" content-id="main" class="menu-part">
       <ion-header>
         <ion-toolbar color="primary">
           <ion-title>Start Menu</ion-title>
@@ -93,6 +93,16 @@
   <style>
     .my-custom-menu {
       --width: 500px;
+    }
+
+    .menu-part::part(backdrop) {
+      background-color: rgba(255, 0, 255, 0.5);
+    }
+
+    .menu-part::part(container) {
+      border-radius: 0 20px 20px 0;
+
+      box-shadow: 4px 0px 16px rgba(255, 0, 255, 0.18);
     }
   </style>
 

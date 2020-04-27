@@ -10,7 +10,12 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <style>
+    ion-checkbox.checkbox-part::part(mark) {
+      transform: scale(.5);
+      transform-origin: center;
+    }
+  </style>
 <body>
   <ion-app>
 
@@ -79,6 +84,11 @@
       <ion-item>
         <ion-label>Checkmark width</ion-label>
         <ion-checkbox checked color="dark" slot="start" style="--checkmark-width: 7;"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Checkmark ::part</ion-label>
+        <ion-checkbox checked color="dark" slot="start" class="checkbox-part"></ion-checkbox>
       </ion-item>
 
       <ion-item>
