@@ -175,6 +175,11 @@ export interface IonicConfig {
    */
   experimentalTransitionShadow?: boolean;
 
+  /**
+   * If `true`, Ionic will enable a basic DOM sanitizer on component properties that accept custom HTML.
+   */
+  sanitizerEnabled?: boolean;
+
   // PRIVATE configs
   keyboardHeight?: number;
   inputShims?: boolean;

@@ -53,7 +53,7 @@ ion-alert,prop,header,string | undefined,undefined,false,false
 ion-alert,prop,inputs,AlertInput[],[],false,false
 ion-alert,prop,keyboardClose,boolean,true,false,false
 ion-alert,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-alert,prop,message,string | undefined,undefined,false,false
+ion-alert,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-alert,prop,mode,"ios" | "md",undefined,false,false
 ion-alert,prop,subHeader,string | undefined,undefined,false,false
 ion-alert,prop,translucent,boolean,false,false,false
@@ -433,7 +433,7 @@ ion-infinite-scroll,event,ionInfinite,void,true
 
 ion-infinite-scroll-content,none
 ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
-ion-infinite-scroll-content,prop,loadingText,string | undefined,undefined,false,false
+ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefined,undefined,false,false
 
 ion-input,scoped
 ion-input,prop,accept,string | undefined,undefined,false,false
@@ -606,7 +606,7 @@ ion-loading,prop,duration,number,0,false,false
 ion-loading,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-loading,prop,keyboardClose,boolean,true,false,false
 ion-loading,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-loading,prop,message,string | undefined,undefined,false,false
+ion-loading,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-loading,prop,mode,"ios" | "md",undefined,false,false
 ion-loading,prop,showBackdrop,boolean,true,false,false
 ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
@@ -896,9 +896,9 @@ ion-refresher,event,ionStart,void,true
 
 ion-refresher-content,none
 ion-refresher-content,prop,pullingIcon,null | string | undefined,undefined,false,false
-ion-refresher-content,prop,pullingText,string | undefined,undefined,false,false
+ion-refresher-content,prop,pullingText,IonicSafeString | string | undefined,undefined,false,false
 ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
-ion-refresher-content,prop,refreshingText,string | undefined,undefined,false,false
+ion-refresher-content,prop,refreshingText,IonicSafeString | string | undefined,undefined,false,false
 
 ion-reorder,shadow
 ion-reorder,part,icon
@@ -1237,7 +1237,7 @@ ion-toast,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-toast,prop,header,string | undefined,undefined,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
 ion-toast,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-toast,prop,message,string | undefined,undefined,false,false
+ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,translucent,boolean,false,false,false

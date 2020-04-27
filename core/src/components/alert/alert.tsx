@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, forceUpdate, h } from '@stencil/core';
 
+import { IonicSafeString } from '../../';
 import { getIonMode } from '../../global/ionic-global';
 import { AlertButton, AlertInput, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
@@ -76,7 +77,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
    *
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
-  @Prop() message?: string;
+  @Prop() message?: string | IonicSafeString;
 
   /**
    * Array of buttons to be added to the alert.

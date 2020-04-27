@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
+import { IonicSafeString } from '../../';
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
@@ -51,7 +52,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   /**
    * Optional text content to display in the loading indicator.
    */
-  @Prop() message?: string;
+  @Prop() message?: string | IonicSafeString;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
