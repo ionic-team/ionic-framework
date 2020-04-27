@@ -97,7 +97,6 @@
   width: calc(var(--handle-width) + 6px);
 }
 
-
 // iOS Toggle Inner Knob: Activated and Checked
 // ----------------------------------------------------------
 
@@ -107,6 +106,9 @@
   @include position-horizontal(calc(var(--handle-width) - 6px), null);
 }
 
+:host(.toggle-activated.toggle-checked) .toggle-icon-wrapper {
+  transform: translate3d(calc((-#{$toggle-ios-border-width} / 2) - 6px), 0, 0);
+}
 
 // iOS Toggle: Disabled
 // ----------------------------------------------------------
