@@ -241,7 +241,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                 <button
                   type="button"
                   class={buttonClass(cancelButton)}
-                  role="cancel"
                   onClick={() => this.buttonClick(cancelButton)}
                 >
                   <span class="action-sheet-button-inner">
