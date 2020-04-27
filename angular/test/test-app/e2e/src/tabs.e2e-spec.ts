@@ -227,7 +227,7 @@ describe('tabs', () => {
       await waitTime(30);
     });
 
-    fit('should only display the back-button when there is a page in the stack', async () => {
+    it('should only display the back-button when there is a page in the stack', async () => {
       let tab = await testTabTitle('Tab 1 - Page 2 (1)') as ElementFinder;
       await testStack('ion-tabs ion-router-outlet', ['app-tabs-tab1-nested']);
       expect(await tab.$('ion-back-button').isDisplayed()).toBe(false);
