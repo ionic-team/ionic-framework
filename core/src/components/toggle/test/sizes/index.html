@@ -58,9 +58,12 @@
         <ion-button onClick="toggleDynamic()">Toggle Dynamic Sizes</ion-button>
       </p>
 
-      <h1>Entirely Custom</h1>
+      <h1>Complex Custom Toggles</h1>
       <ion-toggle mode="ios" class="all-custom"></ion-toggle>
       <ion-toggle mode="ios" checked class="all-custom"></ion-toggle>
+
+      <ion-toggle class="custom-overflow"></ion-toggle>
+      <ion-toggle checked class="custom-overflow"></ion-toggle>
     </ion-content>
 
   </ion-app>
@@ -134,6 +137,12 @@
       --handle-box-shadow: 0 3px 12px rgba(0, 0, 0, .16), 0 3px 1px rgba(0, 0, 0, .1);
     }
 
+    .custom-overflow {
+      --background-checked: #d6ffd6;
+
+      --handle-box-shadow: 0 3px 12px rgba(255, 0, 0, 0.6), 0 3px 1px rgba(50, 70, 255, 0.6);
+      --handle-overflow: visible;
+    }
   </style>
 
   <script>

@@ -16,6 +16,7 @@
   --handle-max-height: #{$toggle-ios-handle-max-height};
   --handle-width: #{$toggle-ios-handle-width};
   --handle-transition: #{$toggle-ios-transition};
+  --handle-overflow: hidden;
 
   width: $toggle-ios-width;
   height: $toggle-ios-height;
@@ -37,8 +38,6 @@
   transform: translate3d(0, 0, 0);
 
   transition: background-color $toggle-ios-transition-duration;
-
-  overflow: hidden;
 }
 
 

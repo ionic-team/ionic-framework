@@ -17,10 +17,11 @@
    * @prop --handle-height: Height of the toggle handle
    * @prop --handle-max-height: Maximum height of the toggle handle
    * @prop --handle-width: Width of the toggle handle
+   * @prop --handle-overflow: Overflow of the toggle handle
    * @prop --handle-transition: Transition of the toggle handle
    */
 
-  /* stylelint-disable-next-line declaration-no-important */
+   /* stylelint-disable-next-line declaration-no-important */
   box-sizing: content-box !important;
 
   display: inline-block;
@@ -78,6 +79,8 @@ button {
   background: var(--background);
 
   pointer-events: none;
+
+  overflow: var(--handle-overflow);
 }
 
 
