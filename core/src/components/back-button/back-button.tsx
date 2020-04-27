@@ -31,7 +31,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   /**
    * The url to navigate back to by default when there is no history.
    */
-  @Prop() defaultHref?: string;
+  @Prop({ mutable: true }) defaultHref?: string;
 
   /**
    * If `true`, the user cannot interact with the button.
@@ -52,6 +52,12 @@ export class BackButton implements ComponentInterface, ButtonInterface {
    * The type of the button.
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+
+  componentWillLoad() {
+    if (this.defaultHref === undefined) {
+      this.defaultHref = config.get('backButtonDefaultHref');
+    }
+  }
 
   get backButtonIcon() {
     const icon = this.icon;
