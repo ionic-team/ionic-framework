@@ -2,6 +2,7 @@
 import React from 'react';
 import { IonContent, IonRefresher, IonRefresherContent } from '@ionic/react';
 import { RefresherEventDetail } from '@ionic/core';
+import { chevronDownCircleOutline } from 'ionicons/icons';
 
 function doRefresh(event: CustomEvent<RefresherEventDetail>) {
   console.log('Begin async operation');
@@ -32,7 +33,7 @@ export const RefresherExample: React.FC = () => (
     <IonContent>
       <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
         <IonRefresherContent
-          pullingIcon="arrow-dropdown"
+          pullingIcon={chevronDownCircleOutline}
           pullingText="Pull to refresh"
           refreshingSpinner="circles"
           refreshingText="Refreshing...">
