@@ -7,4 +7,6 @@ export interface ViewItem<T = any> {
   ionRoute?: boolean;
   mount: boolean;
   routeData?: T;
+  destroy?: () => void;
+  transitionHtml?: string;
 }

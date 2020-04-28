@@ -25,51 +25,27 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
 
   constructor(props: StackManagerProps) {
     super(props);
-
-    this.setupFirstPage = this.setupFirstPage.bind(this);
     this.registerIonPage = this.registerIonPage.bind(this);
     this.transitionPage = this.transitionPage.bind(this);
-
     this.state = {};
-
   }
 
   componentDidMount() {
     if (this.routerOutletElement) {
-      this.routerContextSubscriptions.push(
-        this.context.onExitViewFromOtherOutlet(this.exitViewFromOtherOutlet.bind(this))
-      );
+      console.log('SM Mount - ' + this.routerOutletElement.id);
       this.routerContextSubscriptions.push(
         this.context.onRouteChange(this.handlePageTransition.bind(this))
       );
-      this.setupFirstPage();
     }
   }
 
   componentWillUnmount() {
+    console.log('SM UNMount - ' + (this.routerOutletElement?.id as any).id);
     this.routerContextSubscriptions.forEach(unsubscribe => unsubscribe());
   }
 
   shouldComponentUpdate() {
     return false;
-  }
-
-  exitViewFromOtherOutlet(pathname: string) {
-    const { viewItem } = findViewItemByRoute(this.viewItems, pathname);
-    if (viewItem) {
-
-      this.viewItems = this.viewItems.filter(v => {
-        const matchProps = {
-          exact: v.routeData.childProps.exact,
-          path: v.routeData.childProps.path || v.routeData.childProps.props.from,
-          component: v.routeData.childProps.component
-        };
-        const match = matchPath(this.props.routeInfo.pathname, matchProps);
-        return !!match;
-      });
-
-      this.forceUpdate();
-    }
   }
 
   async handlePageTransition(routeInfo: RouteInfo) {
@@ -148,21 +124,25 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
     return component;
   }
 
-  setupFirstPage() {
-    const { viewItem } = findViewItemByRoute(this.viewItems, this.props.routeInfo.pathname);
-    if (viewItem) {
-      this.handlePageTransition(this.props.routeInfo);
-    }
-  }
-
   async transitionPage(routeInfo: RouteInfo) {
 
     const { viewItem: enteringViewItem, match } = findViewItemByRoute(this.viewItems, routeInfo.pathname);
-    const { viewItem: leavingViewItem } = findViewItemByRoute(this.viewItems, routeInfo.lastPathname);
+    let { viewItem: leavingViewItem } = findViewItemByRoute(this.viewItems, routeInfo.lastPathname);
 
     if (!enteringViewItem || !enteringViewItem.ionPageElement) {
       if (enteringViewItem) {
+        // The ionPage hasn't been rendered yet, try again in a moment
         enteringViewItem.routeData.pendingTransition = true;
+      }
+      if (leavingViewItem && leavingViewItem.ionPageElement) {
+        // If we have a leaving view but not a entering view, the leaving view might be
+        // being transitioned out by another outlet, so grab its html before the page
+        // goes away
+        leavingViewItem.destroy = () => {
+          this.viewItems = this.viewItems.filter(x => x.id !== leavingViewItem!.id);
+          this.forceUpdate();
+        };
+        this.context.storeViewItemForTransition(routeInfo.lastPathname!, leavingViewItem);
       }
       return;
     }
@@ -170,10 +150,18 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
     enteringViewItem!.routeData.match = match;
 
     if (enteringViewItem.ionRoute) {
-
-      if (routeInfo.lastPathname && !leavingViewItem) {
+      if (routeInfo.lastPathname && (!leavingViewItem || !leavingViewItem.ionRoute)) {
         console.log('missing view ' + routeInfo.lastPathname);
-        this.context.exitViewFromOtherOutlet(routeInfo.lastPathname);
+        const viewFromOtherOutlet = this.context.getViewItemForTransition(routeInfo.lastPathname);
+        if (leavingViewItem) {
+          this.viewItems = this.viewItems.filter(x => x.id !== leavingViewItem!.id);
+        }
+        if (viewFromOtherOutlet) {
+          leavingViewItem = viewFromOtherOutlet;
+          if (leavingViewItem.destroy) {
+            leavingViewItem.destroy();
+          }
+        }
       }
 
       if (routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward') {
@@ -209,7 +197,6 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
         } else {
           await this.routerOutletElement.commit(enteringViewItem.ionPageElement, leavingViewItem?.ionPageElement, {
             deepWait: true,
-            // duration: 1500,
             duration: direction === undefined ? 0 : undefined,
             direction: direction as any,
             showGoBack: direction === 'forward',
