@@ -18,6 +18,7 @@
    * @prop --handle-max-height: Maximum height of the toggle handle
    * @prop --handle-width: Width of the toggle handle
    * @prop --handle-overflow: Overflow of the toggle handle
+   * @prop --handle-spacing: Horizontal spacing around the toggle handle.
    * @prop --handle-transition: Transition of the toggle handle
    */
 
@@ -84,10 +85,19 @@ button {
 }
 
 
+// Toggle Background Track: Checked
+// ----------------------------------------------------------
+
+:host(.toggle-checked) .toggle-icon {
+  background: var(--background-checked);
+}
+
+
 // Toggle Inner Knob: Unchecked
 // --------------------------------------------------
 
 .toggle-inner {
+  @include position(null, null, null, var(--handle-spacing));
   @include border-radius(var(--handle-border-radius));
 
   position: absolute;
@@ -104,4 +114,20 @@ button {
   box-shadow: var(--handle-box-shadow);
 
   contain: strict;
+}
+
+
+// Toggle Inner Knob: Checked
+// ----------------------------------------------------------
+
+:host(.toggle-checked) .toggle-icon-wrapper {
+  // transform by 100% - handle width
+  transform: translate3d(calc(100% - var(--handle-width)), 0, 0);
+}
+
+:host(.toggle-checked) .toggle-inner {
+  // transform by handle spacing amount
+  transform: translateX(calc(var(--handle-spacing) * -2));
+
+  background: var(--handle-background-checked);
 }

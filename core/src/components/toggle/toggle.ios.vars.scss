@@ -29,7 +29,7 @@ $toggle-ios-handle-width:              calc(#{$toggle-ios-height} - (#{$toggle-i
 $toggle-ios-handle-height:             $toggle-ios-handle-width !default;
 
 /// @prop - Max height of the toggle handle
-$toggle-ios-handle-max-height:         calc(100% - (#{$toggle-ios-border-width} * 2)) !default;
+$toggle-ios-handle-max-height:         calc(100% - (var(--handle-spacing) * 2)) !default;
 
 /// @prop - Border radius of the toggle handle
 $toggle-ios-handle-border-radius:      $toggle-ios-width / 2 !default;

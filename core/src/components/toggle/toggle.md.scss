@@ -15,6 +15,7 @@
   --handle-width: #{$toggle-md-handle-width};
   --handle-height: #{$toggle-md-handle-height};
   --handle-max-height: #{$toggle-md-handle-max-height};
+  --handle-spacing: 0;
   --handle-transition: #{$toggle-md-transition};
   --handle-overflow: visible;
 
@@ -47,26 +48,6 @@
 
 .toggle-inner {
   will-change: background-color;
-}
-
-
-// Material Design Toggle Background Track: Checked
-// ----------------------------------------------------------
-
-:host(.toggle-checked) .toggle-icon {
-  background: var(--background-checked);
-}
-
-// Material Design Toggle Inner Knob: Checked
-// ----------------------------------------------------------
-
-:host(.toggle-checked) .toggle-icon-wrapper {
-  // transform by 100% - toggle icon width
-  transform: translate3d(calc(100% - var(--handle-width)), 0, 0);
-}
-
-:host(.toggle-checked) .toggle-inner {
-  background: var(--handle-background-checked);
 }
 
 

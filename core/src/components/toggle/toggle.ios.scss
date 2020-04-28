@@ -15,6 +15,7 @@
   --handle-height: #{$toggle-ios-handle-height};
   --handle-max-height: #{$toggle-ios-handle-max-height};
   --handle-width: #{$toggle-ios-handle-width};
+  --handle-spacing: #{$toggle-ios-border-width};
   --handle-transition: #{$toggle-ios-transition};
   --handle-overflow: hidden;
 
@@ -45,17 +46,7 @@
 // ----------------------------------------------------------
 
 .toggle-inner {
-  @include position(null, null, null, $toggle-ios-border-width);
-
   will-change: transform;
-}
-
-
-// iOS Toggle Background Track: Checked
-// ----------------------------------------------------------
-
-:host(.toggle-checked) .toggle-icon {
-  background: var(--background-checked);
 }
 
 
@@ -65,19 +56,6 @@
 :host(.toggle-activated) .toggle-icon::before,
 :host(.toggle-checked) .toggle-icon::before {
   transform: scale3d(0, 0, 0);
-}
-
-
-// iOS Toggle Inner Knob: Checked
-// ----------------------------------------------------------
-
-:host(.toggle-checked) .toggle-icon-wrapper {
-  // transform by 100% - handle width - spacing amount
-  transform: translate3d(calc(100% - var(--handle-width) - (#{$toggle-ios-border-width} * 2)), 0, 0);
-}
-
-:host(.toggle-checked) .toggle-inner {
-  background: var(--handle-background-checked);
 }
 
 
@@ -103,8 +81,8 @@
 // when pressing down on the toggle and it IS checked
 // the knob is wider so move it left by 6px in the transform
 :host(.toggle-activated.toggle-checked) .toggle-icon-wrapper {
-  // transform by 100% - handle width - 6px (width addition on activated) - spacing amount
-  transform: translate3d(calc(100% - var(--handle-width) - 6px - (#{$toggle-ios-border-width} * 2)), 0, 0);
+  // transform by 100% - handle width - 6px (width addition on activated)
+  transform: translate3d(calc(100% - var(--handle-width) - 6px), 0, 0);
 }
 
 
