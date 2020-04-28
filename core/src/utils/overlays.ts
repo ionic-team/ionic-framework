@@ -57,40 +57,6 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
   });
 };
 
-const focusFirstFocusableElement = async (ref: HTMLElement) => {
-  /**
-   * 1. Prioritize all inputs and selects to focus first.
-   * 2. If there are none, look for any buttons.
-   * 3. If there are none, focus the reference element.
-   */
-  const refRoot = ref.shadowRoot || ref;
-  const firstInput = (
-    refRoot.querySelector('ion-input, ion-textarea, input:not([type="hidden"]), textarea, select, [contenteditable]') ||
-    refRoot.querySelector('ion-button, button')
-  ) as HTMLElement | null;
-
-  if (!firstInput) {
-    ref.focus();
-    return ;
-  }
-
-  if (firstInput.tagName.includes('ION-')) {
-
-    if ((firstInput as any).componentOnReady) {
-      await (firstInput as any).componentOnReady();
-    }
-
-    const root = firstInput.shadowRoot || firstInput;
-    const nativeEl = root.querySelector('input, textarea, button') as HTMLElement | null;
-
-    if (nativeEl) {
-      nativeEl.focus();
-    }
-  } else {
-    firstInput.focus();
-  }
-};
-
 export const connectListeners = (doc: Document) => {
   if (lastId === 0) {
     lastId = 1;
@@ -98,7 +64,7 @@ export const connectListeners = (doc: Document) => {
     doc.addEventListener('focusin', ev => {
       const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss && !isDescendant(lastOverlay, ev.target as HTMLElement)) {
-        focusFirstFocusableElement(lastOverlay);
+        lastOverlay.focus();
       }
     });
 
@@ -171,7 +137,7 @@ export const present = async (
     overlay.didPresent.emit();
   }
 
-  focusFirstFocusableElement(overlay.el);
+  overlay.el.focus();
 };
 
 export const dismiss = async (
