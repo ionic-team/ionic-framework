@@ -270,6 +270,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       <Host
         no-router
         aria-modal="true"
+        tabindex="-1"
         class={{
           [mode]: true,
           [`modal-card`]: this.presentingElement !== undefined && mode === 'ios',

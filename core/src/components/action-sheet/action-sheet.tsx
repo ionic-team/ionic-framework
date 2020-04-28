@@ -202,6 +202,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       <Host
         role="dialog"
         aria-modal="true"
+        tabindex="-1"
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}

@@ -139,6 +139,8 @@ export const present = async (
   if (completed) {
     overlay.didPresent.emit();
   }
+
+  overlay.el.focus();
 };
 
 export const dismiss = async (
