@@ -64,7 +64,10 @@ export const connectListeners = (doc: Document) => {
     doc.addEventListener('focusin', ev => {
       const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss && !isDescendant(lastOverlay, ev.target as HTMLElement)) {
-        lastOverlay.focus();
+        const firstInput = lastOverlay.querySelector('input,button') as HTMLElement | null;
+        if (firstInput) {
+          firstInput.focus();
+        }
       }
     });
 
