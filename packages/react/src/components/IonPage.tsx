@@ -40,7 +40,6 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
           {children}
         </PageManager>
       ) : (
-      // <div className={className ? `ion-page ${className}` : 'ion-page'} ref={this.ref} {...props}>
       <div className={className ? `ion-page ${className}` : 'ion-page'} {...props}>
         {children}
       </div>

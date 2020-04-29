@@ -13,6 +13,7 @@ import { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
+import { ReactRouterViewStack } from './ReactRouterViewStack';
 import StackManager from './StackManager';
 
 export interface LocationState { }
@@ -29,15 +30,22 @@ interface IonRouteState {
 class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
   currentPathname: string | undefined;
   currentTab?: string;
-  // exitViewFromOtherOutletHandlers: ((pathname: string) => ViewItem | undefined)[] = [];
+  exitViewFromOtherOutletHandlers: ((pathname: string) => ViewItem | undefined)[] = [];
   incomingRouteParams?: Partial<RouteInfo>;
   locationHistory = new LocationHistory();
   routeChangedHandlers: ((routeInfo: RouteInfo) => void)[] = [];
   routeInfo: RouteInfo;
+  viewStack = new ReactRouterViewStack();
   routeMangerContextState: RouteManagerContextState = {
     onRouteChange: this.registerRouteChangeHandler.bind(this),
-    storeViewItemForTransition: this.storeViewItemForTransition.bind(this),
-    getViewItemForTransition: this.getViewItemForTransition.bind(this)
+    getViewItemForTransition: this.viewStack.getViewItemForTransition,
+    getChildrenToRender: this.viewStack.getChildrenToRender,
+    createViewItem: this.viewStack.createViewItem,
+    findViewItemByPathname: this.viewStack.findViewItemByPathname,
+    findViewItemByRouteInfo: this.viewStack.findViewItemByRouteInfo,
+    findLeavingViewItemByRouteInfo: this.viewStack.findLeavingViewItemByRouteInfo,
+    addViewItem: this.viewStack.add,
+    unMountViewItem: this.viewStack.remove
   };
   pendingRouteChange?: RouteInfo;
   viewItemsForTransition: { [key: string]: ViewItem | undefined; } = {};
@@ -59,7 +67,6 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
     this.handleNavigateBack = this.handleNavigateBack.bind(this);
     this.props.registerHistoryListener(this.handleHistoryChange.bind(this));
     this.handleSetCurrentTab = this.handleSetCurrentTab.bind(this);
-
   }
 
   componentDidMount() {
@@ -86,7 +93,6 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
   }
 
   handleHistoryChange(location: HistoryLocation<LocationState>, action: HistoryAction) {
-
     let leavingLocationInfo: RouteInfo;
     if (this.incomingRouteParams) {
       if (this.incomingRouteParams.routeAction === 'replace') {
@@ -110,14 +116,6 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
             routeDirection: 'none',
             tab: this.currentTab
           };
-        } else if (action === 'POP') {
-          const routeInfo = this.locationHistory.current();
-          if (routeInfo && routeInfo.pushedByRoute) {
-            const prevInfo = this.locationHistory.findLastLocation(routeInfo);
-            if (prevInfo) {
-              this.incomingRouteParams = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
-            }
-          }
         }
         if (!this.incomingRouteParams) {
           this.incomingRouteParams = {
@@ -170,10 +168,6 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
     this.currentPathname = location.pathname;
     this.incomingRouteParams = undefined;
 
-    // TODO: this state needed?
-    this.setState({
-      location
-    });
   }
 
   handleNavigate(path: string, routeAction: RouteAction, routeDirection?: RouterDirection, routeOptions?: any, tab?: string) {
@@ -230,12 +224,12 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
     }
   }
 
-  // registerExitViewFromOtherOutletHandler(cb: (pathname: string) => ViewItem | undefined) {
-  //   this.exitViewFromOtherOutletHandlers.push(cb);
-  //   return () => {
-  //     this.exitViewFromOtherOutletHandlers = this.exitViewFromOtherOutletHandlers.filter(x => x !== cb);
-  //   };
-  // }
+  registerExitViewFromOtherOutletHandler(cb: (pathname: string) => ViewItem | undefined) {
+    this.exitViewFromOtherOutletHandlers.push(cb);
+    return () => {
+      this.exitViewFromOtherOutletHandlers = this.exitViewFromOtherOutletHandlers.filter(x => x !== cb);
+    };
+  }
 
   registerRouteChangeHandler(cb: (routeInfo: RouteInfo) => void) {
     this.routeChangedHandlers.push(cb);
@@ -244,14 +238,14 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
     };
   }
 
-  storeViewItemForTransition(pathname: string, viewItem: ViewItem) {
-    console.log(`storing view: ${pathname}`);
-    this.viewItemsForTransition[pathname] = viewItem;
-    setTimeout(() => {
-      console.log(`removing viewItem ${pathname} from pending transitions`);
-      delete this.viewItemsForTransition[pathname];
-    }, 10000);
-  }
+  // storeViewItemForTransition(pathname: string, viewItem: ViewItem) {
+  //   console.log(`storing view: ${pathname}`);
+  //   this.viewItemsForTransition[pathname] = viewItem;
+  //   setTimeout(() => {
+  //     console.log(`removing viewItem ${pathname} from pending transitions`);
+  //     delete this.viewItemsForTransition[pathname];
+  //   }, 10000);
+  // }
 
   render() {
     return (

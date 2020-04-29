@@ -9,8 +9,15 @@ export interface RouteManagerContextState {
   // exitViewFromOtherOutlet: (pathname: string) => ViewItem | undefined;
   onRouteChange: (callback: (routeInfo: RouteInfo) => void) => () => void;
   // registerExitViewFromOtherOutlet: (callback: (pathname: string) => ViewItem | undefined) => () => void;
-  storeViewItemForTransition: (pathname: string, viewItem: ViewItem) => void;
   getViewItemForTransition: (pathname: string) => ViewItem | undefined;
+  addViewItem: (viewItem: ViewItem) => void;
+  createViewItem: (outletId: string, reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement) => ViewItem;
+  findViewItemByPathname: (pathname: string, outletId?: string) => ViewItem | undefined;
+  findViewItemByRouteInfo: (outletId: string, routeInfo: RouteInfo) => ViewItem | undefined;
+  findLeavingViewItemByRouteInfo: (outletId: string, routeInfo: RouteInfo) => ViewItem | undefined;
+  unMountViewItem: (viewItem: ViewItem) => void;
+  getChildrenToRender: (outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo) => React.ReactNode[];
+
   // matchComponent: (children: React.ReactNode, routeInfo: RouteInfo) => React.ReactNode;
   // createViewItem: (page: HTMLElement, reactElement: React.ReactElement) => ViewItem;
   // findViewItemByRoute: (routeInfo: RouteInfo, viewItems: ViewItem[]) => ViewItem; // TODO implement this
@@ -22,8 +29,14 @@ export const RouteManagerContext = /*@__PURE__*/React.createContext<RouteManager
   // exitViewFromOtherOutlet: () => undefined,
   // registerExitViewFromOtherOutlet: () => () => undefined,
   onRouteChange: () => () => undefined,
-  storeViewItemForTransition: () => undefined,
-  getViewItemForTransition: () => undefined
+  getViewItemForTransition: () => undefined,
+  addViewItem: () => undefined,
+  createViewItem: () => undefined as any,
+  findViewItemByPathname: () => undefined,
+  findViewItemByRouteInfo: () => undefined,
+  findLeavingViewItemByRouteInfo: () => undefined,
+  unMountViewItem: () => undefined,
+  getChildrenToRender: () => undefined as any
   // matchComponent: () => undefined,
   // createViewItem: () => undefined as any,
   // findViewItemByRoute: () => undefined as any,

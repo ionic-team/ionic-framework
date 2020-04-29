@@ -3,6 +3,7 @@ import { JSX as LocalJSX } from '@ionic/core';
 import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
+import { StackContext } from '../routing';
 
 import { IonicReactProps } from './IonicReactProps';
 import { IonRouterOutletInner } from './inner-proxies';
@@ -13,24 +14,51 @@ type Props = LocalJSX.IonRouterOutlet & {
   ref?: React.RefObject<any>;
 };
 
-type InternalProps = Props & {
+interface InternalProps extends Props {
   forwardedRef?: React.RefObject<HTMLIonRouterOutletElement>;
-};
+}
 
-const IonRouterOutletContainer = /*@__PURE__*/(() => class extends React.Component<InternalProps> {
+interface InternalState {
+  ionPageContainer: boolean;
+}
+
+class IonRouterOutletContainer extends React.Component<InternalProps, InternalState> {
   context!: React.ContextType<typeof NavContext>;
+
+  constructor(props: InternalProps) {
+    super(props);
+    this.state = {
+      ionPageContainer: !!this.props.ionPageContainer
+    };
+    this.registerIonPage = this.registerIonPage.bind(this);
+  }
+
+  registerIonPage() {
+    this.setState({
+      ionPageContainer: true
+    });
+  }
 
   render() {
 
     const StackManager = this.context.getStackManager();
 
     return (
-      this.context.hasIonicRouter() && this.props.ionPageContainer ? (
-        <StackManager routeInfo={this.context.routeInfo}>
-          <IonRouterOutletInner {...this.props}>
-            {this.props.children}
-          </IonRouterOutletInner>
-        </StackManager>
+      this.context.hasIonicRouter() ? (
+        this.state.ionPageContainer ? (
+          <StackManager routeInfo={this.context.routeInfo}>
+            <IonRouterOutletInner {...this.props}>
+              {this.props.children}
+            </IonRouterOutletInner>
+          </StackManager>
+        ) :
+          <StackContext.Provider
+            value={{ registerIonPage: this.registerIonPage }}
+          >
+            <IonRouterOutletInner {...this.props}>
+              {this.props.children}
+            </IonRouterOutletInner>
+          </StackContext.Provider>
       ) : (
           <IonRouterOutletInner ref={this.props.forwardedRef} {...this.props}>
             {this.props.children}
@@ -42,6 +70,6 @@ const IonRouterOutletContainer = /*@__PURE__*/(() => class extends React.Compone
   static get contextType() {
     return NavContext;
   }
-})();
+}
 
 export const IonRouterOutlet = createForwardRef<Props & IonicReactProps, HTMLIonRouterOutletElement>(IonRouterOutletContainer, 'IonRouterOutlet');

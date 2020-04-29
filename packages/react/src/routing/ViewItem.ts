@@ -9,4 +9,5 @@ export interface ViewItem<T = any> {
   routeData?: T;
   destroy?: () => void;
   transitionHtml?: string;
+  outletId: string;
 }

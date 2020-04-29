@@ -2,12 +2,9 @@ import {
   RouteInfo,
   RouteManagerContext,
   StackContext,
-  ViewItem,
-  ViewLifeCycleManager,
   generateId
 } from '@ionic/react';
 import React from 'react';
-import { matchPath } from 'react-router-dom';
 
 interface StackManagerProps {
   routeInfo: RouteInfo;
@@ -16,8 +13,8 @@ interface StackManagerProps {
 interface StackManagerState { }
 
 export class StackManager extends React.Component<StackManagerProps, StackManagerState> {
+  id: string;
   context!: React.ContextType<typeof RouteManagerContext>;
-  viewItems: ViewItem[] = [];
   ionRouterOutlet?: React.ReactElement;
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
   firstRender = true;
@@ -27,6 +24,7 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
     super(props);
     this.registerIonPage = this.registerIonPage.bind(this);
     this.transitionPage = this.transitionPage.bind(this);
+    this.id = generateId('routerOutlet');
     this.state = {};
   }
 
@@ -36,6 +34,7 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
       this.routerContextSubscriptions.push(
         this.context.onRouteChange(this.handlePageTransition.bind(this))
       );
+      this.firstRender = false;
     }
   }
 
@@ -58,109 +57,42 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
   }
 
   registerIonPage(page: HTMLElement, routeInfo: RouteInfo) {
-    const matchedNode = matchComponent(this.ionRouterOutlet!.props.children, routeInfo) as React.ReactElement;
-    if (matchedNode) {
-      const { viewItem: foundView } = findViewItemByRoute(this.viewItems, routeInfo.pathname);
-      if (foundView) {
-        foundView.ionPageElement = page;
-        foundView.reactElement = matchedNode as any;
-        foundView.ionRoute = true;
-      }
-      if (this.firstRender || foundView?.routeData.pendingTransition) {
-        this.handlePageTransition(routeInfo);
-        this.firstRender = false;
-      }
+    // const matchedNode = matchComponent(this.ionRouterOutlet!.props.children, routeInfo) as React.ReactElement;
+    // if (matchedNode) {
+    // const { viewItem: foundView } = findViewItemByRoute(this.viewItems, routeInfo.pathname);
+    const foundView = this.context.findViewItemByRouteInfo(this.id, routeInfo);
+    if (foundView) {
+      foundView.ionPageElement = page;
+      // TODO: check to make sure component still updates (redux/etc...)
+      // foundView.reactElement = matchedNode as any;
+      foundView.ionRoute = true;
     }
-  }
-
-  renderChildren(ionRouterOutlet: React.ReactElement) {
-
-    const children: React.ReactNode[] = [];
-
-    React.Children.forEach(ionRouterOutlet!.props.children, (child: React.ReactElement) => {
-
-      // If child is "Route like"
-      if (child.props.path || child.props.from) {
-        const foundView = this.viewItems.find(x => {
-          if (child.props.path) {
-            return x.reactElement.props.path === child.props.path;
-          } else {
-            return x.reactElement.props.from === child.props.from;
-          }
-        });
-        if (foundView && foundView.mount) {
-          const clonedChild = <ViewLifeCycleManager key={`view-${foundView.id}`}>
-            {React.cloneElement(child, {
-              computedMatch: foundView.routeData.match
-            })}
-          </ViewLifeCycleManager>;
-          children.push(clonedChild);
-        } else {
-          const newViewItem = createViewItem(child, this.props.routeInfo);
-          const clonedChild = <ViewLifeCycleManager key={`view-${newViewItem.id}`}>
-            {React.cloneElement(newViewItem.reactElement, {
-              computedMatch: newViewItem.routeData.match
-            })}
-          </ViewLifeCycleManager>;
-          this.viewItems.push(newViewItem);
-          children.push(clonedChild);
-        }
-      } else {
-        children.push(child);
-      }
-    });
-
-    const component = React.cloneElement(ionRouterOutlet as any, {
-      ref: (node: HTMLIonRouterOutletElement) => {
-        this.routerOutletElement = node;
-        const { ref } = ionRouterOutlet as any;
-        if (typeof ref === 'function') {
-          ref(node);
-        }
-      }
-    },
-      children
-    );
-    return component;
+    this.handlePageTransition(routeInfo);
   }
 
   async transitionPage(routeInfo: RouteInfo) {
-
-    const { viewItem: enteringViewItem, match } = findViewItemByRoute(this.viewItems, routeInfo.pathname);
-    let { viewItem: leavingViewItem } = findViewItemByRoute(this.viewItems, routeInfo.lastPathname);
+    const enteringViewItem = this.context.findViewItemByRouteInfo(this.id, routeInfo);
+    let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(this.id, routeInfo);
 
     if (!enteringViewItem || !enteringViewItem.ionPageElement) {
       if (enteringViewItem) {
         // The ionPage hasn't been rendered yet, try again in a moment
         enteringViewItem.routeData.pendingTransition = true;
-      }
-      if (leavingViewItem && leavingViewItem.ionPageElement) {
-        // If we have a leaving view but not a entering view, the leaving view might be
-        // being transitioned out by another outlet, so grab its html before the page
-        // goes away
-        leavingViewItem.destroy = () => {
-          this.viewItems = this.viewItems.filter(x => x.id !== leavingViewItem!.id);
-          this.forceUpdate();
-        };
-        this.context.storeViewItemForTransition(routeInfo.lastPathname!, leavingViewItem);
+      } else {
+        // TODO: investigatge moving viewitem creation here insetead of in reader/getChildren
+        // this.forceUpdate();
       }
       return;
     }
 
-    enteringViewItem!.routeData.match = match;
-
     if (enteringViewItem.ionRoute) {
       if (routeInfo.lastPathname && (!leavingViewItem || !leavingViewItem.ionRoute)) {
-        console.log('missing view ' + routeInfo.lastPathname);
         const viewFromOtherOutlet = this.context.getViewItemForTransition(routeInfo.lastPathname);
         if (leavingViewItem) {
-          this.viewItems = this.viewItems.filter(x => x.id !== leavingViewItem!.id);
+          this.context.unMountViewItem(leavingViewItem);
         }
         if (viewFromOtherOutlet) {
           leavingViewItem = viewFromOtherOutlet;
-          if (leavingViewItem.destroy) {
-            leavingViewItem.destroy();
-          }
         }
       }
 
@@ -169,7 +101,7 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
       } else {
         const shouldLeavingViewBeRemoved = routeInfo.routeDirection !== 'none' && leavingViewItem && (enteringViewItem !== leavingViewItem);
         if (shouldLeavingViewBeRemoved) {
-          this.viewItems = this.viewItems.filter(x => x !== leavingViewItem);
+          this.context.unMountViewItem(leavingViewItem!);
         }
       }
 
@@ -186,7 +118,6 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
             this.routerOutletElement.appendChild(newLeavingElement);
             await this.routerOutletElement.commit(enteringViewItem.ionPageElement, newLeavingElement, {
               deepWait: true,
-              // duration: 1500,
               duration: direction === undefined ? 0 : undefined,
               direction: direction as any,
               showGoBack: direction === 'forward',
@@ -209,14 +140,11 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
         }
       }
 
-    } else {
-      enteringViewItem.mount = true;
-      enteringViewItem.routeData.match = match!;
-    } // TODO: this else block needed?
+    }
 
     if (leavingViewItem) {
       if (!leavingViewItem.ionRoute) {
-        this.viewItems = this.viewItems.filter(x => x !== leavingViewItem);
+        this.context.unMountViewItem(leavingViewItem);
       }
     }
 
@@ -227,10 +155,20 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
     const { children } = this.props;
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
     this.ionRouterOutlet = ionRouterOutlet;
-    const components = this.renderChildren(ionRouterOutlet);
+    const components = this.context.getChildrenToRender(this.id, this.ionRouterOutlet, this.props.routeInfo);
     return (
       <StackContext.Provider value={{ registerIonPage: this.registerIonPage }}>
-        {components}
+        {React.cloneElement(ionRouterOutlet as any, {
+          ref: (node: HTMLIonRouterOutletElement) => {
+            this.routerOutletElement = node;
+            const { ref } = ionRouterOutlet as any;
+            if (typeof ref === 'function') {
+              ref(node);
+            }
+          }
+        },
+          components
+        )}
       </StackContext.Provider>
     );
   }
@@ -256,91 +194,19 @@ function clonePageElement(leavingViewHtml: string) {
   return undefined;
 }
 
-function createViewItem(reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement) {
-  const viewItem: ViewItem = {
-    id: generateId('viewItem'),
-    ionPageElement: page,
-    reactElement,
-    mount: true,
-    ionRoute: false
-  };
-
-  const matchProps = {
-    exact: reactElement.props.exact,
-    path: reactElement.props.path || reactElement.props.from,
-    component: reactElement.props.component
-  };
-
-  const match = matchPath(routeInfo.pathname, matchProps);
-
-  viewItem.routeData = {
-    match,
-    childProps: reactElement.props
-  };
-
-  return viewItem;
-}
-
-function findViewItemByRoute(viewItems: ViewItem[], pathname?: string) {
-  if (!pathname) {
-    return {
-      viewItem: undefined,
-      match: undefined
-    };
-  }
-
-  let viewItem: ViewItem | undefined;
-  let match: ReturnType<typeof matchPath> | undefined;
-
-  viewItems.some(matchView);
-
-  if (!viewItem) {
-    viewItems.some(r => {
-      // try to find a route that doesn't have a path or from prop, that will be our not found route
-      if (!r.routeData.childProps.path && !r.routeData.childProps.from) {
-        match = {
-          path: pathname,
-          url: pathname,
-          isExact: true,
-          params: {}
-        };
-        viewItem = r;
-        return true;
-      }
-      return false;
-    });
-  }
-
-  return { viewItem, match };
-
-  function matchView(v: ViewItem) {
-    const matchProps = {
-      exact: v.routeData.childProps.exact,
-      path: v.routeData.childProps.path || v.routeData.childProps.from,
-      component: v.routeData.childProps.component
-    };
-    const myMatch = matchPath(pathname!, matchProps);
-    if (myMatch) {
-      viewItem = v;
-      match = myMatch;
-      return true;
-    }
-    return false;
-  }
-}
-
-function matchComponent(node: React.ReactNode, routeInfo: RouteInfo) {
-  let matchedNode: React.ReactNode;
-  React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
-    const matchProps = {
-      exact: child.props.exact,
-      path: child.props.path || child.props.from,
-      component: child.props.component
-    };
-    const match = matchPath(routeInfo.pathname, matchProps);
-    if (match) {
-      matchedNode = child;
-    }
-  });
-  return matchedNode;
-}
+// TODO: keep until the todo in registerIonPage is done
+// function matchComponent(node: React.ReactNode, routeInfo: RouteInfo) {
+//   let matchedNode: React.ReactNode;
+//   React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
+//     const matchProps = {
+//       exact: child.props.exact,
+//       path: child.props.path || child.props.from,
+//       component: child.props.component
+//     };
+//     const match = matchPath(routeInfo.pathname, matchProps);
+//     if (match) {
+//       matchedNode = child;
+//     }
+//   });
+//   return matchedNode;
+// }
