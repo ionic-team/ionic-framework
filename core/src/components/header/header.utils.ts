@@ -72,8 +72,11 @@ export const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity?: num
   }
 };
 
-const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) => {
-  if (!ev[0].isIntersecting) { return; }
+const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex, nativeRefresherEl: HTMLElement | null) => {
+  if (
+    !ev[0].isIntersecting ||
+    (nativeRefresherEl && nativeRefresherEl.classList.contains('refresher-active'))
+  ) { return; }
 
   /**
    * There is a bug in Safari where overflow scrolling on a non-body element
@@ -93,9 +96,9 @@ const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) 
  * and show the primary toolbar content. If the toolbars are not intersecting,
  * hide the primary toolbar content and show the scrollable toolbar content
  */
-export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex) => {
+export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex, nativeRefresherEl: HTMLElement | null) => {
   writeTask(() => {
-    handleToolbarBorderIntersection(ev, mainHeaderIndex);
+    handleToolbarBorderIntersection(ev, mainHeaderIndex, nativeRefresherEl);
 
     const event = ev[0];
 
