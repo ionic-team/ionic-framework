@@ -1,4 +1,4 @@
-## Single Selection
+### Single Selection
 
 ```html
 <ion-list>
@@ -29,7 +29,7 @@
 </ion-list>
 ```
 
-## Multiple Selection
+### Multiple Selection
 
 ```html
 <ion-list>
@@ -67,7 +67,7 @@
 </ion-list>
 ```
 
-## Objects as Values
+### Objects as Values
 
 ```html
 <ion-list>
@@ -121,7 +121,7 @@ export class SelectExample {
 }
 ```
 
-## Interface Options
+### Interface Options
 
 ```html
 <ion-list>
