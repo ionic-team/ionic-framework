@@ -21,9 +21,9 @@
   width: $toggle-ios-width;
   height: $toggle-ios-height;
 
-  overflow: hidden;
-
   contain: strict;
+
+  overflow: hidden;
 }
 
 :host(.ion-color.toggle-checked) .toggle-icon {
