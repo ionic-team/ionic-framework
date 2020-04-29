@@ -120,13 +120,27 @@ button {
 // ----------------------------------------------------------
 
 :host(.toggle-checked) .toggle-icon-wrapper {
-  // transform by 100% - handle width
-  transform: translate3d(calc(100% - var(--handle-width)), 0, 0);
+  @include ltr() {
+    // transform by 100% - handle width
+    transform: translate3d(calc(100% - var(--handle-width)), 0, 0);
+  }
+
+  @include rtl() {
+    // transform by -100% + handle width
+    transform: translate3d(calc(-100% + var(--handle-width)), 0, 0);
+  }
 }
 
 :host(.toggle-checked) .toggle-inner {
-  // transform by handle spacing amount
-  transform: translateX(calc(var(--handle-spacing) * -2));
+  @include ltr() {
+    // transform by handle spacing amount
+    transform: translateX(calc(var(--handle-spacing) * -2));
+  }
+
+  @include rtl() {
+    // transform by handle spacing amount
+    transform: translateX(calc(var(--handle-spacing) * 2));
+  }
 
   background: var(--handle-background-checked);
 }

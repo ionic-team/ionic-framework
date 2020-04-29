@@ -99,7 +99,7 @@ ion-toggle {
 }
 ```
 
-Due to the handle having a fixed height, to remove the spacing on the top and bottom, set the height to 100%:
+Due to the handle having a fixed height, to remove the spacing on the top and bottom, set the height to 100%.
 
 ```css
 ion-toggle {
