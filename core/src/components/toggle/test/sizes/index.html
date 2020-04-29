@@ -69,8 +69,10 @@
 
       <ion-toggle mode="md" color="dark" class="custom-spacing"></ion-toggle>
       <ion-toggle mode="md" color="dark" checked class="custom-spacing"></ion-toggle>
-    </ion-content>
 
+      <ion-toggle mode="ios" class="icon-custom"></ion-toggle>
+      <ion-toggle mode="ios" checked class="icon-custom"></ion-toggle>
+    </ion-content>
   </ion-app>
 
   <style>
@@ -124,6 +126,20 @@
 
     .handle-height-large.toggle-checked {
       --handle-border-radius: 4px 14px 14px 4px;
+    }
+
+    .icon-custom {
+      --handle-background-checked: #fff url(/src/components/toggle/test/sizes/power-outline.svg) no-repeat center / contain;
+    }
+
+    .icon-custom::before {
+      position: absolute;
+      content: "ON";
+      color: white;
+      top: 16px;
+      left: 10px;
+      z-index: 1;
+      font-size: 8px;
     }
 
     .all-custom {

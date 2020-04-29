@@ -4,6 +4,49 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 
 ## Customization
 
+### Customizing Background
+
+The background of the toggle track and handle can be customized using CSS variables. There are also variables for setting the background differently when the toggle is checked.
+
+```css
+ion-toggle {
+  --background: #000;
+  --background-checked: #7a49a5;
+
+  --handle-background: #7a49a5;
+  --handle-background-checked: #000;
+}
+```
+
+Because these variables set the `background` property, which is a shorthand, it can accept any value that the [background property](https://developer.mozilla.org/en-US/docs/Web/CSS/background) accepts.
+
+A more complex case may involve adding an image to the handle background.
+
+```css
+ion-toggle {
+  --handle-background-checked: #fff url(/assets/power-icon.png) no-repeat center / contain;
+}
+```
+
+Taking it a step further, we could use the `::before` or `::after` pseudo-elements to position text on top of the background.
+
+```css
+ion-toggle:before {
+  position: absolute;
+
+  top: 16px;
+  left: 10px;
+
+  content: "ON";
+
+  color: white;
+  font-size: 8px;
+
+  z-index: 1;
+}
+```
+
+
 ### Customizing Width
 
 Adjusting the width of the toggle **smaller** will result in a narrower track, with the handle remaining the default width. If desired, set `--handle-width` to make the handle narrower.
