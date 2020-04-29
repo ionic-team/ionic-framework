@@ -244,7 +244,6 @@ export const ToggleExamples: React.FC = () => {
 | `--handle-box-shadow`         | Box shadow of the toggle handle              |
 | `--handle-height`             | Height of the toggle handle                  |
 | `--handle-max-height`         | Maximum height of the toggle handle          |
-| `--handle-overflow`           | Overflow of the toggle handle                |
 | `--handle-spacing`            | Horizontal spacing around the toggle handle. |
 | `--handle-transition`         | Transition of the toggle handle              |
 | `--handle-width`              | Width of the toggle handle                   |

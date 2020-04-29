@@ -17,7 +17,6 @@
    * @prop --handle-height: Height of the toggle handle
    * @prop --handle-max-height: Maximum height of the toggle handle
    * @prop --handle-width: Width of the toggle handle
-   * @prop --handle-overflow: Overflow of the toggle handle
    * @prop --handle-spacing: Horizontal spacing around the toggle handle.
    * @prop --handle-transition: Transition of the toggle handle
    */
@@ -81,7 +80,7 @@ button {
 
   pointer-events: none;
 
-  overflow: var(--handle-overflow);
+  overflow: inherit;
 }
 
 

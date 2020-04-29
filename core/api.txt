@@ -1286,7 +1286,6 @@ ion-toggle,css-prop,--handle-border-radius
 ion-toggle,css-prop,--handle-box-shadow
 ion-toggle,css-prop,--handle-height
 ion-toggle,css-prop,--handle-max-height
-ion-toggle,css-prop,--handle-overflow
 ion-toggle,css-prop,--handle-spacing
 ion-toggle,css-prop,--handle-transition
 ion-toggle,css-prop,--handle-width

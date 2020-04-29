@@ -17,7 +17,6 @@
   --handle-max-height: #{$toggle-md-handle-max-height};
   --handle-spacing: 0;
   --handle-transition: #{$toggle-md-transition};
-  --handle-overflow: visible;
 
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
 

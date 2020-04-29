@@ -17,10 +17,11 @@
   --handle-width: #{$toggle-ios-handle-width};
   --handle-spacing: #{$toggle-ios-border-width};
   --handle-transition: #{$toggle-ios-transition};
-  --handle-overflow: hidden;
 
   width: $toggle-ios-width;
   height: $toggle-ios-height;
+
+  overflow: hidden;
 
   contain: strict;
 }
