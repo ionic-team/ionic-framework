@@ -1283,6 +1283,12 @@ ion-toggle,css-prop,--border-radius
 ion-toggle,css-prop,--handle-background
 ion-toggle,css-prop,--handle-background-checked
 ion-toggle,css-prop,--handle-border-radius
+ion-toggle,css-prop,--handle-box-shadow
+ion-toggle,css-prop,--handle-height
+ion-toggle,css-prop,--handle-max-height
+ion-toggle,css-prop,--handle-spacing
+ion-toggle,css-prop,--handle-transition
+ion-toggle,css-prop,--handle-width
 ion-toggle,part,handle
 ion-toggle,part,track
 
