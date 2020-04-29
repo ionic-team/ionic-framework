@@ -134,12 +134,12 @@ button {
 :host(.toggle-checked) .toggle-inner {
   @include ltr() {
     // transform by handle spacing amount
-    transform: translateX(calc(var(--handle-spacing) * -2));
+    transform: translate3d(calc(var(--handle-spacing) * -2), 0, 0);
   }
 
   @include rtl() {
     // transform by handle spacing amount
-    transform: translateX(calc(var(--handle-spacing) * 2));
+    transform: translate3d(calc(var(--handle-spacing) * 2), 0, 0);
   }
 
   background: var(--handle-background-checked);
