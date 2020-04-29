@@ -31,7 +31,7 @@ ion-toggle {
 Taking it a step further, we could use the `::before` or `::after` pseudo-elements to position text on top of the background.
 
 ```css
-ion-toggle:before {
+ion-toggle::before {
   position: absolute;
 
   top: 16px;
