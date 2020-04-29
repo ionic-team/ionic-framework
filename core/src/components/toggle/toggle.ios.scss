@@ -88,7 +88,7 @@
   }
 
   @include rtl() {
-    // transform by 100% - handle width - 6px (width addition on activated)
+    // transform by -100% + handle width + 6px (width addition on activated)
     transform: translate3d(calc(-100% + var(--handle-width) + 6px), 0, 0);
   }
 }
