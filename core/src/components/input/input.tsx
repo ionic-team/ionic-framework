@@ -217,7 +217,7 @@ export class Input implements ComponentInterface {
   componentWillLoad() {
     if (this.el.hasAttribute('tabindex')) {
       const tabindex = this.el.getAttribute('tabindex');
-      this.tabindex = tabindex ? tabindex : undefined;
+      this.tabindex = tabindex !== null ? tabindex : undefined;
       this.el.removeAttribute('tabindex');
     }
   }
