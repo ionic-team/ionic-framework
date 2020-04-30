@@ -7,7 +7,8 @@ import {
   RouteManagerContextState,
   RouterDirection,
   ViewItem,
-  generateId
+  generateId,
+  getConfig
 } from '@ionic/react';
 import { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import React from 'react';
@@ -185,7 +186,9 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
     }
   }
 
-  handleNavigateBack(path: string | RouteInfo = '/') {
+  handleNavigateBack(defaultHref: string | RouteInfo = '/') {
+    const config = getConfig();
+    defaultHref = defaultHref ? defaultHref : config && config.get('backButtonDefaultHref' as any);
     const routeInfo = this.locationHistory.current();
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = this.locationHistory.findLastLocation(routeInfo);
@@ -197,10 +200,10 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
           this.props.history.replace(prevInfo.pathname + (prevInfo.search || ''));
         }
       } else {
-        this.handleNavigate(path as string, 'pop', 'back');
+        this.handleNavigate(defaultHref as string, 'pop', 'back');
       }
     } else {
-      this.handleNavigate(path as string, 'pop', 'back');
+      this.handleNavigate(defaultHref as string, 'pop', 'back');
     }
   }
 

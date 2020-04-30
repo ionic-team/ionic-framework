@@ -39,5 +39,8 @@ export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
 
+// UTILS
+export { IonicSafeString } from '@ionic/core';
+
 // CORE TYPES
 export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, Gesture, GestureConfig, GestureDetail, mdTransitionAnimation, iosTransitionAnimation } from '@ionic/core';

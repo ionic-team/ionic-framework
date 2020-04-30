@@ -1,5 +1,6 @@
 import { Directive, HostListener, Optional } from '@angular/core';
 
+import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
 
 import { IonRouterOutlet } from './ion-router-outlet';
@@ -14,7 +15,8 @@ export class IonBackButtonDelegate {
 
   constructor(
     @Optional() private routerOutlet: IonRouterOutlet,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private config: Config
   ) {}
 
   /**
@@ -22,11 +24,13 @@ export class IonBackButtonDelegate {
    */
   @HostListener('click', ['$event'])
   onClick(ev: Event) {
+    const defaultHref = this.defaultHref || this.config.get('backButtonDefaultHref');
+
     if (this.routerOutlet && this.routerOutlet.canGoBack()) {
       this.routerOutlet.pop();
       ev.preventDefault();
-    } else if (this.defaultHref != null) {
-      this.navCtrl.navigateBack(this.defaultHref);
+    } else if (defaultHref != null) {
+      this.navCtrl.navigateBack(defaultHref);
       ev.preventDefault();
     }
   }

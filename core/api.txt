@@ -53,7 +53,7 @@ ion-alert,prop,header,string | undefined,undefined,false,false
 ion-alert,prop,inputs,AlertInput[],[],false,false
 ion-alert,prop,keyboardClose,boolean,true,false,false
 ion-alert,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-alert,prop,message,string | undefined,undefined,false,false
+ion-alert,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-alert,prop,mode,"ios" | "md",undefined,false,false
 ion-alert,prop,subHeader,string | undefined,undefined,false,false
 ion-alert,prop,translucent,boolean,false,false,false
@@ -235,6 +235,8 @@ ion-checkbox,css-prop,--checkmark-color
 ion-checkbox,css-prop,--checkmark-width
 ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
+ion-checkbox,part,container
+ion-checkbox,part,mark
 
 ion-chip,shadow
 ion-chip,prop,color,string | undefined,undefined,false,false
@@ -300,6 +302,8 @@ ion-content,css-prop,--padding-bottom
 ion-content,css-prop,--padding-end
 ion-content,css-prop,--padding-start
 ion-content,css-prop,--padding-top
+ion-content,part,background
+ion-content,part,scroll
 
 ion-datetime,shadow
 ion-datetime,prop,cancelText,string,'Cancel',false,false
@@ -335,6 +339,8 @@ ion-datetime,css-prop,--padding-end
 ion-datetime,css-prop,--padding-start
 ion-datetime,css-prop,--padding-top
 ion-datetime,css-prop,--placeholder-color
+ion-datetime,part,placeholder
+ion-datetime,part,text
 
 ion-fab,shadow
 ion-fab,prop,activated,boolean,false,false,false
@@ -416,6 +422,7 @@ ion-img,prop,src,string | undefined,undefined,false,false
 ion-img,event,ionError,void,true
 ion-img,event,ionImgDidLoad,void,true
 ion-img,event,ionImgWillLoad,void,true
+ion-img,part,image
 
 ion-infinite-scroll,none
 ion-infinite-scroll,prop,disabled,boolean,false,false,false
@@ -426,7 +433,7 @@ ion-infinite-scroll,event,ionInfinite,void,true
 
 ion-infinite-scroll-content,none
 ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
-ion-infinite-scroll-content,prop,loadingText,string | undefined,undefined,false,false
+ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefined,undefined,false,false
 
 ion-input,scoped
 ion-input,prop,accept,string | undefined,undefined,false,false
@@ -439,6 +446,7 @@ ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
 ion-input,prop,color,string | undefined,undefined,false,false
 ion-input,prop,debounce,number,0,false,false
 ion-input,prop,disabled,boolean,false,false,false
+ion-input,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-input,prop,max,string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
@@ -522,6 +530,7 @@ ion-item,css-prop,--padding-start
 ion-item,css-prop,--padding-top
 ion-item,css-prop,--ripple-color
 ion-item,css-prop,--transition
+ion-item,part,detail-icon
 
 ion-item-divider,shadow
 ion-item-divider,prop,color,string | undefined,undefined,false,false
@@ -597,7 +606,7 @@ ion-loading,prop,duration,number,0,false,false
 ion-loading,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-loading,prop,keyboardClose,boolean,true,false,false
 ion-loading,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-loading,prop,message,string | undefined,undefined,false,false
+ion-loading,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-loading,prop,mode,"ios" | "md",undefined,false,false
 ion-loading,prop,showBackdrop,boolean,true,false,false
 ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
@@ -645,6 +654,8 @@ ion-menu,css-prop,--max-width
 ion-menu,css-prop,--min-height
 ion-menu,css-prop,--min-width
 ion-menu,css-prop,--width
+ion-menu,part,backdrop
+ion-menu,part,container
 
 ion-menu-button,shadow
 ion-menu-button,prop,autoHide,boolean,true,false,false
@@ -825,6 +836,8 @@ ion-radio,css-prop,--border-radius
 ion-radio,css-prop,--color
 ion-radio,css-prop,--color-checked
 ion-radio,css-prop,--inner-border-radius
+ion-radio,part,container
+ion-radio,part,mark
 
 ion-radio-group,none
 ion-radio-group,prop,allowEmptySelection,boolean,false,false,false
@@ -860,6 +873,12 @@ ion-range,css-prop,--knob-box-shadow
 ion-range,css-prop,--knob-size
 ion-range,css-prop,--pin-background
 ion-range,css-prop,--pin-color
+ion-range,part,bar
+ion-range,part,bar-active
+ion-range,part,knob
+ion-range,part,pin
+ion-range,part,tick
+ion-range,part,tick-active
 
 ion-refresher,none
 ion-refresher,prop,closeDuration,string,'280ms',false,false
@@ -877,11 +896,12 @@ ion-refresher,event,ionStart,void,true
 
 ion-refresher-content,none
 ion-refresher-content,prop,pullingIcon,null | string | undefined,undefined,false,false
-ion-refresher-content,prop,pullingText,string | undefined,undefined,false,false
+ion-refresher-content,prop,pullingText,IonicSafeString | string | undefined,undefined,false,false
 ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
-ion-refresher-content,prop,refreshingText,string | undefined,undefined,false,false
+ion-refresher-content,prop,refreshingText,IonicSafeString | string | undefined,undefined,false,false
 
 ion-reorder,shadow
+ion-reorder,part,icon
 
 ion-reorder-group,none
 ion-reorder-group,prop,disabled,boolean,true,false,false
@@ -937,6 +957,7 @@ ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,string | undefined,undefined,false,false
 ion-searchbar,prop,debounce,number,250,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
+ion-searchbar,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
@@ -954,6 +975,7 @@ ion-searchbar,event,ionClear,void,true
 ion-searchbar,event,ionFocus,void,true
 ion-searchbar,event,ionInput,KeyboardEvent,true
 ion-searchbar,css-prop,--background
+ion-searchbar,css-prop,--border-radius
 ion-searchbar,css-prop,--box-shadow
 ion-searchbar,css-prop,--cancel-button-color
 ion-searchbar,css-prop,--clear-button-color
@@ -1032,6 +1054,9 @@ ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
 ion-select,css-prop,--placeholder-color
 ion-select,css-prop,--placeholder-opacity
+ion-select,part,icon
+ion-select,part,placeholder
+ion-select,part,text
 
 ion-select-option,shadow
 ion-select-option,prop,disabled,boolean,false,false,false
@@ -1162,6 +1187,8 @@ ion-textarea,prop,color,string | undefined,undefined,false,false
 ion-textarea,prop,cols,number | undefined,undefined,false,false
 ion-textarea,prop,debounce,number,0,false,false
 ion-textarea,prop,disabled,boolean,false,false,false
+ion-textarea,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
+ion-textarea,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-textarea,prop,maxlength,number | undefined,undefined,false,false
 ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false
@@ -1210,7 +1237,7 @@ ion-toast,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-toast,prop,header,string | undefined,undefined,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
 ion-toast,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-toast,prop,message,string | undefined,undefined,false,false
+ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,translucent,boolean,false,false,false
@@ -1256,6 +1283,8 @@ ion-toggle,css-prop,--border-radius
 ion-toggle,css-prop,--handle-background
 ion-toggle,css-prop,--handle-background-checked
 ion-toggle,css-prop,--handle-border-radius
+ion-toggle,part,handle
+ion-toggle,part,track
 
 ion-toolbar,shadow
 ion-toolbar,prop,color,string | undefined,undefined,false,false

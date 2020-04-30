@@ -36,8 +36,9 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
 
     if (typeof document !== 'undefined') {
       document.addEventListener('ionBackButton', (e: any) => {
-        e.detail.register(0, () => {
+        e.detail.register(0, (processNextHandler: () => void) => {
           this.goBack();
+          processNextHandler();
         });
       });
     }

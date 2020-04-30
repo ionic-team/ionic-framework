@@ -53,7 +53,7 @@ export interface FrameworkDelegate {
 }
 
 export interface BackButtonEventDetail {
-  register(priority: number, handler: () => Promise<any> | void): void;
+  register(priority: number, handler: (processNextHandler: () => void) => Promise<any> | void): void;
 }
 
 export interface StyleEventDetail {

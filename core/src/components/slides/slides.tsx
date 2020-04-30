@@ -443,7 +443,7 @@ export class Slides implements ComponentInterface {
         shadowScale: 0.94
       },
       fadeEffect: {
-        crossfade: false
+        crossFade: false
       },
       a11y: {
         prevSlideMessage: 'Previous slide',

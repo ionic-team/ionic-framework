@@ -938,6 +938,15 @@ Type: `Promise<any>`
 
 
 
+## Shadow Parts
+
+| Part            | Description                                              |
+| --------------- | -------------------------------------------------------- |
+| `"icon"`        | The select icon container.                               |
+| `"placeholder"` | The text displayed in the select when there is no value. |
+| `"text"`        | The displayed value of the select.                       |
+
+
 ## CSS Custom Properties
 
 | Name                    | Description                                                                                               |

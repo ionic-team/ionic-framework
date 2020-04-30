@@ -10,7 +10,7 @@ interface HapticNotificationOptions {
 const HapticEngine = {
   getEngine() {
     const win = (window as any);
-    return (win.TapticEngine) || (win.Capacitor && win.Capacitor.Plugins.Haptics);
+    return (win.TapticEngine) || (win.Capacitor && win.Capacitor.isPluginAvailable('Haptics') && win.Capacitor.Plugins.Haptics);
   },
   available() {
     return !!this.getEngine();

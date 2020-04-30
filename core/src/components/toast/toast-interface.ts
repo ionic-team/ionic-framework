@@ -1,8 +1,9 @@
+import { IonicSafeString } from '../../';
 import { AnimationBuilder, Color, Mode } from '../../interface';
 
 export interface ToastOptions {
   header?: string;
-  message?: string;
+  message?: string | IonicSafeString;
   cssClass?: string | string[];
   duration?: number;
   buttons?: (ToastButton | string)[];

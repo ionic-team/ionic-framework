@@ -8,6 +8,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part track - The background track of the toggle.
+ * @part handle - The toggle handle, or knob, used to change the checked state.
  */
 @Component({
   tag: 'ion-toggle',
@@ -200,8 +203,8 @@ export class Toggle implements ComponentInterface {
           'interactive': true
         }}
       >
-        <div class="toggle-icon">
-          <div class="toggle-inner"/>
+        <div class="toggle-icon" part="track">
+          <div class="toggle-inner" part="handle" />
         </div>
         <button
           type="button"
