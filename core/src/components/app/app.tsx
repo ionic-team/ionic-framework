@@ -28,8 +28,9 @@ export class App implements ComponentInterface {
         if (config.getBoolean('hardwareBackButton', isHybrid)) {
           import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton());
         }
-
-        import('../../utils/keyboard').then(module => module.startKeyboardAssist(window));
+        if (typeof window !== 'undefined') {
+          import('../../utils/keyboard').then(module => module.startKeyboardAssist(window));
+        }
         import('../../utils/focus-visible').then(module => module.startFocusVisible());
       });
     }
