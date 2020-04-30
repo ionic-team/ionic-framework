@@ -189,6 +189,9 @@ describe('writePath', () => {
 
     writePath(history, '/', false, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/to/schedule');
+
+    writePath(history, '/', false, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123, 'flag=true');
+    expect(history.pushState).toHaveBeenCalledWith(123, '', '/to/schedule?flag=true');
   });
 
   it('should write non root path (no hash)', () => {
@@ -204,6 +207,9 @@ describe('writePath', () => {
 
     writePath(history, '/path/to/', false, ['second', 'page'], ROUTER_INTENT_FORWARD, 2);
     expect(history.pushState).toHaveBeenCalledWith(2, '', '/path/to/second/page');
+
+    writePath(history, '/path/to/', false, ['second', 'page'], ROUTER_INTENT_FORWARD, 2, 'flag=true');
+    expect(history.pushState).toHaveBeenCalledWith(2, '', '/path/to/second/page?flag=true');
   });
 
   it('should write root path (no hash)', () => {
@@ -219,6 +225,9 @@ describe('writePath', () => {
 
     writePath(history, '/', true, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/to/schedule');
+
+    writePath(history, '/', true, ['to', 'schedule'], ROUTER_INTENT_FORWARD, 123, 'flag=true');
+    expect(history.pushState).toHaveBeenCalledWith(123, '', '#/to/schedule?flag=true');
   });
 
   it('should write non root path (no hash)', () => {
@@ -234,6 +243,9 @@ describe('writePath', () => {
 
     writePath(history, '/path/to/', true, ['second', 'page'], ROUTER_INTENT_FORWARD, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path/to/second/page');
+
+    writePath(history, '/path/to/', true, ['second', 'page'], ROUTER_INTENT_FORWARD, 123, 'flag=true');
+    expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path/to/second/page?flag=true');
   });
 });
 

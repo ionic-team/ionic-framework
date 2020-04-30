@@ -99,7 +99,8 @@ export class Router implements ComponentInterface {
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
     const path = parsePath(url);
-    this.setPath(path, direction);
+    const queryString = url.split('?')[1];
+    this.setPath(path, direction, queryString);
     return this.writeNavStateRoot(path, direction);
   }
 
@@ -267,9 +268,9 @@ export class Router implements ComponentInterface {
     return changed;
   }
 
-  private setPath(path: string[], direction: RouterDirection) {
+  private setPath(path: string[], direction: RouterDirection, queryString?: string) {
     this.state++;
-    writePath(window.history, this.root, this.useHash, path, direction, this.state);
+    writePath(window.history, this.root, this.useHash, path, direction, this.state, queryString);
   }
 
   private getPath(): string[] | null {

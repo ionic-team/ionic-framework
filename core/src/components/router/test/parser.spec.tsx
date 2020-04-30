@@ -14,10 +14,12 @@ describe('parser', () => {
       const r4 = mockRouteElement(win, '/5/hola', '4');
       const r5 = mockRouteElement(win, '/path/to/five', '5');
       const r6 = mockRouteElement(win, '/path/to/five2', '6');
+      const r7 = mockRouteElement(win, '/path?flag=true', '6');
 
       root.appendChild(r1);
       root.appendChild(r2);
       root.appendChild(r3);
+      root.appendChild(r7);
       r3.appendChild(r4);
       r4.appendChild(r5);
       r4.appendChild(r6);
@@ -30,7 +32,8 @@ describe('parser', () => {
             { path: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
             { path: ['path', 'to', 'five2'], id: '6', children: [], params: undefined }
           ] }
-        ] }
+        ] },
+        { path: ['path'], id: '6', children: [], params: undefined }
       ];
       expect(readRouteNodes(root)).toEqual(expected);
     });
