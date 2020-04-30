@@ -5,28 +5,33 @@ import { NavContext } from '../../contexts/NavContext';
 import { IonicReactProps } from '../IonicReactProps';
 import { IonTabBarInner } from '../inner-proxies';
 import { IonTabButton } from '../proxies';
+import { createForwardRef } from '../utils';
 
-type Props = LocalJSX.IonTabBar & IonicReactProps & {
-  onIonTabsDidChange?: (event: CustomEvent<{ tab: string }>) => void;
-  onIonTabsWillChange?: (event: CustomEvent<{ tab: string }>) => void;
+type IonTabBarProps = LocalJSX.IonTabBar & IonicReactProps & {
+  onIonTabsDidChange?: (event: CustomEvent<{ tab: string; }>) => void;
+  onIonTabsWillChange?: (event: CustomEvent<{ tab: string; }>) => void;
   currentPath?: string;
   slot?: 'bottom' | 'top';
 };
+
+interface InternalProps extends IonTabBarProps {
+  forwardedRef?: React.RefObject<HTMLIonIconElement>;
+}
 
 interface TabUrls {
   originalHref: string;
   currentHref: string;
 }
 
-interface State {
+interface IonTabBarState {
   activeTab: string | undefined;
-  tabs: { [key: string]: TabUrls };
+  tabs: { [key: string]: TabUrls; };
 }
 
-class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
+class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarState> {
   context!: React.ContextType<typeof NavContext>;
 
-  constructor(props: Props) {
+  constructor(props: InternalProps) {
     super(props);
     const tabs: { [key: string]: TabUrls; } = {};
 
@@ -39,16 +44,42 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
       }
     });
 
+    const tabKeys = Object.keys(tabs);
+    const activeTab = tabKeys
+      .find(key => {
+        const href = tabs[key].originalHref;
+        return props.currentPath!.startsWith(href);
+      }) || tabKeys[0];
+
     this.state = {
-      activeTab: undefined,
+      activeTab,
       tabs
     };
 
     this.onTabButtonClick = this.onTabButtonClick.bind(this);
     this.renderTabButton = this.renderTabButton.bind(this);
+    this.setActiveTabOnContext = this.setActiveTabOnContext.bind(this);
+    this.selectTab = this.selectTab.bind(this);
   }
 
-  static getDerivedStateFromProps(props: Props, state: State) {
+  setActiveTabOnContext = (_tab: string) => { };
+
+  selectTab(tab: string) {
+    const tabUrl = this.state.tabs[tab];
+    if (tabUrl) {
+      this.onTabButtonClick(new CustomEvent('ionTabButtonClick', {
+        detail: {
+          href: tabUrl.currentHref,
+          tab,
+          selected: tab === this.state.activeTab
+        }
+      }));
+      return true;
+    }
+    return false;
+  }
+
+  static getDerivedStateFromProps(props: IonTabBarProps, state: IonTabBarState) {
 
     const tabs = { ...state.tabs };
     const activeTab = Object.keys(state.tabs)
@@ -101,6 +132,7 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
       if (this.props.onIonTabsDidChange) {
         this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
       }
+      this.setActiveTabOnContext(e.detail.tab);
       this.context.navigate(currentHref, 'none');
     }
   }
@@ -120,9 +152,7 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
   }
 
   render() {
-
     const { activeTab } = this.state;
-
     return (
       <IonTabBarInner {...this.props} selectedTab={activeTab}>
         {React.Children.map(this.props.children as any, this.renderTabButton(activeTab))}
@@ -135,10 +165,11 @@ class IonTabBarUnwrapped extends React.PureComponent<Props, State> {
   }
 }
 
-export const IonTabBar: React.FC<Props> = React.memo<Props>(props => {
+const IonTabBarContainer: React.FC<InternalProps> = React.memo<InternalProps>(({ forwardedRef, ...props }) => {
   const context = useContext(NavContext);
   return (
     <IonTabBarUnwrapped
+      ref={forwardedRef}
       {...props as any}
       currentPath={props.currentPath || context.currentPath}
     >
@@ -146,3 +177,5 @@ export const IonTabBar: React.FC<Props> = React.memo<Props>(props => {
     </IonTabBarUnwrapped>
   );
 });
+
+export const IonTabBar = createForwardRef<IonTabBarProps, HTMLIonTabBarElement>(IonTabBarContainer, 'IonTabBar');

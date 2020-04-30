@@ -18,6 +18,7 @@ export { IonPopover } from './IonPopover';
 
 // Custom Components
 export { IonPage } from './IonPage';
+export { IonTabsContext, IonTabsContextState } from './navigation/IonTabsContext';
 export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
 export { IonBackButton } from './navigation/IonBackButton';
