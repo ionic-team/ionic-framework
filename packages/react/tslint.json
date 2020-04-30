@@ -27,8 +27,10 @@
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
     "jsx-wrap-multiline": false,
+    "no-empty": false,
     "no-empty-interface": false,
     "no-unbound-method": false,
+    "no-unused-expression": false,
     "prefer-conditional-expression": false
   }
 }

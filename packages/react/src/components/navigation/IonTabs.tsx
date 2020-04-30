@@ -1,13 +1,16 @@
 import { JSX as LocalJSX } from '@ionic/core';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
 import { IonRouterOutlet } from '../IonRouterOutlet';
 
 import { IonTabBar } from './IonTabBar';
+import { IonTabsContext, IonTabsContextState } from './IonTabsContext';
+
+type ChildFunction = (ionTabContext: IonTabsContextState) => React.ReactNode;
 
 interface Props extends LocalJSX.IonTabs {
-  children: React.ReactNode;
+  children: ChildFunction | React.ReactNode;
 }
 
 const hostStyles: React.CSSProperties = {
@@ -32,25 +35,60 @@ const tabsInner: React.CSSProperties = {
 export class IonTabs extends React.Component<Props> {
   context!: React.ContextType<typeof NavContext>;
   routerOutletRef: React.Ref<HTMLIonRouterOutletElement> = React.createRef();
+  selectTabHandler?: (tag: string) => boolean;
+  tabBarRef = React.createRef<any>();
+
+  ionTabContextState: IonTabsContextState = {
+    activeTab: undefined,
+    selectTab: () => false
+  };
 
   constructor(props: Props) {
     super(props);
+  }
+
+  componentDidMount() {
+    if (this.tabBarRef.current) {
+      // Grab initial value
+      this.ionTabContextState.activeTab = this.tabBarRef.current.state.activeTab;
+      // Override method
+      this.tabBarRef.current.setActiveTabOnContext = (tab: string) => {
+        this.ionTabContextState.activeTab = tab;
+      };
+      this.ionTabContextState.selectTab = this.tabBarRef.current.selectTab;
+    }
   }
 
   render() {
     let outlet: React.ReactElement<{}> | undefined;
     let tabBar: React.ReactElement | undefined;
 
-    React.Children.forEach(this.props.children, (child: any) => {
+    const children = typeof this.props.children === 'function' ?
+      (this.props.children as ChildFunction)(this.ionTabContextState) : this.props.children;
+
+    React.Children.forEach(children, (child: any) => {
       if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
         return;
       }
       if (child.type === IonRouterOutlet) {
         outlet = child;
+      } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
+        outlet = child.props.children[0];
       }
       if (child.type === IonTabBar) {
         const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
-        tabBar = React.cloneElement(child, { onIonTabsDidChange, onIonTabsWillChange });
+        tabBar = React.cloneElement(child, {
+          onIonTabsDidChange,
+          onIonTabsWillChange,
+          ref: this.tabBarRef
+        });
+      } else if (child.type === Fragment && child.props.children[1].type === IonTabBar) {
+        const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
+        tabBar = React.cloneElement(child.props.children[1], {
+          onIonTabsDidChange,
+          onIonTabsWillChange,
+          ref: this.tabBarRef
+        });
       }
     });
 
@@ -63,13 +101,17 @@ export class IonTabs extends React.Component<Props> {
     }
 
     return (
-      <div style={hostStyles}>
-        {tabBar.props.slot === 'top' ? tabBar : null}
-        <div style={tabsInner} className="tabs-inner">
-          {outlet}
+      <IonTabsContext.Provider
+        value={this.ionTabContextState}
+      >
+        <div style={hostStyles}>
+          {tabBar.props.slot === 'top' ? tabBar : null}
+          <div style={tabsInner} className="tabs-inner">
+            {outlet}
+          </div>
+          {tabBar.props.slot === 'bottom' ? tabBar : null}
         </div>
-        {tabBar.props.slot === 'bottom' ? tabBar : null}
-      </div>
+      </IonTabsContext.Provider >
     );
   }
 
