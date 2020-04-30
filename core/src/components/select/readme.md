@@ -16,7 +16,7 @@ By default, select uses the [AlertController API](../alert-controller) to open u
 By default, the select allows the user to select only one option. The alert interface presents users with a radio button styled list of options. The action sheet interface can only be used with a single value select. The select component's value receives the value of the selected option's value.
 
 
-### Multiple Selection
+## Multiple Selection
 
 By adding the `multiple` attribute to select, users are able to select multiple options. When multiple options can be selected, the alert overlay presents users with a checkbox styled list of options. The select component's value receives an array of all of the selected option values.
 
@@ -37,7 +37,7 @@ The `action-sheet` and `popover` interfaces do not have an `OK` button, clicking
 
 ## Interface Options
 
-Since select uses the alert, action sheet and popover interfaces, options can be passed to these components through the `interfaceOptions` property. This can be used to pass a custom header, subheader, css class, and more. 
+Since select uses the alert, action sheet and popover interfaces, options can be passed to these components through the `interfaceOptions` property. This can be used to pass a custom header, subheader, css class, and more.
 
 See the [AlertController API docs](../alert-controller), [ActionSheetController API docs](../action-sheet-controller), and [PopoverController API docs](../popover-controller) for the properties that each interface accepts.
 
@@ -50,7 +50,7 @@ Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert
 
 ### Angular
 
-## Single Selection
+### Single Selection
 
 ```html
 <ion-list>
@@ -81,7 +81,7 @@ Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert
 </ion-list>
 ```
 
-## Multiple Selection
+### Multiple Selection
 
 ```html
 <ion-list>
@@ -119,7 +119,7 @@ Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert
 </ion-list>
 ```
 
-## Objects as Values
+### Objects as Values
 
 ```html
 <ion-list>
@@ -173,7 +173,7 @@ export class SelectExample {
 }
 ```
 
-## Interface Options
+### Interface Options
 
 ```html
 <ion-list>
@@ -255,7 +255,7 @@ export class SelectExample {
 
 ### Javascript
 
-## Single Selection
+### Single Selection
 
 ```html
 <ion-list>
@@ -286,7 +286,7 @@ export class SelectExample {
 </ion-list>
 ```
 
-## Multiple Selection
+### Multiple Selection
 
 ```html
 <ion-list>
@@ -329,7 +329,7 @@ const select = document.querySelector('multiple');
 select.value = ['bird', 'dog'];
 ```
 
-## Objects as Values
+### Objects as Values
 
 ```html
 <ion-list>
@@ -379,12 +379,12 @@ select.value = ['bird', 'dog'];
 
     objectSelectElement.appendChild(selectOption)
   });
-  
+
   objectSelectElement.value = objectOptions[0];
 }
 ```
 
-## Interface Options
+### Interface Options
 
 ```html
 <ion-list>
@@ -463,7 +463,7 @@ customActionSheetSelect.interfaceOptions = customActionSheetOptions;
 
 ### React
 
-## Single Selection
+### Single Selection
 
 ```tsx
 import React, { useState } from 'react';
@@ -512,7 +512,7 @@ export const SingleSelection: React.FC = () => {
 ```
 
 
-## Multiple Selection
+### Multiple Selection
 
 ```tsx
 import React, { useState } from 'react';
@@ -569,7 +569,7 @@ export const MultipleSelection: React.FC = () => {
 ```
 
 
-## Objects as Values
+### Objects as Values
 
 ```tsx
 import React, { useState } from 'react';
@@ -635,7 +635,7 @@ export const ObjectSelection: React.FC = () => {
 ```
 
 
-## Interface Options
+### Interface Options
 
 ```tsx
 import React, { useState } from 'react';
@@ -700,9 +700,9 @@ export const InterfaceOptionsSelection: React.FC = () => {
 
           <IonItem>
             <IonLabel>Popover</IonLabel>
-            <IonSelect 
-              interfaceOptions={customPopoverOptions} 
-              interface="popover" 
+            <IonSelect
+              interfaceOptions={customPopoverOptions}
+              interface="popover"
               placeholder="Select One"
               onIonChange={e => setHairColor(e.detail.value)}
               value={hairColor}>
@@ -744,7 +744,7 @@ export const InterfaceOptionsSelection: React.FC = () => {
 
 ### Vue
 
-## Single Selection
+### Single Selection
 
 ```html
 <template>
@@ -777,7 +777,7 @@ export const InterfaceOptionsSelection: React.FC = () => {
 </template>
 ```
 
-## Multiple Selection
+### Multiple Selection
 
 ```html
 <template>
@@ -817,7 +817,7 @@ export const InterfaceOptionsSelection: React.FC = () => {
 </template>
 ```
 
-## Interface Options
+### Interface Options
 
 ```html
 <template>
