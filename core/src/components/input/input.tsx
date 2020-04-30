@@ -21,6 +21,7 @@ export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
   private didBlurAfterEdit = false;
+  private tabindex?: string | number;
 
   @State() hasFocus = false;
 
@@ -89,18 +90,18 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * A hint to the browser for which keyboard to display.
-   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
-   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
-   */
-  @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
-
-  /**
    * A hint to the browser for which enter key to display.
    * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
    * `"previous"`, `"search"`, and `"send"`.
    */
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+
+  /**
+   * A hint to the browser for which keyboard to display.
+   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
+   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+   */
+  @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -212,6 +213,14 @@ export class Input implements ComponentInterface {
    * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  componentWillLoad() {
+    if (this.el.hasAttribute('tabindex')) {
+      const tabindex = this.el.getAttribute('tabindex');
+      this.tabindex = tabindex ? tabindex : undefined;
+      this.el.removeAttribute('tabindex');
+    }
+  }
 
   connectedCallback() {
     this.emitStyle();
@@ -384,6 +393,7 @@ export class Input implements ComponentInterface {
           spellCheck={this.spellcheck}
           step={this.step}
           size={this.size}
+          tabindex={this.tabindex}
           type={this.type}
           value={value}
           onInput={this.onInput}

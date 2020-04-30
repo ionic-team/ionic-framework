@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Input - Tabindex</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Input - Tabindex</ion-title>
+        <ion-buttons slot="primary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="menu"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-input placeholder="Tab 2nd: Normal IonInput"></ion-input>
+      <ion-input tabindex="1" placeholder="Tab 1st: tabindex 1"></ion-input>
+      <div tabindex="0">Tab 3rd: tabindex 0 on div</div>
+      <ion-input tabindex="0" placeholder="Tab 4th: tabindex 0"></ion-input>
+      <ion-input tabindex="-1" placeholder="IGNORE: tabindex -1"></ion-input>
+      <ion-input placeholder="Tab 5th: Normal IonInput"></ion-input>
+    </ion-content>
+
+    <style>
+      ion-input,
+      div {
+        margin-bottom: 10px;
+      }
+
+      .md div {
+        padding-left: 8px;
+      }
+    </style>
+  </ion-app>
+</body>
+
+</html>
