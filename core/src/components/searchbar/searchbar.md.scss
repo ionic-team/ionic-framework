@@ -6,6 +6,7 @@
 
 :host {
   --background: #{$searchbar-md-input-background-color};
+  --border-radius: #{$searchbar-md-input-border-radius};
   --box-shadow: #{$searchbar-md-input-box-shadow};
   --cancel-button-color: #{$searchbar-md-cancel-button-color};
   --clear-button-color: initial;
@@ -59,7 +60,6 @@
 
 .searchbar-input {
   @include padding(6px, 55px);
-  @include border-radius($searchbar-md-input-border-radius);
   @include background-position(start, 8px, center);
 
   height: $searchbar-md-input-height;

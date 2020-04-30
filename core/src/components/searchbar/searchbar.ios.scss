@@ -6,6 +6,7 @@
 
 :host {
   --background: #{$searchbar-ios-input-background-color};
+  --border-radius: #{$searchbar-ios-input-border-radius};
   --box-shadow: none;
   --cancel-button-color: #{$searchbar-ios-cancel-button-color};
   --clear-button-color: #{$searchbar-ios-input-clear-icon-color};
@@ -45,7 +46,6 @@
 
 .searchbar-input {
   @include padding(0, 28px);
-  @include border-radius($searchbar-ios-input-border-radius);
 
   height: 100%;
 

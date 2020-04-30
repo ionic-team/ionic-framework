@@ -1,4 +1,4 @@
-## Single Selection
+### Single Selection
 
 ```html
 <ion-list>
@@ -29,7 +29,7 @@
 </ion-list>
 ```
 
-## Multiple Selection
+### Multiple Selection
 
 ```html
 <ion-list>
@@ -72,7 +72,7 @@ const select = document.querySelector('multiple');
 select.value = ['bird', 'dog'];
 ```
 
-## Objects as Values
+### Objects as Values
 
 ```html
 <ion-list>
@@ -122,12 +122,12 @@ select.value = ['bird', 'dog'];
 
     objectSelectElement.appendChild(selectOption)
   });
-  
+
   objectSelectElement.value = objectOptions[0];
 }
 ```
 
-## Interface Options
+### Interface Options
 
 ```html
 <ion-list>

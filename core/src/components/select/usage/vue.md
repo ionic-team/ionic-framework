@@ -1,4 +1,4 @@
-## Single Selection
+### Single Selection
 
 ```html
 <template>
@@ -31,7 +31,7 @@
 </template>
 ```
 
-## Multiple Selection
+### Multiple Selection
 
 ```html
 <template>
@@ -71,7 +71,7 @@
 </template>
 ```
 
-## Interface Options
+### Interface Options
 
 ```html
 <template>

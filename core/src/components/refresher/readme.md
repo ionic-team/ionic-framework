@@ -51,7 +51,7 @@ Using the MD native `ion-refresher` requires setting the `pullingIcon` property 
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
-      pullingIcon="arrow-dropdown"
+      pullingIcon="chevron-down-circle-outline"
       pullingText="Pull to refresh"
       refreshingSpinner="circles"
       refreshingText="Refreshing...">
@@ -104,7 +104,7 @@ export class RefresherExample {
 <ion-content>
   <ion-refresher slot="fixed">
     <ion-refresher-content
-      pulling-icon="arrow-dropdown"
+      pulling-icon="chevron-down-circle-outline"
       pulling-text="Pull to refresh"
       refreshing-spinner="circles"
       refreshing-text="Refreshing...">
@@ -120,6 +120,7 @@ export class RefresherExample {
 import React from 'react';
 import { IonContent, IonRefresher, IonRefresherContent } from '@ionic/react';
 import { RefresherEventDetail } from '@ionic/core';
+import { chevronDownCircleOutline } from 'ionicons/icons';
 
 function doRefresh(event: CustomEvent<RefresherEventDetail>) {
   console.log('Begin async operation');
@@ -150,7 +151,7 @@ export const RefresherExample: React.FC = () => (
     <IonContent>
       <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
         <IonRefresherContent
-          pullingIcon="arrow-dropdown"
+          pullingIcon={chevronDownCircleOutline}
           pullingText="Pull to refresh"
           refreshingSpinner="circles"
           refreshingText="Refreshing...">
@@ -184,7 +185,7 @@ export const RefresherExample: React.FC = () => (
   <ion-content>
     <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
       <ion-refresher-content
-        pulling-icon="arrow-dropdown"
+        pulling-icon="chevron-down-circle-outline"
         pulling-text="Pull to refresh"
         refreshing-spinner="circles"
         refreshing-text="Refreshing...">

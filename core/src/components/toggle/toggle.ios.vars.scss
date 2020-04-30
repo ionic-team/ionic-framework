@@ -23,13 +23,16 @@ $toggle-ios-background-color-off:      rgba($text-color-rgb, .088) !default;
 $toggle-ios-background-color-on:       ion-color(primary, base) !default;
 
 /// @prop - Width of the toggle handle
-$toggle-ios-handle-width:              $toggle-ios-height - ($toggle-ios-border-width * 2) !default;
+$toggle-ios-handle-width:              calc(#{$toggle-ios-height} - (#{$toggle-ios-border-width} * 2)) !default;
 
 /// @prop - Height of the toggle handle
 $toggle-ios-handle-height:             $toggle-ios-handle-width !default;
 
+/// @prop - Max height of the toggle handle
+$toggle-ios-handle-max-height:         calc(100% - (var(--handle-spacing) * 2)) !default;
+
 /// @prop - Border radius of the toggle handle
-$toggle-ios-handle-border-radius:      $toggle-ios-handle-height / 2 !default;
+$toggle-ios-handle-border-radius:      $toggle-ios-width / 2 !default;
 
 /// @prop - Box shadow of the toggle handle
 $toggle-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, .16), 0 3px 1px rgba(0, 0, 0, .1) !default;
@@ -42,6 +45,9 @@ $toggle-ios-media-margin:              0 !default;
 
 /// @prop - Transition duration of the toggle icon
 $toggle-ios-transition-duration:       300ms !default;
+
+/// @prop - Transition of the toggle icon
+$toggle-ios-transition:                transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms !default;
 
 /// @prop - Opacity of the disabled toggle
 $toggle-ios-disabled-opacity:          .3 !default;

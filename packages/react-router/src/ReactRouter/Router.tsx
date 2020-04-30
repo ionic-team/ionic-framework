@@ -448,6 +448,9 @@ export class RouteManager extends React.Component<RouteManagerProps, RouteManage
   }
 
   navigateBack(defaultHref?: string) {
+    const config = getConfig();
+    defaultHref = defaultHref ? defaultHref : config && config.get('backButtonDefaultHref');
+
     const { view: leavingView } = this.state.viewStacks.findViewInfoById(this.activeIonPageId);
     if (leavingView) {
       if (leavingView.id === leavingView.prevId) {

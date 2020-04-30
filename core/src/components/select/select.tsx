@@ -12,10 +12,9 @@ import { SelectCompareFn } from './select-interface';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @TODOpart placeholder - The text displayed in the select when there is no value.
- * @TODOpart text - The displayed value of the select.
- * @TODOpart icon - The select icon container.
- * @TODOpart icon-inner - The select icon.
+ * @part placeholder - The text displayed in the select when there is no value.
+ * @part text - The displayed value of the select.
+ * @part icon - The select icon container.
  */
 @Component({
   tag: 'ion-select',
@@ -79,10 +78,12 @@ export class Select implements ComponentInterface {
 
   /**
    * Any additional options that the `alert`, `action-sheet` or `popover` interface
-   * can take. See the [AlertController API docs](../../alert/AlertController/#create), the
-   * [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the
-   * [PopoverController API docs](../../popover/PopoverController/#create) for the
+   * can take. See the [ion-alert docs](../alert), the
+   * [ion-action-sheet docs](../action-sheet) and the
+   * [ion-popover docs](../popover) for the
    * create options for each interface.
+   *
+   * Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
    */
   @Prop() interfaceOptions: any = {};
 
@@ -451,7 +452,7 @@ export class Select implements ComponentInterface {
           {selectText}
         </div>
         <div class="select-icon" role="presentation" part="icon">
-          <div class="select-icon-inner" part="icon-inner"></div>
+          <div class="select-icon-inner"></div>
         </div>
         <button
           type="button"

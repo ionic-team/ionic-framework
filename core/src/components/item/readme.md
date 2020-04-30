@@ -1397,6 +1397,13 @@ Item Inputs
 | `"start"` | Content is placed to the left of the item text in LTR, and to the right in RTL. |
 
 
+## Shadow Parts
+
+| Part            | Description                                                       |
+| --------------- | ----------------------------------------------------------------- |
+| `"detail-icon"` | The chevron icon for the item. Only applies when `detail="true"`. |
+
+
 ## CSS Custom Properties
 
 | Name                             | Description                                                                                                   |

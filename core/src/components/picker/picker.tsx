@@ -216,6 +216,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return (
       <Host
         aria-modal="true"
+        tabindex="-1"
         class={{
           [mode]: true,
 

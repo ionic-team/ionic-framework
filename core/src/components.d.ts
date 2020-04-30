@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController, } from "./interface";
+import { IonicSafeString, } from ".";
 import { SelectCompareFn, } from "./components/select/select-interface";
 export namespace Components {
     interface IonActionSheet {
@@ -119,7 +120,7 @@ export namespace Components {
         /**
           * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
@@ -800,7 +801,7 @@ export namespace Components {
         /**
           * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "loadingText"?: string;
+        "loadingText"?: string | IonicSafeString;
     }
     interface IonInput {
         /**
@@ -844,6 +845,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        /**
           * Returns the native `<input>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLInputElement>;
@@ -880,7 +885,7 @@ export namespace Components {
          */
         "name": string;
         /**
-          * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+          * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, `"date"`, or `"password"`, otherwise it is ignored. When the type attribute is `"date"`, `pattern` will only be used in browsers that do not support the `"date"` input type natively. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date for more information.
          */
         "pattern"?: string;
         /**
@@ -1146,7 +1151,7 @@ export namespace Components {
         /**
           * Optional text content to display in the loading indicator.
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
@@ -1776,7 +1781,7 @@ export namespace Components {
         /**
           * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "pullingText"?: string;
+        "pullingText"?: string | IonicSafeString;
         /**
           * An animated SVG spinner that shows when refreshing begins
          */
@@ -1784,7 +1789,7 @@ export namespace Components {
         /**
           * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "refreshingText"?: string;
+        "refreshingText"?: string | IonicSafeString;
     }
     interface IonReorder {
     }
@@ -1940,6 +1945,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        /**
           * Returns the native `<input>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLInputElement>;
@@ -2042,7 +2051,7 @@ export namespace Components {
          */
         "interface": SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](../alert), the [ion-action-sheet docs](../action-sheet) and the [ion-popover docs](../popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions": any;
         /**
@@ -2375,9 +2384,17 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        /**
           * Returns the native `<textarea>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLTextAreaElement>;
+        /**
+          * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+         */
+        "inputmode"?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
@@ -2485,7 +2502,7 @@ export namespace Components {
         /**
           * Message to be shown in the toast.
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
@@ -3332,7 +3349,7 @@ declare namespace LocalJSX {
         /**
           * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
@@ -4052,7 +4069,7 @@ declare namespace LocalJSX {
         /**
           * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "loadingText"?: string;
+        "loadingText"?: string | IonicSafeString;
     }
     interface IonInput {
         /**
@@ -4095,6 +4112,10 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the input.
          */
         "disabled"?: boolean;
+        /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
@@ -4144,7 +4165,7 @@ declare namespace LocalJSX {
          */
         "onIonInput"?: (event: CustomEvent<KeyboardEvent>) => void;
         /**
-          * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+          * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, `"date"`, or `"password"`, otherwise it is ignored. When the type attribute is `"date"`, `pattern` will only be used in browsers that do not support the `"date"` input type natively. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date for more information.
          */
         "pattern"?: string;
         /**
@@ -4382,7 +4403,7 @@ declare namespace LocalJSX {
         /**
           * Optional text content to display in the loading indicator.
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
@@ -4934,7 +4955,7 @@ declare namespace LocalJSX {
         /**
           * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "pullingText"?: string;
+        "pullingText"?: string | IonicSafeString;
         /**
           * An animated SVG spinner that shows when refreshing begins
          */
@@ -4942,7 +4963,7 @@ declare namespace LocalJSX {
         /**
           * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "refreshingText"?: string;
+        "refreshingText"?: string | IonicSafeString;
     }
     interface IonReorder {
     }
@@ -5090,6 +5111,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
@@ -5212,7 +5237,7 @@ declare namespace LocalJSX {
          */
         "interface"?: SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](../alert), the [ion-action-sheet docs](../action-sheet) and the [ion-popover docs](../popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions"?: any;
         /**
@@ -5540,6 +5565,14 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        /**
+          * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+         */
+        "inputmode"?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
+        /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
@@ -5652,7 +5685,7 @@ declare namespace LocalJSX {
         /**
           * Message to be shown in the toast.
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
