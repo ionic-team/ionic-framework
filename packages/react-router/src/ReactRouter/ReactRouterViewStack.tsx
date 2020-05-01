@@ -123,7 +123,6 @@ export class ReactRouterViewStack extends ViewStacks {
       if (!viewItem) {
         viewItems.some(matchNotFoundView);
       }
-      // LEFT OFF - need to loop through viewstacks instead so we can return VS below
     }
 
     return { viewItem, match };

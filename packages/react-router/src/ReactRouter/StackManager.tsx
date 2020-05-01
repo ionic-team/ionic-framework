@@ -5,6 +5,7 @@ import {
   generateId
 } from '@ionic/react';
 import React from 'react';
+import { matchPath } from 'react-router-dom';
 
 interface StackManagerProps {
   routeInfo: RouteInfo;
@@ -30,7 +31,7 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
 
   componentDidMount() {
     if (this.routerOutletElement) {
-      console.log('SM Mount - ' + this.routerOutletElement.id);
+      console.log(`SM Mount - ${this.routerOutletElement.id} (${this.id})`);
       this.routerContextSubscriptions.push(
         this.context.onRouteChange(this.handlePageTransition.bind(this))
       );
@@ -39,8 +40,9 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
   }
 
   componentWillUnmount() {
-    console.log('SM UNMount - ' + (this.routerOutletElement?.id as any).id);
+    console.log(`SM UNMount - ${(this.routerOutletElement?.id as any).id} (${this.id})`);
     this.routerContextSubscriptions.forEach(unsubscribe => unsubscribe());
+    this.context.clearOutlet(this.id);
   }
 
   shouldComponentUpdate() {
@@ -57,20 +59,22 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
   }
 
   registerIonPage(page: HTMLElement, routeInfo: RouteInfo) {
-    // const matchedNode = matchComponent(this.ionRouterOutlet!.props.children, routeInfo) as React.ReactElement;
-    // if (matchedNode) {
-    // const { viewItem: foundView } = findViewItemByRoute(this.viewItems, routeInfo.pathname);
-    const foundView = this.context.findViewItemByRouteInfo(this.id, routeInfo);
-    if (foundView) {
-      foundView.ionPageElement = page;
-      // TODO: check to make sure component still updates (redux/etc...)
-      // foundView.reactElement = matchedNode as any;
-      foundView.ionRoute = true;
+    const matchedNode = matchComponent(this.ionRouterOutlet!.props.children, routeInfo) as React.ReactElement;
+    if (matchedNode) {
+      // const { viewItem: foundView } = findViewItemByRoute(this.viewItems, routeInfo.pathname);
+      const foundView = this.context.findViewItemByRouteInfo(this.id, routeInfo);
+      if (foundView) {
+        foundView.ionPageElement = page;
+        // TODO: check to make sure component still updates (redux/etc...)
+        // foundView.reactElement = matchedNode as any;
+        foundView.ionRoute = true;
+      }
+      this.handlePageTransition(routeInfo);
     }
-    this.handlePageTransition(routeInfo);
   }
 
   async transitionPage(routeInfo: RouteInfo) {
+    debugger;
     const enteringViewItem = this.context.findViewItemByRouteInfo(this.id, routeInfo);
     let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(this.id, routeInfo);
 
@@ -80,7 +84,7 @@ export class StackManager extends React.Component<StackManagerProps, StackManage
         enteringViewItem.routeData.pendingTransition = true;
       } else {
         // TODO: investigatge moving viewitem creation here insetead of in reader/getChildren
-        // this.forceUpdate();
+        this.forceUpdate();
       }
       return;
     }
@@ -195,18 +199,18 @@ function clonePageElement(leavingViewHtml: string) {
 }
 
 // TODO: keep until the todo in registerIonPage is done
-// function matchComponent(node: React.ReactNode, routeInfo: RouteInfo) {
-//   let matchedNode: React.ReactNode;
-//   React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
-//     const matchProps = {
-//       exact: child.props.exact,
-//       path: child.props.path || child.props.from,
-//       component: child.props.component
-//     };
-//     const match = matchPath(routeInfo.pathname, matchProps);
-//     if (match) {
-//       matchedNode = child;
-//     }
-//   });
-//   return matchedNode;
-// }
+function matchComponent(node: React.ReactNode, routeInfo: RouteInfo) {
+  let matchedNode: React.ReactNode;
+  React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
+    const matchProps = {
+      exact: child.props.exact,
+      path: child.props.path || child.props.from,
+      component: child.props.component
+    };
+    const match = matchPath(routeInfo.pathname, matchProps);
+    if (match) {
+      matchedNode = child;
+    }
+  });
+  return matchedNode;
+}

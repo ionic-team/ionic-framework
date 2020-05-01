@@ -193,13 +193,6 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
   }
 }
 
-// <<<<<<< HEAD
-// interface IonTabBarProps extends Omit<IonTabBarUnwrappedProps, 'onSetCurrentTab' | 'routeInfo'> {
-//   routeInfo?: RouteInfo;
-// }
-
-// export const IonTabBar: React.FC<IonTabBarProps> = React.memo<IonTabBarProps>(props => {
-// =======
 const IonTabBarContainer: React.FC<InternalProps> = React.memo<InternalProps>(({ forwardedRef, ...props }) => {
   const context = useContext(NavContext);
   return (

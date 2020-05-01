@@ -38,6 +38,7 @@ class IonRouterInner extends React.Component<IonRouteProps, IonRouteState> {
   routeInfo: RouteInfo;
   viewStack = new ReactRouterViewStack();
   routeMangerContextState: RouteManagerContextState = {
+    clearOutlet: this.viewStack.clear,
     onRouteChange: this.registerRouteChangeHandler.bind(this),
     getViewItemForTransition: this.viewStack.getViewItemForTransition,
     getChildrenToRender: this.viewStack.getChildrenToRender,
