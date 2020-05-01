@@ -357,6 +357,10 @@ export namespace Components {
     }
     interface IonCheckbox {
         /**
+          * Sets the aria-label of the inside button of the checkox. Accessibility feature.
+         */
+        "ariaLabel": string;
+        /**
           * If `true`, the checkbox is selected.
          */
         "checked": boolean;
@@ -3600,6 +3604,10 @@ declare namespace LocalJSX {
         "mode"?: "ios" | "md";
     }
     interface IonCheckbox {
+        /**
+          * Sets the aria-label of the inside button of the checkox. Accessibility feature.
+         */
+        "ariaLabel"?: string;
         /**
           * If `true`, the checkbox is selected.
          */

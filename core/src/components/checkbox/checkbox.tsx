@@ -54,6 +54,12 @@ export class Checkbox implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * Sets the aria-label of the inside button of the checkox.
+   * Accessibility feature.
+   */
+  @Prop() ariaLabel = '';
+
+  /**
    * The value of the toggle does not mean if it's checked or not, use the `checked`
    * property for that.
    *
@@ -169,6 +175,7 @@ export class Checkbox implements ComponentInterface {
           {path}
         </svg>
         <button
+          aria-label={this.ariaLabel}
           type="button"
           onFocus={this.onFocus}
           onBlur={this.onBlur}
