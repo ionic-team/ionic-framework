@@ -12,14 +12,14 @@ import { IonTabButton } from './IonTabButton';
 type IonTabBarProps = LocalJSX.IonTabBar & IonicReactProps & {
   onIonTabsDidChange?: (event: CustomEvent<{ tab: string; }>) => void;
   onIonTabsWillChange?: (event: CustomEvent<{ tab: string; }>) => void;
-  onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
-  routeInfo: RouteInfo;
   slot?: 'bottom' | 'top';
   style?: { [key: string]: string; };
 };
 
 interface InternalProps extends IonTabBarProps {
   forwardedRef?: React.RefObject<HTMLIonIconElement>;
+  onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
+  routeInfo: RouteInfo;
 }
 
 interface TabUrls {
@@ -94,7 +94,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     return false;
   }
 
-  static getDerivedStateFromProps(props: IonTabBarProps, state: IonTabBarState) {
+  static getDerivedStateFromProps(props: InternalProps, state: IonTabBarState) {
     const tabs = { ...state.tabs };
     const tabKeys = Object.keys(state.tabs);
     const activeTab = tabKeys

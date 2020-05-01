@@ -1,4 +1,4 @@
-import { RouteInfo } from '../models';
+import { RouteInfo } from '../models/RouteInfo';
 
 import { ViewItem } from './ViewItem';
 
@@ -7,6 +7,7 @@ export abstract class ViewStacks {
 
   constructor() {
     this.add = this.add.bind(this);
+    this.clear = this.clear.bind(this);
     this.getViewItemsForOutlet = this.getViewItemsForOutlet.bind(this);
     this.remove = this.remove.bind(this);
   }
@@ -20,6 +21,14 @@ export abstract class ViewStacks {
     }
   }
 
+  clear(outletId: string) {
+    // Give some time for the leaving views to transition before removing
+    setTimeout(() => {
+      console.log('Removing viewstack for outletID ' + outletId);
+      delete this.viewStacks[outletId];
+    }, 500);
+  }
+
   getViewItemsForOutlet(outletId: string) {
     return (this.viewStacks[outletId] || []).filter(x => x.mount);
   }
@@ -31,9 +40,10 @@ export abstract class ViewStacks {
       const viewItemToRemove = viewStack.find(x => x.id === viewItem.id);
       if (viewItemToRemove) {
         viewItemToRemove.mount = false;
+        // Give some time for the leaving view to transition before removing
         setTimeout(() => {
           this.viewStacks[outletId] = viewStack.filter(x => x.id !== viewItemToRemove.id);
-        }, 10000);
+        }, 500);
       }
     }
   }
