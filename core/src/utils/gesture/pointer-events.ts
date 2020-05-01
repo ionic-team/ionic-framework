@@ -7,7 +7,10 @@ export const createPointerEvents = (
   pointerDown: any,
   pointerMove: any,
   pointerUp: any,
-  options: EventListenerOptions
+  options: {
+    passive?: boolean;
+    capture?: boolean
+  }
 ) => {
 
   let rmTouchStart: (() => void) | undefined;

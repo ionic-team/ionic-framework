@@ -66,6 +66,7 @@ export class PickerColumnCmp implements ComponentInterface {
       gestureName: 'picker-swipe',
       gesturePriority: 100,
       threshold: 0,
+      passive: false,
       onStart: ev => this.onStart(ev),
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
