@@ -42,7 +42,7 @@ export const enableScrollAssist = (
   };
 };
 
-const jsSetFocus = (
+const jsSetFocus = async (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
   contentEl: HTMLIonContentElement | null,
@@ -62,6 +62,7 @@ const jsSetFocus = (
   // temporarily move the focus to the focus holder so the browser
   // doesn't freak out while it's trying to get the input in place
   // at this point the native text input still does not have focus
+  const inputLocation = inputEl.getBoundingClientRect();
   relocateInput(componentEl, inputEl, true, scrollData.inputSafeY);
   inputEl.focus();
 
@@ -73,8 +74,8 @@ const jsSetFocus = (
       if (scrollContentTimeout !== undefined) {
         clearTimeout(scrollContentTimeout);
       }
-      window.removeEventListener('resize', scrollContent);
-      window.removeEventListener('keyboardWillShow', scrollContent);
+
+      window.removeEventListener('ionKeyboardDidShow', scrollContent);
 
       // scroll the input into place
       if (contentEl) {
@@ -89,11 +90,37 @@ const jsSetFocus = (
       inputEl.focus();
     };
 
-    window.addEventListener('resize', scrollContent);
-    window.addEventListener('keyboardWillShow', scrollContent);
+    /**
+     * If an input is below the fold, Safari is not going
+     * to properly scroll to it until the webview is resized.
+     * As a result, we need to wait for the keyboard to be shown
+     * in order to properly scroll.
+     */
+    if (contentEl) {
+      const scrollEl = await contentEl.getScrollElement();
 
-    // fallback in case resize never fires
-    scrollContentTimeout = setTimeout(scrollContent, 300);
+      /**
+       * An input is below the fold if it is not visible
+       * on a screen that has scrollTop = 0. Inputs
+       * that are partially visible are considered
+       * above the fold in this case.
+       */
+      const offset = inputLocation.y + scrollEl.scrollTop;
+      if (offset > scrollEl.clientHeight) {
+        window.addEventListener('ionKeyboardDidShow', scrollContent);
+
+        /**
+         * This should only fire in 2 instances:
+         * 1. The app is very slow.
+         * 2. The app is running in a browser on an old OS
+         * that does not support Ionic Keyboard Events
+         */
+        scrollContentTimeout = setTimeout(scrollContent, 1000);
+        return;
+      }
+    }
+
+    scrollContent();
   }
 };
 
