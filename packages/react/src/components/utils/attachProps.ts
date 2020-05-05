@@ -61,7 +61,11 @@ export const getClassName = (classList: DOMTokenList, newProps: any, oldProps: a
  * Checks if an event is supported in the current execution environment.
  * @license Modernizr 3.0.0pre (Custom Build) | MIT
  */
-export const isCoveredByReact = (eventNameSuffix: string, doc: Document = document) => {
+export const isCoveredByReact = (eventNameSuffix: string, doc: Document) => {
+  if (typeof document === "undefined") {
+    return true;
+  }
+  doc = document;
   const eventName = 'on' + eventNameSuffix;
   let isSupported = eventName in doc;
 
