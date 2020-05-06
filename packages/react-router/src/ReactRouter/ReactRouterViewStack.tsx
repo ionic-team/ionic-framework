@@ -1,4 +1,3 @@
-
 import { RouteInfo, ViewItem, ViewLifeCycleManager, ViewStacks, generateId } from '@ionic/react';
 import React from 'react';
 import { matchPath } from 'react-router';
@@ -42,46 +41,46 @@ export class ReactRouterViewStack extends ViewStacks {
   }
 
   getChildrenToRender(outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo) {
-    const children: React.ReactNode[] = [];
     const viewItems = this.getViewItemsForOutlet(outletId);
 
-    React.Children.forEach(ionRouterOutlet!.props.children, (child: React.ReactElement) => {
-
-      // If child is "Route like"
-      if (child.props.path || child.props.from) {
-        const foundView = viewItems.find(viewItem => {
-          if (child.props.path) {
-            return viewItem.reactElement.props.path === child.props.path;
-          } else {
-            return viewItem.reactElement.props.from === child.props.from;
-          }
-        });
-        if (foundView && foundView.mount) {
-          const clonedChild = <ViewLifeCycleManager key={`view-${foundView.id}`}>
-            {React.cloneElement(child, {
-              computedMatch: foundView.routeData.match
-            })}
-          </ViewLifeCycleManager>;
-          children.push(clonedChild);
-        } else {
-          const newViewItem = this.createViewItem(outletId, child, routeInfo);
-          const clonedChild = <ViewLifeCycleManager key={`view-${newViewItem.id}`}>
-            {React.cloneElement(newViewItem.reactElement, {
-              computedMatch: newViewItem.routeData.match
-            })}
-          </ViewLifeCycleManager>;
-          this.add(newViewItem);
-          children.push(clonedChild);
-        }
-      } else {
-        children.push(child);
+    // Sync latest routes with viewItems
+    React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
+      const viewItem = viewItems.find(v => {
+        return matchComponent(child, v.routeData.childProps.path || v.routeData.childProps.from);
+      });
+      if (viewItem) {
+        viewItem.reactElement = child;
       }
     });
 
+    const children = viewItems.map(viewItem => {
+
+      let clonedChild;
+      if (viewItem.ionRoute) {
+        clonedChild = (
+          <ViewLifeCycleManager key={`view-${viewItem.id}`} mount={viewItem.mount} removeView={() => this.remove(viewItem)}>
+            {React.cloneElement(viewItem.reactElement, {
+              computedMatch: viewItem.routeData.match
+            })}
+          </ViewLifeCycleManager>
+        );
+      } else {
+        const match = matchComponent(viewItem.reactElement, routeInfo.pathname);
+        clonedChild = (
+          <ViewLifeCycleManager key={`view-${viewItem.id}`} mount={viewItem.mount} removeView={() => this.remove(viewItem)}>
+            {React.cloneElement(viewItem.reactElement, {
+              computedMatch: match
+            })}
+          </ViewLifeCycleManager>
+        );
+      }
+
+      return clonedChild;
+    });
     return children;
   }
 
-  findViewItemByRouteInfo(outletId: string, routeInfo: RouteInfo) {
+  findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string) {
     const { viewItem, match } = this.findViewItemByPath(routeInfo.pathname, outletId);
     if (viewItem && match) {
       viewItem.routeData.match = match;
@@ -89,8 +88,8 @@ export class ReactRouterViewStack extends ViewStacks {
     return viewItem;
   }
 
-  findLeavingViewItemByRouteInfo(outletId: string, routeInfo: RouteInfo) {
-    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname!, outletId);
+  findLeavingViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string) {
+    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname!, outletId, true, true);
     return viewItem;
   }
 
@@ -100,11 +99,11 @@ export class ReactRouterViewStack extends ViewStacks {
   }
 
   getViewItemForTransition(pathname: string) {
-    const { viewItem } = this.findViewItemByPath(pathname);
+    const { viewItem } = this.findViewItemByPath(pathname, undefined, true, true);
     return viewItem;
   }
 
-  private findViewItemByPath(pathname: string, outletId?: string) {
+  private findViewItemByPath(pathname: string, outletId?: string, forceExact?: boolean, mustBeIonRoute?: boolean) {
 
     let viewItem: ViewItem | undefined;
     let match: ReturnType<typeof matchPath> | undefined;
@@ -114,22 +113,24 @@ export class ReactRouterViewStack extends ViewStacks {
       viewStack = this.getViewItemsForOutlet(outletId);
       viewStack.some(matchView);
       if (!viewItem) {
-        viewStack.some(matchNotFoundView);
+        viewStack.some(matchDefaultRoute);
       }
     } else {
-
       const viewItems = this.getAllViewItems();
       viewItems.some(matchView);
       if (!viewItem) {
-        viewItems.some(matchNotFoundView);
+        viewItems.some(matchDefaultRoute);
       }
     }
 
     return { viewItem, match };
 
     function matchView(v: ViewItem) {
+      if (mustBeIonRoute && !v.ionRoute) {
+        return false;
+      }
       const matchProps = {
-        exact: true, // v.routeData.childProps.exact,
+        exact: forceExact ? true : v.routeData.childProps.exact,
         path: v.routeData.childProps.path || v.routeData.childProps.from,
         component: v.routeData.childProps.component
       };
@@ -142,8 +143,8 @@ export class ReactRouterViewStack extends ViewStacks {
       return false;
     }
 
-    function matchNotFoundView(v: ViewItem) {
-      // try to find a route that doesn't have a path or from prop, that will be our not found route
+    function matchDefaultRoute(v: ViewItem) {
+      // try to find a route that doesn't have a path or from prop, that will be our default route
       if (!v.routeData.childProps.path && !v.routeData.childProps.from) {
         match = {
           path: pathname,
@@ -159,4 +160,16 @@ export class ReactRouterViewStack extends ViewStacks {
 
   }
 
+}
+
+function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
+
+  const matchProps = {
+    exact: forceExact ? true : node.props.exact,
+    path: node.props.path || node.props.from,
+    component: node.props.component
+  };
+  const match = matchPath(pathname, matchProps);
+
+  return match;
 }

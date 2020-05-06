@@ -3,7 +3,6 @@ import { JSX as LocalJSX } from '@ionic/core';
 import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
-import { StackContext } from '../routing';
 
 import { IonicReactProps } from './IonicReactProps';
 import { IonRouterOutletInner } from './inner-proxies';
@@ -45,20 +44,11 @@ class IonRouterOutletContainer extends React.Component<InternalProps, InternalSt
 
     return (
       this.context.hasIonicRouter() ? (
-        this.state.ionPageContainer ? (
-          <StackManager routeInfo={this.context.routeInfo}>
-            <IonRouterOutletInner {...this.props}>
-              {this.props.children}
-            </IonRouterOutletInner>
-          </StackManager>
-        ) :
-          <StackContext.Provider
-            value={{ registerIonPage: this.registerIonPage }}
-          >
-            <IonRouterOutletInner {...this.props}>
-              {this.props.children}
-            </IonRouterOutletInner>
-          </StackContext.Provider>
+        <StackManager routeInfo={this.context.routeInfo}>
+          <IonRouterOutletInner {...this.props}>
+            {this.props.children}
+          </IonRouterOutletInner>
+        </StackManager>
       ) : (
           <IonRouterOutletInner ref={this.props.forwardedRef} {...this.props}>
             {this.props.children}

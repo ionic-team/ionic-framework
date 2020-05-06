@@ -30,7 +30,7 @@ export abstract class ViewStacks {
   }
 
   getViewItemsForOutlet(outletId: string) {
-    return (this.viewStacks[outletId] || []).filter(x => x.mount);
+    return (this.viewStacks[outletId] || []);
   }
 
   remove(viewItem: ViewItem) {
@@ -40,10 +40,7 @@ export abstract class ViewStacks {
       const viewItemToRemove = viewStack.find(x => x.id === viewItem.id);
       if (viewItemToRemove) {
         viewItemToRemove.mount = false;
-        // Give some time for the leaving view to transition before removing
-        setTimeout(() => {
-          this.viewStacks[outletId] = viewStack.filter(x => x.id !== viewItemToRemove.id);
-        }, 500);
+        this.viewStacks[outletId] = viewStack.filter(x => x.id !== viewItemToRemove.id);
       }
     }
   }
@@ -63,8 +60,8 @@ export abstract class ViewStacks {
 
   abstract createViewItem(outletId: string, reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement): ViewItem;
   abstract findViewItemByPathname(pathname: string, outletId?: string): ViewItem | undefined;
-  abstract findViewItemByRouteInfo(outletId: string, routeInfo: RouteInfo): ViewItem | undefined;
-  abstract findLeavingViewItemByRouteInfo(outletId: string, routeInfo: RouteInfo): ViewItem | undefined;
+  abstract findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string): ViewItem | undefined;
+  abstract findLeavingViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string): ViewItem | undefined;
   abstract getChildrenToRender(outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo): React.ReactNode[];
   abstract getViewItemForTransition(pathname: string): ViewItem | undefined;
 }
