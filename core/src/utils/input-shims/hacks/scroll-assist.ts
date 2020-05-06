@@ -119,7 +119,7 @@ const jsSetFocus = async (
       }
     }
 
-    scrollContent('automatic');
+    scrollContent();
   }
 };
 
