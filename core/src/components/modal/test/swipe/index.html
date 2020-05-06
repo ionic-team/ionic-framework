@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Modal - Swipe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <script type="module">
+    import { modalController } from '../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
+  <style>
+  :root {
+    --ion-safe-area-top: 20px;
+    --ion-safe-area-bottom: 20px;
+    --ion-safe-area-right: 20px;
+    --ion-safe-area-left: 20px;
+  }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <div class="ion-page">
+      <ion-header>
+        <ion-toolbar>
+            <ion-title>Modal - Swipe</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <p>
+            <ion-button id="swipe-modal" onclick="presentModal()">Present modal</ion-button>
+        </p>
+      </ion-content>
+    </div>
+  </ion-app>
+
+  <script>
+    const element = document.createElement('div');
+    element.innerHTML = `
+    <ion-header>
+      <ion-toolbar>
+          <ion-title>Modal</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+    </ion-content>
+    `;
+    async function presentModal() {
+      const presentingEl = document.querySelectorAll('.ion-page')[1];
+      const modalElement = await modalController.create({
+          component: element,
+          swipeToClose: true,
+          presentingElement: presentingEl,
+          mode: "ios"
+      });
+      modalElement.present();
+    }
+  </script>
+</body>
+
+</html>

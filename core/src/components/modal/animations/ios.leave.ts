@@ -52,11 +52,20 @@ export const iosLeaveAnimation = (
       const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
       const finalTransform = `translateY(${modalTransform}) scale(${toPresentingScale})`;
 
+      let finalBorderRadius = '0px';
+      const isIPhone = /iPhone/.test(navigator.userAgent);
+      const safeArea = getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-bottom');
+
+      // Check if it's an iPhone with an edge-to-edge display
+      if (isIPhone === true && safeArea !== '0px') {
+        finalBorderRadius = '39px 39px 0 0';
+      }
+
       presentingAnimation
         .addElement(presentingEl)
         .keyframes([
           { offset: 0, filter: 'contrast(0.85)', transform: finalTransform, borderRadius: '10px 10px 0 0' },
-          { offset: 1, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: '0px' }
+          { offset: 1, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: finalBorderRadius }
         ]);
 
       baseAnimation.addAnimation(presentingAnimation);

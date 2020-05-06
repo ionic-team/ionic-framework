@@ -52,6 +52,15 @@ export const iosEnterAnimation = (
       const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
       const finalTransform = `translateY(${modalTransform}) scale(${toPresentingScale})`;
 
+      let initialBorderRadius = '0px';
+      const isIPhone = /iPhone/.test(navigator.userAgent);
+      const safeArea = getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-bottom');
+
+      // Check if it's an iPhone with an edge-to-edge display
+      if (isIPhone === true && safeArea !== '0px') {
+        initialBorderRadius = '39px 39px 0 0';
+      }
+
       presentingAnimation
         .afterStyles({
           'transform': finalTransform
@@ -59,7 +68,7 @@ export const iosEnterAnimation = (
         .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
         .addElement(presentingEl)
         .keyframes([
-          { offset: 0, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: '0px' },
+          { offset: 0, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: initialBorderRadius },
           { offset: 1, filter: 'contrast(0.85)', transform: finalTransform, borderRadius: '10px 10px 0 0' }
         ]);
 
