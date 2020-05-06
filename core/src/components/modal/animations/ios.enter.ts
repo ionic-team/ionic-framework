@@ -54,10 +54,11 @@ export const iosEnterAnimation = (
 
       let initialBorderRadius = '0px';
       const isIPhone = /iPhone/.test(navigator.userAgent);
-      const safeArea = getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-bottom');
+      const iPhoneEdgeToEdgeRatios = ['0.46'];
+      const deviceRatio = (window.innerWidth / window.innerHeight).toFixed(2);
 
       // Check if it's an iPhone with an edge-to-edge display
-      if (isIPhone === true && safeArea !== '0px') {
+      if (isIPhone === true && iPhoneEdgeToEdgeRatios.indexOf(deviceRatio) !== -1) {
         initialBorderRadius = '39px 39px 0 0';
       }
 
