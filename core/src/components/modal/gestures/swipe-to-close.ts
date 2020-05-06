@@ -39,16 +39,18 @@ export const createSwipeToCloseGesture = (
   };
 
   const onMove = (detail: GestureDetail) => {
-    const step = detail.deltaY / height;
-    if (step < 0) { return; }
+    const step = getStep(detail.deltaY, height);
 
     animation.progressStep(step);
   };
 
   const onEnd = (detail: GestureDetail) => {
-    const velocity = detail.velocityY;
-    const step = detail.deltaY / height;
-    if (step < 0) { return; }
+    let velocity = detail.velocityY;
+    if (velocity <= 0) {
+      velocity = 0.0001; // Fixes modal stuck when swiping up from the bottom very fast
+    }
+
+    const step = getStep(detail.deltaY, height);
 
     const threshold = (detail.deltaY + velocity * 1000) / height;
 
@@ -97,4 +99,9 @@ export const createSwipeToCloseGesture = (
 
 const computeDuration = (remaining: number, velocity: number) => {
   return clamp(400, remaining / Math.abs(velocity * 1.1), 500);
+};
+
+const getStep = (deltaY: number, height: number) => {
+  const step = (height > 0) ? deltaY / height : 0.0001;
+  return Math.max(0.0001, Math.min(0.9999, step)); // Prevent step to be >= 1 or <= 0, cause this would throw an error or the modal would get stuck
 };
