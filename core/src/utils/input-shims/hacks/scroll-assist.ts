@@ -62,7 +62,6 @@ const jsSetFocus = async (
   // temporarily move the focus to the focus holder so the browser
   // doesn't freak out while it's trying to get the input in place
   // at this point the native text input still does not have focus
-  const inputLocation = inputEl.getBoundingClientRect();
   relocateInput(componentEl, inputEl, true, scrollData.inputSafeY);
   inputEl.focus();
 
@@ -90,23 +89,23 @@ const jsSetFocus = async (
       inputEl.focus();
     };
 
-    /**
-     * If an input is below the fold, Safari is not going
-     * to properly scroll to it until the webview is resized.
-     * As a result, we need to wait for the keyboard to be shown
-     * in order to properly scroll.
-     */
     if (contentEl) {
       const scrollEl = await contentEl.getScrollElement();
 
       /**
-       * An input is below the fold if it is not visible
-       * on a screen that has scrollTop = 0. Inputs
-       * that are partially visible are considered
-       * above the fold in this case.
+       * scrollData will only consider the amount we need
+       * to scroll in order to properly bring the input
+       * into view. It will not consider the amount
+       * we can scroll in the content element.
+       * As a result, scrollData may request a greater
+       * scroll position than is currently available
+       * in the DOM. If this is the case, we need to
+       * wait for the webview to resize/the keyboard
+       * to show in order for additional scroll
+       * bandwidth to become available.
        */
-      const offset = inputLocation.y + scrollEl.scrollTop;
-      if (offset > scrollEl.clientHeight) {
+      const totalScrollAmount = scrollEl.scrollHeight - scrollEl.clientHeight;
+      if (scrollData.scrollAmount > (totalScrollAmount - scrollEl.scrollTop)) {
         window.addEventListener('ionKeyboardDidShow', scrollContent);
 
         /**
@@ -120,7 +119,7 @@ const jsSetFocus = async (
       }
     }
 
-    scrollContent();
+    scrollContent('automatic');
   }
 };
 
