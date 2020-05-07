@@ -20,11 +20,10 @@ export const createSwipeToCloseGesture = (
   const ionContent: any = el.getElementsByTagName('ion-content')[0];
   let scrollElement: any;
 
-  if (ionContent !== null) {
-    ionContent.forceOverscroll = false;
+  if (ionContent !== undefined) {
     ionContent.getScrollElement().then((scrollElem: any) => {
       scrollElement = scrollElem;
-      scrollElem.addEventListener('scroll', (scrollEvent: any) => {
+      scrollElement.addEventListener('scroll', (scrollEvent: any) => {
         preventStart = true;
         if (scrollEvent.target.scrollTop <= 0) {
           preventStart = false;
@@ -59,7 +58,7 @@ export const createSwipeToCloseGesture = (
   };
 
   const onMove = (detail: GestureDetail) => {
-    if (scrollElement !== null && overflowValue !== 'hidden' && detail.deltaY >= 0) {
+    if (scrollElement !== undefined && overflowValue !== 'hidden' && detail.deltaY >= 0) {
       overflowValue = 'hidden';
       scrollElement.style.overflow = overflowValue;
     }
@@ -71,7 +70,7 @@ export const createSwipeToCloseGesture = (
   };
 
   const onEnd = (detail: GestureDetail) => {
-    if (scrollElement !== null && overflowValue !== 'auto') {
+    if (scrollElement !== undefined) {
       overflowValue = 'auto';
       scrollElement.style.overflow = overflowValue;
     }
