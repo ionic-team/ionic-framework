@@ -14,8 +14,8 @@ declare const requestAnimationFrame: any;
  * Useful for whenever you need to explicitly
  * do "myElement.shadowRoot!.querySelector(...)".
  */
-export const getElementRoot = (el: HTMLElement) => {
-  return el.shadowRoot || el;
+export const getElementRoot = (el: HTMLElement, fallback: HTMLElement = el) => {
+  return el.shadowRoot || fallback;
 };
 
 /**
