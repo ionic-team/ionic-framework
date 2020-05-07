@@ -149,7 +149,7 @@ export class Refresher implements ComponentInterface {
     if (getIonMode(this) === 'ios') {
       await translateElement(el, undefined);
     } else {
-      await transitionEndAsync(this.el.querySelector('.refresher-refreshing-icon'));
+      await transitionEndAsync(this.el.querySelector('.refresher-refreshing-icon'), 200);
     }
 
     this.didRefresh = false;
