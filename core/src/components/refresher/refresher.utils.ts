@@ -148,7 +148,7 @@ export const handleScrollWhileRefreshing = (
 export const translateElement = (el?: HTMLElement, value?: string) => {
   if (!el) { return Promise.resolve(); }
 
-  const trans = transitionEndAsync(el);
+  const trans = transitionEndAsync(el, 200);
 
   writeTask(() => {
     el.style.setProperty('transition', '0.2s all ease-out');
