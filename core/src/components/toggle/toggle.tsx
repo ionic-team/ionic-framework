@@ -214,6 +214,7 @@ export class Toggle implements ComponentInterface {
           onBlur={this.onBlur}
           disabled={disabled}
           ref={btnEl => this.buttonEl = btnEl}
+          aria-hidden="true"
         >
         </button>
       </Host>
