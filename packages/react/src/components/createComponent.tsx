@@ -50,10 +50,11 @@ export const createReactComponent = <PropType, ElementType>(
     render() {
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
 
+      const isRunningInBrowser = typeof document !== 'undefined';
       const propsToPass = Object.keys(cProps).reduce((acc, name) => {
         if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
           const eventName = name.substring(2).toLowerCase();
-          if (isCoveredByReact(eventName)) {
+          if (isRunningInBrowser && isCoveredByReact(eventName)) {
             (acc as any)[name] = (cProps as any)[name];
           }
         } else if (typeof (cProps as any)[name] === 'string') {
@@ -68,7 +69,7 @@ export const createReactComponent = <PropType, ElementType>(
         style
       };
 
-      if (routerLinkComponent) {
+      if (isRunningInBrowser && routerLinkComponent) {
         if (this.props.routerLink && !this.props.href) {
           newProps.href = this.props.routerLink;
         }
