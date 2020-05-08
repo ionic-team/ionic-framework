@@ -50,6 +50,7 @@ export const createReactComponent = <PropType, ElementType>(
     render() {
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
 
+      // tslint:disable-next-line:strict-type-predicates
       const isRunningInBrowser = typeof document !== 'undefined';
       const propsToPass = Object.keys(cProps).reduce((acc, name) => {
         if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
