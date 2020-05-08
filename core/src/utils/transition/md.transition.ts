@@ -55,7 +55,6 @@ export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): 
           leavingPage.elements[0].style.setProperty('display', 'none');
         }
       })
-      .afterStyles({ 'display': 'none' })
       .fromTo('transform', `translateY(${CENTER})`, `translateY(${OFF_BOTTOM})`)
       .fromTo('opacity', 1, 0);
 
