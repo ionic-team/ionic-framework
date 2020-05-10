@@ -1,5 +1,5 @@
 ```typescript
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
 import { trash, share, playCircleOutline, heart, close } from 'ionicons/icons';
 

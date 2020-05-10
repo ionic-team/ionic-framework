@@ -36,7 +36,7 @@ Avatars can be used by themselves or inside of any element. If placed inside of 
 ### React
 
 ```tsx
-import React from 'react'
+import React from 'react';
 import { IonAvatar, IonChip, IonItem, IonLabel, IonContent } from '@ionic/react';
 
 export const AvatarExample: React.FC = () => (
