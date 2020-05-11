@@ -505,6 +505,7 @@ const buttonClass = (button: AlertButton): CssClassMap => {
     'alert-button': true,
     'ion-focusable': true,
     'ion-activatable': true,
+    [`alert-button-role-${button.role}`]: button.role !== undefined,
     ...getClassMap(button.cssClass)
   };
 };

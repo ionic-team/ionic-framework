@@ -301,3 +301,18 @@
 .alert-button.ion-activated {
   background-color: $alert-ios-button-background-color-activated;
 }
+
+// iOS Action Sheet Button: Destructive
+// ---------------------------------------------------
+
+.alert-button-role-destructive,
+.alert-button-role-destructive.ion-activated,
+.alert-button-role-destructive.ion-focused {
+  color: $alert-ios-button-destructive-text-color;
+}
+
+@media (any-hover: hover) {
+  .alert-button-role-destructive:hover {
+    color: $alert-ios-button-destructive-text-color;
+  }
+}
