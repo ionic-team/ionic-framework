@@ -115,8 +115,8 @@ export const ToolbarExample: React.FC = () => (
   </IonToolbar>
 
   <IonToolbar>
-    <IonSegment>
-      <IonSegmentButton value="all" checked>
+    <IonSegment value="all">
+      <IonSegmentButton value="all">
         All
       </IonSegmentButton>
       <IonSegmentButton value="favorites">Favorites</IonSegmentButton>

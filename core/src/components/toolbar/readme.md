@@ -146,8 +146,8 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-segment>
-    <ion-segment-button value="all" checked>
+  <ion-segment value="all">
+    <ion-segment-button value="all">
       All
     </ion-segment-button>
     <ion-segment-button value="favorites">
@@ -310,8 +310,8 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-segment>
-    <ion-segment-button value="all" checked>
+  <ion-segment value="all">
+    <ion-segment-button value="all">
       All
     </ion-segment-button>
     <ion-segment-button value="favorites">
@@ -475,8 +475,8 @@ export const ToolbarExample: React.FC = () => (
   </IonToolbar>
 
   <IonToolbar>
-    <IonSegment>
-      <IonSegmentButton value="all" checked>
+    <IonSegment value="all">
+      <IonSegmentButton value="all">
         All
       </IonSegmentButton>
       <IonSegmentButton value="favorites">Favorites</IonSegmentButton>
@@ -658,8 +658,8 @@ export class ToolbarExample {
       </ion-toolbar>,
 
       <ion-toolbar>
-        <ion-segment>
-          <ion-segment-button value="all" checked={true}>
+        <ion-segment value="all">
+          <ion-segment-button value="all">
             All
           </ion-segment-button>
           <ion-segment-button value="favorites">
@@ -828,8 +828,8 @@ export class ToolbarExample {
   </ion-toolbar>
 
   <ion-toolbar>
-    <ion-segment>
-      <ion-segment-button value="all" checked>
+    <ion-segment value="all">
+      <ion-segment-button value="all">
         All
       </ion-segment-button>
       <ion-segment-button value="favorites">
