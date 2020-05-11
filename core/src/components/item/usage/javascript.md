@@ -1,5 +1,3 @@
-Basic Usage
-
 ```html
 <!-- Default Item -->
 <ion-item>
@@ -29,7 +27,7 @@ Basic Usage
 </ion-item>
 ```
 
-Detail Arrows
+### Detail Arrows
 
 ```html
 <ion-item detail>
@@ -51,7 +49,7 @@ Detail Arrows
 </ion-item>
 ```
 
-List Items
+### List Items
 
 ```html
 <ion-list>
@@ -95,7 +93,7 @@ List Items
 </ion-list>
 ```
 
-Item Lines
+### Item Lines
 
 ```html
 <!-- Item Inset Lines -->
@@ -152,7 +150,7 @@ Item Lines
 ```
 
 
-Media Items
+### Media Items
 
 ```html
 <ion-item button onclick="testClick()">
@@ -196,7 +194,7 @@ Media Items
 </ion-item>
 ```
 
-Buttons in Items
+### Buttons in Items
 
 ```html
 <ion-item>
@@ -232,7 +230,7 @@ Buttons in Items
 </ion-item>
 ```
 
-Icons in Items
+### Icons in Items
 
 ```html
 <ion-item>
@@ -272,7 +270,7 @@ Icons in Items
 </ion-item>
 ```
 
-Item Inputs
+### Item Inputs
 
 ```html
 <ion-item>
