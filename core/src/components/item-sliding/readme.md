@@ -331,6 +331,8 @@ Options can be expanded to take up the full width of the item if you swipe past 
 import React from 'react';
 import { IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonNote } from '@ionic/react';
 
+import { heart, trash, star, archive, ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
+
 export const ItemSlidingExample: React.FC = () => (
 <IonList>
   {/* Sliding item with text options on both sides */}
@@ -383,16 +385,16 @@ export const ItemSlidingExample: React.FC = () => (
 
     <IonItemOptions side="start">
       <IonItemOption>
-        <IonIcon slot="icon-only" name="heart"></IonIcon>
+        <IonIcon slot="icon-only" icon={heart} />
       </IonItemOption>
     </IonItemOptions>
 
     <IonItemOptions side="end">
       <IonItemOption color="danger">
-        <IonIcon slot="icon-only" name="trash"></IonIcon>
+        <IonIcon slot="icon-only" icon={trash} />
       </IonItemOption>
       <IonItemOption>
-        <IonIcon slot="icon-only" name="star"></IonIcon>
+        <IonIcon slot="icon-only" icon={star} />
       </IonItemOption>
     </IonItemOptions>
   </IonItemSliding>
@@ -406,11 +408,11 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
+        <IonIcon slot="start" ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
-        <IonIcon slot="start" name="archive"></IonIcon>
+        <IonIcon slot="start" icon={archive} />
         Archive
       </IonItemOption>
     </IonItemOptions>
@@ -425,11 +427,11 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
+        <IonIcon slot="end" ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
-        <IonIcon slot="end" name="archive"></IonIcon>
+        <IonIcon slot="end" icon={archive} />
         Archive
       </IonItemOption>
     </IonItemOptions>
@@ -444,11 +446,11 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
+        <IonIcon slot="top" ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
-        <IonIcon slot="top" name="archive"></IonIcon>
+        <IonIcon slot="top" icon={archive} />
         Archive
       </IonItemOption>
     </IonItemOptions>
@@ -463,11 +465,11 @@ export const ItemSlidingExample: React.FC = () => (
     </IonItem>
     <IonItemOptions>
       <IonItemOption color="primary">
-        <IonIcon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></IonIcon>
+        <IonIcon slot="bottom" ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
         More
       </IonItemOption>
       <IonItemOption color="secondary">
-        <IonIcon slot="bottom" name="archive"></IonIcon>
+        <IonIcon slot="bottom" icon={archive} />
         Archive
       </IonItemOption>
     </IonItemOptions>

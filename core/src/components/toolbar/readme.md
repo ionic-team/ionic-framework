@@ -360,18 +360,8 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 
 ```tsx
 import React from 'react';
-import {
-  IonToolbar,
-  IonTitle,
-  IonButtons,
-  IonBackButton,
-  IonButton,
-  IonIcon,
-  IonMenuButton,
-  IonSearchbar,
-  IonSegment,
-  IonSegmentButton,
-} from '@ionic/react';
+import { IonToolbar, IonTitle, IonButtons, IonBackButton, IonButton, IonIcon, IonMenuButton, IonSearchbar, IonSegment, IonSegmentButton } from '@ionic/react';
+import { personCircle, search, helpCircle, star, create, ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
 
 export const ToolbarExample: React.FC = () => (
   <IonToolbar>
@@ -395,15 +385,15 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar>
     <IonButtons slot="secondary">
       <IonButton>
-        <IonIcon slot="icon-only" name="person-circle" />
+        <IonIcon slot="icon-only" icon={personCircle} />
       </IonButton>
       <IonButton>
-        <IonIcon slot="icon-only" name="search" />
+        <IonIcon slot="icon-only" icon={search} />
       </IonButton>
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="secondary">
-        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
+        <IonIcon slot="icon-only" ios={ellipsisHorizontal} md={ellipsisVertical} />
       </IonButton>
     </IonButtons>
     <IonTitle>Default Buttons</IonTitle>
@@ -412,7 +402,7 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar>
     <IonButtons slot="secondary">
       <IonButton fill="solid">
-        <IonIcon slot="start" name="person-circle" />
+        <IonIcon slot="start" icon={personCircle} />
         Contact
       </IonButton>
     </IonButtons>
@@ -420,7 +410,7 @@ export const ToolbarExample: React.FC = () => (
     <IonButtons slot="primary">
       <IonButton fill="solid" color="secondary">
         Help
-        <IonIcon slot="end" name="help-circle" />
+        <IonIcon slot="end" icon={helpCircle} />
       </IonButton>
     </IonButtons>
   </IonToolbar>
@@ -428,7 +418,7 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar>
     <IonButtons slot="secondary">
       <IonButton fill="outline">
-        <IonIcon slot="start" name="star" />
+        <IonIcon slot="start" icon={star} />
         Star
       </IonButton>
     </IonButtons>
@@ -436,7 +426,7 @@ export const ToolbarExample: React.FC = () => (
     <IonButtons slot="primary">
       <IonButton color="danger" fill="outline">
         Edit
-        <IonIcon slot="end" name="create" />
+        <IonIcon slot="end" icon={create} />
       </IonButton>
     </IonButtons>
   </IonToolbar>
@@ -457,7 +447,7 @@ export const ToolbarExample: React.FC = () => (
     </IonButtons>
     <IonButtons slot="secondary">
       <IonButton>
-        <IonIcon slot="icon-only" name="star" />
+        <IonIcon slot="icon-only" icon={star} />
       </IonButton>
     </IonButtons>
     <IonTitle>Left side menu toggle</IonTitle>
@@ -466,7 +456,7 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar>
     <IonButtons slot="primary">
       <IonButton onClick={() => {}}>
-        <IonIcon slot="icon-only" name="star" />
+        <IonIcon slot="icon-only" icon={star} />
       </IonButton>
     </IonButtons>
     <IonTitle>Right side menu toggle</IonTitle>
@@ -478,7 +468,7 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar>
     <IonButtons slot="primary">
       <IonButton onClick={() => {}}>
-        <IonIcon slot="icon-only" name="search" />
+        <IonIcon slot="icon-only" icon={search} />
       </IonButton>
     </IonButtons>
     <IonSearchbar placeholder="Search Favorites" />
@@ -496,15 +486,15 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar color="secondary">
     <IonButtons slot="secondary">
       <IonButton>
-        <IonIcon slot="icon-only" name="person-circle" />
+        <IonIcon slot="icon-only" icon={personCircle} />
       </IonButton>
       <IonButton>
-        <IonIcon slot="icon-only" name="search" />
+        <IonIcon slot="icon-only" icon={search} />
       </IonButton>
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="primary">
-        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
+        <IonIcon slot="icon-only" ios={ellipsisHorizontal} md={ellipsisVertical} />
       </IonButton>
     </IonButtons>
     <IonTitle>Secondary Toolbar</IonTitle>
@@ -513,15 +503,15 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar color="dark">
     <IonButtons slot="secondary">
       <IonButton>
-        <IonIcon slot="icon-only" name="person-circle" />
+        <IonIcon slot="icon-only" icon={personCircle} />
       </IonButton>
       <IonButton>
-        <IonIcon slot="icon-only" name="search" />
+        <IonIcon slot="icon-only" icon={search} />
       </IonButton>
     </IonButtons>
     <IonButtons slot="primary">
       <IonButton color="danger">
-        <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
+        <IonIcon slot="icon-only" ios={ellipsisHorizontal} md={ellipsisVertical} />
       </IonButton>
     </IonButtons>
     <IonTitle>Dark Toolbar</IonTitle>
