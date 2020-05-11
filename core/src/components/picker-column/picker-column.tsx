@@ -2,8 +2,8 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, PickerColumn } from '../../interface';
-import { hapticSelectionChanged } from '../../utils/haptic';
 import { clamp } from '../../utils/helpers';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 
 /**
  * @internal
@@ -226,6 +226,7 @@ export class PickerColumnCmp implements ComponentInterface {
       } else {
         this.velocity = 0;
         this.emitColChange();
+        hapticSelectionEnd();
       }
 
     } else if (this.y % this.optHeight !== 0) {
@@ -251,6 +252,8 @@ export class PickerColumnCmp implements ComponentInterface {
     // some "click" events to capture
     detail.event.preventDefault();
     detail.event.stopPropagation();
+
+    hapticSelectionStart();
 
     // reset everything
     cancelAnimationFrame(this.rafId);
