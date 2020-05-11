@@ -710,7 +710,7 @@ export class ToolbarExample {
           </ion-button>
         </ion-buttons>
         <ion-title>Dark Toolbar</ion-title>
-      </ion-toolbar>,
+      </ion-toolbar>
     ];
   }
 }
