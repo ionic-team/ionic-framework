@@ -1,6 +1,6 @@
 ```html
 <ion-tabs>
-
+  <!-- Tab bar -->
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="schedule">
       <ion-icon name="calendar"></ion-icon>
@@ -22,6 +22,5 @@
       <ion-label>About</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
-
 </ion-tabs>
 ```
