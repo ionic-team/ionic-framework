@@ -1,29 +1,57 @@
 ```tsx
 import React from 'react';
 import { IonFab, IonFabButton, IonFabList, IonContent, IonIcon } from '@ionic/react';
+import { logoFacebook, logoTwitter, logoYoutube, logoPwa, logoNpm, logoIonic, logoGithub, logoJavascript, logoAngular, logoVimeo, logoChrome, logoReact } from 'ionicons/icons';
 
 export const FabListExample: React.FC = () => (
   <IonContent>
-    <IonFab vertical="bottom" horizontal="end">
-      <IonFabButton>
-        <IonIcon icon="share" />
-      </IonFabButton>
-
+    <IonFab vertical="center" horizontal="center">
+      <IonFabButton>Share</IonFabButton>
       <IonFabList side="top">
-        <IonFabButton color="primary">
-          <IonIcon icon="logo-facebook" />
+        <IonFabButton>
+          <IonIcon icon={logoFacebook} />
         </IonFabButton>
-        <IonFabButton color="primary">
-          <IonIcon icon="logo-twitter" />
+        <IonFabButton>
+          <IonIcon icon={logoTwitter} />
         </IonFabButton>
-        <IonFabButton color="primary">
-          <IonIcon icon="logo-youtube" />
+        <IonFabButton>
+          <IonIcon icon={logoYoutube} />
+        </IonFabButton>
+      </IonFabList>
+
+      <IonFabList side="end">
+        <IonFabButton>
+          <IonIcon icon={logoPwa} />
+        </IonFabButton>
+        <IonFabButton>
+          <IonIcon icon={logoNpm} />
+        </IonFabButton>
+        <IonFabButton>
+          <IonIcon icon={logoIonic} />
+        </IonFabButton>
+      </IonFabList>
+
+      <IonFabList side="bottom">
+        <IonFabButton>
+          <IonIcon icon={logoGithub} />
+        </IonFabButton>
+        <IonFabButton>
+          <IonIcon icon={logoJavascript} />
+        </IonFabButton>
+        <IonFabButton>
+          <IonIcon icon={logoAngular} />
         </IonFabButton>
       </IonFabList>
 
       <IonFabList side="start">
-        <IonFabButton color="primary">
-          <IonIcon icon="logo-vimeo" />
+        <IonFabButton>
+          <IonIcon icon={logoVimeo} />
+        </IonFabButton>
+        <IonFabButton>
+          <IonIcon icon={logoChrome} />
+        </IonFabButton>
+        <IonFabButton>
+          <IonIcon icon={logoReact} />
         </IonFabButton>
       </IonFabList>
     </IonFab>
