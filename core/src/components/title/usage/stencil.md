@@ -1,88 +1,113 @@
 ```tsx
-render() {
-  return [
-    // Default title
-    <ion-toolbar>
-      <ion-title>Default Title</ion-title>
-    </ion-toolbar>,
+import { Component, h } from '@stencil/core';
 
-    // Small title above a default title
-    <ion-toolbar>
-      <ion-title size="small">Small Title above a Default Title</ion-title>
-    </ion-toolbar>,
-    <ion-toolbar>
-      <ion-title>Default Title</ion-title>
-    </ion-toolbar>,
+@Component({
+  tag: 'title-example',
+  styleUrl: 'title-example.css'
+})
+export class TitleExample {
+  render() {
+    return [
+      // Default title
+      <ion-toolbar>
+        <ion-title>Default Title</ion-title>
+      </ion-toolbar>,
 
-    // Large title
-    <ion-toolbar>
-      <ion-title size="large">Large Title</ion-title>
-    </ion-toolbar>
-  ];
+      // Small title above a default title
+      <ion-toolbar>
+        <ion-title size="small">Small Title above a Default Title</ion-title>
+      </ion-toolbar>,
+      <ion-toolbar>
+        <ion-title>Default Title</ion-title>
+      </ion-toolbar>,
+
+      // Large title
+      <ion-toolbar>
+        <ion-title size="large">Large Title</ion-title>
+      </ion-toolbar>
+    ];
+  }
 }
 ```
+
 
 ### Collapsible Large Titles
 
 Ionic provides a way to create the collapsible titles that exist on stock iOS apps. Getting this setup requires configuring your `ion-title`, `ion-header`, and (optionally) `ion-buttons` elements.
 
 ```tsx
-render() {
-  return [
-    <ion-header translucent={true}>
-      <ion-toolbar>
-        <ion-title>Settings</ion-title>
-      </ion-toolbar>
-    </ion-header>,
+import { Component, h } from '@stencil/core';
 
-    <ion-content fullscreen={true}>
-      <ion-header collapse="condense">
+@Component({
+  tag: 'title-example',
+  styleUrl: 'title-example.css'
+})
+export class TitleExample {
+  render() {
+    return [
+      <ion-header translucent={true}>
         <ion-toolbar>
-          <ion-title size="large">Settings</ion-title>
+          <ion-title>Settings</ion-title>
         </ion-toolbar>
-        <ion-toolbar>
-          <ion-searchbar></ion-searchbar>
-        </ion-toolbar>
-      </ion-header>
+      </ion-header>,
 
-      ...
+      <ion-content fullscreen={true}>
+        <ion-header collapse="condense">
+          <ion-toolbar>
+            <ion-title size="large">Settings</ion-title>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-searchbar></ion-searchbar>
+          </ion-toolbar>
+        </ion-header>
 
-    </ion-content>
-  ];
+        ...
+
+      </ion-content>
+    ];
+  }
 }
 ```
 
 In the example above, notice there are two `ion-header` elements. The first `ion-header` represents the "collapsed" state of your collapsible header, and the second `ion-header` represents the "expanded" state of your collapsible header. Notice that the second `ion-header` must have `collapse="condense"` and must exist within `ion-content`. Additionally, in order to get the large title styling, `ion-title` must have `size="large"`.
 
 ```tsx
-render() {
-  return [
-    <ion-header translucent={true}>
-      <ion-toolbar>
-        <ion-buttons collapse={true} slot="end">
-          <ion-button>Click Me</ion-button>
-        </ion-buttons>
-        <ion-title>Settings</ion-title>
-      </ion-toolbar>
-    </ion-header>,
+import { Component, h } from '@stencil/core';
 
-    <ion-content fullscreen={true}>
-      <ion-header collapse="condense">
+@Component({
+  tag: 'title-example',
+  styleUrl: 'title-example.css'
+})
+export class TitleExample {
+  render() {
+    return [
+      <ion-header translucent={true}>
         <ion-toolbar>
           <ion-buttons collapse={true} slot="end">
             <ion-button>Click Me</ion-button>
           </ion-buttons>
-          <ion-title size="large">Settings</ion-title>
+          <ion-title>Settings</ion-title>
         </ion-toolbar>
-        <ion-toolbar>
-          <ion-searchbar></ion-searchbar>
-        </ion-toolbar>
-      </ion-header>
+      </ion-header>,
 
-      ...
+      <ion-content fullscreen={true}>
+        <ion-header collapse="condense">
+          <ion-toolbar>
+            <ion-buttons collapse={true} slot="end">
+              <ion-button>Click Me</ion-button>
+            </ion-buttons>
+            <ion-title size="large">Settings</ion-title>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-searchbar></ion-searchbar>
+          </ion-toolbar>
+        </ion-header>
 
-    </ion-content>
-  ];
+        ...
+
+      </ion-content>
+    ];
+  }
 }
 ```
 
