@@ -48,7 +48,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.visibilityChanged();
   }
 
