@@ -113,7 +113,7 @@ export const TextAreaExamples: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonList>
-          <IonItemDivider>Default textarea</IonItemDivider>          
+          <IonItemDivider>Default textarea</IonItemDivider>
           <IonItem>
             <IonTextarea value={text} onIonChange={e => setText(e.detail.value!)}></IonTextarea>
           </IonItem>
