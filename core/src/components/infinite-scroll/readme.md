@@ -149,16 +149,16 @@ export class InfiniteScrollExample {
     ];
   }
 
-  loadData(event) {
+  loadData(ev) {
     setTimeout(() => {
       this.pushData();
       console.log('Loaded data');
-      event.target.complete();
+      ev.target.complete();
 
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
       if (this.data.length == 1000) {
-        event.target.disabled = true;
+        ev.target.disabled = true;
       }
     }, 500);
   }
@@ -184,7 +184,7 @@ export class InfiniteScrollExample {
 
         <ion-infinite-scroll
           ref={el => this.infiniteScroll = el}
-          onIonInfinite={(event) => this.loadData(event)}>
+          onIonInfinite={(ev) => this.loadData(ev)}>
           <ion-infinite-scroll-content
             loadingSpinner="bubbles"
             loadingText="Loading more data...">
