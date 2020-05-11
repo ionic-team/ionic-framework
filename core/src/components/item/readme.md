@@ -1089,7 +1089,7 @@ export class ItemExample {
         </ion-label>
       </ion-item>,
 
-      <ion-item detail="false" href="https://www.ionicframework.com">
+      <ion-item detail={false} href="https://www.ionicframework.com">
         <ion-label>
           Anchor Item with no Detail Arrow
         </ion-label>
@@ -1240,7 +1240,7 @@ export class ItemExample {
     return [
       <ion-item button onClick={() => this.testClick()}>
         <ion-avatar slot="start">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="/>
         </ion-avatar>
         <ion-label>
           Avatar Start, Button Item
@@ -1252,13 +1252,13 @@ export class ItemExample {
           Thumbnail End, Anchor Item
         </ion-label>
         <ion-thumbnail slot="end">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="/>
         </ion-thumbnail>
       </ion-item>,
 
       <ion-item>
         <ion-thumbnail slot="start">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="/>
         </ion-thumbnail>
         <ion-label>
           <h2>H2 Title Text</h2>
@@ -1269,7 +1269,7 @@ export class ItemExample {
 
       <ion-item button onClick={() => this.testClick()}>
         <ion-thumbnail slot="start">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="/>
         </ion-thumbnail>
         <ion-label>
           <h3>H3 Title Text</h3>
