@@ -203,7 +203,7 @@ export class TextareaExample {
       // Textarea with custom number of rows and cols
       <ion-item>
         <ion-label>Notes</ion-label>
-        <ion-textarea rows="6" cols="20" placeholder="Enter any notes here..."></ion-textarea>
+        <ion-textarea rows={6} cols={20} placeholder="Enter any notes here..."></ion-textarea>
       </ion-item>
     ];
   }
