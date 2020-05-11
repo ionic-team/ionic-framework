@@ -1,6 +1,6 @@
 ```html
 <ion-split-pane content-id="main">
-  <!--  our side menu  -->
+  <!--  the side menu  -->
   <ion-menu content-id="main">
     <ion-header>
       <ion-toolbar>
