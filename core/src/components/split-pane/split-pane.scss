@@ -54,7 +54,6 @@
 }
 
 :host(.split-pane-visible) ::slotted(.split-pane-side:not(ion-menu)),
-:host(.split-pane-visible) ::slotted(.split-pane-side:not(ion-menu)) ion-menu.menu-enabled,
 :host(.split-pane-visible) ::slotted(ion-menu.split-pane-side.menu-enabled) {
   display: flex;
 

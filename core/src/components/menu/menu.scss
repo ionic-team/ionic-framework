@@ -31,6 +31,12 @@
   contain: strict;
 }
 
+:host(.menu-enabled.menu-pane-visible) {
+  display: flex;
+
+  flex-shrink: 0;
+}
+
 :host(.show-menu) {
   display: block;
 }
