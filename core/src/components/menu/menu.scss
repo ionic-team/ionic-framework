@@ -31,7 +31,14 @@
   contain: strict;
 }
 
-:host(.menu-enabled.menu-pane-visible) {
+/**
+ * Ensures that menus wrapped in custom
+ * components are still visible in apps.
+ * This cannot be done in the split pane styles
+ * due to limitations with targeting children
+ * of slotted elements.
+ */
+:host(.menu-pane-visible.menu-enabled:not(.split-pane-side)) {
   display: flex;
 
   flex-shrink: 0;
