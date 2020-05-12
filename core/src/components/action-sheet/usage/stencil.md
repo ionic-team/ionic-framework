@@ -1,18 +1,15 @@
-```typescript
-import { Component } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+```tsx
+import { Component, h } from '@stencil/core';
+
+import { actionSheetController } from '@ionic/core';
 
 @Component({
-  selector: 'action-sheet-example',
-  templateUrl: 'action-sheet-example.html',
-  styleUrls: ['./action-sheet-example.css'],
+  tag: 'action-sheet-example',
+  styleUrl: 'action-sheet-example.css'
 })
 export class ActionSheetExample {
-
-  constructor(public actionSheetController: ActionSheetController) {}
-
   async presentActionSheet() {
-    const actionSheet = await this.actionSheetController.create({
+    const actionSheet = await actionSheetController.create({
       header: 'Albums',
       buttons: [{
         text: 'Delete',
@@ -51,5 +48,12 @@ export class ActionSheetExample {
     await actionSheet.present();
   }
 
+  render() {
+    return [
+      <ion-content>
+        <ion-button onClick={() => this.presentActionSheet()}>Present Action Sheet</ion-button>
+      </ion-content>
+    ];
+  }
 }
 ```
