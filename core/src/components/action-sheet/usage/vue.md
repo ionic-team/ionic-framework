@@ -12,6 +12,7 @@ export default {
       return this.$ionic.actionSheetController
         .create({
           header: 'Albums',
+          cssClass: 'my-custom-class',
           buttons: [
             {
               text: 'Delete',

@@ -13,6 +13,34 @@ Optionally, a `role` property can be added to a button, such as `cancel`. If a `
 
 Alerts can also include several different inputs whose data can be passed back to the app. Inputs can be used as a simple way to prompt users for information. Radios, checkboxes and text inputs are all accepted, but they cannot be mixed. For example, an alert could have all radio button inputs, or all checkbox inputs, but the same alert cannot mix radio and checkbox inputs. Do note however, different types of "text" inputs can be mixed, such as `url`, `email`, `text`, `textarea` etc. If you require a complex form UI which doesn't fit within the guidelines of an alert then we recommend building the form within a modal instead.
 
+### Customization
+
+Alert uses scoped encapsulation, which means it will automatically scope its CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector.
+
+We recommend passing a custom class to `cssClass` in the `create` method and using that to add custom styles to the host and inner elements. This property can also accept multiple classes separated by spaces. View the [Usage](#usage) section for an example of how to pass a class using `cssClass`.
+
+```css
+/* DOES NOT WORK - not specific enough */
+.alert-wrapper {
+  background: #e5e5e5;
+}
+
+/* Works - pass "my-custom-class" in cssClass to increase specificity */
+.my-custom-class .alert-wrapper {
+  background: #e5e5e5;
+}
+```
+
+Any of the defined [CSS Custom Properties](#css-custom-properties) can be used to style the Alert without needing to target individual elements:
+
+```css
+.my-custom-class {
+  --background: #e5e5e5;
+}
+```
+
+> If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
+
 
 <!-- Auto Generated Below -->
 
@@ -36,6 +64,7 @@ export class AlertExample {
 
   async presentAlert() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
@@ -47,6 +76,7 @@ export class AlertExample {
 
   async presentAlertMultipleButtons() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
@@ -58,6 +88,7 @@ export class AlertExample {
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Confirm!',
       message: 'Message <strong>text</strong>!!!',
       buttons: [
@@ -82,6 +113,7 @@ export class AlertExample {
 
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Prompt!',
       inputs: [
         {
@@ -154,6 +186,7 @@ export class AlertExample {
 
   async presentAlertRadio() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Radio',
       inputs: [
         {
@@ -216,6 +249,7 @@ export class AlertExample {
 
   async presentAlertCheckbox() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Checkbox',
       inputs: [
         {
@@ -280,9 +314,13 @@ export class AlertExample {
 
     await alert.present();
   }
-
 }
 ```
+
+
+### Style Placement
+
+In Angular, the CSS of a specific page is scoped only to elements of that page. Even though the Alert can be presented from within a page, the `ion-alert` element is appended outside of the current page. This means that any custom styles need to go in a global stylesheet file. In an Ionic Angular starter this can be the `src/global.scss` file or you can register a new global style file by [adding to the `styles` build option in `angular.json`](https://angular.io/guide/workspace-config#style-script-config).
 
 
 ### Javascript
@@ -290,6 +328,7 @@ export class AlertExample {
 ```javascript
 function presentAlert() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Alert';
   alert.subHeader = 'Subtitle';
   alert.message = 'This is an alert message.';
@@ -301,6 +340,7 @@ function presentAlert() {
 
 function presentAlertMultipleButtons() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Alert';
   alert.subHeader = 'Subtitle';
   alert.message = 'This is an alert message.';
@@ -312,6 +352,7 @@ function presentAlertMultipleButtons() {
 
 function presentAlertConfirm() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Confirm!';
   alert.message = 'Message <strong>text</strong>!!!';
   alert.buttons = [
@@ -336,6 +377,7 @@ function presentAlertConfirm() {
 
 function presentAlertPrompt() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Prompt!';
   alert.inputs = [
     {
@@ -405,6 +447,7 @@ function presentAlertPrompt() {
 
 function presentAlertRadio() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Radio';
   alert.inputs = [
     {
@@ -460,6 +503,7 @@ function presentAlertRadio() {
 
 function presentAlertCheckbox() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Checkbox';
   alert.inputs = [
     {
@@ -547,6 +591,7 @@ export const AlertExample: React.FC = () => {
         <IonAlert
           isOpen={showAlert1}
           onDidDismiss={() => setShowAlert1(false)}
+          cssClass='my-custom-class'
           header={'Alert'}
           subHeader={'Subtitle'}
           message={'This is an alert message.'}
@@ -556,6 +601,7 @@ export const AlertExample: React.FC = () => {
         <IonAlert
           isOpen={showAlert2}
           onDidDismiss={() => setShowAlert2(false)}
+          cssClass='my-custom-class'
           header={'Alert'}
           subHeader={'Subtitle'}
           message={'This is an alert message.'}
@@ -565,6 +611,7 @@ export const AlertExample: React.FC = () => {
         <IonAlert
           isOpen={showAlert3}
           onDidDismiss={() => setShowAlert3(false)}
+          cssClass='my-custom-class'
           header={'Confirm!'}
           message={'Message <strong>text</strong>!!!'}
           buttons={[
@@ -588,6 +635,7 @@ export const AlertExample: React.FC = () => {
         <IonAlert
           isOpen={showAlert4}
           onDidDismiss={() => setShowAlert4(false)}
+          cssClass='my-custom-class'
           header={'Prompt!'}
           inputs={[
             {
@@ -652,6 +700,7 @@ export const AlertExample: React.FC = () => {
         <IonAlert
           isOpen={showAlert5}
           onDidDismiss={() => setShowAlert5(false)}
+          cssClass='my-custom-class'
           header={'Radio'}
           inputs={[
             {
@@ -713,6 +762,7 @@ export const AlertExample: React.FC = () => {
         <IonAlert
           isOpen={showAlert6}
           onDidDismiss={() => setShowAlert6(false)}
+          cssClass='my-custom-class'
           header={'Checkbox'}
           inputs={[
             {
@@ -793,6 +843,7 @@ import { alertController } from '@ionic/core';
 export class AlertExample {
   async presentAlert() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
@@ -804,6 +855,7 @@ export class AlertExample {
 
   async presentAlertMultipleButtons() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
@@ -815,6 +867,7 @@ export class AlertExample {
 
   async presentAlertConfirm() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Confirm!',
       message: 'Message <strong>text</strong>!!!',
       buttons: [
@@ -839,6 +892,7 @@ export class AlertExample {
 
   async presentAlertPrompt() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Prompt!',
       inputs: [
         {
@@ -911,6 +965,7 @@ export class AlertExample {
 
   async presentAlertRadio() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Radio',
       inputs: [
         {
@@ -973,6 +1028,7 @@ export class AlertExample {
 
   async presentAlertCheckbox() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Checkbox',
       inputs: [
         {
@@ -1075,6 +1131,7 @@ export default {
     presentAlert() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Alert',
           subHeader: 'Subtitle',
           message: 'This is an alert message.',
@@ -1086,6 +1143,7 @@ export default {
     presentAlertMultipleButtons() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Alert',
           subHeader: 'Subtitle',
           message: 'This is an alert message.',
@@ -1097,6 +1155,7 @@ export default {
     presentAlertConfirm() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Confirm!',
           message: 'Message <strong>text</strong>!!!',
           buttons: [
@@ -1122,6 +1181,7 @@ export default {
     presentAlertPrompt() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Prompt!',
           inputs: [
             {
@@ -1185,6 +1245,7 @@ export default {
     presentAlertRadio() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Radio',
           inputs: [
             {
@@ -1242,6 +1303,7 @@ export default {
     presentAlertCheckbox() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Checkbox',
           inputs: [
             {

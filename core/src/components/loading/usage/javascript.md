@@ -1,6 +1,8 @@
 ```javascript
 async function presentLoading() {
   const loading = document.createElement('ion-loading');
+
+  loading.cssClass = 'my-custom-class';
   loading.message = 'Please wait...';
   loading.duration = 2000;
 
@@ -14,6 +16,7 @@ async function presentLoading() {
 async function presentLoadingWithOptions() {
   const loading = document.createElement('ion-loading');
 
+  loading.cssClass = 'my-custom-class';
   loading.spinner = null;
   loading.duration = 5000;
   loading.message = 'Click the backdrop to dismiss early...';
