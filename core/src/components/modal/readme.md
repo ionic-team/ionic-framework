@@ -349,6 +349,7 @@ Modals in iOS mode have the ability to be presented in a card-style and swiped t
 ```tsx
 <IonModal
   isOpen={showModal}
+  cssClass='my-custom-class'
   swipeToClose={true}
   presentingElement={pageRef.current}
   onDidDismiss={() => setShowModal(false)}>
@@ -363,6 +364,7 @@ In most scenarios, setting a ref on `IonPage` and passing that ref's `current` v
 <IonModal
   ref={firstModalRef}
   isOpen={showModal}
+  cssClass='my-custom-class'
   swipeToClose={true}
   presentingElement={pageRef.current}
   onDidDismiss={() => setShowModal(false)}>
@@ -372,6 +374,7 @@ In most scenarios, setting a ref on `IonPage` and passing that ref's `current` v
 </IonModal>
 <IonModal
   isOpen={show2ndModal}
+  cssClass='my-custom-class'
   presentingElement={firstModalRef.current}
   onDidDismiss={() => setShow2ndModal(false)}>
   <p>This is more modal content</p>
