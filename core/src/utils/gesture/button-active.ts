@@ -11,6 +11,7 @@ export const createButtonActiveGesture = (
   let touchedButton: HTMLElement | undefined;
 
   const activateButtonAtPoint = (x: number, y: number, hapticFeedbackFn: () => void) => {
+    if (typeof (document as any) === 'undefined') { return; }
     const target = document.elementFromPoint(x, y) as HTMLElement | null;
     if (!target || !isButton(target)) {
       clearActiveButton();
