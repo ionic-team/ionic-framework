@@ -215,6 +215,9 @@ export class Input implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   componentWillLoad() {
+    // If the ion-input has a tabindex attribute we get the value
+    // and pass it down to the native input, then remove it from the
+    // ion-input to avoid causing tabbing twice on the same element
     if (this.el.hasAttribute('tabindex')) {
       const tabindex = this.el.getAttribute('tabindex');
       this.tabindex = tabindex !== null ? tabindex : undefined;
