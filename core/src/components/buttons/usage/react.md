@@ -1,15 +1,7 @@
 ```tsx
 import React from 'react';
-import {
-  IonButtons,
-  IonToolbar,
-  IonBackButton,
-  IonTitle,
-  IonButton,
-  IonIcon,
-  IonMenuButton,
-  IonContent
-} from '@ionic/react';
+import { IonButtons, IonToolbar, IonBackButton, IonTitle, IonButton, IonIcon, IonMenuButton, IonContent } from '@ionic/react';
+import { personCircle, search, star, ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
 
 export const ButtonsExample: React.FC = () => (
   <IonContent>
@@ -23,16 +15,16 @@ export const ButtonsExample: React.FC = () => (
     <IonToolbar>
       <IonButtons slot="secondary">
         <IonButton>
-          <IonIcon slot="icon-only" name="person-circle" />
+          <IonIcon slot="icon-only" icon={personCircle} />
         </IonButton>
         <IonButton>
-          <IonIcon slot="icon-only" name="search" />
+          <IonIcon slot="icon-only" icon={search} />
         </IonButton>
       </IonButtons>
       <IonTitle>Default Buttons</IonTitle>
       <IonButtons slot="primary">
         <IonButton color="secondary">
-          <IonIcon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" />
+          <IonIcon slot="icon-only" ios={ellipsisHorizontal} md={ellipsisVertical} />
         </IonButton>
       </IonButtons>
     </IonToolbar>
@@ -40,7 +32,7 @@ export const ButtonsExample: React.FC = () => (
     <IonToolbar>
       <IonButtons slot="primary">
         <IonButton onClick={() => {}}>
-          <IonIcon slot="icon-only" name="star" />
+          <IonIcon slot="icon-only" icon={star} />
         </IonButton>
       </IonButtons>
       <IonTitle>Right side menu toggle</IonTitle>
@@ -52,7 +44,7 @@ export const ButtonsExample: React.FC = () => (
     <IonToolbar>
       <IonButtons collapse="true">
         <IonButton>
-          <IonIcon slot="icon-only" name="star" />
+          <IonIcon slot="icon-only" icon={star} />
         </IonButton>
       </IonButtons>
       <IonTitle>Collapsible Buttons</IonTitle>

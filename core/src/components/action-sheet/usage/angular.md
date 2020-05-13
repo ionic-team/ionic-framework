@@ -29,7 +29,7 @@ export class ActionSheetExample {
         }
       }, {
         text: 'Play (open modal)',
-        icon: 'arrow-dropright-circle',
+        icon: 'caret-forward-circle',
         handler: () => {
           console.log('Play clicked');
         }

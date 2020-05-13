@@ -24,23 +24,23 @@ Ionic provides a way to create the collapsible titles that exist on stock iOS ap
 
 ```html
 <ion-header translucent="true">
-  <ion-toolbar>    
-    <ion-title>Settings</ion-title>               
+  <ion-toolbar>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
-  <ion-header collapse="condense">              
-    <ion-toolbar>      
+  <ion-header collapse="condense">
+    <ion-toolbar>
       <ion-title size="large">Settings</ion-title>
     </ion-toolbar>
     <ion-toolbar>
       <ion-searchbar></ion-searchbar>
     </ion-toolbar>
   </ion-header>
-  
+
   ...
-  
+
 </ion-content>
 ```
 
@@ -48,17 +48,17 @@ In the example above, notice there are two `ion-header` elements. The first `ion
 
 ```html
 <ion-header translucent="true">
-  <ion-toolbar>   
+  <ion-toolbar>
     <ion-buttons collapse="true" slot="end">
       <ion-button>Click Me</ion-button>
-    </ion-buttons> 
-    <ion-title>Settings</ion-title>               
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
-  <ion-header collapse="condense">              
-    <ion-toolbar>      
+  <ion-header collapse="condense">
+    <ion-toolbar>
       <ion-buttons collapse="true" slot="end">
         <ion-button>Click Me</ion-button>
       </ion-buttons>
@@ -68,13 +68,13 @@ In the example above, notice there are two `ion-header` elements. The first `ion
       <ion-searchbar></ion-searchbar>
     </ion-toolbar>
   </ion-header>
-  
+
   ...
-  
+
 </ion-content>
 ```
 
-In this example, notice that we have added two sets of `ion-buttons` both with `collapse="true"`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `ion-title` element.
+In this example, notice that we have added two sets of `ion-buttons` both with `collapse` set to `true`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `ion-title` element.
 
 `ion-buttons` elements that do not have `collapse` set will always be visible, regardless of collapsed state. When using the large title and `ion-buttons` elements inside of `ion-content`, the `ion-buttons` elements should always be placed in the `end` slot.
 
@@ -87,4 +87,4 @@ ion-title.large-title {
 }
 ```
 
-> When using collapsible large titles, it is required that `fullscreen="true"` be set on `ion-content` and `translucent="true"` be set on the main `ion-header`.
+> When using collapsible large titles, it is required that `fullscreen` is set to `true` on `ion-content` and `translucent` is set to `true` on the main `ion-header`.

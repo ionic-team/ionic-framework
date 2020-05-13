@@ -73,7 +73,7 @@ export const ReorderGroupExample: React.FC = () => (
 );
 ```
 
-#### Updating Data
+### Updating Data
 
 ```tsx
 const items = [1, 2, 3, 4, 5];

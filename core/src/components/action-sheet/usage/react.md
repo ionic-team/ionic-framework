@@ -1,7 +1,7 @@
 ```typescript
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
-import { trash, share, playCircleOutline, heart, close } from 'ionicons/icons';
+import { trash, share, caretForwardCircle, heart, close } from 'ionicons/icons';
 
 export const ActionSheetExample: React.FC = () => {
 
@@ -28,7 +28,7 @@ export const ActionSheetExample: React.FC = () => {
           }
         }, {
           text: 'Play (open modal)',
-          icon: playCircleOutline,
+          icon: caretForwardCircle,
           handler: () => {
             console.log('Play clicked');
           }

@@ -442,21 +442,24 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'slides-example',
   template: `
-    <ion-slides pager="true" [options]="slideOpts">
-      <ion-slide>
-        <h1>Slide 1</h1>
-      </ion-slide>
-      <ion-slide>
-        <h1>Slide 2</h1>
-      </ion-slide>
-      <ion-slide>
-        <h1>Slide 3</h1>
-      </ion-slide>
-    </ion-slides>
+    <ion-content>
+      <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide>
+          <h1>Slide 1</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 3</h1>
+        </ion-slide>
+      </ion-slides>
+    </ion-content>
   `
 })
 export class SlideExample {
-  // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
+  // Optional parameters to pass to the swiper instance.
+  // See http://idangero.us/swiper/api/ for valid options.
   slideOpts = {
     initialSlide: 1,
     speed: 400
@@ -465,12 +468,19 @@ export class SlideExample {
 }
 ```
 
+```css
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 100%;
+}
+```
+
 
 ### Javascript
 
 ```html
+<ion-content>
   <ion-slides pager="true">
-
     <ion-slide>
       <h1>Slide 1</h1>
     </ion-slide>
@@ -483,15 +493,24 @@ export class SlideExample {
       <h1>Slide 3</h1>
     </ion-slide>
   </ion-slides>
+</ion-content>
 ```
 
 ```javascript
 var slides = document.querySelector('ion-slides');
 
-// Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
+// Optional parameters to pass to the swiper instance.
+// See http://idangero.us/swiper/api/ for valid options.
 slides.options = {
   initialSlide: 1,
   speed: 400
+}
+```
+
+```css
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 100%;
 }
 ```
 
@@ -502,7 +521,8 @@ slides.options = {
 import React from 'react';
 import { IonSlides, IonSlide, IonContent } from '@ionic/react';
 
-// Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
+// Optional parameters to pass to the swiper instance.
+// See http://idangero.us/swiper/api/ for valid options.
 const slideOpts = {
   initialSlide: 1,
   speed: 400
@@ -523,6 +543,60 @@ export const SlidesExample: React.FC = () => (
     </IonSlides>
   </IonContent>
 );
+```
+
+```css
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 100%;
+}
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'slides-example',
+  styleUrl: 'slides-example.css'
+})
+export class SlidesExample {
+  // Optional parameters to pass to the swiper instance.
+  // See http://idangero.us/swiper/api/ for valid options.
+  private slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
+
+  render() {
+    return [
+      <ion-content>
+        <ion-slides pager={true} options={this.slideOpts}>
+          <ion-slide>
+            <h1>Slide 1</h1>
+          </ion-slide>
+
+          <ion-slide>
+            <h1>Slide 2</h1>
+          </ion-slide>
+
+          <ion-slide>
+            <h1>Slide 3</h1>
+          </ion-slide>
+        </ion-slides>
+      </ion-content>
+    ];
+  }
+}
+```
+
+```css
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 100%;
+}
 ```
 
 
