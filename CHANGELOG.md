@@ -1,3 +1,24 @@
+## [5.1.1](https://github.com/ionic-team/ionic/compare/v5.1.0...v5.1.1) (2020-05-13)
+
+
+### Bug Fixes
+
+* **all:** improve scroll assist reliability for below the fold inputs ([#21206](https://github.com/ionic-team/ionic/issues/21206)) ([7166a29](https://github.com/ionic-team/ionic/commit/7166a290cc1dd728e5bab2f7e39b8d41954e3808))
+* **all:** overlay components no longer display outline when focused ([#21226](https://github.com/ionic-team/ionic/issues/21226)) ([bb62023](https://github.com/ionic-team/ionic/commit/bb62023a0cdc5a64e956766c7d1704797fc8c9ae))
+* **display:** remove 1px gap between mutually exclusive breakpoints ([#21276](https://github.com/ionic-team/ionic/issues/21276)) ([703ef5c](https://github.com/ionic-team/ionic/commit/703ef5c99284f1e2b8d63c3af411c945dc756e20)), closes [#20993](https://github.com/ionic-team/ionic/issues/20993) [#20743](https://github.com/ionic-team/ionic/issues/20743)
+* **header:** do not error on collapsible header on devices that do not support IntersectionObserve ([#21222](https://github.com/ionic-team/ionic/issues/21222)) ([0c13f25](https://github.com/ionic-team/ionic/commit/0c13f25bbb4d4674e76cd19b098900f698e7146e))
+* **input:** check for tabindex and pass it properly to native input ([#21170](https://github.com/ionic-team/ionic/issues/21170)) ([dd4cb70](https://github.com/ionic-team/ionic/commit/dd4cb706ffeebc2069645ea03f0e7a96d6b14d43)), closes [#17515](https://github.com/ionic-team/ionic/issues/17515)
+* **ios:** position page transition shadow properly under footer ([#21095](https://github.com/ionic-team/ionic/issues/21095)) ([50678c0](https://github.com/ionic-team/ionic/commit/50678c03c9829a87408633dabd77b21da1650a84))
+* **md:** do not hide page when swipe gesture is cancelled ([#21247](https://github.com/ionic-team/ionic/issues/21247)) ([f334e83](https://github.com/ionic-team/ionic/commit/f334e83a43f855ac1e36eaf73954df6ee27a03af))
+* **overlays:** respect keyboardClose property when opening overlays ([#21240](https://github.com/ionic-team/ionic/issues/21240)) ([9d0dcbb](https://github.com/ionic-team/ionic/commit/9d0dcbbd31fc34ad8952eacb9864ad1b31636113))
+* **picker:** haptics now work properly ([#21268](https://github.com/ionic-team/ionic/issues/21268)) ([8e11ecc](https://github.com/ionic-team/ionic/commit/8e11ecc136c61e925e76c0e48ab21611e09b5898))
+* **refresher:** correctly select shadow root on older browsers ([#21237](https://github.com/ionic-team/ionic/issues/21237)) ([f23f1cb](https://github.com/ionic-team/ionic/commit/f23f1cb37eef02307c357fbb48c0db729974cdc4))
+* **refresher:** refresher completes even after switching to a new tab ([#21236](https://github.com/ionic-team/ionic/issues/21236)) ([1e6f923](https://github.com/ionic-team/ionic/commit/1e6f92377aaf0804cfd0ddb9b06da7b4c9dc355f))
+* **segment-button:** screen readers now announce selected state properly ([#21273](https://github.com/ionic-team/ionic/issues/21273)) ([85cc35e](https://github.com/ionic-team/ionic/commit/85cc35ee9163a38c48c6df466a3c036906437804))
+* **toggle:** screen readers now announce toggle properly ([#21168](https://github.com/ionic-team/ionic/issues/21168)) ([1fbdb22](https://github.com/ionic-team/ionic/commit/1fbdb2255e4ff7fccf22d9ccc12b7f9bb4c3a064))
+
+
+
 # [5.1.0 Aluminum](https://github.com/ionic-team/ionic/compare/v5.0.7...v5.1.0) (2020-04-30)
 
 
