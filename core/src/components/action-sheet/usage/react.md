@@ -1,18 +1,20 @@
-```typescript
+```tsx
 import React, { useState } from 'react';
 import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
 import { trash, share, caretForwardCircle, heart, close } from 'ionicons/icons';
 
 export const ActionSheetExample: React.FC = () => {
-
   const [showActionSheet, setShowActionSheet] = useState(false);
 
   return (
     <IonContent>
-      <IonButton onClick={() => setShowActionSheet(true)} expand="block">Show Action Sheet</IonButton>
+      <IonButton onClick={() => setShowActionSheet(true)} expand="block">
+        Show Action Sheet
+      </IonButton>
       <IonActionSheet
         isOpen={showActionSheet}
         onDidDismiss={() => setShowActionSheet(false)}
+        cssClass='my-custom-class'
         buttons={[{
           text: 'Delete',
           role: 'destructive',
@@ -49,9 +51,6 @@ export const ActionSheetExample: React.FC = () => {
       >
       </IonActionSheet>
     </IonContent>
-
   );
-
 }
-
 ```

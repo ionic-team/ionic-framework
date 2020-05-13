@@ -16,6 +16,7 @@ export default {
     presentAlert() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Alert',
           subHeader: 'Subtitle',
           message: 'This is an alert message.',
@@ -27,6 +28,7 @@ export default {
     presentAlertMultipleButtons() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Alert',
           subHeader: 'Subtitle',
           message: 'This is an alert message.',
@@ -38,6 +40,7 @@ export default {
     presentAlertConfirm() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Confirm!',
           message: 'Message <strong>text</strong>!!!',
           buttons: [
@@ -63,6 +66,7 @@ export default {
     presentAlertPrompt() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Prompt!',
           inputs: [
             {
@@ -126,6 +130,7 @@ export default {
     presentAlertRadio() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Radio',
           inputs: [
             {
@@ -183,6 +188,7 @@ export default {
     presentAlertCheckbox() {
       return this.$ionic.alertController
         .create({
+          cssClass: 'my-custom-class',
           header: 'Checkbox',
           inputs: [
             {

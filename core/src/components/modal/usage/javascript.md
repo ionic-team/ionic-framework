@@ -23,6 +23,7 @@ function presentModal() {
   // create the modal with the `modal-page` component
   const modalElement = document.createElement('ion-modal');
   modalElement.component = 'modal-page';
+  modalElement.cssClass = 'my-custom-class';
 
   // present the modal
   document.body.appendChild(modalElement);
@@ -37,6 +38,7 @@ During creation of a modal, data can be passed in through the `componentProps`. 
 ```javascript
 const modalElement = document.createElement('ion-modal');
 modalElement.component = 'modal-page';
+modalElement.cssClass = 'my-custom-class';
 modalElement.componentProps = {
   'firstName': 'Douglas',
   'lastName': 'Adams',
@@ -85,6 +87,7 @@ Modals in iOS mode have the ability to be presented in a card-style and swiped t
 ```javascript
 const modalElement = document.createElement('ion-modal');
 modalElement.component = 'modal-page';
+modalElement.cssClass = 'my-custom-class';
 modalElement.swipeToClose = true;
 modalElement.presentingElement = document.querySelector('ion-nav');
 ```
@@ -94,6 +97,7 @@ In most scenarios, using the `ion-nav` element as the `presentingElement` is fin
 ```javascript
 const modalElement = document.createElement('ion-modal');
 modalElement.component = 'modal-page';
+modalElement.cssClass = 'my-custom-class';
 modalElement.swipeToClose = true;
 modalElement.presentingElement = await modalController.getTop(); // Get the top-most ion-modal
 ```

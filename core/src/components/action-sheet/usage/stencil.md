@@ -11,6 +11,7 @@ export class ActionSheetExample {
   async presentActionSheet() {
     const actionSheet = await actionSheetController.create({
       header: 'Albums',
+      cssClass: 'my-custom-class',
       buttons: [{
         text: 'Delete',
         role: 'destructive',

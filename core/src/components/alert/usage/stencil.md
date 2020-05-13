@@ -10,6 +10,7 @@ import { alertController } from '@ionic/core';
 export class AlertExample {
   async presentAlert() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
@@ -21,6 +22,7 @@ export class AlertExample {
 
   async presentAlertMultipleButtons() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
@@ -32,6 +34,7 @@ export class AlertExample {
 
   async presentAlertConfirm() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Confirm!',
       message: 'Message <strong>text</strong>!!!',
       buttons: [
@@ -56,6 +59,7 @@ export class AlertExample {
 
   async presentAlertPrompt() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Prompt!',
       inputs: [
         {
@@ -128,6 +132,7 @@ export class AlertExample {
 
   async presentAlertRadio() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Radio',
       inputs: [
         {
@@ -190,6 +195,7 @@ export class AlertExample {
 
   async presentAlertCheckbox() {
     const alert = await alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Checkbox',
       inputs: [
         {
