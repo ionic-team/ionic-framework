@@ -45,6 +45,7 @@ export default {
       return this.$ionic.modalController
         .create({
           component: Modal,
+          cssClass: 'my-custom-class',
           componentProps: {
             data: {
               content: 'New Content',

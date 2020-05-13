@@ -10,7 +10,8 @@ import { modalController } from '@ionic/core';
 export class ModalExample {
   async presentModal() {
     const modal = await modalController.create({
-      component: 'page-modal'
+      component: 'page-modal',
+      cssClass: 'my-custom-class'
     });
     await modal.present();
   }
@@ -52,6 +53,7 @@ The previous example can be written to include data:
 async presentModal() {
   const modal = await modalController.create({
     component: 'page-modal',
+    cssClass: 'my-custom-class',
     componentProps: {
       'firstName': 'Douglas',
       'lastName': 'Adams',
@@ -122,6 +124,7 @@ export class ModalExample {
   async presentModal() {
     const modal = await modalController.create({
       component: 'page-modal',
+      cssClass: 'my-custom-class',
       swipeToClose: true,
       presentingElement: this.el.closest('ion-router-outlet'),
     });
@@ -137,6 +140,7 @@ In most scenarios, using the `ion-router-outlet` element as the `presentingEleme
 async presentModal() {
   const modal = await modalController.create({
     component: 'page-modal',
+    cssClass: 'my-custom-class',
     swipeToClose: true,
     presentingElement: await modalController.getTop() // Get the top-most ion-modal
   });

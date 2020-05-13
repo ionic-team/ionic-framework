@@ -11,6 +11,7 @@ export class PopoverExample {
   async presentPopover(ev: any) {
     const popover = await popoverController.create({
       component: 'page-popover',
+      cssClass: 'my-custom-class',
       event: ev,
       translucent: true
     });
