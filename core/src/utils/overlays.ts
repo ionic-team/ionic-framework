@@ -140,7 +140,9 @@ export const present = async (
     overlay.didPresent.emit();
   }
 
-  overlay.el.focus();
+  if (overlay.keyboardClose) {
+    overlay.el.focus();
+  }
 };
 
 export const dismiss = async (

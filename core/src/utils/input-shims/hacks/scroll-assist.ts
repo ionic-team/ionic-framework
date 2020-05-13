@@ -42,7 +42,7 @@ export const enableScrollAssist = (
   };
 };
 
-const jsSetFocus = (
+const jsSetFocus = async (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
   contentEl: HTMLIonContentElement | null,
@@ -73,8 +73,8 @@ const jsSetFocus = (
       if (scrollContentTimeout !== undefined) {
         clearTimeout(scrollContentTimeout);
       }
-      window.removeEventListener('resize', scrollContent);
-      window.removeEventListener('keyboardWillShow', scrollContent);
+
+      window.removeEventListener('ionKeyboardDidShow', scrollContent);
 
       // scroll the input into place
       if (contentEl) {
@@ -89,11 +89,37 @@ const jsSetFocus = (
       inputEl.focus();
     };
 
-    window.addEventListener('resize', scrollContent);
-    window.addEventListener('keyboardWillShow', scrollContent);
+    if (contentEl) {
+      const scrollEl = await contentEl.getScrollElement();
 
-    // fallback in case resize never fires
-    scrollContentTimeout = setTimeout(scrollContent, 300);
+      /**
+       * scrollData will only consider the amount we need
+       * to scroll in order to properly bring the input
+       * into view. It will not consider the amount
+       * we can scroll in the content element.
+       * As a result, scrollData may request a greater
+       * scroll position than is currently available
+       * in the DOM. If this is the case, we need to
+       * wait for the webview to resize/the keyboard
+       * to show in order for additional scroll
+       * bandwidth to become available.
+       */
+      const totalScrollAmount = scrollEl.scrollHeight - scrollEl.clientHeight;
+      if (scrollData.scrollAmount > (totalScrollAmount - scrollEl.scrollTop)) {
+        window.addEventListener('ionKeyboardDidShow', scrollContent);
+
+        /**
+         * This should only fire in 2 instances:
+         * 1. The app is very slow.
+         * 2. The app is running in a browser on an old OS
+         * that does not support Ionic Keyboard Events
+         */
+        scrollContentTimeout = setTimeout(scrollContent, 1000);
+        return;
+      }
+    }
+
+    scrollContent();
   }
 };
 

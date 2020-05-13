@@ -10,7 +10,7 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar>
     <IonTitle>Default Title</IonTitle>
   </IonToolbar>
-  
+
   {/*-- Small title --*/}
   <IonToolbar>
     <IonTitle size="small">Small Title above a Default Title</IonTitle>
@@ -18,7 +18,7 @@ export const ToolbarExample: React.FC = () => (
   <IonToolbar>
     <IonTitle>Default Title</IonTitle>
   </IonToolbar>
-  
+
   {/*-- Large title --*/}
   <IonToolbar>
     <IonTitle size="large">Large Title</IonTitle>
@@ -43,23 +43,23 @@ import {
 export const LargeTitleExample: React.FC = () => (
   <>
     <IonHeader translucent="true">
-      <IonToolbar>    
-        <IonTitle>Settings</IonTitle>               
+      <IonToolbar>
+        <IonTitle>Settings</IonTitle>
       </IonToolbar>
     </IonHeader>
-    
+
     <IonContent fullscreen="true">
-      <IonHeader collapse="condense">              
-        <IonToolbar>      
+      <IonHeader collapse="condense">
+        <IonToolbar>
           <IonTitle size="large">Settings</IonTitle>
         </IonToolbar>
         <IonToolbar>
           <IonSearchbar></IonSearchbar>
         </IonToolbar>
       </IonHeader>
-      
+
       ...
-      
+
     </IonContent>
   </>
 );
@@ -76,23 +76,23 @@ import {
   IonHeader,
   IonSearchbar,
   IonTitle,
-  IonToolbar  
+  IonToolbar
 } from '@ionic/react';
 
 export const LargeTitleExample: React.FC = () => (
   <>
     <IonHeader translucent="true">
-      <IonToolbar>   
+      <IonToolbar>
         <IonButtons collapse="true" slot="end">
           <IonButton>Click Me</IonButton>
-        </IonButtons> 
-        <IonTitle>Settings</IonTitle>               
+        </IonButtons>
+        <IonTitle>Settings</IonTitle>
       </IonToolbar>
     </IonHeader>
-    
+
     <IonContent fullscreen="true">
-      <IonHeader collapse="condense">              
-        <IonToolbar>      
+      <IonHeader collapse="condense">
+        <IonToolbar>
           <IonButtons collapse="true" slot="end">
             <IonButton>Click Me</IonButton>
           </IonButtons>
@@ -102,15 +102,15 @@ export const LargeTitleExample: React.FC = () => (
           <IonSearchbar></IonSearchbar>
         </IonToolbar>
       </IonHeader>
-      
+
       ...
-      
+
     </IonContent>
   </>
 );
 ```
 
-In this example, notice that we have added two sets of `IonButtons` both with `collapse="true"`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `IonTitle` element.
+In this example, notice that we have added two sets of `IonButtons` both with `collapse` set to `true`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `IonTitle` element.
 
 `IonButtons` elements that do not have `collapse` set will always be visible, regardless of collapsed state. When using the large title and `ion-buttons` elements inside of `ion-content`, the `ion-buttons` elements should always be placed in the `end` slot.
 
@@ -123,4 +123,4 @@ ion-title.large-title {
 }
 ```
 
-> When using collapsible large titles, it is required that `fullscreen="true"` be set on `IonContent` and `translucent="true"` be set on the main `IonHeader`.
+> When using collapsible large titles, it is required that `fullscreen` is set to `true` on `IonContent` and `translucent="true"` be set on the main `IonHeader`.

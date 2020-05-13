@@ -3,7 +3,7 @@
   <ion-content>
 
     <!-- Fixed Floating Action Button that does not scroll with the content -->
-    <ion-fab>
+    <ion-fab slot="fixed">
       <ion-fab-button>Button</ion-fab-button>
     </ion-fab>
 

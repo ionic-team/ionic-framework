@@ -20,7 +20,9 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
     ios: 'item.ios.scss',
     md: 'item.md.scss'
   },
-  shadow: true
+  shadow: {
+    delegatesFocus: true
+  }
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
 

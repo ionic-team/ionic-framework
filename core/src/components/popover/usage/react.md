@@ -9,6 +9,7 @@ export const PopoverExample: React.FC = () => {
     <>
       <IonPopover
         isOpen={showPopover}
+        cssClass='my-custom-class'
         onDidDismiss={e => setShowPopover(false)}
       >
         <p>This is popover content</p>
