@@ -32,7 +32,7 @@ export interface AlertInput {
   handler?: (input: AlertInput) => void;
   min?: string | number;
   max?: string | number;
-  cssClass?: string;
+  cssClass?: string | string[];
 }
 
 export interface AlertButton {
