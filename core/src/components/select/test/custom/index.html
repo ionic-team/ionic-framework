@@ -64,6 +64,12 @@
             <ion-select-option value="seattle">Seattle, WA</ion-select-option>
           </ion-select>
         </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Custom Options</ion-label>
+        </ion-list-header>
 
         <ion-item>
           <ion-label>Default Interface (Alert)</ion-label>
@@ -88,6 +94,36 @@
         <ion-item>
           <ion-label>Popover Interface</ion-label>
           <ion-select placeholder="Styled Options" interface="popover" class="customOptions">
+            <ion-select-option class="select-option-custom-red" value="madison">Madison, WI</ion-select-option>
+            <ion-select-option class="select-option-custom-red" value="austin">Austin, TX</ion-select-option>
+            <ion-select-option class="select-option-custom-purple" value="chicago">Chicago, IL</ion-select-option>
+            <ion-select-option class="select-option-custom-red" value="seattle">Seattle, WA</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Default Interface (Alert): Multiple</ion-label>
+          <ion-select multiple="true" placeholder="Styled Options" class="customOptions">
+            <ion-select-option class="select-option-custom-red" value="madison">Madison, WI</ion-select-option>
+            <ion-select-option class="select-option-custom-red" value="austin">Austin, TX</ion-select-option>
+            <ion-select-option class="select-option-custom-purple" value="chicago">Chicago, IL</ion-select-option>
+            <ion-select-option class="select-option-custom-red" value="seattle">Seattle, WA</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Action Sheet Interface: Multiple</ion-label>
+          <ion-select multiple="true" placeholder="Styled Options" interface="action-sheet" class="customOptions">
+            <ion-select-option class="select-option-custom-red" value="madison">Madison, WI</ion-select-option>
+            <ion-select-option class="select-option-custom-red" value="austin">Austin, TX</ion-select-option>
+            <ion-select-option class="select-option-custom-purple" value="chicago">Chicago, IL</ion-select-option>
+            <ion-select-option class="select-option-custom-red" value="seattle">Seattle, WA</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Popover Interface: Multiple</ion-label>
+          <ion-select multiple="true" placeholder="Styled Options" interface="popover" class="customOptions">
             <ion-select-option class="select-option-custom-red" value="madison">Madison, WI</ion-select-option>
             <ion-select-option class="select-option-custom-red" value="austin">Austin, TX</ion-select-option>
             <ion-select-option class="select-option-custom-purple" value="chicago">Chicago, IL</ion-select-option>
@@ -139,17 +175,25 @@
         opacity: 1;
       }
 
-      /* Alert Interface [Selector 1]: set color for alert options */
-      /* Alert Interface [Selector 2]: set color for checked alert options */
+      /* Alert Interface [Selector 1]: set color for alert options (single selection) */
+      /* Alert Interface [Selector 2]: set color for checked alert options (single selection) */
+      /* Alert Interface [Selector 3]: set color for alert options (multi selection) */
+      /* Alert Interface [Selector 4]: set color for checked alert options (multi selection) */
       .select-interface-custom .select-option-custom-red .alert-radio-label,
-      .select-interface-custom .select-option-custom-red[aria-checked=true] .alert-radio-label {
+      .select-interface-custom .select-option-custom-red[aria-checked=true] .alert-radio-label,
+      .select-interface-custom .select-option-custom-red .alert-checkbox-label,
+      .select-interface-custom .select-option-custom-red[aria-checked=true] .alert-checkbox-label {
         color: #971e49;
       }
 
-      /* Alert Interface [Selector 1]: set color for alert options */
-      /* Alert Interface [Selector 2]: set color for checked alert options */
+      /* Alert Interface [Selector 1]: set color for alert options (single selection) */
+      /* Alert Interface [Selector 2]: set color for checked alert options (single selection) */
+      /* Alert Interface [Selector 3]: set color for alert options (multi selection) */
+      /* Alert Interface [Selector 4]: set color for checked alert options (multi selection) */
       .select-interface-custom .select-option-custom-purple .alert-radio-label,
-      .select-interface-custom .select-option-custom-purple[aria-checked=true] .alert-radio-label {
+      .select-interface-custom .select-option-custom-purple[aria-checked=true] .alert-radio-label,
+      .select-interface-custom .select-option-custom-purple .alert-checkbox-label,
+      .select-interface-custom .select-option-custom-purple[aria-checked=true] .alert-checkbox-label {
         color: #545ca7;
       }
 
