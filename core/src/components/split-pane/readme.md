@@ -6,7 +6,7 @@ displayed as the viewport width increases.
 If the device's screen width is below a certain size, the split pane will collapse and the menu will be hidden. This is ideal for creating an app that will be served in a browser and deployed through the app store to phones and tablets.
 
 
-### Setting Breakpoints
+## Setting Breakpoints
 
 By default, the split pane will expand when the screen is larger than 992px. To customize this, pass a breakpoint in the `when` property. The `when` property can accept a boolean value, any valid media query, or one of Ionic's predefined sizes.
 

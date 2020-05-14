@@ -15,12 +15,12 @@ http://www.idangero.us/
 
 Licensed under MIT
 
-### Custom Animations
+## Custom Animations
 
 By default, Ionic slides use the built-in `slide` animation effect. Custom animations can be provided via the `options` property. Examples of other animations can be found below.
 
 
-#### Coverflow
+### Coverflow
 
 ```typescript
 const slideOpts = {
@@ -113,7 +113,7 @@ const slideOpts = {
 }
 ```
 
-#### Cube
+### Cube
 
 ```typescript
 const slideOpts = {
@@ -273,7 +273,7 @@ const slideOpts = {
 }
 ```
 
-#### Fade
+### Fade
 
 ```typescript
 const slideOpts = {
@@ -337,7 +337,7 @@ const slideOpts = {
 }
 ```
 
-#### Flip
+### Flip
 
 ```typescript
 const slideOpts = {
