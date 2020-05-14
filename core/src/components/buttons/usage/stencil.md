@@ -1,0 +1,63 @@
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'buttons-example',
+  styleUrl: 'buttons-example.css'
+})
+export class ButtonsExample {
+
+  clickedStar() {
+    console.log("Clicked star button");
+  }
+
+  render() {
+    return [
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>Back Button</ion-title>
+      </ion-toolbar>,
+
+      <ion-toolbar>
+        <ion-buttons slot="secondary">
+          <ion-button>
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Default Buttons</ion-title>
+        <ion-buttons slot="primary">
+          <ion-button color="secondary">
+            <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>,
+
+      <ion-toolbar>
+        <ion-buttons slot="primary">
+          <ion-button onClick={() => this.clickedStar()}>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Right side menu toggle</ion-title>
+        <ion-buttons slot="end">
+          <ion-menu-button autoHide={false}></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>,
+
+      <ion-toolbar>
+        <ion-buttons collapse={true}>
+          <ion-button>
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Collapsible Buttons</ion-title>
+      </ion-toolbar>
+    ];
+  }
+}
+```

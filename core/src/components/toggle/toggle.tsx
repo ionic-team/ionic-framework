@@ -2,8 +2,8 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
-import { hapticSelection } from '../../utils/haptic';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { hapticSelection } from '../../utils/native/haptic';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -214,6 +214,7 @@ export class Toggle implements ComponentInterface {
           onBlur={this.onBlur}
           disabled={disabled}
           ref={btnEl => this.buttonEl = btnEl}
+          aria-hidden="true"
         >
         </button>
       </Host>

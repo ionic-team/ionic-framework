@@ -58,13 +58,13 @@ export const createSwipeToCloseGesture = (
   };
 
   const onMove = (detail: GestureDetail) => {
+
     if (scrollElement !== undefined && overflowValue !== 'hidden' && detail.deltaY >= 0) {
       overflowValue = 'hidden';
       scrollElement.style.overflow = overflowValue;
     }
 
-    const step = detail.deltaY / height;
-    if (step < 0) { return; }
+    const step = clamp(0.0001, detail.deltaY / height, 0.9999);
 
     animation.progressStep(step);
   };
@@ -76,8 +76,8 @@ export const createSwipeToCloseGesture = (
     }
 
     const velocity = detail.velocityY;
-    const step = detail.deltaY / height;
-    if (step < 0) { return; }
+
+    const step = clamp(0.0001, detail.deltaY / height, 0.9999);
 
     const threshold = (detail.deltaY + velocity * 1000) / height;
 

@@ -5,7 +5,7 @@ import { IonContent, IonFab, IonFabButton } from '@ionic/react';
 export const FabButtonExample: React.FC = () => (
   <IonContent>
     {/*-- Fixed Floating Action Button that does not scroll with the content --*/}
-    <IonFab>
+    <IonFab slot="fixed">
       <IonFabButton>Button</IonFabButton>
     </IonFab>
 

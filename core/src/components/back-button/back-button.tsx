@@ -126,10 +126,10 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'show-back-button': showBackButton
         }}
       >
-        <button type={type} disabled={disabled} class="button-native" part="button" aria-label={backButtonText || 'back'}>
+        <button type={type} disabled={disabled} class="button-native" aria-label={backButtonText || 'back'}>
           <span class="button-inner">
-            {backButtonIcon && <ion-icon icon={backButtonIcon} aria-hidden="true" lazy={false} part="icon"></ion-icon>}
-            {backButtonText && <span aria-hidden="true" class="button-text" part="text">{backButtonText}</span>}
+            {backButtonIcon && <ion-icon icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
+            {backButtonText && <span aria-hidden="true" class="button-text">{backButtonText}</span>}
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </button>

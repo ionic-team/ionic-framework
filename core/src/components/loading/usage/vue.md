@@ -16,6 +16,7 @@ export default {
     presentLoading() {
       return this.$ionic.loadingController
         .create({
+          cssClass: 'my-custom-class',
           message: 'Please wait...',
           duration: this.timeout,
         })
@@ -29,6 +30,7 @@ export default {
     presentLoadingWithOptions() {
       return this.$ionic.loadingController
         .create({
+          cssClass: 'my-custom-class',
           spinner: null,
           duration: this.timeout,
           message: 'Click the backdrop to dismiss early...',

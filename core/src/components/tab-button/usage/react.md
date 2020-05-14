@@ -6,6 +6,7 @@ import { calendar, personCircle, map, informationCircle } from 'ionicons/icons';
 export const TabButtonExample: React.FC = () => (
   <IonContent>
     <IonTabs>
+      {/*-- Tab bar --*/}
       <IonTabBar slot="bottom">
         <IonTabButton tab="schedule">
           <IonIcon icon={calendar} />
