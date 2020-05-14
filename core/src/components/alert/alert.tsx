@@ -336,7 +336,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
     if (inputs.length === 0) {
       return null;
     }
-
     return (
       <div class="alert-radio-group" role="radiogroup" aria-labelledby={labelledby} aria-activedescendant={this.activeId}>
         { inputs.map(i => (
