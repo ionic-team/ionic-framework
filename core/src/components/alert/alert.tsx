@@ -155,6 +155,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       label: i.label,
       checked: !!i.checked,
       disabled: !!i.disabled,
+      cssClass: i.cssClass,
       id: i.id || `alert-input-${this.overlayIndex}-${index}`,
       handler: i.handler,
       min: i.min,
@@ -307,6 +308,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             tabIndex={0}
             role="checkbox"
             class={{
+              [`${i.cssClass}`]: i.cssClass ? true : false,
               'alert-tappable': true,
               'alert-checkbox': true,
               'alert-checkbox-button': true,
@@ -334,6 +336,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     if (inputs.length === 0) {
       return null;
     }
+
     return (
       <div class="alert-radio-group" role="radiogroup" aria-labelledby={labelledby} aria-activedescendant={this.activeId}>
         { inputs.map(i => (
@@ -345,6 +348,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             id={i.id}
             tabIndex={0}
             class={{
+              [`${i.cssClass}`]: i.cssClass ? true : false,
               'alert-radio-button': true,
               'alert-tappable': true,
               'alert-radio': true,
@@ -384,6 +388,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   disabled={i.disabled}
                   tabIndex={0}
                   class={{
+                    [`${i.cssClass}`]: i.cssClass ? true : false,
                     'alert-input': true,
                     'alert-input-disabled': i.disabled || false
                   }}
@@ -404,6 +409,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   disabled={i.disabled}
                   tabIndex={0}
                   class={{
+                    [`${i.cssClass}`]: i.cssClass ? true : false,
                     'alert-input': true,
                     'alert-input-disabled': i.disabled || false
                   }}

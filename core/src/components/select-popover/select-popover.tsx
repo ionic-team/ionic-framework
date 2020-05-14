@@ -51,7 +51,7 @@ export class SelectPopover implements ComponentInterface {
           }
           <ion-radio-group value={checkedValue}>
             {this.options.map(option =>
-              <ion-item>
+              <ion-item class={option.cssClass}>
                 <ion-label>
                   {option.text}
                 </ion-label>

@@ -229,9 +229,16 @@ export class Select implements ComponentInterface {
   private createActionSheetButtons(data: HTMLIonSelectOptionElement[], selectValue: any): ActionSheetButton[] {
     const actionSheetButtons = data.map(option => {
       const value = getOptionValue(option);
+
+      let optClass;
+      if (option.classList.length > 0) {
+        optClass = option.getAttribute('class')?.replace('hydrated', '');
+      }
+
       return {
         role: (isOptionSelected(value, selectValue, this.compareWith) ? 'selected' : ''),
         text: option.textContent,
+        cssClass: optClass,
         handler: () => {
           this.value = value;
         }
@@ -251,32 +258,50 @@ export class Select implements ComponentInterface {
   }
 
   private createAlertInputs(data: HTMLIonSelectOptionElement[], inputType: 'checkbox' | 'radio', selectValue: any): AlertInput[] {
-    return data.map(o => {
-      const value = getOptionValue(o);
+    const alertInputs = data.map(option => {
+      const value = getOptionValue(option);
+
+      let optClass;
+      if (option.classList.length > 0) {
+        optClass = option.getAttribute('class')?.replace('hydrated', '');
+      }
+
       return {
         type: inputType,
-        label: o.textContent || '',
+        cssClass: optClass,
+        label: option.textContent || '',
         value,
         checked: isOptionSelected(value, selectValue, this.compareWith),
-        disabled: o.disabled
+        disabled: option.disabled
       };
     });
+
+    return alertInputs;
   }
 
   private createPopoverOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectPopoverOption[] {
-    return data.map(o => {
-      const value = getOptionValue(o);
+    const popoverOptions = data.map(option => {
+      const value = getOptionValue(option);
+
+      let optClass;
+      if (option.classList.length > 0) {
+        optClass = option.getAttribute('class')?.replace('hydrated', '');
+      }
+
       return {
-        text: o.textContent || '',
+        text: option.textContent || '',
+        cssClass: optClass,
         value,
         checked: isOptionSelected(value, selectValue, this.compareWith),
-        disabled: o.disabled,
+        disabled: option.disabled,
         handler: () => {
           this.value = value;
           this.close();
         }
       };
     });
+
+    return popoverOptions;
   }
 
   private async openPopover(ev: UIEvent) {
