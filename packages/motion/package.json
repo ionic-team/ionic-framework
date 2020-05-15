@@ -1,0 +1,46 @@
+{
+  "name": "@ionic/motion",
+  "version": "0.0.1",
+  "description": "Motion animations for Ionic Framework",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc -p .",
+    "lint": "eslint src/**/*",
+    "lint.fix": "npm run lint -- --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/ionic.git"
+  },
+  "keywords": [
+    "ionic",
+    "framework",
+    "react",
+    "angular",
+    "mobile",
+    "app",
+    "hybrid",
+    "webapp",
+    "cordova",
+    "capacitor",
+    "progressive",
+    "web",
+    "app",
+    "pwa"
+  ],
+  "author": "Ionic Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "homepage": "https://ionicframework.com/",
+  "devDependencies": {
+    "@ionic/eslint-plugin": "0.0.1",
+    "@typescript-eslint/parser": "^2.33.0",
+    "eslint": "^7.0.0",
+    "typescript": "^3.9.2"
+  },
+  "dependencies": {
+    "@ionic/core": "^5.1.1"
+  }
+}
