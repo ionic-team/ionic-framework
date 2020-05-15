@@ -199,7 +199,7 @@ const IonTabBarContainer: React.FC<InternalProps> = React.memo<InternalProps>(({
     <IonTabBarUnwrapped
       ref={forwardedRef}
       {...props as any}
-      routeInfo={props.routeInfo || context.routeInfo}
+      routeInfo={props.routeInfo || context.routeInfo || { pathname: window.location.pathname }}
       onSetCurrentTab={context.setCurrentTab}
     >
       {props.children}

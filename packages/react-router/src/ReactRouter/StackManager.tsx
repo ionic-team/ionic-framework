@@ -62,6 +62,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       }
 
       const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
+      // TODO: we need to set the route here since its synced later?
       if (enteringViewItem) {
         enteringViewItem.reactElement = enteringRoute;
       }
@@ -166,6 +167,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       }
     }
 
+    // TODO: needed?
     if (leavingViewItem) {
       if (!leavingViewItem.ionRoute) {
         this.context.unMountViewItem(leavingViewItem);
@@ -218,7 +220,6 @@ function clonePageElement(leavingViewHtml: string) {
   return undefined;
 }
 
-// TODO: Move to ReactRouterViewStack
 function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
   let matchedNode: React.ReactNode;
   React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {

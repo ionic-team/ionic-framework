@@ -17,7 +17,9 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ReactRouterViewStack } from './ReactRouterViewStack';
 import StackManager from './StackManager';
 
-export interface LocationState { }
+export interface LocationState {
+  direction?: RouterDirection;
+}
 
 interface IonRouteProps extends RouteComponentProps<{}, {}, LocationState> {
   registerHistoryListener: (cb: (location: HistoryLocation<any>, action: HistoryAction) => void) => void;
@@ -28,12 +30,11 @@ interface IonRouteState {
 }
 
 class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
-  currentPathname: string | undefined;
   currentTab?: string;
   exitViewFromOtherOutletHandlers: ((pathname: string) => ViewItem | undefined)[] = [];
   incomingRouteParams?: Partial<RouteInfo>;
   locationHistory = new LocationHistory();
-  routeChangedHandlers: ((routeInfo: RouteInfo) => void)[] = [];
+  // TODO: can be made not a global?
   routeInfo: RouteInfo;
   viewStack = new ReactRouterViewStack();
   routeMangerContextState: RouteManagerContextState = {
@@ -47,8 +48,6 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     addViewItem: this.viewStack.add,
     unMountViewItem: this.viewStack.remove
   };
-  pendingRouteChange?: RouteInfo;
-  viewItemsForTransition: { [key: string]: ViewItem | undefined; } = {};
 
   constructor(props: IonRouteProps) {
     super(props);
@@ -60,7 +59,6 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     };
 
     this.locationHistory.add(this.routeInfo);
-
     this.handleChangeTab = this.handleChangeTab.bind(this);
     this.handleResetTab = this.handleResetTab.bind(this);
     this.handleNavigate = this.handleNavigate.bind(this);
@@ -77,15 +75,16 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     this.routeInfo.tab = this.currentTab;
   }
 
-  getViewItemForTransition(pathname: string) {
-    return this.viewItemsForTransition[pathname];
-  }
-
   handleChangeTab(tab: string, path: string, routeOptions?: any) {
     const routeInfo = this.locationHistory.getCurrentRouteInfoForTab(tab);
     if (routeInfo) {
       this.incomingRouteParams = { ...routeInfo, routeAction: 'push', routeDirection: 'none' };
-      this.props.history.push(routeInfo.pathname + (routeInfo.search || ''));
+      if (routeInfo.pathname === path) {
+        this.props.history.push(routeInfo.pathname + (routeInfo.search || ''));
+      } else {
+        this.incomingRouteParams.pathname = path;
+        this.props.history.push(path);
+      }
     } else {
       this.handleNavigate(path, 'push', 'none', routeOptions, tab);
     }
@@ -116,10 +115,21 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
             tab: this.currentTab
           };
         }
+        if (action === 'POP') {
+          const direction =
+            leavingLocationInfo?.routeDirection === 'forward' ?
+              'back' : leavingLocationInfo?.routeDirection === 'back' ?
+              'forward' : 'back';
+          this.incomingRouteParams = {
+            routeAction: 'pop',
+            routeDirection: direction,
+            tab: this.currentTab
+          };
+        }
         if (!this.incomingRouteParams) {
           this.incomingRouteParams = {
             routeAction: 'push',
-            routeDirection: 'forward',
+            routeDirection: location.state?.direction || 'forward',
             tab: this.currentTab
           };
         }
@@ -161,7 +171,6 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
       routeInfo: this.routeInfo
     });
 
-    this.currentPathname = location.pathname;
     this.incomingRouteParams = undefined;
 
   }
@@ -220,20 +229,6 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
       ri.tab = tab;
       this.locationHistory.update(ri);
     }
-  }
-
-  registerExitViewFromOtherOutletHandler(cb: (pathname: string) => ViewItem | undefined) {
-    this.exitViewFromOtherOutletHandlers.push(cb);
-    return () => {
-      this.exitViewFromOtherOutletHandlers = this.exitViewFromOtherOutletHandlers.filter(x => x !== cb);
-    };
-  }
-
-  registerRouteChangeHandler(cb: (routeInfo: RouteInfo) => void) {
-    this.routeChangedHandlers.push(cb);
-    return () => {
-      this.routeChangedHandlers = this.routeChangedHandlers.filter(x => x !== cb);
-    };
   }
 
   render() {
