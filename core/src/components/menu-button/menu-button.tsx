@@ -77,7 +77,6 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
         onClick={this.onClick}
         aria-disabled={disabled ? 'true' : null}
         aria-hidden={hidden ? 'true' : null}
-        aria-label="menu"
         class={{
           [mode]: true,
 
@@ -96,6 +95,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           {...attrs}
           disabled={disabled}
           class="button-native"
+          aria-label="menu"
         >
           <span class="button-inner">
             <slot>
