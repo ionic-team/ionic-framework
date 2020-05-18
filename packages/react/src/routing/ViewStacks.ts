@@ -2,12 +2,6 @@ import { RouteInfo } from '../models/RouteInfo';
 
 import { ViewItem } from './ViewItem';
 
-// interface ViewStack<TInfo = any> {
-//   id: string;
-//   viewItems: ViewItem[];
-//   stackInfo: TInfo;
-// }
-
 export abstract class ViewStacks {
   private viewStacks: { [key: string]: ViewItem[]; } = {};
 
