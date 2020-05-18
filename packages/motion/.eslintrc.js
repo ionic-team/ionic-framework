@@ -13,6 +13,8 @@ module.exports = {
   plugins: ['@ionic'],
   extends: ['plugin:@ionic/strict'],
   rules: {
+    "@typescript-eslint/no-explicit-any": 0,
+    "no-negated-condition": 0,
     "no-conditional-assignment": 0,
     "no-non-null-assertion": 0,
     "no-unnecessary-type-assertion": 0,
