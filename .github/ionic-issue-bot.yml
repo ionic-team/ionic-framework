@@ -95,26 +95,35 @@ stale:
 noReply:
   days: 14
   maxIssuesPerRun: 100
-  labels:
-    - label: "needs: reply"
-      message: >
-        Thanks for the issue! This issue is being closed due to the lack of a reply. If this is still
-        an issue with the latest version of Ionic, please create a new issue and ensure the
-        template is fully filled out.
-
-
-        Thank you for using Ionic!
-    - label: "ionitron: needs reproduction"
-      message: >
-        Thanks for the issue! This issue is being closed due to the lack of a code reproduction. If this is still
-        an issue with the latest version of Ionic, please create a new issue and ensure the
-        template is fully filled out.
-
-
-        Thank you for using Ionic!
+  label: "needs: reply"
   responseLabel: triage
   exemptProjects: true
   exemptMilestones: true
+  message: >
+    Thanks for the issue! This issue is being closed due to the lack of a reply. If this is still
+    an issue with the latest version of Ionic, please create a new issue and ensure the
+    template is fully filled out.
+
+
+    Thank you for using Ionic!
+  close: true
+  lock: true
+  dryRun: false
+
+noReproduction:
+  days: 14
+  maxIssuesPerRun: 100
+  label: "ionitron: needs reproduction"
+  responseLabel: triage
+  exemptProjects: true
+  exemptMilestones: true
+  message: >
+    Thanks for the issue! This issue is being closed due to the lack of a code reproduction. If this is still
+    an issue with the latest version of Ionic, please create a new issue and ensure the
+    template is fully filled out.
+
+
+    Thank you for using Ionic!
   close: true
   lock: true
   dryRun: false
