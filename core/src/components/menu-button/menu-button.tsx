@@ -77,6 +77,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
         onClick={this.onClick}
         aria-disabled={disabled ? 'true' : null}
         aria-hidden={hidden ? 'true' : null}
+        aria-label="menu"
         class={{
           [mode]: true,
 
@@ -98,7 +99,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
         >
           <span class="button-inner">
             <slot>
-              <ion-icon icon={menuIcon} mode={mode} lazy={false}></ion-icon>
+              <ion-icon icon={menuIcon} mode={mode} lazy={false} aria-hidden="true"></ion-icon>
             </slot>
           </span>
           {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
