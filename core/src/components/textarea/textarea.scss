@@ -39,7 +39,6 @@
   flex: 1;
 
   width: 100%;
-  box-sizing: border-box;
 
   background: var(--background);
   color: var(--color);
@@ -49,6 +48,8 @@
   white-space: pre-wrap;
 
   z-index: $z-index-item-input;
+
+  box-sizing: border-box;
 }
 
 :host(.ion-color) {
@@ -73,6 +74,13 @@
 
 // Native Textarea
 // --------------------------------------------------
+
+.textarea-wrapper {
+  min-width: inherit;
+  max-width: inherit;
+  min-height: inherit;
+  max-height: inherit;
+}
 
 .native-textarea {
   @include border-radius(var(--border-radius));
