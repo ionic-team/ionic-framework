@@ -62,18 +62,24 @@ const createLargeTitleTransition = (rootAnimation: Animation, rtl: boolean, back
   const shouldAnimationForward = enteringBackButton !== null && leavingLargeTitle !== null && !backDirection;
   const shouldAnimationBackward = enteringLargeTitle !== null && leavingBackButton !== null && backDirection;
 
-  if (shouldAnimationForward) {
-    const leavingLargeTitleBox = leavingLargeTitle.getBoundingClientRect();
-    const enteringBackButtonBox = enteringBackButton.getBoundingClientRect();
+  /**
+   * A device without IntersectionObserver support will not have setup collapsible headers,
+   * this animation would need the cloned title + back-button to work
+   */
+  if (typeof (IntersectionObserver as any) !== 'undefined') {
+    if (shouldAnimationForward) {
+      const leavingLargeTitleBox = leavingLargeTitle.getBoundingClientRect();
+      const enteringBackButtonBox = enteringBackButton.getBoundingClientRect();
 
-    animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle, leavingLargeTitleBox, enteringBackButtonBox);
-    animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton, leavingLargeTitleBox, enteringBackButtonBox);
-  } else if (shouldAnimationBackward) {
-    const enteringLargeTitleBox = enteringLargeTitle.getBoundingClientRect();
-    const leavingBackButtonBox = leavingBackButton.getBoundingClientRect();
+      animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle, leavingLargeTitleBox, enteringBackButtonBox);
+      animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton, leavingLargeTitleBox, enteringBackButtonBox);
+    } else if (shouldAnimationBackward) {
+      const enteringLargeTitleBox = enteringLargeTitle.getBoundingClientRect();
+      const leavingBackButtonBox = leavingBackButton.getBoundingClientRect();
 
-    animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle, enteringLargeTitleBox, leavingBackButtonBox);
-    animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton, enteringLargeTitleBox, leavingBackButtonBox);
+      animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle, enteringLargeTitleBox, leavingBackButtonBox);
+      animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton, enteringLargeTitleBox, leavingBackButtonBox);
+    }
   }
 
   return {
