@@ -54,11 +54,15 @@ export const createSwipeToCloseGesture = (
   let overflowValue: any;
 
   const onStart = () => {
+    if (scrollElement !== undefined) {
+      overflowValue = 'auto';
+      scrollElement.style.overflow = overflowValue;
+    }
+
     animation.progressStart(true, (isOpen) ? 1 : 0);
   };
 
   const onMove = (detail: GestureDetail) => {
-
     if (scrollElement !== undefined && overflowValue !== 'hidden' && detail.deltaY >= 0) {
       overflowValue = 'hidden';
       scrollElement.style.overflow = overflowValue;
