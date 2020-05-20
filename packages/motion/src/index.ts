@@ -1,1 +1,1 @@
-export { sharedAxisTransition } from './animations/axis';
+export { sharedAxisTransition } from './animations/axis.transition';
