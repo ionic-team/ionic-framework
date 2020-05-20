@@ -73,7 +73,7 @@
 
         <ion-item>
           <ion-label>Default Interface (Alert)</ion-label>
-          <ion-select placeholder="Styled Options" class="customOptions">
+          <ion-select placeholder="Styled Options" class="custom-options">
             <ion-select-option class="select-option-custom-red" value="madison">Madison, WI</ion-select-option>
             <ion-select-option class="select-option-custom-red" value="austin">Austin, TX</ion-select-option>
             <ion-select-option class="select-option-custom-purple" value="chicago">Chicago, IL</ion-select-option>
@@ -83,7 +83,7 @@
 
         <ion-item>
           <ion-label>Action Sheet Interface</ion-label>
-          <ion-select placeholder="Styled Options" interface="action-sheet" class="customOptions">
+          <ion-select placeholder="Styled Options" interface="action-sheet" class="custom-options">
             <ion-select-option class="select-option-custom-red" value="madison">Madison, WI</ion-select-option>
             <ion-select-option class="select-option-custom-red" value="austin">Austin, TX</ion-select-option>
             <ion-select-option class="select-option-custom-purple" value="chicago">Chicago, IL</ion-select-option>
@@ -93,7 +93,7 @@
 
         <ion-item>
           <ion-label>Popover Interface</ion-label>
-          <ion-select placeholder="Styled Options" interface="popover" class="customOptions">
+          <ion-select placeholder="Styled Options" interface="popover" class="custom-options">
             <ion-select-option class="select-option-custom-red" value="madison">Madison, WI</ion-select-option>
             <ion-select-option class="select-option-custom-red" value="austin">Austin, TX</ion-select-option>
             <ion-select-option class="select-option-custom-purple" value="chicago">Chicago, IL</ion-select-option>
@@ -103,27 +103,7 @@
 
         <ion-item>
           <ion-label>Default Interface (Alert): Multiple</ion-label>
-          <ion-select multiple="true" placeholder="Styled Options" class="customOptions">
-            <ion-select-option class="select-option-custom-red" value="madison">Madison, WI</ion-select-option>
-            <ion-select-option class="select-option-custom-red" value="austin">Austin, TX</ion-select-option>
-            <ion-select-option class="select-option-custom-purple" value="chicago">Chicago, IL</ion-select-option>
-            <ion-select-option class="select-option-custom-red" value="seattle">Seattle, WA</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Action Sheet Interface: Multiple</ion-label>
-          <ion-select multiple="true" placeholder="Styled Options" interface="action-sheet" class="customOptions">
-            <ion-select-option class="select-option-custom-red" value="madison">Madison, WI</ion-select-option>
-            <ion-select-option class="select-option-custom-red" value="austin">Austin, TX</ion-select-option>
-            <ion-select-option class="select-option-custom-purple" value="chicago">Chicago, IL</ion-select-option>
-            <ion-select-option class="select-option-custom-red" value="seattle">Seattle, WA</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Popover Interface: Multiple</ion-label>
-          <ion-select multiple="true" placeholder="Styled Options" interface="popover" class="customOptions">
+          <ion-select multiple="true" placeholder="Styled Options" class="custom-options">
             <ion-select-option class="select-option-custom-red" value="madison">Madison, WI</ion-select-option>
             <ion-select-option class="select-option-custom-red" value="austin">Austin, TX</ion-select-option>
             <ion-select-option class="select-option-custom-purple" value="chicago">Chicago, IL</ion-select-option>
@@ -134,7 +114,7 @@
     </ion-content>
 
     <script>
-      const selects = document.querySelectorAll('.customOptions');
+      const selects = document.querySelectorAll('.custom-options');
 
       for (var i = 0; i < selects.length; i++) {
         selects[i].interfaceOptions = {
