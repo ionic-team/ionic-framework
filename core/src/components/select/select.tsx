@@ -230,10 +230,9 @@ export class Select implements ComponentInterface {
     const actionSheetButtons = data.map(option => {
       const value = getOptionValue(option);
 
-      let optClass;
-      if (option.classList.length > 0) {
-        optClass = option.getAttribute('class')?.replace('hydrated', '');
-      }
+      // Remove hydrated before copying over classes
+      option.classList.remove('hydrated');
+      const optClass = `${OPTION_CLASS} ${option.className}`;
 
       return {
         role: (isOptionSelected(value, selectValue, this.compareWith) ? 'selected' : ''),
@@ -261,10 +260,9 @@ export class Select implements ComponentInterface {
     const alertInputs = data.map(option => {
       const value = getOptionValue(option);
 
-      let optClass;
-      if (option.classList.length > 0) {
-        optClass = option.getAttribute('class')?.replace('hydrated', '');
-      }
+      // Remove hydrated before copying over classes
+      option.classList.remove('hydrated');
+      const optClass = `${OPTION_CLASS} ${option.className}`;
 
       return {
         type: inputType,
@@ -283,10 +281,9 @@ export class Select implements ComponentInterface {
     const popoverOptions = data.map(option => {
       const value = getOptionValue(option);
 
-      let optClass;
-      if (option.classList.length > 0) {
-        optClass = option.getAttribute('class')?.replace('hydrated', '');
-      }
+      // Remove hydrated before copying over classes
+      option.classList.remove('hydrated');
+      const optClass = `${OPTION_CLASS} ${option.className}`;
 
       return {
         text: option.textContent || '',
@@ -554,3 +551,5 @@ const textForValue = (opts: HTMLIonSelectOptionElement[], value: any, compareWit
 };
 
 let selectIds = 0;
+
+const OPTION_CLASS = 'select-interface-option';
