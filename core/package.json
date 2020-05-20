@@ -39,7 +39,7 @@
     "@types/jest": "24.9.1",
     "@types/node": "12.12.3",
     "@types/puppeteer": "1.19.1",
-    "@types/swiper": "5.2.1",
+    "@types/swiper": "5.3.1",
     "aws-sdk": "^2.497.0",
     "clean-css-cli": "^4.1.11",
     "domino": "^2.1.3",
