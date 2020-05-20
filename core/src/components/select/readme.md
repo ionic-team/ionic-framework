@@ -112,8 +112,13 @@ Notice that by using `::part`, any CSS property on the element can be targeted.
 
 ### Styling Select Interface
 
+Customizing the interface dialog should be done by following the Customization section in that interface's documentation:
 
+- [Alert Customization](../alert#customization)
+- [Action Sheet Customization](../action-sheet#customization)
+- [Popover Customization](../popover#customization)
 
+However, the Select Option does set a class for easier styling and allow the ability to pass a class to the overlay option, see the [Select Options documentation](./select-option) for usage examples of customizing options.
 
 <!-- Auto Generated Below -->
 
