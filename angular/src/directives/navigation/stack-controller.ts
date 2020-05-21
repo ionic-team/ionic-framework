@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RouterDirection } from '@ionic/core';
+import { AnimationBuilder, RouterDirection } from '@ionic/core';
 
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { NavController } from '../../providers/nav-controller';
@@ -52,7 +52,9 @@ export class StackController {
   }
 
   setActive(enteringView: RouteView): Promise<StackEvent> {
-    let { direction, animation } = this.navCtrl.consumeTransition();
+    const consumeResult = this.navCtrl.consumeTransition();
+    let { direction, animation } = consumeResult;
+    const { animationBuilder } = consumeResult;
     const leavingView = this.activeView;
     const tabSwitch = isTabSwitch(enteringView, leavingView);
     if (tabSwitch) {
@@ -116,7 +118,7 @@ export class StackController {
         // In case the enteringView is the same as the leavingPage we need to reattach()
         enteringView.ref.changeDetectorRef.reattach();
 
-        return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false)
+        return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false, animationBuilder)
           .then(() => cleanupAsync(enteringView, views, viewsSnapshot, this.location))
           .then(() => ({
             enteringView,
@@ -154,8 +156,8 @@ export class StackController {
           url = primaryOutlet.route._routerState.snapshot.url;
         }
       }
-
-      return this.navCtrl.navigateBack(url, view.savedExtras).then(() => true);
+      const { animationBuilder } = this.navCtrl.consumeTransition();
+      return this.navCtrl.navigateBack(url, { ...view.savedExtras, animationBuilder }).then(() => true);
     });
   }
 
@@ -225,7 +227,8 @@ export class StackController {
     leavingView: RouteView | undefined,
     direction: 'forward' | 'back' | undefined,
     showGoBack: boolean,
-    progressAnimation: boolean
+    progressAnimation: boolean,
+    animationBuilder?: AnimationBuilder
   ) {
     if (this.skipTransition) {
       this.skipTransition = false;
@@ -250,7 +253,8 @@ export class StackController {
           duration: direction === undefined ? 0 : undefined,
           direction,
           showGoBack,
-          progressAnimation
+          progressAnimation,
+          animationBuilder
         });
       }
     }
