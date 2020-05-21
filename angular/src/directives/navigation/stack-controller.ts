@@ -157,7 +157,7 @@ export class StackController {
         }
       }
       const { animationBuilder } = this.navCtrl.consumeTransition();
-      return this.navCtrl.navigateBack(url, { ...view.savedExtras, animationBuilder }).then(() => true);
+      return this.navCtrl.navigateBack(url, { ...view.savedExtras, animation: animationBuilder }).then(() => true);
     });
   }
 

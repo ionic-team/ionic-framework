@@ -33,7 +33,7 @@ export class IonBackButtonDelegate {
       this.routerOutlet.pop();
       ev.preventDefault();
     } else if (defaultHref != null) {
-      this.navCtrl.navigateBack(defaultHref, { animationBuilder: this.animation });
+      this.navCtrl.navigateBack(defaultHref, { animation: this.animation });
       ev.preventDefault();
     }
   }
