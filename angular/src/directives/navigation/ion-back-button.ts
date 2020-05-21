@@ -8,12 +8,12 @@ import { IonRouterOutlet } from './ion-router-outlet';
 
 @Directive({
   selector: 'ion-back-button',
-  inputs: ['defaultHref', 'animationBuilder'],
+  inputs: ['defaultHref', 'animation'],
 })
 export class IonBackButtonDelegate {
 
   defaultHref: string | undefined | null;
-  animationBuilder?: AnimationBuilder;
+  animation?: AnimationBuilder;
 
   constructor(
     @Optional() private routerOutlet: IonRouterOutlet,
@@ -29,11 +29,11 @@ export class IonBackButtonDelegate {
     const defaultHref = this.defaultHref || this.config.get('backButtonDefaultHref');
 
     if (this.routerOutlet && this.routerOutlet.canGoBack()) {
-      this.navCtrl.setDirection('back', undefined, undefined, this.animationBuilder);
+      this.navCtrl.setDirection('back', undefined, undefined, this.animation);
       this.routerOutlet.pop();
       ev.preventDefault();
     } else if (defaultHref != null) {
-      this.navCtrl.navigateBack(defaultHref, { animationBuilder: this.animationBuilder });
+      this.navCtrl.navigateBack(defaultHref, { animationBuilder: this.animation });
       ev.preventDefault();
     }
   }
