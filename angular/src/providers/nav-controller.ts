@@ -9,7 +9,7 @@ import { Platform } from './platform';
 
 export interface AnimationOptions {
   animated?: boolean;
-  animationBuilder?: AnimationBuilder;
+  animation?: AnimationBuilder;
   animationDirection?: 'forward' | 'back';
 }
 
@@ -67,7 +67,7 @@ export class NavController {
    * ```
    */
   navigateForward(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
-    this.setDirection('forward', options.animated, options.animationDirection, options.animationBuilder);
+    this.setDirection('forward', options.animated, options.animationDirection, options.animation);
     return this.navigate(url, options);
   }
 
@@ -90,7 +90,7 @@ export class NavController {
    * ```
    */
   navigateBack(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
-    this.setDirection('back', options.animated, options.animationDirection, options.animationBuilder);
+    this.setDirection('back', options.animated, options.animationDirection, options.animation);
     return this.navigate(url, options);
   }
 
@@ -113,7 +113,7 @@ export class NavController {
    * ```
    */
   navigateRoot(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
-    this.setDirection('root', options.animated, options.animationDirection, options.animationBuilder);
+    this.setDirection('root', options.animated, options.animationDirection, options.animation);
     return this.navigate(url, options);
   }
 
@@ -123,7 +123,7 @@ export class NavController {
    * by default.
    */
   back(options: AnimationOptions = { animated: true, animationDirection: 'back' }) {
-    this.setDirection('back', options.animated, options.animationDirection, options.animationBuilder);
+    this.setDirection('back', options.animated, options.animationDirection, options.animation);
     return this.location.back();
   }
 
