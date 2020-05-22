@@ -17,6 +17,8 @@ export const isPlatform: IsPlatformSignature = (winOrPlatform: Window | Platform
 };
 
 export const setupPlatforms = (win: any = window) => {
+  if (typeof win === 'undefined') { return []; }
+
   win.Ionic = win.Ionic || {};
 
   let platforms: Platforms[] | undefined | null = win.Ionic.platforms;
