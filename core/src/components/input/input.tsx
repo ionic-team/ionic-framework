@@ -1,7 +1,7 @@
 import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
+import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
 import { debounceEvent, findItemLabel } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -47,7 +47,7 @@ export class Input implements ComponentInterface {
   /**
    * Indicates whether the value of the control can be automatically completed by the browser.
    */
-  @Prop() autocomplete: 'on' | 'off' = 'off';
+  @Prop() autocomplete: AutocompleteTypes = 'off';
 
   /**
    * Whether auto correction should be enabled when the user is entering/editing the text value.
