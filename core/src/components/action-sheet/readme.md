@@ -2,9 +2,37 @@
 
 An Action Sheet is a dialog that displays a set of options. It appears on top of the app's content, and must be manually dismissed by the user before they can resume interaction with the app. Destructive options are made obvious in `ios` mode. There are multiple ways to dismiss the action sheet, including tapping the backdrop or hitting the escape key on desktop.
 
-### Buttons
+## Buttons
 
 A button's `role` property can either be `destructive` or `cancel`. Buttons without a role property will have the default look for the platform. Buttons with the `cancel` role will always load as the bottom button, no matter where they are in the array. All other buttons will be displayed in the order they have been added to the `buttons` array. Note: We recommend that `destructive` buttons are always the first button in the array, making them the top button. Additionally, if the action sheet is dismissed by tapping the backdrop, then it will fire the handler from the button with the cancel role.
+
+## Customization
+
+Action Sheet uses scoped encapsulation, which means it will automatically scope its CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector.
+
+We recommend passing a custom class to `cssClass` in the `create` method and using that to add custom styles to the host and inner elements. This property can also accept multiple classes separated by spaces. View the [Usage](#usage) section for an example of how to pass a class using `cssClass`.
+
+```css
+/* DOES NOT WORK - not specific enough */
+.action-sheet-group {
+  background: #e5e5e5;
+}
+
+/* Works - pass "my-custom-class" in cssClass to increase specificity */
+.my-custom-class .action-sheet-group {
+  background: #e5e5e5;
+}
+```
+
+Any of the defined [CSS Custom Properties](#css-custom-properties) can be used to style the Action Sheet without needing to target individual elements:
+
+```css
+.my-custom-class {
+  --background: #e5e5e5;
+}
+```
+
+> If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
 
 <!-- Auto Generated Below -->
@@ -30,6 +58,7 @@ export class ActionSheetExample {
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Albums',
+      cssClass: 'my-custom-class',
       buttons: [{
         text: 'Delete',
         role: 'destructive',
@@ -45,7 +74,7 @@ export class ActionSheetExample {
         }
       }, {
         text: 'Play (open modal)',
-        icon: 'arrow-dropright-circle',
+        icon: 'caret-forward-circle',
         handler: () => {
           console.log('Play clicked');
         }
@@ -71,14 +100,19 @@ export class ActionSheetExample {
 ```
 
 
+### Style Placement
+
+In Angular, the CSS of a specific page is scoped only to elements of that page. Even though the Action Sheet can be presented from within a page, the `ion-action-sheet` element is appended outside of the current page. This means that any custom styles need to go in a global stylesheet file. In an Ionic Angular starter this can be the `src/global.scss` file or you can register a new global style file by [adding to the `styles` build option in `angular.json`](https://angular.io/guide/workspace-config#style-script-config).
+
+
 ### Javascript
 
 ```javascript
 async function presentActionSheet() {
-
   const actionSheet = document.createElement('ion-action-sheet');
 
-  actionSheet.header = "Albums";
+  actionSheet.header = 'Albums';
+  actionSheet.cssClass = 'my-custom-class';
   actionSheet.buttons = [{
     text: 'Delete',
     role: 'destructive',
@@ -94,7 +128,7 @@ async function presentActionSheet() {
     }
   }, {
     text: 'Play (open modal)',
-    icon: 'arrow-dropright-circle',
+    icon: 'caret-forward-circle',
     handler: () => {
       console.log('Play clicked');
     }
@@ -120,21 +154,23 @@ async function presentActionSheet() {
 
 ### React
 
-```typescript
-import React, { useState } from 'react'
+```tsx
+import React, { useState } from 'react';
 import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
-import { trash, share, playCircleOutline, heart, close } from 'ionicons/icons';
+import { trash, share, caretForwardCircle, heart, close } from 'ionicons/icons';
 
 export const ActionSheetExample: React.FC = () => {
-
   const [showActionSheet, setShowActionSheet] = useState(false);
 
   return (
     <IonContent>
-      <IonButton onClick={() => setShowActionSheet(true)} expand="block">Show Action Sheet</IonButton>
+      <IonButton onClick={() => setShowActionSheet(true)} expand="block">
+        Show Action Sheet
+      </IonButton>
       <IonActionSheet
         isOpen={showActionSheet}
         onDidDismiss={() => setShowActionSheet(false)}
+        cssClass='my-custom-class'
         buttons={[{
           text: 'Delete',
           role: 'destructive',
@@ -150,7 +186,7 @@ export const ActionSheetExample: React.FC = () => {
           }
         }, {
           text: 'Play (open modal)',
-          icon: playCircleOutline,
+          icon: caretForwardCircle,
           handler: () => {
             console.log('Play clicked');
           }
@@ -171,11 +207,72 @@ export const ActionSheetExample: React.FC = () => {
       >
       </IonActionSheet>
     </IonContent>
-
   );
-
 }
+```
 
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+import { actionSheetController } from '@ionic/core';
+
+@Component({
+  tag: 'action-sheet-example',
+  styleUrl: 'action-sheet-example.css'
+})
+export class ActionSheetExample {
+  async presentActionSheet() {
+    const actionSheet = await actionSheetController.create({
+      header: 'Albums',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Delete',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          console.log('Delete clicked');
+        }
+      }, {
+        text: 'Share',
+        icon: 'share',
+        handler: () => {
+          console.log('Share clicked');
+        }
+      }, {
+        text: 'Play (open modal)',
+        icon: 'caret-forward-circle',
+        handler: () => {
+          console.log('Play clicked');
+        }
+      }, {
+        text: 'Favorite',
+        icon: 'heart',
+        handler: () => {
+          console.log('Favorite clicked');
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  render() {
+    return [
+      <ion-content>
+        <ion-button onClick={() => this.presentActionSheet()}>Present Action Sheet</ion-button>
+      </ion-content>
+    ];
+  }
+}
 ```
 
 
@@ -195,6 +292,7 @@ export default {
       return this.$ionic.actionSheetController
         .create({
           header: 'Albums',
+          cssClass: 'my-custom-class',
           buttons: [
             {
               text: 'Delete',
@@ -213,7 +311,7 @@ export default {
             },
             {
               text: 'Play (open modal)',
-              icon: 'arrow-dropright-circle',
+              icon: 'caret-forward-circle',
               handler: () => {
                 console.log('Play clicked')
               },

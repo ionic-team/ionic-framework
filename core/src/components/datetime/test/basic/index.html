@@ -64,7 +64,7 @@
 
         <ion-item>
           <ion-label>YYYY</ion-label>
-          <ion-datetime id="customPickerOptions" placeholder="Custom Options" display-format="YYYY" min="1981" max="2002"></ion-datetime>
+          <ion-datetime id="customPickerOptions" placeholder="Custom Options" display-format="YYYY" min="1981" max="2002" value="2000"></ion-datetime>
         </ion-item>
 
         <ion-item>
@@ -242,10 +242,10 @@
       var selectedLang = "en";
       var customDayShortNames = document.getElementById('customMonthShortNames');
       customDayShortNames.monthShortNames = monthShortNamesEnglish;
-      
+
       function toggleLanguage() {
         selectedLang = selectedLang === 'en' ? 'fr' : 'en';
-        
+
         var customMonthShortNames = document.getElementById('customMonthShortNames');
         var el = document.getElementById('selectedLang');
 

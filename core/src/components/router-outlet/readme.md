@@ -7,7 +7,7 @@ Router outlet is a component used in routing within an Angular app. It behaves i
 Although router outlet has methods for navigating around, it's recommended to use the navigation methods in Angular's router.
 
 
-### Life Cycle Hooks
+## Life Cycle Hooks
 
 Routes rendered in a Router Outlet have access to specific Ionic events that are wired up to animations
 

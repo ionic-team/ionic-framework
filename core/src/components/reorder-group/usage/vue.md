@@ -90,7 +90,7 @@
 </script>
 ```
 
-#### Updating Data
+### Updating Data
 
 ```html
 <script lang="ts">

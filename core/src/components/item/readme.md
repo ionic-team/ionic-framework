@@ -61,8 +61,6 @@ The highlight color changes based on the item state, but all of the states use I
 
 ### Angular
 
-Basic Usage
-
 ```html
 <!-- Default Item -->
 <ion-item>
@@ -92,7 +90,7 @@ Basic Usage
 </ion-item>
 ```
 
-Detail Arrows
+### Detail Arrows
 
 ```html
 <ion-item detail>
@@ -114,7 +112,7 @@ Detail Arrows
 </ion-item>
 ```
 
-List Items
+### List Items
 
 ```html
 <ion-list>
@@ -158,7 +156,7 @@ List Items
 </ion-list>
 ```
 
-Item Lines
+### Item Lines
 
 ```html
 <!-- Item Inset Lines -->
@@ -215,7 +213,7 @@ Item Lines
 ```
 
 
-Media Items
+### Media Items
 
 ```html
 <ion-item button (click)="testClick()">
@@ -259,7 +257,7 @@ Media Items
 </ion-item>
 ```
 
-Buttons in Items
+### Buttons in Items
 
 ```html
 <ion-item>
@@ -295,7 +293,7 @@ Buttons in Items
 </ion-item>
 ```
 
-Icons in Items
+### Icons in Items
 
 ```html
 <ion-item>
@@ -335,7 +333,7 @@ Icons in Items
 </ion-item>
 ```
 
-Item Inputs
+### Item Inputs
 
 ```html
 <ion-item>
@@ -385,8 +383,6 @@ Item Inputs
 
 ### Javascript
 
-Basic Usage
-
 ```html
 <!-- Default Item -->
 <ion-item>
@@ -416,7 +412,7 @@ Basic Usage
 </ion-item>
 ```
 
-Detail Arrows
+### Detail Arrows
 
 ```html
 <ion-item detail>
@@ -438,7 +434,7 @@ Detail Arrows
 </ion-item>
 ```
 
-List Items
+### List Items
 
 ```html
 <ion-list>
@@ -482,7 +478,7 @@ List Items
 </ion-list>
 ```
 
-Item Lines
+### Item Lines
 
 ```html
 <!-- Item Inset Lines -->
@@ -539,7 +535,7 @@ Item Lines
 ```
 
 
-Media Items
+### Media Items
 
 ```html
 <ion-item button onclick="testClick()">
@@ -583,7 +579,7 @@ Media Items
 </ion-item>
 ```
 
-Buttons in Items
+### Buttons in Items
 
 ```html
 <ion-item>
@@ -619,7 +615,7 @@ Buttons in Items
 </ion-item>
 ```
 
-Icons in Items
+### Icons in Items
 
 ```html
 <ion-item>
@@ -659,7 +655,7 @@ Icons in Items
 </ion-item>
 ```
 
-Item Inputs
+### Item Inputs
 
 ```html
 <ion-item>
@@ -727,68 +723,66 @@ export const ItemExamples: React.FC = () => {
         <IonItem>
           <IonLabel>
             Item
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         {/*-- Item as a Button --*/}
         <IonItem button onClick={() => { }}>
           <IonLabel>
             Button Item
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         {/*-- Item as an Anchor --*/}
         <IonItem href="https://www.ionicframework.com">
           <IonLabel>
             Anchor Item
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         <IonItem color="secondary">
           <IonLabel>
             Secondary Color Item
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         {/*-- Detail Arrows --*/}
-
         <IonItem detail>
           <IonLabel>
             Standard Item with Detail Arrow
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         <IonItem button onClick={() => { }} detail>
           <IonLabel>
             Button Item with Detail Arrow
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         <IonItem detail={false} href="https://www.ionicframework.com">
           <IonLabel>
             Anchor Item with no Detail Arrow
-      </IonLabel>
+          </IonLabel>
         </IonItem>
-
 
         <IonList>
           <IonItem>
             <IonLabel>
               Item
-        </IonLabel>
+            </IonLabel>
           </IonItem>
 
           <IonItem lines="none">
             <IonLabel>
               No Lines Item
-        </IonLabel>
+            </IonLabel>
           </IonItem>
 
           <IonItem>
             <IonLabel className="ion-text-wrap">
               Multiline text that should wrap when it is too long
               to fit on one line in the item.
-        </IonLabel>
+            </IonLabel>
           </IonItem>
 
           <IonItem>
@@ -806,11 +800,9 @@ export const ItemExamples: React.FC = () => {
           <IonItem lines="full">
             <IonLabel>
               Item with Full Lines
-        </IonLabel>
+            </IonLabel>
           </IonItem>
-
         </IonList>
-
 
         {/*-- Item Inset Lines --*/}
         <IonItem lines="inset">
@@ -864,21 +856,19 @@ export const ItemExamples: React.FC = () => {
           </IonItem>
         </IonList>
 
-
-
         <IonItem button onClick={() => { }}>
           <IonAvatar slot="start">
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
           </IonAvatar>
           <IonLabel>
             Avatar Start, Button Item
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         <IonItem href="#">
           <IonLabel>
             Thumbnail End, Anchor Item
-      </IonLabel>
+          </IonLabel>
           <IonThumbnail slot="end">
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
           </IonThumbnail>
@@ -906,30 +896,27 @@ export const ItemExamples: React.FC = () => {
           <IonIcon icon={closeCircle} slot="end" />
         </IonItem>
 
-
-        Buttons in Items
-    
-    
-    <IonItem>
+        {/*-- Buttons in Items --*/}
+        <IonItem>
           <IonButton slot="start">
             Start
-      </IonButton>
+          </IonButton>
           <IonLabel>Button Start/End</IonLabel>
           <IonButton slot="end">
             End
-      </IonButton>
+          </IonButton>
         </IonItem>
 
         <IonItem>
           <IonButton slot="start">
             Start Icon
-        <IonIcon icon={home} slot="end" />>
+            <IonIcon icon={home} slot="end" />>
           </IonButton>
           <IonLabel>Buttons with Icons</IonLabel>
           <IonButton slot="end">
             <IonIcon icon={star} slot="end" />
             End Icon
-      </IonButton>
+          </IonButton>
         </IonItem>
 
         <IonItem>
@@ -942,25 +929,24 @@ export const ItemExamples: React.FC = () => {
           </IonButton>
         </IonItem>
 
-
         <IonItem>
           <IonLabel>
             Icon End
-      </IonLabel>
+          </IonLabel>
           <IonIcon icon={informationCircle} slot="end" />
         </IonItem>
 
         <IonItem>
           <IonLabel>
             Large Icon End
-      </IonLabel>
+          </IonLabel>
           <IonIcon icon={informationCircle} size="large" slot="end" />
         </IonItem>
 
         <IonItem>
           <IonLabel>
             Small Icon End
-      </IonLabel>
+          </IonLabel>
           <IonIcon icon={informationCircle} size="small" slot="end" />
         </IonItem>
 
@@ -968,13 +954,13 @@ export const ItemExamples: React.FC = () => {
           <IonIcon icon={star} slot="start" />
           <IonLabel>
             Icon Start
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         <IonItem>
           <IonLabel>
             Two Icons End
-      </IonLabel>
+          </IonLabel>
           <IonIcon icon={checkmarkCircle} slot="end" />
           <IonIcon icon={shuffle} slot="end" />
         </IonItem>
@@ -1022,15 +1008,441 @@ export const ItemExamples: React.FC = () => {
           <IonRange></IonRange>
         </IonItem>
       </IonContent>
-    </IonPage >
+    </IonPage>
   );
 };
 ```
 
 
-### Vue
+### Stencil
 
-Basic Usage
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  buttonClick() {
+    console.log('Clicked button');
+  }
+
+  render() {
+    return [
+      // Default Item
+      <ion-item>
+        <ion-label>
+          Item
+        </ion-label>
+      </ion-item>,
+
+      // Item as a Button
+      <ion-item button onClick={() => this.buttonClick()}>
+        <ion-label>
+          Button Item
+        </ion-label>
+      </ion-item>,
+
+      // Item as an Anchor
+      <ion-item href="https://www.ionicframework.com">
+        <ion-label>
+          Anchor Item
+        </ion-label>
+      </ion-item>,
+
+      <ion-item color="secondary">
+        <ion-label>
+          Secondary Color Item
+        </ion-label>
+      </ion-item>
+    ];
+  }
+}
+```
+
+### Detail Arrows
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  buttonClick() {
+    console.log('Clicked button');
+  }
+
+  render() {
+    return [
+      <ion-item detail>
+        <ion-label>
+          Standard Item with Detail Arrow
+        </ion-label>
+      </ion-item>,
+
+      <ion-item button onClick={() => this.buttonClick()} detail>
+        <ion-label>
+          Button Item with Detail Arrow
+        </ion-label>
+      </ion-item>,
+
+      <ion-item detail={false} href="https://www.ionicframework.com">
+        <ion-label>
+          Anchor Item with no Detail Arrow
+        </ion-label>
+      </ion-item>
+    ];
+  }
+}
+```
+
+### List Items
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  render() {
+    return [
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            Item
+          </ion-label>
+        </ion-item>,
+
+        <ion-item lines="none">
+          <ion-label>
+            No Lines Item
+          </ion-label>
+        </ion-item>,
+
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+          Multiline text that should wrap when it is too long
+          to fit on one line in the item.
+          </ion-label>
+        </ion-item>,
+
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            <ion-text color="primary">
+              <h3>H3 Primary Title</h3>
+            </ion-text>
+            <p>Paragraph line 1</p>
+            <ion-text color="secondary">
+              <p>Paragraph line 2 secondary</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>,
+
+        <ion-item lines="full">
+          <ion-label>
+            Item with Full Lines
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    ];
+  }
+}
+```
+
+### Item Lines
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  render() {
+    return [
+      // Item Inset Lines
+      <ion-item lines="inset">
+        <ion-label>Item Lines Inset</ion-label>
+      </ion-item>,
+
+      // Item Full Lines
+      <ion-item lines="full">
+        <ion-label>Item Lines Full</ion-label>
+      </ion-item>,
+
+      // Item None Lines
+      <ion-item lines="none">
+        <ion-label>Item Lines None</ion-label>
+      </ion-item>,
+
+      // List Full Lines
+      <ion-list lines="full">
+        <ion-item>
+          <ion-label>Full Lines Item 1</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Full Lines Item 2</ion-label>
+        </ion-item>
+      </ion-list>,
+
+      // List Inset Lines
+      <ion-list lines="inset">
+        <ion-item>
+          <ion-label>Inset Lines Item 1</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Inset Lines Item 2</ion-label>
+        </ion-item>
+      </ion-list>,
+
+      // List No Lines
+      <ion-list lines="none">
+        <ion-item>
+          <ion-label>No lines Item 1</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>No lines Item 2</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>No lines Item 3</ion-label>
+        </ion-item>
+      </ion-list>
+    ];
+  }
+}
+```
+
+### Media Items
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  testClick() {
+    console.log('Test click');
+  }
+
+  render() {
+    return [
+      <ion-item button onClick={() => this.testClick()}>
+        <ion-avatar slot="start">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="/>
+        </ion-avatar>
+        <ion-label>
+          Avatar Start, Button Item
+        </ion-label>
+      </ion-item>,
+
+      <ion-item href="#">
+        <ion-label>
+          Thumbnail End, Anchor Item
+        </ion-label>
+        <ion-thumbnail slot="end">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="/>
+        </ion-thumbnail>
+      </ion-item>,
+
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="/>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>H2 Title Text</h2>
+          <p>Button on right</p>
+        </ion-label>
+        <ion-button fill="outline" slot="end">View</ion-button>
+      </ion-item>,
+
+      <ion-item button onClick={() => this.testClick()}>
+        <ion-thumbnail slot="start">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="/>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>H3 Title Text</h3>
+          <p>Icon on right</p>
+        </ion-label>
+        <ion-icon name="close-circle" slot="end"></ion-icon>
+      </ion-item>
+    ];
+  }
+}
+```
+
+### Buttons in Items
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  render() {
+    return [
+      <ion-item>
+        <ion-button slot="start">
+          Start
+        </ion-button>
+        <ion-label>Button Start/End</ion-label>
+        <ion-button slot="end">
+          End
+        </ion-button>
+      </ion-item>,
+
+      <ion-item>
+        <ion-button slot="start">
+          Start Icon
+          <ion-icon name="home" slot="end"></ion-icon>
+        </ion-button>
+        <ion-label>Buttons with Icons</ion-label>
+        <ion-button slot="end">
+          <ion-icon name="star" slot="end"></ion-icon>
+          End Icon
+        </ion-button>
+      </ion-item>,
+
+      <ion-item>
+        <ion-button slot="start">
+          <ion-icon slot="icon-only" name="navigate"></ion-icon>
+        </ion-button>
+        <ion-label>Icon only Buttons</ion-label>
+        <ion-button slot="end">
+          <ion-icon slot="icon-only" name="star"></ion-icon>
+        </ion-button>
+      </ion-item>
+    ];
+  }
+}
+```
+
+### Icons in Items
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  render() {
+    return [
+      <ion-item>
+        <ion-label>
+          Icon End
+        </ion-label>
+        <ion-icon name="information-circle" slot="end"></ion-icon>
+      </ion-item>,
+
+      <ion-item>
+        <ion-label>
+          Large Icon End
+        </ion-label>
+        <ion-icon name="information-circle" size="large" slot="end"></ion-icon>
+      </ion-item>,
+
+      <ion-item>
+        <ion-label>
+          Small Icon End
+        </ion-label>
+        <ion-icon name="information-circle" size="small" slot="end"></ion-icon>
+      </ion-item>,
+
+      <ion-item>
+        <ion-icon name="star" slot="start"></ion-icon>
+        <ion-label>
+          Icon Start
+        </ion-label>
+      </ion-item>,
+
+      <ion-item>
+        <ion-label>
+          Two Icons End
+        </ion-label>
+        <ion-icon name="checkmark-circle" slot="end"></ion-icon>
+        <ion-icon name="shuffle" slot="end"></ion-icon>
+      </ion-item>
+    ];
+  }
+}
+```
+
+### Item Inputs
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'item-example',
+  styleUrl: 'item-example.css'
+})
+export class ItemExample {
+  render() {
+    return [
+      <ion-item>
+        <ion-label position="floating">Datetime</ion-label>
+        <ion-datetime></ion-datetime>
+      </ion-item>,
+
+      <ion-item>
+        <ion-label position="floating">Select</ion-label>
+        <ion-select>
+          <ion-select-option value="">No Game Console</ion-select-option>
+          <ion-select-option value="nes">NES</ion-select-option>
+          <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+          <ion-select-option value="ps">PlayStation</ion-select-option>
+          <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+          <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+          <ion-select-option value="snes">SNES</ion-select-option>
+        </ion-select>
+      </ion-item>,
+
+      <ion-item>
+        <ion-label>Toggle</ion-label>
+        <ion-toggle slot="end"></ion-toggle>
+      </ion-item>,
+
+      <ion-item>
+        <ion-label position="floating">Floating Input</ion-label>
+        <ion-input></ion-input>
+      </ion-item>,
+
+      <ion-item>
+        <ion-label>Input (placeholder)</ion-label>
+        <ion-input placeholder="Placeholder"></ion-input>
+      </ion-item>,
+
+      <ion-item>
+        <ion-label>Checkbox</ion-label>
+        <ion-checkbox slot="start"></ion-checkbox>
+      </ion-item>,
+
+      <ion-item>
+        <ion-label>Range</ion-label>
+        <ion-range></ion-range>
+      </ion-item>
+    ];
+  }
+}
+```
+
+
+### Vue
 
 ```html
 <template>
@@ -1063,7 +1475,7 @@ Basic Usage
 </template>
 ```
 
-Detail Arrows
+### Detail Arrows
 
 ```html
 <template>
@@ -1087,7 +1499,7 @@ Detail Arrows
 </template>
 ```
 
-List Items
+### List Items
 
 ```html
 <template>
@@ -1133,7 +1545,7 @@ List Items
 </template>
 ```
 
-Item Lines
+### Item Lines
 
 ```html
 <template>
@@ -1192,7 +1604,7 @@ Item Lines
 ```
 
 
-Media Items
+### Media Items
 
 ```html
 <template>
@@ -1238,7 +1650,7 @@ Media Items
 </template>
 ```
 
-Buttons in Items
+### Buttons in Items
 
 ```html
 <template>
@@ -1276,7 +1688,7 @@ Buttons in Items
 </template>
 ```
 
-Icons in Items
+### Icons in Items
 
 ```html
 <template>
@@ -1318,7 +1730,7 @@ Icons in Items
 </template>
 ```
 
-Item Inputs
+### Item Inputs
 
 ```html
 <template>

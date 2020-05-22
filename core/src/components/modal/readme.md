@@ -2,10 +2,37 @@
 
 A Modal is a dialog that appears on top of the app's content, and must be dismissed by the app before interaction can resume. It is useful as a select component when there are a lot of options to choose from, or when filtering items in a list, as well as many other use cases.
 
-### Dismissing
+## Dismissing
 
 The modal can be dismissed after creation by calling the `dismiss()` method on the modal controller. The `onDidDismiss` function can be called to perform an action after the modal is dismissed.
 
+## Customization
+
+Modal uses scoped encapsulation, which means it will automatically scope its CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector.
+
+We recommend passing a custom class to `cssClass` in the `create` method and using that to add custom styles to the host and inner elements. This property can also accept multiple classes separated by spaces. View the [Usage](#usage) section for an example of how to pass a class using `cssClass`.
+
+```css
+/* DOES NOT WORK - not specific enough */
+.modal-wrapper {
+  background: #222;
+}
+
+/* Works - pass "my-custom-class" in cssClass to increase specificity */
+.my-custom-class .modal-wrapper {
+  background: #222;
+}
+```
+
+Any of the defined [CSS Custom Properties](#css-custom-properties) can be used to style the Modal without needing to target individual elements:
+
+```css
+.my-custom-class {
+  --background: #222;
+}
+```
+
+> If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
 <!-- Auto Generated Below -->
 
@@ -31,7 +58,8 @@ export class ModalExample {
 
   async presentModal() {
     const modal = await this.modalController.create({
-      component: ModalPage
+      component: ModalPage,
+      cssClass: 'my-custom-class'
     });
     return await modal.present();
   }
@@ -60,6 +88,7 @@ The previous example can be written to include data:
 async presentModal() {
   const modal = await this.modalController.create({
     component: ModalPage,
+    cssClass: 'my-custom-class',
     componentProps: {
       'firstName': 'Douglas',
       'lastName': 'Adams',
@@ -154,6 +183,7 @@ constructor(private routerOutlet: IonRouterOutlet) {}
 async presentModal() {
   const modal = await this.modalController.create({
     component: ModalPage,
+    cssClass: 'my-custom-class',
     swipeToClose: true,
     presentingElement: this.routerOutlet.nativeEl
   });
@@ -171,12 +201,18 @@ constructor(private modalCtrl: ModalController) {}
 async presentModal() {
   const modal = await this.modalController.create({
     component: ModalPage,
+    cssClass: 'my-custom-class',
     swipeToClose: true,
     presentingElement: await this.modalCtrl.getTop() // Get the top-most ion-modal
   });
   return await modal.present();
 }
 ```
+
+
+### Style Placement
+
+In Angular, the CSS of a specific page is scoped only to elements of that page. Even though the Modal can be presented from within a page, the `ion-modal` element is appended outside of the current page. This means that any custom styles need to go in a global stylesheet file. In an Ionic Angular starter this can be the `src/global.scss` file or you can register a new global style file by [adding to the `styles` build option in `angular.json`](https://angular.io/guide/workspace-config#style-script-config).
 
 
 ### Javascript
@@ -205,6 +241,7 @@ function presentModal() {
   // create the modal with the `modal-page` component
   const modalElement = document.createElement('ion-modal');
   modalElement.component = 'modal-page';
+  modalElement.cssClass = 'my-custom-class';
 
   // present the modal
   document.body.appendChild(modalElement);
@@ -219,6 +256,7 @@ During creation of a modal, data can be passed in through the `componentProps`. 
 ```javascript
 const modalElement = document.createElement('ion-modal');
 modalElement.component = 'modal-page';
+modalElement.cssClass = 'my-custom-class';
 modalElement.componentProps = {
   'firstName': 'Douglas',
   'lastName': 'Adams',
@@ -267,6 +305,7 @@ Modals in iOS mode have the ability to be presented in a card-style and swiped t
 ```javascript
 const modalElement = document.createElement('ion-modal');
 modalElement.component = 'modal-page';
+modalElement.cssClass = 'my-custom-class';
 modalElement.swipeToClose = true;
 modalElement.presentingElement = document.querySelector('ion-nav');
 ```
@@ -276,6 +315,7 @@ In most scenarios, using the `ion-nav` element as the `presentingElement` is fin
 ```javascript
 const modalElement = document.createElement('ion-modal');
 modalElement.component = 'modal-page';
+modalElement.cssClass = 'my-custom-class';
 modalElement.swipeToClose = true;
 modalElement.presentingElement = await modalController.getTop(); // Get the top-most ion-modal
 ```
@@ -292,7 +332,7 @@ export const ModalExample: React.FC = () => {
 
   return (
     <IonContent>
-      <IonModal isOpen={showModal}>
+      <IonModal isOpen={showModal} cssClass='my-custom-class'>
         <p>This is modal content</p>
         <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
       </IonModal>
@@ -307,10 +347,11 @@ export const ModalExample: React.FC = () => {
 Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
 
 ```tsx
-<IonModal 
-  isOpen={showModal} 
+<IonModal
+  isOpen={showModal}
+  cssClass='my-custom-class'
   swipeToClose={true}
-  presentingElement={pageRef.current} 
+  presentingElement={pageRef.current}
   onDidDismiss={() => setShowModal(false)}>
     <p>This is modal content</p>
     <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
@@ -320,23 +361,178 @@ Modals in iOS mode have the ability to be presented in a card-style and swiped t
 In most scenarios, setting a ref on `IonPage` and passing that ref's `current` value to `presentingElement` is fine. In cases where you are presenting a card-style modal from within another modal, you should pass in the top-most `ion-modal` ref as the `presentingElement`.
 
 ```tsx
-<IonModal 
-  ref={firstModalRef} 
-  isOpen={showModal} 
+<IonModal
+  ref={firstModalRef}
+  isOpen={showModal}
+  cssClass='my-custom-class'
   swipeToClose={true}
-  presentingElement={pageRef.current} 
+  presentingElement={pageRef.current}
   onDidDismiss={() => setShowModal(false)}>
     <p>This is modal content</p>
     <IonButton onClick={() => setShow2ndModal(true)}>Show 2nd Modal</IonButton>
     <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
 </IonModal>
-<IonModal 
-  isOpen={show2ndModal} 
-  presentingElement={firstModalRef.current} 
+<IonModal
+  isOpen={show2ndModal}
+  cssClass='my-custom-class'
+  presentingElement={firstModalRef.current}
   onDidDismiss={() => setShow2ndModal(false)}>
   <p>This is more modal content</p>
   <IonButton onClick={() => setShow2ndModal(false)}>Close Modal</IonButton>
 </IonModal>
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+import { modalController } from '@ionic/core';
+
+@Component({
+  tag: 'modal-example',
+  styleUrl: 'modal-example.css'
+})
+export class ModalExample {
+  async presentModal() {
+    const modal = await modalController.create({
+      component: 'page-modal',
+      cssClass: 'my-custom-class'
+    });
+    await modal.present();
+  }
+}
+```
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'page-modal',
+  styleUrl: 'page-modal.css',
+})
+export class PageModal {
+  render() {
+    return [
+      <ion-list>
+        <ion-item>
+          <ion-label>Documentation</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Feedback</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Settings</ion-label>
+        </ion-item>
+      </ion-list>
+    ];
+  }
+}
+```
+
+### Passing Data
+
+During creation of a modal, data can be passed in through the `componentProps`.
+The previous example can be written to include data:
+
+```tsx
+async presentModal() {
+  const modal = await modalController.create({
+    component: 'page-modal',
+    cssClass: 'my-custom-class',
+    componentProps: {
+      'firstName': 'Douglas',
+      'lastName': 'Adams',
+      'middleInitial': 'N'
+    }
+  });
+  await modal.present();
+}
+```
+
+To get the data passed into the `componentProps`, set each one as a `@Prop`:
+
+```tsx
+import { Component, Prop, h } from '@stencil/core';
+
+@Component({
+  tag: 'page-modal',
+  styleUrl: 'page-modal.css',
+})
+export class PageModal {
+  // Data passed in by componentProps
+  @Prop() firstName: string;
+  @Prop() lastName: string;
+  @Prop() middleInitial: string;
+}
+```
+
+### Dismissing a Modal
+
+A modal can be dismissed by calling the dismiss method on the modal controller and optionally passing any data from the modal.
+
+```tsx
+export class ModalPage {
+  ...
+
+  dismiss(data?: any) {
+    // dismiss the closest modal and optionally pass back data
+    (this.el.closest('ion-modal') as any).dismiss({
+      'dismissed': true
+    });
+  }
+}
+```
+
+After being dismissed, the data can be read in through the `onWillDismiss` or `onDidDismiss` attached to the modal after creation:
+
+```tsx
+const { data } = await modal.onWillDismiss();
+console.log(data);
+```
+
+### Swipeable Modals
+
+Modals in iOS mode have the ability to be presented in a card-style and swiped to close. The card-style presentation and swipe to close gesture are not mutually exclusive, meaning you can pick and choose which features you want to use. For example, you can have a card-style modal that cannot be swiped or a full sized modal that can be swiped.
+
+```tsx
+import { Component, Element, h } from '@stencil/core';
+
+import { modalController } from '@ionic/core';
+
+@Component({
+  tag: 'modal-example',
+  styleUrl: 'modal-example.css'
+})
+export class ModalExample {
+  @Element() el: any;
+
+  async presentModal() {
+    const modal = await modalController.create({
+      component: 'page-modal',
+      cssClass: 'my-custom-class',
+      swipeToClose: true,
+      presentingElement: this.el.closest('ion-router-outlet'),
+    });
+    await modal.present();
+  }
+
+}
+```
+
+In most scenarios, using the `ion-router-outlet` element as the `presentingElement` is fine. In cases where you are presenting a card-style modal from within another modal, you should pass in the top-most `ion-modal` element as the `presentingElement`.
+
+```tsx
+async presentModal() {
+  const modal = await modalController.create({
+    component: 'page-modal',
+    cssClass: 'my-custom-class',
+    swipeToClose: true,
+    presentingElement: await modalController.getTop() // Get the top-most ion-modal
+  });
+  await modal.present();
+}
 ```
 
 
@@ -389,6 +585,7 @@ export default {
       return this.$ionic.modalController
         .create({
           component: Modal,
+          cssClass: 'my-custom-class',
           componentProps: {
             data: {
               content: 'New Content',

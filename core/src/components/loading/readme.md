@@ -2,9 +2,40 @@
 
 An overlay that can be used to indicate activity while blocking user interaction. The loading indicator appears on top of the app's content, and can be dismissed by the app to resume user interaction with the app. It includes an optional backdrop, which can be disabled by setting `showBackdrop: false` upon creation.
 
-### Dismissing
+## Dismissing
 
 The loading indicator can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the loading options. To dismiss the loading indicator after creation, call the `dismiss()` method on the loading instance. The `onDidDismiss` function can be called to perform an action after the loading indicator is dismissed.
+
+## Customization
+
+Loading uses scoped encapsulation, which means it will automatically scope its CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector.
+
+We recommend passing a custom class to `cssClass` in the `create` method and using that to add custom styles to the host and inner elements. This property can also accept multiple classes separated by spaces. View the [Usage](#usage) section for an example of how to pass a class using `cssClass`.
+
+```css
+/* DOES NOT WORK - not specific enough */
+ion-loading {
+  color: green;
+}
+
+/* Works - pass "my-custom-class" in cssClass to increase specificity */
+.my-custom-class {
+  color: green;
+}
+```
+
+Any of the defined [CSS Custom Properties](#css-custom-properties) can be used to style the Loading without needing to target individual elements:
+
+```css
+.my-custom-class {
+  --background: #222;
+  --spinner-color: #fff;
+
+  color: #fff;
+}
+```
+
+> If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
 
 <!-- Auto Generated Below -->
@@ -28,6 +59,7 @@ export class LoadingExample {
 
   async presentLoading() {
     const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
       message: 'Please wait...',
       duration: 2000
     });
@@ -39,6 +71,7 @@ export class LoadingExample {
 
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
       spinner: null,
       duration: 5000,
       message: 'Click the backdrop to dismiss early...',
@@ -55,11 +88,18 @@ export class LoadingExample {
 ```
 
 
+### Style Placement
+
+In Angular, the CSS of a specific page is scoped only to elements of that page. Even though the Loading can be presented from within a page, the `ion-loading` element is appended outside of the current page. This means that any custom styles need to go in a global stylesheet file. In an Ionic Angular starter this can be the `src/global.scss` file or you can register a new global style file by [adding to the `styles` build option in `angular.json`](https://angular.io/guide/workspace-config#style-script-config).
+
+
 ### Javascript
 
 ```javascript
 async function presentLoading() {
   const loading = document.createElement('ion-loading');
+
+  loading.cssClass = 'my-custom-class';
   loading.message = 'Please wait...';
   loading.duration = 2000;
 
@@ -73,6 +113,7 @@ async function presentLoading() {
 async function presentLoadingWithOptions() {
   const loading = document.createElement('ion-loading');
 
+  loading.cssClass = 'my-custom-class';
   loading.spinner = null;
   loading.duration = 5000;
   loading.message = 'Click the backdrop to dismiss early...';
@@ -106,6 +147,7 @@ export const LoadingExample: React.FC = () => {
     <IonContent>
       <IonButton onClick={() => setShowLoading(true)}>Show Loading</IonButton>
       <IonLoading
+        cssClass='my-custom-class'
         isOpen={showLoading}
         onDidDismiss={() => setShowLoading(false)}
         message={'Please wait...'}
@@ -114,6 +156,58 @@ export const LoadingExample: React.FC = () => {
     </IonContent>
   );
 };
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+import { loadingController } from '@ionic/core';
+
+@Component({
+  tag: 'loading-example',
+  styleUrl: 'loading-example.css'
+})
+export class LoadingExample {
+  async presentLoading() {
+    const loading = await loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!', role, data);
+  }
+
+  async presentLoadingWithOptions() {
+    const loading = await loadingController.create({
+      cssClass: 'my-custom-class',
+      spinner: null,
+      duration: 5000,
+      message: 'Click the backdrop to dismiss early...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading',
+      backdropDismiss: true
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed with role:', role, data);
+  }
+
+  render() {
+    return [
+      <ion-content>
+        <ion-button onClick={() => this.presentLoading()}>Present Loading</ion-button>
+        <ion-button onClick={() => this.presentLoadingWithOptions()}>Present Loading: Options</ion-button>
+      </ion-content>
+    ];
+  }
+}
 ```
 
 
@@ -137,6 +231,7 @@ export default {
     presentLoading() {
       return this.$ionic.loadingController
         .create({
+          cssClass: 'my-custom-class',
           message: 'Please wait...',
           duration: this.timeout,
         })
@@ -150,6 +245,7 @@ export default {
     presentLoadingWithOptions() {
       return this.$ionic.loadingController
         .create({
+          cssClass: 'my-custom-class',
           spinner: null,
           duration: this.timeout,
           message: 'Click the backdrop to dismiss early...',
