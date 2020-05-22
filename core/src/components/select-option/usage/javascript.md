@@ -89,7 +89,7 @@
 ```
 
 ```javascript
-// Pass a custom class to each select for styling
+// Pass a custom class to each select interface for styling
 const selects = document.querySelectorAll('.custom-options');
 
 for (var i = 0; i < selects.length; i++) {
@@ -99,7 +99,7 @@ for (var i = 0; i < selects.length; i++) {
 };
 ```
 
-> Note: In the CSS examples, the selectors could be combined together, but are separated out in order to better explain what each selector is for.
+> Note: In the CSS examples, some of the selectors could be combined together, but are separated out in order to better explain what each selector is for.
 
 ### Customizing Individual Options
 
@@ -126,7 +126,7 @@ To customize an individual option, set a class on the `ion-select-option`:
 ```
 
 ```javascript
-// Pass a custom class to each select for styling
+// Pass a custom class to each select interface for styling
 const select = document.querySelector('.custom-options');
 select.interfaceOptions = {
   cssClass: 'my-custom-interface'

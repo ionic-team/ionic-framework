@@ -114,7 +114,7 @@ export const SelectOptionExample: React.FC = () => {
 }
 ```
 
-> Note: In the CSS examples, the selectors could be combined together, but are separated out in order to better explain what each selector is for.
+> Note: In the CSS examples, some of the selectors could be combined together, but are separated out in order to better explain what each selector is for.
 
 
 ### Customizing Individual Options
