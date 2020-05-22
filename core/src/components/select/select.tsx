@@ -231,8 +231,8 @@ export class Select implements ComponentInterface {
       const value = getOptionValue(option);
 
       // Remove hydrated before copying over classes
-      option.classList.remove('hydrated');
-      const optClass = `${OPTION_CLASS} ${option.className}`;
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
 
       return {
         role: (isOptionSelected(value, selectValue, this.compareWith) ? 'selected' : ''),
@@ -261,8 +261,8 @@ export class Select implements ComponentInterface {
       const value = getOptionValue(option);
 
       // Remove hydrated before copying over classes
-      option.classList.remove('hydrated');
-      const optClass = `${OPTION_CLASS} ${option.className}`;
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
 
       return {
         type: inputType,
@@ -282,8 +282,8 @@ export class Select implements ComponentInterface {
       const value = getOptionValue(option);
 
       // Remove hydrated before copying over classes
-      option.classList.remove('hydrated');
-      const optClass = `${OPTION_CLASS} ${option.className}`;
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
 
       return {
         text: option.textContent || '',
