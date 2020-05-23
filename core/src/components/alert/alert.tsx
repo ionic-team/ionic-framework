@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { IonicSafeString } from '../../';
 import { getIonMode } from '../../global/ionic-global';
-import { AlertButton, AlertInput, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { AlertButton, AlertInput, AlertInputAttributes, AlertTextareaAttributes, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
@@ -158,7 +158,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
       id: i.id || `alert-input-${this.overlayIndex}-${index}`,
       handler: i.handler,
       min: i.min,
-      max: i.max
+      max: i.max,
+      attributes: i.attributes || {},
     }) as AlertInput);
   }
 
@@ -387,6 +388,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                     'alert-input': true,
                     'alert-input-disabled': i.disabled || false
                   }}
+                  {...i.attributes as AlertTextareaAttributes}
                 />
               </div>
             );
@@ -407,6 +409,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                     'alert-input': true,
                     'alert-input-disabled': i.disabled || false
                   }}
+                  {...i.attributes as AlertInputAttributes}
                 />
               </div>
             );
