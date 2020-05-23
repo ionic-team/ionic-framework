@@ -33,6 +33,7 @@ export interface AlertInput {
   handler?: (input: AlertInput) => void;
   min?: string | number;
   max?: string | number;
+  cssClass?: string | string[];
   attributes?: AlertInputAttributes | AlertTextareaAttributes;
 }
 

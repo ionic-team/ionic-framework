@@ -159,6 +159,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       handler: i.handler,
       min: i.min,
       max: i.max,
+      cssClass: i.cssClass,
       attributes: i.attributes || {},
     }) as AlertInput);
   }
@@ -385,10 +386,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   id={i.id}
                   disabled={i.disabled}
                   tabIndex={0}
-                  class={{
-                    'alert-input': true,
-                    'alert-input-disabled': i.disabled || false
-                  }}
+                  class={inputClass(i)}
                 />
               </div>
             );
@@ -406,10 +404,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   id={i.id}
                   disabled={i.disabled}
                   tabIndex={0}
-                  class={{
-                    'alert-input': true,
-                    'alert-input-disabled': i.disabled || false
-                  }}
+                  class={inputClass(i)}
                 />
               </div>
             );
@@ -502,6 +497,14 @@ export class Alert implements ComponentInterface, OverlayInterface {
     );
   }
 }
+
+const inputClass = (input: AlertInput): CssClassMap => {
+  return {
+    'alert-input': true,
+    'alert-input-disabled': input.disabled || false,
+    ...getClassMap(input.cssClass)
+  };
+};
 
 const buttonClass = (button: AlertButton): CssClassMap => {
   return {
