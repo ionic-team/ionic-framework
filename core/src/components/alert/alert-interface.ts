@@ -1,6 +1,7 @@
+import { JSXBase } from '@stencil/core/internal';
+
 import { IonicSafeString } from '../../';
 import { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
-import { JSXBase } from '@stencil/core/internal';
 
 export interface AlertOptions {
   header?: string;
