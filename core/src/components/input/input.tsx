@@ -393,7 +393,7 @@ export class Input implements ComponentInterface {
           placeholder={this.placeholder || ''}
           readOnly={this.readonly}
           required={this.required}
-          spellCheck={this.spellcheck}
+          spellcheck={this.spellcheck ? 'true' : undefined}
           step={this.step}
           size={this.size}
           tabindex={this.tabindex}
