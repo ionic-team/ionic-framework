@@ -26,5 +26,5 @@ export interface ToastButton {
   side?: 'start' | 'end';
   role?: 'cancel' | string;
   cssClass?: string | string[];
-  handler?: () => boolean | void | Promise<boolean>;
+  handler?: () => boolean | void | Promise<boolean | void>;
 }

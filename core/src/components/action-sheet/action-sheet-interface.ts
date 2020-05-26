@@ -21,5 +21,5 @@ export interface ActionSheetButton {
   role?: 'cancel' | 'destructive' | 'selected' | string;
   icon?: string;
   cssClass?: string | string[];
-  handler?: () => boolean | void | Promise<boolean>;
+  handler?: () => boolean | void | Promise<boolean | void>;
 }
