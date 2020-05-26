@@ -19,6 +19,10 @@
   overflow: hidden;
 }
 
+.alert-button .alert-button-inner {
+  pointer-events: none;
+}
+
 
 // iOS Translucent Alert
 // -----------------------------------------
