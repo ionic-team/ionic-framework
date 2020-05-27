@@ -229,9 +229,15 @@ export class Select implements ComponentInterface {
   private createActionSheetButtons(data: HTMLIonSelectOptionElement[], selectValue: any): ActionSheetButton[] {
     const actionSheetButtons = data.map(option => {
       const value = getOptionValue(option);
+
+      // Remove hydrated before copying over classes
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+
       return {
         role: (isOptionSelected(value, selectValue, this.compareWith) ? 'selected' : ''),
         text: option.textContent,
+        cssClass: optClass,
         handler: () => {
           this.value = value;
         }
@@ -251,32 +257,48 @@ export class Select implements ComponentInterface {
   }
 
   private createAlertInputs(data: HTMLIonSelectOptionElement[], inputType: 'checkbox' | 'radio', selectValue: any): AlertInput[] {
-    return data.map(o => {
-      const value = getOptionValue(o);
+    const alertInputs = data.map(option => {
+      const value = getOptionValue(option);
+
+      // Remove hydrated before copying over classes
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+
       return {
         type: inputType,
-        label: o.textContent || '',
+        cssClass: optClass,
+        label: option.textContent || '',
         value,
         checked: isOptionSelected(value, selectValue, this.compareWith),
-        disabled: o.disabled
+        disabled: option.disabled
       };
     });
+
+    return alertInputs;
   }
 
   private createPopoverOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectPopoverOption[] {
-    return data.map(o => {
-      const value = getOptionValue(o);
+    const popoverOptions = data.map(option => {
+      const value = getOptionValue(option);
+
+      // Remove hydrated before copying over classes
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+
       return {
-        text: o.textContent || '',
+        text: option.textContent || '',
+        cssClass: optClass,
         value,
         checked: isOptionSelected(value, selectValue, this.compareWith),
-        disabled: o.disabled,
+        disabled: option.disabled,
         handler: () => {
           this.value = value;
           this.close();
         }
       };
     });
+
+    return popoverOptions;
   }
 
   private async openPopover(ev: UIEvent) {
@@ -529,3 +551,5 @@ const textForValue = (opts: HTMLIonSelectOptionElement[], value: any, compareWit
 };
 
 let selectIds = 0;
+
+const OPTION_CLASS = 'select-interface-option';
