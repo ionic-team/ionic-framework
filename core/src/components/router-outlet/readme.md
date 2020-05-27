@@ -12,12 +12,12 @@ Although router outlet has methods for navigating around, it's recommended to us
 Routes rendered in a Router Outlet have access to specific Ionic events that are wired up to animations
 
 
-| Event Name         | Trigger                                                          |
-|--------------------|------------------------------------------------------------------|
-| `ionViewWillEnter` | Fired when the component being routed to is about to animate in. |
-| `ionViewDidEnter`  | Fired when the component being routed to has animated in.        |
-| `ionViewWillLeave` | Fired when the component being routed from is about to animate.  |
-| `ionViewDidLeave`  | Fired when the component being routed from has animated.         |
+| Event Name         | Trigger                                                            |
+|--------------------|--------------------------------------------------------------------|
+| `ionViewWillEnter` | Fired when the component routing to is about to animate into view. |
+| `ionViewDidEnter`  | Fired when the component routing to has finished animating.        |
+| `ionViewWillLeave` | Fired when the component routing from is about to animate.         |
+| `ionViewDidLeave`  | Fired when the component routing to has finished animating.        |
 
 
 These event tie into Ionic's animation system and can be used to coordinate parts of your app when a Components is done with it's animation. These events are not a replacement for Angular's own event system, but an addition.
