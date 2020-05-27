@@ -159,12 +159,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
       label: i.label,
       checked: !!i.checked,
       disabled: !!i.disabled,
-      cssClass: i.cssClass || '',
       id: i.id || `alert-input-${this.overlayIndex}-${index}`,
       handler: i.handler,
       min: i.min,
       max: i.max,
-      cssClass: i.cssClass,
+      cssClass: i.cssClass || '',
       attributes: i.attributes || {},
     }) as AlertInput);
   }
