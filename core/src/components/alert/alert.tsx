@@ -159,6 +159,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       label: i.label,
       checked: !!i.checked,
       disabled: !!i.disabled,
+      cssClass: i.cssClass || '',
       id: i.id || `alert-input-${this.overlayIndex}-${index}`,
       handler: i.handler,
       min: i.min,
@@ -336,6 +337,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             tabIndex={0}
             role="checkbox"
             class={{
+              ...getClassMap(i.cssClass),
               'alert-tappable': true,
               'alert-checkbox': true,
               'alert-checkbox-button': true,
@@ -374,6 +376,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             id={i.id}
             tabIndex={0}
             class={{
+              ...getClassMap(i.cssClass),
               'alert-radio-button': true,
               'alert-tappable': true,
               'alert-radio': true,
