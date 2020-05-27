@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave} from '@ionic/angular';
+import { ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 
 @Component({
   selector: 'app-virtual-scroll-detail',

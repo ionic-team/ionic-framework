@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import {NavController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave} from '@ionic/angular';
+import { NavController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({

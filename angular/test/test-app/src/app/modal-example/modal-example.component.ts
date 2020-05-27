@@ -1,5 +1,5 @@
 import { Component, Input, NgZone, OnInit, Optional } from '@angular/core';
-import {ModalController, NavParams, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
+import { ModalController, NavParams, IonNav, ViewWillLeave, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 
 @Component({
   selector: 'app-modal-example',
