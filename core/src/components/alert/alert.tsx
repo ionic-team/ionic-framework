@@ -408,12 +408,15 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 <textarea
                   placeholder={i.placeholder}
                   value={i.value}
-                  onInput={e => i.value = (e.target as any).value}
                   id={i.id}
                   disabled={i.disabled}
                   tabIndex={0}
                   class={inputClass(i)}
                   {...i.attributes as AlertTextareaAttributes}
+                  onInput={e => {
+                    i.value = (e.target as any).value;
+                    if (i.attributes?.onInput) { i.attributes.onInput(e); }
+                  }}
                 />
               </div>
             );
@@ -426,12 +429,15 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   type={i.type}
                   min={i.min}
                   max={i.max}
-                  onInput={e => i.value = (e.target as any).value}
                   id={i.id}
                   disabled={i.disabled}
                   tabIndex={0}
                   class={inputClass(i)}
                   {...i.attributes as AlertInputAttributes}
+                  onInput={e => {
+                    i.value = (e.target as any).value;
+                    if (i.attributes?.onInput) { i.attributes.onInput(e); }
+                  }}
                 />
               </div>
             );
