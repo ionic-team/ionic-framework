@@ -411,8 +411,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   id={i.id}
                   disabled={i.disabled}
                   tabIndex={0}
-                  class={inputClass(i)}
                   {...i.attributes as AlertTextareaAttributes}
+                  class={inputClass(i)}
                   onInput={e => {
                     i.value = (e.target as any).value;
                     if (i.attributes?.onInput) { i.attributes.onInput(e); }
@@ -432,8 +432,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   id={i.id}
                   disabled={i.disabled}
                   tabIndex={0}
-                  class={inputClass(i)}
                   {...i.attributes as AlertInputAttributes}
+                  class={inputClass(i)}
                   onInput={e => {
                     i.value = (e.target as any).value;
                     if (i.attributes?.onInput) { i.attributes.onInput(e); }
@@ -535,7 +535,8 @@ const inputClass = (input: AlertInput): CssClassMap => {
   return {
     'alert-input': true,
     'alert-input-disabled': input.disabled || false,
-    ...getClassMap(input.cssClass)
+    ...getClassMap(input.cssClass),
+    ...getClassMap(input.attributes ? input.attributes.class?.toString() : ''),
   };
 };
 
