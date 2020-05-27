@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
-import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
+import { Attribute, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, NgZone, OnDestroy, OnInit, Optional, Output, SkipSelf, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
+import { AnimationBuilder } from '../../';
 import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
 
@@ -13,17 +14,18 @@ import { RouteView, getUrl } from './stack-utils';
 @Directive({
   selector: 'ion-router-outlet',
   exportAs: 'outlet',
-  inputs: ['animated', 'swipeGesture']
+  inputs: ['animated', 'animation', 'swipeGesture']
 })
 export class IonRouterOutlet implements OnDestroy, OnInit {
+  nativeEl: HTMLIonRouterOutletElement;
+
   private activated: ComponentRef<any> | null = null;
-  private activatedView: RouteView | null = null;
+  activatedView: RouteView | null = null;
 
   private _activatedRoute: ActivatedRoute | null = null;
   private _swipeGesture?: boolean;
   private name: string;
   private stackCtrl: StackController;
-  private nativeEl: HTMLIonRouterOutletElement;
 
   // Maintain map of activated route proxies for each component instance
   private proxyMap = new WeakMap<any, ActivatedRoute>();
@@ -36,6 +38,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   @Output() stackEvents = new EventEmitter<any>();
   @Output('activate') activateEvents = new EventEmitter<any>();
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
+
+  set animation(animation: AnimationBuilder) {
+    this.nativeEl.animation = animation;
+  }
 
   set animated(animated: boolean) {
     this.nativeEl.animated = animated;
@@ -57,7 +63,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     private resolver: ComponentFactoryResolver,
     @Attribute('name') name: string,
     @Optional() @Attribute('tabs') tabs: string,
-    private changeDetector: ChangeDetectorRef,
     private config: Config,
     private navCtrl: NavController,
     commonLocation: Location,
@@ -210,8 +215,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       // Store references to the proxy by component
       this.proxyMap.set(cmpRef.instance, activatedRouteProxy);
       this.currentActivatedRoute$.next({ component: cmpRef.instance, activatedRoute });
-
-      this.changeDetector.markForCheck();
     }
 
     this.activatedView = enteringView;
@@ -242,6 +245,22 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   getLastUrl(stackId?: string): string | undefined {
     const active = this.stackCtrl.getLastUrl(stackId);
     return active ? active.url : undefined;
+  }
+
+  /**
+   * Returns the RouteView of the active page of each stack.
+   * @internal
+   */
+  getLastRouteView(stackId?: string): RouteView | undefined {
+    return this.stackCtrl.getLastUrl(stackId);
+  }
+
+  /**
+   * Returns the root view in the tab stack.
+   * @internal
+   */
+  getRootView(stackId?: string): RouteView | undefined {
+    return this.stackCtrl.getRootUrl(stackId);
   }
 
   /**
@@ -317,7 +336,7 @@ class OutletInjector implements Injector {
     private route: ActivatedRoute,
     private childContexts: ChildrenOutletContexts,
     private parent: Injector
-  ) {}
+  ) { }
 
   get(token: any, notFoundValue?: any): any {
     if (token === ActivatedRoute) {

@@ -1,4 +1,4 @@
-import { DatetimeData, daysInMonth, getDateValue, getLocalDateTime, renderDatetime } from '../datetime-util';
+import { DatetimeData, daysInMonth, getDateValue, getDateTime, renderDatetime } from '../datetime-util';
 
 describe('Datetime', () => {
   describe('getDateValue()', () => {
@@ -32,7 +32,7 @@ describe('Datetime', () => {
     });
   });
 
-  describe('getLocalDateTime()', () => {
+  describe('getDateTime()', () => {
     it('should format a datetime string according to the local timezone', () => {
 
       const dateStringTests = [
@@ -44,7 +44,7 @@ describe('Datetime', () => {
       ];
 
       dateStringTests.forEach(test => {
-        const convertToLocal = getLocalDateTime(test.input);
+        const convertToLocal = getDateTime(test.input);
 
         const timeZoneOffset = convertToLocal.getTimezoneOffset() / 60;
         const expectedDateString = test.expectedOutput.replace('%HOUR%', padNumber(test.expectedHourUTC - timeZoneOffset));
@@ -65,8 +65,21 @@ describe('Datetime', () => {
       ];
 
       dateStringTests.forEach(test => {
-        const convertToLocal = getLocalDateTime(test.input);
+        const convertToLocal = getDateTime(test.input);
         expect(convertToLocal.toISOString()).toContain(test.expectedOutput);
+      });
+    });
+
+    it('should format a datetime string using provided timezone', () => {
+      const dateStringTests = [
+        { displayTimezone: 'utc', input: `2019-03-02T12:00:00.000Z`, expectedOutput: `2019-03-02T12:00:00.000Z` },
+        { displayTimezone: 'America/New_York', input: `2019-03-02T12:00:00.000Z`, expectedOutput: `2019-03-02T07:00:00.000Z` },
+        { displayTimezone: 'Asia/Tokyo', input: `2019-03-02T12:00:00.000Z`, expectedOutput: `2019-03-02T21:00:00.000Z` },
+      ];
+
+      dateStringTests.forEach(test => {
+        const convertToLocal = getDateTime(test.input, test.displayTimezone);
+        expect(convertToLocal.toISOString()).toEqual(test.expectedOutput);
       });
     });
 
@@ -74,10 +87,10 @@ describe('Datetime', () => {
       const today = new Date();
       const todayString = renderDatetime('YYYY-MM-DD', { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() } )
 
-      const convertToLocalUndefined = getLocalDateTime(undefined);
+      const convertToLocalUndefined = getDateTime(undefined);
       expect(convertToLocalUndefined.toISOString()).toContain(todayString);
 
-      const convertToLocalNull = getLocalDateTime(null);
+      const convertToLocalNull = getDateTime(null);
       expect(convertToLocalNull.toISOString()).toContain(todayString);
     });
   });

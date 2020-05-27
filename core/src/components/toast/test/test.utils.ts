@@ -2,11 +2,11 @@ import { newE2EPage } from '@stencil/core/testing';
 
 import { generateE2EUrl } from '../../../utils/test/utils';
 
-export async function testToast(
+export const testToast = async (
   type: string,
   selector: string,
   rtl = false
-) {
+) => {
   try {
     const pageUrl = generateE2EUrl('toast', type, rtl);
 
@@ -45,4 +45,4 @@ export async function testToast(
   } catch (err) {
     throw err;
   }
-}
+};

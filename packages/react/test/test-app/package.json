@@ -1,0 +1,46 @@
+{
+  "name": "test-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@ionic/react": "0.0.9",
+    "@types/jest": "24.9.0",
+    "@types/node": "12.7.0",
+    "@types/react": "16.8.24",
+    "@types/react-dom": "16.8.5",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.1.2",
+    "serve": "^11.1.0",
+    "typescript": "3.5.3"
+  },
+  "scripts": {
+    "start": "npm run sync && react-scripts start",
+    "build": "npm run sync && react-scripts build",
+    "test": "start-server-and-test test:serve http://localhost:5000 test:open",
+    "test:open": "cypress open",
+    "test:run": "cypress run",
+    "test:serve": "npm run build && npm run serve",
+    "serve": "serve -s build",
+    "sync": "sh scripts/sync.sh"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "cypress": "^3.4.1",
+    "start-server-and-test": "^1.9.2"
+  }
+}

@@ -15,15 +15,15 @@ http://www.idangero.us/
 
 Licensed under MIT
 
-### Custom Animations
+## Custom Animations
 
 By default, Ionic slides use the built-in `slide` animation effect. Custom animations can be provided via the `options` property. Examples of other animations can be found below.
 
 
-#### Coverflow
+### Coverflow
 
 ```typescript
-const slidesOpts = {
+const slideOpts = {
   slidesPerView: 3,
   coverflowEffect: {
     rotate: 50,
@@ -59,24 +59,24 @@ const slidesOpts = {
         const slideSize = slidesSizesGrid[i];
         const slideOffset = $slideEl[0].swiperSlideOffset;
         const offsetMultiplier = ((center - slideOffset - (slideSize / 2)) / slideSize) * params.modifier;
-  
+
          let rotateY = isHorizontal ? rotate * offsetMultiplier : 0;
         let rotateX = isHorizontal ? 0 : rotate * offsetMultiplier;
         // var rotateZ = 0
         let translateZ = -translate * Math.abs(offsetMultiplier);
-  
+
          let translateY = isHorizontal ? 0 : params.stretch * (offsetMultiplier);
         let translateX = isHorizontal ? params.stretch * (offsetMultiplier) : 0;
-  
+
          // Fix for ultra small values
         if (Math.abs(translateX) < 0.001) translateX = 0;
         if (Math.abs(translateY) < 0.001) translateY = 0;
         if (Math.abs(translateZ) < 0.001) translateZ = 0;
         if (Math.abs(rotateY) < 0.001) rotateY = 0;
         if (Math.abs(rotateX) < 0.001) rotateX = 0;
-  
+
          const slideTransform = `translate3d(${translateX}px,${translateY}px,${translateZ}px)  rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  
+
          $slideEl.transform(slideTransform);
         $slideEl[0].style.zIndex = -Math.abs(Math.round(offsetMultiplier)) + 1;
         if (params.slideShadows) {
@@ -95,7 +95,7 @@ const slidesOpts = {
           if ($shadowAfterEl.length) $shadowAfterEl[0].style.opacity = (-offsetMultiplier) > 0 ? -offsetMultiplier : 0;
         }
       }
-  
+
        // Set correct perspective for IE10
       if (swiper.support.pointerEvents || swiper.support.prefixedPointerEvents) {
         const ws = $wrapperEl[0].style;
@@ -113,10 +113,10 @@ const slidesOpts = {
 }
 ```
 
-#### Cube
+### Cube
 
 ```typescript
-const slidesOpts = {
+const slideOpts = {
   grabCursor: true,
   cubeEffect: {
     shadow: true,
@@ -129,7 +129,7 @@ const slidesOpts = {
       const swiper = this;
       swiper.classNames.push(`${swiper.params.containerModifierClass}cube`);
       swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
-      
+
       const overwriteParams = {
         slidesPerView: 1,
         slidesPerColumn: 1,
@@ -140,7 +140,7 @@ const slidesOpts = {
         centeredSlides: false,
         virtualTranslate: true,
       };
-      
+
       this.params = Object.assign(this.params, overwriteParams);
       this.originalParams = Object.assign(this.originalParams, overwriteParams);
     },
@@ -170,7 +170,7 @@ const slidesOpts = {
           }
         }
       }
-      
+
       for (let i = 0; i < slides.length; i += 1) {
         const $slideEl = slides.eq(i);
         let slideIndex = i;
@@ -203,12 +203,12 @@ const slidesOpts = {
         if (rtl) {
           tx = -tx;
         }
-  
+
          if (!isHorizontal) {
           ty = tx;
           tx = 0;
         }
-  
+
          const transform$$1 = `rotateX(${isHorizontal ? 0 : -slideAngle}deg) rotateY(${isHorizontal ? slideAngle : 0}deg) translate3d(${tx}px, ${ty}px, ${tz}px)`;
         if (progress <= 1 && progress > -1) {
           wrapperRotate = (slideIndex * 90) + (progress * 90);
@@ -237,7 +237,7 @@ const slidesOpts = {
         '-ms-transform-origin': `50% 50% -${swiperSize / 2}px`,
         'transform-origin': `50% 50% -${swiperSize / 2}px`,
       });
-  
+
        if (params.shadow) {
         if (isHorizontal) {
           $cubeShadowEl.transform(`translate3d(0px, ${(swiperWidth / 2) + params.shadowOffset}px, ${-swiperWidth / 2}px) rotateX(90deg) rotateZ(0deg) scale(${params.shadowScale})`);
@@ -273,10 +273,10 @@ const slidesOpts = {
 }
 ```
 
-#### Fade
+### Fade
 
 ```typescript
-const slidesOpts = {
+const slideOpts = {
   on: {
     beforeInit() {
       const swiper = this;
@@ -334,10 +334,10 @@ const slidesOpts = {
       }
     },
   }
-}    
+}
 ```
 
-#### Flip
+### Flip
 
 ```typescript
 const slideOpts = {
@@ -380,9 +380,9 @@ const slideOpts = {
         } else if (rtl) {
           rotateY = -rotateY;
         }
-  
+
          $slideEl[0].style.zIndex = -Math.abs(Math.round(progress)) + slides.length;
-  
+
          if (swiper.params.flipEffect.slideShadows) {
           // Set shadows
           let shadowBefore = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
@@ -415,7 +415,7 @@ const slideOpts = {
         slides.eq(activeIndex).transitionEnd(function onTransitionEnd() {
           if (eventTriggered) return;
           if (!swiper || swiper.destroyed) return;
-  
+
           eventTriggered = true;
           swiper.animating = false;
           const triggerEvents = ['webkitTransitionEnd', 'transitionend'];
@@ -442,21 +442,24 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'slides-example',
   template: `
-    <ion-slides pager="true" [options]="slideOpts">
-      <ion-slide>
-        <h1>Slide 1</h1>
-      </ion-slide>
-      <ion-slide>
-        <h1>Slide 2</h1>
-      </ion-slide>
-      <ion-slide>
-        <h1>Slide 3</h1>
-      </ion-slide>
-    </ion-slides>
+    <ion-content>
+      <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide>
+          <h1>Slide 1</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 3</h1>
+        </ion-slide>
+      </ion-slides>
+    </ion-content>
   `
 })
 export class SlideExample {
-  // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
+  // Optional parameters to pass to the swiper instance.
+  // See http://idangero.us/swiper/api/ for valid options.
   slideOpts = {
     initialSlide: 1,
     speed: 400
@@ -465,12 +468,19 @@ export class SlideExample {
 }
 ```
 
+```css
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 100%;
+}
+```
+
 
 ### Javascript
 
 ```html
+<ion-content>
   <ion-slides pager="true">
-
     <ion-slide>
       <h1>Slide 1</h1>
     </ion-slide>
@@ -483,15 +493,24 @@ export class SlideExample {
       <h1>Slide 3</h1>
     </ion-slide>
   </ion-slides>
+</ion-content>
 ```
 
 ```javascript
 var slides = document.querySelector('ion-slides');
 
-// Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
+// Optional parameters to pass to the swiper instance.
+// See http://idangero.us/swiper/api/ for valid options.
 slides.options = {
   initialSlide: 1,
   speed: 400
+}
+```
+
+```css
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 100%;
 }
 ```
 
@@ -502,13 +521,14 @@ slides.options = {
 import React from 'react';
 import { IonSlides, IonSlide, IonContent } from '@ionic/react';
 
-// Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
+// Optional parameters to pass to the swiper instance.
+// See http://idangero.us/swiper/api/ for valid options.
 const slideOpts = {
   initialSlide: 1,
   speed: 400
 };
 
-export const SlidesExample: React.FunctionComponent = () => (
+export const SlidesExample: React.FC = () => (
   <IonContent>
     <IonSlides pager={true} options={slideOpts}>
       <IonSlide>
@@ -523,6 +543,60 @@ export const SlidesExample: React.FunctionComponent = () => (
     </IonSlides>
   </IonContent>
 );
+```
+
+```css
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 100%;
+}
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'slides-example',
+  styleUrl: 'slides-example.css'
+})
+export class SlidesExample {
+  // Optional parameters to pass to the swiper instance.
+  // See http://idangero.us/swiper/api/ for valid options.
+  private slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
+
+  render() {
+    return [
+      <ion-content>
+        <ion-slides pager={true} options={this.slideOpts}>
+          <ion-slide>
+            <h1>Slide 1</h1>
+          </ion-slide>
+
+          <ion-slide>
+            <h1>Slide 2</h1>
+          </ion-slide>
+
+          <ion-slide>
+            <h1>Slide 3</h1>
+          </ion-slide>
+        </ion-slides>
+      </ion-content>
+    ];
+  }
+}
+```
+
+```css
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 100%;
+}
 ```
 
 
@@ -611,6 +685,18 @@ Get the index of the previous slide.
 #### Returns
 
 Type: `Promise<number>`
+
+
+
+### `getSwiper() => Promise<any>`
+
+Get the Swiper instance.
+Use this to access the full Swiper API.
+See https://idangero.us/swiper/api/ for all API options.
+
+#### Returns
+
+Type: `Promise<any>`
 
 
 
@@ -749,10 +835,14 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                         | Description                                |
-| ---------------------------- | ------------------------------------------ |
-| `--bullet-background`        | Background of the pagination bullets       |
-| `--bullet-background-active` | Background of the active pagination bullet |
+| Name                               | Description                                      |
+| ---------------------------------- | ------------------------------------------------ |
+| `--bullet-background`              | Background of the pagination bullets             |
+| `--bullet-background-active`       | Background of the active pagination bullet       |
+| `--progress-bar-background`        | Background of the pagination progress-bar        |
+| `--progress-bar-background-active` | Background of the active pagination progress-bar |
+| `--scroll-bar-background`          | Background of the pagination scroll-bar          |
+| `--scroll-bar-background-active`   | Background of the active pagination scroll-bar   |
 
 
 ----------------------------------------------

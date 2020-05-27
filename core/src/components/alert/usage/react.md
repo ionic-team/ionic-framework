@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { IonAlert, IonButton, IonContent } from '@ionic/react';
 
-export const AlertExample: React.FunctionComponent = () => {
+export const AlertExample: React.FC = () => {
 
   const [showAlert1, setShowAlert1] = useState(false);
   const [showAlert2, setShowAlert2] = useState(false);
@@ -22,6 +22,7 @@ export const AlertExample: React.FunctionComponent = () => {
         <IonAlert
           isOpen={showAlert1}
           onDidDismiss={() => setShowAlert1(false)}
+          cssClass='my-custom-class'
           header={'Alert'}
           subHeader={'Subtitle'}
           message={'This is an alert message.'}
@@ -31,6 +32,7 @@ export const AlertExample: React.FunctionComponent = () => {
         <IonAlert
           isOpen={showAlert2}
           onDidDismiss={() => setShowAlert2(false)}
+          cssClass='my-custom-class'
           header={'Alert'}
           subHeader={'Subtitle'}
           message={'This is an alert message.'}
@@ -40,6 +42,7 @@ export const AlertExample: React.FunctionComponent = () => {
         <IonAlert
           isOpen={showAlert3}
           onDidDismiss={() => setShowAlert3(false)}
+          cssClass='my-custom-class'
           header={'Confirm!'}
           message={'Message <strong>text</strong>!!!'}
           buttons={[
@@ -63,6 +66,7 @@ export const AlertExample: React.FunctionComponent = () => {
         <IonAlert
           isOpen={showAlert4}
           onDidDismiss={() => setShowAlert4(false)}
+          cssClass='my-custom-class'
           header={'Prompt!'}
           inputs={[
             {
@@ -127,6 +131,7 @@ export const AlertExample: React.FunctionComponent = () => {
         <IonAlert
           isOpen={showAlert5}
           onDidDismiss={() => setShowAlert5(false)}
+          cssClass='my-custom-class'
           header={'Radio'}
           inputs={[
             {
@@ -188,6 +193,7 @@ export const AlertExample: React.FunctionComponent = () => {
         <IonAlert
           isOpen={showAlert6}
           onDidDismiss={() => setShowAlert6(false)}
+          cssClass='my-custom-class'
           header={'Checkbox'}
           inputs={[
             {

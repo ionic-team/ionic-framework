@@ -29,8 +29,8 @@
     </div>
 
     <div>
-      Item 4 (default ion-reorder)
-      <ion-reorder></ion-reorder>
+      Item 4 (custom ion-reorder)
+      <ion-reorder class="reorder-part"></ion-reorder>
     </div>
 
     <div>
@@ -61,5 +61,11 @@
     </ion-reorder>
 
   </ion-reorder-group>
+  <style>
+    .reorder-part::part(icon) {
+      color: purple;
+      opacity: 1;
+    }
+  </style>
 </body>
 </html>

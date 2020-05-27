@@ -29,7 +29,8 @@ export class InfiniteScroll implements ComponentInterface {
   @Prop() threshold = '15%';
 
   @Watch('threshold')
-  protected thresholdChanged(val: string) {
+  protected thresholdChanged() {
+    const val = this.threshold;
     if (val.lastIndexOf('%') > -1) {
       this.thrPx = 0;
       this.thrPc = (parseFloat(val) / 100);
@@ -53,10 +54,12 @@ export class InfiniteScroll implements ComponentInterface {
 
   @Watch('disabled')
   protected disabledChanged() {
-    if (this.disabled) {
+    const disabled = this.disabled;
+    if (disabled) {
       this.isLoading = false;
       this.isBusy = false;
     }
+    this.enableScrollEvents(!disabled);
   }
 
   /**
@@ -73,13 +76,15 @@ export class InfiniteScroll implements ComponentInterface {
    */
   @Event() ionInfinite!: EventEmitter<void>;
 
-  async componentDidLoad() {
+  async connectedCallback() {
     const contentEl = this.el.closest('ion-content');
-    if (contentEl) {
-      await contentEl.componentOnReady();
-      this.scrollEl = await contentEl.getScrollElement();
+    if (!contentEl) {
+      console.error('<ion-infinite-scroll> must be used inside an <ion-content>');
+      return;
     }
-    this.thresholdChanged(this.threshold);
+    this.scrollEl = await contentEl.getScrollElement();
+    this.thresholdChanged();
+    this.disabledChanged();
     if (this.position === 'top') {
       writeTask(() => {
         if (this.scrollEl) {
@@ -89,7 +94,8 @@ export class InfiniteScroll implements ComponentInterface {
     }
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
+    this.enableScrollEvents(false);
     this.scrollEl = undefined;
   }
 
@@ -199,16 +205,26 @@ export class InfiniteScroll implements ComponentInterface {
     );
   }
 
+  private enableScrollEvents(shouldListen: boolean) {
+    if (this.scrollEl) {
+      if (shouldListen) {
+        this.scrollEl.addEventListener('scroll', this.onScroll);
+      } else {
+        this.scrollEl.removeEventListener('scroll', this.onScroll);
+      }
+    }
+  }
+
   render() {
     const mode = getIonMode(this);
+    const disabled = this.disabled;
     return (
       <Host
         class={{
           [mode]: true,
           'infinite-scroll-loading': this.isLoading,
-          'infinite-scroll-enabled': !this.disabled
+          'infinite-scroll-enabled': !disabled
         }}
-        onScroll={this.disabled ? undefined : this.onScroll}
       />
     );
   }

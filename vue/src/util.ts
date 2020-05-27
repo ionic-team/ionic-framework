@@ -1,3 +1,5 @@
+import { HTMLStencilElement } from '@ionic/core';
+
 export class OverlayBaseController<Opts, Overlay> {
   constructor(private ctrl: string) {}
 

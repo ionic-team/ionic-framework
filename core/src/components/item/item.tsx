@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
@@ -11,6 +11,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
+ *
+ * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
  */
 @Component({
   tag: 'ion-item',
@@ -18,7 +20,9 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
     ios: 'item.ios.scss',
     md: 'item.md.scss'
   },
-  shadow: true
+  shadow: {
+    delegatesFocus: true
+  }
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
 
@@ -49,7 +53,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The icon to use when `detail` is set to `true`.
    */
-  @Prop() detailIcon = 'ios-arrow-forward';
+  @Prop() detailIcon = 'chevron-forward';
 
   /**
    * If `true`, the user cannot interact with the item.
@@ -123,23 +127,36 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
     if (hasStyleChange) {
       this.itemStyles.set(tagName, newStyles);
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
   componentDidLoad() {
-    // Check for multiple inputs to change the position to relative
-    const inputs = this.el.querySelectorAll('ion-select, ion-datetime');
-    this.multipleInputs = inputs.length > 1 ? true : false;
+    // The following elements have a clickable cover that is relative to the entire item
+    const covers = this.el.querySelectorAll('ion-checkbox, ion-datetime, ion-select, ion-radio');
+
+    // The following elements can accept focus alongside the previous elements
+    // therefore if these elements are also a child of item, we don't want the
+    // input cover on top of those interfering with their clicks
+    const inputs = this.el.querySelectorAll('ion-input, ion-range, ion-searchbar, ion-segment, ion-textarea, ion-toggle');
+
+    // The following elements should also stay clickable when an input with cover is present
+    const clickables = this.el.querySelectorAll('ion-anchor, ion-button, a, button');
+
+    // Check for multiple inputs to change the position of the input cover to relative
+    // for all of the covered inputs above
+    this.multipleInputs = covers.length + inputs.length > 1
+      || covers.length + clickables.length > 1
+      || covers.length > 0 && this.isClickable();
   }
 
-  // If the item contains an input including a radio, checkbox, datetime, etc.
-  // then the item will have a clickable input cover that should
-  // get the hover, focused and activated states UNLESS it has multiple
-  // inputs, then those need to individually get the click
+  // If the item contains an input including a checkbox, datetime, select, or radio
+  // then the item will have a clickable input cover that covers the item
+  // that should get the hover, focused and activated states UNLESS it has multiple
+  // inputs, then those need to individually get each click
   private hasCover(): boolean {
     const inputs = this.el.querySelectorAll('ion-checkbox, ion-datetime, ion-select, ion-radio');
-    return inputs.length > 0 && !this.multipleInputs;
+    return inputs.length === 1 && !this.multipleInputs;
   }
 
   // If the item has an href or button property it will render a native
@@ -200,7 +217,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
                 <slot></slot>
               </div>
               <slot name="end"></slot>
-              {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
+              {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon"></ion-icon>}
               <div class="item-inner-highlight"></div>
             </div>
             {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

@@ -4,7 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { Color, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { hasShadowDom } from '../../utils/helpers';
-import { createColorClasses, openURL } from '../../utils/theme';
+import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -23,9 +23,9 @@ import { createColorClasses, openURL } from '../../utils/theme';
   shadow: true,
 })
 export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
-
-  private inToolbar = false;
   private inItem = false;
+  private inListHeader = false;
+  private inToolbar = false;
 
   @Element() el!: HTMLElement;
 
@@ -124,6 +124,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   componentWillLoad() {
     this.inToolbar = !!this.el.closest('ion-buttons');
+    this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
   }
 
@@ -189,7 +190,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
     let fill = this.fill;
     if (fill === undefined) {
-      fill = this.inToolbar ? 'clear' : 'solid';
+      fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
     }
     return (
       <Host
@@ -204,7 +205,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [`${buttonType}-${shape}`]: shape !== undefined,
           [`${buttonType}-${fill}`]: true,
           [`${buttonType}-strong`]: strong,
-
+          'in-toolbar': hostContext('ion-toolbar', this.el),
+          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'button-has-icon-only': hasIconOnly,
           'button-disabled': disabled,
           'ion-activatable': true,

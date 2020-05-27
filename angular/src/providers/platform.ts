@@ -1,10 +1,10 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
-import { BackButtonEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
+import { Inject, Injectable, NgZone } from '@angular/core';
+import { BackButtonEventDetail, KeyboardEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
 import { Subject, Subscription } from 'rxjs';
 
 export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
-  subscribeWithPriority(priority: number, callback: () => Promise<any> | void): Subscription;
+  subscribeWithPriority(priority: number, callback: (processNextHandler: () => void) => Promise<any> | void): Subscription;
 }
 
 @Injectable({
@@ -19,6 +19,18 @@ export class Platform {
    * @hidden
    */
   backButton: BackButtonEmitter = new Subject<BackButtonEventDetail>() as any;
+
+  /**
+   * The keyboardDidShow event emits when the
+   * on-screen keyboard is presented.
+   */
+  keyboardDidShow = new Subject<KeyboardEventDetail>() as any;
+
+  /**
+   * The keyboardDidHide event emits when the
+   * on-screen keyboard is hidden.
+   */
+  keyboardDidHide = new Subject<void>();
 
   /**
    * The pause event emits when the native platform puts the application
@@ -42,29 +54,32 @@ export class Platform {
    */
   resize = new Subject<void>();
 
-  constructor(@Inject(DOCUMENT) private doc: any) {
-    this.win = doc.defaultView;
+  constructor(@Inject(DOCUMENT) private doc: any, zone: NgZone) {
+    zone.run(() => {
+      this.win = doc.defaultView;
+      this.backButton.subscribeWithPriority = function(priority, callback) {
+        return this.subscribe(ev => {
+          return ev.register(priority, processNextHandler => zone.run(() => callback(processNextHandler)));
+        });
+      };
 
-    this.backButton.subscribeWithPriority = function(priority, callback) {
-      return this.subscribe(ev => {
-        ev.register(priority, callback);
-      });
-    };
+      proxyEvent(this.pause, doc, 'pause');
+      proxyEvent(this.resume, doc, 'resume');
+      proxyEvent(this.backButton, doc, 'ionBackButton');
+      proxyEvent(this.resize, this.win, 'resize');
+      proxyEvent(this.keyboardDidShow, this.win, 'ionKeyboardDidShow');
+      proxyEvent(this.keyboardDidHide, this.win, 'ionKeyboardDidHide');
 
-    proxyEvent(this.pause, doc, 'pause');
-    proxyEvent(this.resume, doc, 'resume');
-    proxyEvent(this.backButton, doc, 'ionBackButton');
-    proxyEvent(this.resize, this.win, 'resize');
-
-    let readyResolve: (value: string) => void;
-    this._readyPromise = new Promise(res => { readyResolve = res; });
-    if (this.win && this.win['cordova']) {
-      doc.addEventListener('deviceready', () => {
-        readyResolve('cordova');
-      }, { once: true });
-    } else {
-      readyResolve!('dom');
-    }
+      let readyResolve: (value: string) => void;
+      this._readyPromise = new Promise(res => { readyResolve = res; });
+      if (this.win && this.win['cordova']) {
+        doc.addEventListener('deviceready', () => {
+          readyResolve('cordova');
+        }, { once: true });
+      } else {
+        readyResolve!('dom');
+      }
+    });
   }
 
   /**

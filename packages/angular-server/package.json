@@ -1,0 +1,59 @@
+{
+  "name": "@ionic/angular-server",
+  "version": "5.1.1",
+  "description": "Angular SSR Module for Ionic",
+  "keywords": [
+    "ionic",
+    "angular",
+    "universal",
+    "ssr",
+    "prerender",
+    "serverside"
+  ],
+  "author": "Ionic Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/ionic.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "homepage": "https://ionicframework.com/",
+  "scripts": {
+    "test": "echo 'angular no tests yet'",
+    "build": "ng-packagr -p package.json",
+    "build.prod": "npm run clean && npm run build",
+    "clean": "rm -rf ./dist",
+    "lint": "npm run lint.ts",
+    "lint.ts": "tslint --project .",
+    "lint.fix": "tslint --project . --fix"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/public_api.ts"
+    }
+  },
+  "peerDependencies": {
+    "@angular/core": ">=8.2.7",
+    "@angular/platform-server": ">=8.2.7",
+    "@ionic/angular": "*",
+    "rxjs": ">=6.2.0",
+    "zone.js": ">=0.8.26"
+  },
+  "devDependencies": {
+    "@angular/animations": "8.2.13",
+    "@angular/common": "8.2.13",
+    "@angular/compiler": "8.2.13",
+    "@angular/compiler-cli": "8.2.13",
+    "@angular/core": "8.2.13",
+    "@angular/platform-browser": "8.2.13",
+    "@angular/platform-server": "8.2.13",
+    "@ionic/core": "5.1.1",
+    "ng-packagr": "5.7.1",
+    "tslint": "^5.12.1",
+    "tslint-ionic-rules": "0.0.21",
+    "typescript": "3.4.5",
+    "typescript-tslint-plugin": "0.5.4"
+  }
+}

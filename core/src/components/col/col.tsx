@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { matchBreakpoint } from '../../utils/media';
@@ -13,8 +13,6 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true
 })
 export class Col implements ComponentInterface {
-
-  @Element() el!: HTMLIonColElement;
 
   /**
    * The amount to offset the column, in terms of how many columns it should shift to the end
@@ -158,7 +156,7 @@ export class Col implements ComponentInterface {
 
   @Listen('resize', { target: 'window' })
   onResize() {
-    this.el.forceUpdate();
+    forceUpdate(this);
   }
 
   // Loop through all of the breakpoints to see if the media query
@@ -244,23 +242,23 @@ export class Col implements ComponentInterface {
     return this.calculatePosition('push', isRTL ? 'right' : 'left');
   }
 
-  hostData() {
+  render() {
     const isRTL = document.dir === 'rtl';
     const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true
-      },
-      style: {
-        ...this.calculateOffset(isRTL),
-        ...this.calculatePull(isRTL),
-        ...this.calculatePush(isRTL),
-        ...this.calculateSize(),
-      }
-    };
-  }
-
-  render() {
-    return <slot></slot>;
+    return (
+      <Host
+        class={{
+          [mode]: true
+        }}
+        style={{
+          ...this.calculateOffset(isRTL),
+          ...this.calculatePull(isRTL),
+          ...this.calculatePush(isRTL),
+          ...this.calculateSize(),
+        }}
+      >
+        <slot></slot>
+      </Host>
+    );
   }
 }

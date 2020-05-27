@@ -1,7 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
+import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
 import { debounceEvent, findItemLabel } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -21,6 +21,7 @@ export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
   private didBlurAfterEdit = false;
+  private tabindex?: string | number;
 
   @State() hasFocus = false;
 
@@ -46,7 +47,7 @@ export class Input implements ComponentInterface {
   /**
    * Indicates whether the value of the control can be automatically completed by the browser.
    */
-  @Prop() autocomplete: 'on' | 'off' = 'off';
+  @Prop() autocomplete: AutocompleteTypes = 'off';
 
   /**
    * Whether auto correction should be enabled when the user is entering/editing the text value.
@@ -66,7 +67,7 @@ export class Input implements ComponentInterface {
   /**
    * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
-  @Prop({ mutable: true }) clearOnEdit?: boolean;
+  @Prop() clearOnEdit?: boolean;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
@@ -89,10 +90,18 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * A hint to the browser for which keyboard to display.
-   * This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+   * A hint to the browser for which enter key to display.
+   * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
+   * `"previous"`, `"search"`, and `"send"`.
    */
-  @Prop() inputmode?: string;
+  @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+
+  /**
+   * A hint to the browser for which keyboard to display.
+   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
+   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+   */
+  @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -125,7 +134,7 @@ export class Input implements ComponentInterface {
   @Prop() name: string = this.inputId;
 
   /**
-   * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+   * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, `"date"`, or `"password"`, otherwise it is ignored. When the type attribute is `"date"`, `pattern` will only be used in browsers that do not support the `"date"` input type natively. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date for more information.
    */
   @Prop() pattern?: string;
 
@@ -168,7 +177,7 @@ export class Input implements ComponentInterface {
   /**
    * The value of the input.
    */
-  @Prop({ mutable: true }) value?: string | null = '';
+  @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
    * Update the native input element when the value changes
@@ -176,11 +185,11 @@ export class Input implements ComponentInterface {
   @Watch('value')
   protected valueChanged() {
     this.emitStyle();
-    this.ionChange.emit({ value: this.value });
+    this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
   }
 
   /**
-   * Emitted when a keyboard input ocurred.
+   * Emitted when a keyboard input occurred.
    */
   @Event() ionInput!: EventEmitter<KeyboardEvent>;
 
@@ -200,39 +209,38 @@ export class Input implements ComponentInterface {
   @Event() ionFocus!: EventEmitter<void>;
 
   /**
-   * Emitted when the input has been created.
-   * @internal
-   */
-  @Event() ionInputDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has been removed.
-   * @internal
-   */
-  @Event() ionInputDidUnload!: EventEmitter<void>;
-
-  /**
    * Emitted when the styles change.
    * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   componentWillLoad() {
-    // By default, password inputs clear after focus when they have content
-    if (this.clearOnEdit === undefined && this.type === 'password') {
-      this.clearOnEdit = true;
+    // If the ion-input has a tabindex attribute we get the value
+    // and pass it down to the native input, then remove it from the
+    // ion-input to avoid causing tabbing twice on the same element
+    if (this.el.hasAttribute('tabindex')) {
+      const tabindex = this.el.getAttribute('tabindex');
+      this.tabindex = tabindex !== null ? tabindex : undefined;
+      this.el.removeAttribute('tabindex');
     }
+  }
+
+  connectedCallback() {
     this.emitStyle();
-  }
-
-  componentDidLoad() {
     this.debounceChanged();
-
-    this.ionInputDidLoad.emit();
+    if (Build.isBrowser) {
+      document.dispatchEvent(new CustomEvent('ionInputDidLoad', {
+        detail: this.el
+      }));
+    }
   }
 
-  componentDidUnload() {
-    this.ionInputDidUnload.emit();
+  disconnectedCallback() {
+    if (Build.isBrowser) {
+      document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
+        detail: this.el
+      }));
+    }
   }
 
   /**
@@ -254,8 +262,16 @@ export class Input implements ComponentInterface {
     return Promise.resolve(this.nativeInput!);
   }
 
+  private shouldClearOnEdit() {
+    const { type, clearOnEdit } = this;
+    return (clearOnEdit === undefined)
+      ? type === 'password'
+      : clearOnEdit;
+  }
+
   private getValue(): string {
-    return this.value || '';
+    return typeof this.value === 'number' ? this.value.toString() :
+      (this.value || '').toString();
   }
 
   private emitStyle() {
@@ -293,10 +309,11 @@ export class Input implements ComponentInterface {
     this.ionFocus.emit();
   }
 
-  private onKeydown = () => {
-    if (this.clearOnEdit) {
+  private onKeydown = (ev: KeyboardEvent) => {
+    if (this.shouldClearOnEdit()) {
       // Did the input value change after it was blurred and edited?
-      if (this.didBlurAfterEdit && this.hasValue()) {
+      // Do not clear if user is hitting Enter to submit form
+      if (this.didBlurAfterEdit && this.hasValue() && ev.key !== 'Enter') {
         // Clear the input
         this.clearTextInput();
       }
@@ -326,7 +343,7 @@ export class Input implements ComponentInterface {
 
   private focusChanged() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
+    if (!this.hasFocus && this.shouldClearOnEdit() && this.hasValue()) {
       this.didBlurAfterEdit = true;
     }
   }
@@ -335,20 +352,8 @@ export class Input implements ComponentInterface {
     return this.getValue().length > 0;
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      'aria-disabled': this.disabled ? 'true' : null,
-      class: {
-        ...createColorClasses(this.color),
-        [mode]: true,
-        'has-value': this.hasValue(),
-        'has-focus': this.hasFocus
-      }
-    };
-  }
-
   render() {
+    const mode = getIonMode(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
@@ -356,46 +361,58 @@ export class Input implements ComponentInterface {
       label.id = labelId;
     }
 
-    return [
-      <input
-        class="native-input"
-        ref={input => this.nativeInput = input}
-        aria-labelledby={labelId}
-        disabled={this.disabled}
-        accept={this.accept}
-        autoCapitalize={this.autocapitalize}
-        autoComplete={this.autocomplete}
-        autoCorrect={this.autocorrect}
-        autoFocus={this.autofocus}
-        inputMode={this.inputmode}
-        min={this.min}
-        max={this.max}
-        minLength={this.minlength}
-        maxLength={this.maxlength}
-        multiple={this.multiple}
-        name={this.name}
-        pattern={this.pattern}
-        placeholder={this.placeholder || ''}
-        readOnly={this.readonly}
-        required={this.required}
-        spellCheck={this.spellcheck}
-        step={this.step}
-        size={this.size}
-        type={this.type}
-        value={value}
-        onInput={this.onInput}
-        onBlur={this.onBlur}
-        onFocus={this.onFocus}
-        onKeyDown={this.onKeydown}
-      />,
-      (this.clearInput && !this.readonly && !this.disabled) && <button
-        type="button"
-        class="input-clear-icon"
-        tabindex="-1"
-        onTouchStart={this.clearTextInput}
-        onMouseDown={this.clearTextInput}
-      />
-    ];
+    return (
+      <Host
+        aria-disabled={this.disabled ? 'true' : null}
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          'has-value': this.hasValue(),
+          'has-focus': this.hasFocus
+        }}
+      >
+        <input
+          class="native-input"
+          ref={input => this.nativeInput = input}
+          aria-labelledby={labelId}
+          disabled={this.disabled}
+          accept={this.accept}
+          autoCapitalize={this.autocapitalize}
+          autoComplete={this.autocomplete}
+          autoCorrect={this.autocorrect}
+          autoFocus={this.autofocus}
+          enterKeyHint={this.enterkeyhint}
+          inputMode={this.inputmode}
+          min={this.min}
+          max={this.max}
+          minLength={this.minlength}
+          maxLength={this.maxlength}
+          multiple={this.multiple}
+          name={this.name}
+          pattern={this.pattern}
+          placeholder={this.placeholder || ''}
+          readOnly={this.readonly}
+          required={this.required}
+          spellcheck={this.spellcheck ? 'true' : undefined}
+          step={this.step}
+          size={this.size}
+          tabindex={this.tabindex}
+          type={this.type}
+          value={value}
+          onInput={this.onInput}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
+          onKeyDown={this.onKeydown}
+        />
+        {(this.clearInput && !this.readonly && !this.disabled) && <button
+          type="button"
+          class="input-clear-icon"
+          tabindex="-1"
+          onTouchStart={this.clearTextInput}
+          onMouseDown={this.clearTextInput}
+        />}
+      </Host>
+    );
   }
 }
 

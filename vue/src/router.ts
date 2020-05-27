@@ -1,7 +1,7 @@
 import VueRouter, { Route } from 'vue-router';
 import { PluginFunction } from 'vue';
 import { RouterArgs } from './interfaces';
-import IonVueRouter from './components/ion-vue-router';
+import IonVueRouter from './components/navigation/ion-vue-router';
 import { BackButtonEvent, RouterDirection } from '@ionic/core';
 
 // Extend the official VueRouter
@@ -37,7 +37,10 @@ export default class Router extends VueRouter {
 
     // Listen to Ionic's back button event
     document.addEventListener('ionBackButton', (e: Event) => {
-      (e as BackButtonEvent).detail.register(0, () => this.back());
+      (e as BackButtonEvent).detail.register(0, processNextHandler => {
+        this.back();
+        processNextHandler();
+      });
     });
   }
 

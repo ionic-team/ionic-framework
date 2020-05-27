@@ -21,8 +21,8 @@
     </ion-header>
 
     <ion-content>
-      <h2>Mode: ios</h2>
-      <ion-segment mode="ios" id="modeSegment" name="iosMode" value="kittens">
+      <h2>Mode: segment & button ios</h2>
+      <ion-segment mode="ios" value="kittens">
         <ion-segment-button mode="ios" value="puppies">
           <ion-label>Puppies</ion-label>
         </ion-segment-button>
@@ -34,10 +34,21 @@
         </ion-segment-button>
       </ion-segment>
 
-      <hr>
+      <h2>Mode: segment ios</h2>
+      <ion-segment mode="ios" value="kittens">
+        <ion-segment-button value="puppies">
+          <ion-label>Puppies</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="kittens">
+          <ion-label>Kittens</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="turtles">
+          <ion-label>Turtles</ion-label>
+        </ion-segment-button>
+      </ion-segment>
 
-      <h2>Mode: md</h2>
-      <ion-segment mode="md" name="mdMode" value="kittens">
+      <h2>Mode: segment ios, button: md</h2>
+      <ion-segment mode="ios" value="kittens">
         <ion-segment-button mode="md" value="puppies">
           <ion-label>Puppies</ion-label>
         </ion-segment-button>
@@ -45,6 +56,48 @@
           <ion-label>Kittens</ion-label>
         </ion-segment-button>
         <ion-segment-button mode="md" value="turtles">
+          <ion-label>Turtles</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <hr>
+
+      <h2>Mode: segment & button md</h2>
+      <ion-segment mode="md" value="kittens">
+        <ion-segment-button mode="md" value="puppies">
+          <ion-label>Puppies</ion-label>
+        </ion-segment-button>
+        <ion-segment-button mode="md" value="kittens">
+          <ion-label>Kittens</ion-label>
+        </ion-segment-button>
+        <ion-segment-button mode="md" value="turtles">
+          <ion-label>Turtles</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+
+      <h2>Mode: segment md</h2>
+      <ion-segment mode="md" value="kittens">
+        <ion-segment-button value="puppies">
+          <ion-label>Puppies</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="kittens">
+          <ion-label>Kittens</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="turtles">
+          <ion-label>Turtles</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <h2>Mode: segment md, button: ios</h2>
+      <ion-segment mode="md" value="kittens">
+        <ion-segment-button mode="ios" value="puppies">
+          <ion-label>Puppies</ion-label>
+        </ion-segment-button>
+        <ion-segment-button mode="ios" value="kittens">
+          <ion-label>Kittens</ion-label>
+        </ion-segment-button>
+        <ion-segment-button mode="ios" value="turtles">
           <ion-label>Turtles</ion-label>
         </ion-segment-button>
       </ion-segment>

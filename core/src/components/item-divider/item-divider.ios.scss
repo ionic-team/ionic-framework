@@ -5,16 +5,20 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$item-ios-divider-background};
-  --color: #{$item-ios-divider-color};
-  --padding-start: #{$item-ios-divider-padding-start};
-  --inner-padding-end: #{$item-ios-divider-padding-end / 2};
+  --background: #{$item-divider-ios-background};
+  --color: #{$item-divider-ios-color};
+  --padding-start: #{$item-divider-ios-padding-start};
+  --inner-padding-end: #{$item-divider-ios-padding-end / 2};
 
   @include border-radius(0);
 
   position: relative;
 
-  font-size: $item-ios-divider-font-size;
+  min-height: $item-divider-ios-min-height;
+
+  font-size: $item-divider-ios-font-size;
+
+  font-weight: $item-divider-ios-font-weight;
 }
 
 
@@ -32,14 +36,6 @@
 ::slotted(ion-icon[slot="start"]),
 ::slotted(ion-icon[slot="end"]) {
   @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
-}
-
-
-// Material Design Slotted Label
-// --------------------------------------------------
-
-::slotted(ion-label) {
-  @include margin(10px, 8px, 10px, 0);
 }
 
 

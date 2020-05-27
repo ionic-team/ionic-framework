@@ -10,7 +10,8 @@
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
 
 <body>
   <ion-app>
@@ -75,19 +76,63 @@
       <p>
         <ion-back-button class="custom"></ion-back-button>
         <ion-back-button color="secondary" class="custom"></ion-back-button>
-      </p>
-
-      <p>
         <ion-back-button class="custom ion-focused"></ion-back-button>
         <ion-back-button color="secondary" class="custom ion-focused"></ion-back-button>
       </p>
+
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+          <ion-back-button class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Default</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+          <ion-back-button class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Primary</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="light">
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+          <ion-back-button class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Light</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="success">
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+          <ion-back-button class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Success</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar class="themed">
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+          <ion-back-button class="ion-focused"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Themed</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+          <ion-back-button class="ion-hide"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Hidden</ion-title>
+      </ion-toolbar>
     </ion-content>
   </ion-app>
 
   <script>
     var buttons = document.querySelectorAll('ion-back-button');
 
-    for(var i = 0; i < buttons.length; i++) {
+    for (var i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener('click', (event) => onClick(event));
     }
 
@@ -113,7 +158,9 @@
     .wide {
       --background: #d1f3ff;
       --background-hover: #add8e6;
+      --background-hover-opacity: 1;
       --background-focused: #84c5db;
+      --background-focused-opacity: 1;
 
       height: 50px;
       width: 150px;
@@ -140,6 +187,14 @@
       --padding-end: 10px;
     }
 
+    .custom:hover {
+      opacity: 1;
+    }
+
+    .themed {
+      --ion-toolbar-background: #222;
+      --ion-toolbar-color: #ddd;
+    }
   </style>
 </body>
 

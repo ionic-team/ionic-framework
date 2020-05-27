@@ -1,0 +1,87 @@
+{
+  "name": "@ionic/react",
+  "version": "5.1.1",
+  "description": "React specific wrapper for @ionic/core",
+  "keywords": [
+    "ionic",
+    "framework",
+    "react",
+    "mobile",
+    "app",
+    "hybrid",
+    "webapp",
+    "cordova",
+    "progressive web app",
+    "pwa"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ionic-team/ionic.git"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run copy && npm run compile",
+    "clean": "rm -rf dist && rm -rf dist-transpiled",
+    "compile": "npm run tsc && rollup -c",
+    "release": "np --any-branch --yolo --no-release-draft",
+    "lint": "tslint --project .",
+    "lint.fix": "tslint --project . --fix",
+    "tsc": "tsc -p .",
+    "copy": "node scripts/copy.js",
+    "test.spec": "jest --ci",
+    "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist/",
+    "css/"
+  ],
+  "dependencies": {
+    "@ionic/core": "5.1.1",
+    "ionicons": "^5.0.1",
+    "tslib": "*"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.9.0",
+    "@types/node": "^12.12.14",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "fs-extra": "^8.1.0",
+    "jest": "^24.9.0",
+    "jest-dom": "^3.4.0",
+    "np": "^5.0.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-testing-library": "^7.0.0",
+    "rollup": "^1.18.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-virtual": "^1.0.1",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "tslint-ionic-rules": "0.0.21",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.7.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "dist-transpiled",
+      "dist",
+      "test-app"
+    ],
+    "modulePaths": [
+      "<rootDir>"
+    ]
+  }
+}

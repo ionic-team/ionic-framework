@@ -1,5 +1,6 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, h, readTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { isPlatform } from '../../utils/platform';
@@ -8,6 +9,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 /**
  * @slot - Content is placed in the scrollable area if provided without a slot.
  * @slot fixed - Should be used for fixed content that should not scroll.
+ *
+ * @part background - The background of the content.
+ * @part scroll - The scrollable container of the content.
  */
 @Component({
   tag: 'ion-content',
@@ -34,14 +38,14 @@ export class Content implements ComponentInterface {
     event: undefined!,
     startX: 0,
     startY: 0,
-    startTimeStamp: 0,
+    startTime: 0,
     currentX: 0,
     currentY: 0,
     velocityX: 0,
     velocityY: 0,
     deltaX: 0,
     deltaY: 0,
-    timeStamp: 0,
+    currentTime: 0,
     data: undefined,
     isScrolling: true,
   };
@@ -101,19 +105,13 @@ export class Content implements ComponentInterface {
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
 
-  componentWillLoad() {
-    if (this.forceOverscroll === undefined) {
-      const mode = getIonMode(this);
-      this.forceOverscroll = mode === 'ios' && isPlatform(window, 'mobile');
-    }
-  }
-
-  componentDidLoad() {
-    this.resize();
-  }
-
-  componentDidUnload() {
+  disconnectedCallback() {
     this.onScrollEnd();
+  }
+
+  @Listen('appload', { target: 'window' })
+  onAppLoad() {
+    this.resize();
   }
 
   @Listen('click', { capture: true })
@@ -124,12 +122,20 @@ export class Content implements ComponentInterface {
     }
   }
 
+  private shouldForceOverscroll() {
+    const { forceOverscroll } = this;
+    const mode = getIonMode(this);
+    return forceOverscroll === undefined
+      ? mode === 'ios' && isPlatform('ios')
+      : forceOverscroll;
+  }
+
   private resize() {
     if (this.fullscreen) {
-      readTask(this.readDimensions.bind(this));
+      readTask(() => this.readDimensions());
     } else if (this.cTop !== 0 || this.cBottom !== 0) {
       this.cTop = this.cBottom = 0;
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
@@ -141,7 +147,7 @@ export class Content implements ComponentInterface {
     if (dirty) {
       this.cTop = top;
       this.cBottom = bottom;
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
@@ -298,8 +304,10 @@ export class Content implements ComponentInterface {
   }
 
   render() {
+    const { scrollX, scrollY } = this;
     const mode = getIonMode(this);
-    const { scrollX, scrollY, forceOverscroll } = this;
+    const forceOverscroll = this.shouldForceOverscroll();
+    const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', true));
 
     this.resize();
 
@@ -309,32 +317,42 @@ export class Content implements ComponentInterface {
           ...createColorClasses(this.color),
           [mode]: true,
           'content-sizing': hostContext('ion-popover', this.el),
-          'overscroll': !!this.forceOverscroll,
+          'overscroll': forceOverscroll,
         }}
         style={{
           '--offset-top': `${this.cTop}px`,
           '--offset-bottom': `${this.cBottom}px`,
         }}
       >
-        <div
+        <div id="background-content" part="background"></div>
+        <main
           class={{
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
-            'overscroll': (scrollX || scrollY) && !!forceOverscroll
+            'overscroll': (scrollX || scrollY) && forceOverscroll
           }}
           ref={el => this.scrollEl = el!}
-          onScroll={ev => this.onScroll(ev)}
+          onScroll={(this.scrollEvents) ? ev => this.onScroll(ev) : undefined}
+          part="scroll"
         >
           <slot></slot>
-        </div>
+        </main>
+
+        {transitionShadow ? (
+          <div class="transition-effect">
+            <div class="transition-cover"></div>
+            <div class="transition-shadow"></div>
+          </div>
+        ) : null}
+
         <slot name="fixed"></slot>
       </Host>
     );
   }
 }
 
-function getParentElement(el: any) {
+const getParentElement = (el: any) => {
   if (el.parentElement) {
     // normal element with a parent element
     return el.parentElement;
@@ -344,9 +362,9 @@ function getParentElement(el: any) {
     return el.parentNode.host;
   }
   return null;
-}
+};
 
-function getPageElement(el: HTMLElement) {
+const getPageElement = (el: HTMLElement) => {
   const tabs = el.closest('ion-tabs');
   if (tabs) {
     return tabs;
@@ -356,38 +374,39 @@ function getPageElement(el: HTMLElement) {
     return page;
   }
   return getParentElement(el);
-}
+};
 
 // ******** DOM READ ****************
-function updateScrollDetail(
+const updateScrollDetail = (
   detail: ScrollDetail,
   el: Element,
   timestamp: number,
   shouldStart: boolean
-) {
+) => {
   const prevX = detail.currentX;
   const prevY = detail.currentY;
-  const prevT = detail.timeStamp;
+  const prevT = detail.currentTime;
   const currentX = el.scrollLeft;
   const currentY = el.scrollTop;
+  const timeDelta = timestamp - prevT;
+
   if (shouldStart) {
     // remember the start positions
-    detail.startTimeStamp = timestamp;
+    detail.startTime = timestamp;
     detail.startX = currentX;
     detail.startY = currentY;
     detail.velocityX = detail.velocityY = 0;
   }
-  detail.timeStamp = timestamp;
+  detail.currentTime = timestamp;
   detail.currentX = detail.scrollLeft = currentX;
   detail.currentY = detail.scrollTop = currentY;
   detail.deltaX = currentX - detail.startX;
   detail.deltaY = currentY - detail.startY;
 
-  const timeDelta = timestamp - prevT;
   if (timeDelta > 0 && timeDelta < 100) {
     const velocityX = (currentX - prevX) / timeDelta;
     const velocityY = (currentY - prevY) / timeDelta;
     detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
     detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
   }
-}
+};

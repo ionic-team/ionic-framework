@@ -98,44 +98,107 @@ export class HomePage {
 ### React
 
 ```tsx
-import React from 'react';
-import { IonCheckbox, IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCheckbox, IonList, IonItem, IonLabel, IonItemDivider } from '@ionic/react';
 
-const form = [
+const checkboxList = [
   { val: 'Pepperoni', isChecked: true },
   { val: 'Sausage', isChecked: false },
   { val: 'Mushroom', isChecked: false }
 ];
 
-export const CheckboxExample: React.FunctionComponent = () => (
-  <IonContent>
-    {/*-- Default Checkbox --*/}
-    <IonCheckbox />
+export const CheckboxExamples: React.FC = () => {
 
-    {/*-- Disabled Checkbox --*/}
-    <IonCheckbox disabled={true} />
+  const [checked, setChecked] = useState(false);
 
-    {/*-- Checked Checkbox --*/}
-    <IonCheckbox checked={true} />
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>CheckboxExamples</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonList>
+          <IonItemDivider>Default Checkbox</IonItemDivider>
+          <IonItem>
+            <IonLabel>Checked: {JSON.stringify(checked)}</IonLabel>
+            <IonCheckbox checked={checked} onIonChange={e => setChecked(e.detail.checked)} />
+          </IonItem>
 
-    {/*-- Checkbox Colors --*/}
-    <IonCheckbox color="primary" />
-    <IonCheckbox color="secondary" />
-    <IonCheckbox color="danger" />
-    <IonCheckbox color="light" />
-    <IonCheckbox color="dark" />
+          <IonItemDivider>Disabled Checkbox</IonItemDivider>
+          <IonItem><IonCheckbox slot="end" disabled={true} /></IonItem>
 
-    {/*-- Checkboxes in a List --*/}
-    <IonList>
-      { form.map(({val, isChecked}) => (
-        <IonItem key={val}>
-          <IonLabel>{val}</IonLabel>
-          <IonCheckbox slot="end" value={val} checked={isChecked} />
-        </IonItem>
-      )) }
-    </IonList>
-  </IonContent>
-);
+          <IonItemDivider>Checkbox Colors</IonItemDivider>
+          <IonItem>
+            <IonCheckbox slot="end" color="primary" />
+            <IonCheckbox slot="end" color="secondary" />
+            <IonCheckbox slot="end" color="danger" />
+            <IonCheckbox slot="end" color="light" />
+            <IonCheckbox slot="end" color="dark" />
+          </IonItem>
+          <IonItemDivider>Checkboxes in a List</IonItemDivider>
+
+          {checkboxList.map(({ val, isChecked }, i) => (
+            <IonItem key={i}>
+              <IonLabel>{val}</IonLabel>
+              <IonCheckbox slot="end" value={val} checked={isChecked} />
+            </IonItem>
+          ))}
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'checkbox-example',
+  styleUrl: 'checkbox-example.css'
+})
+export class CheckboxExample {
+  private form = [
+    { val: 'Pepperoni', isChecked: true },
+    { val: 'Sausage', isChecked: false },
+    { val: 'Mushroom', isChecked: false }
+  ];
+
+  render() {
+    return [
+      // Default Checkbox
+      <ion-checkbox></ion-checkbox>,
+
+      // Disabled Checkbox
+      <ion-checkbox disabled={true}></ion-checkbox>,
+
+      // Checked Checkbox
+      <ion-checkbox checked={true}></ion-checkbox>,
+
+      // Checkbox Colors
+      <ion-checkbox color="primary"></ion-checkbox>,
+      <ion-checkbox color="secondary"></ion-checkbox>,
+      <ion-checkbox color="danger"></ion-checkbox>,
+      <ion-checkbox color="light"></ion-checkbox>,
+      <ion-checkbox color="dark"></ion-checkbox>,
+
+      // Checkboxes in a List
+      <ion-list>
+        {this.form.map(entry =>
+          <ion-item>
+            <ion-label>{entry.val}</ion-label>
+            <ion-checkbox slot="end" checked={entry.isChecked}></ion-checkbox>
+          </ion-item>
+        )}
+      </ion-list>
+    ];
+  }
+}
 ```
 
 
@@ -163,7 +226,11 @@ export const CheckboxExample: React.FunctionComponent = () => (
   <ion-list>
     <ion-item v-for="entry in form">
       <ion-label>{{entry.val}}</ion-label>
-      <ion-checkbox slot="end" v-on:input="entry.checked = $event.target.value" v-bind:value="entry.isChecked"></ion-checkbox>
+      <ion-checkbox
+        slot="end"
+        @input="entry.checked = $event.target.value"
+        :value="entry.isChecked">
+      </ion-checkbox>
     </ion-item>
   </ion-list>
 </template>
@@ -206,6 +273,14 @@ export const CheckboxExample: React.FunctionComponent = () => (
 | `ionFocus`  | Emitted when the toggle has focus.             | `CustomEvent<void>`                      |
 
 
+## Shadow Parts
+
+| Part          | Description                                       |
+| ------------- | ------------------------------------------------- |
+| `"container"` | The container for the checkbox mark.              |
+| `"mark"`      | The checkmark used to indicate the checked state. |
+
+
 ## CSS Custom Properties
 
 | Name                     | Description                                    |
@@ -218,6 +293,7 @@ export const CheckboxExample: React.FunctionComponent = () => (
 | `--border-style`         | Border style of the checkbox icon              |
 | `--border-width`         | Border width of the checkbox icon              |
 | `--checkmark-color`      | Color of the checkbox checkmark when checked   |
+| `--checkmark-width`      | Stroke width of the checkbox checkmark         |
 | `--size`                 | Size of the checkbox icon                      |
 | `--transition`           | Transition of the checkbox icon                |
 

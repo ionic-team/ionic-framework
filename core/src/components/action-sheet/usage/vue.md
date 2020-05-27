@@ -12,6 +12,7 @@ export default {
       return this.$ionic.actionSheetController
         .create({
           header: 'Albums',
+          cssClass: 'my-custom-class',
           buttons: [
             {
               text: 'Delete',
@@ -30,7 +31,7 @@ export default {
             },
             {
               text: 'Play (open modal)',
-              icon: 'arrow-dropright-circle',
+              icon: 'caret-forward-circle',
               handler: () => {
                 console.log('Play clicked')
               },

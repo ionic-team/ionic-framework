@@ -25,7 +25,7 @@ $searchbar-ios-cancel-button-color:               ion-color(primary, base) !defa
 $searchbar-ios-cancel-button-background-color:    transparent !default;
 
 /// @prop - Size of the searchbar input search icon
-$searchbar-ios-input-search-icon-size:            16px !default;
+$searchbar-ios-input-search-icon-size:            22px !default;
 
 /// @prop - Color of the searchbar input search icon
 $searchbar-ios-input-search-icon-color:           $text-color-step-400 !default;
@@ -46,7 +46,7 @@ $searchbar-ios-input-text-color:                  $text-color !default;
 $searchbar-ios-input-background-color-alpha:      .07 !default;
 
 /// @prop - Background color of the searchbar input
-$searchbar-ios-input-background-color:            rgba(var(--ion-text-color-rgb, $text-color-rgb), $searchbar-ios-input-background-color-alpha) !default;
+$searchbar-ios-input-background-color:            rgba($text-color-rgb, $searchbar-ios-input-background-color-alpha) !default;
 
 /// @prop - Transition of the searchbar input
 $searchbar-ios-input-transition:                  all 300ms ease !default;

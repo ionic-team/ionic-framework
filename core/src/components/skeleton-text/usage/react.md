@@ -11,9 +11,11 @@ import {
   IonThumbnail,
   IonList
 } from '@ionic/react';
+import { call } from 'ionicons/icons';
+
 import './SkeletonTextExample.css';
 
-export const SkeletonTextExample: React.FunctionComponent = () => {
+export const SkeletonTextExample: React.FC = () => {
   const [data, setData] = useState();
 
   setTimeout(() => {
@@ -35,7 +37,11 @@ export const SkeletonTextExample: React.FunctionComponent = () => {
           </div>
 
           <IonList>
-            <IonListHeader>Data</IonListHeader>
+            <IonListHeader>
+              <IonLabel>
+                Data
+              </IonLabel>
+            </IonListHeader>
             <IonItem>
               <IonAvatar slot="start">
                 <img src="./avatar.svg" />
@@ -57,7 +63,7 @@ export const SkeletonTextExample: React.FunctionComponent = () => {
               </IonLabel>
             </IonItem>
             <IonItem>
-              <IonIcon name="call" slot="start" />
+              <IonIcon icon={call} slot="start" />
               <IonLabel>
                 <h3>{data.heading}</h3>
                 <p>{data.para1}</p>
@@ -78,7 +84,9 @@ export const SkeletonTextExample: React.FunctionComponent = () => {
 
           <IonList>
             <IonListHeader>
-              <IonSkeletonText animated style={{ width: '20%' }} />
+              <IonLabel>
+                <IonSkeletonText animated style={{ width: '20%' }} />
+              </IonLabel>
             </IonListHeader>
             <IonItem>
               <IonAvatar slot="start">
