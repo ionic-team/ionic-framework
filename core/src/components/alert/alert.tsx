@@ -425,10 +425,10 @@ export class Alert implements ComponentInterface, OverlayInterface {
               <div class="alert-input-wrapper">
                 <input
                   placeholder={i.placeholder}
-                  value={i.value}
                   type={i.type}
                   min={i.min}
                   max={i.max}
+                  value={i.value}
                   id={i.id}
                   disabled={i.disabled}
                   tabIndex={0}
