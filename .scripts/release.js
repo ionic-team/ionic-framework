@@ -2,7 +2,7 @@
  * Deploy script adopted from https://github.com/sindresorhus/np
  * MIT License (c) Sindre Sorhus (sindresorhus.com)
  */
-const tc = require('turbocolor');
+const { cyan, dim, green, red, yellow } = require('colorette');
 const execa = require('execa');
 const Listr = require('listr');
 const path = require('path');
@@ -48,14 +48,14 @@ async function main() {
     // Dry run doesn't publish to npm or git
     if (dryRun) {
       console.log(`
-        \n${tc.yellow('Did not publish. Remove the "--dry-run" flag to publish:')}\n${tc.green(version)} to ${tc.cyan(npmTag)}\n
+        \n${yellow('Did not publish. Remove the "--dry-run" flag to publish:')}\n${green(version)} to ${cyan(npmTag)}\n
       `);
     } else {
       console.log(`\nionic ${version} published to ${npmTag}!! 🎉\n`);
     }
 
   } catch (err) {
-    console.log('\n', tc.red(err), '\n');
+    console.log('\n', red(err), '\n');
     process.exit(1);
   }
 }
@@ -75,7 +75,7 @@ function publishGit(tasks, version, changelog, npmTag) {
 
   tasks.push(
     {
-      title: `Tag latest commit ${tc.dim(`(${gitTag})`)}`,
+      title: `Tag latest commit ${dim(`(${gitTag})`)}`,
       task: () => execa('git', ['tag', `${gitTag}`], { cwd: common.rootDir })
     },
     {
