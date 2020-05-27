@@ -9,9 +9,9 @@ export interface RouteManagerContextState {
   clearOutlet: (outletId: string) => void;
   createViewItem: (outletId: string, reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement) => ViewItem;
   findLeavingViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string) => ViewItem | undefined;
-  findViewItemByPathname: (pathname: string, outletId?: string) => ViewItem | undefined;
+  // findViewItemByPathname: (pathname: string, outletId?: string) => ViewItem | undefined;
   findViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string) => ViewItem | undefined;
-  getChildrenToRender: (outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo) => React.ReactNode[];
+  getChildrenToRender: (outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo, reRender: () => void) => React.ReactNode[];
   getViewItemForTransition: (pathname: string) => ViewItem | undefined;
   unMountViewItem: (viewItem: ViewItem) => void;
 }
@@ -21,7 +21,7 @@ export const RouteManagerContext = /*@__PURE__*/React.createContext<RouteManager
   clearOutlet: () => undefined,
   createViewItem: () => undefined as any,
   findLeavingViewItemByRouteInfo: () => undefined,
-  findViewItemByPathname: () => undefined,
+  // findViewItemByPathname: () => undefined,
   findViewItemByRouteInfo: () => undefined,
   getChildrenToRender: () => undefined as any,
   getViewItemForTransition: () => undefined,

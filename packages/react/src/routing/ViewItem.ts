@@ -7,7 +7,8 @@ export interface ViewItem<T = any> {
   ionRoute?: boolean;
   mount: boolean;
   routeData?: T;
-  destroy?: () => void;
+  destroy?: () => void; // Todo: needed?
   transitionHtml?: string;
   outletId: string;
+  disableIonPageManagement?: boolean;
 }

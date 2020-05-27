@@ -7,3 +7,4 @@ export * from './ViewItem';
 export * from './StackContext';
 export * from './ViewStacks';
 export * from './IonRoute';
+export * from './IonRedirect';

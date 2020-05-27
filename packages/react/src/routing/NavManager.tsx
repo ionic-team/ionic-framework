@@ -15,6 +15,8 @@ interface NavManagerProps {
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   onChangeTab: (tab: string, path: string, routeOptions?: any) => void;
   onResetTab: (tab: string, path: string, routeOptions?: any) => void;
+  ionRedirect: any;
+  ionRoute: any;
   stackManager: any;
 }
 
@@ -26,6 +28,8 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
       goBack: this.goBack.bind(this),
       hasIonicRouter: () => true,
       navigate: this.navigate.bind(this),
+      getIonRedirect: this.getIonRedirect.bind(this),
+      getIonRoute: this.getIonRoute.bind(this),
       getStackManager: this.getStackManager.bind(this),
       getPageManager: this.getPageManager.bind(this),
       routeInfo: this.props.routeInfo,
@@ -54,6 +58,14 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
 
   getPageManager() {
     return PageManager;
+  }
+
+  getIonRedirect() {
+    return this.props.ionRedirect;
+  }
+
+  getIonRoute() {
+    return this.props.ionRoute;
   }
 
   getStackManager() {

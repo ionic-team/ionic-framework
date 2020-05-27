@@ -2,9 +2,12 @@ import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
 
-interface IonRouteProps {
-  path: string;
+export interface IonRouteProps {
+  path?: string;
   exact?: boolean;
+  show?: boolean;
+  render: (props?: any) => JSX.Element;
+  disableIonPageManagement?: boolean;
 }
 
 interface IonRouteState {
@@ -16,11 +19,16 @@ export class IonRoute extends React.PureComponent<IonRouteProps, IonRouteState> 
   context!: React.ContextType<typeof NavContext>;
 
   render() {
-    const { path } = this.props;
+
+    const IonRouteInner = this.context.getIonRoute();
+
+    if (!this.context.hasIonicRouter() || !IonRoute) {
+      console.error('You either do not have an Ionic Router package, or your router does not support using <IonRoute>');
+      return null;
+    }
+
     return (
-      this.context.routeInfo && matchIonRoute(path, this.context.routeInfo.pathname) ?
-        this.props.children :
-        null
+      <IonRouteInner {...this.props} />
     );
   }
 
@@ -28,12 +36,4 @@ export class IonRoute extends React.PureComponent<IonRouteProps, IonRouteState> 
     return NavContext;
   }
 
-}
-
-export function matchIonRoute(path: string, currentPath: string, exact?: boolean) {
-  if (exact) {
-    return path.toLowerCase() === currentPath.toLowerCase();
-  } else {
-    return currentPath.startsWith(path);
-  }
 }

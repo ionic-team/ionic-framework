@@ -14,6 +14,7 @@ import { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
+import { IonRouteInner } from './IonRouteInner';
 import { ReactRouterViewStack } from './ReactRouterViewStack';
 import StackManager from './StackManager';
 
@@ -42,7 +43,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     getViewItemForTransition: this.viewStack.getViewItemForTransition,
     getChildrenToRender: this.viewStack.getChildrenToRender,
     createViewItem: this.viewStack.createViewItem,
-    findViewItemByPathname: this.viewStack.findViewItemByPathname,
+    // findViewItemByPathname: this.viewStack.findViewItemByPathname,
     findViewItemByRouteInfo: this.viewStack.findViewItemByRouteInfo,
     findLeavingViewItemByRouteInfo: this.viewStack.findLeavingViewItemByRouteInfo,
     addViewItem: this.viewStack.add,
@@ -77,16 +78,18 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
 
   handleChangeTab(tab: string, path: string, routeOptions?: any) {
     const routeInfo = this.locationHistory.getCurrentRouteInfoForTab(tab);
+    const [pathname, search] = path.split('?');
     if (routeInfo) {
       this.incomingRouteParams = { ...routeInfo, routeAction: 'push', routeDirection: 'none' };
-      if (routeInfo.pathname === path) {
+      if (routeInfo.pathname === pathname) {
         this.props.history.push(routeInfo.pathname + (routeInfo.search || ''));
       } else {
-        this.incomingRouteParams.pathname = path;
-        this.props.history.push(path);
+        this.incomingRouteParams.pathname = pathname;
+        this.incomingRouteParams.search = search ? '?' + search : undefined;
+        this.props.history.push(pathname + (search ? '?' + search : ''));
       }
     } else {
-      this.handleNavigate(path, 'push', 'none', routeOptions, tab);
+      this.handleNavigate(pathname, 'push', 'none', routeOptions, tab);
     }
   }
 
@@ -237,6 +240,8 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
         value={this.routeMangerContextState}
       >
         <NavManager
+          ionRoute={IonRouteInner}
+          ionRedirect={{}}
           stackManager={StackManager}
           routeInfo={this.state.routeInfo!}
           onNavigateBack={this.handleNavigateBack}

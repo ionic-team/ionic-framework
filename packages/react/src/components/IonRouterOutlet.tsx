@@ -18,7 +18,6 @@ interface InternalProps extends Props {
 }
 
 interface InternalState {
-  // ionPageContainer: boolean;
 }
 
 class IonRouterOutletContainer extends React.Component<InternalProps, InternalState> {
@@ -26,17 +25,7 @@ class IonRouterOutletContainer extends React.Component<InternalProps, InternalSt
 
   constructor(props: InternalProps) {
     super(props);
-    // this.state = {
-    //   ionPageContainer: !!this.props.ionPageContainer
-    // };
-    // this.registerIonPage = this.registerIonPage.bind(this);
   }
-
-  // registerIonPage() {
-  //   this.setState({
-  //     ionPageContainer: true
-  //   });
-  // }
 
   render() {
 

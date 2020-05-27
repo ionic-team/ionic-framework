@@ -1,4 +1,4 @@
-import { RouteInfo, ViewItem, ViewLifeCycleManager, ViewStacks, generateId } from '@ionic/react';
+import { IonRoute, RouteInfo, ViewItem, ViewLifeCycleManager, ViewStacks, generateId } from '@ionic/react';
 import React from 'react';
 import { matchPath } from 'react-router';
 
@@ -9,7 +9,7 @@ export class ReactRouterViewStack extends ViewStacks {
     this.createViewItem = this.createViewItem.bind(this);
     this.findViewItemByRouteInfo = this.findViewItemByRouteInfo.bind(this);
     this.findLeavingViewItemByRouteInfo = this.findLeavingViewItemByRouteInfo.bind(this);
-    this.findViewItemByPathname = this.findViewItemByPathname.bind(this);
+    // this.findViewItemByPathname = this.findViewItemByPathname.bind(this);
     this.getChildrenToRender = this.getChildrenToRender.bind(this);
     this.getViewItemForTransition = this.getViewItemForTransition.bind(this);
   }
@@ -32,6 +32,11 @@ export class ReactRouterViewStack extends ViewStacks {
 
     const match = matchPath(routeInfo.pathname, matchProps);
 
+    if (reactElement.type === IonRoute) {
+      viewItem.ionRoute = true;
+      viewItem.disableIonPageManagement = reactElement.props.disableIonPageManagement;
+    }
+
     viewItem.routeData = {
       match,
       childProps: reactElement.props
@@ -40,7 +45,7 @@ export class ReactRouterViewStack extends ViewStacks {
     return viewItem;
   }
 
-  getChildrenToRender(outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo) {
+  getChildrenToRender(outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo, reRender: () => void) {
     const viewItems = this.getViewItemsForOutlet(outletId);
 
     // Sync latest routes with viewItems
@@ -56,7 +61,7 @@ export class ReactRouterViewStack extends ViewStacks {
     const children = viewItems.map(viewItem => {
 
       let clonedChild;
-      if (viewItem.ionRoute) {
+      if (viewItem.ionRoute && !viewItem.disableIonPageManagement) {
         clonedChild = (
           <ViewLifeCycleManager key={`view-${viewItem.id}`} mount={viewItem.mount} removeView={() => this.remove(viewItem)}>
             {React.cloneElement(viewItem.reactElement, {
@@ -69,10 +74,18 @@ export class ReactRouterViewStack extends ViewStacks {
         clonedChild = (
           <ViewLifeCycleManager key={`view-${viewItem.id}`} mount={viewItem.mount} removeView={() => this.remove(viewItem)}>
             {React.cloneElement(viewItem.reactElement, {
-              computedMatch: match
+              computedMatch: viewItem.routeData.match
             })}
           </ViewLifeCycleManager>
         );
+
+        if (!match && viewItem.routeData.match) {
+          setTimeout(() => {
+            viewItem.routeData.match = undefined;
+            viewItem.mount = false;
+            reRender();
+          }, 250);
+        }
       }
 
       return clonedChild;
@@ -94,10 +107,10 @@ export class ReactRouterViewStack extends ViewStacks {
   }
 
   // TODO: NEEDED?
-  findViewItemByPathname(pathname: string, outletId?: string) {
-    const { viewItem } = this.findViewItemByPath(pathname, outletId);
-    return viewItem;
-  }
+  // findViewItemByPathname(pathname: string, outletId?: string) {
+  //   const { viewItem } = this.findViewItemByPath(pathname, outletId);
+  //   return viewItem;
+  // }
 
   getViewItemForTransition(pathname: string) {
     const { viewItem } = this.findViewItemByPath(pathname, undefined, true, true);
