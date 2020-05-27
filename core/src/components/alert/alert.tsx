@@ -406,7 +406,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
             return (
               <div class="alert-input-wrapper">
                 <textarea
-                  {...i.attributes as AlertTextareaAttributes}
                   placeholder={i.placeholder}
                   value={i.value}
                   onInput={e => i.value = (e.target as any).value}
@@ -414,6 +413,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   disabled={i.disabled}
                   tabIndex={0}
                   class={inputClass(i)}
+                  {...i.attributes as AlertTextareaAttributes}
                 />
               </div>
             );
@@ -421,7 +421,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
             return (
               <div class="alert-input-wrapper">
                 <input
-                  {...i.attributes as AlertInputAttributes}
                   placeholder={i.placeholder}
                   value={i.value}
                   type={i.type}
@@ -432,6 +431,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   disabled={i.disabled}
                   tabIndex={0}
                   class={inputClass(i)}
+                  {...i.attributes as AlertInputAttributes}
                 />
               </div>
             );
