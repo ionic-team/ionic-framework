@@ -224,7 +224,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the alert did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionAlertDidDismiss');
   }
 
@@ -232,7 +232,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the alert will dismiss.
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionAlertWillDismiss');
   }
 
