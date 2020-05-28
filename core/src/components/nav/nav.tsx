@@ -372,7 +372,8 @@ export class Nav implements NavOutlet {
   setRouteId(
     id: string,
     params: ComponentProps | undefined,
-    direction: RouterDirection
+    direction: RouterDirection,
+    animation?: AnimationBuilder
   ): Promise<RouteWrite> {
     const active = this.getActiveSync();
     if (matches(active, id, params)) {
@@ -410,15 +411,20 @@ export class Nav implements NavOutlet {
       if (viewController) {
         finish = this.popTo(viewController, {
           ...commonOpts,
-          direction: 'back'
+          direction: 'back',
+          animationBuilder: animation
         });
       } else if (direction === 'forward') {
-        finish = this.push(id, params, commonOpts);
+        finish = this.push(id, params, {
+          ...commonOpts,
+          animationBuilder: animation
+        });
       } else if (direction === 'back') {
         finish = this.setRoot(id, params, {
           ...commonOpts,
           direction: 'back',
-          animated: true
+          animated: true,
+          animationBuilder: animation
         });
       }
     }
