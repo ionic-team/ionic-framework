@@ -10,7 +10,10 @@
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
-
+  <script type="module">
+    import { modalController } from '../../../../dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
 <body>
   <ion-app>
 
@@ -49,7 +52,7 @@
         // listen for close event
         const button = this.querySelector('ion-button');
         button.addEventListener('click', async () => {
-          await document.querySelector('ion-modal-controller').dismiss();
+          await modalController.dismiss();
         });
       }
     }

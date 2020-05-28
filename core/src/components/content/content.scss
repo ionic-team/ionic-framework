@@ -59,13 +59,20 @@
   --background: #{$background-color-step-50};
 }
 
+#background-content {
+  @include position(calc(var(--offset-top) * -1), 0px,calc(var(--offset-bottom) * -1), 0px);
+
+  position: absolute;
+
+  background: var(--background);
+}
+
 .inner-scroll {
   @include position(calc(var(--offset-top) * -1), 0px,calc(var(--offset-bottom) * -1), 0px);
   @include padding(calc(var(--padding-top) + var(--offset-top)), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)), var(--padding-start));
 
   position: absolute;
 
-  background: var(--background);
   color: var(--color);
 
   box-sizing: border-box;
@@ -77,17 +84,18 @@
 .scroll-x {
   -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
-  overscroll-behavior: contain;
 }
 
 .scroll-y {
   touch-action: pan-y;
   overflow-y: var(--overflow);
+  overscroll-behavior-y: contain;
 }
 
 .scroll-x {
   touch-action: pan-x;
   overflow-x: var(--overflow);
+  overscroll-behavior-x: contain;
 }
 
 .scroll-x.scroll-y {
@@ -120,6 +128,8 @@
 }
 
 .transition-effect {
+
+  display: none;
   position: absolute;
 
   /* stylelint-disable property-blacklist */
@@ -127,7 +137,7 @@
   /* stylelint-enable property-blacklist */
 
   width: 100%;
-  height: 100%;
+  height: 100vh;
 
   opacity: 0;
 

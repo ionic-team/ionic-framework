@@ -4,7 +4,7 @@ The option buttons for an `ion-item-sliding`. These buttons can be placed either
 You can combine the `ionSwipe` event plus the `expandable` directive to create a full swipe action for the item.
 
 
-### Side Description
+## Side Description
 
 | Side    | Position                                                        | Swipe Direction                                                   |
 |---------|-----------------------------------------------------------------|-------------------------------------------------------------------|

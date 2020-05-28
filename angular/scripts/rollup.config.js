@@ -16,7 +16,7 @@ export default {
   },
   plugins: [
     resolve({
-      module: true,
+       mainFields: ['module']
     })
   ]
 };

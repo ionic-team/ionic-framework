@@ -50,7 +50,7 @@
   background: current-color(base, .12);
 }
 
-:host(.ion-color.activated) {
+:host(.ion-color.ion-activated) {
   background: current-color(base, .16);
 }
 
@@ -78,7 +78,7 @@
   background: rgba(0, 0, 0, .04);
 }
 
-:host(.chip-outline.activated:not(.ion-color)) {
+:host(.chip-outline.ion-activated:not(.ion-color)) {
   background: rgba(0, 0, 0, .08);
 }
 
@@ -135,7 +135,7 @@
 // Chip: Activated
 // ---------------------------------------------
 
-:host(.activated) {
+:host(.ion-activated) {
   --background: #{rgba($text-color-rgb, .20)};
 }
 

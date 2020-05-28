@@ -28,13 +28,16 @@ export const chainToPath = (chain: RouteChain): string[] | null => {
   return path;
 };
 
-export const writePath = (history: History, root: string, useHash: boolean, path: string[], direction: RouterDirection, state: number) => {
+export const writePath = (history: History, root: string, useHash: boolean, path: string[], direction: RouterDirection, state: number, queryString?: string) => {
   let url = generatePath([
     ...parsePath(root),
     ...path
   ]);
   if (useHash) {
     url = '#' + url;
+  }
+  if (queryString !== undefined) {
+    url = url + '?' + queryString;
   }
   if (direction === ROUTER_INTENT_FORWARD) {
     history.pushState(state, '', url);
@@ -79,7 +82,8 @@ export const parsePath = (path: string | undefined | null): string[] => {
   if (path == null) {
     return [''];
   }
-  const segments = path.split('/')
+  const removeQueryString = path.split('?')[0];
+  const segments = removeQueryString.split('/')
     .map(s => s.trim())
     .filter(s => s.length > 0);
 

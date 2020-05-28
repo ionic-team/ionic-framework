@@ -2,15 +2,40 @@
 
 An overlay that can be used to indicate activity while blocking user interaction. The loading indicator appears on top of the app's content, and can be dismissed by the app to resume user interaction with the app. It includes an optional backdrop, which can be disabled by setting `showBackdrop: false` upon creation.
 
-
-### Creating
-
-Loading indicators can be created using a [Loading Controller](../loading-controller). They can be customized by passing loading options in the loading controller's `create()` method. The spinner name should be passed in the `spinner` property. If a value is not passed to `spinner` the loading indicator will use the spinner specified by the platform.
-
-
-### Dismissing
+## Dismissing
 
 The loading indicator can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the loading options. To dismiss the loading indicator after creation, call the `dismiss()` method on the loading instance. The `onDidDismiss` function can be called to perform an action after the loading indicator is dismissed.
+
+## Customization
+
+Loading uses scoped encapsulation, which means it will automatically scope its CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector.
+
+We recommend passing a custom class to `cssClass` in the `create` method and using that to add custom styles to the host and inner elements. This property can also accept multiple classes separated by spaces. View the [Usage](#usage) section for an example of how to pass a class using `cssClass`.
+
+```css
+/* DOES NOT WORK - not specific enough */
+ion-loading {
+  color: green;
+}
+
+/* Works - pass "my-custom-class" in cssClass to increase specificity */
+.my-custom-class {
+  color: green;
+}
+```
+
+Any of the defined [CSS Custom Properties](#css-custom-properties) can be used to style the Loading without needing to target individual elements:
+
+```css
+.my-custom-class {
+  --background: #222;
+  --spinner-color: #fff;
+
+  color: #fff;
+}
+```
+
+> If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
 
 <!-- Auto Generated Below -->
@@ -34,28 +59,38 @@ export class LoadingExample {
 
   async presentLoading() {
     const loading = await this.loadingController.create({
-      message: 'Hellooo',
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
       duration: 2000
     });
     await loading.present();
-    
+
     const { role, data } = await loading.onDidDismiss();
-    
     console.log('Loading dismissed!');
   }
 
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
       spinner: null,
       duration: 5000,
-      message: 'Please wait...',
+      message: 'Click the backdrop to dismiss early...',
       translucent: true,
-      cssClass: 'custom-class custom-loading'
+      cssClass: 'custom-class custom-loading',
+      backdropDismiss: true
     });
-    return await loading.present();
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed with role:', role);
   }
 }
 ```
+
+
+### Style Placement
+
+In Angular, the CSS of a specific page is scoped only to elements of that page. Even though the Loading can be presented from within a page, the `ion-loading` element is appended outside of the current page. This means that any custom styles need to go in a global stylesheet file. In an Ionic Angular starter this can be the `src/global.scss` file or you can register a new global style file by [adding to the `styles` build option in `angular.json`](https://angular.io/guide/workspace-config#style-script-config).
 
 
 ### Javascript
@@ -63,27 +98,34 @@ export class LoadingExample {
 ```javascript
 async function presentLoading() {
   const loading = document.createElement('ion-loading');
-  loading.message: 'Hellooo',
-  loading.duration: 2000;
+
+  loading.cssClass = 'my-custom-class';
+  loading.message = 'Please wait...';
+  loading.duration = 2000;
 
   document.body.appendChild(loading);
   await loading.present();
 
   const { role, data } = await loading.onDidDismiss();
-
   console.log('Loading dismissed!');
 }
 
-function presentLoadingWithOptions() {
+async function presentLoadingWithOptions() {
   const loading = document.createElement('ion-loading');
+
+  loading.cssClass = 'my-custom-class';
   loading.spinner = null;
   loading.duration = 5000;
-  loading.message = 'Please wait...';
+  loading.message = 'Click the backdrop to dismiss early...';
   loading.translucent = true;
   loading.cssClass = 'custom-class custom-loading';
+  loading.backdropDismiss = true;
 
   document.body.appendChild(loading);
-  return loading.present();
+  await loading.present();
+
+  const { role, data } = await loading.onDidDismiss();
+  console.log('Loading dismissed with role:', role);
 }
 ```
 
@@ -105,14 +147,67 @@ export const LoadingExample: React.FC = () => {
     <IonContent>
       <IonButton onClick={() => setShowLoading(true)}>Show Loading</IonButton>
       <IonLoading
+        cssClass='my-custom-class'
         isOpen={showLoading}
         onDidDismiss={() => setShowLoading(false)}
-        message={'Loading...'}
+        message={'Please wait...'}
         duration={5000}
       />
     </IonContent>
   );
 };
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+import { loadingController } from '@ionic/core';
+
+@Component({
+  tag: 'loading-example',
+  styleUrl: 'loading-example.css'
+})
+export class LoadingExample {
+  async presentLoading() {
+    const loading = await loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!', role, data);
+  }
+
+  async presentLoadingWithOptions() {
+    const loading = await loadingController.create({
+      cssClass: 'my-custom-class',
+      spinner: null,
+      duration: 5000,
+      message: 'Click the backdrop to dismiss early...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading',
+      backdropDismiss: true
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed with role:', role, data);
+  }
+
+  render() {
+    return [
+      <ion-content>
+        <ion-button onClick={() => this.presentLoading()}>Present Loading</ion-button>
+        <ion-button onClick={() => this.presentLoadingWithOptions()}>Present Loading: Options</ion-button>
+      </ion-content>
+    ];
+  }
+}
 ```
 
 
@@ -136,30 +231,33 @@ export default {
     presentLoading() {
       return this.$ionic.loadingController
         .create({
-          message: 'Loading',
+          cssClass: 'my-custom-class',
+          message: 'Please wait...',
           duration: this.timeout,
         })
-        .then(l => {
+        .then(loading => {
           setTimeout(function() {
-            l.dismiss()
+            loading.dismiss()
           }, this.timeout)
-          return l.present()
+          return loading.present()
         })
     },
     presentLoadingWithOptions() {
       return this.$ionic.loadingController
         .create({
+          cssClass: 'my-custom-class',
           spinner: null,
           duration: this.timeout,
-          message: 'Please wait...',
+          message: 'Click the backdrop to dismiss early...',
           translucent: true,
           cssClass: 'custom-class custom-loading',
+          backdropDismiss: true
         })
-        .then(l => {
+        .then(loading=> {
           setTimeout(function() {
-            l.dismiss()
+            loading.dismiss()
           }, this.timeout)
-          return l.present()
+          return loading.present()
         })
     },
   },
@@ -180,7 +278,7 @@ export default {
 | `enterAnimation`  | --                 | Animation to use when the loading indicator is presented.                                                                                                                                                                        | `((baseEl: any, opts?: any) => Animation) \| undefined`                                                         | `undefined` |
 | `keyboardClose`   | `keyboard-close`   | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                           | `boolean`                                                                                                       | `true`      |
 | `leaveAnimation`  | --                 | Animation to use when the loading indicator is dismissed.                                                                                                                                                                        | `((baseEl: any, opts?: any) => Animation) \| undefined`                                                         | `undefined` |
-| `message`         | `message`          | Optional text content to display in the loading indicator.                                                                                                                                                                       | `string \| undefined`                                                                                           | `undefined` |
+| `message`         | `message`          | Optional text content to display in the loading indicator.                                                                                                                                                                       | `IonicSafeString \| string \| undefined`                                                                        | `undefined` |
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                | `"ios" \| "md"`                                                                                                 | `undefined` |
 | `showBackdrop`    | `show-backdrop`    | If `true`, a backdrop will be displayed behind the loading indicator.                                                                                                                                                            | `boolean`                                                                                                       | `true`      |
 | `spinner`         | `spinner`          | The name of the spinner to display.                                                                                                                                                                                              | `"bubbles" \| "circles" \| "circular" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| null \| undefined` | `undefined` |

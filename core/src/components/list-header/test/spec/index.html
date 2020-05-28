@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>List Header - Spec</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>List Header - Spec</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content">
+      <ion-list>
+        <ion-list-header lines="inset">
+          <ion-label>Recent</ion-label>
+          <ion-button>Clear</ion-button>
+        </ion-list-header>
+        <ion-item lines="none">
+          <ion-label color="primary">
+            <h1>I got you babe</h1>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-list-header lines="inset">
+          <ion-label>Trending</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label color="primary">
+            <h1>harry styles</h1>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">
+            <h1>christmas</h1>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label color="primary">
+            <h1>falling</h1>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-list-header>
+          <ion-label>New This Week</ion-label>
+          <ion-button>See All</ion-button>
+        </ion-list-header>
+        <ion-list-header lines="full">
+          <ion-label>New This Week</ion-label>
+          <ion-button>See All</ion-button>
+        </ion-list-header>
+        <ion-list-header lines="inset">
+          <ion-label>New This Week</ion-label>
+          <ion-button>See All</ion-button>
+        </ion-list-header>
+      </ion-list>
+    </ion-content>
+  </ion-app>
+
+  <style>
+
+  </style>
+
+</body>
+
+</html>

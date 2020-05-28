@@ -100,7 +100,7 @@ export class ReorderGroupExample {
 }
 ```
 
-#### Updating Data
+### Updating Data
 
 ```javascript
 import { Component, ViewChild } from '@angular/core';

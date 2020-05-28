@@ -14,12 +14,12 @@
 
 <body onLoad="load()">
   <ion-app>
-    <ion-split-pane>
-      <ion-menu>
+    <ion-split-pane content-id="main">
+      <ion-menu content-id="main">
 
       </ion-menu>
 
-      <div class="ion-page" main>
+      <div class="ion-page" id="main">
         <ion-header>
           <ion-toolbar>
             <ion-title>Components: Modes</ion-title>
@@ -105,6 +105,15 @@
           <ion-toast></ion-toast>
           <ion-toggle></ion-toggle>
           <ion-toolbar></ion-toolbar>
+          <p mode="ios">
+            <ion-label></ion-label>
+          </p>
+          <p mode="md">
+            <ion-label></ion-label>
+          </p>
+          <p mode="foo">
+            <ion-label></ion-label>
+          </p>
         </ion-content>
       </div>
     </ion-split-pane>

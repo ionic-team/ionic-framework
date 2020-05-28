@@ -1,6 +1,7 @@
 ```javascript
 function presentAlert() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Alert';
   alert.subHeader = 'Subtitle';
   alert.message = 'This is an alert message.';
@@ -12,6 +13,7 @@ function presentAlert() {
 
 function presentAlertMultipleButtons() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Alert';
   alert.subHeader = 'Subtitle';
   alert.message = 'This is an alert message.';
@@ -23,6 +25,7 @@ function presentAlertMultipleButtons() {
 
 function presentAlertConfirm() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Confirm!';
   alert.message = 'Message <strong>text</strong>!!!';
   alert.buttons = [
@@ -47,6 +50,7 @@ function presentAlertConfirm() {
 
 function presentAlertPrompt() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Prompt!';
   alert.inputs = [
     {
@@ -57,6 +61,13 @@ function presentAlertPrompt() {
       id: 'name2-id',
       value: 'hello',
       placeholder: 'Placeholder 2'
+    },
+    // multiline input.
+    {
+      name: 'paragraph',
+      id: 'paragraph',
+      type: 'textarea',
+      placeholder: 'Placeholder 3'
     },
     {
       name: 'name3',
@@ -109,6 +120,7 @@ function presentAlertPrompt() {
 
 function presentAlertRadio() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Radio';
   alert.inputs = [
     {
@@ -164,6 +176,7 @@ function presentAlertRadio() {
 
 function presentAlertCheckbox() {
   const alert = document.createElement('ion-alert');
+  alert.cssClass = 'my-custom-class';
   alert.header = 'Checkbox';
   alert.inputs = [
     {

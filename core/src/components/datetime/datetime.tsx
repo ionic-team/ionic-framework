@@ -6,10 +6,13 @@ import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { pickerController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 
-import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getDateValue, getTimezoneOffset, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part text - The value of the datetime.
+ * @part placeholder - The placeholder of the datetime.
  */
 @Component({
   tag: 'ion-datetime',
@@ -80,6 +83,14 @@ export class Datetime implements ComponentInterface {
    * more info. Defaults to `MMM D, YYYY`.
    */
   @Prop() displayFormat = 'MMM D, YYYY';
+
+  /**
+   * The timezone to use for display purposes only. See
+   * [Date.prototype.toLocaleString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString)
+   * for a list of supported timezones. If no value is provided, the
+   * component will default to displaying times in the user's local timezone.
+   */
+  @Prop() displayTimezone?: string;
 
   /**
    * The format of the date and time picker columns the user selects.
@@ -287,11 +298,17 @@ export class Datetime implements ComponentInterface {
   }
 
   private updateDatetimeValue(value: any) {
-    updateDate(this.datetimeValue, value);
+    updateDate(this.datetimeValue, value, this.displayTimezone);
   }
 
   private generatePickerOptions(): PickerOptions {
     const mode = getIonMode(this);
+    this.locale = {
+      monthNames: convertToArrayOfStrings(this.monthNames, 'monthNames'),
+      monthShortNames: convertToArrayOfStrings(this.monthShortNames, 'monthShortNames'),
+      dayNames: convertToArrayOfStrings(this.dayNames, 'dayNames'),
+      dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
+    };
     const pickerOptions: PickerOptions = {
       mode,
       ...this.pickerOptions,
@@ -326,7 +343,11 @@ export class Datetime implements ComponentInterface {
              * there can be 1 hr difference when dealing w/ DST
              */
             const date = new Date(convertDataToISO(this.datetimeValue));
-            this.datetimeValue.tzOffset = date.getTimezoneOffset() * -1;
+
+            // If a custom display timezone is provided, use that tzOffset value instead
+            this.datetimeValue.tzOffset = (this.displayTimezone !== undefined && this.displayTimezone.length > 0)
+              ? ((getTimezoneOffset(date, this.displayTimezone)) / 1000 / 60) * -1
+              : date.getTimezoneOffset() * -1;
 
             this.value = convertDataToISO(this.datetimeValue);
           }
@@ -489,11 +510,11 @@ export class Datetime implements ComponentInterface {
     min.day = min.day || 1;
     max.day = max.day || 31;
     min.hour = min.hour || 0;
-    max.hour = max.hour || 23;
+    max.hour = max.hour === undefined ? 23 : max.hour;
     min.minute = min.minute || 0;
-    max.minute = max.minute || 59;
+    max.minute = max.minute === undefined ? 59 : max.minute;
     min.second = min.second || 0;
-    max.second = max.second || 59;
+    max.second = max.second === undefined ? 59 : max.second;
 
     // Ensure min/max constraints
     if (min.year > max.year) {
@@ -597,6 +618,10 @@ export class Datetime implements ComponentInterface {
       ? (placeholder != null ? placeholder : '')
       : text;
 
+    const datetimeTextPart = text === undefined
+      ? (placeholder != null ? 'placeholder' : undefined)
+      : 'text';
+
     if (label) {
       label.id = labelId;
     }
@@ -619,7 +644,7 @@ export class Datetime implements ComponentInterface {
           'in-item': hostContext('ion-item', el)
         }}
       >
-        <div class="datetime-text">{datetimeText}</div>
+        <div class="datetime-text" part={datetimeTextPart}>{datetimeText}</div>
         <button
           type="button"
           onFocus={this.onFocus}

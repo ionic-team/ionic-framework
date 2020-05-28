@@ -32,6 +32,8 @@
   align-items: center;
   justify-content: center;
 
+  outline: none;
+
   font-family: $font-family-base;
 
   contain: strict;
@@ -196,4 +198,9 @@
 .alert-checkbox-icon,
 .alert-checkbox-inner {
   box-sizing: border-box;
+}
+
+textarea.alert-input {
+  min-height: $alert-input-min-height;
+  resize: none;
 }

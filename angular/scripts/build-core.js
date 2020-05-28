@@ -15,7 +15,7 @@ function copyIonicons() {
 
 function copyCSS() {
   const src = path.join(__dirname, '..', '..', 'core', 'css');
-  const dst = path.join(__dirname, '..', 'css');
+  const dst = path.join(__dirname, '..','dist', 'css');
 
   fs.removeSync(dst);
   fs.copySync(src, dst);

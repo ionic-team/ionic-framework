@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
+import { AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -21,10 +21,6 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 })
 export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
-
-  mode = getIonMode(this);
-
-  animation?: Animation;
 
   @Element() el!: HTMLIonPickerElement;
 
@@ -179,7 +175,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
     if (button) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
-      const rtn = await safeCall(button.handler);
+      const rtn = await safeCall(button.handler, this.getSelected());
       if (rtn === false) {
         // if the return value of the handler is false then do not dismiss
         return false;
@@ -220,6 +216,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return (
       <Host
         aria-modal="true"
+        tabindex="-1"
         class={{
           [mode]: true,
 

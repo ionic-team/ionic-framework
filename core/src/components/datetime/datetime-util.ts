@@ -242,12 +242,13 @@ export const parseDate = (val: string | undefined | null): DatetimeData | undefi
 };
 
 /**
- * Converts a valid UTC datetime string
- * To the user's local timezone
+ * Converts a valid UTC datetime string to JS Date time object.
+ * By default uses the users local timezone, but an optional
+ * timezone can be provided.
  * Note: This is not meant for time strings
  * such as "01:47"
  */
-export const getLocalDateTime = (dateString: any = ''): Date => {
+export const getDateTime = (dateString: any = '', timeZone: any = ''): Date => {
   /**
    * If user passed in undefined
    * or null, convert it to the
@@ -261,19 +262,20 @@ export const getLocalDateTime = (dateString: any = ''): Date => {
 
   /**
    * Ensures that YYYY-MM-DD, YYYY-MM,
-   * YYYY-DD, etc does not get affected
+   * YYYY-DD, YYYY, etc does not get affected
    * by timezones and stays on the day/month
    * that the user provided
    */
   if (
     dateString.length === 10 ||
-    dateString.length === 7
+    dateString.length === 7 ||
+    dateString.length === 4
   ) {
     dateString += ' ';
   }
 
   const date = (typeof dateString === 'string' && dateString.length > 0) ? new Date(dateString) : new Date();
-  return new Date(
+  const localDateTime = new Date(
     Date.UTC(
       date.getFullYear(),
       date.getMonth(),
@@ -284,14 +286,26 @@ export const getLocalDateTime = (dateString: any = ''): Date => {
       date.getMilliseconds()
     )
   );
+
+  if (timeZone && timeZone.length > 0) {
+    return new Date(date.getTime() - getTimezoneOffset(localDateTime, timeZone));
+  }
+
+  return localDateTime;
 };
 
-export const updateDate = (existingData: DatetimeData, newData: any): boolean => {
+export const getTimezoneOffset = (localDate: Date, timeZone: string) => {
+  const utcDateTime = new Date(localDate.toLocaleString('en-US', { timeZone: 'utc' }));
+  const tzDateTime = new Date(localDate.toLocaleString('en-US', { timeZone }));
+  return utcDateTime.getTime() - tzDateTime.getTime();
+};
+
+export const updateDate = (existingData: DatetimeData, newData: any, displayTimezone?: string): boolean => {
 
   if (!newData || typeof newData === 'string') {
-    const localDateTime = getLocalDateTime(newData);
-    if (!Number.isNaN(localDateTime.getTime())) {
-      newData = localDateTime.toISOString();
+    const dateTime = getDateTime(newData, displayTimezone);
+    if (!Number.isNaN(dateTime.getTime())) {
+      newData = dateTime.toISOString();
     }
   }
 

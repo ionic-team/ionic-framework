@@ -15,7 +15,7 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 <ion-content>
 
   <!-- Fixed Floating Action Button that does not scroll with the content -->
-  <ion-fab>
+  <ion-fab slot="fixed">
     <ion-fab-button>Button</ion-fab-button>
   </ion-fab>
 
@@ -45,7 +45,7 @@ import { IonContent, IonFab, IonFabButton } from '@ionic/react';
 export const FabButtonExample: React.FC = () => (
   <IonContent>
     {/*-- Fixed Floating Action Button that does not scroll with the content --*/}
-    <IonFab>
+    <IonFab slot="fixed">
       <IonFabButton>Button</IonFabButton>
     </IonFab>
 
@@ -66,6 +66,45 @@ export const FabButtonExample: React.FC = () => (
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'fab-button-example',
+  styleUrl: 'fab-button-example.css'
+})
+export class FabButtonExample {
+  render() {
+    return [
+      <ion-content>
+
+        {/* Fixed Floating Action Button that does not scroll with the content */}
+        <ion-fab slot="fixed">
+          <ion-fab-button>Button</ion-fab-button>
+        </ion-fab>
+
+        {/* Default Floating Action Button that scrolls with the content */}
+        <ion-fab-button>Default</ion-fab-button>
+
+        {/* Mini */}
+        <ion-fab-button size="small">Mini</ion-fab-button>
+
+        {/* Colors */}
+        <ion-fab-button color="primary">Primary</ion-fab-button>
+        <ion-fab-button color="secondary">Secondary</ion-fab-button>
+        <ion-fab-button color="danger">Danger</ion-fab-button>
+        <ion-fab-button color="light">Light</ion-fab-button>
+        <ion-fab-button color="dark">Dark</ion-fab-button>
+
+      </ion-content>
+    ];
+  }
+}
+```
+
+
 ### Vue
 
 ```html
@@ -73,7 +112,7 @@ export const FabButtonExample: React.FC = () => (
   <ion-content>
 
     <!-- Fixed Floating Action Button that does not scroll with the content -->
-    <ion-fab>
+    <ion-fab slot="fixed">
       <ion-fab-button>Button</ion-fab-button>
     </ion-fab>
 
@@ -125,27 +164,30 @@ export const FabButtonExample: React.FC = () => (
 
 ## CSS Custom Properties
 
-| Name                     | Description                                                                                               |
-| ------------------------ | --------------------------------------------------------------------------------------------------------- |
-| `--background`           | Background of the button                                                                                  |
-| `--background-activated` | Background of the button when pressed                                                                     |
-| `--background-focused`   | Background of the button when focused with the tab key                                                    |
-| `--background-hover`     | Background of the button on hover                                                                         |
-| `--border-color`         | Border color of the button                                                                                |
-| `--border-radius`        | Border radius of the button                                                                               |
-| `--border-style`         | Border style of the button                                                                                |
-| `--border-width`         | Border width of the button                                                                                |
-| `--box-shadow`           | Box shadow of the button                                                                                  |
-| `--color`                | Text color of the button                                                                                  |
-| `--color-activated`      | Text color of the button when pressed                                                                     |
-| `--color-focused`        | Text color of the button when focused with the tab key                                                    |
-| `--color-hover`          | Text color of the button on hover                                                                         |
-| `--padding-bottom`       | Bottom padding of the button                                                                              |
-| `--padding-end`          | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button |
-| `--padding-start`        | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button |
-| `--padding-top`          | Top padding of the button                                                                                 |
-| `--ripple-color`         | Color of the button ripple effect                                                                         |
-| `--transition`           | Transition of the button                                                                                  |
+| Name                             | Description                                                                                               |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `--background`                   | Background of the button                                                                                  |
+| `--background-activated`         | Background of the button when pressed. Note: setting this will interfere with the Material Design ripple. |
+| `--background-activated-opacity` | Opacity of the button background when pressed                                                             |
+| `--background-focused`           | Background of the button when focused with the tab key                                                    |
+| `--background-focused-opacity`   | Opacity of the button background when focused with the tab key                                            |
+| `--background-hover`             | Background of the button on hover                                                                         |
+| `--background-hover-opacity`     | Opacity of the button background on hover                                                                 |
+| `--border-color`                 | Border color of the button                                                                                |
+| `--border-radius`                | Border radius of the button                                                                               |
+| `--border-style`                 | Border style of the button                                                                                |
+| `--border-width`                 | Border width of the button                                                                                |
+| `--box-shadow`                   | Box shadow of the button                                                                                  |
+| `--color`                        | Text color of the button                                                                                  |
+| `--color-activated`              | Text color of the button when pressed                                                                     |
+| `--color-focused`                | Text color of the button when focused with the tab key                                                    |
+| `--color-hover`                  | Text color of the button on hover                                                                         |
+| `--padding-bottom`               | Bottom padding of the button                                                                              |
+| `--padding-end`                  | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button |
+| `--padding-start`                | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button |
+| `--padding-top`                  | Top padding of the button                                                                                 |
+| `--ripple-color`                 | Color of the button ripple effect                                                                         |
+| `--transition`                   | Transition of the button                                                                                  |
 
 
 ## Dependencies
