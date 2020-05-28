@@ -8,14 +8,14 @@ import { NavController } from '../../providers/nav-controller';
 
 @Directive({
   selector: '[routerLink]',
-  inputs: ['routerDirection', 'animation']
+  inputs: ['routerDirection', 'routerAnimation']
 })
 export class RouterLinkDelegate {
 
   private subscription?: Subscription;
 
   routerDirection: RouterDirection = 'forward';
-  animation?: AnimationBuilder;
+  routerAnimation?: AnimationBuilder;
 
   constructor(
     private locationStrategy: LocationStrategy,
@@ -51,7 +51,7 @@ export class RouterLinkDelegate {
    */
   @HostListener('click', ['$event'])
   onClick(ev: UIEvent) {
-    this.navCtrl.setDirection(this.routerDirection, undefined, undefined, this.animation);
+    this.navCtrl.setDirection(this.routerDirection, undefined, undefined, this.routerAnimation);
     ev.preventDefault();
   }
 }
