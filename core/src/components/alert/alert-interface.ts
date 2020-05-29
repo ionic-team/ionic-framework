@@ -1,4 +1,4 @@
-import { IonicSafeString } from '../../';
+import { IonicSafeString } from '../../utils/sanitization';
 import { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
 
 export interface AlertOptions {

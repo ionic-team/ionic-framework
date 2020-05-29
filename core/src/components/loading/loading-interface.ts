@@ -1,4 +1,4 @@
-import { IonicSafeString } from '../../';
+import { IonicSafeString } from '../../utils/sanitization';
 import { AnimationBuilder, Mode, SpinnerTypes } from '../../interface';
 
 export interface LoadingOptions {

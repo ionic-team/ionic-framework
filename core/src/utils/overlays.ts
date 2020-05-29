@@ -1,6 +1,7 @@
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
-import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import type { IonicConfig } from '../utils/config'
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 

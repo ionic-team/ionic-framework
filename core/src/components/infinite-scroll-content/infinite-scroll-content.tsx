@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
-import { IonicSafeString } from '../../';
+import { IonicSafeString } from '../../utils/sanitization';
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { SpinnerTypes } from '../../interface';

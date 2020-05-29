@@ -1,4 +1,4 @@
-import { IonicSafeString } from '../../';
+import { IonicSafeString } from '../../utils/sanitization';
 import { AnimationBuilder, Color, Mode } from '../../interface';
 
 export interface ToastOptions {
