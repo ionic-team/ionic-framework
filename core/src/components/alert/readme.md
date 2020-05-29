@@ -1410,7 +1410,7 @@ Type: `Promise<boolean>`
 
 
 
-### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+### `onDidDismiss() => Promise<OverlayEventDetail>`
 
 Returns a promise that resolves when the alert did dismiss.
 
@@ -1420,7 +1420,7 @@ Type: `Promise<OverlayEventDetail<any>>`
 
 
 
-### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+### `onWillDismiss() => Promise<OverlayEventDetail>`
 
 Returns a promise that resolves when the alert will dismiss.
 

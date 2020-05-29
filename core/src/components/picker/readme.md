@@ -56,7 +56,7 @@ Type: `Promise<PickerColumn | undefined>`
 
 
 
-### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+### `onDidDismiss() => Promise<OverlayEventDetail>`
 
 Returns a promise that resolves when the picker did dismiss.
 
@@ -66,7 +66,7 @@ Type: `Promise<OverlayEventDetail<any>>`
 
 
 
-### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+### `onWillDismiss() => Promise<OverlayEventDetail>`
 
 Returns a promise that resolves when the picker will dismiss.
 

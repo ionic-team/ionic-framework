@@ -257,7 +257,7 @@ Type: `Promise<boolean>`
 
 
 
-### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+### `onDidDismiss() => Promise<OverlayEventDetail>`
 
 Returns a promise that resolves when the toast did dismiss.
 
@@ -267,7 +267,7 @@ Type: `Promise<OverlayEventDetail<any>>`
 
 
 
-### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+### `onWillDismiss() => Promise<OverlayEventDetail>`
 
 Returns a promise that resolves when the toast will dismiss.
 

@@ -5,9 +5,9 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController, } from "./interface";
-import { IonicSafeString, } from "./utils/sanitization";
-import { SelectCompareFn, } from "./components/select/select-interface";
+import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
+import { IonicSafeString } from "./utils/sanitization";
+import { SelectCompareFn } from "./components/select/select-interface";
 export namespace Components {
     interface IonActionSheet {
         /**
@@ -55,11 +55,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the action sheet did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": () => Promise<OverlayEventDetail>;
         /**
           * Returns a promise that resolves when the action sheet will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": () => Promise<OverlayEventDetail>;
         "overlayIndex": number;
         /**
           * Present the action sheet overlay after it has been created.
@@ -128,11 +128,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the alert did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": () => Promise<OverlayEventDetail>;
         /**
           * Returns a promise that resolves when the alert will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": () => Promise<OverlayEventDetail>;
         "overlayIndex": number;
         /**
           * Present the alert overlay after it has been created.
@@ -179,7 +179,7 @@ export namespace Components {
         /**
           * The type of the button.
          */
-        "type": "submit" | "reset" | "button";
+        "type": 'submit' | 'reset' | 'button';
     }
     interface IonBackdrop {
         /**
@@ -225,11 +225,11 @@ export namespace Components {
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
          */
-        "expand"?: "full" | "block";
+        "expand"?: 'full' | 'block';
         /**
           * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
          */
-        "fill"?: "clear" | "outline" | "solid" | "default";
+        "fill"?: 'clear' | 'outline' | 'solid' | 'default';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -249,11 +249,11 @@ export namespace Components {
         /**
           * The button shape.
          */
-        "shape"?: "round";
+        "shape"?: 'round';
         /**
           * The button size.
          */
-        "size"?: "small" | "default" | "large";
+        "size"?: 'small' | 'default' | 'large';
         /**
           * If `true`, activates a button with a heavier font weight.
          */
@@ -265,7 +265,7 @@ export namespace Components {
         /**
           * The type of the button.
          */
-        "type": "submit" | "reset" | "button";
+        "type": 'submit' | 'reset' | 'button';
     }
     interface IonButtons {
         /**
@@ -313,7 +313,7 @@ export namespace Components {
         /**
           * The type of the button. Only used when an `onclick` or `button` property is present.
          */
-        "type": "submit" | "reset" | "button";
+        "type": 'submit' | 'reset' | 'button';
     }
     interface IonCardContent {
         /**
@@ -536,7 +536,7 @@ export namespace Components {
           * @param y The point to scroll to on the vertical axis.
           * @param duration The amount of time to take scrolling to that point. Defaults to `0`.
          */
-        "scrollToPoint": (x: number | null | undefined, y: number | null | undefined, duration?: number) => Promise<void>;
+        "scrollToPoint": (x: number | undefined | null, y: number | undefined | null, duration?: number) => Promise<void>;
         /**
           * Scroll to the top of the component.
           * @param duration The amount of time to take scrolling to the top. Defaults to `0`.
@@ -665,11 +665,11 @@ export namespace Components {
         /**
           * Where to align the fab horizontally in the viewport.
          */
-        "horizontal"?: "start" | "end" | "center";
+        "horizontal"?: 'start' | 'end' | 'center';
         /**
           * Where to align the fab vertically in the viewport.
          */
-        "vertical"?: "top" | "bottom" | "center";
+        "vertical"?: 'top' | 'bottom' | 'center';
     }
     interface IonFabButton {
         /**
@@ -711,7 +711,7 @@ export namespace Components {
         /**
           * The size of the button. Set this to `small` in order to have a mini fab.
          */
-        "size"?: "small";
+        "size"?: 'small';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -723,7 +723,7 @@ export namespace Components {
         /**
           * The type of the button.
          */
-        "type": "submit" | "reset" | "button";
+        "type": 'submit' | 'reset' | 'button';
     }
     interface IonFabList {
         /**
@@ -733,7 +733,7 @@ export namespace Components {
         /**
           * The side the fab list will show on relative to the main fab button.
          */
-        "side": "start" | "end" | "top" | "bottom";
+        "side": 'start' | 'end' | 'top' | 'bottom';
     }
     interface IonFooter {
         /**
@@ -755,7 +755,7 @@ export namespace Components {
         /**
           * Describes the scroll effect that will be applied to the header `condense` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
-        "collapse"?: "condense";
+        "collapse"?: 'condense';
         /**
           * The mode determines which platform styles to use.
          */
@@ -787,7 +787,7 @@ export namespace Components {
         /**
           * The position of the infinite scroll element. The value can be either `top` or `bottom`.
          */
-        "position": "top" | "bottom";
+        "position": 'top' | 'bottom';
         /**
           * The threshold distance from the bottom of the content to call the `infinite` output event when scrolled. The threshold value can be either a percent, or in pixels. For example, use the value of `10%` for the `infinite` output event to get called when the user has scrolled 10% from the bottom of the page. Use the value `100px` when the scroll is within 100 pixels from the bottom of the page.
          */
@@ -819,7 +819,7 @@ export namespace Components {
         /**
           * Whether auto correction should be enabled when the user is entering/editing the text value.
          */
-        "autocorrect": "on" | "off";
+        "autocorrect": 'on' | 'off';
         /**
           * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
          */
@@ -847,7 +847,7 @@ export namespace Components {
         /**
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
-        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
           * Returns the native `<input>` element used under the hood.
          */
@@ -855,7 +855,7 @@ export namespace Components {
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
-        "inputmode"?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
+        "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -957,7 +957,7 @@ export namespace Components {
         /**
           * How the bottom border should be displayed on the item.
          */
-        "lines"?: "full" | "inset" | "none";
+        "lines"?: 'full' | 'inset' | 'none';
         /**
           * The mode determines which platform styles to use.
          */
@@ -977,7 +977,7 @@ export namespace Components {
         /**
           * The type of the button. Only used when an `onclick` or `button` property is present.
          */
-        "type": "submit" | "reset" | "button";
+        "type": 'submit' | 'reset' | 'button';
     }
     interface IonItemDivider {
         /**
@@ -1031,7 +1031,7 @@ export namespace Components {
         /**
           * The type of the button.
          */
-        "type": "submit" | "reset" | "button";
+        "type": 'submit' | 'reset' | 'button';
     }
     interface IonItemOptions {
         "fireSwipeEvent": () => Promise<void>;
@@ -1065,7 +1065,7 @@ export namespace Components {
           * Open the sliding item.
           * @param side The side of the options to open. If a side is not provided, it will open the first set of options it finds within the item.
          */
-        "open": (side: "start" | "end" | undefined) => Promise<void>;
+        "open": (side: Side | undefined) => Promise<void>;
     }
     interface IonLabel {
         /**
@@ -1079,7 +1079,7 @@ export namespace Components {
         /**
           * The position determines where and how the label behaves inside an item.
          */
-        "position"?: "fixed" | "stacked" | "floating";
+        "position"?: 'fixed' | 'stacked' | 'floating';
     }
     interface IonList {
         /**
@@ -1093,7 +1093,7 @@ export namespace Components {
         /**
           * How the bottom border should be displayed on all items.
          */
-        "lines"?: "full" | "inset" | "none";
+        "lines"?: 'full' | 'inset' | 'none';
         /**
           * The mode determines which platform styles to use.
          */
@@ -1107,7 +1107,7 @@ export namespace Components {
         /**
           * How the bottom border should be displayed on the list header.
          */
-        "lines"?: "full" | "inset" | "none";
+        "lines"?: 'full' | 'inset' | 'none';
         /**
           * The mode determines which platform styles to use.
          */
@@ -1159,11 +1159,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the loading did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": () => Promise<OverlayEventDetail>;
         /**
           * Returns a promise that resolves when the loading will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": () => Promise<OverlayEventDetail>;
         "overlayIndex": number;
         /**
           * Present the loading overlay after it has been created.
@@ -1256,7 +1256,7 @@ export namespace Components {
         /**
           * The type of the button.
          */
-        "type": "submit" | "reset" | "button";
+        "type": 'submit' | 'reset' | 'button';
     }
     interface IonMenuToggle {
         /**
@@ -1315,11 +1315,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the modal did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": () => Promise<OverlayEventDetail>;
         /**
           * Returns a promise that resolves when the modal will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": () => Promise<OverlayEventDetail>;
         "overlayIndex": number;
         /**
           * Present the modal overlay after it has been created.
@@ -1443,7 +1443,7 @@ export namespace Components {
           * @param done The transition complete function.
          */
         "setRoot": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-        "setRouteId": (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection) => Promise<RouteWrite>;
+        "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection) => Promise<RouteWrite>;
         /**
           * If the nav component should allow for swipe-to-go-back.
          */
@@ -1528,11 +1528,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the picker did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": () => Promise<OverlayEventDetail>;
         /**
           * Returns a promise that resolves when the picker will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": () => Promise<OverlayEventDetail>;
         "overlayIndex": number;
         /**
           * Present the picker overlay after it has been created.
@@ -1600,11 +1600,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the popover did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": () => Promise<OverlayEventDetail>;
         /**
           * Returns a promise that resolves when the popover will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": () => Promise<OverlayEventDetail>;
         "overlayIndex": number;
         /**
           * Present the popover overlay after it has been created.
@@ -1639,7 +1639,7 @@ export namespace Components {
         /**
           * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
          */
-        "type": "determinate" | "indeterminate";
+        "type": 'determinate' | 'indeterminate';
         /**
           * The value determines how much of the active bar should display when the `type` is `"determinate"`. The value should be between [0, 1].
          */
@@ -1814,7 +1814,7 @@ export namespace Components {
         /**
           * Sets the type of ripple-effect:  - `bounded`: the ripple effect expands from the user's click position - `unbounded`: the ripple effect expands from the center of the button and overflows the container.  NOTE: Surfaces for bounded ripples should have the overflow property set to hidden, while surfaces for unbounded ripples should have it set to visible.
          */
-        "type": "bounded" | "unbounded";
+        "type": 'bounded' | 'unbounded';
     }
     interface IonRoute {
         /**
@@ -1824,9 +1824,7 @@ export namespace Components {
         /**
           * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed to the defined component when rendered.
          */
-        "componentProps"?: {
-            [key: string]: any;
-        };
+        "componentProps"?: {[key: string]: any};
         /**
           * Relative path that needs to match in order for this route to apply.  Accepts paths similar to expressjs so that you can define parameters in the url /foo/:bar where bar would be available in incoming props.
          */
@@ -1902,7 +1900,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode": "ios" | "md";
-        "setRouteId": (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection) => Promise<RouteWrite>;
+        "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection) => Promise<RouteWrite>;
         "swipeHandler"?: SwipeGestureHandler;
     }
     interface IonRow {
@@ -1919,7 +1917,7 @@ export namespace Components {
         /**
           * Set the input's autocorrect property.
          */
-        "autocorrect": "on" | "off";
+        "autocorrect": 'on' | 'off';
         /**
           * Set the cancel button icon. Only applies to `md` mode. Defaults to `"arrow-back-sharp"`.
          */
@@ -1947,7 +1945,7 @@ export namespace Components {
         /**
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
-        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
           * Returns the native `<input>` element used under the hood.
          */
@@ -1955,7 +1953,7 @@ export namespace Components {
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
-        "inputmode"?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
+        "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
           * The mode determines which platform styles to use.
          */
@@ -1975,7 +1973,7 @@ export namespace Components {
         /**
           * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
          */
-        "showCancelButton": "never" | "focus" | "always";
+        "showCancelButton": 'never' | 'focus' | 'always';
         /**
           * If `true`, enable spellcheck on the input.
          */
@@ -1983,7 +1981,7 @@ export namespace Components {
         /**
           * Set the type of the input.
          */
-        "type": "text" | "password" | "email" | "number" | "search" | "tel" | "url";
+        "type": 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url';
         /**
           * the value of the searchbar.
          */
@@ -2027,7 +2025,7 @@ export namespace Components {
         /**
           * The type of the button.
          */
-        "type": "submit" | "reset" | "button";
+        "type": 'submit' | 'reset' | 'button';
         /**
           * The value of the segment button.
          */
@@ -2386,7 +2384,7 @@ export namespace Components {
         /**
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
-        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
           * Returns the native `<textarea>` element used under the hood.
          */
@@ -2394,7 +2392,7 @@ export namespace Components {
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
-        "inputmode"?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
+        "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
@@ -2442,7 +2440,7 @@ export namespace Components {
         /**
           * Indicates how the control wraps text.
          */
-        "wrap"?: "hard" | "soft" | "off";
+        "wrap"?: 'hard' | 'soft' | 'off';
     }
     interface IonThumbnail {
     }
@@ -2454,7 +2452,7 @@ export namespace Components {
         /**
           * The size of the toolbar title.
          */
-        "size"?: "large" | "small";
+        "size"?: 'large' | 'small';
     }
     interface IonToast {
         /**
@@ -2510,16 +2508,16 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the toast did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": () => Promise<OverlayEventDetail>;
         /**
           * Returns a promise that resolves when the toast will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": () => Promise<OverlayEventDetail>;
         "overlayIndex": number;
         /**
           * The position of the toast on the screen.
          */
-        "position": "top" | "bottom" | "middle";
+        "position": 'top' | 'bottom' | 'middle';
         /**
           * Present the toast overlay after it has been created.
          */
@@ -3300,6 +3298,7 @@ declare namespace LocalJSX {
           * Emitted before the alert has presented.
          */
         "onIonActionSheetWillPresent"?: (event: CustomEvent<void>) => void;
+        "overlayIndex": number;
         /**
           * Subtitle for the action sheet.
          */
@@ -3370,6 +3369,7 @@ declare namespace LocalJSX {
           * Emitted before the alert has presented.
          */
         "onIonAlertWillPresent"?: (event: CustomEvent<void>) => void;
+        "overlayIndex": number;
         /**
           * The subtitle in the heading of the alert. Displayed under the title.
          */
@@ -3411,7 +3411,7 @@ declare namespace LocalJSX {
         /**
           * The type of the button.
          */
-        "type"?: "submit" | "reset" | "button";
+        "type"?: 'submit' | 'reset' | 'button';
     }
     interface IonBackdrop {
         /**
@@ -3461,11 +3461,11 @@ declare namespace LocalJSX {
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
          */
-        "expand"?: "full" | "block";
+        "expand"?: 'full' | 'block';
         /**
           * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
          */
-        "fill"?: "clear" | "outline" | "solid" | "default";
+        "fill"?: 'clear' | 'outline' | 'solid' | 'default';
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -3493,11 +3493,11 @@ declare namespace LocalJSX {
         /**
           * The button shape.
          */
-        "shape"?: "round";
+        "shape"?: 'round';
         /**
           * The button size.
          */
-        "size"?: "small" | "default" | "large";
+        "size"?: 'small' | 'default' | 'large';
         /**
           * If `true`, activates a button with a heavier font weight.
          */
@@ -3509,7 +3509,7 @@ declare namespace LocalJSX {
         /**
           * The type of the button.
          */
-        "type"?: "submit" | "reset" | "button";
+        "type"?: 'submit' | 'reset' | 'button';
     }
     interface IonButtons {
         /**
@@ -3557,7 +3557,7 @@ declare namespace LocalJSX {
         /**
           * The type of the button. Only used when an `onclick` or `button` property is present.
          */
-        "type"?: "submit" | "reset" | "button";
+        "type"?: 'submit' | 'reset' | 'button';
     }
     interface IonCardContent {
         /**
@@ -3636,6 +3636,10 @@ declare namespace LocalJSX {
           * Emitted when the toggle has focus.
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
@@ -3877,6 +3881,10 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
         /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
+        /**
           * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
          */
         "pickerFormat"?: string;
@@ -3913,11 +3921,11 @@ declare namespace LocalJSX {
         /**
           * Where to align the fab horizontally in the viewport.
          */
-        "horizontal"?: "start" | "end" | "center";
+        "horizontal"?: 'start' | 'end' | 'center';
         /**
           * Where to align the fab vertically in the viewport.
          */
-        "vertical"?: "top" | "bottom" | "center";
+        "vertical"?: 'top' | 'bottom' | 'center';
     }
     interface IonFabButton {
         /**
@@ -3967,7 +3975,7 @@ declare namespace LocalJSX {
         /**
           * The size of the button. Set this to `small` in order to have a mini fab.
          */
-        "size"?: "small";
+        "size"?: 'small';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -3979,7 +3987,7 @@ declare namespace LocalJSX {
         /**
           * The type of the button.
          */
-        "type"?: "submit" | "reset" | "button";
+        "type"?: 'submit' | 'reset' | 'button';
     }
     interface IonFabList {
         /**
@@ -3989,7 +3997,7 @@ declare namespace LocalJSX {
         /**
           * The side the fab list will show on relative to the main fab button.
          */
-        "side"?: "start" | "end" | "top" | "bottom";
+        "side"?: 'start' | 'end' | 'top' | 'bottom';
     }
     interface IonFooter {
         /**
@@ -4011,7 +4019,7 @@ declare namespace LocalJSX {
         /**
           * Describes the scroll effect that will be applied to the header `condense` only applies in iOS mode.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
-        "collapse"?: "condense";
+        "collapse"?: 'condense';
         /**
           * The mode determines which platform styles to use.
          */
@@ -4055,7 +4063,7 @@ declare namespace LocalJSX {
         /**
           * The position of the infinite scroll element. The value can be either `top` or `bottom`.
          */
-        "position"?: "top" | "bottom";
+        "position"?: 'top' | 'bottom';
         /**
           * The threshold distance from the bottom of the content to call the `infinite` output event when scrolled. The threshold value can be either a percent, or in pixels. For example, use the value of `10%` for the `infinite` output event to get called when the user has scrolled 10% from the bottom of the page. Use the value `100px` when the scroll is within 100 pixels from the bottom of the page.
          */
@@ -4087,7 +4095,7 @@ declare namespace LocalJSX {
         /**
           * Whether auto correction should be enabled when the user is entering/editing the text value.
          */
-        "autocorrect"?: "on" | "off";
+        "autocorrect"?: 'on' | 'off';
         /**
           * This Boolean attribute lets you specify that a form control should have input focus when the page loads.
          */
@@ -4115,11 +4123,11 @@ declare namespace LocalJSX {
         /**
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
-        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
-        "inputmode"?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
+        "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -4164,6 +4172,10 @@ declare namespace LocalJSX {
           * Emitted when a keyboard input occurred.
          */
         "onIonInput"?: (event: CustomEvent<KeyboardEvent>) => void;
+        /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
           * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, `"date"`, or `"password"`, otherwise it is ignored. When the type attribute is `"date"`, `pattern` will only be used in browsers that do not support the `"date"` input type natively. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date for more information.
          */
@@ -4233,7 +4245,7 @@ declare namespace LocalJSX {
         /**
           * How the bottom border should be displayed on the item.
          */
-        "lines"?: "full" | "inset" | "none";
+        "lines"?: 'full' | 'inset' | 'none';
         /**
           * The mode determines which platform styles to use.
          */
@@ -4253,7 +4265,7 @@ declare namespace LocalJSX {
         /**
           * The type of the button. Only used when an `onclick` or `button` property is present.
          */
-        "type"?: "submit" | "reset" | "button";
+        "type"?: 'submit' | 'reset' | 'button';
     }
     interface IonItemDivider {
         /**
@@ -4307,7 +4319,7 @@ declare namespace LocalJSX {
         /**
           * The type of the button.
          */
-        "type"?: "submit" | "reset" | "button";
+        "type"?: 'submit' | 'reset' | 'button';
     }
     interface IonItemOptions {
         /**
@@ -4339,9 +4351,13 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
+        /**
           * The position determines where and how the label behaves inside an item.
          */
-        "position"?: "fixed" | "stacked" | "floating";
+        "position"?: 'fixed' | 'stacked' | 'floating';
     }
     interface IonList {
         /**
@@ -4351,7 +4367,7 @@ declare namespace LocalJSX {
         /**
           * How the bottom border should be displayed on all items.
          */
-        "lines"?: "full" | "inset" | "none";
+        "lines"?: 'full' | 'inset' | 'none';
         /**
           * The mode determines which platform styles to use.
          */
@@ -4365,7 +4381,7 @@ declare namespace LocalJSX {
         /**
           * How the bottom border should be displayed on the list header.
          */
-        "lines"?: "full" | "inset" | "none";
+        "lines"?: 'full' | 'inset' | 'none';
         /**
           * The mode determines which platform styles to use.
          */
@@ -4424,6 +4440,7 @@ declare namespace LocalJSX {
           * Emitted before the loading has presented.
          */
         "onIonLoadingWillPresent"?: (event: CustomEvent<void>) => void;
+        "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the loading indicator.
          */
@@ -4462,6 +4479,10 @@ declare namespace LocalJSX {
           * Emitted when the menu is open.
          */
         "onIonDidOpen"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the menu state is changed.
+         */
+        "onIonMenuChange"?: (event: CustomEvent<MenuChangeEventDetail>) => void;
         /**
           * Emitted when the menu is about to be closed.
          */
@@ -4503,7 +4524,7 @@ declare namespace LocalJSX {
         /**
           * The type of the button.
          */
-        "type"?: "submit" | "reset" | "button";
+        "type"?: 'submit' | 'reset' | 'button';
     }
     interface IonMenuToggle {
         /**
@@ -4536,6 +4557,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Animation to use when the modal is presented.
          */
@@ -4568,6 +4590,7 @@ declare namespace LocalJSX {
           * Emitted before the modal has presented.
          */
         "onIonModalWillPresent"?: (event: CustomEvent<void>) => void;
+        "overlayIndex": number;
         /**
           * The element that presented the modal. This is used for card presentation effects and for stacking multiple modals on top of each other. Only applies in iOS mode.
          */
@@ -4590,6 +4613,7 @@ declare namespace LocalJSX {
           * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
          */
         "animation"?: AnimationBuilder;
+        "delegate"?: FrameworkDelegate;
         /**
           * Event fired when the nav has changed components
          */
@@ -4598,6 +4622,10 @@ declare namespace LocalJSX {
           * Event fired when the nav will change components
          */
         "onIonNavWillChange"?: (event: CustomEvent<void>) => void;
+        /**
+          * Event fired when Nav will load a component
+         */
+        "onIonNavWillLoad"?: (event: CustomEvent<void>) => void;
         /**
           * Root NavComponent to load
          */
@@ -4692,6 +4720,7 @@ declare namespace LocalJSX {
           * Emitted before the picker has presented.
          */
         "onIonPickerWillPresent"?: (event: CustomEvent<void>) => void;
+        "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the picker.
          */
@@ -4702,6 +4731,10 @@ declare namespace LocalJSX {
           * Picker column data
          */
         "col": PickerColumn;
+        /**
+          * Emitted when the selected value has changed
+         */
+        "onIonPickerColChange"?: (event: CustomEvent<PickerColumn>) => void;
     }
     interface IonPopover {
         /**
@@ -4724,6 +4757,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Animation to use when the popover is presented.
          */
@@ -4760,6 +4794,7 @@ declare namespace LocalJSX {
           * Emitted before the popover has presented.
          */
         "onIonPopoverWillPresent"?: (event: CustomEvent<void>) => void;
+        "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the popover.
          */
@@ -4789,7 +4824,7 @@ declare namespace LocalJSX {
         /**
           * The state of the progress bar, based on if the time the process takes is known or not. Default options are: `"determinate"` (no animation), `"indeterminate"` (animate from left to right).
          */
-        "type"?: "determinate" | "indeterminate";
+        "type"?: 'determinate' | 'indeterminate';
         /**
           * The value determines how much of the active bar should display when the `type` is `"determinate"`. The value should be between [0, 1].
          */
@@ -4820,6 +4855,10 @@ declare namespace LocalJSX {
           * Emitted when the radio button has focus.
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
           * the value of the radio.
          */
@@ -4888,6 +4927,10 @@ declare namespace LocalJSX {
           * Emitted when the range has focus.
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
           * If `true`, a pin with integer value is shown when the knob is pressed.
          */
@@ -4981,7 +5024,7 @@ declare namespace LocalJSX {
         /**
           * Sets the type of ripple-effect:  - `bounded`: the ripple effect expands from the user's click position - `unbounded`: the ripple effect expands from the center of the button and overflows the container.  NOTE: Surfaces for bounded ripples should have the overflow property set to hidden, while surfaces for unbounded ripples should have it set to visible.
          */
-        "type"?: "bounded" | "unbounded";
+        "type"?: 'bounded' | 'unbounded';
     }
     interface IonRoute {
         /**
@@ -4991,9 +5034,7 @@ declare namespace LocalJSX {
         /**
           * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed to the defined component when rendered.
          */
-        "componentProps"?: {
-            [key: string]: any;
-        };
+        "componentProps"?: {[key: string]: any};
         /**
           * Used internally by `ion-router` to know when this route did change.
          */
@@ -5066,10 +5107,15 @@ declare namespace LocalJSX {
           * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
          */
         "animation"?: AnimationBuilder;
+        "delegate"?: FrameworkDelegate;
         /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "onIonNavDidChange"?: (event: CustomEvent<void>) => void;
+        "onIonNavWillChange"?: (event: CustomEvent<void>) => void;
+        "onIonNavWillLoad"?: (event: CustomEvent<void>) => void;
+        "swipeHandler"?: SwipeGestureHandler;
     }
     interface IonRow {
     }
@@ -5085,7 +5131,7 @@ declare namespace LocalJSX {
         /**
           * Set the input's autocorrect property.
          */
-        "autocorrect"?: "on" | "off";
+        "autocorrect"?: 'on' | 'off';
         /**
           * Set the cancel button icon. Only applies to `md` mode. Defaults to `"arrow-back-sharp"`.
          */
@@ -5113,11 +5159,11 @@ declare namespace LocalJSX {
         /**
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
-        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
-        "inputmode"?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
+        "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
           * The mode determines which platform styles to use.
          */
@@ -5147,6 +5193,10 @@ declare namespace LocalJSX {
          */
         "onIonInput"?: (event: CustomEvent<KeyboardEvent>) => void;
         /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
+        /**
           * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
         "placeholder"?: string;
@@ -5157,7 +5207,7 @@ declare namespace LocalJSX {
         /**
           * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
          */
-        "showCancelButton"?: "never" | "focus" | "always";
+        "showCancelButton"?: 'never' | 'focus' | 'always';
         /**
           * If `true`, enable spellcheck on the input.
          */
@@ -5165,7 +5215,7 @@ declare namespace LocalJSX {
         /**
           * Set the type of the input.
          */
-        "type"?: "text" | "password" | "email" | "number" | "search" | "tel" | "url";
+        "type"?: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url';
         /**
           * the value of the searchbar.
          */
@@ -5188,6 +5238,14 @@ declare namespace LocalJSX {
           * Emitted when the value property has changed and any dragging pointer has been released from `ion-segment`.
          */
         "onIonChange"?: (event: CustomEvent<SegmentChangeEventDetail>) => void;
+        /**
+          * Emitted when user has dragged over a new button
+         */
+        "onIonSelect"?: (event: CustomEvent<SegmentChangeEventDetail>) => void;
+        /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
           * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
          */
@@ -5213,7 +5271,7 @@ declare namespace LocalJSX {
         /**
           * The type of the button.
          */
-        "type"?: "submit" | "reset" | "button";
+        "type"?: 'submit' | 'reset' | 'button';
         /**
           * The value of the segment button.
          */
@@ -5272,6 +5330,10 @@ declare namespace LocalJSX {
           * Emitted when the select has focus.
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
           * The text to display when the select is empty.
          */
@@ -5433,19 +5495,19 @@ declare namespace LocalJSX {
         /**
           * Expression to be called when the split-pane visibility has changed
          */
-        "onIonSplitPaneVisible"?: (event: CustomEvent<{
-            visible: boolean;
-        }>) => void;
+        "onIonSplitPaneVisible"?: (event: CustomEvent<{visible: boolean}>) => void;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
          */
         "when"?: string | boolean;
     }
     interface IonTab {
+        "active"?: boolean;
         /**
           * The component to display inside of the tab.
          */
         "component"?: ComponentRef;
+        "delegate"?: FrameworkDelegate;
         /**
           * A tab id must be provided for each `ion-tab`. It's used internally to reference the selected tab or by the router to switch between them.
          */
@@ -5460,6 +5522,7 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "onIonTabBarChanged"?: (event: CustomEvent<TabBarChangedEventDetail>) => void;
         /**
           * The selected tab component
          */
@@ -5491,6 +5554,10 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted when the tab bar is clicked
+         */
+        "onIonTabButtonClick"?: (event: CustomEvent<TabButtonClickEventDetail>) => void;
+        /**
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel"?: string | undefined;
@@ -5509,17 +5576,18 @@ declare namespace LocalJSX {
     }
     interface IonTabs {
         /**
+          * Emitted when the navigation will load a component.
+         */
+        "onIonNavWillLoad"?: (event: CustomEvent<void>) => void;
+        /**
           * Emitted when the navigation has finished transitioning to a new component.
          */
-        "onIonTabsDidChange"?: (event: CustomEvent<{
-            tab: string;
-        }>) => void;
+        "onIonTabsDidChange"?: (event: CustomEvent<{tab: string}>) => void;
         /**
           * Emitted when the navigation is about to transition to a new component.
          */
-        "onIonTabsWillChange"?: (event: CustomEvent<{
-            tab: string;
-        }>) => void;
+        "onIonTabsWillChange"?: (event: CustomEvent<{tab: string}>) => void;
+        "useRouter"?: boolean;
     }
     interface IonText {
         /**
@@ -5567,11 +5635,11 @@ declare namespace LocalJSX {
         /**
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
-        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
-        "inputmode"?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
+        "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
@@ -5605,6 +5673,10 @@ declare namespace LocalJSX {
          */
         "onIonInput"?: (event: CustomEvent<KeyboardEvent>) => void;
         /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
+        /**
           * Instructional text that shows before the input has a value.
          */
         "placeholder"?: string | null;
@@ -5631,7 +5703,7 @@ declare namespace LocalJSX {
         /**
           * Indicates how the control wraps text.
          */
-        "wrap"?: "hard" | "soft" | "off";
+        "wrap"?: 'hard' | 'soft' | 'off';
     }
     interface IonThumbnail {
     }
@@ -5641,9 +5713,13 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
+        /**
           * The size of the toolbar title.
          */
-        "size"?: "large" | "small";
+        "size"?: 'large' | 'small';
     }
     interface IonToast {
         /**
@@ -5706,10 +5782,11 @@ declare namespace LocalJSX {
           * Emitted before the toast has presented.
          */
         "onIonToastWillPresent"?: (event: CustomEvent<void>) => void;
+        "overlayIndex": number;
         /**
           * The position of the toast on the screen.
          */
-        "position"?: "top" | "bottom" | "middle";
+        "position"?: 'top' | 'bottom' | 'middle';
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -5749,6 +5826,10 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
         /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
+        /**
           * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
          */
         "value"?: string | null;
@@ -5776,6 +5857,7 @@ declare namespace LocalJSX {
           * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
          */
         "approxItemHeight"?: number;
+        "domRender"?: DomRenderFn;
         /**
           * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
          */

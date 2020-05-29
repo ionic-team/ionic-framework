@@ -644,7 +644,7 @@ Type: `Promise<boolean>`
 
 
 
-### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+### `onDidDismiss() => Promise<OverlayEventDetail>`
 
 Returns a promise that resolves when the modal did dismiss.
 
@@ -654,7 +654,7 @@ Type: `Promise<OverlayEventDetail<any>>`
 
 
 
-### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+### `onWillDismiss() => Promise<OverlayEventDetail>`
 
 Returns a promise that resolves when the modal will dismiss.
 

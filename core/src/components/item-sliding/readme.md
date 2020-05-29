@@ -860,7 +860,7 @@ Type: `Promise<number>`
 
 
 
-### `open(side: "start" | "end" | undefined) => Promise<void>`
+### `open(side: Side | undefined) => Promise<void>`
 
 Open the sliding item.
 
