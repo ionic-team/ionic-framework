@@ -68,7 +68,10 @@ export const config: Config = {
     },
     {
       type: 'dist-custom-elements-bundle',
-      dir: 'components/dist',
+      dir: 'components',
+      copy: [
+        { src: '../scripts/components-package.json', dest: 'components/package.json' }
+      ]
     },
     {
       type: 'docs-readme',
