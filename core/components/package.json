@@ -1,0 +1,21 @@
+{
+  "name": "@ionic/core/components",
+  "version": "5.1.1",
+  "description": "Ionic Core Custom Element Components",
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "author": "Ionic Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/ionic.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "homepage": "https://ionicframework.com/"
+}
