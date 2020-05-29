@@ -1,4 +1,4 @@
-import type { IonicConfig } from '../utils/config';
+import { IonicConfig } from '../interface';
 
 export class Config {
   private m = new Map<keyof IonicConfig, any>();
