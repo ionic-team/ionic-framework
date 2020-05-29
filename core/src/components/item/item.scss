@@ -316,9 +316,8 @@ button, a {
 // Item Input
 // --------------------------------------------------
 
-:host([vertical-align-top]),
 :host(.item-input) {
-  align-items: flex-start;
+  align-items: center;
 }
 
 .input-wrapper {
@@ -326,6 +325,7 @@ button, a {
 
   flex: 1;
   flex-direction: inherit;
+
   align-items: inherit;
   align-self: stretch;
 
