@@ -44,7 +44,8 @@ export class App implements ComponentInterface {
           'ion-page': true,
           'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding'),
         }}
-      ></Host>
+      >
+      </Host>
     );
   }
 }
