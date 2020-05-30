@@ -536,7 +536,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 const inputClass = (input: AlertInput): CssClassMap => {
   return {
     'alert-input': true,
-    'alert-input-disabled': ((input.attributes && input.attributes.disabled !== undefined) ? input.attributes.disabled : input.disabled) || false,
+    'alert-input-disabled': (input.attributes?.disabled ?? input.disabled) || false,
     ...getClassMap(input.cssClass),
     ...getClassMap(input.attributes ? input.attributes.class?.toString() : ''),
   };
