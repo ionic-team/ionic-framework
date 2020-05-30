@@ -288,6 +288,10 @@ export class Input implements ComponentInterface {
   private onInput = (ev: Event) => {
     const input = ev.target as HTMLInputElement | null;
     if (input) {
+      if (this.type === 'password' && this.maxlength){
+        if (input.value.length > this.maxLength)
+          input.value = input.value.slice(0, this.maxLength);
+      }
       this.value = input.value || '';
     }
     this.ionInput.emit(ev as KeyboardEvent);
