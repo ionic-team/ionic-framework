@@ -109,7 +109,7 @@ export class Input implements ComponentInterface {
   @Prop() max?: string;
 
   /**
-   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, `number` or `url`, this attribute specifies the maximum number of characters that the user can enter.
    */
   @Prop() maxlength?: number;
 
@@ -288,9 +288,10 @@ export class Input implements ComponentInterface {
   private onInput = (ev: Event) => {
     const input = ev.target as HTMLInputElement | null;
     if (input) {
-      if (this.type === 'password' && this.maxlength){
-        if (input.value.length > this.maxLength)
-          input.value = input.value.slice(0, this.maxLength);
+      if (this.type === 'number' && this.maxlength !== undefined) {
+        if (input.value.length > this.maxlength) {
+          input.value = input.value.slice(0, this.maxlength);
+        }
       }
       this.value = input.value || '';
     }

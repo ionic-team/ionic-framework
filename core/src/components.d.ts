@@ -861,7 +861,7 @@ export namespace Components {
          */
         "max"?: string;
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, `number` or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
         /**
@@ -4125,7 +4125,7 @@ declare namespace LocalJSX {
          */
         "max"?: string;
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, `number` or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
         /**
