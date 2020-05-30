@@ -1,4 +1,4 @@
-import { copyLayoutViewport, copyVisualViewport, setKeyboardClose, setKeyboardOpen, keyboardDidClose, keyboardDidOpen, keyboardDidResize, resetKeyboardAssist, startKeyboardAssist, trackViewportChanges, KEYBOARD_DID_OPEN, KEYBOARD_DID_CLOSE } from '../';
+import { copyLayoutViewport, copyVisualViewport, setKeyboardClose, setKeyboardOpen, keyboardDidClose, keyboardDidOpen, keyboardDidResize, resetKeyboardAssist, startKeyboardAssist, trackViewportChanges, KEYBOARD_DID_OPEN, KEYBOARD_DID_CLOSE } from '../keyboard';
 
 const mockVisualViewport = (win: Window, visualViewport: any = { width: 320, height: 568 }, layoutViewport = { innerWidth: 320, innerHeight: 568 }): any => {
   win.visualViewport = {

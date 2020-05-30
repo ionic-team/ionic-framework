@@ -64,7 +64,7 @@
     "@types/node": "12.12.5",
     "fs-extra": "^7.0.0",
     "glob": "^7.1.4",
-    "ng-packagr": "5.7.1",
+    "ng-packagr": "^9.1.5",
     "rollup": "~1.17.0",
     "rollup-plugin-node-resolve": "~5.2.0",
     "rxjs": "^6.5.2",
