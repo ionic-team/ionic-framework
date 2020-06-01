@@ -53,8 +53,7 @@ export class StackController {
 
   setActive(enteringView: RouteView): Promise<StackEvent> {
     const consumeResult = this.navCtrl.consumeTransition();
-    let { direction, animation } = consumeResult;
-    const { animationBuilder } = consumeResult;
+    let { direction, animation, animationBuilder } = consumeResult;
     const leavingView = this.activeView;
     const tabSwitch = isTabSwitch(enteringView, leavingView);
     if (tabSwitch) {
@@ -105,6 +104,37 @@ export class StackController {
     // was attached to the dom, but BEFORE the transition starts
     if (!reused) {
       enteringView.ref.changeDetectorRef.detectChanges();
+    }
+
+    /**
+     * If we are going back from a page that
+     * was presented using a custom animation
+     * we should default to using that
+     * unless the developer explicitly
+     * provided another animation.
+     */
+    const customAnimation = (
+      currentNavigation &&
+      currentNavigation.previousNavigation &&
+      currentNavigation.previousNavigation.extras &&
+      currentNavigation.previousNavigation.extras.state &&
+      currentNavigation.previousNavigation.extras.state._ionAnimation
+    );
+    if (
+      animationBuilder === undefined &&
+      direction === 'back' &&
+      !tabSwitch &&
+      customAnimation
+    ) {
+      animationBuilder = customAnimation;
+    }
+
+    /**
+     * Save any custom animation to NavigationExtras so that
+     * navigating back will use this custom animation by default.
+     */
+    if (animationBuilder !== undefined) {
+      currentNavigation.extras.state = { ...currentNavigation.extras.state, _ionAnimation: animationBuilder };
     }
 
     // Wait until previous transitions finish
