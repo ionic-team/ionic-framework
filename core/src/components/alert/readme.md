@@ -162,6 +162,16 @@ export class AlertExample {
         {
           name: 'name7',
           type: 'number'
+        },
+        {
+          name: 'name8',
+          type: 'password',
+          placeholder: 'Advanced Attributes',
+          cssClass: 'specialClass',
+          attributes: {
+            maxlength: 4,
+            inputmode: 'decimal'
+          }
         }
       ],
       buttons: [
@@ -423,6 +433,16 @@ function presentAlertPrompt() {
     {
       name: 'name7',
       type: 'number'
+    },
+    {
+      name: 'name8',
+      type: 'password',
+      placeholder: 'Advanced Attributes',
+      cssClass: 'specialClass',
+      attributes: {
+        maxlength: 4,
+        inputmode: 'decimal'
+      }
     }
   ];
   alert.buttons = [
@@ -677,6 +697,16 @@ export const AlertExample: React.FC = () => {
             {
               name: 'name7',
               type: 'number'
+            },
+            {
+              name: 'name8',
+              type: 'password',
+              placeholder: 'Advanced Attributes',
+              cssClass: 'specialClass',
+              attributes: {
+                maxlength: 4,
+                inputmode: 'decimal'
+              }
             }
           ]}
           buttons={[
@@ -941,6 +971,16 @@ export class AlertExample {
         {
           name: 'name7',
           type: 'number'
+        },
+        {
+          name: 'name8',
+          type: 'password',
+          placeholder: 'Advanced Attributes',
+          cssClass: 'specialClass',
+          attributes: {
+            maxlength: 4,
+            inputmode: 'decimal'
+          }
         }
       ],
       buttons: [
@@ -1221,6 +1261,16 @@ export default {
               name: 'name7',
               type: 'number',
             },
+            {
+              name: 'name8',
+              type: 'password',
+              placeholder: 'Advanced Attributes',
+              cssClass: 'specialClass',
+              attributes: {
+                maxlength: 4,
+                inputmode: 'decimal'
+              }
+            }
           ],
           buttons: [
             {

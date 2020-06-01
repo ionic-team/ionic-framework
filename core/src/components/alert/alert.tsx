@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AlertButton, AlertInput, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { AlertButton, AlertInput, AlertInputAttributes, AlertTextareaAttributes, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
@@ -158,11 +158,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
       label: i.label,
       checked: !!i.checked,
       disabled: !!i.disabled,
-      cssClass: i.cssClass || '',
       id: i.id || `alert-input-${this.overlayIndex}-${index}`,
       handler: i.handler,
       min: i.min,
-      max: i.max
+      max: i.max,
+      cssClass: i.cssClass || '',
+      attributes: i.attributes || {},
     }) as AlertInput);
   }
 
@@ -408,14 +409,14 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 <textarea
                   placeholder={i.placeholder}
                   value={i.value}
-                  onInput={e => i.value = (e.target as any).value}
                   id={i.id}
-                  disabled={i.disabled}
                   tabIndex={0}
-                  class={{
-                    ...getClassMap(i.cssClass),
-                    'alert-input': true,
-                    'alert-input-disabled': i.disabled || false
+                  {...i.attributes as AlertTextareaAttributes}
+                  disabled={i.attributes?.disabled ?? i.disabled}
+                  class={inputClass(i)}
+                  onInput={e => {
+                    i.value = (e.target as any).value;
+                    if (i.attributes?.onInput) { i.attributes.onInput(e); }
                   }}
                 />
               </div>
@@ -425,18 +426,18 @@ export class Alert implements ComponentInterface, OverlayInterface {
               <div class="alert-input-wrapper">
                 <input
                   placeholder={i.placeholder}
-                  value={i.value}
                   type={i.type}
                   min={i.min}
                   max={i.max}
-                  onInput={e => i.value = (e.target as any).value}
+                  value={i.value}
                   id={i.id}
-                  disabled={i.disabled}
                   tabIndex={0}
-                  class={{
-                    ...getClassMap(i.cssClass),
-                    'alert-input': true,
-                    'alert-input-disabled': i.disabled || false
+                  {...i.attributes as AlertInputAttributes}
+                  disabled={i.attributes?.disabled ?? i.disabled}
+                  class={inputClass(i)}
+                  onInput={e => {
+                    i.value = (e.target as any).value;
+                    if (i.attributes?.onInput) { i.attributes.onInput(e); }
                   }}
                 />
               </div>
@@ -530,6 +531,15 @@ export class Alert implements ComponentInterface, OverlayInterface {
     );
   }
 }
+
+const inputClass = (input: AlertInput): CssClassMap => {
+  return {
+    'alert-input': true,
+    'alert-input-disabled': (input.attributes?.disabled ?? input.disabled) || false,
+    ...getClassMap(input.cssClass),
+    ...getClassMap(input.attributes ? input.attributes.class?.toString() : ''),
+  };
+};
 
 const buttonClass = (button: AlertButton): CssClassMap => {
   return {
