@@ -1,15 +1,17 @@
-import { ElementRef, HostListener } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import { AfterViewInit, ElementRef, HostListener, Injector, OnDestroy } from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { raf } from '../../util/util';
 
-export class ValueAccessor implements ControlValueAccessor {
+export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
   private onChange: (value: any) => void = () => {/**/};
   private onTouched: () => void = () => {/**/};
   protected lastValue: any;
+  private statusChangeSubscription: Subscription;
 
-  constructor(protected el: ElementRef) {}
+  constructor(protected injector: Injector, protected el: ElementRef) {}
 
   writeValue(value: any) {
     /**
@@ -51,6 +53,19 @@ export class ValueAccessor implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean) {
     this.el.nativeElement.disabled = isDisabled;
+  }
+
+  ngAfterViewInit() {
+    const ngControl = this.injector.get(NgControl, null);
+    if (ngControl && ngControl.statusChanges) {
+      this.statusChangeSubscription = ngControl.statusChanges.subscribe(() => setIonicClasses(this.el));
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.statusChangeSubscription && !this.statusChangeSubscription.closed) {
+      this.statusChangeSubscription.unsubscribe();
+    }
   }
 }
 
