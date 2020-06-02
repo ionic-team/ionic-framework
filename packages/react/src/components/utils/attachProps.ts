@@ -62,6 +62,7 @@ export const getClassName = (classList: DOMTokenList, newProps: any, oldProps: a
  * @license Modernizr 3.0.0pre (Custom Build) | MIT
  */
 export const isCoveredByReact = (eventNameSuffix: string, doc?: Document) => {
+  // tslint:disable-next-line:strict-type-predicates
   if (typeof document === 'undefined') {
     return true;
   }
