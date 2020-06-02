@@ -16,68 +16,66 @@ export const ItemExamples: React.FC = () => {
         <IonItem>
           <IonLabel>
             Item
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         {/*-- Item as a Button --*/}
         <IonItem button onClick={() => { }}>
           <IonLabel>
             Button Item
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         {/*-- Item as an Anchor --*/}
         <IonItem href="https://www.ionicframework.com">
           <IonLabel>
             Anchor Item
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         <IonItem color="secondary">
           <IonLabel>
             Secondary Color Item
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         {/*-- Detail Arrows --*/}
-
         <IonItem detail>
           <IonLabel>
             Standard Item with Detail Arrow
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         <IonItem button onClick={() => { }} detail>
           <IonLabel>
             Button Item with Detail Arrow
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         <IonItem detail={false} href="https://www.ionicframework.com">
           <IonLabel>
             Anchor Item with no Detail Arrow
-      </IonLabel>
+          </IonLabel>
         </IonItem>
-
 
         <IonList>
           <IonItem>
             <IonLabel>
               Item
-        </IonLabel>
+            </IonLabel>
           </IonItem>
 
           <IonItem lines="none">
             <IonLabel>
               No Lines Item
-        </IonLabel>
+            </IonLabel>
           </IonItem>
 
           <IonItem>
             <IonLabel className="ion-text-wrap">
               Multiline text that should wrap when it is too long
               to fit on one line in the item.
-        </IonLabel>
+            </IonLabel>
           </IonItem>
 
           <IonItem>
@@ -95,11 +93,9 @@ export const ItemExamples: React.FC = () => {
           <IonItem lines="full">
             <IonLabel>
               Item with Full Lines
-        </IonLabel>
+            </IonLabel>
           </IonItem>
-
         </IonList>
-
 
         {/*-- Item Inset Lines --*/}
         <IonItem lines="inset">
@@ -153,21 +149,19 @@ export const ItemExamples: React.FC = () => {
           </IonItem>
         </IonList>
 
-
-
         <IonItem button onClick={() => { }}>
           <IonAvatar slot="start">
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
           </IonAvatar>
           <IonLabel>
             Avatar Start, Button Item
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         <IonItem href="#">
           <IonLabel>
             Thumbnail End, Anchor Item
-      </IonLabel>
+          </IonLabel>
           <IonThumbnail slot="end">
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
           </IonThumbnail>
@@ -195,30 +189,27 @@ export const ItemExamples: React.FC = () => {
           <IonIcon icon={closeCircle} slot="end" />
         </IonItem>
 
-
-        Buttons in Items
-    
-    
-    <IonItem>
+        {/*-- Buttons in Items --*/}
+        <IonItem>
           <IonButton slot="start">
             Start
-      </IonButton>
+          </IonButton>
           <IonLabel>Button Start/End</IonLabel>
           <IonButton slot="end">
             End
-      </IonButton>
+          </IonButton>
         </IonItem>
 
         <IonItem>
           <IonButton slot="start">
             Start Icon
-        <IonIcon icon={home} slot="end" />>
+            <IonIcon icon={home} slot="end" />>
           </IonButton>
           <IonLabel>Buttons with Icons</IonLabel>
           <IonButton slot="end">
             <IonIcon icon={star} slot="end" />
             End Icon
-      </IonButton>
+          </IonButton>
         </IonItem>
 
         <IonItem>
@@ -231,25 +222,24 @@ export const ItemExamples: React.FC = () => {
           </IonButton>
         </IonItem>
 
-
         <IonItem>
           <IonLabel>
             Icon End
-      </IonLabel>
+          </IonLabel>
           <IonIcon icon={informationCircle} slot="end" />
         </IonItem>
 
         <IonItem>
           <IonLabel>
             Large Icon End
-      </IonLabel>
+          </IonLabel>
           <IonIcon icon={informationCircle} size="large" slot="end" />
         </IonItem>
 
         <IonItem>
           <IonLabel>
             Small Icon End
-      </IonLabel>
+          </IonLabel>
           <IonIcon icon={informationCircle} size="small" slot="end" />
         </IonItem>
 
@@ -257,13 +247,13 @@ export const ItemExamples: React.FC = () => {
           <IonIcon icon={star} slot="start" />
           <IonLabel>
             Icon Start
-      </IonLabel>
+          </IonLabel>
         </IonItem>
 
         <IonItem>
           <IonLabel>
             Two Icons End
-      </IonLabel>
+          </IonLabel>
           <IonIcon icon={checkmarkCircle} slot="end" />
           <IonIcon icon={shuffle} slot="end" />
         </IonItem>
@@ -311,7 +301,7 @@ export const ItemExamples: React.FC = () => {
           <IonRange></IonRange>
         </IonItem>
       </IonContent>
-    </IonPage >
+    </IonPage>
   );
 };
 ```

@@ -219,7 +219,7 @@ export class ReorderGroup implements ComponentInterface {
       const toIndex = this.lastToIndex;
       const fromIndex = indexForItem(selectedItemEl);
 
-      if (toIndex !== fromIndex && (!listOrReorder || listOrReorder === true)) {
+      if (toIndex !== fromIndex && (listOrReorder === undefined || listOrReorder === true)) {
         const ref = (fromIndex < toIndex)
           ? children[toIndex + 1]
           : children[toIndex];

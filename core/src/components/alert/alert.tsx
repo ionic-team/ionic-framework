@@ -1,10 +1,11 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, forceUpdate, h } from '@stencil/core';
 
-import { IonicSafeString } from '../../';
 import { getIonMode } from '../../global/ionic-global';
-import { AlertButton, AlertInput, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { AlertButton, AlertInput, AlertInputAttributes, AlertTextareaAttributes, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Gesture } from '../../utils/gesture';
+import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
-import { sanitizeDOMString } from '../../utils/sanitization';
+import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -29,6 +30,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private inputType?: string;
   private processedInputs: AlertInput[] = [];
   private processedButtons: AlertButton[] = [];
+  private wrapperEl?: HTMLElement;
+  private gesture?: Gesture;
 
   presented = false;
 
@@ -158,7 +161,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
       id: i.id || `alert-input-${this.overlayIndex}-${index}`,
       handler: i.handler,
       min: i.min,
-      max: i.max
+      max: i.max,
+      cssClass: i.cssClass || '',
+      attributes: i.attributes || {},
     }) as AlertInput);
   }
 
@@ -169,6 +174,29 @@ export class Alert implements ComponentInterface, OverlayInterface {
   componentWillLoad() {
     this.inputsChanged();
     this.buttonsChanged();
+  }
+
+  componentDidUnload() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+  }
+
+  componentDidLoad() {
+    /**
+     * Do not create gesture if:
+     * 1. A gesture already exists
+     * 2. App is running in MD mode
+     * 3. A wrapper ref does not exist
+     */
+    if (this.gesture || getIonMode(this) === 'md' || !this.wrapperEl) { return; }
+
+    this.gesture = createButtonActiveGesture(
+      this.wrapperEl,
+      (refEl: HTMLElement) => refEl.classList.contains('alert-button')
+    );
+    this.gesture.enable(true);
   }
 
   /**
@@ -307,6 +335,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             tabIndex={0}
             role="checkbox"
             class={{
+              ...getClassMap(i.cssClass),
               'alert-tappable': true,
               'alert-checkbox': true,
               'alert-checkbox-button': true,
@@ -345,6 +374,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             id={i.id}
             tabIndex={0}
             class={{
+              ...getClassMap(i.cssClass),
               'alert-radio-button': true,
               'alert-tappable': true,
               'alert-radio': true,
@@ -379,13 +409,14 @@ export class Alert implements ComponentInterface, OverlayInterface {
                 <textarea
                   placeholder={i.placeholder}
                   value={i.value}
-                  onInput={e => i.value = (e.target as any).value}
                   id={i.id}
-                  disabled={i.disabled}
                   tabIndex={0}
-                  class={{
-                    'alert-input': true,
-                    'alert-input-disabled': i.disabled || false
+                  {...i.attributes as AlertTextareaAttributes}
+                  disabled={i.attributes?.disabled ?? i.disabled}
+                  class={inputClass(i)}
+                  onInput={e => {
+                    i.value = (e.target as any).value;
+                    if (i.attributes?.onInput) { i.attributes.onInput(e); }
                   }}
                 />
               </div>
@@ -395,17 +426,18 @@ export class Alert implements ComponentInterface, OverlayInterface {
               <div class="alert-input-wrapper">
                 <input
                   placeholder={i.placeholder}
-                  value={i.value}
                   type={i.type}
                   min={i.min}
                   max={i.max}
-                  onInput={e => i.value = (e.target as any).value}
+                  value={i.value}
                   id={i.id}
-                  disabled={i.disabled}
                   tabIndex={0}
-                  class={{
-                    'alert-input': true,
-                    'alert-input-disabled': i.disabled || false
+                  {...i.attributes as AlertInputAttributes}
+                  disabled={i.attributes?.disabled ?? i.disabled}
+                  class={inputClass(i)}
+                  onInput={e => {
+                    i.value = (e.target as any).value;
+                    if (i.attributes?.onInput) { i.attributes.onInput(e); }
                   }}
                 />
               </div>
@@ -482,7 +514,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
         <ion-backdrop tappable={this.backdropDismiss}/>
 
-        <div class="alert-wrapper">
+        <div class="alert-wrapper" ref={el => this.wrapperEl = el}>
 
           <div class="alert-head">
             {header && <h2 id={hdrId} class="alert-title">{header}</h2>}
@@ -500,11 +532,21 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 }
 
+const inputClass = (input: AlertInput): CssClassMap => {
+  return {
+    'alert-input': true,
+    'alert-input-disabled': (input.attributes?.disabled ?? input.disabled) || false,
+    ...getClassMap(input.cssClass),
+    ...getClassMap(input.attributes ? input.attributes.class?.toString() : ''),
+  };
+};
+
 const buttonClass = (button: AlertButton): CssClassMap => {
   return {
     'alert-button': true,
     'ion-focusable': true,
     'ion-activatable': true,
+    [`alert-button-role-${button.role}`]: button.role !== undefined,
     ...getClassMap(button.cssClass)
   };
 };

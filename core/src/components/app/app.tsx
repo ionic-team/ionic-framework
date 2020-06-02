@@ -6,10 +6,9 @@ import { isPlatform } from '../../utils/platform';
 
 @Component({
   tag: 'ion-app',
-  styleUrl: 'app.scss'
+  styleUrl: 'app.scss',
 })
 export class App implements ComponentInterface {
-
   @Element() el!: HTMLElement;
 
   componentDidLoad() {
@@ -29,7 +28,7 @@ export class App implements ComponentInterface {
           import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton());
         }
         if (typeof (window as any) !== 'undefined') {
-          import('../../utils/keyboard').then(module => module.startKeyboardAssist(window));
+          import('../../utils/keyboard/keyboard').then(module => module.startKeyboardAssist(window));
         }
         import('../../utils/focus-visible').then(module => module.startFocusVisible());
       });
@@ -43,7 +42,7 @@ export class App implements ComponentInterface {
         class={{
           [mode]: true,
           'ion-page': true,
-          'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding')
+          'force-statusbar-padding': config.getBoolean('_forceStatusbarPadding'),
         }}
       >
       </Host>

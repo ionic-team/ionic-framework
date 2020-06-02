@@ -43,6 +43,83 @@ See the [ion-alert docs](../alert), [ion-action-sheet docs](../action-sheet), an
 
 Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
 
+## Customization
+
+There are two units that make up the Select component and each need to be styled separately. The `ion-select` element is represented on the view by the selected value(s), or placeholder if there is none, and dropdown icon. The interface, which is defined in the [Interfaces](#interfaces) section above, is the dialog that opens when clicking on the `ion-select`. The interface contains all of the options defined by adding `ion-select-option` elements. The following sections will go over the differences between styling these.
+
+### Styling Select Element
+
+As mentioned, the `ion-select` element consists only of the value(s), or placeholder, and icon that is displayed on the view. To customize this, style using a combination of CSS and any of the [CSS custom properties](#css-custom-properties):
+
+```css
+ion-select {
+  /* Applies to the value and placeholder color */
+  color: #545ca7;
+
+  /* Set a different placeholder color */
+  --placeholder-color: #971e49;
+
+  /* Set full opacity on the placeholder */
+  --placeholder-opacity: 1;
+}
+```
+
+Alternatively, depending on the [browser support](https://caniuse.com/#feat=mdn-css_selectors_part) needed, CSS shadow parts can be used to style the select:
+
+```css
+/* Set the width to the full container and center the content */
+ion-select {
+  width: 100%;
+
+  justify-content: center;
+}
+
+/* Set the flex in order to size the text width to its content */
+ion-select::part(placeholder),
+ion-select::part(text) {
+  flex: 0 0 auto;
+}
+
+/* Set the placeholder color and opacity */
+ion-select::part(placeholder) {
+  color: #20a08a;
+  opacity: 1;
+}
+
+/*
+ * Set the font of the first letter of the placeholder
+ * Shadow parts work with pseudo-elements, too!
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements
+ */
+ion-select::part(placeholder)::first-letter {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+/* Set the text color */
+ion-select::part(text) {
+  color: #545ca7;
+}
+
+/* Set the icon color and opacity */
+ion-select::part(icon) {
+  color: #971e49;
+  opacity: 1;
+}
+```
+
+Notice that by using `::part`, any CSS property on the element can be targeted.
+
+### Styling Select Interface
+
+Customizing the interface dialog should be done by following the Customization section in that interface's documentation:
+
+- [Alert Customization](../alert#customization)
+- [Action Sheet Customization](../action-sheet#customization)
+- [Popover Customization](../popover#customization)
+
+However, the Select Option does set a class for easier styling and allows for the ability to pass a class to the overlay option, see the [Select Options documentation](./select-option) for usage examples of customizing options.
+
 <!-- Auto Generated Below -->
 
 
@@ -739,6 +816,238 @@ export const InterfaceOptionsSelection: React.FC = () => {
     </IonPage>
   );
 };
+```
+
+
+### Stencil
+
+### Single Selection
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'select-example',
+  styleUrl: 'select-example.css'
+})
+export class SelectExample {
+  render() {
+    return [
+      <ion-list>
+        <ion-list-header>
+          <ion-label>
+            Single Selection
+          </ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Gender</ion-label>
+          <ion-select placeholder="Select One">
+            <ion-select-option value="f">Female</ion-select-option>
+            <ion-select-option value="m">Male</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Hair Color</ion-label>
+          <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+            <ion-select-option value="brown">Brown</ion-select-option>
+            <ion-select-option value="blonde">Blonde</ion-select-option>
+            <ion-select-option value="black">Black</ion-select-option>
+            <ion-select-option value="red">Red</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+      </ion-list>
+    ];
+  }
+}
+```
+
+### Multiple Selection
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'select-example',
+  styleUrl: 'select-example.css'
+})
+export class SelectExample {
+  render() {
+    return [
+      <ion-list>
+        <ion-list-header>
+          <ion-label>
+            Multiple Selection
+          </ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Toppings</ion-label>
+          <ion-select multiple={true} cancelText="Nah" okText="Okay!">
+            <ion-select-option value="bacon">Bacon</ion-select-option>
+            <ion-select-option value="olives">Black Olives</ion-select-option>
+            <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+            <ion-select-option value="peppers">Green Peppers</ion-select-option>
+            <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+            <ion-select-option value="onions">Onions</ion-select-option>
+            <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+            <ion-select-option value="pineapple">Pineapple</ion-select-option>
+            <ion-select-option value="sausage">Sausage</ion-select-option>
+            <ion-select-option value="Spinach">Spinach</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Pets</ion-label>
+          <ion-select multiple={true} value={['bird', 'dog']}>
+            <ion-select-option value="bird">Bird</ion-select-option>
+            <ion-select-option value="cat">Cat</ion-select-option>
+            <ion-select-option value="dog">Dog</ion-select-option>
+            <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    ];
+  }
+}
+```
+
+### Objects as Values
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'select-example',
+  styleUrl: 'select-example.css'
+})
+export class SelectExample {
+  private users: any[] = [
+    {
+      id: 1,
+      first: 'Alice',
+      last: 'Smith',
+    },
+    {
+      id: 2,
+      first: 'Bob',
+      last: 'Davis',
+    },
+    {
+      id: 3,
+      first: 'Charlie',
+      last: 'Rosenburg',
+    }
+  ];
+
+  compareWith = (o1, o2) => {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  };
+
+  render() {
+    return [
+      <ion-list>
+        <ion-list-header>
+          <ion-label>
+            Objects as Values (compareWith)
+          </ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Users</ion-label>
+          <ion-select compareWith={this.compareWith}>
+            {this.users.map(user =>
+            <ion-select-option value={user}>
+              {user.first + ' ' + user.last}
+            </ion-select-option>
+            )}
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    ];
+  }
+}
+```
+
+### Interface Options
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'select-example',
+  styleUrl: 'select-example.css'
+})
+export class SelectExample {
+  private customAlertOptions: any = {
+    header: 'Pizza Toppings',
+    subHeader: 'Select your toppings',
+    message: '$1.00 per topping',
+    translucent: true
+  };
+
+  private customPopoverOptions: any = {
+    header: 'Hair Color',
+    subHeader: 'Select your hair color',
+    message: 'Only select your dominant hair color'
+  };
+
+  private customActionSheetOptions: any = {
+    header: 'Colors',
+    subHeader: 'Select your favorite color'
+  };
+
+  render() {
+    return [
+      <ion-list>
+        <ion-list-header>
+          <ion-label>
+            Interface Options
+          </ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Alert</ion-label>
+          <ion-select interfaceOptions={this.customAlertOptions} interface="alert" multiple={true} placeholder="Select One">
+            <ion-select-option value="bacon">Bacon</ion-select-option>
+            <ion-select-option value="olives">Black Olives</ion-select-option>
+            <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+            <ion-select-option value="peppers">Green Peppers</ion-select-option>
+            <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+            <ion-select-option value="onions">Onions</ion-select-option>
+            <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+            <ion-select-option value="pineapple">Pineapple</ion-select-option>
+            <ion-select-option value="sausage">Sausage</ion-select-option>
+            <ion-select-option value="Spinach">Spinach</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Popover</ion-label>
+          <ion-select interfaceOptions={this.customPopoverOptions} interface="popover" placeholder="Select One">
+            <ion-select-option value="brown">Brown</ion-select-option>
+            <ion-select-option value="blonde">Blonde</ion-select-option>
+            <ion-select-option value="black">Black</ion-select-option>
+            <ion-select-option value="red">Red</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Action Sheet</ion-label>
+          <ion-select interfaceOptions={this.customActionSheetOptions} interface="action-sheet" placeholder="Select One">
+            <ion-select-option value="red">Red</ion-select-option>
+            <ion-select-option value="purple">Purple</ion-select-option>
+            <ion-select-option value="yellow">Yellow</ion-select-option>
+            <ion-select-option value="orange">Orange</ion-select-option>
+            <ion-select-option value="green">Green</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    ];
+  }
+}
 ```
 
 

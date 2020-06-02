@@ -13,6 +13,7 @@ export class AlertExample {
 
   async presentAlert() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
@@ -24,6 +25,7 @@ export class AlertExample {
 
   async presentAlertMultipleButtons() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
@@ -35,6 +37,7 @@ export class AlertExample {
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Confirm!',
       message: 'Message <strong>text</strong>!!!',
       buttons: [
@@ -59,6 +62,7 @@ export class AlertExample {
 
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Prompt!',
       inputs: [
         {
@@ -107,6 +111,16 @@ export class AlertExample {
         {
           name: 'name7',
           type: 'number'
+        },
+        {
+          name: 'name8',
+          type: 'password',
+          placeholder: 'Advanced Attributes',
+          cssClass: 'specialClass',
+          attributes: {
+            maxlength: 4,
+            inputmode: 'decimal'
+          }
         }
       ],
       buttons: [
@@ -131,6 +145,7 @@ export class AlertExample {
 
   async presentAlertRadio() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Radio',
       inputs: [
         {
@@ -193,6 +208,7 @@ export class AlertExample {
 
   async presentAlertCheckbox() {
     const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
       header: 'Checkbox',
       inputs: [
         {
@@ -257,6 +273,10 @@ export class AlertExample {
 
     await alert.present();
   }
-
 }
 ```
+
+
+### Style Placement
+
+In Angular, the CSS of a specific page is scoped only to elements of that page. Even though the Alert can be presented from within a page, the `ion-alert` element is appended outside of the current page. This means that any custom styles need to go in a global stylesheet file. In an Ionic Angular starter this can be the `src/global.scss` file or you can register a new global style file by [adding to the `styles` build option in `angular.json`](https://angular.io/guide/workspace-config#style-script-config).

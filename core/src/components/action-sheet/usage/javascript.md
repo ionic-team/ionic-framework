@@ -1,9 +1,9 @@
 ```javascript
 async function presentActionSheet() {
-
   const actionSheet = document.createElement('ion-action-sheet');
 
-  actionSheet.header = "Albums";
+  actionSheet.header = 'Albums';
+  actionSheet.cssClass = 'my-custom-class';
   actionSheet.buttons = [{
     text: 'Delete',
     role: 'destructive',
@@ -19,7 +19,7 @@ async function presentActionSheet() {
     }
   }, {
     text: 'Play (open modal)',
-    icon: 'arrow-dropright-circle',
+    icon: 'caret-forward-circle',
     handler: () => {
       console.log('Play clicked');
     }
