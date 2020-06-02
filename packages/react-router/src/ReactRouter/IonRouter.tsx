@@ -10,6 +10,7 @@ import {
   generateId,
   getConfig
 } from '@ionic/react';
+import { AnimationBuilder } from '@ionic/core';
 import { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -89,7 +90,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
         this.props.history.push(pathname + (search ? '?' + search : ''));
       }
     } else {
-      this.handleNavigate(pathname, 'push', 'none', routeOptions, tab);
+      this.handleNavigate(pathname, 'push', 'none', undefined, routeOptions, tab);
     }
   }
 
@@ -178,11 +179,12 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
 
   }
 
-  handleNavigate(path: string, routeAction: RouteAction, routeDirection?: RouterDirection, routeOptions?: any, tab?: string) {
+  handleNavigate(path: string, routeAction: RouteAction, routeDirection?: RouterDirection, routeAnimation?: AnimationBuilder, routeOptions?: any, tab?: string) {
     this.incomingRouteParams = {
       routeAction,
       routeDirection,
       routeOptions,
+      routeAnimation,
       tab
     };
 
@@ -193,14 +195,14 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     }
   }
 
-  handleNavigateBack(defaultHref: string | RouteInfo = '/') {
+  handleNavigateBack(defaultHref: string | RouteInfo = '/', routeAnimation?: AnimationBuilder) {
     const config = getConfig();
     defaultHref = defaultHref ? defaultHref : config && config.get('backButtonDefaultHref' as any);
     const routeInfo = this.locationHistory.current();
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = this.locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
-        this.incomingRouteParams = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
+        this.incomingRouteParams = { ...prevInfo, routeAction: 'pop', routeDirection: 'back', routeAnimation: routeAnimation || routeInfo.routeAnimation };
         if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
           this.props.history.goBack();
         } else {
