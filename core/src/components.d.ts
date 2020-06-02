@@ -561,7 +561,7 @@ export namespace Components {
          */
         "dayNames"?: string[] | string;
         /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
          */
         "dayShortNames"?: string[] | string;
         /**
@@ -3801,7 +3801,7 @@ declare namespace LocalJSX {
          */
         "dayNames"?: string[] | string;
         /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
          */
         "dayShortNames"?: string[] | string;
         /**
