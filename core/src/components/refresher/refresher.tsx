@@ -1,9 +1,9 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
-import { getTimeGivenProgression } from '../../';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
-import { clamp, raf } from '../../utils/helpers';
+import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
+import { clamp, getElementRoot, raf } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
 import { createPullingAnimation, createSnapBackAnimation, getRefresherAnimationType, handleScrollWhilePulling, handleScrollWhileRefreshing, setSpinnerOpacity, shouldUseNativeRefresher, transitionEndAsync, translateElement } from './refresher.utils';
@@ -149,7 +149,7 @@ export class Refresher implements ComponentInterface {
     if (getIonMode(this) === 'ios') {
       await translateElement(el, undefined);
     } else {
-      await transitionEndAsync(this.el.querySelector('.refresher-refreshing-icon'));
+      await transitionEndAsync(this.el.querySelector('.refresher-refreshing-icon'), 200);
     }
 
     this.didRefresh = false;
@@ -272,9 +272,9 @@ export class Refresher implements ComponentInterface {
   }
 
   private async setupMDNativeRefresher(contentEl: HTMLIonContentElement, pullingSpinner: HTMLIonSpinnerElement, refreshingSpinner: HTMLIonSpinnerElement) {
-    const circle = pullingSpinner.shadowRoot!.querySelector('circle');
+    const circle = getElementRoot(pullingSpinner).querySelector('circle');
     const pullingRefresherIcon = this.el.querySelector('ion-refresher-content .refresher-pulling-icon') as HTMLElement;
-    const refreshingCircle = refreshingSpinner.shadowRoot!.querySelector('circle');
+    const refreshingCircle = getElementRoot(refreshingSpinner).querySelector('circle');
 
     if (circle !== null && refreshingCircle !== null) {
       writeTask(() => {
@@ -397,7 +397,7 @@ export class Refresher implements ComponentInterface {
     }
 
     this.scrollEl = await contentEl.getScrollElement();
-    this.backgroundContentEl = contentEl.shadowRoot!.querySelector('#background-content') as HTMLElement;
+    this.backgroundContentEl = getElementRoot(contentEl).querySelector('#background-content') as HTMLElement;
 
     if (shouldUseNativeRefresher(this.el, getIonMode(this))) {
       this.setupNativeRefresher(contentEl);

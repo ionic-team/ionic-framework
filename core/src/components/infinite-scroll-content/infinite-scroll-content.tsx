@@ -1,10 +1,9 @@
 import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
-import { IonicSafeString } from '../../';
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { SpinnerTypes } from '../../interface';
-import { sanitizeDOMString } from '../../utils/sanitization';
+import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
   tag: 'ion-infinite-scroll-content',

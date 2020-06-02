@@ -145,6 +145,9 @@ $alert-ios-button-font-size:                            17px !default;
 /// @prop - Color of the text in the alert button
 $alert-ios-button-text-color:                           ion-color(primary, base) !default;
 
+/// @prop - Destructive text color of the alert button
+$alert-ios-button-destructive-text-color:               ion-color(danger, base) !default;
+
 /// @prop - Background color of the alert button
 $alert-ios-button-background-color:                     transparent !default;
 

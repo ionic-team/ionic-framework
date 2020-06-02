@@ -2,11 +2,11 @@
 
 A Toast is a subtle notification commonly used in modern applications. It can be used to provide feedback about an operation or to display a system message. The toast appears on top of the app's content, and can be dismissed by the app to resume user interaction with the app.
 
-### Positioning
+## Positioning
 
 Toasts can be positioned at the top, bottom or middle of the viewport. The position can be passed upon creation. The possible values are `top`, `bottom` and `middle`. If the position is not specified, the toast will be displayed at the bottom of the viewport.
 
-### Dismissing
+## Dismissing
 
 The toast can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the toast options. If a button with a role of `"cancel"` is added, then that button will dismiss the toast. To dismiss the toast after creation, call the `dismiss()` method on the instance.
 
@@ -155,6 +155,63 @@ export const ToastExample: React.FC = () => {
     </IonContent>
   );
 };
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+import { toastController } from '@ionic/core';
+
+@Component({
+  tag: 'toast-example',
+  styleUrl: 'toast-example.css'
+})
+export class ToastExample {
+  async presentToast() {
+    const toast = await toastController.create({
+      message: 'Your settings have been saved.',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async presentToastWithOptions() {
+    const toast = await toastController.create({
+      header: 'Toast header',
+      message: 'Click to Close',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'star',
+          text: 'Favorite',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    toast.present();
+  }
+
+  render() {
+    return [
+      <ion-content>
+        <ion-button onClick={() => this.presentToast()}>Present Toast</ion-button>
+        <ion-button onClick={() => this.presentToastWithOptions()}>Present Toast: Options</ion-button>
+      </ion-content>
+    ];
+  }
+}
 ```
 
 

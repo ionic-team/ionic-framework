@@ -64,6 +64,13 @@ export class Header implements ComponentInterface {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
       const contentEl = (pageEl) ? pageEl.querySelector('ion-content') : null;
 
+      // Cloned elements are always needed in iOS transition
+      writeTask(() => {
+        const title = cloneElement('ion-title') as HTMLIonTitleElement;
+        title.size = 'large';
+        cloneElement('ion-back-button');
+      });
+
       await this.setupCollapsibleHeader(contentEl, pageEl);
     }
   }
@@ -87,6 +94,7 @@ export class Header implements ComponentInterface {
 
   private async setupCollapsibleHeader(contentEl: HTMLIonContentElement | null, pageEl: Element | null) {
     if (!contentEl || !pageEl) { console.error('ion-header requires a content to collapse, make sure there is an ion-content.'); return; }
+    if (typeof (IntersectionObserver as any) === 'undefined') { return; }
 
     this.scrollEl = await contentEl.getScrollElement();
 
@@ -126,10 +134,6 @@ export class Header implements ComponentInterface {
     this.scrollEl!.addEventListener('scroll', this.contentScrollCallback);
 
     writeTask(() => {
-      const title = cloneElement('ion-title') as HTMLIonTitleElement;
-      title.size = 'large';
-      cloneElement('ion-back-button');
-
       if (this.collapsibleMainHeader !== undefined) {
         this.collapsibleMainHeader.classList.add('header-collapse-main');
       }

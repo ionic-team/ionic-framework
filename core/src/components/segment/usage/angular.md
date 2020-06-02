@@ -21,10 +21,10 @@
 
 <!-- Segment with anchors -->
 <ion-segment (ionChange)="segmentChanged($event)">
-  <ion-segment-button href="#dogs" value="dogs">
+  <ion-segment-button value="dogs">
     <ion-label>Dogs</ion-label>
   </ion-segment-button>
-  <ion-segment-button href="#cats" value="cats">
+  <ion-segment-button value="cats">
     <ion-label>Cats</ion-label>
   </ion-segment-button>
 </ion-segment>

@@ -44,7 +44,7 @@
 ```
 
 
-## Activating Tabs
+### Activating Tabs
 
 Each `ion-tab-button` will activate one of the tabs when pressed. In order to link the `ion-tab-button` to the `ion-tab` container, a matching `tab` property should be set on each component.
 

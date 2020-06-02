@@ -79,6 +79,9 @@
 
   position: relative;
 
+  align-items: center;
+  justify-content: space-between;
+
   outline: none;
 
   color: var(--color);
@@ -87,9 +90,9 @@
 
   text-align: initial;
   text-decoration: none;
-  box-sizing: border-box;
 
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 
@@ -202,8 +205,8 @@
   display: flex;
   position: relative;
 
-  align-items: center;
-  justify-content: space-between;
+  align-items: inherit;
+  justify-content: inherit;
 
   width: 100%;
   min-height: var(--min-height);
@@ -313,9 +316,8 @@ button, a {
 // Item Input
 // --------------------------------------------------
 
-:host([vertical-align-top]),
 :host(.item-input) {
-  align-items: flex-start;
+  align-items: center;
 }
 
 .input-wrapper {
@@ -323,17 +325,18 @@ button, a {
 
   flex: 1;
   flex-direction: inherit;
+
   align-items: inherit;
   align-self: stretch;
 
   text-overflow: ellipsis;
 
-  overflow: hidden;
+  overflow: inherit;
   box-sizing: border-box;
 }
 
-:host(.item-label-stacked) .item-native,
-:host(.item-label-floating) .item-native {
+:host(.item-label-stacked),
+:host(.item-label-floating) {
   align-items: start;
 }
 
