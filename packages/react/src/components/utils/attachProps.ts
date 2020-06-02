@@ -62,7 +62,7 @@ export const getClassName = (classList: DOMTokenList, newProps: any, oldProps: a
  * @license Modernizr 3.0.0pre (Custom Build) | MIT
  */
 export const isCoveredByReact = (eventNameSuffix: string, doc?: Document) => {
-  if (typeof document === "undefined") {
+  if (typeof document === 'undefined') {
     return true;
   }
   doc = document;
