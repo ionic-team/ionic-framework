@@ -1,11 +1,24 @@
 import { browser, element, by } from 'protractor';
-import { handleErrorMessages, setProperty, getText, waitTime } from './utils';
+import { handleErrorMessages, getProperty, setProperty, getText, waitTime } from './utils';
 
 describe('form', () => {
 
   afterEach(() => {
     return handleErrorMessages();
   });
+
+  describe('status updates', () => {
+    beforeEach(async () => {
+      await browser.get('/form');
+      await waitTime(30);
+    });
+
+    it('should update when calling status methods programatically', async () => {
+      await element(by.css('form #input-touched')).click();
+      const classList = await getProperty('#touched-input-test', 'classList');
+      expect(classList.contains('ion-touched')).toEqual(true);
+    });
+  }
 
   describe('change', () => {
     beforeEach(async () => {
