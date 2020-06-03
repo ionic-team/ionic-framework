@@ -12,7 +12,10 @@ import { ValueAccessor } from './value-accessor';
       useExisting: RadioValueAccessor,
       multi: true
     }
-  ]
+  ],
+  host: {
+    "[attr.ion-ng-state-sync]": "_syncControlState(_ngControl?.dirty, _ngControl?.touched)"
+  }
 })
 export class RadioValueAccessor extends ValueAccessor {
 

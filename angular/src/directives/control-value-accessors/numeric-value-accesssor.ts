@@ -12,7 +12,10 @@ import { ValueAccessor } from './value-accessor';
       useExisting: NumericValueAccessor,
       multi: true
     }
-  ]
+  ],
+  host: {
+    "[attr.ion-ng-state-sync]": "_syncControlState(_ngControl?.dirty, _ngControl?.touched)"
+  }
 })
 export class NumericValueAccessor extends ValueAccessor {
 

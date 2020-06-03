@@ -12,7 +12,10 @@ import { ValueAccessor, setIonicClasses } from './value-accessor';
       useExisting: BooleanValueAccessor,
       multi: true
     }
-  ]
+  ],
+  host: {
+    "[attr.ion-ng-state-sync]": "_syncControlState(_ngControl?.dirty, _ngControl?.touched)"
+  }
 })
 export class BooleanValueAccessor extends ValueAccessor {
 

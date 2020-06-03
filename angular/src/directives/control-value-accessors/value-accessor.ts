@@ -10,8 +10,11 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   private onTouched: () => void = () => {/**/};
   protected lastValue: any;
   private statusChangeSubscription: Subscription;
+  private controlState: {dirty?: boolean, touched?: boolean} = {};
 
   constructor(protected injector: Injector, protected el: ElementRef) {}
+
+  _ngControl: NgControl | undefined;
 
   writeValue(value: any) {
     /**
@@ -43,6 +46,17 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
     }
   }
 
+  _syncControlState(dirty: boolean, touched: boolean): null {
+
+    if (this.controlState.dirty !== dirty || this.controlState.touched !== touched) {
+      this.controlState.dirty = dirty;
+      this.controlState.touched = touched;
+      setIonicClasses(this.el);
+    }
+
+    return null;
+  }
+
   registerOnChange(fn: (value: any) => void) {
     this.onChange = fn;
   }
@@ -56,13 +70,14 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
-    const ngControl = this.injector.get(NgControl, null);
-    if (ngControl && ngControl.statusChanges) {
-      this.statusChangeSubscription = ngControl.statusChanges.subscribe(() => setIonicClasses(this.el));
+    this._ngControl = this.injector.get(NgControl, null);
+    if (this._ngControl && this._ngControl.statusChanges) {
+      this.statusChangeSubscription = this._ngControl.statusChanges.subscribe(() => setIonicClasses(this.el));
     }
   }
 
   ngOnDestroy() {
+    this._ngControl = undefined;
     if (this.statusChangeSubscription && !this.statusChangeSubscription.closed) {
       this.statusChangeSubscription.unsubscribe();
     }
