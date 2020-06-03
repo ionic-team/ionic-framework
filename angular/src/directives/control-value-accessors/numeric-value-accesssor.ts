@@ -14,7 +14,7 @@ import { ValueAccessor } from './value-accessor';
     }
   ],
   host: {
-    "[attr.ion-ng-state-sync]": "_syncControlState(_ngControl?.dirty, _ngControl?.touched)"
+    '[attr.ion-ng-state-sync]': '_syncControlState(_ngControl?.dirty, _ngControl?.touched)'
   }
 })
 export class NumericValueAccessor extends ValueAccessor {
