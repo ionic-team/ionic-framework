@@ -1,15 +1,15 @@
-import { ElementRef, HostListener } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import { AfterViewInit, ElementRef, HostListener, Injector } from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 import { raf } from '../../util/util';
 
-export class ValueAccessor implements ControlValueAccessor {
+export class ValueAccessor implements ControlValueAccessor, AfterViewInit {
 
   private onChange: (value: any) => void = () => {/**/};
   private onTouched: () => void = () => {/**/};
   protected lastValue: any;
 
-  constructor(protected el: ElementRef) {}
+  constructor(protected injector: Injector, protected el: ElementRef) {}
 
   writeValue(value: any) {
     /**
@@ -51,6 +51,35 @@ export class ValueAccessor implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean) {
     this.el.nativeElement.disabled = isDisabled;
+  }
+
+  ngAfterViewInit() {
+    // TODO fix the any types here
+    const ngControl = this.injector.get<any>(NgControl as any, null);
+    const formControl = ngControl.form;
+
+    /**
+     * TODO Remove this in favor of https://github.com/angular/angular/issues/10887
+     * whenever it is implemented. Currently, Ionic's form status classes
+     * do not react to changes when developers manually call
+     * Angular form control methods such as markAsTouched.
+     * This results in Ionic's form status classes being out
+     * of sync with the ng form status classes.
+     * This patches the methods to manually sync
+     * the classes until this feature is implemented in Angular.
+     */
+    if (ngControl && formControl) {
+      const methodsToPatch = ['markAsTouched', 'markAllAsTouched', 'markAsUntouched', 'markAsDirty', 'markAsPristine', 'markAsPending'];
+      methodsToPatch.forEach(method => {
+       if (formControl[method]) {
+         const oldFn = formControl[method].bind(formControl);
+         formControl[method] = (...params) => {
+           oldFn(...params);
+           setIonicClasses(this.el);
+          };
+        }
+      });
+    }
   }
 }
 

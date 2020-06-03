@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Injector } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ValueAccessor, setIonicClasses } from './value-accessor';
@@ -16,8 +16,8 @@ import { ValueAccessor, setIonicClasses } from './value-accessor';
 })
 export class BooleanValueAccessor extends ValueAccessor {
 
-  constructor(el: ElementRef) {
-    super(el);
+  constructor(injector: Injector, el: ElementRef) {
+    super(injector, el);
   }
 
   writeValue(value: any) {
