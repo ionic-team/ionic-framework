@@ -1,4 +1,4 @@
-import { AfterViewInit, ElementRef, HostListener, Injector, OnDestroy } from '@angular/core';
+import { AfterViewInit, ElementRef, HostListener, Injector, OnDestroy, Type } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -62,7 +62,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
-    const ngControl = this.injector.get<NgControl>(NgControl);
+    const ngControl = this.injector.get<NgControl>(NgControl as Type<NgControl>);
 
     // Listen for changes in validity, disabled, or pending states
     if (ngControl.statusChanges) {
