@@ -12,8 +12,8 @@ ion-action-sheet,prop,mode,"ios" | "md",undefined,false,false
 ion-action-sheet,prop,subHeader,string | undefined,undefined,false,false
 ion-action-sheet,prop,translucent,boolean,false,false,false
 ion-action-sheet,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-action-sheet,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-action-sheet,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-action-sheet,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-action-sheet,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-action-sheet,method,present,present() => Promise<void>
 ion-action-sheet,event,ionActionSheetDidDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetDidPresent,void,true
@@ -58,8 +58,8 @@ ion-alert,prop,mode,"ios" | "md",undefined,false,false
 ion-alert,prop,subHeader,string | undefined,undefined,false,false
 ion-alert,prop,translucent,boolean,false,false,false
 ion-alert,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-alert,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-alert,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-alert,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-alert,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-alert,method,present,present() => Promise<void>
 ion-alert,event,ionAlertDidDismiss,OverlayEventDetail<any>,true
 ion-alert,event,ionAlertDidPresent,void,true
@@ -612,8 +612,8 @@ ion-loading,prop,showBackdrop,boolean,true,false,false
 ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
 ion-loading,prop,translucent,boolean,false,false,false
 ion-loading,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-loading,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-loading,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-loading,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-loading,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,present,present() => Promise<void>
 ion-loading,event,ionLoadingDidDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingDidPresent,void,true
@@ -695,8 +695,8 @@ ion-modal,prop,presentingElement,HTMLElement | undefined,undefined,false,false
 ion-modal,prop,showBackdrop,boolean,true,false,false
 ion-modal,prop,swipeToClose,boolean,false,false,false
 ion-modal,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-modal,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-modal,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-modal,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-modal,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-modal,method,present,present() => Promise<void>
 ion-modal,event,ionModalDidDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalDidPresent,void,true
@@ -761,8 +761,8 @@ ion-picker,prop,mode,"ios" | "md",undefined,false,false
 ion-picker,prop,showBackdrop,boolean,true,false,false
 ion-picker,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-picker,method,getColumn,getColumn(name: string) => Promise<PickerColumn | undefined>
-ion-picker,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-picker,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-picker,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-picker,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-picker,method,present,present() => Promise<void>
 ion-picker,event,ionPickerDidDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerDidPresent,void,true
@@ -796,8 +796,8 @@ ion-popover,prop,mode,"ios" | "md",undefined,false,false
 ion-popover,prop,showBackdrop,boolean,true,false,false
 ion-popover,prop,translucent,boolean,false,false,false
 ion-popover,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-popover,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-popover,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-popover,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-popover,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-popover,method,present,present() => Promise<void>
 ion-popover,event,ionPopoverDidDismiss,OverlayEventDetail<any>,true
 ion-popover,event,ionPopoverDidPresent,void,true
@@ -1242,8 +1242,8 @@ ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,translucent,boolean,false,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-toast,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-toast,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-toast,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-toast,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-toast,method,present,present() => Promise<void>
 ion-toast,event,ionToastDidDismiss,OverlayEventDetail<any>,true
 ion-toast,event,ionToastDidPresent,void,true
