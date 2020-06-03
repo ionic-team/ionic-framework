@@ -1,13 +1,15 @@
-import { AfterViewInit, ElementRef, HostListener, Injector } from '@angular/core';
+import { AfterViewInit, ElementRef, HostListener, Injector, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { raf } from '../../util/util';
 
-export class ValueAccessor implements ControlValueAccessor, AfterViewInit {
+export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
   private onChange: (value: any) => void = () => {/**/};
   private onTouched: () => void = () => {/**/};
   protected lastValue: any;
+  private statusChanges?: Subscription;
 
   constructor(protected injector: Injector, protected el: ElementRef) {}
 
@@ -53,10 +55,21 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit {
     this.el.nativeElement.disabled = isDisabled;
   }
 
+  ngOnDestroy() {
+    if (this.statusChanges) {
+      this.statusChanges.unsubscribe();
+    }
+  }
+
   ngAfterViewInit() {
     // TODO fix the any types here
     const ngControl = this.injector.get<any>(NgControl as any, null);
-    const formControl = ngControl.form;
+    if (!ngControl) return;
+
+    // Listen for changes in validity, disabled, or pending states
+    if (ngControl.statusChanges) {
+      this.statusChanges = ngControl.statusChanges.subscribe(() => setIonicClasses(this.el));
+    }
 
     /**
      * TODO Remove this in favor of https://github.com/angular/angular/issues/10887
@@ -68,8 +81,9 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit {
      * This patches the methods to manually sync
      * the classes until this feature is implemented in Angular.
      */
-    if (ngControl && formControl) {
-      const methodsToPatch = ['markAsTouched', 'markAllAsTouched', 'markAsUntouched', 'markAsDirty', 'markAsPristine', 'markAsPending'];
+    const formControl = ngControl.form;
+    if (formControl) {
+      const methodsToPatch = ['markAsTouched', 'markAllAsTouched', 'markAsUntouched', 'markAsDirty', 'markAsPristine', 'setErrors'];
       methodsToPatch.forEach(method => {
        if (formControl[method]) {
          const oldFn = formControl[method].bind(formControl);
