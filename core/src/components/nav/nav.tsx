@@ -629,6 +629,16 @@ export class Nav implements NavOutlet {
       const requiresTransition =
         (ti.enteringRequiresTransition || ti.leavingRequiresTransition) &&
         enteringView !== leavingView;
+      if (requiresTransition && ti.opts && leavingView) {
+        const isBackDirection = ti.opts.direction === 'back';
+
+        // if heading back, default to using entering page's animation
+        if (isBackDirection) {
+          ti.opts.animationBuilder = ti.opts.animationBuilder || (enteringView && enteringView.animationBuilder);
+        }
+
+        leavingView.animationBuilder = ti.opts.animationBuilder;
+      }
       const result = requiresTransition
         ? await this.transition(enteringView!, leavingView, ti)
         : {
