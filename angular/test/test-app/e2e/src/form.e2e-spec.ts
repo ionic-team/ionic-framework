@@ -13,7 +13,7 @@ describe('form', () => {
       await waitTime(30);
     });
 
-    it('should update when calling status methods programatically', async () => {
+    it('should update Ionic form classes when calling form methods programatically', async () => {
       await element(by.css('form #input-touched')).click();
       const classList = await getProperty('#touched-input-test', 'classList');
       expect(classList.contains('ion-touched')).toEqual(true);

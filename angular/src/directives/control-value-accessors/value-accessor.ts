@@ -62,9 +62,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
-    // TODO fix the any types here
-    const ngControl = this.injector.get<any>(NgControl as any, null);
-    if (!ngControl) { return; }
+    const ngControl = this.injector.get<NgControl>(NgControl);
 
     // Listen for changes in validity, disabled, or pending states
     if (ngControl.statusChanges) {
