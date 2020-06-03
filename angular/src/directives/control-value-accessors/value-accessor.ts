@@ -10,11 +10,11 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   private onTouched: () => void = () => {/**/};
   protected lastValue: any;
   private statusChangeSubscription: Subscription;
-  private controlState: {dirty?: boolean, touched?: boolean} = {};
 
   constructor(protected injector: Injector, protected el: ElementRef) {}
 
   _ngControl: NgControl | undefined;
+  _controlState: {dirty?: boolean | null, touched?: boolean | null} = { dirty: null, touched: null };
 
   writeValue(value: any) {
     /**
@@ -46,11 +46,11 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
     }
   }
 
-  _syncControlState(dirty: boolean, touched: boolean): null {
+  _syncControlState(): null {
 
-    if (this.controlState.dirty !== dirty || this.controlState.touched !== touched) {
-      this.controlState.dirty = dirty;
-      this.controlState.touched = touched;
+    if (this._ngControl && (this._controlState.dirty !== this._ngControl.dirty || this._controlState.touched !== this._ngControl.touched)) {
+      this._controlState.dirty = this._ngControl.dirty;
+      this._controlState.touched = this._ngControl.touched;
       setIonicClasses(this.el);
     }
 
@@ -70,7 +70,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
-    this._ngControl = this.injector.get(NgControl, null);
+    this._ngControl = this.injector.get(NgControl, null); // tslint:disable-line deprecation
     if (this._ngControl && this._ngControl.statusChanges) {
       this.statusChangeSubscription = this._ngControl.statusChanges.subscribe(() => setIonicClasses(this.el));
     }
