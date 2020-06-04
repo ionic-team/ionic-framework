@@ -632,7 +632,10 @@ export class Nav implements NavOutlet {
       if (requiresTransition && ti.opts && leavingView) {
         const isBackDirection = ti.opts.direction === 'back';
 
-        // if heading back, default to using entering page's animation
+        /**
+         * If heading back, use the entering page's animation
+         * unless otherwise specified by the developer.
+         */
         if (isBackDirection) {
           ti.opts.animationBuilder = ti.opts.animationBuilder || (enteringView && enteringView.animationBuilder);
         }
