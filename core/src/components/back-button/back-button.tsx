@@ -105,7 +105,6 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     ev.preventDefault();
 
     if (nav && await nav.canGoBack()) {
-      // TODO
       return nav.pop({ animationBuilder: this.routerAnimation, skipIfBusy: true });
     }
     return openURL(this.defaultHref, ev, 'back', this.routerAnimation);
