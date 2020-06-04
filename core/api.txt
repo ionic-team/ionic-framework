@@ -119,7 +119,9 @@ ion-back-button,css-prop,--padding-start
 ion-back-button,css-prop,--padding-top
 ion-back-button,css-prop,--ripple-color
 ion-back-button,css-prop,--transition
+ion-back-button,part,icon
 ion-back-button,part,native
+ion-back-button,part,text
 
 ion-backdrop,shadow
 ion-backdrop,prop,stopPropagation,boolean,true,false,false

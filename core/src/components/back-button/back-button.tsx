@@ -10,6 +10,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML button element that is rendered around the content.
+ * @part icon - The back button icon (uses ion-icon).
+ * @part text - The back button text.
  */
 @Component({
   tag: 'ion-back-button',
@@ -136,8 +138,8 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           aria-label={backButtonText || 'back'}
         >
           <span class="button-inner">
-            {backButtonIcon && <ion-icon icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
-            {backButtonText && <span aria-hidden="true" class="button-text">{backButtonText}</span>}
+            {backButtonIcon && <ion-icon part="icon" icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
+            {backButtonText && <span part="text" aria-hidden="true" class="button-text">{backButtonText}</span>}
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </button>

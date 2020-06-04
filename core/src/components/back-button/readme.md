@@ -316,7 +316,9 @@ export class BackButtonExample {
 
 | Part       | Description                                                         |
 | ---------- | ------------------------------------------------------------------- |
+| `"icon"`   | The back button icon (uses ion-icon).                               |
 | `"native"` | The native HTML button element that is rendered around the content. |
+| `"text"`   | The back button text.                                               |
 
 
 ## CSS Custom Properties
