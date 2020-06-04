@@ -796,9 +796,10 @@ export class SegmentButtonExample {
 
 ## Shadow Parts
 
-| Part       | Description                                                         |
-| ---------- | ------------------------------------------------------------------- |
-| `"native"` | The native HTML button element that is rendered around the content. |
+| Part          | Description                                                         |
+| ------------- | ------------------------------------------------------------------- |
+| `"indicator"` | The indicator displayed on the checked segment button.              |
+| `"native"`    | The native HTML button element that is rendered around the content. |
 
 
 ## CSS Custom Properties

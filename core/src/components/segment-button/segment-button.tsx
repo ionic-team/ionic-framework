@@ -11,6 +11,7 @@ let ids = 0;
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML button element that is rendered around the content.
+ * @part indicator - The indicator displayed on the checked segment button.
  */
 @Component({
   tag: 'ion-segment-button',

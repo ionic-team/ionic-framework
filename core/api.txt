@@ -1038,6 +1038,7 @@ ion-segment-button,css-prop,--padding-end
 ion-segment-button,css-prop,--padding-start
 ion-segment-button,css-prop,--padding-top
 ion-segment-button,css-prop,--transition
+ion-segment-button,part,indicator
 ion-segment-button,part,native
 
 ion-select,shadow
