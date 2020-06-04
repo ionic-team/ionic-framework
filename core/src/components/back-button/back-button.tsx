@@ -8,6 +8,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML button element that is rendered around the content.
  */
 @Component({
   tag: 'ion-back-button',
@@ -126,7 +128,13 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'show-back-button': showBackButton
         }}
       >
-        <button type={type} disabled={disabled} class="button-native" aria-label={backButtonText || 'back'}>
+        <button
+          type={type}
+          disabled={disabled}
+          class="button-native"
+          part="native"
+          aria-label={backButtonText || 'back'}
+        >
           <span class="button-inner">
             {backButtonIcon && <ion-icon icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
             {backButtonText && <span aria-hidden="true" class="button-text">{backButtonText}</span>}

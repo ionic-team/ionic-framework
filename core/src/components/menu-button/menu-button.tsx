@@ -8,6 +8,11 @@ import { menuController } from '../../utils/menu-controller';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { updateVisibility } from '../menu-toggle/menu-toggle-util';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML button element that is rendered around the content.
+ */
 @Component({
   tag: 'ion-menu-button',
   styleUrls: {
@@ -95,6 +100,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           {...attrs}
           disabled={disabled}
           class="button-native"
+          part="native"
           aria-label="menu"
         >
           <span class="button-inner">

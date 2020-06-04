@@ -9,6 +9,8 @@ let ids = 0;
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML button element that is rendered around the content.
  */
 @Component({
   tag: 'ion-segment-button',
@@ -103,6 +105,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           type={type}
           aria-pressed={checked ? 'true' : 'false'}
           class="button-native"
+          part="native"
           disabled={disabled}
         >
           <span class="button-inner">

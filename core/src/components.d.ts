@@ -1254,6 +1254,10 @@ export namespace Components {
          */
         "menu"?: string;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * The type of the button.
          */
         "type": "submit" | "reset" | "button";
@@ -4500,6 +4504,10 @@ declare namespace LocalJSX {
           * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
          */
         "menu"?: string;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
         /**
           * The type of the button.
          */

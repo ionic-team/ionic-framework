@@ -162,6 +162,13 @@ export class FabButtonExample {
 | `ionFocus` | Emitted when the button has focus.   | `CustomEvent<void>` |
 
 
+## Shadow Parts
+
+| Part       | Description                                                         |
+| ---------- | ------------------------------------------------------------------- |
+| `"native"` | The native HTML button element that is rendered around the content. |
+
+
 ## CSS Custom Properties
 
 | Name                             | Description                                                                                               |

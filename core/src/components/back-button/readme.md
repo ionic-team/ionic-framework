@@ -312,6 +312,13 @@ export class BackButtonExample {
 | `type`        | `type`         | The type of the button.                                                                                                                                                                                                                                                | `"button" \| "reset" \| "submit"` | `'button'`  |
 
 
+## Shadow Parts
+
+| Part       | Description                                                         |
+| ---------- | ------------------------------------------------------------------- |
+| `"native"` | The native HTML button element that is rendered around the content. |
+
+
 ## CSS Custom Properties
 
 | Name                           | Description                                                                                                    |

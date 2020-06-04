@@ -7,6 +7,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML button element that is rendered around the content.
  */
 @Component({
   tag: 'ion-fab-button',
@@ -144,6 +146,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
         <TagType
           {...attrs}
           class="button-native"
+          part="native"
           disabled={disabled}
           onFocus={this.onFocus}
           onBlur={this.onBlur}

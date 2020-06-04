@@ -119,6 +119,7 @@ ion-back-button,css-prop,--padding-start
 ion-back-button,css-prop,--padding-top
 ion-back-button,css-prop,--ripple-color
 ion-back-button,css-prop,--transition
+ion-back-button,part,native
 
 ion-backdrop,shadow
 ion-backdrop,prop,stopPropagation,boolean,true,false,false
@@ -177,6 +178,7 @@ ion-button,css-prop,--padding-start
 ion-button,css-prop,--padding-top
 ion-button,css-prop,--ripple-color
 ion-button,css-prop,--transition
+ion-button,part,native
 
 ion-buttons,scoped
 ion-buttons,prop,collapse,boolean,false,false,false
@@ -387,6 +389,7 @@ ion-fab-button,css-prop,--padding-start
 ion-fab-button,css-prop,--padding-top
 ion-fab-button,css-prop,--ripple-color
 ion-fab-button,css-prop,--transition
+ion-fab-button,part,native
 
 ion-fab-list,shadow
 ion-fab-list,prop,activated,boolean,false,false,false
@@ -561,6 +564,7 @@ ion-item-option,prop,target,string | undefined,undefined,false,false
 ion-item-option,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item-option,css-prop,--background
 ion-item-option,css-prop,--color
+ion-item-option,part,native
 
 ion-item-options,none
 ion-item-options,prop,side,"end" | "start",'end',false,false
@@ -662,6 +666,7 @@ ion-menu-button,prop,autoHide,boolean,true,false,false
 ion-menu-button,prop,color,string | undefined,undefined,false,false
 ion-menu-button,prop,disabled,boolean,false,false,false
 ion-menu-button,prop,menu,string | undefined,undefined,false,false
+ion-menu-button,prop,mode,"ios" | "md",undefined,false,false
 ion-menu-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-menu-button,css-prop,--background
 ion-menu-button,css-prop,--background-focused
@@ -676,6 +681,7 @@ ion-menu-button,css-prop,--padding-bottom
 ion-menu-button,css-prop,--padding-end
 ion-menu-button,css-prop,--padding-start
 ion-menu-button,css-prop,--padding-top
+ion-menu-button,part,native
 
 ion-menu-toggle,shadow
 ion-menu-toggle,prop,autoHide,boolean,true,false,false
@@ -1029,6 +1035,7 @@ ion-segment-button,css-prop,--padding-end
 ion-segment-button,css-prop,--padding-start
 ion-segment-button,css-prop,--padding-top
 ion-segment-button,css-prop,--transition
+ion-segment-button,part,native
 
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false
@@ -1166,6 +1173,7 @@ ion-tab-button,css-prop,--padding-end
 ion-tab-button,css-prop,--padding-start
 ion-tab-button,css-prop,--padding-top
 ion-tab-button,css-prop,--ripple-color
+ion-tab-button,part,native
 
 ion-tabs,shadow
 ion-tabs,method,getSelected,getSelected() => Promise<string | undefined>
