@@ -22,6 +22,7 @@ Menu Button is component that automatically creates the icon and functionality t
 
 | Part       | Description                                                         |
 | ---------- | ------------------------------------------------------------------- |
+| `"icon"`   | The menu button icon (uses ion-icon).                               |
 | `"native"` | The native HTML button element that is rendered around the content. |
 
 

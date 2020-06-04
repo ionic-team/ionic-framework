@@ -683,6 +683,7 @@ ion-menu-button,css-prop,--padding-bottom
 ion-menu-button,css-prop,--padding-end
 ion-menu-button,css-prop,--padding-start
 ion-menu-button,css-prop,--padding-top
+ion-menu-button,part,icon
 ion-menu-button,part,native
 
 ion-menu-toggle,shadow

@@ -12,6 +12,7 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML button element that is rendered around the content.
+ * @part icon - The menu button icon (uses ion-icon).
  */
 @Component({
   tag: 'ion-menu-button',
@@ -105,7 +106,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
         >
           <span class="button-inner">
             <slot>
-              <ion-icon icon={menuIcon} mode={mode} lazy={false} aria-hidden="true"></ion-icon>
+              <ion-icon part="icon" icon={menuIcon} mode={mode} lazy={false} aria-hidden="true"></ion-icon>
             </slot>
           </span>
           {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}
