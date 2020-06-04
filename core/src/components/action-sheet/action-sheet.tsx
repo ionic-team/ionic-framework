@@ -139,7 +139,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the action sheet did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionActionSheetDidDismiss');
   }
 
@@ -148,7 +148,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    *
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionActionSheetWillDismiss');
   }
 

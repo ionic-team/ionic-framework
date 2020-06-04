@@ -34,7 +34,7 @@ const calcScrollData = (
 
   // compute safe area
   const safeAreaTop = visibleAreaTop + 15;
-  const safeAreaBottom = visibleAreaBottom * 0.5;
+  const safeAreaBottom = visibleAreaBottom - 15;
 
   // figure out if each edge of the input is within the safe area
   const distanceToBottom = safeAreaBottom - inputBottom;

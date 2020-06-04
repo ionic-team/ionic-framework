@@ -108,6 +108,16 @@ export const AlertExample: React.FC = () => {
             {
               name: 'name7',
               type: 'number'
+            },
+            {
+              name: 'name8',
+              type: 'password',
+              placeholder: 'Advanced Attributes',
+              cssClass: 'specialClass',
+              attributes: {
+                maxlength: 4,
+                inputmode: 'decimal'
+              }
             }
           ]}
           buttons={[

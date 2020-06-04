@@ -55,11 +55,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the action sheet did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the action sheet will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the action sheet overlay after it has been created.
@@ -128,11 +128,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the alert did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the alert will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the alert overlay after it has been created.
@@ -561,7 +561,7 @@ export namespace Components {
          */
         "dayNames"?: string[] | string;
         /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
          */
         "dayShortNames"?: string[] | string;
         /**
@@ -1159,11 +1159,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the loading did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the loading will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the loading overlay after it has been created.
@@ -1315,11 +1315,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the modal did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the modal will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the modal overlay after it has been created.
@@ -1528,11 +1528,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the picker did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the picker will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the picker overlay after it has been created.
@@ -1600,11 +1600,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the popover did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the popover will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the popover overlay after it has been created.
@@ -2508,11 +2508,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the toast did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the toast will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * The position of the toast on the screen.
@@ -3805,7 +3805,7 @@ declare namespace LocalJSX {
          */
         "dayNames"?: string[] | string;
         /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
          */
         "dayShortNames"?: string[] | string;
         /**
