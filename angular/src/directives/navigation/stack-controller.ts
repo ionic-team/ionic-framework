@@ -113,29 +113,22 @@ export class StackController {
      * unless the developer explicitly
      * provided another animation.
      */
-    const customAnimation = (
-      enteringView &&
-      enteringView.state &&
-      enteringView.state._ionAnimation
-    );
+    const customAnimation = enteringView.animationBuilder;
     if (
       animationBuilder === undefined &&
       direction === 'back' &&
       !tabSwitch &&
-      customAnimation
+      customAnimation !== undefined
     ) {
       animationBuilder = customAnimation;
     }
 
     /**
-     * Save any custom animation to NavigationExtras so that
-     * navigating back will use this custom animation by default.
+     * Save any custom animation so that navigating
+     * back will use this custom animation by default.
      */
     if (animationBuilder !== undefined && leavingView) {
-      leavingView.state = {
-          ...leavingView.state,
-          _ionAnimation: animationBuilder
-      }
+      leavingView.animationBuilder = animationBuilder;
     }
 
     // Wait until previous transitions finish
