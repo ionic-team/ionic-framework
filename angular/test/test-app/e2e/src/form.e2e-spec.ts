@@ -15,6 +15,7 @@ describe('form', () => {
 
     it('should update Ionic form classes when calling form methods programatically', async () => {
       await element(by.css('form #input-touched')).click();
+      await waitTime(100);
       const classList = (await getProperty('#touched-input-test', 'classList')) as string[];
       expect(classList.includes('ion-touched')).toEqual(true);
     });
