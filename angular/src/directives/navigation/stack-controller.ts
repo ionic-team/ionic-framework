@@ -114,11 +114,9 @@ export class StackController {
      * provided another animation.
      */
     const customAnimation = (
-      currentNavigation &&
-      currentNavigation.previousNavigation &&
-      currentNavigation.previousNavigation.extras &&
-      currentNavigation.previousNavigation.extras.state &&
-      currentNavigation.previousNavigation.extras.state._ionAnimation
+      enteringView &&
+      enteringView.state &&
+      enteringView.state._ionAnimation
     );
     if (
       animationBuilder === undefined &&
@@ -133,8 +131,11 @@ export class StackController {
      * Save any custom animation to NavigationExtras so that
      * navigating back will use this custom animation by default.
      */
-    if (animationBuilder !== undefined) {
-      currentNavigation.extras.state = { ...currentNavigation.extras.state, _ionAnimation: animationBuilder };
+    if (animationBuilder !== undefined && leavingView) {
+      leavingView.state = {
+          ...leavingView.state,
+          _ionAnimation: animationBuilder
+      }
     }
 
     // Wait until previous transitions finish

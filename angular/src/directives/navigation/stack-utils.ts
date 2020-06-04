@@ -96,4 +96,5 @@ export interface RouteView {
   savedData?: any;
   savedExtras?: NavigationExtras;
   unlistenEvents: () => void;
+  state?: any;
 }
