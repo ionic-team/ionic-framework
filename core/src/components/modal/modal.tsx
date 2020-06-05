@@ -227,7 +227,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the modal did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionModalDidDismiss');
   }
 
@@ -235,7 +235,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the modal will dismiss.
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionModalWillDismiss');
   }
 

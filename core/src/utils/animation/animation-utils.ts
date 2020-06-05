@@ -1,5 +1,7 @@
 import { AnimationKeyFrames } from './animation-interface';
 
+let animationPrefix: string | undefined;
+
 /**
  * Web Animations requires hyphenated CSS properties
  * to be written in camelCase when animating
@@ -32,8 +34,6 @@ export const processKeyframes = (keyframes: AnimationKeyFrames) => {
 const convertCamelCaseToHypen = (str: string) => {
   return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 };
-
-let animationPrefix: string | undefined;
 
 export const getAnimationPrefix = (el: HTMLElement): string => {
   if (animationPrefix === undefined) {

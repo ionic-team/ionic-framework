@@ -69,9 +69,9 @@ const HapticEngine = {
       return;
     }
     if (this.isCapacitor()) {
-      engine.selectionChanged();
+      engine.selectionEnd();
     } else {
-      engine.gestureSelectionChanged();
+      engine.gestureSelectionEnd();
     }
   }
 };

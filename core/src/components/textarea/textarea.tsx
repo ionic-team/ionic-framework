@@ -345,7 +345,7 @@ export class Textarea implements ComponentInterface {
             placeholder={this.placeholder || ''}
             readOnly={this.readonly}
             required={this.required}
-            spellCheck={this.spellcheck}
+            spellcheck={this.spellcheck ? 'true' : undefined}
             cols={this.cols}
             rows={this.rows}
             wrap={this.wrap}

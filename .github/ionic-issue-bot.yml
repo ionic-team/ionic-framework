@@ -75,8 +75,10 @@ stale:
   days: 365
   maxIssuesPerRun: 100
   exemptLabels:
-    - good first issue
-    - triage
+    - "good first issue"
+    - "triage"
+    - "type: bug"
+    - "type: feature request"
   exemptAssigned: true
   exemptProjects: true
   exemptMilestones: true

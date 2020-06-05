@@ -179,6 +179,7 @@ export class Datetime implements ComponentInterface {
   /**
    * Short abbreviated day of the week names. This can be used to provide
    * locale names for each day in the week. Defaults to English.
+   * Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
    */
   @Prop() dayShortNames?: string[] | string;
 

@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController, } from "./interface";
-import { IonicSafeString, } from ".";
+import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController, } from "./interface";
+import { IonicSafeString, } from "./utils/sanitization";
 import { SelectCompareFn, } from "./components/select/select-interface";
 export namespace Components {
     interface IonActionSheet {
@@ -55,11 +55,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the action sheet did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the action sheet will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the action sheet overlay after it has been created.
@@ -128,11 +128,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the alert did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the alert will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the alert overlay after it has been created.
@@ -561,7 +561,7 @@ export namespace Components {
          */
         "dayNames"?: string[] | string;
         /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
          */
         "dayShortNames"?: string[] | string;
         /**
@@ -815,7 +815,7 @@ export namespace Components {
         /**
           * Indicates whether the value of the control can be automatically completed by the browser.
          */
-        "autocomplete": "on" | "off";
+        "autocomplete": AutocompleteTypes;
         /**
           * Whether auto correction should be enabled when the user is entering/editing the text value.
          */
@@ -1159,11 +1159,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the loading did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the loading will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the loading overlay after it has been created.
@@ -1315,11 +1315,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the modal did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the modal will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the modal overlay after it has been created.
@@ -1528,11 +1528,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the picker did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the picker will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the picker overlay after it has been created.
@@ -1600,11 +1600,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the popover did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the popover will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the popover overlay after it has been created.
@@ -1915,7 +1915,7 @@ export namespace Components {
         /**
           * Set the input's autocomplete property.
          */
-        "autocomplete": "on" | "off";
+        "autocomplete": AutocompleteTypes;
         /**
           * Set the input's autocorrect property.
          */
@@ -2510,11 +2510,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the toast did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the toast will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * The position of the toast on the screen.
@@ -3801,7 +3801,7 @@ declare namespace LocalJSX {
          */
         "dayNames"?: string[] | string;
         /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
          */
         "dayShortNames"?: string[] | string;
         /**
@@ -4083,7 +4083,7 @@ declare namespace LocalJSX {
         /**
           * Indicates whether the value of the control can be automatically completed by the browser.
          */
-        "autocomplete"?: "on" | "off";
+        "autocomplete"?: AutocompleteTypes;
         /**
           * Whether auto correction should be enabled when the user is entering/editing the text value.
          */
@@ -5081,7 +5081,7 @@ declare namespace LocalJSX {
         /**
           * Set the input's autocomplete property.
          */
-        "autocomplete"?: "on" | "off";
+        "autocomplete"?: AutocompleteTypes;
         /**
           * Set the input's autocorrect property.
          */
