@@ -1,11 +1,5 @@
 import { Animation, AnimationBuilder, createAnimation } from '@ionic/core';
-
-export type Axis = 'x' | 'y' | 'z';
-
-export interface AnimationOptions {
-  duration?: number;
-  easing?: string;
-}
+import { AnimationOptions, Axis } from '../';
 
 const createXAxisTransition = (enteringEl: HTMLElement, leavingEl: HTMLElement, backDirection: boolean): Animation[] => {
   const enteringTransition = createAnimation().addElement(enteringEl);
