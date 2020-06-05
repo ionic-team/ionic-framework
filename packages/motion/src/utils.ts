@@ -1,1 +1,1 @@
-export const getElementRoot = (el: HTMLElement, fallback: HTMLElement = el) => return el.shadowRoot || fallback;
+export const getElementRoot = (el: HTMLElement, fallback: HTMLElement = el) => el.shadowRoot || fallback;
