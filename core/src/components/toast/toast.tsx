@@ -257,6 +257,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     const wrapperClass = {
       'toast-wrapper': true,
+      'ion-wrapper': true,
       [`toast-${this.position}`]: true
     };
 

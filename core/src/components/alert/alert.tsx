@@ -482,7 +482,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
         <ion-backdrop tappable={this.backdropDismiss}/>
 
-        <div class="alert-wrapper">
+        <div class="alert-wrapper ion-wrapper">
 
           <div class="alert-head">
             {header && <h2 id={hdrId} class="alert-title">{header}</h2>}

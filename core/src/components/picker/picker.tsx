@@ -236,7 +236,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
           tappable={this.backdropDismiss}
         >
         </ion-backdrop>
-        <div class="picker-wrapper" role="dialog">
+        <div class="picker-wrapper ion-wrapper" role="dialog">
           <div class="picker-toolbar">
             {this.buttons.map(b => (
               <div class={buttonWrapperClass(b)}>

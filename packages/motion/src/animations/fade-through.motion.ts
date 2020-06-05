@@ -25,7 +25,7 @@ const enter = (animationOpts: AnimationOptions, enteringEl: HTMLElement, leaving
   ]);
 
   enteringAnimation.keyframes([
-    { offset: 0, opacity: 0 },
+    { offset: 0, opacity: 0, transform: 'scale(0.92)' },
     { offset: 0.3, opacity: 0, transform: 'scale(0.92)' },
     { offset: 1, opacity: 1, transform: 'scale(1)' },
   ]);

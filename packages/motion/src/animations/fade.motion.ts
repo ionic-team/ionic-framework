@@ -16,7 +16,10 @@ const createBase = (animationOpts: AnimationOptions, enteringEl: HTMLElement): {
 };
 
 const enter = (animationOpts: AnimationOptions, baseEl: HTMLElement): Animation => {
-  const { rootAnimation, elementAnimation } = createBase(animationOpts, baseEl);
+  const root = getElementRoot(baseEl);
+  const wrapper = (root.querySelector('.ion-wrapper') || baseEl) as HTMLElement;
+  const backdrop = root.querySelector('ion-backdrop');
+  const { rootAnimation, elementAnimation } = createBase(animationOpts, wrapper);
 
   elementAnimation.keyframes([
     { offset: 0, opacity: 0, transform: 'scale(0.8)' },
@@ -24,13 +27,10 @@ const enter = (animationOpts: AnimationOptions, baseEl: HTMLElement): Animation 
     { offset: 1, opacity: 1, transform: 'scale(1)' },
   ]);
 
-  const root = getElementRoot(baseEl);
-  const backdrop = root.querySelector('ion-backdrop');
-
   if (backdrop) {
     const backdropAnimation = createAnimation()
       .addElement(backdrop)
-      .fromTo('opacity', '0', '1');
+      .fromTo('opacity', '0', 'var(--backdrop-opacity, 1)');
 
     rootAnimation.addAnimation(backdropAnimation);
   }
@@ -39,20 +39,20 @@ const enter = (animationOpts: AnimationOptions, baseEl: HTMLElement): Animation 
 };
 
 const leave = (animationOpts: AnimationOptions, baseEl: HTMLElement): Animation => {
-  const { rootAnimation, elementAnimation } = createBase(animationOpts, baseEl);
+  const root = getElementRoot(baseEl);
+  const wrapper = (root.querySelector('.ion-wrapper') || baseEl) as HTMLElement;
+  const backdrop = root.querySelector('ion-backdrop');
+  const { rootAnimation, elementAnimation } = createBase(animationOpts, wrapper);
 
   elementAnimation.keyframes([
     { offset: 0, opacity: 1 },
     { offset: 1, opacity: 0 },
   ]);
 
-  const root = getElementRoot(baseEl);
-  const backdrop = root.querySelector('ion-backdrop');
-
   if (backdrop) {
     const backdropAnimation = createAnimation()
       .addElement(backdrop)
-      .fromTo('opacity', '1', '0');
+      .fromTo('opacity', 'var(--backdrop-opacity, 1)', '0');
 
     rootAnimation.addAnimation(backdropAnimation);
   }

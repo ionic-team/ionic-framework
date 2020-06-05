@@ -291,7 +291,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         {mode === 'ios' && <div class="modal-shadow"></div>}
         <div
           role="dialog"
-          class="modal-wrapper"
+          class="modal-wrapper ion-wrapper"
         >
         </div>
       </Host>
