@@ -66,7 +66,7 @@ export const fadeMotionLeave = (animationOpts: AnimationOptions = {}): Animation
 
 export const fadeMotion = (animationOpts: AnimationOptions = {}): AnimationBuilder => (_: HTMLElement, opts: any): Animation => {
   const backDirection = opts.direction === 'back';
-  const { enteringEl } = opts;
+  const { enteringEl, leavingEl } = opts;
 
-  return backDirection ? leave(animationOpts, enteringEl) : enter(animationOpts, enteringEl);
+  return backDirection ? leave(animationOpts, leavingEl) : enter(animationOpts, enteringEl);
 };

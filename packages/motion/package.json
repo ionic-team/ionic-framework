@@ -4,7 +4,7 @@
   "description": "Motion animations for Ionic Framework",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc -p .",
+    "build": "npm run clean && tsc -p . && cp package.json ./dist/package.json",
     "lint": "eslint src/**/*",
     "lint.fix": "npm run lint -- --fix"
   },
