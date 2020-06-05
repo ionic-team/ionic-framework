@@ -391,6 +391,7 @@ ion-fab-button,css-prop,--padding-start
 ion-fab-button,css-prop,--padding-top
 ion-fab-button,css-prop,--ripple-color
 ion-fab-button,css-prop,--transition
+ion-fab-button,part,close-icon
 ion-fab-button,part,native
 
 ion-fab-list,shadow

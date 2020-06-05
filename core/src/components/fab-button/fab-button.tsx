@@ -9,6 +9,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML button element that is rendered around the content.
+ * @part close-icon - The container for the close icon.
  */
 @Component({
   tag: 'ion-fab-button',
@@ -152,7 +153,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           onBlur={this.onBlur}
           onClick={(ev: Event) => openURL(href, ev, this.routerDirection)}
         >
-          <span class="close-icon">
+          <span class="close-icon" part="close-icon">
             <ion-icon name="close" lazy={false}></ion-icon>
           </span>
           <span class="button-inner">
