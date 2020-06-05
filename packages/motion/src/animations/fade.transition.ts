@@ -1,4 +1,5 @@
 import { AnimationOptions } from '../';
+import { getElementRoot } from '../utils';
 import { Animation, AnimationBuilder, createAnimation } from '@ionic/core';
 
 const createBase = (animationOpts: AnimationOptions, enteringEl: HTMLElement): { [key: string]: Animation; } => {
@@ -23,6 +24,17 @@ const enter = (animationOpts: AnimationOptions, baseEl: HTMLElement): Animation 
     { offset: 1, opacity: 1, transform: 'scale(1)' },
   ]);
 
+  const root = getElementRoot(baseEl);
+  const backdrop = root.querySelector('ion-backdrop');
+
+  if (backdrop) {
+    const backdropAnimation = createAnimation()
+      .addElement(backdrop)
+      .fromTo('opacity', '0', '1');
+
+    rootAnimation.addAnimation(backdropAnimation);
+  }
+
   return rootAnimation;
 };
 
@@ -33,6 +45,17 @@ const leave = (animationOpts: AnimationOptions, baseEl: HTMLElement): Animation 
     { offset: 0, opacity: 1 },
     { offset: 1, opacity: 0 },
   ]);
+
+  const root = getElementRoot(baseEl);
+  const backdrop = root.querySelector('ion-backdrop');
+
+  if (backdrop) {
+    const backdropAnimation = createAnimation()
+      .addElement(backdrop)
+      .fromTo('opacity', '1', '0');
+
+    rootAnimation.addAnimation(backdropAnimation);
+  }
 
   return rootAnimation;
 };
