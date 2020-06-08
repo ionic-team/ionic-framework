@@ -213,7 +213,8 @@ export class Router implements ComponentInterface {
   private async safeWriteNavState(
     node: HTMLElement | undefined, chain: RouteChain, direction: RouterDirection,
     path: string[], redirectFrom: string[] | null,
-    index = 0, animation?: AnimationBuilder
+    index = 0, 
+    animation?: AnimationBuilder
   ): Promise<boolean> {
     const unlock = await this.lock();
     let changed = false;
