@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Mode, RouterDirection } from '../../interface';
+import { AnimationBuilder, Color, Mode, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -69,6 +69,12 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
+
+  /**
    * Specifies where to display the linked URL.
    * Only applies when an `href` is provided.
    * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
@@ -87,7 +93,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         <slot></slot>
       ];
     }
-    const { href, routerDirection } = this;
+    const { href, routerAnimation, routerDirection } = this;
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -104,7 +110,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         class="card-native"
         part="native"
         disabled={this.disabled}
-        onClick={(ev: Event) => openURL(href, ev, routerDirection)}
+        onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
       >
         <slot></slot>
         {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

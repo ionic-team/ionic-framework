@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Injectable, Optional } from '@angular/core';
 import { NavigationExtras, NavigationStart, Router, UrlSerializer, UrlTree } from '@angular/router';
-import { NavDirection, RouterDirection } from '@ionic/core';
+import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core';
 
 import { IonRouterOutlet } from '../directives/navigation/ion-router-outlet';
 
@@ -9,6 +9,7 @@ import { Platform } from './platform';
 
 export interface AnimationOptions {
   animated?: boolean;
+  animation?: AnimationBuilder;
   animationDirection?: 'forward' | 'back';
 }
 
@@ -22,6 +23,7 @@ export class NavController {
   private topOutlet?: IonRouterOutlet;
   private direction: 'forward' | 'back' | 'root' | 'auto' = DEFAULT_DIRECTION;
   private animated?: NavDirection = DEFAULT_ANIMATED;
+  private animationBuilder?: AnimationBuilder;
   private guessDirection: RouterDirection = 'forward';
   private guessAnimation?: NavDirection;
   private lastNavId = -1;
@@ -65,7 +67,7 @@ export class NavController {
    * ```
    */
   navigateForward(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
-    this.setDirection('forward', options.animated, options.animationDirection);
+    this.setDirection('forward', options.animated, options.animationDirection, options.animation);
     return this.navigate(url, options);
   }
 
@@ -88,7 +90,7 @@ export class NavController {
    * ```
    */
   navigateBack(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
-    this.setDirection('back', options.animated, options.animationDirection);
+    this.setDirection('back', options.animated, options.animationDirection, options.animation);
     return this.navigate(url, options);
   }
 
@@ -111,7 +113,7 @@ export class NavController {
    * ```
    */
   navigateRoot(url: string | UrlTree | any[], options: NavigationOptions = {}): Promise<boolean> {
-    this.setDirection('root', options.animated, options.animationDirection);
+    this.setDirection('root', options.animated, options.animationDirection, options.animation);
     return this.navigate(url, options);
   }
 
@@ -121,7 +123,7 @@ export class NavController {
    * by default.
    */
   back(options: AnimationOptions = { animated: true, animationDirection: 'back' }) {
-    this.setDirection('back', options.animated, options.animationDirection);
+    this.setDirection('back', options.animated, options.animationDirection, options.animation);
     return this.location.back();
   }
 
@@ -150,9 +152,10 @@ export class NavController {
    *
    * It's recommended to use `navigateForward()`, `navigateBack()` and `navigateRoot()` instead of `setDirection()`.
    */
-  setDirection(direction: RouterDirection, animated?: boolean, animationDirection?: 'forward' | 'back') {
+  setDirection(direction: RouterDirection, animated?: boolean, animationDirection?: 'forward' | 'back', animationBuilder?: AnimationBuilder) {
     this.direction = direction;
     this.animated = getAnimation(direction, animated, animationDirection);
+    this.animationBuilder = animationBuilder;
   }
 
   /**
@@ -168,6 +171,7 @@ export class NavController {
   consumeTransition() {
     let direction: RouterDirection = 'root';
     let animation: NavDirection | undefined;
+    const animationBuilder = this.animationBuilder;
 
     if (this.direction === 'auto') {
       direction = this.guessDirection;
@@ -178,10 +182,12 @@ export class NavController {
     }
     this.direction = DEFAULT_DIRECTION;
     this.animated = DEFAULT_ANIMATED;
+    this.animationBuilder = undefined;
 
     return {
       direction,
-      animation
+      animation,
+      animationBuilder
     };
   }
 
