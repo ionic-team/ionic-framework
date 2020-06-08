@@ -173,7 +173,7 @@ export class Router implements ComponentInterface {
     const lastState = this.lastState;
     this.lastState = state;
 
-    if (state > lastState) {
+    if (state > lastState || (state >= lastState && lastState > 0)) {
       return ROUTER_INTENT_FORWARD;
     } else if (state < lastState) {
       return ROUTER_INTENT_BACK;
