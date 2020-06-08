@@ -6,7 +6,7 @@ interface IsPlatformSignature {
   (win: Window, plt: Platforms): boolean;
 }
 
-export const getPlatforms = (win: any) => setupPlatforms(win);
+export const getPlatforms = (win?: any) => setupPlatforms(win);
 
 export const isPlatform: IsPlatformSignature = (winOrPlatform: Window | Platforms | undefined, platform?: Platforms) => {
   if (typeof winOrPlatform === 'string') {
@@ -17,6 +17,8 @@ export const isPlatform: IsPlatformSignature = (winOrPlatform: Window | Platform
 };
 
 export const setupPlatforms = (win: any = window) => {
+  if (typeof win === 'undefined') { return []; }
+
   win.Ionic = win.Ionic || {};
 
   let platforms: Platforms[] | undefined | null = win.Ionic.platforms;

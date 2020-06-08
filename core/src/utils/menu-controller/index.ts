@@ -1,11 +1,12 @@
-import { AnimationBuilder, IonicAnimation, MenuI } from '../../interface';
+import { AnimationBuilder, BackButtonEvent, MenuI } from '../../interface';
+import { MENU_BACK_BUTTON_PRIORITY } from '../hardware-back-button';
 
 import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
 import { menuRevealAnimation } from './animations/reveal';
 
 const createMenuController = () => {
-  const menuAnimations = new Map<string, ((menu: MenuI) => IonicAnimation) | AnimationBuilder>();
+  const menuAnimations = new Map<string, AnimationBuilder>();
   const menus: MenuI[] = [];
 
   const open = async (menu?: string | null): Promise<boolean> => {
@@ -122,7 +123,7 @@ const createMenuController = () => {
     return isAnimatingSync();
   };
 
-  const registerAnimation = (name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => {
+  const registerAnimation = (name: string, animation: AnimationBuilder) => {
     menuAnimations.set(name, animation);
   };
 
@@ -205,6 +206,18 @@ const createMenuController = () => {
   registerAnimation('reveal', menuRevealAnimation);
   registerAnimation('push', menuPushAnimation);
   registerAnimation('overlay', menuOverlayAnimation);
+
+  /* tslint:disable-next-line */
+  if (typeof document !== 'undefined') {
+    document.addEventListener('ionBackButton', (ev: any) => {
+      const openMenu = _getOpenSync();
+      if (openMenu) {
+        (ev as BackButtonEvent).detail.register(MENU_BACK_BUTTON_PRIORITY, () => {
+          return openMenu.close();
+        });
+      }
+    });
+  }
 
   return {
     registerAnimation,

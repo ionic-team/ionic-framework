@@ -49,14 +49,22 @@ export default () => {
     config.set('animated', false);
   }
 
+  const isIonicElement = (elm: any) =>
+        elm.tagName && elm.tagName.startsWith('ION-');
+
+  const isAllowedIonicModeValue = (elmMode: string) =>
+      ['ios', 'md'].includes(elmMode);
+
   setMode((elm: any) => {
     while (elm) {
       const elmMode = (elm as any).mode || elm.getAttribute('mode');
-
       if (elmMode) {
-        return elmMode;
+        if (isAllowedIonicModeValue(elmMode)) {
+          return elmMode;
+        } else if (isIonicElement(elm)) {
+          console.warn('Invalid ionic mode: "' + elmMode + '", expected: "ios" or "md"');
+        }
       }
-
       elm = elm.parentElement;
     }
     return defaultMode;

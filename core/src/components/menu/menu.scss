@@ -126,6 +126,12 @@ ion-backdrop {
 // Menu Split Pane
 // --------------------------------------------------
 
+:host(.menu-pane-visible) {
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+}
+
 :host(.menu-pane-visible) .menu-inner {
   @include position-horizontal(0, 0);
 

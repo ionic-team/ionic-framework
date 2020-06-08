@@ -2,6 +2,7 @@ export interface Animation {
   parentAnimation: Animation | undefined;
   elements: HTMLElement[];
   childAnimations: Animation[];
+  id: string | undefined;
 
   /**
    * Play the animation
@@ -26,9 +27,9 @@ export interface Animation {
   /**
    * Destroy the animation and all child animations.
    */
-  destroy(): void;
+  destroy(clearStyleSheets?: boolean): void;
 
-  progressStart(forceLinearEasing: boolean): void;
+  progressStart(forceLinearEasing: boolean, step?: number): void;
   progressStep(step: number): void;
   progressEnd(playTo: 0 | 1 | undefined, step: number, dur?: number): void;
 
@@ -211,26 +212,23 @@ export interface Animation {
    * upon the animation ending
    */
   onFinish(callback: AnimationLifecycle, opts?: AnimationCallbackOptions): Animation;
-
-  /** @deprecated */
-  playAsync(): Promise<void>;
-  /** @deprecated */
-  playSync(): void;
 }
 
 export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;
+export type AnimationKeyFrames = [AnimationKeyFrameEdge, AnimationKeyFrameEdge] | AnimationKeyFrame[];
+export type AnimationStyles = Record<string, any>;
 
 export interface AnimationCallbackOptions {
   oneTimeCallback: boolean;
 }
 
-export type AnimationKeyFrames = AnimationKeyFrame[];
-
 export interface AnimationKeyFrame extends AnimationStyles {
   offset: number;
 }
 
-export type AnimationStyles = Record<string, any>;
+export interface AnimationKeyFrameEdge extends AnimationStyles {
+  offset?: number;
+}
 
 export interface AnimationPlayOptions {
   sync: boolean;
@@ -239,3 +237,5 @@ export interface AnimationPlayOptions {
 export type AnimationPlayTo = 'start' | 'end';
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationFill = 'auto' | 'none' | 'forwards' | 'backwards' | 'both';
+
+export type AnimationBuilder = (baseEl: any, opts?: any) => Animation;

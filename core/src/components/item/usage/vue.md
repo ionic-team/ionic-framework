@@ -1,5 +1,3 @@
-Basic Usage
-
 ```html
 <template>
   <!-- Default Item -->
@@ -10,7 +8,7 @@ Basic Usage
   </ion-item>
 
   <!-- Item as a Button -->
-  <ion-item @click="buttonClick()">
+  <ion-item button @click="buttonClick()">
     <ion-label>
       Button Item
     </ion-label>
@@ -31,7 +29,7 @@ Basic Usage
 </template>
 ```
 
-Detail Arrows
+### Detail Arrows
 
 ```html
 <template>
@@ -41,7 +39,7 @@ Detail Arrows
     </ion-label>
   </ion-item>
 
-  <ion-item @click="buttonClick()" detail>
+  <ion-item button @click="buttonClick()" detail>
     <ion-label>
       Button Item with Detail Arrow
     </ion-label>
@@ -55,7 +53,7 @@ Detail Arrows
 </template>
 ```
 
-List Items
+### List Items
 
 ```html
 <template>
@@ -101,7 +99,7 @@ List Items
 </template>
 ```
 
-Item Lines
+### Item Lines
 
 ```html
 <template>
@@ -160,11 +158,11 @@ Item Lines
 ```
 
 
-Media Items
+### Media Items
 
 ```html
 <template>
-  <ion-item @click="testClick()">
+  <ion-item button @click="testClick()">
     <ion-avatar slot="start">
       <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </ion-avatar>
@@ -193,7 +191,7 @@ Media Items
     <ion-button fill="outline" slot="end">View</ion-button>
   </ion-item>
 
-  <ion-item @click="testClick()">
+  <ion-item button @click="testClick()">
     <ion-thumbnail slot="start">
       <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </ion-thumbnail>
@@ -206,7 +204,7 @@ Media Items
 </template>
 ```
 
-Buttons in Items
+### Buttons in Items
 
 ```html
 <template>
@@ -244,7 +242,7 @@ Buttons in Items
 </template>
 ```
 
-Icons in Items
+### Icons in Items
 
 ```html
 <template>
@@ -286,7 +284,7 @@ Icons in Items
 </template>
 ```
 
-Item Inputs
+### Item Inputs
 
 ```html
 <template>

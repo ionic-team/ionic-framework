@@ -2,10 +2,10 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuI, Side } from '../../interface';
-import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
+import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
+import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import { assert, isEndSide as isEnd } from '../../utils/helpers';
+import { assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
@@ -13,6 +13,10 @@ const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
 const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
 const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
 
+/**
+ * @part container - The container for the menu content.
+ * @part backdrop - The backdrop that appears over the main content when the menu is open.
+ */
 @Component({
   tag: 'ion-menu',
   styleUrls: {
@@ -27,11 +31,6 @@ export class Menu implements ComponentInterface, MenuI {
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
-
-  mode = getIonMode(this);
-
-  private easing: string = this.mode === 'ios' ? iosEasing : mdEasing;
-  private easingReverse: string = this.mode === 'ios' ? iosEasingReverse : mdEasingReverse;
 
   isAnimating = false;
   width!: number; // TODO
@@ -49,12 +48,12 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * The content's id the menu should use.
    */
-  @Prop() contentId?: string;
+  @Prop({ reflectToAttr: true }) contentId?: string;
 
   /**
    * An id for the menu.
    */
-  @Prop() menuId?: string;
+  @Prop({ reflectToAttr: true }) menuId?: string;
 
   /**
    * The display type of the menu.
@@ -163,8 +162,8 @@ BEFORE:
   <div main>...</div>
 
 AFTER:
-  <ion-menu contentId="my-content"></ion-menu>
-  <div id="my-content">...</div>
+  <ion-menu contentId="main-content"></ion-menu>
+  <div id="main-content">...</div>
 `);
     }
     const content = this.contentId !== undefined
@@ -192,6 +191,7 @@ AFTER:
       gestureName: 'menu-swipe',
       gesturePriority: 30,
       threshold: 10,
+      blurOnStart: true,
       canStart: ev => this.canStart(ev),
       onWillStart: () => this.onWillStart(),
       onStart: () => this.onStart(),
@@ -335,9 +335,17 @@ AFTER:
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const isReversed = !shouldOpen;
-    const ani = (this.animation as IonicAnimation)!
+    const mode = getIonMode(this);
+    const easing = mode === 'ios' ? iosEasing : mdEasing;
+    const easingReverse = mode === 'ios' ? iosEasingReverse : mdEasingReverse;
+    const ani = (this.animation as Animation)!
       .direction((isReversed) ? 'reverse' : 'normal')
-      .easing((isReversed) ? this.easingReverse : this.easing);
+      .easing((isReversed) ? easingReverse : easing)
+      .onFinish(() => {
+        if (ani.getDirection() === 'reverse') {
+          ani.direction('normal');
+        }
+      });
 
     if (animated) {
       await ani.play();
@@ -355,7 +363,9 @@ AFTER:
   }
 
   private canStart(detail: GestureDetail): boolean {
-    if (!this.canSwipe()) {
+    // Do not allow swipe gesture if a modal is open
+    const isModalPresented = !!document.querySelector('ion-modal.show-modal');
+    if (isModalPresented || !this.canSwipe()) {
       return false;
     }
     if (this._isOpen) {
@@ -384,9 +394,7 @@ AFTER:
     }
 
     // the cloned animation should not use an easing curve during seek
-    (this.animation as IonicAnimation)
-      .direction((this._isOpen) ? 'reverse' : 'normal')
-      .progressStart(true);
+    (this.animation as Animation).progressStart(true, (this._isOpen) ? 1 : 0);
   }
 
   private onMove(detail: GestureDetail) {
@@ -398,7 +406,7 @@ AFTER:
     const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
 
-    this.animation.progressStep(stepValue);
+    this.animation.progressStep((this._isOpen) ? 1 - stepValue : stepValue);
   }
 
   private onEnd(detail: GestureDetail) {
@@ -428,7 +436,7 @@ AFTER:
       shouldOpen = true;
     }
 
-    this.lastOnEnd = detail.timeStamp;
+    this.lastOnEnd = detail.currentTime;
 
     // Account for rounding errors in JS
     let newStepValue = (shouldComplete) ? 0.001 : -0.001;
@@ -439,7 +447,7 @@ AFTER:
      * for the cubic bezier curve (at least with web animations)
      * Not sure if the negative step value is an error or not
      */
-    const adjustedStepValue = (stepValue <= 0) ? 0.01 : stepValue;
+    const adjustedStepValue = (stepValue < 0) ? 0.01 : stepValue;
 
     /**
      * Animation will be reversed here, so need to
@@ -449,14 +457,16 @@ AFTER:
      * to the new easing curve, as `stepValue` is going to be given
      * in terms of a linear curve.
      */
-    newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.4, 0), new Point(0.6, 1), new Point(1, 1), adjustedStepValue);
+    newStepValue += getTimeGivenProgression([0, 0], [0.4, 0], [0.6, 1], [1, 1], clamp(0, adjustedStepValue, 0.9999))[0] || 0;
+
+    const playTo = (this._isOpen) ? !shouldComplete : shouldComplete;
 
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
       .onFinish(
         () => this.afterAnimation(shouldOpen),
         { oneTimeCallback: true })
-      .progressEnd(shouldComplete ? 1 : 0, newStepValue, 300);
+      .progressEnd((playTo) ? 1 : 0, (this._isOpen) ? 1 - newStepValue : newStepValue, 300);
   }
 
   private beforeAnimation(shouldOpen: boolean) {
@@ -520,7 +530,7 @@ AFTER:
   private updateState() {
     const isActive = this._isActive();
     if (this.gesture) {
-      this.gesture.setDisabled(!isActive || !this.swipeGesture);
+      this.gesture.enable(isActive && this.swipeGesture);
     }
 
     // Close menu immediately
@@ -539,13 +549,16 @@ AFTER:
     assert(this._isOpen, 'menu cannot be closed');
 
     this.isAnimating = true;
-    const ani = (this.animation as IonicAnimation)!.direction('reverse');
+
+    const ani = (this.animation as Animation)!.direction('reverse');
     ani.play({ sync: true });
+
     this.afterAnimation(false);
   }
 
   render() {
-    const { isEndSide, type, disabled, mode, isPaneVisible } = this;
+    const { isEndSide, type, disabled, isPaneVisible } = this;
+    const mode = getIonMode(this);
 
     return (
       <Host
@@ -561,6 +574,7 @@ AFTER:
       >
         <div
           class="menu-inner"
+          part="container"
           ref={el => this.menuInnerEl = el}
         >
           <slot></slot>
@@ -571,6 +585,7 @@ AFTER:
           class="menu-backdrop"
           tappable={false}
           stopPropagation={false}
+          part="backdrop"
         />
       </Host>
     );

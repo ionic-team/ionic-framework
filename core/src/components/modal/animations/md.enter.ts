@@ -1,17 +1,21 @@
-import { IonicAnimation } from '../../../interface';
+import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * Md Modal Enter Animation
  */
-export const mdEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
+export const mdEnterAnimation = (baseEl: HTMLElement): Animation => {
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)');
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
+    .beforeStyles({
+      'pointer-events': 'none'
+    })
+    .afterClearStyles(['pointer-events']);
 
   wrapperAnimation
     .addElement(baseEl.querySelector('.modal-wrapper')!)
@@ -24,6 +28,5 @@ export const mdEnterAnimation = (baseEl: HTMLElement): IonicAnimation => {
     .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(280)
-    .beforeAddClass('show-modal')
     .addAnimation([backdropAnimation, wrapperAnimation]);
 };
