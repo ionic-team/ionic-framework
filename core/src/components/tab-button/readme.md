@@ -236,7 +236,7 @@ export class TabButtonExample {
 
 | Part       | Description                                                         |
 | ---------- | ------------------------------------------------------------------- |
-| `"native"` | The native HTML button element that is rendered around the content. |
+| `"native"` | The native HTML anchor element that is rendered around the content. |
 
 
 ## CSS Custom Properties

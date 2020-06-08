@@ -164,10 +164,10 @@ export class FabButtonExample {
 
 ## Shadow Parts
 
-| Part           | Description                                                         |
-| -------------- | ------------------------------------------------------------------- |
-| `"close-icon"` | The container for the close icon.                                   |
-| `"native"`     | The native HTML button element that is rendered around the content. |
+| Part           | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| `"close-icon"` | The container for the close icon.                                             |
+| `"native"`     | The native HTML button or anchor element that is rendered around the content. |
 
 
 ## CSS Custom Properties

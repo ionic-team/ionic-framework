@@ -15,7 +15,7 @@ import { createColorClasses } from '../../utils/theme';
  * @slot bottom - Content is placed below the option text.
  * @slot end - Content is placed to the right of the option text in LTR, and to the left in RTL.
  *
- * @part native - The native HTML button element that is rendered around the content.
+ * @part native - The native HTML button or anchor element that is rendered around the content.
  */
 @Component({
   tag: 'ion-item-option',

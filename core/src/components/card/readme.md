@@ -268,6 +268,13 @@ export class CardExample {
 | `type`            | `type`             | The type of the button. Only used when an `onclick` or `button` property is present.                                                                                                                                                                                                      | `"button" \| "reset" \| "submit"` | `'button'`  |
 
 
+## Shadow Parts
+
+| Part       | Description                                                                         |
+| ---------- | ----------------------------------------------------------------------------------- |
+| `"native"` | The native HTML button, anchor, or div element that is rendered around the content. |
+
+
 ## CSS Custom Properties
 
 | Name           | Description            |

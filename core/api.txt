@@ -198,6 +198,7 @@ ion-card,prop,target,string | undefined,undefined,false,false
 ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-card,css-prop,--background
 ion-card,css-prop,--color
+ion-card,part,native
 
 ion-card-content,none
 ion-card-content,prop,mode,"ios" | "md",undefined,false,false
@@ -292,7 +293,7 @@ ion-content,prop,scrollY,boolean,true,false,false
 ion-content,method,getScrollElement,getScrollElement() => Promise<HTMLElement>
 ion-content,method,scrollByPoint,scrollByPoint(x: number, y: number, duration: number) => Promise<void>
 ion-content,method,scrollToBottom,scrollToBottom(duration?: number) => Promise<void>
-ion-content,method,scrollToPoint,scrollToPoint(x: number | null | undefined, y: number | null | undefined, duration?: number) => Promise<void>
+ion-content,method,scrollToPoint,scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration?: number) => Promise<void>
 ion-content,method,scrollToTop,scrollToTop(duration?: number) => Promise<void>
 ion-content,event,ionScroll,ScrollDetail,true
 ion-content,event,ionScrollEnd,ScrollBaseDetail,true
@@ -579,7 +580,7 @@ ion-item-sliding,method,close,close() => Promise<void>
 ion-item-sliding,method,closeOpened,closeOpened() => Promise<boolean>
 ion-item-sliding,method,getOpenAmount,getOpenAmount() => Promise<number>
 ion-item-sliding,method,getSlidingRatio,getSlidingRatio() => Promise<number>
-ion-item-sliding,method,open,open(side: "start" | "end" | undefined) => Promise<void>
+ion-item-sliding,method,open,open(side: Side | undefined) => Promise<void>
 ion-item-sliding,event,ionDrag,any,true
 
 ion-label,scoped

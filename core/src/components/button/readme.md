@@ -319,9 +319,9 @@ export class ButtonExample {
 
 ## Shadow Parts
 
-| Part       | Description                                                         |
-| ---------- | ------------------------------------------------------------------- |
-| `"native"` | The native HTML button element that is rendered around the content. |
+| Part       | Description                                                                   |
+| ---------- | ----------------------------------------------------------------------------- |
+| `"native"` | The native HTML button or anchor element that is rendered around the content. |
 
 
 ## CSS Custom Properties

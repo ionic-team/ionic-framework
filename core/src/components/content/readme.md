@@ -196,7 +196,7 @@ Type: `Promise<void>`
 
 
 
-### `scrollToPoint(x: number | null | undefined, y: number | null | undefined, duration?: number) => Promise<void>`
+### `scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration?: number) => Promise<void>`
 
 Scroll to a specified X/Y location in the component.
 
