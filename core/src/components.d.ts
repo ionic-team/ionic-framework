@@ -677,9 +677,9 @@ export namespace Components {
          */
         "activated": boolean;
         /**
-          * Set the close button icon which appears when this button is used as a main fab-button inside a `ion-fab` with a `fab-list`.
+          * The icon name to use for the close icon which appears on click when the fab button is the main button in a fab containing a fab list.
          */
-        "closeButtonIcon": string;
+        "closeIcon": string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -713,7 +713,7 @@ export namespace Components {
          */
         "show": boolean;
         /**
-          * The size of the button. Set this to `small` in order to have a mini fab.
+          * The size of the button. Set this to `small` in order to have a mini fab button.
          */
         "size"?: "small";
         /**
@@ -3929,9 +3929,9 @@ declare namespace LocalJSX {
          */
         "activated"?: boolean;
         /**
-          * Set the close button icon which appears when this button is used as a main fab-button inside a `ion-fab` with a `fab-list`.
+          * The icon name to use for the close icon which appears on click when the fab button is the main button in a fab containing a fab list.
          */
-        "closeButtonIcon"?: string;
+        "closeIcon"?: string;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -3973,7 +3973,7 @@ declare namespace LocalJSX {
          */
         "show"?: boolean;
         /**
-          * The size of the button. Set this to `small` in order to have a mini fab.
+          * The size of the button. Set this to `small` in order to have a mini fab button.
          */
         "size"?: "small";
         /**
