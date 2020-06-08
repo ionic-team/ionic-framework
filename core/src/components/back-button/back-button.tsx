@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { AnimationBuilder, Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
@@ -53,6 +53,12 @@ export class BackButton implements ComponentInterface, ButtonInterface {
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
+  /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
+
   componentWillLoad() {
     if (this.defaultHref === undefined) {
       this.defaultHref = config.get('backButtonDefaultHref');
@@ -99,9 +105,9 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     ev.preventDefault();
 
     if (nav && await nav.canGoBack()) {
-      return nav.pop({ skipIfBusy: true });
+      return nav.pop({ animationBuilder: this.routerAnimation, skipIfBusy: true });
     }
-    return openURL(this.defaultHref, ev, 'back');
+    return openURL(this.defaultHref, ev, 'back', this.routerAnimation);
   }
 
   render() {

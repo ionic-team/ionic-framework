@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, RouterDirection } from '../../interface';
+import { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
@@ -37,6 +37,12 @@ export class RouterLink implements ComponentInterface {
   @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
+
+  /**
    * Specifies where to display the linked URL.
    * Only applies when an `href` is provided.
    * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
@@ -44,7 +50,7 @@ export class RouterLink implements ComponentInterface {
   @Prop() target: string | undefined;
 
   private onClick = (ev: Event) => {
-    openURL(this.href, ev, this.routerDirection);
+    openURL(this.href, ev, this.routerDirection, this.routerAnimation);
   }
 
   render() {
