@@ -53,7 +53,9 @@ export class Img implements ComponentInterface {
     if (this.src === undefined) {
       return;
     }
-    if ('IntersectionObserver' in window &&
+    if (
+      typeof (window as any) !== 'undefined' &&
+      'IntersectionObserver' in window &&
       'IntersectionObserverEntry' in window &&
       'isIntersecting' in window.IntersectionObserverEntry.prototype) {
       this.removeIO();
