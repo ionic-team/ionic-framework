@@ -92,8 +92,9 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   @Prop() size?: 'small';
 
   /**
-   * The icon name to use for the close icon which appears on click when the fab button
-   * is the main button in a fab containing a fab list.
+   * The icon name to use for the close icon. This will appear when the fab button
+   * is pressed. Only applies if it is the main button inside of a fab containing a
+   * fab list.
    */
   @Prop() closeIcon = 'close';
 
