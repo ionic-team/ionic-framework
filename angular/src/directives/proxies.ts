@@ -498,8 +498,8 @@ export class IonNav {
 }
 export declare interface IonNavLink extends Components.IonNavLink {
 }
-@ProxyCmp({ inputs: ["component", "componentProps", "routerDirection"] })
-@Component({ selector: "ion-nav-link", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["component", "componentProps", "routerDirection"] })
+@ProxyCmp({ inputs: ["component", "componentProps", "routerAnimation", "routerDirection"] })
+@Component({ selector: "ion-nav-link", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["component", "componentProps", "routerAnimation", "routerDirection"] })
 export class IonNavLink {
     protected el: HTMLElement;
     constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
