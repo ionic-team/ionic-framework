@@ -55,7 +55,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
 
   /**
    * When using a router, it specifies the transition animation when navigating to
-   * another page using `href`.
+   * another page.
    */
   @Prop() routerAnimation: AnimationBuilder | undefined;
 

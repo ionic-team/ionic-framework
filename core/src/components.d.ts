@@ -173,7 +173,7 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+          * When using a router, it specifies the transition animation when navigating to another page.
          */
         "routerAnimation": AnimationBuilder | undefined;
         /**
@@ -3429,7 +3429,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+          * When using a router, it specifies the transition animation when navigating to another page.
          */
         "routerAnimation"?: AnimationBuilder | undefined;
         /**
