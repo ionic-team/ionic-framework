@@ -689,6 +689,10 @@ export namespace Components {
          */
         "activated": boolean;
         /**
+          * The icon name to use for the close icon. This will appear when the fab button is pressed. Only applies if it is the main button inside of a fab containing a fab list.
+         */
+        "closeIcon": string;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -725,7 +729,7 @@ export namespace Components {
          */
         "show": boolean;
         /**
-          * The size of the button. Set this to `small` in order to have a mini fab.
+          * The size of the button. Set this to `small` in order to have a mini fab button.
          */
         "size"?: "small";
         /**
@@ -3965,6 +3969,10 @@ declare namespace LocalJSX {
          */
         "activated"?: boolean;
         /**
+          * The icon name to use for the close icon. This will appear when the fab button is pressed. Only applies if it is the main button inside of a fab containing a fab list.
+         */
+        "closeIcon"?: string;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -4009,7 +4017,7 @@ declare namespace LocalJSX {
          */
         "show"?: boolean;
         /**
-          * The size of the button. Set this to `small` in order to have a mini fab.
+          * The size of the button. Set this to `small` in order to have a mini fab button.
          */
         "size"?: "small";
         /**

@@ -93,9 +93,16 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
-   * The size of the button. Set this to `small` in order to have a mini fab.
+   * The size of the button. Set this to `small` in order to have a mini fab button.
    */
   @Prop() size?: 'small';
+
+  /**
+   * The icon name to use for the close icon. This will appear when the fab button
+   * is pressed. Only applies if it is the main button inside of a fab containing a
+   * fab list.
+   */
+  @Prop() closeIcon = 'close';
 
   /**
    * Emitted when the button has focus.
@@ -156,7 +163,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           onClick={(ev: Event) => openURL(href, ev, this.routerDirection, this.routerAnimation)}
         >
           <span class="close-icon">
-            <ion-icon name="close" lazy={false}></ion-icon>
+            <ion-icon icon={this.closeIcon} lazy={false}></ion-icon>
           </span>
           <span class="button-inner">
             <slot></slot>

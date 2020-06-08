@@ -354,6 +354,7 @@ ion-fab,method,close,close() => Promise<void>
 
 ion-fab-button,shadow
 ion-fab-button,prop,activated,boolean,false,false,false
+ion-fab-button,prop,closeIcon,string,'close',false,false
 ion-fab-button,prop,color,string | undefined,undefined,false,false
 ion-fab-button,prop,disabled,boolean,false,false,false
 ion-fab-button,prop,download,string | undefined,undefined,false,false
