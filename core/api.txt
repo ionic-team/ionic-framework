@@ -85,6 +85,7 @@ ion-back-button,prop,defaultHref,string | undefined,undefined,false,false
 ion-back-button,prop,disabled,boolean,false,false,true
 ion-back-button,prop,icon,null | string | undefined,undefined,false,false
 ion-back-button,prop,mode,"ios" | "md",undefined,false,false
+ion-back-button,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-back-button,prop,text,null | string | undefined,undefined,false,false
 ion-back-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-back-button,css-prop,--background
@@ -146,6 +147,7 @@ ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undef
 ion-button,prop,href,string | undefined,undefined,false,false
 ion-button,prop,mode,"ios" | "md",undefined,false,false
 ion-button,prop,rel,string | undefined,undefined,false,false
+ion-button,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-button,prop,shape,"round" | undefined,undefined,false,true
 ion-button,prop,size,"default" | "large" | "small" | undefined,undefined,false,true
@@ -189,6 +191,7 @@ ion-card,prop,download,string | undefined,undefined,false,false
 ion-card,prop,href,string | undefined,undefined,false,false
 ion-card,prop,mode,"ios" | "md",undefined,false,false
 ion-card,prop,rel,string | undefined,undefined,false,false
+ion-card,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-card,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-card,prop,target,string | undefined,undefined,false,false
 ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
@@ -357,6 +360,7 @@ ion-fab-button,prop,download,string | undefined,undefined,false,false
 ion-fab-button,prop,href,string | undefined,undefined,false,false
 ion-fab-button,prop,mode,"ios" | "md",undefined,false,false
 ion-fab-button,prop,rel,string | undefined,undefined,false,false
+ion-fab-button,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-fab-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-fab-button,prop,show,boolean,false,false,false
 ion-fab-button,prop,size,"small" | undefined,undefined,false,false
@@ -492,6 +496,7 @@ ion-item,prop,href,string | undefined,undefined,false,false
 ion-item,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-item,prop,mode,"ios" | "md",undefined,false,false
 ion-item,prop,rel,string | undefined,undefined,false,false
+ion-item,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-item,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
@@ -740,6 +745,7 @@ ion-nav,event,ionNavWillChange,void,false
 ion-nav-link,none
 ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
 ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-nav-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 
 ion-note,shadow
@@ -927,7 +933,7 @@ ion-router,none
 ion-router,prop,root,string,'/',false,false
 ion-router,prop,useHash,boolean,true,false,false
 ion-router,method,back,back() => Promise<void>
-ion-router,method,push,push(url: string, direction?: RouterDirection) => Promise<boolean>
+ion-router,method,push,push(url: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>
 ion-router,event,ionRouteDidChange,RouterEventDetail,true
 ion-router,event,ionRouteWillChange,RouterEventDetail,true
 
@@ -935,6 +941,7 @@ ion-router-link,shadow
 ion-router-link,prop,color,string | undefined,undefined,false,false
 ion-router-link,prop,href,string | undefined,undefined,false,false
 ion-router-link,prop,rel,string | undefined,undefined,false,false
+ion-router-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-router-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-router-link,prop,target,string | undefined,undefined,false,false
 ion-router-link,css-prop,--background

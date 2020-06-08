@@ -173,6 +173,10 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
+          * When using a router, it specifies the transition animation when navigating to another page.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
+        /**
           * The text to display in the back button.
          */
         "text"?: string | null;
@@ -243,6 +247,10 @@ export namespace Components {
          */
         "rel": string | undefined;
         /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
+        /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection": RouterDirection;
@@ -302,6 +310,10 @@ export namespace Components {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel": string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
         /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
@@ -701,6 +713,10 @@ export namespace Components {
          */
         "rel": string | undefined;
         /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
+        /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection": RouterDirection;
@@ -966,6 +982,10 @@ export namespace Components {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel": string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
         /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
@@ -1443,7 +1463,7 @@ export namespace Components {
           * @param done The transition complete function.
          */
         "setRoot": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-        "setRouteId": (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection) => Promise<RouteWrite>;
+        "setRouteId": (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<RouteWrite>;
         /**
           * If the nav component should allow for swipe-to-go-back.
          */
@@ -1458,6 +1478,10 @@ export namespace Components {
           * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
          */
         "componentProps"?: ComponentProps;
+        /**
+          * The transition animation when navigating to another page.
+         */
+        "routerAnimation"?: AnimationBuilder;
         /**
           * The transition direction when navigating to another page.
          */
@@ -1854,7 +1878,7 @@ export namespace Components {
           * @param url The url to navigate to.
           * @param direction The direction of the animation. Defaults to `"forward"`.
          */
-        "push": (url: string, direction?: RouterDirection) => Promise<boolean>;
+        "push": (url: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>;
         /**
           * By default `ion-router` will match the routes at the root path ("/"). That can be changed when
          */
@@ -1877,6 +1901,10 @@ export namespace Components {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel": string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
         /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
@@ -1902,7 +1930,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode": "ios" | "md";
-        "setRouteId": (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection) => Promise<RouteWrite>;
+        "setRouteId": (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<RouteWrite>;
         "swipeHandler"?: SwipeGestureHandler;
     }
     interface IonRow {
@@ -3405,6 +3433,10 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * When using a router, it specifies the transition animation when navigating to another page.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
+        /**
           * The text to display in the back button.
          */
         "text"?: string | null;
@@ -3487,6 +3519,10 @@ declare namespace LocalJSX {
          */
         "rel"?: string | undefined;
         /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
+        /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection"?: RouterDirection;
@@ -3546,6 +3582,10 @@ declare namespace LocalJSX {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel"?: string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
         /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
@@ -3957,6 +3997,10 @@ declare namespace LocalJSX {
          */
         "rel"?: string | undefined;
         /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
+        /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection"?: RouterDirection;
@@ -4242,6 +4286,10 @@ declare namespace LocalJSX {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel"?: string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
         /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
@@ -4620,6 +4668,10 @@ declare namespace LocalJSX {
           * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
          */
         "componentProps"?: ComponentProps;
+        /**
+          * The transition animation when navigating to another page.
+         */
+        "routerAnimation"?: AnimationBuilder;
         /**
           * The transition direction when navigating to another page.
          */
@@ -5048,6 +5100,10 @@ declare namespace LocalJSX {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel"?: string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
         /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */

@@ -26,8 +26,8 @@ export class IonAvatar {
 }
 export declare interface IonBackButton extends Components.IonBackButton {
 }
-@ProxyCmp({ inputs: ["color", "defaultHref", "disabled", "icon", "mode", "text", "type"] })
-@Component({ selector: "ion-back-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "defaultHref", "disabled", "icon", "mode", "text", "type"] })
+@ProxyCmp({ inputs: ["color", "defaultHref", "disabled", "icon", "mode", "routerAnimation", "text", "type"] })
+@Component({ selector: "ion-back-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "defaultHref", "disabled", "icon", "mode", "routerAnimation", "text", "type"] })
 export class IonBackButton {
     protected el: HTMLElement;
     constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -61,8 +61,8 @@ export class IonBadge {
 }
 export declare interface IonButton extends Components.IonButton {
 }
-@ProxyCmp({ inputs: ["buttonType", "color", "disabled", "download", "expand", "fill", "href", "mode", "rel", "routerDirection", "shape", "size", "strong", "target", "type"] })
-@Component({ selector: "ion-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["buttonType", "color", "disabled", "download", "expand", "fill", "href", "mode", "rel", "routerDirection", "shape", "size", "strong", "target", "type"] })
+@ProxyCmp({ inputs: ["buttonType", "color", "disabled", "download", "expand", "fill", "href", "mode", "rel", "routerAnimation", "routerDirection", "shape", "size", "strong", "target", "type"] })
+@Component({ selector: "ion-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["buttonType", "color", "disabled", "download", "expand", "fill", "href", "mode", "rel", "routerAnimation", "routerDirection", "shape", "size", "strong", "target", "type"] })
 export class IonButton {
     ionFocus!: EventEmitter<CustomEvent>;
     ionBlur!: EventEmitter<CustomEvent>;
@@ -86,8 +86,8 @@ export class IonButtons {
 }
 export declare interface IonCard extends Components.IonCard {
 }
-@ProxyCmp({ inputs: ["button", "color", "disabled", "download", "href", "mode", "rel", "routerDirection", "target", "type"] })
-@Component({ selector: "ion-card", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["button", "color", "disabled", "download", "href", "mode", "rel", "routerDirection", "target", "type"] })
+@ProxyCmp({ inputs: ["button", "color", "disabled", "download", "href", "mode", "rel", "routerAnimation", "routerDirection", "target", "type"] })
+@Component({ selector: "ion-card", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["button", "color", "disabled", "download", "href", "mode", "rel", "routerAnimation", "routerDirection", "target", "type"] })
 export class IonCard {
     protected el: HTMLElement;
     constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -220,8 +220,8 @@ export class IonFab {
 }
 export declare interface IonFabButton extends Components.IonFabButton {
 }
-@ProxyCmp({ inputs: ["activated", "color", "disabled", "download", "href", "mode", "rel", "routerDirection", "show", "size", "target", "translucent", "type"] })
-@Component({ selector: "ion-fab-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["activated", "color", "disabled", "download", "href", "mode", "rel", "routerDirection", "show", "size", "target", "translucent", "type"] })
+@ProxyCmp({ inputs: ["activated", "color", "disabled", "download", "href", "mode", "rel", "routerAnimation", "routerDirection", "show", "size", "target", "translucent", "type"] })
+@Component({ selector: "ion-fab-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["activated", "color", "disabled", "download", "href", "mode", "rel", "routerAnimation", "routerDirection", "show", "size", "target", "translucent", "type"] })
 export class IonFabButton {
     ionFocus!: EventEmitter<CustomEvent>;
     ionBlur!: EventEmitter<CustomEvent>;
@@ -344,8 +344,8 @@ export class IonInput {
 }
 export declare interface IonItem extends Components.IonItem {
 }
-@ProxyCmp({ inputs: ["button", "color", "detail", "detailIcon", "disabled", "download", "href", "lines", "mode", "rel", "routerDirection", "target", "type"] })
-@Component({ selector: "ion-item", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["button", "color", "detail", "detailIcon", "disabled", "download", "href", "lines", "mode", "rel", "routerDirection", "target", "type"] })
+@ProxyCmp({ inputs: ["button", "color", "detail", "detailIcon", "disabled", "download", "href", "lines", "mode", "rel", "routerAnimation", "routerDirection", "target", "type"] })
+@Component({ selector: "ion-item", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["button", "color", "detail", "detailIcon", "disabled", "download", "href", "lines", "mode", "rel", "routerAnimation", "routerDirection", "target", "type"] })
 export class IonItem {
     protected el: HTMLElement;
     constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -498,8 +498,8 @@ export class IonNav {
 }
 export declare interface IonNavLink extends Components.IonNavLink {
 }
-@ProxyCmp({ inputs: ["component", "componentProps", "routerDirection"] })
-@Component({ selector: "ion-nav-link", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["component", "componentProps", "routerDirection"] })
+@ProxyCmp({ inputs: ["component", "componentProps", "routerAnimation", "routerDirection"] })
+@Component({ selector: "ion-nav-link", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["component", "componentProps", "routerAnimation", "routerDirection"] })
 export class IonNavLink {
     protected el: HTMLElement;
     constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {

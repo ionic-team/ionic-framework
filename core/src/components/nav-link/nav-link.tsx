@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
-import { ComponentProps, NavComponent, RouterDirection } from '../../interface';
+import { AnimationBuilder, ComponentProps, NavComponent, RouterDirection } from '../../interface';
 
 import { navLink } from './nav-link-utils';
 
@@ -25,8 +25,13 @@ export class NavLink implements ComponentInterface {
    */
   @Prop() routerDirection: RouterDirection = 'forward';
 
+  /**
+   * The transition animation when navigating to another page.
+   */
+  @Prop() routerAnimation?: AnimationBuilder;
+
   private onClick = () => {
-    return navLink(this.el, this.routerDirection, this.component, this.componentProps);
+    return navLink(this.el, this.routerDirection, this.component, this.componentProps, this.routerAnimation);
   }
 
   render() {

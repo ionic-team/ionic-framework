@@ -1,4 +1,4 @@
-import { Color, CssClassMap, RouterDirection } from '../interface';
+import { AnimationBuilder, Color, CssClassMap, RouterDirection } from '../interface';
 
 export const hostContext = (selector: string, el: HTMLElement): boolean => {
   return el.closest(selector) !== null;
@@ -33,14 +33,14 @@ export const getClassMap = (classes: string | string[] | undefined): CssClassMap
 
 const SCHEME = /^[a-z][a-z0-9+\-.]*:/;
 
-export const openURL = async (url: string | undefined | null, ev: Event | undefined | null, direction: RouterDirection): Promise<boolean> => {
+export const openURL = async (url: string | undefined | null, ev: Event | undefined | null, direction: RouterDirection, animation?: AnimationBuilder): Promise<boolean> => {
   if (url != null && url[0] !== '#' && !SCHEME.test(url)) {
     const router = document.querySelector('ion-router');
     if (router) {
       if (ev != null) {
         ev.preventDefault();
       }
-      return router.push(url, direction);
+      return router.push(url, direction, animation);
     }
   }
   return false;
