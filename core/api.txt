@@ -745,6 +745,7 @@ ion-nav,event,ionNavWillChange,void,false
 ion-nav-link,none
 ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
 ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-nav-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 
 ion-note,shadow

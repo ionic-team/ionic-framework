@@ -1479,6 +1479,10 @@ export namespace Components {
          */
         "componentProps"?: ComponentProps;
         /**
+          * The transition animation when navigating to another page.
+         */
+        "routerAnimation"?: AnimationBuilder;
+        /**
           * The transition direction when navigating to another page.
          */
         "routerDirection": RouterDirection;
@@ -4664,6 +4668,10 @@ declare namespace LocalJSX {
           * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
          */
         "componentProps"?: ComponentProps;
+        /**
+          * The transition animation when navigating to another page.
+         */
+        "routerAnimation"?: AnimationBuilder;
         /**
           * The transition direction when navigating to another page.
          */
