@@ -315,11 +315,11 @@ export class BackButtonExample {
 
 ## Shadow Parts
 
-| Part       | Description                                                         |
-| ---------- | ------------------------------------------------------------------- |
-| `"icon"`   | The back button icon (uses ion-icon).                               |
+| Part       | Description                                                   |
+| ---------- | ------------------------------------------------------------- |
+| `"icon"`   | The back button icon (uses ion-icon).                         |
 | `"native"` | The native HTML button element that wraps all child elements. |
-| `"text"`   | The back button text.                                               |
+| `"text"`   | The back button text.                                         |
 
 
 ## CSS Custom Properties

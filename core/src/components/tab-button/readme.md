@@ -234,8 +234,8 @@ export class TabButtonExample {
 
 ## Shadow Parts
 
-| Part       | Description                                                         |
-| ---------- | ------------------------------------------------------------------- |
+| Part       | Description                                                   |
+| ---------- | ------------------------------------------------------------- |
 | `"native"` | The native HTML anchor element that wraps all child elements. |
 
 

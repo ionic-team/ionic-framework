@@ -36,8 +36,8 @@ action for the item.
 
 ## Shadow Parts
 
-| Part       | Description                                                                   |
-| ---------- | ----------------------------------------------------------------------------- |
+| Part       | Description                                                             |
+| ---------- | ----------------------------------------------------------------------- |
 | `"native"` | The native HTML button or anchor element that wraps all child elements. |
 
 

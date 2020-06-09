@@ -271,8 +271,8 @@ export class CardExample {
 
 ## Shadow Parts
 
-| Part       | Description                                                                         |
-| ---------- | ----------------------------------------------------------------------------------- |
+| Part       | Description                                                                   |
+| ---------- | ----------------------------------------------------------------------------- |
 | `"native"` | The native HTML button, anchor, or div element that wraps all child elements. |
 
 
