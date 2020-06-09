@@ -1,15 +1,17 @@
-import { ElementRef, HostListener } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import { AfterViewInit, ElementRef, HostListener, Injector, OnDestroy, Type } from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { raf } from '../../util/util';
 
-export class ValueAccessor implements ControlValueAccessor {
+export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
   private onChange: (value: any) => void = () => {/**/};
   private onTouched: () => void = () => {/**/};
   protected lastValue: any;
+  private statusChanges?: Subscription;
 
-  constructor(protected el: ElementRef) {}
+  constructor(protected injector: Injector, protected el: ElementRef) {}
 
   writeValue(value: any) {
     /**
@@ -51,6 +53,45 @@ export class ValueAccessor implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean) {
     this.el.nativeElement.disabled = isDisabled;
+  }
+
+  ngOnDestroy() {
+    if (this.statusChanges) {
+      this.statusChanges.unsubscribe();
+    }
+  }
+
+  ngAfterViewInit() {
+    const ngControl = this.injector.get<NgControl>(NgControl as Type<NgControl>);
+
+    // Listen for changes in validity, disabled, or pending states
+    if (ngControl.statusChanges) {
+      this.statusChanges = ngControl.statusChanges.subscribe(() => setIonicClasses(this.el));
+    }
+
+    /**
+     * TODO Remove this in favor of https://github.com/angular/angular/issues/10887
+     * whenever it is implemented. Currently, Ionic's form status classes
+     * do not react to changes when developers manually call
+     * Angular form control methods such as markAsTouched.
+     * This results in Ionic's form status classes being out
+     * of sync with the ng form status classes.
+     * This patches the methods to manually sync
+     * the classes until this feature is implemented in Angular.
+     */
+    const formControl = ngControl.control;
+    if (formControl) {
+      const methodsToPatch = ['markAsTouched', 'markAllAsTouched', 'markAsUntouched', 'markAsDirty', 'markAsPristine'];
+      methodsToPatch.forEach(method => {
+       if (formControl[method]) {
+         const oldFn = formControl[method].bind(formControl);
+         formControl[method] = (...params) => {
+           oldFn(...params);
+           setIonicClasses(this.el);
+          };
+        }
+      });
+    }
   }
 }
 
