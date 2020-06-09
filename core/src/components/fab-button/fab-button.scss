@@ -207,13 +207,7 @@
 // --------------------------------------------------
 
 .close-icon {
-  @include position(0, 0, null, 0);
-
-  display: flex;
-  position: absolute;
-
-  align-items: center;
-  justify-content: center;
+  @include margin(0, auto);
 
   height: 100%;
 

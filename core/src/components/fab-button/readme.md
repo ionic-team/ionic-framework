@@ -168,7 +168,7 @@ export class FabButtonExample {
 
 | Part           | Description                                                                   |
 | -------------- | ----------------------------------------------------------------------------- |
-| `"close-icon"` | The container for the close icon.                                             |
+| `"close-icon"` | The close icon that is displayed when a fab list opens (uses ion-icon).       |
 | `"native"`     | The native HTML button or anchor element that is rendered around the content. |
 
 
