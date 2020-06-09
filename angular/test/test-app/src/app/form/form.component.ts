@@ -25,6 +25,11 @@ export class FormComponent {
     });
   }
 
+  setTouched() {
+    const formControl = this.profileForm.get('input');
+    formControl.markAsTouched();
+  }
+
   onSubmit(_ev) {
     this.submitted = 'true';
   }
