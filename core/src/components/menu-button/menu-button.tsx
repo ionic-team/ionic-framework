@@ -11,7 +11,7 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @part native - The native HTML button element that is rendered around the content.
+ * @part native - The native HTML button element that wraps all child elements.
  * @part icon - The menu button icon (uses ion-icon).
  */
 @Component({

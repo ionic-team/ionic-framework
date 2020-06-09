@@ -8,7 +8,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @part native - The native HTML button, anchor, or div element that is rendered around the content.
+ * @part native - The native HTML button, anchor, or div element that wraps all child elements.
  */
 @Component({
   tag: 'ion-card',

@@ -322,7 +322,7 @@ export class ButtonExample {
 
 | Part       | Description                                                                   |
 | ---------- | ----------------------------------------------------------------------------- |
-| `"native"` | The native HTML button or anchor element that is rendered around the content. |
+| `"native"` | The native HTML button or anchor element that wraps all child elements. |
 
 
 ## CSS Custom Properties

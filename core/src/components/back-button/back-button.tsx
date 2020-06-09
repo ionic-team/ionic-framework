@@ -9,7 +9,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @part native - The native HTML button element that is rendered around the content.
+ * @part native - The native HTML button element that wraps all child elements.
  * @part icon - The back button icon (uses ion-icon).
  * @part text - The back button text.
  */

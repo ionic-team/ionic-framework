@@ -8,7 +8,7 @@ import { AnchorInterface } from '../../utils/element-interface';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @part native - The native HTML anchor element that is rendered around the content.
+ * @part native - The native HTML anchor element that wraps all child elements.
  */
 @Component({
   tag: 'ion-tab-button',

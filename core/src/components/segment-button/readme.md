@@ -677,7 +677,7 @@ export class SegmentButtonExample {
       <ion-label>Shared Links</ion-label>
     </ion-segment-button>
   </ion-segment>
-  
+
   <!-- Label only -->
   <ion-segment value="1">
     <ion-segment-button value="1">
@@ -690,7 +690,7 @@ export class SegmentButtonExample {
       <ion-label>Item Three</ion-label>
     </ion-segment-button>
   </ion-segment>
-  
+
   <!-- Icon only -->
   <ion-segment value="heart">
     <ion-segment-button value="call">
@@ -703,7 +703,7 @@ export class SegmentButtonExample {
       <ion-icon name="pin"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-  
+
   <!-- Icon top -->
   <ion-segment value="2">
     <ion-segment-button value="1">
@@ -719,7 +719,7 @@ export class SegmentButtonExample {
       <ion-icon name="pin"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-  
+
   <!-- Icon bottom -->
   <ion-segment value="1">
     <ion-segment-button value="1" layout="icon-bottom">
@@ -735,7 +735,7 @@ export class SegmentButtonExample {
       <ion-label>Item Three</ion-label>
     </ion-segment-button>
   </ion-segment>
-  
+
   <!-- Icon start -->
   <ion-segment value="1">
     <ion-segment-button value="1" layout="icon-start">
@@ -751,7 +751,7 @@ export class SegmentButtonExample {
       <ion-icon name="pin"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-  
+
   <!-- Icon end -->
   <ion-segment value="1">
     <ion-segment-button value="1" layout="icon-end">
@@ -799,7 +799,7 @@ export class SegmentButtonExample {
 | Part          | Description                                                         |
 | ------------- | ------------------------------------------------------------------- |
 | `"indicator"` | The indicator displayed on the checked segment button.              |
-| `"native"`    | The native HTML button element that is rendered around the content. |
+| `"native"`    | The native HTML button element that wraps all child elements. |
 
 
 ## CSS Custom Properties

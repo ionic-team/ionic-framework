@@ -8,7 +8,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @part native - The native HTML button or anchor element that is rendered around the content.
+ * @part native - The native HTML button or anchor element that wraps all child elements.
  * @part close-icon - The close icon that is displayed when a fab list opens (uses ion-icon).
  */
 @Component({
