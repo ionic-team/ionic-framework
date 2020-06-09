@@ -208,6 +208,9 @@
 
 .close-icon {
   @include margin(0, auto);
+  @include position(0, 0, null, 0);
+
+  position: absolute;
 
   height: 100%;
 
