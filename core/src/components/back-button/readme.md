@@ -173,6 +173,75 @@ export const BackButtonExample: React.FC = () => (
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'back-button-example',
+  styleUrl: 'back-button-example.css'
+})
+export class BackButtonExample {
+  render() {
+    const buttonText = "Custom";
+    const buttonIcon = "add";
+
+    return [
+      // Default back button
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>,
+
+      // Back button with a default href
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button defaultHref="home"></ion-back-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>,
+
+      // Back button with custom text and icon
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button
+              text={buttonText}
+              icon={buttonIcon}>
+            </ion-back-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>,
+
+      // Back button with no text and custom icon
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button text="" icon="add"></ion-back-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>,
+
+      // Danger back button next to a menu button
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+            <ion-back-button color="danger"></ion-back-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+    ];
+  }
+}
+```
+
+
 ### Vue
 
 ```html
@@ -232,15 +301,16 @@ export const BackButtonExample: React.FC = () => (
 
 ## Properties
 
-| Property      | Attribute      | Description                                                                                                                                                                                                                                                            | Type                              | Default     |
-| ------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ----------- |
-| `color`       | `color`        | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`             | `undefined` |
-| `defaultHref` | `default-href` | The url to navigate back to by default when there is no history.                                                                                                                                                                                                       | `string \| undefined`             | `undefined` |
-| `disabled`    | `disabled`     | If `true`, the user cannot interact with the button.                                                                                                                                                                                                                   | `boolean`                         | `false`     |
-| `icon`        | `icon`         | The icon name to use for the back button.                                                                                                                                                                                                                              | `null \| string \| undefined`     | `undefined` |
-| `mode`        | `mode`         | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                   | `undefined` |
-| `text`        | `text`         | The text to display in the back button.                                                                                                                                                                                                                                | `null \| string \| undefined`     | `undefined` |
-| `type`        | `type`         | The type of the button.                                                                                                                                                                                                                                                | `"button" \| "reset" \| "submit"` | `'button'`  |
+| Property          | Attribute      | Description                                                                                                                                                                                                                                                            | Type                                                    | Default     |
+| ----------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ----------- |
+| `color`           | `color`        | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                   | `undefined` |
+| `defaultHref`     | `default-href` | The url to navigate back to by default when there is no history.                                                                                                                                                                                                       | `string \| undefined`                                   | `undefined` |
+| `disabled`        | `disabled`     | If `true`, the user cannot interact with the button.                                                                                                                                                                                                                   | `boolean`                                               | `false`     |
+| `icon`            | `icon`         | The icon name to use for the back button.                                                                                                                                                                                                                              | `null \| string \| undefined`                           | `undefined` |
+| `mode`            | `mode`         | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                         | `undefined` |
+| `routerAnimation` | --             | When using a router, it specifies the transition animation when navigating to another page.                                                                                                                                                                            | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
+| `text`            | `text`         | The text to display in the back button.                                                                                                                                                                                                                                | `null \| string \| undefined`                           | `undefined` |
+| `type`            | `type`         | The type of the button.                                                                                                                                                                                                                                                | `"button" \| "reset" \| "submit"`                       | `'button'`  |
 
 
 ## CSS Custom Properties

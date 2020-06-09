@@ -1,7 +1,6 @@
 import { IonicConfig } from '../interface';
 
 export class Config {
-
   private m = new Map<keyof IonicConfig, any>();
 
   reset(configObj: IonicConfig) {
@@ -10,7 +9,7 @@ export class Config {
 
   get(key: keyof IonicConfig, fallback?: any): any {
     const value = this.m.get(key);
-    return (value !== undefined) ? value : fallback;
+    return value !== undefined ? value : fallback;
   }
 
   getBoolean(key: keyof IonicConfig, fallback = false): boolean {
@@ -34,7 +33,7 @@ export class Config {
   }
 }
 
-export const config = /*@__PURE__*/new Config();
+export const config = /*@__PURE__*/ new Config();
 
 export const configFromSession = (win: Window): any => {
   try {
@@ -55,7 +54,8 @@ export const saveConfig = (win: Window, c: any) => {
 
 export const configFromURL = (win: Window) => {
   const configObj: any = {};
-  win.location.search.slice(1)
+  win.location.search
+    .slice(1)
     .split('&')
     .map(entry => entry.split('='))
     .map(([key, value]) => [decodeURIComponent(key), decodeURIComponent(value)])

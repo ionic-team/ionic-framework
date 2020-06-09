@@ -75,11 +75,18 @@
             <ion-radio id="dangerRadio" slot="end" color="danger" value="broccoli"></ion-radio>
           </ion-item>
         </ion-radio-group>
-        
+
         <ion-radio-group allow-empty-selection value="custom">
           <ion-item>
             <ion-label>Custom</ion-label>
             <ion-radio slot="end" color="danger" value="custom" style="--border-radius:2px;--inner-border-radius: 10px 0px 10px 0px;"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+
+        <ion-radio-group allow-empty-selection value="custom">
+          <ion-item>
+            <ion-label>Radio ::part</ion-label>
+            <ion-radio slot="end" value="custom" class="radio-part"></ion-radio>
           </ion-item>
         </ion-radio-group>
 
@@ -128,7 +135,7 @@
         <span id="standAloneCheckedSpan"></span>
       </p>
 
-      
+
       <ion-item>
         <ion-label>Checkbox / Toggle</ion-label>
         <ion-radio slot="start" id="checked"></ion-radio>
@@ -203,6 +210,24 @@
         border: 1px solid #ddd;
         padding: 15px 10px;
         margin-top: -20px;
+      }
+
+      .radio-part::part(container) {
+        background: rgba(255, 0, 0, 0.3);
+        border-color: darkred;
+      }
+
+      .radio-part::part(mark) {
+        background: hotpink;
+      }
+
+      .radio-part.radio-checked::part(container) {
+        background: rgba(0, 255, 0, 0.3);
+        border-color: darkgreen;
+      }
+
+      .radio-part.radio-checked::part(mark) {
+        background: purple;
       }
 
     </style>

@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
 import { dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
-import { sanitizeDOMString } from '../../utils/sanitization';
+import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -72,7 +72,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   /**
    * Message to be shown in the toast.
    */
-  @Prop() message?: string;
+  @Prop() message?: string | IonicSafeString;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -158,7 +158,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the toast did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionToastDidDismiss');
   }
 
@@ -166,7 +166,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the toast will dismiss.
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionToastWillDismiss');
   }
 
@@ -271,6 +271,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
           ...getClassMap(this.cssClass),
           'toast-translucent': this.translucent
         }}
+        tabindex="-1"
         onIonToastWillDismiss={this.dispatchCancelHandler}
       >
         <div class={wrapperClass}>

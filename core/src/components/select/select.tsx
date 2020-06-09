@@ -12,10 +12,9 @@ import { SelectCompareFn } from './select-interface';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @TODOpart placeholder - The text displayed in the select when there is no value.
- * @TODOpart text - The displayed value of the select.
- * @TODOpart icon - The select icon container.
- * @TODOpart icon-inner - The select icon.
+ * @part placeholder - The text displayed in the select when there is no value.
+ * @part text - The displayed value of the select.
+ * @part icon - The select icon container.
  */
 @Component({
   tag: 'ion-select',
@@ -79,10 +78,12 @@ export class Select implements ComponentInterface {
 
   /**
    * Any additional options that the `alert`, `action-sheet` or `popover` interface
-   * can take. See the [AlertController API docs](../../alert/AlertController/#create), the
-   * [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the
-   * [PopoverController API docs](../../popover/PopoverController/#create) for the
+   * can take. See the [ion-alert docs](../alert), the
+   * [ion-action-sheet docs](../action-sheet) and the
+   * [ion-popover docs](../popover) for the
    * create options for each interface.
+   *
+   * Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
    */
   @Prop() interfaceOptions: any = {};
 
@@ -228,9 +229,15 @@ export class Select implements ComponentInterface {
   private createActionSheetButtons(data: HTMLIonSelectOptionElement[], selectValue: any): ActionSheetButton[] {
     const actionSheetButtons = data.map(option => {
       const value = getOptionValue(option);
+
+      // Remove hydrated before copying over classes
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+
       return {
         role: (isOptionSelected(value, selectValue, this.compareWith) ? 'selected' : ''),
         text: option.textContent,
+        cssClass: optClass,
         handler: () => {
           this.value = value;
         }
@@ -250,32 +257,48 @@ export class Select implements ComponentInterface {
   }
 
   private createAlertInputs(data: HTMLIonSelectOptionElement[], inputType: 'checkbox' | 'radio', selectValue: any): AlertInput[] {
-    return data.map(o => {
-      const value = getOptionValue(o);
+    const alertInputs = data.map(option => {
+      const value = getOptionValue(option);
+
+      // Remove hydrated before copying over classes
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+
       return {
         type: inputType,
-        label: o.textContent || '',
+        cssClass: optClass,
+        label: option.textContent || '',
         value,
         checked: isOptionSelected(value, selectValue, this.compareWith),
-        disabled: o.disabled
+        disabled: option.disabled
       };
     });
+
+    return alertInputs;
   }
 
   private createPopoverOptions(data: HTMLIonSelectOptionElement[], selectValue: any): SelectPopoverOption[] {
-    return data.map(o => {
-      const value = getOptionValue(o);
+    const popoverOptions = data.map(option => {
+      const value = getOptionValue(option);
+
+      // Remove hydrated before copying over classes
+      const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
+      const optClass = `${OPTION_CLASS} ${copyClasses}`;
+
       return {
-        text: o.textContent || '',
+        text: option.textContent || '',
+        cssClass: optClass,
         value,
         checked: isOptionSelected(value, selectValue, this.compareWith),
-        disabled: o.disabled,
+        disabled: option.disabled,
         handler: () => {
           this.value = value;
           this.close();
         }
       };
     });
+
+    return popoverOptions;
   }
 
   private async openPopover(ev: UIEvent) {
@@ -451,7 +474,7 @@ export class Select implements ComponentInterface {
           {selectText}
         </div>
         <div class="select-icon" role="presentation" part="icon">
-          <div class="select-icon-inner" part="icon-inner"></div>
+          <div class="select-icon-inner"></div>
         </div>
         <button
           type="button"
@@ -528,3 +551,5 @@ const textForValue = (opts: HTMLIonSelectOptionElement[], value: any, compareWit
 };
 
 let selectIds = 0;
+
+const OPTION_CLASS = 'select-interface-option';

@@ -6,6 +6,19 @@ declare const __zone_symbol__requestAnimationFrame: any;
 declare const requestAnimationFrame: any;
 
 /**
+ * Gets the root context of a shadow dom element
+ * On newer browsers this will be the shadowRoot,
+ * but for older browser this may just be the
+ * element itself.
+ *
+ * Useful for whenever you need to explicitly
+ * do "myElement.shadowRoot!.querySelector(...)".
+ */
+export const getElementRoot = (el: HTMLElement, fallback: HTMLElement = el) => {
+  return el.shadowRoot || fallback;
+};
+
+/**
  * Patched version of requestAnimationFrame that avoids ngzone
  * Use only when you know ngzone should not run
  */

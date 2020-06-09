@@ -45,6 +45,8 @@
   align-items: center;
   justify-content: center;
 
+  outline: none;
+
   contain: strict;
 }
 
@@ -77,7 +79,7 @@
 
 .modal-shadow {
   position: absolute;
-  
+
   background: transparent;
 }
 

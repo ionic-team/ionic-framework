@@ -8,19 +8,19 @@ Data should be modified during the refresher's output events. Once the async
 operation has completed and the refreshing should end, call `complete()` on the
 refresher.
 
-### Native Refreshers
+## Native Refreshers
 
 Both iOS and Android platforms provide refreshers that take advantage of properties exposed by their respective devices that give pull to refresh a fluid, native-like feel.
 
 Certain properties such as `pullMin` and `snapbackDuration` are not compatible because much of the native refreshers are scroll-based. See [Refresher Properties](#properties) for more information.
 
-#### iOS Usage
+### iOS Usage
 
 Using the iOS native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [Spinner Documentation](../spinner#properties) for accepted values. The `pullingIcon` defaults to the `lines` spinner on iOS. The spinner tick marks will be progressively shown as the user pulls down on the page.
 
 The iOS native `ion-refresher` relies on rubber band scrolling in order to work properly and is only compatible with iOS devices as a result. We provide a fallback refresher for apps running in iOS mode on devices that do not support rubber band scrolling.
 
-#### Android Usage
+### Android Usage
 
 Using the MD native `ion-refresher` requires setting the `pullingIcon` property on `ion-refresher-content` to the value of one of the available spinners. See the [ion-spinner Documentation](../spinner#properties) for accepted values. `pullingIcon` defaults to the `circular` spinner on MD.
 
@@ -51,7 +51,7 @@ Using the MD native `ion-refresher` requires setting the `pullingIcon` property 
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
-      pullingIcon="arrow-dropdown"
+      pullingIcon="chevron-down-circle-outline"
       pullingText="Pull to refresh"
       refreshingSpinner="circles"
       refreshingText="Refreshing...">
@@ -104,7 +104,7 @@ export class RefresherExample {
 <ion-content>
   <ion-refresher slot="fixed">
     <ion-refresher-content
-      pulling-icon="arrow-dropdown"
+      pulling-icon="chevron-down-circle-outline"
       pulling-text="Pull to refresh"
       refreshing-spinner="circles"
       refreshing-text="Refreshing...">
@@ -120,6 +120,7 @@ export class RefresherExample {
 import React from 'react';
 import { IonContent, IonRefresher, IonRefresherContent } from '@ionic/react';
 import { RefresherEventDetail } from '@ionic/core';
+import { chevronDownCircleOutline } from 'ionicons/icons';
 
 function doRefresh(event: CustomEvent<RefresherEventDetail>) {
   console.log('Begin async operation');
@@ -150,7 +151,7 @@ export const RefresherExample: React.FC = () => (
     <IonContent>
       <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
         <IonRefresherContent
-          pullingIcon="arrow-dropdown"
+          pullingIcon={chevronDownCircleOutline}
           pullingText="Pull to refresh"
           refreshingSpinner="circles"
           refreshingText="Refreshing...">
@@ -159,6 +160,58 @@ export const RefresherExample: React.FC = () => (
     </IonContent>
   </IonContent>
 );
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'refresher-example',
+  styleUrl: 'refresher-example.css'
+})
+export class RefresherExample {
+  doRefresh(ev: any) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      ev.target.complete();
+    }, 2000);
+  }
+
+  render() {
+    return [
+      // Default Refresher
+      <ion-content>
+        <ion-refresher slot="fixed" onIonRefresh={(ev) => this.doRefresh(ev)}>
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+      </ion-content>,
+
+      // Custom Refresher Properties
+      <ion-content>
+        <ion-refresher slot="fixed" pullFactor={0.5} pullMin={100} pullMax={200}>
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+      </ion-content>,
+
+      // Custom Refresher Content
+      <ion-content>
+        <ion-refresher slot="fixed" onIonRefresh={(ev) => this.doRefresh(ev)}>
+          <ion-refresher-content
+            pullingIcon="chevron-down-circle-outline"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+          </ion-refresher-content>
+        </ion-refresher>
+      </ion-content>
+    ];
+  }
+}
 ```
 
 
@@ -184,7 +237,7 @@ export const RefresherExample: React.FC = () => (
   <ion-content>
     <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
       <ion-refresher-content
-        pulling-icon="arrow-dropdown"
+        pulling-icon="chevron-down-circle-outline"
         pulling-text="Pull to refresh"
         refreshing-spinner="circles"
         refreshing-text="Refreshing...">

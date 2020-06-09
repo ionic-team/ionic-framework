@@ -87,6 +87,46 @@ export const RadioExamples: React.FC = () => {
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'radio-example',
+  styleUrl: 'radio-example.css'
+})
+export class RadioExample {
+  render() {
+    return [
+      <ion-list>
+        <ion-radio-group value="biff">
+          <ion-list-header>
+            <ion-label>Name</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-label>Biff</ion-label>
+            <ion-radio slot="start" value="biff"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Griff</ion-label>
+            <ion-radio slot="start" value="griff"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Buford</ion-label>
+            <ion-radio slot="start" value="buford"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+    ];
+  }
+}
+```
+
+
 ### Vue
 
 ```html
@@ -135,6 +175,14 @@ export const RadioExamples: React.FC = () => {
 | ---------- | ------------------------------------------ | ------------------- |
 | `ionBlur`  | Emitted when the radio button loses focus. | `CustomEvent<void>` |
 | `ionFocus` | Emitted when the radio button has focus.   | `CustomEvent<void>` |
+
+
+## Shadow Parts
+
+| Part          | Description                                              |
+| ------------- | -------------------------------------------------------- |
+| `"container"` | The container for the radio mark.                        |
+| `"mark"`      | The checkmark or dot used to indicate the checked state. |
 
 
 ## CSS Custom Properties

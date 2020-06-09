@@ -5,7 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController, } from "./interface";
+import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController, } from "./interface";
+import { IonicSafeString, } from "./utils/sanitization";
 import { SelectCompareFn, } from "./components/select/select-interface";
 export namespace Components {
     interface IonActionSheet {
@@ -54,11 +55,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the action sheet did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the action sheet will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the action sheet overlay after it has been created.
@@ -119,7 +120,7 @@ export namespace Components {
         /**
           * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
@@ -127,11 +128,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the alert did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the alert will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the alert overlay after it has been created.
@@ -171,6 +172,10 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
         /**
           * The text to display in the back button.
          */
@@ -242,6 +247,10 @@ export namespace Components {
          */
         "rel": string | undefined;
         /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
+        /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection": RouterDirection;
@@ -301,6 +310,10 @@ export namespace Components {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel": string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
         /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
@@ -560,7 +573,7 @@ export namespace Components {
          */
         "dayNames"?: string[] | string;
         /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
          */
         "dayShortNames"?: string[] | string;
         /**
@@ -676,6 +689,10 @@ export namespace Components {
          */
         "activated": boolean;
         /**
+          * The icon name to use for the close icon. This will appear when the fab button is pressed. Only applies if it is the main button inside of a fab containing a fab list.
+         */
+        "closeIcon": string;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -700,6 +717,10 @@ export namespace Components {
          */
         "rel": string | undefined;
         /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
+        /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection": RouterDirection;
@@ -708,7 +729,7 @@ export namespace Components {
          */
         "show": boolean;
         /**
-          * The size of the button. Set this to `small` in order to have a mini fab.
+          * The size of the button. Set this to `small` in order to have a mini fab button.
          */
         "size"?: "small";
         /**
@@ -800,7 +821,7 @@ export namespace Components {
         /**
           * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "loadingText"?: string;
+        "loadingText"?: string | IonicSafeString;
     }
     interface IonInput {
         /**
@@ -814,7 +835,7 @@ export namespace Components {
         /**
           * Indicates whether the value of the control can be automatically completed by the browser.
          */
-        "autocomplete": "on" | "off";
+        "autocomplete": AutocompleteTypes;
         /**
           * Whether auto correction should be enabled when the user is entering/editing the text value.
          */
@@ -843,6 +864,10 @@ export namespace Components {
           * If `true`, the user cannot interact with the input.
          */
         "disabled": boolean;
+        /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
         /**
           * Returns the native `<input>` element used under the hood.
          */
@@ -880,7 +905,7 @@ export namespace Components {
          */
         "name": string;
         /**
-          * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+          * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, `"date"`, or `"password"`, otherwise it is ignored. When the type attribute is `"date"`, `pattern` will only be used in browsers that do not support the `"date"` input type natively. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date for more information.
          */
         "pattern"?: string;
         /**
@@ -961,6 +986,10 @@ export namespace Components {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel": string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
         /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
@@ -1146,7 +1175,7 @@ export namespace Components {
         /**
           * Optional text content to display in the loading indicator.
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
@@ -1154,11 +1183,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the loading did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the loading will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the loading overlay after it has been created.
@@ -1310,11 +1339,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the modal did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the modal will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the modal overlay after it has been created.
@@ -1438,7 +1467,7 @@ export namespace Components {
           * @param done The transition complete function.
          */
         "setRoot": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-        "setRouteId": (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection) => Promise<RouteWrite>;
+        "setRouteId": (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<RouteWrite>;
         /**
           * If the nav component should allow for swipe-to-go-back.
          */
@@ -1453,6 +1482,10 @@ export namespace Components {
           * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
          */
         "componentProps"?: ComponentProps;
+        /**
+          * The transition animation when navigating to another page.
+         */
+        "routerAnimation"?: AnimationBuilder;
         /**
           * The transition direction when navigating to another page.
          */
@@ -1523,11 +1556,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the picker did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the picker will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the picker overlay after it has been created.
@@ -1595,11 +1628,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the popover did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the popover will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * Present the popover overlay after it has been created.
@@ -1776,7 +1809,7 @@ export namespace Components {
         /**
           * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "pullingText"?: string;
+        "pullingText"?: string | IonicSafeString;
         /**
           * An animated SVG spinner that shows when refreshing begins
          */
@@ -1784,7 +1817,7 @@ export namespace Components {
         /**
           * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "refreshingText"?: string;
+        "refreshingText"?: string | IonicSafeString;
     }
     interface IonReorder {
     }
@@ -1849,7 +1882,7 @@ export namespace Components {
           * @param url The url to navigate to.
           * @param direction The direction of the animation. Defaults to `"forward"`.
          */
-        "push": (url: string, direction?: RouterDirection) => Promise<boolean>;
+        "push": (url: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>;
         /**
           * By default `ion-router` will match the routes at the root path ("/"). That can be changed when
          */
@@ -1872,6 +1905,10 @@ export namespace Components {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel": string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
         /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
@@ -1897,7 +1934,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode": "ios" | "md";
-        "setRouteId": (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection) => Promise<RouteWrite>;
+        "setRouteId": (id: string, params: ComponentProps<null> | undefined, direction: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<RouteWrite>;
         "swipeHandler"?: SwipeGestureHandler;
     }
     interface IonRow {
@@ -1910,7 +1947,7 @@ export namespace Components {
         /**
           * Set the input's autocomplete property.
          */
-        "autocomplete": "on" | "off";
+        "autocomplete": AutocompleteTypes;
         /**
           * Set the input's autocorrect property.
          */
@@ -1939,6 +1976,10 @@ export namespace Components {
           * If `true`, the user cannot interact with the input.
          */
         "disabled": boolean;
+        /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
         /**
           * Returns the native `<input>` element used under the hood.
          */
@@ -2042,7 +2083,7 @@ export namespace Components {
          */
         "interface": SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](../alert), the [ion-action-sheet docs](../action-sheet) and the [ion-popover docs](../popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions": any;
         /**
@@ -2375,9 +2416,17 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        /**
           * Returns the native `<textarea>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLTextAreaElement>;
+        /**
+          * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+         */
+        "inputmode"?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
         /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
@@ -2485,7 +2534,7 @@ export namespace Components {
         /**
           * Message to be shown in the toast.
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2493,11 +2542,11 @@ export namespace Components {
         /**
           * Returns a promise that resolves when the toast did dismiss.
          */
-        "onDidDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         /**
           * Returns a promise that resolves when the toast will dismiss.
          */
-        "onWillDismiss": () => Promise<OverlayEventDetail<any>>;
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
           * The position of the toast on the screen.
@@ -3332,7 +3381,7 @@ declare namespace LocalJSX {
         /**
           * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
@@ -3387,6 +3436,10 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
         /**
           * The text to display in the back button.
          */
@@ -3470,6 +3523,10 @@ declare namespace LocalJSX {
          */
         "rel"?: string | undefined;
         /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
+        /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection"?: RouterDirection;
@@ -3529,6 +3586,10 @@ declare namespace LocalJSX {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel"?: string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
         /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
@@ -3784,7 +3845,7 @@ declare namespace LocalJSX {
          */
         "dayNames"?: string[] | string;
         /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
          */
         "dayShortNames"?: string[] | string;
         /**
@@ -3908,6 +3969,10 @@ declare namespace LocalJSX {
          */
         "activated"?: boolean;
         /**
+          * The icon name to use for the close icon. This will appear when the fab button is pressed. Only applies if it is the main button inside of a fab containing a fab list.
+         */
+        "closeIcon"?: string;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -3940,6 +4005,10 @@ declare namespace LocalJSX {
          */
         "rel"?: string | undefined;
         /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
+        /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection"?: RouterDirection;
@@ -3948,7 +4017,7 @@ declare namespace LocalJSX {
          */
         "show"?: boolean;
         /**
-          * The size of the button. Set this to `small` in order to have a mini fab.
+          * The size of the button. Set this to `small` in order to have a mini fab button.
          */
         "size"?: "small";
         /**
@@ -4052,7 +4121,7 @@ declare namespace LocalJSX {
         /**
           * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "loadingText"?: string;
+        "loadingText"?: string | IonicSafeString;
     }
     interface IonInput {
         /**
@@ -4066,7 +4135,7 @@ declare namespace LocalJSX {
         /**
           * Indicates whether the value of the control can be automatically completed by the browser.
          */
-        "autocomplete"?: "on" | "off";
+        "autocomplete"?: AutocompleteTypes;
         /**
           * Whether auto correction should be enabled when the user is entering/editing the text value.
          */
@@ -4095,6 +4164,10 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the input.
          */
         "disabled"?: boolean;
+        /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
@@ -4144,7 +4217,7 @@ declare namespace LocalJSX {
          */
         "onIonInput"?: (event: CustomEvent<KeyboardEvent>) => void;
         /**
-          * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+          * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, `"date"`, or `"password"`, otherwise it is ignored. When the type attribute is `"date"`, `pattern` will only be used in browsers that do not support the `"date"` input type natively. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date for more information.
          */
         "pattern"?: string;
         /**
@@ -4221,6 +4294,10 @@ declare namespace LocalJSX {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel"?: string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
         /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
@@ -4382,7 +4459,7 @@ declare namespace LocalJSX {
         /**
           * Optional text content to display in the loading indicator.
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
@@ -4599,6 +4676,10 @@ declare namespace LocalJSX {
           * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
          */
         "componentProps"?: ComponentProps;
+        /**
+          * The transition animation when navigating to another page.
+         */
+        "routerAnimation"?: AnimationBuilder;
         /**
           * The transition direction when navigating to another page.
          */
@@ -4934,7 +5015,7 @@ declare namespace LocalJSX {
         /**
           * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "pullingText"?: string;
+        "pullingText"?: string | IonicSafeString;
         /**
           * An animated SVG spinner that shows when refreshing begins
          */
@@ -4942,7 +5023,7 @@ declare namespace LocalJSX {
         /**
           * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
-        "refreshingText"?: string;
+        "refreshingText"?: string | IonicSafeString;
     }
     interface IonReorder {
     }
@@ -5028,6 +5109,10 @@ declare namespace LocalJSX {
          */
         "rel"?: string | undefined;
         /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
+        /**
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection"?: RouterDirection;
@@ -5060,7 +5145,7 @@ declare namespace LocalJSX {
         /**
           * Set the input's autocomplete property.
          */
-        "autocomplete"?: "on" | "off";
+        "autocomplete"?: AutocompleteTypes;
         /**
           * Set the input's autocorrect property.
          */
@@ -5089,6 +5174,10 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the input.
          */
         "disabled"?: boolean;
+        /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
@@ -5212,7 +5301,7 @@ declare namespace LocalJSX {
          */
         "interface"?: SelectInterface;
         /**
-          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
+          * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](../alert), the [ion-action-sheet docs](../action-sheet) and the [ion-popover docs](../popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions"?: any;
         /**
@@ -5540,6 +5629,14 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
+         */
+        "enterkeyhint"?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+        /**
+          * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+         */
+        "inputmode"?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
+        /**
           * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
@@ -5652,7 +5749,7 @@ declare namespace LocalJSX {
         /**
           * Message to be shown in the toast.
          */
-        "message"?: string;
+        "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */

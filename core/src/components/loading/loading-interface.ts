@@ -1,8 +1,9 @@
 import { AnimationBuilder, Mode, SpinnerTypes } from '../../interface';
+import { IonicSafeString } from '../../utils/sanitization';
 
 export interface LoadingOptions {
   spinner?: SpinnerTypes | null;
-  message?: string;
+  message?: string | IonicSafeString;
   cssClass?: string | string[];
   showBackdrop?: boolean;
   duration?: number;

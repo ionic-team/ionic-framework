@@ -25,7 +25,7 @@
 
   @Component()
   export default class Example extends Vue {
-    backdropDismiss = false;
+    enableBackdropDismiss = false;
     showBackdrop = false;
     shouldPropagate = false;
   }

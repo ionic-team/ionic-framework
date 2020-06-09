@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { AnimationBuilder, Color } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
@@ -31,7 +31,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   /**
    * The url to navigate back to by default when there is no history.
    */
-  @Prop() defaultHref?: string;
+  @Prop({ mutable: true }) defaultHref?: string;
 
   /**
    * If `true`, the user cannot interact with the button.
@@ -52,6 +52,18 @@ export class BackButton implements ComponentInterface, ButtonInterface {
    * The type of the button.
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+
+  /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
+
+  componentWillLoad() {
+    if (this.defaultHref === undefined) {
+      this.defaultHref = config.get('backButtonDefaultHref');
+    }
+  }
 
   get backButtonIcon() {
     const icon = this.icon;
@@ -93,9 +105,9 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     ev.preventDefault();
 
     if (nav && await nav.canGoBack()) {
-      return nav.pop({ skipIfBusy: true });
+      return nav.pop({ animationBuilder: this.routerAnimation, skipIfBusy: true });
     }
-    return openURL(this.defaultHref, ev, 'back');
+    return openURL(this.defaultHref, ev, 'back', this.routerAnimation);
   }
 
   render() {
@@ -120,10 +132,10 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'show-back-button': showBackButton
         }}
       >
-        <button type={type} disabled={disabled} class="button-native" part="button">
+        <button type={type} disabled={disabled} class="button-native" aria-label={backButtonText || 'back'}>
           <span class="button-inner">
-            {backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false} part="icon"></ion-icon>}
-            {backButtonText && <span class="button-text" part="text">{backButtonText}</span>}
+            {backButtonIcon && <ion-icon icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
+            {backButtonText && <span aria-hidden="true" class="button-text">{backButtonText}</span>}
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </button>

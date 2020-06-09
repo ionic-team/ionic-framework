@@ -139,6 +139,10 @@ export const present = async (
   if (completed) {
     overlay.didPresent.emit();
   }
+
+  if (overlay.keyboardClose) {
+    overlay.el.focus();
+  }
 };
 
 export const dismiss = async (
@@ -156,6 +160,8 @@ export const dismiss = async (
   overlay.presented = false;
 
   try {
+    // Overlay contents should not be clickable during dismiss
+    overlay.el.style.setProperty('pointer-events', 'none');
     overlay.willDismiss.emit({ data, role });
     const mode = getIonMode(overlay);
     const animationBuilder = (overlay.leaveAnimation)

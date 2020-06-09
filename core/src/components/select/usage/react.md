@@ -1,4 +1,4 @@
-## Single Selection
+### Single Selection
 
 ```tsx
 import React, { useState } from 'react';
@@ -47,7 +47,7 @@ export const SingleSelection: React.FC = () => {
 ```
 
 
-## Multiple Selection
+### Multiple Selection
 
 ```tsx
 import React, { useState } from 'react';
@@ -104,7 +104,7 @@ export const MultipleSelection: React.FC = () => {
 ```
 
 
-## Objects as Values
+### Objects as Values
 
 ```tsx
 import React, { useState } from 'react';
@@ -170,7 +170,7 @@ export const ObjectSelection: React.FC = () => {
 ```
 
 
-## Interface Options
+### Interface Options
 
 ```tsx
 import React, { useState } from 'react';
@@ -235,9 +235,9 @@ export const InterfaceOptionsSelection: React.FC = () => {
 
           <IonItem>
             <IonLabel>Popover</IonLabel>
-            <IonSelect 
-              interfaceOptions={customPopoverOptions} 
-              interface="popover" 
+            <IonSelect
+              interfaceOptions={customPopoverOptions}
+              interface="popover"
               placeholder="Select One"
               onIonChange={e => setHairColor(e.detail.value)}
               value={hairColor}>

@@ -7,16 +7,26 @@
   /**
    * @prop --background: Background of the toggle
    * @prop --background-checked: Background of the toggle when checked
+   * @prop --border-radius: Border radius of the toggle track
+   *
    * @prop --handle-background: Background of the toggle handle
    * @prop --handle-background-checked: Background of the toggle handle when checked
-   * @prop --border-radius: Border radius of the toggle track
+   *
    * @prop --handle-border-radius: Border radius of the toggle handle
+   * @prop --handle-box-shadow: Box shadow of the toggle handle
+   * @prop --handle-height: Height of the toggle handle
+   * @prop --handle-max-height: Maximum height of the toggle handle
+   * @prop --handle-width: Width of the toggle handle
+   * @prop --handle-spacing: Horizontal spacing around the toggle handle
+   * @prop --handle-transition: Transition of the toggle handle
    */
 
   /* stylelint-disable-next-line declaration-no-important */
   box-sizing: content-box !important;
 
   display: inline-block;
+
+  position: relative;
 
   outline: none;
 
@@ -39,3 +49,98 @@ button {
   @include input-cover();
 }
 
+// Toggle Background Track: Unchecked
+// --------------------------------------------------
+
+.toggle-icon-wrapper {
+  display: flex;
+
+  position: relative;
+
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  transition: var(--handle-transition);
+
+  will-change: transform;
+}
+
+.toggle-icon {
+  @include border-radius(var(--border-radius));
+
+  display: block;
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  background: var(--background);
+
+  pointer-events: none;
+
+  overflow: inherit;
+}
+
+
+// Toggle Background Track: Checked
+// ----------------------------------------------------------
+
+:host(.toggle-checked) .toggle-icon {
+  background: var(--background-checked);
+}
+
+
+// Toggle Inner Knob: Unchecked
+// --------------------------------------------------
+
+.toggle-inner {
+  @include position(null, null, null, var(--handle-spacing));
+  @include border-radius(var(--handle-border-radius));
+
+  position: absolute;
+
+  width: var(--handle-width);
+  height: var(--handle-height);
+
+  max-height: var(--handle-max-height);
+
+  transition: var(--handle-transition);
+
+  background: var(--handle-background);
+
+  box-shadow: var(--handle-box-shadow);
+
+  contain: strict;
+}
+
+
+// Toggle Inner Knob: Checked
+// ----------------------------------------------------------
+
+:host(.toggle-checked) .toggle-icon-wrapper {
+  @include ltr() {
+    // transform by 100% - handle width
+    transform: translate3d(calc(100% - var(--handle-width)), 0, 0);
+  }
+
+  @include rtl() {
+    // transform by -100% + handle width
+    transform: translate3d(calc(-100% + var(--handle-width)), 0, 0);
+  }
+}
+
+:host(.toggle-checked) .toggle-inner {
+  @include ltr() {
+    // transform by handle spacing amount
+    transform: translate3d(calc(var(--handle-spacing) * -2), 0, 0);
+  }
+
+  @include rtl() {
+    // transform by handle spacing amount
+    transform: translate3d(calc(var(--handle-spacing) * 2), 0, 0);
+  }
+
+  background: var(--handle-background-checked);
+}

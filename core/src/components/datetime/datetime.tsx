@@ -10,6 +10,9 @@ import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convert
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part text - The value of the datetime.
+ * @part placeholder - The placeholder of the datetime.
  */
 @Component({
   tag: 'ion-datetime',
@@ -176,6 +179,7 @@ export class Datetime implements ComponentInterface {
   /**
    * Short abbreviated day of the week names. This can be used to provide
    * locale names for each day in the week. Defaults to English.
+   * Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
    */
   @Prop() dayShortNames?: string[] | string;
 
@@ -300,6 +304,12 @@ export class Datetime implements ComponentInterface {
 
   private generatePickerOptions(): PickerOptions {
     const mode = getIonMode(this);
+    this.locale = {
+      monthNames: convertToArrayOfStrings(this.monthNames, 'monthNames'),
+      monthShortNames: convertToArrayOfStrings(this.monthShortNames, 'monthShortNames'),
+      dayNames: convertToArrayOfStrings(this.dayNames, 'dayNames'),
+      dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
+    };
     const pickerOptions: PickerOptions = {
       mode,
       ...this.pickerOptions,
@@ -609,6 +619,10 @@ export class Datetime implements ComponentInterface {
       ? (placeholder != null ? placeholder : '')
       : text;
 
+    const datetimeTextPart = text === undefined
+      ? (placeholder != null ? 'placeholder' : undefined)
+      : 'text';
+
     if (label) {
       label.id = labelId;
     }
@@ -631,7 +645,7 @@ export class Datetime implements ComponentInterface {
           'in-item': hostContext('ion-item', el)
         }}
       >
-        <div class="datetime-text">{datetimeText}</div>
+        <div class="datetime-text" part={datetimeTextPart}>{datetimeText}</div>
         <button
           type="button"
           onFocus={this.onFocus}

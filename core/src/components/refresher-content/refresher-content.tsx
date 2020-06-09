@@ -4,7 +4,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { SpinnerTypes } from '../../interface';
 import { isPlatform } from '../../utils/platform';
-import { sanitizeDOMString } from '../../utils/sanitization';
+import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 import { SPINNERS } from '../spinner/spinner-configs';
 
 @Component({
@@ -30,7 +30,7 @@ export class RefresherContent implements ComponentInterface {
    *
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
-  @Prop() pullingText?: string;
+  @Prop() pullingText?: string | IonicSafeString;
 
   /**
    * An animated SVG spinner that shows when refreshing begins
@@ -46,7 +46,7 @@ export class RefresherContent implements ComponentInterface {
    *
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
-  @Prop() refreshingText?: string;
+  @Prop() refreshingText?: string | IonicSafeString;
 
   componentWillLoad() {
     if (this.pullingIcon === undefined) {
