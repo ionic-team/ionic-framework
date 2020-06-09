@@ -23,9 +23,14 @@ export const startInputShims = (config: Config) => {
   const hideCaretMap = new WeakMap<HTMLElement, () => void>();
   const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
 
-  const registerInput = (componentEl: HTMLElement) => {
-    const inputEl = (componentEl.shadowRoot || componentEl).querySelector('input') || (componentEl.shadowRoot || componentEl).querySelector('textarea');
+  const registerInput = async (componentEl: HTMLElement) => {
+    if ((componentEl as any).componentOnReady) {
+      await (componentEl as any).componentOnReady();
+    }
+    const inputRoot = componentEl.shadowRoot || componentEl;
+    const inputEl = inputRoot.querySelector('input') || inputRoot.querySelector('textarea');
     const scrollEl = componentEl.closest('ion-content');
+    const footerEl = (!scrollEl) ? componentEl.closest('ion-footer') as HTMLIonFooterElement | null : null;
 
     if (!inputEl) {
       return;
@@ -36,8 +41,8 @@ export const startInputShims = (config: Config) => {
       hideCaretMap.set(componentEl, rmFn);
     }
 
-    if (SCROLL_ASSIST && !!scrollEl && scrollAssist && !scrollAssistMap.has(componentEl)) {
-      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, keyboardHeight);
+    if (SCROLL_ASSIST && (!!scrollEl || !!footerEl) && scrollAssist && !scrollAssistMap.has(componentEl)) {
+      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, footerEl, keyboardHeight);
       scrollAssistMap.set(componentEl, rmFn);
     }
   };

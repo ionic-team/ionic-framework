@@ -6,6 +6,12 @@ view.
 
 Content, along with many other Ionic components, can be customized to modify its padding, margin, and more using the global styles provided in the [CSS Utilities](/docs/layout/css-utilities) or by individually styling it using CSS and the available [CSS Custom Properties](#css-custom-properties).
 
+
+## Fixed Content
+
+In order to place elements outside of the scrollable area, `slot="fixed"` can be added to the element. This will absolutely position the element placing it in the top left. In order to place the element in a different position, style it using [top, right, bottom, and left](https://developer.mozilla.org/en-US/docs/Web/CSS/position).
+
+
 <!-- Auto Generated Below -->
 
 
@@ -19,6 +25,11 @@ Content, along with many other Ionic components, can be customized to modify its
   (ionScrollStart)="logScrollStart()"
   (ionScroll)="logScrolling($event)"
   (ionScrollEnd)="logScrollEnd()">
+    <h1>Main Content</h1>
+
+    <div slot="fixed">
+      <h1>Fixed Content</h1>
+    </div>
 </ion-content>
 ```
 
@@ -26,7 +37,13 @@ Content, along with many other Ionic components, can be customized to modify its
 ### Javascript
 
 ```html
-<ion-content></ion-content>
+<ion-content>
+  <h1>Main Content</h1>
+
+  <div slot="fixed">
+    <h1>Fixed Content</h1>
+  </div>
+</ion-content>
 ```
 
 ```javascript
@@ -50,8 +67,54 @@ const ContentExample: React.FC = () => (
     onIonScrollStart={() => {}}
     onIonScroll={() => {}}
     onIonScrollEnd={() => {}}>
+      <h1>Main Content</h1>
+
+      <div slot="fixed">
+        <h1>Fixed Content</h1>
+      </div>
   </IonContent>
 );
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'content-example',
+  styleUrl: 'content-example.css'
+})
+export class ContentExample {
+  logScrollStart() {
+    console.log('Scroll start');
+  }
+
+  logScrolling(ev) {
+    console.log('Scrolling', ev);
+  }
+
+  logScrollEnd() {
+    console.log('Scroll end');
+  }
+
+  render() {
+    return [
+      <ion-content
+        scrollEvents={true}
+        onIonScrollStart={() => this.logScrollStart()}
+        onIonScroll={(ev) => this.logScrolling(ev)}
+        onIonScrollEnd={() => this.logScrollEnd()}>
+          <h1>Main Content</h1>
+
+          <div slot="fixed">
+            <h1>Fixed Content</h1>
+          </div>
+      </ion-content>
+    ];
+  }
+}
 ```
 
 
@@ -64,6 +127,11 @@ const ContentExample: React.FC = () => (
     @ionScrollStart="logScrollStart()"
     @ionScroll="logScrolling($event)"
     @ionScrollEnd="logScrollEnd()">
+      <h1>Main Content</h1>
+
+      <div slot="fixed">
+        <h1>Fixed Content</h1>
+      </div>
   </ion-content>
 </template>
 ```
@@ -155,6 +223,14 @@ Type: `Promise<void>`
 | --------- | -------------------------------------------------------------------- |
 |           | Content is placed in the scrollable area if provided without a slot. |
 | `"fixed"` | Should be used for fixed content that should not scroll.             |
+
+
+## Shadow Parts
+
+| Part           | Description                              |
+| -------------- | ---------------------------------------- |
+| `"background"` | The background of the content.           |
+| `"scroll"`     | The scrollable container of the content. |
 
 
 ## CSS Custom Properties

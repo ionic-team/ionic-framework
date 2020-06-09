@@ -23,7 +23,7 @@ Ionic Angular specific building blocks on top of [@ionic/core](https://www.npmjs
 
 1. Pull the latest from master
 2. Build ionic/angular: `npm run build`
-3. Run `npm link` from ionic/angular directory
+3. Run `npm link` from `ionic/angular/dist` directory
 4. Create a blank angular project
 
 ```

@@ -7,7 +7,10 @@ export const createPointerEvents = (
   pointerDown: any,
   pointerMove: any,
   pointerUp: any,
-  options: EventListenerOptions
+  options: {
+    passive?: boolean;
+    capture?: boolean
+  }
 ) => {
 
   let rmTouchStart: (() => void) | undefined;
@@ -92,8 +95,8 @@ export const createPointerEvents = (
     stopMouse();
   };
 
-  const setDisabled = (disabled: boolean) => {
-    if (disabled) {
+  const enable = (isEnabled = true) => {
+    if (!isEnabled) {
       if (rmTouchStart) {
         rmTouchStart();
       }
@@ -114,12 +117,12 @@ export const createPointerEvents = (
   };
 
   const destroy = () => {
-    setDisabled(true);
+    enable(false);
     pointerUp = pointerMove = pointerDown = undefined;
   };
 
   return {
-    setDisabled,
+    enable,
     stop,
     destroy
   };

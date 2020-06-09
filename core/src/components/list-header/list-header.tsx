@@ -24,16 +24,26 @@ export class ListHeader implements ComponentInterface {
    */
   @Prop() color?: Color;
 
+  /**
+   * How the bottom border should be displayed on the list header.
+   */
+  @Prop() lines?: 'full' | 'inset' | 'none';
+
   render() {
+    const { lines } = this;
     const mode = getIonMode(this);
+
     return (
       <Host
         class={{
           ...createColorClasses(this.color),
           [mode]: true,
+          [`list-header-lines-${lines}`]: lines !== undefined,
         }}
       >
-        <slot></slot>
+        <div class="list-header-inner">
+          <slot></slot>
+        </div>
       </Host>
     );
   }

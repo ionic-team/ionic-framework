@@ -4,7 +4,7 @@ The Range slider lets users select from a range of values by moving
 the slider knob. It can accept dual knobs, but by default one knob
 controls the value of the range.
 
-### Range Labels
+## Range Labels
 
 Labels can be placed on either side of the range by adding the
 `slot="start"` or `slot="end"` to the element. The element doesn't have to
@@ -94,44 +94,123 @@ left or right of the range.
 ### React
 
 ```tsx
-import React from 'react';
-import { IonList, IonItem, IonRange, IonLabel, IonIcon, IonContent } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonRange, IonLabel, IonIcon, IonItemDivider } from '@ionic/react';
+import { sunny } from 'ionicons/icons';
+import { RangeValue } from '@ionic/core';
 
-export const RangeExample: React.FC = () => (
-  <IonContent>
-    <IonList>
-      <IonItem>
-        <IonRange color="danger" pin={true} />
-      </IonItem>
+export const RangeExamples: React.FC = () => {
 
-      <IonItem>
-        <IonRange min={-200} max={200} color="secondary">
-          <IonLabel slot="start">-200</IonLabel>
-          <IonLabel slot="end">200</IonLabel>
-        </IonRange>
-      </IonItem>
+  const [value, setValue] = useState(0);
+  const [rangeValue, setRangeValue] = useState<{
+    lower: number;
+    upper: number;
+  }>({ lower: 0, upper: 0 });
 
-      <IonItem>
-        <IonRange min={20} max={80} step={2}>
-          <IonIcon size="small" slot="start" name="sunny" />
-          <IonIcon slot="end" name="sunny" />
-        </IonRange>
-      </IonItem>
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>IonRange Examples</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonList>
+          <IonItemDivider>Default</IonItemDivider>
+          <IonItem>
+            <IonRange pin={true} value={value} onIonChange={e => setValue(e.detail.value as number)} />
+          </IonItem>
+          <IonItem>
+            <IonLabel>Value: {value}</IonLabel>
+          </IonItem>
 
-      <IonItem>
-        <IonRange min={1000} max={2000} step={100} snaps={true} color="secondary" />
-      </IonItem>
+          <IonItemDivider>Min & Max</IonItemDivider>
+          <IonItem>
+            <IonRange min={-200} max={200} color="secondary">
+              <IonLabel slot="start">-200</IonLabel>
+              <IonLabel slot="end">200</IonLabel>
+            </IonRange>
+          </IonItem>
 
-      <IonItem>
-        <IonRange min={1000} max={2000} step={100} snaps={true} ticks={false} color="secondary" />
-      </IonItem>
+          <IonItemDivider>Icons</IonItemDivider>
+          <IonItem>
+            <IonRange min={20} max={80} step={2}>
+              <IonIcon size="small" slot="start" icon={sunny} />
+              <IonIcon slot="end" icon={sunny} />
+            </IonRange>
+          </IonItem>
 
-      <IonItem>
-        <IonRange dualKnobs={true} min={21} max={72} step={3} snaps={true} />
-      </IonItem>
-    </IonList>
-  </IonContent>
-);
+          <IonItemDivider>With Snaps & Ticks</IonItemDivider>
+          <IonItem>
+            <IonRange min={1000} max={2000} step={100} snaps={true} color="secondary" />
+          </IonItem>
+
+          <IonItemDivider>With Snaps & No Ticks</IonItemDivider>
+          <IonItem>
+            <IonRange min={1000} max={2000} step={100} snaps={true} ticks={false} color="secondary" />
+          </IonItem>
+
+          <IonItemDivider>Dual Knobs</IonItemDivider>
+          <IonItem>
+            <IonRange dualKnobs={true} min={0} max={60} step={3} snaps={true} onIonChange={e => setRangeValue(e.detail.value as any)} />
+          </IonItem>
+          <IonItem>
+            <IonLabel>Value: lower: {rangeValue.lower} upper: {rangeValue.upper}</IonLabel>
+          </IonItem>
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'range-example',
+  styleUrl: 'range-example.css'
+})
+export class RangeExample {
+  render() {
+    return [
+      <ion-list>
+        <ion-item>
+          <ion-range color="danger" pin={true}></ion-range>
+        </ion-item>
+
+        <ion-item>
+          <ion-range min={-200} max={200} color="secondary">
+            <ion-label slot="start">-200</ion-label>
+            <ion-label slot="end">200</ion-label>
+          </ion-range>
+        </ion-item>
+
+        <ion-item>
+          <ion-range min={20} max={80} step={2}>
+            <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+            <ion-icon slot="end" name="sunny"></ion-icon>
+          </ion-range>
+        </ion-item>
+
+        <ion-item>
+          <ion-range min={1000} max={2000} step={100} snaps={true} color="secondary"></ion-range>
+        </ion-item>
+
+        <ion-item>
+          <ion-range min={1000} max={2000} step={100} snaps={true} ticks={false} color="secondary"></ion-range>
+        </ion-item>
+
+        <ion-item>
+          <ion-range dualKnobs={true} min={21} max={72} step={3} snaps={true}></ion-range>
+        </ion-item>
+      </ion-list>
+    ];
+  }
+}
 ```
 
 
@@ -218,6 +297,18 @@ export default {
 | --------- | ---------------------------------------------------------------------------------- |
 | `"end"`   | Content is placed to the right of the range slider in LTR, and to the left in RTL. |
 | `"start"` | Content is placed to the left of the range slider in LTR, and to the right in RTL. |
+
+
+## Shadow Parts
+
+| Part            | Description                                |
+| --------------- | ------------------------------------------ |
+| `"bar"`         | The inactive part of the bar.              |
+| `"bar-active"`  | The active part of the bar.                |
+| `"knob"`        | The handle that is used to drag the range. |
+| `"pin"`         | The counter that appears above a knob.     |
+| `"tick"`        | An inactive tick mark.                     |
+| `"tick-active"` | An active tick mark.                       |
 
 
 ## CSS Custom Properties

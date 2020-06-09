@@ -1,4 +1,7 @@
 export const watchForOptions = <T extends HTMLElement>(containerEl: HTMLElement, tagName: string, onChange: (el: T | undefined) => void) => {
+  /* tslint:disable-next-line */
+  if (typeof MutationObserver === 'undefined') { return; }
+
   const mutation = new MutationObserver(mutationList => {
     onChange(getSelectedOption<T>(mutationList, tagName));
   });
@@ -28,5 +31,5 @@ export const findCheckedOption = (el: any, tagName: string) => {
     ? [el]
     : Array.from(el.querySelectorAll(tagName));
 
-  return options.find((o: any) => o.checked === true);
+  return options.find((o: any) => o.value === el.value);
 };

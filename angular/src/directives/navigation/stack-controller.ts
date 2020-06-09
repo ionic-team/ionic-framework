@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RouterDirection } from '@ionic/core';
+import { AnimationBuilder, RouterDirection } from '@ionic/core';
 
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { NavController } from '../../providers/nav-controller';
@@ -52,7 +52,8 @@ export class StackController {
   }
 
   setActive(enteringView: RouteView): Promise<StackEvent> {
-    let { direction, animation } = this.navCtrl.consumeTransition();
+    const consumeResult = this.navCtrl.consumeTransition();
+    let { direction, animation, animationBuilder } = consumeResult;
     const leavingView = this.activeView;
     const tabSwitch = isTabSwitch(enteringView, leavingView);
     if (tabSwitch) {
@@ -70,7 +71,7 @@ export class StackController {
     if (router.getCurrentNavigation) {
       currentNavigation = router.getCurrentNavigation();
 
-    // Angular < 7.2.0
+      // Angular < 7.2.0
     } else if (
       router.navigations &&
       router.navigations.value
@@ -105,6 +106,31 @@ export class StackController {
       enteringView.ref.changeDetectorRef.detectChanges();
     }
 
+    /**
+     * If we are going back from a page that
+     * was presented using a custom animation
+     * we should default to using that
+     * unless the developer explicitly
+     * provided another animation.
+     */
+    const customAnimation = enteringView.animationBuilder;
+    if (
+      animationBuilder === undefined &&
+      direction === 'back' &&
+      !tabSwitch &&
+      customAnimation !== undefined
+    ) {
+      animationBuilder = customAnimation;
+    }
+
+    /**
+     * Save any custom animation so that navigating
+     * back will use this custom animation by default.
+     */
+    if (animationBuilder !== undefined && leavingView) {
+      leavingView.animationBuilder = animationBuilder;
+    }
+
     // Wait until previous transitions finish
     return this.zone.runOutsideAngular(() => {
       return this.wait(() => {
@@ -116,7 +142,7 @@ export class StackController {
         // In case the enteringView is the same as the leavingPage we need to reattach()
         enteringView.ref.changeDetectorRef.reattach();
 
-        return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false)
+        return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false, animationBuilder)
           .then(() => cleanupAsync(enteringView, views, viewsSnapshot, this.location))
           .then(() => ({
             enteringView,
@@ -154,8 +180,8 @@ export class StackController {
           url = primaryOutlet.route._routerState.snapshot.url;
         }
       }
-
-      return this.navCtrl.navigateBack(url, view.savedExtras).then(() => true);
+      const { animationBuilder } = this.navCtrl.consumeTransition();
+      return this.navCtrl.navigateBack(url, { ...view.savedExtras, animation: animationBuilder }).then(() => true);
     });
   }
 
@@ -191,6 +217,14 @@ export class StackController {
     return views.length > 0 ? views[views.length - 1] : undefined;
   }
 
+  /**
+   * @internal
+   */
+  getRootUrl(stackId?: string) {
+    const views = this.getStack(stackId);
+    return views.length > 0 ? views[0] : undefined;
+  }
+
   getActiveStackId(): string | undefined {
     return this.activeView ? this.activeView.stackId : undefined;
   }
@@ -217,7 +251,8 @@ export class StackController {
     leavingView: RouteView | undefined,
     direction: 'forward' | 'back' | undefined,
     showGoBack: boolean,
-    progressAnimation: boolean
+    progressAnimation: boolean,
+    animationBuilder?: AnimationBuilder
   ) {
     if (this.skipTransition) {
       this.skipTransition = false;
@@ -242,7 +277,8 @@ export class StackController {
           duration: direction === undefined ? 0 : undefined,
           direction,
           showGoBack,
-          progressAnimation
+          progressAnimation,
+          animationBuilder
         });
       }
     }

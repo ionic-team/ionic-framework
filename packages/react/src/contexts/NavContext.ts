@@ -2,20 +2,16 @@ import { RouterDirection } from '@ionic/core';
 import React from 'react';
 
 export interface NavContextState {
-  getHistory: () => History;
-  getLocation: () => Location;
   getPageManager: () => any;
   getStackManager: () => any;
   goBack: (defaultHref?: string) => void;
-  navigate: (path: string, direction?: RouterDirection | 'none') => void;
+  navigate: (path: string, direction?: RouterDirection | 'none', ionRouteAction?: 'push' | 'replace' | 'pop') => void;
   hasIonicRouter: () => boolean;
   registerIonPage: (page: HTMLElement) => void;
   currentPath: string | undefined;
 }
 
 export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
-  getHistory: () => window.history,
-  getLocation: () => window.location,
   getPageManager: () => undefined,
   getStackManager: () => undefined,
   goBack: (defaultHref?: string) => {

@@ -1,7 +1,6 @@
 import { EventEmitter } from '@stencil/core';
-import { HTMLStencilElement } from '@stencil/core/internal';
 
-import { Animation, AnimationBuilder, IonicAnimation, Mode } from '../interface';
+import { AnimationBuilder, HTMLStencilElement } from '../interface';
 
 export interface OverlayEventDetail<T = any> {
   data?: T;
@@ -9,13 +8,11 @@ export interface OverlayEventDetail<T = any> {
 }
 
 export interface OverlayInterface {
-  mode: Mode;
   el: HTMLElement;
   animated: boolean;
   keyboardClose: boolean;
   overlayIndex: number;
   presented: boolean;
-  animation?: Animation | IonicAnimation;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;

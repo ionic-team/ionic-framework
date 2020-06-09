@@ -1,24 +1,25 @@
-import { NavDirection } from '@ionic/core';
 import React, { ReactNode } from 'react';
 
 import { ViewStacks } from './ViewStacks';
 
 export interface RouteManagerContextState {
   syncView: (page: HTMLElement, viewId: string) => void;
+  syncRoute: (route: any) => void;
   hideView: (viewId: string) => void;
   viewStacks: ViewStacks;
-  setupIonRouter: (id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) => Promise<void>;
+  setupIonRouter: (id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) => void;
   removeViewStack: (stack: string) => void;
-  transitionView: (enteringEl: HTMLElement, leavingEl: HTMLElement, ionRouterOuter: HTMLIonRouterOutletElement, direction: NavDirection) => void;
+  getRoute: (id: string) => any;
 }
 
 export const RouteManagerContext = /*@__PURE__*/React.createContext<RouteManagerContextState>({
   viewStacks: new ViewStacks(),
   syncView: () => { navContextNotFoundError(); },
+  syncRoute: () => { navContextNotFoundError(); },
   hideView: () => { navContextNotFoundError(); },
   setupIonRouter: () => Promise.reject(navContextNotFoundError()),
   removeViewStack: () => { navContextNotFoundError(); },
-  transitionView: () => { navContextNotFoundError(); }
+  getRoute: () => { navContextNotFoundError(); }
 });
 
 function navContextNotFoundError() {

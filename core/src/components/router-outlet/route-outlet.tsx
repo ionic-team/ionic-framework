@@ -2,8 +2,8 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, IonicAnimation, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
-import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
+import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { transition } from '../../utils/transition';
 
@@ -18,7 +18,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private activeComponent: any;
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
-  private ani?: IonicAnimation | Animation;
+  private ani?: Animation;
   private animationEnabled = true;
 
   @Element() el!: HTMLElement;
@@ -47,7 +47,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Watch('swipeHandler')
   swipeHandlerChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.swipeHandler === undefined);
+      this.gesture.enable(this.swipeHandler !== undefined);
     }
   }
 
@@ -91,12 +91,12 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
            */
           if (!shouldComplete) {
             this.ani.easing('cubic-bezier(1, 0, 0.68, 0.28)');
-            newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(1, 0), new Point(0.68, 0.28), new Point(1, 1), step);
+            newStepValue += getTimeGivenProgression([0, 0], [1, 0], [0.68, 0.28], [1, 1], step)[0];
           } else {
-            newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.32, 0.72), new Point(0, 1), new Point(1, 1), step);
+            newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], step)[0];
           }
 
-          (this.ani as IonicAnimation).progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
+          this.ani.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
 
         }
       }
@@ -131,10 +131,11 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   /** @internal */
   @Method()
-  async setRouteId(id: string, params: ComponentProps | undefined, direction: RouterDirection): Promise<RouteWrite> {
+  async setRouteId(id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder): Promise<RouteWrite> {
     const changed = await this.setRoot(id, params, {
       duration: direction === 'root' ? 0 : undefined,
       direction: direction === 'back' ? 'back' : 'forward',
+      animationBuilder: animation
     });
     return {
       changed,

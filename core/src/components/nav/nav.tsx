@@ -2,8 +2,8 @@ import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch, h 
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, IonicAnimation, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
-import { Point, getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
+import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
 
@@ -18,7 +18,7 @@ import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToVie
 export class Nav implements NavOutlet {
 
   private transInstr: TransitionInstruction[] = [];
-  private sbAni?: Animation | IonicAnimation;
+  private sbAni?: Animation;
   private animationEnabled = true;
   private useRouter = false;
   private isTransitioning = false;
@@ -38,7 +38,7 @@ export class Nav implements NavOutlet {
   @Watch('swipeGesture')
   swipeGestureChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.swipeGesture !== true);
+      this.gesture.enable(this.swipeGesture === true);
     }
   }
 
@@ -372,7 +372,8 @@ export class Nav implements NavOutlet {
   setRouteId(
     id: string,
     params: ComponentProps | undefined,
-    direction: RouterDirection
+    direction: RouterDirection,
+    animation?: AnimationBuilder
   ): Promise<RouteWrite> {
     const active = this.getActiveSync();
     if (matches(active, id, params)) {
@@ -410,15 +411,20 @@ export class Nav implements NavOutlet {
       if (viewController) {
         finish = this.popTo(viewController, {
           ...commonOpts,
-          direction: 'back'
+          direction: 'back',
+          animationBuilder: animation
         });
       } else if (direction === 'forward') {
-        finish = this.push(id, params, commonOpts);
+        finish = this.push(id, params, {
+          ...commonOpts,
+          animationBuilder: animation
+        });
       } else if (direction === 'back') {
         finish = this.setRoot(id, params, {
           ...commonOpts,
           direction: 'back',
-          animated: true
+          animated: true,
+          animationBuilder: animation
         });
       }
     }
@@ -623,6 +629,19 @@ export class Nav implements NavOutlet {
       const requiresTransition =
         (ti.enteringRequiresTransition || ti.leavingRequiresTransition) &&
         enteringView !== leavingView;
+      if (requiresTransition && ti.opts && leavingView) {
+        const isBackDirection = ti.opts.direction === 'back';
+
+        /**
+         * If heading back, use the entering page's animation
+         * unless otherwise specified by the developer.
+         */
+        if (isBackDirection) {
+          ti.opts.animationBuilder = ti.opts.animationBuilder || (enteringView && enteringView.animationBuilder);
+        }
+
+        leavingView.animationBuilder = ti.opts.animationBuilder;
+      }
       const result = requiresTransition
         ? await this.transition(enteringView!, leavingView, ti)
         : {
@@ -825,7 +844,7 @@ export class Nav implements NavOutlet {
     const opts = ti.opts!;
 
     const progressCallback = opts.progressAnimation
-      ? (ani: IonicAnimation | Animation | undefined) => this.sbAni = ani
+      ? (ani: Animation | undefined) => this.sbAni = ani
       : undefined;
     const mode = getIonMode(this);
     const enteringEl = enteringView.element!;
@@ -981,12 +1000,12 @@ export class Nav implements NavOutlet {
        */
       if (!shouldComplete) {
         this.sbAni.easing('cubic-bezier(1, 0, 0.68, 0.28)');
-        newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(1, 0), new Point(0.68, 0.28), new Point(1, 1), stepValue);
+        newStepValue += getTimeGivenProgression([0, 0], [1, 0], [0.68, 0.28], [1, 1], stepValue)[0];
       } else {
-        newStepValue += getTimeGivenProgression(new Point(0, 0), new Point(0.32, 0.72), new Point(0, 1), new Point(1, 1), stepValue);
+        newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], stepValue)[0];
       }
 
-      (this.sbAni as IonicAnimation).progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
+      this.sbAni.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
     }
   }
 

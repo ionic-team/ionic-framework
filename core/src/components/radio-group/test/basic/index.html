@@ -90,9 +90,11 @@
         const item = document.createElement('ion-item');
         item.innerHTML = `
           <ion-label>Item ${count}</ion-label>
-          <ion-radio value="item-${count}" slot="start" checked></ion-radio>
+          <ion-radio value="item-${count}" slot="start"></ion-radio>
         `;
         group.appendChild(item);
+        
+        group.value = `item-${count}`;
         count++;
       }
       function removeSelect() {

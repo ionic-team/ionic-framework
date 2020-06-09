@@ -1,49 +1,52 @@
 
 import { defineCustomElements } from '@ionic/core/loader';
 import { addIcons } from 'ionicons';
-import { arrowBack, arrowDown, arrowForward, close, closeCircle, menu, reorder, search } from 'ionicons/icons';
-export { AlertButton, AlertInput, setupConfig } from '@ionic/core';
+import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
+export { createAnimation, createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, iosTransitionAnimation, IonicSafeString, mdTransitionAnimation, setupConfig } from '@ionic/core';
 export * from './proxies';
 
 // createControllerComponent
 export { IonAlert } from './IonAlert';
 export { IonLoading } from './IonLoading';
-export { IonToast } from './IonToast';
+export * from './IonToast';
+export { IonPicker } from './IonPicker';
 
 // createOverlayComponent
-export { IonActionSheet } from './IonActionSheet';
+export * from './IonActionSheet';
 export { IonModal } from './IonModal';
 export { IonPopover } from './IonPopover';
 
 // Custom Components
 export { IonPage } from './IonPage';
+export { IonTabsContext, IonTabsContextState } from './navigation/IonTabsContext';
 export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
 export { IonBackButton } from './navigation/IonBackButton';
 export { IonRouterOutlet } from './IonRouterOutlet';
+export { IonIcon } from './IonIcon';
 
 // Utils
-export { isPlatform, getPlatforms } from './utils';
+export { isPlatform, getPlatforms, getConfig } from './utils';
 export { RouterDirection } from './hrefprops';
+
+// Ionic Animations
+export { CreateAnimation } from './CreateAnimation';
 
 // Icons that are used by internal components
 addIcons({
-  'ios-close': close.ios,
-  'md-close': close.md,
-  'ios-reorder': reorder.ios,
-  'md-reorder': reorder.md,
-  'ios-menu': menu.ios,
-  'md-menu': menu.md,
-  'ios-arrow-forward': arrowForward.ios,
-  'md-arrow-forward': arrowForward.md,
-  'ios-arrow-back': arrowBack.ios,
-  'md-arrow-back': arrowBack.md,
-  'ios-arrow-down': arrowDown.ios,
-  'md-arrow-down': arrowDown.md,
-  'ios-search': search.ios,
-  'md-search': search.md,
-  'ios-close-circle': closeCircle.ios,
-  'md-close-circle': closeCircle.md,
+  'arrow-back-sharp': arrowBackSharp,
+  'caret-back-sharp': caretBackSharp,
+  'chevron-back': chevronBack,
+  'chevron-forward': chevronForward,
+  'close': close,
+  'close-circle': closeCircle,
+  'close-sharp': closeSharp,
+  'menu-outline': menuOutline,
+  'menu-sharp': menuSharp,
+  'reorder-two-sharp': reorderTwoSharp,
+  'reorder-three-outline': reorderThreeOutline,
+  'search-outline': searchOutline,
+  'search-sharp': searchSharp,
 });
 
 // TODO: defineCustomElements() is asyncronous

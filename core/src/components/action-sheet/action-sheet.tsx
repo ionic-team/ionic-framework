@@ -1,7 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Gesture } from '../../utils/gesture';
+import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -25,7 +27,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation?: any;
-  mode = getIonMode(this);
+  private wrapperEl?: HTMLElement;
+  private groupEl?: HTMLElement;
+  private gesture?: Gesture;
 
   @Element() el!: HTMLIonActionSheetElement;
 
@@ -135,7 +139,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the action sheet did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionActionSheetDidDismiss');
   }
 
@@ -144,7 +148,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    *
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionActionSheetWillDismiss');
   }
 
@@ -193,6 +197,35 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     }
   }
 
+  componentDidUnload() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+  }
+
+  componentDidLoad() {
+    /**
+     * Do not create gesture if:
+     * 1. A gesture already exists
+     * 2. App is running in MD mode
+     * 3. A wrapper ref does not exist
+     */
+    const { groupEl, wrapperEl } = this;
+    if (this.gesture || getIonMode(this) === 'md' || !wrapperEl || !groupEl) { return; }
+
+    readTask(() => {
+      const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
+      if (!isScrollable) {
+        this.gesture = createButtonActiveGesture(
+          wrapperEl,
+          (refEl: HTMLElement) => refEl.classList.contains('action-sheet-button')
+        );
+        this.gesture.enable(true);
+      }
+    });
+  }
+
   render() {
     const mode = getIonMode(this);
     const allButtons = this.getButtons();
@@ -203,6 +236,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       <Host
         role="dialog"
         aria-modal="true"
+        tabindex="-1"
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
@@ -216,9 +250,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         onIonBackdropTap={this.onBackdropTap}
       >
         <ion-backdrop tappable={this.backdropDismiss}/>
-        <div class="action-sheet-wrapper" role="dialog">
+        <div class="action-sheet-wrapper" role="dialog" ref={el => this.wrapperEl = el}>
           <div class="action-sheet-container">
-            <div class="action-sheet-group">
+            <div class="action-sheet-group" ref={el => this.groupEl = el}>
               {this.header !== undefined &&
                 <div class="action-sheet-title">
                   {this.header}
@@ -226,7 +260,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                 </div>
               }
               {buttons.map(b =>
-                <button type="button" ion-activatable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
+                <button type="button" class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                   <span class="action-sheet-button-inner">
                     {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                     {b.text}
@@ -252,6 +286,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                       />}
                     {cancelButton.text}
                   </span>
+                  {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
                 </button>
               </div>
             }
@@ -266,6 +301,7 @@ const buttonClass = (button: ActionSheetButton): CssClassMap => {
   return {
     'action-sheet-button': true,
     'ion-activatable': true,
+    'ion-focusable': true,
     [`action-sheet-${button.role}`]: button.role !== undefined,
     ...getClassMap(button.cssClass),
   };

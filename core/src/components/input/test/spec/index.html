@@ -13,7 +13,7 @@
 
 <body>
   <ion-app>
-    <ion-content class="ion-padding">
+    <ion-content>
       <ion-item>
         <ion-label position="floating">Floating: input</ion-label>
         <ion-input></ion-input>
@@ -33,6 +33,16 @@
       <ion-item>
         <ion-label position="stacked">Stacked: div</ion-label>
         <div>A div</div>
+      </ion-item>
+      <ion-item class="ion-align-items-center">
+        <ion-icon slot="start" name="planet"></ion-icon>
+        <ion-label position="stacked">Align items: center</ion-label>
+        <div>A div</div>
+      </ion-item>
+      <ion-item class="ion-align-items-center">
+        <ion-icon slot="start" name="planet"></ion-icon>
+        <ion-label position="stacked">Align items: center</ion-label>
+        <div class="ion-align-self-end">A div: align self right</div>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Floating: textarea</ion-label>

@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, RouterDirection } from '../../interface';
+import { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
@@ -63,6 +63,12 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   @Prop() routerDirection: RouterDirection = 'forward';
 
   /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
+
+  /**
    * Specifies where to display the linked URL.
    * Only applies when an `href` is provided.
    * Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
@@ -87,9 +93,16 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
-   * The size of the button. Set this to `small` in order to have a mini fab.
+   * The size of the button. Set this to `small` in order to have a mini fab button.
    */
   @Prop() size?: 'small';
+
+  /**
+   * The icon name to use for the close icon. This will appear when the fab button
+   * is pressed. Only applies if it is the main button inside of a fab containing a
+   * fab list.
+   */
+  @Prop() closeIcon = 'close';
 
   /**
    * Emitted when the button has focus.
@@ -147,10 +160,10 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           disabled={disabled}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
-          onClick={(ev: Event) => openURL(href, ev, this.routerDirection)}
+          onClick={(ev: Event) => openURL(href, ev, this.routerDirection, this.routerAnimation)}
         >
           <span class="close-icon">
-            <ion-icon name="close" lazy={false}></ion-icon>
+            <ion-icon icon={this.closeIcon} lazy={false}></ion-icon>
           </span>
           <span class="button-inner">
             <slot></slot>

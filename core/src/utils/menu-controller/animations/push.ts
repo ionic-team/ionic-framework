@@ -1,4 +1,5 @@
-import { IonicAnimation, MenuI } from '../../../interface';
+import { getIonMode } from '../../../global/ionic-global';
+import { Animation, MenuI } from '../../../interface';
 import { createAnimation } from '../../animation/animation';
 
 import { baseAnimation } from './base';
@@ -8,10 +9,11 @@ import { baseAnimation } from './base';
  * The content slides over to reveal the menu underneath.
  * The menu itself also slides over to reveal its bad self.
  */
-export const menuPushAnimation = (menu: MenuI): IonicAnimation => {
+export const menuPushAnimation = (menu: MenuI): Animation => {
   let contentOpenedX: string;
   let menuClosedX: string;
 
+  const mode = getIonMode(menu);
   const width = menu.width;
 
   if (menu.isEndSide) {
@@ -35,5 +37,5 @@ export const menuPushAnimation = (menu: MenuI): IonicAnimation => {
     .addElement(menu.backdropEl!)
     .fromTo('opacity', 0.01, 0.32);
 
-  return baseAnimation(menu.mode === 'ios').addAnimation([menuAnimation, contentAnimation, backdropAnimation]);
+  return baseAnimation(mode === 'ios').addAnimation([menuAnimation, contentAnimation, backdropAnimation]);
 };

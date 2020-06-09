@@ -97,6 +97,7 @@ This attribute specifies the size of the button. Setting this attribute will cha
 import React from 'react';
 
 import { IonButton, IonIcon, IonContent } from '@ionic/react';
+import { star } from 'ionicons/icons';
 
 export const ButtonExample: React.FC = () => (
   <IonContent>
@@ -131,17 +132,17 @@ export const ButtonExample: React.FC = () => (
 
     {/*-- Icons --*/}
     <IonButton>
-      <IonIcon slot="start" name="star" />
+      <IonIcon slot="start" icon={star} />
       Left Icon
     </IonButton>
 
     <IonButton>
       Right Icon
-      <IonIcon slot="end" name="star" />
+      <IonIcon slot="end" icon={star} />
     </IonButton>
 
     <IonButton>
-      <IonIcon slot="icon-only" name="star" />
+      <IonIcon slot="icon-only" icon={star} />
     </IonButton>
 
     {/*-- Sizes --*/}
@@ -151,6 +152,72 @@ export const ButtonExample: React.FC = () => (
   </IonContent>
 );
 
+```
+
+
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'button-example',
+  styleUrl: 'button-example.css'
+})
+export class ButtonExample {
+  render() {
+    return [
+      // Default
+      <ion-button>Default</ion-button>,
+
+      // Anchor
+      <ion-button href="#">Anchor</ion-button>,
+
+      // Colors
+      <ion-button color="primary">Primary</ion-button>,
+      <ion-button color="secondary">Secondary</ion-button>,
+      <ion-button color="tertiary">Tertiary</ion-button>,
+      <ion-button color="success">Success</ion-button>,
+      <ion-button color="warning">Warning</ion-button>,
+      <ion-button color="danger">Danger</ion-button>,
+      <ion-button color="light">Light</ion-button>,
+      <ion-button color="medium">Medium</ion-button>,
+      <ion-button color="dark">Dark</ion-button>,
+
+      // Expand
+      <ion-button expand="full">Full Button</ion-button>,
+      <ion-button expand="block">Block Button</ion-button>,
+
+      // Round
+      <ion-button shape="round">Round Button</ion-button>,
+
+      // Fill
+      <ion-button expand="full" fill="outline">Outline + Full</ion-button>,
+      <ion-button expand="block" fill="outline">Outline + Block</ion-button>,
+      <ion-button shape="round" fill="outline">Outline + Round</ion-button>,
+
+      // Icons
+      <ion-button>
+        <ion-icon slot="start" name="star"></ion-icon>
+        Left Icon
+      </ion-button>,
+
+      <ion-button>
+        Right Icon
+        <ion-icon slot="end" name="star"></ion-icon>
+      </ion-button>,
+
+      <ion-button>
+        <ion-icon slot="icon-only" name="star"></ion-icon>
+      </ion-button>,
+
+      // Sizes
+      <ion-button size="large">Large</ion-button>,
+      <ion-button>Default</ion-button>,
+      <ion-button size="small">Small</ion-button>
+    ];
+  }
+}
 ```
 
 
@@ -224,6 +291,7 @@ export const ButtonExample: React.FC = () => (
 | `href`            | `href`             | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                                   | `string \| undefined`                                       | `undefined` |
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                                         | `"ios" \| "md"`                                             | `undefined` |
 | `rel`             | `rel`              | Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).                                                                                                    | `string \| undefined`                                       | `undefined` |
+| `routerAnimation` | --                 | When using a router, it specifies the transition animation when navigating to another page using `href`.                                                                                                                                                                                  | `((baseEl: any, opts?: any) => Animation) \| undefined`     | `undefined` |
 | `routerDirection` | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                                                  | `"back" \| "forward" \| "root"`                             | `'forward'` |
 | `shape`           | `shape`            | The button shape.                                                                                                                                                                                                                                                                         | `"round" \| undefined`                                      | `undefined` |
 | `size`            | `size`             | The button size.                                                                                                                                                                                                                                                                          | `"default" \| "large" \| "small" \| undefined`              | `undefined` |
@@ -252,28 +320,31 @@ export const ButtonExample: React.FC = () => (
 
 ## CSS Custom Properties
 
-| Name                     | Description                                                                                               |
-| ------------------------ | --------------------------------------------------------------------------------------------------------- |
-| `--background`           | Background of the button                                                                                  |
-| `--background-activated` | Background of the button when pressed                                                                     |
-| `--background-focused`   | Background of the button when focused with the tab key                                                    |
-| `--background-hover`     | Background of the button on hover                                                                         |
-| `--border-color`         | Border color of the button                                                                                |
-| `--border-radius`        | Border radius of the button                                                                               |
-| `--border-style`         | Border style of the button                                                                                |
-| `--border-width`         | Border width of the button                                                                                |
-| `--box-shadow`           | Box shadow of the button                                                                                  |
-| `--color`                | Text color of the button                                                                                  |
-| `--color-activated`      | Text color of the button when pressed                                                                     |
-| `--color-focused`        | Text color of the button when focused with the tab key                                                    |
-| `--color-hover`          | Text color of the button when hover                                                                       |
-| `--opacity`              | Opacity of the button                                                                                     |
-| `--padding-bottom`       | Bottom padding of the button                                                                              |
-| `--padding-end`          | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button |
-| `--padding-start`        | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button |
-| `--padding-top`          | Top padding of the button                                                                                 |
-| `--ripple-color`         | Color of the button ripple effect                                                                         |
-| `--transition`           | Transition of the button                                                                                  |
+| Name                             | Description                                                                                               |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `--background`                   | Background of the button                                                                                  |
+| `--background-activated`         | Background of the button when pressed. Note: setting this will interfere with the Material Design ripple. |
+| `--background-activated-opacity` | Opacity of the button when pressed                                                                        |
+| `--background-focused`           | Background of the button when focused with the tab key                                                    |
+| `--background-focused-opacity`   | Opacity of the button when focused with the tab key                                                       |
+| `--background-hover`             | Background of the button on hover                                                                         |
+| `--background-hover-opacity`     | Opacity of the background on hover                                                                        |
+| `--border-color`                 | Border color of the button                                                                                |
+| `--border-radius`                | Border radius of the button                                                                               |
+| `--border-style`                 | Border style of the button                                                                                |
+| `--border-width`                 | Border width of the button                                                                                |
+| `--box-shadow`                   | Box shadow of the button                                                                                  |
+| `--color`                        | Text color of the button                                                                                  |
+| `--color-activated`              | Text color of the button when pressed                                                                     |
+| `--color-focused`                | Text color of the button when focused with the tab key                                                    |
+| `--color-hover`                  | Text color of the button when hover                                                                       |
+| `--opacity`                      | Opacity of the button                                                                                     |
+| `--padding-bottom`               | Bottom padding of the button                                                                              |
+| `--padding-end`                  | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button |
+| `--padding-start`                | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button |
+| `--padding-top`                  | Top padding of the button                                                                                 |
+| `--ripple-color`                 | Color of the button ripple effect                                                                         |
+| `--transition`                   | Transition of the button                                                                                  |
 
 
 ## Dependencies

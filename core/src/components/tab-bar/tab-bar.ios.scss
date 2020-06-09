@@ -10,7 +10,7 @@
   --background-focused: #{$tabbar-ios-background-focused};
   --border: #{$hairlines-width solid $tabbar-ios-border-color};
   --color: #{$tab-button-ios-text-color};
-  --color-selected: #{$tabbar-ios-color-activated};
+  --color-selected: #{$tabbar-ios-color-selected};
 
   height: 50px;
 }

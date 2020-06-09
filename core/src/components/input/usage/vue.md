@@ -10,7 +10,7 @@
   <ion-input placeholder="Enter Input"></ion-input>
 
   <!-- Input with clear button when there is a value -->
-  <ion-input clearInput value="clear me"></ion-input>
+  <ion-input clear-input value="clear me"></ion-input>
 
   <!-- Number type input -->
   <ion-input type="number" value="333"></ion-input>

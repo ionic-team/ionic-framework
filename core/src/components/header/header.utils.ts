@@ -45,34 +45,47 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
         innerTitleEl: (ionTitleEl) ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
         ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')) || []
       } as ToolbarIndex;
-    }) || [[]]
+    }) || []
   } as HeaderIndex;
 };
 
-export const handleContentScroll = (scrollEl: HTMLElement, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex, remainingHeight = 0) => {
+export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: HeaderIndex, contentEl: HTMLElement) => {
   readTask(() => {
     const scrollTop = scrollEl.scrollTop;
-    const lastMainToolbar = mainHeaderIndex.toolbars[mainHeaderIndex.toolbars.length - 1];
-
     const scale = clamp(1, 1 + (-scrollTop / 500), 1.1);
 
-    const borderOpacity = clamp(0, (scrollTop - remainingHeight) / lastMainToolbar.el.clientHeight, 1);
-    const maxOpacity = 1;
-    const scaledOpacity = borderOpacity * maxOpacity;
-
-    writeTask(() => {
-      scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
-      setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0], (scaledOpacity === 1) ? undefined : scaledOpacity);
-    });
+    // Native refresher should not cause titles to scale
+    const nativeRefresher = contentEl.querySelector('ion-refresher.refresher-native');
+    if (nativeRefresher === null) {
+      writeTask(() => {
+        scaleLargeTitles(scrollHeaderIndex.toolbars, scale);
+      });
+    }
   });
 };
 
-const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | undefined) => {
+export const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity?: number) => {
   if (opacity === undefined) {
     toolbar.background.style.removeProperty('--opacity');
   } else {
     toolbar.background.style.setProperty('--opacity', opacity.toString());
   }
+};
+
+const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) => {
+  if (!ev[0].isIntersecting) { return; }
+
+  /**
+   * There is a bug in Safari where overflow scrolling on a non-body element
+   * does not always reset the scrollTop position to 0 when letting go. It will
+   * set to 1 once the rubber band effect has ended. This causes the background to
+   * appear slightly on certain app setups.
+   */
+  const scale = (ev[0].intersectionRatio > 0.9) ? 0 : ((1 - ev[0].intersectionRatio) * 100) / 75;
+
+  mainHeaderIndex.toolbars.forEach(toolbar => {
+    setToolbarBackgroundOpacity(toolbar, (scale === 1) ? undefined : scale);
+  });
 };
 
 /**
@@ -82,7 +95,10 @@ const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity: number | un
  */
 export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex) => {
   writeTask(() => {
+    handleToolbarBorderIntersection(ev, mainHeaderIndex);
+
     const event = ev[0];
+
     const intersection = event.intersectionRect;
     const intersectionArea = intersection.width * intersection.height;
     const rootArea = event.rootBounds.width * event.rootBounds.height;
@@ -114,20 +130,18 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
       if (hasValidIntersection) {
         setHeaderActive(mainHeaderIndex);
         setHeaderActive(scrollHeaderIndex, false);
+        setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0]);
       }
     }
   });
 };
 
 export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
-  writeTask(() => {
-    if (active) {
-      headerIndex.el.classList.remove('header-collapse-condense-inactive');
-    } else {
-      headerIndex.el.classList.add('header-collapse-condense-inactive');
-    }
-    setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? undefined : 0);
-  });
+  if (active) {
+    headerIndex.el.classList.remove('header-collapse-condense-inactive');
+  } else {
+    headerIndex.el.classList.add('header-collapse-condense-inactive');
+  }
 };
 
 export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, transition = false) => {

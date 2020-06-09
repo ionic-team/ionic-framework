@@ -1,8 +1,8 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
-import { dismiss, eventMethod, prepareOverlay, present, safeCall } from '../../utils/overlays';
+import { AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
+import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -21,10 +21,6 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 })
 export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
-
-  mode = getIonMode(this);
-
-  animation?: Animation;
 
   @Element() el!: HTMLIonPickerElement;
 
@@ -141,7 +137,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the picker did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionPickerDidDismiss');
   }
 
@@ -149,7 +145,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the picker will dismiss.
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionPickerWillDismiss');
   }
 
@@ -163,19 +159,29 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return Promise.resolve(this.columns.find(column => column.name === name));
   }
 
-  private buttonClick(button: PickerButton) {
-    // if (this.disabled) {
-    //   return;
-    // }
-
-    // keep the time of the most recent button click
-    // a handler has been provided, execute it
-    // pass the handler the values from the inputs
-    const shouldDismiss = safeCall(button.handler, this.getSelected()) !== false;
-    if (shouldDismiss) {
-      return this.dismiss();
+  private async buttonClick(button: PickerButton) {
+    const role = button.role;
+    if (isCancel(role)) {
+      return this.dismiss(undefined, role);
     }
-    return Promise.resolve(false);
+    const shouldDismiss = await this.callButtonHandler(button);
+    if (shouldDismiss) {
+      return this.dismiss(this.getSelected(), button.role);
+    }
+    return Promise.resolve();
+  }
+
+  private async callButtonHandler(button: PickerButton | undefined) {
+    if (button) {
+      // a handler has been provided, execute it
+      // pass the handler the values from the inputs
+      const rtn = await safeCall(button.handler, this.getSelected());
+      if (rtn === false) {
+        // if the return value of the handler is false then do not dismiss
+        return false;
+      }
+    }
+    return true;
   }
 
   private getSelected() {
@@ -194,11 +200,14 @@ export class Picker implements ComponentInterface, OverlayInterface {
   }
 
   private onBackdropTap = () => {
-    const cancelBtn = this.buttons.find(b => b.role === 'cancel');
-    if (cancelBtn) {
-      this.buttonClick(cancelBtn);
-    } else {
-      this.dismiss();
+    this.dismiss(undefined, BACKDROP);
+  }
+
+  private dispatchCancelHandler = (ev: CustomEvent) => {
+    const role = ev.detail.role;
+    if (isCancel(role)) {
+      const cancelButton = this.buttons.find(b => b.role === 'cancel');
+      this.callButtonHandler(cancelButton);
     }
   }
 
@@ -207,6 +216,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
     return (
       <Host
         aria-modal="true"
+        tabindex="-1"
         class={{
           [mode]: true,
 
@@ -219,6 +229,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
           zIndex: `${20000 + this.overlayIndex}`
         }}
         onIonBackdropTap={this.onBackdropTap}
+        onIonPickerWillDismiss={this.dispatchCancelHandler}
       >
         <ion-backdrop
           visible={this.showBackdrop}
