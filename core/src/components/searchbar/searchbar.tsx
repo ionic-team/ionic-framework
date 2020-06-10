@@ -481,7 +481,7 @@ export class Searchbar implements ComponentInterface {
             value={this.getValue()}
             autoComplete={this.autocomplete}
             autoCorrect={this.autocorrect}
-            spellcheck={this.spellcheck ? 'true' : undefined}
+            spellcheck={this.spellcheck}
           />
 
           {mode === 'md' && cancelButton}
