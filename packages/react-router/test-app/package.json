@@ -103,7 +103,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "1.5.2",
-    "cypress": "^4.3.0"
+    "cypress": "^4.8.0"
   },
   "description": "An Ionic project",
   "jest": {
