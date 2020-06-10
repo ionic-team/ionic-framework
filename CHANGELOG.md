@@ -1,3 +1,43 @@
+# [5.2.0](https://github.com/ionic-team/ionic/compare/v5.1.1...v5.2.0) (2020-06-10)
+
+
+### Bug Fixes
+
+* **action-sheet, toast:** allow button handler to return `Promise<void>` ([#21259](https://github.com/ionic-team/ionic/issues/21259)) ([7703da2](https://github.com/ionic-team/ionic/commit/7703da28f8181b02390b97a7d4d02df99b2ad34c))
+* **angular:** patch FormControl methods to properly sync Ionic form classes ([#21429](https://github.com/ionic-team/ionic/issues/21429)) ([e95b481](https://github.com/ionic-team/ionic/commit/e95b481a53191582bca635f322ad07eadbd62d64))
+* **datetime:** ensure year-only values are not affected by timezone when parsing ([#21309](https://github.com/ionic-team/ionic/issues/21309)) ([3937101](https://github.com/ionic-team/ionic/commit/3937101e5c2b181a6b7926eb8386c22b0f887716))
+* **header:** large title transition now works on older versions of iOS ([#21339](https://github.com/ionic-team/ionic/issues/21339)) ([2dac12c](https://github.com/ionic-team/ionic/commit/2dac12c577e0c7a5310857389dbda2b2b3dfadd1))
+* **img:** use setTimeout fallback on older versions of chrome  ([#21358](https://github.com/ionic-team/ionic/issues/21358)) ([0bf9449](https://github.com/ionic-team/ionic/commit/0bf9449ee1f9b2498e35f61511cb3e018814c6ca))
+* **ios:** add haptic drag gesture for action sheet and alert components ([#21060](https://github.com/ionic-team/ionic/issues/21060)) ([33be1f0](https://github.com/ionic-team/ionic/commit/33be1f061ebbe27ee22e357c394f112af42ec360))
+* **item:** inherit align-items from parent item ([#19278](https://github.com/ionic-team/ionic/issues/19278)) ([882f8fe](https://github.com/ionic-team/ionic/commit/882f8fef07dfb6ebda17ca09046d1af281075098)), closes [#18703](https://github.com/ionic-team/ionic/issues/18703)
+* **item:** input-wrapper now inherits overflow ([#21282](https://github.com/ionic-team/ionic/issues/21282)) ([29d208d](https://github.com/ionic-team/ionic/commit/29d208de88f340e216e22badb6366bba4eda8bfb))
+* **menu-button:** screen readers now properly announce menu button ([#21324](https://github.com/ionic-team/ionic/issues/21324)) ([eaf4fb6](https://github.com/ionic-team/ionic/commit/eaf4fb6b2a6d68f5c3d8d49ef41b4885f096070d))
+* **modal:** card style modal no longer gets stuck when swiping quickly ([#21224](https://github.com/ionic-team/ionic/issues/21224)) ([448dfa0](https://github.com/ionic-team/ionic/commit/448dfa0a6955008ce4dc73354f5b8319ae1a1cc2))
+* **modal:** set card-style modal height using the --height css variable ([#21453](https://github.com/ionic-team/ionic/issues/21453)) ([a4f0bdb](https://github.com/ionic-team/ionic/commit/a4f0bdb4c3ceeeaf902d520e9aa72e04a6ec2302))
+* **reorder-group:** revert item to original position when passing false to complete ([#21396](https://github.com/ionic-team/ionic/issues/21396)) ([5f2001c](https://github.com/ionic-team/ionic/commit/5f2001c43c0846ec8973cbb8eb5662976ba7e31a)), closes [#19128](https://github.com/ionic-team/ionic/issues/19128)
+* **router:** use correct nav transition when going back ([#21301](https://github.com/ionic-team/ionic/issues/21301)) ([c8db0d5](https://github.com/ionic-team/ionic/commit/c8db0d5eeba6f10d1492e95e6df6b4d871d43400))
+* **scroll-assist:** improve scroll detection accuracy ([#21416](https://github.com/ionic-team/ionic/issues/21416)) ([137c49d](https://github.com/ionic-team/ionic/commit/137c49d70be45e1b0ee73d41fed6e9d69a2caa32))
+* **slides:** update Swiper dependency to resolve error when doing SSR ([#21350](https://github.com/ionic-team/ionic/issues/21350)) ([3290604](https://github.com/ionic-team/ionic/commit/32906048a491961ec7340ba2e085807ea8a9c118))
+* **textarea:** native textarea inherits max/min width and height ([#21333](https://github.com/ionic-team/ionic/issues/21333)) ([2377480](https://github.com/ionic-team/ionic/commit/237748049c7644ae8a7a74101ece5cfd7a160470))
+
+
+### Features
+
+* **alert:** add destructive role to alert buttons ([#21269](https://github.com/ionic-team/ionic/issues/21269)) ([e53f024](https://github.com/ionic-team/ionic/commit/e53f0241e2bf91461c55097fde271ae85ca644ea))
+* **alert:** add support for custom input attributes ([#21365](https://github.com/ionic-team/ionic/issues/21365)) ([1ed8169](https://github.com/ionic-team/ionic/commit/1ed81693f225b6801a0897ef1a8314999c122484))
+* **all:** add all autocomplete values to input and searchbar ([#21297](https://github.com/ionic-team/ionic/issues/21297)) ([4fd7c0c](https://github.com/ionic-team/ionic/commit/4fd7c0cc5a6c97100fa380e4ff1be0bb84c7006b))
+* **all:** add optional generic typings for overlay component methods ([#21393](https://github.com/ionic-team/ionic/issues/21393)) ([5bf83b8](https://github.com/ionic-team/ionic/commit/5bf83b80d7d2749719dd1a280ae8e205fbc4b2a9))
+* **all:** add shadow parts to missing components ([#21436](https://github.com/ionic-team/ionic/issues/21436)) ([17375d2](https://github.com/ionic-team/ionic/commit/17375d232500b47ef1cacd7c028c38990d307984))
+* **all:** add support for configuring animations on a per-page basis  ([#21433](https://github.com/ionic-team/ionic/issues/21433)) ([f34d375](https://github.com/ionic-team/ionic/commit/f34d3752e3462c9d81487fc86af5ec185cc3d1e3))
+* **angular:** expose activatedView ([#21302](https://github.com/ionic-team/ionic/issues/21302)) ([829a0d9](https://github.com/ionic-team/ionic/commit/829a0d9be5a20c5fc96b5c5f18fedc4eb5e5b9ec))
+* **angular:** expose getPlatforms and isPlatform ([#21308](https://github.com/ionic-team/ionic/issues/21308)) ([4af54a2](https://github.com/ionic-team/ionic/commit/4af54a2fea5d9cef843b1ebce849fb4a5c206f0b))
+* **angular:** add strongly typed Ionic lifecycle hooks ([#18044](https://github.com/ionic-team/ionic/issues/18044)) ([53fc8e3](https://github.com/ionic-team/ionic/commit/53fc8e37c89cea793d0e00246d52805166730108)), closes [#18043](https://github.com/ionic-team/ionic/issues/18043)
+* **fab-button:** add close icon font size css variable ([#19628](https://github.com/ionic-team/ionic/issues/19628)) ([df408f9](https://github.com/ionic-team/ionic/commit/df408f91f1aef903adaa5e635fef9bc7542e8739))
+* **fab-button:** add closeIcon property ([#19626](https://github.com/ionic-team/ionic/issues/19626)) ([698e526](https://github.com/ionic-team/ionic/commit/698e526b9f882e98efc4bf160999182c645b772c))
+* **select-option:** pass class from the option to the interface for individual styling  ([#21304](https://github.com/ionic-team/ionic/issues/21304)) ([5285824](https://github.com/ionic-team/ionic/commit/5285824da5258ea638420fc60c50e0a19952f89c))
+
+
+
 ## [5.1.1](https://github.com/ionic-team/ionic/compare/v5.1.0...v5.1.1) (2020-05-13)
 
 
