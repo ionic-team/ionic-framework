@@ -35,8 +35,6 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
   exitViewFromOtherOutletHandlers: ((pathname: string) => ViewItem | undefined)[] = [];
   incomingRouteParams?: Partial<RouteInfo>;
   locationHistory = new LocationHistory();
-  // TODO: can be made not a global?
-  routeInfo: RouteInfo;
   viewStack = new ReactRouterViewStack();
   routeMangerContextState: RouteManagerContextState = {
     clearOutlet: this.viewStack.clear,
@@ -53,13 +51,13 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
   constructor(props: IonRouteProps) {
     super(props);
 
-    this.routeInfo = {
+    const routeInfo = {
       id: generateId('routeInfo'),
       pathname: this.props.location.pathname,
       search: this.props.location.search
     };
 
-    this.locationHistory.add(this.routeInfo);
+    this.locationHistory.add(routeInfo);
     this.handleChangeTab = this.handleChangeTab.bind(this);
     this.handleResetTab = this.handleResetTab.bind(this);
     this.handleNavigate = this.handleNavigate.bind(this);
@@ -68,12 +66,8 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     this.handleSetCurrentTab = this.handleSetCurrentTab.bind(this);
 
     this.state = {
-      routeInfo: this.routeInfo
+      routeInfo
     };
-  }
-
-  componentDidMount() {
-    this.routeInfo.tab = this.currentTab;
   }
 
   handleChangeTab(tab: string, path: string, routeOptions?: any) {
@@ -122,7 +116,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           const direction =
             leavingLocationInfo?.routeDirection === 'forward' ?
               'back' : leavingLocationInfo?.routeDirection === 'back' ?
-              'forward' : 'back';
+                'forward' : 'back';
           this.incomingRouteParams = {
             routeAction: 'pop',
             routeDirection: direction,
@@ -138,15 +132,17 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
         }
       }
 
+      let routeInfo: RouteInfo;
+
       if (this.incomingRouteParams?.id) {
-        this.routeInfo = {
+        routeInfo = {
           ...this.incomingRouteParams as RouteInfo,
           lastPathname: leavingLocationInfo.pathname
         };
-        this.locationHistory.add(this.routeInfo);
+        this.locationHistory.add(routeInfo);
       } else {
         const isPushed = (this.incomingRouteParams.routeAction === 'push' && this.incomingRouteParams.routeDirection === 'forward');
-        this.routeInfo = {
+        routeInfo = {
           id: generateId('routeInfo'),
           ...this.incomingRouteParams,
           lastPathname: leavingLocationInfo.pathname,
@@ -155,27 +151,26 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           params: this.props.match.params
         };
         if (isPushed) {
-          this.routeInfo.tab = leavingLocationInfo.tab;
-          this.routeInfo.pushedByRoute = leavingLocationInfo.pathname;
-        } else if (this.routeInfo.routeAction === 'pop') {
-          const r = this.locationHistory.findLastLocation(this.routeInfo);
-          this.routeInfo.pushedByRoute = r?.pushedByRoute;
-        } else if (this.routeInfo.routeAction === 'push' && this.routeInfo.tab !== leavingLocationInfo.tab) {
+          routeInfo.tab = leavingLocationInfo.tab;
+          routeInfo.pushedByRoute = leavingLocationInfo.pathname;
+        } else if (routeInfo.routeAction === 'pop') {
+          const r = this.locationHistory.findLastLocation(routeInfo);
+          routeInfo.pushedByRoute = r?.pushedByRoute;
+        } else if (routeInfo.routeAction === 'push' && routeInfo.tab !== leavingLocationInfo.tab) {
           // If we are switching tabs grab the last route info for the tab and use its pushedByRoute
-          const lastRoute = this.locationHistory.getCurrentRouteInfoForTab(this.routeInfo.tab);
-          this.routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
+          const lastRoute = this.locationHistory.getCurrentRouteInfoForTab(routeInfo.tab);
+          routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
         }
 
-        this.locationHistory.add(this.routeInfo);
+        this.locationHistory.add(routeInfo);
       }
+
+      this.setState({
+        routeInfo
+      });
     }
 
-    this.setState({
-      routeInfo: this.routeInfo
-    });
-
     this.incomingRouteParams = undefined;
-
   }
 
   handleNavigate(path: string, routeAction: RouteAction, routeDirection?: RouterDirection, routeOptions?: any, tab?: string) {

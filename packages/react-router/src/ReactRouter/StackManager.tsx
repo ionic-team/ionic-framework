@@ -50,6 +50,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   async handlePageTransition(routeInfo: RouteInfo) {
+    // TODO: this inTrans needed?
     if (!this.inTransition) {
       // If routerOutlet isn't quite ready, give it another try in a moment
       if (!this.routerOutletElement || !this.routerOutletElement.commit) {
