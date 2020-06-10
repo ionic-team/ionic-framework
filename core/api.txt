@@ -382,6 +382,7 @@ ion-fab-button,css-prop,--border-radius
 ion-fab-button,css-prop,--border-style
 ion-fab-button,css-prop,--border-width
 ion-fab-button,css-prop,--box-shadow
+ion-fab-button,css-prop,--close-icon-font-size
 ion-fab-button,css-prop,--color
 ion-fab-button,css-prop,--color-activated
 ion-fab-button,css-prop,--color-focused

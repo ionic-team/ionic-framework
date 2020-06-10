@@ -20,6 +20,8 @@
    *
    * @prop --transition: Transition of the button
    *
+   * @prop --close-icon-font-size: Font size of the close icon
+   *
    * @prop --border-radius: Border radius of the button
    * @prop --border-width: Border width of the button
    * @prop --border-style: Border style of the button
@@ -222,10 +224,13 @@
   transition: all ease-in-out 300ms;
   transition-property: transform, opacity;
 
+  font-size: var(--close-icon-font-size);
+
   opacity: 0;
 
   z-index: 1;
 }
+
 
 // FAB Animation
 // --------------------------------------------------
