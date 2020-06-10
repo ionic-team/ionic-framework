@@ -159,7 +159,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the popover did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionPopoverDidDismiss');
   }
 
@@ -167,7 +167,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the popover will dismiss.
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionPopoverWillDismiss');
   }
 

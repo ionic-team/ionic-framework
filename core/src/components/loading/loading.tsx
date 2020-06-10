@@ -161,7 +161,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the loading did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionLoadingDidDismiss');
   }
 
@@ -169,7 +169,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the loading will dismiss.
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionLoadingWillDismiss');
   }
 

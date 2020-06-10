@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
+import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
@@ -12,6 +12,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
  *
+ * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
  */
 @Component({
@@ -84,6 +85,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * How the bottom border should be displayed on the item.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
+
+  /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
 
   /**
    * When using a router, it specifies the transition direction when navigating to
@@ -170,7 +177,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   render() {
-    const { detail, detailIcon, download, lines, disabled, href, rel, target, routerDirection } = this;
+    const { detail, detailIcon, download, lines, disabled, href, rel, target, routerAnimation, routerDirection } = this;
     const childStyles = {};
     const mode = getIonMode(this);
     const clickable = this.isClickable();
@@ -208,8 +215,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           <TagType
             {...attrs}
             class="item-native"
+            part="native"
             disabled={disabled}
-            onClick={(ev: Event) => openURL(href, ev, routerDirection)}
+            onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
           >
             <slot name="start"></slot>
             <div class="item-inner">

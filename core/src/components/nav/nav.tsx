@@ -372,7 +372,8 @@ export class Nav implements NavOutlet {
   setRouteId(
     id: string,
     params: ComponentProps | undefined,
-    direction: RouterDirection
+    direction: RouterDirection,
+    animation?: AnimationBuilder
   ): Promise<RouteWrite> {
     const active = this.getActiveSync();
     if (matches(active, id, params)) {
@@ -410,15 +411,20 @@ export class Nav implements NavOutlet {
       if (viewController) {
         finish = this.popTo(viewController, {
           ...commonOpts,
-          direction: 'back'
+          direction: 'back',
+          animationBuilder: animation
         });
       } else if (direction === 'forward') {
-        finish = this.push(id, params, commonOpts);
+        finish = this.push(id, params, {
+          ...commonOpts,
+          animationBuilder: animation
+        });
       } else if (direction === 'back') {
         finish = this.setRoot(id, params, {
           ...commonOpts,
           direction: 'back',
-          animated: true
+          animated: true,
+          animationBuilder: animation
         });
       }
     }
@@ -623,6 +629,19 @@ export class Nav implements NavOutlet {
       const requiresTransition =
         (ti.enteringRequiresTransition || ti.leavingRequiresTransition) &&
         enteringView !== leavingView;
+      if (requiresTransition && ti.opts && leavingView) {
+        const isBackDirection = ti.opts.direction === 'back';
+
+        /**
+         * If heading back, use the entering page's animation
+         * unless otherwise specified by the developer.
+         */
+        if (isBackDirection) {
+          ti.opts.animationBuilder = ti.opts.animationBuilder || (enteringView && enteringView.animationBuilder);
+        }
+
+        leavingView.animationBuilder = ti.opts.animationBuilder;
+      }
       const result = requiresTransition
         ? await this.transition(enteringView!, leavingView, ti)
         : {

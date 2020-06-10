@@ -12,8 +12,8 @@ ion-action-sheet,prop,mode,"ios" | "md",undefined,false,false
 ion-action-sheet,prop,subHeader,string | undefined,undefined,false,false
 ion-action-sheet,prop,translucent,boolean,false,false,false
 ion-action-sheet,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-action-sheet,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-action-sheet,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-action-sheet,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-action-sheet,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-action-sheet,method,present,present() => Promise<void>
 ion-action-sheet,event,ionActionSheetDidDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetDidPresent,void,true
@@ -58,8 +58,8 @@ ion-alert,prop,mode,"ios" | "md",undefined,false,false
 ion-alert,prop,subHeader,string | undefined,undefined,false,false
 ion-alert,prop,translucent,boolean,false,false,false
 ion-alert,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-alert,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-alert,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-alert,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-alert,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-alert,method,present,present() => Promise<void>
 ion-alert,event,ionAlertDidDismiss,OverlayEventDetail<any>,true
 ion-alert,event,ionAlertDidPresent,void,true
@@ -85,6 +85,7 @@ ion-back-button,prop,defaultHref,string | undefined,undefined,false,false
 ion-back-button,prop,disabled,boolean,false,false,true
 ion-back-button,prop,icon,null | string | undefined,undefined,false,false
 ion-back-button,prop,mode,"ios" | "md",undefined,false,false
+ion-back-button,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-back-button,prop,text,null | string | undefined,undefined,false,false
 ion-back-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-back-button,css-prop,--background
@@ -119,6 +120,9 @@ ion-back-button,css-prop,--padding-start
 ion-back-button,css-prop,--padding-top
 ion-back-button,css-prop,--ripple-color
 ion-back-button,css-prop,--transition
+ion-back-button,part,icon
+ion-back-button,part,native
+ion-back-button,part,text
 
 ion-backdrop,shadow
 ion-backdrop,prop,stopPropagation,boolean,true,false,false
@@ -146,6 +150,7 @@ ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undef
 ion-button,prop,href,string | undefined,undefined,false,false
 ion-button,prop,mode,"ios" | "md",undefined,false,false
 ion-button,prop,rel,string | undefined,undefined,false,false
+ion-button,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-button,prop,shape,"round" | undefined,undefined,false,true
 ion-button,prop,size,"default" | "large" | "small" | undefined,undefined,false,true
@@ -177,6 +182,7 @@ ion-button,css-prop,--padding-start
 ion-button,css-prop,--padding-top
 ion-button,css-prop,--ripple-color
 ion-button,css-prop,--transition
+ion-button,part,native
 
 ion-buttons,scoped
 ion-buttons,prop,collapse,boolean,false,false,false
@@ -189,11 +195,13 @@ ion-card,prop,download,string | undefined,undefined,false,false
 ion-card,prop,href,string | undefined,undefined,false,false
 ion-card,prop,mode,"ios" | "md",undefined,false,false
 ion-card,prop,rel,string | undefined,undefined,false,false
+ion-card,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-card,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-card,prop,target,string | undefined,undefined,false,false
 ion-card,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-card,css-prop,--background
 ion-card,css-prop,--color
+ion-card,part,native
 
 ion-card-content,none
 ion-card-content,prop,mode,"ios" | "md",undefined,false,false
@@ -288,7 +296,7 @@ ion-content,prop,scrollY,boolean,true,false,false
 ion-content,method,getScrollElement,getScrollElement() => Promise<HTMLElement>
 ion-content,method,scrollByPoint,scrollByPoint(x: number, y: number, duration: number) => Promise<void>
 ion-content,method,scrollToBottom,scrollToBottom(duration?: number) => Promise<void>
-ion-content,method,scrollToPoint,scrollToPoint(x: number | null | undefined, y: number | null | undefined, duration?: number) => Promise<void>
+ion-content,method,scrollToPoint,scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration?: number) => Promise<void>
 ion-content,method,scrollToTop,scrollToTop(duration?: number) => Promise<void>
 ion-content,event,ionScroll,ScrollDetail,true
 ion-content,event,ionScrollEnd,ScrollBaseDetail,true
@@ -351,12 +359,14 @@ ion-fab,method,close,close() => Promise<void>
 
 ion-fab-button,shadow
 ion-fab-button,prop,activated,boolean,false,false,false
+ion-fab-button,prop,closeIcon,string,'close',false,false
 ion-fab-button,prop,color,string | undefined,undefined,false,false
 ion-fab-button,prop,disabled,boolean,false,false,false
 ion-fab-button,prop,download,string | undefined,undefined,false,false
 ion-fab-button,prop,href,string | undefined,undefined,false,false
 ion-fab-button,prop,mode,"ios" | "md",undefined,false,false
 ion-fab-button,prop,rel,string | undefined,undefined,false,false
+ion-fab-button,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-fab-button,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-fab-button,prop,show,boolean,false,false,false
 ion-fab-button,prop,size,"small" | undefined,undefined,false,false
@@ -377,6 +387,7 @@ ion-fab-button,css-prop,--border-radius
 ion-fab-button,css-prop,--border-style
 ion-fab-button,css-prop,--border-width
 ion-fab-button,css-prop,--box-shadow
+ion-fab-button,css-prop,--close-icon-font-size
 ion-fab-button,css-prop,--color
 ion-fab-button,css-prop,--color-activated
 ion-fab-button,css-prop,--color-focused
@@ -387,6 +398,8 @@ ion-fab-button,css-prop,--padding-start
 ion-fab-button,css-prop,--padding-top
 ion-fab-button,css-prop,--ripple-color
 ion-fab-button,css-prop,--transition
+ion-fab-button,part,close-icon
+ion-fab-button,part,native
 
 ion-fab-list,shadow
 ion-fab-list,prop,activated,boolean,false,false,false
@@ -492,6 +505,7 @@ ion-item,prop,href,string | undefined,undefined,false,false
 ion-item,prop,lines,"full" | "inset" | "none" | undefined,undefined,false,false
 ion-item,prop,mode,"ios" | "md",undefined,false,false
 ion-item,prop,rel,string | undefined,undefined,false,false
+ion-item,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-item,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-item,prop,target,string | undefined,undefined,false,false
 ion-item,prop,type,"button" | "reset" | "submit",'button',false,false
@@ -531,6 +545,7 @@ ion-item,css-prop,--padding-top
 ion-item,css-prop,--ripple-color
 ion-item,css-prop,--transition
 ion-item,part,detail-icon
+ion-item,part,native
 
 ion-item-divider,shadow
 ion-item-divider,prop,color,string | undefined,undefined,false,false
@@ -561,6 +576,7 @@ ion-item-option,prop,target,string | undefined,undefined,false,false
 ion-item-option,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-item-option,css-prop,--background
 ion-item-option,css-prop,--color
+ion-item-option,part,native
 
 ion-item-options,none
 ion-item-options,prop,side,"end" | "start",'end',false,false
@@ -572,7 +588,7 @@ ion-item-sliding,method,close,close() => Promise<void>
 ion-item-sliding,method,closeOpened,closeOpened() => Promise<boolean>
 ion-item-sliding,method,getOpenAmount,getOpenAmount() => Promise<number>
 ion-item-sliding,method,getSlidingRatio,getSlidingRatio() => Promise<number>
-ion-item-sliding,method,open,open(side: "start" | "end" | undefined) => Promise<void>
+ion-item-sliding,method,open,open(side: Side | undefined) => Promise<void>
 ion-item-sliding,event,ionDrag,any,true
 
 ion-label,scoped
@@ -612,8 +628,8 @@ ion-loading,prop,showBackdrop,boolean,true,false,false
 ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
 ion-loading,prop,translucent,boolean,false,false,false
 ion-loading,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-loading,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-loading,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-loading,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-loading,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,present,present() => Promise<void>
 ion-loading,event,ionLoadingDidDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingDidPresent,void,true
@@ -662,6 +678,7 @@ ion-menu-button,prop,autoHide,boolean,true,false,false
 ion-menu-button,prop,color,string | undefined,undefined,false,false
 ion-menu-button,prop,disabled,boolean,false,false,false
 ion-menu-button,prop,menu,string | undefined,undefined,false,false
+ion-menu-button,prop,mode,"ios" | "md",undefined,false,false
 ion-menu-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-menu-button,css-prop,--background
 ion-menu-button,css-prop,--background-focused
@@ -676,6 +693,8 @@ ion-menu-button,css-prop,--padding-bottom
 ion-menu-button,css-prop,--padding-end
 ion-menu-button,css-prop,--padding-start
 ion-menu-button,css-prop,--padding-top
+ion-menu-button,part,icon
+ion-menu-button,part,native
 
 ion-menu-toggle,shadow
 ion-menu-toggle,prop,autoHide,boolean,true,false,false
@@ -695,8 +714,8 @@ ion-modal,prop,presentingElement,HTMLElement | undefined,undefined,false,false
 ion-modal,prop,showBackdrop,boolean,true,false,false
 ion-modal,prop,swipeToClose,boolean,false,false,false
 ion-modal,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-modal,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-modal,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-modal,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-modal,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-modal,method,present,present() => Promise<void>
 ion-modal,event,ionModalDidDismiss,OverlayEventDetail<any>,true
 ion-modal,event,ionModalDidPresent,void,true
@@ -740,6 +759,7 @@ ion-nav,event,ionNavWillChange,void,false
 ion-nav-link,none
 ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
 ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-nav-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 
 ion-note,shadow
@@ -761,8 +781,8 @@ ion-picker,prop,mode,"ios" | "md",undefined,false,false
 ion-picker,prop,showBackdrop,boolean,true,false,false
 ion-picker,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-picker,method,getColumn,getColumn(name: string) => Promise<PickerColumn | undefined>
-ion-picker,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-picker,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-picker,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-picker,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-picker,method,present,present() => Promise<void>
 ion-picker,event,ionPickerDidDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerDidPresent,void,true
@@ -796,8 +816,8 @@ ion-popover,prop,mode,"ios" | "md",undefined,false,false
 ion-popover,prop,showBackdrop,boolean,true,false,false
 ion-popover,prop,translucent,boolean,false,false,false
 ion-popover,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-popover,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-popover,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-popover,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-popover,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-popover,method,present,present() => Promise<void>
 ion-popover,event,ionPopoverDidDismiss,OverlayEventDetail<any>,true
 ion-popover,event,ionPopoverDidPresent,void,true
@@ -927,7 +947,7 @@ ion-router,none
 ion-router,prop,root,string,'/',false,false
 ion-router,prop,useHash,boolean,true,false,false
 ion-router,method,back,back() => Promise<void>
-ion-router,method,push,push(url: string, direction?: RouterDirection) => Promise<boolean>
+ion-router,method,push,push(url: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>
 ion-router,event,ionRouteDidChange,RouterEventDetail,true
 ion-router,event,ionRouteWillChange,RouterEventDetail,true
 
@@ -935,6 +955,7 @@ ion-router-link,shadow
 ion-router-link,prop,color,string | undefined,undefined,false,false
 ion-router-link,prop,href,string | undefined,undefined,false,false
 ion-router-link,prop,rel,string | undefined,undefined,false,false
+ion-router-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-router-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
 ion-router-link,prop,target,string | undefined,undefined,false,false
 ion-router-link,css-prop,--background
@@ -1029,6 +1050,8 @@ ion-segment-button,css-prop,--padding-end
 ion-segment-button,css-prop,--padding-start
 ion-segment-button,css-prop,--padding-top
 ion-segment-button,css-prop,--transition
+ion-segment-button,part,indicator
+ion-segment-button,part,native
 
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false
@@ -1166,6 +1189,7 @@ ion-tab-button,css-prop,--padding-end
 ion-tab-button,css-prop,--padding-start
 ion-tab-button,css-prop,--padding-top
 ion-tab-button,css-prop,--ripple-color
+ion-tab-button,part,native
 
 ion-tabs,shadow
 ion-tabs,method,getSelected,getSelected() => Promise<string | undefined>
@@ -1242,8 +1266,8 @@ ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,translucent,boolean,false,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
-ion-toast,method,onDidDismiss,onDidDismiss() => Promise<OverlayEventDetail<any>>
-ion-toast,method,onWillDismiss,onWillDismiss() => Promise<OverlayEventDetail<any>>
+ion-toast,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
+ion-toast,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-toast,method,present,present() => Promise<void>
 ion-toast,event,ionToastDidDismiss,OverlayEventDetail<any>,true
 ion-toast,event,ionToastDidPresent,void,true
