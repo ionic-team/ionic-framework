@@ -318,6 +318,13 @@ export class ButtonExample {
 | `"start"`     | Content is placed to the left of the button text in LTR, and to the right in RTL. |
 
 
+## Shadow Parts
+
+| Part       | Description                                                             |
+| ---------- | ----------------------------------------------------------------------- |
+| `"native"` | The native HTML button or anchor element that wraps all child elements. |
+
+
 ## CSS Custom Properties
 
 | Name                             | Description                                                                                               |

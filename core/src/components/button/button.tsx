@@ -13,6 +13,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
  * @slot icon-only - Should be used on an icon in a button that has no text.
  * @slot start - Content is placed to the left of the button text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the button text in LTR, and to the left in RTL.
+ *
+ * @part native - The native HTML button or anchor element that wraps all child elements.
  */
 @Component({
   tag: 'ion-button',
@@ -222,6 +224,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
         <TagType
           {...attrs}
           class="button-native"
+          part="native"
           disabled={disabled}
           onFocus={this.onFocus}
           onBlur={this.onBlur}

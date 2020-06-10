@@ -7,6 +7,8 @@ import { createColorClasses, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML button, anchor, or div element that wraps all child elements.
  */
 @Component({
   tag: 'ion-card',
@@ -106,6 +108,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
       <TagType
         {...attrs}
         class="card-native"
+        part="native"
         disabled={this.disabled}
         onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
       >

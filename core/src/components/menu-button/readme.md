@@ -14,7 +14,16 @@ Menu Button is component that automatically creates the icon and functionality t
 | `color`    | `color`     | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`             | `undefined` |
 | `disabled` | `disabled`  | If `true`, the user cannot interact with the menu button.                                                                                                                                                                                                              | `boolean`                         | `false`     |
 | `menu`     | `menu`      | Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle                                                                                                                 | `string \| undefined`             | `undefined` |
+| `mode`     | `mode`      | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                   | `undefined` |
 | `type`     | `type`      | The type of the button.                                                                                                                                                                                                                                                | `"button" \| "reset" \| "submit"` | `'button'`  |
+
+
+## Shadow Parts
+
+| Part       | Description                                                   |
+| ---------- | ------------------------------------------------------------- |
+| `"icon"`   | The menu button icon (uses ion-icon).                         |
+| `"native"` | The native HTML button element that wraps all child elements. |
 
 
 ## CSS Custom Properties
