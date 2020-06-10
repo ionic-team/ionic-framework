@@ -1,4 +1,4 @@
-# [5.2.0](https://github.com/ionic-team/ionic/compare/v5.1.1...v5.2.0) (2020-06-10)
+# [5.2.0 Silicon](https://github.com/ionic-team/ionic/compare/v5.1.1...v5.2.0) (2020-06-10)
 
 
 ### Bug Fixes
