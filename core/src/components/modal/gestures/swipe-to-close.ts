@@ -39,16 +39,15 @@ export const createSwipeToCloseGesture = (
   };
 
   const onMove = (detail: GestureDetail) => {
-    const step = detail.deltaY / height;
-    if (step < 0) { return; }
+    const step = clamp(0.0001, detail.deltaY / height, 0.9999);
 
     animation.progressStep(step);
   };
 
   const onEnd = (detail: GestureDetail) => {
     const velocity = detail.velocityY;
-    const step = detail.deltaY / height;
-    if (step < 0) { return; }
+
+    const step = clamp(0.0001, detail.deltaY / height, 0.9999);
 
     const threshold = (detail.deltaY + velocity * 1000) / height;
 

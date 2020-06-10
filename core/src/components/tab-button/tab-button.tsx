@@ -7,6 +7,8 @@ import { AnchorInterface } from '../../utils/element-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML anchor element that wraps all child elements.
  */
 @Component({
   tag: 'ion-tab-button',
@@ -161,7 +163,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           'ion-focusable': true
         }}
       >
-        <a {...attrs} tabIndex={-1} class="button-native">
+        <a {...attrs} tabIndex={-1} class="button-native" part="native">
           <span class="button-inner">
             <slot></slot>
           </span>

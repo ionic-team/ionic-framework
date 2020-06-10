@@ -1,5 +1,7 @@
-import { IonicSafeString } from '../../';
+import { JSXBase } from '@stencil/core/internal';
+
 import { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
+import { IonicSafeString } from '../../utils/sanitization';
 
 export interface AlertOptions {
   header?: string;
@@ -32,7 +34,12 @@ export interface AlertInput {
   handler?: (input: AlertInput) => void;
   min?: string | number;
   max?: string | number;
+  cssClass?: string | string[];
+  attributes?: AlertInputAttributes | AlertTextareaAttributes;
 }
+
+export interface AlertTextareaAttributes extends JSXBase.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+export interface AlertInputAttributes extends JSXBase.InputHTMLAttributes<HTMLInputElement> {}
 
 export interface AlertButton {
   text: string;

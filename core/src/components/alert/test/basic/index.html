@@ -75,7 +75,14 @@
         header: 'Alert',
         subHeader: 'Subtitle',
         message: 'This is an alert message.',
-        buttons: ['Cancel', 'Open Modal', 'Delete']
+        buttons: [
+          'Open Modal',
+          {
+            text: 'Delete',
+            role: 'destructive',
+          },
+          'Cancel',
+        ]
       });
     }
 
@@ -161,6 +168,16 @@
           {
             name: 'name7',
             type: 'number'
+          },
+          {
+            name: 'name8',
+            type: 'text',
+            placeholder: 'Advanced Attributes',
+            cssClass: 'specialClass',
+            attributes: {
+              maxlength: 4,
+              inputmode: 'decimal'
+            }
           }
         ],
         buttons: [

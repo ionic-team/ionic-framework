@@ -1,12 +1,12 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-router-link',
   templateUrl: './router-link.component.html',
 })
-export class RouterLinkComponent implements OnInit {
+export class RouterLinkComponent implements OnInit, ViewWillEnter, ViewDidEnter, ViewWillLeave, ViewDidLeave {
 
   onInit = 0;
   willEnter = 0;

@@ -2,18 +2,18 @@
 
 An Alert is a dialog that presents users with information or collects information from the user using inputs. An alert appears on top of the app's content, and must be manually dismissed by the user before they can resume interaction with the app. It can also optionally have a `header`, `subHeader` and `message`.
 
-### Buttons
+## Buttons
 
 In the array of `buttons`, each button includes properties for its `text`, and optionally a `handler`. If a handler returns `false` then the alert will not automatically be dismissed when the button is clicked. All buttons will show up in the order they have been added to the `buttons` array from left to right. Note: The right most button (the last one in the array) is the main button.
 
 Optionally, a `role` property can be added to a button, such as `cancel`. If a `cancel` role is on one of the buttons, then if the alert is dismissed by tapping the backdrop, then it will fire the handler from the button with a cancel role.
 
 
-### Inputs
+## Inputs
 
 Alerts can also include several different inputs whose data can be passed back to the app. Inputs can be used as a simple way to prompt users for information. Radios, checkboxes and text inputs are all accepted, but they cannot be mixed. For example, an alert could have all radio button inputs, or all checkbox inputs, but the same alert cannot mix radio and checkbox inputs. Do note however, different types of "text" inputs can be mixed, such as `url`, `email`, `text`, `textarea` etc. If you require a complex form UI which doesn't fit within the guidelines of an alert then we recommend building the form within a modal instead.
 
-### Customization
+## Customization
 
 Alert uses scoped encapsulation, which means it will automatically scope its CSS by appending each of the styles with an additional class at runtime. Overriding scoped selectors in CSS requires a [higher specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) selector.
 
@@ -162,6 +162,16 @@ export class AlertExample {
         {
           name: 'name7',
           type: 'number'
+        },
+        {
+          name: 'name8',
+          type: 'password',
+          placeholder: 'Advanced Attributes',
+          cssClass: 'specialClass',
+          attributes: {
+            maxlength: 4,
+            inputmode: 'decimal'
+          }
         }
       ],
       buttons: [
@@ -423,6 +433,16 @@ function presentAlertPrompt() {
     {
       name: 'name7',
       type: 'number'
+    },
+    {
+      name: 'name8',
+      type: 'password',
+      placeholder: 'Advanced Attributes',
+      cssClass: 'specialClass',
+      attributes: {
+        maxlength: 4,
+        inputmode: 'decimal'
+      }
     }
   ];
   alert.buttons = [
@@ -677,6 +697,16 @@ export const AlertExample: React.FC = () => {
             {
               name: 'name7',
               type: 'number'
+            },
+            {
+              name: 'name8',
+              type: 'password',
+              placeholder: 'Advanced Attributes',
+              cssClass: 'specialClass',
+              attributes: {
+                maxlength: 4,
+                inputmode: 'decimal'
+              }
             }
           ]}
           buttons={[
@@ -941,6 +971,16 @@ export class AlertExample {
         {
           name: 'name7',
           type: 'number'
+        },
+        {
+          name: 'name8',
+          type: 'password',
+          placeholder: 'Advanced Attributes',
+          cssClass: 'specialClass',
+          attributes: {
+            maxlength: 4,
+            inputmode: 'decimal'
+          }
         }
       ],
       buttons: [
@@ -1221,6 +1261,16 @@ export default {
               name: 'name7',
               type: 'number',
             },
+            {
+              name: 'name8',
+              type: 'password',
+              placeholder: 'Advanced Attributes',
+              cssClass: 'specialClass',
+              attributes: {
+                maxlength: 4,
+                inputmode: 'decimal'
+              }
+            }
           ],
           buttons: [
             {
@@ -1410,23 +1460,23 @@ Type: `Promise<boolean>`
 
 
 
-### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+### `onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>`
 
 Returns a promise that resolves when the alert did dismiss.
 
 #### Returns
 
-Type: `Promise<OverlayEventDetail<any>>`
+Type: `Promise<OverlayEventDetail<T>>`
 
 
 
-### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+### `onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>`
 
 Returns a promise that resolves when the alert will dismiss.
 
 #### Returns
 
-Type: `Promise<OverlayEventDetail<any>>`
+Type: `Promise<OverlayEventDetail<T>>`
 
 
 

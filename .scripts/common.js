@@ -4,7 +4,7 @@ const execa = require('execa');
 const inquirer = require('inquirer');
 const Listr = require('listr');
 const semver = require('semver');
-const tc = require('turbocolor');
+const { bold, cyan, dim } = require('colorette');
 
 const rootDir = path.join(__dirname, '../');
 
@@ -55,7 +55,7 @@ async function askNpmTag(version) {
       type: 'confirm',
       name: 'confirm',
       message: answers => {
-        return `Will publish ${tc.cyan(version)} to ${tc.cyan(answers.npmTag)}. Continue?`;
+        return `Will publish ${cyan(version)} to ${cyan(answers.npmTag)}. Continue?`;
       }
     }
   ];
@@ -192,7 +192,7 @@ function preparePackage(tasks, package, version, install) {
 
   // Add project tasks
   tasks.push({
-    title: `Prepare ${tc.bold(pkg.name)}`,
+    title: `Prepare ${bold(pkg.name)}`,
     task: () => new Listr(projectTasks)
   });
 }
@@ -234,7 +234,7 @@ function prepareDevPackage(tasks, package, version) {
 
   // Add project tasks
   tasks.push({
-    title: `Prepare dev build: ${tc.bold(pkg.name)}`,
+    title: `Prepare dev build: ${bold(pkg.name)}`,
     task: () => new Listr(projectTasks)
   });
 }
@@ -244,7 +244,7 @@ function updatePackageVersions(tasks, packages, version) {
     updatePackageVersion(tasks, package, version);
 
     tasks.push({
-      title: `${package} update @ionic/core dependency, if present ${tc.dim(`(${version})`)}`,
+      title: `${package} update @ionic/core dependency, if present ${dim(`(${version})`)}`,
       task: async () => {
         if (package !== 'core') {
           const pkg = readPkg(package);
@@ -261,7 +261,7 @@ function updatePackageVersions(tasks, packages, version) {
       updatePackageVersion(tasks, distPackage, version);
 
       tasks.push({
-        title: `${package} update @ionic/core dependency, if present ${tc.dim(`(${version})`)}`,
+        title: `${package} update @ionic/core dependency, if present ${dim(`(${version})`)}`,
         task: async () => {
           const pkg = readPkg(distPackage);
           updateDependency(pkg, '@ionic/core', version);
@@ -272,7 +272,7 @@ function updatePackageVersions(tasks, packages, version) {
 
     if (package === 'packages/react-router') {
       tasks.push({
-        title: `${package} update @ionic/react dependency, if present ${tc.dim(`(${version})`)}`,
+        title: `${package} update @ionic/react dependency, if present ${dim(`(${version})`)}`,
         task: async () => {
           const pkg = readPkg(package);
           updateDependency(pkg, '@ionic/react', version);
@@ -287,7 +287,7 @@ function updatePackageVersion(tasks, package, version) {
   const projectRoot = projectPath(package);
 
   tasks.push({
-    title: `${package}: update package.json ${tc.dim(`(${version})`)}`,
+    title: `${package}: update package.json ${dim(`(${version})`)}`,
     task: async () => {
       await execa('npm', ['version', version], { cwd: projectRoot });
     }
