@@ -137,7 +137,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the picker did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionPickerDidDismiss');
   }
 
@@ -145,7 +145,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the picker will dismiss.
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionPickerWillDismiss');
   }
 

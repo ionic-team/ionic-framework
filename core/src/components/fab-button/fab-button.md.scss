@@ -21,14 +21,14 @@
     opacity 15ms linear 30ms,
     transform 270ms cubic-bezier(0, 0, .2, 1) 0ms
   };
+  --close-icon-font-size: #{$fab-md-icon-font-size};
 }
 
 :host(.ion-activated) {
   --box-shadow: #{$fab-md-box-shadow-activated};
 }
 
-::slotted(ion-icon),
-.close-icon {
+::slotted(ion-icon) {
   font-size: $fab-md-icon-font-size;
 }
 

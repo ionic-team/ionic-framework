@@ -307,23 +307,23 @@ Type: `Promise<boolean>`
 
 
 
-### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+### `onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>`
 
 Returns a promise that resolves when the loading did dismiss.
 
 #### Returns
 
-Type: `Promise<OverlayEventDetail<any>>`
+Type: `Promise<OverlayEventDetail<T>>`
 
 
 
-### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+### `onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>`
 
 Returns a promise that resolves when the loading will dismiss.
 
 #### Returns
 
-Type: `Promise<OverlayEventDetail<any>>`
+Type: `Promise<OverlayEventDetail<T>>`
 
 
 

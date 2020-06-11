@@ -15,6 +15,7 @@
   --color: #{$fab-ios-text-color};
   --box-shadow: #{$fab-ios-box-shadow};
   --transition: #{$fab-ios-transition};
+  --close-icon-font-size: #{$fab-ios-icon-font-size};
 }
 
 :host(.ion-activated) {
@@ -23,10 +24,10 @@
   --transition: #{$fab-ios-transition-activated};
 }
 
-::slotted(ion-icon),
-.close-icon {
+::slotted(ion-icon) {
   font-size: $fab-ios-icon-font-size;
 }
+
 
 // FAB buttons in a list
 // --------------------------------------------------

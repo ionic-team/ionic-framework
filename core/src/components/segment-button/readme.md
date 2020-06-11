@@ -794,6 +794,14 @@ export class SegmentButtonExample {
 | `value`    | `value`    | The value of the segment button.                             | `string`                                                                                                | `'ion-sb-' + (ids++)` |
 
 
+## Shadow Parts
+
+| Part          | Description                                                   |
+| ------------- | ------------------------------------------------------------- |
+| `"indicator"` | The indicator displayed on the checked segment button.        |
+| `"native"`    | The native HTML button element that wraps all child elements. |
+
+
 ## CSS Custom Properties
 
 | Name                           | Description                                                                                                       |

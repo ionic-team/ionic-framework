@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, RouterDirection } from '../../interface';
+import { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
@@ -13,6 +13,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
  * @slot icon-only - Should be used on an icon in a button that has no text.
  * @slot start - Content is placed to the left of the button text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the button text in LTR, and to the left in RTL.
+ *
+ * @part native - The native HTML button or anchor element that wraps all child elements.
  */
 @Component({
   tag: 'ion-button',
@@ -64,6 +66,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * another page using `href`.
    */
   @Prop() routerDirection: RouterDirection = 'forward';
+
+  /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
 
   /**
    * This attribute instructs browsers to download a URL instead of navigating to
@@ -146,7 +154,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   private handleClick = (ev: Event) => {
     if (this.type === 'button') {
-      openURL(this.href, ev, this.routerDirection);
+      openURL(this.href, ev, this.routerDirection, this.routerAnimation);
 
     } else if (hasShadowDom(this.el)) {
       // this button wants to specifically submit a form
@@ -216,6 +224,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
         <TagType
           {...attrs}
           class="button-native"
+          part="native"
           disabled={disabled}
           onFocus={this.onFocus}
           onBlur={this.onBlur}

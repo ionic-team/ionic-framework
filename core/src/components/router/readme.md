@@ -78,7 +78,7 @@ Type: `Promise<void>`
 
 
 
-### `push(url: string, direction?: RouterDirection) => Promise<boolean>`
+### `push(url: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>`
 
 Navigate to the specified URL.
 

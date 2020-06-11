@@ -14,6 +14,7 @@ It is the element form of calling the `push()`, `pop()`, and `setRoot()` methods
 | ----------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------- |
 | `component`       | `component`        | Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.                          | `Function \| HTMLElement \| ViewController \| null \| string \| undefined` | `undefined` |
 | `componentProps`  | --                 | Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`. | `undefined \| { [key: string]: any; }`                                     | `undefined` |
+| `routerAnimation` | --                 | The transition animation when navigating to another page.                                                         | `((baseEl: any, opts?: any) => Animation) \| undefined`                    | `undefined` |
 | `routerDirection` | `router-direction` | The transition direction when navigating to another page.                                                         | `"back" \| "forward" \| "root"`                                            | `'forward'` |
 
 
