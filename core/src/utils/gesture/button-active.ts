@@ -8,7 +8,8 @@ export const createButtonActiveGesture = (
   el: HTMLElement,
   isButton: (refEl: HTMLElement) => boolean
 ): Gesture => {
-  let touchedButton: HTMLElement | undefined;
+  let currentTouchedButton: HTMLElement | undefined;
+  let initialTouchedButton: HTMLElement | undefined;
 
   const activateButtonAtPoint = (x: number, y: number, hapticFeedbackFn: () => void) => {
     if (typeof (document as any) === 'undefined') { return; }
@@ -18,30 +19,35 @@ export const createButtonActiveGesture = (
       return;
     }
 
-    if (target !== touchedButton) {
+    if (target !== currentTouchedButton) {
       clearActiveButton();
       setActiveButton(target, hapticFeedbackFn);
     }
   };
 
   const setActiveButton = (button: HTMLElement, hapticFeedbackFn: () => void) => {
-    touchedButton = button;
-    const buttonToModify = touchedButton;
+    currentTouchedButton = button;
+
+    if (!initialTouchedButton) {
+      initialTouchedButton = currentTouchedButton;
+    }
+
+    const buttonToModify = currentTouchedButton;
     writeTask(() => buttonToModify.classList.add('ion-activated'));
     hapticFeedbackFn();
   };
 
   const clearActiveButton = (dispatchClick = false) => {
-    if (!touchedButton) { return; }
+    if (!currentTouchedButton) { return; }
 
-    const buttonToModify = touchedButton;
+    const buttonToModify = currentTouchedButton;
     writeTask(() => buttonToModify.classList.remove('ion-activated'));
 
-    if (dispatchClick) {
-      touchedButton.click();
+    if (dispatchClick && initialTouchedButton !== currentTouchedButton) {
+      currentTouchedButton.click();
     }
 
-    touchedButton = undefined;
+    currentTouchedButton = undefined;
   };
 
   return createGesture({
@@ -53,6 +59,7 @@ export const createButtonActiveGesture = (
     onEnd: () => {
       clearActiveButton(true);
       hapticSelectionEnd();
+      initialTouchedButton = undefined;
     }
   });
 };
