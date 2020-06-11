@@ -3,7 +3,8 @@ import {
   IonContent,
   IonPage,
   IonRouterOutlet,
-  IonSplitPane
+  IonSplitPane,
+  IonRoute
 } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
@@ -42,7 +43,8 @@ const App: React.FC = () => {
         <IonSplitPane contentId="main">
           <Menu />
           <IonRouterOutlet id="main">
-            <Route path="/tabs" component={Tabs} />
+            <IonRoute path="/tabs" render={() => <Tabs />} />
+            {/* <Route path="/tabs" component={Tabs} /> */}
             <Route path="/" render={() => <Redirect to="/tabs" />} exact />
             {/* <Route path="/favorites" component={Favorites} /> */}
             <Route path="/favorites" render={() => {

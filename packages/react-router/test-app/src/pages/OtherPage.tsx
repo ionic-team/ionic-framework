@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonBackButton, IonRouterOutlet, useIonViewWillEnter } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, useIonViewWillEnter, IonButton } from '@ionic/react';
 import { Route } from 'react-router';
 
 interface OtherPageProps {
@@ -29,7 +29,7 @@ const OtherPage: React.FC<OtherPageProps> = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent>
-
+          <IonButton routerLink="/tabs/tab3">Go to tab3</IonButton>
         </IonContent>
       </IonPage>
     //   )}></Route>

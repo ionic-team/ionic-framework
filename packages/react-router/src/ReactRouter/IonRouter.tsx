@@ -41,7 +41,6 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     getViewItemForTransition: this.viewStack.getViewItemForTransition,
     getChildrenToRender: this.viewStack.getChildrenToRender,
     createViewItem: this.viewStack.createViewItem,
-    // findViewItemByPathname: this.viewStack.findViewItemByPathname,
     findViewItemByRouteInfo: this.viewStack.findViewItemByRouteInfo,
     findLeavingViewItemByRouteInfo: this.viewStack.findLeavingViewItemByRouteInfo,
     addViewItem: this.viewStack.add,

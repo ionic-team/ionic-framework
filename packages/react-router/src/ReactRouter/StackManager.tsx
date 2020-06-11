@@ -64,7 +64,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       }
 
       const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
-      // TODO: we need to set the route here since its synced later?
       if (enteringViewItem) {
         enteringViewItem.reactElement = enteringRoute;
       }
@@ -93,7 +92,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   async transitionPage(routeInfo: RouteInfo, enteringViewItem: ViewItem, leavingViewItem?: ViewItem) {
 
-    // TODO: Needed?
+    // When changing outlets, this sets the leaving outlets view to the current
+    // leavingViewItem so it can be transitioned out correctly
     if (routeInfo.lastPathname && (!leavingViewItem || !leavingViewItem.ionRoute)) {
       const viewFromOtherOutlet = this.context.getViewItemForTransition(routeInfo.lastPathname);
       if (leavingViewItem) {
@@ -136,13 +136,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
           leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
         }
-      }
-    }
-
-    // TODO: needed?
-    if (leavingViewItem) {
-      if (!leavingViewItem.ionRoute) {
-        this.context.unMountViewItem(leavingViewItem);
       }
     }
   }

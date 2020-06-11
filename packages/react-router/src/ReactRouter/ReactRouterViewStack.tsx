@@ -9,7 +9,6 @@ export class ReactRouterViewStack extends ViewStacks {
     this.createViewItem = this.createViewItem.bind(this);
     this.findViewItemByRouteInfo = this.findViewItemByRouteInfo.bind(this);
     this.findLeavingViewItemByRouteInfo = this.findLeavingViewItemByRouteInfo.bind(this);
-    // this.findViewItemByPathname = this.findViewItemByPathname.bind(this);
     this.getChildrenToRender = this.getChildrenToRender.bind(this);
     this.getViewItemForTransition = this.getViewItemForTransition.bind(this);
   }
@@ -106,12 +105,6 @@ export class ReactRouterViewStack extends ViewStacks {
     return viewItem;
   }
 
-  // TODO: NEEDED?
-  // findViewItemByPathname(pathname: string, outletId?: string) {
-  //   const { viewItem } = this.findViewItemByPath(pathname, outletId);
-  //   return viewItem;
-  // }
-
   getViewItemForTransition(pathname: string) {
     const { viewItem } = this.findViewItemByPath(pathname, undefined, true, true);
     return viewItem;
@@ -177,7 +170,6 @@ export class ReactRouterViewStack extends ViewStacks {
 }
 
 function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
-
   const matchProps = {
     exact: forceExact ? true : node.props.exact,
     path: node.props.path || node.props.from,
