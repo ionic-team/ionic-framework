@@ -19,7 +19,6 @@ interface StackManagerState { }
 export class StackManager extends React.PureComponent<StackManagerProps, StackManagerState> {
   id: string;
   context!: React.ContextType<typeof RouteManagerContext>;
-  inTransition = false;
   ionRouterOutlet?: React.ReactElement;
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
 
@@ -50,38 +49,35 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   async handlePageTransition(routeInfo: RouteInfo) {
-    // TODO: this inTrans needed?
-    if (!this.inTransition) {
-      // If routerOutlet isn't quite ready, give it another try in a moment
-      if (!this.routerOutletElement || !this.routerOutletElement.commit) {
-        setTimeout(() => this.handlePageTransition(routeInfo), 10);
+    // If routerOutlet isn't quite ready, give it another try in a moment
+    if (!this.routerOutletElement || !this.routerOutletElement.commit) {
+      setTimeout(() => this.handlePageTransition(routeInfo), 10);
+    } else {
+      let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+      const leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
+
+      if (!(routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward')) {
+        const shouldLeavingViewBeRemoved = routeInfo.routeDirection !== 'none' && leavingViewItem && (enteringViewItem !== leavingViewItem);
+        if (shouldLeavingViewBeRemoved) {
+          leavingViewItem!.mount = false;
+        }
+      }
+
+      const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
+      // TODO: we need to set the route here since its synced later?
+      if (enteringViewItem) {
+        enteringViewItem.reactElement = enteringRoute;
+      }
+      if (!enteringViewItem) {
+        if (enteringRoute) {
+          enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
+          this.context.addViewItem(enteringViewItem);
+        }
+      }
+      if (enteringViewItem && enteringViewItem.ionPageElement) {
+        this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
       } else {
-        let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
-        const leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
-
-        if (!(routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward')) {
-          const shouldLeavingViewBeRemoved = routeInfo.routeDirection !== 'none' && leavingViewItem && (enteringViewItem !== leavingViewItem);
-          if (shouldLeavingViewBeRemoved) {
-            leavingViewItem!.mount = false;
-          }
-        }
-
-        const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
-        // TODO: we need to set the route here since its synced later?
-        if (enteringViewItem) {
-          enteringViewItem.reactElement = enteringRoute;
-        }
-        if (!enteringViewItem) {
-          if (enteringRoute) {
-            enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
-            this.context.addViewItem(enteringViewItem);
-          }
-        }
-        if (enteringViewItem && enteringViewItem.ionPageElement) {
-          this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
-        } else {
-          this.forceUpdate();
-        }
+        this.forceUpdate();
       }
     }
   }
