@@ -1,3 +1,12 @@
+## [5.2.1](https://github.com/ionic-team/ionic/compare/v5.2.0...v5.2.1) (2020-06-11)
+
+
+### Bug Fixes
+
+* **angular:** resolve error when not using ngModel on components ([4083e32](https://github.com/ionic-team/ionic/commit/4083e32e103db71f6db86ed1ecd398fda407c28b))
+
+
+
 # [5.2.0 Silicon](https://github.com/ionic-team/ionic/compare/v5.1.1...v5.2.0) (2020-06-10)
 
 
