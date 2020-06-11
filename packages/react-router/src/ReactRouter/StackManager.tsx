@@ -32,7 +32,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   componentDidMount() {
     if (this.routerOutletElement) {
-      console.log(`SM Mount - ${this.routerOutletElement.id} (${this.id})`);
+      // console.log(`SM Mount - ${this.routerOutletElement.id} (${this.id})`);
       this.handlePageTransition(this.props.routeInfo);
     }
   }
@@ -44,7 +44,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   componentWillUnmount() {
-    console.log(`SM UNMount - ${(this.routerOutletElement?.id as any).id} (${this.id})`);
+    // console.log(`SM UNMount - ${(this.routerOutletElement?.id as any).id} (${this.id})`);
     this.context.clearOutlet(this.id);
   }
 
