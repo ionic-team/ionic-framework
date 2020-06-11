@@ -187,7 +187,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     await transition({
       mode,
       animated,
-      animationBuilder,
       enteringEl,
       leavingEl,
       baseEl: el,
@@ -195,7 +194,8 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
         ? ani => this.ani = ani
         : undefined
       ),
-      ...opts
+      ...opts,
+      animationBuilder,
     });
 
     // emit nav changed event
