@@ -128,6 +128,15 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
           originalRouteOptions: tabs[activeTab].originalRouteOptions,
           currentRouteOptions: props.routeInfo?.routeOptions
         };
+        if (props.routeInfo.routeAction === 'pop') {
+          // If navigating back and the tabs change, set the prev tab back to its original href
+          tabs[prevActiveTab] = {
+            originalHref: tabs[prevActiveTab].originalHref,
+            currentHref: tabs[prevActiveTab].originalHref,
+            originalRouteOptions: tabs[prevActiveTab].originalRouteOptions,
+            currentRouteOptions: tabs[prevActiveTab].currentRouteOptions
+          };
+        }
       }
     }
 
