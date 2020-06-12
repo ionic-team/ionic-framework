@@ -99,6 +99,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   async transitionPage(routeInfo: RouteInfo, enteringViewItem: ViewItem, leavingViewItem?: ViewItem) {
 
+    let afterTransition = () => { return; };
     // When changing outlets, this sets the leaving outlets view to the current
     // leavingViewItem so it can be transitioned out correctly
     if (routeInfo.lastPathname && (!leavingViewItem || !leavingViewItem.ionRoute)) {
@@ -107,7 +108,14 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         this.context.unMountViewItem(leavingViewItem);
       }
       if (viewFromOtherOutlet) {
+        // We move the leaving page into the current router-outlet for a smother transition
+        // Then move it back after the transition
         leavingViewItem = viewFromOtherOutlet;
+        const parent = leavingViewItem.ionPageElement?.parentElement;
+        this.routerOutletElement?.append(leavingViewItem.ionPageElement!);
+        afterTransition = () => {
+          parent?.append(leavingViewItem?.ionPageElement!);
+        };
       }
     }
 
@@ -142,6 +150,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         if (leavingViewItem && leavingViewItem.ionPageElement) {
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
           leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+          if (afterTransition) {
+            afterTransition();
+          }
         }
       }
     }
