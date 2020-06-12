@@ -43,6 +43,14 @@ export const createButtonActiveGesture = (
     const buttonToModify = currentTouchedButton;
     writeTask(() => buttonToModify.classList.remove('ion-activated'));
 
+    /**
+     * Clicking on one button, but releasing on another button
+     * does not dispatch a click event in browsers, so we
+     * need to do it manually here. Some browsers will
+     * dispatch a click if clicking on one button, dragging over
+     * another button, and releasing on the original button. In that
+     * case, we need to make sure we do not cause a double click there.
+     */
     if (dispatchClick && initialTouchedButton !== currentTouchedButton) {
       currentTouchedButton.click();
     }
