@@ -107,7 +107,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     React.Children.forEach((props as any).children, (child: any) => {
       if (child != null && typeof child === 'object' && child.props && child.type === IonTabButton) {
         const tab = tabs[child.props.tab];
-        if (tab.originalHref !== child.props.href) {
+        if (!tab || (tab.originalHref !== child.props.href)) {
           tabs[child.props.tab] = {
             originalHref: child.props.href,
             currentHref: child.props.href,

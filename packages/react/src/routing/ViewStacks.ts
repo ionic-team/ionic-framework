@@ -24,7 +24,7 @@ export abstract class ViewStacks {
   clear(outletId: string) {
     // Give some time for the leaving views to transition before removing
     setTimeout(() => {
-      console.log('Removing viewstack for outletID ' + outletId);
+      // console.log('Removing viewstack for outletID ' + outletId);
       delete this.viewStacks[outletId];
     }, 500);
   }
