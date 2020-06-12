@@ -49,6 +49,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   async handlePageTransition(routeInfo: RouteInfo) {
+    let shouldReRender = false;
+
     // If routerOutlet isn't quite ready, give it another try in a moment
     if (!this.routerOutletElement || !this.routerOutletElement.commit) {
       setTimeout(() => this.handlePageTransition(routeInfo), 10);
@@ -60,6 +62,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         const shouldLeavingViewBeRemoved = routeInfo.routeDirection !== 'none' && leavingViewItem && (enteringViewItem !== leavingViewItem);
         if (shouldLeavingViewBeRemoved) {
           leavingViewItem!.mount = false;
+          shouldReRender = true;
         }
       }
 
@@ -76,6 +79,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       if (enteringViewItem && enteringViewItem.ionPageElement) {
         this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
       } else {
+        shouldReRender = true;
+      }
+
+      if (shouldReRender) {
         this.forceUpdate();
       }
     }

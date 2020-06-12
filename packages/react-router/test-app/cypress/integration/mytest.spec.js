@@ -213,6 +213,17 @@ describe('Navigation Tests', () => {
     cy.ionPageVisible('home-page')
   })
 
+  it('/ > Details 1 on settings > Back > Settings Tab, should be on setting home', () => {
+    // For bug https://github.com/ionic-team/ionic/issues/21031
+    cy.visit(`http://localhost:${port}/`)
+    cy.ionNav('ion-item', 'Details 1 on settings')
+    cy.ionPageVisible('settings-details-page-1')
+    cy.ionBackClick()
+    cy.ionPageVisible('home-page')
+    cy.ionTabClick('Settings')
+    cy.ionPageVisible('settings-page')
+  })
+
 })
 
 

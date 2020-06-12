@@ -44,6 +44,10 @@ const Details: React.FC<DetailsProps> = () => {
         <IonButton routerLink={`/tabs/home/details/${nextId}`}>
           <IonLabel>Go to Details {nextId}</IonLabel>
         </IonButton>
+        <br />
+        <IonButton routerLink={`/tabs/settings/details/1`}>
+          <IonLabel>Go to Settings Details 1</IonLabel>
+        </IonButton>
       </IonContent>
     </IonPage>
   );

@@ -5,7 +5,7 @@
   "dependencies": {
     "@babel/core": "7.8.4",
     "@capacitor/core": "1.5.2",
-    "@ionic/react": "file:../../react/ionic-react-5.1.1.tgz",
+    "@ionic/react": "file:../../react/ionic-react-5.2.0.tgz",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
