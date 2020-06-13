@@ -34,6 +34,7 @@ import PropsTest from './pages/PropsTest';
 import Tabs from './pages/Tabs';
 import './theme/variables.css';
 import { IonReactRouter } from './ReactRouter/IonReactRouter';
+import TopPage from './pages/TopPage';
 // import { IonReactRouter } from '@ionic/react-router';
 debugger;
 const App: React.FC = () => {
@@ -43,7 +44,7 @@ const App: React.FC = () => {
         <IonSplitPane contentId="main">
           <Menu />
           <IonRouterOutlet id="main">
-            <IonRoute path="/tabs" render={() => <Tabs />} />
+            <Route path="/tabs" render={() => <Tabs />} />
             {/* <Route path="/tabs" component={Tabs} /> */}
             <Route path="/" render={() => <Redirect to="/tabs" />} exact />
             {/* <Route path="/favorites" component={Favorites} /> */}
@@ -63,6 +64,7 @@ const App: React.FC = () => {
             }} />
             {/* <Route path="/otherpage" component={OtherPage} />             */}
             <Route path="/propstest" component={PropsTest} />
+            <Route path="/toppage" component={TopPage} />
             <Route render={() => <IonPage data-pageid="not-found"><IonContent><div>Not found</div></IonContent></IonPage>} />
             {/* <Route render={() => <Redirect to="/tabs" />} /> */}
           </IonRouterOutlet>

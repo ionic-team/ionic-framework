@@ -5,6 +5,8 @@ import './Tab3.css';
 
 class Tab3 extends React.Component {
 
+  
+
 
   componentDidMount() {
     console.log('Tab3 mount');
@@ -14,9 +16,9 @@ class Tab3 extends React.Component {
     console.log('Tab3 unmount');
   }
 
-  // ionViewWillEnter() {
-  //   console.log('IVWE Tab3');
-  // }
+  ionViewWillEnter() {
+    console.log('IVWE Tab3');
+  }
 
   // ionViewWillLeave() {
   //   console.log('IVWL Tab3');

@@ -108,14 +108,39 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         this.context.unMountViewItem(leavingViewItem);
       }
       if (viewFromOtherOutlet) {
-        // We move the leaving page into the current router-outlet for a smother transition
-        // Then move it back after the transition
         leavingViewItem = viewFromOtherOutlet;
-        const parent = leavingViewItem.ionPageElement?.parentElement;
-        this.routerOutletElement?.append(leavingViewItem.ionPageElement!);
-        afterTransition = () => {
-          parent?.append(leavingViewItem?.ionPageElement!);
-        };
+        if (routeInfo.routeDirection !== 'none') {
+          debugger;
+          // We move the leaving page into the current router-outlet for a
+          // smother transition. Then move it back after the transition.
+
+          // const cloneElement = clonePageElement(leavingViewItem.ionPageElement!)!;
+          const cloneElement = leavingViewItem.ionPageElement!.cloneNode(true);
+          const oldElement = leavingViewItem.ionPageElement;
+          this.routerOutletElement?.append(cloneElement);
+          leavingViewItem.ionPageElement?.classList.add('ion-page-hidden');
+          leavingViewItem.ionPageElement = cloneElement as HTMLElement;
+          afterTransition = () => {
+            debugger;
+            leavingViewItem!.ionPageElement = oldElement;
+            this.routerOutletElement?.removeChild(cloneElement);
+          };
+
+          // const cloneElement = leavingViewItem.ionPageElement!.cloneNode(true);
+          // leavingViewItem.ionPageElement?.classList.add('ion-page-hidden');
+          // this.routerOutletElement?.append(cloneElement);
+          // afterTransition = () => {
+          //   debugger;
+          //   this.routerOutletElement?.removeChild(cloneElement);
+          // };
+
+          // const parent = leavingViewItem.ionPageElement?.parentElement;
+          // this.routerOutletElement?.append(leavingViewItem.ionPageElement!);
+          // afterTransition = () => {
+          //   debugger;
+          //   parent?.append(leavingViewItem?.ionPageElement!);
+          // };
+        }
       }
     }
 
@@ -145,8 +170,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           duration: direction === undefined ? 0 : undefined,
           direction: direction as any,
           showGoBack: direction === 'forward',
-          progressAnimation: false
+          progressAnimation: false,
         });
+
         if (leavingViewItem && leavingViewItem.ionPageElement) {
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
           leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
