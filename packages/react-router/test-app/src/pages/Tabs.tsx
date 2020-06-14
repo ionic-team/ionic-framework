@@ -18,9 +18,10 @@ const Tabs: React.FC<TabsProps> = () => {
     <IonTabs>
       <IonRouterOutlet id="tabs">
         <Route path="/tabs/home" component={Tab1} exact />
-        <Route path="/tabs/home/details/:id" render={(props) => {
+        <Route path="/tabs/home/details/:id" component={Details} exact={true} />
+        {/* <Route path="/tabs/home/details/:id" render={(props) => {
           return <Details />
-        }} exact={true} />
+        }} exact={true} /> */}
         <Route path="/tabs/settings" component={Tab2} exact={true} />
         <Route path="/tabs/settings/details/:id" component={SettingsDetails} exact={true} />
         <Route path="/tabs/tab3" component={Tab3} />

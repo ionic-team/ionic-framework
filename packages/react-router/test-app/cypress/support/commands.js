@@ -80,9 +80,10 @@ Cypress.Commands.add('ionTabClick', (tabText) => {
   // cy.get('ion-tab-button.tab-selected').contains(tabText)
 });
 
-Cypress.Commands.add('ionBackClick', () => {
-  cy.get(`div.ion-page[aria-hidden!=true]`)
-    .should('have.length', 1)
+Cypress.Commands.add('ionBackClick', (pageId) => {
+  cy.get(`div.ion-page[data-pageid=${pageId}]`)
+    .should('be.visible', true)
+    // .should('have.length', 1)
     .find('ion-back-button')
     .click()
 });

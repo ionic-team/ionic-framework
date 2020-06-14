@@ -3,7 +3,7 @@ cd ../../react
 npm run build
 npm pack
 cd ../react-router/test-app
-npm i ../../react/ionic-react-5.2.0.tgz
+npm i ../../react/ionic-react-5.2.1.tgz
 npm run start
 
 

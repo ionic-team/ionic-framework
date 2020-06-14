@@ -13,7 +13,7 @@ const Tab2: React.FC = () => {
 
   return (
     <IonPage data-pageid="settings-page">
-      <IonHeader>
+      <IonHeader translucent={true}>
         <IonToolbar>
           <IonButtons slot="start">
             <IonMenuButton />
@@ -22,6 +22,11 @@ const Tab2: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+      <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">Settings</IonTitle>
+          </IonToolbar>
+        </IonHeader>
         <IonList>
           <IonItem routerLink='/tabs/settings/details/1'>
             <IonLabel>Settings Details 1</IonLabel>

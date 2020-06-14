@@ -35,6 +35,7 @@ import Tabs from './pages/Tabs';
 import './theme/variables.css';
 import { IonReactRouter } from './ReactRouter/IonReactRouter';
 import TopPage from './pages/TopPage';
+import DynamicRoutes from './pages/dynamic-routes/DynamicRoutes';
 // import { IonReactRouter } from '@ionic/react-router';
 debugger;
 const App: React.FC = () => {
@@ -47,26 +48,27 @@ const App: React.FC = () => {
             <Route path="/tabs" render={() => <Tabs />} />
             {/* <Route path="/tabs" component={Tabs} /> */}
             <Route path="/" render={() => <Redirect to="/tabs" />} exact />
-            {/* <Route path="/favorites" component={Favorites} /> */}
-            <Route path="/favorites" render={() => {
+            <Route path="/favorites" component={Favorites} />
+            {/* <Route path="/favorites" render={() => {
               return (
                 <IonRouterOutlet id="favorites">
                   <Route path="/favorites" component={Favorites} />
                 </IonRouterOutlet>
               );
-            }} />
-            <Route path="/otherpage" render={() => {
+            }} /> */}
+            {/* <Route path="/otherpage" render={() => {
               return (
                 <IonRouterOutlet id="otherpage">
                   <Route path="/otherpage" component={OtherPage} />
                 </IonRouterOutlet>
               );
-            }} />
-            {/* <Route path="/otherpage" component={OtherPage} />             */}
+            }} /> */}
+            <Route path="/otherpage" component={OtherPage} />            
             <Route path="/propstest" component={PropsTest} />
             <Route path="/toppage" component={TopPage} />
             <Route render={() => <IonPage data-pageid="not-found"><IonContent><div>Not found</div></IonContent></IonPage>} />
             {/* <Route render={() => <Redirect to="/tabs" />} /> */}
+            <Route path="/dynamic-routes" component={DynamicRoutes} />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

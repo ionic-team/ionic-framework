@@ -17,7 +17,7 @@ describe('Navigation Tests', () => {
     cy.visit(`http://localhost:${port}`)
     cy.ionNav('ion-item', 'Details 1')
     cy.contains('[data-pageid=home-details-page-1] ion-label', 'Details 1')
-    cy.ionBackClick();
+    cy.ionBackClick('home-details-page-1');
     cy.contains('[data-pageid=home-page] ion-title', 'Home')
   })
 
@@ -80,11 +80,11 @@ describe('Navigation Tests', () => {
     cy.contains('[data-pageid=settings-details-page-3] ion-label', 'Details 3')
     cy.ionTabClick('Home')
     cy.contains('[data-pageid=home-details-page-3] ion-label', 'Details 3')
-    cy.ionBackClick();
+    cy.ionBackClick('home-details-page-3');
     cy.contains('[data-pageid=home-details-page-2] ion-label', 'Details 2')
-    cy.ionBackClick();
+    cy.ionBackClick('home-details-page-2');
     cy.contains('[data-pageid=home-details-page-1] ion-label', 'Details 1')
-    cy.ionBackClick();
+    cy.ionBackClick('home-details-page-1');
     cy.ionPageVisible('home-page');
   })
 
@@ -94,7 +94,7 @@ describe('Navigation Tests', () => {
     cy.contains('[data-pageid=home-details-page-1] ion-label', 'Query Params: ')
     cy.ionNav('ion-button', 'Go to Details 2')
     cy.contains('[data-pageid=home-details-page-2] ion-label', 'Details 2')
-    cy.ionBackClick();
+    cy.ionBackClick('home-details-page-2');
     cy.contains('[data-pageid=home-details-page-1] ion-label', 'Query Params: ')
   })
 
@@ -126,9 +126,9 @@ describe('Navigation Tests', () => {
     cy.ionPageVisible('settings-details-page-1');
     cy.ionNav('ion-button', 'Go to Settings Details 2')
     cy.ionPageVisible('settings-details-page-2');
-    cy.ionBackClick();
+    cy.ionBackClick('settings-details-page-2');
     cy.ionPageVisible('settings-details-page-1');
-    cy.ionBackClick();
+    cy.ionBackClick('settings-details-page-1');
     cy.ionPageVisible('home-page');
   })
 
@@ -138,7 +138,7 @@ describe('Navigation Tests', () => {
     cy.visit(`http://localhost:${port}/tabs/tab3`)
     cy.ionNav('ion-button', 'Go to Other Page')
     cy.ionPageVisible('other-page')
-    cy.ionBackClick()
+    cy.ionBackClick('other-page')
     cy.ionPageVisible('tab3-page')
   })
 
@@ -218,7 +218,7 @@ describe('Navigation Tests', () => {
     cy.visit(`http://localhost:${port}/`)
     cy.ionNav('ion-item', 'Details 1 on settings')
     cy.ionPageVisible('settings-details-page-1')
-    cy.ionBackClick()
+    cy.ionBackClick('settings-details-page-1')
     cy.ionPageVisible('home-page')
     cy.ionTabClick('Settings')
     cy.ionPageVisible('settings-page')

@@ -22,12 +22,12 @@ const SettingsDetails: React.FC<DetailsProps> = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons>
-            <IonBackButton defaultHref="/tabs/home"></IonBackButton>
+            <IonBackButton defaultHref="/tabs/settings"></IonBackButton>
           </IonButtons>
           <IonTitle>Settings Details</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent fullscreen>
         <IonLabel data-testid="details-label">Details {id}</IonLabel>
         <br /><br />
         <IonButton routerLink={`/tabs/settings/details/${nextId}`}>
