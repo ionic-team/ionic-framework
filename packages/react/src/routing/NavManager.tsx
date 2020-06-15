@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+import { AnimationBuilder } from '@ionic/core';
 import { NavContext, NavContextState } from '../contexts/NavContext';
 import { RouteAction } from '../models/IonRouteAction';
 import { RouteInfo } from '../models/RouteInfo';
@@ -10,8 +10,8 @@ import PageManager from './PageManager';
 
 interface NavManagerProps {
   routeInfo: RouteInfo;
-  onNavigateBack: (route?: string | RouteInfo) => void;
-  onNavigate: (path: string, action: RouteAction, direction?: RouterDirection, options?: any, tab?: string) => void;
+  onNavigateBack: (route?: string | RouteInfo, animationBuilder?: AnimationBuilder) => void;
+  onNavigate: (path: string, action: RouteAction, direction?: RouterDirection, animationBuilder?: AnimationBuilder, options?: any, tab?: string) => void;
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   onChangeTab: (tab: string, path: string, routeOptions?: any) => void;
   onResetTab: (tab: string, path: string, routeOptions?: any) => void;
@@ -48,12 +48,12 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
     }
   }
 
-  goBack(route?: string | RouteInfo) {
-    this.props.onNavigateBack(route);
+  goBack(route?: string | RouteInfo, animationBuilder?: AnimationBuilder) {
+    this.props.onNavigateBack(route, animationBuilder);
   }
 
-  navigate(path: string, direction: RouterDirection = 'forward', action: RouteAction = 'push', options?: any, tab?: string) {
-    this.props.onNavigate(path, action, direction, options, tab);
+  navigate(path: string, direction: RouterDirection = 'forward', action: RouteAction = 'push', animationBuilder?: AnimationBuilder, options?: any, tab?: string) {
+    this.props.onNavigate(path, action, direction, animationBuilder, options, tab);
   }
 
   getPageManager() {

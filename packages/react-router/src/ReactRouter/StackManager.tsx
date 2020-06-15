@@ -136,7 +136,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         duration: direction === undefined ? 0 : undefined,
         direction: direction as any,
         showGoBack: direction === 'forward',
-        progressAnimation: false
+        progressAnimation: false,
+        animationBuilder: routeInfo.routeAnimation
       });
     }
   }

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
+import { AnimationBuilder } from '@ionic/core';
+
 import { NavContext } from '../contexts/NavContext';
 import { RouterDirection } from '../models/RouterDirection';
 
@@ -13,6 +15,7 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   ref?: React.Ref<any>;
   routerDirection?: RouterDirection;
   routerOptions?: any;
+  routerAnimation?: AnimationBuilder;
 }
 
 export const createReactComponent = <PropType, ElementType>(
@@ -37,10 +40,10 @@ export const createReactComponent = <PropType, ElementType>(
     }
 
     private handleClick = (e: React.MouseEvent<PropType>) => {
-      const { routerLink, routerDirection, routerOptions } = this.props;
+      const { routerLink, routerDirection, routerOptions, routerAnimation } = this.props;
       if (routerLink !== undefined) {
         e.preventDefault();
-        this.context.navigate(routerLink, routerDirection, undefined, routerOptions);
+        this.context.navigate(routerLink, routerDirection, undefined, routerAnimation, routerOptions);
       }
     }
 
