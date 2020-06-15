@@ -120,7 +120,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
             duration: direction === undefined ? 0 : undefined,
             direction: direction as any,
             showGoBack: direction === 'forward',
-            progressAnimation: false
+            progressAnimation: false,
+            animationBuilder: routeInfo.routeAnimation
           });
           this.routerOutletElement.removeChild(newLeavingElement);
         }
@@ -130,7 +131,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           duration: direction === undefined ? 0 : undefined,
           direction: direction as any,
           showGoBack: direction === 'forward',
-          progressAnimation: false
+          progressAnimation: false,
+          animationBuilder: routeInfo.routeAnimation
         });
         if (leavingViewItem && leavingViewItem.ionPageElement) {
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
