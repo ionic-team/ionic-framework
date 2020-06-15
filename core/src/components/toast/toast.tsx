@@ -14,7 +14,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @part button - The buttons inside of the toast.
+ * @part button - Any button element that is displayed inside of the toast.
  * @part container - The element that wraps all child elements.
  * @part header - The header text of the toast.
  * @part message - The body text of the toast.
