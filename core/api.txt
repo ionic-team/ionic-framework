@@ -1051,6 +1051,7 @@ ion-segment-button,css-prop,--padding-start
 ion-segment-button,css-prop,--padding-top
 ion-segment-button,css-prop,--transition
 ion-segment-button,part,indicator
+ion-segment-button,part,indicator-background
 ion-segment-button,part,native
 
 ion-select,shadow
@@ -1290,6 +1291,10 @@ ion-toast,css-prop,--min-width
 ion-toast,css-prop,--start
 ion-toast,css-prop,--white-space
 ion-toast,css-prop,--width
+ion-toast,part,button
+ion-toast,part,container
+ion-toast,part,header
+ion-toast,part,message
 
 ion-toggle,shadow
 ion-toggle,prop,checked,boolean,false,false,false
