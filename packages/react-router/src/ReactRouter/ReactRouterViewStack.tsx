@@ -44,7 +44,7 @@ export class ReactRouterViewStack extends ViewStacks {
     return viewItem;
   }
 
-  getChildrenToRender(outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo, reRender: () => void) {
+  getChildrenToRender(outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo) {
     const viewItems = this.getViewItemsForOutlet(outletId);
 
     // Sync latest routes with viewItems
@@ -79,11 +79,8 @@ export class ReactRouterViewStack extends ViewStacks {
         );
 
         if (!match && viewItem.routeData.match) {
-          setTimeout(() => {
-            viewItem.routeData.match = undefined;
-            viewItem.mount = false;
-            reRender();
-          }, 250);
+          viewItem.routeData.match = undefined;
+          viewItem.mount = false;
         }
       }
 
@@ -101,7 +98,7 @@ export class ReactRouterViewStack extends ViewStacks {
   }
 
   findLeavingViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string) {
-    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname!, outletId, true, true);
+    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname!, outletId, false, true);
     return viewItem;
   }
 

@@ -49,7 +49,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   async handlePageTransition(routeInfo: RouteInfo) {
-    let shouldReRender = false;
+    // let shouldReRender = false;
 
     // If routerOutlet isn't quite ready, give it another try in a moment
     if (!this.routerOutletElement || !this.routerOutletElement.commit) {
@@ -57,12 +57,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     } else {
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
       const leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
-
       if (!(routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward')) {
         const shouldLeavingViewBeRemoved = routeInfo.routeDirection !== 'none' && leavingViewItem && (enteringViewItem !== leavingViewItem);
         if (shouldLeavingViewBeRemoved) {
           leavingViewItem!.mount = false;
-          shouldReRender = true;
         }
       }
 
@@ -78,13 +76,14 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       }
       if (enteringViewItem && enteringViewItem.ionPageElement) {
         this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
-      } else {
-        shouldReRender = true;
+      } else if (leavingViewItem && !enteringRoute && !enteringViewItem) {
+        // If we have a leavingView but no entering view/route, we are probably leaving to
+        // another outlet, so hide this leavingView
+        leavingViewItem.ionPageElement!.classList.add('ion-page-hidden');
+        leavingViewItem.ionPageElement!.setAttribute('aria-hidden', 'true');
       }
 
-      if (shouldReRender) {
-        this.forceUpdate();
-      }
+      this.forceUpdate();
     }
   }
 
@@ -99,50 +98,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   async transitionPage(routeInfo: RouteInfo, enteringViewItem: ViewItem, leavingViewItem?: ViewItem) {
 
-    let afterTransition = () => { return; };
-    // When changing outlets, this sets the leaving outlets view to the current
-    // leavingViewItem so it can be transitioned out correctly
-    if (routeInfo.lastPathname && (!leavingViewItem || !leavingViewItem.ionRoute)) {
-      const viewFromOtherOutlet = this.context.getViewItemForTransition(routeInfo.lastPathname);
-      if (leavingViewItem) {
-        this.context.unMountViewItem(leavingViewItem);
-      }
-      if (viewFromOtherOutlet) {
-        leavingViewItem = viewFromOtherOutlet;
-        if (routeInfo.routeDirection !== 'none') {
-          debugger;
-          // We move the leaving page into the current router-outlet for a
-          // smother transition. Then move it back after the transition.
-
-          // const cloneElement = clonePageElement(leavingViewItem.ionPageElement!)!;
-          const cloneElement = leavingViewItem.ionPageElement!.cloneNode(true);
-          const oldElement = leavingViewItem.ionPageElement;
-          this.routerOutletElement?.append(cloneElement);
-          leavingViewItem.ionPageElement?.classList.add('ion-page-hidden');
-          leavingViewItem.ionPageElement = cloneElement as HTMLElement;
-          afterTransition = () => {
-            debugger;
-            leavingViewItem!.ionPageElement = oldElement;
-            this.routerOutletElement?.removeChild(cloneElement);
-          };
-
-          // const cloneElement = leavingViewItem.ionPageElement!.cloneNode(true);
-          // leavingViewItem.ionPageElement?.classList.add('ion-page-hidden');
-          // this.routerOutletElement?.append(cloneElement);
-          // afterTransition = () => {
-          //   debugger;
-          //   this.routerOutletElement?.removeChild(cloneElement);
-          // };
-
-          // const parent = leavingViewItem.ionPageElement?.parentElement;
-          // this.routerOutletElement?.append(leavingViewItem.ionPageElement!);
-          // afterTransition = () => {
-          //   debugger;
-          //   parent?.append(leavingViewItem?.ionPageElement!);
-          // };
-        }
-      }
-    }
+    const routerOutlet = this.routerOutletElement!;
 
     const direction = (routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root')
       ? undefined
@@ -152,35 +108,36 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       if (leavingViewItem && leavingViewItem.ionPageElement && (enteringViewItem === leavingViewItem)) {
         // If a page is transitioning to another version of itself
         // we clone it so we can have an animation to show
-        const newLeavingElement = clonePageElement(leavingViewItem.ionPageElement.outerHTML);
-        if (newLeavingElement) {
-          this.routerOutletElement.appendChild(newLeavingElement);
-          await this.routerOutletElement.commit(enteringViewItem.ionPageElement, newLeavingElement, {
-            deepWait: true,
-            duration: direction === undefined ? 0 : undefined,
-            direction: direction as any,
-            showGoBack: direction === 'forward',
-            progressAnimation: false
-          });
-          this.routerOutletElement.removeChild(newLeavingElement);
+        const match = matchComponent(leavingViewItem.reactElement, routeInfo.pathname, true);
+        if (match) {
+          const newLeavingElement = clonePageElement(leavingViewItem.ionPageElement.outerHTML);
+          if (newLeavingElement) {
+            this.routerOutletElement.appendChild(newLeavingElement);
+            await runCommit(enteringViewItem.ionPageElement, newLeavingElement);
+            this.routerOutletElement.removeChild(newLeavingElement);
+          }
+        } else {
+          await runCommit(enteringViewItem.ionPageElement, undefined);
         }
       } else {
-        await this.routerOutletElement.commit(enteringViewItem.ionPageElement, leavingViewItem?.ionPageElement, {
-          deepWait: true,
-          duration: direction === undefined ? 0 : undefined,
-          direction: direction as any,
-          showGoBack: direction === 'forward',
-          progressAnimation: false,
-        });
+        await runCommit(enteringViewItem.ionPageElement, leavingViewItem?.ionPageElement);
 
         if (leavingViewItem && leavingViewItem.ionPageElement) {
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
           leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-          if (afterTransition) {
-            afterTransition();
-          }
         }
       }
+    }
+
+    async function runCommit(enteringEl: HTMLElement, leavingEl?: HTMLElement) {
+      enteringEl.classList.add('ion-page-invisible');
+      await routerOutlet.commit(enteringEl, leavingEl, {
+        deepWait: true,
+        duration: direction === undefined ? 0 : undefined,
+        direction: direction as any,
+        showGoBack: direction === 'forward',
+        progressAnimation: false
+      });
     }
   }
 
@@ -240,10 +197,21 @@ function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
   // If we haven't found a node
   // try to find one that doesn't have a path or from prop, that will be our not found route
   React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
-    if (!child.props.path || !child.props.from) {
+    if (!(child.props.path || child.props.from)) {
       matchedNode = child;
     }
   });
 
   return matchedNode;
+}
+
+function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
+  const matchProps = {
+    exact: forceExact ? true : node.props.exact,
+    path: node.props.path || node.props.from,
+    component: node.props.component
+  };
+  const match = matchPath(pathname, matchProps);
+
+  return match;
 }

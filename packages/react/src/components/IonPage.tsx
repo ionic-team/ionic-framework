@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
+import PageManager from '../routing/PageManager';
 
 import { IonicReactProps } from './IonicReactProps';
 import { createForwardRef } from './utils';
@@ -22,11 +23,9 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
   render() {
     const { className, children, forwardedRef, ...props } = this.props;
 
-    const PageManager = this.context.getPageManager();
-
     return (
       this.context.hasIonicRouter() ? (
-        <PageManager className={className} routeInfo={this.context.routeInfo} {...props}>
+        <PageManager className={className ? ` ion-page-invisible ${className}` : ' ion-page-invisible'} routeInfo={this.context.routeInfo} {...props}>
           {children}
         </PageManager>
       ) : (

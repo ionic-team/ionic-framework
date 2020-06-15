@@ -64,12 +64,11 @@ export class PageManager extends React.Component<PageManagerProps> {
         {context => {
           this.ionLifeCycleContext = context;
           return (
-            <div className={className ? `ion-page ion-page-invisible ${className}` : 'ion-page ion-page-invisible'} ref={this.ionPageElementRef} {...props}>
+            <div className={className ? `ion-page ${className}` : 'ion-page'} ref={this.ionPageElementRef} {...props}>
               {children}
             </div>
           );
         }}
-
       </IonLifeCycleContext.Consumer>
     );
   }
