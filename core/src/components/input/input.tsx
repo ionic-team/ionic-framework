@@ -405,6 +405,7 @@ export class Input implements ComponentInterface {
           onKeyDown={this.onKeydown}
         />
         {(this.clearInput && !this.readonly && !this.disabled) && <button
+          aria-label="reset"
           type="button"
           class="input-clear-icon"
           tabindex="-1"
