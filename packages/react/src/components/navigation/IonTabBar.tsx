@@ -58,13 +58,6 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
         return props.routeInfo!.pathname.startsWith(href);
       }) || tabKeys[0];
 
-    if (activeTab) {
-      // Set active tab currentHref to current url
-      tabs[activeTab].currentHref = props.routeInfo?.pathname || tabs[activeTab].currentHref;
-      tabs[activeTab].currentRouteOptions = props.routeInfo?.routeOptions || tabs[activeTab].currentRouteOptions;
-      props.onSetCurrentTab(activeTab, props.routeInfo);
-    }
-
     this.state = {
       activeTab,
       tabs
