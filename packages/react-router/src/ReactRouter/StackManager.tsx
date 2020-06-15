@@ -78,9 +78,14 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
       } else if (leavingViewItem && !enteringRoute && !enteringViewItem) {
         // If we have a leavingView but no entering view/route, we are probably leaving to
-        // another outlet, so hide this leavingView
-        leavingViewItem.ionPageElement!.classList.add('ion-page-hidden');
-        leavingViewItem.ionPageElement!.setAttribute('aria-hidden', 'true');
+        // another outlet, so hide this leavingView. We do it in a timeout to give time for a
+        // transition to finish.
+        setTimeout(() => {
+          if (leavingViewItem.ionPageElement) {
+            leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
+            leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+          }
+        }, 250);
       }
 
       this.forceUpdate();
@@ -121,7 +126,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
       } else {
         await runCommit(enteringViewItem.ionPageElement, leavingViewItem?.ionPageElement);
-
         if (leavingViewItem && leavingViewItem.ionPageElement) {
           leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
           leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
