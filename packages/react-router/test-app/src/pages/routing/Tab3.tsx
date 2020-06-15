@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, withIonLifeCycle, IonButtons, IonMenuButton, IonButton } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import './Tab3.css';
 
 class Tab3 extends React.Component {
-
-  
-
 
   componentDidMount() {
     console.log('Tab3 mount');
@@ -46,7 +42,7 @@ class Tab3 extends React.Component {
           </IonToolbar>
         </IonHeader>
         <IonContent>
-          <IonButton routerLink="/otherpage">Go to Other Page</IonButton>
+          <IonButton routerLink="/routing/otherpage">Go to Other Page</IonButton>
         </IonContent>
       </IonPage>
     );

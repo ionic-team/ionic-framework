@@ -26,19 +26,19 @@ interface AppPage {
 const appPages: AppPage[] = [
   {
     title: 'Tabs',
-    url: '/tabs',
+    url: '/routing/tabs',
     iosIcon: mailOutline,
     mdIcon: mailSharp
   },
   {
     title: 'Favorites',
-    url: '/favorites',
+    url: '/routing/favorites',
     iosIcon: heartOutline,
     mdIcon: heartSharp
   },
   {
     title: 'Other Page',
-    url: '/otherpage',
+    url: '/routing/otherpage',
     iosIcon: heartOutline,
     mdIcon: heartSharp
   }

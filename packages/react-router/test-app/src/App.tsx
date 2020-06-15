@@ -1,13 +1,8 @@
 import {
-  IonApp,
-  IonContent,
-  IonPage,
-  IonRouterOutlet,
-  IonSplitPane,
-  IonRoute
+  IonApp
 } from '@ionic/react';
-import React, { useEffect, useState } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import React from 'react';
+import { Route } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -25,52 +20,26 @@ import '@ionic/react/css/padding.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 
-/* Theme variables */
 
-import Menu from './components/Menu';
-import Favorites from './pages/Favorites';
-import OtherPage from './pages/OtherPage';
-import PropsTest from './pages/PropsTest';
-import Tabs from './pages/Tabs';
+/* Theme variables */
 import './theme/variables.css';
 import { IonReactRouter } from './ReactRouter/IonReactRouter';
-import TopPage from './pages/TopPage';
 import DynamicRoutes from './pages/dynamic-routes/DynamicRoutes';
+import Routing from './pages/routing/Routing';
+import MultipleTabs from './pages/muiltiple-tabs/MultipleTabs';
+import DynamicTabs from './pages/dynamic-tabs/DynamicTabs';
 // import { IonReactRouter } from '@ionic/react-router';
 debugger;
 const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonSplitPane contentId="main">
-          <Menu />
-          <IonRouterOutlet id="main">
-            <Route path="/tabs" render={() => <Tabs />} />
-            {/* <Route path="/tabs" component={Tabs} /> */}
-            <Route path="/" render={() => <Redirect to="/tabs" />} exact />
-            <Route path="/favorites" component={Favorites} />
-            {/* <Route path="/favorites" render={() => {
-              return (
-                <IonRouterOutlet id="favorites">
-                  <Route path="/favorites" component={Favorites} />
-                </IonRouterOutlet>
-              );
-            }} /> */}
-            {/* <Route path="/otherpage" render={() => {
-              return (
-                <IonRouterOutlet id="otherpage">
-                  <Route path="/otherpage" component={OtherPage} />
-                </IonRouterOutlet>
-              );
-            }} /> */}
-            <Route path="/otherpage" component={OtherPage} />            
-            <Route path="/propstest" component={PropsTest} />
-            <Route path="/toppage" component={TopPage} />
-            <Route render={() => <IonPage data-pageid="not-found"><IonContent><div>Not found</div></IonContent></IonPage>} />
-            {/* <Route render={() => <Redirect to="/tabs" />} /> */}
-            <Route path="/dynamic-routes" component={DynamicRoutes} />
-          </IonRouterOutlet>
-        </IonSplitPane>
+
+      <Route path="/routing" component={Routing} />
+      <Route path="/dynamic-routes" component={DynamicRoutes} />
+      <Route path="/multiple-tabs" component={MultipleTabs} />
+      <Route path="/dynamic-tabs" component={DynamicTabs} />
+
       </IonReactRouter>
     </IonApp>
   );

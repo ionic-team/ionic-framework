@@ -7,14 +7,14 @@ describe('Navigation Tests', () => {
   // });
 
   it('/ > Details 1, the details screen should appear', () => {
-    cy.visit(`http://localhost:${port}`)
+    cy.visit(`http://localhost:${port}/routing`)
     cy.ionPageVisible('home-page')
     cy.ionNav('ion-item', 'Details 1')
     cy.contains('[data-pageid=home-details-page-1] ion-label', 'Details 1')
   })
 
   it('/ > Details 1 > Back, should go back to home', () => {
-    cy.visit(`http://localhost:${port}`)
+    cy.visit(`http://localhost:${port}/routing`)
     cy.ionNav('ion-item', 'Details 1')
     cy.contains('[data-pageid=home-details-page-1] ion-label', 'Details 1')
     cy.ionBackClick('home-details-page-1');
@@ -22,7 +22,7 @@ describe('Navigation Tests', () => {
   })
 
   it('/ > Details 1 > Settings Tab > Home Tab, should go back to details 1 on home tab', () => {
-    cy.visit(`http://localhost:${port}`)
+    cy.visit(`http://localhost:${port}/routing`)
     cy.ionNav('ion-item', 'Details 1')
     cy.ionPageVisible('home-details-page-1')
     cy.ionTabClick('Settings');
@@ -32,7 +32,7 @@ describe('Navigation Tests', () => {
   })
 
   it('/ > Details 1 > Settings Tab > Home Tab > Home Tab, should go back to home', () => {
-    cy.visit(`http://localhost:${port}`)
+    cy.visit(`http://localhost:${port}/routing`)
     cy.ionNav('ion-item', 'Details 1')
     cy.contains('[data-pageid=home-details-page-1] ion-label', 'Details 1')
     cy.ionTabClick('Settings')
@@ -44,22 +44,22 @@ describe('Navigation Tests', () => {
   })
 
   it('When going directly to /tabs, it should load home page', () => {
-    cy.visit(`http://localhost:${port}/tabs`)
+    cy.visit(`http://localhost:${port}/routing/tabs`)
     cy.ionPageVisible('home-page');
   })
 
   it('When going directly to /tabs/home, it should load home page', () => {
-    cy.visit(`http://localhost:${port}/tabs/home`)
+    cy.visit(`http://localhost:${port}/routing/tabs/home`)
     cy.ionPageVisible('home-page');
   })
 
   it('When going directly to /tabs/settings, it should load settings page', () => {
-    cy.visit(`http://localhost:${port}/tabs/settings`)
+    cy.visit(`http://localhost:${port}/routing/tabs/settings`)
     cy.ionPageVisible('settings-page');
   })
 
   it('Home Details 1 > Settings Tab > Home Tab, details 1 page should still be active', () => {
-    cy.visit(`http://localhost:${port}/tabs/home/details/1`)
+    cy.visit(`http://localhost:${port}/routing/tabs/home/details/1`)
     cy.ionTabClick('Settings')
     cy.ionPageVisible('settings-page');
     cy.ionTabClick('Home')
@@ -68,7 +68,7 @@ describe('Navigation Tests', () => {
 
   it('/ > Home Details 1+2+3 > Settings Tab > Setting Details 1+2+3 > Home Tab > Back * 3 > Settings Tab > Back * 3, should be at settings page', () => {
     // This was a bug when loading the root of the app and not going directly to the home tab
-    cy.visit(`http://localhost:${port}/`)
+    cy.visit(`http://localhost:${port}/routing/`)
     cy.ionNav('ion-item', 'Details 1');
     cy.ionNav('ion-button', 'Go to Details 2')
     cy.ionNav('ion-button', 'Go to Details 3')
@@ -89,7 +89,7 @@ describe('Navigation Tests', () => {
   })
 
   it('/ > Details 1 with Query Param > Details 2 > Back,  Query param should show on screen', () => {
-    cy.visit(`http://localhost:${port}/`)
+    cy.visit(`http://localhost:${port}/routing/`)
     cy.ionNav('ion-item', 'Details 1 with Query Params')
     cy.contains('[data-pageid=home-details-page-1] ion-label', 'Query Params: ')
     cy.ionNav('ion-button', 'Go to Details 2')
@@ -99,7 +99,7 @@ describe('Navigation Tests', () => {
   })
 
   it('/ > Details 1 with Query Param > Settings Tab > Home Tab > Query param should show on screen', () => {
-    cy.visit(`http://localhost:${port}/`)
+    cy.visit(`http://localhost:${port}/routing/`)
     cy.ionNav('ion-item', 'Details 1 with Query Params')
     cy.contains('[data-pageid=home-details-page-1] ion-label', 'Query Params: ')
     cy.ionTabClick('Settings')
@@ -110,7 +110,7 @@ describe('Navigation Tests', () => {
 
   it('Home Details 1 > Home Tab > Details 1 > Home Tab, should be on home page', () => {
     // Tests a bug when landing directly on a page thats not the originalHref and going back to home
-    cy.visit(`http://localhost:${port}/tabs/home/details/1`)
+    cy.visit(`http://localhost:${port}/routing/tabs/home/details/1`)
     cy.ionTabClick('Home')
     cy.ionPageVisible('home-page');
     cy.ionNav('ion-item', 'Details 1')
@@ -121,7 +121,7 @@ describe('Navigation Tests', () => {
 
   it('Home > Session Details Link > Session Details 2 > Back > Back, should be at home page', () => {
     // Tests a bug when landing directly on a page thats not the originalHref and going back to home
-    cy.visit(`http://localhost:${port}/tabs/home`)
+    cy.visit(`http://localhost:${port}/routing/tabs/home`)
     cy.ionNav('a', 'Go to details 1 on settings')
     cy.ionPageVisible('settings-details-page-1');
     cy.ionNav('ion-button', 'Go to Settings Details 2')
@@ -135,7 +135,7 @@ describe('Navigation Tests', () => {
   it('Tab 3 > Other Page > Back, should be back on Tab 3', () => {
     // Tests transferring from one outlet to another and back again with animation
     // TODO: how to test the transition animation happens?
-    cy.visit(`http://localhost:${port}/tabs/tab3`)
+    cy.visit(`http://localhost:${port}/routing/tabs/tab3`)
     cy.ionNav('ion-button', 'Go to Other Page')
     cy.ionPageVisible('other-page')
     cy.ionBackClick('other-page')
@@ -144,7 +144,7 @@ describe('Navigation Tests', () => {
 
   it('/ > Menu > Favorites > Menu > Tabs, should be back on Home', () => {
     // Tests transferring from one outlet to another and back again via menu
-    cy.visit(`http://localhost:${port}`)
+    cy.visit(`http://localhost:${port}/routing`)
     cy.ionMenuClick()
     cy.ionMenuNav('Favorites')
     cy.ionPageVisible('favorites-page')
@@ -155,7 +155,7 @@ describe('Navigation Tests', () => {
 
   it('/ > Session Details > Details 2 > Details 3 > Browser Back * 3, should be back on home', () => {
     // Tests browser back button
-    cy.visit(`http://localhost:${port}/`)
+    cy.visit(`http://localhost:${port}/routing/`)
     cy.ionNav('ion-item', 'Details 1')
     cy.ionPageVisible('home-details-page-1')
     cy.ionNav('ion-button', 'Go to Details 2')
@@ -172,7 +172,7 @@ describe('Navigation Tests', () => {
 
   it('/ > Session Details > Details 2 > Details 3 > Settings Tab > Home Tab > Browser Back * 3, should be back on home', () => {
     // Tests browser back button with a tab switch
-    cy.visit(`http://localhost:${port}/`)
+    cy.visit(`http://localhost:${port}/routing/`)
     cy.ionNav('ion-item', 'Details 1')
     cy.ionPageVisible('home-details-page-1')
     cy.ionNav('ion-button', 'Go to Details 2')
@@ -189,7 +189,7 @@ describe('Navigation Tests', () => {
   })
 
   it('when props get passed into a route render, the component should update', () => {
-    cy.visit(`http://localhost:${port}/propstest`)
+    cy.visit(`http://localhost:${port}/routing/propstest`)
     cy.ionPageVisible('props-test')
     cy.get('div[data-testid=count-label]').contains('1');
     cy.contains('Increment').click();
@@ -199,14 +199,14 @@ describe('Navigation Tests', () => {
   })
 
   it('/asdf, when accessing a route not defined from root outlet, should show not found page', () => {
-    cy.visit(`http://localhost:${port}/asdf`, { failOnStatusCode: false })
+    cy.visit(`http://localhost:${port}/routing/asdf`, { failOnStatusCode: false })
     cy.ionPageVisible('not-found')
     cy.get('div').contains('Not found')
   })
 
 
   it('/tabs/home > Details 1 on settings > Home Tab, should be back on home page', () => {
-    cy.visit(`http://localhost:${port}/tabs/home`)
+    cy.visit(`http://localhost:${port}/routing/tabs/home`)
     cy.ionNav('ion-item', 'Details 1 on settings')
     cy.ionPageVisible('settings-details-page-1')
     cy.ionTabClick('Home')
@@ -215,7 +215,7 @@ describe('Navigation Tests', () => {
 
   it('/ > Details 1 on settings > Back > Settings Tab, should be on setting home', () => {
     // For bug https://github.com/ionic-team/ionic/issues/21031
-    cy.visit(`http://localhost:${port}/`)
+    cy.visit(`http://localhost:${port}/routing/`)
     cy.ionNav('ion-item', 'Details 1 on settings')
     cy.ionPageVisible('settings-details-page-1')
     cy.ionBackClick('settings-details-page-1')
@@ -225,10 +225,3 @@ describe('Navigation Tests', () => {
   })
 
 })
-
-
-// cy.wait(300)
-// cy.get('#tab-button-settings').click()
-// cy.wait(300)
-// cy.get('#tab-button-home').click()
-// cy.wait(300)

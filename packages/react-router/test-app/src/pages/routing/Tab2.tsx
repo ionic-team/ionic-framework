@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonButtons, IonMenuButton } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import './Tab2.css';
 
 const Tab2: React.FC = () => {
@@ -28,10 +27,10 @@ const Tab2: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonList>
-          <IonItem routerLink='/tabs/settings/details/1'>
+          <IonItem routerLink='/routing/tabs/settings/details/1'>
             <IonLabel>Settings Details 1</IonLabel>
           </IonItem>
-          <IonItem routerLink='/tabs/settings/details/2'>
+          <IonItem routerLink='/routing/tabs/settings/details/2'>
             <IonLabel>Settings Details 2</IonLabel>
           </IonItem>
         </IonList>

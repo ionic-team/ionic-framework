@@ -27,7 +27,7 @@ const Details: React.FC<DetailsProps> = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons>
-            <IonBackButton defaultHref="/tabs/home"></IonBackButton>
+            <IonBackButton defaultHref="/routing/tabs/home"></IonBackButton>
           </IonButtons>
           <IonTitle>Details</IonTitle>
         </IonToolbar>
@@ -41,11 +41,11 @@ const Details: React.FC<DetailsProps> = () => {
             <br /><br />
           </>
         )}
-        <IonButton routerLink={`/tabs/home/details/${nextId}`}>
+        <IonButton routerLink={`/routing/tabs/home/details/${nextId}`}>
           <IonLabel>Go to Details {nextId}</IonLabel>
         </IonButton>
         <br />
-        <IonButton routerLink={`/tabs/settings/details/1`}>
+        <IonButton routerLink={`/routing/tabs/settings/details/1`}>
           <IonLabel>Go to Settings Details 1</IonLabel>
         </IonButton>
       </IonContent>

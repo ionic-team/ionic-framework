@@ -9,6 +9,7 @@ const OtherPage: React.FC<OtherPageProps> = () => {
 
   useIonViewWillEnter(() => {
     console.log('IVWE on otherpage');
+    
   })
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const OtherPage: React.FC<OtherPageProps> = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent>
-          <IonButton routerLink="/tabs/tab3">Go to tab3</IonButton>
+          <IonButton routerLink="/routing/tabs/tab3">Go to tab3</IonButton>
         </IonContent>
       </IonPage>
     //   )}></Route>
