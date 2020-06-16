@@ -28,7 +28,7 @@ const Tabs: React.FC<TabsProps> = () => {
         {/* <Route path="/routing/tabs" render={() => <Route render={() => <Redirect to="/tabs/home" />} />} /> */}
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="home" href="/routing/tabs/home">
+        <IonTabButton tab="home" href="/routing/tabs/home" routerOptions={{unmount: true}}>
           <IonIcon icon={triangle} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>

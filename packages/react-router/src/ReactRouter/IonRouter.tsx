@@ -1,3 +1,4 @@
+import { AnimationBuilder } from '@ionic/core';
 import {
   LocationHistory,
   NavManager,
@@ -10,7 +11,6 @@ import {
   generateId,
   getConfig
 } from '@ionic/react';
-import { AnimationBuilder } from '@ionic/core';
 import { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -76,10 +76,12 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     if (routeInfo) {
       this.incomingRouteParams = { ...routeInfo, routeAction: 'push', routeDirection: 'none' };
       if (routeInfo.pathname === pathname) {
+        this.incomingRouteParams.routeOptions = routeOptions;
         this.props.history.push(routeInfo.pathname + (routeInfo.search || ''));
       } else {
         this.incomingRouteParams.pathname = pathname;
         this.incomingRouteParams.search = search ? '?' + search : undefined;
+        this.incomingRouteParams.routeOptions = routeOptions;
         this.props.history.push(pathname + (search ? '?' + search : ''));
       }
     } else {

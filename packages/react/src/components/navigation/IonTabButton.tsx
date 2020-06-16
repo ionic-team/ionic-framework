@@ -5,7 +5,7 @@ import { IonicReactProps } from '../IonicReactProps';
 import { IonTabButtonInner } from '../inner-proxies';
 
 type Props = LocalJSX.IonTabButton & IonicReactProps & {
-  routeOptions?: unknown;
+  routerOptions?: { as?: string, unmount?: boolean };
   ref?: React.RefObject<HTMLIonTabButtonElement>;
   onClick?: (e: any) => void;
 };
@@ -20,7 +20,7 @@ export class IonTabButton extends React.Component<Props> {
   handleIonTabButtonClick() {
     if (this.props.onClick) {
       this.props.onClick(new CustomEvent('ionTabButtonClick', {
-        detail: { tab: this.props.tab, href: this.props.href, routeOptions: this.props.routeOptions }
+        detail: { tab: this.props.tab, href: this.props.href, routeOptions: this.props.routerOptions }
       }));
     }
   }

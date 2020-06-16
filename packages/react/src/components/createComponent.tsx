@@ -1,7 +1,6 @@
+import { AnimationBuilder } from '@ionic/core';
 import React from 'react';
 import ReactDom from 'react-dom';
-
-import { AnimationBuilder } from '@ionic/core';
 
 import { NavContext } from '../contexts/NavContext';
 import { RouterDirection } from '../models/RouterDirection';
@@ -14,7 +13,7 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   routerLink?: string;
   ref?: React.Ref<any>;
   routerDirection?: RouterDirection;
-  routerOptions?: any;
+  routerOptions?: { as?: string, unmount?: boolean };
   routerAnimation?: AnimationBuilder;
 }
 

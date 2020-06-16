@@ -66,26 +66,9 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     this.onTabButtonClick = this.onTabButtonClick.bind(this);
     this.renderTabButton = this.renderTabButton.bind(this);
     this.setActiveTabOnContext = this.setActiveTabOnContext.bind(this);
-    this.selectTab = this.selectTab.bind(this);
   }
 
   setActiveTabOnContext = (_tab: string) => { };
-
-  selectTab(tab: string) {
-    const tabUrl = this.state.tabs[tab];
-    if (tabUrl) {
-      this.onTabButtonClick(new CustomEvent('ionTabButtonClick', {
-        detail: {
-          href: tabUrl.currentHref,
-          tab,
-          selected: tab === this.state.activeTab,
-          routeOptions: undefined
-        }
-      }));
-      return true;
-    }
-    return false;
-  }
 
   static getDerivedStateFromProps(props: InternalProps, state: IonTabBarState) {
     const tabs = { ...state.tabs };

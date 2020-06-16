@@ -37,6 +37,9 @@ const Tab1: React.FC = () => {
           <IonItem routerLink='/routing/tabs/home/details/1'>
             <IonLabel>Details 1</IonLabel>
           </IonItem>
+          <IonItem routerLink='/routing/tabs/home/details/1' routerOptions={{unmount: true}}>
+            <IonLabel>Details 1 & Unmount</IonLabel>
+          </IonItem>
           <IonItem routerLink='/routing/tabs/home/details/1?hello=there'>
             <IonLabel>Details 1 with Query Params</IonLabel>
           </IonItem>

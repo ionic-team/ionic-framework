@@ -64,6 +64,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
       }
 
+      if (leavingViewItem && routeInfo.routeOptions?.unmount) {
+        leavingViewItem.mount = false;
+      }
+
       const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
       if (enteringViewItem) {
         enteringViewItem.reactElement = enteringRoute;
