@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonButtons, IonMenuButton } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonButtons, IonMenuButton, IonButton } from '@ionic/react';
 import './Tab2.css';
+import { useHistory } from 'react-router';
 
 const Tab2: React.FC = () => {
+
+  const history = useHistory();
 
   useEffect(() => {
     console.log('Settings mount');
@@ -21,7 +24,7 @@ const Tab2: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-      <IonHeader collapse="condense">
+        <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Settings</IonTitle>
           </IonToolbar>
@@ -34,6 +37,13 @@ const Tab2: React.FC = () => {
             <IonLabel>Settings Details 2</IonLabel>
           </IonItem>
         </IonList>
+        <br />
+        <br />
+        <IonButton onClick={() => {
+          history.push('/routing/tabs/settings/details/1', { routerOptions: { unmount: true } });
+        }}>
+          Details with Unmount via history.push
+        </IonButton>
       </IonContent>
     </IonPage>
   );

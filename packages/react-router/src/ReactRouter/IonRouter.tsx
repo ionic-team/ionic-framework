@@ -21,6 +21,7 @@ import StackManager from './StackManager';
 
 export interface LocationState {
   direction?: RouterDirection;
+  routerOptions?: { as?: string, unmount?: boolean; };
 }
 
 interface IonRouteProps extends RouteComponentProps<{}, {}, LocationState> {
@@ -129,6 +130,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           this.incomingRouteParams = {
             routeAction: 'push',
             routeDirection: location.state?.direction || 'forward',
+            routeOptions: location.state?.routerOptions,
             tab: this.currentTab
           };
         }

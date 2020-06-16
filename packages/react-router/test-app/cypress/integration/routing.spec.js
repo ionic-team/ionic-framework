@@ -224,4 +224,11 @@ describe('Navigation Tests', () => {
     cy.ionPageVisible('settings-page')
   })
 
+  /*
+    Tests to add:
+    Test that lifecycle events fire
+    Test unmounting components by passing unmount to routerOptions
+    Test components mount/unmount properly
+  */
+
 })
