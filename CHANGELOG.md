@@ -1,3 +1,15 @@
+## [5.2.2](https://github.com/ionic-team/ionic/compare/v5.2.1...v5.2.2) (2020-06-17)
+
+
+### Bug Fixes
+
+* **action-sheet, alert:** resolve double click issue when running in iOS mode on chrome ([#21506](https://github.com/ionic-team/ionic/issues/21506)) ([bcccc21](https://github.com/ionic-team/ionic/commit/bcccc217b8833a284a1781e287db5e46043b3548)), closes [#21503](https://github.com/ionic-team/ionic/issues/21503)
+* **angular:** fix issue where navAnimation was being incorrectly overridden ([#21508](https://github.com/ionic-team/ionic/issues/21508)) ([e968bd0](https://github.com/ionic-team/ionic/commit/e968bd029a4fb37b4001d96a490c6091a948785a)), closes [#21495](https://github.com/ionic-team/ionic/issues/21495)
+* **input:** add aria-label to clear button ([#21538](https://github.com/ionic-team/ionic/issues/21538)) ([d8b377f](https://github.com/ionic-team/ionic/commit/d8b377ffeb88eaae23b33eadeae5c8e54e1bc77c)), closes [#21537](https://github.com/ionic-team/ionic/issues/21537)
+* **ios:** respect toolbar opacity when doing nav transition ([#21512](https://github.com/ionic-team/ionic/issues/21512)) ([24cfdc3](https://github.com/ionic-team/ionic/commit/24cfdc308f63b7a55969ac58806eafd67116b017))
+* **segment:** ensure checked classes get set after not having a value ([#21547](https://github.com/ionic-team/ionic/issues/21547)) ([17308f2](https://github.com/ionic-team/ionic/commit/17308f247f8750029ece39548c9f457e15326189)), closes [#21546](https://github.com/ionic-team/ionic/issues/21546)
+
+
 ## [5.2.1](https://github.com/ionic-team/ionic/compare/v5.2.0...v5.2.1) (2020-06-11)
 
 
