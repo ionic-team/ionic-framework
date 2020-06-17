@@ -57,6 +57,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     } else {
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
       const leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
+
       if (!(routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward')) {
         const shouldLeavingViewBeRemoved = routeInfo.routeDirection !== 'none' && leavingViewItem && (enteringViewItem !== leavingViewItem);
         if (shouldLeavingViewBeRemoved) {
@@ -117,6 +118,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       if (leavingViewItem && leavingViewItem.ionPageElement && (enteringViewItem === leavingViewItem)) {
         // If a page is transitioning to another version of itself
         // we clone it so we can have an animation to show
+
         const match = matchComponent(leavingViewItem.reactElement, routeInfo.pathname, true);
         if (match) {
           const newLeavingElement = clonePageElement(leavingViewItem.ionPageElement.outerHTML);
@@ -138,7 +140,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     }
 
     async function runCommit(enteringEl: HTMLElement, leavingEl?: HTMLElement) {
-      enteringEl.classList.add('ion-page-invisible');
       await routerOutlet.commit(enteringEl, leavingEl, {
         deepWait: true,
         duration: direction === undefined ? 0 : undefined,
@@ -166,6 +167,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       <StackContext.Provider value={{ registerIonPage: this.registerIonPage }}>
         {React.cloneElement(ionRouterOutlet as any, {
           ref: (node: HTMLIonRouterOutletElement) => {
+            if (ionRouterOutlet.props.setRef) {
+              ionRouterOutlet.props.setRef(node);
+            }
             this.routerOutletElement = node;
             const { ref } = ionRouterOutlet as any;
             if (typeof ref === 'function') {
