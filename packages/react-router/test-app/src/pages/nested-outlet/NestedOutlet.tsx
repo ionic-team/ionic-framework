@@ -1,7 +1,7 @@
 import { IonButton, IonContent, IonHeader, IonPage, IonRouterOutlet, IonTitle, IonToolbar } from '@ionic/react';
 import { useEffect } from 'react';
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, Redirect } from 'react-router';
 
 const Page: React.FC = () => {
   useEffect(() => {
@@ -11,10 +11,10 @@ const Page: React.FC = () => {
     };
   }, []);
   return (
-    <IonPage>
+    <IonPage data-pageid="secondpage">
       <IonHeader>
         <IonToolbar>
-          <IonTitle>My Page</IonTitle>
+          <IonTitle>Second Page</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -25,21 +25,21 @@ const Page: React.FC = () => {
   );
 };
 
-
-const OutletPage: React.FC = () => {
+const SecondPage: React.FC = () => {
   useEffect(() => {
-    console.log('mount OutletPage');
+    console.log('mount secondpage');
     return () => {
-      console.log('unmount OutletPage'); // Never called.
+      console.log('unmount secondpage'); // Never called.
     };
   }, []);
   return (
     <IonRouterOutlet ionPage>
-      <Route path="/nested-outlet/OutletPage/page" component={Page} exact={true} />
+      <Route path="/nested-outlet/secondpage" exact={true} 
+        render={() => <Redirect to="/nested-outlet/secondpage/page" />} />
+      <Route path="/nested-outlet/secondpage/page" component={Page} exact={true} />
     </IonRouterOutlet>
   );
 };
-
 
 const FirstPage: React.FC = () => {
   useEffect(() => {
@@ -49,24 +49,23 @@ const FirstPage: React.FC = () => {
     };
   }, []);
   return (
-    <IonPage>
+    <IonPage data-pageid="firstpage">
       <IonHeader>
         <IonToolbar>
           <IonTitle>FirstPage</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonButton routerLink="/nested-outlet/OutletPage/page" routerDirection="forward">Go to my Subpage</IonButton>
+        <IonButton routerLink="/nested-outlet/secondpage/page" routerDirection="forward">Go to second page</IonButton>
       </IonContent>
     </IonPage>
   );
 };
 
-
 const NestedOutlet: React.FC = () => (
   <IonRouterOutlet>
     <Route path="/nested-outlet" component={FirstPage} exact={true} />
-    <Route path="/nested-outlet/OutletPage" component={OutletPage} />
+    <Route path="/nested-outlet/secondpage" component={SecondPage} />
   </IonRouterOutlet>
 );
 

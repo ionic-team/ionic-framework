@@ -49,6 +49,7 @@ Cypress.Commands.add('ionPageVisible', (pageId) => {
 
 Cypress.Commands.add('ionNav', (element, contains) => {
   cy.contains(element, contains).click();
+  cy.wait(250);
 })
 
 Cypress.Commands.add('ionMenuNav', (contains) => {
@@ -75,7 +76,7 @@ Cypress.Commands.add('ionMenuNav', (contains) => {
 
 Cypress.Commands.add('ionTabClick', (tabText) => {
   // TODO: figure out how to get rid of this wait. Switching tabs after a forward nav to a details page needs it
-  cy.wait(600)
+  cy.wait(250)
   cy.contains('ion-tab-button', tabText).click({ force: true})
   // cy.get('ion-tab-button.tab-selected').contains(tabText)
 });
