@@ -12,7 +12,7 @@ interface PageManagerProps {
   routeInfo?: RouteInfo;
 }
 
-export class PageManager extends React.Component<PageManagerProps> {
+export class PageManager extends React.PureComponent<PageManagerProps> {
   ionLifeCycleContext!: React.ContextType<typeof IonLifeCycleContext>;
   context!: React.ContextType<typeof StackContext>;
   ionPageElementRef: React.RefObject<HTMLDivElement>;
@@ -59,12 +59,18 @@ export class PageManager extends React.Component<PageManagerProps> {
 
   render() {
     const { className, children, routeInfo, ...props } = this.props;
+
     return (
       <IonLifeCycleContext.Consumer>
         {context => {
           this.ionLifeCycleContext = context;
+          const hidePageClass = this.context.isInOutlet() ? 'ion-page-invisible' : '';
           return (
-            <div className={className ? `ion-page ${className}` : 'ion-page'} ref={this.ionPageElementRef} {...props}>
+            <div
+              className={className ? `${className} ion-page ${hidePageClass}` : `ion-page ${hidePageClass}`}
+              ref={this.ionPageElementRef}
+              {...props}
+            >
               {children}
             </div>
           );

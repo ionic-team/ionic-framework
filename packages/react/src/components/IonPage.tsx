@@ -25,14 +25,18 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
 
     return (
       this.context.hasIonicRouter() ? (
-        <PageManager className={className ? ` ion-page-invisible ${className}` : ' ion-page-invisible'} routeInfo={this.context.routeInfo} {...props}>
+        <PageManager
+          className={className ? `${className}` : ''}
+          routeInfo={this.context.routeInfo}
+          {...props}
+        >
           {children}
         </PageManager>
       ) : (
-      <div className={className ? `ion-page ${className}` : 'ion-page'} {...props}>
-        {children}
-      </div>
-      )
+          <div className={className ? `ion-page ${className}` : 'ion-page'} {...props}>
+            {children}
+          </div>
+        )
     );
   }
 

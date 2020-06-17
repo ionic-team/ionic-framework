@@ -37,7 +37,11 @@ class IonRouterOutletContainer extends React.Component<InternalProps, InternalSt
     return (
       this.context.hasIonicRouter() ? (
         props.ionPage ? (
-          <OutletPageManager StackManager={StackManager} routeInfo={this.context.routeInfo} {...props}>
+          <OutletPageManager
+            StackManager={StackManager}
+            routeInfo={this.context.routeInfo}
+            {...props}
+          >
             {children}
           </OutletPageManager>
         ) : (

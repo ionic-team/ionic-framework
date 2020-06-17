@@ -69,7 +69,7 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
           this.ionLifeCycleContext = context;
           return (
             <StackManager routeInfo={routeInfo}>
-              <IonRouterOutletInner className="ion-page" setRef={(val: HTMLIonRouterOutletElement) => this.ionRouterOutlet = val} {...props}>
+              <IonRouterOutletInner setRef={(val: HTMLIonRouterOutletElement) => this.ionRouterOutlet = val} {...props}>
                 {children}
               </IonRouterOutletInner>
             </StackManager>

@@ -2,6 +2,7 @@ import {
   RouteInfo,
   RouteManagerContext,
   StackContext,
+  StackContextState,
   ViewItem,
   generateId
 } from '@ionic/react';
@@ -21,6 +22,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   context!: React.ContextType<typeof RouteManagerContext>;
   ionRouterOutlet?: React.ReactElement;
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
+
+  stackContextValue: StackContextState = {
+    registerIonPage: this.registerIonPage.bind(this),
+    isInOutlet: () => true
+  };
 
   constructor(props: StackManagerProps) {
     super(props);
@@ -113,7 +119,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     const direction = (routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root')
       ? undefined
       : routeInfo.routeDirection;
-
+debugger;
     if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
       if (leavingViewItem && leavingViewItem.ionPageElement && (enteringViewItem === leavingViewItem)) {
         // If a page is transitioning to another version of itself
@@ -140,6 +146,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     }
 
     async function runCommit(enteringEl: HTMLElement, leavingEl?: HTMLElement) {
+      console.log(enteringEl, leavingEl);
+      enteringEl.classList.add('ion-page');
+      enteringEl.classList.add('ion-page-invisible');
+
       await routerOutlet.commit(enteringEl, leavingEl, {
         deepWait: true,
         duration: direction === undefined ? 0 : undefined,
@@ -164,7 +174,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         this.forceUpdate();
       });
     return (
-      <StackContext.Provider value={{ registerIonPage: this.registerIonPage }}>
+      <StackContext.Provider value={this.stackContextValue}>
         {React.cloneElement(ionRouterOutlet as any, {
           ref: (node: HTMLIonRouterOutletElement) => {
             if (ionRouterOutlet.props.setRef) {
