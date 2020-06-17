@@ -119,7 +119,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     const direction = (routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root')
       ? undefined
       : routeInfo.routeDirection;
-debugger;
+
     if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
       if (leavingViewItem && leavingViewItem.ionPageElement && (enteringViewItem === leavingViewItem)) {
         // If a page is transitioning to another version of itself
