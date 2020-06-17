@@ -164,4 +164,8 @@ export class LocationHistory {
   current() {
     return this.locationHistory[this.locationHistory.length - 1];
   }
+
+  canGoBack() {
+    return this.locationHistory.length > 1;
+  }
 }

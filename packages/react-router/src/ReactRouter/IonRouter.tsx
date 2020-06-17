@@ -249,6 +249,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           onSetCurrentTab={this.handleSetCurrentTab}
           onChangeTab={this.handleChangeTab}
           onResetTab={this.handleResetTab}
+          locationHistory={this.locationHistory}
         >
           {this.props.children}
         </NavManager>

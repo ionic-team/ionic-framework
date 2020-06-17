@@ -1,11 +1,12 @@
 import { JSX as LocalJSX } from '@ionic/core';
 import React from 'react';
 
+import { RouterOptions } from '../../models';
 import { IonicReactProps } from '../IonicReactProps';
 import { IonTabButtonInner } from '../inner-proxies';
 
 type Props = LocalJSX.IonTabButton & IonicReactProps & {
-  routerOptions?: { as?: string, unmount?: boolean };
+  routerOptions?: RouterOptions;
   ref?: React.RefObject<HTMLIonTabButtonElement>;
   onClick?: (e: any) => void;
 };

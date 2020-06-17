@@ -1,7 +1,8 @@
 
-import { RouteAction } from './IonRouteAction';
-import { RouterDirection } from './RouterDirection';
 import { AnimationBuilder } from '@ionic/core';
+
+import { RouteAction } from './RouteAction';
+import { RouterDirection } from './RouterDirection';
 
 export interface RouteInfo<TOptions = any> {
   id: string;

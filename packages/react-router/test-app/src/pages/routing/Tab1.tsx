@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, useIonViewWillEnter, useIonViewWillLeave, useIonViewDidEnter, IonButtons, IonMenuButton, IonInput } from '@ionic/react';
+import React, { useEffect, useContext } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, useIonViewWillEnter, useIonViewWillLeave, useIonViewDidEnter, IonButtons, IonMenuButton, IonInput, IonButton, useIonRouter, IonRouterContext } from '@ionic/react';
 import './Tab1.css';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +12,11 @@ const Tab1: React.FC = () => {
 
   useIonViewWillEnter(() => {
     console.log('IVWE on tab1');
-  })
+  });
+
+  const ionRouter = useContext(IonRouterContext);
+
+  // const ionRouter = useIonRouter();
 
   // useIonViewDidEnter(() => {
   //   console.log('IVDE on tab1');
@@ -32,12 +36,12 @@ const Tab1: React.FC = () => {
           <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>  
+      <IonContent>
         <IonList>
           <IonItem routerLink='/routing/tabs/home/details/1'>
             <IonLabel>Details 1</IonLabel>
           </IonItem>
-          <IonItem routerLink='/routing/tabs/home/details/1' routerOptions={{unmount: true}}>
+          <IonItem routerLink='/routing/tabs/home/details/1' routerOptions={{ unmount: true }}>
             <IonLabel>Details 1 & Unmount</IonLabel>
           </IonItem>
           <IonItem routerLink='/routing/tabs/home/details/1?hello=there'>
@@ -53,10 +57,19 @@ const Tab1: React.FC = () => {
         <Link to="/routing/tabs/home/details/1">
           Go to details 1 via link
         </Link>
+        <IonButton onClick={() => ionRouter.push('/routing/tabs/home/details/1')}>
+          Go to details 1 via IonRouter
+        </IonButton>
         <br /><br />
         <Link to="/routing/tabs/settings/details/1">
           Go to details 1 on settings
         </Link>
+        <br />
+        <br />
+        CanGoBack: {JSON.stringify(ionRouter.canGoBack())}
+        <br />
+        <br />
+        RouteInfo: {JSON.stringify(ionRouter.routeInfo)}
       </IonContent>
     </IonPage>
   );

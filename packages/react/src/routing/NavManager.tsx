@@ -1,11 +1,15 @@
 
-import React from 'react';
 import { AnimationBuilder } from '@ionic/core';
+import React from 'react';
+
+import { IonRouterContext, IonRouterContextState } from '../components/IonRouterContext';
 import { NavContext, NavContextState } from '../contexts/NavContext';
-import { RouteAction } from '../models/IonRouteAction';
+import { RouteAction } from '../models/RouteAction';
 import { RouteInfo } from '../models/RouteInfo';
 import { RouterDirection } from '../models/RouterDirection';
+import { RouterOptions } from '../models/RouterOptions';
 
+import { LocationHistory } from './LocationHistory';
 import PageManager from './PageManager';
 
 interface NavManagerProps {
@@ -18,9 +22,21 @@ interface NavManagerProps {
   ionRedirect: any;
   ionRoute: any;
   stackManager: any;
+  locationHistory: LocationHistory;
 }
 
 export class NavManager extends React.Component<NavManagerProps, NavContextState> {
+
+  ionRouterContextValue: IonRouterContextState = {
+    push: (pathname: string, routerDirection?: RouterDirection, routeAction?: RouteAction, routerOptions?: RouterOptions, animationBuilder?: AnimationBuilder) => {
+      this.navigate(pathname, routerDirection, routeAction, animationBuilder, routerOptions);
+    },
+    back: (animationBuilder?: AnimationBuilder) => {
+      this.goBack(undefined, animationBuilder);
+    },
+    canGoBack: () => this.props.locationHistory.canGoBack(),
+    routeInfo: this.props.routeInfo
+  };
 
   constructor(props: NavManagerProps) {
     super(props);
@@ -35,7 +51,7 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
       routeInfo: this.props.routeInfo,
       setCurrentTab: this.props.onSetCurrentTab,
       changeTab: this.props.onChangeTab,
-      resetTab: this.props.onResetTab
+      resetTab: this.props.onResetTab,
     };
 
     if (typeof document !== 'undefined') {
@@ -75,7 +91,9 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
   render() {
     return (
       <NavContext.Provider value={{ ...this.state, routeInfo: this.props.routeInfo }}>
+        <IonRouterContext.Provider value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}>Z
         {this.props.children}
+        </IonRouterContext.Provider>
       </NavContext.Provider>
     );
   }

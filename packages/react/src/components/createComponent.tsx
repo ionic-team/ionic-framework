@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 import { NavContext } from '../contexts/NavContext';
+import { RouterOptions } from '../models';
 import { RouterDirection } from '../models/RouterDirection';
 
 import { attachProps, camelToDashCase, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
@@ -13,7 +14,7 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   routerLink?: string;
   ref?: React.Ref<any>;
   routerDirection?: RouterDirection;
-  routerOptions?: { as?: string, unmount?: boolean };
+  routerOptions?: RouterOptions;
   routerAnimation?: AnimationBuilder;
 }
 

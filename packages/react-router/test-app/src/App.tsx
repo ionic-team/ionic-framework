@@ -28,7 +28,8 @@ import DynamicRoutes from './pages/dynamic-routes/DynamicRoutes';
 import Routing from './pages/routing/Routing';
 import MultipleTabs from './pages/muiltiple-tabs/MultipleTabs';
 import DynamicTabs from './pages/dynamic-tabs/DynamicTabs';
-// import { IonReactRouter } from '@ionic/react-router';
+import NestedOutlet from './pages/nested-outlet/NestedOutlet';
+import NestedOutlet2 from './pages/nested-outlet/NestedOutlet2';
 debugger;
 const App: React.FC = () => {
   return (
@@ -39,6 +40,8 @@ const App: React.FC = () => {
       <Route path="/dynamic-routes" component={DynamicRoutes} />
       <Route path="/multiple-tabs" component={MultipleTabs} />
       <Route path="/dynamic-tabs" component={DynamicTabs} />
+      <Route path="/nested-outlet" component={NestedOutlet} />
+      <Route path="/nested-outlet2" component={NestedOutlet2} />
 
       </IonReactRouter>
     </IonApp>
