@@ -146,7 +146,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     }
 
     async function runCommit(enteringEl: HTMLElement, leavingEl?: HTMLElement) {
-      console.log(enteringEl, leavingEl);
       enteringEl.classList.add('ion-page');
       enteringEl.classList.add('ion-page-invisible');
 
