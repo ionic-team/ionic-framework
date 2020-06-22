@@ -23,6 +23,7 @@ import '@ionic/react/css/text-transformation.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import Main from './pages/Main';
 import { IonReactRouter } from './ReactRouter/IonReactRouter';
 import DynamicRoutes from './pages/dynamic-routes/DynamicRoutes';
 import Routing from './pages/routing/Routing';
@@ -36,6 +37,7 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
 
+      <Route path="/" component={Main} />
       <Route path="/routing" component={Routing} />
       <Route path="/dynamic-routes" component={DynamicRoutes} />
       <Route path="/multiple-tabs" component={MultipleTabs} />
