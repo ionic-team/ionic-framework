@@ -333,6 +333,7 @@ export class Textarea implements ComponentInterface {
         >
           <textarea
             class="native-textarea"
+            aria-labelledby={labelId}
             ref={el => this.nativeInput = el}
             autoCapitalize={this.autocapitalize}
             autoFocus={this.autofocus}
