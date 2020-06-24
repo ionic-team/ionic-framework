@@ -2,7 +2,7 @@ import {
   IonApp
 } from '@ionic/react';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect, BrowserRouter, Link } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -37,13 +37,13 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
 
-      <Route path="/" component={Main} />
-      <Route path="/routing" component={Routing} />
-      <Route path="/dynamic-routes" component={DynamicRoutes} />
-      <Route path="/multiple-tabs" component={MultipleTabs} />
-      <Route path="/dynamic-tabs" component={DynamicTabs} />
-      <Route path="/nested-outlet" component={NestedOutlet} />
-      <Route path="/nested-outlet2" component={NestedOutlet2} />
+        <Route path="/" component={Main} exact />
+        <Route path="/routing" component={Routing} />
+        <Route path="/dynamic-routes" component={DynamicRoutes} />
+        <Route path="/multiple-tabs" component={MultipleTabs} />
+        <Route path="/dynamic-tabs" component={DynamicTabs} />
+        <Route path="/nested-outlet" component={NestedOutlet} />
+        <Route path="/nested-outlet2" component={NestedOutlet2} />
 
       </IonReactRouter>
     </IonApp>
