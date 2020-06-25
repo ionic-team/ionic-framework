@@ -58,6 +58,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Theming](#theming)
 - [Toast](#toast)
 - [Toolbar](#toolbar)
+- [ViewChild](#viewChild)
 
 
 ## Action Sheet
@@ -1959,4 +1960,20 @@ These have been renamed to the following:
     <ion-button>Right</ion-button>
   </ion-buttons>
 </ion-toolbar>
+```
+
+
+##ViewChild
+The ViewChild declaration, used with a Slides component, should define two arguments. This second argument is coming with Angular 8.
+N.B.: It is no longer required with Angular 9+.
+
+**Old usage exemple :**
+```
+@ViewChild('slider') slider:Slides;
+ 
+```
+
+**New usage exemple :**
+```
+@ViewChild('slider', {static: false}) slider:IonSlides;
 ```
