@@ -323,6 +323,10 @@ export class Input implements ComponentInterface {
     }
   }
 
+  private clearTextOnEnter = (ev: KeyboardEvent) => {
+    if (ev.key === 'Enter') this.clearTextInput(ev);
+  }
+
   private clearTextInput = (ev?: Event) => {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
@@ -408,7 +412,9 @@ export class Input implements ComponentInterface {
           aria-label="reset"
           type="button"
           class="input-clear-icon"
-          onClick={this.clearTextInput}
+          onTouchStart={this.clearTextInput}
+          onMouseDown={this.clearTextInput}
+          onKeyDown={this.clearTextOnEnter}
         />}
       </Host>
     );
