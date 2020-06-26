@@ -1,7 +1,7 @@
 import React from 'react';
 import { JSX } from '@ionic/core';
 import { createReactComponent } from '../createComponent';
-import { render, fireEvent, cleanup, RenderResult } from 'react-testing-library';
+import { render, fireEvent, cleanup, RenderResult } from '@testing-library/react';
 import { IonButton } from '../index';
 
 afterEach(cleanup);
