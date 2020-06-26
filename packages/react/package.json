@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@ionic/core": "5.2.2",
-    "ionicons": "^5.0.1",
+    "ionicons": "^5.1.2",
     "tslib": "*"
   },
   "peerDependencies": {
@@ -64,9 +64,9 @@
     "rollup": "^2.18.1",
     "rollup-plugin-sourcemaps": "^0.6.2",
     "ts-jest": "^26.1.1",
-    "tslint": "^5.18.0",
+    "tslint": "^6.1.2",
     "tslint-ionic-rules": "0.0.21",
-    "tslint-react": "^4.0.0",
+    "tslint-react": "^5.0.0",
     "typescript": "^3.9.5"
   },
   "jest": {
