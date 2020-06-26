@@ -147,7 +147,7 @@
   appearance: none;
 }
 
-:host(.has-focus.has-value) .input-clear-icon {
+:host(.has-value) .input-clear-icon {
   visibility: visible;
 }
 

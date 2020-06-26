@@ -408,9 +408,7 @@ export class Input implements ComponentInterface {
           aria-label="reset"
           type="button"
           class="input-clear-icon"
-          tabindex="-1"
-          onTouchStart={this.clearTextInput}
-          onMouseDown={this.clearTextInput}
+          onClick={this.clearTextInput}
         />}
       </Host>
     );
