@@ -1963,7 +1963,7 @@ These have been renamed to the following:
 ```
 
 
-##ViewChild
+## ViewChild
 The ViewChild declaration, used with a Slides component, should define two arguments. This second argument is coming with Angular 8.
 N.B.: It is no longer required with Angular 9+.
 
