@@ -1,5 +1,5 @@
 import * as utils from '../utils';
-import 'jest-dom/extend-expect'
+import '@testing-library/jest-dom/extend-expect';
 
 describe('isCoveredByReact', () => {
   it('should identify standard events as covered by React', () => {
