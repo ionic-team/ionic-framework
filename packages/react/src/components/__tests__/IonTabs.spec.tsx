@@ -10,7 +10,7 @@ describe('IonTabs', () => {
     const { container } = render(
       <IonTabs>
         <IonRouterOutlet></IonRouterOutlet>
-        <IonTabBar slot="bottom" currentPath={'/'}>
+        <IonTabBar slot="bottom">
           <IonTabButton tab="schedule">
             <IonLabel>Schedule</IonLabel>
             <IonIcon name="schedule"></IonIcon>
@@ -44,7 +44,7 @@ describe('IonTabs', () => {
     const { container } = render(
       <IonTabs>
         <IonRouterOutlet></IonRouterOutlet>
-        <IonTabBar slot="bottom" currentPath={'/'}>
+        <IonTabBar slot="bottom">
           {false &&
           <IonTabButton tab="schedule">
             <IonLabel>Schedule</IonLabel>
