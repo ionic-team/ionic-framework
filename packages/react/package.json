@@ -50,6 +50,7 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@rollup/plugin-virtual": "^2.0.3",
+    "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.3",
     "@types/jest": "^26.0.3",
     "@types/node": "^14.0.14",
