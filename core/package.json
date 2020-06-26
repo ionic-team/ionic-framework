@@ -51,7 +51,7 @@
     "np": "^5.0.3",
     "pixelmatch": "4.0.2",
     "puppeteer": "1.20.0",
-    "rollup": "^2.18.0",
+    "rollup": "^2.18.1",
     "sass": "^1.26.9",
     "stylelint": "10.1.0",
     "stylelint-order": "3.0.1",
