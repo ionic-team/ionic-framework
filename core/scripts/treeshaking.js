@@ -4,17 +4,16 @@ const { rollup } = require('rollup');
 const virtual = require('rollup-plugin-virtual');
 const fs = require('fs');
 
-function main() {
-  const input = process.argv[2] || get_input();
-  check(input).then(result => {
-    const relative = path.relative(process.cwd(), input);
+async function main() {
+  const input = process.argv[2] || getMainEntry();
+	const result = await check(input);
+	const relative = path.relative(process.cwd(), input);
 
-    if (result.shaken) {
-      console.error(`Success! ${relative} is fully tree-shakeable`);
-    } else {
-      error(`Failed to tree-shake ${relative}`);
-    }
-  });
+	if (result.shaken) {
+		console.error(`Success! ${relative} is fully tree-shakeable`);
+	} else {
+		error(`Failed to tree-shake ${relative}`);
+	};
 }
 
 
@@ -23,7 +22,7 @@ function error(msg) {
 	process.exit(1);
 }
 
-function get_input() {
+function getMainEntry() {
 	if (!fs.existsSync('package.json')) {
 		error(`Could not find package.json`);
 	}
@@ -41,14 +40,14 @@ function get_input() {
 }
 
 function resolve(file) {
-	if (is_directory(file)) {
+	if (isDirectory(file)) {
 		return if_exists(`${file}/index.mjs`) || if_exists(`${file}/index.js`);
 	}
 
 	return if_exists(file) || if_exists(`${file}.mjs`) || if_exists(`${file}.js`);
 }
 
-function is_directory(file) {
+function isDirectory(file) {
 	try {
 		const stats = fs.statSync(file);
 		return stats.isDirectory();

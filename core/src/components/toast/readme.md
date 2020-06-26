@@ -288,6 +288,16 @@ Type: `Promise<void>`
 
 
 
+## Shadow Parts
+
+| Part          | Description |
+| ------------- | ----------- |
+| `"button"`    |             |
+| `"container"` |             |
+| `"header"`    |             |
+| `"message"`   |             |
+
+
 ## CSS Custom Properties
 
 | Name              | Description                                                                                            |
