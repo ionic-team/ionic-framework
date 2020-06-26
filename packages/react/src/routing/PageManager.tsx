@@ -58,7 +58,7 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
   }
 
   render() {
-    const { className, children, routeInfo, ...props } = this.props;
+    const { className, children, routeInfo, forwardedRef, ...props } = this.props;
 
     return (
       <IonLifeCycleContext.Consumer>
