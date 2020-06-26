@@ -232,6 +232,13 @@ export class TabButtonExample {
 | `target`   | `target`   | Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.                                                                                                                                       | `string \| undefined`                                                                                   | `undefined` |
 
 
+## Shadow Parts
+
+| Part       | Description                                                   |
+| ---------- | ------------------------------------------------------------- |
+| `"native"` | The native HTML anchor element that wraps all child elements. |
+
+
 ## CSS Custom Properties
 
 | Name                           | Description                                                                                                   |

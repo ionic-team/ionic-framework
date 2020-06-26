@@ -393,7 +393,7 @@ export class Input implements ComponentInterface {
           placeholder={this.placeholder || ''}
           readOnly={this.readonly}
           required={this.required}
-          spellcheck={this.spellcheck ? 'true' : undefined}
+          spellcheck={this.spellcheck}
           step={this.step}
           size={this.size}
           tabindex={this.tabindex}
@@ -405,6 +405,7 @@ export class Input implements ComponentInterface {
           onKeyDown={this.onKeydown}
         />
         {(this.clearInput && !this.readonly && !this.disabled) && <button
+          aria-label="reset"
           type="button"
           class="input-clear-icon"
           tabindex="-1"

@@ -654,10 +654,10 @@ To customize an individual option, set a class on the `ion-select-option`:
 
 ## Properties
 
-| Property   | Attribute  | Description                                                 | Type      | Default     |
-| ---------- | ---------- | ----------------------------------------------------------- | --------- | ----------- |
-| `disabled` | `disabled` | If `true`, the user cannot interact with the select option. | `boolean` | `false`     |
-| `value`    | `value`    | The text value of the option.                               | `any`     | `undefined` |
+| Property   | Attribute  | Description                                                                                                                                                                         | Type      | Default     |
+| ---------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons. | `boolean` | `false`     |
+| `value`    | `value`    | The text value of the option.                                                                                                                                                       | `any`     | `undefined` |
 
 
 ----------------------------------------------

@@ -1,4 +1,4 @@
-import { ComponentProps, FrameworkDelegate } from '../../interface';
+import { AnimationBuilder, ComponentProps, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 import { assert } from '../../utils/helpers';
 
@@ -12,6 +12,7 @@ export class ViewController {
   nav?: any;
   element?: HTMLElement;
   delegate?: FrameworkDelegate;
+  animationBuilder?: AnimationBuilder;
 
   constructor(
     public component: any,
