@@ -47,7 +47,7 @@ describe('attachProps', () => {
     });
 
     expect((div as any).testprop).toEqual(['red']);
-    expect(div).toHaveStyle('');
+    expect(div).toHaveStyle(`display: block;`);
     expect(Object.keys((div as any).__events)).toEqual(['ionClick']);
   });
 
