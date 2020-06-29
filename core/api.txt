@@ -933,6 +933,8 @@ ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false,false
 ion-ripple-effect,method,addRipple,addRipple(x: number, y: number) => Promise<() => void>
 
 ion-route,none
+ion-route,prop,beforeEnter,(() => boolean | NavigationHookOptions | Promise<NavigationHookResult>) | undefined,undefined,false,false
+ion-route,prop,beforeLeave,(() => boolean | NavigationHookOptions | Promise<NavigationHookResult>) | undefined,undefined,false,false
 ion-route,prop,component,string,undefined,true,false
 ion-route,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-route,prop,url,string,'',false,false

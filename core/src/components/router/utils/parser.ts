@@ -29,8 +29,8 @@ export const readRouteNodes = (root: Element, node = root): RouteTree => {
         path: parsePath(readProp(el, 'url')),
         id: component.toLowerCase(),
         params: el.componentProps,
-        canLeave: el.canLeave,
-        canEnter: el.canEnter,
+        beforeLeave: el.beforeLeave,
+        beforeEnter: el.beforeEnter,
         children: readRouteNodes(root, el)
       };
     });
@@ -60,8 +60,8 @@ const flattenNode = (chain: RouteChain, routes: RouteChain[], node: RouteNode) =
     id: node.id,
     path: node.path,
     params: node.params,
-    canLeave: node.canLeave,
-    canEnter: node.canEnter
+    beforeLeave: node.beforeLeave,
+    beforeEnter: node.beforeEnter
   });
 
   if (node.children.length === 0) {

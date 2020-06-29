@@ -239,32 +239,22 @@ export class Router implements ComponentInterface {
     }
     return resolve;
   }
- private async runGuards(to: string[]) {
+  private async runGuards(to: string[]) {
     const routes = readRoutes(this.el);
 
     const from = parsePath(this.previousPath);
-    console.log('from',from,'to',to);
+
     const toChain = routerPathToChain(to, routes);
     const fromChain = routerPathToChain(from, routes);
 
-    const canEnterGuard = toChain && toChain[toChain.length - 1].canEnter;
-    const canLeaveGuard = fromChain && fromChain[fromChain.length - 1].canLeave;
+    const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
+    const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
 
-    const canLeave = canLeaveGuard && await canLeaveGuard();
-    if (canLeave === false) {
-      return false;
-    } else if (typeof canLeave === 'string') {
-      console.log('need to redirect to',canLeave);
-      return canLeave;
-    }
+    const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
+    if (canLeave === false || typeof canLeave === 'object') { return canLeave; }
 
-    const canEnter = canEnterGuard && await canEnterGuard();
-    if (canEnter === false) {
-      return false;
-    } else if (typeof canEnter === 'string') {
-      console.log('need to redirect to',canEnter);
-      return canEnter;
-    }
+    const canEnter = beforeEnterHook ? await beforeEnterHook() : true;
+    if (canEnter === false || typeof canEnter === 'object') { return canEnter; }
 
     return true;
   }
@@ -281,11 +271,9 @@ export class Router implements ComponentInterface {
     this.busy = true;
 
     const canProceed = await this.runGuards(path);
-    if (canProceed === false) {
-      console.log('cannot proceed');
-      this.busy = false;
-      if (this.previousPath) {
-       // this.push(this.previousPath, 'root');
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object' && canProceed.redirect) {
+        this.push(canProceed.redirect, 'root');
       }
       return false;
     }
