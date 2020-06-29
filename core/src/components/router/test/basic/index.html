@@ -30,6 +30,13 @@
     }
 
     class PageTwo extends HTMLElement {
+      ionViewCanEnter() {
+        console.log('hello!!!!');
+
+        return false;
+
+        return true;
+      }
       connectedCallback() {
         this.innerHTML = `
         <ion-header>
@@ -203,8 +210,8 @@
       <ion-route url="/" component="tabs-page">
         <ion-route url="/" component="tab-one"> </ion-route>
         <ion-route url="/two" component="tab-two">
-          <ion-route component="page-one"> </ion-route>
-          <ion-route url="/second-page" component="page-two"> </ion-route>
+          <ion-route component="page-one" id="pageOne"> </ion-route>
+          <ion-route url="/second-page" component="page-two" id="pageTwo"> </ion-route>
           <ion-route url="/three/:prop1" component="page-three"> </ion-route>
         </ion-route>
         <ion-route url="/three" component="tab-three"> </ion-route>
@@ -214,6 +221,26 @@
     </ion-router>
 
     <ion-nav></ion-nav>
+
+    <script>
+    const r1 = document.querySelector('#pageOne');
+    const r2 = document.querySelector('#pageTwo');
+    r2.canLeave = () => {
+      console.log('Page 2 can leave')
+    }
+    r2.canEnter = () => {
+      console.log('Page 2 can enter')
+    }
+
+    r1.canLeave = () => {
+      console.log('Page 1 can leave');
+      return false;
+    }
+    r1.canEnter = () => {
+      console.log('Page 1 can enter');
+      return true;
+    }
+    </script>
   </ion-app>
 
   <style>

@@ -191,6 +191,8 @@ export class Router implements ComponentInterface {
     // lookup redirect rule
     const redirects = readRedirects(this.el);
     const redirect = routeRedirect(path, redirects);
+
+    console.log('get redirect', redirects);
     let redirectFrom: string[] | null = null;
     if (redirect) {
       this.setPath(redirect.to!, direction);
@@ -237,6 +239,35 @@ export class Router implements ComponentInterface {
     }
     return resolve;
   }
+ private async runGuards(to: string[]) {
+    const routes = readRoutes(this.el);
+
+    const from = parsePath(this.previousPath);
+    console.log('from',from,'to',to);
+    const toChain = routerPathToChain(to, routes);
+    const fromChain = routerPathToChain(from, routes);
+
+    const canEnterGuard = toChain && toChain[toChain.length - 1].canEnter;
+    const canLeaveGuard = fromChain && fromChain[fromChain.length - 1].canLeave;
+
+    const canLeave = canLeaveGuard && await canLeaveGuard();
+    if (canLeave === false) {
+      return false;
+    } else if (typeof canLeave === 'string') {
+      console.log('need to redirect to',canLeave);
+      return canLeave;
+    }
+
+    const canEnter = canEnterGuard && await canEnterGuard();
+    if (canEnter === false) {
+      return false;
+    } else if (typeof canEnter === 'string') {
+      console.log('need to redirect to',canEnter);
+      return canEnter;
+    }
+
+    return true;
+  }
 
   private async writeNavState(
     node: HTMLElement | undefined, chain: RouteChain, direction: RouterDirection,
@@ -248,6 +279,16 @@ export class Router implements ComponentInterface {
       return false;
     }
     this.busy = true;
+
+    const canProceed = await this.runGuards(path);
+    if (canProceed === false) {
+      console.log('cannot proceed');
+      this.busy = false;
+      if (this.previousPath) {
+       // this.push(this.previousPath, 'root');
+      }
+      return false;
+    }
 
     // generate route event and emit will change
     const routeEvent = this.routeChangeEvent(path, redirectFrom);

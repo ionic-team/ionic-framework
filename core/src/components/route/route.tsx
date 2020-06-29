@@ -29,6 +29,22 @@ export class Route implements ComponentInterface {
   @Prop() componentProps?: {[key: string]: any};
 
   /**
+   * A navigation guard that is fired when the route tries to leave.
+   * Returning `true` allows the navigation to proceed, while returning
+   * `false` causes it to be cancelled. Returning a string path causes
+   * the router to redirect to the path specified.
+   */
+  @Prop() canLeave?: () => string | boolean;
+
+  /**
+  * A navigation guard that is fired when the route tries to enter.
+  * Returning `true` allows the navigation to proceed, while returning
+  * `false` causes it to be cancelled. Returning a string path causes
+  * the router to redirect to the path specified.
+  */
+  @Prop() canEnter?: () => string | boolean;
+
+  /**
    * Used internally by `ion-router` to know when this route did change.
    */
   @Event() ionRouteDataChanged!: EventEmitter<any>;

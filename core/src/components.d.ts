@@ -1850,6 +1850,14 @@ export namespace Components {
     }
     interface IonRoute {
         /**
+          * A navigation guard that is fired when the route tries to enter. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a string path causes the router to redirect to the path specified.
+         */
+        "canEnter"?: () => string | boolean;
+        /**
+          * A navigation guard that is fired when the route tries to leave. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a string path causes the router to redirect to the path specified.
+         */
+        "canLeave"?: () => string | boolean;
+        /**
           * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
          */
         "component": string;
@@ -5095,6 +5103,14 @@ declare namespace LocalJSX {
         "type"?: 'bounded' | 'unbounded';
     }
     interface IonRoute {
+        /**
+          * A navigation guard that is fired when the route tries to enter. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a string path causes the router to redirect to the path specified.
+         */
+        "canEnter"?: () => string | boolean;
+        /**
+          * A navigation guard that is fired when the route tries to leave. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a string path causes the router to redirect to the path specified.
+         */
+        "canLeave"?: () => string | boolean;
         /**
           * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in `ion-tabs` it actually refers to the name of the `ion-tab` to select.
          */

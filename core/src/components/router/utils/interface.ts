@@ -36,6 +36,8 @@ export interface RouteEntry {
   id: string;
   path: string[];
   params: {[key: string]: any} | undefined;
+  canLeave?: () => string | boolean;
+  canEnter?: () => string | boolean;
 }
 
 export interface RouteNode extends RouteEntry {
