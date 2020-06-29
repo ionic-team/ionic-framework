@@ -170,7 +170,7 @@ describe('Navigation Tests', () => {
     cy.ionPageVisible('home-page')
   })
 
-  it('/ > Session Details > Details 2 > Details 3 > Settings Tab > Home Tab > Browser Back * 3, should be back on home', () => {
+  it('/ > Details 1 > Details 2 > Details 3 > Settings Tab > Home Tab > Browser Back, should be back on home', () => {
     // Tests browser back button with a tab switch
     cy.visit(`http://localhost:${port}/routing/`)
     cy.ionNav('ion-item', 'Details 1')
@@ -184,8 +184,25 @@ describe('Navigation Tests', () => {
     cy.ionTabClick('Home')
     cy.ionPageVisible('home-details-page-3')
     cy.go('back')
-    cy.ionPageVisible('settings-page')
-    cy.get('ion-tab-button.tab-selected').contains('Settings')
+    cy.ionPageVisible('home-details-page-2')
+    cy.get('ion-tab-button.tab-selected').contains('Home')
+  })
+
+  it('/ > Details 1 > Details 2 > Details 3 > Browser Back > Back > Back, should be back on home', () => {
+    // Tests browser back button with a tab switch
+    cy.visit(`http://localhost:${port}/routing/`)
+    cy.ionNav('ion-item', 'Details 1')
+    cy.ionPageVisible('home-details-page-1')
+    cy.ionNav('ion-button', 'Go to Details 2')
+    cy.ionPageVisible('home-details-page-2')
+    cy.ionNav('ion-button', 'Go to Details 3')
+    cy.ionPageVisible('home-details-page-3')
+    cy.go('back')
+    cy.ionPageVisible('home-details-page-2')
+    cy.ionBackClick('home-details-page-2')
+    cy.ionPageVisible('home-details-page-1')
+    cy.ionBackClick('home-details-page-1')
+    cy.ionPageVisible('home-page')
   })
 
   it('when props get passed into a route render, the component should update', () => {

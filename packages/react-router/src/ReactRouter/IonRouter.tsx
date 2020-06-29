@@ -106,7 +106,6 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
 
     const leavingUrl = leavingLocationInfo.pathname + leavingLocationInfo.search;
     if (leavingUrl !== location.pathname) {
-
       if (!this.incomingRouteParams) {
         if (action === 'REPLACE') {
           this.incomingRouteParams = {
@@ -116,15 +115,18 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           };
         }
         if (action === 'POP') {
-          const direction =
-            leavingLocationInfo?.routeDirection === 'forward' ?
-              'back' : leavingLocationInfo?.routeDirection === 'back' ?
-                'forward' : 'back';
-          this.incomingRouteParams = {
-            routeAction: 'pop',
-            routeDirection: direction,
-            tab: this.currentTab
-          };
+          const ri = this.locationHistory.current();
+          if (ri && ri.pushedByRoute) {
+            const prevInfo = this.locationHistory.findLastLocation(ri);
+            this.incomingRouteParams = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
+          } else {
+            const direction = 'none';
+            this.incomingRouteParams = {
+              routeAction: 'pop',
+              routeDirection: direction,
+              tab: this.currentTab
+            };
+          }
         }
         if (!this.incomingRouteParams) {
           this.incomingRouteParams = {
