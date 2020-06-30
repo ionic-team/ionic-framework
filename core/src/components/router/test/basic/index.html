@@ -30,13 +30,6 @@
     }
 
     class PageTwo extends HTMLElement {
-      ionViewCanEnter() {
-        console.log('hello!!!!');
-
-        return false;
-
-        return true;
-      }
       connectedCallback() {
         this.innerHTML = `
         <ion-header>
@@ -211,7 +204,7 @@
         <ion-route url="/" component="tab-one"> </ion-route>
         <ion-route url="/two" component="tab-two">
           <ion-route component="page-one"> </ion-route>
-          <ion-route url="/second-page" component="page-two" id="pageTwo"> </ion-route>
+          <ion-route url="/second-page" component="page-two"> </ion-route>
           <ion-route url="/three/:prop1" component="page-three"> </ion-route>
         </ion-route>
         <ion-route url="/three" component="tab-three"> </ion-route>

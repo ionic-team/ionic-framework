@@ -74,7 +74,6 @@ export class Router implements ComponentInterface {
     const direction = this.historyDirection();
     let path = this.getPath();
 
-    console.log('running guards...');
     const canProceed = await this.runGuards(path);
     if (canProceed !== true) {
       if (typeof canProceed === 'object') {
