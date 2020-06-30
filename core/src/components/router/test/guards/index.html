@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Nav</title>
+  <title>Navigation Guards</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
@@ -20,18 +20,42 @@
           </ion-toolbar>
         </ion-header>
         <ion-content>
-          <ion-button id="push">router.push</ion-button>
-          <ion-router-link href="/child">
-            <ion-button>router-link</ion-button>
-          </ion-router-link>
-          <ion-button href="/child">href</ion-button>
+          <ion-list>
+            <ion-list-header>Router.push</ion-list-header>
+            <div class="ion-padding">
+              <ion-button id="router-child">Go To Child Page</ion-button><br>
+              <ion-button id="router-child2">Go To Child2 Page</ion-button><br>
+            </div>
+
+            <ion-list-header>ion-router-link</ion-list-header>
+            <div class="ion-padding">
+              <ion-router-link href="/child">
+                <ion-button>Go To Child Page</ion-button><br>
+              </ion-router-link>
+              <ion-router-link href="/child2">
+                <ion-button>Go To Child2 Page</ion-button><br>
+              </ion-router-link>
+            </div>
+
+            <ion-list-header>href</ion-list-header>
+            <div class="ion-padding">
+              <ion-button href="/child">Go To Child Page</ion-button><br>
+              <ion-button href="/child2">Go To Child2 Page</ion-button><br>
+            </div>
+          </ion-list>
         </ion-content>`;
 
-        const b = this.querySelector('#push');
-        b.addEventListener('click', () => {
+        const childButton = this.querySelector('#router-child');
+        const child2Button = this.querySelector('#router-child2');
+        childButton.addEventListener('click', () => {
           const r = document.querySelector('ion-router');
           r.push('/child');
-        })
+        });
+
+        child2Button.addEventListener('click', () => {
+          const r = document.querySelector('ion-router');
+          r.push('/child2');
+        });
       }
     }
 
@@ -41,9 +65,25 @@
         <ion-header>
           <ion-toolbar>
             <ion-buttons>
-              <ion-back-button></ion-back-button>
+              <ion-back-button default-href="/test"></ion-back-button>
             </ion-buttons>
             <ion-title>Child Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+        </ion-content>`;
+      }
+    }
+
+    class Child2Page extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons>
+              <ion-back-button default-href="/"></ion-back-button>
+            </ion-buttons>
+            <ion-title>Child2 Page</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -57,7 +97,7 @@
         <ion-header>
           <ion-toolbar>
             <ion-buttons>
-              <ion-back-button></ion-back-button>
+              <ion-back-button default-href="/child2"></ion-back-button>
             </ion-buttons>
             <ion-title>Test Page</ion-title>
           </ion-toolbar>
@@ -69,6 +109,7 @@
 
     customElements.define('home-page', HomePage);
     customElements.define('child-page', ChildPage);
+    customElements.define('child2-page', Child2Page);
     customElements.define('test-page', TestPage);
 
   </script>
@@ -83,38 +124,30 @@
       <ion-route url="/home" component="home-page"></ion-route>
       <ion-route url="/test" component="test-page"></ion-route>
       <ion-route url="/child" component="child-page"></ion-route>
+      <ion-route url="/child2" component="child2-page"></ion-route>
     </ion-router>
 
     <ion-nav></ion-nav>
 
     <script>
-      const canEnterChildPage = () => {
-        console.log('can enter nav guard');
-        return false;
-      }
+      const redirect = (to = '/test') => { return { redirect: to }};
+      const returnFalse = () => false;
+      const returnTrue = () => true;
+
       const page = document.querySelector('ion-route[component="child-page"]');
-      page.beforeEnter = canEnterChildPage;
+      page.beforeEnter = redirect;
+      page.beforeLeave = returnFalse;
+
+      const page2 = document.querySelector('ion-route[component="child2-page"]');
+      page2.beforeEnter = returnTrue;
+      page2.beforeLeave = () => {
+       return new Promise((resolve, reject) => {
+         setTimeout(() => {
+           return resolve();
+         }, 1000);
+       })
+      };
     </script>
   </ion-app>
-
-  <style>
-    f {
-      display: block;
-      margin: 15px auto;
-      max-width: 150px;
-      height: 150px;
-      background: blue;
-    }
-
-    f:last-of-type {
-      background: yellow;
-    }
-
-  </style>
 </body>
-
-<script>
-
-</script>
-
 </html>

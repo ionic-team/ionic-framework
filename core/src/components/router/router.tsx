@@ -93,6 +93,21 @@ export class Router implements ComponentInterface {
     });
   }
 
+  /** @internal */
+  @Method()
+  async canTransition() {
+    const canProceed = await this.runGuards();
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        return canProceed.redirect;
+      } else {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   /**
    * Navigate to the specified URL.
    *
@@ -257,18 +272,18 @@ export class Router implements ComponentInterface {
     }
     return resolve;
   }
-  private async runGuards(to: string[] | null) {
-    if (!to) { return true; }
+  private async runGuards(to: string[] | null = this.getPath(), from: string[] | null = parsePath(this.previousPath)) {
+    if (!to || !from) { return true; }
 
     const routes = readRoutes(this.el);
-
-    const from = parsePath(this.previousPath);
 
     const toChain = routerPathToChain(to, routes);
     const fromChain = routerPathToChain(from, routes);
 
     const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
     const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
+
+    console.log(beforeEnterHook, beforeLeaveHook);
 
     const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
     if (canLeave === false || typeof canLeave === 'object') { return canLeave; }
