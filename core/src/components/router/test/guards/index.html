@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Nav</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <script>
+
+    class HomePage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Home Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-button id="push">router.push</ion-button>
+          <ion-router-link href="/child">
+            <ion-button>router-link</ion-button>
+          </ion-router-link>
+          <ion-button href="/child">href</ion-button>
+        </ion-content>`;
+
+        const b = this.querySelector('#push');
+        b.addEventListener('click', () => {
+          const r = document.querySelector('ion-router');
+          r.push('/child');
+        })
+      }
+    }
+
+    class ChildPage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons>
+              <ion-back-button></ion-back-button>
+            </ion-buttons>
+            <ion-title>Child Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+        </ion-content>`;
+      }
+    }
+
+    class TestPage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons>
+              <ion-back-button></ion-back-button>
+            </ion-buttons>
+            <ion-title>Test Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+        </ion-content>`;
+      }
+    }
+
+    customElements.define('home-page', HomePage);
+    customElements.define('child-page', ChildPage);
+    customElements.define('test-page', TestPage);
+
+  </script>
+</head>
+
+<body>
+
+  <ion-app>
+
+    <ion-router>
+      <ion-route-redirect from="/" to="/home"></ion-route-redirect>
+      <ion-route url="/home" component="home-page"></ion-route>
+      <ion-route url="/test" component="test-page"></ion-route>
+      <ion-route url="/child" component="child-page"></ion-route>
+    </ion-router>
+
+    <ion-nav></ion-nav>
+
+    <script>
+      const canEnterChildPage = () => {
+        console.log('can enter nav guard');
+        return false;
+      }
+      const page = document.querySelector('ion-route[component="child-page"]');
+      page.beforeEnter = canEnterChildPage;
+    </script>
+  </ion-app>
+
+  <style>
+    f {
+      display: block;
+      margin: 15px auto;
+      max-width: 150px;
+      height: 150px;
+      background: blue;
+    }
+
+    f:last-of-type {
+      background: yellow;
+    }
+
+  </style>
+</body>
+
+<script>
+
+</script>
+
+</html>

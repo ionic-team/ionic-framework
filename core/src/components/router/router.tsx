@@ -70,10 +70,19 @@ export class Router implements ComponentInterface {
   }
 
   @Listen('popstate', { target: 'window' })
-  protected onPopState() {
+  protected async onPopState() {
     const direction = this.historyDirection();
-    const path = this.getPath();
-    console.debug('[ion-router] URL changed -> update nav', path, direction);
+    let path = this.getPath();
+
+    console.log('running guards...');
+    const canProceed = await this.runGuards(path);
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        path = parsePath(canProceed.redirect);
+      }
+      return false;
+    }
+    console.log('[ion-router] URL changed -> update nav', path, direction);
     return this.writeNavStateRoot(path, direction);
   }
 
@@ -92,14 +101,25 @@ export class Router implements ComponentInterface {
    * @param direction The direction of the animation. Defaults to `"forward"`.
    */
   @Method()
-  push(url: string, direction: RouterDirection = 'forward', animation?: AnimationBuilder) {
+  async push(url: string, direction: RouterDirection = 'forward', animation?: AnimationBuilder) {
     if (url.startsWith('.')) {
       url = (new URL(url, window.location.href)).pathname;
     }
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
-    const path = parsePath(url);
-    const queryString = url.split('?')[1];
+    let path = parsePath(url);
+    let queryString = url.split('?')[1];
+
+    const canProceed = await this.runGuards(path);
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        path = parsePath(canProceed.redirect);
+        queryString = canProceed.redirect.split('?')[1];
+      } else {
+        return false;
+      }
+    }
+
     this.setPath(path, direction, queryString);
     return this.writeNavStateRoot(path, direction, animation);
   }
@@ -192,7 +212,6 @@ export class Router implements ComponentInterface {
     const redirects = readRedirects(this.el);
     const redirect = routeRedirect(path, redirects);
 
-    console.log('get redirect', redirects);
     let redirectFrom: string[] | null = null;
     if (redirect) {
       this.setPath(redirect.to!, direction);
@@ -239,7 +258,9 @@ export class Router implements ComponentInterface {
     }
     return resolve;
   }
-  private async runGuards(to: string[]) {
+  private async runGuards(to: string[] | null) {
+    if (!to) { return true; }
+
     const routes = readRoutes(this.el);
 
     const from = parsePath(this.previousPath);
@@ -269,14 +290,6 @@ export class Router implements ComponentInterface {
       return false;
     }
     this.busy = true;
-
-    const canProceed = await this.runGuards(path);
-    if (canProceed !== true) {
-      if (typeof canProceed === 'object' && canProceed.redirect) {
-        this.push(canProceed.redirect, 'root');
-      }
-      return false;
-    }
 
     // generate route event and emit will change
     const routeEvent = this.routeChangeEvent(path, redirectFrom);
