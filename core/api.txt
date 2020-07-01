@@ -1098,6 +1098,7 @@ ion-slides,prop,mode,"ios" | "md",undefined,false,false
 ion-slides,prop,options,any,{},false,false
 ion-slides,prop,pager,boolean,false,false,false
 ion-slides,prop,scrollbar,boolean,false,false,false
+ion-slides,method,appendSlide,appendSlide(el: HTMLElement) => Promise<void>
 ion-slides,method,getActiveIndex,getActiveIndex() => Promise<number>
 ion-slides,method,getPreviousIndex,getPreviousIndex() => Promise<number>
 ion-slides,method,getSwiper,getSwiper() => Promise<any>

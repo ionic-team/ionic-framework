@@ -668,6 +668,16 @@ ion-slides {
 
 ## Methods
 
+### `appendSlide(el: HTMLElement) => Promise<void>`
+
+Append the element into the internal swiper wrapper div
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `getActiveIndex() => Promise<number>`
 
 Get the index of the active slide.

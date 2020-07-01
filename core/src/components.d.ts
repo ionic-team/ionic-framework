@@ -2160,6 +2160,10 @@ export namespace Components {
     }
     interface IonSlides {
         /**
+          * Append the element into the internal swiper wrapper div
+         */
+        "appendSlide": (el: HTMLElement) => Promise<void>;
+        /**
           * Get the index of the active slide.
          */
         "getActiveIndex": () => Promise<number>;

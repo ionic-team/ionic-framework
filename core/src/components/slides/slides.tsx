@@ -33,6 +33,8 @@ export class Slides implements ComponentInterface {
 
   @Element() el!: HTMLIonSlidesElement;
 
+  wrapperEl?: HTMLDivElement;
+
   /**
    * Options to pass to the swiper instance.
    * See http://idangero.us/swiper/api/ for valid options
@@ -200,6 +202,14 @@ export class Slides implements ComponentInterface {
       waitForSlides(this.el)
     ]);
     swiper.update();
+  }
+
+  /**
+   * Append the element into the internal swiper wrapper div
+   */
+  @Method()
+  async appendSlide(el: HTMLElement) {
+    this.wrapperEl?.appendChild(el);
   }
 
   /**

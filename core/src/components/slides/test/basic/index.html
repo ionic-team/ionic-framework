@@ -87,7 +87,8 @@
       slide.style.background = 'white';
       slide.innerHTML = `<h1>Slide ${slideCount}</h1>`;
       slideCount++;
-      slides.querySelector('.swiper-wrapper').appendChild(slide);
+      //slides.querySelector('.swiper-wrapper').appendChild(slide);
+      slides.appendSlide(slide);
     };
 
     async function removeSlide() {
