@@ -34,6 +34,7 @@
         </ion-slide>
       </ion-slides>
       <ion-button expand="block" onclick="addSlide()">Add slide</ion-button>
+      <ion-button expand="block" onclick="addSlideReact()">Add slide react</ion-button>
       <ion-button expand="block" onclick="removeSlide()">Remove slide</ion-button>
 
       <ion-button expand="block" onclick="slidePrev()">Slide Prev</ion-button>
@@ -49,6 +50,7 @@
       <ion-button expand="block" onclick="slideAutoPlay()">Start auto play</ion-button>
       <ion-button expand="block" onclick="slideStopAutoPlay()">Stop auto play</ion-button>
       <ion-button expand="block" onclick="setOptions()">Set options</ion-button>
+      <ion-button expand="block" onclick="swiperUpdate()">Swiper update</ion-button>
     </ion-content>
 
   </ion-app>
@@ -61,7 +63,25 @@
         enabled: true
       }
     }
-
+    async function swiperUpdate(){
+      slides.update();
+    }
+    let lastSlide = null;
+    /* simulate react dom updates */
+    async function addSlideReact() {
+      const slide = document.createElement('ion-slide');
+      slide.style.background = 'white';
+      slide.innerHTML = `<h1>Slide ${slideCount}</h1>`;
+      slideCount++;
+      if(lastSlide == null){
+        slides.appendChild(slide);
+      }
+      else{
+        lastSlide.remove();
+        slides.appendChild(slide);
+      }
+      lastSlide = slide;
+    };
     async function addSlide() {
       const slide = document.createElement('ion-slide');
       slide.style.background = 'white';

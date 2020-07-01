@@ -14,6 +14,11 @@ import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
     md: 'slides.md.scss'
   },
   assetsDir: 'swiper',
+  shadow: false
+  /* enabling shadow will make the slot work when updating children but breaks swiper
+     stick to using the virtual dom to render the slot see for more info
+     https://github.com/ionic-team/stencil/blob/master/src/runtime/test/shadow.spec.tsx
+  */
 })
 export class Slides implements ComponentInterface {
 
@@ -185,6 +190,11 @@ export class Slides implements ComponentInterface {
    */
   @Method()
   async update() {
+    /* TEMP FIX: if <ion-slide> are added as direct children, move them inside the wrapper
+                 when nodes are added outside stencil, no re-render is done to move the <ion-slide> in the <slot>
+    */
+    Array.from(this.el.children).map(s => {if (s.nodeName.toUpperCase() === 'ION-SLIDE') {this.wrapperEl?.appendChild(s); }});
+
     const [swiper] = await Promise.all([
       this.getSwiper(),
       waitForSlides(this.el)
