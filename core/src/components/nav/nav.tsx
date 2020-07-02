@@ -539,6 +539,9 @@ export class Nav implements NavOutlet {
         const canTransition = await router.canTransition();
         if (canTransition === false) {
           return Promise.resolve(false);
+        } else if (typeof canTransition === 'string') {
+          router.push(canTransition, ti.opts!.direction || 'back');
+          return Promise.resolve(false);
         }
       }
     }

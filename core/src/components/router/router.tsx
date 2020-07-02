@@ -81,7 +81,7 @@ export class Router implements ComponentInterface {
       }
       return false;
     }
-    console.log('[ion-router] URL changed -> update nav', path, direction);
+    console.debug('[ion-router] URL changed -> update nav', path, direction);
     return this.writeNavStateRoot(path, direction);
   }
 
@@ -282,8 +282,6 @@ export class Router implements ComponentInterface {
 
     const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
     const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
-
-    console.log(beforeEnterHook, beforeLeaveHook);
 
     const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
     if (canLeave === false || typeof canLeave === 'object') { return canLeave; }
