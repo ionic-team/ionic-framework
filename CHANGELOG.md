@@ -1,3 +1,15 @@
+## [5.2.3](https://github.com/ionic-team/ionic/compare/v5.2.2...v5.2.3) (2020-07-01)
+
+
+### Bug Fixes
+
+* **angular:** expose createAnimation in addition to AnimationController ([#21616](https://github.com/ionic-team/ionic/issues/21616)) ([a5b3750](https://github.com/ionic-team/ionic/commit/a5b3750ee2a7c005f80f8453b03c67dd1a5622ca)), closes [#21615](https://github.com/ionic-team/ionic/issues/21615)
+* **select:** change role to listbox ([#21609](https://github.com/ionic-team/ionic/issues/21609)) ([8c79e2c](https://github.com/ionic-team/ionic/commit/8c79e2c5b58ad562967f2d559c6b548e57536936))
+* **slides:** enable keyboard integration ([#21608](https://github.com/ionic-team/ionic/issues/21608)) ([26674f1](https://github.com/ionic-team/ionic/commit/26674f1dfa8c9a28f5525f1b16070e8ec494c232)), closes [#21554](https://github.com/ionic-team/ionic/issues/21554)
+* **textarea:** add aria-labelledby to native textarea ([#21606](https://github.com/ionic-team/ionic/issues/21606)) ([88f23b1](https://github.com/ionic-team/ionic/commit/88f23b1626eb400336f2f52a3e0d34ac3c161e64)), closes [#21600](https://github.com/ionic-team/ionic/issues/21600)
+
+
+
 ## [5.2.2](https://github.com/ionic-team/ionic/compare/v5.2.1...v5.2.2) (2020-06-17)
 
 
