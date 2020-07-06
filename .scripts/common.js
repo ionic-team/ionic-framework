@@ -10,8 +10,8 @@ const rootDir = path.join(__dirname, '../');
 
 const packages = [
   'core',
-  'docs',
-  'angular',
+  // 'docs',
+  // 'angular',
   'packages/react',
   'packages/react-router',
   'packages/angular-server'
@@ -269,7 +269,7 @@ function updatePackageVersions(tasks, packages, version) {
         }
       });
     }
-
+    console.log('!!!!: ' + package)
     if (package === 'packages/react-router') {
       tasks.push({
         title: `${package} update @ionic/react dependency, if present ${dim(`(${version})`)}`,
