@@ -76,13 +76,15 @@
   },
   "jest": {
     "preset": "ts-jest",
+
     "setupFilesAfterEnv": [
       "<rootDir>/setupTests.ts"
     ],
     "testPathIgnorePatterns": [
       "node_modules",
       "dist-transpiled",
-      "dist"
+      "dist",
+      "<rootDir>/test-app"
     ],
     "globals": {
       "ts-jest": {

@@ -105,7 +105,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "1.5.2",
-    "cypress": "^4.7.0",
+    "cypress": "^4.9.0",
     "react-scripts": "3.4.1"
   },
   "description": "An Ionic project",

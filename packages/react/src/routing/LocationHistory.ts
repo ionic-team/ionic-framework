@@ -62,11 +62,6 @@ export class LocationHistory {
       routeInfos.push(routeInfo);
     }
     this.locationHistory.push(routeInfo);
-    // Todo: re-add restricting size
-    // this.locationHistory.push(routeInfo);
-    // if (this.locationHistory.length > RESTRICT_SIZE) {
-    //   this.locationHistory.splice(0, 10);
-    // }
   }
 
   private _pop(routeInfo: RouteInfo) {
