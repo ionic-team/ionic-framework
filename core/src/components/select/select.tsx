@@ -459,7 +459,7 @@ export class Select implements ComponentInterface {
     return (
       <Host
         onClick={this.onClick}
-        role="combobox"
+        role="listbox"
         aria-haspopup="dialog"
         aria-disabled={disabled ? 'true' : null}
         aria-expanded={`${isExpanded}`}

@@ -45,18 +45,18 @@
     "test": "jest --coverage --verbose"
   },
   "dependencies": {
-    "@ionic/core": "^4.6.0",
-    "ionicons": "^5.0.1"
+    "@ionic/core": "^5.2.2",
+    "ionicons": "^5.1.2"
   },
   "devDependencies": {
-    "rollup": "^0.62.0",
-    "rollup-plugin-terser": "^1.0.1",
+    "rollup": "^2.18.1",
+    "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-vue": "^4.3.0",
-    "rollup-plugin-typescript2": "^0.17.1",
+    "rollup-plugin-typescript2": "^0.27.1",
     "tslib": "1.9.3",
     "tslint": "5.11.0",
     "tslint-ionic-rules": "0.0.19",
-    "typescript": "3.1.1",
+    "typescript": "3.9.5",
     "vue": "^2.5.17",
     "vue-template-compiler": "^2.5.17",
     "vue-router": "^3.0.1"

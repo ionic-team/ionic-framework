@@ -1,5 +1,5 @@
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 
 export default {
   input: 'dist-transpiled/index.js',

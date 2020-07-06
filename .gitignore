@@ -64,3 +64,4 @@ core/loader/
 core/www/
 .stencil/
 angular/build/
+core/components/

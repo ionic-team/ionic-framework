@@ -56,7 +56,11 @@
     let slideCount = 4;
     const slides = document.getElementById('slides')
     slides.pager = false;
-    slides.options = {}
+    slides.options = {
+      keyboard: {
+        enabled: true
+      }
+    }
 
     async function addSlide() {
       const slide = document.createElement('ion-slide');
