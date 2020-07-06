@@ -209,6 +209,13 @@ function prepareDevPackage(tasks, package, version) {
         title: `${pkg.name}: npm link @ionic/core`,
         task: () => execa('npm', ['link', '@ionic/core'], { cwd: projectRoot })
       });
+
+      if (package === 'packages/react-router') {
+        projectTasks.push({
+          title: `${pkg.name}: npm link @ionic/react`,
+          task: () => execa('npm', ['link', '@ionic/react'], { cwd: projectRoot })
+        });
+      }
     }
 
     projectTasks.push({
@@ -269,7 +276,7 @@ function updatePackageVersions(tasks, packages, version) {
         }
       });
     }
-
+    console.log('!!!!: ' + package)
     if (package === 'packages/react-router') {
       tasks.push({
         title: `${package} update @ionic/react dependency, if present ${dim(`(${version})`)}`,
