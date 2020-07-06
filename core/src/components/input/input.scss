@@ -147,7 +147,11 @@
   appearance: none;
 }
 
-:host(.has-focus.has-value) .input-clear-icon {
+.input-clear-icon:focus {
+  opacity: 0.5;
+}
+
+:host(.has-value) .input-clear-icon {
   visibility: visible;
 }
 
