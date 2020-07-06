@@ -75,7 +75,6 @@
   },
   "jest": {
     "preset": "ts-jest",
-
     "setupFilesAfterEnv": [
       "<rootDir>/setupTests.ts"
     ],
