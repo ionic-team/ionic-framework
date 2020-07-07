@@ -32,6 +32,9 @@ const Main: React.FC<MainProps> = () => {
           <IonItem routerLink="/nested-outlet2">
             <IonLabel>Nested Outlet 2</IonLabel>
           </IonItem>
+          <IonItem routerLink="/replace-action">
+            <IonLabel>Replace Action</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

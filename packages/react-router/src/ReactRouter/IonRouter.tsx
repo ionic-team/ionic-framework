@@ -166,6 +166,13 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           // If we are switching tabs grab the last route info for the tab and use its pushedByRoute
           const lastRoute = this.locationHistory.getCurrentRouteInfoForTab(routeInfo.tab);
           routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
+        } else if (routeInfo.routeAction === 'replace') {
+          // Make sure to set the lastPathname, etc.. to the current route so the page transitions out
+          const currentRouteInfo = this.locationHistory.current();
+          routeInfo.lastPathname = currentRouteInfo?.pathname || routeInfo.lastPathname;
+          routeInfo.pushedByRoute = currentRouteInfo?.pushedByRoute || routeInfo.pushedByRoute;
+          routeInfo.routeDirection = currentRouteInfo?.routeDirection || routeInfo.routeDirection;
+          routeInfo.routeAnimation = currentRouteInfo?.routeAnimation || routeInfo.routeAnimation;
         }
 
         this.locationHistory.add(routeInfo);
