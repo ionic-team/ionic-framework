@@ -1,0 +1,46 @@
+{
+  "name": "@ionic/vue",
+  "version": "0.0.1",
+  "description": "Vue specific wrapper for @ionic/core",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/types/components.d.ts",
+  "scripts": {
+    "build": "stencil build --docs",
+    "test": "echo \"No tests specified\" && exit 0",
+    "start": "stencil build --dev --watch --serve",
+    "generate": "stencil generate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/ionic.git"
+  },
+  "keywords": [
+    "ionic",
+    "framework",
+    "vue",
+    "mobile",
+    "app",
+    "hybrid",
+    "webapp",
+    "corodva",
+    "progressive",
+    "web",
+    "app",
+    "pwa"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "homepage": "https://github.com/ionic-team/ionic#readme",
+  "dependencies": {
+    "@ionic/core": "5.3.0-dev.202007071548.a0735b9"
+  },
+  "devDependencies": {
+    "@stencil/core": "^1.16.0",
+    "@stencil/vue-output-target": "0.0.1",
+    "vue": "^3.0.0-beta.19"
+  }
+}
