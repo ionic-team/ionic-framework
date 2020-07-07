@@ -81,7 +81,8 @@
     "testPathIgnorePatterns": [
       "node_modules",
       "dist-transpiled",
-      "dist"
+      "dist",
+      "<rootDir>/test-app"
     ],
     "globals": {
       "ts-jest": {

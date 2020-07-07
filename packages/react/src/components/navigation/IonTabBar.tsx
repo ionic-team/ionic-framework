@@ -2,25 +2,31 @@ import { JSX as LocalJSX } from '@ionic/core';
 import React, { useContext } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
+import { RouteInfo } from '../../models';
 import { IonicReactProps } from '../IonicReactProps';
 import { IonTabBarInner } from '../inner-proxies';
-import { IonTabButton } from '../proxies';
 import { createForwardRef } from '../utils';
+
+import { IonTabButton } from './IonTabButton';
 
 type IonTabBarProps = LocalJSX.IonTabBar & IonicReactProps & {
   onIonTabsDidChange?: (event: CustomEvent<{ tab: string; }>) => void;
   onIonTabsWillChange?: (event: CustomEvent<{ tab: string; }>) => void;
-  currentPath?: string;
   slot?: 'bottom' | 'top';
+  style?: { [key: string]: string; };
 };
 
 interface InternalProps extends IonTabBarProps {
   forwardedRef?: React.RefObject<HTMLIonIconElement>;
+  onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
+  routeInfo: RouteInfo;
 }
 
 interface TabUrls {
   originalHref: string;
   currentHref: string;
+  originalRouteOptions?: unknown;
+  currentRouteOptions?: unknown;
 }
 
 interface IonTabBarState {
@@ -34,12 +40,13 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
   constructor(props: InternalProps) {
     super(props);
     const tabs: { [key: string]: TabUrls; } = {};
-
     React.Children.forEach((props as any).children, (child: any) => {
       if (child != null && typeof child === 'object' && child.props && child.type === IonTabButton) {
         tabs[child.props.tab] = {
           originalHref: child.props.href,
-          currentHref: child.props.href
+          currentHref: child.props.href,
+          originalRouteOptions: child.props.href === props.routeInfo?.pathname ? props.routeInfo?.routeOptions : undefined,
+          currentRouteOptions: child.props.href === props.routeInfo?.pathname ? props.routeInfo?.routeOptions : undefined,
         };
       }
     });
@@ -48,7 +55,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     const activeTab = tabKeys
       .find(key => {
         const href = tabs[key].originalHref;
-        return props.currentPath!.startsWith(href);
+        return props.routeInfo!.pathname.startsWith(href);
       }) || tabKeys[0];
 
     this.state = {
@@ -59,54 +66,57 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     this.onTabButtonClick = this.onTabButtonClick.bind(this);
     this.renderTabButton = this.renderTabButton.bind(this);
     this.setActiveTabOnContext = this.setActiveTabOnContext.bind(this);
-    this.selectTab = this.selectTab.bind(this);
   }
 
   setActiveTabOnContext = (_tab: string) => { };
 
-  selectTab(tab: string) {
-    const tabUrl = this.state.tabs[tab];
-    if (tabUrl) {
-      this.onTabButtonClick(new CustomEvent('ionTabButtonClick', {
-        detail: {
-          href: tabUrl.currentHref,
-          tab,
-          selected: tab === this.state.activeTab
-        }
-      }));
-      return true;
-    }
-    return false;
-  }
-
-  static getDerivedStateFromProps(props: IonTabBarProps, state: IonTabBarState) {
-
+  static getDerivedStateFromProps(props: InternalProps, state: IonTabBarState) {
     const tabs = { ...state.tabs };
-    const activeTab = Object.keys(state.tabs)
+    const tabKeys = Object.keys(state.tabs);
+    const activeTab = tabKeys
       .find(key => {
         const href = state.tabs[key].originalHref;
-        return props.currentPath!.startsWith(href);
+        return props.routeInfo!.pathname.startsWith(href);
       });
 
     // Check to see if the tab button href has changed, and if so, update it in the tabs state
     React.Children.forEach((props as any).children, (child: any) => {
       if (child != null && typeof child === 'object' && child.props && child.type === IonTabButton) {
         const tab = tabs[child.props.tab];
-        if (tab.originalHref !== child.props.href) {
+        if (!tab || (tab.originalHref !== child.props.href)) {
           tabs[child.props.tab] = {
             originalHref: child.props.href,
-            currentHref: child.props.href
+            currentHref: child.props.href,
+            originalRouteOptions: child.props.routeOptions,
+            currentRouteOptions: child.props.routeOptions
           };
         }
       }
     });
-
-    if (!(activeTab === undefined || (activeTab === state.activeTab && state.tabs[activeTab].currentHref === props.currentPath))) {
-      tabs[activeTab] = {
-        originalHref: tabs[activeTab].originalHref,
-        currentHref: props.currentPath!
-      };
+    const { activeTab: prevActiveTab } = state;
+    if (activeTab && prevActiveTab) {
+      const prevHref = state.tabs[prevActiveTab].currentHref;
+      const prevRouteOptions = state.tabs[prevActiveTab].currentRouteOptions;
+      if (activeTab !== prevActiveTab || (prevHref !== props.routeInfo?.pathname || prevRouteOptions !== props.routeInfo?.routeOptions)) {
+        tabs[activeTab] = {
+          originalHref: tabs[activeTab].originalHref,
+          currentHref: props.routeInfo!.pathname + (props.routeInfo!.search || ''),
+          originalRouteOptions: tabs[activeTab].originalRouteOptions,
+          currentRouteOptions: props.routeInfo?.routeOptions
+        };
+        if (props.routeInfo.routeAction === 'pop') {
+          // If navigating back and the tabs change, set the prev tab back to its original href
+          tabs[prevActiveTab] = {
+            originalHref: tabs[prevActiveTab].originalHref,
+            currentHref: tabs[prevActiveTab].originalHref,
+            originalRouteOptions: tabs[prevActiveTab].originalRouteOptions,
+            currentRouteOptions: tabs[prevActiveTab].currentRouteOptions
+          };
+        }
+      }
     }
+
+    activeTab && props.onSetCurrentTab(activeTab, props.routeInfo);
 
     return {
       activeTab,
@@ -114,16 +124,16 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     };
   }
 
-  private onTabButtonClick(e: CustomEvent<{ href: string, selected: boolean, tab: string; }>) {
-    const originalHref = this.state.tabs[e.detail.tab].originalHref;
+  private onTabButtonClick(e: CustomEvent<{ href: string, selected: boolean, tab: string; routeOptions: unknown; }>) {
+    const tappedTab = this.state.tabs[e.detail.tab];
+    const originalHref = tappedTab.originalHref;
     const currentHref = e.detail.href;
     const { activeTab: prevActiveTab } = this.state;
+    // this.props.onSetCurrentTab(e.detail.tab, this.props.routeInfo);
     // Clicking the current tab will bring you back to the original href
     if (prevActiveTab === e.detail.tab) {
-      if (originalHref === currentHref) {
-        this.context.navigate(originalHref, 'none');
-      } else {
-        this.context.navigate(originalHref, 'back', 'pop');
+      if (originalHref !== currentHref) {
+        this.context.resetTab(e.detail.tab, originalHref, tappedTab.originalRouteOptions);
       }
     } else {
       if (this.props.onIonTabsWillChange) {
@@ -132,19 +142,22 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
       if (this.props.onIonTabsDidChange) {
         this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
       }
-      this.setActiveTabOnContext(e.detail.tab);
-      this.context.navigate(currentHref, 'none');
+
+      this.context.changeTab(e.detail.tab, currentHref, e.detail.routeOptions);
     }
   }
 
   private renderTabButton(activeTab: string | null | undefined) {
-    return (child: (React.ReactElement<LocalJSX.IonTabButton & { onIonTabButtonClick: (e: CustomEvent) => void; }>) | null | undefined) => {
+
+    return (child: (React.ReactElement<LocalJSX.IonTabButton & { onClick: (e: any) => void; routeOptions?: unknown; }>) | null | undefined) => {
       if (child != null && child.props && child.type === IonTabButton) {
-        const href = (child.props.tab === activeTab) ? this.props.currentPath : (this.state.tabs[child.props.tab!].currentHref);
+        const href = (child.props.tab === activeTab) ? this.props.routeInfo?.pathname : (this.state.tabs[child.props.tab!].currentHref);
+        const routeOptions = (child.props.tab === activeTab) ? this.props.routeInfo?.routeOptions : (this.state.tabs[child.props.tab!].currentRouteOptions);
 
         return React.cloneElement(child, {
           href,
-          onIonTabButtonClick: this.onTabButtonClick
+          routeOptions,
+          onClick: this.onTabButtonClick
         });
       }
       return null;
@@ -171,7 +184,8 @@ const IonTabBarContainer: React.FC<InternalProps> = React.memo<InternalProps>(({
     <IonTabBarUnwrapped
       ref={forwardedRef}
       {...props as any}
-      currentPath={props.currentPath || context.currentPath}
+      routeInfo={props.routeInfo || context.routeInfo || { pathname: window.location.pathname }}
+      onSetCurrentTab={context.setCurrentTab}
     >
       {props.children}
     </IonTabBarUnwrapped>
