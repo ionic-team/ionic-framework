@@ -1,5 +1,6 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
+import { vueOutputTarget } from '@stencil/vue-output-target';
 
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
@@ -57,6 +58,17 @@ export const config: Config = {
     })
   ],
   outputTargets: [
+    vueOutputTarget({
+      componentCorePackage: '@ionic/core',
+      proxiesFile: '../packages/vue/src/proxies.ts',
+      componentModels: [
+        {
+          elements: ['ion-input'],
+          targetAttr: 'value',
+          event: 'ionChange'
+        }
+      ],
+    }),
     {
       type: 'docs-vscode',
       file: 'dist/html.html-data.json',
