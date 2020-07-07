@@ -37,6 +37,7 @@
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "devDependencies": {
     "@stencil/core": "^1.16.0",
-    "vue": "^3.0.0-beta.19"
+    "vue": "^3.0.0-beta.19",
+    "workbox-build": "4.3.1"
   }
 }
