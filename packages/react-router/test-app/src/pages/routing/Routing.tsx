@@ -6,7 +6,6 @@ import Tabs from './Tabs';
 import Favorites from './Favorites';
 import OtherPage from './OtherPage';
 import PropsTest from './PropsTest';
-import TopPage from './TopPage';
 
 interface RoutingProps {
 }
@@ -36,7 +35,6 @@ const Routing: React.FC<RoutingProps> = () => {
       }} /> */}
         <Route path="/routing/otherpage" component={OtherPage} />
         <Route path="/routing/propstest" component={PropsTest} />
-        <Route path="/routing/toppage" component={TopPage} />
         <Route render={() => <IonPage data-pageid="not-found"><IonContent><div>Not found</div></IonContent></IonPage>} />
         {/* <Route render={() => <Redirect to="/tabs" />} /> */}
 
