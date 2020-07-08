@@ -127,7 +127,7 @@ export class StackController {
      * Save any custom animation so that navigating
      * back will use this custom animation by default.
      */
-    if (animationBuilder !== undefined && leavingView) {
+    if (leavingView) {
       leavingView.animationBuilder = animationBuilder;
     }
 
