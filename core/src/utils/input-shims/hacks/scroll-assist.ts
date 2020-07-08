@@ -50,7 +50,7 @@ const jsSetFocus = async (
   keyboardHeight: number
 ) => {
   if (!contentEl && !footerEl) { return; }
-  let scrollData = getScrollData(componentEl, (contentEl || footerEl)!, keyboardHeight);
+  const scrollData = getScrollData(componentEl, (contentEl || footerEl)!, keyboardHeight);
 
   if (contentEl && Math.abs(scrollData.scrollAmount) < 4) {
     // the text input is in a safe position that doesn't
@@ -93,7 +93,7 @@ const jsSetFocus = async (
     const doubleKeyboardEventListener = () => {
       window.removeEventListener('ionKeyboardDidShow', doubleKeyboardEventListener);
       window.addEventListener('ionKeyboardDidShow', scrollContent);
-    }
+    };
 
     if (contentEl) {
       const scrollEl = await contentEl.getScrollElement();
