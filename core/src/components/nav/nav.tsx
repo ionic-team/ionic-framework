@@ -533,7 +533,7 @@ export class Nav implements NavOutlet {
      * is required in order for hooks to work with
      * the ion-back-button or swipe to go back.
      */
-    if (ti.opts!.updateURL !== false && this.useRouter) {
+    if (ti.opts && ti.opts.updateURL !== false && this.useRouter) {
       const router = document.querySelector('ion-router');
       if (router) {
         const canTransition = await router.canTransition();
@@ -578,7 +578,7 @@ export class Nav implements NavOutlet {
     }
     ti.resolve!(result.hasCompleted);
 
-    if (ti.opts && ti.opts.updateURL !== false && this.useRouter) {
+    if (ti.opts!.updateURL !== false && this.useRouter) {
       const router = document.querySelector('ion-router');
       if (router) {
         const direction = result.direction === 'back' ? 'back' : 'forward';
