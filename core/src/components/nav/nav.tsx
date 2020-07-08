@@ -578,7 +578,7 @@ export class Nav implements NavOutlet {
     }
     ti.resolve!(result.hasCompleted);
 
-    if (ti.opts!.updateURL !== false && this.useRouter) {
+    if (ti.opts && ti.opts.updateURL !== false && this.useRouter) {
       const router = document.querySelector('ion-router');
       if (router) {
         const direction = result.direction === 'back' ? 'back' : 'forward';
