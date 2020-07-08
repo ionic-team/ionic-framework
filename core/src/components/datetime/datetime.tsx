@@ -632,7 +632,6 @@ export class Datetime implements ComponentInterface {
     return (
       <Host
         onClick={this.onClick}
-        role="combobox"
         aria-disabled={disabled ? 'true' : null}
         aria-expanded={`${isExpanded}`}
         aria-haspopup="true"
