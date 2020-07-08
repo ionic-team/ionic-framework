@@ -190,13 +190,16 @@ export class StackController {
     if (leavingView) {
       const views = this.getStack(leavingView.stackId);
       const enteringView = views[views.length - 2];
+      const customAnimation = enteringView.animationBuilder;
+
       return this.wait(() => {
         return this.transition(
           enteringView, // entering view
           leavingView, // leaving view
           'back',
           this.canGoBack(2),
-          true
+          true,
+          customAnimation
         );
       });
     }
