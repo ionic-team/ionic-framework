@@ -1851,11 +1851,11 @@ export namespace Components {
     }
     interface IonRoute {
         /**
-          * A navigation hook that is fired when the route tries to enter. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a string path causes the router to redirect to the path specified.
+          * A navigation hook that is fired when the route tries to enter. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a `NavigationHookOptions` object causes the router to redirect to the path specified.
          */
         "beforeEnter"?: NavigationHookCallback;
         /**
-          * A navigation hook that is fired when the route tries to leave. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a string path causes the router to redirect to the path specified.
+          * A navigation hook that is fired when the route tries to leave. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a `NavigationHookOptions` object causes the router to redirect to the path specified.
          */
         "beforeLeave"?: NavigationHookCallback;
         /**
@@ -5106,11 +5106,11 @@ declare namespace LocalJSX {
     }
     interface IonRoute {
         /**
-          * A navigation hook that is fired when the route tries to enter. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a string path causes the router to redirect to the path specified.
+          * A navigation hook that is fired when the route tries to enter. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a `NavigationHookOptions` object causes the router to redirect to the path specified.
          */
         "beforeEnter"?: NavigationHookCallback;
         /**
-          * A navigation hook that is fired when the route tries to leave. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a string path causes the router to redirect to the path specified.
+          * A navigation hook that is fired when the route tries to leave. Returning `true` allows the navigation to proceed, while returning `false` causes it to be cancelled. Returning a `NavigationHookOptions` object causes the router to redirect to the path specified.
          */
         "beforeLeave"?: NavigationHookCallback;
         /**

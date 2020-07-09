@@ -33,16 +33,16 @@ export class Route implements ComponentInterface {
   /**
    * A navigation hook that is fired when the route tries to leave.
    * Returning `true` allows the navigation to proceed, while returning
-   * `false` causes it to be cancelled. Returning a string path causes
-   * the router to redirect to the path specified.
+   * `false` causes it to be cancelled. Returning a `NavigationHookOptions`
+   * object causes the router to redirect to the path specified.
    */
   @Prop() beforeLeave?: NavigationHookCallback;
 
   /**
    * A navigation hook that is fired when the route tries to enter.
    * Returning `true` allows the navigation to proceed, while returning
-   * `false` causes it to be cancelled. Returning a string path causes
-   * the router to redirect to the path specified.
+   * `false` causes it to be cancelled. Returning a `NavigationHookOptions`
+   * object causes the router to redirect to the path specified.
    */
   @Prop() beforeEnter?: NavigationHookCallback;
 
