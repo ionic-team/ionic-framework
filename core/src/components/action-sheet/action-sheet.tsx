@@ -250,7 +250,10 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         onIonBackdropTap={this.onBackdropTap}
       >
         <ion-backdrop tappable={this.backdropDismiss}/>
-        <div class="action-sheet-wrapper" role="dialog" ref={el => this.wrapperEl = el}>
+
+        <div tabindex="0"></div>
+
+        <div class="action-sheet-wrapper ion-overlay-wrapper" role="dialog" ref={el => this.wrapperEl = el}>
           <div class="action-sheet-container">
             <div class="action-sheet-group" ref={el => this.groupEl = el}>
               {this.header !== undefined &&
@@ -292,6 +295,8 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
             }
           </div>
         </div>
+
+        <div tabindex="0"></div>
       </Host>
     );
   }

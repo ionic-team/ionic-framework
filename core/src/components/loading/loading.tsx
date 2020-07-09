@@ -194,7 +194,10 @@ export class Loading implements ComponentInterface, OverlayInterface {
         }}
       >
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
-        <div class="loading-wrapper" role="dialog">
+
+        <div tabindex="0"></div>
+
+        <div class="loading-wrapper ion-overlay-wrapper" role="dialog">
           {spinner && (
             <div class="loading-spinner">
               <ion-spinner name={spinner} aria-hidden="true" />
@@ -203,6 +206,8 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
           {message && <div class="loading-content" innerHTML={sanitizeDOMString(message)}></div>}
         </div>
+
+        <div tabindex="0"></div>
       </Host>
     );
   }

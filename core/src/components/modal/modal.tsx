@@ -289,11 +289,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
         <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>
 
         {mode === 'ios' && <div class="modal-shadow"></div>}
+
+        <div tabindex="0"></div>
+
         <div
           role="dialog"
-          class="modal-wrapper"
+          class="modal-wrapper ion-overlay-wrapper"
         >
         </div>
+
+        <div tabindex="0"></div>
       </Host>
     );
   }
