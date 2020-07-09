@@ -27,6 +27,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
   presented = false;
+  lastFocus?: HTMLElement;
 
   @Element() el!: HTMLIonLoadingElement;
 

@@ -34,6 +34,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   // Whether or not modal is being dismissed via gesture
   private gestureAnimationDismissing = false;
   presented = false;
+  lastFocus?: HTMLElement;
   animation?: Animation;
 
   @Element() el!: HTMLIonModalElement;

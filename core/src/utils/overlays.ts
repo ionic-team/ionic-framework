@@ -58,18 +58,38 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
   });
 };
 
-const focusFirstDescendant = (ref: Element) => {
-  const firstInput = ref.querySelector('input,button') as HTMLElement | null;
+const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input, textarea, button, select, .ion-focusable';
+
+const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
+  let firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
+
+  const shadowRoot = firstInput && firstInput.shadowRoot;
+  if (shadowRoot) {
+    firstInput = shadowRoot.querySelector('input, textarea, button, select');
+  }
+
   if (firstInput) {
     firstInput.focus();
+  } else {
+    // Focus overlay instead of letting focus escape
+    overlay.focus();
   }
 };
 
-const focusLastDescendant = (ref: Element) => {
-  const inputs = Array.from(ref.querySelectorAll('input,button')) as HTMLElement[];
-  const lastInput = inputs.length > 0 && inputs[inputs.length - 1];
+const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
+  const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
+  let lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
+
+  const shadowRoot = lastInput && lastInput.shadowRoot;
+  if (shadowRoot) {
+    lastInput = shadowRoot.querySelector('input, textarea, button, select');
+  }
+
   if (lastInput) {
     lastInput.focus();
+  } else {
+    // Focus overlay instead of letting focus escape
+    overlay.focus();
   }
 };
 
@@ -81,11 +101,11 @@ const focusLastDescendant = (ref: Element) => {
  * Should NOT include: Toast
  */
 const trapKeyboardFocus = (ev: Event, doc: Document) => {
-  const lastOverlay = getOverlay(doc) as any;
+  const lastOverlay = getOverlay(doc);
   const target = ev.target as HTMLElement | null;
 
   // If no active overlay, ignore this event
-  if (!lastOverlay) { return; }
+  if (!lastOverlay || !target) { return; }
 
   /**
    * If we are focusing the overlay, clear
@@ -135,7 +155,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
       const lastFocus = lastOverlay.lastFocus;
 
       // Focus the first element in the overlay wrapper
-      focusFirstDescendant(overlayWrapper);
+      focusFirstDescendant(overlayWrapper, lastOverlay);
 
       /**
        * If the cached last focused element is the
@@ -147,9 +167,9 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        * last focus to equal the active element.
        */
       if (lastFocus === doc.activeElement) {
-        focusLastDescendant(overlayWrapper);
+        focusLastDescendant(overlayWrapper, lastOverlay);
       }
-      lastOverlay.lastFocus = doc.activeElement;
+      lastOverlay.lastFocus = doc.activeElement as HTMLElement;
     }
   }
 };

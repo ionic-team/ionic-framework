@@ -35,6 +35,7 @@ export interface OverlayController {
 export interface HTMLIonOverlayElement extends HTMLStencilElement {
   overlayIndex: number;
   backdropDismiss?: boolean;
+  lastFocus?: HTMLElement;
 
   dismiss(data?: any, role?: string): Promise<boolean>;
 }

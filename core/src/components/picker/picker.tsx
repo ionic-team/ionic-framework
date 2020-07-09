@@ -21,6 +21,7 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 })
 export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
+  lastFocus?: HTMLElement;
 
   @Element() el!: HTMLIonPickerElement;
 

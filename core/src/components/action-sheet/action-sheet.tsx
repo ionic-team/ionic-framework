@@ -26,6 +26,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   presented = false;
+  lastFocus?: HTMLElement;
   animation?: any;
   private wrapperEl?: HTMLElement;
   private groupEl?: HTMLElement;

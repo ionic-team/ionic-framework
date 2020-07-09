@@ -34,6 +34,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private gesture?: Gesture;
 
   presented = false;
+  lastFocus?: HTMLElement;
 
   @Element() el!: HTMLIonAlertElement;
 
