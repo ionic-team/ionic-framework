@@ -16,6 +16,9 @@ test('datetime/picker: focus trap', async () => {
   expect(datetime).not.toBe(null);
   await datetime.waitForVisible();
 
+  // TODO fix
+  await page.waitFor(100);
+
   await page.keyboard.press('Tab');
 
   const activeElementText = await getActiveElementText(page);
