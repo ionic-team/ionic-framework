@@ -1,10 +1,14 @@
-import { Animation, AnimationBuilder, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
 
 import { ViewController } from './view-controller';
 
 export type NavDirection = 'back' | 'forward';
 
 export type NavComponent = ComponentRef | ViewController;
+export interface NavComponentWithProps {
+  page: NavComponent;
+  params?: ComponentProps<any>;
+}
 
 export interface NavResult {
   hasCompleted: boolean;
