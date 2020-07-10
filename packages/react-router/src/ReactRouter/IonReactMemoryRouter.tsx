@@ -1,21 +1,40 @@
-import { MemoryHistory } from 'history';
+import { Action as HistoryAction, Location as HistoryLocation, MemoryHistory } from 'history';
 import React from 'react';
-import { MemoryRouter, MemoryRouterProps, matchPath } from 'react-router';
+import { MemoryRouterProps, Router } from 'react-router';
 
-import { LocationState, RouteManager } from './Router';
+import { IonRouter, LocationState } from './IonRouter';
 
 interface IonReactMemoryRouterProps extends MemoryRouterProps {
   history: MemoryHistory<LocationState>;
 }
 
 export class IonReactMemoryRouter extends React.Component<IonReactMemoryRouterProps> {
+  history: MemoryHistory<LocationState>;
+  historyListenHandler?: ((location: HistoryLocation, action: HistoryAction) => void);
+
+  constructor(props: IonReactMemoryRouterProps) {
+    super(props);
+    this.history = props.history;
+    this.history.listen(this.handleHistoryChange.bind(this));
+    this.registerHistoryListener = this.registerHistoryListener.bind(this);
+  }
+
+  handleHistoryChange(location: HistoryLocation, action: HistoryAction) {
+    if (this.historyListenHandler) {
+      this.historyListenHandler(location, action);
+    }
+  }
+
+  registerHistoryListener(cb: (location: HistoryLocation, action: HistoryAction) => void) {
+    this.historyListenHandler = cb;
+  }
+
   render() {
-    const { children, history, ...props } = this.props;
-    const match = matchPath(history.location.pathname, this.props);
+    const { children, ...props } = this.props;
     return (
-      <MemoryRouter {...props}>
-        <RouteManager history={history} location={history.location} match={match!}>{children}</RouteManager>
-      </MemoryRouter>
+      <Router {...props}>
+        <IonRouter registerHistoryListener={this.registerHistoryListener}>{children}</IonRouter>
+      </Router>
     );
   }
 }

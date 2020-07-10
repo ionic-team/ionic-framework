@@ -1,16 +1,22 @@
 import resolve from '@rollup/plugin-node-resolve';
 import sourcemaps from 'rollup-plugin-sourcemaps';
+// import json from '@rollup/plugin-json';
 
 export default {
-  input: 'dist-transpiled/index.js',
+  input: {
+    'index': 'dist-transpiled/index',
+    // 'routing/index': 'dist-transpiled/routing/index'
+  },
   output: [
     {
-      file: 'dist/index.esm.js',
+      dir: 'dist/',
+      entryFileNames: "[name].esm.js",
+      chunkFileNames: "[name]-[hash].esm.js",
       format: 'es',
       sourcemap: true
     },
     {
-      file: 'dist/index.js',
+      dir: 'dist/',
       format: 'commonjs',
       preferConst: true,
       sourcemap: true
@@ -19,6 +25,7 @@ export default {
   external: (id) => !/^(\.|\/)/.test(id),
   plugins: [
     resolve(),
-    sourcemaps()
+    sourcemaps(),
+    // json()
   ]
 };

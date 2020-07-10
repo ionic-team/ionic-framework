@@ -78,6 +78,9 @@ async function setPackageVersionChanges(packages, version) {
     if (package !== 'core') {
       const pkg = common.readPkg(package);
       common.updateDependency(pkg, '@ionic/core', version);
+      if(package === 'packages/react-router') {
+        common.updateDependency(pkg, '@ionic/react', version);
+      }
       common.writePkg(package, pkg);
     }
     const projectRoot = common.projectPath(package);
