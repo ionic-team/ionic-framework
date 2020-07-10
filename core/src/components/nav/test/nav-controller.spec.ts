@@ -285,41 +285,6 @@ describe('NavController', () => {
       expect(nav['views'][2].nav).toEqual(nav);
 
     }, 10000);
-
-    it('should insert all pages in middle with properties', async () => {
-      const view4 = mockView(MockView4);
-      const instance4 = spyOnLifecycles(view4);
-
-      const view1 = mockView(MockView1);
-      const view2 = mockView(MockView2);
-      const view3 = mockView(MockView3);
-
-      mockViews(nav, [view1, view2, view3]);
-
-      const view5 = mockView(MockView5);
-      await nav.insertPages(1, [{ page: view4, params: { test: true }}, { page: view5, params: { test: true }}], null, trnsDone);
-      expect(instance4.ionViewWillEnter).not.toHaveBeenCalled();
-      expect(instance4.ionViewDidEnter).not.toHaveBeenCalled();
-      expect(instance4.ionViewWillLeave).not.toHaveBeenCalled();
-      expect(instance4.ionViewDidLeave).not.toHaveBeenCalled();
-      expect(instance4.ionViewWillUnload).not.toHaveBeenCalled();
-
-      const hasCompleted = true;
-      const requiresTransition = false;
-      expect(trnsDone).toHaveBeenCalledWith(
-        hasCompleted, requiresTransition, undefined, undefined, undefined
-      );
-      expect(nav.getLength()).toEqual(5);
-      expect(nav['views'][0].component).toEqual(MockView1);
-      expect(nav['views'][1].component).toEqual(MockView4);
-      expect(nav['views'][2].component).toEqual(MockView5);
-      expect(nav['views'][3].component).toEqual(MockView2);
-      expect(nav['views'][4].component).toEqual(MockView3);
-
-      expect(nav['views'][1].nav).toEqual(nav);
-      expect(nav['views'][2].nav).toEqual(nav);
-
-    }, 10000);
   });
 
   describe('pop', () => {
