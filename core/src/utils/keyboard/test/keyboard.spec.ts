@@ -34,12 +34,6 @@ const resizeVisualViewport = (win: Window, visualViewport: any = {}) => {
 
 const resizeLayoutViewport = (win: Window, layoutViewport: any = {}) => {
   win = Object.assign(win, { innerWidth: layoutViewport.width, innerHeight: layoutViewport.height });
-
-  if (win.visualViewport.onresize) {
-    win.visualViewport.onresize();
-  } else {
-    trackViewportChanges(win);
-  }
 }
 
 describe('Keyboard Assist Tests', () => {
