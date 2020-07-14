@@ -66,9 +66,26 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     this.onTabButtonClick = this.onTabButtonClick.bind(this);
     this.renderTabButton = this.renderTabButton.bind(this);
     this.setActiveTabOnContext = this.setActiveTabOnContext.bind(this);
+    this.selectTab = this.selectTab.bind(this);
   }
 
   setActiveTabOnContext = (_tab: string) => { };
+
+  selectTab(tab: string) {
+    const tabUrl = this.state.tabs[tab];
+    if (tabUrl) {
+      this.onTabButtonClick(new CustomEvent('ionTabButtonClick', {
+        detail: {
+          href: tabUrl.currentHref,
+          tab,
+          selected: tab === this.state.activeTab,
+          routeOptions: undefined
+        }
+      }));
+      return true;
+    }
+    return false;
+  }
 
   static getDerivedStateFromProps(props: InternalProps, state: IonTabBarState) {
     const tabs = { ...state.tabs };
@@ -77,7 +94,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
       .find(key => {
         const href = state.tabs[key].originalHref;
         return props.routeInfo!.pathname.startsWith(href);
-      });
+      }) || tabKeys[0];
 
     // Check to see if the tab button href has changed, and if so, update it in the tabs state
     React.Children.forEach((props as any).children, (child: any) => {
@@ -142,7 +159,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
       if (this.props.onIonTabsDidChange) {
         this.props.onIonTabsDidChange(new CustomEvent('ionTabDidChange', { detail: { tab: e.detail.tab } }));
       }
-
+      this.setActiveTabOnContext(e.detail.tab);
       this.context.changeTab(e.detail.tab, currentHref, e.detail.routeOptions);
     }
   }
