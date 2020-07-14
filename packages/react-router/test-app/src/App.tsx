@@ -32,6 +32,7 @@ import DynamicTabs from './pages/dynamic-tabs/DynamicTabs';
 import NestedOutlet from './pages/nested-outlet/NestedOutlet';
 import NestedOutlet2 from './pages/nested-outlet/NestedOutlet2';
 import ReplaceAction from './pages/replace-action/Replace';
+import TabsContext from './pages/tab-context/TabContext';
 debugger;
 const App: React.FC = () => {
   return (
@@ -46,6 +47,7 @@ const App: React.FC = () => {
         <Route path="/nested-outlet" component={NestedOutlet} />
         <Route path="/nested-outlet2" component={NestedOutlet2} />
         <Route path="/replace-action" component={ReplaceAction} />
+        <Route path="/tab-context" component={TabsContext} />
 
       </IonReactRouter>
     </IonApp>
