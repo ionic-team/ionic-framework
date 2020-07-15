@@ -326,7 +326,7 @@ export class Nav implements NavOutlet {
     done?: TransitionDoneFn
   ): Promise<boolean> {
     return this.setPages(
-      [{ page: component, params: componentProps }],
+      [{ component, componentProps }],
       opts,
       done
     );
@@ -344,7 +344,7 @@ export class Nav implements NavOutlet {
    */
   @Method()
   setPages(
-    views: any[],
+    views: NavComponent[] | NavComponentWithProps[],
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {

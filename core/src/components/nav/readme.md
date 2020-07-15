@@ -145,7 +145,7 @@ Type: `Promise<boolean>`
 
 
 
-### `setPages(views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
+### `setPages(views: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
 
 Set the views of the current navigation stack and navigate to the last view.
 By default animations are disabled, but they can be enabled by passing options
