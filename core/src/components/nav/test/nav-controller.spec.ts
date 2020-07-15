@@ -818,8 +818,8 @@ describe('NavController', () => {
       const view5 = mockView(MockView5);
 
       await nav.setPages([
-        { page: view4 },
-        { page: view5 }
+        { component: view4 },
+        { component: view5 }
       ], null, trnsDone);
       expect(instance1.ionViewWillUnload).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
