@@ -5,9 +5,9 @@ import { ViewController } from './view-controller';
 export type NavDirection = 'back' | 'forward';
 
 export type NavComponent = ComponentRef | ViewController;
-export interface NavComponentWithProps {
+export interface NavComponentWithProps<T = any> {
   component: NavComponent;
-  componentProps?: ComponentProps<any>;
+  componentProps?: ComponentProps<T> | null;
 }
 
 export interface NavResult {

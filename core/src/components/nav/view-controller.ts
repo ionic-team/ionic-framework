@@ -95,7 +95,14 @@ export const convertToViews = (pages: NavComponentWithProps[]): ViewController[]
       return page;
     }
     if ('component' in page) {
-      return convertToView(page.component, page.componentProps);
+      /**
+       * TODO Ionic 6:
+       * Consider switching to just using `undefined` here
+       * as well as on the public interfaces and on
+       * `NavComponentWithProps`. Previously `pages` was
+       * of type `any[]` so TypeScript did not catch this.
+       */
+      return convertToView(page.component, (page.componentProps === null) ? undefined : page.componentProps);
     }
     return convertToView(page, undefined);
   }).filter(v => v !== null) as ViewController[];
