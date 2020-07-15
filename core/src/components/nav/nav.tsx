@@ -156,7 +156,7 @@ export class Nav implements NavOutlet {
     return this.queueTrns(
       {
         insertStart: -1,
-        insertViews: [{ page: component, params: componentProps }],
+        insertViews: [{ component, componentProps }],
         opts
       },
       done
@@ -184,7 +184,7 @@ export class Nav implements NavOutlet {
     return this.queueTrns(
       {
         insertStart: insertIndex,
-        insertViews: [{ page: component, params: componentProps }],
+        insertViews: [{ component, componentProps }],
         opts
       },
       done

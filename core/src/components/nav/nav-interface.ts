@@ -6,8 +6,8 @@ export type NavDirection = 'back' | 'forward';
 
 export type NavComponent = ComponentRef | ViewController;
 export interface NavComponentWithProps {
-  page: NavComponent;
-  params?: ComponentProps<any>;
+  component: NavComponent;
+  componentProps?: ComponentProps<any>;
 }
 
 export interface NavResult {
