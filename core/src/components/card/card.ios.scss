@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$item-ios-background};
+  --background: #{$card-ios-background};
   --color: #{$card-ios-text-color};
 
   @include margin($card-ios-margin-top, $card-ios-margin-end, $card-ios-margin-bottom, $card-ios-margin-start);

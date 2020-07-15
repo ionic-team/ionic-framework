@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --background: #{$item-md-background};
+  --background: #{$card-md-background};
   --color: #{$card-md-text-color};
 
   @include margin($card-md-margin-top, $card-md-margin-end, $card-md-margin-bottom, $card-md-margin-start);
