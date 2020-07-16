@@ -2,21 +2,26 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Virtual Scroll TrackBy Test
+      TrackBy
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="addItems()">
-        <ion-icon name="add" slot="icon-only"></ion-icon>
+      <ion-button (click)="addItems('top')">
+        <ion-icon name="chevron-up" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button (click)="addItems('last')">
+        <ion-icon name="chevron-down" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-virtual-scroll [items]="items">
+  <ion-virtual-scroll [items]="items" [approxItemHeight]="itemHeight()">
     <ion-item *virtualItem="let item">
       <ion-label>
         Item-{{item.name}}
       </ion-label>
+      <ion-button slot="end" (click)="changeItems(item.id)">CHANGE</ion-button>
+      <ion-button color="danger" slot="end" (click)="deleteItems(item.id)">DELETE</ion-button>
     </ion-item>
   </ion-virtual-scroll>
 </ion-content>

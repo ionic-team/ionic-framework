@@ -1,10 +1,11 @@
 import { Injectable, IterableChangeRecord, IterableDiffers, TrackByFunction } from '@angular/core';
 
 export interface VirtualScrollDiff {
-  checkRange: {
+  changeRangePositions: {
     offset: number;
     range: number;
   }[];
+  dirtyCheckPosition: number | null;
   trackByArray: object[];
 }
 
@@ -27,7 +28,8 @@ export class VirtualScrollController {
 
     if (changes === null) {
       return {
-        checkRange: [],
+        changeRangePositions: [],
+        dirtyCheckPosition: null,
         trackByArray: recentArray,
       }
     }
@@ -56,16 +58,29 @@ export class VirtualScrollController {
         });
       });
 
-    const checkNum = [];
+    const checkChange: number[] = [];
+    const checkDirty: number[] = [];
     for (const changed of changeObject) {
-      checkNum.push(changed.record.currentIndex);
-      if (['change', 'remove'].includes(changed.type)) {
-        const index = recentArray.findIndex((e, i) => {
+      const newItemIndex = (changed.record.currentIndex) ? changed.record.currentIndex: 0;
+      if (['create'].includes(changed.type)) {
+        checkDirty.push(newItemIndex);
+      }
+      if (['remove', 'change'].includes(changed.type)) {
+        const currentItemIndex = recentArray.findIndex((e, i) => {
           return trackByFn(i, e) === trackByFn(i, changed.record.item);
         });
-        recentArray.slice(index, 1);
+        recentArray.splice(currentItemIndex, 1);
         if (changed.type === 'remove') {
+          checkDirty.push(currentItemIndex);
           continue;
+        }
+        if (changed.type === 'change') {
+          if (newItemIndex === currentItemIndex) {
+            checkChange.push(newItemIndex);
+          } else {
+            let checkPosition = (newItemIndex > currentItemIndex) ? currentItemIndex: newItemIndex;
+            checkDirty.push(checkPosition);
+          }
         }
       }
       if (changed.record.currentIndex !== null) {
@@ -73,7 +88,7 @@ export class VirtualScrollController {
       }
     }
 
-    const checkRange = checkNum.reduce((a: any[], c) => {
+    const changeRangePositions = checkChange.reduce((a: any[], c) => {
       if (a[a.length - 1] && a[a.length - 1].offset + a[a.length - 1].range === c) {
         a[a.length - 1].range ++;
       } else {
@@ -83,8 +98,9 @@ export class VirtualScrollController {
     }, []);
 
     return {
-      checkRange,
-      trackByArray: recentArray
+      trackByArray: recentArray,
+      dirtyCheckPosition: checkDirty.length === 0 ? null: Math.min.apply(null, checkDirty),
+      changeRangePositions,
     };
   }
 }
