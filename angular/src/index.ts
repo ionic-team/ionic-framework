@@ -32,6 +32,7 @@ export { DomController } from './providers/dom-controller';
 export { Config } from './providers/config';
 export { AnimationController } from './providers/animation-controller';
 export { GestureController } from './providers/gesture-controller';
+export { VirtualScrollController } from './providers/virtual-scroll-controller';
 
 // ROUTER STRATEGY
 export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
