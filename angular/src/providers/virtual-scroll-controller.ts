@@ -102,6 +102,15 @@ export class VirtualScrollController {
       }
     }
 
+    // All line reloaded
+    if (checkDirty.includes(0)) {
+      return {
+        dirtyCheckPosition: null,
+        trackByArray: incomingArray,
+        changeRangePositions: [],
+      };
+    }
+
     return {
       trackByArray: recentArray,
       dirtyCheckPosition: checkDirty.length === 0 ? null : Math.min.apply(null, checkDirty),
