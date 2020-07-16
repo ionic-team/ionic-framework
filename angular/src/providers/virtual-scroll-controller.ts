@@ -15,12 +15,6 @@ export interface VirtualScrollDiff {
 export class VirtualScrollController {
   constructor(private iterableDiffers: IterableDiffers) {}
 
-  /**
-   * Helper instead of trackBy
-   * @param recentArray
-   * @param incomingArray
-   * @param trackByFn
-   */
   diff(recentArray: object[], incomingArray: object[], trackByFn: TrackByFunction<any>): VirtualScrollDiff {
     const differs = this.iterableDiffers.find(recentArray).create(trackByFn);
     differs.diff(recentArray);
@@ -31,7 +25,7 @@ export class VirtualScrollController {
         changeRangePositions: [],
         dirtyCheckPosition: null,
         trackByArray: recentArray,
-      }
+      };
     }
 
     const changeObject: {
@@ -40,12 +34,12 @@ export class VirtualScrollController {
     }[] = [];
 
     changes.forEachOperation(
-      (item: IterableChangeRecord<any>, adjustedPreviousIndex: number|null,
-       currentIndex: number|null) => {
+      (item: IterableChangeRecord<any>, adjustedPreviousIndex: number | null,
+       currentIndex: number | null) => {
         let type: 'create' | 'remove' | 'change';
-        if (item.previousIndex == null) {
+        if (item.previousIndex === null) {
           type = 'create';
-        } else if (currentIndex == null) {
+        } else if (currentIndex === null) {
           type = 'remove';
         } else if (adjustedPreviousIndex !== null) {
           type = 'change';
@@ -61,7 +55,7 @@ export class VirtualScrollController {
     const checkChange: number[] = [];
     const checkDirty: number[] = [];
     for (const changed of changeObject) {
-      const newItemIndex = (changed.record.currentIndex) ? changed.record.currentIndex: 0;
+      const newItemIndex = changed.record.currentIndex !== null ? changed.record.currentIndex : 0;
       if (['create'].includes(changed.type)) {
         checkDirty.push(newItemIndex);
       }
@@ -78,7 +72,7 @@ export class VirtualScrollController {
           if (newItemIndex === currentItemIndex) {
             checkChange.push(newItemIndex);
           } else {
-            let checkPosition = (newItemIndex > currentItemIndex) ? currentItemIndex: newItemIndex;
+            const checkPosition = (newItemIndex > currentItemIndex) ? currentItemIndex : newItemIndex;
             checkDirty.push(checkPosition);
           }
         }
@@ -102,7 +96,8 @@ export class VirtualScrollController {
      */
     const newOrder = recentArray.map((item, i) => trackByFn(i, item));
     const incomingOrder = incomingArray.map((item, i) => trackByFn(i, item));
-    for(let i = 0; i < newOrder.length; i++ ) {
+
+    for (let i = 0; i < newOrder.length; i++) {
       if (newOrder[i] !== incomingOrder[i]) {
         checkDirty.push(i);
       }
@@ -110,7 +105,7 @@ export class VirtualScrollController {
 
     return {
       trackByArray: recentArray,
-      dirtyCheckPosition: checkDirty.length === 0 ? null: Math.min.apply(null, checkDirty),
+      dirtyCheckPosition: checkDirty.length === 0 ? null : Math.min.apply(null, checkDirty),
       changeRangePositions,
     };
   }
