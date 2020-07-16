@@ -29,20 +29,20 @@ export class VirtualScrollController {
     }
 
     const changeObject: {
-      type: 'create' | 'remove' | 'change';
+      type: 'create' | 'remove' | 'move';
       record: IterableChangeRecord<any>;
     }[] = [];
 
     changes.forEachOperation(
       (item: IterableChangeRecord<any>, adjustedPreviousIndex: number | null,
        currentIndex: number | null) => {
-        let type: 'create' | 'remove' | 'change';
+        let type: 'create' | 'remove' | 'move';
         if (item.previousIndex === null) {
           type = 'create';
         } else if (currentIndex === null) {
           type = 'remove';
         } else if (adjustedPreviousIndex !== null) {
-          type = 'change';
+          type = 'move';
         } else {
           throw new Error('IterableChangeRecord has no type');
         }
@@ -68,13 +68,9 @@ export class VirtualScrollController {
           checkDirty.push(currentItemIndex);
           continue;
         }
-        if (changed.type === 'change') {
-          if (newItemIndex === currentItemIndex) {
-            checkChange.push(newItemIndex);
-          } else {
-            const checkPosition = (newItemIndex > currentItemIndex) ? currentItemIndex : newItemIndex;
-            checkDirty.push(checkPosition);
-          }
+        if (changed.type === 'move') {
+          checkChange.push(newItemIndex);
+          checkChange.push(currentItemIndex);
         }
       }
       if (changed.record.currentIndex !== null) {
@@ -82,7 +78,10 @@ export class VirtualScrollController {
       }
     }
 
-    const changeRangePositions = checkChange.reduce((a: any[], c) => {
+    const uniqueChange = Array.from(new Set(checkChange));
+    uniqueChange.sort();
+
+    const changeRangePositions = uniqueChange.reduce((a: any[], c) => {
       if (a[a.length - 1] && a[a.length - 1].offset + a[a.length - 1].range === c) {
         a[a.length - 1].range ++;
       } else {

@@ -43,11 +43,8 @@ export class VirtualScrollTrackByComponent {
     /**
      * USE API
      */
-    const { trackByArray, changeRangePositions } = this.virtualScrollController.diff(this.items, newItem, this.trackByFn);
+    const { trackByArray } = this.virtualScrollController.diff(this.items, newItem, this.trackByFn);
     this.items = trackByArray as any;
-    changeRangePositions.forEach(range => {
-      this.virtualScroll.checkRange(range.offset, range.range);
-    });
   }
 
   deleteItems(itemId: number) {
