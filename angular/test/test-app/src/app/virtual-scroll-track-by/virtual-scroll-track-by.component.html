@@ -1,0 +1,22 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Virtual Scroll TrackBy Test
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addItems()">
+        <ion-icon name="add" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-virtual-scroll [items]="items">
+    <ion-item *virtualItem="let item">
+      <ion-label>
+        Item-{{item.name}}
+      </ion-label>
+    </ion-item>
+  </ion-virtual-scroll>
+</ion-content>

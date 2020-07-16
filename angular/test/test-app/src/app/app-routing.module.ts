@@ -9,6 +9,7 @@ import { RouterLinkPage3Component } from './router-link-page3/router-link-page3.
 import { HomePageComponent } from './home-page/home-page.component';
 import { VirtualScrollComponent } from './virtual-scroll/virtual-scroll.component';
 import { VirtualScrollDetailComponent } from './virtual-scroll-detail/virtual-scroll-detail.component';
+import { VirtualScrollTrackByComponent } from './virtual-scroll-track-by/virtual-scroll-track-by.component';
 import { NestedOutletComponent } from './nested-outlet/nested-outlet.component';
 import { NestedOutletPageComponent } from './nested-outlet-page/nested-outlet-page.component';
 import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-page2.component';
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'slides', component: SlidesComponent },
   { path: 'virtual-scroll', component: VirtualScrollComponent },
   { path: 'virtual-scroll-detail/:itemId', component: VirtualScrollDetailComponent },
+  { path: 'virtual-scroll-track-by', component: VirtualScrollTrackByComponent },
   { path: 'tabs', redirectTo: '/tabs/account', pathMatch: 'full' },
   {
     path: 'navigation',
