@@ -97,6 +97,17 @@ export class VirtualScrollController {
       return a;
     }, []);
 
+    /**
+     * Check order of Array
+     */
+    const newOrder = recentArray.map((item, i) => trackByFn(i, item));
+    const incomingOrder = incomingArray.map((item, i) => trackByFn(i, item));
+    for(let i = 0; i < newOrder.length; i++ ) {
+      if (newOrder[i] !== incomingOrder[i]) {
+        checkDirty.push(i);
+      }
+    }
+
     return {
       trackByArray: recentArray,
       dirtyCheckPosition: checkDirty.length === 0 ? null: Math.min.apply(null, checkDirty),

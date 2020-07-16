@@ -1,15 +1,20 @@
 
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      TrackBy
-    </ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="start">
       <ion-button (click)="addItems('top')">
         <ion-icon name="chevron-up" slot="icon-only"></ion-icon>
       </ion-button>
       <ion-button (click)="addItems('last')">
         <ion-icon name="chevron-down" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      TrackBy
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="resetItem()">
+        <ion-icon name="reorder-two" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

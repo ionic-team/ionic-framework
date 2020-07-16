@@ -22,6 +22,9 @@ export class VirtualScrollTrackByComponent {
       [{ id: this.itemId, name: `TopItem-${this.itemId}` }].concat(this.items)
       : this.items.concat([{ id: this.itemId, name: `BottomItem-${this.itemId}` }]);
 
+    /**
+     * USE API
+     */
     const { trackByArray, dirtyCheckPosition } = this.virtualScrollController.diff(this.items, newItem, this.trackByFn);
     this.items = trackByArray as any;
     if (dirtyCheckPosition !== null) {
@@ -37,6 +40,9 @@ export class VirtualScrollTrackByComponent {
       return d;
     });
 
+    /**
+     * USE API
+     */
     const { trackByArray, changeRangePositions } = this.virtualScrollController.diff(this.items, newItem, this.trackByFn);
     this.items = trackByArray as any;
     changeRangePositions.forEach(range => {
@@ -49,8 +55,25 @@ export class VirtualScrollTrackByComponent {
       return d.id !== itemId
     });
 
+    /**
+     * USE API
+     */
     const { trackByArray, dirtyCheckPosition } = this.virtualScrollController.diff(this.items, newItem, this.trackByFn);
     this.items = trackByArray as any;
+    if (dirtyCheckPosition !== null) {
+      this.virtualScroll.checkRange(dirtyCheckPosition, this.items.length);
+    }
+  }
+
+  resetItem() {
+    const newItem = Array.from({length: 10}, (_, i) => ({ id: i, name: `${i}`}));
+
+    /**
+     * USE API
+     */
+    const { trackByArray, dirtyCheckPosition } = this.virtualScrollController.diff(this.items, newItem, this.trackByFn);
+    this.items = trackByArray as any;
+    console.log([trackByArray.length, dirtyCheckPosition]);
     if (dirtyCheckPosition !== null) {
       this.virtualScroll.checkRange(dirtyCheckPosition);
     }
