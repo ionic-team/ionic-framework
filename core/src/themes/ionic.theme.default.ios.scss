@@ -33,4 +33,5 @@ $item-ios-color:                            var(--ion-item-color, $text-color) !
 
 // iOS Card
 // --------------------------------------------------
-$card-ios-background:                        var(--ion-card-background, $background-color) !default;
+$card-ios-background:                        var(--ion-card-background, $item-ios-background) !default;
+$card-ios-color:                             var(--ion-card-color, $text-color-step-400) !default;

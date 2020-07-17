@@ -6,7 +6,7 @@
 
 :host {
   --background: #{$card-md-background};
-  --color: #{$card-md-text-color};
+  --color: #{$card-md-color};
 
   @include margin($card-md-margin-top, $card-md-margin-end, $card-md-margin-bottom, $card-md-margin-start);
   @include border-radius($card-md-border-radius);
