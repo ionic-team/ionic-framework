@@ -1,6 +1,6 @@
 const port = 3000;
 
-describe.only('Tab Context', () => {
+describe('Tab Context', () => {
   /*
     This spec tests the IonTabsContext API
   */
