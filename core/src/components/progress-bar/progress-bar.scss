@@ -66,8 +66,11 @@
 
 .progress,
 .progress-indeterminate {
-  background: var(--progress-background);
+  /* stylelint-disable-next-line property-blacklist */
   border-radius: var(--progress-border-radius);
+
+  background: var(--progress-background);
+
   z-index: 2;
 }
 
