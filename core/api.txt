@@ -479,9 +479,9 @@ ion-input,prop,type,"date" | "datetime-local" | "email" | "month" | "number" | "
 ion-input,prop,value,null | number | string | undefined,'',false,false
 ion-input,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
 ion-input,method,setFocus,setFocus() => Promise<void>
-ion-input,event,ionBlur,void,true
+ion-input,event,ionBlur,FocusEvent,true
 ion-input,event,ionChange,InputChangeEventDetail,true
-ion-input,event,ionFocus,void,true
+ion-input,event,ionFocus,FocusEvent,true
 ion-input,event,ionInput,KeyboardEvent,true
 ion-input,css-prop,--background
 ion-input,css-prop,--color
@@ -1229,9 +1229,9 @@ ion-textarea,prop,value,null | string | undefined,'',false,false
 ion-textarea,prop,wrap,"hard" | "off" | "soft" | undefined,undefined,false,false
 ion-textarea,method,getInputElement,getInputElement() => Promise<HTMLTextAreaElement>
 ion-textarea,method,setFocus,setFocus() => Promise<void>
-ion-textarea,event,ionBlur,void,true
+ion-textarea,event,ionBlur,FocusEvent,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
-ion-textarea,event,ionFocus,void,true
+ion-textarea,event,ionFocus,FocusEvent,true
 ion-textarea,event,ionInput,KeyboardEvent,true
 ion-textarea,css-prop,--background
 ion-textarea,css-prop,--border-radius
