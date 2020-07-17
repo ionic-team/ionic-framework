@@ -325,9 +325,9 @@ export class InputExample {
 
 | Event       | Description                             | Type                                  |
 | ----------- | --------------------------------------- | ------------------------------------- |
-| `ionBlur`   | Emitted when the input loses focus.     | `CustomEvent<void>`                   |
+| `ionBlur`   | Emitted when the input loses focus.     | `CustomEvent<FocusEvent>`             |
 | `ionChange` | Emitted when the value has changed.     | `CustomEvent<InputChangeEventDetail>` |
-| `ionFocus`  | Emitted when the input has focus.       | `CustomEvent<void>`                   |
+| `ionFocus`  | Emitted when the input has focus.       | `CustomEvent<FocusEvent>`             |
 | `ionInput`  | Emitted when a keyboard input occurred. | `CustomEvent<KeyboardEvent>`          |
 
 
