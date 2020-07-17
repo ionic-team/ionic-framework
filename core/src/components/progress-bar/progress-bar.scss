@@ -67,7 +67,7 @@
 .progress,
 .progress-indeterminate {
   background: var(--progress-background);
-
+  border-radius: var(--progress-border-radius);
   z-index: 2;
 }
 
