@@ -47,7 +47,7 @@ export type AutocompleteTypes = (
 | 'tel-extension' | 'impp' | 'url' | 'photo');
 
 
-export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time';
+export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time' | 'week' | 'month' | 'datetime-local';
 export type Side = 'start' | 'end';
 export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Color = PredefinedColors | string;

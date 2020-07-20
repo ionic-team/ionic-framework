@@ -35,6 +35,9 @@ const Main: React.FC<MainProps> = () => {
           <IonItem routerLink="/replace-action">
             <IonLabel>Replace Action</IonLabel>
           </IonItem>
+          <IonItem routerLink="/tab-context">
+            <IonLabel>Tab Context</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

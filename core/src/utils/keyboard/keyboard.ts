@@ -5,9 +5,6 @@ const KEYBOARD_THRESHOLD = 150;
 let previousVisualViewport: any = {};
 let currentVisualViewport: any = {};
 
-let previousLayoutViewport: any = {};
-let currentLayoutViewport: any = {};
-
 let keyboardOpen = false;
 
 /**
@@ -16,8 +13,6 @@ let keyboardOpen = false;
 export const resetKeyboardAssist = () => {
   previousVisualViewport = {};
   currentVisualViewport = {};
-  previousLayoutViewport = {};
-  currentLayoutViewport = {};
   keyboardOpen = false;
 };
 
@@ -27,7 +22,6 @@ export const startKeyboardAssist = (win: Window) => {
   if (!(win as any).visualViewport) { return; }
 
   currentVisualViewport = copyVisualViewport((win as any).visualViewport);
-  currentLayoutViewport = copyLayoutViewport(win);
 
   (win as any).visualViewport.onresize = () => {
     trackViewportChanges(win);
@@ -67,7 +61,7 @@ export const setKeyboardClose = (win: Window) => {
  * of the previous visual viewport height minus the current
  * visual viewport height is greater than KEYBOARD_THRESHOLD
  *
- * We need to be able to accomodate users who have zooming
+ * We need to be able to accommodate users who have zooming
  * enabled in their browser (or have zoomed in manually) which
  * is why we take into account the current visual viewport's
  * scale value.
@@ -77,8 +71,7 @@ export const keyboardDidOpen = (): boolean => {
   return (
     !keyboardOpen &&
     previousVisualViewport.width === currentVisualViewport.width &&
-    scaledHeightDifference > KEYBOARD_THRESHOLD &&
-    !layoutViewportDidChange()
+    scaledHeightDifference > KEYBOARD_THRESHOLD
   );
 };
 
@@ -98,20 +91,6 @@ export const keyboardDidResize = (win: Window): boolean => {
  */
 export const keyboardDidClose = (win: Window): boolean => {
   return keyboardOpen && currentVisualViewport.height === win.innerHeight;
-};
-
-/**
- * Determine if the layout viewport has
- * changed since the last visual viewport change.
- * It is rare that a layout viewport change is not
- * associated with a visual viewport change so we
- * want to make sure we don't get any false positives.
- */
-const layoutViewportDidChange = (): boolean => {
-  return (
-    currentLayoutViewport.width !== previousLayoutViewport.width ||
-    currentLayoutViewport.height !== previousLayoutViewport.height
-  );
 };
 
 /**
@@ -143,9 +122,6 @@ const fireKeyboardCloseEvent = (win: Window): void => {
 export const trackViewportChanges = (win: Window) => {
   previousVisualViewport = { ...currentVisualViewport };
   currentVisualViewport = copyVisualViewport((win as any).visualViewport);
-
-  previousLayoutViewport = { ...currentLayoutViewport };
-  currentLayoutViewport = copyLayoutViewport(win);
 };
 
 /**
@@ -161,16 +137,5 @@ export const copyVisualViewport = (visualViewport: any): any => {
     pageTop: visualViewport.pageTop,
     pageLeft: visualViewport.pageLeft,
     scale: visualViewport.scale
-  };
-};
-
-/**
- * Creates a deep copy of the layout viewport
- * at a given state
- */
-export const copyLayoutViewport = (win: Window): any => {
-  return {
-    width: win.innerWidth,
-    height: win.innerHeight
   };
 };
