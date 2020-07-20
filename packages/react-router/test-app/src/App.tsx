@@ -38,7 +38,6 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-
         <Route path="/" component={Main} exact />
         <Route path="/routing" component={Routing} />
         <Route path="/dynamic-routes" component={DynamicRoutes} />
@@ -48,7 +47,6 @@ const App: React.FC = () => {
         <Route path="/nested-outlet2" component={NestedOutlet2} />
         <Route path="/replace-action" component={ReplaceAction} />
         <Route path="/tab-context" component={TabsContext} />
-
       </IonReactRouter>
     </IonApp>
   );
