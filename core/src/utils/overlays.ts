@@ -31,10 +31,10 @@ export const popoverController = /*@__PURE__*/createController<PopoverOptions, H
 export const toastController = /*@__PURE__*/createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
 export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
+  /* tslint:disable-next-line */
   if (typeof document !== 'undefined') {
     connectListeners(document);
   }
-  
   const overlayIndex = lastId++;
   el.overlayIndex = overlayIndex;
   if (!el.hasAttribute('id')) {
@@ -43,18 +43,19 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
 };
 
 export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, opts: object | undefined): Promise<T> => {
+  /* tslint:disable-next-line */
   if (typeof customElements !== 'undefined') {
     return customElements.whenDefined(tagName).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
       element.classList.add('overlay-hidden');
-  
+
       // convert the passed in overlay options into props
       // that get passed down into the new overlay
       Object.assign(element, opts);
-  
+
       // append the overlay element to the document body
       getAppRoot(document).appendChild(element);
-  
+
       return element.componentOnReady() as any;
     });
   }
