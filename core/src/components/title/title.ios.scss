@@ -41,7 +41,7 @@
 
 :host(.title-large) {
   @include padding(0, 16px);
-  @include transform-origin(start, top);
+  @include transform-origin(start, center);
 
   bottom: 0;
 
