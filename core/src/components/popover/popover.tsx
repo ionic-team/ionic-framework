@@ -115,7 +115,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionPopoverDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  constructor() {
+  connectedCallback() {
     prepareOverlay(this.el);
   }
 

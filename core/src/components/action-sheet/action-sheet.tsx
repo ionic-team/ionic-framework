@@ -117,7 +117,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     return present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
   }
 
-  constructor() {
+  connectedCallback() {
     prepareOverlay(this.el);
   }
 
