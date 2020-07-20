@@ -130,7 +130,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
   }
 
-  constructor() {
+  connectedCallback() {
     prepareOverlay(this.el);
   }
 

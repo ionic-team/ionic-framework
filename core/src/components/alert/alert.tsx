@@ -167,7 +167,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     }) as AlertInput);
   }
 
-  constructor() {
+  connectedCallback() {
     prepareOverlay(this.el);
   }
 
