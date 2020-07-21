@@ -136,6 +136,7 @@
     </ion-content>
 
     <script>
+    document.querySelector('ion-input').addEventListener('ionBlur', (ev) => { console.log(ev)})
       function toggleBoolean(id, prop) {
         var el = document.getElementById(id);
 

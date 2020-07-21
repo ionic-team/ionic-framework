@@ -2,14 +2,34 @@ import { JSX as LocalJSX } from '@ionic/core';
 import React, { Fragment } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
+import PageManager from '../../routing/PageManager';
 import { IonRouterOutlet } from '../IonRouterOutlet';
 
 import { IonTabBar } from './IonTabBar';
 import { IonTabsContext, IonTabsContextState } from './IonTabsContext';
 
+class IonTabsElement extends HTMLDivElement {
+  constructor() {
+    super();
+  }
+}
+
+if (window && window.customElements) {
+  customElements.define('ion-tabs', IonTabsElement, { extends: 'div' });
+}
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'ion-tabs': any;
+    }
+  }
+}
+
 type ChildFunction = (ionTabContext: IonTabsContextState) => React.ReactNode;
 
 interface Props extends LocalJSX.IonTabs {
+  className?: string;
   children: ChildFunction | React.ReactNode;
 }
 
@@ -71,7 +91,7 @@ export class IonTabs extends React.Component<Props> {
         return;
       }
       if (child.type === IonRouterOutlet) {
-        outlet = child;
+        outlet = React.cloneElement(child, { tabs: true });
       } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
         outlet = child.props.children[0];
       }
@@ -96,21 +116,34 @@ export class IonTabs extends React.Component<Props> {
       throw new Error('IonTabs must contain an IonRouterOutlet');
     }
     if (!tabBar) {
-      // TODO, this is not required
       throw new Error('IonTabs needs a IonTabBar');
     }
+
+    const { className, ...props } = this.props;
 
     return (
       <IonTabsContext.Provider
         value={this.ionTabContextState}
       >
-        <div style={hostStyles}>
-          {tabBar.props.slot === 'top' ? tabBar : null}
-          <div style={tabsInner} className="tabs-inner">
-            {outlet}
-          </div>
-          {tabBar.props.slot === 'bottom' ? tabBar : null}
-        </div>
+        {this.context.hasIonicRouter() ? (
+          <PageManager className={className ? `${className}` : ''} routeInfo={this.context.routeInfo} {...props}>
+            <ion-tabs className="ion-tabs" style={hostStyles}>
+              {tabBar.props.slot === 'top' ? tabBar : null}
+              <div style={tabsInner} className="tabs-inner">
+                {outlet}
+              </div>
+              {tabBar.props.slot === 'bottom' ? tabBar : null}
+            </ion-tabs>
+          </PageManager>
+        ) : (
+            <div className={className ? `${className}` : 'ion-tabs'} {...props} style={hostStyles}>
+              {tabBar.props.slot === 'top' ? tabBar : null}
+              <div style={tabsInner} className="tabs-inner">
+                {outlet}
+              </div>
+              {tabBar.props.slot === 'bottom' ? tabBar : null}
+            </div>
+          )}
       </IonTabsContext.Provider >
     );
   }

@@ -1,10 +1,12 @@
+import { AnimationBuilder } from '@ionic/core';
 import React from 'react';
 import ReactDom from 'react-dom';
 
 import { NavContext } from '../contexts/NavContext';
+import { RouterOptions } from '../models';
+import { RouterDirection } from '../models/RouterDirection';
 
-import { RouterDirection } from './hrefprops';
-import { attachProps, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
+import { attachProps, camelToDashCase, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.Ref<ElementType>;
@@ -12,6 +14,8 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   routerLink?: string;
   ref?: React.Ref<any>;
   routerDirection?: RouterDirection;
+  routerOptions?: RouterOptions;
+  routerAnimation?: AnimationBuilder;
 }
 
 export const createReactComponent = <PropType, ElementType>(
@@ -36,10 +40,10 @@ export const createReactComponent = <PropType, ElementType>(
     }
 
     private handleClick = (e: React.MouseEvent<PropType>) => {
-      const { routerLink, routerDirection } = this.props;
+      const { routerLink, routerDirection, routerOptions, routerAnimation } = this.props;
       if (routerLink !== undefined) {
         e.preventDefault();
-        this.context.navigate(routerLink, routerDirection);
+        this.context.navigate(routerLink, routerDirection, undefined, routerAnimation, routerOptions);
       }
     }
 
@@ -52,6 +56,8 @@ export const createReactComponent = <PropType, ElementType>(
           if (isCoveredByReact(eventName)) {
             (acc as any)[name] = (cProps as any)[name];
           }
+        } else if (typeof (cProps as any)[name] === 'string') {
+          (acc as any)[camelToDashCase(name)] = (cProps as any)[name];
         }
         return acc;
       }, {});

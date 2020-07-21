@@ -21,13 +21,17 @@ export { IonPage } from './IonPage';
 export { IonTabsContext, IonTabsContextState } from './navigation/IonTabsContext';
 export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
+export { IonTabButton } from './navigation/IonTabButton';
 export { IonBackButton } from './navigation/IonBackButton';
 export { IonRouterOutlet } from './IonRouterOutlet';
 export { IonIcon } from './IonIcon';
+export * from './IonRoute';
+export * from './IonRedirect';
+export * from './IonRouterContext';
 
 // Utils
-export { isPlatform, getPlatforms, getConfig } from './utils';
-export { RouterDirection } from './hrefprops';
+export { isPlatform, getPlatforms, getConfig, ionRenderToString } from './utils';
+export * from './hrefprops';
 
 // Ionic Animations
 export { CreateAnimation } from './CreateAnimation';
@@ -51,4 +55,6 @@ addIcons({
 
 // TODO: defineCustomElements() is asyncronous
 // We need to use the promise
-defineCustomElements(window);
+if (typeof window !== 'undefined') {
+  defineCustomElements(window);
+}

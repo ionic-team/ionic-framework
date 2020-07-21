@@ -266,7 +266,7 @@ export class VirtualScroll implements ComponentInterface {
     let node: HTMLElement | null = el;
     while (node && node !== contentEl) {
       topOffset += node.offsetTop;
-      node = node.parentElement;
+      node = node.offsetParent as HTMLElement;
     }
     this.viewportOffset = topOffset;
     if (scrollEl) {

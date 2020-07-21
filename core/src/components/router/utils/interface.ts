@@ -1,4 +1,5 @@
 import { AnimationBuilder, ComponentProps } from '../../../interface';
+import { NavigationHookCallback } from '../../route/route-interface';
 
 export interface HTMLStencilElement extends HTMLElement {
   componentOnReady(): Promise<this>;
@@ -36,6 +37,8 @@ export interface RouteEntry {
   id: string;
   path: string[];
   params: {[key: string]: any} | undefined;
+  beforeLeave?: NavigationHookCallback;
+  beforeEnter?: NavigationHookCallback;
 }
 
 export interface RouteNode extends RouteEntry {

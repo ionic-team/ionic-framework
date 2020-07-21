@@ -513,7 +513,7 @@ export class Nav implements NavOutlet {
   // 7. _transitionStart(): called once the transition actually starts, it initializes the Animation underneath.
   // 8. _transitionFinish(): called once the transition finishes
   // 9. _cleanup(): syncs the navigation internal state with the DOM. For example it removes the pages from the DOM or hides/show them.
-  private queueTrns(
+  private async queueTrns(
     ti: TransitionInstruction,
     done: TransitionDoneFn | undefined
   ): Promise<boolean> {
@@ -526,6 +526,25 @@ export class Nav implements NavOutlet {
       ti.reject = reject;
     });
     ti.done = done;
+
+    /**
+     * If using router, check to see if navigation hooks
+     * will allow us to perform this transition. This
+     * is required in order for hooks to work with
+     * the ion-back-button or swipe to go back.
+     */
+    if (ti.opts && ti.opts.updateURL !== false && this.useRouter) {
+      const router = document.querySelector('ion-router');
+      if (router) {
+        const canTransition = await router.canTransition();
+        if (canTransition === false) {
+          return Promise.resolve(false);
+        } else if (typeof canTransition === 'string') {
+          router.push(canTransition, ti.opts!.direction || 'back');
+          return Promise.resolve(false);
+        }
+      }
+    }
 
     // Normalize empty
     if (ti.insertViews && ti.insertViews.length === 0) {

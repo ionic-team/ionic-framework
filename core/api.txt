@@ -475,13 +475,13 @@ ion-input,prop,required,boolean,false,false,false
 ion-input,prop,size,number | undefined,undefined,false,false
 ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
-ion-input,prop,type,"date" | "email" | "number" | "password" | "search" | "tel" | "text" | "time" | "url",'text',false,false
+ion-input,prop,type,"date" | "datetime-local" | "email" | "month" | "number" | "password" | "search" | "tel" | "text" | "time" | "url" | "week",'text',false,false
 ion-input,prop,value,null | number | string | undefined,'',false,false
 ion-input,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
 ion-input,method,setFocus,setFocus() => Promise<void>
-ion-input,event,ionBlur,void,true
+ion-input,event,ionBlur,FocusEvent,true
 ion-input,event,ionChange,InputChangeEventDetail,true
-ion-input,event,ionFocus,void,true
+ion-input,event,ionFocus,FocusEvent,true
 ion-input,event,ionInput,KeyboardEvent,true
 ion-input,css-prop,--background
 ion-input,css-prop,--color
@@ -933,6 +933,8 @@ ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false,false
 ion-ripple-effect,method,addRipple,addRipple(x: number, y: number) => Promise<() => void>
 
 ion-route,none
+ion-route,prop,beforeEnter,(() => boolean | NavigationHookOptions | Promise<NavigationHookResult>) | undefined,undefined,false,false
+ion-route,prop,beforeLeave,(() => boolean | NavigationHookOptions | Promise<NavigationHookResult>) | undefined,undefined,false,false
 ion-route,prop,component,string,undefined,true,false
 ion-route,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-route,prop,url,string,'',false,false
@@ -1070,7 +1072,7 @@ ion-select,prop,value,any,undefined,false,false
 ion-select,method,open,open(event?: UIEvent | undefined) => Promise<any>
 ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
-ion-select,event,ionChange,SelectChangeEventDetail,true
+ion-select,event,ionChange,SelectChangeEventDetail<any>,true
 ion-select,event,ionFocus,void,true
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
@@ -1227,9 +1229,9 @@ ion-textarea,prop,value,null | string | undefined,'',false,false
 ion-textarea,prop,wrap,"hard" | "off" | "soft" | undefined,undefined,false,false
 ion-textarea,method,getInputElement,getInputElement() => Promise<HTMLTextAreaElement>
 ion-textarea,method,setFocus,setFocus() => Promise<void>
-ion-textarea,event,ionBlur,void,true
+ion-textarea,event,ionBlur,FocusEvent,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
-ion-textarea,event,ionFocus,void,true
+ion-textarea,event,ionFocus,FocusEvent,true
 ion-textarea,event,ionInput,KeyboardEvent,true
 ion-textarea,css-prop,--background
 ion-textarea,css-prop,--border-radius

@@ -1,9 +1,9 @@
-# Ionic
+# Ionic Framework
 
-[Ionic](https://ionicframework.com/) is the open-source mobile app development framework that makes it easy to
+[Ionic Framework](https://ionicframework.com/) is the open-source mobile app development framework that makes it easy to
 build top quality native and progressive web apps with web technologies.
 
-Ionic is based on [Web Components](https://www.webcomponents.org/introduction) and comes with many significant performance, usability, and feature improvements over the past versions.
+Ionic Framework is based on [Web Components](https://www.webcomponents.org/introduction) and comes with many significant performance, usability, and feature improvements over the past versions.
 
 
 ### Packages
@@ -42,7 +42,7 @@ It is the perfect starting point for learning and building your own app.
 
 ### Future Goals
 
-As Ionic components migrate to the web component standard, a goal of ours is to have Ionic components easily work within all of the popular frameworks.
+As Ionic Framework components migrate to the web component standard, a goal of ours is to have Ionic Framework easily work within all of the popular frameworks.
 
 ### Earlier Versions
 

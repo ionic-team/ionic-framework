@@ -150,7 +150,6 @@ export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, trans
     const titleDiv = toolbar.innerTitleEl;
     if (!ionTitle || ionTitle.size !== 'large') { return; }
 
-    titleDiv.style.transformOrigin = 'left center';
     titleDiv.style.transition = (transition) ? TRANSITION : '';
     titleDiv.style.transform = `scale3d(${scale}, ${scale}, 1)`;
   });
