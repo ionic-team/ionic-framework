@@ -1,33 +1,11 @@
-import Vue, { VNode, CreateElement } from 'vue';
+import { FunctionalComponent, h } from 'vue';
 
-export const createCommonRender = (tagName: string, eventNames: string[] = []) =>
-  function (createElement: CreateElement): VNode {
-    const vueElement = this as Vue;
-    const allListeners = eventNames.reduce((listeners, eventName) => {
-      return {
-        ...listeners,
-        [eventName]: (event: CustomEvent<any>) => {
-          let emittedValue = event.detail;
-          if (event.detail.value) {
-            emittedValue = event.detail.value;
-          }
-          vueElement.$emit(eventName, emittedValue);
-        },
-      };
-    }, vueElement.$listeners);
+export const defineContainer = <Props extends object>(name: string, componentProps: string[]) => {
+  const Container: FunctionalComponent<Props> = (props, { slots }) =>
+    h(name, props, slots.default && slots.default());
 
-    return createElement(
-      tagName,
-      {
-        ref: 'wc',
-        domProps: vueElement.$props,
-        on: allListeners,
-      },
-      [vueElement.$slots.default],
-    );
-  };
+  Container.displayName = name;
+  Container.props = componentProps;
 
-export const createCommonMethod = (methodName: string) =>
-  function (...args: any[]) {
-    this.$refs.wc[methodName](...args);
-  } as unknown;
+  return Container;
+};

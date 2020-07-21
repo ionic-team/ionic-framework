@@ -2,15 +2,19 @@
   "name": "@ionic/vue",
   "version": "0.1.0",
   "description": "Vue specific wrapper for @ionic/core",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/types/components.d.ts",
   "scripts": {
-    "build": "stencil build --docs",
-    "test": "echo \"No tests specified\" && exit 0",
-    "start": "stencil build --dev --watch --serve",
-    "generate": "stencil generate"
+    "test": "jest",
+    "build": "npm run clean && npm run compile",
+    "clean": "rimraf dist",
+    "compile": "npm run tsc",
+    "tsc": "tsc -p ."
   },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ionic-team/ionic.git"
@@ -37,7 +41,14 @@
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "devDependencies": {
     "@stencil/core": "^1.16.0",
-    "vue": "^3.0.0-beta.19",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.22.1",
+    "typescript": "^3.9.7",
+    "vue": "^3.0.0-rc.2",
     "workbox-build": "4.3.1"
+  },
+  "dependencies": {
+    "@ionic/core": "^5.2.3",
+    "ionicons": "^5.1.2"
   }
 }

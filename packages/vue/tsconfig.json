@@ -1,26 +1,26 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
-    "declaration": false,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "es2017"
-    ],
+    "esModuleInterop": true,
+    "lib": ["dom", "es2015"],
+    "module": "es2015",
     "moduleResolution": "node",
-    "module": "esnext",
-    "target": "es2017",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "outDir": "dist",
+    "removeComments": false,
+    "sourceMap": true,
     "jsx": "react",
-    "jsxFactory": "h"
+    "target": "es2015"
   },
-  "include": [
-    "src",
-    "types/jsx.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["./__tests__/**", "node_modules", "setupTests.ts"],
+  "compileOnSave": false,
+  "buildOnSave": false
 }
