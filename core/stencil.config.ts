@@ -1,6 +1,6 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
-import { vueOutputTarget } from '@stencil/vue-output-target';
+import { vueOutputTarget } from '@stencil/vue3-output-target';
 
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
