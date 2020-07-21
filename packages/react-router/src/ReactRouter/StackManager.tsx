@@ -55,7 +55,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   async handlePageTransition(routeInfo: RouteInfo) {
-    // let shouldReRender = false;
 
     // If routerOutlet isn't quite ready, give it another try in a moment
     if (!this.routerOutletElement || !this.routerOutletElement.commit) {
@@ -172,12 +171,16 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       () => {
         this.forceUpdate();
       });
+
     return (
       <StackContext.Provider value={this.stackContextValue}>
         {React.cloneElement(ionRouterOutlet as any, {
           ref: (node: HTMLIonRouterOutletElement) => {
             if (ionRouterOutlet.props.setRef) {
               ionRouterOutlet.props.setRef(node);
+            }
+            if (ionRouterOutlet.props.forwardedRef) {
+              ionRouterOutlet.props.forwardedRef.current = node;
             }
             this.routerOutletElement = node;
             const { ref } = ionRouterOutlet as any;

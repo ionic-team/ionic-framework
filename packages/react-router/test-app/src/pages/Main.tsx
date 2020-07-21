@@ -38,6 +38,9 @@ const Main: React.FC<MainProps> = () => {
           <IonItem routerLink="/tab-context">
             <IonLabel>Tab Context</IonLabel>
           </IonItem>
+          <IonItem routerLink="/outlet-ref">
+            <IonLabel>Outlet Ref</IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

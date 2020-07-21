@@ -9,7 +9,7 @@ import { StackContext } from './StackContext';
 
 interface OutletPageManagerProps {
   className?: string;
-  forwardedRef?: React.RefObject<HTMLDivElement>;
+  forwardedRef?: React.RefObject<HTMLIonRouterOutletElement>;
   routeInfo?: RouteInfo;
   StackManager: any;
 }
