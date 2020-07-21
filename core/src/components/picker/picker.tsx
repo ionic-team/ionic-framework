@@ -100,7 +100,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionPickerDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  constructor() {
+  connectedCallback() {
     prepareOverlay(this.el);
   }
 
