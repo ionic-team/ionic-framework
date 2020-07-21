@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "0.1.0",
+  "version": "5.3.0-dev.202007211859.72ff371",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "test": "jest",
@@ -11,7 +11,7 @@
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/proxies.d.ts",
   "files": [
     "dist/"
   ],
@@ -48,7 +48,7 @@
     "workbox-build": "4.3.1"
   },
   "dependencies": {
-    "@ionic/core": "^5.2.3",
+    "@ionic/core": "5.3.0-dev.202007211859.72ff371",
     "ionicons": "^5.1.2"
   }
 }

@@ -583,7 +583,9 @@ export const IonRippleEffect = /*@__PURE__*/ defineContainer<JSX.IonRippleEffect
 export const IonRoute = /*@__PURE__*/ defineContainer<JSX.IonRoute>('ion-route', [
   'url',
   'component',
-  'componentProps'
+  'componentProps',
+  'beforeLeave',
+  'beforeEnter'
 ]);
 
 
