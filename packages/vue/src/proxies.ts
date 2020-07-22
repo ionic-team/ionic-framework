@@ -19,7 +19,11 @@ export const IonActionSheet = /*@__PURE__*/ defineContainer<JSX.IonActionSheet>(
   'header',
   'subHeader',
   'translucent',
-  'animated'
+  'animated',
+  'ionActionSheetDidPresent',
+  'ionActionSheetWillPresent',
+  'ionActionSheetWillDismiss',
+  'ionActionSheetDidDismiss'
 ]);
 
 
@@ -36,7 +40,11 @@ export const IonAlert = /*@__PURE__*/ defineContainer<JSX.IonAlert>('ion-alert',
   'inputs',
   'backdropDismiss',
   'translucent',
-  'animated'
+  'animated',
+  'ionAlertDidPresent',
+  'ionAlertWillPresent',
+  'ionAlertWillDismiss',
+  'ionAlertDidDismiss'
 ]);
 
 
@@ -64,7 +72,8 @@ export const IonBackButton = /*@__PURE__*/ defineContainer<JSX.IonBackButton>('i
 export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-backdrop', [
   'visible',
   'tappable',
-  'stopPropagation'
+  'stopPropagation',
+  'ionBackdropTap'
 ]);
 
 
@@ -88,7 +97,9 @@ export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-butto
   'size',
   'strong',
   'target',
-  'type'
+  'type',
+  'ionFocus',
+  'ionBlur'
 ]);
 
 
@@ -138,7 +149,11 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox>('ion-c
   'checked',
   'indeterminate',
   'disabled',
-  'value'
+  'value',
+  'ionChange',
+  'ionFocus',
+  'ionBlur',
+  'ionStyle'
 ]);
 
 
@@ -182,7 +197,10 @@ export const IonContent = /*@__PURE__*/ defineContainer<JSX.IonContent>('ion-con
   'forceOverscroll',
   'scrollX',
   'scrollY',
-  'scrollEvents'
+  'scrollEvents',
+  'ionScrollStart',
+  'ionScroll',
+  'ionScrollEnd'
 ]);
 
 
@@ -208,7 +226,12 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'dayShortNames',
   'pickerOptions',
   'placeholder',
-  'value'
+  'value',
+  'ionCancel',
+  'ionChange',
+  'ionFocus',
+  'ionBlur',
+  'ionStyle'
 ]);
 
 
@@ -234,7 +257,9 @@ export const IonFabButton = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion
   'translucent',
   'type',
   'size',
-  'closeIcon'
+  'closeIcon',
+  'ionFocus',
+  'ionBlur'
 ]);
 
 
@@ -277,14 +302,18 @@ export const IonIcon = /*@__PURE__*/ defineContainer<JSX.IonIcon>('ion-icon', [
 
 export const IonImg = /*@__PURE__*/ defineContainer<JSX.IonImg>('ion-img', [
   'alt',
-  'src'
+  'src',
+  'ionImgWillLoad',
+  'ionImgDidLoad',
+  'ionError'
 ]);
 
 
 export const IonInfiniteScroll = /*@__PURE__*/ defineContainer<JSX.IonInfiniteScroll>('ion-infinite-scroll', [
   'threshold',
   'disabled',
-  'position'
+  'position',
+  'ionInfinite'
 ]);
 
 
@@ -321,7 +350,12 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput>('ion-input',
   'step',
   'size',
   'type',
-  'value'
+  'value',
+  'ionInput',
+  'ionChange',
+  'ionBlur',
+  'ionFocus',
+  'ionStyle'
 ]);
 
 
@@ -366,18 +400,21 @@ export const IonItemOption = /*@__PURE__*/ defineContainer<JSX.IonItemOption>('i
 
 
 export const IonItemOptions = /*@__PURE__*/ defineContainer<JSX.IonItemOptions>('ion-item-options', [
-  'side'
+  'side',
+  'ionSwipe'
 ]);
 
 
 export const IonItemSliding = /*@__PURE__*/ defineContainer<JSX.IonItemSliding>('ion-item-sliding', [
-  'disabled'
+  'disabled',
+  'ionDrag'
 ]);
 
 
 export const IonLabel = /*@__PURE__*/ defineContainer<JSX.IonLabel>('ion-label', [
   'color',
-  'position'
+  'position',
+  'ionStyle'
 ]);
 
 
@@ -405,7 +442,11 @@ export const IonLoading = /*@__PURE__*/ defineContainer<JSX.IonLoading>('ion-loa
   'showBackdrop',
   'spinner',
   'translucent',
-  'animated'
+  'animated',
+  'ionLoadingDidPresent',
+  'ionLoadingWillPresent',
+  'ionLoadingWillDismiss',
+  'ionLoadingDidDismiss'
 ]);
 
 
@@ -416,7 +457,12 @@ export const IonMenu = /*@__PURE__*/ defineContainer<JSX.IonMenu>('ion-menu', [
   'disabled',
   'side',
   'swipeGesture',
-  'maxEdgeStart'
+  'maxEdgeStart',
+  'ionWillOpen',
+  'ionWillClose',
+  'ionDidOpen',
+  'ionDidClose',
+  'ionMenuChange'
 ]);
 
 
@@ -448,7 +494,11 @@ export const IonModal = /*@__PURE__*/ defineContainer<JSX.IonModal>('ion-modal',
   'showBackdrop',
   'animated',
   'swipeToClose',
-  'presentingElement'
+  'presentingElement',
+  'ionModalDidPresent',
+  'ionModalWillPresent',
+  'ionModalWillDismiss',
+  'ionModalDidDismiss'
 ]);
 
 
@@ -458,7 +508,10 @@ export const IonNav = /*@__PURE__*/ defineContainer<JSX.IonNav>('ion-nav', [
   'animated',
   'animation',
   'rootParams',
-  'root'
+  'root',
+  'ionNavWillLoad',
+  'ionNavWillChange',
+  'ionNavDidChange'
 ]);
 
 
@@ -486,7 +539,11 @@ export const IonPicker = /*@__PURE__*/ defineContainer<JSX.IonPicker>('ion-picke
   'duration',
   'showBackdrop',
   'backdropDismiss',
-  'animated'
+  'animated',
+  'ionPickerDidPresent',
+  'ionPickerWillPresent',
+  'ionPickerWillDismiss',
+  'ionPickerDidDismiss'
 ]);
 
 
@@ -503,7 +560,11 @@ export const IonPopover = /*@__PURE__*/ defineContainer<JSX.IonPopover>('ion-pop
   'event',
   'showBackdrop',
   'translucent',
-  'animated'
+  'animated',
+  'ionPopoverDidPresent',
+  'ionPopoverWillPresent',
+  'ionPopoverWillDismiss',
+  'ionPopoverDidDismiss'
 ]);
 
 
@@ -520,14 +581,18 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio>('ion-radio',
   'color',
   'name',
   'disabled',
-  'value'
+  'value',
+  'ionStyle',
+  'ionFocus',
+  'ionBlur'
 ]);
 
 
 export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('ion-radio-group', [
   'allowEmptySelection',
   'name',
-  'value'
+  'value',
+  'ionChange'
 ]);
 
 
@@ -543,7 +608,11 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range',
   'step',
   'ticks',
   'disabled',
-  'value'
+  'value',
+  'ionChange',
+  'ionStyle',
+  'ionFocus',
+  'ionBlur'
 ]);
 
 
@@ -553,7 +622,10 @@ export const IonRefresher = /*@__PURE__*/ defineContainer<JSX.IonRefresher>('ion
   'closeDuration',
   'snapbackDuration',
   'pullFactor',
-  'disabled'
+  'disabled',
+  'ionRefresh',
+  'ionPull',
+  'ionStart'
 ]);
 
 
@@ -571,7 +643,8 @@ export const IonReorder = /*@__PURE__*/ defineContainer<JSX.IonReorder>('ion-reo
 
 
 export const IonReorderGroup = /*@__PURE__*/ defineContainer<JSX.IonReorderGroup>('ion-reorder-group', [
-  'disabled'
+  'disabled',
+  'ionItemReorder'
 ]);
 
 
@@ -585,19 +658,23 @@ export const IonRoute = /*@__PURE__*/ defineContainer<JSX.IonRoute>('ion-route',
   'component',
   'componentProps',
   'beforeLeave',
-  'beforeEnter'
+  'beforeEnter',
+  'ionRouteDataChanged'
 ]);
 
 
 export const IonRouteRedirect = /*@__PURE__*/ defineContainer<JSX.IonRouteRedirect>('ion-route-redirect', [
   'from',
-  'to'
+  'to',
+  'ionRouteRedirectChanged'
 ]);
 
 
 export const IonRouter = /*@__PURE__*/ defineContainer<JSX.IonRouter>('ion-router', [
   'root',
-  'useHash'
+  'useHash',
+  'ionRouteWillChange',
+  'ionRouteDidChange'
 ]);
 
 
@@ -616,7 +693,10 @@ export const IonRouterOutlet = /*@__PURE__*/ defineContainer<JSX.IonRouterOutlet
   'delegate',
   'animated',
   'animation',
-  'swipeHandler'
+  'swipeHandler',
+  'ionNavWillLoad',
+  'ionNavWillChange',
+  'ionNavDidChange'
 ]);
 
 
@@ -642,7 +722,14 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion
   'showCancelButton',
   'spellcheck',
   'type',
-  'value'
+  'value',
+  'ionInput',
+  'ionChange',
+  'ionCancel',
+  'ionClear',
+  'ionBlur',
+  'ionFocus',
+  'ionStyle'
 ]);
 
 
@@ -650,7 +737,10 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-seg
   'color',
   'disabled',
   'scrollable',
-  'value'
+  'value',
+  'ionChange',
+  'ionSelect',
+  'ionStyle'
 ]);
 
 
@@ -673,7 +763,12 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-selec
   'interface',
   'interfaceOptions',
   'compareWith',
-  'value'
+  'value',
+  'ionChange',
+  'ionCancel',
+  'ionFocus',
+  'ionBlur',
+  'ionStyle'
 ]);
 
 
@@ -696,7 +791,23 @@ export const IonSlide = /*@__PURE__*/ defineContainer<JSX.IonSlide>('ion-slide',
 export const IonSlides = /*@__PURE__*/ defineContainer<JSX.IonSlides>('ion-slides', [
   'options',
   'pager',
-  'scrollbar'
+  'scrollbar',
+  'ionSlidesDidLoad',
+  'ionSlideTap',
+  'ionSlideDoubleTap',
+  'ionSlideWillChange',
+  'ionSlideDidChange',
+  'ionSlideNextStart',
+  'ionSlidePrevStart',
+  'ionSlideNextEnd',
+  'ionSlidePrevEnd',
+  'ionSlideTransitionStart',
+  'ionSlideTransitionEnd',
+  'ionSlideDrag',
+  'ionSlideReachStart',
+  'ionSlideReachEnd',
+  'ionSlideTouchStart',
+  'ionSlideTouchEnd'
 ]);
 
 
@@ -711,7 +822,8 @@ export const IonSpinner = /*@__PURE__*/ defineContainer<JSX.IonSpinner>('ion-spi
 export const IonSplitPane = /*@__PURE__*/ defineContainer<JSX.IonSplitPane>('ion-split-pane', [
   'contentId',
   'disabled',
-  'when'
+  'when',
+  'ionSplitPaneVisible'
 ]);
 
 
@@ -726,7 +838,8 @@ export const IonTab = /*@__PURE__*/ defineContainer<JSX.IonTab>('ion-tab', [
 export const IonTabBar = /*@__PURE__*/ defineContainer<JSX.IonTabBar>('ion-tab-bar', [
   'color',
   'selectedTab',
-  'translucent'
+  'translucent',
+  'ionTabBarChanged'
 ]);
 
 
@@ -738,12 +851,16 @@ export const IonTabButton = /*@__PURE__*/ defineContainer<JSX.IonTabButton>('ion
   'layout',
   'selected',
   'tab',
-  'target'
+  'target',
+  'ionTabButtonClick'
 ]);
 
 
 export const IonTabs = /*@__PURE__*/ defineContainer<JSX.IonTabs>('ion-tabs', [
-  'useRouter'
+  'useRouter',
+  'ionNavWillLoad',
+  'ionTabsWillChange',
+  'ionTabsDidChange'
 ]);
 
 
@@ -772,7 +889,12 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-t
   'rows',
   'wrap',
   'autoGrow',
-  'value'
+  'value',
+  'ionChange',
+  'ionInput',
+  'ionStyle',
+  'ionBlur',
+  'ionFocus'
 ]);
 
 
@@ -783,7 +905,8 @@ export const IonThumbnail = /*@__PURE__*/ defineContainer<JSX.IonThumbnail>('ion
 
 export const IonTitle = /*@__PURE__*/ defineContainer<JSX.IonTitle>('ion-title', [
   'color',
-  'size'
+  'size',
+  'ionStyle'
 ]);
 
 
@@ -800,7 +923,11 @@ export const IonToast = /*@__PURE__*/ defineContainer<JSX.IonToast>('ion-toast',
   'position',
   'buttons',
   'translucent',
-  'animated'
+  'animated',
+  'ionToastDidPresent',
+  'ionToastWillPresent',
+  'ionToastWillDismiss',
+  'ionToastDidDismiss'
 ]);
 
 
@@ -809,7 +936,11 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggl
   'name',
   'checked',
   'disabled',
-  'value'
+  'value',
+  'ionChange',
+  'ionFocus',
+  'ionBlur',
+  'ionStyle'
 ]);
 
 

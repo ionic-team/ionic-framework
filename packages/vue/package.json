@@ -1,19 +1,21 @@
 {
   "name": "@ionic/vue",
-  "version": "5.3.0-dev.202007211859.72ff371",
+  "version": "5.3.0-dev.202007221937.467aa2c",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "test": "jest",
-    "build": "npm run clean && npm run compile",
+    "build": "npm run clean && npm run copy && npm run compile",
     "clean": "rimraf dist",
     "compile": "npm run tsc",
-    "tsc": "tsc -p ."
+    "tsc": "tsc -p .",
+    "copy": "node ./scripts/copy-css.js"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/proxies.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "css/"
   ],
   "repository": {
     "type": "git",
@@ -40,7 +42,7 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "devDependencies": {
-    "@stencil/core": "^1.16.0",
+    "@stencil/core": "^1.17.0-0",
     "rimraf": "^3.0.2",
     "rollup": "^2.22.1",
     "typescript": "^3.9.7",
@@ -48,7 +50,7 @@
     "workbox-build": "4.3.1"
   },
   "dependencies": {
-    "@ionic/core": "5.3.0-dev.202007211859.72ff371",
+    "@ionic/core": "5.3.0-dev.202007221937.467aa2c",
     "ionicons": "^5.1.2"
   }
 }

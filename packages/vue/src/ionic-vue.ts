@@ -6,6 +6,8 @@ export const IonicVue: Plugin = {
   async install(_app: App, config?: IonicConfig) {
     config && setupConfig(config);
     await applyPolyfills();
-    defineCustomElements(window);
+    defineCustomElements(window, {
+      ce: (eventName: string, opts: any) => new CustomEvent(eventName.toLowerCase(), opts)
+    } as any);
   }
 };
