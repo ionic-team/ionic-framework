@@ -34,6 +34,7 @@ import NestedOutlet2 from './pages/nested-outlet/NestedOutlet2';
 import ReplaceAction from './pages/replace-action/Replace';
 import TabsContext from './pages/tab-context/TabContext';
 import { OutletRef } from './pages/outlet-ref/OutletRef';
+import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipToGoBack';
 debugger;
 const App: React.FC = () => {
   return (
@@ -49,6 +50,7 @@ const App: React.FC = () => {
         <Route path="/replace-action" component={ReplaceAction} />
         <Route path="/tab-context" component={TabsContext} />
         <Route path="/outlet-ref" component={OutletRef} />
+        <Route path="/swipe-to-go-back" component={SwipeToGoBack} />
       </IonReactRouter>
     </IonApp>
   );

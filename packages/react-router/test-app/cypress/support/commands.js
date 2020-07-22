@@ -66,6 +66,14 @@ Cypress.Commands.add('ionNav', (element, contains) => {
   cy.wait(250);
 })
 
+Cypress.Commands.add('ionSwipeRight', (element, contains) => {
+  cy.get('ion-router-outlet')
+    .trigger('mousedown', { position: "left" })
+    .trigger('mousemove', { clientX: 100, clientY: 275 })
+    .trigger('mouseup', { force: true })
+  cy.wait(150);
+})
+
 Cypress.Commands.add('ionMenuNav', (contains) => {
   // cy.get('ion-menu.show-menu').should('exist');
   // cy.wait(1000)

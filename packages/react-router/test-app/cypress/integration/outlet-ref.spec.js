@@ -1,6 +1,6 @@
 const port = 3000;
 
-describe('Multiple Tabs', () => {
+describe('IonRouterOutlet Ref', () => {
   /*
     This spec tests that setting a ref on an IonRouterOutlet works
   */
