@@ -3,6 +3,7 @@ import { getIonMode } from '../global/ionic-global';
 import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
+import { getElementRoot } from './helpers';
 
 let lastId = 0;
 
@@ -62,19 +63,128 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
   return Promise.resolve() as any;
 };
 
+const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input, textarea, button, select, .ion-focusable';
+
+const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
+  let firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
+
+  const shadowRoot = firstInput && firstInput.shadowRoot;
+  if (shadowRoot) {
+    firstInput = shadowRoot.querySelector('input, textarea, button, select');
+  }
+
+  if (firstInput) {
+    firstInput.focus();
+  } else {
+    // Focus overlay instead of letting focus escape
+    overlay.focus();
+  }
+};
+
+const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
+  const inputs = Array.from(ref.querySelectorAll(focusableQueryString)) as HTMLElement[];
+  let lastInput = inputs.length > 0 ? inputs[inputs.length - 1] : null;
+
+  const shadowRoot = lastInput && lastInput.shadowRoot;
+  if (shadowRoot) {
+    lastInput = shadowRoot.querySelector('input, textarea, button, select');
+  }
+
+  if (lastInput) {
+    lastInput.focus();
+  } else {
+    // Focus overlay instead of letting focus escape
+    overlay.focus();
+  }
+};
+
+/**
+ * Traps keyboard focus inside of overlay components.
+ * Based on https://w3c.github.io/aria-practices/examples/dialog-modal/alertdialog.html
+ * This includes the following components: Action Sheet, Alert, Loading, Modal,
+ * Picker, and Popover.
+ * Should NOT include: Toast
+ */
+const trapKeyboardFocus = (ev: Event, doc: Document) => {
+  const lastOverlay = getOverlay(doc);
+  const target = ev.target as HTMLElement | null;
+
+  // If no active overlay, ignore this event
+  if (!lastOverlay || !target) { return; }
+
+  /**
+   * If we are focusing the overlay, clear
+   * the last focused element so that hitting
+   * tab activates the first focusable element
+   * in the overlay wrapper.
+   */
+  if (lastOverlay === target) {
+    lastOverlay.lastFocus = undefined;
+
+    /**
+     * Otherwise, we must be focusing an element
+     * inside of the overlay. The two possible options
+     * here are an input/button/etc or the ion-focus-trap
+     * element. The focus trap element is used to prevent
+     * the keyboard focus from leaving the overlay when
+     * using Tab or screen assistants.
+     */
+  } else {
+    /**
+     * We do not want to focus the traps, so get the overlay
+     * wrapper element as the traps live outside of the wrapper.
+     */
+    const overlayRoot = getElementRoot(lastOverlay);
+    const overlayWrapper = overlayRoot.querySelector('.ion-overlay-wrapper');
+
+    if (!overlayWrapper) { return; }
+
+    /**
+     * If the target is inside the wrapper, let the browser
+     * focus as normal and keep a log of the last focused element.
+     */
+    if (overlayWrapper.contains(target)) {
+      lastOverlay.lastFocus = target;
+    } else {
+      /**
+       * Otherwise, we must have focused one of the focus traps.
+       * We need to wrap the focus to either the first element
+       * or the last element.
+       */
+
+      /**
+       * Once we call `focusFirstDescendant` and focus the first
+       * descendant, another focus event will fire which will
+       * cause `lastOverlay.lastFocus` to be updated before
+       * we can run the code after that. We will cache the value
+       * here to avoid that.
+       */
+      const lastFocus = lastOverlay.lastFocus;
+
+      // Focus the first element in the overlay wrapper
+      focusFirstDescendant(overlayWrapper, lastOverlay);
+
+      /**
+       * If the cached last focused element is the
+       * same as the active element, then we need
+       * to wrap focus to the last descendant. This happens
+       * when the first descendant is focused, and the user
+       * presses Shift + Tab. The previous line will focus
+       * the same descendant again (the first one), causing
+       * last focus to equal the active element.
+       */
+      if (lastFocus === doc.activeElement) {
+        focusLastDescendant(overlayWrapper, lastOverlay);
+      }
+      lastOverlay.lastFocus = doc.activeElement as HTMLElement;
+    }
+  }
+};
+
 export const connectListeners = (doc: Document) => {
   if (lastId === 0) {
     lastId = 1;
-    // trap focus inside overlays
-    doc.addEventListener('focusin', ev => {
-      const lastOverlay = getOverlay(doc);
-      if (lastOverlay && lastOverlay.backdropDismiss && !isDescendant(lastOverlay, ev.target as HTMLElement)) {
-        const firstInput = lastOverlay.querySelector('input,button') as HTMLElement | null;
-        if (firstInput) {
-          firstInput.focus();
-        }
-      }
-    });
+    doc.addEventListener('focus', ev => trapKeyboardFocus(ev, doc), true);
 
     // handle back-button click
     doc.addEventListener('ionBackButton', ev => {
@@ -245,16 +355,6 @@ export const onceEvent = (element: HTMLElement, eventName: string, callback: (ev
 
 export const isCancel = (role: string | undefined): boolean => {
   return role === 'cancel' || role === BACKDROP;
-};
-
-const isDescendant = (parent: HTMLElement, child: HTMLElement | null) => {
-  while (child) {
-    if (child === parent) {
-      return true;
-    }
-    child = child.parentElement;
-  }
-  return false;
 };
 
 const defaultGate = (h: any) => h();
