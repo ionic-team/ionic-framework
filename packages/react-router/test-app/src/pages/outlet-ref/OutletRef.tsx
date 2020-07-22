@@ -22,8 +22,6 @@ export const OutletRef: React.FC<OutletRefProps> = () => {
   );
 };
 
-
-
 const Main: React.FC<{ outletId?: string; }> = ({ outletId }) => {
   return (
     <IonPage data-pageid="main">
@@ -38,5 +36,3 @@ const Main: React.FC<{ outletId?: string; }> = ({ outletId }) => {
     </IonPage>
   );
 };
-
-export default Main;
