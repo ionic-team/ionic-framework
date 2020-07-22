@@ -2,7 +2,7 @@ import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch, h 
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, NavComponent, NavComponentWithProps, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
@@ -156,7 +156,7 @@ export class Nav implements NavOutlet {
     return this.queueTrns(
       {
         insertStart: -1,
-        insertViews: [{ page: component, params: componentProps }],
+        insertViews: [{ component, componentProps }],
         opts
       },
       done
@@ -184,7 +184,7 @@ export class Nav implements NavOutlet {
     return this.queueTrns(
       {
         insertStart: insertIndex,
-        insertViews: [{ page: component, params: componentProps }],
+        insertViews: [{ component, componentProps }],
         opts
       },
       done
@@ -204,7 +204,7 @@ export class Nav implements NavOutlet {
   @Method()
   insertPages(
     insertIndex: number,
-    insertComponents: NavComponent[],
+    insertComponents: NavComponent[] | NavComponentWithProps[],
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
@@ -326,7 +326,7 @@ export class Nav implements NavOutlet {
     done?: TransitionDoneFn
   ): Promise<boolean> {
     return this.setPages(
-      [{ page: component, params: componentProps }],
+      [{ component, componentProps }],
       opts,
       done
     );
@@ -344,7 +344,7 @@ export class Nav implements NavOutlet {
    */
   @Method()
   setPages(
-    views: any[],
+    views: NavComponent[] | NavComponentWithProps[],
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
@@ -958,16 +958,27 @@ export class Nav implements NavOutlet {
 
     for (let i = views.length - 1; i >= 0; i--) {
       const view = views[i];
+
+      /**
+       * When inserting multiple views via insertPages
+       * the last page will be transitioned to, but the
+       * others will not be. As a result, a DOM element
+       * will only be created for the last page inserted.
+       * As a result, it is possible to have views in the
+       * stack that do not have `view.element` yet.
+       */
       const element = view.element;
-      if (i > activeViewIndex) {
-        // this view comes after the active view
-        // let's unload it
-        lifecycle(element, LIFECYCLE_WILL_UNLOAD);
-        this.destroyView(view);
-      } else if (i < activeViewIndex) {
-        // this view comes before the active view
-        // and it is not a portal then ensure it is hidden
-        setPageHidden(element!, true);
+      if (element) {
+        if (i > activeViewIndex) {
+          // this view comes after the active view
+          // let's unload it
+          lifecycle(element, LIFECYCLE_WILL_UNLOAD);
+          this.destroyView(view);
+        } else if (i < activeViewIndex) {
+          // this view comes before the active view
+          // and it is not a portal then ensure it is hidden
+          setPageHidden(element!, true);
+        }
       }
     }
   }
