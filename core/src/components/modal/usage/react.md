@@ -24,18 +24,48 @@ Modals in iOS mode have the ability to be presented in a card-style and swiped t
 > Card style modals when running on iPhone-sized devices do not have backdrops. As a result, the `--backdrop-opacity` variable will not have any effect.
 
 ```tsx
-<IonModal
-  isOpen={showModal}
-  cssClass='my-custom-class'
-  swipeToClose={true}
-  presentingElement={pageRef.current}
-  onDidDismiss={() => setShowModal(false)}>
-    <p>This is modal content</p>
-    <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
-</IonModal>
+const App: React.FC = () => {
+  const routerRef = useRef<HTMLIonRouterOutletElement | null>(null);
+  
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet ref={routerRef}>
+          <Route path="/home" render={() => <Home router={routerRef.current.current} />}  exact={true} />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  )
+};
+
+...
+
+interface HomePageProps {
+  router: HTMLIonRouterOutletElement | null;
+}
+
+const Home: React.FC<HomePageProps> = ({ router }) => {
+  const [showModal, setShowModal] = useState(false);
+  
+  return (
+    ...
+    
+    <IonModal
+      isOpen={showModal}
+      cssClass='my-custom-class'
+      swipeToClose={true}
+      presentingElement={router || undefined}
+      onDidDismiss={() => setShowModal(false)}>
+      <p>This is modal content</p>
+    </IonModal>
+    
+    ...
+  );
+};
+
 ```
 
-In most scenarios, setting a ref on `IonPage` and passing that ref's `current` value to `presentingElement` is fine. In cases where you are presenting a card-style modal from within another modal, you should pass in the top-most `ion-modal` ref as the `presentingElement`.
+In most scenarios, setting a ref on `IonRouterOutlet` and passing that ref's `current` value to `presentingElement` is fine. In cases where you are presenting a card-style modal from within another modal, you should pass in the top-most `ion-modal` ref as the `presentingElement`.
 
 ```tsx
 <IonModal
@@ -43,7 +73,7 @@ In most scenarios, setting a ref on `IonPage` and passing that ref's `current` v
   isOpen={showModal}
   cssClass='my-custom-class'
   swipeToClose={true}
-  presentingElement={pageRef.current}
+  presentingElement={router || undefined}
   onDidDismiss={() => setShowModal(false)}>
     <p>This is modal content</p>
     <IonButton onClick={() => setShow2ndModal(true)}>Show 2nd Modal</IonButton>
