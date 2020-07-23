@@ -22,7 +22,6 @@ export class LoadingExample {
 
   async presentLoadingWithOptions() {
     const loading = await loadingController.create({
-      cssClass: 'my-custom-class',
       spinner: null,
       duration: 5000,
       message: 'Click the backdrop to dismiss early...',
