@@ -1,3 +1,33 @@
+# [5.3.0 Phosphorus](https://github.com/ionic-team/ionic/compare/v5.2.3...v5.3.0) (2020-07-23)
+
+
+### Bug Fixes
+
+* **angular:** per-page animations now work with swipe to go back ([#21706](https://github.com/ionic-team/ionic/issues/21706)) ([2664587](https://github.com/ionic-team/ionic/commit/2664587749e45100a04f70796733de162b26cdf7)), closes [#21692](https://github.com/ionic-team/ionic/issues/21692)
+* **datetime:** remove unneeded combobox role ([#21708](https://github.com/ionic-team/ionic/issues/21708)) ([f00ad8a](https://github.com/ionic-team/ionic/commit/f00ad8a8357ccd7fe85631dad0c841f2d4c72487))
+* **input:** clear button can now be tabbed to ([#21633](https://github.com/ionic-team/ionic/issues/21633)) ([1dcd9de](https://github.com/ionic-team/ionic/commit/1dcd9de50ae16bfa102e98120a022de5b0287baa))
+* **ios:** improve scroll assist reliability on password inputs ([#21703](https://github.com/ionic-team/ionic/issues/21703)) ([3cbf9e7](https://github.com/ionic-team/ionic/commit/3cbf9e7c4c225d6b02237d8ea8f16fb924ba360e)), closes [#21688](https://github.com/ionic-team/ionic/issues/21688)
+* **keyboard:** keyboard events now consistently fire on android ([#21741](https://github.com/ionic-team/ionic/issues/21741)) ([020f3cc](https://github.com/ionic-team/ionic/commit/020f3cc56cb6dac23dd8766a3802422500b510e2)), closes [#21734](https://github.com/ionic-team/ionic/issues/21734)
+* **nav:** insertPages method correctly inserts multiple pages with props ([#21725](https://github.com/ionic-team/ionic/issues/21725)) ([eb592b8](https://github.com/ionic-team/ionic/commit/eb592b8917b8a7412d8c346f41b47d3b79002b95)), closes [#21724](https://github.com/ionic-team/ionic/issues/21724)
+* **overlays:** trap focus inside overlay components except toast ([#21716](https://github.com/ionic-team/ionic/issues/21716)) ([fff4aec](https://github.com/ionic-team/ionic/commit/fff4aec6cfbd48566594a05f4af57dd0578977a8)), closes [#21647](https://github.com/ionic-team/ionic/issues/21647)
+* **segment-button:** allow min-width to be overridden ([#21722](https://github.com/ionic-team/ionic/issues/21722)) ([88f1828](https://github.com/ionic-team/ionic/commit/88f1828bd8f6b9a1c1f3dcb220d93067bed7f404)), closes [#21105](https://github.com/ionic-team/ionic/issues/21105)
+* **title:** allow overriding of large title transform-origin ([#21770](https://github.com/ionic-team/ionic/issues/21770)) ([dbe6853](https://github.com/ionic-team/ionic/commit/dbe6853884bd76c3d8e229cd58e1571d9b3a7249)), closes [#21761](https://github.com/ionic-team/ionic/issues/21761)
+* **virtual-scroll:** properly calculate top offset when nested ([#21581](https://github.com/ionic-team/ionic/issues/21581)) ([d297ecb](https://github.com/ionic-team/ionic/commit/d297ecb87ad3e1c8f0988f0571a475081ce368f8))
+
+
+### Features
+
+* **card:** expose global card css variables ([#21756](https://github.com/ionic-team/ionic/issues/21756)) ([096eef4](https://github.com/ionic-team/ionic/commit/096eef4a79c2d05c37eb224466c6d7d512d2be20)), closes [#21694](https://github.com/ionic-team/ionic/issues/21694)
+* **input:** accept datetime-local, month, and week type values ([#21758](https://github.com/ionic-team/ionic/issues/21758)) ([fa93dff](https://github.com/ionic-team/ionic/commit/fa93dffdb4f350e8db8acc7f06b06761974eea8e)), closes [#21757](https://github.com/ionic-team/ionic/issues/21757)
+* **input, textarea:** expose native events for ionBlur and ionFocus ([#21777](https://github.com/ionic-team/ionic/issues/21777)) ([a625c83](https://github.com/ionic-team/ionic/commit/a625c837a60abc07ad71c696196a89f1a25a4c27)), closes [#17363](https://github.com/ionic-team/ionic/issues/17363)
+* **react:** add custom history to IonReactRouter ([#21775](https://github.com/ionic-team/ionic/issues/21775)) ([d4a5fbd](https://github.com/ionic-team/ionic/commit/d4a5fbd955e8ecccba8b77491943d81fdf5a5ef4)), closes [#20297](https://github.com/ionic-team/ionic/issues/20297) 
+* **react:** add new react router ([#21693](https://github.com/ionic-team/ionic/issues/21693)) ([c171ccb](https://github.com/ionic-team/ionic/commit/c171ccbd37c1ee4b4934758a3a759170ff357cb2))
+* **router:** add navigation hooks ([#21709](https://github.com/ionic-team/ionic/issues/21709)) ([77464ef](https://github.com/ionic-team/ionic/commit/77464ef21aaaa5afa7a02e5417f3ec295b240601))
+* **segment-button, toast:** expose additional shadow parts ([#21532](https://github.com/ionic-team/ionic/issues/21532)) ([a5e4669](https://github.com/ionic-team/ionic/commit/a5e4669c4bcbcb2cdd605ed17c35e42438bd5596))
+* **select:** add optional generic typings ([#21514](https://github.com/ionic-team/ionic/issues/21514)) ([7c2d0c9](https://github.com/ionic-team/ionic/commit/7c2d0c981ab91930478c4b76220ce4ec4ed4e471))
+
+
+
 ## [5.2.3](https://github.com/ionic-team/ionic/compare/v5.2.2...v5.2.3) (2020-07-01)
 
 

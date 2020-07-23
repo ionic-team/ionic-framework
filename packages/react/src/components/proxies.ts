@@ -6,7 +6,6 @@ import { HrefProps } from './hrefprops';
 // ionic/core
 export const IonApp = /*@__PURE__*/createReactComponent<JSX.IonApp, HTMLIonAppElement>('ion-app');
 export const IonTab = /*@__PURE__*/createReactComponent<JSX.IonTab, HTMLIonTabElement>('ion-tab');
-export const IonTabButton = /*@__PURE__*/createReactComponent<JSX.IonTabButton, HTMLIonTabButtonElement>('ion-tab-button');
 export const IonRouterLink = /*@__PURE__*/createReactComponent<HrefProps<JSX.IonRouterLink>, HTMLIonRouterLinkElement>('ion-router-link', true);
 export const IonAvatar = /*@__PURE__*/createReactComponent<JSX.IonAvatar, HTMLIonAvatarElement>('ion-avatar');
 export const IonBackdrop = /*@__PURE__*/createReactComponent<JSX.IonBackdrop, HTMLIonBackdropElement>('ion-backdrop');

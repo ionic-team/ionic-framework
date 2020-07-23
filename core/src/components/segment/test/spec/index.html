@@ -159,6 +159,40 @@
         </ion-segment-button>
       </ion-segment>
 
+      <!-- Non Scrollable, Custom Min Width -->
+      <ion-segment color="tertiary" value="heart" id="min-width-custom">
+        <ion-segment-button value="home">
+          <ion-icon name="home"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="heart">
+          <ion-icon name="heart"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="pin">
+          <ion-icon name="pin"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="star">
+          <ion-icon name="star"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="call">
+          <ion-icon name="call"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="globe">
+          <ion-icon name="globe"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="basket">
+          <ion-icon name="basket"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="airplane">
+          <ion-icon name="airplane"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="boat">
+          <ion-icon name="boat"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="baseball">
+          <ion-icon name="baseball"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+
       <!-- Scrollable Icons -->
       <ion-segment scrollable color="tertiary" value="heart">
         <ion-segment-button value="home">
@@ -212,6 +246,10 @@
     </ion-content>
 
     <style>
+      ion-segment#min-width-custom ion-segment-button {
+        min-width: auto;
+      }
+
       ion-content {
         --padding-top: 16px;
       }

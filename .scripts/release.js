@@ -132,7 +132,7 @@ async function publishGithub(version, gitTag, changelog, npmTag) {
 
   await octokit.repos.createRelease({
     owner: 'ionic-team',
-    repo: 'ionic',
+    repo: 'ionic-framework',
     target_commitish: branch,
     tag_name: gitTag,
     name: version,

@@ -177,12 +177,12 @@ export class Textarea implements ComponentInterface {
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur!: EventEmitter<void>;
+  @Event() ionBlur!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   connectedCallback() {
     this.emitStyle();
@@ -292,18 +292,18 @@ export class Textarea implements ComponentInterface {
     this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onFocus = () => {
+  private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
     this.focusChange();
 
-    this.ionFocus.emit();
+    this.ionFocus.emit(ev);
   }
 
-  private onBlur = () => {
+  private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChange();
 
-    this.ionBlur.emit();
+    this.ionBlur.emit(ev);
   }
 
   private onKeyDown = () => {

@@ -288,6 +288,16 @@ Type: `Promise<void>`
 
 
 
+## Shadow Parts
+
+| Part          | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| `"button"`    | Any button element that is displayed inside of the toast. |
+| `"container"` | The element that wraps all child elements.                |
+| `"header"`    | The header text of the toast.                             |
+| `"message"`   | The body text of the toast.                               |
+
+
 ## CSS Custom Properties
 
 | Name              | Description                                                                                            |

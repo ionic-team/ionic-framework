@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "5.2.3",
+  "version": "5.3.0",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "npm run clean && npm run copy && npm run compile",
-    "clean": "rm -rf dist && rm -rf dist-transpiled",
+    "clean": "rm -rf dist && rm -rf dist-transpiled && rm -rf routing",
     "compile": "npm run tsc && rollup -c",
     "release": "np --any-branch --yolo --no-release-draft",
     "lint": "tslint --project .",
@@ -39,7 +39,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "5.2.3",
+    "@ionic/core": "5.3.0",
     "ionicons": "^5.1.2",
     "tslib": "*"
   },

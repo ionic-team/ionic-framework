@@ -1,5 +1,5 @@
 // Components interfaces
-import {Components as IoniconsComponents} from 'ionicons';
+import { Components as IoniconsComponents, JSX as IoniconsJSX } from 'ionicons';
 export * from './components';
 export * from './index';
 export * from './components/alert/alert-interface';
@@ -47,7 +47,7 @@ export type AutocompleteTypes = (
 | 'tel-extension' | 'impp' | 'url' | 'photo');
 
 
-export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time';
+export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'time' | 'week' | 'month' | 'datetime-local';
 export type Side = 'start' | 'end';
 export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Color = PredefinedColors | string;
@@ -78,5 +78,11 @@ export interface StyleEventDetail {
 declare module "./components" {
   export namespace Components {
     export interface IonIcon extends IoniconsComponents.IonIcon{}
+  }
+}
+
+declare module "./components" {
+  export namespace JSX {
+    export interface IonIcon extends IoniconsJSX.IonIcon {}
   }
 }

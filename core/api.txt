@@ -475,13 +475,13 @@ ion-input,prop,required,boolean,false,false,false
 ion-input,prop,size,number | undefined,undefined,false,false
 ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
-ion-input,prop,type,"date" | "email" | "number" | "password" | "search" | "tel" | "text" | "time" | "url",'text',false,false
+ion-input,prop,type,"date" | "datetime-local" | "email" | "month" | "number" | "password" | "search" | "tel" | "text" | "time" | "url" | "week",'text',false,false
 ion-input,prop,value,null | number | string | undefined,'',false,false
 ion-input,method,getInputElement,getInputElement() => Promise<HTMLInputElement>
 ion-input,method,setFocus,setFocus() => Promise<void>
-ion-input,event,ionBlur,void,true
+ion-input,event,ionBlur,FocusEvent,true
 ion-input,event,ionChange,InputChangeEventDetail,true
-ion-input,event,ionFocus,void,true
+ion-input,event,ionFocus,FocusEvent,true
 ion-input,event,ionInput,KeyboardEvent,true
 ion-input,css-prop,--background
 ion-input,css-prop,--color
@@ -745,13 +745,13 @@ ion-nav,method,getActive,getActive() => Promise<ViewController | undefined>
 ion-nav,method,getByIndex,getByIndex(index: number) => Promise<ViewController | undefined>
 ion-nav,method,getPrevious,getPrevious(view?: ViewController | undefined) => Promise<ViewController | undefined>
 ion-nav,method,insert,insert<T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,insertPages,insertPages(insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
+ion-nav,method,insertPages,insertPages(insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,pop,pop(opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,popTo,popTo(indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,popToRoot,popToRoot(opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,push,push<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,removeIndex,removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,setPages,setPages(views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
+ion-nav,method,setPages,setPages(views: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,setRoot,setRoot<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,event,ionNavDidChange,void,false
 ion-nav,event,ionNavWillChange,void,false
@@ -933,6 +933,8 @@ ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false,false
 ion-ripple-effect,method,addRipple,addRipple(x: number, y: number) => Promise<() => void>
 
 ion-route,none
+ion-route,prop,beforeEnter,(() => boolean | NavigationHookOptions | Promise<NavigationHookResult>) | undefined,undefined,false,false
+ion-route,prop,beforeLeave,(() => boolean | NavigationHookOptions | Promise<NavigationHookResult>) | undefined,undefined,false,false
 ion-route,prop,component,string,undefined,true,false
 ion-route,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-route,prop,url,string,'',false,false
@@ -1051,6 +1053,7 @@ ion-segment-button,css-prop,--padding-start
 ion-segment-button,css-prop,--padding-top
 ion-segment-button,css-prop,--transition
 ion-segment-button,part,indicator
+ion-segment-button,part,indicator-background
 ion-segment-button,part,native
 
 ion-select,shadow
@@ -1069,7 +1072,7 @@ ion-select,prop,value,any,undefined,false,false
 ion-select,method,open,open(event?: UIEvent | undefined) => Promise<any>
 ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
-ion-select,event,ionChange,SelectChangeEventDetail,true
+ion-select,event,ionChange,SelectChangeEventDetail<any>,true
 ion-select,event,ionFocus,void,true
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
@@ -1226,9 +1229,9 @@ ion-textarea,prop,value,null | string | undefined,'',false,false
 ion-textarea,prop,wrap,"hard" | "off" | "soft" | undefined,undefined,false,false
 ion-textarea,method,getInputElement,getInputElement() => Promise<HTMLTextAreaElement>
 ion-textarea,method,setFocus,setFocus() => Promise<void>
-ion-textarea,event,ionBlur,void,true
+ion-textarea,event,ionBlur,FocusEvent,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
-ion-textarea,event,ionFocus,void,true
+ion-textarea,event,ionFocus,FocusEvent,true
 ion-textarea,event,ionInput,KeyboardEvent,true
 ion-textarea,css-prop,--background
 ion-textarea,css-prop,--border-radius
@@ -1290,6 +1293,10 @@ ion-toast,css-prop,--min-width
 ion-toast,css-prop,--start
 ion-toast,css-prop,--white-space
 ion-toast,css-prop,--width
+ion-toast,part,button
+ion-toast,part,container
+ion-toast,part,header
+ion-toast,part,message
 
 ion-toggle,shadow
 ion-toggle,prop,checked,boolean,false,false,false

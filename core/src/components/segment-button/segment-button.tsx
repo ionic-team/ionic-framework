@@ -12,6 +12,7 @@ let ids = 0;
  *
  * @part native - The native HTML button element that wraps all child elements.
  * @part indicator - The indicator displayed on the checked segment button.
+ * @part indicator-background - The background element for the indicator displayed on the checked segment button.
  */
 @Component({
   tag: 'ion-segment-button',
