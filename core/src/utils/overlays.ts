@@ -63,14 +63,16 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
   return Promise.resolve() as any;
 };
 
-const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input, textarea, button, select, .ion-focusable';
+const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]), textarea, button, select, .ion-focusable';
+const innerFocusableQueryString = 'input:not([type=hidden]), textarea, button, select';
 
 const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   let firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
 
   const shadowRoot = firstInput && firstInput.shadowRoot;
   if (shadowRoot) {
-    firstInput = shadowRoot.querySelector('input, textarea, button, select');
+    // If there are no inner focusable elements, just focus the host element.
+    firstInput = shadowRoot.querySelector(innerFocusableQueryString) || firstInput;
   }
 
   if (firstInput) {
@@ -87,7 +89,8 @@ const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
 
   const shadowRoot = lastInput && lastInput.shadowRoot;
   if (shadowRoot) {
-    lastInput = shadowRoot.querySelector('input, textarea, button, select');
+    // If there are no inner focusable elements, just focus the host element.
+    lastInput = shadowRoot.querySelector(innerFocusableQueryString) || lastInput;
   }
 
   if (lastInput) {
