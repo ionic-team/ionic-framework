@@ -8,7 +8,7 @@
     "@capacitor/core": "1.5.2",
     "@capacitor/ios": "^2.2.0",
     "@ionic/core": "^5.3.0-dev.202006121329.e968bd0",
-    "@ionic/react": "file:../../react/ionic-react-5.2.2.tgz",
+    "@ionic/react": "file:../../react/ionic-react-5.3.0.tgz",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
