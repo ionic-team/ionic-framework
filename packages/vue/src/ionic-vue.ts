@@ -8,8 +8,14 @@ export const IonicVue: Plugin = {
       config && setupConfig(config);
       await applyPolyfills();
       await defineCustomElements(window, {
-        ce: (eventName: string, opts: any) => new CustomEvent(eventName.toLowerCase(), opts)
-      });
+        ce: (eventName: string, opts: any) => new CustomEvent(eventName.toLowerCase(), opts),
+        ael: (el: any, eventName: string, cb: any, opts: any) => {
+          el.addEventListener(eventName.toLowerCase(), cb, opts);
+        },
+        rel: (el: any, eventName: string, cb: any, opts: any) => {
+          el.removeEventListener(eventName.toLowerCase(), cb, opts);
+        }
+      } as any);
     }
   }
 };

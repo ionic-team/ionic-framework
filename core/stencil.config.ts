@@ -68,7 +68,7 @@ export const config: Config = {
           event: 'ionChange'
         },
         {
-          elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-select', 'ion-textarea'],
+          elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-textarea'],
           targetAttr: 'value',
           event: 'ionChange'
         }

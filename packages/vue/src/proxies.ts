@@ -594,7 +594,10 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio>('ion-radio',
   'ionStyle',
   'ionFocus',
   'ionBlur'
-]);
+],
+  'value',
+  'ionChange'
+);
 
 
 export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('ion-radio-group', [
@@ -770,7 +773,10 @@ export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButt
   'layout',
   'type',
   'value'
-]);
+],
+  'value',
+  'ionChange'
+);
 
 
 export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-select', [
