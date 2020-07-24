@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "5.3.0-dev.202007241556.b26625c",
+  "version": "5.3.0-dev.202007242205.cd66b6b",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "test": "jest",
@@ -50,7 +50,7 @@
     "workbox-build": "4.3.1"
   },
   "dependencies": {
-    "@ionic/core": "5.3.0-dev.202007241556.b26625c",
+    "@ionic/core": "5.3.0-dev.202007242205.cd66b6b",
     "ionicons": "^5.1.2"
   }
 }
