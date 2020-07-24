@@ -1,9 +1,9 @@
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
 import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
-import { plt } from '@stencil/core';
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
+import { addEventListener, removeEventListener } from './helpers';
 
 let lastId = 0;
 
@@ -238,10 +238,10 @@ export const eventMethod = <T>(element: HTMLElement, eventName: string): Promise
 
 export const onceEvent = (element: HTMLElement, eventName: string, callback: (ev: Event) => void) => {
   const handler = (ev: Event) => {
-    plt.rel(element, eventName, handler);
+    removeEventListener(element, eventName, handler);
     callback(ev);
   };
-  plt.ael(element, eventName, handler);
+  addEventListener(element, eventName, handler);
 };
 
 export const isCancel = (role: string | undefined): boolean => {
