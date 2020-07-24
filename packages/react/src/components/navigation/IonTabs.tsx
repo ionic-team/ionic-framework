@@ -17,7 +17,7 @@ class IonTabsElement extends HTMLElement {
 if (window && window.customElements) {
   const element = customElements.get('ion-tabs');
   if (!element) {
-    customElements.define('ion-tabs', IonTabsElement, { extends: 'div' });
+    customElements.define('ion-tabs', IonTabsElement);
   }
 }
 
