@@ -63,7 +63,12 @@ export const config: Config = {
       proxiesFile: '../packages/vue/src/proxies.ts',
       componentModels: [
         {
-          elements: ['ion-input'],
+          elements: ['ion-checkbox', 'ion-toggle'],
+          targetAttr: 'checked',
+          event: 'ionChange'
+        },
+        {
+          elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-select', 'ion-textarea'],
           targetAttr: 'value',
           event: 'ionChange'
         }

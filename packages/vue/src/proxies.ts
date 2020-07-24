@@ -154,7 +154,10 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox>('ion-c
   'ionFocus',
   'ionBlur',
   'ionStyle'
-]);
+],
+  'checked',
+  'ionChange'
+);
 
 
 export const IonChip = /*@__PURE__*/ defineContainer<JSX.IonChip>('ion-chip', [
@@ -232,7 +235,10 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'ionFocus',
   'ionBlur',
   'ionStyle'
-]);
+],
+  'value',
+  'ionChange'
+);
 
 
 export const IonFab = /*@__PURE__*/ defineContainer<JSX.IonFab>('ion-fab', [
@@ -356,7 +362,10 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput>('ion-input',
   'ionBlur',
   'ionFocus',
   'ionStyle'
-]);
+],
+  'value',
+  'ionChange'
+);
 
 
 export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', [
@@ -593,7 +602,10 @@ export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('i
   'name',
   'value',
   'ionChange'
-]);
+],
+  'value',
+  'ionChange'
+);
 
 
 export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range', [
@@ -613,7 +625,10 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range',
   'ionStyle',
   'ionFocus',
   'ionBlur'
-]);
+],
+  'value',
+  'ionChange'
+);
 
 
 export const IonRefresher = /*@__PURE__*/ defineContainer<JSX.IonRefresher>('ion-refresher', [
@@ -730,7 +745,10 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion
   'ionBlur',
   'ionFocus',
   'ionStyle'
-]);
+],
+  'value',
+  'ionChange'
+);
 
 
 export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-segment', [
@@ -741,7 +759,10 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-seg
   'ionChange',
   'ionSelect',
   'ionStyle'
-]);
+],
+  'value',
+  'ionChange'
+);
 
 
 export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButton>('ion-segment-button', [
@@ -769,7 +790,10 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-selec
   'ionFocus',
   'ionBlur',
   'ionStyle'
-]);
+],
+  'value',
+  'ionChange'
+);
 
 
 export const IonSelectOption = /*@__PURE__*/ defineContainer<JSX.IonSelectOption>('ion-select-option', [
@@ -895,7 +919,10 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-t
   'ionStyle',
   'ionBlur',
   'ionFocus'
-]);
+],
+  'value',
+  'ionChange'
+);
 
 
 export const IonThumbnail = /*@__PURE__*/ defineContainer<JSX.IonThumbnail>('ion-thumbnail', [
@@ -941,7 +968,10 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggl
   'ionFocus',
   'ionBlur',
   'ionStyle'
-]);
+],
+  'checked',
+  'ionChange'
+);
 
 
 export const IonToolbar = /*@__PURE__*/ defineContainer<JSX.IonToolbar>('ion-toolbar', [

@@ -4,10 +4,12 @@ import { applyPolyfills, defineCustomElements } from '@ionic/core/loader';
 
 export const IonicVue: Plugin = {
   async install(_app: App, config?: IonicConfig) {
-    config && setupConfig(config);
-    await applyPolyfills();
-    defineCustomElements(window, {
-      ce: (eventName: string, opts: any) => new CustomEvent(eventName.toLowerCase(), opts)
-    } as any);
+    if (typeof (window as any) !== 'undefined') {
+      config && setupConfig(config);
+      await applyPolyfills();
+      await defineCustomElements(window, {
+        ce: (eventName: string, opts: any) => new CustomEvent(eventName.toLowerCase(), opts)
+      });
+    }
   }
 };

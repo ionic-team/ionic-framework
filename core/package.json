@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "5.3.0-dev.202007221937.467aa2c",
+  "version": "5.3.0-dev.202007231938.1a80e4b",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -36,9 +36,9 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@rollup/plugin-virtual": "^2.0.3",
-    "@stencil/core": "^1.17.0-0",
+    "@stencil/core": "^1.17.0",
     "@stencil/sass": "1.3.2",
-    "@stencil/vue3-output-target": "0.0.2-1",
+    "@stencil/vue3-output-target": "0.0.2-10",
     "@types/jest": "26.0.3",
     "@types/node": "14.0.14",
     "@types/puppeteer": "3.0.1",
