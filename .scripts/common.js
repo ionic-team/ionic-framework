@@ -15,7 +15,8 @@ const packages = [
   //'packages/react',
   //'packages/react-router',
   //'packages/angular-server',
-  'packages/vue'
+  'packages/vue',
+  'packages/vue-router'
 ];
 
 function readPkg(project) {

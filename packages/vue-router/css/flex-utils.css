@@ -1,0 +1,81 @@
+.ion-align-self-start {
+  align-self: flex-start !important;
+}
+
+.ion-align-self-end {
+  align-self: flex-end !important;
+}
+
+.ion-align-self-center {
+  align-self: center !important;
+}
+
+.ion-align-self-stretch {
+  align-self: stretch !important;
+}
+
+.ion-align-self-baseline {
+  align-self: baseline !important;
+}
+
+.ion-align-self-auto {
+  align-self: auto !important;
+}
+
+.ion-wrap {
+  flex-wrap: wrap !important;
+}
+
+.ion-nowrap {
+  flex-wrap: nowrap !important;
+}
+
+.ion-wrap-reverse {
+  flex-wrap: wrap-reverse !important;
+}
+
+.ion-justify-content-start {
+  justify-content: flex-start !important;
+}
+
+.ion-justify-content-center {
+  justify-content: center !important;
+}
+
+.ion-justify-content-end {
+  justify-content: flex-end !important;
+}
+
+.ion-justify-content-around {
+  justify-content: space-around !important;
+}
+
+.ion-justify-content-between {
+  justify-content: space-between !important;
+}
+
+.ion-justify-content-evenly {
+  justify-content: space-evenly !important;
+}
+
+.ion-align-items-start {
+  align-items: flex-start !important;
+}
+
+.ion-align-items-center {
+  align-items: center !important;
+}
+
+.ion-align-items-end {
+  align-items: flex-end !important;
+}
+
+.ion-align-items-stretch {
+  align-items: stretch !important;
+}
+
+.ion-align-items-baseline {
+  align-items: baseline !important;
+}
+
+/*# sourceMappingURL=flex-utils.css.map */

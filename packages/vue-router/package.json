@@ -1,14 +1,13 @@
 {
-  "name": "@ionic/vue",
+  "name": "@ionic/vue-router",
   "version": "5.3.0-dev.202007271731.167c23a",
-  "description": "Vue specific wrapper for @ionic/core",
+  "description": "Vue Router integration for @ionic/vue",
   "scripts": {
     "test": "jest",
-    "build": "npm run clean && npm run copy && npm run compile",
+    "build": "npm run clean && npm run compile",
     "clean": "rimraf dist",
     "compile": "npm run tsc",
-    "tsc": "tsc -p .",
-    "copy": "node ./scripts/copy-css.js"
+    "tsc": "tsc -p ."
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -42,15 +41,14 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "devDependencies": {
-    "@stencil/core": "^1.17.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.22.1",
     "typescript": "^3.9.7",
-    "vue": "^3.0.0-rc.2",
+    "vue": "^3.0.0-rc.4",
     "workbox-build": "4.3.1"
   },
   "dependencies": {
-    "@ionic/core": "5.3.0-dev.202007271731.167c23a",
-    "ionicons": "^5.1.2"
+    "@ionic/vue": "dev",
+    "vue-router": "^4.0.0-beta.4"
   }
 }
