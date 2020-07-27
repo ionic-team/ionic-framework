@@ -2,7 +2,7 @@
 import { defineCustomElements } from '@ionic/core/loader';
 import { addIcons } from 'ionicons';
 import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
-export { createAnimation, createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, iosTransitionAnimation, IonicSafeString, mdTransitionAnimation, NavComponentWithProps, setupConfig } from '@ionic/core';
+export { createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, iosTransitionAnimation, IonicSafeString, mdTransitionAnimation, NavComponentWithProps, setupConfig } from '@ionic/core';
 export * from './proxies';
 
 // createControllerComponent
@@ -33,8 +33,8 @@ export * from './IonRouterContext';
 export { isPlatform, getPlatforms, getConfig, ionRenderToString } from './utils';
 export * from './hrefprops';
 
-// Ionic Animations
-export { CreateAnimation } from './CreateAnimation';
+// Isomer
+export * from '@isomer/react';
 
 // Icons that are used by internal components
 addIcons({

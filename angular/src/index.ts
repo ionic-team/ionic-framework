@@ -30,7 +30,6 @@ export { ToastController } from './providers/toast-controller';
 export { NavController } from './providers/nav-controller';
 export { DomController } from './providers/dom-controller';
 export { Config } from './providers/config';
-export { AnimationController } from '@isomer/angular';
 export { GestureController } from './providers/gesture-controller';
 
 // ROUTER STRATEGY
@@ -43,7 +42,10 @@ export * from './types/ionic-lifecycle-hooks';
 export { IonicModule } from './ionic-module';
 
 // UTILS
-export { IonicSafeString, getPlatforms, isPlatform, createAnimation } from '@ionic/core';
+export { IonicSafeString, getPlatforms, isPlatform } from '@ionic/core';
 
 // CORE TYPES
-export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, Gesture, GestureConfig, GestureDetail, mdTransitionAnimation, iosTransitionAnimation, NavComponentWithProps } from '@ionic/core';
+export { AnimationBuilder, Gesture, GestureConfig, GestureDetail, mdTransitionAnimation, iosTransitionAnimation, NavComponentWithProps } from '@ionic/core';
+
+// ISOMER
+export * from '@isomer/angular';

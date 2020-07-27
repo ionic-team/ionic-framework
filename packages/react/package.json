@@ -40,6 +40,7 @@
   ],
   "dependencies": {
     "@ionic/core": "5.3.1",
+    "@isomer/react": "^0.3.0",
     "ionicons": "^5.1.2",
     "tslib": "*"
   },
