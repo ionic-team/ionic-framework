@@ -71,7 +71,6 @@ export class LoadingExample {
 
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
       spinner: null,
       duration: 5000,
       message: 'Click the backdrop to dismiss early...',
@@ -113,7 +112,6 @@ async function presentLoading() {
 async function presentLoadingWithOptions() {
   const loading = document.createElement('ion-loading');
 
-  loading.cssClass = 'my-custom-class';
   loading.spinner = null;
   loading.duration = 5000;
   loading.message = 'Click the backdrop to dismiss early...';
@@ -185,7 +183,6 @@ export class LoadingExample {
 
   async presentLoadingWithOptions() {
     const loading = await loadingController.create({
-      cssClass: 'my-custom-class',
       spinner: null,
       duration: 5000,
       message: 'Click the backdrop to dismiss early...',
@@ -245,7 +242,6 @@ export default {
     presentLoadingWithOptions() {
       return this.$ionic.loadingController
         .create({
-          cssClass: 'my-custom-class',
           spinner: null,
           duration: this.timeout,
           message: 'Click the backdrop to dismiss early...',

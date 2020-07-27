@@ -1,3 +1,12 @@
+## [5.3.1](https://github.com/ionic-team/ionic/compare/v5.3.0...v5.3.1) (2020-07-27)
+
+
+### Bug Fixes
+
+* **react:** properly extend HTMLElement for tabs ([bfddb17](https://github.com/ionic-team/ionic/commit/bfddb170659224d0f826762744dfe44a85813d36)), closes [#21803](https://github.com/ionic-team/ionic/issues/21803)
+
+
+
 # [5.3.0 Phosphorus](https://github.com/ionic-team/ionic/compare/v5.2.3...v5.3.0) (2020-07-23)
 
 

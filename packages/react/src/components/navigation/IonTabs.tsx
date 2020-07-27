@@ -8,14 +8,17 @@ import { IonRouterOutlet } from '../IonRouterOutlet';
 import { IonTabBar } from './IonTabBar';
 import { IonTabsContext, IonTabsContextState } from './IonTabsContext';
 
-class IonTabsElement extends HTMLDivElement {
+class IonTabsElement extends HTMLElement {
   constructor() {
     super();
   }
 }
 
 if (window && window.customElements) {
-  customElements.define('ion-tabs', IonTabsElement, { extends: 'div' });
+  const element = customElements.get('ion-tabs');
+  if (!element) {
+    customElements.define('ion-tabs', IonTabsElement);
+  }
 }
 
 declare global {
