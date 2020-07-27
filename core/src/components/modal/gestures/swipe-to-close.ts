@@ -1,5 +1,4 @@
-import { Animation } from '../../../interface';
-import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
+import { Animation, getTimeGivenProgression } from '@isomer/core';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp } from '../../../utils/helpers';
 

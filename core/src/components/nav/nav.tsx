@@ -2,8 +2,8 @@ import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch, h 
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, NavComponent, NavComponentWithProps, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
-import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
+import { AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, NavComponent, NavComponentWithProps, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import { Animation, getTimeGivenProgression } from '@isomer/core';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
 

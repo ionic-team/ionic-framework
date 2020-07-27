@@ -1,6 +1,6 @@
 import { getIonMode } from '../../../global/ionic-global';
-import { Animation, MenuI } from '../../../interface';
-import { createAnimation } from '../../animation/animation';
+import { MenuI } from '../../../interface';
+import { createAnimation, Animation } from '@isomer/core';
 
 import { baseAnimation } from './base';
 

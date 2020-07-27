@@ -3,7 +3,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
-import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
+import { getTimeGivenProgression } from '@isomer/core';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';

@@ -1,5 +1,4 @@
-import { Animation } from '../../../interface';
-import { createAnimation } from '../../../utils/animation/animation';
+import { createAnimation, Animation } from '@isomer/core';
 
 /**
  * iOS Popover Leave Animation
