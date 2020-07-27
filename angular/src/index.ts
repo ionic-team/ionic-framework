@@ -30,7 +30,7 @@ export { ToastController } from './providers/toast-controller';
 export { NavController } from './providers/nav-controller';
 export { DomController } from './providers/dom-controller';
 export { Config } from './providers/config';
-export { AnimationController } from './providers/animation-controller';
+export { AnimationController } from '@isomer/angular';
 export { GestureController } from './providers/gesture-controller';
 
 // ROUTER STRATEGY
