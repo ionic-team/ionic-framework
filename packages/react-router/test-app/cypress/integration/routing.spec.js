@@ -241,6 +241,15 @@ describe('Navigation Tests', () => {
     cy.ionPageVisible('settings-page')
   })
 
+  it('/routing/tabs/redirect > Should be on settings page > Home Tab > Should be on home page', () => {
+    // tests that a redirect going to a tab other than the first tab works
+    // fixes bug https://github.com/ionic-team/ionic-framework/issues/21830
+    cy.visit(`http://localhost:${port}/routing/tabs/redirect`)
+    cy.ionPageVisible('settings-page')
+    cy.ionTabClick('Home')
+    cy.ionPageVisible('home-page')
+  })
+
   /*
     Tests to add:
     Test that lifecycle events fire
