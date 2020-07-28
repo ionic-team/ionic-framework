@@ -1,4 +1,4 @@
-import { createAnimation, Animation } from '@isomer/core';
+import { Animation, createAnimation } from '@isomer/core';
 
 /**
  * iOS Toast Leave Animation

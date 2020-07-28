@@ -1,4 +1,5 @@
-import { createAnimation, Animation } from '@isomer/core';
+import { Animation, createAnimation } from '@isomer/core';
+
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
 /**

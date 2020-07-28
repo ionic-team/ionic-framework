@@ -1,8 +1,8 @@
+import { Animation, getTimeGivenProgression } from '@isomer/core';
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
-import { Animation, getTimeGivenProgression } from '@isomer/core';
 import { clamp, getElementRoot, raf } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 

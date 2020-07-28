@@ -1,9 +1,9 @@
+import { Animation, getTimeGivenProgression } from '@isomer/core';
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, NavComponent, NavComponentWithProps, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
-import { Animation, getTimeGivenProgression } from '@isomer/core';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
 

@@ -1,6 +1,6 @@
+import { createAnimation } from '@isomer/core';
 import { writeTask } from '@stencil/core';
 
-import { createAnimation } from '@isomer/core';
 import { isPlatform } from '../../utils/platform';
 
 // MD Native Refresher

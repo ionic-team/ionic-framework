@@ -1,4 +1,5 @@
-import { createAnimation, Animation } from '@isomer/core';
+import { Animation, createAnimation } from '@isomer/core';
+
 import { TransitionOptions, getIonPageElement } from '../transition';
 
 const DURATION = 540;

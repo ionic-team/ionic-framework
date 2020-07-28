@@ -1,9 +1,9 @@
+import { getTimeGivenProgression } from '@isomer/core';
 import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
-import { getTimeGivenProgression } from '@isomer/core';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
