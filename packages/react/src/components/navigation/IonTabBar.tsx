@@ -110,6 +110,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
         }
       }
     });
+
     const { activeTab: prevActiveTab } = state;
     if (activeTab && prevActiveTab) {
       const prevHref = state.tabs[prevActiveTab].currentHref;
@@ -121,7 +122,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
           originalRouteOptions: tabs[activeTab].originalRouteOptions,
           currentRouteOptions: props.routeInfo?.routeOptions
         };
-        if (props.routeInfo.routeAction === 'pop') {
+        if (props.routeInfo.routeAction === 'pop' && (activeTab !== prevActiveTab)) {
           // If navigating back and the tabs change, set the prev tab back to its original href
           tabs[prevActiveTab] = {
             originalHref: tabs[prevActiveTab].originalHref,
