@@ -30,7 +30,7 @@ interface TabUrls {
 }
 
 interface IonTabBarState {
-  activeTab: string | undefined;
+  activeTab?: string;
   tabs: { [key: string]: TabUrls; };
 }
 
@@ -51,15 +51,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
       }
     });
 
-    const tabKeys = Object.keys(tabs);
-    const activeTab = tabKeys
-      .find(key => {
-        const href = tabs[key].originalHref;
-        return props.routeInfo!.pathname.startsWith(href);
-      }) || tabKeys[0];
-
     this.state = {
-      activeTab,
       tabs
     };
 
@@ -67,6 +59,28 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     this.renderTabButton = this.renderTabButton.bind(this);
     this.setActiveTabOnContext = this.setActiveTabOnContext.bind(this);
     this.selectTab = this.selectTab.bind(this);
+  }
+
+  componentDidMount() {
+    const tabs = this.state.tabs;
+    const tabKeys = Object.keys(tabs);
+    const activeTab = tabKeys
+      .find(key => {
+        const href = tabs[key].originalHref;
+        return this.props.routeInfo!.pathname.startsWith(href);
+      });
+
+    if (activeTab) {
+      this.setState({
+        activeTab
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.state.activeTab) {
+      this.setActiveTabOnContext(this.state.activeTab);
+    }
   }
 
   setActiveTabOnContext = (_tab: string) => { };
@@ -94,7 +108,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
       .find(key => {
         const href = state.tabs[key].originalHref;
         return props.routeInfo!.pathname.startsWith(href);
-      }) || tabKeys[0];
+      });
 
     // Check to see if the tab button href has changed, and if so, update it in the tabs state
     React.Children.forEach((props as any).children, (child: any) => {
