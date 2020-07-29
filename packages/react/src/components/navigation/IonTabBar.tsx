@@ -52,7 +52,6 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     });
 
     this.state = {
-      // activeTab,
       tabs
     };
 
