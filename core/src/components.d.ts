@@ -1307,6 +1307,10 @@ export namespace Components {
          */
         "backdropDismiss": boolean;
         /**
+          * The breakpoints to use for the sheet type modal gesture. This is used when dragging the modal up or down to stop at a certain height. Should be passed in as a decimal percentage of the total modal height. For example: [0, .25, .5, 1]
+         */
+        "breakpoints"?: number[];
+        /**
           * The component to display inside of the modal.
          */
         "component": ComponentRef;
@@ -1329,6 +1333,14 @@ export namespace Components {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        /**
+          * The horizontal line that displays at the top of a modal. It is `true` by default for a modal with type `'sheet'`.
+         */
+        "handle"?: boolean;
+        /**
+          * The initial breakpoint to open the sheet modal. This must be included in the breakpoints passed in or it will not stop at the initial breakpoint after opening. Defaults to `1`.
+         */
+        "initialBreakpoint": number;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -1366,6 +1378,10 @@ export namespace Components {
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
          */
         "swipeToClose": boolean;
+        /**
+          * The type of modal to present. TODO we could probably remove this and look for the breakpoints
+         */
+        "type": 'default' | 'sheet' | 'card';
     }
     interface IonNav {
         /**
@@ -4620,6 +4636,10 @@ declare namespace LocalJSX {
          */
         "backdropDismiss"?: boolean;
         /**
+          * The breakpoints to use for the sheet type modal gesture. This is used when dragging the modal up or down to stop at a certain height. Should be passed in as a decimal percentage of the total modal height. For example: [0, .25, .5, 1]
+         */
+        "breakpoints"?: number[];
+        /**
           * The component to display inside of the modal.
          */
         "component": ComponentRef;
@@ -4636,6 +4656,14 @@ declare namespace LocalJSX {
           * Animation to use when the modal is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        /**
+          * The horizontal line that displays at the top of a modal. It is `true` by default for a modal with type `'sheet'`.
+         */
+        "handle"?: boolean;
+        /**
+          * The initial breakpoint to open the sheet modal. This must be included in the breakpoints passed in or it will not stop at the initial breakpoint after opening. Defaults to `1`.
+         */
+        "initialBreakpoint"?: number;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -4677,6 +4705,10 @@ declare namespace LocalJSX {
           * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
          */
         "swipeToClose"?: boolean;
+        /**
+          * The type of modal to present. TODO we could probably remove this and look for the breakpoints
+         */
+        "type"?: 'default' | 'sheet' | 'card';
     }
     interface IonNav {
         /**

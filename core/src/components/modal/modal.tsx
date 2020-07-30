@@ -12,6 +12,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 
 /**
@@ -61,6 +62,27 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() leaveAnimation?: AnimationBuilder;
 
   /**
+   * The breakpoints to use for the sheet type modal gesture. This is used when
+   * dragging the modal up or down to stop at a certain height. Should be passed in
+   * as a decimal percentage of the total modal height.
+   * For example: [0, .25, .5, 1]
+   */
+  @Prop() breakpoints?: number[];
+
+  /**
+   * The initial breakpoint to open the sheet modal. This must be included in the
+   * breakpoints passed in or it will not stop at the initial breakpoint after opening.
+   * Defaults to `1`.
+   */
+  @Prop() initialBreakpoint = 1;
+
+  /**
+   * The horizontal line that displays at the top of a modal. It is `true` by default for
+   * a modal with type `'sheet'`.
+   */
+  @Prop() handle?: boolean;
+
+  /**
    * The component to display inside of the modal.
    */
   @Prop() component!: ComponentRef;
@@ -95,6 +117,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
    */
   @Prop() swipeToClose = false;
+
+  /**
+   * The type of modal to present.
+   * TODO we could probably remove this and look for the breakpoints
+   */
+  @Prop() type: 'default' | 'sheet' | 'card' = 'default';
 
   /**
    * The element that presented the modal. This is used for card presentation effects
@@ -158,7 +186,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
-    if (this.swipeToClose) {
+    if (this.type === 'sheet') {
+      this.initSheetGesture();
+    } else if (this.swipeToClose) {
       this.initSwipeToClose();
     }
   }
@@ -172,6 +202,38 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
     const ani = this.animation = animationBuilder(this.el, this.presentingElement);
     this.gesture = createSwipeToCloseGesture(
+      this.el,
+      ani,
+      () => {
+        /**
+         * While the gesture animation is finishing
+         * it is possible for a user to tap the backdrop.
+         * This would result in the dismiss animation
+         * being played again. Typically this is avoided
+         * by setting `presented = false` on the overlay
+         * component; however, we cannot do that here as
+         * that would prevent the element from being
+         * removed from the DOM.
+         */
+        this.gestureAnimationDismissing = true;
+        this.animation!.onFinish(async () => {
+          await this.dismiss(undefined, 'gesture');
+          this.gestureAnimationDismissing = false;
+        });
+      },
+    );
+    this.gesture.enable(true);
+  }
+
+  private initSheetGesture() {
+    if (getIonMode(this) !== 'ios') { return; }
+
+    // All of the elements needed for the swipe gesture
+    // should be in the DOM and referenced by now, except
+    // for the presenting el
+    const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
+    const ani = this.animation = animationBuilder(this.el, this.presentingElement);
+    this.gesture = createSheetGesture(
       this.el,
       ani,
       () => {
@@ -265,6 +327,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   render() {
+    const { handle, type } = this;
+
+    const showHandle = handle || type === 'sheet';
+
     const mode = getIonMode(this);
 
     return (
@@ -275,6 +341,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         class={{
           [mode]: true,
           [`modal-card`]: this.presentingElement !== undefined && mode === 'ios',
+          [`modal-${type}`]: true,
           ...getClassMap(this.cssClass)
         }}
         style={{
@@ -297,6 +364,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           role="dialog"
           class="modal-wrapper ion-overlay-wrapper"
         >
+          {showHandle && <div class="modal-handle"></div>}
         </div>
 
         <div tabindex="0"></div>

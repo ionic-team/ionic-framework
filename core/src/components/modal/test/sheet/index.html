@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Modal - Sheet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <style>
+  :root {
+    --ion-safe-area-top: 20px;
+    --ion-safe-area-bottom: 20px;
+  }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+
+    <div class="ion-page">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal - Sheet</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <p>
+          <ion-button id="basic-modal" onclick="presentModal()">Present Modal</ion-button>
+          <ion-button id="sheet-modal" onclick="presentModal('sheet')">Present Sheet Modal</ion-button>
+          <ion-button id="card-modal" onclick="presentModal('sheet', {'cssClass': 'custom-handle'})">Present Sheet Modal (custom handle)</ion-button>
+          <ion-button id="card-modal" onclick="presentModal('card')">Present Card Modal</ion-button>
+          <ion-button id="card-modal" onclick="presentCardModal()">Present Card Modal w/ presentingElement</ion-button>
+        </p>
+      </ion-content>
+    </div>
+
+  </ion-app>
+
+  <style>
+    .custom-handle {
+      --height: 75%;
+    }
+
+    .custom-handle .modal-handle {
+      top: -16px;
+      background: rgba(255, 255, 255, 0.53);
+    }
+
+    .custom-handle .modal-wrapper {
+      overflow: visible;
+    }
+  </style>
+
+  <script>
+    window.addEventListener("ionModalDidDismiss", function (e) { console.log('DidDismiss', e) })
+    window.addEventListener("ionModalWillDismiss", function (e) { console.log('WillDismiss', e) })
+
+    function createModal(type, options) {
+      let items = '';
+
+      for (var i = 0; i < 25; i++ ) {
+        items += `<ion-item>Item ${i}</ion-item>`;
+      }
+
+      // create component to open
+      const element = document.createElement('div');
+      element.innerHTML = `
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Super Modal</ion-title>
+          <ion-buttons slot="end">
+            <ion-button class="dismiss">Dismiss Modal</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          ${items}
+        </ion-list>
+      </ion-content>
+      `;
+
+      let extraOptions = {};
+      if (type === 'sheet') {
+        extraOptions = {
+          type: 'sheet',
+          initialBreakpoint: .25,
+          breakPoints: [0, .25, .75, 100]
+        };
+      } else if (type === 'card') {
+        extraOptions = {
+          component: element,
+          swipeToClose: true,
+        };
+      }
+
+      if (options) {
+        extraOptions = {
+          ...extraOptions,
+          ...options
+        }
+      }
+
+      // present the modal
+      const modalElement = Object.assign(document.createElement('ion-modal'), {
+        component: element,
+        ...extraOptions
+      });
+
+      // listen for close event
+      const button = element.querySelector('ion-button');
+      button.addEventListener('click', () => {
+        modalElement.dismiss();
+      });
+      document.body.appendChild(modalElement);
+      return modalElement;
+    }
+
+    async function presentModal(type = 'default', options) {
+      const modal = createModal(type, options);
+      await modal.present();
+    }
+
+    async function presentCardModal() {
+      const presentingEl = document.querySelectorAll('.ion-page')[1];
+      const modal = createModal('card', {
+        presentingElement: presentingEl
+      });
+      await modal.present();
+    }
+  </script>
+</body>
+
+</html>

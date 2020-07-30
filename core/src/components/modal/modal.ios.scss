@@ -19,6 +19,9 @@
   @include transform(translate3d(0, 100%, 0));
 }
 
+// iOS Card Modal
+// --------------------------------------------------
+
 @media screen and (max-width: 767px) {
   @supports (width: max(0px, 1px)) {
     :host(.modal-card) {
@@ -73,4 +76,33 @@
   :host(.modal-card) .modal-shadow {
     box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.1);
   }
+}
+
+// iOS Sheet Modal
+// --------------------------------------------------
+
+:host(.modal-sheet) {
+  align-items: flex-end;
+
+  // --backdrop-opacity: 0;
+  --border-radius: #{$modal-ios-border-radius};
+}
+
+.modal-handle {
+  position: absolute;
+
+  top: 14px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 36px;
+  height: 5px;
+
+  border-radius: 8px;
+
+  background: rgba(0, 0, 0, 0.23);
+
+  z-index: 2;
 }

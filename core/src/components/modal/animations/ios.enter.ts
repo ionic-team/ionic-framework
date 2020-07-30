@@ -9,6 +9,11 @@ export const iosEnterAnimation = (
     baseEl: HTMLElement,
     presentingEl?: HTMLElement,
   ): Animation => {
+  // If an initial breakpoint was passed we need to transform the modal to be that
+  // far from the top, otherwise we will transform it to the top (0vh)
+  const initialBreakpoint = (baseEl as HTMLIonModalElement).initialBreakpoint;
+  const initialHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}%` : '0vh';
+
   const backdropAnimation = createAnimation()
     .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
@@ -20,7 +25,7 @@ export const iosEnterAnimation = (
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
     .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
+    .fromTo('transform', 'translateY(100vh)', `translateY(${initialHeight})`);
 
   const baseAnimation = createAnimation()
     .addElement(baseEl)
@@ -45,7 +50,7 @@ export const iosEnterAnimation = (
       /**
        * Fallback for browsers that does not support `max()` (ex: Firefox)
        * No need to worry about statusbar padding since engines like Gecko
-       * are not used as the engine for standlone Cordova/Capacitor apps
+       * are not used as the engine for standalone Cordova/Capacitor apps
        */
       const transformOffset = (!CSS.supports('width', 'max(0px, 1px)')) ? '30px' : 'max(30px, var(--ion-safe-area-top))';
       const modalTransform = hasCardModal ? '-10px' : transformOffset;
