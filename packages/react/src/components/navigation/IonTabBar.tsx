@@ -189,7 +189,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
         return React.cloneElement(child, {
           href,
           routeOptions,
-          onClick: this.onTabButtonClick
+          onClick: () => {child.props.onClick?(); this.onTabButtonClick();}
         });
       }
       return null;
