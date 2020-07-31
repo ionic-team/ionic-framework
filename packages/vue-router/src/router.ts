@@ -93,6 +93,10 @@ export const createIonRouter = (opts: RouterOptions) => {
 
   const canGoBack = (deep: number = 1) => locationHistory.canGoBack(deep);
 
+  const navigate = (navigationOptions: ExternalNavigationOptions) => {
+    console.log('HELLO',navigationOptions)
+  }
+
   return {
     handleHistoryChange,
     getCurrentRouteInfo,

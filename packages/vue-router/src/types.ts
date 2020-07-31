@@ -1,3 +1,5 @@
+import { AnimationBuilder } from '@ionic/core';
+
 export interface RouteInfo {
   id: string;
   routeAction?: RouteAction;
@@ -29,4 +31,11 @@ export interface ViewItem {
 
 export interface ViewStacks {
   [k: string]: ViewItem[];
+}
+
+export interface ExternalNavigationOptions {
+  path: string;
+  direction?: RouteDirection;
+  animation?: AnimationBuilder;
+  event: Event;
 }
