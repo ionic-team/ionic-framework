@@ -11,7 +11,7 @@ import { createViewStacks } from './viewStacks';
 
 export const createRouter = (opts: RouterOptions) => {
   const router = createVueRouter(opts);
-  const ionRouter = createIonRouter(opts);
+  const ionRouter = createIonRouter(opts, router);
   const viewStacks = createViewStacks();
 
   const oldInstall = router.install.bind(router);

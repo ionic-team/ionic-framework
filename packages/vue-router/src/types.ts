@@ -2,8 +2,9 @@ import { AnimationBuilder } from '@ionic/core';
 
 export interface RouteInfo {
   id: string;
-  routeAction?: RouteAction;
-  routeDirection?: RouteDirection;
+  routerAction?: RouteAction;
+  routerDirection?: RouteDirection;
+  routerAnimation?: AnimationBuilder;
   lastPathname?: string;
   pathname: string;
   search: string;
@@ -11,8 +12,9 @@ export interface RouteInfo {
 }
 
 export interface RouteParams {
-  routeAction: RouteAction;
-  routeDirection: RouteDirection;
+  routerAction: RouteAction;
+  routerDirection: RouteDirection;
+  routerAnimation?: AnimationBuilder;
 }
 
 export type RouteAction = 'push' | 'pop' | 'replace';
@@ -34,8 +36,8 @@ export interface ViewStacks {
 }
 
 export interface ExternalNavigationOptions {
-  path: string;
-  direction?: RouteDirection;
-  animation?: AnimationBuilder;
+  routerLink: string;
+  routerDirection?: RouteDirection;
+  routerAnimation?: AnimationBuilder;
   event: Event;
 }

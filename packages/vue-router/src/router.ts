@@ -1,4 +1,5 @@
 import {
+  Router,
   RouteLocationNormalized,
   RouteLocationNormalizedLoaded,
   RouterOptions,
@@ -12,7 +13,7 @@ import {
   TransitionCallback,
 } from './types';
 
-export const createIonRouter = (opts: RouterOptions) => {
+export const createIonRouter = (opts: RouterOptions, router: Router) => {
   const locationHistory = createLocationHistory();
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
@@ -24,8 +25,8 @@ export const createIonRouter = (opts: RouterOptions) => {
   //  HistoryLocation   HistoryLocation    NavigationInformation
   const handleNavigate = (info: any) => {
     incomingRouteParams = {
-      routeAction: info.type,
-      routeDirection: info.direction
+      routerAction: info.type,
+      routerDirection: info.direction
     };
   }
 
@@ -38,7 +39,7 @@ export const createIonRouter = (opts: RouterOptions) => {
     let routeInfo: RouteInfo;
 
     if (incomingRouteParams) {
-      if (incomingRouteParams.routeAction === 'replace') {
+      if (incomingRouteParams.routerAction === 'replace') {
         leavingLocationInfo = locationHistory.previous();
       } else {
         leavingLocationInfo = locationHistory.current();
@@ -51,8 +52,8 @@ export const createIonRouter = (opts: RouterOptions) => {
     if (leavingUrl !== to.fullPath) {
       if (!incomingRouteParams) {
         incomingRouteParams = {
-          routeAction: 'push',
-          routeDirection: 'forward'
+          routerAction: 'push',
+          routerDirection: 'forward'
         };
       }
 
@@ -95,7 +96,15 @@ export const createIonRouter = (opts: RouterOptions) => {
   const canGoBack = (deep: number = 1) => locationHistory.canGoBack(deep);
 
   const navigate = (navigationOptions: ExternalNavigationOptions) => {
-    console.log('HELLO',navigationOptions)
+    const { routerAnimation, routerDirection, routerLink } = navigationOptions;
+
+    incomingRouteParams = {
+      routerAnimation,
+      routerDirection: routerDirection || 'forward',
+      routerAction: 'push'
+    }
+
+    router.push(routerLink);
   }
 
   return {
@@ -104,6 +113,7 @@ export const createIonRouter = (opts: RouterOptions) => {
     handleRegisterListener,
     handleTransition,
     setInitialRoute,
-    canGoBack
+    canGoBack,
+    navigate
   }
 }

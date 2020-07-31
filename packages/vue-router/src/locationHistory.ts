@@ -4,7 +4,7 @@ export const createLocationHistory = () => {
   const locationHistory: RouteInfo[] = [];
 
   const add = (routeInfo: RouteInfo) => {
-    switch (routeInfo.routeAction) {
+    switch (routeInfo.routerAction) {
       case "pop":
       popRoute(routeInfo);
       break;
@@ -16,7 +16,7 @@ export const createLocationHistory = () => {
       break;
     }
 
-    if (routeInfo.routeDirection === 'root') {
+    if (routeInfo.routerDirection === 'root') {
       clearHistory();
       addRoute(routeInfo);
     }
