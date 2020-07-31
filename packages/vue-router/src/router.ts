@@ -6,6 +6,7 @@ import {
 import { createLocationHistory } from './locationHistory';
 import { generateId } from './utils';
 import {
+  ExternalNavigationOptions,
   RouteInfo,
   RouteParams,
   TransitionCallback,
