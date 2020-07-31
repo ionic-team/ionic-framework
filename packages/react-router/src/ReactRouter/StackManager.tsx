@@ -4,7 +4,8 @@ import {
   StackContext,
   StackContextState,
   ViewItem,
-  generateId
+  generateId,
+  getConfig
 } from '@ionic/react';
 import React from 'react';
 import { matchPath } from 'react-router-dom';
@@ -38,6 +39,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   componentDidMount() {
     if (this.routerOutletElement) {
+      this.setupRouterOutlet(this.routerOutletElement);
       // console.log(`SM Mount - ${this.routerOutletElement.id} (${this.id})`);
       this.handlePageTransition(this.props.routeInfo);
     }
@@ -109,6 +111,28 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       foundView.ionRoute = true;
     }
     this.handlePageTransition(routeInfo);
+  }
+
+  async setupRouterOutlet(routerOutlet: HTMLIonRouterOutletElement) {
+
+    const canStart = () => {
+      const config = getConfig();
+      const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
+      if (swipeEnabled) {
+        return this.context.canGoBack();
+      } else {
+        return false;
+      }
+    };
+
+    const onStart = () => {
+      this.context.goBack();
+    };
+    routerOutlet.swipeHandler = {
+      canStart,
+      onStart,
+      onEnd: _shouldContinue => true
+    };
   }
 
   async transitionPage(routeInfo: RouteInfo, enteringViewItem: ViewItem, leavingViewItem?: ViewItem) {

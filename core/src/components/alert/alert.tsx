@@ -34,6 +34,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private gesture?: Gesture;
 
   presented = false;
+  lastFocus?: HTMLElement;
 
   @Element() el!: HTMLIonAlertElement;
 
@@ -514,7 +515,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
         <ion-backdrop tappable={this.backdropDismiss}/>
 
-        <div class="alert-wrapper" ref={el => this.wrapperEl = el}>
+        <div tabindex="0"></div>
+
+        <div class="alert-wrapper ion-overlay-wrapper" ref={el => this.wrapperEl = el}>
 
           <div class="alert-head">
             {header && <h2 id={hdrId} class="alert-title">{header}</h2>}
@@ -527,6 +530,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
           {this.renderAlertButtons()}
 
         </div>
+
+        <div tabindex="0"></div>
       </Host>
     );
   }

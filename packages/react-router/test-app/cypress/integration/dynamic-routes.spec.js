@@ -4,7 +4,7 @@ This spec covers that routes can be added and navigated to at runtime.
 Fixes bug reported in https://github.com/ionic-team/ionic/issues/21329
 */
 
-describe('Dynamic Route Tests', () => {
+describe('Dynamic Routes', () => {
   it('/dynamic-routes, when adding a dynamic route, we should be able to navigate to it', () => {
     cy.visit(`http://localhost:${port}/dynamic-routes`)
     cy.ionPageVisible('dynamic-routes-home')

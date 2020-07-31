@@ -1,4 +1,4 @@
-import { AnimationBuilder, ComponentProps, FrameworkDelegate } from '../../interface';
+import { AnimationBuilder, ComponentProps, FrameworkDelegate, NavComponentWithProps } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 import { assert } from '../../utils/helpers';
 
@@ -89,13 +89,20 @@ export const convertToView = (page: any, params: ComponentProps | undefined): Vi
   return new ViewController(page, params);
 };
 
-export const convertToViews = (pages: any[]): ViewController[] => {
+export const convertToViews = (pages: NavComponentWithProps[]): ViewController[] => {
   return pages.map(page => {
     if (page instanceof ViewController) {
       return page;
     }
-    if ('page' in page) {
-      return convertToView(page.page, page.params);
+    if ('component' in page) {
+      /**
+       * TODO Ionic 6:
+       * Consider switching to just using `undefined` here
+       * as well as on the public interfaces and on
+       * `NavComponentWithProps`. Previously `pages` was
+       * of type `any[]` so TypeScript did not catch this.
+       */
+      return convertToView(page.component, (page.componentProps === null) ? undefined : page.componentProps);
     }
     return convertToView(page, undefined);
   }).filter(v => v !== null) as ViewController[];

@@ -39,9 +39,11 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
   locationHistory = new LocationHistory();
   viewStack = new ReactRouterViewStack();
   routeMangerContextState: RouteManagerContextState = {
+    canGoBack: () => this.locationHistory.canGoBack(),
     clearOutlet: this.viewStack.clear,
     getViewItemForTransition: this.viewStack.getViewItemForTransition,
     getChildrenToRender: this.viewStack.getChildrenToRender,
+    goBack: () => this.handleNavigateBack(),
     createViewItem: this.viewStack.createViewItem,
     findViewItemByRouteInfo: this.viewStack.findViewItemByRouteInfo,
     findLeavingViewItemByRouteInfo: this.viewStack.findLeavingViewItemByRouteInfo,
