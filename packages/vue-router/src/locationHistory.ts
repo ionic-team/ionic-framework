@@ -60,8 +60,8 @@ export const createLocationHistory = () => {
     return locationHistory[locationHistory.length - 1];
   }
 
-  const canGoBack = () => {
-    return locationHistory.length > 1;
+  const canGoBack = (deep: number = 1) => {
+    return locationHistory.length > deep;
   }
 
   return {

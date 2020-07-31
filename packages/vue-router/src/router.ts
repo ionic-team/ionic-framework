@@ -91,7 +91,7 @@ export const createIonRouter = (opts: RouterOptions) => {
     locationHistory.add(info);
   }
 
-  const canGoBack = () => locationHistory.canGoBack();
+  const canGoBack = (deep: number = 1) => locationHistory.canGoBack(deep);
 
   return {
     handleHistoryChange,

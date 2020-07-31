@@ -61,6 +61,13 @@ export const config: Config = {
     vueOutputTarget({
       componentCorePackage: '@ionic/core',
       proxiesFile: '../packages/vue/src/proxies.ts',
+      excludeComponents: [
+        'ion-router',
+        'ion-route',
+        'ion-route-redirect',
+        'ion-router-link',
+        'ion-router-outlet',
+      ],
       componentModels: [
         {
           elements: ['ion-checkbox', 'ion-toggle'],
