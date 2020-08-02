@@ -299,6 +299,7 @@ export class ButtonExample {
 | `target`          | `target`           | Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.                                                                                                                                       | `string \| undefined`                                       | `undefined` |
 | `type`            | `type`             | The type of the button.                                                                                                                                                                                                                                                                   | `"button" \| "reset" \| "submit"`                           | `'button'`  |
 
+
 ## Events
 
 | Event      | Description                          | Type                |
