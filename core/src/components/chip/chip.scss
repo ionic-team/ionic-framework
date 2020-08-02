@@ -36,6 +36,11 @@
   vertical-align: middle;
   box-sizing: border-box;
 }
+:host(.chip-disabled) {
+	cursor: default;
+	opacity: .5;
+	pointer-events: none;
+}
 
 
 // Chip Colors
