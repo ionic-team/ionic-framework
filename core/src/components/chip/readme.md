@@ -231,6 +231,7 @@ export class ChipExample {
 | `color`   | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
 | `mode`    | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
 | `outline` | `outline` | Display an outline style button.                                                                                                                                                                                                                                       | `boolean`             | `false`     |
+| `disabled`            | `disabled`             | If `true` the user cannot interact with the chip.                                                                                                                                                                                                                                                                   | `boolean`                           | `'false'`  |
 
 
 ## CSS Custom Properties
