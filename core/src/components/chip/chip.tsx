@@ -45,8 +45,8 @@ export class Chip implements ComponentInterface {
           ...createColorClasses(this.color),
           [mode]: true,
           'chip-outline': this.outline,
-            'ion-activatable': true,
-            'chip-disabled': disabled,
+          'ion-activatable': true,
+          'chip-disabled': disabled,
         }}
       >
         <slot></slot>
