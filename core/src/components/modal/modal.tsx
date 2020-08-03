@@ -193,13 +193,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
+    await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
+
     if (this.type === 'sheet') {
       this.initSheetGesture();
     } else if (this.swipeToClose) {
       this.initSwipeToClose();
     }
-
-    await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
   }
 
   private initSwipeToClose() {
@@ -265,16 +265,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
     );
     this.gesture.enable(true);
 
-
-    // If an initial breakpoint was passed we need to transform the modal to be that
-    // far from the top, otherwise we will transform it to the top (0vh)
     if (this.initialBreakpoint) {
-      raf(() => {
+      // raf(() => {
         const step = this.initialBreakpoint;
         console.log('step', step);
         ani.progressStart(true, step);
-        ani.progressStep(step);
-      });
+        // ani.progressStep(step);
+      // });
     }
   }
 
