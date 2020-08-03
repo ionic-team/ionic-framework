@@ -409,10 +409,33 @@ export const createAnimation = (animationId?: string): Animation => {
   };
 
   const keyframes = (keyframeValues: AnimationKeyFrames) => {
+    const different = _keyframes !== keyframeValues;
     _keyframes = keyframeValues;
+
+    if (different) {
+      updateKeyframes(_keyframes);
+    }
 
     return ani;
   };
+
+  const updateKeyframes = (keyframeValues: AnimationKeyFrames) => {
+    if (supportsWebAnimations) {
+      const webAnimations = getWebAnimations();
+      webAnimations.forEach(ani => {
+        if (ani.effect.setKeyframes) {
+          ani.effect.setKeyframes(keyframeValues);
+        } else {
+          const newEffect = new KeyframeEffect(ani.effect.target, keyframeValues, ani.effect.getTiming());
+          ani.effect = newEffect;
+        }
+      });
+
+      console.log('replaced!!',getKeyframes(),webAnimations)
+    } else {
+      console.warn('Reactive keyframes do not currently support CSS Animations. Please bug Liam about this on Slack');
+    }
+  }
 
   /**
    * Run all "before" animation hooks.

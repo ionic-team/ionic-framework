@@ -15,9 +15,10 @@ const base = 0;
 export const createSheetGesture = (
   el: HTMLIonModalElement,
   animation: Animation,
-  onDismiss: () => void
+  onDismiss: () => void,
+  getInitialStep: () => number,
 ) => {
-  const height = el.offsetHeight;
+  const height = window.innerHeight;
   let isOpen = false;
 
   const canStart = (detail: GestureDetail) => {
@@ -39,17 +40,14 @@ export const createSheetGesture = (
   };
 
   const onStart = () => {
-    animation.progressStart(true, (isOpen) ? 1 : 0);
+    animation.progressStart(true, getInitialStep());
   };
 
   const onMove = (detail: GestureDetail) => {
-    offset = base + Math.min(1, detail.deltaY / 100);
+    offset = getInitialStep() + (detail.deltaY / height);
 
-    animation.progressStep(offset);
-    console.log('offset', offset);
-
-    // const step = clamp(0.0001, detail.deltaY / height, 0.9999);
-    // animation.progressStep(step);
+    const step = clamp(0.0001, offset, 0.9999);
+    animation.progressStep(step);
   };
 
   const onEnd = (detail: GestureDetail) => {

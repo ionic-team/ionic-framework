@@ -8,6 +8,8 @@ import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, prese
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
+import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier'
+
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -193,14 +195,31 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
-    await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
+
+
+    this.animation = await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
     if (this.type === 'sheet') {
       this.initSheetGesture();
     } else if (this.swipeToClose) {
       this.initSwipeToClose();
     }
+
+    if (this.type === 'sheet') {
+
+      const wrapper = this.animation!.childAnimations[0];
+      wrapper.keyframes([
+        { offset: 0, transform: 'translateY(0vh)' },
+        { offset: 1, transform: 'translateY(100vh)' }
+      ]);
+
+      const step = getTimeGivenProgression([0,0],[0.32,0.72],[0,1],[1,1], 1 - this.initialBreakpoint)[0];
+      this.animation!.progressStep(step);
+    }
+
   }
+
+  private  currentStep: number = 1;
 
   private initSwipeToClose() {
     if (getIonMode(this) !== 'ios') { return; }
@@ -230,6 +249,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.gestureAnimationDismissing = false;
         });
       },
+
     );
     this.gesture.enable(true);
   }
@@ -241,7 +261,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // should be in the DOM and referenced by now, except
     // for the presenting el
     const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-    const ani = this.animation = animationBuilder(this.el, this.presentingElement);
+    const ani = this.animation!;// = animationBuilder(this.el, this.presentingElement);
+
     this.gesture = createSheetGesture(
       this.el,
       ani,
@@ -262,17 +283,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
           this.gestureAnimationDismissing = false;
         });
       },
+      () => 1 - this.initialBreakpoint
     );
     this.gesture.enable(true);
 
-    if (this.initialBreakpoint) {
-      // raf(() => {
-        const step = this.initialBreakpoint;
-        console.log('step', step);
-        ani.progressStart(true, step);
-        // ani.progressStep(step);
-      // });
-    }
+
+
   }
 
   /**

@@ -261,6 +261,8 @@ export const present = async (
   if (overlay.keyboardClose) {
     overlay.el.focus();
   }
+
+  return completed;
 };
 
 export const dismiss = async (
@@ -311,7 +313,7 @@ const overlayAnimation = async (
   animationBuilder: AnimationBuilder,
   baseEl: any,
   opts: any
-): Promise<boolean> => {
+): Promise<any> => {
   // Make overlay visible in case it's hidden
   baseEl.classList.remove('overlay-hidden');
 
@@ -336,7 +338,7 @@ const overlayAnimation = async (
 
   await animation.play();
 
-  return true;
+  return animation;
 };
 
 export const eventMethod = <T>(element: HTMLElement, eventName: string): Promise<T> => {

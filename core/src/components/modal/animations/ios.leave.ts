@@ -23,7 +23,7 @@ export const iosLeaveAnimation = (
     .beforeStyles({ 'opacity': 1 })
     .fromTo('transform', `translateY(${lastHeight})`, 'translateY(100vh)');
 
-  const baseAnimation = createAnimation()
+  const baseAnimation = createAnimation('leaving-base')
     .addElement(baseEl)
     .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(duration)
