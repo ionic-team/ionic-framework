@@ -8,7 +8,8 @@ export {
   // Overlay Controllers
   alertController,
   actionSheetController,
-  menuController, modalController,
+  menuController,
+  modalController,
   loadingController,
   pickerController,
   popoverController,
@@ -21,13 +22,26 @@ export {
   isPlatform, Platforms, getPlatforms,
 
   // Gesture
+  Gesture,
+  GestureConfig,
+  GestureDetail,
   createGesture,
 
   // Animations
+  Animation,
+  AnimationBuilder,
+  AnimationCallbackOptions,
+  AnimationDirection,
+  AnimationFill,
+  AnimationKeyFrames,
+  AnimationLifecycle,
   createAnimation,
   iosTransitionAnimation,
   mdTransitionAnimation,
   getTimeGivenProgression,
+
+  // Hardware Back Button
+  BackButtonEvent
 } from '@ionic/core';
 
 // Icons that are used by internal components

@@ -19,6 +19,15 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
   let incomingRouteParams: RouteParams;
   let transitionListeners: TransitionCallback[] = [];
 
+  if (typeof (document as any) !== 'undefined') {
+    document.addEventListener('ionBackButton', (ev: Event) => {
+      (ev as any).detail.register(0, (processNextHandler: () => void) => {
+        opts.history.go(-1);
+        processNextHandler();
+      });
+    })
+  }
+
   //   NavigationCallback
   opts.history.listen((_: any, _x: any, info: any) => handleNavigate(info));
 
