@@ -10,10 +10,6 @@ export const iosLeaveAnimation = (
   presentingEl?: HTMLElement,
   duration = 500
 ): Animation => {
-  const initialBreakpoint = (baseEl as HTMLIonModalElement).initialBreakpoint;
-  const lastHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}%` : '0vh';
-  // TODO need to find out what the last breakpoint it stopped on was and move it from there instead
-
   const backdropAnimation = createAnimation()
     .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 'var(--backdrop-opacity)', 0.0);
@@ -21,7 +17,7 @@ export const iosLeaveAnimation = (
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
     .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', `translateY(${lastHeight})`, 'translateY(100vh)');
+    .fromTo('transform', `translateY(0vh)`, 'translateY(100vh)');
 
   const baseAnimation = createAnimation()
     .addElement(baseEl)

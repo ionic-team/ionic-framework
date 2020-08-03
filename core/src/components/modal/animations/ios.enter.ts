@@ -9,11 +9,6 @@ export const iosEnterAnimation = (
     baseEl: HTMLElement,
     presentingEl?: HTMLElement,
   ): Animation => {
-  // If an initial breakpoint was passed we need to transform the modal to be that
-  // far from the top, otherwise we will transform it to the top (0vh)
-  const initialBreakpoint = (baseEl as HTMLIonModalElement).initialBreakpoint;
-  const initialHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}%` : '0vh';
-
   const backdropAnimation = createAnimation()
     .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
@@ -25,7 +20,7 @@ export const iosEnterAnimation = (
   const wrapperAnimation = createAnimation()
     .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
     .beforeStyles({ 'opacity': 1 })
-    .fromTo('transform', 'translateY(100vh)', `translateY(${initialHeight})`);
+    .fromTo('transform', 'translateY(100vh)', `translateY(0vh)`);
 
   const baseAnimation = createAnimation()
     .addElement(baseEl)

@@ -8,6 +8,10 @@ export const SheetDefaults = {
   MIN_PRESENTING_SCALE: 0.93,
 };
 
+let offset = 0;
+const base = 0;
+// const breakpoints = [0, .5, 1];
+
 export const createSheetGesture = (
   el: HTMLIonModalElement,
   animation: Animation,
@@ -39,11 +43,13 @@ export const createSheetGesture = (
   };
 
   const onMove = (detail: GestureDetail) => {
-    const step = clamp(0.0001, detail.deltaY / height, 0.9999);
+    offset = base + Math.min(1, detail.deltaY / 100);
 
-    console.log(step);
+    animation.progressStep(offset);
+    console.log('offset', offset);
 
-    animation.progressStep(step);
+    // const step = clamp(0.0001, detail.deltaY / height, 0.9999);
+    // animation.progressStep(step);
   };
 
   const onEnd = (detail: GestureDetail) => {
