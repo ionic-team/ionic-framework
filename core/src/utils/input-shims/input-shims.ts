@@ -11,7 +11,7 @@ const SCROLL_ASSIST = true;
 const SCROLL_PADDING = true;
 const HIDE_CARET = true;
 
-export const startInputShims = (config: Config) => {
+export const startInputShims = async (config: Config) => {
   const doc = document;
   const keyboardHeight = config.getNumber('keyboardHeight', 290);
   const scrollAssist = config.getBoolean('scrollAssist', true);
@@ -77,11 +77,11 @@ export const startInputShims = (config: Config) => {
   // At this point we need to look for all of the inputs not registered yet
   // and register them.
   for (const input of inputs) {
-    registerInput(input);
+    await registerInput(input);
   }
 
-  doc.addEventListener('ionInputDidLoad', ((ev: InputEvent) => {
-    registerInput(ev.detail);
+  doc.addEventListener('ionInputDidLoad', (async (ev: InputEvent) => {
+    await registerInput(ev.detail);
   }) as any);
 
   doc.addEventListener('ionInputDidUnload', ((ev: InputEvent) => {
