@@ -922,6 +922,10 @@ export namespace Components {
          */
         "required": boolean;
         /**
+          * Sets the custom validity error message on the native `<input>` element.
+         */
+        "setCustomValidity": (error: string) => Promise<void>;
+        /**
           * Sets focus on the specified `ion-input`. Use this method instead of the global `input.focus()`.
          */
         "setFocus": () => Promise<void>;
@@ -941,6 +945,10 @@ export namespace Components {
           * The type of control to display. The default type is text.
          */
         "type": TextFieldTypes;
+        /**
+          * The HTML standard validity attribute related to forms participation forwarded from the native html input.
+         */
+        "validity": ValidityState | null;
         /**
           * The value of the input.
          */
@@ -4274,6 +4282,10 @@ declare namespace LocalJSX {
           * The type of control to display. The default type is text.
          */
         "type"?: TextFieldTypes;
+        /**
+          * The HTML standard validity attribute related to forms participation forwarded from the native html input.
+         */
+        "validity"?: ValidityState | null;
         /**
           * The value of the input.
          */
