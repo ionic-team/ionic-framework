@@ -82,7 +82,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     const dispatchedFrom = ev.target as HTMLElement;
     const parent = this.el.parentElement as EventTarget;
 
-    if ((ev.composedPath && ev.composedPath().includes(parent)) || dispatchedFrom && dispatchedFrom.contains(this.el)) {
+    if ((ev.composedPath && ev.composedPath().includes(parent)) || (dispatchedFrom && dispatchedFrom.contains(this.el))) {
       this.selected = this.tab === ev.detail.tab;
     }
   }
