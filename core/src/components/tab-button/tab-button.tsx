@@ -77,9 +77,12 @@ export class TabButton implements ComponentInterface, AnchorInterface {
    */
   @Event() ionTabButtonClick!: EventEmitter<TabButtonClickEventDetail>;
 
-  @Listen('ionTabBarChanged', { target: 'parent' })
+  @Listen('ionTabBarChanged', { target: 'window' })
   onTabBarChanged(ev: CustomEvent<TabBarChangedEventDetail>) {
-    this.selected = this.tab === ev.detail.tab;
+    const dispatchedFrom = ev.target as HTMLElement;
+    if (dispatchedFrom && dispatchedFrom.contains(this.el)) {
+      this.selected = this.tab === ev.detail.tab;
+    }
   }
 
   componentWillLoad() {

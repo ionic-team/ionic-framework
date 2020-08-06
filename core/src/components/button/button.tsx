@@ -46,20 +46,20 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * If `true`, the user cannot interact with the button.
    */
-  @Prop({ reflectToAttr: true }) disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
    * without left and right borders.
    */
-  @Prop({ reflectToAttr: true }) expand?: 'full' | 'block';
+  @Prop({ reflect: true }) expand?: 'full' | 'block';
 
   /**
    * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
    * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
    * a toolbar, where the default is `"clear"`.
    */
-  @Prop({ reflectToAttr: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
+  @Prop({ reflect: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
 
   /**
    * When using a router, it specifies the transition direction when navigating to
@@ -96,12 +96,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * The button shape.
    */
-  @Prop({ reflectToAttr: true }) shape?: 'round';
+  @Prop({ reflect: true }) shape?: 'round';
 
   /**
    * The button size.
    */
-  @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
+  @Prop({ reflect: true }) size?: 'small' | 'default' | 'large';
 
   /**
    * If `true`, activates a button with a heavier font weight.
