@@ -58,17 +58,6 @@ export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avata
 ]);
 
 
-export const IonBackButton = /*@__PURE__*/ defineContainer<JSX.IonBackButton>('ion-back-button', [
-  'color',
-  'defaultHref',
-  'disabled',
-  'icon',
-  'text',
-  'type',
-  'routerAnimation'
-]);
-
-
 export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-backdrop', [
   'visible',
   'tappable',

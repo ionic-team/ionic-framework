@@ -17,7 +17,6 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
   const locationHistory = createLocationHistory();
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
-  let transitionListeners: TransitionCallback[] = [];
 
   if (typeof (document as any) !== 'undefined') {
     document.addEventListener('ionBackButton', (ev: Event) => {
@@ -37,10 +36,6 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
       routerAction: info.type,
       routerDirection: info.direction
     };
-  }
-
-  const handleRegisterListener = (cb: TransitionCallback) => {
-    transitionListeners.push(cb);
   }
 
   const handleHistoryChange = (to: RouteLocationNormalized) => {
@@ -86,10 +81,6 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
     incomingRouteParams = undefined;
   }
 
-  const handleTransition = () => {
-    transitionListeners.forEach(listener => listener(currentRouteInfo!)); // TODO
-  }
-
   const getCurrentRouteInfo = () => currentRouteInfo;
 
   const setInitialRoute = (routeInfo: RouteLocationNormalizedLoaded) => {
@@ -104,6 +95,10 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
 
   const canGoBack = (deep: number = 1) => locationHistory.canGoBack(deep);
 
+  const setIncomingRouteParams = (params: RouteParams) => {
+    incomingRouteParams = params;
+  }
+
   const navigate = (navigationOptions: ExternalNavigationOptions) => {
     const { routerAnimation, routerDirection, routerLink } = navigationOptions;
 
@@ -116,13 +111,17 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
     router.push(routerLink);
   }
 
+  const getRouter = () => router;
+  const getLocationHistory = () => locationHistory;
+
   return {
     handleHistoryChange,
     getCurrentRouteInfo,
-    handleRegisterListener,
-    handleTransition,
     setInitialRoute,
     canGoBack,
-    navigate
+    navigate,
+    getRouter,
+    getLocationHistory,
+    setIncomingRouteParams
   }
 }

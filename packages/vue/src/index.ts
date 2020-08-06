@@ -4,6 +4,8 @@ import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, clo
 export * from './proxies';
 export * from './ionic-vue';
 
+export * from '../components/IonBackButton';
+
 export {
   // Overlay Controllers
   alertController,
