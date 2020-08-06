@@ -177,7 +177,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     this.buttonsChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
