@@ -3,12 +3,11 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
-
-import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier'
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -16,7 +15,6 @@ import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
-import { raf } from '../../utils/helpers';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -40,6 +38,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   presented = false;
   lastFocus?: HTMLElement;
   animation?: Animation;
+  maxBreakpoint?: number;
 
   @Element() el!: HTMLIonModalElement;
 
@@ -67,7 +66,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * The breakpoints to use for the sheet type modal gesture. This is used when
    * dragging the modal up or down to stop at a certain height. Should be passed in
-   * as a decimal percentage of the total modal height.
+   * as a decimal percentage of the modal's height, between 0 and 1.
    * For example: [0, .25, .5, 1]
    */
   @Prop() breakpoints?: number[];
@@ -75,7 +74,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * The initial breakpoint to open the sheet modal. This must be included in the
    * breakpoints passed in or it will not stop at the initial breakpoint after opening.
-   * Defaults to `1`.
+   * Should be a decimal value between 0 and 1. Defaults to `1`.
    */
   @Prop() initialBreakpoint = 1;
 
@@ -166,7 +165,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     prepareOverlay(this.el);
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
+    console.log(this.breakpoints);
+    this.breakpoints = this.breakpoints && this.breakpoints.sort((a, b) => a - b);
     // if (this.type === 'sheet') {
     //   this.initSheetGesture();
     // } else if (this.swipeToClose) {
@@ -260,8 +261,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     // All of the elements needed for the swipe gesture
     // should be in the DOM and referenced by now, except
     // for the presenting el
-    const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
-    const ani = this.animation!;// = animationBuilder(this.el, this.presentingElement);
+    // const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
+    const ani = this.animation!;
+    // = animationBuilder(this.el, this.presentingElement);
 
     this.gesture = createSheetGesture(
       this.el,
@@ -287,8 +289,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
     );
     this.gesture.enable(true);
 
-
-
+    // if (this.breakpoints) {
+    //   console.log('found breakpoints', this.breakpoints);
+    //   const breakpoints = this.breakpoints;
+    //   const maxBreakpoint = breakpoints[breakpoints.length - 1];
+    //   console.log(breakpoints, maxBreakpoint);
+    // }
   }
 
   /**

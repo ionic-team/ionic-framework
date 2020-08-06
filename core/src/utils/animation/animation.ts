@@ -430,12 +430,10 @@ export const createAnimation = (animationId?: string): Animation => {
           ani.effect = newEffect;
         }
       });
-
-      console.log('replaced!!',getKeyframes(),webAnimations)
     } else {
       console.warn('Reactive keyframes do not currently support CSS Animations. Please bug Liam about this on Slack');
     }
-  }
+  };
 
   /**
    * Run all "before" animation hooks.

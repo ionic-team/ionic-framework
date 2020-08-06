@@ -13,7 +13,7 @@ export const iosEnterAnimation = (
   // far from the top, otherwise we will transform it to the top (0vh)
   const initialBreakpoint = (baseEl as HTMLIonModalElement).initialBreakpoint;
   const initialHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}%` : '0vh';
-console.log(initialBreakpoint,initialHeight);
+
   const backdropAnimation = createAnimation()
     .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
@@ -22,7 +22,7 @@ console.log(initialBreakpoint,initialHeight);
     })
     .afterClearStyles(['pointer-events']);
 
-  const wrapperAnimation = createAnimation()
+  const wrapperAnimation = createAnimation('wrapperAnimation')
     .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
     .beforeStyles({ 'opacity': 1 })
     .fromTo('transform', 'translateY(100vh)', `translateY(${initialHeight})`);

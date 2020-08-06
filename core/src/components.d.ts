@@ -1307,7 +1307,7 @@ export namespace Components {
          */
         "backdropDismiss": boolean;
         /**
-          * The breakpoints to use for the sheet type modal gesture. This is used when dragging the modal up or down to stop at a certain height. Should be passed in as a decimal percentage of the total modal height. For example: [0, .25, .5, 1]
+          * The breakpoints to use for the sheet type modal gesture. This is used when dragging the modal up or down to stop at a certain height. Should be passed in as a decimal percentage of the modal's height, between 0 and 1. For example: [0, .25, .5, 1]
          */
         "breakpoints"?: number[];
         /**
@@ -1338,7 +1338,7 @@ export namespace Components {
          */
         "handle"?: boolean;
         /**
-          * The initial breakpoint to open the sheet modal. This must be included in the breakpoints passed in or it will not stop at the initial breakpoint after opening. Defaults to `1`.
+          * The initial breakpoint to open the sheet modal. This must be included in the breakpoints passed in or it will not stop at the initial breakpoint after opening. Should be a decimal value between 0 and 1. Defaults to `1`.
          */
         "initialBreakpoint": number;
         /**
@@ -4636,7 +4636,7 @@ declare namespace LocalJSX {
          */
         "backdropDismiss"?: boolean;
         /**
-          * The breakpoints to use for the sheet type modal gesture. This is used when dragging the modal up or down to stop at a certain height. Should be passed in as a decimal percentage of the total modal height. For example: [0, .25, .5, 1]
+          * The breakpoints to use for the sheet type modal gesture. This is used when dragging the modal up or down to stop at a certain height. Should be passed in as a decimal percentage of the modal's height, between 0 and 1. For example: [0, .25, .5, 1]
          */
         "breakpoints"?: number[];
         /**
@@ -4661,7 +4661,7 @@ declare namespace LocalJSX {
          */
         "handle"?: boolean;
         /**
-          * The initial breakpoint to open the sheet modal. This must be included in the breakpoints passed in or it will not stop at the initial breakpoint after opening. Defaults to `1`.
+          * The initial breakpoint to open the sheet modal. This must be included in the breakpoints passed in or it will not stop at the initial breakpoint after opening. Should be a decimal value between 0 and 1. Defaults to `1`.
          */
         "initialBreakpoint"?: number;
         /**
