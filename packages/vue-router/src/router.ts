@@ -9,8 +9,7 @@ import { generateId } from './utils';
 import {
   ExternalNavigationOptions,
   RouteInfo,
-  RouteParams,
-  TransitionCallback,
+  RouteParams
 } from './types';
 
 export const createIonRouter = (opts: RouterOptions, router: Router) => {
@@ -50,6 +49,10 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
       }
     } else {
       leavingLocationInfo = locationHistory.current();
+    }
+
+    if (!leavingLocationInfo) {
+      leavingLocationInfo = {};
     }
 
     const leavingUrl = leavingLocationInfo.pathname + leavingLocationInfo.search;

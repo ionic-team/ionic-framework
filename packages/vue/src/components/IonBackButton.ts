@@ -1,12 +1,11 @@
-<script>
-import { h, inject } from 'vue';
+import { h, inject, defineComponent } from 'vue';
 
-export default {
+export const IonBackButton = defineComponent({
   name: 'IonBackButton',
-  setup(props, { attrs, slots }) {
-    const ionRouter = inject('navManager');
+  setup(_, { attrs, slots }) {
+    const ionRouter: any = inject('navManager');
 
-    const onClick = (ev) => {
+    const onClick = (ev: Event) => {
       const defaultHref = attrs['default-href'] || attrs['defaultHref'];
       const routerAnimation = attrs['router-animation'] || attrs['routerAnimation'];
 
@@ -41,5 +40,4 @@ export default {
       )
     }
   }
-}
-</script>
+});

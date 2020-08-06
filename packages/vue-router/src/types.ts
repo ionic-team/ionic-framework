@@ -19,7 +19,6 @@ export interface RouteParams {
 
 export type RouteAction = 'push' | 'pop' | 'replace';
 export type RouteDirection = 'forward' | 'back' | 'root';
-export type TransitionCallback = (routeInfo: RouteInfo) => void;
 
 export interface ViewItem {
   id: string;
