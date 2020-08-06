@@ -830,7 +830,7 @@ export namespace Components {
          */
         "accept"?: string;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Default options are: `"off"`, `"characters"`, `"words"`, and `"sentences"`. For more information, see [Autocapitalize for mobile](https://developers.google.com/web/updates/2015/04/autocapitalize)
          */
         "autocapitalize": string;
         /**
@@ -4151,7 +4151,7 @@ declare namespace LocalJSX {
          */
         "accept"?: string;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Default options are: `"off"`, `"characters"`, `"words"`, and `"sentences"`. For more information, see [Autocapitalize for mobile](https://developers.google.com/web/updates/2015/04/autocapitalize)
          */
         "autocapitalize"?: string;
         /**
