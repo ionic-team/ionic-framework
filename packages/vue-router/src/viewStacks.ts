@@ -9,6 +9,7 @@ export const createViewStacks = () => {
 
   const registerIonPage = (viewItem: ViewItem, ionPage: HTMLElement) => {
     viewItem.ionPageElement = ionPage;
+    viewItem.ionPage = true;
   }
 
   const findViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number) => {
