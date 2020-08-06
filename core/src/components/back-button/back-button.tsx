@@ -40,7 +40,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   /**
    * If `true`, the user cannot interact with the button.
    */
-  @Prop({ reflectToAttr: true }) disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
    * The icon name to use for the back button.
