@@ -80,7 +80,9 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   @Listen('ionTabBarChanged', { target: 'window' })
   onTabBarChanged(ev: CustomEvent<TabBarChangedEventDetail>) {
     const dispatchedFrom = ev.target as HTMLElement;
-    if (dispatchedFrom && dispatchedFrom.contains(this.el)) {
+    const parent = this.el.parentElement as EventTarget;
+
+    if ((ev.composedPath && ev.composedPath().includes(parent)) || dispatchedFrom && dispatchedFrom.contains(this.el)) {
       this.selected = this.tab === ev.detail.tab;
     }
   }
