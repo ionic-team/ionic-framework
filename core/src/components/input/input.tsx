@@ -41,6 +41,8 @@ export class Input implements ComponentInterface {
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+   * Default options are: `"off"`, `"characters"`, `"words"`, and `"sentences"`.
+   * For more information, see [Autocapitalize for mobile](https://developers.google.com/web/updates/2015/04/autocapitalize)
    */
   @Prop() autocapitalize = 'off';
 
