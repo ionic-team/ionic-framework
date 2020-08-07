@@ -1,5 +1,4 @@
 import { Animation } from '../../../interface';
-import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp } from '../../../utils/helpers';
 
@@ -16,14 +15,14 @@ let offset = 0;
 export const createSheetGesture = (
   el: HTMLIonModalElement,
   animation: Animation,
-  onDismiss: () => void,
-  getInitialStep: () => number,
+  onDismiss: () => void
 ) => {
   const height = window.innerHeight;
   let currentBreakpoint = el.initialBreakpoint;
   const breakpoints = el.breakpoints;
   const maxBreakpoint = breakpoints && breakpoints[breakpoints.length - 1];
   let isOpen = false;
+  const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
 
   const canStart = (detail: GestureDetail) => {
     const target = detail.event.target as HTMLElement | null;
@@ -44,102 +43,67 @@ export const createSheetGesture = (
   };
 
   const onStart = () => {
-    const initialStep = currentBreakpoint ? 1 - currentBreakpoint : getInitialStep();
-    console.log('starting at currentBreakpoint', currentBreakpoint);
-    console.log('starting at initialStep', initialStep);
-
-    animation.progressStart(true, initialStep);
+    animation.progressStart(true, 1 - currentBreakpoint);
   };
 
   const onMove = (detail: GestureDetail) => {
-    const initialStep = currentBreakpoint ? 1 - currentBreakpoint : getInitialStep();
-    offset = initialStep + (detail.deltaY / height);
+    const initialStep = 1 - currentBreakpoint;
+    offset = clamp(0.0001, initialStep + (detail.deltaY / height), 0.9999);
 
-    const step = clamp(0.0001, offset, 0.9999);
-    animation.progressStep(step);
-    // offset = base + Math.min(1, detail.deltaY / 100);
-
-    // animation.progressStep(offset);
-    // console.log('offset', offset);
-
-    // const step = clamp(0.0001, detail.deltaY / height, 0.9999);
-    // animation.progressStep(step);
-    // console.log(step);
-
-    // console.log('got breakpoints', breakpoints);
-    // console.log('height', height);
-    // console.log('maxBreakpoint', maxBreakpoint);
+    animation.progressStep(offset);
+    console.log(offset);
   };
 
   const onEnd = (detail: GestureDetail) => {
-    const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
     const wrapperKeyframes = wrapperAnimation?.getKeyframes();
-    console.log('wrapper', wrapperKeyframes, wrapperAnimation);
-
     const velocity = detail.velocityY;
-
     const step = clamp(0.0001, detail.deltaY / height, 0.9999);
-
     const threshold = (detail.deltaY + velocity * 1000) / height;
-
     const diff = currentBreakpoint - threshold;
-    // console.log('threshold', threshold);
-    // console.log('diff', diff);
 
     let closest = 0;
     if (breakpoints) {
       closest = breakpoints.reduce((a, b) => {
         return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
       });
-
-      console.log('closest', closest);
     }
 
-    console.log('currentBreakpoint', currentBreakpoint);
+    console.log('current step',offset,'closest breakpoint',closest)
 
-    const shouldComplete = closest === 0;
-    // let newStepValue = (shouldComplete) ? -0.001 : closest;
-    const newStepValue = .5;
-    currentBreakpoint = newStepValue;
+    const shouldRemainOpen = closest !== 0;
+    currentBreakpoint = 0;
+    isOpen = shouldRemainOpen;
 
-    // TODO 0 offset needs to be current location
-    // 1 offset needs to be snap to
     if (wrapperAnimation) {
       wrapperAnimation.keyframes([
-        { offset: 0, transform: 'translateY(55vh)' },
-        { offset: 1, transform: 'translateY(50vh)' }
+        { offset: 0, transform: `translateY(${offset * 100}vh)` },
+        { offset: 1, transform: `translateY(${(1 - closest) * 100}vh)`}
       ]);
+      animation.progressStep(0);
     }
 
-    if (!shouldComplete) {
-      animation.easing('cubic-bezier(1, 0, 0.68, 0.28)');
-      // newStepValue += getTimeGivenProgression([0, 0], [1, 0], [0.68, 0.28], [1, 1], step)[0];
-      console.log('newStepValue', newStepValue);
-    } else {
-      animation.easing('cubic-bezier(0.32, 0.72, 0, 1)');
-      // newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], step)[0];
-      console.log('newStepValue', newStepValue);
-    }
+    //const duration = (shouldRemainOpen) ? computeDuration(step * height, velocity) : computeDuration((1 - step) * height, velocity);
 
-    const duration = (shouldComplete) ? computeDuration(step * height, velocity) : computeDuration((1 - step) * height, velocity);
-    isOpen = shouldComplete;
 
     gesture.enable(false);
 
     animation
       .onFinish(() => {
-        if (!shouldComplete) {
-          gesture.enable(true);
+        if (shouldRemainOpen) {
 
           if (wrapperAnimation && wrapperKeyframes) {
+            console.log('reset keyframes to', wrapperKeyframes, 'offset', closest);
             wrapperAnimation.keyframes(wrapperKeyframes);
-            wrapperAnimation.progressStep(newStepValue);
+            animation.progressStart(true, 1 - closest);
+            currentBreakpoint = closest;
           }
-        }
-      })
-      .progressEnd((shouldComplete) ? 1 : 0, newStepValue, duration);
 
-    if (shouldComplete) {
+          gesture.enable(true);
+        }
+      }, { oneTimeCallback: true })
+      .progressEnd(1, 0, 300);
+
+    if (!shouldRemainOpen) {
       onDismiss();
     }
   };

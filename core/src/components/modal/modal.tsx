@@ -3,7 +3,6 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
@@ -214,8 +213,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         { offset: 1, transform: 'translateY(100vh)' }
       ]);
 
-      const step = getTimeGivenProgression([0,0],[0.32,0.72],[0,1],[1,1], 1 - this.initialBreakpoint)[0];
-      this.animation!.progressStep(step);
+      this.animation!.progressStart(true, 1 - this.initialBreakpoint);
     }
 
   }
@@ -284,8 +282,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
           await this.dismiss(undefined, 'gesture');
           this.gestureAnimationDismissing = false;
         });
-      },
-      () => 1 - this.initialBreakpoint
+      }
     );
     this.gesture.enable(true);
 

@@ -12,7 +12,7 @@ export const iosEnterAnimation = (
   // If an initial breakpoint was passed we need to transform the modal to be that
   // far from the top, otherwise we will transform it to the top (0vh)
   const initialBreakpoint = (baseEl as HTMLIonModalElement).initialBreakpoint;
-  const initialHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}%` : '0vh';
+  const initialHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}vh` : '0vh';
 
   const backdropAnimation = createAnimation()
     .addElement(baseEl.querySelector('ion-backdrop')!)
