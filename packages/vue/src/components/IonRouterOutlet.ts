@@ -40,13 +40,15 @@ export const IonRouterOutlet = defineComponent({
       setupViewItem(matchedRouteRef);
     });
 
-    const canStart = () => ionRouter.canGoBack(1);
+    const canStart = () => {
+      const stack = viewStacks.getViewStack(id);
+      return stack && stack.length > 1;
+    }
     const onStart = async () => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
       const { routerAnimation } = routeInfo;
-
-      // TODO edge case: swipe back from nested outlet root to previous outlet
-      const enteringViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id);
+      const items = viewStacks.getViewStack(id);
+      const enteringViewItem = items[items.length - 2];
       const leavingViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
 
       if (leavingViewItem) {

@@ -70,6 +70,8 @@ export const defineContainer = <Props extends object>(name: string, componentPro
       const navManager: NavManager = inject(NAV_MANAGER);
       const handleClick = (ev: Event) => {
         const routerProps = Object.keys(finalProps).filter(p => p.startsWith(ROUTER_PROP_REFIX));
+        if (routerProps.length === 0) return;
+
         let navigationPayload: any = { event: ev };
         routerProps.forEach(prop => {
           navigationPayload[prop] = finalProps[prop];

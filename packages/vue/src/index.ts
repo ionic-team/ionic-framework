@@ -7,7 +7,6 @@ export * from './ionic-vue';
 export * from './components/IonBackButton';
 export * from './components/IonPage';
 export * from './components/IonRouterOutlet';
-export * from './components/IonTabs';
 
 export {
   // Overlay Controllers

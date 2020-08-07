@@ -30,4 +30,4 @@ export const createRouter = (opts: RouterOptions) => {
   return router;
 }
 
-export const createWebHistory = (base?: string) => createVueWebHistory(base)
+export const createWebHistory = (base?: string) => createVueWebHistory(base);

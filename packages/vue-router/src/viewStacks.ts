@@ -7,6 +7,10 @@ import {  RouteInfo,
 export const createViewStacks = () => {
   let viewStacks: ViewStacks = {};
 
+  const getViewStack = (outletId: number) => {
+    return viewStacks[outletId];
+  }
+
   const registerIonPage = (viewItem: ViewItem, ionPage: HTMLElement) => {
     viewItem.ionPageElement = ionPage;
   }
@@ -93,6 +97,7 @@ export const createViewStacks = () => {
     getChildrenToRender,
     add,
     remove,
-    registerIonPage
+    registerIonPage,
+    getViewStack
   }
 }
