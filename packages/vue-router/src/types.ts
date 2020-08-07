@@ -1,13 +1,13 @@
 import { AnimationBuilder } from '@ionic/core';
 
 export interface RouteInfo {
-  id: string;
+  id?: string;
   routerAction?: RouteAction;
   routerDirection?: RouteDirection;
   routerAnimation?: AnimationBuilder;
   lastPathname?: string;
-  pathname: string;
-  search: string;
+  pathname?: string;
+  search?: string;
   params?: { [k: string]: any };
 }
 

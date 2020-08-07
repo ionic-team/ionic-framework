@@ -114,7 +114,6 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
     router.push(routerLink);
   }
 
-  const getRouter = () => router;
   const getLocationHistory = () => locationHistory;
 
   return {
@@ -123,7 +122,6 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
     setInitialRoute,
     canGoBack,
     navigate,
-    getRouter,
     getLocationHistory,
     setIncomingRouteParams
   }

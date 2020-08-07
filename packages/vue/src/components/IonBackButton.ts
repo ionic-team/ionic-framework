@@ -1,9 +1,11 @@
 import { h, inject, defineComponent } from 'vue';
+import { Router, useRouter } from 'vue-router';
 
 export const IonBackButton = defineComponent({
   name: 'IonBackButton',
   setup(_, { attrs, slots }) {
     const ionRouter: any = inject('navManager');
+    const vueRouter: Router = useRouter();
 
     const onClick = (ev: Event) => {
       const defaultHref = attrs['default-href'] || attrs['defaultHref'];
@@ -17,7 +19,7 @@ export const IonBackButton = defineComponent({
           routerAnimation
         });
 
-        ionRouter.getRouter().go(-1);
+        vueRouter.go(-1);
 
       } else {
         ionRouter.setIncomingRouteParams({
@@ -25,7 +27,7 @@ export const IonBackButton = defineComponent({
           routerAction: 'replace',
           routerAnimation
         });
-        ionRouter.getRouter().replace(defaultHref);
+        vueRouter.replace(defaultHref);
       }
     }
 
