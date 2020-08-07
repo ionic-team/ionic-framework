@@ -322,10 +322,9 @@ export class Textarea implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
-        }}
+        })}
       >
         <div
           class="textarea-wrapper"

@@ -43,12 +43,11 @@ export class ItemDivider implements ComponentInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'item-divider-sticky': this.sticky,
           'item': true,
-        }}
+        })}
       >
         <slot name="start"></slot>
         <div class="item-divider-inner">

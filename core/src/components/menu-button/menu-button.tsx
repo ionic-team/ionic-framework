@@ -83,11 +83,8 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
         onClick={this.onClick}
         aria-disabled={disabled ? 'true' : null}
         aria-hidden={hidden ? 'true' : null}
-        class={{
+        class={createColorClasses(color, {
           [mode]: true,
-
-          ...createColorClasses(color),
-
           'button': true,  // ion-buttons target .button
           'menu-button-hidden': hidden,
           'menu-button-disabled': disabled,
@@ -95,7 +92,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'ion-activatable': true,
           'ion-focusable': true
-        }}
+        })}
       >
         <button
           {...attrs}
