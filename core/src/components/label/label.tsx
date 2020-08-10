@@ -69,12 +69,11 @@ export class Label implements ComponentInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           [`label-${position}`]: position !== undefined,
           [`label-no-animate`]: (this.noAnimate)
-        }}
+        })}
       >
       </Host>
     );

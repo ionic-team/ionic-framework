@@ -122,13 +122,11 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     const mode = getIonMode(this);
     return (
       <Host
-        class={{
+        class={createColorClasses(this.color, {
           [mode]: true,
-
-          ...createColorClasses(this.color),
           'card-disabled': this.disabled,
           'ion-activatable': this.isClickable()
-        }}
+        })}
       >
         {this.renderCard(mode)}
       </Host>

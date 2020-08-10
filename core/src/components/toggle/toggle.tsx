@@ -193,15 +193,14 @@ export class Toggle implements ComponentInterface {
         aria-disabled={disabled ? 'true' : null}
         aria-checked={`${checked}`}
         aria-labelledby={labelId}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
           'interactive': true
-        }}
+        })}
       >
         <div class="toggle-icon" part="track">
           <div class="toggle-icon-wrapper">
