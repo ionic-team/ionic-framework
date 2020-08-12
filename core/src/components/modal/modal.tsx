@@ -165,13 +165,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    console.log(this.breakpoints);
     this.breakpoints = this.breakpoints && this.breakpoints.sort((a, b) => a - b);
-    // if (this.type === 'sheet') {
-    //   this.initSheetGesture();
-    // } else if (this.swipeToClose) {
-    //   this.initSwipeToClose();
-    // }
   }
 
   /**
@@ -195,8 +189,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
-
-
     this.animation = await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
 
     if (this.type === 'sheet') {
@@ -206,7 +198,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     if (this.type === 'sheet') {
-
       const wrapper = this.animation!.childAnimations[0];
       wrapper.keyframes([
         { offset: 0, transform: 'translateY(0vh)' },
@@ -215,10 +206,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
       this.animation!.progressStart(true, 1 - this.initialBreakpoint);
     }
-
   }
-
-  private  currentStep: number = 1;
 
   private initSwipeToClose() {
     if (getIonMode(this) !== 'ios') { return; }
@@ -256,12 +244,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private initSheetGesture() {
     if (getIonMode(this) !== 'ios') { return; }
 
-    // All of the elements needed for the swipe gesture
-    // should be in the DOM and referenced by now, except
-    // for the presenting el
-    // const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
     const ani = this.animation!;
-    // = animationBuilder(this.el, this.presentingElement);
 
     this.gesture = createSheetGesture(
       this.el,
@@ -285,13 +268,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       }
     );
     this.gesture.enable(true);
-
-    // if (this.breakpoints) {
-    //   console.log('found breakpoints', this.breakpoints);
-    //   const breakpoints = this.breakpoints;
-    //   const maxBreakpoint = breakpoints[breakpoints.length - 1];
-    //   console.log(breakpoints, maxBreakpoint);
-    // }
   }
 
   /**

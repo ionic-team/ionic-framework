@@ -17,47 +17,58 @@ export const createSheetGesture = (
   animation: Animation,
   onDismiss: () => void
 ) => {
+  const contentEl = el.querySelector('ion-content');
   const height = window.innerHeight;
   let currentBreakpoint = el.initialBreakpoint;
   const breakpoints = el.breakpoints;
   const maxBreakpoint = breakpoints && breakpoints[breakpoints.length - 1];
-  let isOpen = false;
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
 
-  const canStart = (detail: GestureDetail) => {
-    const target = detail.event.target as HTMLElement | null;
-
-    if (target === null ||
-       !(target as any).closest) {
-      return true;
-    }
-
-    const content = target.closest('ion-content');
-    if (content === null) {
-      return true;
-    }
-    // Target is in the content so we don't start the gesture.
-    // We could be more nuanced here and allow it for content that
-    // does not need to scroll.
-    return false;
-  };
+  const canStart = () => true;
 
   const onStart = () => {
+    // When the gesture starts we need to turn off the content scrolling
+    // because the content shouldn't scroll unless it's fullscreen
+    if (contentEl) {
+      contentEl.scrollY = false;
+    }
+
     animation.progressStart(true, 1 - currentBreakpoint);
   };
 
   const onMove = (detail: GestureDetail) => {
+    const target = detail.event.target as HTMLElement | null;
+
+    const content = target!.closest('ion-content');
+
+    if (content === null) {
+      // If we're not dragging inside of the content we need to allow
+      // the modal to drag higher than the maximum breakpoint
+      console.log('we are dragging above content, go beyond max breakpoint');
+    } else {
+      // Target is in the content, we need to allow the modal to increase height
+      // until the maximum breakpoint is reached and then allow scrolling the content
+      console.log('we need to stop at maxBreakpoint', maxBreakpoint);
+      content.scrollY = false;
+
+      console.log('current breakpoint vs max', currentBreakpoint, maxBreakpoint);
+      if (currentBreakpoint === maxBreakpoint) {
+        content.scrollY = true;
+      }
+    }
+
     const initialStep = 1 - currentBreakpoint;
     offset = clamp(0.0001, initialStep + (detail.deltaY / height), 0.9999);
 
+    console.log('offset', offset);
+
     animation.progressStep(offset);
-    console.log(offset);
   };
 
   const onEnd = (detail: GestureDetail) => {
     const wrapperKeyframes = wrapperAnimation?.getKeyframes();
     const velocity = detail.velocityY;
-    const step = clamp(0.0001, detail.deltaY / height, 0.9999);
+    // const step = clamp(0.0001, detail.deltaY / height, 0.9999);
     const threshold = (detail.deltaY + velocity * 1000) / height;
     const diff = currentBreakpoint - threshold;
 
@@ -68,22 +79,18 @@ export const createSheetGesture = (
       });
     }
 
-    console.log('current step',offset,'closest breakpoint',closest)
-
     const shouldRemainOpen = closest !== 0;
     currentBreakpoint = 0;
-    isOpen = shouldRemainOpen;
 
     if (wrapperAnimation) {
       wrapperAnimation.keyframes([
         { offset: 0, transform: `translateY(${offset * 100}vh)` },
-        { offset: 1, transform: `translateY(${(1 - closest) * 100}vh)`}
+        { offset: 1, transform: `translateY(${(1 - closest) * 100}vh)` }
       ]);
       animation.progressStep(0);
     }
 
-    //const duration = (shouldRemainOpen) ? computeDuration(step * height, velocity) : computeDuration((1 - step) * height, velocity);
-
+    // const duration = (shouldRemainOpen) ? computeDuration(step * height, velocity) : computeDuration((1 - step) * height, velocity);
 
     gesture.enable(false);
 
@@ -92,7 +99,6 @@ export const createSheetGesture = (
         if (shouldRemainOpen) {
 
           if (wrapperAnimation && wrapperKeyframes) {
-            console.log('reset keyframes to', wrapperKeyframes, 'offset', closest);
             wrapperAnimation.keyframes(wrapperKeyframes);
             animation.progressStart(true, 1 - closest);
             currentBreakpoint = closest;
@@ -122,6 +128,6 @@ export const createSheetGesture = (
   return gesture;
 };
 
-const computeDuration = (remaining: number, velocity: number) => {
-  return clamp(400, remaining / Math.abs(velocity * 1.1), 500);
-};
+// const computeDuration = (remaining: number, velocity: number) => {
+//   return clamp(400, remaining / Math.abs(velocity * 1.1), 500);
+// };
