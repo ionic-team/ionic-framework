@@ -2,17 +2,18 @@ import {
   Router,
   RouteLocationNormalized,
   RouteLocationNormalizedLoaded,
-  RouterOptions,
 } from 'vue-router';
 import { createLocationHistory } from './locationHistory';
 import { generateId } from './utils';
 import {
   ExternalNavigationOptions,
   RouteInfo,
-  RouteParams
+  RouteParams,
+  IonicVueRouterOptions
 } from './types';
 
-export const createIonRouter = (opts: RouterOptions, router: Router) => {
+export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
+  const tabsPrefix = opts.tabsPrefix || '/tabs';
   const locationHistory = createLocationHistory();
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
@@ -29,6 +30,20 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
   //   NavigationCallback
   opts.history.listen((_: any, _x: any, info: any) => handleNavigate(info));
 
+  const getTab = (path: string): string | undefined => {
+    const tabs = path.split(tabsPrefix);
+    if (tabs.length === 1) return undefined;
+
+    return tabs[1].split('/')[1];
+  }
+
+  const isTabSwitch = (to: string, from: string): boolean => {
+    const toTab = getTab(to);
+    const fromTab = getTab(from);
+
+    return fromTab !== undefined && toTab !== undefined && fromTab !== toTab
+  }
+
   //  HistoryLocation   HistoryLocation    NavigationInformation
   const handleNavigate = (info: any) => {
     incomingRouteParams = {
@@ -37,7 +52,7 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
     };
   }
 
-  const handleHistoryChange = (to: RouteLocationNormalized) => {
+  const handleHistoryChange = (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     let leavingLocationInfo: RouteInfo;
     let routeInfo: RouteInfo;
 
@@ -64,18 +79,28 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
         };
       }
 
+      const tabSwitch = isTabSwitch(to.fullPath, from.fullPath);
+      if (tabSwitch) {
+        incomingRouteParams.routerDirection = 'root';
+      }
+
       routeInfo = {
         ...incomingRouteParams,
         id: generateId('routeInfo'),
         lastPathname: leavingLocationInfo.pathname,
         pathname: to.path,
         search: to.fullPath.split('?')[1] || '',
-        params: to.params
+        params: to.params,
+        tab: getTab(to.fullPath),
+        previousTab: getTab(from.fullPath),
+        tabSwitch
       };
 
-      // TODO add tabs support
-
-      locationHistory.add(routeInfo);
+      if (incomingRouteParams.routerAction === 'pop' && !tabSwitch) {
+        locationHistory.pop(routeInfo);
+      } else {
+        locationHistory.add(routeInfo);
+      }
     } else {
       routeInfo = leavingLocationInfo;
     }
@@ -116,6 +141,34 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
 
   const getLocationHistory = () => locationHistory;
 
+  const resetTab = (tab: string, originalHref: string) => {
+    const routeInfo = locationHistory.getFirstRouteInfoForTab(tab);
+    if (routeInfo) {
+      const newRouteInfo = { ...routeInfo };
+      newRouteInfo.pathname = originalHref;
+      incomingRouteParams = { ...newRouteInfo, routerAction: 'pop', routerDirection: 'back' };
+      router.push(newRouteInfo.pathname + (newRouteInfo.search || ''));
+    }
+  }
+
+  const changeTab = (tab: string, path: string) => {
+    const routeInfo = locationHistory.getCurrentRouteInfoForTab(tab);
+    const [pathname, search] = path.split('?');
+    if (routeInfo) {
+      incomingRouteParams = { ...routeInfo, routerAction: 'push', routerDirection: 'none' };
+      if (routeInfo.pathname === pathname) {
+        router.push(routeInfo.pathname + (routeInfo.search || ''))
+      } else {
+        router.push(pathname + (search ? '?' + search : ''));
+      }
+    } else {
+      navigate({
+        routerLink: pathname,
+        routerDirection: 'none'
+      })
+    }
+  }
+
   return {
     handleHistoryChange,
     getCurrentRouteInfo,
@@ -123,6 +176,8 @@ export const createIonRouter = (opts: RouterOptions, router: Router) => {
     canGoBack,
     navigate,
     getLocationHistory,
-    setIncomingRouteParams
+    setIncomingRouteParams,
+    resetTab,
+    changeTab
   }
 }

@@ -840,27 +840,6 @@ export const IonTabBar = /*@__PURE__*/ defineContainer<JSX.IonTabBar>('ion-tab-b
 ]);
 
 
-export const IonTabButton = /*@__PURE__*/ defineContainer<JSX.IonTabButton>('ion-tab-button', [
-  'disabled',
-  'download',
-  'href',
-  'rel',
-  'layout',
-  'selected',
-  'tab',
-  'target',
-  'ionTabButtonClick'
-]);
-
-
-export const IonTabs = /*@__PURE__*/ defineContainer<JSX.IonTabs>('ion-tabs', [
-  'useRouter',
-  'ionNavWillLoad',
-  'ionTabsWillChange',
-  'ionTabsDidChange'
-]);
-
-
 export const IonText = /*@__PURE__*/ defineContainer<JSX.IonText>('ion-text', [
   'color'
 ]);

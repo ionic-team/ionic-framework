@@ -2,12 +2,10 @@ import { RouteInfo } from './types';
 
 export const createLocationHistory = () => {
   const locationHistory: RouteInfo[] = [];
+  const tabsHistory: { [k: string]: RouteInfo[] } = {};
 
   const add = (routeInfo: RouteInfo) => {
     switch (routeInfo.routerAction) {
-      case "pop":
-      popRoute(routeInfo);
-      break;
       case "replace":
       replaceRoute(routeInfo);
       break;
@@ -17,57 +15,73 @@ export const createLocationHistory = () => {
     }
 
     if (routeInfo.routerDirection === 'root') {
-      clearHistory();
+      clearHistory(routeInfo);
       addRoute(routeInfo);
     }
   }
 
-  const addRoute = (routeInfo: RouteInfo) => {
-    // TODO add tabs support
-
-    locationHistory.push(routeInfo);
-  }
-
-  const popRoute = (routeInfo: RouteInfo) => {
-    // TODO add tabs support
-
-    let lastRoute = locationHistory[locationHistory.length - 1];
-    while (lastRoute && lastRoute.id !== routeInfo.id) {
-      locationHistory.pop();
-      lastRoute = locationHistory[locationHistory.length - 1];
-    }
-
-    replaceRoute(routeInfo);
-  }
-
   const replaceRoute = (routeInfo: RouteInfo) => {
-    // TODO add tabs support
-
-    locationHistory.pop();
+    pop(routeInfo);
     addRoute(routeInfo);
   }
 
-  const clearHistory = () => {
-    // TODO add tabs support
+  const pop = (routeInfo: RouteInfo) => {
+    locationHistory.pop();
+    const { tab } = routeInfo;
+    if (tab) {
+      if (tabsHistory[tab]) {
+        tabsHistory[tab].pop();
+      }
+    }
+  }
+  const addRoute = (routeInfo: RouteInfo) => {
+    locationHistory.push(routeInfo);
+    const { tab } = routeInfo;
+    if (tab) {
+      if (tabsHistory[tab]) {
+        tabsHistory[tab].push(routeInfo)
+      } else {
+        tabsHistory[tab] = [routeInfo];
+      }
+    }
+  }
+
+  const clearHistory = (routeInfo: RouteInfo) => {
     locationHistory.length = 0;
+    const { tab } = routeInfo;
+    if (tab) {
+      tabsHistory[tab] = [];
+    }
+  }
+  const getTabsHistory = (tab: string) => tabsHistory[tab];
+  const previous = () => locationHistory[locationHistory.length - 2] || current();
+  const current = () => locationHistory[locationHistory.length - 1];
+  const canGoBack = (deep: number = 1) => locationHistory.length > deep;
+
+  const getFirstRouteInfoForTab = (tab: string): RouteInfo | undefined => {
+    const tabHistory = getTabsHistory(tab);
+    if (tabHistory) {
+      return tabHistory[0];
+    }
+    return undefined;
   }
 
-  const previous = () => {
-    return locationHistory[locationHistory.length - 2] || current();
-  }
-
-  const current = () => {
-    return locationHistory[locationHistory.length - 1];
-  }
-
-  const canGoBack = (deep: number = 1) => {
-    return locationHistory.length > deep;
+  const getCurrentRouteInfoForTab = (tab: string): RouteInfo | undefined => {
+    const tabHistory = getTabsHistory(tab);
+    if (tabHistory) {
+      return tabHistory[tabHistory.length - 1];
+    }
+    return undefined;
   }
 
   return {
     current,
     previous,
     add,
-    canGoBack
+    pop,
+    canGoBack,
+    getTabsHistory,
+    getFirstRouteInfoForTab,
+    getCurrentRouteInfoForTab
   }
 }

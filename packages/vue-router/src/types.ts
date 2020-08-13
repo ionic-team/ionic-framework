@@ -1,4 +1,9 @@
 import { AnimationBuilder } from '@ionic/core';
+import { RouterOptions } from 'vue-router';
+
+export interface IonicVueRouterOptions extends RouterOptions {
+  tabsPrefix?: string;
+}
 
 export interface RouteInfo {
   id?: string;
@@ -9,6 +14,9 @@ export interface RouteInfo {
   pathname?: string;
   search?: string;
   params?: { [k: string]: any };
+  tab?: string;
+  previousTab?: string;
+  tabSwitch?: boolean;
 }
 
 export interface RouteParams {
@@ -18,7 +26,7 @@ export interface RouteParams {
 }
 
 export type RouteAction = 'push' | 'pop' | 'replace';
-export type RouteDirection = 'forward' | 'back' | 'root';
+export type RouteDirection = 'forward' | 'back' | 'root' | 'none';
 
 export interface ViewItem {
   id: string;
@@ -38,5 +46,4 @@ export interface ExternalNavigationOptions {
   routerLink: string;
   routerDirection?: RouteDirection;
   routerAnimation?: AnimationBuilder;
-  event: Event;
 }

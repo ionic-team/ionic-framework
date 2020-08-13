@@ -17,7 +17,7 @@ let viewDepthKey: InjectionKey<0> = Symbol(0);
 
 export const IonRouterOutlet = defineComponent({
   name: 'IonRouterOutlet',
-  setup() {
+  setup(_, { attrs }) {
     const vueRouter = useRouter();
     const route = useRoute();
     const depth = inject(viewDepthKey, 0)
@@ -203,6 +203,12 @@ export const IonRouterOutlet = defineComponent({
       }
 
       components.value = viewStacks.getChildrenToRender(id);
+
+      const { onStackEvents } = attrs;
+      if (onStackEvents) {
+        // TODO
+        (onStackEvents as any)(currentRoute);
+      }
     }
 
     if (matchedRouteRef.value) {
