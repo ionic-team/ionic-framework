@@ -12,7 +12,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import { createSheetGesture } from './gestures/sheet';
+import { createSheetGesture, SheetDefaults } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 
 /**
@@ -197,12 +197,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSwipeToClose();
     }
 
+    // After the sheet has been initialized, we need to transform the
+    // modal to th initial breakpoint
     if (this.type === 'sheet') {
       const wrapper = this.animation!.childAnimations[0];
-      wrapper.keyframes([
-        { offset: 0, transform: 'translateY(0vh)' },
-        { offset: 1, transform: 'translateY(100vh)' }
-      ]);
+      wrapper.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
 
       this.animation!.progressStart(true, 1 - this.initialBreakpoint);
     }

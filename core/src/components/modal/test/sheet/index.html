@@ -22,6 +22,11 @@
   <ion-app>
 
     <div class="ion-page">
+      <div class="breakpoint" style="top: calc(10% - 2px)"></div>
+      <div class="breakpoint" style="top: calc(25% - 2px)"></div>
+      <div class="breakpoint" style="top: calc(50% - 2px)"></div>
+      <div class="breakpoint" style="top: calc(75% - 2px)"></div>
+
       <ion-header>
         <ion-toolbar>
           <ion-title>Modal - Sheet</ion-title>
@@ -42,6 +47,16 @@
   </ion-app>
 
   <style>
+    .breakpoint {
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 2px;
+      background: red;
+      z-index: 99999;
+    }
+
     .custom-handle {
       --height: 75%;
     }
