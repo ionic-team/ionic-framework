@@ -22,7 +22,13 @@ export const IonRouterOutlet = defineComponent({
     const route = useRoute();
     const depth = inject(viewDepthKey, 0)
     // TODO types
-    const matchedRouteRef: any = computed(() => route.matched[depth]);
+    const matchedRouteRef: any = computed(() => {
+      if (attrs.tabs) {
+        return route.matched[route.matched.length - 1];
+      }
+
+      return route.matched[depth];
+    });
     const ionRouterOutlet = ref();
     const id = generateId('ion-router-outlet');
 
@@ -123,7 +129,7 @@ export const IonRouterOutlet = defineComponent({
 
       return ionRouterOutlet.value.commit(enteringEl, leavingEl, {
         deepWait: true,
-        duration: direction === undefined || direction === 'root' ? 0 : undefined,
+        duration: direction === undefined || direction === 'root' || direction === 'none' ? 0 : undefined,
         direction,
         showGoBack,
         progressAnimation,

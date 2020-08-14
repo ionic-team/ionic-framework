@@ -55,7 +55,7 @@ export const IonTabs = defineComponent({
             }
           },
           [
-            h(IonRouterOutlet, { onStackEvents: onTabUpdate.bind(this)  })
+            h(IonRouterOutlet, { tabs: true, onStackEvents: onTabUpdate.bind(this)  })
           ]
         ),
         ...slots.default && slots.default()

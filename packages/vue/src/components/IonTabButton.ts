@@ -13,7 +13,7 @@ export const IonTabButton = defineComponent({
       const { tab, href } = attrs;
       const currentRoute = ionRouter.getCurrentRouteInfo();
 
-      if (currentRoute.previousTab === tab) {
+      if (currentRoute.tab === tab) {
         if (href !== currentRoute.pathname) {
           ionRouter.resetTab(tab, href);
         }

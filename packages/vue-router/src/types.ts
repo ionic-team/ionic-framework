@@ -14,15 +14,16 @@ export interface RouteInfo {
   pathname?: string;
   search?: string;
   params?: { [k: string]: any };
+  pushedByRoute?: string;
   tab?: string;
-  previousTab?: string;
-  tabSwitch?: boolean;
 }
 
 export interface RouteParams {
   routerAction: RouteAction;
   routerDirection: RouteDirection;
   routerAnimation?: AnimationBuilder;
+  tab?: string;
+  id?: string;
 }
 
 export type RouteAction = 'push' | 'pop' | 'replace';

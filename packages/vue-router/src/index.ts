@@ -25,8 +25,8 @@ export const createRouter = (opts: IonicVueRouterOptions) => {
     oldInstall(app);
   };
 
-  router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
-    ionRouter.handleHistoryChange(to, from);
+  router.beforeEach((to: RouteLocationNormalized, _: RouteLocationNormalized, next: NavigationGuardNext) => {
+    ionRouter.handleHistoryChange(to);
     next();
   });
 
