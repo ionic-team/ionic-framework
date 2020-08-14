@@ -1,29 +1,10 @@
-import { h, defineComponent, onMounted } from 'vue';
+import { h, defineComponent } from 'vue';
 import { IonRouterOutlet } from './IonRouterOutlet';
 
 export const IonTabs = defineComponent({
   name: 'IonTabs',
-  data() {
-    // TODO clean this up
-    let r: any;
-    let promise = new Promise((resolve) => r = resolve);
-
-    onMounted(() => r());
-
-    const onTabUpdate = async (route: any) => {
-      await promise;
-
-      const { ionTabsRef } = this.$refs as any;
-      const { tab } = route;
-      const tabBar = ionTabsRef.querySelector('ion-tab-bar');
-
-      tabBar.selectedTab = tab;
-    }
-
-    return { onTabUpdate }
-  },
   render() {
-    const { $slots: slots, onTabUpdate } = this;
+    const { $slots: slots } = this;
     return h(
       'div',
       {
@@ -55,7 +36,7 @@ export const IonTabs = defineComponent({
             }
           },
           [
-            h(IonRouterOutlet, { tabs: true, onStackEvents: onTabUpdate.bind(this)  })
+            h(IonRouterOutlet, { tabs: true })
           ]
         ),
         ...slots.default && slots.default()

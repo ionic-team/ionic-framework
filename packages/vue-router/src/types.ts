@@ -37,6 +37,7 @@ export interface ViewItem {
   ionPageElement?: HTMLElement;
   vueComponent: any; // todo
   ionRoute: boolean;
+  mount: false;
 }
 
 export interface ViewStacks {

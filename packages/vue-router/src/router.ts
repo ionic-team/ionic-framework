@@ -20,6 +20,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   let incomingRouteParams: RouteParams;
   let currentTab: string | undefined;
 
+  // TODO types
+  let historyChangeListeners: any[] = [];
+
   const currentRoute = router.currentRoute.value;
   currentRouteInfo = {
     id: generateId('routeInfo'),
@@ -53,7 +56,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         incomingRouteParams = { ...prevInfo, routerAction: 'pop', routerDirection: 'back', routerAnimation: routerAnimation || routeInfo.routerAnimation };
         console.log('Set incoming route params', incomingRouteParams)
         if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
-          router.go(-1);
+          router.back();
         } else {
           router.replace(prevInfo.pathname + (prevInfo.search || ''));
         }
@@ -180,6 +183,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       currentRouteInfo = routeInfo;
     }
     incomingRouteParams = undefined;
+    historyChangeListeners.forEach(cb => cb(currentRouteInfo));
   }
 
   const getCurrentRouteInfo = () => currentRouteInfo;
@@ -248,6 +252,11 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     }
   }
 
+  // TODO types
+  const registerHistoryChangeListener = (cb: any) => {
+    historyChangeListeners.push(cb);
+  }
+
   return {
     handleHistoryChange,
     handleNavigateBack,
@@ -259,6 +268,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     getLocationHistory,
     setIncomingRouteParams,
     resetTab,
-    changeTab
+    changeTab,
+    registerHistoryChangeListener
   }
 }

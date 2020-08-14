@@ -9,6 +9,7 @@ export * from './components/IonPage';
 export * from './components/IonRouterOutlet';
 export * from './components/IonTabButton';
 export * from './components/IonTabs';
+export * from './components/IonTabBar';
 
 export {
   // Overlay Controllers

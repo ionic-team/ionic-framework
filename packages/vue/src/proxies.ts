@@ -832,14 +832,6 @@ export const IonTab = /*@__PURE__*/ defineContainer<JSX.IonTab>('ion-tab', [
 ]);
 
 
-export const IonTabBar = /*@__PURE__*/ defineContainer<JSX.IonTabBar>('ion-tab-bar', [
-  'color',
-  'selectedTab',
-  'translucent',
-  'ionTabBarChanged'
-]);
-
-
 export const IonText = /*@__PURE__*/ defineContainer<JSX.IonText>('ion-text', [
   'color'
 ]);

@@ -71,7 +71,8 @@ export const config: Config = {
         'ion-back-button',
 
         'ion-tab-button',
-        'ion-tabs'
+        'ion-tabs',
+        'ion-tab-bar'
       ],
       routerLinkComponents: [
         'ion-card',

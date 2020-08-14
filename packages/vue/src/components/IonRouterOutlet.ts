@@ -149,6 +149,8 @@ export const IonRouterOutlet = defineComponent({
         const enteringEl = enteringViewItem.ionPageElement;
         const leavingEl = leavingViewItem.ionPageElement;
 
+        enteringEl.classList.remove('ion-page-hidden');
+
         /**
         * If we are going back from a page that
         * was presented using a custom animation
@@ -180,11 +182,17 @@ export const IonRouterOutlet = defineComponent({
         leavingEl.classList.add('ion-page-hidden');
         leavingEl.setAttribute('aria-hidden', 'true');
 
-        if (routerAction === 'pop') {
-          viewStacks.remove(leavingViewItem, id);
-          components.value = viewStacks.getChildrenToRender(id);
+        if (!(routerAction === 'push' && routerDirection === 'forward')) {
+          const shouldLeavingViewBeRemoved = routerDirection !== 'none' && leavingViewItem && (enteringViewItem !== leavingViewItem);
+          if (shouldLeavingViewBeRemoved) {
+            leavingViewItem.mount = false;
+            leavingViewItem.ionPageElement = undefined;
+            leavingViewItem.ionRoute = false;
+          }
         }
       }
+
+      components.value = viewStacks.getChildrenToRender(id);
     }
 
     // TODO types
@@ -198,23 +206,21 @@ export const IonRouterOutlet = defineComponent({
 
       if (!enteringViewItem) {
         enteringViewItem = viewStacks.createViewItem(id, matchedRouteRef.value.components.default, matchedRouteRef.value, currentRoute);
+        viewStacks.add(enteringViewItem);
+      }
 
-        enteringViewItem.vueComponent.components.IonPage.mounted = function() {
+      if (!enteringViewItem.mount) {
+        enteringViewItem.mount = true;
+        enteringViewItem.vueComponent.components.IonPage.mounted = function () {
           viewStacks.registerIonPage(enteringViewItem, this.$refs.ionPage);
           handlePageTransition();
-        }
-        viewStacks.add(enteringViewItem);
+          enteringViewItem.vueComponent.components.IonPage.mounted = undefined;
+        };
       } else {
         handlePageTransition();
       }
 
       components.value = viewStacks.getChildrenToRender(id);
-
-      const { onStackEvents } = attrs;
-      if (onStackEvents) {
-        // TODO
-        (onStackEvents as any)(currentRoute);
-      }
     }
 
     if (matchedRouteRef.value) {
