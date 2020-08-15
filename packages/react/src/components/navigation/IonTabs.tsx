@@ -8,7 +8,7 @@ import { IonRouterOutlet } from '../IonRouterOutlet';
 import { IonTabBar } from './IonTabBar';
 import { IonTabsContext, IonTabsContextState } from './IonTabsContext';
 
-if (window && window.customElements) {
+if (typeof window !== 'undefined' && window.customElements) {
   class IonTabsElement extends HTMLElement {
     constructor() {
       super();
