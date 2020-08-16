@@ -28,6 +28,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
   private usersElement?: HTMLElement;
 
   presented = false;
+  lastFocus?: HTMLElement;
 
   @Element() el!: HTMLIonPopoverElement;
 
@@ -219,10 +220,15 @@ export class Popover implements ComponentInterface, OverlayInterface {
         onIonBackdropTap={this.onBackdropTap}
       >
         <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop}/>
-        <div class="popover-wrapper">
+
+        <div tabindex="0"></div>
+
+        <div class="popover-wrapper ion-overlay-wrapper">
           <div class="popover-arrow"></div>
           <div class="popover-content"></div>
         </div>
+
+        <div tabindex="0"></div>
       </Host>
     );
   }

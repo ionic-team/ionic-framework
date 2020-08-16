@@ -155,15 +155,14 @@ export class Checkbox implements ComponentInterface {
         aria-disabled={disabled ? 'true' : null}
         aria-checked={`${checked}`}
         aria-labelledby={labelId}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           'interactive': true
-        }}
+        })}
       >
         <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}

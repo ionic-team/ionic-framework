@@ -1,15 +1,21 @@
-import { Action as HistoryAction, Location as HistoryLocation, createHashHistory as createHistory } from 'history';
+import { Action as HistoryAction, History, Location as HistoryLocation, createHashHistory as createHistory } from 'history';
 import React from 'react';
 import { BrowserRouterProps, Router } from 'react-router-dom';
 
 import { IonRouter } from './IonRouter';
 
-export class IonReactHashRouter extends React.Component<BrowserRouterProps> {
-  history = createHistory(this.props);
+interface IonReactHashRouterProps<THistoryLocationState = History.PoorMansUnknown> extends BrowserRouterProps {
+  history?: History<THistoryLocationState>;
+}
+
+export class IonReactHashRouter extends React.Component<IonReactHashRouterProps> {
+  history: History<History.PoorMansUnknown>;
   historyListenHandler?: ((location: HistoryLocation, action: HistoryAction) => void);
 
-  constructor(props: BrowserRouterProps) {
+  constructor(props: IonReactHashRouterProps) {
     super(props);
+    const { history, ...rest } = props;
+    this.history = history || createHistory(rest);
     this.history.listen(this.handleHistoryChange.bind(this));
     this.registerHistoryListener = this.registerHistoryListener.bind(this);
   }

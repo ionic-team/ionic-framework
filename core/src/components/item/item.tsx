@@ -201,15 +201,16 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         aria-disabled={disabled ? 'true' : null}
         class={{
           ...childStyles,
-          ...createColorClasses(this.color),
-          'item': true,
-          [mode]: true,
-          [`item-lines-${lines}`]: lines !== undefined,
-          'item-disabled': disabled,
-          'in-list': hostContext('ion-list', this.el),
-          'item-multiple-inputs': this.multipleInputs,
-          'ion-activatable': canActivate,
-          'ion-focusable': true,
+          ...createColorClasses(this.color, {
+            'item': true,
+            [mode]: true,
+            [`item-lines-${lines}`]: lines !== undefined,
+            'item-disabled': disabled,
+            'in-list': hostContext('ion-list', this.el),
+            'item-multiple-inputs': this.multipleInputs,
+            'ion-activatable': canActivate,
+            'ion-focusable': true,
+          })
         }}
       >
           <TagType

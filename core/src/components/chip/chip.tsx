@@ -33,12 +33,11 @@ export class Chip implements ComponentInterface {
 
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'chip-outline': this.outline,
           'ion-activatable': true,
-        }}
+        })}
       >
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

@@ -142,8 +142,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     return (
       <Host
         aria-disabled={disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
           'fab-button-in-list': inList,
           'fab-button-translucent-in-list': inList && translucent,
@@ -154,7 +153,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           'ion-activatable': true,
           'ion-focusable': true,
           [`fab-button-${size}`]: size !== undefined,
-        }}
+        })}
       >
 
         <TagType

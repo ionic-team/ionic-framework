@@ -745,13 +745,13 @@ ion-nav,method,getActive,getActive() => Promise<ViewController | undefined>
 ion-nav,method,getByIndex,getByIndex(index: number) => Promise<ViewController | undefined>
 ion-nav,method,getPrevious,getPrevious(view?: ViewController | undefined) => Promise<ViewController | undefined>
 ion-nav,method,insert,insert<T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,insertPages,insertPages(insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
+ion-nav,method,insertPages,insertPages(insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,pop,pop(opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,popTo,popTo(indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,popToRoot,popToRoot(opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,push,push<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,removeIndex,removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,setPages,setPages(views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
+ion-nav,method,setPages,setPages(views: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,method,setRoot,setRoot<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
 ion-nav,event,ionNavDidChange,void,false
 ion-nav,event,ionNavWillChange,void,false

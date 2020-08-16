@@ -241,6 +241,34 @@ describe('Navigation Tests', () => {
     cy.ionPageVisible('settings-page')
   })
 
+  it('/routing/tabs/redirect > Should be on settings page > Home Tab > Should be on home page', () => {
+    // tests that a redirect going to a tab other than the first tab works
+    // fixes bug https://github.com/ionic-team/ionic-framework/issues/21830
+    cy.visit(`http://localhost:${port}/routing/tabs/redirect`)
+    cy.ionPageVisible('settings-page')
+    cy.ionTabClick('Home')
+    cy.ionPageVisible('home-page')
+  })
+
+  it('/routing/ > Details 1 > Details 2 > Details 3 > Back > Settings Tab > Home Tab > Should be at details 2 page', () => {
+    // fixes an issue where route history was being lost after starting to go back, switching tabs
+    // and switching back to the same tab again
+    // for bug https://github.com/ionic-team/ionic-framework/issues/21834
+    cy.visit(`http://localhost:${port}/routing`)
+    cy.ionPageVisible('home-page')
+    cy.ionNav('ion-item', 'Details 1')
+    cy.ionPageVisible('home-details-page-1')
+    cy.ionNav('ion-button', 'Go to Details 2')
+    cy.ionPageVisible('home-details-page-2')
+    cy.ionNav('ion-button', 'Go to Details 3')
+    cy.ionPageVisible('home-details-page-3')
+    cy.ionBackClick('home-details-page-3')
+    cy.ionPageVisible('home-details-page-2')
+    cy.ionTabClick('Settings')
+    cy.ionPageVisible('settings-page')
+    cy.ionTabClick('Home')
+    cy.ionPageVisible('home-details-page-2')
+  })
   /*
     Tests to add:
     Test that lifecycle events fire

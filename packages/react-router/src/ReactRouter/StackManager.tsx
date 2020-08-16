@@ -4,7 +4,8 @@ import {
   StackContext,
   StackContextState,
   ViewItem,
-  generateId
+  generateId,
+  getConfig
 } from '@ionic/react';
 import React from 'react';
 import { matchPath } from 'react-router-dom';
@@ -38,6 +39,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   componentDidMount() {
     if (this.routerOutletElement) {
+      this.setupRouterOutlet(this.routerOutletElement);
       // console.log(`SM Mount - ${this.routerOutletElement.id} (${this.id})`);
       this.handlePageTransition(this.props.routeInfo);
     }
@@ -55,7 +57,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   async handlePageTransition(routeInfo: RouteInfo) {
-    // let shouldReRender = false;
 
     // If routerOutlet isn't quite ready, give it another try in a moment
     if (!this.routerOutletElement || !this.routerOutletElement.commit) {
@@ -110,6 +111,28 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       foundView.ionRoute = true;
     }
     this.handlePageTransition(routeInfo);
+  }
+
+  async setupRouterOutlet(routerOutlet: HTMLIonRouterOutletElement) {
+
+    const canStart = () => {
+      const config = getConfig();
+      const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
+      if (swipeEnabled) {
+        return this.context.canGoBack();
+      } else {
+        return false;
+      }
+    };
+
+    const onStart = () => {
+      this.context.goBack();
+    };
+    routerOutlet.swipeHandler = {
+      canStart,
+      onStart,
+      onEnd: _shouldContinue => true
+    };
   }
 
   async transitionPage(routeInfo: RouteInfo, enteringViewItem: ViewItem, leavingViewItem?: ViewItem) {
@@ -172,12 +195,16 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       () => {
         this.forceUpdate();
       });
+
     return (
       <StackContext.Provider value={this.stackContextValue}>
         {React.cloneElement(ionRouterOutlet as any, {
           ref: (node: HTMLIonRouterOutletElement) => {
             if (ionRouterOutlet.props.setRef) {
               ionRouterOutlet.props.setRef(node);
+            }
+            if (ionRouterOutlet.props.forwardedRef) {
+              ionRouterOutlet.props.forwardedRef.current = node;
             }
             this.routerOutletElement = node;
             const { ref } = ionRouterOutlet as any;

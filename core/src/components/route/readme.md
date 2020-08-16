@@ -11,7 +11,7 @@ Navigation hooks can be used to perform tasks or act as navigation guards. Hooks
 ## Interfaces
 
 ```typescript
-interface NavigationHookResult {
+interface NavigationHookOptions {
   /**
    * A valid path to redirect navigation to.
    */

@@ -46,7 +46,7 @@ class IonRouterOutletContainer extends React.Component<InternalProps, InternalSt
           </OutletPageManager>
         ) : (
             <StackManager routeInfo={this.context.routeInfo}>
-              <IonRouterOutletInner {...props}>
+              <IonRouterOutletInner {...props} forwardedRef={forwardedRef}>
                 {children}
               </IonRouterOutletInner>
             </StackManager>
