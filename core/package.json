@@ -15,14 +15,14 @@
     "progressive web app",
     "pwa"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "dist/index.cjs.js",
+  "module": "components/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
   "jsnext:main": "dist/esm/index.mjs",
   "collection:main": "dist/collection/index.js",
   "collection": "dist/collection/collection-manifest.json",
-  "types": "dist/types/interface.d.ts",
+  "types": "components/index.d.ts",
   "files": [
     "components/",
     "css/",
