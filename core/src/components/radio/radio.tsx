@@ -130,14 +130,13 @@ export class Radio implements ComponentInterface {
         aria-disabled={disabled ? 'true' : null}
         aria-checked={`${checked}`}
         aria-labelledby={labelId}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'interactive': true,
           'radio-checked': checked,
           'radio-disabled': disabled,
-        }}
+        })}
       >
         <div class="radio-icon" part="container">
           <div class="radio-inner" part="mark" />

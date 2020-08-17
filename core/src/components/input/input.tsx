@@ -368,12 +368,11 @@ export class Input implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus
-        }}
+        })}
       >
         <input
           class="native-input"

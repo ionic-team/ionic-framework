@@ -313,12 +313,11 @@ export class Content implements ComponentInterface {
 
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'content-sizing': hostContext('ion-popover', this.el),
           'overscroll': forceOverscroll,
-        }}
+        })}
         style={{
           '--offset-top': `${this.cTop}px`,
           '--offset-bottom': `${this.cBottom}px`,

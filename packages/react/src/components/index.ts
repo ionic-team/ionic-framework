@@ -30,7 +30,7 @@ export * from './IonRedirect';
 export * from './IonRouterContext';
 
 // Utils
-export { isPlatform, getPlatforms, getConfig, ionRenderToString } from './utils';
+export { isPlatform, getPlatforms, getConfig } from './utils';
 export * from './hrefprops';
 
 // Ionic Animations

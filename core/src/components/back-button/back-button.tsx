@@ -122,10 +122,8 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     return (
       <Host
         onClick={this.onClick}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
-
           'button': true, // ion-buttons target .button
           'back-button-disabled': disabled,
           'back-button-has-icon-only': hasIconOnly,
@@ -134,7 +132,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'ion-activatable': true,
           'ion-focusable': true,
           'show-back-button': showBackButton
-        }}
+        })}
       >
         <button
           type={type}

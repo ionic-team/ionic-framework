@@ -204,8 +204,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       <Host
         onClick={this.handleClick}
         aria-disabled={disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
           [buttonType]: true,
           [`${buttonType}-${expand}`]: expand !== undefined,
@@ -219,7 +218,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           'button-disabled': disabled,
           'ion-activatable': true,
           'ion-focusable': true,
-        }}
+        })}
       >
         <TagType
           {...attrs}
