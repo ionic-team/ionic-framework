@@ -257,6 +257,7 @@ export class Input implements ComponentInterface {
   /**
    * Sets blur on the native `input` in `ion-input`. Use this method instead of the global
    * `input.blur()`.
+   * @internal
    */
   @Method()
   async setBlur() {
