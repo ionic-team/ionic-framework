@@ -244,13 +244,24 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * Sets focus on the specified `ion-input`. Use this method instead of the global
+   * Sets focus on the native `input` in `ion-input`. Use this method instead of the global
    * `input.focus()`.
    */
   @Method()
   async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
+    }
+  }
+
+  /**
+   * Sets blur on the native `input` in `ion-input`. Use this method instead of the global
+   * `input.blur()`.
+   */
+  @Method()
+  async setBlur() {
+    if (this.nativeInput) {
+      this.nativeInput.blur();
     }
   }
 

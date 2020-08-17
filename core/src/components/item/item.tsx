@@ -176,6 +176,22 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return (this.isClickable() || this.hasCover());
   }
 
+  private hasInputs(): boolean {
+    const inputs = this.el.querySelectorAll('ion-input');
+    return inputs.length > 0;
+  }
+
+  @Listen('click')
+  delegateFocus() {
+    if (this.hasInputs()) {
+      const input = this.el.querySelector('ion-input');
+      if (input) {
+        input.setBlur();
+        input.setFocus();
+      }
+    }
+  }
+
   render() {
     const { detail, detailIcon, download, lines, disabled, href, rel, target, routerAnimation, routerDirection } = this;
     const childStyles = {};
