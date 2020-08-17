@@ -11,7 +11,7 @@
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/proxies.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist/",
     "css/"

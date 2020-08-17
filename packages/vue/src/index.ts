@@ -2,14 +2,14 @@ import { addIcons } from 'ionicons';
 import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
 
 export * from './proxies';
-export * from './ionic-vue';
+export { IonicVue } from './ionic-vue';
 
-export * from './components/IonBackButton';
-export * from './components/IonPage';
-export * from './components/IonRouterOutlet';
-export * from './components/IonTabButton';
-export * from './components/IonTabs';
-export * from './components/IonTabBar';
+export { IonBackButton } from './components/IonBackButton';
+export { IonPage } from './components/IonPage';
+export { IonRouterOutlet } from './components/IonRouterOutlet';
+export { IonTabButton } from './components/IonTabButton';
+export { IonTabs } from './components/IonTabs';
+export { IonTabBar } from './components/IonTabBar';
 
 export {
   // Overlay Controllers
