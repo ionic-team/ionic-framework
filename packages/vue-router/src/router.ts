@@ -45,16 +45,16 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   opts.history.listen((to: any, _: any, info: any) => handleHistoryChange({ path: to }, info.type, info.direction));
 
   const handleNavigateBack = (defaultHref?: string, routerAnimation?: AnimationBuilder) => {
-    console.log('--- Begin Navigate Back ---');
+    //console.log('--- Begin Navigate Back ---');
     // todo grab default back button href from config
     const routeInfo = locationHistory.current();
-    console.log('Route Info', routeInfo)
+    //console.log('Route Info', routeInfo)
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
-        console.log('Prev Info', prevInfo)
+        //console.log('Prev Info', prevInfo)
         incomingRouteParams = { ...prevInfo, routerAction: 'pop', routerDirection: 'back', routerAnimation: routerAnimation || routeInfo.routerAnimation };
-        console.log('Set incoming route params', incomingRouteParams)
+        //console.log('Set incoming route params', incomingRouteParams)
         if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
           router.back();
         } else {
@@ -66,7 +66,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     } else {
       handleNavigate(defaultHref, 'pop', 'back');
     }
-    console.log('--- End Navigate Back ---');
+    //console.log('--- End Navigate Back ---');
   }
 
   const handleNavigate = (path: string, routerAction?: RouteAction, routerDirection?: RouteDirection, routerAnimation?: AnimationBuilder, tab?: string) => {
@@ -129,11 +129,11 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
             routerDirection: direction || 'forward',
             tab: currentTab
           }
-          console.log('No route params, setting', incomingRouteParams)
+          //console.log('No route params, setting', incomingRouteParams)
         }
       }
 
-      console.log('Incoming Route Params', incomingRouteParams)
+      //console.log('Incoming Route Params', incomingRouteParams)
 
       let routeInfo: RouteInfo;
       if (incomingRouteParams?.id) {
@@ -143,7 +143,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         }
         locationHistory.add(routeInfo);
 
-        console.log('Incoming route params had id, current routeInfo', routeInfo)
+        //console.log('Incoming route params had id, current routeInfo', routeInfo)
       } else {
         const isPushed = incomingRouteParams.routerAction === 'push' && incomingRouteParams.routerDirection === 'forward';
         routeInfo = {
@@ -155,27 +155,27 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           params: location.params && location.params,
         }
 
-        console.log('No id on incoming route params', routeInfo)
+        //console.log('No id on incoming route params', routeInfo)
 
         if (isPushed) {
           routeInfo.tab = leavingLocationInfo.tab;
           routeInfo.pushedByRoute = leavingLocationInfo.pathname;
-          console.log('Was pushed', routeInfo);
+          //console.log('Was pushed', routeInfo);
         } else if (routeInfo.routerAction === 'pop') {
           const route = locationHistory.findLastLocation(routeInfo);
           routeInfo.pushedByRoute = route?.pushedByRoute;
-          console.log('action pop', routeInfo)
+          //console.log('action pop', routeInfo)
         } else if (routeInfo.routerAction === 'push' && routeInfo.tab !== leavingLocationInfo.tab) {
           const lastRoute = locationHistory.getCurrentRouteInfoForTab(routeInfo.tab);
           routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
-          console.log('was push and switch tab', routeInfo)
+          //console.log('was push and switch tab', routeInfo)
         } else if (routeInfo.routerAction === 'replace') {
           const currentRouteInfo = locationHistory.current();
           routeInfo.lastPathname = currentRouteInfo?.pathname || routeInfo.lastPathname;
           routeInfo.pushedByRoute = currentRouteInfo?.pushedByRoute || routeInfo.pushedByRoute;
           routeInfo.routerDirection = currentRouteInfo?.routerDirection || routeInfo.routerDirection;
           routeInfo.routerAnimation = currentRouteInfo?.routerAnimation || routeInfo.routerAnimation;
-          console.log('was repalce',routeInfo)
+          //console.log('was repalce',routeInfo)
         }
 
         locationHistory.add(routeInfo);
