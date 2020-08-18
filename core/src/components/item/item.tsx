@@ -27,6 +27,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
 
+  private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
 
   @Element() el!: HTMLIonItemElement;
@@ -110,6 +111,18 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
+  @Listen('ionColor')
+  labelColorChanged(ev: CustomEvent<string>) {
+    const { color } = this;
+
+    // There will be a conflict with item color if
+    // we apply the label color to item, so we ignore
+    // the label color if the user sets a color on item
+    if (color === undefined) {
+      this.labelColorStyles = ev.detail;
+    }
+  }
+
   @Listen('ionStyle')
   itemStyle(ev: CustomEvent<StyleEventDetail>) {
     ev.stopPropagation();
@@ -177,7 +190,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   render() {
-    const { detail, detailIcon, download, lines, disabled, href, rel, target, routerAnimation, routerDirection } = this;
+    const { detail, detailIcon, download, labelColorStyles, lines, disabled, href, rel, target, routerAnimation, routerDirection } = this;
     const childStyles = {};
     const mode = getIonMode(this);
     const clickable = this.isClickable();
@@ -201,6 +214,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         aria-disabled={disabled ? 'true' : null}
         class={{
           ...childStyles,
+          ...labelColorStyles,
           ...createColorClasses(this.color, {
             'item': true,
             [mode]: true,

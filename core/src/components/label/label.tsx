@@ -31,6 +31,12 @@ export class Label implements ComponentInterface {
   @Prop() position?: 'fixed' | 'stacked' | 'floating';
 
   /**
+   * Emitted when the color changes.
+   * @internal
+   */
+  @Event() ionColor!: EventEmitter<StyleEventDetail>;
+
+  /**
    * Emitted when the styles change.
    * @internal
    */
@@ -41,6 +47,7 @@ export class Label implements ComponentInterface {
   componentWillLoad() {
     this.noAnimate = (this.position === 'floating');
     this.emitStyle();
+    this.emitColor();
   }
 
   componentDidLoad() {
@@ -51,13 +58,28 @@ export class Label implements ComponentInterface {
     }
   }
 
+  @Watch('color')
+  colorChanged() {
+    this.emitColor();
+  }
+
   @Watch('position')
   positionChanged() {
     this.emitStyle();
   }
 
+  private emitColor() {
+    const { color } = this;
+
+    this.ionColor.emit({
+      'item-label-color': color !== undefined,
+      [`ion-color-${color}`]: color !== undefined
+    });
+  }
+
   private emitStyle() {
-    const position = this.position;
+    const { position } = this;
+
     this.ionStyle.emit({
       'label': true,
       [`label-${position}`]: position !== undefined

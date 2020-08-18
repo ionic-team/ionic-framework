@@ -4421,6 +4421,10 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted when the color changes.
+         */
+        "onIonColor"?: (event: CustomEvent<StyleEventDetail>) => void;
+        /**
           * Emitted when the styles change.
          */
         "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
