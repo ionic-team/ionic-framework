@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Injector } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ValueAccessor } from './value-accessor';
@@ -16,12 +16,12 @@ import { ValueAccessor } from './value-accessor';
 })
 export class RadioValueAccessor extends ValueAccessor {
 
-  constructor(el: ElementRef) {
-    super(el);
+  constructor(injector: Injector, el: ElementRef) {
+    super(injector, el);
   }
 
-  @HostListener('ionSelect', ['$event.target.checked'])
-  _handleIonSelect(value: any) {
-    this.handleChangeEvent(value);
+  @HostListener('ionSelect', ['$event.target'])
+  _handleIonSelect(el: any) {
+    this.handleChangeEvent(el, el.checked);
   }
 }

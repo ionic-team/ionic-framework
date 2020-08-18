@@ -4,14 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Segment - Standalone</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/core.css" rel="stylesheet">
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+</head>
 
-<body>
+<body onLoad="onLoad()">
   <ion-toolbar>
     <ion-segment value="Free">
       <ion-segment-button value="Paid">
@@ -77,15 +79,15 @@
   </ion-segment>
 
   <ion-segment class="custom-icon" value="instagram">
-    <ion-segment-button class="segment-facebook" value="facebook">
+    <ion-segment-button class="segment-button-facebook" value="facebook">
       <ion-label>Facebook</ion-label>
       <ion-icon name="logo-facebook"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button class="segment-instagram" value="instagram">
+    <ion-segment-button class="segment-button-instagram" value="instagram">
       <ion-label>Instagram</ion-label>
       <ion-icon name="logo-instagram"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button class="segment-slack" value="slack">
+    <ion-segment-button class="segment-button-slack" value="slack">
       <ion-label>Slack</ion-label>
       <ion-icon name="logo-slack"></ion-icon>
     </ion-segment-button>
@@ -145,6 +147,29 @@
     results.innerHTML = value.charAt(0).toUpperCase() + value.slice(1);
     segment.value = value;
   }
+
+  async function onLoad() {
+    const customIconSegments = document.querySelectorAll('.custom-icon');
+
+    for (var i = 0; i < customIconSegments.length; i++) {
+      const customIconSegment = customIconSegments[i];
+
+      await customIconSegment.componentOnReady();
+      addIconClass(customIconSegment, customIconSegment.value);
+
+      customIconSegment.addEventListener('ionChange', function (ev) {
+        addIconClass(customIconSegment, ev.detail.value);
+      });
+    }
+  }
+
+  function addIconClass(el, value) {
+    console.log('adding class to', el, value);
+    if (value) {
+      el.classList.remove('segment-facebook-checked', 'segment-instagram-checked', 'segment-slack-checked');
+      el.classList.add(`segment-${value}-checked`);
+    }
+  }
 </script>
 
 <style>
@@ -188,23 +213,64 @@
     --color: navy;
   }
 
-  .custom-icon {
-    --indicator-color: lightgray;
+  /*
+   * Custom Icon Segment (Facebook, Instagram, Slack)
+   */
+  .custom-icon ion-icon {
+    font-size: 44px;
   }
 
-  .segment-facebook {
-    --background-hover: rgba(59, 89, 153, .04);
-    --color-checked: #3b5999;
+  /*
+   * MD Custom Icon Segment (Facebook, Instagram, Slack)
+   */
+  .md .segment-facebook-checked .segment-button-facebook {
+    --color-checked: #3a3d46;
+    --indicator-color: #3a3d46;
   }
 
-  .segment-instagram {
-    --background-hover: rgba(228, 64, 95, .04);
+  .md .segment-instagram-checked .segment-button-instagram {
     --color-checked: #e4405f;
+    --indicator-color: #e4405f;
   }
 
-  .segment-slack {
-    --background-hover: rgba(58, 175, 133, .04);
+  .md .segment-slack-checked .segment-button-slack {
     --color-checked: #3aaf85;
+    --indicator-color: #3aaf85;
+  }
+
+  /*
+   * iOS Custom Icon Segment (Facebook, Instagram, Slack)
+   */
+  .ios .custom-icon {
+    --indicator-color: transparent;
+    --indicator-transition: none;
+  }
+
+  .ios .segment-facebook-checked .segment-button-facebook {
+    --background-checked: #3a3d46;
+    --color-checked: #ffffff;
+  }
+
+  .ios .segment-instagram-checked .segment-button-instagram {
+    --background-checked: #e4405f;
+    --color-checked: #ffffff;
+  }
+
+  .ios .segment-slack-checked .segment-button-slack {
+    --background-checked: #3aaf85;
+    --color-checked: #ffffff;
+  }
+
+  .ios .segment-button-facebook {
+    --color: #3a3d46;
+  }
+
+  .ios .segment-button-instagram {
+    --color: #e4405f;
+  }
+
+  .ios .segment-button-slack {
+    --color: #3aaf85;
   }
 
   .custom-indicator {
@@ -215,6 +281,7 @@
   .large-icon ion-icon {
     font-size: 44px;
   }
+
 </style>
 
 </html>

@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>CSS Variable - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
 
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
@@ -43,6 +44,10 @@
       margin-bottom: 8px;
     }
 
+    ion-toolbar ion-segment {
+      margin-bottom: 0;
+    }
+
     .icon-section ion-icon {
       font-size: 48px;
     }
@@ -62,9 +67,9 @@
           <ion-label>Colors</ion-label>
           <ion-icon name="brush"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="other">
-          <ion-label>Other</ion-label>
-          <ion-icon name="more"></ion-icon>
+        <ion-tab-button tab="overlays">
+          <ion-label>Overlays</ion-label>
+          <ion-icon ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         </ion-tab-button>
       </ion-tab-bar>
 
@@ -83,25 +88,55 @@
             <ion-title>Lists</ion-title>
 
             <ion-buttons slot="primary">
-              <ion-button color="secondary" fill="outline">Secondary Outline</ion-button>
+              <ion-back-button color="secondary" default-href="/"></ion-back-button>
+              <ion-menu-button color="secondary" auto-hide="false"></ion-menu-button>
+              <ion-button color="secondary">Default</ion-button>
+              <ion-button color="secondary" fill="solid">Solid</ion-button>
+              <ion-button color="secondary" fill="clear">Clear</ion-button>
+              <ion-button color="secondary" fill="outline">Outline</ion-button>
             </ion-buttons>
-
-            <div slot="end" class="right-container">
-              <ion-label>Select a Theme:</ion-label>
-              <ion-select interface="popover" class="theme-picker">
-                <ion-select-option value="default" selected>Default</ion-select-option>
-                <ion-select-option value="oceanic">Oceanic</ion-select-option>
-                <ion-select-option value="vibrant">Vibrant</ion-select-option>
-                <ion-select-option value="dark">Dark</ion-select-option>
-              </ion-select>
-            </div>
           </ion-toolbar>
           <ion-toolbar>
-            <ion-segment>
-              <ion-segment-button><ion-label>Favorites</ion-label></ion-segment-button>
-              <ion-segment-button><ion-label>All</ion-label></ion-segment-button>
-              <ion-segment-button disabled><ion-label>Disabled</ion-label></ion-segment-button>
-              <ion-segment-button checked><ion-label>Active</ion-label></ion-segment-button>
+            <ion-buttons slot="start">
+              <ion-back-button class="ion-focused" default-href="/"></ion-back-button>
+              <ion-menu-button class="ion-focused" auto-hide="false"></ion-menu-button>
+              <ion-button class="ion-focused">Default</ion-button>
+              <ion-button class="ion-focused" fill="solid">Solid</ion-button>
+              <ion-button class="ion-focused" fill="clear">Clear</ion-button>
+              <ion-button class="ion-focused" fill="outline">Outline</ion-button>
+            </ion-buttons>
+
+            <ion-title>Lists</ion-title>
+
+            <ion-buttons slot="primary">
+              <ion-back-button color="secondary" class="ion-focused" default-href="/"></ion-back-button>
+              <ion-menu-button color="secondary" class="ion-focused" auto-hide="false"></ion-menu-button>
+              <ion-button color="secondary" class="ion-focused">Default</ion-button>
+              <ion-button color="secondary" class="ion-focused" fill="solid">Solid</ion-button>
+              <ion-button color="secondary" class="ion-focused" fill="clear">Clear</ion-button>
+              <ion-button color="secondary" class="ion-focused" fill="outline">Outline</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-segment value="default" class="theme-picker">
+              <ion-segment-button value="default">
+                <ion-label>Default</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="oceanic">
+                <ion-label>Oceanic</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="vibrant">
+                <ion-label>Vibrant</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="dark">
+                <ion-label>Dark</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="toolbar">
+                <ion-label>Toolbar</ion-label>
+              </ion-segment-button>
+              <ion-segment-button disabled>
+                  <ion-label>Disabled</ion-label>
+              </ion-segment-button>
             </ion-segment>
           </ion-toolbar>
         </ion-header>
@@ -115,7 +150,8 @@
                 </ion-card-header>
 
                 <ion-card-content>
-                  Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods.
+                  Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a
+                  week in the woods.
                   Wash your spirit clean.
                 </ion-card-content>
               </ion-card>
@@ -132,9 +168,9 @@
               </ion-card>
 
               <ion-card>
-                <ion-item href="#" class="activated">
+                <ion-item href="#" class="ion-activated">
                   <ion-icon name="wifi" slot="start"></ion-icon>
-                  Card Link Item 1 .activated
+                  Card Link Item 1 activated
                 </ion-item>
 
                 <ion-item href="#">
@@ -142,25 +178,25 @@
                   Card Link Item 2
                 </ion-item>
 
-                <ion-item class="activated">
+                <ion-item button class="ion-activated">
                   <ion-icon name="warning" slot="start"></ion-icon>
-                  Card Button Item 1 .activated
+                  Card Button Item 1 activated
                 </ion-item>
 
-                <ion-item>
+                <ion-item button class="ion-focused">
                   <ion-icon name="walk" slot="start"></ion-icon>
-                  Card Button Item 2
+                  Card Button Item 2 focused
                 </ion-item>
               </ion-card>
             </section>
 
             <section>
               <ion-list>
-                <ion-item>
+                <ion-item button>
                   <ion-label>Pokémon Yellow</ion-label>
                   <ion-note slot="end">Note</ion-note>
                 </ion-item>
-                <ion-item>
+                <ion-item button>
                   <ion-label>Super Metroid</ion-label>
                   <ion-note slot="end">Note</ion-note>
                 </ion-item>
@@ -168,7 +204,7 @@
                   <ion-label>Mega Man X</ion-label>
                   <ion-note slot="end">Note</ion-note>
                 </ion-item>
-                <ion-item href="#" class="activated">
+                <ion-item href="#" class="ion-activated">
                   <ion-label>The Legend of Zelda</ion-label>
                   <ion-note slot="end">Note</ion-note>
                 </ion-item>
@@ -177,40 +213,56 @@
                   <ion-note slot="end">Note</ion-note>
                 </ion-item>
                 <ion-item>
-                  <ion-label>Super Mario World</ion-label>
+                  <ion-label>
+                    <h2>Super Mario World</h2>
+                    <p>Featuring Luigi</p>
+                  </ion-label>
                   <ion-note slot="end">Note</ion-note>
                 </ion-item>
                 <ion-item>
-                  <ion-label>Street Fighter II</ion-label>
+                  <ion-label>
+                    <h2>Street Fighter II</h2>
+                    <p>The Sequel</p>
+                  </ion-label>
                   <ion-note slot="end">Note</ion-note>
                 </ion-item>
                 <ion-item-divider>Sliding Items</ion-item-divider>
                 <ion-item-sliding>
-                  <ion-item><ion-label>Half Life</ion-label></ion-item>
+                  <ion-item>
+                    <ion-label>Half Life</ion-label>
+                  </ion-item>
                   <ion-item-options>
                     <ion-item-option>More</ion-item-option>
                   </ion-item-options>
                 </ion-item-sliding>
                 <ion-item-sliding>
-                  <ion-item color="secondary"><ion-label>Final Fantasy VII</ion-label></ion-item>
+                  <ion-item color="secondary">
+                    <ion-label>Final Fantasy VII</ion-label>
+                  </ion-item>
                   <ion-item-options>
                     <ion-item-option>More</ion-item-option>
                   </ion-item-options>
                 </ion-item-sliding>
                 <ion-item-sliding>
-                  <ion-item><ion-label>Tetris</ion-label></ion-item>
+                  <ion-item>
+                    <ion-label>Tetris</ion-label>
+                  </ion-item>
                   <ion-item-options>
                     <ion-item-option>More</ion-item-option>
                   </ion-item-options>
                 </ion-item-sliding>
                 <ion-item-sliding>
-                  <ion-item><ion-label>Donkey Kong III</ion-label></ion-item>
+                  <ion-item>
+                    <ion-label>Donkey Kong III</ion-label>
+                  </ion-item>
                   <ion-item-options>
                     <ion-item-option>More</ion-item-option>
                   </ion-item-options>
                 </ion-item-sliding>
                 <ion-item-sliding>
-                  <ion-item><ion-label>Goldeneye 007</ion-label></ion-item>
+                  <ion-item>
+                    <ion-label>Goldeneye 007</ion-label>
+                  </ion-item>
                   <ion-item-options>
                     <ion-item-option disabled="true">More</ion-item-option>
                   </ion-item-options>
@@ -219,125 +271,134 @@
             </section>
 
             <section>
-              <ion-radio-group id="fruitRadio">
-                <ion-item-divider>
-                  <ion-label>Fruits</ion-label>
-                </ion-item-divider>
+              <ion-list>
+                <ion-radio-group id="fruitRadio" value="grape">
+                  <ion-item-divider>
+                    <ion-label>Fruits</ion-label>
+                  </ion-item-divider>
+                  <ion-item>
+                    <ion-label>Apple</ion-label>
+                    <ion-radio slot="start" value="apple"></ion-radio>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Grape, checked, disabled</ion-label>
+                    <ion-radio slot="start" id="grapeChecked" value="grape" disabled></ion-radio>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Cherry</ion-label>
+                    <ion-radio slot="start" color="danger" value="cherry"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+
+              <ion-list>
+                <ion-radio-group id="fruitRadio" value="lettuce">
+                  <ion-item-divider>
+                    <ion-label>Veggies</ion-label>
+                  </ion-item-divider>
+                  <ion-item>
+                    <ion-label>Celery</ion-label>
+                    <ion-radio color="tertiary" slot="start" value="celery"></ion-radio>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Lettuce, checked, disabled</ion-label>
+                    <ion-radio color="tertiary" slot="start" value="lettuce" disabled></ion-radio>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Onion</ion-label>
+                    <ion-radio color="tertiary" slot="start" value="onion"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+
+              <ion-list>
                 <ion-item>
-                  <ion-label>Apple</ion-label>
-                  <ion-radio slot="start" value="apple"></ion-radio>
+                  <ion-range value="20"></ion-range>
                 </ion-item>
 
                 <ion-item>
-                  <ion-label>Grape, checked, disabled</ion-label>
-                  <ion-radio slot="start" id="grapeChecked" value="grape" checked disabled></ion-radio>
+                  <ion-range color="success" value="20"></ion-range>
                 </ion-item>
 
                 <ion-item>
-                  <ion-label>Cherry</ion-label>
-                  <ion-radio slot="start" color="danger" value="cherry"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-
-              <ion-radio-group id="fruitRadio">
-                <ion-item-divider>
-                  <ion-label>Veggies</ion-label>
-                </ion-item-divider>
-                <ion-item>
-                  <ion-label>Celery</ion-label>
-                  <ion-radio color="tertiary" slot="start" value="celery"></ion-radio>
+                  <ion-range color="warning" value="20"></ion-range>
                 </ion-item>
 
                 <ion-item>
-                  <ion-label>Lettuce, checked, disabled</ion-label>
-                  <ion-radio color="tertiary" slot="start" value="lettuce" checked disabled></ion-radio>
+                  <ion-range color="danger" value="20"></ion-range>
                 </ion-item>
+              </ion-list>
 
-                <ion-item>
-                  <ion-label>Onion</ion-label>
-                  <ion-radio color="tertiary" slot="start" value="onion"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-
-              <ion-item>
-                <ion-range value="20"></ion-range>
-              </ion-item>
-
-              <ion-item>
-                <ion-range color="success" value="20"></ion-range>
-              </ion-item>
-
-              <ion-item>
-                <ion-range color="warning" value="20"></ion-range>
-              </ion-item>
-
-              <ion-item>
-                <ion-range color="danger" value="20"></ion-range>
-              </ion-item>
             </section>
 
             <section>
-              <ion-item>
-                <ion-label>Default</ion-label>
-                <ion-checkbox slot="end" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Primary</ion-label>
-                <ion-checkbox slot="end" color="primary" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Secondary</ion-label>
-                <ion-checkbox slot="end" color="secondary" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Warning</ion-label>
-                <ion-checkbox slot="end" color="warning" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Danger</ion-label>
-                <ion-checkbox slot="end" color="danger" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Light</ion-label>
-                <ion-checkbox slot="end" color="light" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Dark</ion-label>
-                <ion-checkbox slot="end" color="dark" checked></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Unchecked by Default</ion-label>
-                <ion-checkbox slot="end"></ion-checkbox>
-              </ion-item>
-              <ion-item>
-                <ion-label>Disabled</ion-label>
-                <ion-checkbox slot="end" disabled></ion-checkbox>
-              </ion-item>
+              <ion-list>
+                <ion-item>
+                  <ion-label>Default</ion-label>
+                  <ion-checkbox slot="end" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Primary</ion-label>
+                  <ion-checkbox slot="end" color="primary" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Secondary</ion-label>
+                  <ion-checkbox slot="end" color="secondary" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Warning</ion-label>
+                  <ion-checkbox slot="end" color="warning" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Danger</ion-label>
+                  <ion-checkbox slot="end" color="danger" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Light</ion-label>
+                  <ion-checkbox slot="end" color="light" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Dark</ion-label>
+                  <ion-checkbox slot="end" color="dark" checked></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Unchecked by Default</ion-label>
+                  <ion-checkbox slot="end"></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Disabled</ion-label>
+                  <ion-checkbox slot="end" disabled></ion-checkbox>
+                </ion-item>
 
-              <ion-item>
-                <ion-toggle slot="start"></ion-toggle>
-                <ion-label>Blueberry</ion-label>
-              </ion-item>
+                <ion-item>
+                  <ion-toggle slot="start"></ion-toggle>
+                  <ion-label>Blueberry</ion-label>
+                </ion-item>
 
-              <ion-item>
-                <ion-toggle color="success" slot="start" checked></ion-toggle>
-                <ion-label>Lettuce</ion-label>
-              </ion-item>
+                <ion-item>
+                  <ion-toggle color="success" slot="start" checked></ion-toggle>
+                  <ion-label>Lettuce</ion-label>
+                </ion-item>
 
-              <ion-item>
-                <ion-toggle color="danger" slot="start" checked></ion-toggle>
-                <ion-label>Apple</ion-label>
-              </ion-item>
+                <ion-item>
+                  <ion-toggle color="danger" slot="start" checked></ion-toggle>
+                  <ion-label>Apple</ion-label>
+                </ion-item>
 
-              <ion-item>
-                <ion-toggle color="tertiary" slot="start" checked></ion-toggle>
-                <ion-label>Radish</ion-label>
-              </ion-item>
+                <ion-item>
+                  <ion-toggle color="tertiary" slot="start" checked></ion-toggle>
+                  <ion-label>Radish</ion-label>
+                </ion-item>
 
-              <ion-item>
-                <ion-toggle color="dark" slot="start" checked></ion-toggle>
-                <ion-label>Blackberry</ion-label>
-              </ion-item>
+                <ion-item>
+                  <ion-toggle color="dark" slot="start" checked></ion-toggle>
+                  <ion-label>Blackberry</ion-label>
+                </ion-item>
+              </ion-list>
             </section>
           </div>
         </ion-content>
@@ -370,6 +431,7 @@
                 <ion-button fill="clear" color="warning">Warning Clear</ion-button>
                 <ion-button color="danger">Danger</ion-button>
                 <ion-button color="light">Light</ion-button>
+                <ion-button color="dark">Dark</ion-button>
                 <ion-button expand="block" fill="outline" color="medium">Medium Outline</ion-button>
                 <ion-button expand="full" fill="clear" color="dark">Dark Clear</ion-button>
               </p>
@@ -382,20 +444,21 @@
                 <ion-button class="ion-focused" fill="clear" color="warning">Warning Clear</ion-button>
                 <ion-button class="ion-focused" color="danger">Danger</ion-button>
                 <ion-button class="ion-focused" color="light">Light</ion-button>
+                <ion-button class="ion-focused" color="dark">Dark</ion-button>
                 <ion-button class="ion-focused" expand="block" fill="outline" color="medium">Medium Outline</ion-button>
                 <ion-button class="ion-focused" expand="full" fill="clear" color="dark">Dark Clear</ion-button>
               </p>
 
               <p>
-                <ion-button class="activated" color="primary">Primary</ion-button>
-                <ion-button class="activated" color="secondary">Secondary</ion-button>
-                <ion-button class="activated" color="tertiary">Tertiary</ion-button>
-                <ion-button class="activated" fill="outline" color="success">Success Outline</ion-button>
-                <ion-button class="activated" fill="clear" color="warning">Warning Clear</ion-button>
-                <ion-button class="activated" color="danger">Danger</ion-button>
-                <ion-button class="activated" color="light">Light</ion-button>
-                <ion-button class="activated" expand="block" fill="outline" color="medium">Medium Outline</ion-button>
-                <ion-button class="activated" expand="full" fill="clear" color="dark">Dark Clear</ion-button>
+                <ion-button class="ion-activated" color="primary">Primary</ion-button>
+                <ion-button class="ion-activated" color="secondary">Secondary</ion-button>
+                <ion-button class="ion-activated" color="tertiary">Tertiary</ion-button>
+                <ion-button class="ion-activated" fill="outline" color="success">Success Outline</ion-button>
+                <ion-button class="ion-activated" fill="clear" color="warning">Warning Clear</ion-button>
+                <ion-button class="ion-activated" color="danger">Danger</ion-button>
+                <ion-button class="ion-activated" color="light">Light</ion-button>
+                <ion-button class="ion-activated" expand="block" fill="outline" color="medium">Medium Outline</ion-button>
+                <ion-button class="ion-activated" expand="full" fill="clear" color="dark">Dark Clear</ion-button>
               </p>
             </section>
 
@@ -406,7 +469,8 @@
                   <ion-icon slot="icon-only" name="star"></ion-icon>
                 </ion-button>
                 <ion-button>
-                  <ion-icon slot="start" name="pin"></ion-icon>Map</ion-button>
+                  <ion-icon slot="start" name="pin"></ion-icon>Map
+                </ion-button>
                 <ion-button shape="round">Round</ion-button>
                 <ion-button fill="outline">Outline</ion-button>
                 <ion-button fill="clear">Clear</ion-button>
@@ -484,12 +548,12 @@
                 <ion-icon name="happy" color="warning"></ion-icon>
                 <ion-icon name="people"></ion-icon>
                 <ion-icon name="person" color="tertiary"></ion-icon>
-                <ion-icon name="contact"></ion-icon>
+                <ion-icon name="person-circle"></ion-icon>
 
                 <ion-icon name="apps"></ion-icon>
-                <ion-icon name="lock"></ion-icon>
+                <ion-icon name="lock-closed"></ion-icon>
                 <ion-icon name="key" color="success"></ion-icon>
-                <ion-icon name="unlock"></ion-icon>
+                <ion-icon name="lock-open"></ion-icon>
 
                 <ion-icon name="map" color="secondary"></ion-icon>
                 <ion-icon name="navigate"></ion-icon>
@@ -499,7 +563,7 @@
                 <ion-icon name="mic"></ion-icon>
                 <ion-icon name="musical-notes" color="warning"></ion-icon>
                 <ion-icon name="volume-high"></ion-icon>
-                <ion-icon name="microphone" color="tertiary"></ion-icon>
+                <ion-icon name="mic" color="tertiary"></ion-icon>
 
                 <ion-icon name="cafe" color="success"></ion-icon>
                 <ion-icon name="calculator"></ion-icon>
@@ -520,34 +584,34 @@
                 <ion-searchbar color="dark"></ion-searchbar>
               </p>
               <p>
-                <ion-segment>
-                  <ion-segment-button checked>All</ion-segment-button>
-                  <ion-segment-button>Favorites</ion-segment-button>
+                <ion-segment value="all">
+                  <ion-segment-button value="all">All</ion-segment-button>
+                  <ion-segment-button value="favorites">Favorites</ion-segment-button>
                 </ion-segment>
 
-                <ion-segment color="primary">
-                  <ion-segment-button checked>All</ion-segment-button>
-                  <ion-segment-button>Favorites</ion-segment-button>
+                <ion-segment color="primary" value="all">
+                  <ion-segment-button value="all">All</ion-segment-button>
+                  <ion-segment-button value="favorites">Favorites</ion-segment-button>
                 </ion-segment>
 
-                <ion-segment color="secondary">
-                  <ion-segment-button checked>All</ion-segment-button>
-                  <ion-segment-button>Favorites</ion-segment-button>
+                <ion-segment color="secondary" value="all">
+                  <ion-segment-button value="all">All</ion-segment-button>
+                  <ion-segment-button value="favorites">Favorites</ion-segment-button>
                 </ion-segment>
 
-                <ion-segment color="success">
-                  <ion-segment-button checked>All</ion-segment-button>
-                  <ion-segment-button>Favorites</ion-segment-button>
+                <ion-segment color="success" value="all">
+                  <ion-segment-button value="all">All</ion-segment-button>
+                  <ion-segment-button value="favorites">Favorites</ion-segment-button>
                 </ion-segment>
 
-                <ion-segment color="light">
-                  <ion-segment-button checked>All</ion-segment-button>
-                  <ion-segment-button>Favorites</ion-segment-button>
+                <ion-segment color="light" value="all">
+                  <ion-segment-button value="all">All</ion-segment-button>
+                  <ion-segment-button value="favorites">Favorites</ion-segment-button>
                 </ion-segment>
 
-                <ion-segment color="medium">
-                  <ion-segment-button checked>All</ion-segment-button>
-                  <ion-segment-button>Favorites</ion-segment-button>
+                <ion-segment color="medium" value="all">
+                  <ion-segment-button value="all">All</ion-segment-button>
+                  <ion-segment-button value="favorites">Favorites</ion-segment-button>
                 </ion-segment>
 
               </p>
@@ -567,7 +631,7 @@
                   </ion-buttons>
                   <ion-buttons slot="primary">
                     <ion-button>
-                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                     </ion-button>
                   </ion-buttons>
                   <ion-title>Toolbar</ion-title>
@@ -581,19 +645,19 @@
                   </ion-buttons>
                   <ion-buttons slot="primary">
                     <ion-button>
-                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                     </ion-button>
                   </ion-buttons>
-                  <ion-segment>
-                    <ion-segment-button>All</ion-segment-button>
-                    <ion-segment-button checked>Favorites</ion-segment-button>
+                  <ion-segment value="favorites">
+                    <ion-segment-button value="all">All</ion-segment-button>
+                    <ion-segment-button value="favorites">Favorites</ion-segment-button>
                   </ion-segment>
                 </ion-toolbar>
 
                 <ion-toolbar color="secondary">
                   <ion-buttons slot="primary">
                     <ion-button>
-                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                     </ion-button>
                   </ion-buttons>
                   <ion-searchbar></ion-searchbar>
@@ -607,7 +671,7 @@
                   </ion-buttons>
                   <ion-buttons slot="primary">
                     <ion-button>
-                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                     </ion-button>
                   </ion-buttons>
                   <ion-title>Tertiary</ion-title>
@@ -621,7 +685,7 @@
                   </ion-buttons>
                   <ion-buttons slot="primary">
                     <ion-button>
-                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                     </ion-button>
                   </ion-buttons>
                   <ion-title>Success</ion-title>
@@ -635,7 +699,7 @@
                   </ion-buttons>
                   <ion-buttons slot="primary">
                     <ion-button>
-                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                     </ion-button>
                   </ion-buttons>
                   <ion-title>Warning</ion-title>
@@ -644,7 +708,7 @@
                 <ion-toolbar color="danger">
                   <ion-buttons slot="primary">
                     <ion-button>
-                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                     </ion-button>
                   </ion-buttons>
                   <ion-searchbar></ion-searchbar>
@@ -658,12 +722,12 @@
                   </ion-buttons>
                   <ion-buttons slot="primary">
                     <ion-button>
-                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                     </ion-button>
                   </ion-buttons>
-                  <ion-segment>
-                    <ion-segment-button>All</ion-segment-button>
-                    <ion-segment-button checked>Favorites</ion-segment-button>
+                  <ion-segment value="favorites">
+                    <ion-segment-button value="all">All</ion-segment-button>
+                    <ion-segment-button value="favorites">Favorites</ion-segment-button>
                   </ion-segment>
                 </ion-toolbar>
 
@@ -675,7 +739,7 @@
                   </ion-buttons>
                   <ion-buttons slot="primary">
                     <ion-button>
-                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                     </ion-button>
                   </ion-buttons>
                   <ion-title>Medium</ion-title>
@@ -689,7 +753,7 @@
                   </ion-buttons>
                   <ion-buttons slot="primary">
                     <ion-button>
-                      <ion-icon slot="icon-only" name="more"></ion-icon>
+                      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                     </ion-button>
                   </ion-buttons>
                   <ion-title>Dark</ion-title>
@@ -700,10 +764,10 @@
         </ion-content>
       </ion-tab>
 
-      <ion-tab tab="other">
+      <ion-tab tab="overlays">
         <ion-header>
           <ion-toolbar>
-            <ion-title>Other</ion-title>
+            <ion-title>Overlays</ion-title>
             <div slot="end" class="right-container">
               <ion-label>Select a Theme:</ion-label>
               <ion-select interface="popover" class="theme-picker">
@@ -717,7 +781,40 @@
         </ion-header>
         <ion-content>
           <div class="wrapper">
-
+            <!-- <section> -->
+            <ion-list>
+              <ion-item button onClick="presentAlert()">
+                <ion-label>Present Alert</ion-label>
+              </ion-item>
+              <ion-item button onClick="presentActionSheet()">
+                <ion-label>Present Action Sheet</ion-label>
+              </ion-item>
+              <ion-item button onClick="presentLoading()">
+                <ion-label>Present Loading</ion-label>
+              </ion-item>
+              <ion-item button onClick="presentModal()">
+                <ion-label>Present Modal</ion-label>
+              </ion-item>
+              <ion-item button onClick="presentPopover(event)">
+                <ion-label>Present Popover</ion-label>
+              </ion-item>
+              <ion-item button onClick="presentToast()">
+                <ion-label>Present Toast</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>Datetime</ion-label>
+                <ion-datetime></ion-datetime>
+              </ion-item>
+              <ion-item>
+                <ion-label>Select</ion-label>
+                <ion-select>
+                  <ion-select-option>1</ion-select-option>
+                  <ion-select-option>2</ion-select-option>
+                  <ion-select-option>3</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+            <!-- </section> -->
           </div>
         </ion-content>
       </ion-tab>
@@ -751,6 +848,155 @@
       for (let i = 0; i < selects.length; i++) {
         selects[i].value = theme;
       }
+    }
+
+    async function presentAlert() {
+      const alert = Object.assign(document.createElement('ion-alert'), {
+        header: 'Alert',
+        subHeader: 'Subtitle',
+        message: 'This is an alert message.',
+        buttons: ['OK']
+      });
+      document.body.appendChild(alert);
+      return await alert.present();
+    }
+
+    async function presentActionSheet() {
+      const actionSheet = Object.assign(document.createElement('ion-action-sheet'), {
+        header: "Albums",
+        buttons: [{
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        }, {
+          text: 'Share',
+          icon: 'share',
+          handler: () => {
+            console.log('Share clicked');
+          }
+        }, {
+          text: 'Play (open modal)',
+          icon: 'chevron-forward-circle',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        }, {
+          text: 'Favorite',
+          icon: 'heart',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      });
+      document.body.appendChild(actionSheet);
+      await actionSheet.present();
+    }
+
+    async function presentLoading() {
+      const loading = Object.assign(document.createElement('ion-loading'), {
+        message: 'Hellooo',
+        duration: 2000
+      });
+      document.body.appendChild(loading);
+
+      await loading.present();
+
+      const { role, data } = await loading.onDidDismiss();
+
+      console.log('Loading dismissed!');
+    }
+
+    async function createModal() {
+      // initialize controller
+      // create component to open
+      const element = document.createElement('div');
+      element.innerHTML = `
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Super Modal</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <h1>Content of doom</h1>
+        <div>Here's some more content</div>
+        <ion-button class="dismiss">Dismiss Modal</ion-button>
+      </ion-content>
+      `;
+
+
+      // present the modal
+      const modalElement = Object.assign(document.createElement('ion-modal'), {
+        component: element
+      });
+
+      // listen for close event
+      const button = element.querySelector('ion-button');
+      button.addEventListener('click', () => {
+        modalElement.dismiss();
+      });
+      document.body.appendChild(modalElement);
+      return modalElement;
+    }
+
+    async function presentModal() {
+      const modal = await createModal();
+      await modal.present();
+    }
+
+    async function presentPopover(event) {
+      const popoverElement = Object.assign(document.createElement('ion-popover'), {
+        component: 'profile-page',
+        event: event
+      });
+      document.body.appendChild(popoverElement);
+      return await popoverElement.present();
+    }
+
+    class ProfilePage extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-content>
+            <ion-list>
+              <ion-list-header>
+                <ion-label>
+                  Ionic
+                </ion-label>
+              </ion-list-header>
+              <ion-item><ion-label>Item 0</ion-label></ion-item>
+              <ion-item><ion-label>Item 1</ion-label></ion-item>
+              <ion-item><ion-label>Item 2</ion-label></ion-item>
+              <ion-item><ion-label>Item 3</ion-label></ion-item>
+            </ion-list>
+          </ion-content>
+        `;
+      }
+    }
+
+    customElements.define('profile-page', ProfilePage);
+
+    async function presentToast() {
+      const toast = Object.assign(document.createElement('ion-toast'), {
+        message: 'Hello world!',
+        buttons: [
+          { text: 'Close', role: 'close' }
+        ]
+      });
+      document.body.appendChild(toast);
+      await toast.present();
     }
   </script>
 </body>

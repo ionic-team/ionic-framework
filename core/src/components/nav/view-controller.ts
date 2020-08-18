@@ -1,4 +1,4 @@
-import { ComponentProps, FrameworkDelegate } from '../../interface';
+import { AnimationBuilder, ComponentProps, FrameworkDelegate, NavComponentWithProps } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 import { assert } from '../../utils/helpers';
 
@@ -12,6 +12,7 @@ export class ViewController {
   nav?: any;
   element?: HTMLElement;
   delegate?: FrameworkDelegate;
+  animationBuilder?: AnimationBuilder;
 
   constructor(
     public component: any,
@@ -46,7 +47,7 @@ export class ViewController {
   }
 }
 
-export function matches(view: ViewController | undefined, id: string, params: ComponentProps | undefined): view is ViewController {
+export const matches = (view: ViewController | undefined, id: string, params: ComponentProps | undefined): view is ViewController => {
   if (!view) {
     return false;
   }
@@ -76,9 +77,9 @@ export function matches(view: ViewController | undefined, id: string, params: Co
     }
   }
   return true;
-}
+};
 
-export function convertToView(page: any, params: ComponentProps | undefined): ViewController | null {
+export const convertToView = (page: any, params: ComponentProps | undefined): ViewController | null => {
   if (!page) {
     return null;
   }
@@ -86,16 +87,23 @@ export function convertToView(page: any, params: ComponentProps | undefined): Vi
     return page;
   }
   return new ViewController(page, params);
-}
+};
 
-export function convertToViews(pages: any[]): ViewController[] {
+export const convertToViews = (pages: NavComponentWithProps[]): ViewController[] => {
   return pages.map(page => {
     if (page instanceof ViewController) {
       return page;
     }
-    if ('page' in page) {
-      return convertToView(page.page, page.params);
+    if ('component' in page) {
+      /**
+       * TODO Ionic 6:
+       * Consider switching to just using `undefined` here
+       * as well as on the public interfaces and on
+       * `NavComponentWithProps`. Previously `pages` was
+       * of type `any[]` so TypeScript did not catch this.
+       */
+      return convertToView(page.component, (page.componentProps === null) ? undefined : page.componentProps);
     }
     return convertToView(page, undefined);
   }).filter(v => v !== null) as ViewController[];
-}
+};

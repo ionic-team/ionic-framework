@@ -1,4 +1,4 @@
-import { Component, ComponentInterface } from '@stencil/core';
+import { Component, ComponentInterface, Host, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -14,15 +14,18 @@ import { getIonMode } from '../../global/ionic-global';
 })
 export class CardContent implements ComponentInterface {
 
-  hostData() {
+  render() {
     const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true,
+    return (
+      <Host
+        class={{
+          [mode]: true,
 
-        // Used internally for styling
-        [`card-content-${mode}`]: true
-      }
-    };
+          // Used internally for styling
+          [`card-content-${mode}`]: true
+        }}
+      >
+      </Host>
+    );
   }
 }

@@ -24,9 +24,7 @@ function baseConfig() {
     output: [
       outputConfig('', 'umd', {
         globals: {
-          vue: 'Vue',
-          'vue-class-component': 'VueClassComponent',
-          'vue-property-decorator': 'vue-property-decorator',
+          vue: 'Vue'
         },
       }),
       outputConfig('.esm', 'esm'),
@@ -35,8 +33,6 @@ function baseConfig() {
     external: [
       'vue',
       'vue-router',
-      'vue-class-component',
-      'vue-property-decorator',
       '@ionic/core',
       '@ionic/core/loader',
       'ionicons',

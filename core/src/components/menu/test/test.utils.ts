@@ -1,13 +1,14 @@
 import { newE2EPage } from '@stencil/core/testing';
 
+import { menuController } from '../../../utils/menu-controller';
 import { generateE2EUrl } from '../../../utils/test/utils';
 
-export async function testMenu(
+export const testMenu = async (
   type: string,
   selector: string,
   menuId = '',
   rtl = false
-) {
+) => {
   try {
     const pageUrl = generateE2EUrl('menu', type, rtl);
 
@@ -18,15 +19,13 @@ export async function testMenu(
     const screenshotCompares = [];
 
     if (menuId.length > 0) {
-      const menuCtrl = await page.find('ion-menu-controller');
-      await page.waitFor(250);
-      await menuCtrl.callMethod('enable', true, menuId);
+      await menuController.enable(true, menuId);
     }
 
     const menu = await page.find(selector);
 
     await menu.callMethod('open');
-    await page.waitFor(250);
+    await page.waitFor(1000);
 
     screenshotCompares.push(await page.compareScreenshot());
 
@@ -41,4 +40,4 @@ export async function testMenu(
   } catch (err) {
     throw err;
   }
-}
+};

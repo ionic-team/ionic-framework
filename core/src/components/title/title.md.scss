@@ -1,0 +1,27 @@
+@import "./title";
+
+// Material Design Title
+// --------------------------------------------------
+
+:host {
+  @include padding(0, 20px);
+
+  font-size: 20px;
+  font-weight: 500;
+
+  letter-spacing: .0125em;
+}
+
+
+// Material Design Title: Small
+// --------------------------------------------------
+
+:host(.title-small) {
+  width: 100%;
+  height: 100%;
+
+  font-size: 15px;
+
+  font-weight: normal;
+}
+

@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
-import { BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
+import { AnimationBuilder, BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
 import { debounce } from '../../utils/helpers';
 
 import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from './utils/constants';
@@ -70,16 +70,42 @@ export class Router implements ComponentInterface {
   }
 
   @Listen('popstate', { target: 'window' })
-  protected onPopState() {
+  protected async onPopState() {
     const direction = this.historyDirection();
-    const path = this.getPath();
+    let path = this.getPath();
+
+    const canProceed = await this.runGuards(path);
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        path = parsePath(canProceed.redirect);
+      }
+      return false;
+    }
     console.debug('[ion-router] URL changed -> update nav', path, direction);
     return this.writeNavStateRoot(path, direction);
   }
 
   @Listen('ionBackButton', { target: 'document' })
   protected onBackButton(ev: BackButtonEvent) {
-    ev.detail.register(0, () => this.back());
+    ev.detail.register(0, processNextHandler => {
+      this.back();
+      processNextHandler();
+    });
+  }
+
+  /** @internal */
+  @Method()
+  async canTransition() {
+    const canProceed = await this.runGuards();
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        return canProceed.redirect;
+      } else {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /**
@@ -89,22 +115,34 @@ export class Router implements ComponentInterface {
    * @param direction The direction of the animation. Defaults to `"forward"`.
    */
   @Method()
-  push(url: string, direction: RouterDirection = 'forward') {
+  async push(url: string, direction: RouterDirection = 'forward', animation?: AnimationBuilder) {
     if (url.startsWith('.')) {
       url = (new URL(url, window.location.href)).pathname;
     }
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
-    const path = parsePath(url);
-    this.setPath(path, direction);
-    return this.writeNavStateRoot(path, direction);
+    let path = parsePath(url);
+    let queryString = url.split('?')[1];
+
+    const canProceed = await this.runGuards(path);
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        path = parsePath(canProceed.redirect);
+        queryString = canProceed.redirect.split('?')[1];
+      } else {
+        return false;
+      }
+    }
+
+    this.setPath(path, direction, queryString);
+    return this.writeNavStateRoot(path, direction, animation);
   }
 
   /**
    * Go back to previous page in the window.history.
    */
   @Method()
-  back() {
+  back(): Promise<void> {
     window.history.back();
     return Promise.resolve(this.waitPromise);
   }
@@ -169,7 +207,7 @@ export class Router implements ComponentInterface {
     const lastState = this.lastState;
     this.lastState = state;
 
-    if (state > lastState) {
+    if (state > lastState || (state >= lastState && lastState > 0)) {
       return ROUTER_INTENT_FORWARD;
     } else if (state < lastState) {
       return ROUTER_INTENT_BACK;
@@ -178,7 +216,7 @@ export class Router implements ComponentInterface {
     }
   }
 
-  private async writeNavStateRoot(path: string[] | null, direction: RouterDirection): Promise<boolean> {
+  private async writeNavStateRoot(path: string[] | null, direction: RouterDirection, animation?: AnimationBuilder): Promise<boolean> {
     if (!path) {
       console.error('[ion-router] URL is not part of the routing set');
       return false;
@@ -187,6 +225,7 @@ export class Router implements ComponentInterface {
     // lookup redirect rule
     const redirects = readRedirects(this.el);
     const redirect = routeRedirect(path, redirects);
+
     let redirectFrom: string[] | null = null;
     if (redirect) {
       this.setPath(redirect.to!, direction);
@@ -203,18 +242,19 @@ export class Router implements ComponentInterface {
     }
 
     // write DOM give
-    return this.safeWriteNavState(document.body, chain, direction, path, redirectFrom);
+    return this.safeWriteNavState(document.body, chain, direction, path, redirectFrom, 0, animation);
   }
 
   private async safeWriteNavState(
     node: HTMLElement | undefined, chain: RouteChain, direction: RouterDirection,
     path: string[], redirectFrom: string[] | null,
-    index = 0
+    index = 0,
+    animation?: AnimationBuilder
   ): Promise<boolean> {
     const unlock = await this.lock();
     let changed = false;
     try {
-      changed = await this.writeNavState(node, chain, direction, path, redirectFrom, index);
+      changed = await this.writeNavState(node, chain, direction, path, redirectFrom, index, animation);
     } catch (e) {
       console.error(e);
     }
@@ -232,11 +272,30 @@ export class Router implements ComponentInterface {
     }
     return resolve;
   }
+  private async runGuards(to: string[] | null = this.getPath(), from: string[] | null = parsePath(this.previousPath)) {
+    if (!to || !from) { return true; }
+
+    const routes = readRoutes(this.el);
+
+    const toChain = routerPathToChain(to, routes);
+    const fromChain = routerPathToChain(from, routes);
+
+    const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
+    const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
+
+    const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
+    if (canLeave === false || typeof canLeave === 'object') { return canLeave; }
+
+    const canEnter = beforeEnterHook ? await beforeEnterHook() : true;
+    if (canEnter === false || typeof canEnter === 'object') { return canEnter; }
+
+    return true;
+  }
 
   private async writeNavState(
     node: HTMLElement | undefined, chain: RouteChain, direction: RouterDirection,
     path: string[], redirectFrom: string[] | null,
-    index = 0
+    index = 0, animation?: AnimationBuilder
   ): Promise<boolean> {
     if (this.busy) {
       console.warn('[ion-router] router is busy, transition was cancelled');
@@ -250,7 +309,7 @@ export class Router implements ComponentInterface {
       this.ionRouteWillChange.emit(routeEvent);
     }
 
-    const changed = await writeNavState(node, chain, direction, index);
+    const changed = await writeNavState(node, chain, direction, index, false, animation);
     this.busy = false;
 
     if (changed) {
@@ -264,9 +323,9 @@ export class Router implements ComponentInterface {
     return changed;
   }
 
-  private setPath(path: string[], direction: RouterDirection) {
+  private setPath(path: string[], direction: RouterDirection, queryString?: string) {
     this.state++;
-    writePath(window.history, this.root, this.useHash, path, direction, this.state);
+    writePath(window.history, this.root, this.useHash, path, direction, this.state, queryString);
   }
 
   private getPath(): string[] | null {

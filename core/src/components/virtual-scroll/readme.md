@@ -8,7 +8,7 @@ in the list is rendered at once; instead a small subset of records (enough to fi
 are rendered and reused as the user scrolls.
 
 
-### Approximate Widths and Heights
+## Approximate Widths and Heights
 
 If the height of items in the virtual scroll are not close to the
 default size of `40px`, it is extremely important to provide a value for
@@ -24,7 +24,7 @@ is only used to help calculate initial dimensions.
 It's also important to know that Ionic's default item sizes have
 slightly different heights between platforms, which is perfectly fine.
 
-### Images Within Virtual Scroll
+## Images Within Virtual Scroll
 
 HTTP requests, image decoding, and image rendering can cause jank while
 scrolling. In order to better control images, Ionic provides `<ion-img>`
@@ -49,7 +49,7 @@ images while scrolling quickly.
 
 ## Virtual Scroll Performance Tips
 
-#### iOS Cordova WKWebView
+### iOS Cordova WKWebView
 
 When deploying to iOS with Cordova, it's highly recommended to use the
 [WKWebView plugin](https://blog.ionicframework.com/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
@@ -57,7 +57,7 @@ in order to take advantage of iOS's higher performing webview. Additionally,
 WKWebView is superior at scrolling efficiently in comparison to the older
 UIWebView.
 
-#### Lock in element dimensions and locations
+### Lock in element dimensions and locations
 
 In order for virtual scroll to efficiently size and locate every item, it's
 very important every element within each virtual item does not dynamically
@@ -65,14 +65,14 @@ change its dimensions or location. The best way to ensure size and location
 does not change, it's recommended each virtual item has locked in its size
 via CSS.
 
-#### Use `ion-img` for images
+### Use `ion-img` for images
 
 When including images within Virtual Scroll, be sure to use
 [`ion-img`](../img/Img/) rather than the standard `<img>` HTML element.
 With `ion-img`, images are lazy loaded so only the viewable ones are
 rendered, and HTTP requests are efficiently controlled while scrolling.
 
-#### Set Approximate Widths and Heights
+### Set Approximate Widths and Heights
 
 As mentioned above, all elements should lock in their dimensions. However,
 virtual scroll isn't aware of the dimensions until after they have been
@@ -82,7 +82,7 @@ how many items should be built. With "approx" property inputs, such as
 therefore allowing virtual scroll to decide how many items should be
 created.
 
-#### Changing dataset should use `virtualTrackBy`
+### Changing dataset should use `trackBy`
 
 It is possible for the identities of elements in the iterator to change
 while the data does not. This can happen, for example, if the iterator
@@ -91,7 +91,7 @@ produced from an RPC to the server, and that RPC is re-run. Even if the
 different identities, and Ionic will tear down the entire DOM and rebuild
 it. This is an expensive operation and should be avoided if possible.
 
-#### Efficient headers and footer functions
+### Efficient headers and footer functions
 Each virtual item must stay extremely efficient, but one way to really
 kill its performance is to perform any DOM operations within section header
 and footer functions. These functions are called for every record in the
@@ -252,7 +252,9 @@ within a `<div>` is a safe way to make sure dimensions are measured correctly.
 | `approxHeaderHeight` | `approx-header-height` | The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.                                                                                                            | `number`                                                                                 | `30`        |
 | `approxItemHeight`   | `approx-item-height`   | It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. | `number`                                                                                 | `45`        |
 | `footerFn`           | --                     | Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.                                                                                                                                                                                                                | `((item: any, index: number, items: any[]) => string \| null \| undefined) \| undefined` | `undefined` |
+| `footerHeight`       | --                     | An optional function that maps each item footer within their height.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `((item: any, index: number) => number) \| undefined`                                    | `undefined` |
 | `headerFn`           | --                     | Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.             | `((item: any, index: number, items: any[]) => string \| null \| undefined) \| undefined` | `undefined` |
+| `headerHeight`       | --                     | An optional function that maps each item header within their height.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `((item: any, index: number) => number) \| undefined`                                    | `undefined` |
 | `itemHeight`         | --                     | An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance                                                                                                                                                                                                                                      | `((item: any, index: number) => number) \| undefined`                                    | `undefined` |
 | `items`              | --                     | The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.                                                                                                                                                                                                                                                                                                                      | `any[] \| undefined`                                                                     | `undefined` |
 | `nodeRender`         | --                     | NOTE: only Vanilla JS API.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `((el: HTMLElement \| null, cell: Cell, domIndex: number) => HTMLElement) \| undefined`  | `undefined` |

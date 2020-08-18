@@ -1,90 +1,104 @@
 import { Animation } from '../../../interface';
+import { createAnimation } from '../../../utils/animation/animation';
+import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
 /**
- * iOS Modal Enter Animation
+ * iOS Modal Enter Animation for the Card presentation style
  */
-export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new AnimationC();
+export const iosEnterAnimation = (
+    baseEl: HTMLElement,
+    presentingEl?: HTMLElement,
+  ): Animation => {
+  const backdropAnimation = createAnimation()
+    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
+    .beforeStyles({
+      'pointer-events': 'none'
+    })
+    .afterClearStyles(['pointer-events']);
 
-  const backdropAnimation = new AnimationC();
-  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
+  const wrapperAnimation = createAnimation()
+    .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
+    .beforeStyles({ 'opacity': 1 })
+    .fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
 
-  const wrapperAnimation = new AnimationC();
-  wrapperAnimation.addElement(baseEl.querySelector('.modal-wrapper'));
-
-  wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', '100%', '0%');
-
-  backdropAnimation.fromTo('opacity', 0.01, 0.4);
-
-  return Promise.resolve(baseAnimation
+  const baseAnimation = createAnimation()
     .addElement(baseEl)
-    .easing('cubic-bezier(0.36,0.66,0.04,1)')
-    .duration(400)
-    .beforeAddClass('show-modal')
-    .add(backdropAnimation)
-    .add(wrapperAnimation));
-}
+    .easing('cubic-bezier(0.32,0.72,0,1)')
+    .duration(500)
+    .addAnimation(wrapperAnimation);
 
-/**
- * Animations for modals
- */
-// export function modalSlideIn(rootEl: HTMLElement) {
+  if (presentingEl) {
+    const isMobile = window.innerWidth < 768;
+    const hasCardModal = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined);
 
-// }
+    const presentingAnimation = createAnimation()
+      .beforeStyles({
+        'transform': 'translateY(0)',
+        'transform-origin': 'top center',
+        'overflow': 'hidden'
+      });
 
-// export class ModalSlideOut {
-//   constructor(el: HTMLElement) {
-//     let backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
-//     let wrapperEle = <HTMLElement>el.querySelector('.modal-wrapper');
-//     let wrapperEleRect = wrapperEle.getBoundingClientRect();
-//     let wrapper = new Animation(this.plt, wrapperEle);
+    const bodyEl = document.body;
 
-//     // height of the screen - top of the container tells us how much to scoot it down
-//     // so it's off-screen
-//     wrapper.fromTo('translateY', '0px', `${this.plt.height() - wrapperEleRect.top}px`);
-//     backdrop.fromTo('opacity', 0.4, 0.0);
+    if (isMobile) {
+      /**
+       * Fallback for browsers that does not support `max()` (ex: Firefox)
+       * No need to worry about statusbar padding since engines like Gecko
+       * are not used as the engine for standlone Cordova/Capacitor apps
+       */
+      const transformOffset = (!CSS.supports('width', 'max(0px, 1px)')) ? '30px' : 'max(30px, var(--ion-safe-area-top))';
+      const modalTransform = hasCardModal ? '-10px' : transformOffset;
+      const toPresentingScale = SwipeToCloseDefaults.MIN_PRESENTING_SCALE;
+      const finalTransform = `translateY(${modalTransform}) scale(${toPresentingScale})`;
 
-//     this
-//       .element(this.leavingView.pageRef())
-//       .easing('ease-out')
-//       .duration(250)
-//       .add(backdrop)
-//       .add(wrapper);
-//   }
-// }
+      presentingAnimation
+        .afterStyles({
+          'transform': finalTransform
+        })
+        .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
+        .addElement(presentingEl)
+        .keyframes([
+          { offset: 0, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: '0px' },
+          { offset: 1, filter: 'contrast(0.85)', transform: finalTransform, borderRadius: '10px 10px 0 0' }
+        ]);
 
-// export class ModalMDSlideIn {
-//   constructor(el: HTMLElement) {
-//     const backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
-//     const wrapper = new Animation(this.plt, el.querySelector('.modal-wrapper'));
+      baseAnimation.addAnimation(presentingAnimation);
+    } else {
+      baseAnimation.addAnimation(backdropAnimation);
 
-//     backdrop.fromTo('opacity', 0.01, 0.4);
-//     wrapper.fromTo('translateY', '40px', '0px');
-//     wrapper.fromTo('opacity', 0.01, 1);
+      if (!hasCardModal) {
+        wrapperAnimation.fromTo('opacity', '0', '1');
+      } else {
+        const toPresentingScale = (hasCardModal) ? SwipeToCloseDefaults.MIN_PRESENTING_SCALE : 1;
+        const finalTransform = `translateY(-10px) scale(${toPresentingScale})`;
 
-//     const DURATION = 280;
-//     const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
-//     this.element(this.enteringView.pageRef()).easing(EASING).duration(DURATION)
-//       .add(backdrop)
-//       .add(wrapper);
-//   }
-// }
+        presentingAnimation
+          .afterStyles({
+            'transform': finalTransform
+          })
+          .addElement(presentingEl.querySelector('.modal-wrapper')!)
+          .keyframes([
+            { offset: 0, filter: 'contrast(1)', transform: 'translateY(0) scale(1)' },
+            { offset: 1, filter: 'contrast(0.85)', transform: finalTransform }
+          ]);
 
-// export class ModalMDSlideOut {
-//   constructor(el: HTMLElement) {
-//     const backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
-//     const wrapper = new Animation(this.plt, el.querySelector('.modal-wrapper'));
+        const shadowAnimation = createAnimation()
+          .afterStyles({
+            'transform': finalTransform
+          })
+          .addElement(presentingEl.querySelector('.modal-shadow')!)
+          .keyframes([
+            { offset: 0, opacity: '1', transform: 'translateY(0) scale(1)' },
+            { offset: 1, opacity: '0', transform: finalTransform }
+          ]);
 
-//     backdrop.fromTo('opacity', 0.4, 0.0);
-//     wrapper.fromTo('translateY', '0px', '40px');
-//     wrapper.fromTo('opacity', 0.99, 0);
+        baseAnimation.addAnimation([presentingAnimation, shadowAnimation]);
+      }
+    }
+  } else {
+    baseAnimation.addAnimation(backdropAnimation);
+  }
 
-//     this
-//       .element(this.leavingView.pageRef())
-//       .duration(200)
-//       .easing('cubic-bezier(0.47,0,0.745,0.715)')
-//       .add(wrapper)
-//       .add(backdrop);
-//   }
-// }
+  return baseAnimation;
+};

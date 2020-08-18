@@ -1,0 +1,66 @@
+@import "./title";
+
+// iOS Title
+// --------------------------------------------------
+
+:host {
+  @include position(0, null, null, 0);
+  @include padding(0, 90px, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  transform: translateZ(0);
+
+  font-size: 17px;
+  font-weight: 600;
+
+  text-align: center;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+
+// iOS Title: Small
+// --------------------------------------------------
+
+:host(.title-small) {
+  @include padding(6px, 9px, 16px, 9px);
+
+  position: relative;
+
+  font-size: 13px;
+  font-weight: normal;
+}
+
+
+// iOS Title: Large
+// --------------------------------------------------
+
+:host(.title-large) {
+  @include padding(0, 16px);
+  @include transform-origin(start, center);
+
+  bottom: 0;
+
+  align-items: flex-end;
+
+  min-width: 100%;
+
+  padding-bottom: 6px;
+
+  font-size: 34px;
+  font-weight: 700;
+
+  text-align: start;
+}
+
+:host(.title-large.ion-cloned-element) {
+  --color: #{$text-color};
+}
+
+:host(.title-large) .toolbar-title {
+  @include transform-origin(inherit);
+}

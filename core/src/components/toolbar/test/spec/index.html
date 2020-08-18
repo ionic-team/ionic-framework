@@ -36,7 +36,9 @@
       <ion-header>
         <ion-toolbar color="tertiary">
           <ion-buttons slot="start">
-            <ion-menu-button auto-hide="false"></ion-menu-button>
+            <ion-button>
+              <ion-icon slot="icon-only" name="add"></ion-icon>
+            </ion-button>
           </ion-buttons>
           <ion-buttons slot="primary">
             <ion-button>
@@ -46,11 +48,30 @@
               <ion-icon slot="icon-only" name="search"></ion-icon>
             </ion-button>
             <ion-button>
-              <ion-icon slot="icon-only" name="more"></ion-icon>
+              <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
             </ion-button>
           </ion-buttons>
 
           <ion-title>Page title</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-header>
+        <ion-toolbar color="tertiary">
+          <ion-buttons slot="start">
+            <ion-back-button default-href="/" text="February"></ion-back-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button>
+              <ion-icon slot="icon-only" ios="list-outline" md="list-sharp"></ion-icon>
+            </ion-button>
+            <ion-button>
+              <ion-icon slot="icon-only" ios="search-outline" md="search-sharp"></ion-icon>
+            </ion-button>
+            <ion-button>
+              <ion-icon slot="icon-only" ios="add-outline" md="add-sharp"></ion-icon>
+            </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
 
@@ -170,9 +191,9 @@
       </ion-toolbar>
 
       <ion-toolbar color="tertiary">
-        <ion-segment>
-          <ion-segment-button checked>All</ion-segment-button>
-          <ion-segment-button>Favorites</ion-segment-button>
+        <ion-segment value="all">
+          <ion-segment-button value="all">All</ion-segment-button>
+          <ion-segment-button value="favorites">Favorites</ion-segment-button>
         </ion-segment>
       </ion-toolbar>
 
@@ -186,9 +207,9 @@
           </ion-button>
         </ion-buttons>
 
-        <ion-segment>
-          <ion-segment-button checked>All</ion-segment-button>
-          <ion-segment-button>Favorites</ion-segment-button>
+        <ion-segment value="all">
+          <ion-segment-button value="all">All</ion-segment-button>
+          <ion-segment-button value="favorites">Favorites</ion-segment-button>
         </ion-segment>
       </ion-toolbar>
 
@@ -197,9 +218,9 @@
           <ion-menu-button auto-hide="false"></ion-menu-button>
         </ion-buttons>
 
-        <ion-segment>
-          <ion-segment-button checked>All</ion-segment-button>
-          <ion-segment-button>Favorites</ion-segment-button>
+        <ion-segment value="all">
+          <ion-segment-button value="all">All</ion-segment-button>
+          <ion-segment-button value="favorites">Favorites</ion-segment-button>
         </ion-segment>
       </ion-toolbar>
 
@@ -208,9 +229,9 @@
           <ion-menu-button auto-hide="false"></ion-menu-button>
         </ion-buttons>
 
-        <ion-segment>
-          <ion-segment-button checked>All</ion-segment-button>
-          <ion-segment-button>Favorites</ion-segment-button>
+        <ion-segment value="all">
+          <ion-segment-button value="all">All</ion-segment-button>
+          <ion-segment-button value="favorites">Favorites</ion-segment-button>
         </ion-segment>
       </ion-toolbar>
 

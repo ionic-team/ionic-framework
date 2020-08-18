@@ -1,8 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
-import { debounceEvent, findItemLabel } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -21,6 +21,7 @@ export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-input-${textareaIds++}`;
   private didBlurAfterEdit = false;
+  private textareaWrapper?: HTMLElement;
 
   @Element() el!: HTMLElement;
 
@@ -67,6 +68,20 @@ export class Textarea implements ComponentInterface {
   protected disabledChanged() {
     this.emitStyle();
   }
+
+  /**
+   * A hint to the browser for which keyboard to display.
+   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
+   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+   */
+  @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+
+  /**
+   * A hint to the browser for which enter key to display.
+   * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
+   * `"previous"`, `"search"`, and `"send"`.
+   */
+  @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
@@ -149,7 +164,7 @@ export class Textarea implements ComponentInterface {
   @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
-   * Emitted when a keyboard input ocurred.
+   * Emitted when a keyboard input occurred.
    */
   @Event() ionInput!: EventEmitter<KeyboardEvent>;
 
@@ -162,48 +177,46 @@ export class Textarea implements ComponentInterface {
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur!: EventEmitter<void>;
+  @Event() ionBlur!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
-  /**
-   * Emitted when the input has been created.
-   * @internal
-   */
-  @Event() ionInputDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has been removed.
-   * @internal
-   */
-  @Event() ionInputDidUnload!: EventEmitter<void>;
-
-  componentWillLoad() {
+  connectedCallback() {
     this.emitStyle();
+    this.debounceChanged();
+    if (Build.isBrowser) {
+      document.dispatchEvent(new CustomEvent('ionInputDidLoad', {
+        detail: this.el
+      }));
+    }
+  }
+
+  disconnectedCallback() {
+    if (Build.isBrowser) {
+      document.dispatchEvent(new CustomEvent('ionInputDidUnload', {
+        detail: this.el
+      }));
+    }
   }
 
   componentDidLoad() {
-    this.debounceChanged();
-
-    this.runAutoGrow();
-
-    this.ionInputDidLoad.emit();
+    raf(() => this.runAutoGrow());
   }
 
   private runAutoGrow() {
     const nativeInput = this.nativeInput;
     if (nativeInput && this.autoGrow) {
       readTask(() => {
+        nativeInput.style.height = 'auto';
         nativeInput.style.height = nativeInput.scrollHeight + 'px';
+        if (this.textareaWrapper) {
+          this.textareaWrapper.style.height = nativeInput.scrollHeight + 'px';
+        }
       });
     }
-  }
-
-  componentDidUnload() {
-    this.ionInputDidUnload.emit();
   }
 
   /**
@@ -279,18 +292,18 @@ export class Textarea implements ComponentInterface {
     this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onFocus = () => {
+  private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
     this.focusChange();
 
-    this.ionFocus.emit();
+    this.ionFocus.emit(ev);
   }
 
-  private onBlur = () => {
+  private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChange();
 
-    this.ionBlur.emit();
+    this.ionBlur.emit(ev);
   }
 
   private onKeyDown = () => {
@@ -309,34 +322,41 @@ export class Textarea implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
-        }}
+        })}
       >
-        <textarea
-          class="native-textarea"
-          ref={el => this.nativeInput = el}
-          autoCapitalize={this.autocapitalize}
-          autoFocus={this.autofocus}
-          disabled={this.disabled}
-          maxLength={this.maxlength}
-          minLength={this.minlength}
-          name={this.name}
-          placeholder={this.placeholder || ''}
-          readOnly={this.readonly}
-          required={this.required}
-          spellCheck={this.spellcheck}
-          cols={this.cols}
-          rows={this.rows}
-          wrap={this.wrap}
-          onInput={this.onInput}
-          onBlur={this.onBlur}
-          onFocus={this.onFocus}
-          onKeyDown={this.onKeyDown}
+        <div
+          class="textarea-wrapper"
+          ref={el => this.textareaWrapper = el}
         >
-          {value}
-        </textarea>
+          <textarea
+            class="native-textarea"
+            aria-labelledby={labelId}
+            ref={el => this.nativeInput = el}
+            autoCapitalize={this.autocapitalize}
+            autoFocus={this.autofocus}
+            enterKeyHint={this.enterkeyhint}
+            inputMode={this.inputmode}
+            disabled={this.disabled}
+            maxLength={this.maxlength}
+            minLength={this.minlength}
+            name={this.name}
+            placeholder={this.placeholder || ''}
+            readOnly={this.readonly}
+            required={this.required}
+            spellcheck={this.spellcheck}
+            cols={this.cols}
+            rows={this.rows}
+            wrap={this.wrap}
+            onInput={this.onInput}
+            onBlur={this.onBlur}
+            onFocus={this.onFocus}
+            onKeyDown={this.onKeyDown}
+          >
+            {value}
+          </textarea>
+        </div>
       </Host>
     );
   }

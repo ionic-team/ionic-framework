@@ -2,12 +2,15 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
-import { hapticSelection } from '../../utils/haptic';
 import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { hapticSelection } from '../../utils/native/haptic';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part track - The background track of the toggle.
+ * @part handle - The toggle handle, or knob, used to change the checked state.
  */
 @Component({
   tag: 'ion-toggle',
@@ -92,15 +95,11 @@ export class Toggle implements ComponentInterface {
   disabledChanged() {
     this.emitStyle();
     if (this.gesture) {
-      this.gesture.setDisabled(this.disabled);
+      this.gesture.enable(!this.disabled);
     }
   }
 
-  componentWillLoad() {
-    this.emitStyle();
-  }
-
-  async componentDidLoad() {
+  async connectedCallback() {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'toggle',
@@ -114,11 +113,15 @@ export class Toggle implements ComponentInterface {
     this.disabledChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
     }
+  }
+
+  componentWillLoad() {
+    this.emitStyle();
   }
 
   private emitStyle() {
@@ -190,18 +193,19 @@ export class Toggle implements ComponentInterface {
         aria-disabled={disabled ? 'true' : null}
         aria-checked={`${checked}`}
         aria-labelledby={labelId}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
           'interactive': true
-        }}
+        })}
       >
-        <div class="toggle-icon">
-          <div class="toggle-inner"/>
+        <div class="toggle-icon" part="track">
+          <div class="toggle-icon-wrapper">
+            <div class="toggle-inner" part="handle" />
+          </div>
         </div>
         <button
           type="button"
@@ -209,6 +213,7 @@ export class Toggle implements ComponentInterface {
           onBlur={this.onBlur}
           disabled={disabled}
           ref={btnEl => this.buttonEl = btnEl}
+          aria-hidden="true"
         >
         </button>
       </Host>
@@ -216,7 +221,7 @@ export class Toggle implements ComponentInterface {
   }
 }
 
-function shouldToggle(doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean {
+const shouldToggle = (doc: HTMLDocument, checked: boolean, deltaX: number, margin: number): boolean => {
   const isRTL = doc.dir === 'rtl';
 
   if (checked) {
@@ -226,6 +231,6 @@ function shouldToggle(doc: HTMLDocument, checked: boolean, deltaX: number, margi
     return (!isRTL && (- margin < deltaX)) ||
       (isRTL && (margin > deltaX));
   }
-}
+};
 
 let toggleIds = 0;

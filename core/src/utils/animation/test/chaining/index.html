@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Animation - Basic</title>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  <script type="module">
+    import { createAnimation } from '../../../../dist/ionic/index.esm.js';
+    
+    const squareA = document.querySelectorAll('.square-a');
+    const squareB = document.querySelectorAll('.square-b');
+    const squareC = document.querySelectorAll('.square-c');
+    const squareCText = document.querySelectorAll('.square-c .text');
+        
+    const animationA = createAnimation('animation-a');
+    const animationB = createAnimation('animation-b');
+    const animationC = createAnimation('animation-c');
+    
+    const animationCSubA = createAnimation('animation-c-sub-a');
+    const animationCSubB = createAnimation('animation-c-sub-b');
+    
+    animationA
+      .addElement(squareA)
+      .duration(1000)
+      .easing('linear')
+      .iterations(1)
+      .keyframes([
+        { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 0 },
+        { transform: 'scale(1.5) rotate(45deg)', opacity: 0.5, offset: 0.5 },
+        { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 1 }
+      ])
+      .beforeStyles({
+        'background': 'rgba(0, 0, 255, 0.5'
+      })
+      .afterStyles({
+        'background': 'rgba(0, 255, 0, 0.5)'
+      });
+
+    animationB
+      .addElement(squareB)
+      .duration(500)
+      .easing('ease-in-out')
+      .iterations(1)
+      .keyframes([
+        { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 0 },
+        { transform: 'scale(0.5) rotate(-45deg)', opacity: 0.5, offset: 0.5 },
+        { transform: 'scale(1) rotate(0deg)', opacity: 1, offset: 1 }
+      ])
+      .beforeStyles({
+        'background': 'rgba(0, 0, 255, 0.5'
+      })
+      .afterStyles({
+        'background': 'rgba(0, 255, 0, 0.5)'
+      });
+      
+    animationCSubA
+      .addElement(squareCText)
+      .duration(1000)
+      .delay(2000)
+      .keyframes([
+        {
+          offset: 0,
+          transform: 'scale(1)'
+        },
+        {
+          offset: 0.5,
+          transform: 'scale(1.5)'
+        },
+        {
+          offset: 1,
+          transform: 'scale(1)'
+        }
+      ])
+      .fromTo('color', 'red', 'blue')
+      .onFinish(() => {
+        document.querySelector('li.animation-c-sub-a .status').innerText = 'DONE';
+      });
+      
+    animationCSubB
+      .addElement(squareCText)
+      .duration(1000)
+      .delay(3500)
+      .fromTo('background', 'red', 'blue')
+      .onFinish(() => {
+        document.querySelector('li.animation-c-sub-b .status').innerText = 'DONE';
+      });
+
+    animationC
+      .addElement(squareC)
+      .duration(2000)
+      .easing('ease-in-out')
+      .iterations(1)
+      .keyframes([
+        { transform: 'scale(1) skew(0deg)', opacity: 1, offset: 0 },
+        { transform: 'scale(1.5) skew(15deg)', opacity: 0.5, offset: 0.5 },
+        { transform: 'scale(1) skew(0deg)', opacity: 1, offset: 1 }
+      ])
+      .beforeStyles({
+        'background': 'rgba(0, 0, 255, 0.5'
+      })
+      .afterStyles({
+        'background': 'rgba(0, 255, 0, 0.5)'
+      })
+      .addAnimation([animationCSubA, animationCSubB])
+      .onFinish(() => {
+        document.querySelector('li.animation-c .status').innerText = 'DONE';
+      });
+      
+    animationA.onFinish(() => {
+      animationB.play();
+      document.querySelector('li.animation-a .status').innerText = 'DONE';
+    });
+    animationB.onFinish(() => {
+      animationC.play()
+      document.querySelector('li.animation-b .status').innerText = 'DONE';
+    }); 
+      
+    document.querySelector('.play').addEventListener('click', () => {
+      animationA.play();
+      document.querySelectorAll('.status').forEach(status => {
+        status.innerText = '';
+      })
+    });
+    
+    document.querySelector('.pause').addEventListener('click', () => {
+      animationA.pause();
+    });
+    
+    document.querySelector('.destroy').addEventListener('click', () => {
+      animationA.destroy();
+    });
+    
+    document.querySelector('.stop').addEventListener('click', () => {
+      animationA.stop();
+      
+      document.querySelectorAll('.status').forEach(status => {
+        status.innerText = '';
+      })
+    });
+  </script>
+  
+  <style>
+    .square {
+      width: 100px;
+      height: 100px;
+      background: rgba(0, 0, 255, 0.5);
+      text-align: center;
+      line-height: 100px;
+      margin-left: 25px;
+      margin-top: 25px;
+      margin-bottom: 25px;
+    }
+    
+    .status-pane {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 300px;
+      height: 400px;
+      padding-right: 10px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    
+    li .status {
+      float: right;
+    }
+  </style>
+  </head>
+
+<body
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Animations</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+      <div class="ion-padding">
+        <ion-button class="play">Play</ion-button>
+        <ion-button class="pause">Pause</ion-button>
+        <ion-button class="stop">Stop</ion-button>
+        <ion-button class="destroy">Destroy</ion-button>
+        
+        <div class="square square-a">
+          <div class="text">Hello</div>
+        </div>
+        
+        <div class="square square-b">
+          <div class="text">Hello</div>
+        </div>
+        
+        <div class="square square-c">
+          <div class="text">Hello</div>
+        </div>
+        
+        <div class="status-pane">
+          <ul>
+            <li class="animation-a">Animation A<div class="status"></div></li>
+          </ul>
+          
+          <ul>
+            <li class="animation-b">Animation B<div class="status"></div></li>
+          </ul>
+          
+          <ul>
+            <li class="animation-c">Animation C<div class="status"></div></li>
+            <ul>
+              <li class="animation-c-sub-a">Animation C sub A<div class="status"></div></li>
+              <li class="animation-c-sub-b">Animation C sub B<div class="status"></div></li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </ion-content>
+  </ion-app>
+</body>
+
+</html>
+

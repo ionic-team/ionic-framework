@@ -1,9 +1,10 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h, writeTask } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
+import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -11,6 +12,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -24,14 +26,18 @@ import { mdLeaveAnimation } from './animations/md.leave';
   scoped: true
 })
 export class Modal implements ComponentInterface, OverlayInterface {
+  private gesture?: Gesture;
 
+  // Reference to the user's provided modal content
   private usersElement?: HTMLElement;
 
+  // Whether or not modal is being dismissed via gesture
+  private gestureAnimationDismissing = false;
   presented = false;
-  animation: Animation | undefined;
-  mode = getIonMode(this);
+  lastFocus?: HTMLElement;
+  animation?: Animation;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonModalElement;
 
   /** @internal */
   @Prop() overlayIndex!: number;
@@ -86,6 +92,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
+   * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
+   */
+  @Prop() swipeToClose = false;
+
+  /**
+   * The element that presented the modal. This is used for card presentation effects
+   * and for stacking multiple modals on top of each other. Only applies in iOS mode.
+   */
+  @Prop() presentingElement?: HTMLElement;
+
+  /**
    * Emitted after the modal has presented.
    */
   @Event({ eventName: 'ionModalDidPresent' }) didPresent!: EventEmitter<void>;
@@ -105,34 +122,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionModalDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    this.dismiss(undefined, BACKDROP);
-  }
-
-  @Listen('ionModalDidPresent')
-  @Listen('ionModalWillPresent')
-  @Listen('ionModalWillDismiss')
-  @Listen('ionModalDidDismiss')
-  protected lifecycle(modalEvent: CustomEvent) {
-    const el = this.usersElement;
-    const name = LIFECYCLE_MAP[modalEvent.type];
-    if (el && name) {
-      const ev = new CustomEvent(name, {
-        bubbles: false,
-        cancelable: false,
-        detail: modalEvent.detail
-      });
-      el.dispatchEvent(ev);
+  @Watch('swipeToClose')
+  swipeToCloseChanged(enable: boolean) {
+    if (this.gesture) {
+      this.gesture.enable(enable);
+    } else if (enable) {
+      this.initSwipeToClose();
     }
+  }
+
+  connectedCallback() {
+    prepareOverlay(this.el);
   }
 
   /**
@@ -153,7 +153,46 @@ export class Modal implements ComponentInterface, OverlayInterface {
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], componentProps);
     await deepReady(this.usersElement);
-    return present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation);
+
+    writeTask(() => this.el.classList.add('show-modal'));
+
+    await present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, this.presentingElement);
+
+    if (this.swipeToClose) {
+      this.initSwipeToClose();
+    }
+  }
+
+  private initSwipeToClose() {
+    if (getIonMode(this) !== 'ios') { return; }
+
+    // All of the elements needed for the swipe gesture
+    // should be in the DOM and referenced by now, except
+    // for the presenting el
+    const animationBuilder = this.leaveAnimation || config.get('modalLeave', iosLeaveAnimation);
+    const ani = this.animation = animationBuilder(this.el, this.presentingElement);
+    this.gesture = createSwipeToCloseGesture(
+      this.el,
+      ani,
+      () => {
+        /**
+         * While the gesture animation is finishing
+         * it is possible for a user to tap the backdrop.
+         * This would result in the dismiss animation
+         * being played again. Typically this is avoided
+         * by setting `presented = false` on the overlay
+         * component; however, we cannot do that here as
+         * that would prevent the element from being
+         * removed from the DOM.
+         */
+        this.gestureAnimationDismissing = true;
+        this.animation!.onFinish(async () => {
+          await this.dismiss(undefined, 'gesture');
+          this.gestureAnimationDismissing = false;
+        });
+      },
+    );
+    this.gesture.enable(true);
   }
 
   /**
@@ -164,10 +203,24 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    const dismissed = await dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation);
+    if (this.gestureAnimationDismissing && role !== 'gesture') {
+      return false;
+    }
+
+    const enteringAnimation = activeAnimations.get(this) || [];
+    const dismissed = await dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, this.presentingElement);
+
     if (dismissed) {
       await detachComponent(this.delegate, this.usersElement);
+      if (this.animation) {
+        this.animation.destroy();
+      }
+
+      enteringAnimation.forEach(ani => ani.destroy());
     }
+
+    this.animation = undefined;
+
     return dismissed;
   }
 
@@ -175,7 +228,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the modal did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionModalDidDismiss');
   }
 
@@ -183,36 +236,72 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the modal will dismiss.
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionModalWillDismiss');
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      'no-router': true,
-      'aria-modal': 'true',
-      class: {
-        [mode]: true,
-        ...getClassMap(this.cssClass)
-      },
-      style: {
-        zIndex: 20000 + this.overlayIndex,
-      }
-    };
+  private onBackdropTap = () => {
+    this.dismiss(undefined, BACKDROP);
+  }
+
+  private onDismiss = (ev: UIEvent) => {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
+  private onLifecycle = (modalEvent: CustomEvent) => {
+    const el = this.usersElement;
+    const name = LIFECYCLE_MAP[modalEvent.type];
+    if (el && name) {
+      const ev = new CustomEvent(name, {
+        bubbles: false,
+        cancelable: false,
+        detail: modalEvent.detail
+      });
+      el.dispatchEvent(ev);
+    }
   }
 
   render() {
     const mode = getIonMode(this);
-    const dialogClasses = {
-      [`modal-wrapper`]: true,
-      [mode]: true,
-    };
 
-    return [
-      <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>,
-      <div role="dialog" class={dialogClasses}></div>
-    ];
+    return (
+      <Host
+        no-router
+        aria-modal="true"
+        tabindex="-1"
+        class={{
+          [mode]: true,
+          [`modal-card`]: this.presentingElement !== undefined && mode === 'ios',
+          ...getClassMap(this.cssClass)
+        }}
+        style={{
+          zIndex: `${20000 + this.overlayIndex}`,
+        }}
+        onIonBackdropTap={this.onBackdropTap}
+        onIonDismiss={this.onDismiss}
+        onIonModalDidPresent={this.onLifecycle}
+        onIonModalWillPresent={this.onLifecycle}
+        onIonModalWillDismiss={this.onLifecycle}
+        onIonModalDidDismiss={this.onLifecycle}
+      >
+        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>
+
+        {mode === 'ios' && <div class="modal-shadow"></div>}
+
+        <div tabindex="0"></div>
+
+        <div
+          role="dialog"
+          class="modal-wrapper ion-overlay-wrapper"
+        >
+        </div>
+
+        <div tabindex="0"></div>
+      </Host>
+    );
   }
 }
 

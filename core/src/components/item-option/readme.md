@@ -34,6 +34,13 @@ action for the item.
 | `"top"`       | Content is placed above the option text.                                          |
 
 
+## Shadow Parts
+
+| Part       | Description                                                             |
+| ---------- | ----------------------------------------------------------------------- |
+| `"native"` | The native HTML button or anchor element that wraps all child elements. |
+
+
 ## CSS Custom Properties
 
 | Name           | Description                   |

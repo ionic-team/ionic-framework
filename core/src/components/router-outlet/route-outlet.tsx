@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
+import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { transition } from '../../utils/transition';
 
@@ -18,8 +19,14 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
   private ani?: Animation;
+  private animationEnabled = true;
 
   @Element() el!: HTMLElement;
+
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop({ mutable: true }) mode = getIonMode(this);
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -40,7 +47,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   @Watch('swipeHandler')
   swipeHandlerChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(this.swipeHandler === undefined);
+      this.gesture.enable(this.swipeHandler !== undefined);
     }
   }
 
@@ -53,30 +60,55 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   /** @internal */
   @Event({ bubbles: false }) ionNavDidChange!: EventEmitter<void>;
 
-  componentWillLoad() {
-    this.ionNavWillLoad.emit();
-  }
-
-  async componentDidLoad() {
+  async connectedCallback() {
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
-      () => !!this.swipeHandler && this.swipeHandler.canStart(),
+      () => !!this.swipeHandler && this.swipeHandler.canStart() && this.animationEnabled,
       () => this.swipeHandler && this.swipeHandler.onStart(),
       step => this.ani && this.ani.progressStep(step),
       (shouldComplete, step, dur) => {
         if (this.ani) {
-          this.ani.progressEnd(shouldComplete, step, dur);
-        }
-        if (this.swipeHandler) {
-          this.swipeHandler.onEnd(shouldComplete);
+          this.animationEnabled = false;
+
+          this.ani.onFinish(() => {
+            this.animationEnabled = true;
+
+            if (this.swipeHandler) {
+              this.swipeHandler.onEnd(shouldComplete);
+            }
+          }, { oneTimeCallback: true });
+
+          // Account for rounding errors in JS
+          let newStepValue = (shouldComplete) ? -0.001 : 0.001;
+
+          /**
+           * Animation will be reversed here, so need to
+           * reverse the easing curve as well
+           *
+           * Additionally, we need to account for the time relative
+           * to the new easing curve, as `stepValue` is going to be given
+           * in terms of a linear curve.
+           */
+          if (!shouldComplete) {
+            this.ani.easing('cubic-bezier(1, 0, 0.68, 0.28)');
+            newStepValue += getTimeGivenProgression([0, 0], [1, 0], [0.68, 0.28], [1, 1], step)[0];
+          } else {
+            newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], step)[0];
+          }
+
+          this.ani.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
+
         }
       }
     );
     this.swipeHandlerChanged();
   }
 
-  componentDidUnload() {
-    this.activeEl = this.activeComponent = undefined;
+  componentWillLoad() {
+    this.ionNavWillLoad.emit();
+  }
+
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
@@ -99,10 +131,11 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   /** @internal */
   @Method()
-  async setRouteId(id: string, params: ComponentProps | undefined, direction: RouterDirection): Promise<RouteWrite> {
+  async setRouteId(id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder): Promise<RouteWrite> {
     const changed = await this.setRoot(id, params, {
       duration: direction === 'root' ? 0 : undefined,
       direction: direction === 'back' ? 'back' : 'forward',
+      animationBuilder: animation
     });
     return {
       changed,
@@ -147,15 +180,13 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     // emit nav will change event
     this.ionNavWillChange.emit();
 
-    const mode = getIonMode(this);
-    const { el } = this;
+    const { el, mode } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const animationBuilder = this.animation || opts.animationBuilder || config.get('navAnimation');
 
     await transition({
       mode,
       animated,
-      animationBuilder,
       enteringEl,
       leavingEl,
       baseEl: el,
@@ -163,7 +194,8 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
         ? ani => this.ani = ani
         : undefined
       ),
-      ...opts
+      ...opts,
+      animationBuilder,
     });
 
     // emit nav changed event

@@ -1,14 +1,15 @@
-import { NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../interface';
+import { AnimationBuilder, NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../interface';
 
 import { ROUTER_INTENT_NONE } from './constants';
 
-export async function writeNavState(
+export const writeNavState = async (
   root: HTMLElement | undefined,
   chain: RouteChain,
   direction: RouterDirection,
   index: number,
-  changed = false
-): Promise<boolean> {
+  changed = false,
+  animation?: AnimationBuilder
+): Promise<boolean> => {
   try {
     // find next navigation outlet in the DOM
     const outlet = searchNavNode(root);
@@ -20,7 +21,7 @@ export async function writeNavState(
     await outlet.componentOnReady();
 
     const route = chain[index];
-    const result = await outlet.setRouteId(route.id, route.params, direction);
+    const result = await outlet.setRouteId(route.id, route.params, direction, animation);
 
     // if the outlet changed the page, reset navigation to neutral (no direction)
     // this means nested outlets will not animate
@@ -30,7 +31,7 @@ export async function writeNavState(
     }
 
     // recursively set nested outlets
-    changed = await writeNavState(result.element, chain, direction, index + 1, changed);
+    changed = await writeNavState(result.element, chain, direction, index + 1, changed, animation);
 
     // once all nested outlets are visible let's make the parent visible too,
     // using markVisible prevents flickering
@@ -42,9 +43,9 @@ export async function writeNavState(
     console.error(e);
     return false;
   }
-}
+};
 
-export async function readNavState(root: HTMLElement | undefined) {
+export const readNavState = async (root: HTMLElement | undefined) => {
   const ids: RouteID[] = [];
   let outlet: NavOutletElement | undefined;
   let node: HTMLElement | undefined = root;
@@ -65,20 +66,20 @@ export async function readNavState(root: HTMLElement | undefined) {
     }
   }
   return { ids, outlet };
-}
+};
 
-export function waitUntilNavNode() {
+export const waitUntilNavNode = () => {
   if (searchNavNode(document.body)) {
     return Promise.resolve();
   }
   return new Promise(resolve => {
     window.addEventListener('ionNavWillLoad', resolve, { once: true });
   });
-}
+};
 
 const QUERY = ':not([no-router]) ion-nav, :not([no-router]) ion-tabs, :not([no-router]) ion-router-outlet';
 
-function searchNavNode(root: HTMLElement | undefined): NavOutletElement | undefined {
+const searchNavNode = (root: HTMLElement | undefined): NavOutletElement | undefined => {
   if (!root) {
     return undefined;
   }
@@ -87,4 +88,4 @@ function searchNavNode(root: HTMLElement | undefined): NavOutletElement | undefi
   }
   const outlet = root.querySelector<NavOutletElement>(QUERY);
   return outlet ? outlet : undefined;
-}
+};

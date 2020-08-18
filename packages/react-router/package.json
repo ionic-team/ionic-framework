@@ -1,0 +1,99 @@
+{
+  "name": "@ionic/react-router",
+  "version": "5.3.1",
+  "description": "React Router wrapper for @ionic/react",
+  "keywords": [
+    "ionic",
+    "framework",
+    "react",
+    "mobile",
+    "app",
+    "hybrid",
+    "webapp",
+    "cordova",
+    "progressive web app",
+    "pwa"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ionic-team/ionic.git"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf dist dist-transpiled",
+    "compile": "npm run tsc && rollup -c",
+    "release": "np --any-branch --no-cleanup",
+    "lint": "tslint --project .",
+    "lint.fix": "tslint --project . --fix",
+    "tsc": "tsc -p .",
+    "test.spec": "jest --ci"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "dependencies": {
+    "tslib": "*"
+  },
+  "peerDependencies": {
+    "@ionic/core": "5.3.1",
+    "@ionic/react": "5.3.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1"
+  },
+  "devDependencies": {
+    "@ionic/core": "5.3.1",
+    "@ionic/react": "5.3.1",
+    "@rollup/plugin-node-resolve": "^8.1.0",
+    "@testing-library/jest-dom": "^5.11.0",
+    "@testing-library/react": "^10.4.3",
+    "@testing-library/user-event": "^12.0.11",
+    "@types/jest": "^26.0.3",
+    "@types/node": "^14.0.14",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-router": "^5.0.3",
+    "@types/react-router-dom": "^5.1.5",
+    "jest": "^26.1.0",
+    "np": "^5.0.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "rollup": "^2.18.1",
+    "rollup-plugin-sourcemaps": "^0.6.2",
+    "ts-jest": "^26.1.1",
+    "tslint": "^6.1.2",
+    "tslint-ionic-rules": "0.0.21",
+    "tslint-react": "^5.0.0",
+    "typescript": "^3.9.5"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupTests.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "dist-transpiled",
+      "dist",
+      "<rootDir>/test-app"
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": false
+      }
+    },
+    "modulePaths": [
+      "<rootDir>"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|jpg|png|svg)$": "<rootDir>/empty-module.js"
+    }
+  }
+}

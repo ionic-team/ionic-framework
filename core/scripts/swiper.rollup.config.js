@@ -1,4 +1,4 @@
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 
 export default {
   input: 'src/components/slides/swiper/swiper.js',
@@ -7,8 +7,6 @@ export default {
     format: 'es'
   },
   plugins: [
-    resolve({
-      module: true
-    })
+    resolve()
   ]
 };

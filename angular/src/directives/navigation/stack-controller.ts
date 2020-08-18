@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RouterDirection } from '@ionic/core';
+import { AnimationBuilder, RouterDirection } from '@ionic/core';
 
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { NavController } from '../../providers/nav-controller';
@@ -31,7 +31,7 @@ export class StackController {
   createView(ref: ComponentRef<any>, activatedRoute: ActivatedRoute): RouteView {
     const url = getUrl(this.router, activatedRoute);
     const element = (ref && ref.location && ref.location.nativeElement) as HTMLElement;
-    const unlistenEvents = bindLifecycleEvents(ref.instance, element);
+    const unlistenEvents = bindLifecycleEvents(this.zone, ref.instance, element);
     return {
       id: this.nextId++,
       stackId: computeStackId(this.tabsPrefix, url),
@@ -52,13 +52,15 @@ export class StackController {
   }
 
   setActive(enteringView: RouteView): Promise<StackEvent> {
-    let { direction, animation } = this.navCtrl.consumeTransition();
+    const consumeResult = this.navCtrl.consumeTransition();
+    let { direction, animation, animationBuilder } = consumeResult;
     const leavingView = this.activeView;
     const tabSwitch = isTabSwitch(enteringView, leavingView);
     if (tabSwitch) {
       direction = 'back';
       animation = undefined;
     }
+
     const viewsSnapshot = this.views.slice();
 
     let currentNavigation;
@@ -69,7 +71,7 @@ export class StackController {
     if (router.getCurrentNavigation) {
       currentNavigation = router.getCurrentNavigation();
 
-    // Angular < 7.2.0
+      // Angular < 7.2.0
     } else if (
       router.navigations &&
       router.navigations.value
@@ -94,16 +96,61 @@ export class StackController {
       }
     }
 
+    const reused = this.views.includes(enteringView);
     const views = this.insertView(enteringView, direction);
-    return this.wait(async () => {
-      await this.transition(enteringView, leavingView, animation, this.canGoBack(1), false);
-      await cleanupAsync(enteringView, views, viewsSnapshot, this.location);
-      return {
-        enteringView,
-        direction,
-        animation,
-        tabSwitch
-      };
+
+    // Trigger change detection before transition starts
+    // This will call ngOnInit() the first time too, just after the view
+    // was attached to the dom, but BEFORE the transition starts
+    if (!reused) {
+      enteringView.ref.changeDetectorRef.detectChanges();
+    }
+
+    /**
+     * If we are going back from a page that
+     * was presented using a custom animation
+     * we should default to using that
+     * unless the developer explicitly
+     * provided another animation.
+     */
+    const customAnimation = enteringView.animationBuilder;
+    if (
+      animationBuilder === undefined &&
+      direction === 'back' &&
+      !tabSwitch &&
+      customAnimation !== undefined
+    ) {
+      animationBuilder = customAnimation;
+    }
+
+    /**
+     * Save any custom animation so that navigating
+     * back will use this custom animation by default.
+     */
+    if (leavingView) {
+      leavingView.animationBuilder = animationBuilder;
+    }
+
+    // Wait until previous transitions finish
+    return this.zone.runOutsideAngular(() => {
+      return this.wait(() => {
+        // disconnect leaving page from change detection to
+        // reduce jank during the page transition
+        if (leavingView) {
+          leavingView.ref.changeDetectorRef.detach();
+        }
+        // In case the enteringView is the same as the leavingPage we need to reattach()
+        enteringView.ref.changeDetectorRef.reattach();
+
+        return this.transition(enteringView, leavingView, animation, this.canGoBack(1), false, animationBuilder)
+          .then(() => cleanupAsync(enteringView, views, viewsSnapshot, this.location))
+          .then(() => ({
+            enteringView,
+            direction,
+            animation,
+            tabSwitch
+          }));
+      });
     });
   }
 
@@ -133,39 +180,52 @@ export class StackController {
           url = primaryOutlet.route._routerState.snapshot.url;
         }
       }
-
-      return this.navCtrl.navigateBack(url, view.savedExtras).then(() => true);
+      const { animationBuilder } = this.navCtrl.consumeTransition();
+      return this.navCtrl.navigateBack(url, { ...view.savedExtras, animation: animationBuilder }).then(() => true);
     });
   }
 
-  async startBackTransition() {
+  startBackTransition() {
     const leavingView = this.activeView;
     if (leavingView) {
       const views = this.getStack(leavingView.stackId);
       const enteringView = views[views.length - 2];
-      enteringView.ref.changeDetectorRef.reattach();
-      await this.wait(() => {
+      const customAnimation = enteringView.animationBuilder;
+
+      return this.wait(() => {
         return this.transition(
           enteringView, // entering view
           leavingView, // leaving view
           'back',
+          this.canGoBack(2),
           true,
-          true
+          customAnimation
         );
       });
     }
+    return Promise.resolve();
   }
 
   endBackTransition(shouldComplete: boolean) {
     if (shouldComplete) {
       this.skipTransition = true;
       this.pop(1);
+    } else if (this.activeView) {
+      cleanup(this.activeView, this.views, this.views, this.location);
     }
   }
 
   getLastUrl(stackId?: string) {
     const views = this.getStack(stackId);
     return views.length > 0 ? views[views.length - 1] : undefined;
+  }
+
+  /**
+   * @internal
+   */
+  getRootUrl(stackId?: string) {
+    const views = this.getStack(stackId);
+    return views.length > 0 ? views[0] : undefined;
   }
 
   getActiveStackId(): string | undefined {
@@ -189,35 +249,43 @@ export class StackController {
     return this.views.slice();
   }
 
-  private async transition(
+  private transition(
     enteringView: RouteView | undefined,
     leavingView: RouteView | undefined,
     direction: 'forward' | 'back' | undefined,
     showGoBack: boolean,
-    progressAnimation: boolean
+    progressAnimation: boolean,
+    animationBuilder?: AnimationBuilder
   ) {
     if (this.skipTransition) {
       this.skipTransition = false;
-      return;
+      return Promise.resolve(false);
+    }
+    if (leavingView === enteringView) {
+      return Promise.resolve(false);
     }
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
     if (enteringEl && enteringEl !== leavingEl) {
-      enteringEl.classList.add('ion-page', 'ion-page-invisible');
+      enteringEl.classList.add('ion-page');
+      enteringEl.classList.add('ion-page-invisible');
       if (enteringEl.parentElement !== containerEl) {
         containerEl.appendChild(enteringEl);
       }
 
-      await containerEl.componentOnReady();
-      await containerEl.commit(enteringEl, leavingEl, {
-        deepWait: true,
-        duration: direction === undefined ? 0 : undefined,
-        direction,
-        showGoBack,
-        progressAnimation
-      });
+      if ((containerEl as any).commit) {
+        return containerEl.commit(enteringEl, leavingEl, {
+          deepWait: true,
+          duration: direction === undefined ? 0 : undefined,
+          direction,
+          showGoBack,
+          progressAnimation,
+          animationBuilder
+        });
+      }
     }
+    return Promise.resolve(false);
   }
 
   private async wait<T>(task: () => Promise<T>): Promise<T> {
@@ -230,22 +298,24 @@ export class StackController {
   }
 }
 
-function cleanupAsync(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
-  return new Promise(resolve => {
-    requestAnimationFrame(() => {
-      cleanup(activeRoute, views, viewsSnapshot, location);
-      resolve();
+const cleanupAsync = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
+  if (typeof (requestAnimationFrame as any) === 'function') {
+    return new Promise<any>(resolve => {
+      requestAnimationFrame(() => {
+        cleanup(activeRoute, views, viewsSnapshot, location);
+        resolve();
+      });
     });
-  });
-}
+  }
+  return Promise.resolve();
+};
 
-function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) {
+const cleanup = (activeRoute: RouteView, views: RouteView[], viewsSnapshot: RouteView[], location: Location) => {
   viewsSnapshot
     .filter(view => !views.includes(view))
     .forEach(destroyView);
 
   views.forEach(view => {
-
     /**
      * In the event that a user navigated multiple
      * times in rapid succession, we want to make sure
@@ -265,4 +335,4 @@ function cleanup(activeRoute: RouteView, views: RouteView[], viewsSnapshot: Rout
       view.ref.changeDetectorRef.detach();
     }
   });
-}
+};

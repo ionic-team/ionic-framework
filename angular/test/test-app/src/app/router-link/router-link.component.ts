@@ -1,18 +1,19 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-router-link',
   templateUrl: './router-link.component.html',
 })
-export class RouterLinkComponent implements OnInit {
+export class RouterLinkComponent implements OnInit, ViewWillEnter, ViewDidEnter, ViewWillLeave, ViewDidLeave {
 
   onInit = 0;
   willEnter = 0;
   didEnter = 0;
   willLeave = 0;
   didLeave = 0;
+  changes = 0;
 
   constructor(
     private navCtrl: NavController,
@@ -33,6 +34,11 @@ export class RouterLinkComponent implements OnInit {
 
   navigateRoot() {
     this.navCtrl.navigateRoot('/router-link-page');
+  }
+
+  counter() {
+    this.changes++;
+    return Math.floor(this.changes / 2);
   }
 
   ngOnInit() {

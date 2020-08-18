@@ -1,26 +1,27 @@
+import { clamp } from '../helpers';
 
 import { Gesture, GestureDetail, createGesture } from './index';
 
-export function createSwipeBackGesture(
+export const createSwipeBackGesture = (
   el: HTMLElement,
   canStartHandler: () => boolean,
   onStartHandler: () => void,
   onMoveHandler: (step: number) => void,
   onEndHandler: (shouldComplete: boolean, step: number, dur: number) => void,
-): Gesture {
+): Gesture => {
   const win = el.ownerDocument!.defaultView!;
-  function canStart(detail: GestureDetail) {
+  const canStart = (detail: GestureDetail) => {
     return detail.startX <= 50 && canStartHandler();
-  }
+  };
 
-  function onMove(detail: GestureDetail) {
+  const onMove = (detail: GestureDetail) => {
     // set the transition animation's progress
     const delta = detail.deltaX;
     const stepValue = delta / win.innerWidth;
     onMoveHandler(stepValue);
-  }
+  };
 
-  function onEnd(detail: GestureDetail) {
+  const onEnd = (detail: GestureDetail) => {
     // the swipe back gesture has ended
     const delta = detail.deltaX;
     const width = win.innerWidth;
@@ -35,10 +36,16 @@ export function createSwipeBackGesture(
     let realDur = 0;
     if (missingDistance > 5) {
       const dur = missingDistance / Math.abs(velocity);
-      realDur = Math.min(dur, 300);
+      realDur = Math.min(dur, 540);
     }
-    onEndHandler(shouldComplete, stepValue, realDur);
-  }
+
+    /**
+     * TODO: stepValue can sometimes return negative values
+     * or values greater than 1 which should not be possible.
+     * Need to investigate more to find where the issue is.
+     */
+    onEndHandler(shouldComplete, (stepValue <= 0) ? 0.01 : clamp(0, stepValue, 0.9999), realDur);
+  };
 
   return createGesture({
     el,
@@ -50,4 +57,4 @@ export function createSwipeBackGesture(
     onMove,
     onEnd
   });
-}
+};

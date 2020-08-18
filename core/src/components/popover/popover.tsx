@@ -1,9 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -28,10 +28,9 @@ export class Popover implements ComponentInterface, OverlayInterface {
   private usersElement?: HTMLElement;
 
   presented = false;
-  animation?: Animation;
-  mode = getIonMode(this);
+  lastFocus?: HTMLElement;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonPopoverElement;
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -87,6 +86,8 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   /**
    * If `true`, the popover will be translucent.
+   * Only applies when the mode is `"ios"` and the device supports
+   * [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
    */
   @Prop() translucent = false;
 
@@ -115,34 +116,8 @@ export class Popover implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionPopoverDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    this.dismiss(undefined, BACKDROP);
-  }
-
-  @Listen('ionPopoverDidPresent')
-  @Listen('ionPopoverWillPresent')
-  @Listen('ionPopoverWillDismiss')
-  @Listen('ionPopoverDidDismiss')
-  protected lifecycle(modalEvent: CustomEvent) {
-    const el = this.usersElement;
-    const name = LIFECYCLE_MAP[modalEvent.type];
-    if (el && name) {
-      const event = new CustomEvent(name, {
-        bubbles: false,
-        cancelable: false,
-        detail: modalEvent.detail
-      });
-      el.dispatchEvent(event);
-    }
+  connectedCallback() {
+    prepareOverlay(this.el);
   }
 
   /**
@@ -185,7 +160,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the popover did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionPopoverDidDismiss');
   }
 
@@ -193,34 +168,69 @@ export class Popover implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the popover will dismiss.
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionPopoverWillDismiss');
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      'aria-modal': 'true',
-      'no-router': true,
-      style: {
-        zIndex: 20000 + this.overlayIndex,
-      },
-      class: {
-        ...getClassMap(this.cssClass),
-        [mode]: true,
-        'popover-translucent': this.translucent
-      }
-    };
+  private onDismiss = (ev: UIEvent) => {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
+  private onBackdropTap = () => {
+    this.dismiss(undefined, BACKDROP);
+  }
+
+  private onLifecycle = (modalEvent: CustomEvent) => {
+    const el = this.usersElement;
+    const name = LIFECYCLE_MAP[modalEvent.type];
+    if (el && name) {
+      const event = new CustomEvent(name, {
+        bubbles: false,
+        cancelable: false,
+        detail: modalEvent.detail
+      });
+      el.dispatchEvent(event);
+    }
   }
 
   render() {
-    return [
-      <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop}/>,
-      <div class="popover-wrapper">
-        <div class="popover-arrow"></div>
-        <div class="popover-content"></div>
-      </div>
-    ];
+    const mode = getIonMode(this);
+    const { onLifecycle } = this;
+    return (
+      <Host
+        aria-modal="true"
+        no-router
+        tabindex="-1"
+        style={{
+          zIndex: `${20000 + this.overlayIndex}`,
+        }}
+        class={{
+          ...getClassMap(this.cssClass),
+          [mode]: true,
+          'popover-translucent': this.translucent
+        }}
+        onIonPopoverDidPresent={onLifecycle}
+        onIonPopoverWillPresent={onLifecycle}
+        onIonPopoverWillDismiss={onLifecycle}
+        onIonPopoverDidDismiss={onLifecycle}
+        onIonDismiss={this.onDismiss}
+        onIonBackdropTap={this.onBackdropTap}
+      >
+        <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop}/>
+
+        <div tabindex="0"></div>
+
+        <div class="popover-wrapper ion-overlay-wrapper">
+          <div class="popover-arrow"></div>
+          <div class="popover-content"></div>
+        </div>
+
+        <div tabindex="0"></div>
+      </Host>
+    );
   }
 }
 

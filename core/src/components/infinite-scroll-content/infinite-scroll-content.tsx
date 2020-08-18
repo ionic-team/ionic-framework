@@ -1,9 +1,9 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { SpinnerTypes } from '../../interface';
-import { sanitizeDOMString } from '../../utils/sanitization';
+import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
   tag: 'ion-infinite-scroll-content',
@@ -28,7 +28,7 @@ export class InfiniteScrollContent implements ComponentInterface {
    *
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
-  @Prop() loadingText?: string;
+  @Prop() loadingText?: string | IonicSafeString;
 
   componentDidLoad() {
     if (this.loadingSpinner === undefined) {
@@ -40,30 +40,28 @@ export class InfiniteScrollContent implements ComponentInterface {
     }
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        [mode]: true,
-
-        // Used internally for styling
-        [`infinite-scroll-content-${mode}`]: true
-      }
-    };
-  }
-
   render() {
+    const mode = getIonMode(this);
     return (
-      <div class="infinite-loading">
-        {this.loadingSpinner && (
-          <div class="infinite-loading-spinner">
-            <ion-spinner name={this.loadingSpinner} />
-          </div>
-        )}
-        {this.loadingText && (
-          <div class="infinite-loading-text" innerHTML={sanitizeDOMString(this.loadingText)} />
-        )}
-      </div>
+      <Host
+        class={{
+          [mode]: true,
+
+          // Used internally for styling
+          [`infinite-scroll-content-${mode}`]: true
+        }}
+      >
+        <div class="infinite-loading">
+          {this.loadingSpinner && (
+            <div class="infinite-loading-spinner">
+              <ion-spinner name={this.loadingSpinner} />
+            </div>
+          )}
+          {this.loadingText && (
+            <div class="infinite-loading-text" innerHTML={sanitizeDOMString(this.loadingText)} />
+          )}
+        </div>
+      </Host>
     );
   }
 }

@@ -1,10 +1,10 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, RouterDirection } from '../../interface';
+import { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { hasShadowDom } from '../../utils/helpers';
-import { createColorClasses, openURL } from '../../utils/theme';
+import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -13,6 +13,8 @@ import { createColorClasses, openURL } from '../../utils/theme';
  * @slot icon-only - Should be used on an icon in a button that has no text.
  * @slot start - Content is placed to the left of the button text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the button text in LTR, and to the left in RTL.
+ *
+ * @part native - The native HTML button or anchor element that wraps all child elements.
  */
 @Component({
   tag: 'ion-button',
@@ -23,9 +25,9 @@ import { createColorClasses, openURL } from '../../utils/theme';
   shadow: true,
 })
 export class Button implements ComponentInterface, AnchorInterface, ButtonInterface {
-
-  private inToolbar = false;
   private inItem = false;
+  private inListHeader = false;
+  private inToolbar = false;
 
   @Element() el!: HTMLElement;
 
@@ -44,26 +46,32 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * If `true`, the user cannot interact with the button.
    */
-  @Prop({ reflectToAttr: true }) disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
    * without left and right borders.
    */
-  @Prop({ reflectToAttr: true }) expand?: 'full' | 'block';
+  @Prop({ reflect: true }) expand?: 'full' | 'block';
 
   /**
    * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
    * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
    * a toolbar, where the default is `"clear"`.
    */
-  @Prop({ reflectToAttr: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
+  @Prop({ reflect: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
 
   /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
   @Prop() routerDirection: RouterDirection = 'forward';
+
+  /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
 
   /**
    * This attribute instructs browsers to download a URL instead of navigating to
@@ -88,12 +96,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * The button shape.
    */
-  @Prop({ reflectToAttr: true }) shape?: 'round';
+  @Prop({ reflect: true }) shape?: 'round';
 
   /**
    * The button size.
    */
-  @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
+  @Prop({ reflect: true }) size?: 'small' | 'default' | 'large';
 
   /**
    * If `true`, activates a button with a heavier font weight.
@@ -124,6 +132,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   componentWillLoad() {
     this.inToolbar = !!this.el.closest('ion-buttons');
+    this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
   }
 
@@ -145,7 +154,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   private handleClick = (ev: Event) => {
     if (this.type === 'button') {
-      openURL(this.href, ev, this.routerDirection);
+      openURL(this.href, ev, this.routerDirection, this.routerAnimation);
 
     } else if (hasShadowDom(this.el)) {
       // this button wants to specifically submit a form
@@ -189,14 +198,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
     let fill = this.fill;
     if (fill === undefined) {
-      fill = this.inToolbar ? 'clear' : 'solid';
+      fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
     }
     return (
       <Host
         onClick={this.handleClick}
         aria-disabled={disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
           [buttonType]: true,
           [`${buttonType}-${expand}`]: expand !== undefined,
@@ -204,16 +212,18 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [`${buttonType}-${shape}`]: shape !== undefined,
           [`${buttonType}-${fill}`]: true,
           [`${buttonType}-strong`]: strong,
-
+          'in-toolbar': hostContext('ion-toolbar', this.el),
+          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'button-has-icon-only': hasIconOnly,
           'button-disabled': disabled,
           'ion-activatable': true,
           'ion-focusable': true,
-        }}
+        })}
       >
         <TagType
           {...attrs}
           class="button-native"
+          part="native"
           disabled={disabled}
           onFocus={this.onFocus}
           onBlur={this.onBlur}

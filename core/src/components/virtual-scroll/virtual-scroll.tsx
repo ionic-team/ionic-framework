@@ -1,6 +1,6 @@
-import { Component, ComponentInterface, Element, FunctionalComponent, Listen, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
+import { Component, ComponentInterface, Element, FunctionalComponent, Host, Listen, Method, Prop, State, Watch, forceUpdate, h, readTask, writeTask } from '@stencil/core';
 
-import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
@@ -105,6 +105,16 @@ export class VirtualScroll implements ComponentInterface {
   @Prop() itemHeight?: ItemHeightFn;
 
   /**
+   * An optional function that maps each item header within their height.
+   */
+  @Prop() headerHeight?: HeaderHeightFn;
+
+  /**
+   * An optional function that maps each item footer within their height.
+   */
+  @Prop() footerHeight?: FooterHeightFn;
+
+  /**
    * NOTE: only JSX API for stencil.
    *
    * Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
@@ -134,22 +144,22 @@ export class VirtualScroll implements ComponentInterface {
   @Prop() domRender?: DomRenderFn;
 
   @Watch('itemHeight')
+  @Watch('headerHeight')
+  @Watch('footerHeight')
   @Watch('items')
   itemsChanged() {
     this.calcCells();
     this.updateVirtualScroll();
   }
 
-  async componentDidLoad() {
+  async connectedCallback() {
     const contentEl = this.el.closest('ion-content');
     if (!contentEl) {
-      console.error('virtual-scroll must be used inside ion-content');
+      console.error('<ion-virtual-scroll> must be used inside an <ion-content>');
       return;
     }
-    await contentEl.componentOnReady();
-
-    this.contentEl = contentEl;
     this.scrollEl = await contentEl.getScrollElement();
+    this.contentEl = contentEl;
     this.calcCells();
     this.updateState();
   }
@@ -158,12 +168,13 @@ export class VirtualScroll implements ComponentInterface {
     this.updateState();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.scrollEl = undefined;
   }
 
   @Listen('resize', { target: 'window' })
   onResize() {
+    this.calcCells();
     this.updateVirtualScroll();
   }
 
@@ -196,6 +207,8 @@ export class VirtualScroll implements ComponentInterface {
     const cells = calcCells(
       this.items,
       this.itemHeight,
+      this.headerHeight,
+      this.footerHeight,
       this.headerFn,
       this.footerFn,
       this.approxHeaderHeight,
@@ -253,7 +266,7 @@ export class VirtualScroll implements ComponentInterface {
     let node: HTMLElement | null = el;
     while (node && node !== contentEl) {
       topOffset += node.offsetTop;
-      node = node.parentElement;
+      node = node.offsetParent as HTMLElement;
     }
     this.viewportOffset = topOffset;
     if (scrollEl) {
@@ -297,7 +310,7 @@ export class VirtualScroll implements ComponentInterface {
     } else if (this.domRender) {
       this.domRender(this.virtualDom);
     } else if (this.renderItem) {
-      this.el.forceUpdate();
+      forceUpdate(this);
     }
   }
 
@@ -356,6 +369,8 @@ export class VirtualScroll implements ComponentInterface {
     this.cells = calcCells(
       this.items,
       this.itemHeight,
+      this.headerHeight,
+      this.footerHeight,
       this.headerFn,
       this.footerFn,
       this.approxHeaderHeight,
@@ -406,23 +421,20 @@ export class VirtualScroll implements ComponentInterface {
     }
   }
 
-  hostData() {
-    return {
-      style: {
-        height: `${this.totalHeight}px`
-      }
-    };
-  }
-
   render() {
-    if (this.renderItem) {
-      return (
-        <VirtualProxy dom={this.virtualDom}>
-          {this.virtualDom.map(node => this.renderVirtualNode(node))}
-        </VirtualProxy>
-      );
-    }
-    return undefined;
+    return (
+      <Host
+        style={{
+          height: `${this.totalHeight}px`
+        }}
+      >
+        {this.renderItem && (
+          <VirtualProxy dom={this.virtualDom}>
+            {this.virtualDom.map(node => this.renderVirtualNode(node))}
+          </VirtualProxy>
+        )}
+      </Host>
+    );
   }
 }
 
