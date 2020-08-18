@@ -11,7 +11,7 @@ import {
 } from 'vue';
 import { AnimationBuilder } from '@ionic/core';
 import { useRoute, useRouter } from 'vue-router';
-import { generateId } from '../utils';
+import { fireLifecycle, generateId, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../utils';
 
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 
@@ -144,10 +144,14 @@ export const IonRouterOutlet = defineComponent({
       const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
       const leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id);
 
+      fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_WILL_ENTER);
+
       if (leavingViewItem) {
         let animationBuilder = routerAnimation;
         const enteringEl = enteringViewItem.ionPageElement;
         const leavingEl = leavingViewItem.ionPageElement;
+
+        fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_WILL_LEAVE);
 
         enteringEl.classList.remove('ion-page-hidden');
 
@@ -190,7 +194,11 @@ export const IonRouterOutlet = defineComponent({
             leavingViewItem.ionRoute = false;
           }
         }
+
+        fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_DID_LEAVE);
       }
+
+      fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_DID_ENTER);
 
       components.value = viewStacks.getChildrenToRender(id);
     }
