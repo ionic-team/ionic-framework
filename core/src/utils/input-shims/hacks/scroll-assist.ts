@@ -1,4 +1,5 @@
 import { pointerCoord } from '../../helpers';
+import { isPlatform } from '../../platform';
 
 import { isFocused, relocateInput } from './common';
 import { getScrollData } from './scroll-data';
@@ -94,6 +95,11 @@ const jsSetFocus = async (
       window.removeEventListener('ionKeyboardDidShow', doubleKeyboardEventListener);
       window.addEventListener('ionKeyboardDidShow', scrollContent);
     };
+
+    if (isPlatform('ios')) {
+      // Add 30px to account for the "Accessory" bar
+      scrollData.scrollAmount += 30;
+    }
 
     if (contentEl) {
       const scrollEl = await contentEl.getScrollElement();
