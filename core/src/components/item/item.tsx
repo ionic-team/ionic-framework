@@ -4,6 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
+import { raf } from '../../utils/helpers';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -183,14 +184,19 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   // This is needed for WebKit due to a delegatesFocus bug where
   // clicking on the left padding of an item is not focusing the input
-  // but is opening the keyboard
+  // but is opening the keyboard. It will no longer be needed with
+  // iOS 14.
   @Listen('click')
   delegateFocus() {
     if (this.hasInputs()) {
       const input = this.el.querySelector('ion-input');
       if (input) {
+        input.fireFocusEvents = false;
         input.setBlur();
         input.setFocus();
+        raf(() => {
+          input.fireFocusEvents = true;
+        });
       }
     }
   }
