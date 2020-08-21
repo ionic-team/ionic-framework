@@ -54,6 +54,6 @@
     "tslint": "^5.12.1",
     "tslint-ionic-rules": "0.0.21",
     "typescript": "3.4.5",
-    "typescript-tslint-plugin": "0.5.4"
+    "typescript-tslint-plugin": "^0.5.5"
   }
 }
