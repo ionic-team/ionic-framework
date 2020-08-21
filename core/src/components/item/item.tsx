@@ -181,7 +181,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return inputs.length > 0;
   }
 
-  // This is needed for Safari due to a delegatesFocus bug where
+  // This is needed for WebKit due to a delegatesFocus bug where
   // clicking on the left padding of an item is not focusing the input
   // but is opening the keyboard
   @Listen('click')
