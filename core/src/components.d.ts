@@ -869,6 +869,9 @@ export namespace Components {
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+        /**
+          * This is required for a WebKit bug which requires us to blur and focus and input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
+         */
         "fireFocusEvents": boolean;
         /**
           * Returns the native `<input>` element used under the hood.
@@ -4195,6 +4198,9 @@ declare namespace LocalJSX {
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+        /**
+          * This is required for a WebKit bug which requires us to blur and focus and input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
+         */
         "fireFocusEvents"?: boolean;
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.

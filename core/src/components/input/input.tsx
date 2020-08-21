@@ -23,7 +23,7 @@ export class Input implements ComponentInterface {
   private didBlurAfterEdit = false;
   private tabindex?: string | number;
 
-  /*
+  /**
    * This is required for a WebKit bug which requires us to
    * blur and focus and input to properly focus the input in
    * an item with delegatesFocus. It will no longer be needed
