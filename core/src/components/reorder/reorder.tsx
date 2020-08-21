@@ -20,7 +20,7 @@ export class Reorder implements ComponentInterface {
     const currentTarget = ev.currentTarget as HTMLElement;
     const reorderGroupEl = currentTarget.closest('ion-reorder-group');
     ev.preventDefault();
-    
+
     // do not stop event propagation if reorder is inside disabled ion-reorder-group
     // it allows interaction with included components
     if (!reorderGroupEl || !reorderGroupEl.disabled) {
