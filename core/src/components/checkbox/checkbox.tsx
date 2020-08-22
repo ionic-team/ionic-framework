@@ -173,6 +173,7 @@ export class Checkbox implements ComponentInterface {
           onBlur={this.onBlur}
           disabled={this.disabled}
           ref={btnEl => this.buttonEl = btnEl}
+          part="trigger"
         >
         </button>
       </Host>

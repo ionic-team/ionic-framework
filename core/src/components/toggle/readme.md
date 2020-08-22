@@ -446,10 +446,11 @@ export class ToggleExample {
 
 ## Shadow Parts
 
-| Part       | Description                                                   |
-| ---------- | ------------------------------------------------------------- |
-| `"handle"` | The toggle handle, or knob, used to change the checked state. |
-| `"track"`  | The background track of the toggle.                           |
+| Part        | Description                                                   |
+| ----------- | ------------------------------------------------------------- |
+| `"handle"`  | The toggle handle, or knob, used to change the checked state. |
+| `"track"`   | The background track of the toggle.                           |
+| `"trigger"` | The trigger button of the toggle.                             |
 
 
 ## CSS Custom Properties

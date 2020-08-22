@@ -214,6 +214,7 @@ export class Toggle implements ComponentInterface {
           disabled={disabled}
           ref={btnEl => this.buttonEl = btnEl}
           aria-hidden="true"
+          part="trigger"
         >
         </button>
       </Host>

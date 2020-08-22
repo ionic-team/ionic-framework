@@ -279,6 +279,7 @@ export class CheckboxExample {
 | ------------- | ------------------------------------------------- |
 | `"container"` | The container for the checkbox mark.              |
 | `"mark"`      | The checkmark used to indicate the checked state. |
+| `"trigger"`   | The trigger button of the checkbox.               |
 
 
 ## CSS Custom Properties
