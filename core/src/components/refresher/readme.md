@@ -331,6 +331,16 @@ Type: `Promise<number>`
 
 
 
+### `start() => Promise<void>`
+
+Call `start()` to manually start Refreshing
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ----------------------------------------------
 
