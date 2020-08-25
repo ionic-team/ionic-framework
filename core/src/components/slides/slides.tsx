@@ -13,7 +13,7 @@ import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
     ios: 'slides.ios.scss',
     md: 'slides.md.scss'
   },
-  assetsDir: 'swiper',
+  assetsDirs: ['swiper'],
 })
 export class Slides implements ComponentInterface {
 
@@ -443,7 +443,7 @@ export class Slides implements ComponentInterface {
         shadowScale: 0.94
       },
       fadeEffect: {
-        crossfade: false
+        crossFade: false
       },
       a11y: {
         prevSlideMessage: 'Previous slide',

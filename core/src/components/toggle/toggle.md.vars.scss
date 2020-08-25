@@ -14,7 +14,7 @@ $toggle-md-track-width:                           36px !default;
 $toggle-md-track-height:                          14px !default;
 
 /// @prop - Background color of the toggle track
-$toggle-md-track-background-color-off:            rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.3) !default;
+$toggle-md-track-background-color-off:            rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.39) !default;
 
 /// @prop - Background color alpha of the checked toggle track
 $toggle-md-track-background-color-alpha-on:       .5 !default;
@@ -28,11 +28,14 @@ $toggle-md-handle-width:                          20px !default;
 /// @prop - Height of the toggle handle
 $toggle-md-handle-height:                         20px !default;
 
+/// @prop - Max height of the toggle handle
+$toggle-md-handle-max-height:                     calc(100% + 6px) !default;
+
 /// @prop - Border radius of the toggle handle
 $toggle-md-handle-border-radius:                  50% !default;
 
 /// @prop - Box shadow of the toggle handle
-$toggle-md-handle-box-shadow:                     0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
+$toggle-md-handle-box-shadow:                     0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
 
 /// @prop - Background color of the toggle handle
 $toggle-md-handle-background-color-off:           #ffffff !default;
@@ -54,6 +57,9 @@ $toggle-md-media-margin-start:                    $toggle-md-media-margin-end !d
 
 /// @prop - Transition duration of the toggle icon
 $toggle-md-transition-duration:                   160ms !default;
+
+/// @prop - Transition of the toggle icon
+$toggle-md-transition:                            transform $toggle-md-transition-duration cubic-bezier(0.4, 0.0, 0.2, 1), background-color $toggle-md-transition-duration cubic-bezier(0.4, 0.0, 0.2, 1) !default;
 
 /// @prop - Opacity of the disabled toggle
 $toggle-md-disabled-opacity:                      .3 !default;

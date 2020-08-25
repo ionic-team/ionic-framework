@@ -153,6 +153,55 @@ export const CheckboxExamples: React.FC = () => {
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'checkbox-example',
+  styleUrl: 'checkbox-example.css'
+})
+export class CheckboxExample {
+  private form = [
+    { val: 'Pepperoni', isChecked: true },
+    { val: 'Sausage', isChecked: false },
+    { val: 'Mushroom', isChecked: false }
+  ];
+
+  render() {
+    return [
+      // Default Checkbox
+      <ion-checkbox></ion-checkbox>,
+
+      // Disabled Checkbox
+      <ion-checkbox disabled={true}></ion-checkbox>,
+
+      // Checked Checkbox
+      <ion-checkbox checked={true}></ion-checkbox>,
+
+      // Checkbox Colors
+      <ion-checkbox color="primary"></ion-checkbox>,
+      <ion-checkbox color="secondary"></ion-checkbox>,
+      <ion-checkbox color="danger"></ion-checkbox>,
+      <ion-checkbox color="light"></ion-checkbox>,
+      <ion-checkbox color="dark"></ion-checkbox>,
+
+      // Checkboxes in a List
+      <ion-list>
+        {this.form.map(entry =>
+          <ion-item>
+            <ion-label>{entry.val}</ion-label>
+            <ion-checkbox slot="end" checked={entry.isChecked}></ion-checkbox>
+          </ion-item>
+        )}
+      </ion-list>
+    ];
+  }
+}
+```
+
+
 ### Vue
 
 ```html
@@ -222,6 +271,14 @@ export const CheckboxExamples: React.FC = () => {
 | `ionBlur`   | Emitted when the toggle loses focus.           | `CustomEvent<void>`                      |
 | `ionChange` | Emitted when the checked property has changed. | `CustomEvent<CheckboxChangeEventDetail>` |
 | `ionFocus`  | Emitted when the toggle has focus.             | `CustomEvent<void>`                      |
+
+
+## Shadow Parts
+
+| Part          | Description                                       |
+| ------------- | ------------------------------------------------- |
+| `"container"` | The container for the checkbox mark.              |
+| `"mark"`      | The checkmark used to indicate the checked state. |
 
 
 ## CSS Custom Properties

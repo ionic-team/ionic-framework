@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
-import { debounceEvent, findItemLabel } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -68,6 +68,20 @@ export class Textarea implements ComponentInterface {
   protected disabledChanged() {
     this.emitStyle();
   }
+
+  /**
+   * A hint to the browser for which keyboard to display.
+   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
+   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+   */
+  @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+
+  /**
+   * A hint to the browser for which enter key to display.
+   * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
+   * `"previous"`, `"search"`, and `"send"`.
+   */
+  @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
@@ -163,12 +177,12 @@ export class Textarea implements ComponentInterface {
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur!: EventEmitter<void>;
+  @Event() ionBlur!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   connectedCallback() {
     this.emitStyle();
@@ -189,7 +203,7 @@ export class Textarea implements ComponentInterface {
   }
 
   componentDidLoad() {
-    this.runAutoGrow();
+    raf(() => this.runAutoGrow());
   }
 
   private runAutoGrow() {
@@ -278,18 +292,18 @@ export class Textarea implements ComponentInterface {
     this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onFocus = () => {
+  private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
     this.focusChange();
 
-    this.ionFocus.emit();
+    this.ionFocus.emit(ev);
   }
 
-  private onBlur = () => {
+  private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChange();
 
-    this.ionBlur.emit();
+    this.ionBlur.emit(ev);
   }
 
   private onKeyDown = () => {
@@ -308,10 +322,9 @@ export class Textarea implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
-        }}
+        })}
       >
         <div
           class="textarea-wrapper"
@@ -319,9 +332,12 @@ export class Textarea implements ComponentInterface {
         >
           <textarea
             class="native-textarea"
+            aria-labelledby={labelId}
             ref={el => this.nativeInput = el}
             autoCapitalize={this.autocapitalize}
             autoFocus={this.autofocus}
+            enterKeyHint={this.enterkeyhint}
+            inputMode={this.inputmode}
             disabled={this.disabled}
             maxLength={this.maxlength}
             minLength={this.minlength}
@@ -329,7 +345,7 @@ export class Textarea implements ComponentInterface {
             placeholder={this.placeholder || ''}
             readOnly={this.readonly}
             required={this.required}
-            spellCheck={this.spellcheck}
+            spellcheck={this.spellcheck}
             cols={this.cols}
             rows={this.rows}
             wrap={this.wrap}

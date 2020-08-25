@@ -363,7 +363,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
         const translucentHeader = parentHeader?.translucent;
         if (!translucentHeader) {
-          enteringToolBarBg.fromTo(OPACITY, 0.01, 1);
+          enteringToolBarBg.fromTo(OPACITY, 0.01, 'var(--opacity)');
         } else {
           enteringToolBarBg.fromTo('transform', (isRTL ? 'translateX(-100%)' : 'translateX(100%)'), 'translateX(0px)');
         }
@@ -386,12 +386,18 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
     // setup leaving view
     if (leavingEl) {
-
       const leavingContent = createAnimation();
       const leavingContentEl = leavingEl.querySelector(':scope > ion-content');
+      const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
+      const leavingHeaderEls = leavingEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *');
 
-      leavingContent.addElement(leavingContentEl!); // REVIEW
-      leavingContent.addElement(leavingEl.querySelectorAll(':scope > ion-header > *:not(ion-toolbar), :scope > ion-footer > *'));
+      if (!leavingContentEl && leavingToolBarEls.length === 0 && leavingHeaderEls.length === 0) {
+        leavingContent.addElement(leavingEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs')!);  // REVIEW
+      } else {
+        leavingContent.addElement(leavingContentEl!);  // REVIEW
+        leavingContent.addElement(leavingHeaderEls);
+      }
+
       rootAnimation.addAnimation(leavingContent);
 
       if (backDirection) {
@@ -445,7 +451,6 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
         }
       }
 
-      const leavingToolBarEls = leavingEl.querySelectorAll(':scope > ion-header > ion-toolbar');
       leavingToolBarEls.forEach(leavingToolBarEl => {
         const leavingToolBar = createAnimation();
         leavingToolBar.addElement(leavingToolBarEl);
@@ -505,7 +510,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
           // should just slide out, no fading out
           const translucentHeader = parentHeader?.translucent;
           if (!translucentHeader) {
-            leavingToolBarBg.fromTo(OPACITY, 0.99, 0);
+            leavingToolBarBg.fromTo(OPACITY, 'var(--opacity)', 0);
           } else {
             leavingToolBarBg.fromTo('transform', 'translateX(0px)', (isRTL ? 'translateX(-100%)' : 'translateX(100%)'));
           }

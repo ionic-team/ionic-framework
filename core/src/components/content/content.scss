@@ -128,7 +128,6 @@
 }
 
 .transition-effect {
-
   display: none;
   position: absolute;
 
@@ -137,7 +136,7 @@
   /* stylelint-enable property-blacklist */
 
   width: 100%;
-  height: 100%;
+  height: 100vh;
 
   opacity: 0;
 

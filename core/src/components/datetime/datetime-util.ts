@@ -262,13 +262,14 @@ export const getDateTime = (dateString: any = '', timeZone: any = ''): Date => {
 
   /**
    * Ensures that YYYY-MM-DD, YYYY-MM,
-   * YYYY-DD, etc does not get affected
+   * YYYY-DD, YYYY, etc does not get affected
    * by timezones and stays on the day/month
    * that the user provided
    */
   if (
     dateString.length === 10 ||
-    dateString.length === 7
+    dateString.length === 7 ||
+    dateString.length === 4
   ) {
     dateString += ' ';
   }

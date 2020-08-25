@@ -114,8 +114,8 @@
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-segment>
-    <ion-segment-button value="all" checked>
+  <ion-segment value="all">
+    <ion-segment-button value="all">
       All
     </ion-segment-button>
     <ion-segment-button value="favorites">

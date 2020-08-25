@@ -71,6 +71,22 @@
   <ion-fab-button class="fab-button-in-list custom-border"><ion-icon name="star"></ion-icon></ion-fab-button>
   <ion-fab-button class="fab-button-in-list custom-border ion-activated"><ion-icon name="star"></ion-icon></ion-fab-button>
 
+  <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+    <ion-fab-button class="custom-close"><ion-icon name="star"></ion-icon></ion-fab-button>
+
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="heart"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="square"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="triangle"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
   <style>
     ion-fab-button {
       display: inline-block;
@@ -103,6 +119,12 @@
       --border-width: 2px;
       --border-style: dashed;
       --border-color: red;
+    }
+
+    .custom-close::part(close-icon) {
+      color: red;
+
+      font-size: 44px;
     }
   </style>
 </body>

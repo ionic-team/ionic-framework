@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
-import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 
 const enum ReorderGroupState {
   Idle = 0,
@@ -219,7 +219,7 @@ export class ReorderGroup implements ComponentInterface {
       const toIndex = this.lastToIndex;
       const fromIndex = indexForItem(selectedItemEl);
 
-      if (toIndex !== fromIndex && (!listOrReorder || listOrReorder === true)) {
+      if (toIndex !== fromIndex && (listOrReorder === undefined || listOrReorder === true)) {
         const ref = (fromIndex < toIndex)
           ? children[toIndex + 1]
           : children[toIndex];

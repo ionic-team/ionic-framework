@@ -13,6 +13,7 @@ export const LoadingExample: React.FC = () => {
     <IonContent>
       <IonButton onClick={() => setShowLoading(true)}>Show Loading</IonButton>
       <IonLoading
+        cssClass='my-custom-class'
         isOpen={showLoading}
         onDidDismiss={() => setShowLoading(false)}
         message={'Please wait...'}

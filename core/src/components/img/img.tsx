@@ -2,6 +2,9 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 
+/**
+ * @part image - The inner `img` element.
+ */
 @Component({
   tag: 'ion-img',
   styleUrl: 'img.scss',
@@ -50,7 +53,11 @@ export class Img implements ComponentInterface {
     if (this.src === undefined) {
       return;
     }
-    if ('IntersectionObserver' in window) {
+    if (
+      typeof (window as any) !== 'undefined' &&
+      'IntersectionObserver' in window &&
+      'IntersectionObserverEntry' in window &&
+      'isIntersecting' in window.IntersectionObserverEntry.prototype) {
       this.removeIO();
       this.io = new IntersectionObserver(data => {
         // because there will only ever be one instance
@@ -99,6 +106,7 @@ export class Img implements ComponentInterface {
           alt={this.alt}
           onLoad={this.onLoad}
           onError={this.loadError}
+          part="image"
         />
       </Host>
     );

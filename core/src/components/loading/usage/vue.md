@@ -16,6 +16,7 @@ export default {
     presentLoading() {
       return this.$ionic.loadingController
         .create({
+          cssClass: 'my-custom-class',
           message: 'Please wait...',
           duration: this.timeout,
         })

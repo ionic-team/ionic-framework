@@ -34,12 +34,11 @@ export class CardHeader implements ComponentInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           'card-header-translucent': this.translucent,
           'ion-inherit-color': true,
           [mode]: true
-        }}
+        })}
       >
         <slot></slot>
       </Host>

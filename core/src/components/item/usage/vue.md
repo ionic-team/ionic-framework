@@ -1,5 +1,3 @@
-Basic Usage
-
 ```html
 <template>
   <!-- Default Item -->
@@ -31,7 +29,7 @@ Basic Usage
 </template>
 ```
 
-Detail Arrows
+### Detail Arrows
 
 ```html
 <template>
@@ -55,7 +53,7 @@ Detail Arrows
 </template>
 ```
 
-List Items
+### List Items
 
 ```html
 <template>
@@ -101,7 +99,7 @@ List Items
 </template>
 ```
 
-Item Lines
+### Item Lines
 
 ```html
 <template>
@@ -160,7 +158,7 @@ Item Lines
 ```
 
 
-Media Items
+### Media Items
 
 ```html
 <template>
@@ -206,7 +204,7 @@ Media Items
 </template>
 ```
 
-Buttons in Items
+### Buttons in Items
 
 ```html
 <template>
@@ -244,7 +242,7 @@ Buttons in Items
 </template>
 ```
 
-Icons in Items
+### Icons in Items
 
 ```html
 <template>
@@ -286,7 +284,7 @@ Icons in Items
 </template>
 ```
 
-Item Inputs
+### Item Inputs
 
 ```html
 <template>

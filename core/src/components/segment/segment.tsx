@@ -213,6 +213,7 @@ export class Segment implements ComponentInterface {
     // If there are no checked buttons, set the current button to checked
     if (!checked) {
       this.value = clicked.value;
+      this.setCheckedClasses();
     }
 
     // If the gesture began on the clicked button with the indicator
@@ -375,8 +376,12 @@ export class Segment implements ComponentInterface {
     const previous = this.checked;
     this.value = current.value;
 
-    if (previous && this.scrollable) {
-      this.checkButton(previous, current);
+    if (this.scrollable) {
+      if (previous) {
+        this.checkButton(previous, current);
+      } else {
+        this.setCheckedClasses();
+      }
     }
 
     this.checked = current;
@@ -384,19 +389,17 @@ export class Segment implements ComponentInterface {
 
   render() {
     const mode = getIonMode(this);
-
     return (
       <Host
         onClick={this.onClick}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'segment-activated': this.activated,
           'segment-disabled': this.disabled,
           'segment-scrollable': this.scrollable
-        }}
+        })}
       >
         <slot></slot>
       </Host>

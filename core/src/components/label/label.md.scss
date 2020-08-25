@@ -13,15 +13,19 @@
 // Material Design Stacked & Floating Labels
 // --------------------------------------------------
 
+/**
+ * When translating the label, we need to use translateY
+ * instead of translate3d due to a WebKit bug: https://bugs.webkit.org/show_bug.cgi?id=215731
+ */
 :host(.label-stacked) {
   @include transform-origin(start, top);
-  @include transform(translate3d(0, 50%, 0), scale(.75));
+  @include transform(translateY(50%), scale(.75));
 
   transition: color 150ms $label-md-transition-timing-function;
 }
 
 :host(.label-floating) {
-  @include transform(translate3d(0, 96%, 0));
+  @include transform(translateY(96%));
   @include transform-origin(start, top);
 
   transition:
@@ -41,7 +45,7 @@
 :host-context(.item-has-focus).label-floating,
 :host-context(.item-has-placeholder).label-floating,
 :host-context(.item-has-value).label-floating {
-  @include transform(translate3d(0, 50%, 0), scale(.75));
+  @include transform(translateY(50%), scale(.75));
 }
 
 :host-context(.item-has-focus).label-stacked,

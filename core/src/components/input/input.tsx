@@ -1,7 +1,7 @@
 import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
+import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
 import { debounceEvent, findItemLabel } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -21,6 +21,7 @@ export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
   private didBlurAfterEdit = false;
+  private tabindex?: string | number;
 
   @State() hasFocus = false;
 
@@ -46,7 +47,7 @@ export class Input implements ComponentInterface {
   /**
    * Indicates whether the value of the control can be automatically completed by the browser.
    */
-  @Prop() autocomplete: 'on' | 'off' = 'off';
+  @Prop() autocomplete: AutocompleteTypes = 'off';
 
   /**
    * Whether auto correction should be enabled when the user is entering/editing the text value.
@@ -89,6 +90,13 @@ export class Input implements ComponentInterface {
   }
 
   /**
+   * A hint to the browser for which enter key to display.
+   * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
+   * `"previous"`, `"search"`, and `"send"`.
+   */
+  @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+
+  /**
    * A hint to the browser for which keyboard to display.
    * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
@@ -126,7 +134,7 @@ export class Input implements ComponentInterface {
   @Prop() name: string = this.inputId;
 
   /**
-   * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+   * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, `"date"`, or `"password"`, otherwise it is ignored. When the type attribute is `"date"`, `pattern` will only be used in browsers that do not support the `"date"` input type natively. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date for more information.
    */
   @Prop() pattern?: string;
 
@@ -193,18 +201,29 @@ export class Input implements ComponentInterface {
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur!: EventEmitter<void>;
+  @Event() ionBlur!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the styles change.
    * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  componentWillLoad() {
+    // If the ion-input has a tabindex attribute we get the value
+    // and pass it down to the native input, then remove it from the
+    // ion-input to avoid causing tabbing twice on the same element
+    if (this.el.hasAttribute('tabindex')) {
+      const tabindex = this.el.getAttribute('tabindex');
+      this.tabindex = tabindex !== null ? tabindex : undefined;
+      this.el.removeAttribute('tabindex');
+    }
+  }
 
   connectedCallback() {
     this.emitStyle();
@@ -274,20 +293,20 @@ export class Input implements ComponentInterface {
     this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onBlur = () => {
+  private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChanged();
     this.emitStyle();
 
-    this.ionBlur.emit();
+    this.ionBlur.emit(ev);
   }
 
-  private onFocus = () => {
+  private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
     this.focusChanged();
     this.emitStyle();
 
-    this.ionFocus.emit();
+    this.ionFocus.emit(ev);
   }
 
   private onKeydown = (ev: KeyboardEvent) => {
@@ -302,6 +321,10 @@ export class Input implements ComponentInterface {
       // Reset the flag
       this.didBlurAfterEdit = false;
     }
+  }
+
+  private clearTextOnEnter = (ev: KeyboardEvent) => {
+    if (ev.key === 'Enter') { this.clearTextInput(ev); }
   }
 
   private clearTextInput = (ev?: Event) => {
@@ -345,12 +368,11 @@ export class Input implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus
-        }}
+        })}
       >
         <input
           class="native-input"
@@ -362,6 +384,7 @@ export class Input implements ComponentInterface {
           autoComplete={this.autocomplete}
           autoCorrect={this.autocorrect}
           autoFocus={this.autofocus}
+          enterKeyHint={this.enterkeyhint}
           inputMode={this.inputmode}
           min={this.min}
           max={this.max}
@@ -373,9 +396,10 @@ export class Input implements ComponentInterface {
           placeholder={this.placeholder || ''}
           readOnly={this.readonly}
           required={this.required}
-          spellCheck={this.spellcheck}
+          spellcheck={this.spellcheck}
           step={this.step}
           size={this.size}
+          tabindex={this.tabindex}
           type={this.type}
           value={value}
           onInput={this.onInput}
@@ -384,11 +408,12 @@ export class Input implements ComponentInterface {
           onKeyDown={this.onKeydown}
         />
         {(this.clearInput && !this.readonly && !this.disabled) && <button
+          aria-label="reset"
           type="button"
           class="input-clear-icon"
-          tabindex="-1"
           onTouchStart={this.clearTextInput}
           onMouseDown={this.clearTextInput}
+          onKeyDown={this.clearTextOnEnter}
         />}
       </Host>
     );

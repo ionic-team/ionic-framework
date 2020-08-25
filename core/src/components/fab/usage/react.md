@@ -1,6 +1,6 @@
 ```tsx
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonFabList } from '@ionic/react';
+import { IonContent, IonHeader, IonFooter, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonFabList } from '@ionic/react';
 import { add, settings, share, person, arrowForwardCircle, arrowBackCircle, arrowUpCircle, logoVimeo, logoFacebook, logoInstagram, logoTwitter } from 'ionicons/icons';
 
 export const FabExamples: React.FC = () => {
@@ -8,7 +8,7 @@ export const FabExamples: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>FabExamples</IonTitle>
+          <IonTitle>Header</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -90,6 +90,11 @@ export const FabExamples: React.FC = () => {
           </IonFabList>
         </IonFab>
       </IonContent>
+      <IonFooter>
+        <IonToolbar>
+          <IonTitle>Footer</IonTitle>
+        </IonToolbar>
+      </IonFooter>
     </IonPage>
   );
 };

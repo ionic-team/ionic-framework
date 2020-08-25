@@ -1,7 +1,7 @@
 
 const path = require('path');
 const { rollup } = require('rollup');
-const virtual = require('rollup-plugin-virtual');
+const virtual = require('@rollup/plugin-virtual');
 const fs = require('fs');
 
 function main() {

@@ -9,6 +9,10 @@ let ids = 0;
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML button element that wraps all child elements.
+ * @part indicator - The indicator displayed on the checked segment button.
+ * @part indicator-background - The background element for the indicator displayed on the checked segment button.
  */
 @Component({
   tag: 'ion-segment-button',
@@ -101,8 +105,9 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
       >
         <button
           type={type}
-          aria-pressed={checked ? 'true' : null}
+          aria-pressed={checked ? 'true' : 'false'}
           class="button-native"
+          part="native"
           disabled={disabled}
         >
           <span class="button-inner">

@@ -20,7 +20,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   nativeEl: HTMLIonRouterOutletElement;
 
   private activated: ComponentRef<any> | null = null;
-  private activatedView: RouteView | null = null;
+  activatedView: RouteView | null = null;
 
   private _activatedRoute: ActivatedRoute | null = null;
   private _swipeGesture?: boolean;

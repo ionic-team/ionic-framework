@@ -155,6 +155,72 @@ export const ButtonExample: React.FC = () => (
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'button-example',
+  styleUrl: 'button-example.css'
+})
+export class ButtonExample {
+  render() {
+    return [
+      // Default
+      <ion-button>Default</ion-button>,
+
+      // Anchor
+      <ion-button href="#">Anchor</ion-button>,
+
+      // Colors
+      <ion-button color="primary">Primary</ion-button>,
+      <ion-button color="secondary">Secondary</ion-button>,
+      <ion-button color="tertiary">Tertiary</ion-button>,
+      <ion-button color="success">Success</ion-button>,
+      <ion-button color="warning">Warning</ion-button>,
+      <ion-button color="danger">Danger</ion-button>,
+      <ion-button color="light">Light</ion-button>,
+      <ion-button color="medium">Medium</ion-button>,
+      <ion-button color="dark">Dark</ion-button>,
+
+      // Expand
+      <ion-button expand="full">Full Button</ion-button>,
+      <ion-button expand="block">Block Button</ion-button>,
+
+      // Round
+      <ion-button shape="round">Round Button</ion-button>,
+
+      // Fill
+      <ion-button expand="full" fill="outline">Outline + Full</ion-button>,
+      <ion-button expand="block" fill="outline">Outline + Block</ion-button>,
+      <ion-button shape="round" fill="outline">Outline + Round</ion-button>,
+
+      // Icons
+      <ion-button>
+        <ion-icon slot="start" name="star"></ion-icon>
+        Left Icon
+      </ion-button>,
+
+      <ion-button>
+        Right Icon
+        <ion-icon slot="end" name="star"></ion-icon>
+      </ion-button>,
+
+      <ion-button>
+        <ion-icon slot="icon-only" name="star"></ion-icon>
+      </ion-button>,
+
+      // Sizes
+      <ion-button size="large">Large</ion-button>,
+      <ion-button>Default</ion-button>,
+      <ion-button size="small">Small</ion-button>
+    ];
+  }
+}
+```
+
+
 ### Vue
 
 ```html
@@ -225,6 +291,7 @@ export const ButtonExample: React.FC = () => (
 | `href`            | `href`             | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                                   | `string \| undefined`                                       | `undefined` |
 | `mode`            | `mode`             | The mode determines which platform styles to use.                                                                                                                                                                                                                                         | `"ios" \| "md"`                                             | `undefined` |
 | `rel`             | `rel`              | Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).                                                                                                    | `string \| undefined`                                       | `undefined` |
+| `routerAnimation` | --                 | When using a router, it specifies the transition animation when navigating to another page using `href`.                                                                                                                                                                                  | `((baseEl: any, opts?: any) => Animation) \| undefined`     | `undefined` |
 | `routerDirection` | `router-direction` | When using a router, it specifies the transition direction when navigating to another page using `href`.                                                                                                                                                                                  | `"back" \| "forward" \| "root"`                             | `'forward'` |
 | `shape`           | `shape`            | The button shape.                                                                                                                                                                                                                                                                         | `"round" \| undefined`                                      | `undefined` |
 | `size`            | `size`             | The button size.                                                                                                                                                                                                                                                                          | `"default" \| "large" \| "small" \| undefined`              | `undefined` |
@@ -249,6 +316,13 @@ export const ButtonExample: React.FC = () => (
 | `"end"`       | Content is placed to the right of the button text in LTR, and to the left in RTL. |
 | `"icon-only"` | Should be used on an icon in a button that has no text.                           |
 | `"start"`     | Content is placed to the left of the button text in LTR, and to the right in RTL. |
+
+
+## Shadow Parts
+
+| Part       | Description                                                             |
+| ---------- | ----------------------------------------------------------------------- |
+| `"native"` | The native HTML button or anchor element that wraps all child elements. |
 
 
 ## CSS Custom Properties

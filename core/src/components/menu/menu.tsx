@@ -13,6 +13,10 @@ const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
 const iosEasingReverse = 'cubic-bezier(1, 0, 0.68, 0.28)';
 const mdEasingReverse = 'cubic-bezier(0.4, 0, 0.6, 1)';
 
+/**
+ * @part container - The container for the menu content.
+ * @part backdrop - The backdrop that appears over the main content when the menu is open.
+ */
 @Component({
   tag: 'ion-menu',
   styleUrls: {
@@ -44,12 +48,12 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * The content's id the menu should use.
    */
-  @Prop({ reflectToAttr: true }) contentId?: string;
+  @Prop({ reflect: true }) contentId?: string;
 
   /**
    * An id for the menu.
    */
-  @Prop({ reflectToAttr: true }) menuId?: string;
+  @Prop({ reflect: true }) menuId?: string;
 
   /**
    * The display type of the menu.
@@ -92,7 +96,7 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * Which side of the view the menu should be placed.
    */
-  @Prop({ reflectToAttr: true }) side: Side = 'start';
+  @Prop({ reflect: true }) side: Side = 'start';
 
   @Watch('side')
   protected sideChanged() {
@@ -187,6 +191,7 @@ AFTER:
       gestureName: 'menu-swipe',
       gesturePriority: 30,
       threshold: 10,
+      blurOnStart: true,
       canStart: ev => this.canStart(ev),
       onWillStart: () => this.onWillStart(),
       onStart: () => this.onStart(),
@@ -569,6 +574,7 @@ AFTER:
       >
         <div
           class="menu-inner"
+          part="container"
           ref={el => this.menuInnerEl = el}
         >
           <slot></slot>
@@ -579,6 +585,7 @@ AFTER:
           class="menu-backdrop"
           tappable={false}
           stopPropagation={false}
+          part="backdrop"
         />
       </Host>
     );
