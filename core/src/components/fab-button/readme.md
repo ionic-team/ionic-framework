@@ -164,6 +164,14 @@ export class FabButtonExample {
 | `ionFocus` | Emitted when the button has focus.   | `CustomEvent<void>` |
 
 
+## Shadow Parts
+
+| Part           | Description                                                             |
+| -------------- | ----------------------------------------------------------------------- |
+| `"close-icon"` | The close icon that is displayed when a fab list opens (uses ion-icon). |
+| `"native"`     | The native HTML button or anchor element that wraps all child elements. |
+
+
 ## CSS Custom Properties
 
 | Name                             | Description                                                                                               |
@@ -180,6 +188,7 @@ export class FabButtonExample {
 | `--border-style`                 | Border style of the button                                                                                |
 | `--border-width`                 | Border width of the button                                                                                |
 | `--box-shadow`                   | Box shadow of the button                                                                                  |
+| `--close-icon-font-size`         | Font size of the close icon                                                                               |
 | `--color`                        | Text color of the button                                                                                  |
 | `--color-activated`              | Text color of the button when pressed                                                                     |
 | `--color-focused`                | Text color of the button when focused with the tab key                                                    |

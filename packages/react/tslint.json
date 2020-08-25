@@ -17,7 +17,7 @@
     "no-floating-promises": false,
     "no-invalid-template-strings": true,
     "ban-export-const-enum": true,
-    "only-arrow-functions": true,
+    "only-arrow-functions": false,
     "strict-boolean-conditions": [false],
     "jsx-key": false,
     "jsx-self-close": false,
@@ -31,6 +31,9 @@
     "no-empty-interface": false,
     "no-unbound-method": false,
     "no-unused-expression": false,
-    "prefer-conditional-expression": false
+    "prefer-conditional-expression": false,
+    "strict-type-predicates": false,
+    "interface-over-type-literal": false,
+    "prefer-object-spread": false
   }
 }

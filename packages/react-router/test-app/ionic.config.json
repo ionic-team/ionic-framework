@@ -1,0 +1,7 @@
+{
+  "name": "react-router-new",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

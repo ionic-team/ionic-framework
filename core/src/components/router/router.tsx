@@ -70,9 +70,17 @@ export class Router implements ComponentInterface {
   }
 
   @Listen('popstate', { target: 'window' })
-  protected onPopState() {
+  protected async onPopState() {
     const direction = this.historyDirection();
-    const path = this.getPath();
+    let path = this.getPath();
+
+    const canProceed = await this.runGuards(path);
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        path = parsePath(canProceed.redirect);
+      }
+      return false;
+    }
     console.debug('[ion-router] URL changed -> update nav', path, direction);
     return this.writeNavStateRoot(path, direction);
   }
@@ -85,6 +93,21 @@ export class Router implements ComponentInterface {
     });
   }
 
+  /** @internal */
+  @Method()
+  async canTransition() {
+    const canProceed = await this.runGuards();
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        return canProceed.redirect;
+      } else {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   /**
    * Navigate to the specified URL.
    *
@@ -92,14 +115,25 @@ export class Router implements ComponentInterface {
    * @param direction The direction of the animation. Defaults to `"forward"`.
    */
   @Method()
-  push(url: string, direction: RouterDirection = 'forward', animation?: AnimationBuilder) {
+  async push(url: string, direction: RouterDirection = 'forward', animation?: AnimationBuilder) {
     if (url.startsWith('.')) {
       url = (new URL(url, window.location.href)).pathname;
     }
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
-    const path = parsePath(url);
-    const queryString = url.split('?')[1];
+    let path = parsePath(url);
+    let queryString = url.split('?')[1];
+
+    const canProceed = await this.runGuards(path);
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        path = parsePath(canProceed.redirect);
+        queryString = canProceed.redirect.split('?')[1];
+      } else {
+        return false;
+      }
+    }
+
     this.setPath(path, direction, queryString);
     return this.writeNavStateRoot(path, direction, animation);
   }
@@ -191,6 +225,7 @@ export class Router implements ComponentInterface {
     // lookup redirect rule
     const redirects = readRedirects(this.el);
     const redirect = routeRedirect(path, redirects);
+
     let redirectFrom: string[] | null = null;
     if (redirect) {
       this.setPath(redirect.to!, direction);
@@ -236,6 +271,25 @@ export class Router implements ComponentInterface {
       await p;
     }
     return resolve;
+  }
+  private async runGuards(to: string[] | null = this.getPath(), from: string[] | null = parsePath(this.previousPath)) {
+    if (!to || !from) { return true; }
+
+    const routes = readRoutes(this.el);
+
+    const toChain = routerPathToChain(to, routes);
+    const fromChain = routerPathToChain(from, routes);
+
+    const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
+    const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
+
+    const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
+    if (canLeave === false || typeof canLeave === 'object') { return canLeave; }
+
+    const canEnter = beforeEnterHook ? await beforeEnterHook() : true;
+    if (canEnter === false || typeof canEnter === 'object') { return canEnter; }
+
+    return true;
   }
 
   private async writeNavState(

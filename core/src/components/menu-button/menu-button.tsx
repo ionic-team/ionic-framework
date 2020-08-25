@@ -8,6 +8,12 @@ import { menuController } from '../../utils/menu-controller';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { updateVisibility } from '../menu-toggle/menu-toggle-util';
 
+/**
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML button element that wraps all child elements.
+ * @part icon - The menu button icon (uses ion-icon).
+ */
 @Component({
   tag: 'ion-menu-button',
   styleUrls: {
@@ -77,11 +83,8 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
         onClick={this.onClick}
         aria-disabled={disabled ? 'true' : null}
         aria-hidden={hidden ? 'true' : null}
-        class={{
+        class={createColorClasses(color, {
           [mode]: true,
-
-          ...createColorClasses(color),
-
           'button': true,  // ion-buttons target .button
           'menu-button-hidden': hidden,
           'menu-button-disabled': disabled,
@@ -89,17 +92,18 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'ion-activatable': true,
           'ion-focusable': true
-        }}
+        })}
       >
         <button
           {...attrs}
           disabled={disabled}
           class="button-native"
+          part="native"
           aria-label="menu"
         >
           <span class="button-inner">
             <slot>
-              <ion-icon icon={menuIcon} mode={mode} lazy={false} aria-hidden="true"></ion-icon>
+              <ion-icon part="icon" icon={menuIcon} mode={mode} lazy={false} aria-hidden="true"></ion-icon>
             </slot>
           </span>
           {mode === 'md' && <ion-ripple-effect type="unbounded"></ion-ripple-effect>}

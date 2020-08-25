@@ -7,6 +7,9 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML button or anchor element that wraps all child elements.
+ * @part close-icon - The close icon that is displayed when a fab list opens (uses ion-icon).
  */
 @Component({
   tag: 'ion-fab-button',
@@ -139,8 +142,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
     return (
       <Host
         aria-disabled={disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
           'fab-button-in-list': inList,
           'fab-button-translucent-in-list': inList && translucent,
@@ -151,20 +153,19 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           'ion-activatable': true,
           'ion-focusable': true,
           [`fab-button-${size}`]: size !== undefined,
-        }}
+        })}
       >
 
         <TagType
           {...attrs}
           class="button-native"
+          part="native"
           disabled={disabled}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           onClick={(ev: Event) => openURL(href, ev, this.routerDirection, this.routerAnimation)}
         >
-          <span class="close-icon">
-            <ion-icon icon={this.closeIcon} lazy={false}></ion-icon>
-          </span>
+          <ion-icon icon={this.closeIcon} part="close-icon" class="close-icon" lazy={false}></ion-icon>
           <span class="button-inner">
             <slot></slot>
           </span>

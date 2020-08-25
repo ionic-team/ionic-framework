@@ -201,12 +201,12 @@ export class Input implements ComponentInterface {
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur!: EventEmitter<void>;
+  @Event() ionBlur!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the styles change.
@@ -293,20 +293,20 @@ export class Input implements ComponentInterface {
     this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onBlur = () => {
+  private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChanged();
     this.emitStyle();
 
-    this.ionBlur.emit();
+    this.ionBlur.emit(ev);
   }
 
-  private onFocus = () => {
+  private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
     this.focusChanged();
     this.emitStyle();
 
-    this.ionFocus.emit();
+    this.ionFocus.emit(ev);
   }
 
   private onKeydown = (ev: KeyboardEvent) => {
@@ -321,6 +321,10 @@ export class Input implements ComponentInterface {
       // Reset the flag
       this.didBlurAfterEdit = false;
     }
+  }
+
+  private clearTextOnEnter = (ev: KeyboardEvent) => {
+    if (ev.key === 'Enter') { this.clearTextInput(ev); }
   }
 
   private clearTextInput = (ev?: Event) => {
@@ -364,12 +368,11 @@ export class Input implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus
-        }}
+        })}
       >
         <input
           class="native-input"
@@ -393,7 +396,7 @@ export class Input implements ComponentInterface {
           placeholder={this.placeholder || ''}
           readOnly={this.readonly}
           required={this.required}
-          spellcheck={this.spellcheck ? 'true' : undefined}
+          spellcheck={this.spellcheck}
           step={this.step}
           size={this.size}
           tabindex={this.tabindex}
@@ -405,11 +408,12 @@ export class Input implements ComponentInterface {
           onKeyDown={this.onKeydown}
         />
         {(this.clearInput && !this.readonly && !this.disabled) && <button
+          aria-label="reset"
           type="button"
           class="input-clear-icon"
-          tabindex="-1"
           onTouchStart={this.clearTextInput}
           onMouseDown={this.clearTextInput}
+          onKeyDown={this.clearTextOnEnter}
         />}
       </Host>
     );

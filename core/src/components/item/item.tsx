@@ -12,6 +12,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
  *
+ * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
  */
 @Component({
@@ -200,20 +201,22 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         aria-disabled={disabled ? 'true' : null}
         class={{
           ...childStyles,
-          ...createColorClasses(this.color),
-          'item': true,
-          [mode]: true,
-          [`item-lines-${lines}`]: lines !== undefined,
-          'item-disabled': disabled,
-          'in-list': hostContext('ion-list', this.el),
-          'item-multiple-inputs': this.multipleInputs,
-          'ion-activatable': canActivate,
-          'ion-focusable': true,
+          ...createColorClasses(this.color, {
+            'item': true,
+            [mode]: true,
+            [`item-lines-${lines}`]: lines !== undefined,
+            'item-disabled': disabled,
+            'in-list': hostContext('ion-list', this.el),
+            'item-multiple-inputs': this.multipleInputs,
+            'ion-activatable': canActivate,
+            'ion-focusable': true,
+          })
         }}
       >
           <TagType
             {...attrs}
             class="item-native"
+            part="native"
             disabled={disabled}
             onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
           >

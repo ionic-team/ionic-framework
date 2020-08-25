@@ -1,6 +1,6 @@
 # ion-segment-button
 
-Segment buttons are groups of related buttons inside of a [Segment](../segment). They are displayed in a horizontal row. A segment button can be checked by default by adding the `checked` attribute or by setting the `value` of the segment to the `value` of the segment button. Only one segment button should be selected at a time.
+Segment buttons are groups of related buttons inside of a [Segment](../segment). They are displayed in a horizontal row. A segment button can be checked by default by setting the `value` of the segment to the `value` of the segment button. Only one segment button can be selected at a time.
 
 
 <!-- Auto Generated Below -->
@@ -792,6 +792,15 @@ export class SegmentButtonExample {
 | `mode`     | `mode`     | The mode determines which platform styles to use.            | `"ios" \| "md"`                                                                                         | `undefined`           |
 | `type`     | `type`     | The type of the button.                                      | `"button" \| "reset" \| "submit"`                                                                       | `'button'`            |
 | `value`    | `value`    | The value of the segment button.                             | `string`                                                                                                | `'ion-sb-' + (ids++)` |
+
+
+## Shadow Parts
+
+| Part                     | Description                                                                       |
+| ------------------------ | --------------------------------------------------------------------------------- |
+| `"indicator"`            | The indicator displayed on the checked segment button.                            |
+| `"indicator-background"` | The background element for the indicator displayed on the checked segment button. |
+| `"native"`               | The native HTML button element that wraps all child elements.                     |
 
 
 ## CSS Custom Properties

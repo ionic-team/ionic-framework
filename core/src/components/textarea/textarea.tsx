@@ -177,12 +177,12 @@ export class Textarea implements ComponentInterface {
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur!: EventEmitter<void>;
+  @Event() ionBlur!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   connectedCallback() {
     this.emitStyle();
@@ -292,18 +292,18 @@ export class Textarea implements ComponentInterface {
     this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onFocus = () => {
+  private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
     this.focusChange();
 
-    this.ionFocus.emit();
+    this.ionFocus.emit(ev);
   }
 
-  private onBlur = () => {
+  private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChange();
 
-    this.ionBlur.emit();
+    this.ionBlur.emit(ev);
   }
 
   private onKeyDown = () => {
@@ -322,10 +322,9 @@ export class Textarea implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
-        }}
+        })}
       >
         <div
           class="textarea-wrapper"
@@ -333,6 +332,7 @@ export class Textarea implements ComponentInterface {
         >
           <textarea
             class="native-textarea"
+            aria-labelledby={labelId}
             ref={el => this.nativeInput = el}
             autoCapitalize={this.autocapitalize}
             autoFocus={this.autofocus}
@@ -345,7 +345,7 @@ export class Textarea implements ComponentInterface {
             placeholder={this.placeholder || ''}
             readOnly={this.readonly}
             required={this.required}
-            spellcheck={this.spellcheck ? 'true' : undefined}
+            spellcheck={this.spellcheck}
             cols={this.cols}
             rows={this.rows}
             wrap={this.wrap}

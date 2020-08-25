@@ -315,9 +315,9 @@ export class ReorderExample {
 
 ## Shadow Parts
 
-| Part     | Description                     |
-| -------- | ------------------------------- |
-| `"icon"` | The icon of the reorder handle. |
+| Part     | Description                                     |
+| -------- | ----------------------------------------------- |
+| `"icon"` | The icon of the reorder handle (uses ion-icon). |
 
 
 ## Dependencies

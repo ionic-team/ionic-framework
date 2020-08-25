@@ -35,11 +35,11 @@ export class ListHeader implements ComponentInterface {
 
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           [`list-header-lines-${lines}`]: lines !== undefined,
-        }}
+        }
+        )}
       >
         <div class="list-header-inner">
           <slot></slot>

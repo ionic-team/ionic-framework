@@ -17,10 +17,10 @@ export const IonBackButton = /*@__PURE__*/(() => class extends React.Component<P
   context!: React.ContextType<typeof NavContext>;
 
   clickButton = (e: React.MouseEvent) => {
-    const defaultHref = this.props.defaultHref;
+    const { defaultHref, routerAnimation } = this.props;
     if (this.context.hasIonicRouter()) {
       e.stopPropagation();
-      this.context.goBack(defaultHref);
+      this.context.goBack(defaultHref, routerAnimation);
     } else if (defaultHref !== undefined) {
       window.location.href = defaultHref;
     }

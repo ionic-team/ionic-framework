@@ -21,7 +21,6 @@ export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}
           syncEvent(node, eventNameLc, newProps[name]);
         }
       } else {
-        (node as any)[name] = newProps[name];
         const propType = typeof newProps[name];
         if (propType === 'string') {
           node.setAttribute(camelToDashCase(name), newProps[name]);
@@ -61,20 +60,24 @@ export const getClassName = (classList: DOMTokenList, newProps: any, oldProps: a
  * Checks if an event is supported in the current execution environment.
  * @license Modernizr 3.0.0pre (Custom Build) | MIT
  */
-export const isCoveredByReact = (eventNameSuffix: string, doc: Document = document) => {
-  const eventName = 'on' + eventNameSuffix;
-  let isSupported = eventName in doc;
+export const isCoveredByReact = (eventNameSuffix: string) => {
+  if (typeof document === 'undefined') {
+    return true;
+  } else {
+    const eventName = 'on' + eventNameSuffix;
+    let isSupported = eventName in document;
 
-  if (!isSupported) {
-    const element = doc.createElement('div');
-    element.setAttribute(eventName, 'return;');
-    isSupported = typeof (element as any)[eventName] === 'function';
+    if (!isSupported) {
+      const element = document.createElement('div');
+      element.setAttribute(eventName, 'return;');
+      isSupported = typeof (element as any)[eventName] === 'function';
+    }
+
+    return isSupported;
   }
-
-  return isSupported;
 };
 
-export const syncEvent = (node: Element & { __events?: { [key: string]: ((e: Event) => any) | undefined } }, eventName: string, newEventHandler?: (e: Event) => any) => {
+export const syncEvent = (node: Element & { __events?: { [key: string]: ((e: Event) => any) | undefined; }; }, eventName: string, newEventHandler?: (e: Event) => any) => {
   const eventStore = node.__events || (node.__events = {});
   const oldEventHandler = eventStore[eventName];
 

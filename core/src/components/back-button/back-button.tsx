@@ -8,6 +8,10 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part native - The native HTML button element that wraps all child elements.
+ * @part icon - The back button icon (uses ion-icon).
+ * @part text - The back button text.
  */
 @Component({
   tag: 'ion-back-button',
@@ -36,7 +40,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   /**
    * If `true`, the user cannot interact with the button.
    */
-  @Prop({ reflectToAttr: true }) disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
    * The icon name to use for the back button.
@@ -118,10 +122,8 @@ export class BackButton implements ComponentInterface, ButtonInterface {
     return (
       <Host
         onClick={this.onClick}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
-
           'button': true, // ion-buttons target .button
           'back-button-disabled': disabled,
           'back-button-has-icon-only': hasIconOnly,
@@ -130,12 +132,18 @@ export class BackButton implements ComponentInterface, ButtonInterface {
           'ion-activatable': true,
           'ion-focusable': true,
           'show-back-button': showBackButton
-        }}
+        })}
       >
-        <button type={type} disabled={disabled} class="button-native" aria-label={backButtonText || 'back'}>
+        <button
+          type={type}
+          disabled={disabled}
+          class="button-native"
+          part="native"
+          aria-label={backButtonText || 'back'}
+        >
           <span class="button-inner">
-            {backButtonIcon && <ion-icon icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
-            {backButtonText && <span aria-hidden="true" class="button-text">{backButtonText}</span>}
+            {backButtonIcon && <ion-icon part="icon" icon={backButtonIcon} aria-hidden="true" lazy={false}></ion-icon>}
+            {backButtonText && <span part="text" aria-hidden="true" class="button-text">{backButtonText}</span>}
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
         </button>

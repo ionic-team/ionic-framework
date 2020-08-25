@@ -14,7 +14,7 @@ export class SelectOption implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**
-   * If `true`, the user cannot interact with the select option.
+   * If `true`, the user cannot interact with the select option. This property does not apply when `interface="action-sheet"` as `ion-action-sheet` does not allow for disabled buttons.
    */
   @Prop() disabled = false;
 

@@ -41,6 +41,7 @@
 
 :host(.title-large) {
   @include padding(0, 16px);
+  @include transform-origin(start, center);
 
   bottom: 0;
 
@@ -58,4 +59,8 @@
 
 :host(.title-large.ion-cloned-element) {
   --color: #{$text-color};
+}
+
+:host(.title-large) .toolbar-title {
+  @include transform-origin(inherit);
 }

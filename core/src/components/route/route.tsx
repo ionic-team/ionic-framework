@@ -1,5 +1,7 @@
 import { Component, ComponentInterface, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
+import { NavigationHookCallback } from './route-interface';
+
 @Component({
   tag: 'ion-route'
 })
@@ -27,6 +29,22 @@ export class Route implements ComponentInterface {
    * to the defined component when rendered.
    */
   @Prop() componentProps?: {[key: string]: any};
+
+  /**
+   * A navigation hook that is fired when the route tries to leave.
+   * Returning `true` allows the navigation to proceed, while returning
+   * `false` causes it to be cancelled. Returning a `NavigationHookOptions`
+   * object causes the router to redirect to the path specified.
+   */
+  @Prop() beforeLeave?: NavigationHookCallback;
+
+  /**
+   * A navigation hook that is fired when the route tries to enter.
+   * Returning `true` allows the navigation to proceed, while returning
+   * `false` causes it to be cancelled. Returning a `NavigationHookOptions`
+   * object causes the router to redirect to the path specified.
+   */
+  @Prop() beforeEnter?: NavigationHookCallback;
 
   /**
    * Used internally by `ion-router` to know when this route did change.

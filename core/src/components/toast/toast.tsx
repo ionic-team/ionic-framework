@@ -13,6 +13,11 @@ import { mdLeaveAnimation } from './animations/md.leave';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part button - Any button element that is displayed inside of the toast.
+ * @part container - The element that wraps all child elements.
+ * @part header - The header text of the toast.
+ * @part message - The body text of the toast.
  */
 @Component({
   tag: 'ion-toast',
@@ -121,7 +126,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  constructor() {
+  connectedCallback() {
     prepareOverlay(this.el);
   }
 
@@ -264,13 +269,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
         style={{
           zIndex: `${60000 + this.overlayIndex}`,
         }}
-        class={{
+        class={createColorClasses(this.color, {
           [mode]: true,
-
-          ...createColorClasses(this.color),
           ...getClassMap(this.cssClass),
           'toast-translucent': this.translucent
-        }}
+        })}
         tabindex="-1"
         onIonToastWillDismiss={this.dispatchCancelHandler}
       >

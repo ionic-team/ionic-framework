@@ -462,8 +462,8 @@ export class IonMenu {
 }
 export declare interface IonMenuButton extends Components.IonMenuButton {
 }
-@ProxyCmp({ inputs: ["autoHide", "color", "disabled", "menu", "type"] })
-@Component({ selector: "ion-menu-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["autoHide", "color", "disabled", "menu", "type"] })
+@ProxyCmp({ inputs: ["autoHide", "color", "disabled", "menu", "mode", "type"] })
+@Component({ selector: "ion-menu-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["autoHide", "color", "disabled", "menu", "mode", "type"] })
 export class IonMenuButton {
     protected el: HTMLElement;
     constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
