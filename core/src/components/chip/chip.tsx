@@ -39,13 +39,12 @@ export class Chip implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'chip-outline': this.outline,
           'chip-disabled': this.disabled,
           'ion-activatable': true,
-        }}
+        })}
       >
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
