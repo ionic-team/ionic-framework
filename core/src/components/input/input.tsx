@@ -25,7 +25,7 @@ export class Input implements ComponentInterface {
 
   /**
    * This is required for a WebKit bug which requires us to
-   * blur and focus and input to properly focus the input in
+   * blur and focus an input to properly focus the input in
    * an item with delegatesFocus. It will no longer be needed
    * with iOS 14.
    *
