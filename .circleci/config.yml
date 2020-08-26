@@ -311,12 +311,7 @@ jobs:
           command: npm install
           working_directory: /tmp/workspace/angular/test/test-app
       - run:
-          name: Update Chromedriver
-          command: |
-            sudo apt-get update
-            sudo apt-get install google-chrome-stable
-      - run:
-          command: npm run test -- --watch=false --progress=false --browsers=ChromeHeadlessCI
+          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
           working_directory: /tmp/workspace/angular/test/test-app
 
 workflows:
@@ -363,8 +358,8 @@ workflows:
     #       requires: [build-react]
     #   - test-react-router-spec:
     #       requires: [build-react-router]
-      - test-angular-lint:
-          requires: [build-angular]
+    #   - test-angular-lint:
+    #       requires: [build-angular]
       - test-angular-e2e:
           requires:
             - build-angular
