@@ -311,6 +311,11 @@ jobs:
           command: npm ci
           working_directory: /tmp/workspace/angular/test/test-app
       - run:
+          name: Update Chromedriver
+          command: |
+            sudo apt-get update
+            sudo apt-get install google-chrome-stable
+      - run:
           command: npm test
           working_directory: /tmp/workspace/angular/test/test-app
 
