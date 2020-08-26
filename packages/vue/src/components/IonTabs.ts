@@ -6,9 +6,8 @@ export const IonTabs = defineComponent({
   render() {
     const { $slots: slots } = this;
     return h(
-      'div',
+      'ion-tabs',
       {
-        class: 'ion-tabs',
         style: {
           'display': 'flex',
           'position': 'absolute',

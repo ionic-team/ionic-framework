@@ -16,6 +16,7 @@ export const IonicVue: Plugin = {
       });
       await applyPolyfills();
       await defineCustomElements(window, {
+        exclude: ['ion-tabs'],
         ce: (eventName: string, opts: any) => new CustomEvent(eventName.toLowerCase(), opts),
         ael,
         rel
