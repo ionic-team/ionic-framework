@@ -870,7 +870,7 @@ export namespace Components {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
-          * This is required for a WebKit bug which requires us to blur and focus and input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
+          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
          */
         "fireFocusEvents": boolean;
         /**
@@ -4199,7 +4199,7 @@ declare namespace LocalJSX {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
-          * This is required for a WebKit bug which requires us to blur and focus and input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
+          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
          */
         "fireFocusEvents"?: boolean;
         /**
