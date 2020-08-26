@@ -331,6 +331,9 @@ export class Input implements ComponentInterface {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
       ev.stopPropagation();
+
+      // Attempt to focus input again after pressing clear button
+      this.setFocus();
     }
 
     this.value = '';
