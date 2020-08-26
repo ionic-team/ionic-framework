@@ -8,7 +8,7 @@
     "sync:build": "sh scripts/build-ionic.sh",
     "sync": "sh scripts/sync.sh",
     "build": "npm run sync && ng build --prod --no-progress",
-    "test": "ng e2e --prod --protractor-config=e2e/protractor-ci.conf.js",
+    "test": "ng e2e --prod",
     "test.dev": "npm run sync && ng e2e",
     "lint": "ng lint",
     "postinstall": "npm run sync && ngcc",

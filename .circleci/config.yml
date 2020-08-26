@@ -311,7 +311,7 @@ jobs:
           command: npm install
           working_directory: /tmp/workspace/angular/test/test-app
       - run:
-          command: npm run test
+          command: npm run test -- --protractor-config=e2e/protractor-ci.conf.js
           working_directory: /tmp/workspace/angular/test/test-app
 
 workflows:
