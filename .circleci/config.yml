@@ -311,7 +311,7 @@ jobs:
           command: npm install
           working_directory: /tmp/workspace/angular/test/test-app
       - run:
-          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          command: npm run test
           working_directory: /tmp/workspace/angular/test/test-app
 
 workflows:
