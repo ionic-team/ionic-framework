@@ -50,7 +50,7 @@
     "jest-cli": "^26.4.1",
     "np": "^6.4.0",
     "pixelmatch": "4.0.2",
-    "puppeteer": "5.2.1",
+    "puppeteer": "^5.2.1",
     "rollup": "^2.26.4",
     "sass": "^1.26.10",
     "stylelint": "^13.6.1",
