@@ -3,28 +3,28 @@ version: 2
 aliases:
   - &restore-cache
       keys:
-        - v1-dependency-cache-{{ checksum "package.json" }}-3
+        - dependency-cache-{{ checksum "package.json" }}-3
 
   - &save-cache
-      key: v1-dependency-cache-{{ checksum "package.json" }}-3
+      key: dependency-cache-{{ checksum "package.json" }}-3
       paths:
         - node_modules
 
   - &restore-cache-core
       keys:
-        - v1-dependency-cache-{{ checksum "core/package.json" }}-3
+        - dependency-cache-{{ checksum "core/package.json" }}-3
 
   - &save-cache-core
-      key: v1-dependency-cache-{{ checksum "core/package.json" }}-3
+      key: dependency-cache-{{ checksum "core/package.json" }}-3
       paths:
         - core/node_modules
 
   - &restore-cache-core-stencil
       keys:
-        - stencil-cache-3
+        - stencil-cache-2
 
   - &save-cache-core-stencil
-      key: stencil-cache-3
+      key: stencil-cache-2
       paths:
         - core/.stencil
         - core/screenshot/images
