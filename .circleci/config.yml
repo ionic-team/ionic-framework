@@ -21,10 +21,10 @@ aliases:
 
   - &restore-cache-core-stencil
       keys:
-        - stencil-cache-2
+        - stencil-cache-3
 
   - &save-cache-core-stencil
-      key: stencil-cache-2
+      key: stencil-cache-3
       paths:
         - core/.stencil
         - core/screenshot/images
