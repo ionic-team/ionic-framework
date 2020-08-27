@@ -3,19 +3,19 @@ version: 2
 aliases:
   - &restore-cache
       keys:
-        - dependency-cache-{{ checksum "package.json" }}-3
+        - v1-dependency-cache-{{ checksum "package.json" }}-3
 
   - &save-cache
-      key: dependency-cache-{{ checksum "package.json" }}-3
+      key: v1-dependency-cache-{{ checksum "package.json" }}-3
       paths:
         - node_modules
 
   - &restore-cache-core
       keys:
-        - dependency-cache-{{ checksum "core/package.json" }}-3
+        - v1-dependency-cache-{{ checksum "core/package.json" }}-3
 
   - &save-cache-core
-      key: dependency-cache-{{ checksum "core/package.json" }}-3
+      key: v1-dependency-cache-{{ checksum "core/package.json" }}-3
       paths:
         - core/node_modules
 
