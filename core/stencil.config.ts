@@ -131,10 +131,6 @@ export const config: Config = {
   },
   testing: {
     allowableMismatchedPixels: 200,
-    browserArgs: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox'
-    ],
     pixelmatchThreshold: 0.05,
     waitBeforeScreenshot: 20,
     emulate: [
