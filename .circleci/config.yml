@@ -1,4 +1,7 @@
-version: 2
+version: 2.1
+
+orbs:
+  puppeteer: threetreeslight/puppeteer@0.1.2
 
 aliases:
   - &restore-cache
