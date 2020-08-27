@@ -33,6 +33,8 @@ defaults: &defaults
   docker:
     - image: circleci/node:latest-browsers
   working_directory: /tmp/workspace
+  environment:
+    NODE_ENV: development
 
 jobs:
   build:
