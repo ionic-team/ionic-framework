@@ -282,7 +282,7 @@ export class Datetime implements ComponentInterface {
         value: colOptions[colSelectedIndex].value
       };
 
-      if (data.name !== 'ampm' && this.datetimeValue.ampm) {
+      if (data.name !== 'ampm' && this.datetimeValue.ampm !== undefined) {
         changeData['ampm'] = {
           value: this.datetimeValue.ampm
         }
