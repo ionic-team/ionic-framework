@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
+import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocapitalizeTypes, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
@@ -830,9 +830,9 @@ export namespace Components {
          */
         "accept"?: string;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Default options are: `"off"`, `"characters"`, `"words"`, and `"sentences"`. For more information, see [Autocapitalize for mobile](https://developers.google.com/web/updates/2015/04/autocapitalize)
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
          */
-        "autocapitalize": string;
+        "autocapitalize": AutocapitalizeTypes;
         /**
           * Indicates whether the value of the control can be automatically completed by the browser.
          */
@@ -4151,9 +4151,9 @@ declare namespace LocalJSX {
          */
         "accept"?: string;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Default options are: `"off"`, `"characters"`, `"words"`, and `"sentences"`. For more information, see [Autocapitalize for mobile](https://developers.google.com/web/updates/2015/04/autocapitalize)
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
          */
-        "autocapitalize"?: string;
+        "autocapitalize"?: AutocapitalizeTypes;
         /**
           * Indicates whether the value of the control can be automatically completed by the browser.
          */
