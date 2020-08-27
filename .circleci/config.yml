@@ -31,7 +31,7 @@ aliases:
 
 defaults: &defaults
   docker:
-    - image: circleci/node:10-browsers
+    - image: circleci/node:latest-browsers
   working_directory: /tmp/workspace
 
 jobs:
