@@ -100,14 +100,12 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
     return (
       <Host
         onClick={this.onClick}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
-
           'item-option-disabled': disabled,
           'item-option-expandable': expandable,
           'ion-activatable': true,
-        }}
+        })}
       >
         <TagType
           {...attrs}

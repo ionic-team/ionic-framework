@@ -23,6 +23,16 @@ export class Input implements ComponentInterface {
   private didBlurAfterEdit = false;
   private tabindex?: string | number;
 
+  /**
+   * This is required for a WebKit bug which requires us to
+   * blur and focus an input to properly focus the input in
+   * an item with delegatesFocus. It will no longer be needed
+   * with iOS 14.
+   *
+   * @internal
+   */
+  @Prop() fireFocusEvents = true;
+
   @State() hasFocus = false;
 
   @Element() el!: HTMLElement;
@@ -244,13 +254,25 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * Sets focus on the specified `ion-input`. Use this method instead of the global
+   * Sets focus on the native `input` in `ion-input`. Use this method instead of the global
    * `input.focus()`.
    */
   @Method()
   async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
+    }
+  }
+
+  /**
+   * Sets blur on the native `input` in `ion-input`. Use this method instead of the global
+   * `input.blur()`.
+   * @internal
+   */
+  @Method()
+  async setBlur() {
+    if (this.nativeInput) {
+      this.nativeInput.blur();
     }
   }
 
@@ -298,7 +320,9 @@ export class Input implements ComponentInterface {
     this.focusChanged();
     this.emitStyle();
 
-    this.ionBlur.emit(ev);
+    if (this.fireFocusEvents) {
+      this.ionBlur.emit(ev);
+    }
   }
 
   private onFocus = (ev: FocusEvent) => {
@@ -306,7 +330,9 @@ export class Input implements ComponentInterface {
     this.focusChanged();
     this.emitStyle();
 
-    this.ionFocus.emit(ev);
+    if (this.fireFocusEvents) {
+      this.ionFocus.emit(ev);
+    }
   }
 
   private onKeydown = (ev: KeyboardEvent) => {
@@ -331,6 +357,9 @@ export class Input implements ComponentInterface {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
       ev.stopPropagation();
+
+      // Attempt to focus input again after pressing clear button
+      this.setFocus();
     }
 
     this.value = '';
@@ -368,12 +397,11 @@ export class Input implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus
-        }}
+        })}
       >
         <input
           class="native-input"

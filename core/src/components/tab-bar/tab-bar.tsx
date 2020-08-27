@@ -75,12 +75,11 @@ export class TabBar implements ComponentInterface {
       <Host
         role="tablist"
         aria-hidden={keyboardVisible ? 'true' : null}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
           'tab-bar-translucent': translucent,
           'tab-bar-hidden': keyboardVisible,
-        }}
+        })}
       >
         <slot></slot>
       </Host>

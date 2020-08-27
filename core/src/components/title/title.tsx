@@ -61,12 +61,10 @@ export class ToolbarTitle implements ComponentInterface {
 
     return (
       <Host
-        class={{
+        class={createColorClasses(this.color, {
           [mode]: true,
           [`title-${size}`]: true,
-
-          ...createColorClasses(this.color),
-        }}
+        })}
       >
         <div class="toolbar-title">
           <slot></slot>

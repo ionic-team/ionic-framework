@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forc
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
+import { raf } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -176,6 +177,30 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return (this.isClickable() || this.hasCover());
   }
 
+  private hasInputs(): boolean {
+    const inputs = this.el.querySelectorAll('ion-input');
+    return inputs.length > 0;
+  }
+
+  // This is needed for WebKit due to a delegatesFocus bug where
+  // clicking on the left padding of an item is not focusing the input
+  // but is opening the keyboard. It will no longer be needed with
+  // iOS 14.
+  @Listen('click')
+  delegateFocus() {
+    if (this.hasInputs()) {
+      const input = this.el.querySelector('ion-input');
+      if (input) {
+        input.fireFocusEvents = false;
+        input.setBlur();
+        input.setFocus();
+        raf(() => {
+          input.fireFocusEvents = true;
+        });
+      }
+    }
+  }
+
   render() {
     const { detail, detailIcon, download, lines, disabled, href, rel, target, routerAnimation, routerDirection } = this;
     const childStyles = {};
@@ -201,15 +226,16 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         aria-disabled={disabled ? 'true' : null}
         class={{
           ...childStyles,
-          ...createColorClasses(this.color),
-          'item': true,
-          [mode]: true,
-          [`item-lines-${lines}`]: lines !== undefined,
-          'item-disabled': disabled,
-          'in-list': hostContext('ion-list', this.el),
-          'item-multiple-inputs': this.multipleInputs,
-          'ion-activatable': canActivate,
-          'ion-focusable': true,
+          ...createColorClasses(this.color, {
+            'item': true,
+            [mode]: true,
+            [`item-lines-${lines}`]: lines !== undefined,
+            'item-disabled': disabled,
+            'in-list': hostContext('ion-list', this.el),
+            'item-multiple-inputs': this.multipleInputs,
+            'ion-activatable': canActivate,
+            'ion-focusable': true,
+          })
         }}
       >
           <TagType
