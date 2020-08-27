@@ -318,17 +318,15 @@ workflows:
   version: 2
   build:
     jobs:
-      - test-core-e2e
-
-    #   - build
-    #   - build-core:
-    #       requires: [build]
+      - build
+      - build-core:
+          requires: [build]
     #   - test-core-clean-build:
     #       requires: [build-core]
     #   - test-core-lint:
     #       requires: [build-core]
-    #   - test-core-e2e:
-    #       requires: [build-core]
+      - test-core-e2e:
+          requires: [build-core]
     #   - test-core-spec:
     #       requires: [build-core]
     #   - test-core-treeshake:
