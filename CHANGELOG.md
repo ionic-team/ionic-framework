@@ -1,3 +1,21 @@
+## [5.3.2](https://github.com/ionic-team/ionic/compare/v5.3.1...v5.3.2) (2020-08-27)
+
+
+### Bug Fixes
+
+* **input:** improve reliability of scroll assist when accessory bar is enabled ([#21936](https://github.com/ionic-team/ionic/issues/21936)) ([22477fb](https://github.com/ionic-team/ionic/commit/22477fb9bf7c0637aa5c8d0aab34c8ccc521b0b9)), closes [#21912](https://github.com/ionic-team/ionic/issues/21912)
+* **input:** properly focus the input when clicking the item padding in WebKit ([#21930](https://github.com/ionic-team/ionic/issues/21930)) ([e4964ff](https://github.com/ionic-team/ionic/commit/e4964ff77b317c92b201cf7c265787b55bdde4d4)), closes [#21509](https://github.com/ionic-team/ionic/issues/21509)
+* **input:** remain focused in the input after pressing the clear button ([#21985](https://github.com/ionic-team/ionic/issues/21985)) ([6878fb9](https://github.com/ionic-team/ionic/commit/6878fb9eb99c17908f5630019efaa762b5b006e0)), closes [#21549](https://github.com/ionic-team/ionic/issues/21549)
+* **label:** use translateY so input caret shows up due to webkit issue ([#21949](https://github.com/ionic-team/ionic/issues/21949)) ([00eac33](https://github.com/ionic-team/ionic/commit/00eac33053f49dbebf22ef95fddcb66570ed117a)), closes [#21943](https://github.com/ionic-team/ionic/issues/21943)
+* **overlays:** prevent focus from being stolen when presenting another overlay from within a modal ([#21856](https://github.com/ionic-team/ionic/issues/21856)) ([5c177d7](https://github.com/ionic-team/ionic/commit/5c177d756f7755e766d5b619d49825c4799aee47)), closes [#21840](https://github.com/ionic-team/ionic/issues/21840)
+* **range:** properly display stacked labels in an item with a range ([#21944](https://github.com/ionic-team/ionic/issues/21944)) ([9f4b01e](https://github.com/ionic-team/ionic/commit/9f4b01e17fd2f5e742d32bc9e080b6b394c43d37)), closes [#21625](https://github.com/ionic-team/ionic/issues/21625)
+* **react:** export correct animation types ([#21950](https://github.com/ionic-team/ionic/issues/21950)) ([36e4bf7](https://github.com/ionic-team/ionic/commit/36e4bf7dd76e396f910d28445566b5503cc84c8c))
+* **react:** removed exporting of ionRenderToString to decrease bundle size, closes [#21917](https://github.com/ionic-team/ionic/issues/21917) ([#21928](https://github.com/ionic-team/ionic/issues/21928)) ([434befe](https://github.com/ionic-team/ionic/commit/434befea5f31aa599ee5b1b7edf29238912c23d9))
+* **react:** setting active tab properly on mount, closes [#21830](https://github.com/ionic-team/ionic/issues/21830) ([#21833](https://github.com/ionic-team/ionic/issues/21833)) ([f58424f](https://github.com/ionic-team/ionic/commit/f58424f62596b9eb82bebb8e07c211e1725c025a))
+* **reat:** fix tab currentHref when changing tabs, closes [#21834](https://github.com/ionic-team/ionic/issues/21834) ([#21835](https://github.com/ionic-team/ionic/issues/21835)) ([74468ab](https://github.com/ionic-team/ionic/commit/74468ab7972b174ba85bf239306c27080f253a4a))
+
+
+
 ## [5.3.1](https://github.com/ionic-team/ionic/compare/v5.3.0...v5.3.1) (2020-07-27)
 
 
