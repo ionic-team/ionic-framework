@@ -39,7 +39,7 @@ export const defineContainer = <Props extends object>(name: string, componentPro
   * Note: The `props` here are not all properties on a component.
   * They refer to whatever properties are set on an instance of a component.
   */
-  const Container: FunctionalComponent<Props & InputProps> = (props, { slots, emit }) => {
+  const Container: FunctionalComponent<Props & InputProps> = (props, { attrs, slots, emit }) => {
     const { modelValue, ...restOfProps } = props;
     let finalProps: any = (modelProp) ? (
       {
@@ -62,6 +62,7 @@ export const defineContainer = <Props extends object>(name: string, componentPro
 
       finalProps = {
         ...finalProps,
+        ...attrs,
         onVnodeBeforeMount
       }
     }

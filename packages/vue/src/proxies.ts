@@ -824,14 +824,6 @@ export const IonSplitPane = /*@__PURE__*/ defineContainer<JSX.IonSplitPane>('ion
 ]);
 
 
-export const IonTab = /*@__PURE__*/ defineContainer<JSX.IonTab>('ion-tab', [
-  'active',
-  'delegate',
-  'tab',
-  'component'
-]);
-
-
 export const IonText = /*@__PURE__*/ defineContainer<JSX.IonText>('ion-text', [
   'color'
 ]);
