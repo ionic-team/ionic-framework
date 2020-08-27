@@ -149,7 +149,7 @@ describe('tabs', () => {
 
     it('should set root when clicking on an active tab to navigate to the root', async () => {
       const expectNestedTabUrlToContain = 'search=hello#fragment';
-      let tab = await getSelectedTab() as ElementFinder;
+      const tab = await getSelectedTab() as ElementFinder;
       const initialUrl = await browser.getCurrentUrl();
       await tab.$('#goto-nested-page1-with-query-params').click();
       await testTabTitle('Tab 1 - Page 2 (1)');
@@ -176,7 +176,7 @@ describe('tabs', () => {
     it('should preserve root url navigation extras when clicking on an active tab to navigate to the root', async () => {
       await browser.get(rootUrl);
 
-      let tab = await getSelectedTab() as ElementFinder;
+      const tab = await getSelectedTab() as ElementFinder;
       await tab.$('#goto-nested-page1-with-query-params').click();
       await testTabTitle('Tab 1 - Page 2 (1)');
       await testUrlContains(expectNestedTabUrlToContain);
