@@ -37,7 +37,7 @@ export interface LifeCycleCount {
 }
 
 export function handleErrorMessages() {
-  return browser.manage().logs().get('browser').then(function (browserLog) {
+  return browser.manage().logs().get('browser').then(browserLog => {
     for (let i = 0; i <= browserLog.length - 1; i++) {
       if (browserLog[i].level.name_ === 'SEVERE') {
         fail(browserLog[i].message);
