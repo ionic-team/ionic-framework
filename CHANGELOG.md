@@ -12,7 +12,7 @@
 * **react:** export correct animation types ([#21950](https://github.com/ionic-team/ionic/issues/21950)) ([36e4bf7](https://github.com/ionic-team/ionic/commit/36e4bf7dd76e396f910d28445566b5503cc84c8c))
 * **react:** removed exporting of ionRenderToString to decrease bundle size, closes [#21917](https://github.com/ionic-team/ionic/issues/21917) ([#21928](https://github.com/ionic-team/ionic/issues/21928)) ([434befe](https://github.com/ionic-team/ionic/commit/434befea5f31aa599ee5b1b7edf29238912c23d9))
 * **react:** setting active tab properly on mount, closes [#21830](https://github.com/ionic-team/ionic/issues/21830) ([#21833](https://github.com/ionic-team/ionic/issues/21833)) ([f58424f](https://github.com/ionic-team/ionic/commit/f58424f62596b9eb82bebb8e07c211e1725c025a))
-* **reat:** fix tab currentHref when changing tabs, closes [#21834](https://github.com/ionic-team/ionic/issues/21834) ([#21835](https://github.com/ionic-team/ionic/issues/21835)) ([74468ab](https://github.com/ionic-team/ionic/commit/74468ab7972b174ba85bf239306c27080f253a4a))
+* **react:** fix tab currentHref when changing tabs, closes [#21834](https://github.com/ionic-team/ionic/issues/21834) ([#21835](https://github.com/ionic-team/ionic/issues/21835)) ([74468ab](https://github.com/ionic-team/ionic/commit/74468ab7972b174ba85bf239306c27080f253a4a))
 
 
 
