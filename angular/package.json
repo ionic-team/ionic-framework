@@ -67,12 +67,12 @@
     "ng-packagr": "^9.1.5",
     "rollup": "~1.17.0",
     "rollup-plugin-node-resolve": "~5.2.0",
-    "rxjs": "^6.5.2",
-    "tsickle": "^0.34.0",
+    "rxjs": "^6.6.2",
+    "tsickle": "^0.39.1",
     "tslint": "^5.12.1",
     "tslint-ionic-rules": "0.0.21",
     "typescript": "3.4.5",
-    "zone.js": "^0.8.28"
+    "zone.js": "^0.11.1"
   },
   "schematics": "./schematics/collection.json",
   "ngPackage": {
