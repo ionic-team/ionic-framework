@@ -349,7 +349,8 @@ export const updateDate = (existingData: DatetimeData, newData: any, displayTime
             ? (existingData.hour! < 12 ? existingData.hour! + 12 : existingData.hour!)
             : (existingData.hour! >= 12 ? existingData.hour! - 12 : existingData.hour))
       };
-      (existingData as any)['hour'] = newData['hour'].value;
+      existingData['hour'] = newData['hour'].value;
+      existingData['ampm'] = newData['ampm'].value;
       return true;
     }
 
@@ -551,6 +552,7 @@ export interface DatetimeData {
   second?: number;
   millisecond?: number;
   tzOffset?: number;
+  ampm?: string;
 }
 
 export interface LocaleData {
