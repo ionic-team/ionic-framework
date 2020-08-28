@@ -48,14 +48,10 @@ export const IonAlert = /*@__PURE__*/ defineContainer<JSX.IonAlert>('ion-alert',
 ]);
 
 
-export const IonApp = /*@__PURE__*/ defineContainer<JSX.IonApp>('ion-app', [
-  
-]);
+export const IonApp = /*@__PURE__*/ defineContainer<JSX.IonApp>('ion-app');
 
 
-export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar', [
-  
-]);
+export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar');
 
 
 export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-backdrop', [
@@ -117,9 +113,7 @@ export const IonCard = /*@__PURE__*/ defineContainer<JSX.IonCard>('ion-card', [
 });
 
 
-export const IonCardContent = /*@__PURE__*/ defineContainer<JSX.IonCardContent>('ion-card-content', [
-  
-]);
+export const IonCardContent = /*@__PURE__*/ defineContainer<JSX.IonCardContent>('ion-card-content');
 
 
 export const IonCardHeader = /*@__PURE__*/ defineContainer<JSX.IonCardHeader>('ion-card-header', [
@@ -398,9 +392,7 @@ export const IonItemDivider = /*@__PURE__*/ defineContainer<JSX.IonItemDivider>(
 ]);
 
 
-export const IonItemGroup = /*@__PURE__*/ defineContainer<JSX.IonItemGroup>('ion-item-group', [
-  
-]);
+export const IonItemGroup = /*@__PURE__*/ defineContainer<JSX.IonItemGroup>('ion-item-group');
 
 
 export const IonItemOption = /*@__PURE__*/ defineContainer<JSX.IonItemOption>('ion-item-option', [
@@ -665,9 +657,7 @@ export const IonRefresherContent = /*@__PURE__*/ defineContainer<JSX.IonRefreshe
 ]);
 
 
-export const IonReorder = /*@__PURE__*/ defineContainer<JSX.IonReorder>('ion-reorder', [
-  
-]);
+export const IonReorder = /*@__PURE__*/ defineContainer<JSX.IonReorder>('ion-reorder');
 
 
 export const IonReorderGroup = /*@__PURE__*/ defineContainer<JSX.IonReorderGroup>('ion-reorder-group', [
@@ -681,9 +671,7 @@ export const IonRippleEffect = /*@__PURE__*/ defineContainer<JSX.IonRippleEffect
 ]);
 
 
-export const IonRow = /*@__PURE__*/ defineContainer<JSX.IonRow>('ion-row', [
-  
-]);
+export const IonRow = /*@__PURE__*/ defineContainer<JSX.IonRow>('ion-row');
 
 
 export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion-searchbar', [
@@ -780,9 +768,7 @@ export const IonSkeletonText = /*@__PURE__*/ defineContainer<JSX.IonSkeletonText
 ]);
 
 
-export const IonSlide = /*@__PURE__*/ defineContainer<JSX.IonSlide>('ion-slide', [
-  
-]);
+export const IonSlide = /*@__PURE__*/ defineContainer<JSX.IonSlide>('ion-slide');
 
 
 export const IonSlides = /*@__PURE__*/ defineContainer<JSX.IonSlides>('ion-slides', [
@@ -862,9 +848,7 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-t
 });
 
 
-export const IonThumbnail = /*@__PURE__*/ defineContainer<JSX.IonThumbnail>('ion-thumbnail', [
-  
-]);
+export const IonThumbnail = /*@__PURE__*/ defineContainer<JSX.IonThumbnail>('ion-thumbnail');
 
 
 export const IonTitle = /*@__PURE__*/ defineContainer<JSX.IonTitle>('ion-title', [
