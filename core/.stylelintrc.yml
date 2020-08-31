@@ -254,7 +254,7 @@ rules:
       - visibility
       - z-index
 
-  property-blacklist:
+  property-disallowed-list:
     - background-position
     - right
     - left
