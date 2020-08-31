@@ -118,7 +118,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   /** @internal */
   @Method()
   async commit(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions): Promise<boolean> {
-    console.log('CORE ROUTER OUTLET');
     const unlock = await this.lock();
     let changed = false;
     try {

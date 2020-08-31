@@ -210,6 +210,8 @@ export const IonRouterOutlet = defineComponent({
       }
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
+      if (currentRoute.tab !== undefined && !attrs.tabs) return
+
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
 
       if (!enteringViewItem) {
