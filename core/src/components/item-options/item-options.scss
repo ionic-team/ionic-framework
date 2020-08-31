@@ -5,10 +5,10 @@
 
 ion-item-options {
   @include multi-dir() {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable property-disallowed-list */
     top: 0;
     right: 0;
-    /* stylelint-enable property-blacklist */
+    /* stylelint-enable property-disallowed-list */
   }
 
   @include ltr() {
@@ -19,10 +19,10 @@ ion-item-options {
     justify-content: flex-start;
 
     &:not(.item-options-end) {
-      /* stylelint-disable property-blacklist */
+      /* stylelint-disable property-disallowed-list */
       right: auto;
       left: 0;
-      /* stylelint-enable property-blacklist */
+      /* stylelint-enable property-disallowed-list */
 
       justify-content: flex-end;
     }
@@ -41,10 +41,10 @@ ion-item-options {
 
 .item-options-start {
   @include multi-dir() {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable property-disallowed-list */
     right: auto;
     left: 0;
-    /* stylelint-enable property-blacklist */
+    /* stylelint-enable property-disallowed-list */
   }
 
   @include ltr() {
