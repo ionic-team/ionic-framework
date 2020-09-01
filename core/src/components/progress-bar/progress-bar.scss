@@ -55,7 +55,7 @@
 
 .progress,
 .progress-buffer-bar {
-  /* stylelint-disable-next-line property-blacklist */
+  /* stylelint-disable-next-line property-disallowed-list */
   transform-origin: left top;
 
   transition: transform 150ms linear;
@@ -89,12 +89,12 @@
 // --------------------------------------------------
 
 .indeterminate-bar-primary {
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   top: 0;
   right: 0;
   bottom: 0;
   left: -145.166611%;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 
   animation: primary-indeterminate-translate 2s infinite linear;
 
@@ -105,12 +105,12 @@
 }
 
 .indeterminate-bar-secondary {
-  /* stylelint-disable property-blacklist */
+  /* stylelint-disable property-disallowed-list */
   top: 0;
   right: 0;
   bottom: 0;
   left:  -54.888891%;
-  /* stylelint-enable property-blacklist */
+  /* stylelint-enable property-disallowed-list */
 
   animation: secondary-indeterminate-translate 2s infinite linear;
 
@@ -138,7 +138,7 @@
 :host(.progress-bar-reversed) {
   .progress,
   .progress-buffer-bar {
-    /* stylelint-disable-next-line property-blacklist */
+    /* stylelint-disable-next-line property-disallowed-list */
     transform-origin: right top;
   }
 

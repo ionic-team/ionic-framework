@@ -56,7 +56,7 @@ span {
   animation-timing-function: linear;
 }
 
-/* stylelint-disable property-blacklist */
+/* stylelint-disable property-disallowed-list */
 @keyframes shimmer {
   0% {
     background-position: -468px 0
@@ -66,4 +66,4 @@ span {
     background-position: 468px 0
   }
 }
-/* stylelint-enable property-blacklist */
+/* stylelint-enable property-disallowed-list */
