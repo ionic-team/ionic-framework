@@ -32,6 +32,12 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
     }
   }
 
+  componentDidUpdate(oldProps: PageManagerProps) {
+    if (this.ionPageElementRef.current && (this.props.routeInfo?.pathname !== oldProps.routeInfo?.pathname)) {
+      this.context.syncIonPage(this.ionPageElementRef.current, this.props.routeInfo!);
+    }
+  }
+
   componentWillUnmount() {
     if (this.ionPageElementRef.current) {
       this.ionPageElementRef.current.removeEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));

@@ -26,6 +26,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   stackContextValue: StackContextState = {
     registerIonPage: this.registerIonPage.bind(this),
+    syncIonPage: this.syncIonPage.bind(this),
     isInOutlet: () => true
   };
 
@@ -111,6 +112,13 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       foundView.ionRoute = true;
     }
     this.handlePageTransition(routeInfo);
+  }
+
+  syncIonPage(page: HTMLElement, routeInfo: RouteInfo) {
+    const foundView = this.context.findViewItemByRouteInfo(routeInfo, this.id);
+    if (foundView) {
+      foundView.ionPageElement = page;
+    }
   }
 
   async setupRouterOutlet(routerOutlet: HTMLIonRouterOutletElement) {
