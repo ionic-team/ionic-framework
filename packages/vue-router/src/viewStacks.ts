@@ -82,10 +82,10 @@ export const createViewStacks = () => {
     }
   }
 
-  const getChildrenToRender = (outletId: number): any[] => {
+  const getChildrenToRender = (outletId: number): ViewItem[] => {
     const viewStack = viewStacks[outletId];
     if (viewStack) {
-      const components = viewStacks[outletId].filter(v => v.mount).map(v => v.vueComponent);
+      const components = viewStacks[outletId].filter(v => v.mount);
       return components;
     }
     return [];

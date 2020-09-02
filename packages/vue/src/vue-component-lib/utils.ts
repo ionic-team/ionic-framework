@@ -1,4 +1,4 @@
-import { FunctionalComponent, VNode, h, inject, ref, Ref } from 'vue';
+import { FunctionalComponent, VNode, defineComponent, h, inject, ref, Ref } from 'vue';
 
 export interface InputProps extends Object {
   modelValue: string | boolean;
@@ -44,7 +44,7 @@ export const defineContainer = <Props extends object>(name: string, componentPro
   * Note: The `props` here are not all properties on a component.
   * They refer to whatever properties are set on an instance of a component.
   */
-  const Container: FunctionalComponent<Props & InputProps> = (props, { attrs, slots, emit }) => {
+  const Container: FunctionalComponent<Props & InputProps> = defineComponent((props, { attrs, slots, emit }) => {
     const { modelValue, ...restOfProps } = props;
     const containerRef = ref<HTMLElement>();
     const classes: string[] = (attrs.class as string)?.split(' ') || [];
@@ -71,9 +71,8 @@ export const defineContainer = <Props extends object>(name: string, componentPro
       finalProps = {
         ...finalProps,
         ...attrs,
-        ref: containerRef,
-        class: getElementClasses(containerRef, classes),
-        onVnodeBeforeMount
+        onVnodeBeforeMount,
+        ref: containerRef
       }
     }
 
@@ -103,12 +102,16 @@ export const defineContainer = <Props extends object>(name: string, componentPro
       }
     }
 
-    return h(
-      name,
-      finalProps,
-      slots.default && slots.default()
-    );
-  }
+    return () =>
+      h(
+        name,
+        {
+          ...finalProps,
+          class: getElementClasses(containerRef, classes),
+        },
+        slots.default && slots.default()
+      );
+  });
 
   Container.displayName = name;
   Container.props = componentProps;
