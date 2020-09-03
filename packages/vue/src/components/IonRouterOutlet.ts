@@ -1,10 +1,9 @@
 import {
   h,
   defineComponent,
-  inject,
-  provide,
   ref,
   computed,
+  inject,
   watch,
   shallowRef,
   InjectionKey
@@ -14,20 +13,42 @@ import { useRoute, useRouter } from 'vue-router';
 import { fireLifecycle, generateId, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../utils';
 
 let viewDepthKey: InjectionKey<0> = Symbol(0);
-
 export const IonRouterOutlet = defineComponent({
   name: 'IonRouterOutlet',
   setup(_, { attrs }) {
     const vueRouter = useRouter();
     const route = useRoute();
-    const depth = inject(viewDepthKey, 0)
+    const depth = inject(viewDepthKey, 0);
+
     // TODO types
     const matchedRouteRef: any = computed(() => {
+      const lastRoute = route.matched[route.matched.length - 1];
       if (attrs.tabs) {
-        return route.matched[route.matched.length - 1];
+        return lastRoute;
       }
 
-      return route.matched[depth];
+      let currentRoute = route.matched[depth];
+      /**
+       * This allows us to render child pages in the same router-outlet
+       * without having to add a nested outlet. Vue typically requires
+       * you to add another router-view if you want a child page,
+       * but this is not very conducive to mobile applications
+       * especially with regards to transitions.
+       *
+       * What we do here is we check to see the last route
+       * matched is a child route of the route depth we are listening
+       * on (except for tabs). If so, render that. Otherwise just render the component
+       * we are listening on.
+       */
+
+       // TODO let tabs prefix be dynamic
+      if (lastRoute && currentRoute && currentRoute.path !== '/tabs/') {
+        const isChildComponent = lastRoute.path.includes(currentRoute.path);
+        if (isChildComponent) {
+          currentRoute = lastRoute;
+        }
+      }
+      return currentRoute;
     });
     const ionRouterOutlet = ref();
     const id = generateId('ion-router-outlet');
@@ -39,8 +60,6 @@ export const IonRouterOutlet = defineComponent({
     const components = shallowRef([]);
 
     let skipTransition = false;
-
-    provide(viewDepthKey, depth + 1)
 
     watch(matchedRouteRef, () => {
       setupViewItem(matchedRouteRef);
