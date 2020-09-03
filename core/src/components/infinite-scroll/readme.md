@@ -14,6 +14,7 @@ Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` component
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
