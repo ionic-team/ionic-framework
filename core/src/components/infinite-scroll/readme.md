@@ -12,12 +12,7 @@ The `ion-infinite-scroll` component has the infinite scroll logic. It requires a
 
 Separating the `ion-infinite-scroll` and `ion-infinite-scroll-content` components allows developers to create their own content components, if desired. This content can contain anything, from an SVG element to elements with unique CSS animations.
 
-## React
-
-The Infinite Scroll component is not supported in React.
-
 <!-- Auto Generated Below -->
-
 
 ## Usage
 
