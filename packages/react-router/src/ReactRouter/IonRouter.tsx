@@ -100,8 +100,6 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
       } else {
         leavingLocationInfo = this.locationHistory.current();
       }
-    } else if (action === 'REPLACE') {
-      leavingLocationInfo = this.locationHistory.previous();
     } else {
       leavingLocationInfo = this.locationHistory.current();
     }
@@ -113,7 +111,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           this.incomingRouteParams = {
             routeAction: 'replace',
             routeDirection: 'none',
-            tab: this.currentTab
+            tab: this.currentTab //TODO this isn't legit if replacing to a page that is not in the tabs
           };
         }
         if (action === 'POP') {
