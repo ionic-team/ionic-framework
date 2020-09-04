@@ -197,7 +197,7 @@ export const IonRouterOutlet = defineComponent({
           enteringEl,
           leavingEl,
           routerDirection,
-          ionRouter.canGoBack(1),
+          routerDirection === 'forward',
           false,
           animationBuilder
         );
