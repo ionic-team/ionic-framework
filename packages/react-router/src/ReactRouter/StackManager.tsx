@@ -65,19 +65,19 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
       let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
 
-      if(!leavingViewItem && routeInfo.prevRouteLastPathname) {
+      if (!leavingViewItem && routeInfo.prevRouteLastPathname) {
         leavingViewItem = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
       }
 
       // Check if leavingViewItem should be unmounted
-      if(leavingViewItem) {
-        if(routeInfo.routeAction === 'replace') {
+      if (leavingViewItem) {
+        if (routeInfo.routeAction === 'replace') {
           leavingViewItem.mount = false;
         } else if (!(routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward')) {
-          if(routeInfo.routeDirection !== 'none' && (enteringViewItem !== leavingViewItem)) {
+          if (routeInfo.routeDirection !== 'none' && (enteringViewItem !== leavingViewItem)) {
             leavingViewItem.mount = false;
           }
-        } else if(routeInfo.routeOptions?.unmount) {
+        } else if (routeInfo.routeOptions?.unmount) {
           leavingViewItem.mount = false;
         }
       }
@@ -99,10 +99,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         // another outlet, so hide this leavingView. We do it in a timeout to give time for a
         // transition to finish.
         // setTimeout(() => {
-          if (leavingViewItem.ionPageElement) {
-            leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
-            leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-          }
+        if (leavingViewItem.ionPageElement) {
+          leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
+          leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+        }
         // }, 250);
       }
 
