@@ -251,6 +251,15 @@ export class TextareaExample {
     <ion-textarea rows="6" cols="20" placeholder="Enter any notes here..."></ion-textarea>
   </ion-item>
 </template>
+
+<script>
+import { IonItem, IonLabe, IonTextarea } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonItem, IonLabe, IonTextarea }
+});
+</script>
 ```
 
 

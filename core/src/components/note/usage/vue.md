@@ -23,4 +23,13 @@
     </ion-item>
   </ion-list>
 </template>
+
+<script>
+import { IonItem, IonLabel, IonList, IonNote } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonItem, IonLabel, IonList, IonNote }
+});
+</script>
 ```

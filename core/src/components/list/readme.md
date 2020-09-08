@@ -358,6 +358,37 @@ export class ListExample {
     </ion-item-sliding>
   </ion-list>
 </template>
+
+<script>
+import { 
+  IonCheckbox, 
+  IonInput, 
+  IonItem, 
+  IonItemOption, 
+  IonItemOptions, 
+  IonItemSliding, 
+  IonList, 
+  IonLabel, 
+  IonRadio, 
+  IonToggle 
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { 
+    IonCheckbox, 
+    IonInput, 
+    IonItem, 
+    IonItemOption, 
+    IonItemOptions, 
+    IonItemSliding, 
+    IonList, 
+    IonLabel, 
+    IonRadio, 
+    IonToggle 
+  }
+});
+</script>
 ```
 
 

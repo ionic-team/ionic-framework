@@ -280,16 +280,18 @@ export class ActionSheetExample {
 
 ```html
 <template>
-  <IonVuePage :title="'Action Sheet'">
-    <ion-button @click="presentActionSheet">Show Action Sheet</ion-button>
-  </IonVuePage>
+  <ion-button @click="presentActionSheet">Show Action Sheet</ion-button>
 </template>
 
 <script>
-export default {
+import { IonButton, actionSheetController } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonButton },
   methods: {
-    presentActionSheet() {
-      return this.$ionic.actionSheetController
+    async presentActionSheet() {
+      const actionSheet = await actionSheetController
         .create({
           header: 'Albums',
           cssClass: 'my-custom-class',
@@ -332,11 +334,11 @@ export default {
               },
             },
           ],
-        })
-        .then(a => a.present())
+        });
+      return actionSheet.present();
     },
   },
-}
+});
 </script>
 ```
 
