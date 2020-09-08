@@ -177,9 +177,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return (this.isClickable() || this.hasCover());
   }
 
-  private hasInputs(): boolean {
-    const inputs = this.el.querySelectorAll('ion-input');
-    return inputs.length > 0;
+  private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
+    const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<HTMLIonInputElement | HTMLIonTextareaElement>;
+    return inputs[0];
   }
 
   // This is needed for WebKit due to a delegatesFocus bug where
@@ -187,17 +187,19 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   // but is opening the keyboard. It will no longer be needed with
   // iOS 14.
   @Listen('click')
-  delegateFocus() {
-    if (this.hasInputs()) {
-      const input = this.el.querySelector('ion-input');
-      if (input) {
-        input.fireFocusEvents = false;
-        input.setBlur();
-        input.setFocus();
-        raf(() => {
-          input.fireFocusEvents = true;
-        });
-      }
+  delegateFocus(ev: Event) {
+    const clickedItem = (ev.target as HTMLElement).tagName === 'ION-ITEM';
+    const input = this.getFirstInput();
+
+    // Only focus the first input if we clicked on an ion-item
+    // and the first input exists
+    if (clickedItem && input) {
+      input.fireFocusEvents = false;
+      input.setBlur();
+      input.setFocus();
+      raf(() => {
+        input.fireFocusEvents = true;
+      });
     }
   }
 
