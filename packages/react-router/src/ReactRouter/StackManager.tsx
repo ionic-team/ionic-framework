@@ -69,7 +69,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         leavingViewItem = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
       }
 
-      //Check if leavingViewItem should be unmounted
+      // Check if leavingViewItem should be unmounted
       if(leavingViewItem) {
         if(routeInfo.routeAction === 'replace') {
           leavingViewItem.mount = false;
