@@ -23,6 +23,16 @@ export class Textarea implements ComponentInterface {
   private didBlurAfterEdit = false;
   private textareaWrapper?: HTMLElement;
 
+  /**
+   * This is required for a WebKit bug which requires us to
+   * blur and focus an input to properly focus the input in
+   * an item with delegatesFocus. It will no longer be needed
+   * with iOS 14.
+   *
+   * @internal
+   */
+  @Prop() fireFocusEvents = true;
+
   @Element() el!: HTMLElement;
 
   @State() hasFocus = false;
@@ -220,13 +230,25 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * Sets focus on the specified `ion-textarea`. Use this method instead of the global
-   * `input.focus()`.
+   * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global
+   * `textarea.focus()`.
    */
   @Method()
   async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
+    }
+  }
+
+  /**
+   * Sets blur on the native `textarea` in `ion-textarea`. Use this method instead of the global
+   * `textarea.blur()`.
+   * @internal
+   */
+  @Method()
+  async setBlur() {
+    if (this.nativeInput) {
+      this.nativeInput.blur();
     }
   }
 
@@ -296,14 +318,18 @@ export class Textarea implements ComponentInterface {
     this.hasFocus = true;
     this.focusChange();
 
-    this.ionFocus.emit(ev);
+    if (this.fireFocusEvents) {
+      this.ionFocus.emit(ev);
+    }
   }
 
   private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChange();
 
-    this.ionBlur.emit(ev);
+    if (this.fireFocusEvents) {
+      this.ionBlur.emit(ev);
+    }
   }
 
   private onKeyDown = () => {
