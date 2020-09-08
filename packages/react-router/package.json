@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@ionic/core": "5.3.2",
-    "@ionic/react": "file:../react/ionic-react-5.3.2.tgz",
+    "@ionic/react": "5.3.2",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.9",
