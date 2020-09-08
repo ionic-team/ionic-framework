@@ -65,15 +65,15 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
       const leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
 
-      //Check if leavingViewItem should be unmounted
-      if(leavingViewItem) {
-        if(routeInfo.routeAction === 'replace') {
+      // Check if leavingViewItem should be unmounted
+      if (leavingViewItem) {
+        if (routeInfo.routeAction === 'replace') {
           leavingViewItem.mount = false;
         } else if (!(routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward')) {
-          if(routeInfo.routeDirection !== 'none' && (enteringViewItem !== leavingViewItem)) {
+          if (routeInfo.routeDirection !== 'none' && (enteringViewItem !== leavingViewItem)) {
             leavingViewItem.mount = false;
           }
-        } else if(routeInfo.routeOptions?.unmount) {
+        } else if (routeInfo.routeOptions?.unmount) {
           leavingViewItem.mount = false;
         }
 
