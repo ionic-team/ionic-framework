@@ -22,33 +22,11 @@ export const IonRouterOutlet = defineComponent({
 
     // TODO types
     const matchedRouteRef: any = computed(() => {
-      const lastRoute = route.matched[route.matched.length - 1];
       if (attrs.tabs) {
-        return lastRoute;
+        return route.matched[route.matched.length - 1];
       }
 
-      let currentRoute = route.matched[depth];
-      /**
-       * This allows us to render child pages in the same router-outlet
-       * without having to add a nested outlet. Vue typically requires
-       * you to add another router-view if you want a child page,
-       * but this is not very conducive to mobile applications
-       * especially with regards to transitions.
-       *
-       * What we do here is we check to see the last route
-       * matched is a child route of the route depth we are listening
-       * on (except for tabs). If so, render that. Otherwise just render the component
-       * we are listening on.
-       */
-
-       // TODO let tabs prefix be dynamic
-      if (lastRoute && currentRoute && currentRoute.path !== '/tabs/') {
-        const isChildComponent = lastRoute.path.includes(currentRoute.path);
-        if (isChildComponent) {
-          currentRoute = lastRoute;
-        }
-      }
-      return currentRoute;
+      return route.matched[depth];
     });
     const ionRouterOutlet = ref();
     const id = generateId('ion-router-outlet');
