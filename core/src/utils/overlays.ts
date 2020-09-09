@@ -3,7 +3,7 @@ import { getIonMode } from '../global/ionic-global';
 import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
-import { getElementRoot, addEventListener, removeEventListener } from './helpers';
+import { addEventListener, getElementRoot, removeEventListener } from './helpers';
 
 let lastId = 0;
 
