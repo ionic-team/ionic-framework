@@ -152,13 +152,6 @@ function preparePackage(tasks, package, version, install) {
           task: () => execa('npm', ['link', '@ionic/react'], { cwd: projectRoot })
         });
       }
-
-      if (package === 'packages/vue-router') {
-        projectTasks.push({
-          title: `${pkg.name}: npm link @ionic/vue`,
-          task: () => execa('npm', ['link', '@ionic/vue'], { cwd: projectRoot })
-        });
-      }
     }
 
     // Lint, Test, Bump Core dependency
@@ -223,13 +216,6 @@ function prepareDevPackage(tasks, package, version) {
         projectTasks.push({
           title: `${pkg.name}: npm link @ionic/react`,
           task: () => execa('npm', ['link', '@ionic/react'], { cwd: projectRoot })
-        });
-      }
-
-      if (package === 'packages/vue-router') {
-        projectTasks.push({
-          title: `${pkg.name}: npm link @ionic/vue`,
-          task: () => execa('npm', ['link', '@ionic/vue'], { cwd: projectRoot })
         });
       }
     }
@@ -299,17 +285,6 @@ function updatePackageVersions(tasks, packages, version) {
         task: async () => {
           const pkg = readPkg(package);
           updateDependency(pkg, '@ionic/react', version);
-          writePkg(package, pkg);
-        }
-      });
-    }
-
-    if (package === 'packages/vue-router') {
-      tasks.push({
-        title: `${package} update @ionic/vue dependency, if present ${dim(`(${version})`)}`,
-        task: async () => {
-          const pkg = readPkg(package);
-          updateDependency(pkg, '@ionic/vue', version);
           writePkg(package, pkg);
         }
       });
