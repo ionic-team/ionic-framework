@@ -4,6 +4,7 @@
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
     "test": "jest",
+    "lint": "echo add linter",
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist",
     "compile": "npm run tsc",
