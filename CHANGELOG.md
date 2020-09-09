@@ -1,3 +1,7 @@
+# [0.2.0-6](https://github.com/ionic-team/ionic/compare/v0.2.0-5...v0.2.0-6) (2020-09-09)
+
+
+
 ## [5.3.1](https://github.com/ionic-team/ionic/compare/v5.3.0...v5.3.1) (2020-07-27)
 
 
