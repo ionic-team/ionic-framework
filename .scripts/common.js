@@ -181,7 +181,7 @@ function preparePackage(tasks, package, version, install) {
     });
 
     // Link core or react for sub projects
-    if (package === 'core' || package === 'packages/react') {
+    if (package === 'core' || package === 'packages/react' || package === 'packages/vue') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
@@ -225,6 +225,13 @@ function prepareDevPackage(tasks, package, version) {
           task: () => execa('npm', ['link', '@ionic/react'], { cwd: projectRoot })
         });
       }
+
+      if (package === 'packages/vue-router') {
+        projectTasks.push({
+          title: `${pkg.name}: npm link @ionic/vue`,
+          task: () => execa('npm', ['link', '@ionic/vue'], { cwd: projectRoot })
+        });
+      }
     }
 
     projectTasks.push({
@@ -240,7 +247,7 @@ function prepareDevPackage(tasks, package, version) {
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
 
-    if (package === 'core' || package === 'packages/react') {
+    if (package === 'core' || package === 'packages/react' || package === 'packages/vue') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
@@ -292,6 +299,17 @@ function updatePackageVersions(tasks, packages, version) {
         task: async () => {
           const pkg = readPkg(package);
           updateDependency(pkg, '@ionic/react', version);
+          writePkg(package, pkg);
+        }
+      });
+    }
+
+    if (package === 'packages/vue-router') {
+      tasks.push({
+        title: `${package} update @ionic/vue dependency, if present ${dim(`(${version})`)}`,
+        task: async () => {
+          const pkg = readPkg(package);
+          updateDependency(pkg, '@ionic/vue', version);
           writePkg(package, pkg);
         }
       });

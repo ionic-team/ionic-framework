@@ -81,6 +81,9 @@ async function setPackageVersionChanges(packages, version) {
       if(package === 'packages/react-router') {
         common.updateDependency(pkg, '@ionic/react', version);
       }
+      if(package === 'packages/vue-router') {
+        common.updateDependency(pkg, '@ionic/vue', version);
+      }
       common.writePkg(package, pkg);
     }
     const projectRoot = common.projectPath(package);
