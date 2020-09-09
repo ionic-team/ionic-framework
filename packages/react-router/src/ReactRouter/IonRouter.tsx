@@ -41,7 +41,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
   routeMangerContextState: RouteManagerContextState = {
     canGoBack: () => this.locationHistory.canGoBack(),
     clearOutlet: this.viewStack.clear,
-    getViewItemForTransition: this.viewStack.getViewItemForTransition,
+    findViewItemByPathname: this.viewStack.findViewItemByPathname,
     getChildrenToRender: this.viewStack.getChildrenToRender,
     goBack: () => this.handleNavigateBack(),
     createViewItem: this.viewStack.createViewItem,
@@ -154,7 +154,8 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           lastPathname: leavingLocationInfo.pathname,
           pathname: location.pathname,
           search: location.search,
-          params: this.props.match.params
+          params: this.props.match.params,
+          prevRouteLastPathname: leavingLocationInfo.lastPathname
         };
         if (isPushed) {
           routeInfo.tab = leavingLocationInfo.tab;
@@ -170,6 +171,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           // Make sure to set the lastPathname, etc.. to the current route so the page transitions out
           const currentRouteInfo = this.locationHistory.current();
           routeInfo.lastPathname = currentRouteInfo?.pathname || routeInfo.lastPathname;
+          routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
           routeInfo.pushedByRoute = currentRouteInfo?.pushedByRoute || routeInfo.pushedByRoute;
           routeInfo.routeDirection = currentRouteInfo?.routeDirection || routeInfo.routeDirection;
           routeInfo.routeAnimation = currentRouteInfo?.routeAnimation || routeInfo.routeAnimation;
@@ -187,13 +189,13 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
   }
 
   handleNavigate(path: string, routeAction: RouteAction, routeDirection?: RouterDirection, routeAnimation?: AnimationBuilder, routeOptions?: any, tab?: string) {
-    this.incomingRouteParams = {
+    this.incomingRouteParams = Object.assign(this.incomingRouteParams || {}, {
       routeAction,
       routeDirection,
       routeOptions,
       routeAnimation,
       tab
-    };
+    });
 
     if (routeAction === 'push') {
       this.props.history.push(path);
@@ -213,7 +215,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
         if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
           this.props.history.goBack();
         } else {
-          this.props.history.replace(prevInfo.pathname + (prevInfo.search || ''));
+          this.handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back');
         }
       } else {
         this.handleNavigate(defaultHref as string, 'pop', 'back');
