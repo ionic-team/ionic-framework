@@ -9,7 +9,7 @@ const { bold, cyan, dim } = require('colorette');
 const rootDir = path.join(__dirname, '../');
 
 const packages = [
-  'core',
+  //'core',
   //'docs',
   //'angular',
   //'packages/react',

@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "5.4.0-dev.202008311901.a6d6d90",
+  "version": "0.1.0-0",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "test": "jest",
