@@ -1,5 +1,7 @@
 # Ionic Vue
 
-## 0.1.0 
+## 0.3.0 
+
+* Vue 3 support
 
 Enjoy! :tada:
