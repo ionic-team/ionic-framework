@@ -152,6 +152,13 @@ function preparePackage(tasks, package, version, install) {
           task: () => execa('npm', ['link', '@ionic/react'], { cwd: projectRoot })
         });
       }
+
+      if (package === 'packages/vue-router') {
+        projectTasks.push({
+          title: `${pkg.name}: npm link @ionic/vue`,
+          task: () => execa('npm', ['link', '@ionic/vue'], { cwd: projectRoot })
+        });
+      }
     }
 
     // Lint, Test, Bump Core dependency
