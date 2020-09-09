@@ -1,8 +1,9 @@
 {
   "name": "@ionic/vue",
-  "version": "5.4.0-dev.202008311901.a6d6d90",
+  "version": "0.3.1",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
+    "lint": "echo add linter",
     "test": "jest",
     "build": "npm run clean && npm run copy && npm run compile",
     "clean": "rimraf dist",
@@ -51,7 +52,7 @@
     "workbox-build": "4.3.1"
   },
   "dependencies": {
-    "@ionic/core": "5.4.0-dev.202008311901.a6d6d90",
+    "@ionic/core": "0.3.1",
     "ionicons": "^5.1.2"
   }
 }
