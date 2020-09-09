@@ -9,7 +9,7 @@ const { bold, cyan, dim } = require('colorette');
 const rootDir = path.join(__dirname, '../');
 
 const packages = [
-  //'core',
+  'core',
   //'docs',
   //'angular',
   //'packages/react',
@@ -44,7 +44,7 @@ async function askNpmTag(version) {
       type: 'list',
       name: 'npmTag',
       message: 'Select npm tag or specify a new tag',
-      choices: ['latest', 'next', 'v4-lts']
+      choices: ['latest', 'next', 'v4-lts', 'beta']
         .concat([
           new inquirer.Separator(),
           {
