@@ -190,10 +190,18 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   delegateFocus(ev: Event) {
     const clickedItem = (ev.target as HTMLElement).tagName === 'ION-ITEM';
     const input = this.getFirstInput();
+    let firstActive = false;
+
+    // If the first input is the same as the active element we need
+    // to focus the first input again, but if the active element
+    // is another input inside of the item we shouldn't switch focus
+    if (input && document.activeElement) {
+      firstActive = input.querySelector('input, textarea') === document.activeElement;
+    }
 
     // Only focus the first input if we clicked on an ion-item
     // and the first input exists
-    if (clickedItem && input) {
+    if (clickedItem && input && firstActive) {
       input.fireFocusEvents = false;
       input.setBlur();
       input.setFocus();
