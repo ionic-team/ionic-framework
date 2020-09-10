@@ -238,7 +238,7 @@ export const parseDate = (val: string | undefined | null): DatetimeData | undefi
     second: parse[6],
     millisecond: parse[7],
     tzOffset,
-    ampm: parse[4] > 12 ? 'pm' : 'am'
+    ampm: parse[4] >= 12 ? 'pm' : 'am'
   };
 };
 
