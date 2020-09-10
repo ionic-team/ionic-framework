@@ -1,0 +1,53 @@
+{
+  "name": "@ionic/vue-router",
+  "version": "0.3.1",
+  "description": "Vue Router integration for @ionic/vue",
+  "scripts": {
+    "test": "jest",
+    "lint": "echo add linter",
+    "build": "npm run clean && npm run compile",
+    "clean": "rimraf dist",
+    "compile": "npm run tsc",
+    "tsc": "tsc -p ."
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "css/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/ionic.git"
+  },
+  "keywords": [
+    "ionic",
+    "framework",
+    "vue",
+    "mobile",
+    "app",
+    "hybrid",
+    "webapp",
+    "cordova",
+    "progressive",
+    "web",
+    "app",
+    "pwa"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "homepage": "https://github.com/ionic-team/ionic#readme",
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "rollup": "^2.22.1",
+    "typescript": "^3.9.7",
+    "vue": "^3.0.0-rc.4",
+    "workbox-build": "4.3.1",
+    "vue-router": "^4.0.0-beta.9",
+    "@ionic/vue": "0.2.0-5"
+  }
+}
