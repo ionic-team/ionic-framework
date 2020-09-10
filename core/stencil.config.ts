@@ -1,5 +1,6 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
+import { vueOutputTarget } from '@stencil/vue-output-target';
 
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
@@ -57,6 +58,43 @@ export const config: Config = {
     })
   ],
   outputTargets: [
+    vueOutputTarget({
+      componentCorePackage: '@ionic/core',
+      proxiesFile: '../packages/vue/src/proxies.ts',
+      excludeComponents: [
+        'ion-router',
+        'ion-route',
+        'ion-route-redirect',
+        'ion-router-link',
+        'ion-router-outlet',
+
+        'ion-back-button',
+
+        'ion-tab-button',
+        'ion-tabs',
+        'ion-tab',
+        'ion-tab-bar',
+      ],
+      routerLinkComponents: [
+        'ion-card',
+        'ion-item',
+        'ion-button',
+        'ion-fab-button',
+
+      ],
+      componentModels: [
+        {
+          elements: ['ion-checkbox', 'ion-toggle'],
+          targetAttr: 'checked',
+          event: 'ionChange'
+        },
+        {
+          elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-textarea'],
+          targetAttr: 'value',
+          event: 'ionChange'
+        }
+      ],
+    }),
     {
       type: 'docs-vscode',
       file: 'dist/html.html-data.json',

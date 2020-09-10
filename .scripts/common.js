@@ -10,11 +10,13 @@ const rootDir = path.join(__dirname, '../');
 
 const packages = [
   'core',
-  'docs',
-  'angular',
-  'packages/react',
-  'packages/react-router',
-  'packages/angular-server'
+  //'docs',
+  //'angular',
+  //'packages/react',
+  //'packages/react-router',
+  //'packages/angular-server',
+  'packages/vue',
+  'packages/vue-router'
 ];
 
 function readPkg(project) {
@@ -42,7 +44,7 @@ async function askNpmTag(version) {
       type: 'list',
       name: 'npmTag',
       message: 'Select npm tag or specify a new tag',
-      choices: ['latest', 'next', 'v4-lts']
+      choices: ['latest', 'next', 'v4-lts', 'beta']
         .concat([
           new inquirer.Separator(),
           {
@@ -172,7 +174,7 @@ function preparePackage(tasks, package, version, install) {
     });
 
     // Link core or react for sub projects
-    if (package === 'core' || package === 'packages/react') {
+    if (package === 'core' || package === 'packages/react' || package === 'packages/vue') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
@@ -231,7 +233,7 @@ function prepareDevPackage(tasks, package, version) {
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
 
-    if (package === 'core' || package === 'packages/react') {
+    if (package === 'core' || package === 'packages/react' || package === 'packages/vue') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
