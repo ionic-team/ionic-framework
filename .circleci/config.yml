@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 aliases:
   - &restore-cache
@@ -31,10 +31,29 @@ aliases:
 
 defaults: &defaults
   docker:
-    - image: circleci/node:10-browsers
+    - image: circleci/node:latest-browsers
   working_directory: /tmp/workspace
+  environment:
+    NODE_ENV: development
 
 jobs:
+  puppeteer-dependencies:
+    <<: *defaults
+    steps:
+    - run:
+        name: Install headless Chrome dependencies
+        command: |
+          sudo apt-get install -yq \
+          gconf-service libasound2 libatk1.0-0 libatk-bridge2.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
+          libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
+          libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 \
+          libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
+          fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
+    - run:
+        name: Install Puppeteer with Chromium
+        command: |
+          npm i puppeteer
+
   build:
     <<: *defaults
     steps:
@@ -311,13 +330,14 @@ jobs:
           command: npm install
           working_directory: /tmp/workspace/angular/test/test-app
       - run:
-          command: npm test
+          command: npm run test -- --protractor-config=e2e/protractor-ci.conf.js
           working_directory: /tmp/workspace/angular/test/test-app
 
 workflows:
   version: 2
   build:
     jobs:
+      - puppeteer-dependencies
       - build
       - build-core:
           requires: [build]
@@ -326,7 +346,7 @@ workflows:
       - test-core-lint:
           requires: [build-core]
       - test-core-e2e:
-          requires: [build-core]
+          requires: [puppeteer-dependencies, build-core]
       - test-core-spec:
           requires: [build-core]
       - test-core-treeshake:

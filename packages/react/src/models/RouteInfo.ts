@@ -7,6 +7,7 @@ import { RouterDirection } from './RouterDirection';
 export interface RouteInfo<TOptions = any> {
   id: string;
   lastPathname?: string;
+  prevRouteLastPathname?: string;
   routeAction?: RouteAction;
   routeDirection?: RouterDirection;
   routeAnimation?: AnimationBuilder;

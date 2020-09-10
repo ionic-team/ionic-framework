@@ -16,6 +16,8 @@ import { createColorClasses } from '../../utils/theme';
   scoped: true
 })
 export class Label implements ComponentInterface {
+  private inRange = false;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -45,6 +47,7 @@ export class Label implements ComponentInterface {
   @State() noAnimate = false;
 
   componentWillLoad() {
+    this.inRange = !!this.el.closest('ion-range');
     this.noAnimate = (this.position === 'floating');
     this.emitStyle();
     this.emitColor();
@@ -78,12 +81,17 @@ export class Label implements ComponentInterface {
   }
 
   private emitStyle() {
-    const { position } = this;
+    const { inRange, position } = this;
 
-    this.ionStyle.emit({
-      'label': true,
-      [`label-${position}`]: position !== undefined
-    });
+    // If the label is inside of a range we don't want
+    // to override the classes added by the label that
+    // is a direct child of the item
+    if (!inRange) {
+      this.ionStyle.emit({
+        'label': true,
+        [`label-${position}`]: position !== undefined
+      });
+    }
   }
 
   render() {

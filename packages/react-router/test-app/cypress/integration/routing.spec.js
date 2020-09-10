@@ -1,6 +1,6 @@
 const port = 3000;
 
-describe('Navigation Tests', () => {
+describe('Routing Tests', () => {
 
   // before(() => {
   //   Cypress.config('userAgent', 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1')
@@ -268,6 +268,28 @@ describe('Navigation Tests', () => {
     cy.ionPageVisible('settings-page')
     cy.ionTabClick('Home')
     cy.ionPageVisible('home-details-page-2')
+  })
+
+  it('/routing/tabs/home Menu > Favorites > Menu > Home with redirect, Home page should be visible, and Favorites should be hidden', () => {
+    cy.visit(`http://localhost:${port}/routing/tabs/home`)
+    cy.ionMenuClick()
+    cy.ionMenuNav('Favorites')
+    cy.ionPageVisible('favorites-page')
+    cy.ionMenuClick()
+    cy.ionMenuNav('Home with redirect')
+    cy.ionPageVisible('home-page')
+    cy.ionPageDoesNotExist('favorites-page')
+  })
+
+  it('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be hidden', () => {
+    cy.visit(`http://localhost:${port}/routing/tabs/home`)
+    cy.ionMenuClick()
+    cy.ionMenuNav('Favorites')
+    cy.ionPageVisible('favorites-page')
+    cy.ionMenuClick()
+    cy.ionMenuNav('Home with router')
+    cy.ionPageVisible('home-page')
+    cy.ionPageHidden('favorites-page')
   })
   /*
     Tests to add:

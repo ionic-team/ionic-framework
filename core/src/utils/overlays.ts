@@ -138,6 +138,8 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
      * wrapper element as the traps live outside of the wrapper.
      */
     const overlayRoot = getElementRoot(lastOverlay);
+    if (!overlayRoot.contains(target)) { return; }
+
     const overlayWrapper = overlayRoot.querySelector('.ion-overlay-wrapper');
 
     if (!overlayWrapper) { return; }
