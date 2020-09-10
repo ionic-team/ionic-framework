@@ -179,6 +179,19 @@
       clickableItem.color = color === undefined ? 'primary' : undefined;
     });
 
+    const inputs = document.querySelectorAll('ion-input');
+
+    for (var i = 0; i < inputs.length; i++) {
+      const input = inputs[i];
+
+      input.addEventListener('ionBlur', function() {
+        console.log('Listen ionBlur: fired');
+      });
+
+      input.addEventListener('ionFocus', function() {
+        console.log('Listen ionFocus: fired');
+      });
+    }
 
     function toggleDisabled() {
       isDisabled = !isDisabled;

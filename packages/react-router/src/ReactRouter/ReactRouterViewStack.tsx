@@ -10,7 +10,7 @@ export class ReactRouterViewStack extends ViewStacks {
     this.findViewItemByRouteInfo = this.findViewItemByRouteInfo.bind(this);
     this.findLeavingViewItemByRouteInfo = this.findLeavingViewItemByRouteInfo.bind(this);
     this.getChildrenToRender = this.getChildrenToRender.bind(this);
-    this.getViewItemForTransition = this.getViewItemForTransition.bind(this);
+    this.findViewItemByPathname = this.findViewItemByPathname.bind(this);
   }
 
   createViewItem(outletId: string, reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement) {
@@ -97,13 +97,13 @@ export class ReactRouterViewStack extends ViewStacks {
     return viewItem;
   }
 
-  findLeavingViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string) {
-    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname!, outletId, false, true);
+  findLeavingViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string, mustBeIonRoute = true) {
+    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname!, outletId, false, mustBeIonRoute);
     return viewItem;
   }
 
-  getViewItemForTransition(pathname: string) {
-    const { viewItem } = this.findViewItemByPath(pathname, undefined, true, true);
+  findViewItemByPathname(pathname: string, outletId?: string) {
+    const { viewItem } = this.findViewItemByPath(pathname, outletId);
     return viewItem;
   }
 
