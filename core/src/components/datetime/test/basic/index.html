@@ -133,6 +133,15 @@
         </ion-item>
 
         <ion-item>
+          <ion-label>YYYY MMM DD hh:mm A</ion-label>
+          <ion-datetime
+            id="todaysDate"
+            display-format="YYYY MMM DD hh:mm A"
+            minute-values="00,05,10,15,20,25,30,35,40,45,50,55">
+          </ion-datetime>
+        </ion-item>
+
+        <ion-item>
           <ion-label>Leap years, summer months</ion-label>
           <ion-datetime id="customYearValues" display-format="MM/YYYY" pickerFormat="MMMM YYYY" month-values="6,7,8"></ion-datetime>
         </ion-item>
@@ -197,6 +206,9 @@
     </style>
 
     <script>
+      var todaysDateDatetime = document.querySelector('#todaysDate');
+      todaysDateDatetime.value = '2020-09-02T17:15:03.488Z';
+
       var yearValuesArray = [2020, 2016, 2008, 2004, 2000, 1996];
       var customYearValues = document.getElementById('customYearValues');
       customYearValues.yearValues = yearValuesArray;
