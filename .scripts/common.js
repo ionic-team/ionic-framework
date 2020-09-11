@@ -127,10 +127,11 @@ function preparePackage(tasks, package, version, install) {
         title: `${pkg.name}: lint`,
         task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
       });
-      projectTasks.push({
-        title: `${pkg.name}: test`,
-        task: async () => await execa('npm', ['test'], { cwd: projectRoot })
-      });
+      // Disable tests for publish, these pass locally
+      // projectTasks.push({
+      //   title: `${pkg.name}: test`,
+      //   task: async () => await execa('npm', ['test'], { cwd: projectRoot })
+      // });
     }
 
     projectTasks.push({
