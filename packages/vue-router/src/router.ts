@@ -258,5 +258,5 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     resetTab,
     changeTab,
     registerHistoryChangeListener
-  } as IonRouter
+  }
 }

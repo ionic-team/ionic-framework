@@ -1,18 +1,6 @@
 import { AnimationBuilder } from '@ionic/core';
 import { RouterOptions } from 'vue-router';
 
-// TODO the any functions here need to be private
-export interface IonRouter {
-  handleNavigateBack: any,
-  handleSetCurrentTab: any,
-  getCurrentRouteInfo: any,
-  canGoBack: () => boolean,
-  navigate: any,
-  resetTab: any,
-  changeTab: any,
-  registerHistoryChangeListener: any
-}
-
 export interface IonicVueRouterOptions extends RouterOptions {
   tabsPrefix?: string;
 }
