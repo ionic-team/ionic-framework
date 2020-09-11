@@ -7,7 +7,7 @@ export interface IonRouter {
   canGoBack: (deep?: number) => boolean;
 }
 
-export const useHardwareBackButton = (priority: number, handler: Handler) => {
+export const useBackButton = (priority: number, handler: Handler) => {
   const callback = (ev: BackButtonEvent) => ev.detail.register(priority, handler);
   const unregister = () => document.removeEventListener('ionBackButton', callback);
 

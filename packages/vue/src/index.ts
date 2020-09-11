@@ -11,7 +11,7 @@ export { IonTabButton } from './components/IonTabButton';
 export { IonTabs } from './components/IonTabs';
 export { IonTabBar } from './components/IonTabBar';
 
-export { IonRouter, useHardwareBackButton, useIonRouter } from './hooks';
+export { IonRouter, useBackButton, useIonRouter } from './hooks';
 
 export {
   // Overlay Controllers
