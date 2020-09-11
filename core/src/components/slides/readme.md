@@ -618,17 +618,21 @@ ion-slides {
 </template>
 
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { IonSlides, IonSlide } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
+export default defineComponent({
+  components: { IonSlides, IonSlide },
+  setup() {
     // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
-    slideOpts = {
+    const slideOpts = {
       initialSlide: 1,
       speed: 400
     };
+    return { slideOpts }
   }
+});
 </script>
 ```
 

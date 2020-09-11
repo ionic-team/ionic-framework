@@ -158,6 +158,29 @@ export class SplitPaneExample {
     <ion-router-outlet id="main"></ion-router-outlet>
   </ion-split-pane>
 </template>
+
+<script>
+import { 
+  IonHeader, 
+  IonMenu, 
+  IonRouterOutlet, 
+  IonSplitPane, 
+  IonTitle, 
+  IonToolbar
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonHeader, 
+    IonMenu, 
+    IonRouterOutlet, 
+    IonSplitPane, 
+    IonTitle, 
+    IonToolbar
+  }
+});
+</script>
 ```
 
 
