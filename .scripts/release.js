@@ -13,6 +13,8 @@ const fs = require('fs-extra');
 
 async function main() {
   try {
+    const dryRun = process.argv.indexOf('--dry-run') > -1;
+
     if (!process.env.GH_TOKEN) {
       throw new Error('env.GH_TOKEN is undefined');
     }
@@ -26,15 +28,31 @@ async function main() {
     // repo must be clean
     common.checkGit(tasks);
 
-    // publish each package in NPM
-    common.publishPackages(tasks, common.packages, version);
+    const { npmTag, confirm } = await common.askNpmTag(version);
 
-    // push tag to git remote
-    publishGit(tasks, version, changelog);
+    if (!confirm) {
+      return;
+    }
+
+    if(!dryRun) {
+      // publish each package in NPM
+      common.publishPackages(tasks, common.packages, version, npmTag);
+
+      // push tag to git remote
+      publishGit(tasks, version, changelog, npmTag);
+    }
 
     const listr = new Listr(tasks);
     await listr.run();
-    console.log(`\nionic ${version} published!! 🎉\n`);
+
+    // Dry run doesn't publish to npm or git
+    if (dryRun) {
+      console.log(`
+        \n${tc.yellow('Did not publish. Remove the "--dry-run" flag to publish:')}\n${tc.green(version)} to ${tc.cyan(npmTag)}\n
+      `);
+    } else {
+      console.log(`\nionic ${version} published to ${npmTag}!! 🎉\n`);
+    }
 
   } catch (err) {
     console.log('\n', tc.red(err), '\n');
