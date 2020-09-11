@@ -174,7 +174,7 @@ function preparePackage(tasks, package, version, install) {
     });
 
     // Link core or react for sub projects
-    if (package === 'core' || package === 'packages/react' || package === 'packages/vue') {
+    if (package === 'core' || package === 'packages/react') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
@@ -233,7 +233,7 @@ function prepareDevPackage(tasks, package, version) {
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
 
-    if (package === 'core' || package === 'packages/react' || package === 'packages/vue') {
+    if (package === 'core' || package === 'packages/react') {
       projectTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })

@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "0.3.1",
+  "version": "5.4.0-dev.202009101933.5ffa65f",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "lint": "echo add linter",
