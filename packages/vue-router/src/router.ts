@@ -1,6 +1,7 @@
 import {
   Router,
-  RouteLocationNormalizedLoaded,
+  RouteLocationNormalized,
+  NavigationGuardNext
 } from 'vue-router';
 import { createLocationHistory } from './locationHistory';
 import { generateId } from './utils';
@@ -10,11 +11,18 @@ import {
   RouteParams,
   RouteAction,
   RouteDirection,
-  IonicVueRouterOptions
+  IonicVueRouterOptions,
+  IonRouter
 } from './types';
 import { AnimationBuilder } from '@ionic/core';
 
 export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
+
+  router.beforeEach((to: RouteLocationNormalized, _: RouteLocationNormalized, next: NavigationGuardNext) => {
+    handleHistoryChange(to);
+    next();
+  });
+
   const locationHistory = createLocationHistory();
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
@@ -188,21 +196,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
   const getCurrentRouteInfo = () => currentRouteInfo;
 
-  const setInitialRoute = (routeInfo: RouteLocationNormalizedLoaded) => {
-    const info: RouteInfo = {
-      id: generateId('routeInfo'),
-      pathname: routeInfo.fullPath,
-      search: ''
-    }
-
-    locationHistory.add(info);
-  }
-
   const canGoBack = (deep: number = 1) => locationHistory.canGoBack(deep);
-
-  const setIncomingRouteParams = (params: RouteParams) => {
-    incomingRouteParams = params;
-  }
 
   const navigate = (navigationOptions: ExternalNavigationOptions) => {
     const { routerAnimation, routerDirection, routerLink } = navigationOptions;
@@ -215,8 +209,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
     router.push(routerLink);
   }
-
-  const getLocationHistory = () => locationHistory;
 
   const resetTab = (tab: string, originalHref: string) => {
     const routeInfo = locationHistory.getFirstRouteInfoForTab(tab);
@@ -258,15 +250,11 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   }
 
   return {
-    handleHistoryChange,
     handleNavigateBack,
     handleSetCurrentTab,
     getCurrentRouteInfo,
-    setInitialRoute,
     canGoBack,
     navigate,
-    getLocationHistory,
-    setIncomingRouteParams,
     resetTab,
     changeTab,
     registerHistoryChangeListener
