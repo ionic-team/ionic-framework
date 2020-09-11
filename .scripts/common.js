@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const execa = require('execa');
+const inquirer = require('inquirer');
 const Listr = require('listr');
 const semver = require('semver');
 const tc = require('turbocolor');
@@ -32,6 +33,34 @@ function packagePath(project) {
 
 function projectPath(project) {
   return path.join(rootDir, project);
+}
+
+async function askNpmTag(version) {
+  const prompts = [
+    {
+      type: 'list',
+      name: 'npmTag',
+      message: 'Select npm tag or specify a new tag',
+      choices: ['latest', 'next', 'v4-lts']
+        .concat([
+          new inquirer.Separator(),
+          {
+            name: 'Other (specify)',
+            value: null
+          }
+        ])
+    },
+    {
+      type: 'confirm',
+      name: 'confirm',
+      message: answers => {
+        return `Will publish ${tc.cyan(version)} to ${tc.cyan(answers.npmTag)}. Continue?`;
+      }
+    }
+  ];
+
+  const { npmTag, confirm } = await inquirer.prompt(prompts);
+  return { npmTag, confirm };
 }
 
 function checkGit(tasks) {
@@ -127,10 +156,11 @@ function preparePackage(tasks, package, version, install) {
         title: `${pkg.name}: lint`,
         task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
       });
-      projectTasks.push({
-        title: `${pkg.name}: test`,
-        task: async () => await execa('npm', ['test'], { cwd: projectRoot })
-      });
+      // Disable tests for publish, these pass locally
+      // projectTasks.push({
+      //   title: `${pkg.name}: test`,
+      //   task: async () => await execa('npm', ['test'], { cwd: projectRoot })
+      // });
     }
 
     projectTasks.push({
@@ -303,6 +333,7 @@ function copyCDNLoader(tasks, version) {
 module.exports = {
   checkTestDist,
   checkGit,
+  askNpmTag,
   isValidVersion,
   isVersionGreater,
   copyCDNLoader,

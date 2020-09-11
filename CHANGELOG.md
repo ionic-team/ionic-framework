@@ -1,3 +1,11 @@
+## [4.11.11](https://github.com/ionic-team/ionic/compare/v4.11.0...v4.11.11) (2020-09-11)
+
+
+### Bug Fixes
+
+* **datetime:** do not reset to am when changing the hour and pm is set ([#22016](https://github.com/ionic-team/ionic/issues/22016)) ([1dac5a4](https://github.com/ionic-team/ionic/commit/1dac5a46f5e5adad9638e4e4e901bae1058c7287)), closes [#19175](https://github.com/ionic-team/ionic/issues/19175) [#19260](https://github.com/ionic-team/ionic/issues/19260) [#20026](https://github.com/ionic-team/ionic/issues/20026) [#16630](https://github.com/ionic-team/ionic/issues/16630)
+
+
 ## [4.11.10](https://github.com/ionic-team/ionic/compare/v4.11.9...v4.11.10) (2020-01-24)
 
 
@@ -127,7 +135,7 @@ npm i @types/react@latest @types/react-dom@latest
 
 # [4.11.0 Sodium](https://github.com/ionic-team/ionic/compare/v4.10.3...v4.11.0) (2019-10-09)
 
-Ionic React! Enjoy! 🧂 🌊 🐼 
+Ionic React! Enjoy! 🧂 🌊 🐼
 
 ## [4.10.3](https://github.com/ionic-team/ionic/compare/v4.10.2...v4.10.3) (2019-10-09)
 
