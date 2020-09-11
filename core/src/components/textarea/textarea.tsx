@@ -19,7 +19,7 @@ import { createColorClasses } from '../../utils/theme';
 export class Textarea implements ComponentInterface {
 
   private nativeInput?: HTMLTextAreaElement;
-  private inputId = `ion-input-${textareaIds++}`;
+  private inputId = `ion-textarea-${textareaIds++}`;
   private didBlurAfterEdit = false;
   private textareaWrapper?: HTMLElement;
 
