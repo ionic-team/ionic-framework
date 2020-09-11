@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue-router",
-  "version": "0.3.1",
+  "version": "5.4.0-dev.202009101934.5ffa65f",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
     "test": "jest",

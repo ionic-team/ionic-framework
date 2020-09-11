@@ -1,9 +1,7 @@
 import { App } from 'vue';
 import {
   createRouter as createVueRouter,
-  createWebHistory as createVueWebHistory,
-  NavigationGuardNext,
-  RouteLocationNormalized
+  createWebHistory as createVueWebHistory
 } from 'vue-router';
 import { createIonRouter } from './router';
 import { createViewStacks } from './viewStacks';
@@ -24,11 +22,6 @@ export const createRouter = (opts: IonicVueRouterOptions) => {
 
     oldInstall(app);
   };
-
-  router.beforeEach((to: RouteLocationNormalized, _: RouteLocationNormalized, next: NavigationGuardNext) => {
-    ionRouter.handleHistoryChange(to);
-    next();
-  });
 
   return router;
 }
