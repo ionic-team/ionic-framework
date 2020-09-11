@@ -11,8 +11,7 @@ import {
   RouteParams,
   RouteAction,
   RouteDirection,
-  IonicVueRouterOptions,
-  IonRouter
+  IonicVueRouterOptions
 } from './types';
 import { AnimationBuilder } from '@ionic/core';
 
