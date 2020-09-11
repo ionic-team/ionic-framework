@@ -4,7 +4,7 @@ import { inject } from 'vue';
 type Handler = (processNextHandler: () => void) => Promise<any> | void | null;
 
 export interface IonRouter {
-  canGoBack: (deep: number) => boolean;
+  canGoBack: (deep?: number) => boolean;
 }
 
 export const useHardwareBackButton = (priority: number, handler: Handler) => {
