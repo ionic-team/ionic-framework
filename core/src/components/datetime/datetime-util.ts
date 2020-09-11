@@ -324,7 +324,7 @@ export const updateDate = (existingData: DatetimeData, newData: any): boolean =>
 
           // If the existing meridiem is pm, we want to switch to am if it is either
           // A) coming from 12 (12 pm)
-          // A) going to 12 (12 am)
+          // B) going to 12 (12 am)
           if (existingData.ampm === 'pm' && (existingData.hour === 12 || newData.hour.value === 12)) {
             newData.ampm.value = 'am';
           }
