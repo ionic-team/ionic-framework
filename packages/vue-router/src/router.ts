@@ -31,15 +31,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   // TODO types
   let historyChangeListeners: any[] = [];
 
-  const currentRoute = router.currentRoute.value;
-  currentRouteInfo = {
-    id: generateId('routeInfo'),
-    pathname: currentRoute.path,
-    search: currentRoute.fullPath.split('?')[1] || '',
-    params: currentRoute.params
-  }
-  locationHistory.add(currentRouteInfo)
-
   if (typeof (document as any) !== 'undefined') {
     document.addEventListener('ionBackButton', (ev: Event) => {
       (ev as any).detail.register(0, (processNextHandler: () => void) => {
@@ -103,6 +94,13 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       }
     } else {
       leavingLocationInfo = locationHistory.current();
+    }
+
+    if (!leavingLocationInfo) {
+      leavingLocationInfo = {
+        pathname: '',
+        search: ''
+      }
     }
 
     const leavingUrl = leavingLocationInfo.pathname + leavingLocationInfo.search;
