@@ -421,6 +421,10 @@ workflows:
           requires: [build-core]
       - build-react-router:
           requires: [build-core, build-react]
+      - build-vue:
+          requires: [build-core]
+      - build-vue-router:
+          requires: [build-core, build-vue]
       - test-react-lint:
           requires: [build-react]
       - test-react-router-lint:
