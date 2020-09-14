@@ -391,6 +391,28 @@ jobs:
           command: npm run test.spec
           working_directory: /tmp/workspace/packages/react-router
 
+  test-vue-router-spec:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/core
+      - run:
+          command: sudo npm link @ionic/core
+          working_directory: /tmp/workspace/packages/vue
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/packages/vue
+      - run:
+          command: sudo npm link @ionic/vue
+          working_directory: /tmp/workspace/packages/vue-router
+      - run:
+          command: npm run test.spec
+          working_directory: /tmp/workspace/packages/vue-router
+
   test-angular-e2e:
     <<: *defaults
     steps:
@@ -456,6 +478,8 @@ workflows:
       - test-vue-lint:
           requires: [build-vue]
       - test-vue-router-lint:
+          requires: [build-vue-router]
+      - test-vue-router-spec:
           requires: [build-vue-router]
       - test-angular-lint:
           requires: [build-angular]
