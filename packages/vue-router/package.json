@@ -3,7 +3,7 @@
   "version": "5.4.0-dev.202009101934.5ffa65f",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
-    "test": "jest",
+    "test.spec": "jest",
     "lint": "echo add linter",
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist",
