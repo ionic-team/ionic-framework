@@ -315,8 +315,8 @@ Type: `Promise<HTMLTextAreaElement>`
 
 ### `setFocus() => Promise<void>`
 
-Sets focus on the specified `ion-textarea`. Use this method instead of the global
-`input.focus()`.
+Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global
+`textarea.focus()`.
 
 #### Returns
 
