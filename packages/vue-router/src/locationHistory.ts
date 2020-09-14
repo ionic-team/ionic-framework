@@ -149,10 +149,8 @@ export const createLocationHistory = () => {
     current,
     previous,
     add,
-    pop,
     canGoBack,
     update,
-    getTabsHistory,
     getFirstRouteInfoForTab,
     getCurrentRouteInfoForTab,
     findLastLocation
