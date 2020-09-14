@@ -333,6 +333,26 @@ jobs:
           command: npm run lint
           working_directory: /tmp/workspace/packages/react-router
 
+  test-vue-lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run lint
+          working_directory: /tmp/workspace/packages/vue
+
+  test-vue-router-lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run lint
+          working_directory: /tmp/workspace/packages/vue-router
+
   test-react-spec:
     <<: *defaults
     steps:
@@ -421,10 +441,6 @@ workflows:
           requires: [build-core]
       - build-react-router:
           requires: [build-core, build-react]
-      - build-vue:
-          requires: [build-core]
-      - build-vue-router:
-          requires: [build-core, build-vue]
       - test-react-lint:
           requires: [build-react]
       - test-react-router-lint:
@@ -433,6 +449,14 @@ workflows:
           requires: [build-react]
       - test-react-router-spec:
           requires: [build-react-router]
+      - build-vue:
+          requires: [build-core]
+      - build-vue-router:
+          requires: [build-core, build-vue]
+      - test-vue-lint:
+          requires: [build-vue]
+      - test-vue-router-lint:
+          requires: [build-vue-router]
       - test-angular-lint:
           requires: [build-angular]
       - test-angular-e2e:
