@@ -260,10 +260,36 @@ export const present = async (
     overlay.didPresent.emit();
   }
 
+  focusPreviousElementOnDismiss(overlay.el);
+
   if (overlay.keyboardClose) {
     overlay.el.focus();
   }
 };
+
+/**
+ * When an overlay component is dismissed,
+ * focus should be returned to the element
+ * that presented the overlay. Otherwise
+ * focus will be set on the body which
+ * means that people using screen readers
+ * or tabbing will need to re-navigate
+ * to where they were before they
+ * opened the overlay.
+ */
+const focusPreviousElementOnDismiss = async (overlayEl: any) => {
+  let previousElement = document.activeElement as HTMLElement;
+  if (!previousElement) return;
+
+  const shadowRoot = previousElement && previousElement.shadowRoot;
+  if (shadowRoot) {
+    // If there are no inner focusable elements, just focus the host element.
+    previousElement = shadowRoot.querySelector(innerFocusableQueryString) || previousElement;
+  }
+
+  await overlayEl.onDidDimiss();
+  previousElement.focus();
+}
 
 export const dismiss = async (
   overlay: OverlayInterface,
