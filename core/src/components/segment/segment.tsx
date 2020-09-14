@@ -31,6 +31,16 @@ export class Segment implements ComponentInterface {
   @State() activated = false;
 
   /**
+   * If `false`, the gesture to drag the indicator between the buttons will be disabled.
+   */
+  @Prop() changeOnSwipe = true;
+
+  @Watch('changeOnSwipe')
+  changeOnSwipeChanged() {
+    this.gestureChanged();
+  }
+
+  /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
@@ -95,8 +105,8 @@ export class Segment implements ComponentInterface {
   }
 
   private gestureChanged() {
-    if (this.gesture && !this.scrollable) {
-      this.gesture.enable(!this.disabled);
+    if (this.gesture) {
+      this.gesture.enable(!this.scrollable && !this.disabled && this.changeOnSwipe);
     }
   }
 
@@ -121,7 +131,6 @@ export class Segment implements ComponentInterface {
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
-    this.gesture.enable(!this.scrollable);
     this.gestureChanged();
 
     if (this.disabled) {
@@ -373,10 +382,18 @@ export class Segment implements ComponentInterface {
 
   private onClick = (ev: Event) => {
     const current = ev.target as HTMLIonSegmentButtonElement;
+    /**
+     * If current element is ion-segment then that means
+     * user tried to swipe to other ion-segment-button,
+     * and we should not update the checked button.
+     */
+    if (current.tagName === 'ION-SEGMENT') {
+      return;
+    }
     const previous = this.checked;
     this.value = current.value;
 
-    if (this.scrollable) {
+    if (this.scrollable || !this.changeOnSwipe) {
       if (previous) {
         this.checkButton(previous, current);
       } else {

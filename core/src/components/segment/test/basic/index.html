@@ -198,6 +198,9 @@
       <div class="ion-padding">
         <ion-button expand="block" color="secondary" onClick="toggleValue()">Toggle Value</ion-button>
       </div>
+      <div class="ion-padding-horizontal">
+        <ion-button expand="block" color="tertiary" onClick="toggleChangeOnSwipe()">Toggle Change On Swipe</ion-button>
+      </div>
 
       <script>
         var dynamicAttrDisable = document.getElementsByName('dynamicAttrDisable');
@@ -226,6 +229,14 @@
             } else {
               dynamicAttrElem[i].setAttribute('value', 'active');
             }
+          }
+        }
+
+        function toggleChangeOnSwipe() {
+          const ionSegmentElement = document.querySelectorAll('ion-segment');
+          for (var i = 0; i < ionSegmentElement.length; i++) {
+            const changeOnSwipe = ionSegmentElement[i].getAttribute('change-on-swipe') === 'false' ? true : false;
+            ionSegmentElement[i].setAttribute('change-on-swipe', changeOnSwipe);
           }
         }
 

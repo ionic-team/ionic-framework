@@ -2043,6 +2043,10 @@ export namespace Components {
     }
     interface IonSegment {
         /**
+          * If `false`, the gesture to drag the indicator between the buttons will be disabled.
+         */
+        "changeOnSwipe": boolean;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -5324,6 +5328,10 @@ declare namespace LocalJSX {
         "value"?: string | null;
     }
     interface IonSegment {
+        /**
+          * If `false`, the gesture to drag the indicator between the buttons will be disabled.
+         */
+        "changeOnSwipe"?: boolean;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
