@@ -93,6 +93,7 @@ export const defineContainer = <Props extends object>(name: string, componentPro
       getComponentClasses(attrs.class).forEach(value => {
         classes.add(value);
       });
+
       let propsToAdd = {
         ...finalProps,
         ref: containerRef,
