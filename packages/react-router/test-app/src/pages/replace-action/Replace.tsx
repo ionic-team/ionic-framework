@@ -10,7 +10,7 @@ const ReplaceAction: React.FC<TopPageProps> = () => {
     <IonRouterOutlet>
       <Route path="/replace-action/page1" component={Page1} exact />
       <Route path="/replace-action/page2" component={Page2} exact />
-      <Route path="/replace-action/page3" component={Edit} exact />
+      <Route path="/replace-action/page3" component={Page3} exact />
       <Route exact path="/replace-action" render={() => <Redirect to="/replace-action/page1" />} />
     </IonRouterOutlet>
   );
@@ -61,7 +61,7 @@ const Page2: React.FC = () => {
   );
 };
 
-const Edit: React.FC = () => {
+const Page3: React.FC = () => {
   return (
     <IonPage data-pageid="page3">
       <IonHeader>

@@ -178,4 +178,13 @@
     </ion-row>
   </ion-grid>
 </template>
+
+<script>
+import { IonCol, IonGrid, IonRow } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonCol, IonGrid, IonRow }
+});
+</script>
 ```

@@ -416,6 +416,61 @@ export class FabExample {
     </ion-toolbar>
   </ion-footer>
 </template>
+
+<script>
+import { 
+  IonContent, 
+  IonFab, 
+  IonFabButton, 
+  IonFabList, 
+  IonFooter, 
+  IonHeader, 
+  IonIcon, 
+  IonTitle, 
+  IonToolbar 
+} from '@ionic/vue';
+import { 
+  add, 
+  arrowBackCircle,
+  arrowForwardCircle, 
+  logoFacebook, 
+  logoInstagram, 
+  logoTwitter, 
+  logoVimeo, 
+  person, 
+  settings, 
+  share
+} from 'ionicons/icons';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { 
+    IonContent, 
+    IonFab, 
+    IonFabButton, 
+    IonFabList, 
+    IonFooter, 
+    IonHeader, 
+    IonIcon, 
+    IonTitle, 
+    IonToolbar
+  },
+  setup() {
+    return {
+      add, 
+      arrowBackCircle,
+      arrowForwardCircle, 
+      logoFacebook, 
+      logoInstagram, 
+      logoTwitter, 
+      logoVimeo, 
+      person, 
+      settings, 
+      share
+    }
+  }
+});
+</script>
 ```
 
 
