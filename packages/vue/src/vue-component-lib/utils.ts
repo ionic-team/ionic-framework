@@ -48,12 +48,6 @@ export const defineContainer = <Props extends object>(name: string, componentPro
     const { modelValue, ...restOfProps } = props;
     const containerRef = ref<HTMLElement>();
     const classes: string[] = (attrs.class as string)?.split(' ') || [];
-
-    let finalProps: any = {
-      ...restOfProps,
-      ref: containerRef
-    };
-
     const onVnodeBeforeMount = (vnode: VNode) => {
       // Add a listener to tell Vue to update the v-model
       if (vnode.el) {
@@ -62,6 +56,8 @@ export const defineContainer = <Props extends object>(name: string, componentPro
         });
       }
     };
+
+    let finalProps: any = { ...restOfProps };
 
     if (routerLinkComponent) {
       const navManager: NavManager = inject(NAV_MANAGER);
@@ -92,8 +88,8 @@ export const defineContainer = <Props extends object>(name: string, componentPro
     return () => {
       let propsToAdd = {
         ...finalProps,
-        class: getElementClasses(containerRef, classes),
-        ref: containerRef
+        ref: containerRef,
+        class: getElementClasses(containerRef, classes)
       };
 
       if (modelUpdateEvent) {
