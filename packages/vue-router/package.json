@@ -3,7 +3,7 @@
   "version": "5.4.0-dev.202009101934.5ffa65f",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
-    "test": "jest",
+    "test.spec": "jest",
     "lint": "echo add linter",
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist",
@@ -42,12 +42,29 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "devDependencies": {
+    "@ionic/vue": "0.3.1",
+    "@types/jest": "^26.0.13",
+    "@types/node": "^14.10.1",
+    "jest": "^26.4.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.22.1",
+    "ts-jest": "^26.3.0",
     "typescript": "^3.9.7",
     "vue": "^3.0.0-rc.4",
-    "workbox-build": "4.3.1",
     "vue-router": "^4.0.0-beta.9",
-    "@ionic/vue": "0.2.0-5"
+    "workbox-build": "4.3.1"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(js|ts|tsx)$": "<rootDir>/test/jest.preprocessor.js"
+    },
+    "testRegex": "(\\.(test|spec))\\.(ts?|tsx?|jsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json",
+      "jsx"
+    ]
   }
 }
