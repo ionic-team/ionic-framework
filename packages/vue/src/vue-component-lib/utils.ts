@@ -48,33 +48,16 @@ export const defineContainer = <Props extends object>(name: string, componentPro
     const { modelValue, ...restOfProps } = props;
     const containerRef = ref<HTMLElement>();
     const classes: string[] = (attrs.class as string)?.split(' ') || [];
-
-    let finalProps: any = (modelProp) ? (
-      {
-        ...restOfProps,
-        [modelProp]: props.hasOwnProperty(MODEL_VALUE) ? modelValue : (props as any)[modelProp],
+    const onVnodeBeforeMount = (vnode: VNode) => {
+      // Add a listener to tell Vue to update the v-model
+      if (vnode.el) {
+        vnode.el.addEventListener(modelUpdateEvent.toLowerCase(), (e: Event) => {
+          emit(UPDATE_VALUE_EVENT, (e?.target as any)[modelProp]);
+        });
       }
-    ) : restOfProps;
+    };
 
-
-    if (modelUpdateEvent) {
-      const onVnodeBeforeMount = (vnode: VNode) => {
-
-        // Add a listener to tell Vue to update the v-model
-        if (vnode.el) {
-          vnode.el.addEventListener(modelUpdateEvent.toLowerCase(), (e: Event) => {
-            emit(UPDATE_VALUE_EVENT, (e?.target as any)[modelProp]);
-          });
-        }
-      };
-
-      finalProps = {
-        ...finalProps,
-        ...attrs,
-        onVnodeBeforeMount,
-        ref: containerRef
-      }
-    }
+    let finalProps: any = { ...restOfProps };
 
     if (routerLinkComponent) {
       const navManager: NavManager = inject(NAV_MANAGER);
@@ -102,15 +85,29 @@ export const defineContainer = <Props extends object>(name: string, componentPro
       }
     }
 
-    return () =>
-      h(
-        name,
-        {
-          ...finalProps,
-          class: getElementClasses(containerRef, classes),
-        },
-        slots.default && slots.default()
-      );
+    return () => {
+      let propsToAdd = {
+        ...finalProps,
+        ref: containerRef,
+        class: getElementClasses(containerRef, classes)
+      };
+
+      if (modelUpdateEvent) {
+        propsToAdd = {
+          ...propsToAdd,
+          onVnodeBeforeMount
+        }
+      }
+
+      if (modelProp) {
+        propsToAdd = {
+          ...propsToAdd,
+          [modelProp]: props.hasOwnProperty('modelValue') ? props.modelValue : (props as any)[modelProp]
+        }
+      }
+
+      return h(name, propsToAdd, slots.default && slots.default());
+    }
   });
 
   Container.displayName = name;
