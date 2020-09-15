@@ -41,10 +41,10 @@ function getMainEntry() {
 
 function resolve(file) {
 	if (isDirectory(file)) {
-		return if_exists(`${file}/index.mjs`) || if_exists(`${file}/index.js`);
+		return if_exists(`${file}/index.cjs.js`) || if_exists(`${file}/index.js`);
 	}
 
-	return if_exists(file) || if_exists(`${file}.mjs`) || if_exists(`${file}.js`);
+	return if_exists(file) || if_exists(`${file}.cjs.js`) || if_exists(`${file}.js`);
 }
 
 function isDirectory(file) {
