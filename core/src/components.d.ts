@@ -2043,10 +2043,6 @@ export namespace Components {
     }
     interface IonSegment {
         /**
-          * If `false`, the gesture to drag the indicator between the buttons will be disabled.
-         */
-        "changeOnSwipe": boolean;
-        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -2062,6 +2058,10 @@ export namespace Components {
           * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
          */
         "scrollable": boolean;
+        /**
+          * If `false`, the gesture to drag the indicator between the buttons will be disabled.
+         */
+        "swipeGesture": boolean;
         /**
           * the value of the segment.
          */
@@ -5329,10 +5329,6 @@ declare namespace LocalJSX {
     }
     interface IonSegment {
         /**
-          * If `false`, the gesture to drag the indicator between the buttons will be disabled.
-         */
-        "changeOnSwipe"?: boolean;
-        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -5360,6 +5356,10 @@ declare namespace LocalJSX {
           * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
          */
         "scrollable"?: boolean;
+        /**
+          * If `false`, the gesture to drag the indicator between the buttons will be disabled.
+         */
+        "swipeGesture"?: boolean;
         /**
           * the value of the segment.
          */

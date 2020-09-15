@@ -31,16 +31,6 @@ export class Segment implements ComponentInterface {
   @State() activated = false;
 
   /**
-   * If `false`, the gesture to drag the indicator between the buttons will be disabled.
-   */
-  @Prop() changeOnSwipe = true;
-
-  @Watch('changeOnSwipe')
-  changeOnSwipeChanged() {
-    this.gestureChanged();
-  }
-
-  /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
@@ -58,6 +48,16 @@ export class Segment implements ComponentInterface {
    * in order to swipe to see hidden buttons.
    */
   @Prop() scrollable = false;
+
+  /**
+   * If `false`, the gesture to drag the indicator between the buttons will be disabled.
+   */
+  @Prop() swipeGesture = true;
+
+  @Watch('swipeGesture')
+  swipeGestureChanged() {
+    this.gestureChanged();
+  }
 
   /**
    * the value of the segment.
@@ -106,7 +106,7 @@ export class Segment implements ComponentInterface {
 
   private gestureChanged() {
     if (this.gesture) {
-      this.gesture.enable(!this.scrollable && !this.disabled && this.changeOnSwipe);
+      this.gesture.enable(!this.scrollable && !this.disabled && this.swipeGesture);
     }
   }
 
@@ -393,7 +393,7 @@ export class Segment implements ComponentInterface {
     const previous = this.checked;
     this.value = current.value;
 
-    if (this.scrollable || !this.changeOnSwipe) {
+    if (this.scrollable || !this.swipeGesture) {
       if (previous) {
         this.checkButton(previous, current);
       } else {

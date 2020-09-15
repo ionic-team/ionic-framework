@@ -199,7 +199,7 @@
         <ion-button expand="block" color="secondary" onClick="toggleValue()">Toggle Value</ion-button>
       </div>
       <div class="ion-padding-horizontal">
-        <ion-button expand="block" color="tertiary" onClick="toggleChangeOnSwipe()">Toggle Change On Swipe</ion-button>
+        <ion-button expand="block" color="tertiary" onClick="toggleSwipeGesture()">Toggle Swipe Gesture</ion-button>
       </div>
 
       <script>
@@ -232,11 +232,11 @@
           }
         }
 
-        function toggleChangeOnSwipe() {
+        function toggleSwipeGesture() {
           const ionSegmentElement = document.querySelectorAll('ion-segment');
           for (var i = 0; i < ionSegmentElement.length; i++) {
-            const changeOnSwipe = ionSegmentElement[i].getAttribute('change-on-swipe') === 'false' ? true : false;
-            ionSegmentElement[i].setAttribute('change-on-swipe', changeOnSwipe);
+            const swipeGesture = ionSegmentElement[i].getAttribute('swipe-gesture') === 'false' ? true : false;
+            ionSegmentElement[i].setAttribute('swipe-gesture', swipeGesture);
           }
         }
 
