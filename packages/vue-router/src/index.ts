@@ -1,7 +1,9 @@
 import { App } from 'vue';
 import {
   createRouter as createVueRouter,
-  createWebHistory as createVueWebHistory
+  createWebHistory as createVueWebHistory,
+  createWebHashHistory as createVueWebHashHistory,
+  createMemoryHistory as createVueMemoryHistory
 } from 'vue-router';
 import { createIonRouter } from './router';
 import { createViewStacks } from './viewStacks';
@@ -27,5 +29,5 @@ export const createRouter = (opts: IonicVueRouterOptions) => {
 }
 
 export const createWebHistory = (base?: string) => createVueWebHistory(base);
-export const createWebHashHistory = (base?: string) => createWebHashHistory(base);
-export const createMemoryHistory = (base?: string) => createMemoryHistory(base);
+export const createWebHashHistory = (base?: string) => createVueWebHashHistory(base);
+export const createMemoryHistory = (base?: string) => createVueMemoryHistory(base);
