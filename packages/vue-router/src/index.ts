@@ -27,3 +27,5 @@ export const createRouter = (opts: IonicVueRouterOptions) => {
 }
 
 export const createWebHistory = (base?: string) => createVueWebHistory(base);
+export const createWebHashHistory = (base?: string) => createWebHashHistory(base);
+export const createMemoryHistory = (base?: string) => createMemoryHistory(base);
