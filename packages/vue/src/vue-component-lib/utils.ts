@@ -20,9 +20,13 @@ interface ComponentOptions {
   routerLinkComponent?: boolean;
 }
 
-const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: string[], defaultClasses: string[] = []) => {
+const getComponentClasses = (classes: unknown) => {
+  return (classes as string)?.split(' ') || [];
+};
+
+const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: Set<string>, defaultClasses: string[] = []) => {
   return [ ...Array.from(ref.value?.classList || []), ...defaultClasses ]
-    .filter((c: string, i, self) => !componentClasses.includes(c) && self.indexOf(c) === i);
+    .filter((c: string, i, self) => !componentClasses.has(c) && self.indexOf(c) === i);
 };
 
 /**
@@ -47,7 +51,7 @@ export const defineContainer = <Props extends object>(name: string, componentPro
   const Container: FunctionalComponent<Props & InputProps> = defineComponent((props, { attrs, slots, emit }) => {
     const { modelValue, ...restOfProps } = props;
     const containerRef = ref<HTMLElement>();
-    const classes: string[] = (attrs.class as string)?.split(' ') || [];
+    const classes = new Set(getComponentClasses(attrs.class));
     const onVnodeBeforeMount = (vnode: VNode) => {
       // Add a listener to tell Vue to update the v-model
       if (vnode.el) {
@@ -86,6 +90,10 @@ export const defineContainer = <Props extends object>(name: string, componentPro
     }
 
     return () => {
+      getComponentClasses(attrs.class).forEach(value => {
+        classes.add(value);
+      });
+
       let propsToAdd = {
         ...finalProps,
         ref: containerRef,
