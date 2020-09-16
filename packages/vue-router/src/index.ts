@@ -23,7 +23,7 @@ export const createRouter = (opts: IonicVueRouterOptions) => {
     oldInstall(app);
   };
 
-  const oldIsReady = router.install.bind(router);
+  const oldIsReady = router.isReady.bind(router);
   router.isReady = () => oldIsReady();
 
   return router;
