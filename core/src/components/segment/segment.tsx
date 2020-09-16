@@ -50,7 +50,7 @@ export class Segment implements ComponentInterface {
   @Prop() scrollable = false;
 
   /**
-   * If `false`, the gesture to drag the indicator between the buttons will be disabled.
+   * If `true`, users will be able to swipe between segment buttons to activate them.
    */
   @Prop() swipeGesture = true;
 
