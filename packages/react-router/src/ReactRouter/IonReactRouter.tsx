@@ -4,14 +4,14 @@ import { BrowserRouterProps, Router } from 'react-router-dom';
 
 import { IonRouter } from './IonRouter';
 
-interface IonReactRouterProps<THistoryLocationState = History.PoorMansUnknown> extends BrowserRouterProps {
+interface IonReactRouterProps<THistoryLocationState = unknown> extends BrowserRouterProps {
   history?: History<THistoryLocationState>;
 }
 
 export class IonReactRouter extends React.Component<IonReactRouterProps> {
 
   historyListenHandler?: ((location: HistoryLocation, action: HistoryAction) => void);
-  history: History<History.PoorMansUnknown>;
+  history: History<unknown>;
 
   constructor(props: IonReactRouterProps) {
     super(props);
