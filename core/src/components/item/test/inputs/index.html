@@ -124,6 +124,27 @@
       </ion-list-header>
       <ion-list class="multiple">
         <ion-item>
+          <ion-label>Multiple inputs</ion-label>
+          <ion-input placeholder="Input 1"></ion-input>
+          <ion-input placeholder="Input 2"></ion-input>
+          <ion-input placeholder="Input 3"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Multiple textareas</ion-label>
+          <ion-textarea placeholder="Textarea 1"></ion-textarea>
+          <ion-textarea placeholder="Textarea 2"></ion-textarea>
+          <ion-textarea placeholder="Textarea 3"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Multiple input/textareas</ion-label>
+          <ion-textarea placeholder="Textarea 1"></ion-textarea>
+          <ion-input placeholder="Input 2"></ion-input>
+          <ion-textarea placeholder="Textarea 3"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
           <ion-checkbox slot="start" id="checkbox-start"></ion-checkbox>
           <ion-label>Multiple inputs w/ cover</ion-label>
           <ion-datetime placeholder="startTime" display-format="HH:mm" id="datetime-end"></ion-datetime>
@@ -179,7 +200,7 @@
       clickableItem.color = color === undefined ? 'primary' : undefined;
     });
 
-    const inputs = document.querySelectorAll('ion-input');
+    const inputs = document.querySelectorAll('ion-input, ion-textarea');
 
     for (var i = 0; i < inputs.length; i++) {
       const input = inputs[i];

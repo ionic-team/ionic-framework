@@ -160,6 +160,29 @@ export class HeaderExample {
     </ion-header>
   </ion-content>
 </template>
+
+<script>
+import { 
+  IonBackButton, 
+  IonButtons, 
+  IonContent, 
+  IonHeader, 
+  IonTitle, 
+  IonToolbar
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { 
+    IonBackButton, 
+    IonButtons, 
+    IonContent, 
+    IonHeader, 
+    IonTitle, 
+    IonToolbar
+  }
+});
+</script>
 ```
 
 

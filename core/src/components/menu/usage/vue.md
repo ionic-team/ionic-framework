@@ -59,25 +59,44 @@
 }
 </style>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { 
+  IonContent, 
+  IonHeader, 
+  IonItem, 
+  IonList, 
+  IonMenu, 
+  IonRouterOutlet,
+  IonTitle, 
+  IonToolbar,
+  mentController
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-
+export default defineComponent({
+  components: {
+    IonContent, 
+    IonHeader, 
+    IonItem, 
+    IonList, 
+    IonMenu, 
+    IonRouterOutlet,
+    IonTitle, 
+    IonToolbar
+  },
+  methods: {
     openFirst() {
-      this.menu.enable(true, 'first');
-      this.menu.open('first');
-    }
-
+      mentController.enable(true, 'first');
+      mentController.open('first');
+    },
     openEnd() {
-      this.menu.open('end');
-    }
-
+      mentController.open('end');
+    },
     openCustom() {
-      this.menu.enable(true, 'custom');
-      this.menu.open('custom');
+      mentController.enable(true, 'custom');
+      mentController.open('custom');
     }
   }
+});
 </script>
 ```

@@ -79,14 +79,15 @@
   </ion-item>
 </template>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { IonDatetime, IonItem, IonLabel } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
-
-    customDayShortNames = [
+export default defineComponent({
+  components: { IonDatetime, IonItem, IonLabel },
+  setup() {
+    const customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
+    const customDayShortNames = [
       's\u00f8n',
       'man',
       'tir',
@@ -95,8 +96,7 @@
       'fre',
       'l\u00f8r'
     ];
-
-    customPickerOptions = {
+    const customPickerOptions = {
       buttons: [{
         text: 'Save',
         handler: () => console.log('Clicked Save!')
@@ -108,6 +108,13 @@
         }
       }]
     }
+    
+    return {
+      customYearValues,
+      customDayShortNames,
+      customPickerOptions
+    }
   }
+});
 </script>
 ```
