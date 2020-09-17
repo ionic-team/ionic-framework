@@ -16,6 +16,13 @@
 * **vue:** add webHashHistory and memoryHistory options for router ([#22101](https://github.com/ionic-team/ionic/issues/22101)) ([fe2cf22](https://github.com/ionic-team/ionic/commit/fe2cf22f5dab4e13458be0a93d38d346a03f7e3d))
 
 
+### Upgrade Steps
+
+```
+npm i @ionic/vue@0.4.0 @ionic/vue-router@0.4.0
+```
+
+
 
 ## 0.3.1
 
