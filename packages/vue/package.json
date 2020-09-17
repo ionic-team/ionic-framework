@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "5.4.0-dev.202009101933.5ffa65f",
+  "version": "0.4.0",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "lint": "echo add linter",
@@ -52,7 +52,7 @@
     "workbox-build": "4.3.1"
   },
   "dependencies": {
-    "@ionic/core": "0.3.1",
+    "@ionic/core": "0.4.0",
     "ionicons": "^5.1.2"
   }
 }
