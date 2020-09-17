@@ -1,3 +1,16 @@
+## [5.3.3](https://github.com/ionic-team/ionic/compare/v5.3.2...v5.3.3) (2020-09-17)
+
+
+### Bug Fixes
+
+* **datetime:** do not reset to am when changing hour and pm is set ([#21997](https://github.com/ionic-team/ionic/issues/21997)) ([8b85fe0](https://github.com/ionic-team/ionic/commit/8b85fe0d9eea39adfdcf790bf00d8ef91d5edbe7)), closes [#19175](https://github.com/ionic-team/ionic/issues/19175) [#19260](https://github.com/ionic-team/ionic/issues/19260) [#20026](https://github.com/ionic-team/ionic/issues/20026) [#16630](https://github.com/ionic-team/ionic/issues/16630)
+* **input:** only focus the first input / textarea when clicking on the parent item ([#22049](https://github.com/ionic-team/ionic/issues/22049)) ([99f2532](https://github.com/ionic-team/ionic/commit/99f2532ee174da79e2b6a462cfa124673edc1170)), closes [#22037](https://github.com/ionic-team/ionic/issues/22037) [#22032](https://github.com/ionic-team/ionic/issues/22032)
+* **react:** Keep a hold of previous routes when doing a redirect, closes [#22053](https://github.com/ionic-team/ionic/issues/22053) ([74af3cb](https://github.com/ionic-team/ionic/commit/74af3cb50b089a6bd60d515158e03b18b86455b8))
+* **react:** redirect routes should unmount leaving component, fixes [#22022](https://github.com/ionic-team/ionic/issues/22022) ([#22029](https://github.com/ionic-team/ionic/issues/22029)) ([b11e06c](https://github.com/ionic-team/ionic/commit/b11e06cec1d3c28bab9f29185fe2c3a2975b092f))
+* **textarea:** do not generate duplicate IDs between ion-input and ion-textarea ([#22074](https://github.com/ionic-team/ionic/issues/22074)) ([c72c7ff](https://github.com/ionic-team/ionic/commit/c72c7ffa983af8885dd93f9adfcb3f2af232d2d9)), closes [#21542](https://github.com/ionic-team/ionic/issues/21542)
+
+
+
 ## [5.3.2](https://github.com/ionic-team/ionic/compare/v5.3.1...v5.3.2) (2020-08-27)
 
 
