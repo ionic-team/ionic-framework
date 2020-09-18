@@ -20,8 +20,7 @@ export const IonTabs = defineComponent({
           'height': '100%',
           'contain': 'layout size style',
           'z-index': '0'
-        },
-        ref: 'ionTabsRef'
+        }
       },
       [
         h(
@@ -35,7 +34,7 @@ export const IonTabs = defineComponent({
             }
           },
           [
-            h(IonRouterOutlet, { tabs: true })
+            h(IonRouterOutlet)
           ]
         ),
         ...slots.default && slots.default()
