@@ -10,6 +10,7 @@ export { IonRouterOutlet } from './components/IonRouterOutlet';
 export { IonTabButton } from './components/IonTabButton';
 export { IonTabs } from './components/IonTabs';
 export { IonTabBar } from './components/IonTabBar';
+export { IonActionSheet } from './components/Overlays';
 
 export { IonRouter, useBackButton, useIonRouter } from './hooks';
 
