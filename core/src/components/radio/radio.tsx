@@ -32,10 +32,10 @@ export class Radio implements ComponentInterface {
   @State() checked = false;
 
   /**
-   * The tabindex of the radio.
+   * The tabindex of the radio button.
    * @internal
    */
-  @Prop() tabindex = -1;
+  @State() buttonTabindex = -1;
 
   /**
    * The color to use from your application's color palette.
@@ -81,6 +81,12 @@ export class Radio implements ComponentInterface {
     if (this.buttonEl) {
       this.buttonEl.focus();
     }
+  }
+
+  /** @internal */
+  @Method()
+  async setButtonTabindex(value: number) {
+    this.buttonTabindex = value;
   }
 
   connectedCallback() {
@@ -131,7 +137,7 @@ export class Radio implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, checked, color, el, tabindex } = this;
+    const { inputId, disabled, checked, color, el, buttonTabindex } = this;
     const mode = getIonMode(this);
     const labelId = inputId + '-lbl';
     const label = findItemLabel(el);
@@ -161,7 +167,7 @@ export class Radio implements ComponentInterface {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           disabled={disabled}
-          tabindex={tabindex}
+          tabindex={buttonTabindex}
         >
         </button>
       </Host>

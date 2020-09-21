@@ -1703,11 +1703,8 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        "setButtonTabindex": (value: number) => Promise<void>;
         "setFocus": () => Promise<void>;
-        /**
-          * The tabindex of the radio.
-         */
-        "tabindex": number;
         /**
           * the value of the radio.
          */
@@ -4954,10 +4951,6 @@ declare namespace LocalJSX {
           * Emitted when the styles change.
          */
         "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
-        /**
-          * The tabindex of the radio.
-         */
-        "tabindex"?: number;
         /**
           * the value of the radio.
          */

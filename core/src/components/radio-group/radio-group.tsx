@@ -60,7 +60,8 @@ export class RadioGroup implements ComponentInterface {
     const focusable = checked || first;
 
     for (const radio of radios) {
-      radio.tabindex = radio === focusable ? 0 : -1;
+      const tabindex = radio === focusable ? 0 : -1;
+      radio.setButtonTabindex(tabindex);
     }
   }
 
