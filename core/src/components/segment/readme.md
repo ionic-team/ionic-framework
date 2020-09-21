@@ -548,14 +548,17 @@ export class SegmentExample {
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+import { IonSegment, IonSegmentButton, IonToolbar } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    segmentChanged(ev: any) {
+export default defineComponent({
+  components: { IonSegment, IonSegmentButton, IonToolbar },
+  methods: {
+    segmentChanged(ev: CustomEvent) {
       console.log('Segment changed', ev);
     }
   }
+});
 </script>
 ```
 

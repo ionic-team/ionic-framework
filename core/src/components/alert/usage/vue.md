@@ -1,44 +1,46 @@
 ```html
 <template>
-  <IonVuePage :title="'Alert'">
-    <ion-button @click="presentAlert">Show Alert</ion-button>
-    <ion-button @click="presentAlertMultipleButtons">Show Alert (multiple buttons)</ion-button>
-    <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button>
-    <ion-button @click="presentAlertPrompt">Show Alert (prompt)</ion-button>
-    <ion-button @click="presentAlertRadio">Show Alert (radio)</ion-button>
-    <ion-button @click="presentAlertCheckbox">Show Alert (checkbox)</ion-button>
-  </IonVuePage>
+  <ion-button @click="presentAlert">Show Alert</ion-button>
+  <ion-button @click="presentAlertMultipleButtons">Show Alert (multiple buttons)</ion-button>
+  <ion-button @click="presentAlertConfirm">Show Alert (confirm)</ion-button>
+  <ion-button @click="presentAlertPrompt">Show Alert (prompt)</ion-button>
+  <ion-button @click="presentAlertRadio">Show Alert (radio)</ion-button>
+  <ion-button @click="presentAlertCheckbox">Show Alert (checkbox)</ion-button>
 </template>
 
 <script>
-export default {
+import { IonButton, alertController } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonButton },
   methods: {
-    presentAlert() {
-      return this.$ionic.alertController
+    async presentAlert() {
+      const alert = await alertController
         .create({
           cssClass: 'my-custom-class',
           header: 'Alert',
           subHeader: 'Subtitle',
           message: 'This is an alert message.',
           buttons: ['OK'],
-        })
-        .then(a => a.present())
+        });
+      return alert.present();
     },
 
-    presentAlertMultipleButtons() {
-      return this.$ionic.alertController
+    async presentAlertMultipleButtons() {
+      const alert = await alertController
         .create({
           cssClass: 'my-custom-class',
           header: 'Alert',
           subHeader: 'Subtitle',
           message: 'This is an alert message.',
           buttons: ['Cancel', 'Open Modal', 'Delete'],
-        })
-        .then(a => a.present())
+        });
+      return alert.present();
     },
 
-    presentAlertConfirm() {
-      return this.$ionic.alertController
+    async presentAlertConfirm() {
+      const alert = await alertController
         .create({
           cssClass: 'my-custom-class',
           header: 'Confirm!',
@@ -59,12 +61,12 @@ export default {
               },
             },
           ],
-        })
-        .then(a => a.present())
+        });
+      return alert.present();
     },
 
-    presentAlertPrompt() {
-      return this.$ionic.alertController
+    async presentAlertPrompt() {
+      const alert = await alertController
         .create({
           cssClass: 'my-custom-class',
           header: 'Prompt!',
@@ -133,12 +135,12 @@ export default {
               },
             },
           ],
-        })
-        .then(a => a.present())
+        });
+      return alert.present();
     },
 
-    presentAlertRadio() {
-      return this.$ionic.alertController
+    async presentAlertRadio() {
+      const alert = await alertController
         .create({
           cssClass: 'my-custom-class',
           header: 'Radio',
@@ -191,12 +193,12 @@ export default {
               },
             },
           ],
-        })
-        .then(a => a.present())
+        });
+      return alert.present();
     },
 
-    presentAlertCheckbox() {
-      return this.$ionic.alertController
+    async presentAlertCheckbox() {
+      const alert = await alertController
         .create({
           cssClass: 'my-custom-class',
           header: 'Checkbox',
@@ -254,10 +256,10 @@ export default {
               },
             },
           ],
-        })
-        .then(a => a.present())
+        });
+      return alert.present();
     },
   },
-}
+});
 </script>
 ```

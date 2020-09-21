@@ -1,7 +1,7 @@
 ```html
 <template>
   <ion-content
-    :scrollEvents="true"
+    :scroll-events="true"
     @ionScrollStart="logScrollStart()"
     @ionScroll="logScrolling($event)"
     @ionScrollEnd="logScrollEnd()">
@@ -12,5 +12,15 @@
       </div>
   </ion-content>
 </template>
+
+<script>
+import { IonContent } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonContent }
+});
+</script>
+
 ```
 

@@ -21,18 +21,18 @@
     <ion-item>
       <ion-label>Pepperoni</ion-label>
       <ion-toggle
-        @ionChange="toppings.push($event.target.value)"
+        @ionChange="toppings.value.push($event.target.value)"
         value="pepperoni"
-        :checked="toppings.indexOf('pepperoni') !== -1">
+        :checked="toppings.value.indexOf('pepperoni') !== -1">
       </ion-toggle>
     </ion-item>
 
     <ion-item>
       <ion-label>Sausage</ion-label>
       <ion-toggle
-        @ionChange="toppings.push($event.target.value)"
+        @ionChange="toppings.value.push($event.target.value)"
         value="sausage"
-        :checked="toppings.indexOf('pepperoni') !== -1"
+        :checked="toppings.value.indexOf('pepperoni') !== -1"
         disabled="true">
       </ion-toggle>
     </ion-item>
@@ -40,11 +40,25 @@
     <ion-item>
       <ion-label>Mushrooms</ion-label>
       <ion-toggle
-        @ionChange="toppings.push($event.target.value)"
+        @ionChange="toppings.value.push($event.target.value)"
         value="mushrooms"
-        :checked="toppings.indexOf('pepperoni') !== -1">
+        :checked="toppings.value.indexOf('pepperoni') !== -1">
       </ion-toggle>
     </ion-item>
   </ion-list>
 </template>
+
+<script>
+import { IonLabel, IonList, IonItem, IonToggle } from '@ionic/vue';
+import { defineComponent, vue } from 'vue';
+
+export default defineComponent({
+  components: { IonLabel, IonList, IonItem, IonToggle },
+  setup() {
+    const toppings = ref([]);
+    
+    return { toppings };
+  }
+});
+</script>
 ```
