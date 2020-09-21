@@ -5,15 +5,16 @@
   "scripts": {
     "lint": "echo add linter",
     "test": "jest",
-    "build": "npm run clean && npm run copy && npm run compile",
-    "clean": "rimraf dist",
+    "build": "npm run clean && npm run copy && npm run compile && npm run bundle",
+    "bundle": "rollup --config rollup.config.js",
+    "clean": "rimraf dist dist-transpiled",
     "compile": "npm run tsc",
     "tsc": "tsc -p .",
     "copy": "node ./scripts/copy-css.js"
   },
   "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/types/index.d.ts",
   "files": [
     "dist/",
     "css/"
@@ -43,9 +44,11 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "@stencil/core": "^1.17.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.22.1",
+    "rollup": "^2.28.1",
+    "rollup-plugin-terser": "^7.0.2",
     "typescript": "^3.9.7",
     "vue": "^3.0.0-rc.2",
     "vue-router": "^4.0.0-beta.6",
