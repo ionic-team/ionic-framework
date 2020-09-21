@@ -97,6 +97,10 @@ export class RadioGroup implements ComponentInterface {
 
   @Listen('keydown', { target: 'document' })
   onKeydown(ev: any) {
+    if (ev.target && !this.el.contains(ev.target)) {
+      return;
+    }
+
     // Get all radios inside of the radio group and then
     // filter out disabled radios since we need to skip those
     const radios = Array.from(this.el.querySelectorAll('ion-radio')).filter(radio => !radio.disabled);
