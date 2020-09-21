@@ -13,7 +13,10 @@
 </template>
 
 <script>
-export default {
+import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   name: 'Modal',
   props: {
     title: { type: String, default: 'Super Modal' },
@@ -23,26 +26,29 @@ export default {
       content: 'Content',
     }
   },
-}
+  components: { IonContent, IonHeader, IonTitle, IonToolbar }
+});
 </script>
 ```
 
 ```html
 <template>
-  <ion-page class="ion-page">
-    <ion-content class="ion-content ion-padding">
+  <ion-page>
+    <ion-content class="ion-padding">
       <ion-button @click="openModal">Open Modal</ion-button>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
+import { IonButton, IonContent, IonPage, modalController } from '@ionic/vue';
 import Modal from './modal.vue'
 
 export default {
+  components: { IonButton, IonContent, IonPage },
   methods: {
-    openModal() {
-      return this.$ionic.modalController
+    async openModal() {
+      const modal = await modalController
         .create({
           component: Modal,
           cssClass: 'my-custom-class',
@@ -55,7 +61,7 @@ export default {
             },
           },
         })
-        .then(m => m.present())
+      return modal.present();
     },
   },
 }

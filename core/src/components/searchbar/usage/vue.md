@@ -44,4 +44,13 @@
     <ion-searchbar></ion-searchbar>
   </ion-toolbar>
 </template>
+
+<script>
+import { IonSearchbar, IonToolbar } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonSearchbar, IonToolbar }
+});
+</script>
 ```

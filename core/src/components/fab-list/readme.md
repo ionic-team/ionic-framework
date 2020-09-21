@@ -215,6 +215,15 @@ export class FabListExample {
 
   </ion-fab>
 </template>
+
+<script>
+import { IonFab, IonFabButton, IonFabList } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonFab, IonFabButton, IonFabList }
+});
+</script>
 ```
 
 
