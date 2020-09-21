@@ -14,5 +14,6 @@ export default {
       sourcemap: true,
       plugins: [terser()]
     }
-  ]
+  ],
+  external: ['ionicons', 'ionicons/icons', '@ionic/core', '@ionic/core/loader', 'vue', 'vue-router']
 };
