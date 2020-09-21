@@ -7,7 +7,6 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "lib": ["dom", "es2020"],
-    "importHelpers": true,
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -17,7 +16,6 @@
     "outDir": "dist-transpiled",
     "declarationDir": "dist/types",
     "removeComments": false,
-    "inlineSources": true,
     "sourceMap": true,
     "jsx": "react",
     "target": "es2017"
