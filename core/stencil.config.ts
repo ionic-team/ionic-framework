@@ -76,7 +76,6 @@ export const config: Config = {
 
         // Overlays
         'ion-alert',
-        'ion-action-sheet',
         'ion-loading',
         'ion-modal',
         'ion-picker',

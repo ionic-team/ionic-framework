@@ -8,6 +8,25 @@ import { JSX } from '@ionic/core';
 
 
 
+export const IonActionSheet = /*@__PURE__*/ defineContainer<JSX.IonActionSheet>('ion-action-sheet', [
+  'overlayIndex',
+  'keyboardClose',
+  'enterAnimation',
+  'leaveAnimation',
+  'buttons',
+  'cssClass',
+  'backdropDismiss',
+  'header',
+  'subHeader',
+  'translucent',
+  'animated',
+  'ionActionSheetDidPresent',
+  'ionActionSheetWillPresent',
+  'ionActionSheetWillDismiss',
+  'ionActionSheetDidDismiss'
+]);
+
+
 export const IonApp = /*@__PURE__*/ defineContainer<JSX.IonApp>('ion-app');
 
 
