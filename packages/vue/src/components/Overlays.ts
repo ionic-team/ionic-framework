@@ -1,8 +1,5 @@
 import {
   JSX,
-
-  ActionSheetOptions,
-
   actionSheetController
 } from '@ionic/core';
 import { FunctionalComponent, defineComponent, h, ref } from 'vue';
@@ -63,7 +60,7 @@ const defineOverlayContainer = <Props extends object>(name: string, componentPro
           onVnodeUpdated,
           onVnodeBeforeUnmount
         },
-        [h('div', { ref: content }, slots?.default())]
+        [h('div', { ref: content }, slots.default && slots.default())]
       );
     }
   });
