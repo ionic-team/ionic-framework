@@ -16,7 +16,7 @@ import { fireLifecycle, generateId, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LI
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
   name: 'IonRouterOutlet',
-  setup() {
+  setup(_, { attrs }) {
     const vueRouter = useRouter();
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
