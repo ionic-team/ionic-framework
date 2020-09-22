@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
+import { AnimationBuilder, Color, CssClassMap, Gesture, GestureDetail, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
 import { dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
@@ -29,7 +29,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class Toast implements ComponentInterface, OverlayInterface {
 
+  private animation?: any;
   private durationTimeout: any;
+  private gesture?: Gesture;
 
   presented = false;
 
@@ -90,6 +92,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
 
   /**
+   * The direction of the swipe gesture to dismiss the toast.
+   */
+  @Prop() swipeGesture: undefined | 'left' | 'right' = undefined;
+
+  /**
    * An array of buttons for the toast.
    */
   @Prop() buttons?: (ToastButton | string)[];
@@ -126,8 +133,23 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  connectedCallback() {
+  async connectedCallback() {
     prepareOverlay(this.el);
+    if (this.swipeGesture !== undefined) {
+      await this.setupSwipeAnimation();
+      this.setupSwipeGesture();
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = undefined;
+    }
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
   }
 
   /**
@@ -222,6 +244,80 @@ export class Toast implements ComponentInterface, OverlayInterface {
       const cancelButton = this.getButtons().find(b => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
+  }
+
+  private async setupSwipeAnimation() {
+    this.animation = (await import('../../utils/animation/animation')).createAnimation();
+    this.animation
+      .addElement(this.el)
+      .duration(2000)
+      .iterations(1);
+  }
+
+  private async setupSwipeGesture() {
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+      el: this.el,
+      gestureName: 'drag',
+      onStart: () => {
+        this.animation.progressStart(false, 0);
+      },
+      onMove: (detail: GestureDetail) => {
+        const stepValue = this.swipeGesture === 'left'
+          ? this.clamp((detail.startX - detail.currentX) / this.el.clientWidth)
+          : this.clamp((detail.currentX - detail.startX) / this.el.clientWidth);
+
+        this.animation.progressStep(stepValue);
+      },
+      onEnd: (detail: GestureDetail) => {
+        const stepValue = this.swipeGesture === 'left'
+          ? this.clamp((detail.startX - detail.currentX) / this.el.clientWidth)
+          : this.clamp((detail.currentX - detail.startX) / this.el.clientWidth);
+
+        const velocity = detail.velocityX;
+        const z = this.el.clientWidth / 2.0;
+        const shouldComplete = this.swipeGesture === 'left'
+          ? velocity <= 0 && (velocity < -0.2 || detail.deltaX < -z)
+          : velocity >= 0 && (velocity > 0.2 || detail.deltaX > z);
+
+        this.animation
+          .onFinish(
+            () => shouldComplete && this.dismiss()
+          )
+          .progressEnd((shouldComplete) ? 1 : 0, stepValue, 300);
+      }
+    });
+    this.swipeGestureChanged();
+  }
+
+  private swipeGestureChanged() {
+    if (this.swipeGesture === undefined) {
+      if (this.gesture) {
+        this.gesture.enable(false);
+      }
+    } else {
+      this.setGestureDirection(this.swipeGesture);
+      if (this.gesture) {
+        this.gesture.enable(true);
+      }
+    }
+  }
+
+  private setGestureDirection(direction: 'left' | 'right') {
+    const translateTarget = direction === 'left' ? 'translateX(-100%)' : 'translateX(100%)';
+    this.animation
+      .keyframes([
+        { transform: 'translateX(0)', opacity: 1, offset: 0 },
+        { transform: translateTarget, opacity: 0, offset: 1 },
+      ]);
+  }
+
+  private clamp = (val: number) => {
+    if (val > 1) {
+      return 1;
+    } else if (val < 0) {
+      return 0;
+    }
+    return val;
   }
 
   renderButtons(buttons: ToastButton[], side: 'start' | 'end') {
