@@ -16,13 +16,27 @@ import { fireLifecycle, generateId, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LI
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
   name: 'IonRouterOutlet',
-  setup() {
+  setup(_, { attrs }) {
     const vueRouter = useRouter();
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
 
     // TODO types
-    const matchedRouteRef: any = computed(() => route.matched[depth]);
+    let tabsPrefix: string | undefined;
+    const matchedRouteRef: any = computed(() => {
+      const matchedRoute = route.matched[depth];
+
+      if (attrs.tabs && !tabsPrefix) {
+          tabsPrefix = route.matched[0].path;
+          viewStacks.addTabsPrefix(tabsPrefix);
+      }
+
+      if (matchedRoute && attrs.tabs && route.matched[depth + 1]) {
+        return route.matched[route.matched.length - 1];
+      }
+
+      return matchedRoute;
+    });
 
     provide(viewDepthKey, depth + 1)
 
@@ -205,6 +219,10 @@ export const IonRouterOutlet = defineComponent({
       }
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
+      const hasTabsPrefix = viewStacks.hasTabsPrefix(currentRoute.pathname)
+      const isLastPathTabs = viewStacks.hasTabsPrefix(currentRoute.lastPathname);
+      if (hasTabsPrefix && isLastPathTabs && !attrs.tabs) { return; }
+
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
 
       if (!enteringViewItem) {
