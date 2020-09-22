@@ -49,7 +49,6 @@ export const defineContainer = <Props extends object>(name: string, componentPro
   * They refer to whatever properties are set on an instance of a component.
   */
   const Container: FunctionalComponent<Props & InputProps> = defineComponent((props, { attrs, slots, emit }) => {
-    const { modelValue, ...restOfProps } = props;
     const containerRef = ref<HTMLElement>();
     const classes = new Set(getComponentClasses(attrs.class));
     const onVnodeBeforeMount = (vnode: VNode) => {
@@ -61,7 +60,7 @@ export const defineContainer = <Props extends object>(name: string, componentPro
       }
     };
 
-    let finalProps: any = { ...restOfProps };
+    let finalProps: any = { ...props };
 
     if (routerLinkComponent) {
       const navManager: NavManager = inject(NAV_MANAGER);
