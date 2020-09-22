@@ -4,6 +4,7 @@ import {
   ref,
   computed,
   inject,
+  provide,
   watch,
   shallowRef,
   InjectionKey
@@ -15,19 +16,16 @@ import { fireLifecycle, generateId, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LI
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
   name: 'IonRouterOutlet',
-  setup(_, { attrs }) {
+  setup() {
     const vueRouter = useRouter();
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
 
     // TODO types
-    const matchedRouteRef: any = computed(() => {
-      if (attrs.tabs) {
-        return route.matched[route.matched.length - 1];
-      }
+    const matchedRouteRef: any = computed(() => route.matched[depth]);
 
-      return route.matched[depth];
-    });
+    provide(viewDepthKey, depth + 1)
+
     const ionRouterOutlet = ref();
     const id = generateId('ion-router-outlet');
 
@@ -207,8 +205,6 @@ export const IonRouterOutlet = defineComponent({
       }
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
-      if (currentRoute.tab !== undefined && !attrs.tabs) return
-
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
 
       if (!enteringViewItem) {

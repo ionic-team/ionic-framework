@@ -817,6 +817,7 @@ export const IonText = /*@__PURE__*/ defineContainer<JSX.IonText>('ion-text', [
 
 
 export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-textarea', [
+  'fireFocusEvents',
   'color',
   'autocapitalize',
   'autofocus',
