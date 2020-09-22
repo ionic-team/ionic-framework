@@ -252,8 +252,8 @@ export class PickerColumnCmp implements ComponentInterface {
     // some "click" events to capture
     if (detail.event.cancelable) {
       detail.event.preventDefault();
-      detail.event.stopPropagation();
     }
+    detail.event.stopPropagation();
 
     hapticSelectionStart();
 
@@ -276,8 +276,8 @@ export class PickerColumnCmp implements ComponentInterface {
   private onMove(detail: GestureDetail) {
     if (detail.event.cancelable) {
       detail.event.preventDefault();
-      detail.event.stopPropagation();
     }
+    detail.event.stopPropagation();
 
     // update the scroll position relative to pointer start position
     let y = this.y + detail.deltaY;
