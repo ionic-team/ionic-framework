@@ -112,13 +112,19 @@ export class RadioGroup implements ComponentInterface {
       let next;
 
       // If hitting arrow down or arrow right, move to the next radio
+      // If we're on the last radio, move to the first radio
       if (['ArrowDown', 'ArrowRight'].includes(ev.key)) {
-        next = radios[index + 1];
+        next = (index === radios.length - 1)
+          ? radios[0]
+          : radios[index + 1];
       }
 
       // If hitting arrow up or arrow left, move to the previous radio
+      // If we're on the first radio, move to the last radio
       if (['ArrowUp', 'ArrowLeft'].includes(ev.key)) {
-        next = radios[index - 1];
+        next = (index === 0)
+          ? radios[radios.length - 1]
+          : radios[index - 1]
       }
 
       if (next && radios.includes(next)) {
