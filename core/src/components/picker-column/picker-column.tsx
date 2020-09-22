@@ -250,8 +250,10 @@ export class PickerColumnCmp implements ComponentInterface {
     // We have to prevent default in order to block scrolling under the picker
     // but we DO NOT have to stop propagation, since we still want
     // some "click" events to capture
-    detail.event.preventDefault();
-    detail.event.stopPropagation();
+    if (detail.event.cancelable) {
+      detail.event.preventDefault();
+      detail.event.stopPropagation();
+    }
 
     hapticSelectionStart();
 
@@ -272,8 +274,10 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   private onMove(detail: GestureDetail) {
-    detail.event.preventDefault();
-    detail.event.stopPropagation();
+    if (detail.event.cancelable) {
+      detail.event.preventDefault();
+      detail.event.stopPropagation();
+    }
 
     // update the scroll position relative to pointer start position
     let y = this.y + detail.deltaY;
