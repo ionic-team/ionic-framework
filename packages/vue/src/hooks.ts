@@ -45,8 +45,10 @@ export const useKeyboard = (): IonKeyboardRef => {
   }
 
   const unregister = () => {
-    window.removeEventListener('ionKeyboardDidShow', showCallback);
-    window.removeEventListener('ionKeyboardDidHide', hideCallback);
+    if (typeof (window as any) !== 'undefined') {
+      window.removeEventListener('ionKeyboardDidShow', showCallback);
+      window.removeEventListener('ionKeyboardDidHide', hideCallback);
+    }
   }
 
   if (typeof (window as any) !== 'undefined') {
