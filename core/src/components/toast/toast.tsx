@@ -252,6 +252,16 @@ export class Toast implements ComponentInterface, OverlayInterface {
       .addElement(this.el)
       .duration(2000)
       .iterations(1);
+    this.setGestureDirection(this.swipeGesture!);
+  }
+
+  private setGestureDirection(direction: 'left' | 'right') {
+    const translateTarget = direction === 'left' ? 'translateX(-100%)' : 'translateX(100%)';
+    this.animation
+      .keyframes([
+        { transform: 'translateX(0)', opacity: 1, offset: 0 },
+        { transform: translateTarget, opacity: 0, offset: 1 },
+      ]);
   }
 
   private async setupSwipeGesture() {
@@ -286,29 +296,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
           .progressEnd((shouldComplete) ? 1 : 0, stepValue, 300);
       }
     });
-    this.swipeGestureChanged();
-  }
-
-  private swipeGestureChanged() {
-    if (this.swipeGesture === undefined) {
-      if (this.gesture) {
-        this.gesture.enable(false);
-      }
-    } else {
-      this.setGestureDirection(this.swipeGesture);
-      if (this.gesture) {
-        this.gesture.enable(true);
-      }
-    }
-  }
-
-  private setGestureDirection(direction: 'left' | 'right') {
-    const translateTarget = direction === 'left' ? 'translateX(-100%)' : 'translateX(100%)';
-    this.animation
-      .keyframes([
-        { transform: 'translateX(0)', opacity: 1, offset: 0 },
-        { transform: translateTarget, opacity: 0, offset: 1 },
-      ]);
+    this.gesture.enable(true);
   }
 
   private clamp = (val: number) => {
