@@ -382,15 +382,16 @@ export class Segment implements ComponentInterface {
 
   private onClick = (ev: Event) => {
     const current = ev.target as HTMLIonSegmentButtonElement;
-    /**
-     * If current element is ion-segment then that means
-     * user tried to swipe to other ion-segment-button,
-     * and we should not update the checked button.
-     */
+    const previous = this.checked;
+
+    // If the current element is a segment then that means
+    // the user tried to swipe to a segment button and
+    // click a segment button at the same time so we should
+    // not update the checked segment button
     if (current.tagName === 'ION-SEGMENT') {
       return;
     }
-    const previous = this.checked;
+
     this.value = current.value;
 
     if (this.scrollable || !this.swipeGesture) {

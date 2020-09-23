@@ -235,8 +235,8 @@
         function toggleSwipeGesture() {
           const ionSegmentElement = document.querySelectorAll('ion-segment');
           for (var i = 0; i < ionSegmentElement.length; i++) {
-            const swipeGesture = ionSegmentElement[i].getAttribute('swipe-gesture') === 'false' ? true : false;
-            ionSegmentElement[i].setAttribute('swipe-gesture', swipeGesture);
+            const swipeGesture = ionSegmentElement[i].swipeGesture === false ? false : true;
+            ionSegmentElement[i].swipeGesture = swipeGesture;
           }
         }
 
