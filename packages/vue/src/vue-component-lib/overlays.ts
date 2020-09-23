@@ -39,9 +39,10 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
     }
 
     const present = async (props: Readonly<Props>) => {
+      const component = (slots) ? h('div', { ref: content }, slots) : undefined;
       overlay.value = await controller.create({
         ...props,
-        component: content.value
+        component
       });
 
       eventListeners.forEach(eventListener => {
@@ -61,8 +62,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
           onVnodeMounted,
           onVnodeUpdated,
           onVnodeBeforeUnmount
-        },
-        [h('div', { ref: content }, slots.default && slots.default())]
+        }
       );
     }
   });
