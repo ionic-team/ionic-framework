@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Host, Listen, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -14,16 +14,17 @@ import { getIonMode } from '../../global/ionic-global';
   shadow: true
 })
 export class Reorder implements ComponentInterface {
+  @Element() el!: HTMLIonReorderElement;
 
   @Listen('click', { capture: true })
   onClick(ev: Event) {
-    const currentTarget = ev.currentTarget as HTMLElement;
-    const reorderGroupEl = currentTarget.closest('ion-reorder-group');
+    const reorderGroup = this.el.closest('ion-reorder-group');
+
     ev.preventDefault();
 
-    // do not stop event propagation if reorder is inside disabled ion-reorder-group
-    // it allows interaction with included components
-    if (!reorderGroupEl || !reorderGroupEl.disabled) {
+    // Only stop event propagation if the reorder is inside of an enabled
+    // reorder group. This allows interaction with clickable children components.
+    if (!reorderGroup || !reorderGroup.disabled) {
       ev.stopImmediatePropagation();
     }
   }
