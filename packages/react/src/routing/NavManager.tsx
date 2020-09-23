@@ -25,7 +25,7 @@ interface NavManagerProps {
   locationHistory: LocationHistory;
 }
 
-export class NavManager extends React.Component<NavManagerProps, NavContextState> {
+export class NavManager extends React.PureComponent<NavManagerProps, NavContextState> {
 
   ionRouterContextValue: IonRouterContextState = {
     push: (pathname: string, routerDirection?: RouterDirection, routeAction?: RouteAction, routerOptions?: RouterOptions, animationBuilder?: AnimationBuilder) => {

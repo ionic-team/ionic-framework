@@ -299,6 +299,15 @@ export class ListHeaderExample {
     </ion-item>
   </ion-list>
 </template>
+
+<script>
+import { IonItem, IonLabel, IonList, IonListHeader } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonItem, IonLabel, IonList, IonListHeader }
+});
+</script>
 ```
 
 
