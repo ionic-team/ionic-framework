@@ -12,7 +12,7 @@ export { IonTabs } from './components/IonTabs';
 export { IonTabBar } from './components/IonTabBar';
 export { IonActionSheet } from './components/Overlays';
 
-export { IonRouter, useBackButton, useIonRouter } from './hooks';
+export { IonKeyboardRef, IonRouter, useBackButton, useIonRouter, useKeyboard } from './hooks';
 
 export {
   // Overlay Controllers

@@ -6,6 +6,14 @@ import {  RouteInfo,
 
 export const createViewStacks = () => {
   let viewStacks: ViewStacks = {};
+  const tabsPrefixes = new Set();
+
+  const addTabsPrefix = (prefix: string) => tabsPrefixes.add(prefix);
+  const hasTabsPrefix = (path: string) => {
+    const values = Array.from(tabsPrefixes.values());
+    const hasPrefix = values.find((v: string) => path.includes(v));
+    return hasPrefix !== undefined;
+  }
 
   const getViewStack = (outletId: number) => {
     return viewStacks[outletId];
@@ -92,6 +100,8 @@ export const createViewStacks = () => {
   }
 
   return {
+    addTabsPrefix,
+    hasTabsPrefix,
     findViewItemByRouteInfo,
     findLeavingViewItemByRouteInfo,
     createViewItem,

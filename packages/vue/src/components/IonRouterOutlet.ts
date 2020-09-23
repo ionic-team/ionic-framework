@@ -4,6 +4,7 @@ import {
   ref,
   computed,
   inject,
+  provide,
   watch,
   shallowRef,
   InjectionKey
@@ -21,13 +22,24 @@ export const IonRouterOutlet = defineComponent({
     const depth = inject(viewDepthKey, 0);
 
     // TODO types
+    let tabsPrefix: string | undefined;
     const matchedRouteRef: any = computed(() => {
-      if (attrs.tabs) {
+      const matchedRoute = route.matched[depth];
+
+      if (attrs.tabs && !tabsPrefix) {
+          tabsPrefix = route.matched[0].path;
+          viewStacks.addTabsPrefix(tabsPrefix);
+      }
+
+      if (matchedRoute && attrs.tabs && route.matched[depth + 1]) {
         return route.matched[route.matched.length - 1];
       }
 
-      return route.matched[depth];
+      return matchedRoute;
     });
+
+    provide(viewDepthKey, depth + 1)
+
     const ionRouterOutlet = ref();
     const id = generateId('ion-router-outlet');
 
@@ -207,7 +219,9 @@ export const IonRouterOutlet = defineComponent({
       }
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
-      if (currentRoute.tab !== undefined && !attrs.tabs) return
+      const hasTabsPrefix = viewStacks.hasTabsPrefix(currentRoute.pathname)
+      const isLastPathTabs = viewStacks.hasTabsPrefix(currentRoute.lastPathname);
+      if (hasTabsPrefix && isLastPathTabs && !attrs.tabs) { return; }
 
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
 
