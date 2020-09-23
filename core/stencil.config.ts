@@ -75,6 +75,7 @@ export const config: Config = {
         'ion-tab-bar',
 
         // Overlays
+        'ion-action-sheet',
         'ion-alert',
         'ion-loading',
         'ion-modal',

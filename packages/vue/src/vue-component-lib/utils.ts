@@ -1,4 +1,4 @@
-import { FunctionalComponent, VNode, defineComponent, h, inject, ref, Ref } from 'vue';
+import { VNode, defineComponent, h, inject, ref, Ref } from 'vue';
 
 export interface InputProps extends Object {
   modelValue: string | boolean;
@@ -40,7 +40,7 @@ const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: 
 * options for the component such as router or v-model
 * integrations.
 */
-export const defineContainer = <Props extends object>(name: string, componentProps: string[] = [], componentOptions: ComponentOptions = {}) => {
+export const defineContainer = <Props>(name: string, componentProps: string[] = [], componentOptions: ComponentOptions = {}) => {
   const { modelProp, modelUpdateEvent, routerLinkComponent } = componentOptions;
 
   /**
@@ -48,7 +48,7 @@ export const defineContainer = <Props extends object>(name: string, componentPro
   * Note: The `props` here are not all properties on a component.
   * They refer to whatever properties are set on an instance of a component.
   */
-  const Container: FunctionalComponent<Props & InputProps> = defineComponent((props, { attrs, slots, emit }) => {
+  const Container = defineComponent<Props & InputProps>((props, { attrs, slots, emit }) => {
     const containerRef = ref<HTMLElement>();
     const classes = new Set(getComponentClasses(attrs.class));
     const onVnodeBeforeMount = (vnode: VNode) => {
