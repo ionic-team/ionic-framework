@@ -7,15 +7,15 @@ const getActiveElementText = async (page) => {
 
 test('datetime/picker: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/datetime/test/basic?ionic:_testing=true' });
-  const ionPickerDidPresent = await page.spyOnEvent('ionPickerDidPresent');
-
   await page.click('#datetime-part');
   await page.waitForSelector('#datetime-part');
 
   let datetime = await page.find('ion-datetime');
+
   expect(datetime).not.toBe(null);
 
-  await ionPickerDidPresent.next();
+  // TODO fix
+  await page.waitFor(100);
 
   await page.keyboard.press('Tab');
 
