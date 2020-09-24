@@ -65,8 +65,6 @@ ${componentDefinitions.join('')}
 `;
 
   fs.writeFileSync('./src/components/Overlays.ts', template);
-
-  console.log('Done!');
 }
 
 function getDocsBlock(tag) {
