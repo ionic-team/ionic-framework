@@ -206,7 +206,6 @@
             type: 'radio',
             label: 'Radio 1',
             value: 'value1',
-            checked: true
           },
           {
             type: 'radio',
@@ -216,7 +215,8 @@
           {
             type: 'radio',
             label: 'Radio 3',
-            value: 'value3'
+            value: 'value3',
+            checked: true
           },
           {
             type: 'radio',
@@ -241,12 +241,12 @@
             role: 'cancel',
             cssClass: 'secondary',
             handler: () => {
-              console.log('Confirm Cancel')
+              console.log('Confirm Cancel');
             }
           }, {
             text: 'Ok',
-            handler: () => {
-              console.log('Confirm Ok')
+            handler: (ev) => {
+              console.log('Confirm Ok', ev);
             }
           }
         ]
