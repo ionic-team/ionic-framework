@@ -1,32 +1,3 @@
-# [0.5.0](https://github.com/ionic-team/ionic/compare/v5.3.3...v0.5.0) (2020-09-24)
-
-
-### Bug Fixes
-
-* **vue:** canGoBack now returns correct result with initial load redirect ([#22071](https://github.com/ionic-team/ionic/issues/22071)) ([8227844](https://github.com/ionic-team/ionic/commit/8227844cbc6da252acb97bfa0f9a2cefa40185f9))
-* **vue:** canGoBack param should be optional ([2efab94](https://github.com/ionic-team/ionic/commit/2efab9403533455a1860fba23d3b74c204fda106))
-* **vue:** correctly render child pages in tabs ([#22141](https://github.com/ionic-team/ionic/issues/22141)) ([7e449a1](https://github.com/ionic-team/ionic/commit/7e449a1ca62956d36b92c32289e5db7a3acb6718))
-* **vue:** ensure dynamic classes are synced with internal Ionic component classes ([#22096](https://github.com/ionic-team/ionic/issues/22096)) ([9cb22be](https://github.com/ionic-team/ionic/commit/9cb22be91a232c395780f7ceb50c3e9ae28e7dc2)), closes [#22051](https://github.com/ionic-team/ionic/issues/22051)
-* **vue:** overlays function properly when used via controller or template ([#22155](https://github.com/ionic-team/ionic/issues/22155)) ([fe5fadf](https://github.com/ionic-team/ionic/commit/fe5fadf19cd63087311959c549e7e7c55261b459)), closes [#22090](https://github.com/ionic-team/ionic/issues/22090)
-* **vue:** pushing a non-tabs page inside of tabs no longer renders it inside of the tabs outlet ([#22112](https://github.com/ionic-team/ionic/issues/22112)) ([6ac6810](https://github.com/ionic-team/ionic/commit/6ac6810148182a829348e8cac2e3b722448dad98)), closes [#22066](https://github.com/ionic-team/ionic/issues/22066)
-* **vue:** using refs with v-model now works properly ([#22092](https://github.com/ionic-team/ionic/issues/22092)) ([67fbb3b](https://github.com/ionic-team/ionic/commit/67fbb3b963e2e75284b578777057c0822720fb1e)), closes [#22076](https://github.com/ionic-team/ionic/issues/22076)
-
-
-### Features
-
-* **vue:** add hardware back button hook ([#22069](https://github.com/ionic-team/ionic/issues/22069)) ([a7f564b](https://github.com/ionic-team/ionic/commit/a7f564b818a6ce5f97d999934d5cca77da1b2c83))
-* **vue:** add hook to access Ionic Vue router ([#22072](https://github.com/ionic-team/ionic/issues/22072)) ([3d34b68](https://github.com/ionic-team/ionic/commit/3d34b68fbd25b724b6f89c01642788d325f6e909))
-* **vue:** add ionic vue beta ([#22062](https://github.com/ionic-team/ionic/issues/22062)) ([5ffa65f](https://github.com/ionic-team/ionic/commit/5ffa65f84a037f265a89f0b3310552d73125b8cd))
-* **vue:** add keyboard hook ([#22145](https://github.com/ionic-team/ionic/issues/22145)) ([b76bfa3](https://github.com/ionic-team/ionic/commit/b76bfa36c207ab18450d874cb876803aace58bea))
-* **vue:** add webHashHistory and memoryHistory options for router ([#22101](https://github.com/ionic-team/ionic/issues/22101)) ([fe2cf22](https://github.com/ionic-team/ionic/commit/fe2cf22f5dab4e13458be0a93d38d346a03f7e3d))
-
-
-### Performance Improvements
-
-* **vue:** improve build with smaller bundle sizes ([#22131](https://github.com/ionic-team/ionic/issues/22131)) ([f82bac1](https://github.com/ionic-team/ionic/commit/f82bac17806e87772033b4602285fe0662d190e3))
-
-
-
 ## [5.3.3](https://github.com/ionic-team/ionic/compare/v5.3.2...v5.3.3) (2020-09-17)
 
 
