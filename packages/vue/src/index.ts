@@ -10,18 +10,22 @@ export { IonRouterOutlet } from './components/IonRouterOutlet';
 export { IonTabButton } from './components/IonTabButton';
 export { IonTabs } from './components/IonTabs';
 export { IonTabBar } from './components/IonTabBar';
+export * from './components/Overlays';
 
 export { IonKeyboardRef, IonRouter, useBackButton, useIonRouter, useKeyboard } from './hooks';
+
+export {
+  modalController,
+  popoverController
+} from './controllers';
 
 export {
   // Overlay Controllers
   alertController,
   actionSheetController,
   menuController,
-  modalController,
   loadingController,
   pickerController,
-  popoverController,
   toastController,
 
   // Security

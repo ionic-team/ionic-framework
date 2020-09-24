@@ -8,46 +8,6 @@ import { JSX } from '@ionic/core';
 
 
 
-export const IonActionSheet = /*@__PURE__*/ defineContainer<JSX.IonActionSheet>('ion-action-sheet', [
-  'overlayIndex',
-  'keyboardClose',
-  'enterAnimation',
-  'leaveAnimation',
-  'buttons',
-  'cssClass',
-  'backdropDismiss',
-  'header',
-  'subHeader',
-  'translucent',
-  'animated',
-  'ionActionSheetDidPresent',
-  'ionActionSheetWillPresent',
-  'ionActionSheetWillDismiss',
-  'ionActionSheetDidDismiss'
-]);
-
-
-export const IonAlert = /*@__PURE__*/ defineContainer<JSX.IonAlert>('ion-alert', [
-  'overlayIndex',
-  'keyboardClose',
-  'enterAnimation',
-  'leaveAnimation',
-  'cssClass',
-  'header',
-  'subHeader',
-  'message',
-  'buttons',
-  'inputs',
-  'backdropDismiss',
-  'translucent',
-  'animated',
-  'ionAlertDidPresent',
-  'ionAlertWillPresent',
-  'ionAlertWillDismiss',
-  'ionAlertDidDismiss'
-]);
-
-
 export const IonApp = /*@__PURE__*/ defineContainer<JSX.IonApp>('ion-app');
 
 
@@ -439,26 +399,6 @@ export const IonListHeader = /*@__PURE__*/ defineContainer<JSX.IonListHeader>('i
 ]);
 
 
-export const IonLoading = /*@__PURE__*/ defineContainer<JSX.IonLoading>('ion-loading', [
-  'overlayIndex',
-  'keyboardClose',
-  'enterAnimation',
-  'leaveAnimation',
-  'message',
-  'cssClass',
-  'duration',
-  'backdropDismiss',
-  'showBackdrop',
-  'spinner',
-  'translucent',
-  'animated',
-  'ionLoadingDidPresent',
-  'ionLoadingWillPresent',
-  'ionLoadingWillDismiss',
-  'ionLoadingDidDismiss'
-]);
-
-
 export const IonMenu = /*@__PURE__*/ defineContainer<JSX.IonMenu>('ion-menu', [
   'contentId',
   'menuId',
@@ -490,27 +430,6 @@ export const IonMenuToggle = /*@__PURE__*/ defineContainer<JSX.IonMenuToggle>('i
 ]);
 
 
-export const IonModal = /*@__PURE__*/ defineContainer<JSX.IonModal>('ion-modal', [
-  'overlayIndex',
-  'delegate',
-  'keyboardClose',
-  'enterAnimation',
-  'leaveAnimation',
-  'component',
-  'componentProps',
-  'cssClass',
-  'backdropDismiss',
-  'showBackdrop',
-  'animated',
-  'swipeToClose',
-  'presentingElement',
-  'ionModalDidPresent',
-  'ionModalWillPresent',
-  'ionModalWillDismiss',
-  'ionModalDidDismiss'
-]);
-
-
 export const IonNav = /*@__PURE__*/ defineContainer<JSX.IonNav>('ion-nav', [
   'delegate',
   'swipeGesture',
@@ -534,46 +453,6 @@ export const IonNavLink = /*@__PURE__*/ defineContainer<JSX.IonNavLink>('ion-nav
 
 export const IonNote = /*@__PURE__*/ defineContainer<JSX.IonNote>('ion-note', [
   'color'
-]);
-
-
-export const IonPicker = /*@__PURE__*/ defineContainer<JSX.IonPicker>('ion-picker', [
-  'overlayIndex',
-  'keyboardClose',
-  'enterAnimation',
-  'leaveAnimation',
-  'buttons',
-  'columns',
-  'cssClass',
-  'duration',
-  'showBackdrop',
-  'backdropDismiss',
-  'animated',
-  'ionPickerDidPresent',
-  'ionPickerWillPresent',
-  'ionPickerWillDismiss',
-  'ionPickerDidDismiss'
-]);
-
-
-export const IonPopover = /*@__PURE__*/ defineContainer<JSX.IonPopover>('ion-popover', [
-  'delegate',
-  'overlayIndex',
-  'enterAnimation',
-  'leaveAnimation',
-  'component',
-  'componentProps',
-  'keyboardClose',
-  'cssClass',
-  'backdropDismiss',
-  'event',
-  'showBackdrop',
-  'translucent',
-  'animated',
-  'ionPopoverDidPresent',
-  'ionPopoverWillPresent',
-  'ionPopoverWillDismiss',
-  'ionPopoverDidDismiss'
 ]);
 
 
@@ -857,27 +736,6 @@ export const IonTitle = /*@__PURE__*/ defineContainer<JSX.IonTitle>('ion-title',
   'color',
   'size',
   'ionStyle'
-]);
-
-
-export const IonToast = /*@__PURE__*/ defineContainer<JSX.IonToast>('ion-toast', [
-  'overlayIndex',
-  'color',
-  'enterAnimation',
-  'leaveAnimation',
-  'cssClass',
-  'duration',
-  'header',
-  'message',
-  'keyboardClose',
-  'position',
-  'buttons',
-  'translucent',
-  'animated',
-  'ionToastDidPresent',
-  'ionToastWillPresent',
-  'ionToastWillDismiss',
-  'ionToastDidDismiss'
 ]);
 
 
