@@ -62,18 +62,26 @@ export const config: Config = {
       componentCorePackage: '@ionic/core',
       proxiesFile: '../packages/vue/src/proxies.ts',
       excludeComponents: [
+        // Routing
         'ion-router',
         'ion-route',
         'ion-route-redirect',
         'ion-router-link',
         'ion-router-outlet',
-
         'ion-back-button',
-
         'ion-tab-button',
         'ion-tabs',
         'ion-tab',
         'ion-tab-bar',
+
+        // Overlays
+        'ion-action-sheet',
+        'ion-alert',
+        'ion-loading',
+        'ion-modal',
+        'ion-picker',
+        'ion-popover',
+        'ion-toast'
       ],
       routerLinkComponents: [
         'ion-card',
