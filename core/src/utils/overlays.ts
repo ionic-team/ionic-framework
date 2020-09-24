@@ -63,7 +63,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
   return Promise.resolve() as any;
 };
 
-const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]), textarea, button, select, .ion-focusable';
+const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
 const innerFocusableQueryString = 'input:not([type=hidden]), textarea, button, select';
 
 const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {

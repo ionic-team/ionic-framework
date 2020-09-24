@@ -1703,6 +1703,8 @@ export namespace Components {
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
+        "setButtonTabindex": (value: number) => Promise<void>;
+        "setFocus": () => Promise<void>;
         /**
           * the value of the radio.
          */
