@@ -278,8 +278,8 @@ export const present = async (
  * opened the overlay.
  */
 const focusPreviousElementOnDismiss = async (overlayEl: any) => {
-  let previousElement = document.activeElement as HTMLElement;
-  if (!previousElement) return;
+  let previousElement = document.activeElement as HTMLElement | null;
+  if (!previousElement) { return; }
 
   const shadowRoot = previousElement && previousElement.shadowRoot;
   if (shadowRoot) {
@@ -287,7 +287,7 @@ const focusPreviousElementOnDismiss = async (overlayEl: any) => {
     previousElement = shadowRoot.querySelector(innerFocusableQueryString) || previousElement;
   }
 
-  await overlayEl.onDidDimiss();
+  await overlayEl.onDidDismiss();
   previousElement.focus();
 }
 
