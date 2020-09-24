@@ -260,10 +260,46 @@ export const present = async (
     overlay.didPresent.emit();
   }
 
+  /**
+   * When an overlay that steals focus
+   * is dismissed, focus should be returned
+   * to the element that was focused
+   * prior to the overlay opening. Toast
+   * does not steal focus and is excluded
+   * from returning focus as a result.
+   */
+  if (overlay.el.tagName !== 'ION-TOAST') {
+    focusPreviousElementOnDismiss(overlay.el);
+  }
+
   if (overlay.keyboardClose) {
     overlay.el.focus();
   }
 };
+
+/**
+ * When an overlay component is dismissed,
+ * focus should be returned to the element
+ * that presented the overlay. Otherwise
+ * focus will be set on the body which
+ * means that people using screen readers
+ * or tabbing will need to re-navigate
+ * to where they were before they
+ * opened the overlay.
+ */
+const focusPreviousElementOnDismiss = async (overlayEl: any) => {
+  let previousElement = document.activeElement as HTMLElement | null;
+  if (!previousElement) { return; }
+
+  const shadowRoot = previousElement && previousElement.shadowRoot;
+  if (shadowRoot) {
+    // If there are no inner focusable elements, just focus the host element.
+    previousElement = shadowRoot.querySelector(innerFocusableQueryString) || previousElement;
+  }
+
+  await overlayEl.onDidDismiss();
+  previousElement.focus();
+}
 
 export const dismiss = async (
   overlay: OverlayInterface,
