@@ -18,4 +18,13 @@
     <ion-label>Item Avatar</ion-label>
   </ion-item>
 </template>
+
+<script>
+import { IonAvatar, IonChip, IonItem, IonLabel } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonAvatar, IonChip, IonItem, IonLabel }
+});
+</script>
 ```

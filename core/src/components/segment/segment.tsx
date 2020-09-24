@@ -244,7 +244,7 @@ export class Segment implements ComponentInterface {
 
     // Scale the indicator width to match the previous indicator width
     // and translate it on top of the previous indicator
-    const transform = `translate3d(${xPosition}px, 0, 0) scaleX(${widthDelta})`;
+    const transform = `translate(${xPosition}px, 0) scaleX(${widthDelta})`;
 
     writeTask(() => {
       // Remove the transition before positioning on top of the previous indicator
@@ -389,19 +389,17 @@ export class Segment implements ComponentInterface {
 
   render() {
     const mode = getIonMode(this);
-
     return (
       <Host
         onClick={this.onClick}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'segment-activated': this.activated,
           'segment-disabled': this.disabled,
           'segment-scrollable': this.scrollable
-        }}
+        })}
       >
         <slot></slot>
       </Host>

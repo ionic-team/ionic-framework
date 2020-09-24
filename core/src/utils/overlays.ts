@@ -63,7 +63,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
   return Promise.resolve() as any;
 };
 
-const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]), textarea, button, select, .ion-focusable';
+const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
 const innerFocusableQueryString = 'input:not([type=hidden]), textarea, button, select';
 
 const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
@@ -138,6 +138,8 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
      * wrapper element as the traps live outside of the wrapper.
      */
     const overlayRoot = getElementRoot(lastOverlay);
+    if (!overlayRoot.contains(target)) { return; }
+
     const overlayWrapper = overlayRoot.querySelector('.ion-overlay-wrapper');
 
     if (!overlayWrapper) { return; }

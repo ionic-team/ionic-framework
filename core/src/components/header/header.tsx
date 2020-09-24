@@ -49,7 +49,7 @@ export class Header implements ComponentInterface {
     await this.checkCollapsibleHeader();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     this.destroyCollapsibleHeader();
   }
 

@@ -60,13 +60,12 @@ export class ProgressBar implements ComponentInterface {
         aria-valuenow={type === 'determinate' ? value : null}
         aria-valuemin="0"
         aria-valuemax="1"
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
           [`progress-bar-${type}`]: true,
           'progress-paused': paused,
           'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
-        }}
+        })}
       >
         {type === 'indeterminate'
           ? renderIndeterminate()

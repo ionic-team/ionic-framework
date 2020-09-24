@@ -2,7 +2,7 @@
 import { defineCustomElements } from '@ionic/core/loader';
 import { addIcons } from 'ionicons';
 import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
-export { createAnimation, createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, iosTransitionAnimation, IonicSafeString, mdTransitionAnimation, NavComponentWithProps, setupConfig } from '@ionic/core';
+export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, createAnimation, createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, iosTransitionAnimation, IonicSafeString, mdTransitionAnimation, NavComponentWithProps, setupConfig } from '@ionic/core';
 export * from './proxies';
 
 // createControllerComponent
@@ -30,7 +30,7 @@ export * from './IonRedirect';
 export * from './IonRouterContext';
 
 // Utils
-export { isPlatform, getPlatforms, getConfig, ionRenderToString } from './utils';
+export { isPlatform, getPlatforms, getConfig } from './utils';
 export * from './hrefprops';
 
 // Ionic Animations

@@ -283,6 +283,15 @@ export class InputExample {
     <ion-input></ion-input>
   </ion-item>
 </template>
+
+<script>
+import { IonLabel, IonInput, IonItem } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonLabel, IonInput, IonItem }
+});
+</script>
 ```
 
 
@@ -356,7 +365,7 @@ Type: `Promise<void>`
 
 ### `setFocus() => Promise<void>`
 
-Sets focus on the specified `ion-input`. Use this method instead of the global
+Sets focus on the native `input` in `ion-input`. Use this method instead of the global
 `input.focus()`.
 
 #### Returns

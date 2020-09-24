@@ -201,6 +201,15 @@ export class ItemDividerExample {
     <ion-item><ion-label>B5</ion-label></ion-item>
   </ion-list>
 </template>
+
+<script>
+import { IonItem, IonItemDivider, IonLabel } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonItem, IonItemDivider, IonLabel }
+});
+</script>
 ```
 
 
