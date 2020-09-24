@@ -260,7 +260,17 @@ export const present = async (
     overlay.didPresent.emit();
   }
 
-  focusPreviousElementOnDismiss(overlay.el);
+  /**
+   * When an overlay that steals focus
+   * is dismissed, focus should be returned
+   * to the element that was focused
+   * prior to the overlay opening. Toast
+   * does not steal focus and is excluded
+   * from returning focus as a result.
+   */
+  if (overlay.el.tagName !== 'ION-TOAST') {
+    focusPreviousElementOnDismiss(overlay.el);
+  }
 
   if (overlay.keyboardClose) {
     overlay.el.focus();
