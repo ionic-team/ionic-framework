@@ -167,13 +167,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       // if form property is defined, it will be used to submit
       // else climb up the dom to see if we're in a <form>
       // and if so, then use JS to submit it
-      const form = (this.form) ? this.form: this.el.closest('form');
+      const form = (this.form) ? this.form : this.el.closest('form');
+
       if (form) {
         ev.preventDefault();
 
-        const fakeButton = document.createElement('button');
-        fakeButton.type = this.type;
-        fakeButton.style.display = 'none';
+        const fakeButton = document.createElement('      const form = (this.form) ? this.form: this.el.closest('form');
+.display = 'none';
         form.appendChild(fakeButton);
         fakeButton.click();
         fakeButton.remove();
