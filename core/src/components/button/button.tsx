@@ -121,6 +121,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
+  * if `form` is defined, on button click the specified form will be submitted.
+  * Useful when `ion-button` is outside of the form.
+  */
+  @Prop() form: HTMLFormElement | undefined;
+
+  /**
    * Emitted when the button has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
@@ -158,9 +164,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
     } else if (hasShadowDom(this.el)) {
       // this button wants to specifically submit a form
-      // climb up the dom to see if we're in a <form>
+      // if form property is defined, it will be used to submit
+      // else climb up the dom to see if we're in a <form>
       // and if so, then use JS to submit it
-      const form = this.el.closest('form');
+      const form = (this.form) ? this.form: this.el.closest('form');
       if (form) {
         ev.preventDefault();
 
