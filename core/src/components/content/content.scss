@@ -71,6 +71,19 @@
   @include position(calc(var(--offset-top) * -1), 0px,calc(var(--offset-bottom) * -1), 0px);
   @include padding(calc(var(--padding-top) + var(--offset-top)), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)), var(--padding-start));
 
+  position: absolute;
+
+  color: var(--color);
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+.scroll-y,
+.scroll-x {
+  -webkit-overflow-scrolling: touch;
+
   /**
    * This adds `.inner-scroll` as part of the
    * stacking context in WebKit. Without it,
@@ -87,21 +100,7 @@
    *
    * See: https://bugs.webkit.org/show_bug.cgi?id=216701
    */
-  will-change: transform;
-
-  position: absolute;
-
-  color: var(--color);
-
-  box-sizing: border-box;
-
-  overflow: hidden;
-}
-
-.scroll-y,
-.scroll-x {
-  -webkit-overflow-scrolling: touch;
-  will-change: scroll-position;
+  will-change: scroll-position, transform;
 }
 
 .scroll-y {
