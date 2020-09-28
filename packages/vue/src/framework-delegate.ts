@@ -6,7 +6,7 @@ export const VueDelegate = () => {
      * Ionic Framework passes in modal and popover element
      * refs as props, but if these are not defined
      * on the Vue component instance as props, Vue will
-     * throw a warning
+     * warn the user.
      */
     delete componentProps['modal'];
     delete componentProps['popover'];
