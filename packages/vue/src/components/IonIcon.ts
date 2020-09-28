@@ -3,9 +3,22 @@ import { isPlatform } from '@ionic/core';
 
 export const IonIcon = defineComponent({
   name: 'IonIcon',
-  setup(_, { attrs, slots }) {
+  props: {
+    ariaLabel: String,
+    color: String,
+    flipRtl: Boolean,
+    icon: String,
+    ios: String,
+    lazy: String,
+    md: String,
+    mode: String,
+    name: String,
+    size: String,
+    src: String
+  },
+  setup(props, { slots }) {
     return () => {
-      const { icon, ios, md, ...restOfAttrs } = attrs;
+      const { icon, ios, md } = props;
 
       let iconToUse: typeof icon;
       if (ios || md) {
@@ -21,7 +34,7 @@ export const IonIcon = defineComponent({
       return h(
         'ion-icon',
         {
-          ...restOfAttrs,
+          ...props,
           icon: iconToUse
         },
         slots
