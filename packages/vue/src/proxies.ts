@@ -248,21 +248,6 @@ export const IonHeader = /*@__PURE__*/ defineContainer<JSX.IonHeader>('ion-heade
 ]);
 
 
-export const IonIcon = /*@__PURE__*/ defineContainer<JSX.IonIcon>('ion-icon', [
-  'mode',
-  'color',
-  'ariaLabel',
-  'ios',
-  'md',
-  'flipRtl',
-  'name',
-  'src',
-  'icon',
-  'size',
-  'lazy'
-]);
-
-
 export const IonImg = /*@__PURE__*/ defineContainer<JSX.IonImg>('ion-img', [
   'alt',
   'src',
