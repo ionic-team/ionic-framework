@@ -53,12 +53,7 @@ export default {
           component: Modal,
           cssClass: 'my-custom-class',
           componentProps: {
-            data: {
-              content: 'New Content',
-            },
-            propsData: {
-              title: 'New title',
-            },
+            title: 'New Title'
           },
         })
       return modal.present();
