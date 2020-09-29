@@ -224,6 +224,42 @@ export default {
 </script>
 ```
 
+Developers can also use this component directly in their template:
+
+```html
+<template>
+  <ion-button @click="setOpen(true, $event)">Show Popover</ion-button>
+  <ion-popover
+    :is-open="isOpenRef"
+    css-class="my-custom-class"
+    :event="event"
+    :translucent="true"
+    @onDidDismiss="setOpen(false)"
+  >
+    <Popover></Popover>
+  </ion-popover>
+</template>
+
+<script>
+import { IonButton, IonPopover } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+import Popver from './popover.vue'
+
+export default defineComponent({
+  components: { IonButton, IonPopover, Popover },
+  setup() {
+    const isOpenRef = ref(false);
+    const event = ref();
+    const setOpen = (state: boolean, event?: Event) => {
+      event.value = event; 
+      isOpenRef.value = state;
+    }
+    return { isOpenRef, setOpen, event }
+  }
+});
+</script>
+```
+
 
 
 ## Properties

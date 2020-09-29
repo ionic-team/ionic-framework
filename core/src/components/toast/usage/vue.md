@@ -51,3 +51,33 @@ export default {
 }
 </script>
 ```
+
+Developers can also use this component directly in their template:
+
+```html
+<template>
+  <ion-button @click="setOpen(true)">Show Toast</ion-button>
+  <ion-toast
+    :is-open="isOpenRef"
+    message="Your settings have been saved."
+    :duration="2000"
+    @onDidDismiss="setOpen(false)"
+  >
+  </ion-toast>
+</template>
+
+<script>
+import { IonToast, IonButton } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  components: { IonToast, IonButton },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    
+    return { isOpenRef, setOpen }
+  }
+});
+</script>
+```
