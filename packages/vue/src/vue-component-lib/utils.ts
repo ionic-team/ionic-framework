@@ -60,31 +60,18 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
       }
     };
 
-    let finalProps: any = { ...props };
-
+    let handleClick: (ev: Event) => void;
     if (routerLinkComponent) {
       const navManager: NavManager = inject(NAV_MANAGER);
-      const handleClick = (ev: Event) => {
-        const routerProps = Object.keys(finalProps).filter(p => p.startsWith(ROUTER_PROP_REFIX));
+      handleClick = (ev: Event) => {
+        const routerProps = Object.keys(props).filter(p => p.startsWith(ROUTER_PROP_REFIX));
         if (routerProps.length === 0) return;
 
         let navigationPayload: any = { event: ev };
         routerProps.forEach(prop => {
-          navigationPayload[prop] = finalProps[prop];
+          navigationPayload[prop] = (props as any)[prop];
         });
         navManager.navigate(navigationPayload);
-      }
-
-      if (finalProps.onClick) {
-        const oldClick = finalProps.onClick;
-        finalProps.onClick = (ev: Event) => {
-          oldClick(ev);
-          if (!ev.defaultPrevented) {
-            handleClick(ev);
-          }
-        }
-      } else {
-        finalProps.onClick = handleClick;
       }
     }
 
@@ -94,16 +81,21 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
       });
 
       let propsToAdd = {
-        ...finalProps,
+        ...props,
         ref: containerRef,
-        class: getElementClasses(containerRef, classes)
+        class: getElementClasses(containerRef, classes),
+        onClick: (routerLinkComponent) ? handleClick : (props as any).onClick,
+        onVnodeBeforeMount: (modelUpdateEvent) ? onVnodeBeforeMount : undefined
       };
 
-      if (modelUpdateEvent) {
-        propsToAdd = {
-          ...propsToAdd,
-          onVnodeBeforeMount
-        }
+      if ((props as any).onClick) {
+        const oldClick = (props as any).onClick;
+        propsToAdd.onClick = (ev: Event) => {
+            oldClick(ev);
+            if (!ev.defaultPrevented) {
+                handleClick(ev);
+            }
+        };
       }
 
       if (modelProp) {
