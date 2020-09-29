@@ -1,3 +1,12 @@
+## [4.11.12](https://github.com/ionic-team/ionic/compare/v4.11.11...v4.11.12) (2020-09-29)
+
+
+### Bug Fixes
+
+* **datetime:** remove the automatic switching from am to pm and vice versa ([#22208](https://github.com/ionic-team/ionic/issues/22208)) ([0d56c51](https://github.com/ionic-team/ionic/commit/0d56c5166497de38df9be432f8c7577b4b6c0e94)), closes [#18924](https://github.com/ionic-team/ionic/issues/18924)
+
+
+
 ## [4.11.11](https://github.com/ionic-team/ionic/compare/v4.11.0...v4.11.11) (2020-09-11)
 
 
