@@ -32,6 +32,8 @@ declare global {
 type ChildFunction = (ionTabContext: IonTabsContextState) => React.ReactNode;
 
 interface Props extends LocalJSX.IonTabs {
+  onIonTabsDidChange?: (event: CustomEvent<{ tab: string; }>) => void;
+  onIonTabsWillChange?: (event: CustomEvent<{ tab: string; }>) => void;
   className?: string;
   children: ChildFunction | React.ReactNode;
 }
