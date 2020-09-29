@@ -326,24 +326,6 @@ export const updateDate = (existingData: DatetimeData, newData: any, displayTime
       // newData is from the datetime picker's selected values
       // update the existing datetimeValue with the new values
       if (newData.ampm !== undefined && newData.hour !== undefined) {
-        // If the date we came from exists, we need to change the meridiem value when
-        // going to and from 12
-        if (existingData.ampm !== undefined && existingData.hour !== undefined) {
-          // If the existing meridiem is am, we want to switch to pm if it is either
-          // A) coming from 0 (12 am)
-          // B) going to 12 (12 pm)
-          if (existingData.ampm === 'am' && (existingData.hour === 0 || newData.hour.value === 12)) {
-            newData.ampm.value = 'pm';
-          }
-
-          // If the existing meridiem is pm, we want to switch to am if it is either
-          // A) coming from 12 (12 pm)
-          // B) going to 12 (12 am)
-          if (existingData.ampm === 'pm' && (existingData.hour === 12 || newData.hour.value === 12)) {
-            newData.ampm.value = 'am';
-          }
-        }
-
         // change the value of the hour based on whether or not it is am or pm
         // if the meridiem is pm and equal to 12, it remains 12
         // otherwise we add 12 to the hour value
