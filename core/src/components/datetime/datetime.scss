@@ -65,3 +65,7 @@ button {
   direction: ltr;
   overflow: inherit;
 }
+
+:host-context(ion-item:not(.item-label)) {
+  --padding-start: 0;
+}

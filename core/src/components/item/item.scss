@@ -409,6 +409,8 @@ button, a {
 
 :host(.item-label-stacked) ::slotted(ion-select),
 :host(.item-label-floating) ::slotted(ion-select) {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
   --padding-start: 0;
 
   align-self: stretch;
@@ -427,6 +429,15 @@ button, a {
   --padding-start: 0;
 
   width: 100%;
+}
+
+
+// Item Alignment
+// --------------------------------------------------
+
+:host(.item-label-fixed) ::slotted(ion-select),
+:host(.item-label-fixed) ::slotted(ion-datetime) {
+  --padding-start: 8px;
 }
 
 
