@@ -81,7 +81,9 @@ export const config: Config = {
         'ion-modal',
         'ion-picker',
         'ion-popover',
-        'ion-toast'
+        'ion-toast',
+
+        'ion-icon'
       ],
       routerLinkComponents: [
         'ion-card',
