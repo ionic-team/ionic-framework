@@ -18,6 +18,8 @@ export const VueDelegate = () => {
     parentElement.appendChild(div);
 
     render(vueInstance, div);
+
+    return div;
   }
 
   const removeViewFromDom = (_: HTMLElement, childElement: any) => {
