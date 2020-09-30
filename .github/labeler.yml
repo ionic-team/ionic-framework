@@ -10,13 +10,12 @@
 
 'package: angular':
   - angular/**/*
-  - packages/angular-server/**/*
+  - packages/angular-*/**/*
 
 'package: react':
   - packages/react/**/*
-  - packages/react-router/**/*
+  - packages/react-*/**/*
 
 'package: vue':
-  - vue/**/*
   - packages/vue/**/*
-  - packages/vue-router/**/*
+  - packages/vue-*/**/*
