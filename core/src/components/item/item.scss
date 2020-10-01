@@ -432,15 +432,6 @@ button, a {
 }
 
 
-// Item Alignment
-// --------------------------------------------------
-
-:host(.item-label-fixed) ::slotted(ion-select),
-:host(.item-label-fixed) ::slotted(ion-datetime) {
-  --padding-start: 8px;
-}
-
-
 // Item w/ Multiple Inputs
 // --------------------------------------------------
 // Multiple inputs in an item should have the input

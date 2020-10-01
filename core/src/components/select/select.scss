@@ -94,8 +94,6 @@ button {
 
 :host-context(ion-item:not(.item-label)) {
   --padding-start: 0;
-}
 
-:host-context(.item-label-floating) .select-icon {
-  @include transform(translate3d(0, -50%, 0));
+  max-width: none;
 }

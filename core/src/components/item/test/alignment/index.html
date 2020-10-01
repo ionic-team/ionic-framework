@@ -27,15 +27,34 @@
         <ion-list-header>Leading Icons</ion-list-header>
         <ion-item>
           <ion-icon slot="start" name="time"></ion-icon>
-          <ion-datetime value="2019-01-01"></ion-datetime>
+          <ion-datetime display-format="DDDD MMMM D YYYY hh:mm:ss a" value="2019-10-01T15:43:40.394Z"></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-icon slot="start" name="radio-button-off"></ion-icon>
-          <ion-input value="from" placeholder="Choose Starting Point"></ion-input>
+          <ion-input placeholder="Choose Starting Point"></ion-input>
         </ion-item>
         <ion-item>
           <ion-icon slot="start" name="pin"></ion-icon>
-          <ion-select placeholder="Choose Destination">
+          <ion-select placeholder="Choose Really Really Long Destination Here">
+            <ion-select-option>Madison, WI</ion-select-option>
+            <ion-select-option>Atlanta, GA</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>Default Labels</ion-list-header>
+        <ion-item>
+          <ion-label>Time</ion-label>
+          <ion-datetime display-format="DDDD MMMM D YYYY hh:mm:ss a" value="2019-10-01T15:43:40.394Z"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>From</ion-label>
+          <ion-input placeholder="Choose Starting Point"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Destination</ion-label>
+          <ion-select placeholder="Choose Really Really Long Destination Here">
             <ion-select-option>Madison, WI</ion-select-option>
             <ion-select-option>Atlanta, GA</ion-select-option>
           </ion-select>
@@ -46,15 +65,15 @@
         <ion-list-header>Fixed Labels</ion-list-header>
         <ion-item>
           <ion-label position="fixed">Time</ion-label>
-          <ion-datetime value="2019-01-01"></ion-datetime>
+          <ion-datetime display-format="DDDD MMMM D YYYY hh:mm:ss a" value="2019-10-01T15:43:40.394Z"></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label position="fixed">From</ion-label>
-          <ion-input value="from" placeholder="Choose Starting Point"></ion-input>
+          <ion-input placeholder="Choose Starting Point"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="fixed">Destination</ion-label>
-          <ion-select placeholder="Choose Destination">
+          <ion-select placeholder="Choose Really Really Long Destination Here">
             <ion-select-option>Madison, WI</ion-select-option>
             <ion-select-option>Atlanta, GA</ion-select-option>
           </ion-select>
@@ -65,7 +84,7 @@
         <ion-list-header>Floating Labels</ion-list-header>
         <ion-item>
           <ion-label position="floating">Time</ion-label>
-          <ion-datetime></ion-datetime>
+          <ion-datetime display-format="DDDD MMMM D YYYY hh:mm:ss a"></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label position="floating">From</ion-label>
@@ -84,15 +103,15 @@
         <ion-list-header>Stacked Labels</ion-list-header>
         <ion-item>
           <ion-label position="stacked">Time</ion-label>
-          <ion-datetime value="2019-01-01"></ion-datetime>
+          <ion-datetime display-format="DDDD MMMM D YYYY hh:mm:ss a" value="2019-10-01T15:43:40.394Z"></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">From</ion-label>
-          <ion-input value="from" placeholder="Choose Starting Point"></ion-input>
+          <ion-input placeholder="Choose Starting Point"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Destination</ion-label>
-          <ion-select placeholder="Choose Destination">
+          <ion-select placeholder="Choose Really Really Long Destination Here">
             <ion-select-option>Madison, WI</ion-select-option>
             <ion-select-option>Atlanta, GA</ion-select-option>
           </ion-select>
@@ -105,6 +124,7 @@
   <style>
     ion-item {
       --border-width: 0;
+      --inner-border-width: 0;
       --background: #ddd;
       border-radius: 4px;
       margin-bottom: 10px;
