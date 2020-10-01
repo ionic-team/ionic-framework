@@ -220,7 +220,7 @@ describe('datetime-util', () => {
         "second": undefined,
         "tzOffset": 0,
         "year": 1000,
-        "ampm": "am"
+        "ampm": undefined
       });
     });
 
@@ -235,7 +235,7 @@ describe('datetime-util', () => {
         "second": undefined,
         "tzOffset": 0,
         "year": undefined,
-        "ampm": "pm"
+        "ampm": undefined
       });
     });
 
@@ -250,7 +250,7 @@ describe('datetime-util', () => {
         "second": 20,
         "tzOffset": 0,
         "year": 1994,
-        "ampm": "pm"
+        "ampm": undefined
       });
     });
 
@@ -265,7 +265,7 @@ describe('datetime-util', () => {
         "second": undefined,
         "tzOffset": 0,
         "year": 2018,
-        "ampm": "am"
+        "ampm": undefined
       });
     });
 
