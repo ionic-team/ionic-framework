@@ -1,5 +1,23 @@
 # Ionic Vue
 
+## 0.5.2
+
+### Bug Fixes
+
+* **vue:** add missing tabs attribute to router outlet inside ion-tabs ([#22226](https://github.com/ionic-team/ionic/issues/22226)) ([ba4f07e](https://github.com/ionic-team/ionic/commit/ba4f07e270830d3eca67d71051a57ba7c7105f85))
+
+### Upgrade Steps
+
+```
+npm i @ionic/vue@0.5.2 @ionic/vue-router@0.5.2
+```
+
+### New to Ionic Vue?
+
+Check out our [Quickstart Guide](https://ionicframework.com/docs/vue/quickstart) to get up and running. Then be sure to check out our [Building Your First App Guide](https://ionicframework.com/docs/vue/your-first-app) to learn how build a cross platform Ionic Vue application from start to finish!
+
+
+
 ## 0.5.1
 
 ### Bug Fixes
