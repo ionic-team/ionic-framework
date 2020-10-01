@@ -1,3 +1,12 @@
+## [4.11.13](https://github.com/ionic-team/ionic/compare/v4.11.12...v4.11.13) (2020-10-01)
+
+
+### Bug Fixes
+
+* **datetime:** do not set ampm when the column doesn't exist ([#22224](https://github.com/ionic-team/ionic/issues/22224)) ([210db5b](https://github.com/ionic-team/ionic/commit/210db5b265c04dcdc847f173503c5c096fdb3374))
+
+
+
 ## [4.11.12](https://github.com/ionic-team/ionic/compare/v4.11.11...v4.11.12) (2020-09-29)
 
 
