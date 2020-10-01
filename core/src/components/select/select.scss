@@ -91,9 +91,3 @@ button {
 
   pointer-events: none;
 }
-
-:host-context(ion-item:not(.item-label)) {
-  --padding-start: 0;
-
-  max-width: none;
-}
