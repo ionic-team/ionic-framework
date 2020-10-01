@@ -1,5 +1,26 @@
 # Ionic Vue
 
+## 0.5.1
+
+### Bug Fixes
+
+* **vue:** correctly handle platform specific icons ([#22200](https://github.com/ionic-team/ionic/issues/22200)) ([25d3ea6](https://github.com/ionic-team/ionic/commit/25d3ea6b8d78016e9122c4ec02016af33a2041e8)), closes [#19078](https://github.com/ionic-team/ionic/issues/19078)
+* **vue:** correctly update property values ([#22218](https://github.com/ionic-team/ionic/issues/22218)) ([2527189](https://github.com/ionic-team/ionic/commit/25271897e2a5acd216f4076ab0284bb91023d424)), closes [#22079](https://github.com/ionic-team/ionic/issues/22079)
+* **vue:** ion-nav now handles Vue components properly ([#22197](https://github.com/ionic-team/ionic/issues/22197)) ([2c6259c](https://github.com/ionic-team/ionic/commit/2c6259c1f6f715d46e32ae4ab6142f448dda631c)), closes [#22184](https://github.com/ionic-team/ionic/issues/22184)
+* **vue:** pass props to component when using modal and popover controller ([#22198](https://github.com/ionic-team/ionic/issues/22198)) ([e84f804](https://github.com/ionic-team/ionic/commit/e84f80493cb9e2c17e6bc5f3e68582eaf643f2cf)), closes [#22189](https://github.com/ionic-team/ionic/issues/22189)
+
+### Upgrade Steps
+
+```
+npm i @ionic/vue@0.5.1 @ionic/vue-router@0.5.1
+```
+
+### New to Ionic Vue?
+
+Check out our [Quickstart Guide](https://ionicframework.com/docs/vue/quickstart) to get up and running. Then be sure to check out our [Building Your First App Guide](https://ionicframework.com/docs/vue/your-first-app) to learn how build a cross platform Ionic Vue application from start to finish!
+
+
+
 ## 0.5.0
 
 ### Bug Fixes
