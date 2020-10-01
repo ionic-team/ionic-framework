@@ -76,6 +76,28 @@ In Angular, the CSS of a specific page is scoped only to elements of that page. 
 ### Javascript
 
 ```javascript
+class PopoverExamplePage extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    this.innerHTML = `
+      <ion-content>
+        <ion-list>
+          <ion-list-header><ion-label>Ionic</ion-label></ion-list-header>
+          <ion-item button><ion-label>Item 0</ion-label></ion-item>
+          <ion-item button><ion-label>Item 1</ion-label></ion-item>
+          <ion-item button><ion-label>Item 2</ion-label></ion-item>
+          <ion-item button><ion-label>Item 3</ion-label></ion-item>
+        </ion-list>
+      </ion-content>
+    `;
+  }
+}
+
+customElements.define('popover-example-page', PopoverExamplePage);
+
 function presentPopover(ev) {
   const popover = Object.assign(document.createElement('ion-popover'), {
     component: 'popover-example-page',
@@ -96,18 +118,26 @@ import React, { useState } from 'react';
 import { IonPopover, IonButton } from '@ionic/react';
 
 export const PopoverExample: React.FC = () => {
-  const [showPopover, setShowPopover] = useState(false);
+  const [popoverState, setShowPopover] = useState({ showPopover: false, event: undefined });
 
   return (
     <>
       <IonPopover
-        isOpen={showPopover}
         cssClass='my-custom-class'
-        onDidDismiss={e => setShowPopover(false)}
+        event={popoverState.event}
+        isOpen={popoverState.showPopover}
+        onDidDismiss={() => setShowPopover({ showPopover: false, event: undefined })}
       >
         <p>This is popover content</p>
       </IonPopover>
-      <IonButton onClick={() => setShowPopover(true)}>Show Popover</IonButton>
+      <IonButton onClick={
+        (e: any) => {
+          e.persist();
+          setShowPopover({ showPopover: true, event: e })
+        }}
+      >
+        Show Popover
+      </IonButton>
     </>
   );
 };
