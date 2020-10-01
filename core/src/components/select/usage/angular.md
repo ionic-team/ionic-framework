@@ -121,7 +121,7 @@ export class SelectExample {
 
   compareWith(o1: User, o2: User) {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
-  };
+  }
 }
 ```
 
@@ -187,7 +187,7 @@ export class SelectExample {
     }
 
     return o1.id === o2.id;
-  };
+  }
 }
 ```
 
