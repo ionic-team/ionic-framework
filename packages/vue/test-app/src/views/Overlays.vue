@@ -19,27 +19,27 @@
 
         <ion-item>
           <ion-label>Alert</ion-label>
-          <ion-radio value="alert"></ion-radio>
+          <ion-radio value="alert" id="ion-alert"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Action Sheet</ion-label>
-          <ion-radio value="action-sheet"></ion-radio>
+          <ion-radio value="action-sheet" id="ion-action-sheet"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Loading</ion-label>
-          <ion-radio value="loading"></ion-radio>
+          <ion-radio value="loading" id="ion-loading"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Modal</ion-label>
-          <ion-radio value="modal"></ion-radio>
+          <ion-radio value="modal" id="ion-modal"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Popover</ion-label>
-          <ion-radio value="popover"></ion-radio>
+          <ion-radio value="popover" id="ion-popover"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Toast</ion-label>
-          <ion-radio value="toast"></ion-radio>
+          <ion-radio value="toast" id="ion-toast"></ion-radio>
         </ion-item>
       </ion-radio-group>
 
@@ -52,17 +52,17 @@
 
         <ion-item>
           <ion-label>Controller</ion-label>
-          <ion-radio value="controller"></ion-radio>
+          <ion-radio value="controller" id="controller"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Component</ion-label>
-          <ion-radio value="component"></ion-radio>
+          <ion-radio value="component" id="component"></ion-radio>
         </ion-item>
       </ion-radio-group>
 
       <br />
 
-      <ion-button expand="block" @click="present($event)">Present Overlay</ion-button>
+      <ion-button expand="block" @click="present($event)" id="present-overlay">Present Overlay</ion-button>
 
       <ion-action-sheet
         :is-open="isActionSheetOpen"
@@ -83,6 +83,7 @@
         :is-open="isLoadingOpen"
         :duration="2000"
         message="Loading"
+        :backdrop-dismiss="true"
         @onDidDismiss="setLoadingRef(false)"
       >
       </ion-loading>
@@ -106,6 +107,7 @@
         :is-open="isToastOpen"
         :duration="2000"
         message="Toast"
+        :buttons="toastButtons"
         @onDidDismiss="setToastRef(false)"
       >
       </ion-toast>
@@ -223,6 +225,12 @@ export default defineComponent({
       }
     ]
 
+    const toastButtons = [
+      {
+        text: 'Close', role: 'close'
+      }
+    ]
+
     const openActionSheet = async () => {
       const actionSheet = await actionSheetController.create({ buttons: actionSheetButtons });
       await actionSheet.present();
@@ -234,12 +242,12 @@ export default defineComponent({
     }
 
     const openLoading = async () => {
-      const loading = await loadingController.create({ message: "Loading", duration: 2000 });
+      const loading = await loadingController.create({ message: "Loading", duration: 2000, backdropDismiss: true });
       await loading.present();
     }
 
     const openToast = async () => {
-      const toast = await toastController.create({ header: "Toast!", duration: 2000 });
+      const toast = await toastController.create({ header: "Toast!", buttons: toastButtons });
       await toast.present();
     }
 
@@ -306,6 +314,7 @@ export default defineComponent({
       presentationType,
       actionSheetButtons,
       alertButtons,
+      toastButtons,
       openActionSheet,
       openAlert,
       openLoading,
