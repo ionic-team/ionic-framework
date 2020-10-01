@@ -10,8 +10,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@ionic/vue": "^0.5.0",
-    "@ionic/vue-router": "^0.5.0",
+    "@ionic/vue": "^0.6.0-dev.202009301514.ea201ea",
+    "@ionic/vue-router": "^0.6.0-dev.202009301514.ea201ea",
     "core-js": "^3.6.5",
     "vue": "^3.0.0-0",
     "vue-router": "^4.0.0-0"
@@ -21,7 +21,7 @@
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-e2e-cypress": "~4.5.0",
+    "@vue/cli-plugin-e2e-cypress": "^4.5.4",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
@@ -30,6 +30,7 @@
     "@vue/compiler-sfc": "^3.0.0-0",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "^2.0.0-0",
+    "cypress": "^5.3.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
     "typescript": "~3.9.3",

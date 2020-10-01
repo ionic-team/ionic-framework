@@ -1,6 +1,6 @@
 <template>
   <ion-content class="ion-padding">
-    Popover Content
+    {{ title }}
   </ion-content>
 </template>
 
@@ -13,6 +13,9 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'PopoverContent',
+  props: {
+    title: { type: String, default: 'Default Title' }
+  },
   components: {
     IonContent
   },

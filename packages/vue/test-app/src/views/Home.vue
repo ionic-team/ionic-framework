@@ -17,6 +17,12 @@
         <ion-item router-link="/overlays">
           <ion-label>Overlays</ion-label>
         </ion-item>
+        <ion-item router-link="/inputs">
+          <ion-label>Inputs</ion-label>
+        </ion-item>
+        <ion-item router-link="/slides">
+          <ion-label>Slides</ion-label>
+        </ion-item>
       </ion-list>
 
     </ion-content>

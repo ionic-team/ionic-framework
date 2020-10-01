@@ -8,7 +8,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-    Modal Content
+    {{ title }}
   </ion-content>
 </template>
 
@@ -26,6 +26,9 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'ModalContent',
+  props: {
+    title: { type: String, default: 'Default Title' }
+  },
   components: {
     IonButton,
     IonButtons,
