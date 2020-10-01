@@ -34,7 +34,7 @@ export const IonTabs = defineComponent({
             }
           },
           [
-            h(IonRouterOutlet)
+            h(IonRouterOutlet, { tabs: true })
           ]
         ),
         ...slots.default && slots.default()
