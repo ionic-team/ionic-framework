@@ -244,7 +244,7 @@ export class Segment implements ComponentInterface {
 
     // Scale the indicator width to match the previous indicator width
     // and translate it on top of the previous indicator
-    const transform = `translate3d(${xPosition}px, 0, 0) scaleX(${widthDelta})`;
+    const transform = `translate(${xPosition}px, 0) scaleX(${widthDelta})`;
 
     writeTask(() => {
       // Remove the transition before positioning on top of the previous indicator

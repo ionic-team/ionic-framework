@@ -2,14 +2,14 @@ import { Action as HistoryAction, Location as HistoryLocation, MemoryHistory } f
 import React from 'react';
 import { MemoryRouterProps, Router } from 'react-router';
 
-import { IonRouter, LocationState } from './IonRouter';
+import { IonRouter } from './IonRouter';
 
 interface IonReactMemoryRouterProps extends MemoryRouterProps {
-  history: MemoryHistory<LocationState>;
+  history: MemoryHistory;
 }
 
 export class IonReactMemoryRouter extends React.Component<IonReactMemoryRouterProps> {
-  history: MemoryHistory<LocationState>;
+  history: MemoryHistory;
   historyListenHandler?: ((location: HistoryLocation, action: HistoryAction) => void);
 
   constructor(props: IonReactMemoryRouterProps) {
