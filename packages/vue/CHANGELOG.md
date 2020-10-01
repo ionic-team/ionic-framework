@@ -9,7 +9,7 @@
 ### Upgrade Steps
 
 ```
-npm i @ionic/vue@0.5.1 @ionic/vue-router@0.5.1
+npm i @ionic/vue@0.5.2 @ionic/vue-router@0.5.2
 ```
 
 ### New to Ionic Vue?
