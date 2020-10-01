@@ -14,6 +14,11 @@ import { getClassMap } from '../../utils/theme';
   scoped: true
 })
 export class SelectPopover implements ComponentInterface {
+  /**
+   * Additional classes to apply for custom CSS. If multiple classes are
+   * provided they should be separated by spaces.
+   */
+  @Prop() cssClass?: string | string[];
 
   /** Header text for the popover */
   @Prop() header?: string;
@@ -39,7 +44,10 @@ export class SelectPopover implements ComponentInterface {
     const checkedOption = this.options.find(o => o.checked);
     const checkedValue = checkedOption ? checkedOption.value : undefined;
     return (
-      <Host class={getIonMode(this)}>
+      <Host class={{
+          ...getClassMap(this.cssClass),
+          ...getIonMode(this)
+        }}>
         <ion-list>
           {this.header !== undefined && <ion-list-header>{this.header}</ion-list-header>}
           { (this.subHeader !== undefined || this.message !== undefined) &&
