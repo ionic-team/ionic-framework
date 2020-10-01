@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "cypress": "node_modules/.bin/cypress open"
   },
   "dependencies": {
     "@ionic/vue": "^0.6.0-dev.202009301514.ea201ea",

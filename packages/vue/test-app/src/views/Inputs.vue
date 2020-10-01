@@ -92,7 +92,7 @@
         Datetime: {{ datetime }}<br>
         Radio Group: {{ radio }}<br>
         Segment: {{ segment }}<br>
-        Bananas: {{ bananas }}<br>
+        Select: {{ select }}<br>
 
         <br>
 
