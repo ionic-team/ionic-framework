@@ -3,10 +3,16 @@
  * Defaults to the current date if
  * no date given
  */
-export const getDateValue = (date: DatetimeData, format: string): number => {
+export const getDateValue = (date: DatetimeData, format: string): number | string => {
   const getValue = getValueFromFormat(date, format);
 
-  if (getValue !== undefined) { return getValue; }
+  if (getValue !== undefined) {
+    if (format === FORMAT_A || format === FORMAT_a) {
+      date.ampm = getValue;
+    }
+
+    return getValue;
+  }
 
   const defaultDate = parseDate(new Date().toISOString());
   return getValueFromFormat((defaultDate as DatetimeData), format);
@@ -238,7 +244,6 @@ export const parseDate = (val: string | undefined | null): DatetimeData | undefi
     second: parse[6],
     millisecond: parse[7],
     tzOffset,
-    ampm: parse[4] >= 12 ? 'pm' : 'am'
   };
 };
 
