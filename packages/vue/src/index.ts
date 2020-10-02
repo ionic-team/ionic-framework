@@ -1,6 +1,7 @@
 import { addIcons } from 'ionicons';
 import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
 
+export * from './globalExtensions';
 export * from './proxies';
 export { IonicVue } from './ionic-vue';
 
