@@ -413,22 +413,6 @@ jobs:
           command: npm run test.spec
           working_directory: /tmp/workspace/packages/vue-router
 
-  test-vue-e2e:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/workspace
-      - name: Cypress Tests
-        uses: cypress-io/github-action@v2
-        with:
-          working-directory: /tmp/workspace/packages/vue/test-app
-          command: npm run cypress
-          start: npm run serve
-          wait-on: 'http://localhost:8080'
-          browser: chrome
-          headless: true
-
   test-angular-e2e:
     <<: *defaults
     steps:
@@ -497,8 +481,6 @@ workflows:
           requires: [build-vue-router]
       - test-vue-router-spec:
           requires: [build-vue-router]
-      - test-vue-e2e:
-          requires: [build-vue, build-vue-router]
       - test-angular-lint:
           requires: [build-angular]
       - test-angular-e2e:
