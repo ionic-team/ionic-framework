@@ -420,6 +420,15 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/packages/vue
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/packages/vue-router
+      - run:
+          command: sudo npm link @ionic/vue @ionic/vue-router
+          working_directory: /tmp/workspace/packages/vue/test-app
+      - run:
           command: npm install
           working_directory: /tmp/workspace/packages/vue/test-app
       - run:
