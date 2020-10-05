@@ -431,7 +431,8 @@ jobs:
       - run:
           command: sudo npm link @ionic/vue @ionic/vue-router && npm install
           working_directory: /tmp/workspace/packages/vue/test-app
-      - name: Cypress run
+      - run: npm run cypress
+      - name: Cypress Tests
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
