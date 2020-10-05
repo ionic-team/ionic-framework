@@ -6,9 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e": "start-server-and-test serve http://localhost:8080 cypress",
     "lint": "vue-cli-service lint",
-    "cypress": "node_modules/.bin/cypress open"
+    "cypress": "node_modules/.bin/cypress run --headless --browser chrome"
   },
   "dependencies": {
     "@ionic/vue": "^0.6.0-dev.202009301514.ea201ea",
@@ -35,7 +35,8 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
     "typescript": "~3.9.3",
-    "vue-jest": "^5.0.0-0"
+    "vue-jest": "^5.0.0-0",
+    "wait-on": "^5.2.0"
   },
   "description": "An Ionic project"
 }

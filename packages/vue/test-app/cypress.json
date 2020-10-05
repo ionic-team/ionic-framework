@@ -1,4 +1,5 @@
 {
   "pluginsFile": "tests/e2e/plugins/index.js",
-  "includeShadowDom": true
+  "includeShadowDom": true,
+  "video": false
 }
