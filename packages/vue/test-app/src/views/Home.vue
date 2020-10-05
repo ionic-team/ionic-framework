@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page data-pageid="home">
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-title>Test App</ion-title>
@@ -22,6 +22,12 @@
         </ion-item>
         <ion-item router-link="/slides">
           <ion-label>Slides</ion-label>
+        </ion-item>
+        <ion-item router-link="/navigation" id="navigation">
+          <ion-label>Navigation</ion-label>
+        </ion-item>
+        <ion-item router-link="/nested" id="nested">
+          <ion-label>Nested Router Outlet</ion-label>
         </ion-item>
       </ion-list>
 

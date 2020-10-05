@@ -23,3 +23,31 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('ionSwipeToGoBack', (complete = false) => {
+  cy.get('ion-router-outlet')
+    .trigger('mousedown', { position: "left" })
+    .trigger('mousemove', { clientX: (complete) ? 100 : 300, clientY: 275 })
+    .trigger('mouseup', { force: true })
+  cy.wait(150);
+})
+
+Cypress.Commands.add('ionPageVisible', (pageId) => {
+  cy.get(`.ion-page[data-pageid=${pageId}]`)
+    .should('not.have.class', 'ion-page-hidden')
+    .should('not.have.class', 'ion-page-invisible')
+    .should('have.length', 1)
+})
+
+Cypress.Commands.add('ionPageInvisible', (pageId) => {
+  cy.get(`div.ion-page[data-pageid=${pageId}]`)
+    .should('have.class', 'ion-page-invisible')
+    .should('have.length', 1)
+})
+
+Cypress.Commands.add('ionBackClick', (pageId) => {
+  cy.get(`div.ion-page[data-pageid=${pageId}]`)
+    .should('be.visible', true)
+    .find('ion-back-button')
+    .click()
+});

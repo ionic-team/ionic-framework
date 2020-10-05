@@ -26,6 +26,26 @@ const routes: Array<RouteRecordRaw> = [
     path: '/slides',
     name: 'Slides',
     component: () => import('@/views/Slides.vue')
+  },
+  {
+    path: '/navigation',
+    name: 'Navigation',
+    component: () => import('@/views/Navigation.vue')
+  },
+  {
+    path: '/nested',
+    name: 'RouterOutlet',
+    component: () => import('@/views/RouterOutlet.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/NestedChild.vue')
+      },
+      {
+        path: 'two',
+        component: () => import('@/views/NestedChildTwo.vue')
+      }
+    ]
   }
 ]
 
