@@ -432,7 +432,7 @@ jobs:
           command: sudo npm link @ionic/vue @ionic/vue-router
           working_directory: /tmp/workspace/packages/vue/test-app
       - run:
-          command: npm install
+          command: sudo npm install
           working_directory: /tmp/workspace/packages/vue/test-app
       - run:
           command: npm run test:e2e
@@ -459,21 +459,9 @@ workflows:
       - build
       - build-core:
           requires: [build]
-      - test-core-clean-build:
-          requires: [build-core]
-      - test-core-lint:
-          requires: [build-core]
-      - test-core-treeshake:
-          requires: [build-core]
       - build-vue:
           requires: [build-core]
       - build-vue-router:
           requires: [build-core, build-vue]
-      - test-vue-lint:
-          requires: [build-vue]
-      - test-vue-router-lint:
-          requires: [build-vue-router]
-      - test-vue-router-spec:
-          requires: [build-vue-router]
       - test-vue-e2e:
           requires: [build-vue, build-vue-router]
