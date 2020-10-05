@@ -419,6 +419,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
+      - uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
+          headless: true
       - run:
           command: sudo npm link
           working_directory: /tmp/workspace/packages/vue
@@ -431,11 +435,6 @@ jobs:
       - run:
           command: sudo npm link @ionic/vue @ionic/vue-router && npm install
           working_directory: /tmp/workspace/packages/vue/test-app
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          browser: chrome
-          headless: true
 
   test-angular-e2e:
     <<: *defaults
