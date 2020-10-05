@@ -219,13 +219,13 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
   const changeTab = (tab: string, path: string) => {
     const routeInfo = locationHistory.getCurrentRouteInfoForTab(tab);
-    // TODO search
     const [pathname] = path.split('?');
 
     if (routeInfo) {
       incomingRouteParams = Object.assign(Object.assign({}, routeInfo), { routerAction: 'push', routerDirection: 'none' });
 
-      router.push(routeInfo.pathname + (routeInfo.search || ''));
+      const search = (routeInfo.search) ? `?${routeInfo.search}` : '';
+      router.push(routeInfo.pathname + search);
     }
     else {
       handleNavigate(pathname, 'push', 'none', undefined, tab);

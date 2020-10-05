@@ -153,6 +153,8 @@ export const IonRouterOutlet = defineComponent({
       const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
       const leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id);
 
+      if (enteringViewItem === leavingViewItem) return;
+
       fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_WILL_ENTER);
 
       if (leavingViewItem) {
