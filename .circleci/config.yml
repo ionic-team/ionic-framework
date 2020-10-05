@@ -419,13 +419,13 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - run:
-          command: sudo npm link @ionic/vue @ionic/vue-router && npm install
-          working_directory: /tmp/workspace/packages/vue/test-app
-      - run: npm run cypress
       - name: Cypress Tests
         uses: cypress-io/github-action@v2
         with:
+          working-directory: /tmp/workspace/packages/vue/test-app
+          command: npm run cypress
+          start: npm run serve
+          wait-on: 'http://localhost:8080'
           browser: chrome
           headless: true
 
