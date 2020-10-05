@@ -419,6 +419,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
+      - uses: cypress-io/github-action@v2
 
   test-angular-e2e:
     <<: *defaults
