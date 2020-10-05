@@ -419,7 +419,21 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - uses: cypress-io/github-action@v2
+      - run:
+          command: sudo npm link
+          working_directory: /tmp/workspace/packages/vue
+      - run:
+          comment: sudo npm link
+          working_directory: /tmp/workspace/packages/vue-router
+      - run:
+          command: sudo npm link @ionic/vue
+          working_directory: /tmp/workspace/packages/vue-router
+      - run:
+          command: sudo npm link @ionic/vue @ionic/vue-router && npm install
+          working_directory: /tmp/workspace/packages/vue/test-app
+      - run:
+          command: npm run test:e2e
+          working_directory: /tmp/workspace/packages/vue/test-app
 
   test-angular-e2e:
     <<: *defaults
