@@ -413,31 +413,6 @@ jobs:
           command: npm run test.spec
           working_directory: /tmp/workspace/packages/vue-router
 
-  test-vue-e2e:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          command: sudo npm link
-          working_directory: /tmp/workspace/packages/vue
-      - run:
-          command: sudo npm link @ionic/core
-          working_directory: /tmp/workspace/packages/vue-router
-      - run:
-          command: sudo npm link
-          working_directory: /tmp/workspace/packages/vue-router
-      - run:
-          command: sudo npm link @ionic/vue @ionic/vue-router
-          working_directory: /tmp/workspace/packages/vue/test-app
-      - run:
-          command: sudo npm install
-          working_directory: /tmp/workspace/packages/vue/test-app
-      - run:
-          command: npm run test:e2e
-          working_directory: /tmp/workspace/packages/vue/test-app
-
   test-angular-e2e:
     <<: *defaults
     steps:
@@ -459,9 +434,56 @@ workflows:
       - build
       - build-core:
           requires: [build]
+      - test-core-clean-build:
+          requires: [build-core]
+      - test-core-lint:
+          requires: [build-core]
+      - test-core-e2e:
+          requires: [puppeteer-dependencies, build-core]
+      - test-core-spec:
+          requires: [build-core]
+      - test-core-treeshake:
+          requires: [build-core]
+      - test-core-screenshot:
+          requires: [build-core]
+          filters:
+            branches:
+              ignore: master
+      - test-core-screenshot-master:
+          requires: [build-core]
+          filters:
+            branches:
+              only: master
+
+      - build-angular:
+          requires: [build-core]
+      - build-angular-server:
+          requires: [build-angular]
+      - build-react:
+          requires: [build-core]
+      - build-react-router:
+          requires: [build-core, build-react]
+      - test-react-lint:
+          requires: [build-react]
+      - test-react-router-lint:
+          requires: [build-react-router]
+      - test-react-spec:
+          requires: [build-react]
+      - test-react-router-spec:
+          requires: [build-react-router]
       - build-vue:
           requires: [build-core]
       - build-vue-router:
           requires: [build-core, build-vue]
-      - test-vue-e2e:
-          requires: [build-vue, build-vue-router]
+      - test-vue-lint:
+          requires: [build-vue]
+      - test-vue-router-lint:
+          requires: [build-vue-router]
+      - test-vue-router-spec:
+          requires: [build-vue-router]
+      - test-angular-lint:
+          requires: [build-angular]
+      - test-angular-e2e:
+          requires:
+            - build-angular
+            - build-angular-server
