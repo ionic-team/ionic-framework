@@ -45,9 +45,20 @@ Cypress.Commands.add('ionPageInvisible', (pageId) => {
     .should('have.length', 1)
 })
 
+Cypress.Commands.add('ionPageHidden', (pageId) => {
+  cy.get(`div.ion-page[data-pageid=${pageId}]`)
+    .should('have.class', 'ion-page-hidden')
+    .should('have.length', 1)
+})
+
 Cypress.Commands.add('ionBackClick', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('be.visible', true)
     .find('ion-back-button')
     .click()
+});
+
+Cypress.Commands.add('ionPageDoesNotExist', (pageId) => {
+  cy.get(`div.ion-page[data-pageid=${pageId}]`)
+    .should('not.exist')
 });
