@@ -212,7 +212,6 @@
 }
 
 
-
 // Material Design Floating/Stacked Label
 // --------------------------------------------------
 
@@ -220,6 +219,16 @@
 :host(.item-label-floating) ::slotted([slot="end"]) {
   @include margin($item-md-label-slot-end-margin-top, $item-md-label-slot-end-margin-end, $item-md-label-slot-end-margin-bottom, $item-md-label-slot-end-margin-start);
 }
+
+
+// Material Design Fixed Labels
+// --------------------------------------------------
+
+:host(.item-label-fixed) ::slotted(ion-select),
+:host(.item-label-fixed) ::slotted(ion-datetime) {
+  --padding-start: 8px;
+}
+
 
 // Material Design Toggle/Radio Item
 // --------------------------------------------------

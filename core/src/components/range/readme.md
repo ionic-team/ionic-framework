@@ -252,12 +252,16 @@ export class RangeExample {
 </template>
 
 <script>
-export default {
+import { IonItem, IonLabel, IonList, IonRange } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {  IonItem, IonLabel, IonList, IonRange },
   mounted() {
     // Sets initial value for dual-knob ion-range
     this.$refs.rangeDualKnobs.value = { lower: 24, upper: 42 };
   }
-}
+});
 </script>
 ```
 
