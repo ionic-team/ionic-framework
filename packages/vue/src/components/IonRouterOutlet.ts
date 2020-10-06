@@ -125,24 +125,32 @@ export const IonRouterOutlet = defineComponent({
       progressAnimation: boolean,
       animationBuilder?: AnimationBuilder
     ) => {
-      if (skipTransition) {
-        skipTransition = false;
-        return Promise.resolve(false);
-      }
+      return new Promise(resolve => {
+        if (skipTransition) {
+          skipTransition = false;
+          return resolve(false);
+        }
 
-      if (enteringEl === leavingEl) {
-        return Promise.resolve(false);
-      }
+        if (enteringEl === leavingEl) {
+          return resolve(false);
+        }
 
-      enteringEl.classList.add('ion-page-invisible');
+        requestAnimationFrame(() => {
+          requestAnimationFrame(async () => {
+            enteringEl.classList.add('ion-page-invisible');
 
-      return ionRouterOutlet.value.commit(enteringEl, leavingEl, {
-        deepWait: true,
-        duration: direction === undefined || direction === 'root' || direction === 'none' ? 0 : undefined,
-        direction,
-        showGoBack,
-        progressAnimation,
-        animationBuilder
+            const result = await ionRouterOutlet.value.commit(enteringEl, leavingEl, {
+              deepWait: true,
+              duration: direction === undefined || direction === 'root' || direction === 'none' ? 0 : undefined,
+              direction,
+              showGoBack,
+              progressAnimation,
+              animationBuilder
+            });
+
+            return resolve(result);
+          });
+        });
       });
     }
 
@@ -152,6 +160,9 @@ export const IonRouterOutlet = defineComponent({
 
       const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
       const leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id);
+      const enteringEl = enteringViewItem.ionPageElement;
+
+      if (enteringViewItem === leavingViewItem) return;
 
       if (enteringViewItem === leavingViewItem) return;
 
@@ -159,7 +170,6 @@ export const IonRouterOutlet = defineComponent({
 
       if (leavingViewItem) {
         let animationBuilder = routerAnimation;
-        const enteringEl = enteringViewItem.ionPageElement;
         const leavingEl = leavingViewItem.ionPageElement;
 
         fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_WILL_LEAVE);
@@ -207,6 +217,14 @@ export const IonRouterOutlet = defineComponent({
         }
 
         fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_DID_LEAVE);
+      } else {
+        /**
+         * If there is no leaving element, just show
+         * the entering element. Wrap it in an raf
+         * in case ion-content's fullscreen callback
+         * is running. Otherwise we'd have a flicker.
+         */
+        requestAnimationFrame(() => enteringEl.classList.remove('ion-page-invisible'));
       }
 
       fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_DID_ENTER);
