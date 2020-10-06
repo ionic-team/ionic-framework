@@ -172,8 +172,6 @@ export const IonRouterOutlet = defineComponent({
 
         fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_WILL_LEAVE);
 
-        enteringEl.classList.remove('ion-page-hidden');
-
         /**
         * If we are going back from a page that
         * was presented using a custom animation
@@ -197,7 +195,7 @@ export const IonRouterOutlet = defineComponent({
           enteringEl,
           leavingEl,
           routerDirection,
-          routerDirection === 'forward',
+          !!routeInfo.pushedByRoute,
           false,
           animationBuilder
         );
