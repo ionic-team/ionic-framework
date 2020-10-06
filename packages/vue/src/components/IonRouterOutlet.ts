@@ -164,6 +164,8 @@ export const IonRouterOutlet = defineComponent({
 
       if (enteringViewItem === leavingViewItem) return;
 
+      if (enteringViewItem === leavingViewItem) return;
+
       fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_WILL_ENTER);
 
       if (leavingViewItem) {
