@@ -46,6 +46,28 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/NestedChildTwo.vue')
       }
     ]
+  },
+  {
+    path: '/tabs/',
+    component: () => import('@/views/Tabs.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/tabs/tab1'
+      },
+      {
+        path: 'tab1',
+        component: () => import('@/views/Tab1.vue')
+      },
+      {
+        path: 'tab2',
+        component: () => import('@/views/Tab2.vue')
+      },
+      {
+        path: 'tab3',
+        component: () => import('@/views/Tab3.vue')
+      }
+    ]
   }
 ]
 

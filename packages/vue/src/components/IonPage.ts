@@ -7,7 +7,7 @@ export const IonPage = defineComponent({
       return h(
         'div',
         {
-          ['class']: 'ion-page',
+          ['class']: 'ion-page ion-page-invisible',
           ...attrs,
           ref: 'ionPage'
         },
