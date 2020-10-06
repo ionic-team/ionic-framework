@@ -26,6 +26,9 @@
         <ion-item router-link="/navigation" id="navigation">
           <ion-label>Navigation</ion-label>
         </ion-item>
+        <ion-item router-link="/default-href" id="default-href">
+          <ion-label>Default Href</ion-label>
+        </ion-item>
         <ion-item router-link="/nested" id="nested">
           <ion-label>Nested Router Outlet</ion-label>
         </ion-item>

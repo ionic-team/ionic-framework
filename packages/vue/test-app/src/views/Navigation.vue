@@ -3,7 +3,7 @@
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons>
-          <ion-back-button default-href="/"></ion-back-button>
+          <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title>Navigation</ion-title>
       </ion-toolbar>
@@ -18,6 +18,10 @@
 
       <ion-item button @click="setRouteParams" id="route-params">
         <ion-label>Set Route Parameters</ion-label>
+      </ion-item>
+
+      <ion-item button router-link="/navigation/child" id="child">
+        <ion-label>Go to Child Page</ion-label>
       </ion-item>
     </ion-content>
   </ion-page>

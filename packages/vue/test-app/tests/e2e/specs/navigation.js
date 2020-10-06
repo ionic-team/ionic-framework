@@ -1,4 +1,4 @@
-describe.only('Navigation', () => {
+describe('Navigation', () => {
 
  /*
  // TODO move these to separate describe block
@@ -42,11 +42,25 @@ describe.only('Navigation', () => {
   });
 
   it('should go back home with default href', () => {
-    cy.visit('http://localhost:8080/navigation');
+    cy.visit('http://localhost:8080/default-href');
 
+    cy.ionBackClick('defaulthref');
+
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('defaulthref');
+  });
+
+  it('should show back button', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.get('#navigation').click();
+    cy.get('#child').click();
+
+    cy.ionBackClick('navigationchild');
     cy.ionBackClick('navigation');
 
     cy.ionPageVisible('home');
     cy.ionPageDoesNotExist('navigation');
-  });
+    cy.ionPageDoesNotExist('navigationchild')
+  })
 });
