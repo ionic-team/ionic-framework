@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page data-pageid="tabs">
     <ion-content>
       <ion-tabs>
         <ion-tab-bar slot="bottom">
