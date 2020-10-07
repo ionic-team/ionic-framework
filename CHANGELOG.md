@@ -1,3 +1,17 @@
+## [5.3.5](https://github.com/ionic-team/ionic/compare/v5.3.4...v5.3.5) (2020-10-07)
+
+
+### Bug Fixes
+
+* **button:** allow any element type to use the "icon-only" slot ([#22168](https://github.com/ionic-team/ionic/issues/22168)) ([c454c84](https://github.com/ionic-team/ionic/commit/c454c84ef46322143467600334a0263d4e7df6cb))
+* **datetime:** do not set ampm when the column doesn't exist ([#22220](https://github.com/ionic-team/ionic/issues/22220)) ([18fb885](https://github.com/ionic-team/ionic/commit/18fb8855e0c45fe65843b33811812c51c74de90f)), closes [#22149](https://github.com/ionic-team/ionic/issues/22149)
+* **datetime:** remove the automatic switching from am to pm ([#22207](https://github.com/ionic-team/ionic/issues/22207)) ([f81d18c](https://github.com/ionic-team/ionic/commit/f81d18c6f9f1bce056afda1cac4cf6d6ace0a7ca)), closes [#18924](https://github.com/ionic-team/ionic/issues/18924) [#22171](https://github.com/ionic-team/ionic/issues/22171) [#22199](https://github.com/ionic-team/ionic/issues/22199)
+* **item:** properly align datetime and select with fixed or no labels ([#22221](https://github.com/ionic-team/ionic/issues/22221)) ([f42c688](https://github.com/ionic-team/ionic/commit/f42c688f4630e3dc5d10b947e7f2bee9d5967d8c)), closes [#18773](https://github.com/ionic-team/ionic/issues/18773) [#18761](https://github.com/ionic-team/ionic/issues/18761) [#18779](https://github.com/ionic-team/ionic/issues/18779)
+* **label:** keep color when focused on a floating or stacked label ([#18576](https://github.com/ionic-team/ionic/issues/18576)) ([992580a](https://github.com/ionic-team/ionic/commit/992580a3830321bdf9591681ebe38e823205389d)), closes [#18531](https://github.com/ionic-team/ionic/issues/18531)
+* **select:** do not close popover or set value when switching with arrow keys ([#22210](https://github.com/ionic-team/ionic/issues/22210)) ([1878c8e](https://github.com/ionic-team/ionic/commit/1878c8e7e01c02f06bdc5f1562af0d45531539cf)), closes [#22179](https://github.com/ionic-team/ionic/issues/22179)
+
+
+
 ## [5.3.4](https://github.com/ionic-team/ionic/compare/v5.3.3...v5.3.4) (2020-09-25)
 
 
