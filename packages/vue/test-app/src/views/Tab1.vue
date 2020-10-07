@@ -16,16 +16,20 @@
       </ion-header>
 
       <ExploreContainer name="Tab 1 page" />
+
+      <ion-item router-link="tab1/child-one" id="child-one">
+        <ion-label>Go to Tab 1 Child 1</ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-import { IonButtons, IonBackButton, IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+import { IonButtons, IonBackButton, IonPage, IonHeader, IonItem, IonLabel, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 import ExploreContainer from '@/components/ExploreContainer.vue';
 
 export default  {
   name: 'Tab1',
-  components: { IonButtons, IonBackButton, ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
+  components: { IonButtons, IonBackButton, ExploreContainer, IonHeader, IonItem, IonLabel, IonToolbar, IonTitle, IonContent, IonPage }
 }
 </script>
