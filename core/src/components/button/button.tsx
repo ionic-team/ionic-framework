@@ -137,7 +137,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   private get hasIconOnly() {
-    return !!this.el.querySelector('ion-icon[slot="icon-only"]');
+    return !!this.el.querySelector('[slot="icon-only"]');
   }
 
   private get rippleType() {

@@ -97,6 +97,8 @@ export class RadioGroup implements ComponentInterface {
 
   @Listen('keydown', { target: 'document' })
   onKeydown(ev: any) {
+    const inSelectPopover = !!this.el.closest('ion-select-popover');
+
     if (ev.target && !this.el.contains(ev.target)) {
       return;
     }
@@ -129,7 +131,10 @@ export class RadioGroup implements ComponentInterface {
 
       if (next && radios.includes(next)) {
         next.setFocus();
-        this.value = next.value;
+
+        if (!inSelectPopover) {
+          this.value = next.value;
+        }
       }
     }
   }
