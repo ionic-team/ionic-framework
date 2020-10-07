@@ -1,20 +1,4 @@
 describe('Navigation', () => {
-
- /*
- // TODO move these to separate describe block
- it.skip('should swipe and abort', () => {
-    cy.ionPageInvisible('home');
-    cy.ionSwipeToGoBack();
-    cy.ionPageInvisible('home');
-    cy.ionPageVisible('navigation');
-  });
-
-  it.skip('should swipe and complete', () => {
-    cy.ionSwipeToGoBack(true);
-    cy.ionPageVisible('home');
-  });
-  */
-
   it('should go to sibling page', () => {
     cy.visit('http://localhost:8080');
     cy.get('ion-item#navigation').click();
@@ -64,3 +48,31 @@ describe('Navigation', () => {
     cy.ionPageDoesNotExist('navigationchild')
   })
 });
+
+// Swipe to go back command not working
+describe.skip('Swipe to Go Back', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:8080?ionic:mode=ios')
+    cy.viewport(320, 568)
+  });
+
+  it('should swipe and abort', () => {
+    cy.get('#navigation').click();
+    cy.ionPageHidden('home');
+    cy.ionPageVisible('navigation');
+
+    cy.ionSwipeToGoBack();
+    cy.ionPageHidden('home');
+    cy.ionPageVisible('navigation');
+  });
+
+  it('should swipe and complete', () => {
+    cy.get('#navigation').click();
+    cy.ionPageHidden('home');
+    cy.ionPageVisible('navigation');
+
+    cy.ionSwipeToGoBack(true);
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('navigation');
+  });
+})

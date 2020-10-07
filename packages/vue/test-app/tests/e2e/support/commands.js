@@ -27,7 +27,7 @@
 Cypress.Commands.add('ionSwipeToGoBack', (complete = false) => {
   cy.get('ion-router-outlet')
     .trigger('mousedown', { position: "left" })
-    .trigger('mousemove', { clientX: (complete) ? 100 : 300, clientY: 275 })
+    .trigger('mousemove', { clientX: (complete) ? 300 : 100, clientY: 275 })
     .trigger('mouseup', { force: true })
   cy.wait(150);
 })
