@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page data-pageid="tabs">
     <ion-content>
       <ion-tabs>
         <ion-tab-bar slot="bottom">
@@ -7,12 +7,12 @@
             <ion-icon :icon="triangle" />
             <ion-label>Tab 1</ion-label>
           </ion-tab-button>
-            
+
           <ion-tab-button tab="tab2" href="/tabs/tab2">
             <ion-icon :icon="ellipse" />
             <ion-label>Tab 2</ion-label>
           </ion-tab-button>
-          
+
           <ion-tab-button tab="tab3" href="/tabs/tab3">
             <ion-icon :icon="square" />
             <ion-label>Tab 3</ion-label>
@@ -32,8 +32,8 @@ export default {
   components: { IonContent, IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage },
   setup() {
     return {
-      ellipse, 
-      square, 
+      ellipse,
+      square,
       triangle,
     }
   }
