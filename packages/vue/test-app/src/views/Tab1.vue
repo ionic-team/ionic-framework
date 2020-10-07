@@ -25,19 +25,11 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import { IonItem, IonLabel, IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-=======
-import { IonButtons, IonBackButton, IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
->>>>>>> origin/ionic-vue
+import { IonButtons, IonBackButton, IonPage, IonHeader, IonItem, IonLabel, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 import ExploreContainer from '@/components/ExploreContainer.vue';
 
 export default  {
   name: 'Tab1',
-<<<<<<< HEAD
-  components: { IonItem, IonLabel, ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
-=======
-  components: { IonButtons, IonBackButton, ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
->>>>>>> origin/ionic-vue
+  components: { IonButtons, IonBackButton, ExploreContainer, IonHeader, IonItem, IonLabel, IonToolbar, IonTitle, IonContent, IonPage }
 }
 </script>
