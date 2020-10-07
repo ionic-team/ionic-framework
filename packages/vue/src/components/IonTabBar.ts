@@ -9,10 +9,10 @@ export const IonTabBar = defineComponent({
       // TODO types
       const tabs = Array.from(this.$el.querySelectorAll('ion-tab-button')) as any[];
       const activeTab = tabs.find(tab => currentRoute.pathname.startsWith(tab.href));
+      const tabBar = this.$refs.ionTabBar;
 
-      if (activeTab) {
+      if (activeTab && tabBar) {
         ionRouter.handleSetCurrentTab(activeTab.tab);
-        const tabBar = this.$refs.ionTabBar;
         tabBar.selectedTab = activeTab.tab;
       }
     }
