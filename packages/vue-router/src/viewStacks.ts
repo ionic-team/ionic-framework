@@ -53,8 +53,8 @@ export const createViewStacks = () => {
       const viewItemPath = viewItem.matchedRoute.path;
 
       const regexp = pathToRegexp(viewItemPath, [], {
-        end: false,
-        strict: false,
+        end: viewItem.exact,
+        strict: viewItem.exact,
         sensitive: false
       });
       return (regexp.exec(pathname)) ? viewItem : undefined;
@@ -90,7 +90,8 @@ export const createViewStacks = () => {
       ionPageElement: ionPage,
       vueComponent,
       ionRoute: false,
-      mount: false
+      mount: false,
+      exact: routeInfo.pathname === matchedRoute.path
     };
   }
 
