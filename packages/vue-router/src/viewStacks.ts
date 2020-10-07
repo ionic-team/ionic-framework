@@ -1,8 +1,10 @@
 import { generateId } from './utils';
+const pathToRegexp = require("path-to-regexp");
 import {  RouteInfo,
   ViewItem,
   ViewStacks,
 } from './types';
+import { RouteLocationMatched } from 'vue-router';
 
 export const createViewStacks = () => {
   let viewStacks: ViewStacks = {};
@@ -13,6 +15,10 @@ export const createViewStacks = () => {
     const values = Array.from(tabsPrefixes.values());
     const hasPrefix = values.find((v: string) => path.includes(v));
     return hasPrefix !== undefined;
+  }
+
+  const clear = (outletId: number) => {
+    delete viewStacks[outletId];
   }
 
   const getViewStack = (outletId: number) => {
@@ -42,24 +48,40 @@ export const createViewStacks = () => {
   }
 
   const findViewItemByPath = (path: string, outletId?: number): ViewItem | undefined => {
+    const matchView = (viewItem: ViewItem) => {
+      const pathname = path;
+      const viewItemPath = viewItem.matchedRoute.path;
+
+      const regexp = pathToRegexp(viewItemPath, [], {
+        end: false,
+        strict: false,
+        sensitive: false
+      });
+      return (regexp.exec(pathname)) ? viewItem : undefined;
+    }
+
     if (outletId) {
       const stack = viewStacks[outletId];
       if (!stack) return undefined;
-      return findViewItemInStack(path, stack);
+
+      const quickMatch = findViewItemInStack(path, stack);
+      if (quickMatch) return quickMatch;
+
+      const match = stack.find(matchView);
+      if (match) return match;
     }
 
     for (let outletId in viewStacks) {
       const stack = viewStacks[outletId];
       const viewItem = findViewItemInStack(path, stack);
-
       if (viewItem) {
-        return viewItem;
+          return viewItem;
       }
     }
     return undefined;
   }
 
-  const createViewItem = (outletId: number, vueComponent: any, matchedRoute: any, routeInfo: RouteInfo, ionPage?: HTMLElement): ViewItem => {
+  const createViewItem = (outletId: number, vueComponent: any, matchedRoute: RouteLocationMatched, routeInfo: RouteInfo, ionPage?: HTMLElement): ViewItem => {
     return {
       id: generateId('viewItem'),
       pathname: routeInfo.pathname,
@@ -100,6 +122,7 @@ export const createViewStacks = () => {
   }
 
   return {
+    clear,
     addTabsPrefix,
     hasTabsPrefix,
     findViewItemByRouteInfo,

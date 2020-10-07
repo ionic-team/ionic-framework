@@ -1,4 +1,4 @@
-describe.only('Navigation', () => {
+describe('Navigation', () => {
 
  /*
  // TODO move these to separate describe block
