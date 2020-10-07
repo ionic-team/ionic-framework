@@ -282,3 +282,14 @@
 :host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
   color: $label-md-text-color-focused;
 }
+
+// Material Design Inputs: Highlight Color
+// --------------------------------------------------
+
+:host(.ion-color) {
+  --highlight-color-focused: #{current-color(contrast)};
+}
+
+:host(.item-label-color) {
+  --highlight-color-focused: #{current-color(base)};
+}
