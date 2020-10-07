@@ -164,8 +164,6 @@ export const IonRouterOutlet = defineComponent({
 
       if (enteringViewItem === leavingViewItem) return;
 
-      if (enteringViewItem === leavingViewItem) return;
-
       fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_WILL_ENTER);
 
       if (leavingViewItem) {
@@ -173,8 +171,6 @@ export const IonRouterOutlet = defineComponent({
         const leavingEl = leavingViewItem.ionPageElement;
 
         fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_WILL_LEAVE);
-
-        enteringEl.classList.remove('ion-page-hidden');
 
         /**
         * If we are going back from a page that
@@ -199,7 +195,7 @@ export const IonRouterOutlet = defineComponent({
           enteringEl,
           leavingEl,
           routerDirection,
-          routerDirection === 'forward',
+          !!routeInfo.pushedByRoute,
           false,
           animationBuilder
         );

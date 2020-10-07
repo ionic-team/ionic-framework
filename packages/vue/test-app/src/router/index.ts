@@ -5,11 +5,6 @@ import Home from '../views/Home.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/home'
-  },
-  {
-    path: '/home',
-    name: 'Home',
     component: Home
   },
   {
@@ -28,9 +23,17 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Slides.vue')
   },
   {
+    path: '/default-href',
+    component: () => import('@/views/DefaultHref.vue')
+  },
+  {
     path: '/navigation',
     name: 'Navigation',
     component: () => import('@/views/Navigation.vue')
+  },
+  {
+    path: '/navigation/child',
+    component: () => import('@/views/NavigationChild.vue')
   },
   {
     path: '/nested',
@@ -57,7 +60,17 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'tab1',
-        component: () => import('@/views/Tab1.vue')
+        component: () => import('@/views/Tab1.vue'),
+        children: [
+          {
+            path: 'child-one',
+            component: () => import('@/views/Tab1ChildOne.vue')
+          },
+          {
+            path: 'child-two',
+            component: () => import('@/views/Tab1ChildTwo.vue')
+          }
+        ]
       },
       {
         path: 'tab2',
