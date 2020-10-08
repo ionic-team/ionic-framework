@@ -130,22 +130,6 @@ noReproduction:
   lock: true
   dryRun: false
 
-labelPullRequest:
-  labels:
-    - label: "package: angular"
-      branch: master
-      path: ^angular
-    - label: "package: core"
-      branch: master
-      path: ^core
-    - label: "package: react"
-      branch: master
-      path: ^react
-    - label: "package: vue"
-      branch: master
-      path: ^vue
-  dryRun: false
-
 wrongRepo:
   repos:
     - label: "ionitron: capacitor"
