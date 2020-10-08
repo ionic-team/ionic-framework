@@ -368,6 +368,7 @@ export const IonItemSliding = /*@__PURE__*/ defineContainer<JSX.IonItemSliding>(
 export const IonLabel = /*@__PURE__*/ defineContainer<JSX.IonLabel>('ion-label', [
   'color',
   'position',
+  'ionColor',
   'ionStyle'
 ]);
 
