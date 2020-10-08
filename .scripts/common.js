@@ -10,11 +10,11 @@ const rootDir = path.join(__dirname, '../');
 
 const packages = [
   'core',
-  //'docs',
-  //'angular',
-  //'packages/react',
-  //'packages/react-router',
-  //'packages/angular-server',
+  'docs',
+  'angular',
+  'packages/react',
+  'packages/react-router',
+  'packages/angular-server',
   'packages/vue',
   'packages/vue-router'
 ];
@@ -44,7 +44,7 @@ async function askNpmTag(version) {
       type: 'list',
       name: 'npmTag',
       message: 'Select npm tag or specify a new tag',
-      choices: ['latest', 'next', 'v4-lts', 'beta']
+      choices: ['latest', 'next', 'v4-lts']
         .concat([
           new inquirer.Separator(),
           {
