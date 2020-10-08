@@ -86,10 +86,10 @@ function publishGit(tasks, version, changelog, npmTag) {
       title: 'Push tags to remove',
       task: () => execa('git', ['push', '--follow-tags'], { cwd: common.rootDir })
     },
-    /*{
+    {
       title: 'Publish Github release',
       task: () => publishGithub(version, gitTag, changelog, npmTag)
-    }*/
+    }
   );
 }
 
