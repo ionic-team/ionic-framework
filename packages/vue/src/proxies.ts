@@ -8,9 +8,6 @@ import { JSX } from '@ionic/core';
 
 
 
-export const IonApp = /*@__PURE__*/ defineContainer<JSX.IonApp>('ion-app');
-
-
 export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar');
 
 
