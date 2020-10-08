@@ -1,62 +1,70 @@
 <template>
-  <ion-page data-pageid="navigation">
+  <ion-page data-pageid="routing">
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons>
           <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>Navigation</ion-title>
+        <ion-title>Routing</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Navigation</ion-title>
+          <ion-title size="large">Routing</ion-title>
         </ion-toolbar>
       </ion-header>
 
-      <div class="ion-padding">
-        <ion-button expand="block" @click="openModal" id="open-nav-modal">Open Modal</ion-button>
-      </div>
+      <ion-item button @click="setRouteParams" id="route-params">
+        <ion-label>Set Route Parameters</ion-label>
+      </ion-item>
+
+      <ion-item button router-link="/routing/child" id="child">
+        <ion-label>Go to Child Page</ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
 import {
-  IonButton,
   IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
+  IonItem,
+  IonLabel,
   IonPage,
   IonTitle,
-  IonToolbar,
-  modalController
+  IonToolbar
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import Nav from '@/components/Nav.vue';
+import { useRouter } from 'vue-router';
+
 export default defineComponent({
   components: {
-    IonButton,
     IonBackButton,
     IonButtons,
     IonContent,
     IonHeader,
+    IonItem,
+    IonLabel,
     IonPage,
     IonTitle,
     IonToolbar
   },
   setup() {
-    const openModal = async () => {
-      const modal = await modalController.create({
-        component: Nav
+    const router = useRouter();
+    const setRouteParams = () => {
+      router.push({
+        query: {
+          search: 'liamwashere'
+        }
       });
-
-      await modal.present();
     }
-    return { openModal }
+
+    return { setRouteParams }
   }
 });
 </script>
