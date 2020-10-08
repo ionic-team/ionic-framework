@@ -38,7 +38,7 @@
   "scripts": {
     "dev": "rollup -c",
     "watch": "rollup -c -w",
-    "build": "npm run clean && NODE_ENV=production rollup -c --configProd",
+    "build": "npm run clean && rollup -c --configProd",
     "clean": "node scripts/clean.js",
     "lint": "tslint --project .",
     "lint.fix": "tslint --project . --fix",
