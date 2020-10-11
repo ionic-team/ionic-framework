@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail } from '../../interface';
@@ -20,7 +20,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   shadow: true
 })
 export class Radio implements ComponentInterface {
-
+  private buttonEl?: HTMLButtonElement;
   private inputId = `ion-rb-${radioButtonIds++}`;
   private radioGroup: HTMLIonRadioGroupElement | null = null;
 
@@ -30,6 +30,12 @@ export class Radio implements ComponentInterface {
    * If `true`, the radio is selected.
    */
   @State() checked = false;
+
+  /**
+   * The tabindex of the radio button.
+   * @internal
+   */
+  @State() buttonTabindex = -1;
 
   /**
    * The color to use from your application's color palette.
@@ -68,6 +74,20 @@ export class Radio implements ComponentInterface {
    * Emitted when the radio button loses focus.
    */
   @Event() ionBlur!: EventEmitter<void>;
+
+  /** @internal */
+  @Method()
+  async setFocus() {
+    if (this.buttonEl) {
+      this.buttonEl.focus();
+    }
+  }
+
+  /** @internal */
+  @Method()
+  async setButtonTabindex(value: number) {
+    this.buttonTabindex = value;
+  }
 
   connectedCallback() {
     if (this.value === undefined) {
@@ -117,7 +137,7 @@ export class Radio implements ComponentInterface {
   }
 
   render() {
-    const { inputId, disabled, checked, color, el } = this;
+    const { inputId, disabled, checked, color, el, buttonTabindex } = this;
     const mode = getIonMode(this);
     const labelId = inputId + '-lbl';
     const label = findItemLabel(el);
@@ -142,10 +162,12 @@ export class Radio implements ComponentInterface {
           <div class="radio-inner" part="mark" />
         </div>
         <button
+          ref={btnEl => this.buttonEl = btnEl}
           type="button"
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           disabled={disabled}
+          tabindex={buttonTabindex}
         >
         </button>
       </Host>
