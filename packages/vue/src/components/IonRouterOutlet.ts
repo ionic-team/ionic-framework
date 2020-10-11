@@ -24,7 +24,7 @@ export const IonRouterOutlet = defineComponent({
     // TODO types
     let tabsPrefix: string | undefined;
     const matchedRouteRef: any = computed(() => {
-      const matchedRoute = route.matched[depth];
+      const matchedRoute = route?.matched[depth];
 
       if (attrs.tabs && !tabsPrefix) {
           tabsPrefix = route.matched[0].path;
@@ -164,6 +164,7 @@ export const IonRouterOutlet = defineComponent({
 
       if (enteringViewItem === leavingViewItem) return;
 
+      console.log('FIRE!');
       fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_WILL_ENTER);
 
       if (leavingViewItem) {
@@ -248,6 +249,7 @@ export const IonRouterOutlet = defineComponent({
 
       if (!enteringViewItem.mount) {
         enteringViewItem.mount = true;
+        console.log(enteringViewItem);
         enteringViewItem.vueComponent.components.IonPage.mounted = function () {
           viewStacks.registerIonPage(enteringViewItem, this.$refs.ionPage);
           handlePageTransition();
@@ -272,6 +274,7 @@ export const IonRouterOutlet = defineComponent({
   },
   render() {
     const { components } = this;
+    console.log(components);
 
     return h(
       'ion-router-outlet',
