@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { SelectPopoverOption } from '../../interface';
@@ -17,8 +17,6 @@ import { getClassMap } from '../../utils/theme';
   scoped: true
 })
 export class SelectPopover implements ComponentInterface {
-  @Element() el!: HTMLIonSelectPopoverElement;
-
   /**
    * The header text of the popover
    */
@@ -92,7 +90,7 @@ export class SelectPopover implements ComponentInterface {
     if (multiple) {
       // this is a popover with checkboxes (multiple value select)
       // return an array of all the checked values
-      return options.filter(i => i.checked).map(i => i.value);
+      return options.filter(o => o.checked).map(o => o.value);
     }
 
     // this is a popover with radio buttons (single value select)
@@ -134,11 +132,10 @@ export class SelectPopover implements ComponentInterface {
   }
 
   renderRadioOptions(options: SelectPopoverOption[]) {
-    const checkedOption = options.find(o => o.checked);
-    const checkedValue = checkedOption ? checkedOption.value : undefined;
+    const checked = options.filter(o => o.checked).map(o => o.value);
 
     return (
-      <ion-radio-group value={checkedValue}>
+      <ion-radio-group value={checked}>
         {options.map(option =>
           <ion-item class={getClassMap(option.cssClass)}>
             <ion-label>
