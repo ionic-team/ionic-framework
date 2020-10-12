@@ -8,7 +8,8 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "start-server-and-test serve http://localhost:8080 cypress",
     "lint": "vue-cli-service lint",
-    "cypress": "node_modules/.bin/cypress run --headless --browser chrome"
+    "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
+    "sync": "sh ./scripts/sync.sh"
   },
   "dependencies": {
     "@ionic/vue": "5.4.0-dev.202010091911.bfc0b25",
