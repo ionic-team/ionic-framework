@@ -1,4 +1,4 @@
-# Copy angular dist
+# Copy ionic vue dist
 rm -rf node_modules/@ionic/vue/dist node_modules/@ionic/vue/css
 cp -a ../dist node_modules/@ionic/vue/dist
 cp -a ../css node_modules/@ionic/vue/css
