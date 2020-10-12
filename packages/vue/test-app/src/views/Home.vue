@@ -35,6 +35,9 @@
         <ion-item router-link="/tabs" id="tabs">
           <ion-label>Tabs</ion-label>
         </ion-item>
+        <ion-item router-link="/tabs-alt" id="tab-secondary">
+          <ion-label>Tabs Secondary</ion-label>
+        </ion-item>
       </ion-list>
 
     </ion-content>

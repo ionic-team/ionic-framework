@@ -7,13 +7,13 @@ describe('Nested', () => {
     cy.ionPageVisible('nestedchild');
   });
 
-  it.skip('should go to second page', () => {
+  it('should go to second page', () => {
     cy.get('#nested-child-two').click();
     cy.ionPageVisible('nestedchildtwo');
-    cy.ionPageInvisible('nestedchild');
+    cy.ionPageHidden('nestedchild');
   });
 
-  it.skip('should go back to first page', () => {
+  it('should go back to first page', () => {
     cy.get('#nested-child-two').click();
     cy.ionBackClick('nestedchildtwo');
     cy.ionPageVisible('nestedchild');

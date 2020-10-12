@@ -20,6 +20,9 @@
       <ion-item router-link="tab1/child-one" id="child-one">
         <ion-label>Go to Tab 1 Child 1</ion-label>
       </ion-item>
+      <ion-item router-link="/nested" id="nested">
+        <ion-label>Go to Nested Outlet</ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>

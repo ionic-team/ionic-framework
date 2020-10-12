@@ -19,16 +19,8 @@ export const IonRouterOutlet = defineComponent({
   setup(_, { attrs }) {
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
-
-    // TODO types
-    let tabsPrefix: string | undefined;
     const matchedRouteRef: any = computed(() => {
       const matchedRoute = route.matched[depth];
-
-      if (attrs.tabs && !tabsPrefix) {
-          tabsPrefix = route.matched[0].path;
-          viewStacks.addTabsPrefix(tabsPrefix);
-      }
 
       if (matchedRoute && attrs.tabs && route.matched[depth + 1]) {
         return route.matched[route.matched.length - 1];
@@ -253,19 +245,27 @@ export const IonRouterOutlet = defineComponent({
     }
 
     // TODO types
+    let parentOutletPath: string;
     const setupViewItem = (matchedRouteRef: any) => {
-      if (!matchedRouteRef.value) {
-        return;
+      if (!parentOutletPath) {
+        parentOutletPath = route.matched[0].path;
+      }
+
+      if (
+        !matchedRouteRef.value ||
+        (route.matched[0].path !== parentOutletPath && id !== '1')
+      ) {
+          return;
       }
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
-      const hasTabsPrefix = viewStacks.hasTabsPrefix(currentRoute.pathname)
-      const isLastPathTabs = viewStacks.hasTabsPrefix(currentRoute.lastPathname);
-      if (hasTabsPrefix && isLastPathTabs && !attrs.tabs) { return; }
-
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
 
       if (!enteringViewItem) {
+        if (viewStacks.findViewItemByMatchedRoute(matchedRouteRef.value, id)) {
+          return;
+        }
+
         enteringViewItem = viewStacks.createViewItem(id, matchedRouteRef.value.components.default, matchedRouteRef.value, currentRoute);
         viewStacks.add(enteringViewItem);
       }

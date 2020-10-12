@@ -81,6 +81,38 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Tab3.vue')
       }
     ]
+  },
+  {
+    path: '/tabs-alt/',
+    component: () => import('@/views/Tabs.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/tabs-alt/tab1'
+      },
+      {
+        path: 'tab1',
+        component: () => import('@/views/Tab1.vue'),
+        children: [
+          {
+            path: 'child-one',
+            component: () => import('@/views/Tab1ChildOne.vue')
+          },
+          {
+            path: 'child-two',
+            component: () => import('@/views/Tab1ChildTwo.vue')
+          }
+        ]
+      },
+      {
+        path: 'tab2',
+        component: () => import('@/views/Tab2.vue')
+      },
+      {
+        path: 'tab3',
+        component: () => import('@/views/Tab3.vue')
+      }
+    ]
   }
 ]
 
