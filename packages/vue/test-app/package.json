@@ -11,8 +11,8 @@
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome"
   },
   "dependencies": {
-    "@ionic/vue": "5.4.0-dev.202010081632.d371af4",
-    "@ionic/vue-router": "5.4.0-dev.202010081632.d371af4",
+    "@ionic/vue": "5.4.0-dev.202010091911.bfc0b25",
+    "@ionic/vue-router": "5.4.0-dev.202010091911.bfc0b25",
     "core-js": "^3.6.5",
     "vue": "^3.0.0-0",
     "vue-router": "^4.0.0-0"

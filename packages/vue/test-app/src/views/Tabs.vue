@@ -1,7 +1,7 @@
 <template>
   <ion-page data-pageid="tabs">
     <ion-content>
-      <ion-tabs>
+      <ion-tabs id="tabs">
         <ion-tab-bar slot="bottom">
           <ion-tab-button tab="tab1" href="/tabs/tab1">
             <ion-icon :icon="triangle" />
