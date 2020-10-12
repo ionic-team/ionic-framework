@@ -27,13 +27,16 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/DefaultHref.vue')
   },
   {
-    path: '/navigation',
-    name: 'Navigation',
-    component: () => import('@/views/Navigation.vue')
+    path: '/routing',
+    component: () => import('@/views/Routing.vue')
   },
   {
-    path: '/navigation/child',
-    component: () => import('@/views/NavigationChild.vue')
+    path: '/routing/child',
+    component: () => import('@/views/RoutingChild.vue')
+  },
+  {
+    path: '/navigation',
+    component: () => import('@/views/Navigation.vue')
   },
   {
     path: '/nested',
@@ -81,7 +84,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Tab3.vue')
       }
     ]
-  }
+  },
 ]
 
 const router = createRouter({
