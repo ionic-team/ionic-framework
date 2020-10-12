@@ -55,9 +55,9 @@ export class SelectPopover implements ComponentInterface {
    * of the selected option(s) and return it in the option
    * handler
    */
-  private async callOptionHandler(ev: any) {
+  private callOptionHandler(ev: any) {
     const { options } = this;
-    const option = await options.find(o => this.getValue(o.value) === ev.target.value);
+    const option = options.find(o => this.getValue(o.value) === ev.target.value);
 
     const values = this.getValues(ev);
 
