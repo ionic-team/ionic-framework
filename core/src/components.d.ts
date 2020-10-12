@@ -2154,19 +2154,23 @@ export namespace Components {
     }
     interface IonSelectPopover {
         /**
-          * Header text for the popover
+          * The header text of the popover
          */
         "header"?: string;
         /**
-          * Text for popover body
+          * The text content of the popover body
          */
         "message"?: string;
         /**
-          * Array of options for the popover
+          * If true, the select accepts multiple values
+         */
+        "multiple"?: boolean;
+        /**
+          * An array of options for the popover
          */
         "options": SelectPopoverOption[];
         /**
-          * Subheader text for the popover
+          * The subheader text of the popover
          */
         "subHeader"?: string;
     }
@@ -5475,19 +5479,23 @@ declare namespace LocalJSX {
     }
     interface IonSelectPopover {
         /**
-          * Header text for the popover
+          * The header text of the popover
          */
         "header"?: string;
         /**
-          * Text for popover body
+          * The text content of the popover body
          */
         "message"?: string;
         /**
-          * Array of options for the popover
+          * If true, the select accepts multiple values
+         */
+        "multiple"?: boolean;
+        /**
+          * An array of options for the popover
          */
         "options"?: SelectPopoverOption[];
         /**
-          * Subheader text for the popover
+          * The subheader text of the popover
          */
         "subHeader"?: string;
     }

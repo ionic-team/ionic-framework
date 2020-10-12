@@ -183,21 +183,21 @@ export class Select implements ComponentInterface {
 
   private createOverlay(ev?: UIEvent): Promise<OverlaySelect> {
     let selectInterface = this.interface;
-    if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
+    if (selectInterface === 'action-sheet' && this.multiple) {
       console.warn(`Select interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`);
       selectInterface = 'alert';
     }
 
     if (selectInterface === 'popover' && !ev) {
-      console.warn('Select interface cannot be a "popover" without passing an event. Using the "alert" interface instead.');
+      console.warn(`Select interface cannot be a "${selectInterface}" without passing an event. Using the "alert" interface instead.`);
       selectInterface = 'alert';
     }
 
-    if (selectInterface === 'popover') {
-      return this.openPopover(ev!);
-    }
     if (selectInterface === 'action-sheet') {
       return this.openActionSheet();
+    }
+    if (selectInterface === 'popover') {
+      return this.openPopover(ev!);
     }
     return this.openAlert();
   }
@@ -291,9 +291,11 @@ export class Select implements ComponentInterface {
         value,
         checked: isOptionSelected(value, selectValue, this.compareWith),
         disabled: option.disabled,
-        handler: () => {
-          this.value = value;
-          this.close();
+        handler: (selected: any) => {
+          this.value = selected;
+          if (!this.multiple) {
+            this.close();
+          }
         }
       };
     });
@@ -304,6 +306,7 @@ export class Select implements ComponentInterface {
   private async openPopover(ev: UIEvent) {
     const interfaceOptions = this.interfaceOptions;
     const mode = getIonMode(this);
+    const multiple = this.multiple;
     const value = this.value;
     const popoverOpts: PopoverOptions = {
       mode,
@@ -316,6 +319,7 @@ export class Select implements ComponentInterface {
         header: interfaceOptions.header,
         subHeader: interfaceOptions.subHeader,
         message: interfaceOptions.message,
+        multiple,
         value,
         options: this.createPopoverOptions(this.childOpts, value)
       }

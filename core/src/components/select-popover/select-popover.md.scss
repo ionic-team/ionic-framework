@@ -1,0 +1,13 @@
+@import "./select-popover";
+
+:host ion-list {
+  padding: 0;
+}
+
+// :host ion-list ion-radio {
+//   opacity: 0;
+// }
+
+:host ion-item {
+  --inner-border-width: 0;
+}
