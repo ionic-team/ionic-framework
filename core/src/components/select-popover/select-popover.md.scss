@@ -1,13 +1,26 @@
 @import "./select-popover";
+@import "./select-popover.md.vars";
 
 :host ion-list {
-  padding: 0;
+  @include padding(0);
 }
 
-// :host ion-list ion-radio {
-//   opacity: 0;
-// }
+:host ion-list ion-radio {
+  opacity: 0;
+}
 
 :host ion-item {
   --inner-border-width: 0;
+}
+
+:host .item-radio-checked {
+  --background: rgba(0, 0, 0, .12);
+  --color: #{ion-color(primary, base)};
+}
+
+:host .item-checkbox-checked {
+  --background-activated: #{$item-md-color};
+  --background-focused: #{$item-md-color};
+  --background-hover: #{$item-md-color};
+  --color: #{ion-color(primary, base)};
 }
