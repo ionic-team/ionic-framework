@@ -14,4 +14,4 @@ describe('Navigation', () => {
 
     cy.get('#nav-child-content').should('have.text', 'Custom Title');
   });
-})
+});

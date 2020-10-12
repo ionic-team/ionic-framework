@@ -35,6 +35,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/RoutingChild.vue')
   },
   {
+    path: '/navigation',
+    component: () => import('@/views/Navigation.vue')
+  },
+  {
     path: '/nested',
     name: 'RouterOutlet',
     component: () => import('@/views/RouterOutlet.vue'),
@@ -80,10 +84,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Tab3.vue')
       }
     ]
-  },
-  {
-    path: '/navigation',
-    component: () => import('@/views/Navigation.vue')
   },
 ]
 

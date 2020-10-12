@@ -36,7 +36,7 @@ export default defineComponent({
   },
   methods: {
     pushPage: function() {
-      const ionNav = document.querySelector('ion-nav');
+      const ionNav = document.querySelector('ion-nav') as any;
       ionNav.push(NavChild, { title: 'Custom Title' });
     },
     dismiss: async function() {

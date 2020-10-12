@@ -10,14 +10,13 @@ import {
   InjectionKey
 } from 'vue';
 import { AnimationBuilder } from '@ionic/core';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { fireLifecycle, generateId, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../utils';
 
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
   name: 'IonRouterOutlet',
   setup(_, { attrs }) {
-    const vueRouter = useRouter();
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
 
@@ -57,13 +56,22 @@ export const IonRouterOutlet = defineComponent({
 
     const canStart = () => {
       const stack = viewStacks.getViewStack(id);
-      return stack && stack.length > 1;
+      if (!stack || stack.length <= 1) return false;
+
+      /**
+       * We only want to outlet of the entering view
+       * to respond to this gesture, so check
+       * to make sure the view is in the outlet we want.
+       */
+      const routeInfo = ionRouter.getCurrentRouteInfo();
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
+
+      return !!enteringViewItem;
     }
     const onStart = async () => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
       const { routerAnimation } = routeInfo;
-      const items = viewStacks.getViewStack(id);
-      const enteringViewItem = items[items.length - 2];
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
       const leavingViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
 
       if (leavingViewItem) {
@@ -105,7 +113,23 @@ export const IonRouterOutlet = defineComponent({
     const onEnd = (shouldContinue: boolean) => {
       if (shouldContinue) {
         skipTransition = true;
-        vueRouter.back();
+
+        /**
+         * Use the same logic as clicking
+         * ion-back-button to determine where
+         * to go back to.
+         */
+        ionRouter.handleNavigateBack();
+      } else {
+        /**
+         * In the event that the swipe
+         * gesture was aborted, we should
+         * re-hide the page that was going to enter.
+         */
+        const routeInfo = ionRouter.getCurrentRouteInfo();
+        const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
+        enteringViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+        enteringViewItem.ionPageElement.classList.add('ion-page-hidden');
       }
     }
 

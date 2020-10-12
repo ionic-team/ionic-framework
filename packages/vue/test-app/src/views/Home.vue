@@ -23,6 +23,9 @@
         <ion-item router-link="/slides">
           <ion-label>Slides</ion-label>
         </ion-item>
+        <ion-item router-link="/navigation" id="navigation">
+          <ion-label>Navigation</ion-label>
+        </ion-item>
         <ion-item router-link="/routing" id="routing">
           <ion-label>Routing</ion-label>
         </ion-item>
@@ -34,9 +37,6 @@
         </ion-item>
         <ion-item router-link="/tabs" id="tabs">
           <ion-label>Tabs</ion-label>
-        </ion-item>
-        <ion-item router-link="/navigation" id="nav">
-          <ion-label>Nav</ion-label>
         </ion-item>
       </ion-list>
 
