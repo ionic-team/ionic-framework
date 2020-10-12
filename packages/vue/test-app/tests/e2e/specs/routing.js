@@ -1,28 +1,28 @@
 describe('Routing', () => {
   it('should go to sibling page', () => {
     cy.visit('http://localhost:8080');
-    cy.get('ion-item#navigation').click();
+    cy.get('ion-item#routing').click();
 
     cy.wait(500)
 
-    cy.ionPageVisible('navigation')
+    cy.ionPageVisible('routing')
     cy.ionPageHidden('home')
   });
 
   it('should set query params and keep view in stack', () => {
-    cy.visit('http://localhost:8080/navigation');
+    cy.visit('http://localhost:8080/routing');
     cy.get('#route-params').click();
-    cy.ionPageVisible('navigation');
+    cy.ionPageVisible('routing');
   });
 
   it('should go back home', () => {
     cy.visit('http://localhost:8080');
-    cy.get('ion-item#navigation').click();
+    cy.get('ion-item#routing').click();
 
-    cy.ionBackClick('navigation');
+    cy.ionBackClick('routing');
 
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('navigation');
+    cy.ionPageDoesNotExist('routing');
   });
 
   it('should go back home with default href', () => {
@@ -37,15 +37,15 @@ describe('Routing', () => {
   it('should show back button', () => {
     cy.visit('http://localhost:8080');
 
-    cy.get('#navigation').click();
+    cy.get('#routing').click();
     cy.get('#child').click();
 
-    cy.ionBackClick('navigationchild');
-    cy.ionBackClick('navigation');
+    cy.ionBackClick('routingchild');
+    cy.ionBackClick('routing');
 
     cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('navigation');
-    cy.ionPageDoesNotExist('navigationchild')
+    cy.ionPageDoesNotExist('routing');
+    cy.ionPageDoesNotExist('routingchild')
   })
 });
 
@@ -53,15 +53,15 @@ describe('Routing - Swipe to Go Back', () => {
   beforeEach(() => {
     cy.viewport(320, 568);
     cy.visit('http://localhost:8080?ionic:mode=ios');
-    cy.get('#navigation').click();
+    cy.get('#routing').click();
     cy.ionPageHidden('home');
-    cy.ionPageVisible('navigation')
+    cy.ionPageVisible('routing')
   });
 
   it('should swipe and abort', () => {
     cy.ionSwipeToGoBack();
     cy.ionPageHidden('home');
-    cy.ionPageVisible('navigation');
+    cy.ionPageVisible('routing');
   });
 
   it('should swipe and complete', () => {
