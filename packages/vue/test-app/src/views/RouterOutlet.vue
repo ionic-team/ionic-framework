@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page data-pageid="routeroutlet">
     <ion-content>
       <ion-router-outlet></ion-router-outlet>
     </ion-content>

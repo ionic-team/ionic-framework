@@ -134,3 +134,30 @@ describe('Tabs - Swipe to Go Back', () => {
     cy.ionPageVisible('home');
   });
 })
+
+describe('Multi Tabs', () => {
+  it('should navigate to multiple tabs instances', () => {
+    cy.visit('http://localhost:8080/tabs')
+
+    cy.get('#tabs-secondary').click();
+    cy.ionPageHidden('tabs');
+    cy.ionPageVisible('tabs-secondary');
+
+    cy.get('[data-pageid="tab1-secondary"] #tabs-primary').click();
+    cy.ionPageHidden('tabs-secondary');
+    cy.ionPageVisible('tabs');
+
+    cy.ionBackClick('tab1');
+    cy.ionPageVisible('tabs-secondary');
+    cy.ionPageDoesNotExist('tabs');
+
+    cy.ionBackClick('tab1-secondary');
+    cy.ionPageVisible('tabs');
+    cy.ionPageDoesNotExist('tabs-secondary');
+
+    cy.ionBackClick('tab1');
+
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('tabs');
+  });
+})

@@ -83,34 +83,24 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
-    path: '/tabs-alt/',
-    component: () => import('@/views/Tabs.vue'),
+    path: '/tabs-secondary/',
+    component: () => import('@/views/TabsSecondary.vue'),
     children: [
       {
         path: '',
-        redirect: '/tabs-alt/tab1'
+        redirect: '/tabs-secondary/tab1'
       },
       {
         path: 'tab1',
-        component: () => import('@/views/Tab1.vue'),
-        children: [
-          {
-            path: 'child-one',
-            component: () => import('@/views/Tab1ChildOne.vue')
-          },
-          {
-            path: 'child-two',
-            component: () => import('@/views/Tab1ChildTwo.vue')
-          }
-        ]
+        component: () => import('@/views/Tab1Secondary.vue')
       },
       {
         path: 'tab2',
-        component: () => import('@/views/Tab2.vue')
+        component: () => import('@/views/Tab2Secondary.vue')
       },
       {
         path: 'tab3',
-        component: () => import('@/views/Tab3.vue')
+        component: () => import('@/views/Tab3Secondary.vue')
       }
     ]
   }

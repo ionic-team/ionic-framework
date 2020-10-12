@@ -18,4 +18,18 @@ describe('Nested', () => {
     cy.ionBackClick('nestedchildtwo');
     cy.ionPageVisible('nestedchild');
   });
+
+  it('should go navigate across nested outlet contexts', () => {
+    cy.ionPageVisible('nestedchild');
+
+    cy.get('#nested-tabs').click();
+
+    cy.ionPageHidden('routeroutlet');
+    cy.ionPageVisible('tab1');
+
+    cy.ionBackClick('tab1');
+
+    cy.ionPageDoesNotExist('tab1');
+    cy.ionPageVisible('routeroutlet');
+  });
 })
