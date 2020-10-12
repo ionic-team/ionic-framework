@@ -90,6 +90,7 @@
 
       <ion-modal
         :is-open="isModalOpen"
+        :componentProps="overlayProps"
         @onDidDismiss="setModalRef(false)"
       >
         <ModalContent></ModalContent>
@@ -97,6 +98,7 @@
 
       <ion-popover
         :is-open="isPopoverOpen"
+        :componentProps="overlayProps"
         :event="popoverEvent"
         @onDidDismiss="setPopoverRef(false)"
       >
@@ -231,6 +233,10 @@ export default defineComponent({
       }
     ]
 
+    const overlayProps = {
+      title: 'Custom Title'
+    }
+
     const openActionSheet = async () => {
       const actionSheet = await actionSheetController.create({ buttons: actionSheetButtons });
       await actionSheet.present();
@@ -252,12 +258,12 @@ export default defineComponent({
     }
 
     const openModal = async () => {
-      const modal = await modalController.create({ component: ModalContent });
+      const modal = await modalController.create({ component: ModalContent, componentProps: overlayProps });
       await modal.present();
     }
 
     const openPopover = async (event: Event) => {
-      const popover = await popoverController.create({ component: PopoverContent, event });
+      const popover = await popoverController.create({ component: PopoverContent, event, componentProps: overlayProps });
       await popover.present();
     }
 
@@ -309,6 +315,7 @@ export default defineComponent({
     }
 
     return {
+      overlayProps,
       present,
       componentType,
       presentationType,

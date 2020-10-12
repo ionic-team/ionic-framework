@@ -16,8 +16,6 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
 
   const Container = defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
     const overlay = ref();
-    const content = ref();
-
     const onVnodeMounted = async () => {
       const isOpen = props.isOpen;
       isOpen && (await present(props))
@@ -39,7 +37,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
     }
 
     const present = async (props: Readonly<Props>) => {
-      const component = (slots) ? h('div', { ref: content }, slots) : undefined;
+      const component = slots.default && slots.default()[0];
       overlay.value = await controller.create({
         ...props,
         component
