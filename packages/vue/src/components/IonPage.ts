@@ -6,8 +6,8 @@ export const IonPage = defineComponent({
     isInOutlet: { type: Boolean, default: false }
   },
   setup(props, { attrs, slots }) {
+    const hidePageClass = (props.isInOutlet) ? 'ion-page-invisible' : '';
     return () => {
-      const hidePageClass = (props.isInOutlet) ? 'ion-page-invisible' : '';
       return h(
         'div',
         {
