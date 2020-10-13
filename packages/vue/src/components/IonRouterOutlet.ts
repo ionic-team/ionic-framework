@@ -301,7 +301,7 @@ export const IonRouterOutlet = defineComponent({
       'ion-router-outlet',
       { ref: 'ionRouterOutlet' },
       // TODO types
-      components && components.map((c: any) => h(c.vueComponent, { key: c.pathname }))
+      components && components.map((c: any) => h(c.vueComponent, { key: c.pathname, isInOutlet: true }))
     )
   }
 });
