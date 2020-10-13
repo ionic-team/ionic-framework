@@ -19,16 +19,8 @@ export const IonRouterOutlet = defineComponent({
   setup(_, { attrs }) {
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
-
-    // TODO types
-    let tabsPrefix: string | undefined;
     const matchedRouteRef: any = computed(() => {
       const matchedRoute = route.matched[depth];
-
-      if (attrs.tabs && !tabsPrefix) {
-          tabsPrefix = route.matched[0].path;
-          viewStacks.addTabsPrefix(tabsPrefix);
-      }
 
       if (matchedRoute && attrs.tabs && route.matched[depth + 1]) {
         return route.matched[route.matched.length - 1];
@@ -50,9 +42,10 @@ export const IonRouterOutlet = defineComponent({
 
     let skipTransition = false;
 
-    watch(matchedRouteRef, () => {
-      setupViewItem(matchedRouteRef);
-    });
+    // The base url for this router outlet
+    let parentOutletPath: string;
+
+    watch(matchedRouteRef, () => setupViewItem(matchedRouteRef));
 
     const canStart = () => {
       const stack = viewStacks.getViewStack(id);
@@ -252,20 +245,46 @@ export const IonRouterOutlet = defineComponent({
       components.value = viewStacks.getChildrenToRender(id);
     }
 
-    // TODO types
     const setupViewItem = (matchedRouteRef: any) => {
-      if (!matchedRouteRef.value) {
-        return;
+      const firstMatchedRoute = route.matched[0];
+      if (!parentOutletPath) {
+        parentOutletPath = firstMatchedRoute.path;
+      }
+
+      /**
+       * If no matched route, do not do anything in this outlet.
+       * If there is a match, but it the first matched path
+       * is not the root path for this outlet, then this view
+       * change needs to be rendered in a different outlet.
+       * We also add an exception for when the matchedRouteRef is
+       * equal to the first matched route (i.e. the base router outlet).
+       * This logic is mainly to help nested outlets/multi-tab
+       * setups work better.
+       */
+      if (
+        !matchedRouteRef.value ||
+        (matchedRouteRef.value !== firstMatchedRoute && firstMatchedRoute.path !== parentOutletPath)
+      ) {
+          return;
       }
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
-      const hasTabsPrefix = viewStacks.hasTabsPrefix(currentRoute.pathname)
-      const isLastPathTabs = viewStacks.hasTabsPrefix(currentRoute.lastPathname);
-      if (hasTabsPrefix && isLastPathTabs && !attrs.tabs) { return; }
-
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
 
       if (!enteringViewItem) {
+        /**
+         * If we have no existing entering item, we need
+         * make sure that there is no existing view according to the
+         * matched route rather than what is in the url bar.
+         * This is mainly for tabs when outlet 1 renders ion-tabs
+         * and outlet 2 renders the individual tab view. We don't
+         * want outlet 1 creating a new ion-tabs instance every time
+         * we switch tabs.
+         */
+        if (viewStacks.findViewItemByMatchedRoute(matchedRouteRef.value, id)) {
+          return;
+        }
+
         enteringViewItem = viewStacks.createViewItem(id, matchedRouteRef.value.components.default, matchedRouteRef.value, currentRoute);
         viewStacks.add(enteringViewItem);
       }

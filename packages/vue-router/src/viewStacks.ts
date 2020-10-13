@@ -6,14 +6,6 @@ import {  RouteInfo,
 
 export const createViewStacks = () => {
   let viewStacks: ViewStacks = {};
-  const tabsPrefixes = new Set();
-
-  const addTabsPrefix = (prefix: string) => tabsPrefixes.add(prefix);
-  const hasTabsPrefix = (path: string) => {
-    const values = Array.from(tabsPrefixes.values());
-    const hasPrefix = values.find((v: string) => path.includes(v));
-    return hasPrefix !== undefined;
-  }
 
   const getViewStack = (outletId: number) => {
     return viewStacks[outletId];
@@ -29,6 +21,19 @@ export const createViewStacks = () => {
 
   const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number) => {
     return findViewItemByPath(routeInfo.lastPathname, outletId);
+  }
+
+  const findViewItemByMatchedRoute = (matchedRoute: any, outletId: number): ViewItem | undefined => {
+    const stack = viewStacks[outletId];
+    if (!stack) return undefined;
+
+    return stack.find((viewItem: ViewItem) => {
+      if (viewItem.matchedRoute.path === matchedRoute.path) {
+        return viewItem;
+      }
+
+      return undefined;
+    });
   }
 
   const findViewItemInStack = (path: string, stack: ViewItem[]): ViewItem | undefined => {
@@ -100,9 +105,8 @@ export const createViewStacks = () => {
   }
 
   return {
-    addTabsPrefix,
-    hasTabsPrefix,
     findViewItemByRouteInfo,
+    findViewItemByMatchedRoute,
     findLeavingViewItemByRouteInfo,
     createViewItem,
     getChildrenToRender,
