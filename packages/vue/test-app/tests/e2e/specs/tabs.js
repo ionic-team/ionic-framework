@@ -36,6 +36,21 @@ describe('Tabs', () => {
     cy.get('ion-tab-button#tab-button-tab1').click();
   });
 
+  it('should go to correct tab when going back via browser', () => {
+    cy.visit('http://localhost:8080/tabs')
+
+    cy.get('#child-one').click();
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageVisible('tab2');
+    cy.ionPageHidden('tab1childone');
+
+    cy.go('back');
+
+    cy.ionPageVisible('tab1childone');
+    cy.ionPageHidden('tab1');
+  });
+
   // TODO this does not work
   it.skip('should return to tab root when clicking tab button', () => {
     cy.visit('http://localhost:8080/tabs')

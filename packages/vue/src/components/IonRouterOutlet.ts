@@ -42,9 +42,10 @@ export const IonRouterOutlet = defineComponent({
 
     let skipTransition = false;
 
-    watch(matchedRouteRef, () => {
-      setupViewItem(matchedRouteRef);
-    });
+    // The base url for this router outlet
+    let parentOutletPath: string;
+
+    watch(matchedRouteRef, () => setupViewItem(matchedRouteRef));
 
     const canStart = () => {
       const stack = viewStacks.getViewStack(id);
@@ -244,16 +245,25 @@ export const IonRouterOutlet = defineComponent({
       components.value = viewStacks.getChildrenToRender(id);
     }
 
-    // TODO types
-    let parentOutletPath: string;
     const setupViewItem = (matchedRouteRef: any) => {
+      const firstMatchedRoute = route.matched[0];
       if (!parentOutletPath) {
-        parentOutletPath = route.matched[0].path;
+        parentOutletPath = firstMatchedRoute.path;
       }
 
+      /**
+       * If no matched route, do not do anything in this outlet.
+       * If there is a match, but it the first matched path
+       * is not the root path for this outlet, then this view
+       * change needs to be rendered in a different outlet.
+       * We also add an exception for when the matchedRouteRef is
+       * equal to the first matched route (i.e. the base router outlet).
+       * This logic is mainly to help nested outlets/multi-tab
+       * setups work better.
+       */
       if (
         !matchedRouteRef.value ||
-        (route.matched[0].path !== parentOutletPath && id !== '1')
+        (matchedRouteRef.value !== firstMatchedRoute && firstMatchedRoute.path !== parentOutletPath)
       ) {
           return;
       }
@@ -262,6 +272,15 @@ export const IonRouterOutlet = defineComponent({
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
 
       if (!enteringViewItem) {
+        /**
+         * If we have no existing entering item, we need
+         * make sure that there is no existing view according to the
+         * matched route rather than what is in the url bar.
+         * This is mainly for tabs when outlet 1 renders ion-tabs
+         * and outlet 2 renders the individual tab view. We don't
+         * want outlet 1 creating a new ion-tabs instance every time
+         * we switch tabs.
+         */
         if (viewStacks.findViewItemByMatchedRoute(matchedRouteRef.value, id)) {
           return;
         }
