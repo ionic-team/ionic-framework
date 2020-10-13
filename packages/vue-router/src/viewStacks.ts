@@ -1,5 +1,5 @@
 import { generateId } from './utils';
-const pathToRegexp = require("path-to-regexp");
+import { pathToRegexp } from './regexp';
 import {  RouteInfo,
   ViewItem,
   ViewStacks,
