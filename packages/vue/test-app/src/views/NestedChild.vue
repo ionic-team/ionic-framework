@@ -17,6 +17,7 @@
       </ion-header>
 
       <div class="ion-padding">
+        <ion-button router-link="/tabs/tab1" id="nested-tabs">Tab 1</ion-button>
         <ion-button router-link="/nested/two" id="nested-child-two">Nested Child Two</ion-button>
       </div>
     </ion-content>

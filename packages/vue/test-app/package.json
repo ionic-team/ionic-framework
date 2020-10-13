@@ -12,8 +12,8 @@
     "sync": "sh ./scripts/sync.sh"
   },
   "dependencies": {
-    "@ionic/vue": "5.4.0-dev.202010081857.bfc0b25",
-    "@ionic/vue-router": "5.4.0-dev.202010081857.bfc0b25",
+    "@ionic/vue": "^5.4.0-rc.1",
+    "@ionic/vue-router": "^5.4.0-rc.1",
     "core-js": "^3.6.5",
     "vue": "^3.0.0-0",
     "vue-router": "^4.0.0-0"
