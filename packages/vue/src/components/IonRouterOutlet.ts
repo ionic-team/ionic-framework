@@ -7,7 +7,8 @@ import {
   provide,
   watch,
   shallowRef,
-  InjectionKey
+  InjectionKey,
+  onUnmounted
 } from 'vue';
 import { AnimationBuilder } from '@ionic/core';
 import { useRoute } from 'vue-router';
@@ -306,6 +307,13 @@ export const IonRouterOutlet = defineComponent({
     if (matchedRouteRef.value) {
       setupViewItem(matchedRouteRef);
     }
+
+    /**
+     * Remove stack data for this outlet
+     * when outlet is destroyed otherwise
+     * we will see cached view data.
+     */
+    onUnmounted(() => viewStacks.clear(id));
 
     return {
       id,
