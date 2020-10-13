@@ -3,18 +3,26 @@ import React, { useState } from 'react';
 import { IonPopover, IonButton } from '@ionic/react';
 
 export const PopoverExample: React.FC = () => {
-  const [showPopover, setShowPopover] = useState(false);
+  const [popoverState, setShowPopover] = useState({ showPopover: false, event: undefined });
 
   return (
     <>
       <IonPopover
-        isOpen={showPopover}
         cssClass='my-custom-class'
-        onDidDismiss={e => setShowPopover(false)}
+        event={popoverState.event}
+        isOpen={popoverState.showPopover}
+        onDidDismiss={() => setShowPopover({ showPopover: false, event: undefined })}
       >
         <p>This is popover content</p>
       </IonPopover>
-      <IonButton onClick={() => setShowPopover(true)}>Show Popover</IonButton>
+      <IonButton onClick={
+        (e: any) => {
+          e.persist();
+          setShowPopover({ showPopover: true, event: e })
+        }}
+      >
+        Show Popover
+      </IonButton>
     </>
   );
 };

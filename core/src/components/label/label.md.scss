@@ -38,19 +38,20 @@
   @include margin(0, 0, 0, 0);
 }
 
-:host-context(.item-select).label-floating {
-  @include transform(translate3d(0, 130%, 0));
-}
-
 :host-context(.item-has-focus).label-floating,
 :host-context(.item-has-placeholder).label-floating,
 :host-context(.item-has-value).label-floating {
   @include transform(translateY(50%), scale(.75));
 }
 
-:host-context(.item-has-focus).label-stacked,
-:host-context(.item-has-focus).label-floating {
+:host-context(.item-has-focus).label-stacked:not(.ion-color),
+:host-context(.item-has-focus).label-floating:not(.ion-color) {
   color: $label-md-text-color-focused;
+}
+
+:host-context(.item-has-focus.ion-color).label-stacked:not(.ion-color),
+:host-context(.item-has-focus.ion-color).label-floating:not(.ion-color) {
+  color: #{current-color(contrast)};
 }
 
 

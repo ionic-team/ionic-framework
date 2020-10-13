@@ -8,9 +8,6 @@ import { JSX } from '@ionic/core';
 
 
 
-export const IonApp = /*@__PURE__*/ defineContainer<JSX.IonApp>('ion-app');
-
-
 export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar');
 
 
@@ -368,6 +365,7 @@ export const IonItemSliding = /*@__PURE__*/ defineContainer<JSX.IonItemSliding>(
 export const IonLabel = /*@__PURE__*/ defineContainer<JSX.IonLabel>('ion-label', [
   'color',
   'position',
+  'ionColor',
   'ionStyle'
 ]);
 

@@ -1419,6 +1419,40 @@ export default defineComponent({
 </script>
 ```
 
+Developers can also use this component directly in their template:
+
+```html
+<template>
+  <ion-button @click="setOpen(true)">Show Alert</ion-button>
+  <ion-alert
+    :is-open="isOpenRef"
+    header="Alert"
+    sub-header="Subtitle"
+    message="This is an alert message."
+    css-class="my-custom-class"
+    :buttons="buttons"
+    @onDidDismiss="setOpen(false)"
+  >
+  </ion-alert>
+</template>
+
+<script>
+import { IonAlert, IonButton } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  components: { IonAlert, IonButton },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    const buttons = ['Ok'];
+    
+    return { buttons, isOpenRef, setOpen }
+  }
+});
+</script>
+```
+
 
 
 ## Properties

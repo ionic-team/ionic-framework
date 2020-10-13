@@ -7,14 +7,12 @@ const getActiveElementText = async (page) => {
 
 test('datetime/picker: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/datetime/test/basic?ionic:_testing=true' });
-
   await page.click('#datetime-part');
   await page.waitForSelector('#datetime-part');
 
   let datetime = await page.find('ion-datetime');
 
   expect(datetime).not.toBe(null);
-  await datetime.waitForVisible();
 
   // TODO fix
   await page.waitFor(100);

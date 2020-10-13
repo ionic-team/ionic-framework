@@ -76,6 +76,28 @@ In Angular, the CSS of a specific page is scoped only to elements of that page. 
 ### Javascript
 
 ```javascript
+class PopoverExamplePage extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    this.innerHTML = `
+      <ion-content>
+        <ion-list>
+          <ion-list-header><ion-label>Ionic</ion-label></ion-list-header>
+          <ion-item button><ion-label>Item 0</ion-label></ion-item>
+          <ion-item button><ion-label>Item 1</ion-label></ion-item>
+          <ion-item button><ion-label>Item 2</ion-label></ion-item>
+          <ion-item button><ion-label>Item 3</ion-label></ion-item>
+        </ion-list>
+      </ion-content>
+    `;
+  }
+}
+
+customElements.define('popover-example-page', PopoverExamplePage);
+
 function presentPopover(ev) {
   const popover = Object.assign(document.createElement('ion-popover'), {
     component: 'popover-example-page',
@@ -96,18 +118,26 @@ import React, { useState } from 'react';
 import { IonPopover, IonButton } from '@ionic/react';
 
 export const PopoverExample: React.FC = () => {
-  const [showPopover, setShowPopover] = useState(false);
+  const [popoverState, setShowPopover] = useState({ showPopover: false, event: undefined });
 
   return (
     <>
       <IonPopover
-        isOpen={showPopover}
         cssClass='my-custom-class'
-        onDidDismiss={e => setShowPopover(false)}
+        event={popoverState.event}
+        isOpen={popoverState.showPopover}
+        onDidDismiss={() => setShowPopover({ showPopover: false, event: undefined })}
       >
         <p>This is popover content</p>
       </IonPopover>
-      <IonButton onClick={() => setShowPopover(true)}>Show Popover</IonButton>
+      <IonButton onClick={
+        (e: any) => {
+          e.persist();
+          setShowPopover({ showPopover: true, event: e })
+        }}
+      >
+        Show Popover
+      </IonButton>
     </>
   );
 };
@@ -221,6 +251,42 @@ export default {
     },
   },
 }
+</script>
+```
+
+Developers can also use this component directly in their template:
+
+```html
+<template>
+  <ion-button @click="setOpen(true, $event)">Show Popover</ion-button>
+  <ion-popover
+    :is-open="isOpenRef"
+    css-class="my-custom-class"
+    :event="event"
+    :translucent="true"
+    @onDidDismiss="setOpen(false)"
+  >
+    <Popover></Popover>
+  </ion-popover>
+</template>
+
+<script>
+import { IonButton, IonPopover } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+import Popver from './popover.vue'
+
+export default defineComponent({
+  components: { IonButton, IonPopover, Popover },
+  setup() {
+    const isOpenRef = ref(false);
+    const event = ref();
+    const setOpen = (state: boolean, event?: Event) => {
+      event.value = event; 
+      isOpenRef.value = state;
+    }
+    return { isOpenRef, setOpen, event }
+  }
+});
 </script>
 ```
 
