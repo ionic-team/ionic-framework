@@ -164,15 +164,20 @@ export class BackdropExample {
   </ion-backdrop>
 </template>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { IonBackdrop } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    enableBackdropDismiss = false;
-    showBackdrop = false;
-    shouldPropagate = false;
+export default defineComponent({
+  components: { IonBackdrop },
+  setup() {
+    return {
+      enableBackdropDismiss: true,
+      showBackdrop: true,
+      shouldPropagate: true
+    }
   }
+});
 </script>
 ```
 

@@ -204,6 +204,15 @@
 }
 
 
+// iOS Fixed Labels
+// --------------------------------------------------
+
+:host(.item-label-fixed) ::slotted(ion-select),
+:host(.item-label-fixed) ::slotted(ion-datetime) {
+  --padding-start: 0;
+}
+
+
 // FROM TEXTAREA
 // iOS Stacked & Floating Textarea
 // --------------------------------------------------

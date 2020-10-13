@@ -106,6 +106,15 @@ export class FooterExample {
     </ion-toolbar>
   </ion-footer>
 </template>
+
+<script>
+import { IonContent, IonFooter, IonTitle, IonToolbar } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonContent, IonFooter, IonTitle, IonToolbar }
+});
+</script>
 ```
 
 
