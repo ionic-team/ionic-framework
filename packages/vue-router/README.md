@@ -26,3 +26,6 @@ npm run build
 
 See our [Contributing Guide](https://github.com/ionic-team/ionic-framework/blob/master/.github/CONTRIBUTING.md).
 
+## Need Help?
+
+Post your question on the [Ionic Forum](http://forum.ionicframework.com/).
