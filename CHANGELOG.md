@@ -1,3 +1,27 @@
+# [5.4.0-rc.2](https://github.com/ionic-team/ionic/compare/v5.4.0-rc.1...v5.4.0-rc.2) (2020-10-13)
+
+> This version is dedicated to our upcoming Ionic Vue release.
+
+### Bug Fixes
+
+* **vue:** do not hide page content when using ion-page in non-routing contexts  ([#22302](https://github.com/ionic-team/ionic/issues/22302)) ([fff82d0](https://github.com/ionic-team/ionic/commit/fff82d0bdcd850e7c70947b39d554e88c4cdfd1e)), closes [#22300](https://github.com/ionic-team/ionic/issues/22300)
+* **vue:** going back from tabs page to a non-tabs page now selects correct page ([#22275](https://github.com/ionic-team/ionic/issues/22275)) ([b06ae16](https://github.com/ionic-team/ionic/commit/b06ae165912cbab811fe4a3c35b4e2b3fe0b425b)), closes [#22258](https://github.com/ionic-team/ionic/issues/22258)
+* **vue:** improve swipe to go back reliability ([#22288](https://github.com/ionic-team/ionic/issues/22288)) ([c74fd41](https://github.com/ionic-team/ionic/commit/c74fd4147b57e6b11c22dffdf6355568a763f30a)), closes [#22237](https://github.com/ionic-team/ionic/issues/22237)
+* **vue:** modal, popover, and nav are now created within application context ([#22282](https://github.com/ionic-team/ionic/issues/22282)) ([6026c65](https://github.com/ionic-team/ionic/commit/6026c65b1ae80af0f8604e7a3bcb220153267955)), closes [#22079](https://github.com/ionic-team/ionic/issues/22079)
+* **vue:** pages now render in correct outlet when using multiple nested outlets ([#22301](https://github.com/ionic-team/ionic/issues/22301)) ([52f655c](https://github.com/ionic-team/ionic/commit/52f655c9d40988cac36f88c88f24195b3f64c431)), closes [#22286](https://github.com/ionic-team/ionic/issues/22286)
+
+### Upgrade Steps
+
+```
+npm install @ionic/vue@5.4.0-rc.2 @ionic/vue-router@5.4.0-rc.2 --save-exact
+```
+
+### New to Ionic Vue?
+
+Check out our [Quickstart Guide](https://ionicframework.com/docs/vue/quickstart) to get up and running. Then be sure to check out our [Building Your First App Guide](https://ionicframework.com/docs/vue/your-first-app) to learn how build a cross platform Ionic Vue application from start to finish!
+
+
+
 # [5.4.0-rc.1](https://github.com/ionic-team/ionic/compare/v5.3.5...v5.4.0-rc.1) (2020-10-08)
 
 > This version is dedicated to our upcoming Ionic Vue release.

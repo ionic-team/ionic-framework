@@ -2,6 +2,9 @@
   <ion-page data-pageid="tab2">
     <ion-header>
       <ion-toolbar>
+        <ion-buttons>
+          <ion-back-button default-href="/"></ion-back-button>
+        </ion-buttons>
         <ion-title>Tab 2</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -18,11 +21,11 @@
 </template>
 
 <script>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+import { IonButtons, IonBackButton, IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 import ExploreContainer from '@/components/ExploreContainer.vue';
 
 export default  {
   name: 'Tab2',
-  components: { ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
+  components: { IonButtons, IonBackButton, ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
 }
 </script>

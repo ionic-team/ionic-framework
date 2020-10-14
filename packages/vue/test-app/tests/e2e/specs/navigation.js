@@ -1,66 +1,13 @@
 describe('Navigation', () => {
-
- /*
- // TODO move these to separate describe block
- it.skip('should swipe and abort', () => {
-    cy.ionPageInvisible('home');
-    cy.ionSwipeToGoBack();
-    cy.ionPageInvisible('home');
-    cy.ionPageVisible('navigation');
-  });
-
-  it.skip('should swipe and complete', () => {
-    cy.ionSwipeToGoBack(true);
-    cy.ionPageVisible('home');
-  });
-  */
-
-  it('should go to sibling page', () => {
-    cy.visit('http://localhost:8080');
-    cy.get('ion-item#navigation').click();
-
-    cy.wait(500)
-
-    cy.ionPageVisible('navigation')
-    cy.ionPageHidden('home')
-  });
-
-  it('should set query params and keep view in stack', () => {
+  beforeEach(() => {
     cy.visit('http://localhost:8080/navigation');
-    cy.get('#route-params').click();
-    cy.ionPageVisible('navigation');
   });
 
-  it('should go back home', () => {
-    cy.visit('http://localhost:8080');
-    cy.get('ion-item#navigation').click();
+  it('should push a page with props', () => {
+    cy.get('#open-nav-modal').click();
 
-    cy.ionBackClick('navigation');
+    cy.get('#push-nav-child').click();
 
-    cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('navigation');
+    cy.get('#nav-child-content').should('have.text', 'Custom Title');
   });
-
-  it('should go back home with default href', () => {
-    cy.visit('http://localhost:8080/default-href');
-
-    cy.ionBackClick('defaulthref');
-
-    cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('defaulthref');
-  });
-
-  it('should show back button', () => {
-    cy.visit('http://localhost:8080');
-
-    cy.get('#navigation').click();
-    cy.get('#child').click();
-
-    cy.ionBackClick('navigationchild');
-    cy.ionBackClick('navigation');
-
-    cy.ionPageVisible('home');
-    cy.ionPageDoesNotExist('navigation');
-    cy.ionPageDoesNotExist('navigationchild')
-  })
 });

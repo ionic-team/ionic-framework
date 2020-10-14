@@ -13,12 +13,12 @@ describe('View Stacks', () => {
     const item = viewStacks.createViewItem(
       '1',
       () => {},
-      'mockMatchedRoute',
+      { path: '/mockMatchedRoute' },
       { pathname: '/home' }
     );
 
     expect(item.outletId).toEqual('1');
-    expect(item.matchedRoute).toEqual('mockMatchedRoute');
+    expect(item.matchedRoute).toEqual({ path: '/mockMatchedRoute' });
     expect(item.pathname).toEqual('/home');
   });
 
@@ -26,7 +26,7 @@ describe('View Stacks', () => {
     const item = viewStacks.createViewItem(
       '1',
       () => {},
-      'mockMatchedRoute',
+      { path: '/mockMatchedRoute' },
       { pathname: '/home' }
     );
 
@@ -39,7 +39,7 @@ describe('View Stacks', () => {
     const item = viewStacks.createViewItem(
       '1',
       () => {},
-      'mockMatchedRoute',
+      { path: '/mockMatchedRoute' },
       { pathname: '/home' }
     );
 
@@ -69,31 +69,44 @@ describe('View Stacks', () => {
     const itemA = createRegisteredViewItem(viewStacks, '1', '/home');
     const itemB = createRegisteredViewItem(viewStacks, '2', '/dashboard');
 
-    const getLeavingView = viewStacks.findLeavingViewItemByRouteInfo({ pathname: '/home', lastPathname: '/dashboard' });
+    const getLeavingView = viewStacks.findLeavingViewItemByRouteInfo({ pathname: '/home', lastPathname: '/dashboard', matchedRoute: { path: '/home' } });
 
     expect(getLeavingView).toEqual(itemB);
   });
 
   it('should get children to render', () => {
-      const itemA = createRegisteredViewItem(viewStacks);
-      const itemB = createRegisteredViewItem(viewStacks);
-      const itemC = createRegisteredViewItem(viewStacks);
+    const itemA = createRegisteredViewItem(viewStacks);
+    const itemB = createRegisteredViewItem(viewStacks);
+    const itemC = createRegisteredViewItem(viewStacks);
 
-      itemA.mount = itemC.mount = true;
+    itemA.mount = itemC.mount = true;
 
-      const routes = viewStacks.getChildrenToRender('1');
-      expect(routes).toEqual([
-        itemA,
-        itemC
-      ]);
-    });
+    const routes = viewStacks.getChildrenToRender(1);
+    expect(routes).toEqual([
+      itemA,
+      itemC
+    ]);
+  });
+
+  it('should clear a stack', () => {
+    const itemA = createRegisteredViewItem(viewStacks, 2);
+    const itemB = createRegisteredViewItem(viewStacks, 2);
+
+    const viewItems = viewStacks.getViewStack(2);
+    expect(viewItems.length).toEqual(2);
+
+    viewStacks.clear('2');
+
+    const viewItemsAgain = viewStacks.getViewStack(2);
+    expect(viewItemsAgain).toEqual(undefined);
+  })
 })
 
 const createRegisteredViewItem = (viewStacks, outletId = '1', route = `/home/${counter++}`) => {
   const item = viewStacks.createViewItem(
     outletId,
     () => {},
-    'mockMatchedRoute',
+    { path: '/mockMatchedRoute' },
     { pathname: route }
   );
 

@@ -48,14 +48,54 @@ describe('Overlays', () => {
   }
 
   it(`should open and close ion-toast via component`, () => {
-      cy.get(`ion-radio#ion-toast`).click();
-      cy.get('ion-radio#component').click();
+    cy.get(`ion-radio#ion-toast`).click();
+    cy.get('ion-radio#component').click();
 
-      cy.get('ion-button#present-overlay').click();
-      cy.get('ion-toast').should('exist');
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-toast').should('exist');
 
-      cy.get('ion-toast').find('button').click();
+    cy.get('ion-toast').find('button').click();
 
-      cy.get('ion-toast').should('not.exist');
-    });
+    cy.get('ion-toast').should('not.exist');
+  });
+
+  it('it should pass props to modal via controller', () => {
+    cy.get('ion-radio#ion-modal').click();
+    cy.get('ion-radio#controller').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    cy.get('ion-modal ion-content').should('have.text', 'Custom Title');
+  });
+
+  it('it should pass props to modal via component', () => {
+    cy.get('ion-radio#ion-modal').click();
+    cy.get('ion-radio#component').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    cy.get('ion-modal ion-content').should('have.text', 'Custom Title');
+  });
+
+  it('it should pass props to popover via controller', () => {
+    cy.get('ion-radio#ion-popover').click();
+    cy.get('ion-radio#controller').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-popover').should('exist');
+
+    cy.get('ion-popover ion-content').should('have.text', 'Custom Title');
+  });
+
+  it('it should pass props to popover via component', () => {
+    cy.get('ion-radio#ion-popover').click();
+    cy.get('ion-radio#component').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-popover').should('exist');
+
+    cy.get('ion-popover ion-content').should('have.text', 'Custom Title');
+  });
 })

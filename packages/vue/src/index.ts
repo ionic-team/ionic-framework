@@ -12,6 +12,8 @@ export { IonTabs } from './components/IonTabs';
 export { IonTabBar } from './components/IonTabBar';
 export { IonNav } from './components/IonNav';
 export { IonIcon } from './components/IonIcon';
+export { IonApp } from './components/IonApp';
+
 export * from './components/Overlays';
 
 export { IonKeyboardRef, IonRouter, useBackButton, useIonRouter, useKeyboard } from './hooks';

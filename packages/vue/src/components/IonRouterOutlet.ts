@@ -7,29 +7,21 @@ import {
   provide,
   watch,
   shallowRef,
-  InjectionKey
+  InjectionKey,
+  onUnmounted
 } from 'vue';
-import { AnimationBuilder, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core';
-import { useRoute, useRouter } from 'vue-router';
-import { fireLifecycle, generateId } from '../utils';
+import { AnimationBuilder } from '@ionic/core';
+import { useRoute } from 'vue-router';
+import { fireLifecycle, generateId, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../utils';
 
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
   name: 'IonRouterOutlet',
   setup(_, { attrs }) {
-    const vueRouter = useRouter();
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
-
-    // TODO types
-    let tabsPrefix: string | undefined;
     const matchedRouteRef: any = computed(() => {
       const matchedRoute = route?.matched[depth];
-
-      if (attrs.tabs && !tabsPrefix) {
-          tabsPrefix = route.matched[0].path;
-          viewStacks.addTabsPrefix(tabsPrefix);
-      }
 
       if (matchedRoute && attrs.tabs && route.matched[depth + 1]) {
         return route.matched[route.matched.length - 1];
@@ -51,19 +43,29 @@ export const IonRouterOutlet = defineComponent({
 
     let skipTransition = false;
 
-    watch(matchedRouteRef, () => {
-      setupViewItem(matchedRouteRef);
-    });
+    // The base url for this router outlet
+    let parentOutletPath: string;
+
+    watch(matchedRouteRef, () => setupViewItem(matchedRouteRef));
 
     const canStart = () => {
       const stack = viewStacks.getViewStack(id);
-      return stack && stack.length > 1;
+      if (!stack || stack.length <= 1) return false;
+
+      /**
+       * We only want to outlet of the entering view
+       * to respond to this gesture, so check
+       * to make sure the view is in the outlet we want.
+       */
+      const routeInfo = ionRouter.getCurrentRouteInfo();
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
+
+      return !!enteringViewItem;
     }
     const onStart = async () => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
       const { routerAnimation } = routeInfo;
-      const items = viewStacks.getViewStack(id);
-      const enteringViewItem = items[items.length - 2];
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
       const leavingViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
 
       if (leavingViewItem) {
@@ -105,7 +107,23 @@ export const IonRouterOutlet = defineComponent({
     const onEnd = (shouldContinue: boolean) => {
       if (shouldContinue) {
         skipTransition = true;
-        vueRouter.back();
+
+        /**
+         * Use the same logic as clicking
+         * ion-back-button to determine where
+         * to go back to.
+         */
+        ionRouter.handleNavigateBack();
+      } else {
+        /**
+         * In the event that the swipe
+         * gesture was aborted, we should
+         * re-hide the page that was going to enter.
+         */
+        const routeInfo = ionRouter.getCurrentRouteInfo();
+        const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
+        enteringViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+        enteringViewItem.ionPageElement.classList.add('ion-page-hidden');
       }
     }
 
@@ -229,20 +247,46 @@ export const IonRouterOutlet = defineComponent({
       components.value = viewStacks.getChildrenToRender(id);
     }
 
-    // TODO types
     const setupViewItem = (matchedRouteRef: any) => {
-      if (!matchedRouteRef.value) {
-        return;
+      const firstMatchedRoute = route.matched[0];
+      if (!parentOutletPath) {
+        parentOutletPath = firstMatchedRoute.path;
+      }
+
+      /**
+       * If no matched route, do not do anything in this outlet.
+       * If there is a match, but it the first matched path
+       * is not the root path for this outlet, then this view
+       * change needs to be rendered in a different outlet.
+       * We also add an exception for when the matchedRouteRef is
+       * equal to the first matched route (i.e. the base router outlet).
+       * This logic is mainly to help nested outlets/multi-tab
+       * setups work better.
+       */
+      if (
+        !matchedRouteRef.value ||
+        (matchedRouteRef.value !== firstMatchedRoute && firstMatchedRoute.path !== parentOutletPath)
+      ) {
+          return;
       }
 
       const currentRoute = ionRouter.getCurrentRouteInfo();
-      const hasTabsPrefix = viewStacks.hasTabsPrefix(currentRoute.pathname)
-      const isLastPathTabs = viewStacks.hasTabsPrefix(currentRoute.lastPathname);
-      if (hasTabsPrefix && isLastPathTabs && !attrs.tabs) { return; }
-
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
 
       if (!enteringViewItem) {
+        /**
+         * If we have no existing entering item, we need
+         * make sure that there is no existing view according to the
+         * matched route rather than what is in the url bar.
+         * This is mainly for tabs when outlet 1 renders ion-tabs
+         * and outlet 2 renders the individual tab view. We don't
+         * want outlet 1 creating a new ion-tabs instance every time
+         * we switch tabs.
+         */
+        if (viewStacks.findViewItemByMatchedRoute(matchedRouteRef.value, id)) {
+          return;
+        }
+
         enteringViewItem = viewStacks.createViewItem(id, matchedRouteRef.value.components.default, matchedRouteRef.value, currentRoute);
         viewStacks.add(enteringViewItem);
       }
@@ -266,6 +310,13 @@ export const IonRouterOutlet = defineComponent({
       setupViewItem(matchedRouteRef);
     }
 
+    /**
+     * Remove stack data for this outlet
+     * when outlet is destroyed otherwise
+     * we will see cached view data.
+     */
+    onUnmounted(() => viewStacks.clear(id));
+
     return {
       id,
       components,
@@ -280,7 +331,7 @@ export const IonRouterOutlet = defineComponent({
       'ion-router-outlet',
       { ref: 'ionRouterOutlet' },
       // TODO types
-      components && components.map((c: any) => h(c.vueComponent, { key: c.pathname }))
+      components && components.map((c: any) => h(c.vueComponent, { key: c.pathname, isInOutlet: true }))
     )
   }
 });
