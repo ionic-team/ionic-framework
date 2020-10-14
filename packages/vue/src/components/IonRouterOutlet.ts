@@ -10,9 +10,9 @@ import {
   InjectionKey,
   onUnmounted
 } from 'vue';
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core';
 import { useRoute } from 'vue-router';
-import { fireLifecycle, generateId, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../utils';
+import { fireLifecycle, generateId } from '../utils';
 
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
@@ -21,7 +21,7 @@ export const IonRouterOutlet = defineComponent({
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
     const matchedRouteRef: any = computed(() => {
-      const matchedRoute = route?.matched[depth];
+      const matchedRoute = route.matched[depth];
 
       if (matchedRoute && attrs.tabs && route.matched[depth + 1]) {
         return route.matched[route.matched.length - 1];
@@ -182,7 +182,6 @@ export const IonRouterOutlet = defineComponent({
 
       if (enteringViewItem === leavingViewItem) return;
 
-      console.log('FIRE!');
       fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_WILL_ENTER);
 
       if (leavingViewItem) {
@@ -293,7 +292,6 @@ export const IonRouterOutlet = defineComponent({
 
       if (!enteringViewItem.mount) {
         enteringViewItem.mount = true;
-        console.log(enteringViewItem);
         enteringViewItem.vueComponent.components.IonPage.mounted = function () {
           viewStacks.registerIonPage(enteringViewItem, this.$refs.ionPage);
           handlePageTransition();
@@ -325,7 +323,6 @@ export const IonRouterOutlet = defineComponent({
   },
   render() {
     const { components } = this;
-    console.log(components);
 
     return h(
       'ion-router-outlet',
