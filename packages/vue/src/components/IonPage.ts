@@ -3,7 +3,11 @@ import { h, defineComponent } from 'vue';
 export const IonPage = defineComponent({
   name: 'IonPage',
   props: {
-    isInOutlet: { type: Boolean, default: false }
+    isInOutlet: { type: Boolean, default: false },
+    registerIonPage: { type: Function, default: () => {} }
+  },
+  mounted() {
+    this.$props.registerIonPage(this.$refs.ionPage);
   },
   setup(props, { attrs, slots }) {
     const hidePageClass = (props.isInOutlet) ? 'ion-page-invisible' : '';
