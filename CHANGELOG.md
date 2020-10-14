@@ -1,3 +1,23 @@
+# [5.4.0-rc.3](https://github.com/ionic-team/ionic/compare/v5.4.0-rc.2...v5.4.0-rc.3) (2020-10-14)
+
+> This version is dedicated to our upcoming Ionic Vue release.
+
+### Bug Fixes
+
+* **vue:** ion-page component is now properly shown with HMR ([#22319](https://github.com/ionic-team/ionic/issues/22319)) ([c5ab562](https://github.com/ionic-team/ionic/commit/c5ab562eaa098717407e6b3e8139abd2112246a2))
+
+### Upgrade Steps
+
+```
+npm install @ionic/vue@5.4.0-rc.3 @ionic/vue-router@5.4.0-rc.3 --save-exact
+```
+
+### New to Ionic Vue?
+
+Check out our [Quickstart Guide](https://ionicframework.com/docs/vue/quickstart) to get up and running. Then be sure to check out our [Building Your First App Guide](https://ionicframework.com/docs/vue/your-first-app) to learn how build a cross platform Ionic Vue application from start to finish!
+
+
+
 # [5.4.0-rc.2](https://github.com/ionic-team/ionic/compare/v5.4.0-rc.1...v5.4.0-rc.2) (2020-10-13)
 
 > This version is dedicated to our upcoming Ionic Vue release.
