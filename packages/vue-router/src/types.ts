@@ -39,6 +39,7 @@ export interface ViewItem {
   ionRoute: boolean;
   mount: boolean;
   exact: boolean;
+  registerCallback?: () => void;
 }
 
 export interface ViewStacks {

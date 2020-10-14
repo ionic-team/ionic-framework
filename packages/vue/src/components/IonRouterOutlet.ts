@@ -292,11 +292,10 @@ export const IonRouterOutlet = defineComponent({
 
       if (!enteringViewItem.mount) {
         enteringViewItem.mount = true;
-        enteringViewItem.vueComponent.components.IonPage.mounted = function () {
-          viewStacks.registerIonPage(enteringViewItem, this.$refs.ionPage);
+        enteringViewItem.registerCallback = () => {
           handlePageTransition();
-          enteringViewItem.vueComponent.components.IonPage.mounted = undefined;
-        };
+          enteringViewItem.registerCallback = undefined;
+        }
       } else {
         handlePageTransition();
       }
@@ -315,20 +314,57 @@ export const IonRouterOutlet = defineComponent({
      */
     onUnmounted(() => viewStacks.clear(id));
 
+    // TODO types
+    const registerIonPage = (viewItem: any, ionPageEl: HTMLElement) => {
+      const oldIonPageEl = viewItem.ionPageElement;
+
+      viewStacks.registerIonPage(viewItem, ionPageEl);
+
+      /**
+       * If there is a registerCallback,
+       * then this component is being registered
+       * as a result of a navigation change.
+       */
+      if (viewItem.registerCallback) {
+        viewItem.registerCallback();
+
+      /**
+       * If there is no registerCallback, then
+       * this component is likely being re-registered
+       * as a result of a hot module replacement.
+       * We need to see if the oldIonPageEl has
+       * .ion-page-invisible. If it does not then we
+       * need to remove it from the new ionPageEl otherwise
+       * the page will be hidden when it is replaced.
+       */
+      } else if (oldIonPageEl && !oldIonPageEl.classList.contains('ion-page-invisible')) {
+        ionPageEl.classList.remove('ion-page-invisible');
+      }
+  };
     return {
       id,
       components,
-      ionRouterOutlet
+      ionRouterOutlet,
+      registerIonPage
     }
   },
   render() {
-    const { components } = this;
+    const { components, registerIonPage } = this;
 
     return h(
       'ion-router-outlet',
       { ref: 'ionRouterOutlet' },
       // TODO types
-      components && components.map((c: any) => h(c.vueComponent, { key: c.pathname, isInOutlet: true }))
+      components && components.map((c: any) => {
+        return h(
+          c.vueComponent,
+          {
+            key: c.pathname,
+            isInOutlet: true,
+            registerIonPage: (ionPageEl: HTMLElement) => registerIonPage(c, ionPageEl)
+          }
+        )
+      })
     )
   }
 });
