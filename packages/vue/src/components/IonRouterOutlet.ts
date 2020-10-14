@@ -337,7 +337,7 @@ export const IonRouterOutlet = defineComponent({
        * need to remove it from the new ionPageEl otherwise
        * the page will be hidden when it is replaced.
        */
-      } else if (!oldIonPageEl.classList.contains('ion-page-invisible')) {
+      } else if (oldIonPageEl && !oldIonPageEl.classList.contains('ion-page-invisible')) {
         ionPageEl.classList.remove('ion-page-invisible');
       }
   };
