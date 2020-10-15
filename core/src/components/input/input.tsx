@@ -1,7 +1,7 @@
 import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes, AutocapitalizeTypes } from '../../interface';
+import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
 import { debounceEvent, findItemLabel } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -41,8 +41,9 @@ export class Input implements ComponentInterface {
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+   * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
    */
-  @Prop() autocapitalize: AutocapitalizeTypes = 'off';
+  @Prop() autocapitalize = 'off';
 
   /**
    * Indicates whether the value of the control can be automatically completed by the browser.
