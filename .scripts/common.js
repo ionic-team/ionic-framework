@@ -10,11 +10,11 @@ const rootDir = path.join(__dirname, '../');
 
 const packages = [
   'core',
-  'docs',
-  'angular',
-  'packages/react',
-  'packages/react-router',
-  'packages/angular-server',
+  //'docs',
+  //'angular',
+  //'packages/react',
+  //'packages/react-router',
+  //'packages/angular-server',
   'packages/vue',
   'packages/vue-router'
 ];
