@@ -13,7 +13,6 @@ const Page1 = {
   components: {
     IonPage,
   },
-  mounted() {},
   ionViewDidEnter() {},
   ionViewDidLeave() { console.log('asd') },
   ionViewWillEnter() {},
