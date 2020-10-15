@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail } from '../../interface';
-import { findItemLabel } from '../../utils/helpers';
+import { addEventListener, findItemLabel, removeEventListener } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -96,14 +96,14 @@ export class Radio implements ComponentInterface {
     const radioGroup = this.radioGroup = this.el.closest('ion-radio-group');
     if (radioGroup) {
       this.updateState();
-      radioGroup.addEventListener('ionChange', this.updateState);
+      addEventListener(radioGroup, 'ionChange', this.updateState);
     }
   }
 
   disconnectedCallback() {
     const radioGroup = this.radioGroup;
     if (radioGroup) {
-      radioGroup.removeEventListener('ionChange', this.updateState);
+      removeEventListener(radioGroup, 'ionChange', this.updateState);
       this.radioGroup = null;
     }
   }
