@@ -88,6 +88,7 @@ The `detail` property of the `ionItemReorder` event includes all of the relevant
 ```javascript
 import { Component, ViewChild } from '@angular/core';
 import { IonReorderGroup } from '@ionic/angular';
+import { ItemReorderEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'reorder-group-example',
@@ -99,7 +100,7 @@ export class ReorderGroupExample {
 
   constructor() {}
 
-  doReorder(ev: any) {
+  doReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
     console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
@@ -121,6 +122,7 @@ export class ReorderGroupExample {
 ```javascript
 import { Component, ViewChild } from '@angular/core';
 import { IonReorderGroup } from '@ionic/angular';
+import { ItemReorderEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'reorder-group-example',
@@ -134,7 +136,7 @@ export class ReorderGroupExample {
 
   constructor() {}
 
-  doReorder(ev: any) {
+  doReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     // Before complete is called with the items they will remain in the
     // order before the drag
     console.log('Before complete', this.items);
@@ -576,13 +578,27 @@ export class ReorderGroupExample {
   </ion-reorder-group>
 </template>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { 
+  IonIcon, 
+  IonItem, 
+  IonLabel, 
+  IonReorder, 
+  IonReorderGroup
+} from '@ionic/vue';
+import { pizza } from 'ionicons/icons';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-
-    doReorder(event) {
+export default defineComponent({
+  components: { 
+    IonIcon, 
+    IonItem, 
+    IonLabel, 
+    IonReorder, 
+    IonReorderGroup
+  },
+  setup() {
+    const doReorder = (event: CustomEvent) => {
       // The `from` and `to` properties contain the index of the item
       // when the drag started and ended, respectively
       console.log('Dragged from index', event.detail.from, 'to', event.detail.to);
@@ -592,21 +608,25 @@ export class ReorderGroupExample {
       // by the reorder group
       event.detail.complete();
     }
+    return { doReorder, pizza }
   }
+});
 </script>
 ```
 
 ### Updating Data
 
 ```html
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+...
+import { defineComponent, ref } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    items = [1, 2, 3, 4, 5];
+export default defineComponent({
+  ...
+  setup() {
+    const items = ref([1, 2, 3, 4, 5]);
 
-    doReorder(event) {
+    const doReorder = (event: CustomEvent) => {
       // Before complete is called with the items they will remain in the
       // order before the drag
       console.log('Before complete', this.items);
@@ -614,12 +634,14 @@ export class ReorderGroupExample {
       // Finish the reorder and position the item in the DOM based on
       // where the gesture ended. Update the items variable to the
       // new order of items
-      this.items = event.detail.complete(this.items);
+      items.value = event.detail.complete(items.value);
 
       // After complete is called the items will be in the new order
       console.log('After complete', this.items);
     }
+    return { doReorder, items, ... }
   }
+});
 </script>
 ```
 

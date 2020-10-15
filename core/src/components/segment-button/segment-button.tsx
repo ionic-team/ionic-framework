@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@s
 import { getIonMode } from '../../global/ionic-global';
 import { SegmentButtonLayout } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
+import { addEventListener, removeEventListener } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 let ids = 0;
@@ -53,14 +54,14 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     const segmentEl = this.segmentEl = this.el.closest('ion-segment');
     if (segmentEl) {
       this.updateState();
-      segmentEl.addEventListener('ionSelect', this.updateState);
+      addEventListener(segmentEl, 'ionSelect', this.updateState);
     }
   }
 
   disconnectedCallback() {
     const segmentEl = this.segmentEl;
     if (segmentEl) {
-      segmentEl.removeEventListener('ionSelect', this.updateState);
+      removeEventListener(segmentEl, 'ionSelect', this.updateState);
       this.segmentEl = null;
     }
   }

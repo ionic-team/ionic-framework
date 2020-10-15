@@ -18,7 +18,7 @@
   <ion-content>
     <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
       <ion-refresher-content
-        pulling-icon="chevron-down-circle-outline"
+        :pulling-icon="chevronDownCircleOutline"
         pulling-text="Pull to refresh"
         refreshing-spinner="circles"
         refreshing-text="Refreshing...">
@@ -28,19 +28,23 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+import { IonContent, IonRefresher, IonRefresherContent } from '@ionic/vue';
+import { chevronDownCircleOutline } from 'ionicons/icons'
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-
-    doRefresh(event) {
+export default defineComponent({
+  components: { IonContent, IonRefresher, IonRefresherContent },
+  setup() {
+    const doRefresh = (event: CustomEvent) => {
       console.log('Begin async operation');
-
+      
       setTimeout(() => {
         console.log('Async operation has ended');
         event.target.complete();
       }, 2000);
     }
+    return { chevronDownCircleOutline, doRefresh }
   }
+});
 </script>
 ```

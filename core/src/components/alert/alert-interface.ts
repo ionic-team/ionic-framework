@@ -36,6 +36,7 @@ export interface AlertInput {
   max?: string | number;
   cssClass?: string | string[];
   attributes?: AlertInputAttributes | AlertTextareaAttributes;
+  tabindex?: number;
 }
 
 export interface AlertTextareaAttributes extends JSXBase.TextareaHTMLAttributes<HTMLTextAreaElement> {}

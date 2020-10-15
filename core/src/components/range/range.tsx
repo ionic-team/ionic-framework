@@ -422,14 +422,13 @@ export class Range implements ComponentInterface {
       <Host
         onFocusin={this.onFocus}
         onFocusout={this.onBlur}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,
           'range-has-pin': pin
-        }}
+        })}
       >
 
         <slot name="start"></slot>

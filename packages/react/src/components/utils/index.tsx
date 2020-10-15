@@ -16,7 +16,6 @@ export const createForwardRef = <PropType, ElementType>(ReactComponent: any, dis
 
 export * from './attachProps';
 export * from './case';
-export * from './ionRenderToString';
 
 export const isPlatform = (platform: Platforms) => {
   return isPlatformCore(window, platform);

@@ -269,13 +269,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
         style={{
           zIndex: `${60000 + this.overlayIndex}`,
         }}
-        class={{
+        class={createColorClasses(this.color, {
           [mode]: true,
-
-          ...createColorClasses(this.color),
           ...getClassMap(this.cssClass),
           'toast-translucent': this.translucent
-        }}
+        })}
         tabindex="-1"
         onIonToastWillDismiss={this.dispatchCancelHandler}
       >
