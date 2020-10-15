@@ -1,6 +1,7 @@
 import { mount, flushPromises } from '@vue/test-utils';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { IonicVue, IonApp, IonRouterOutlet, IonPage } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
 const App = {
   components: { IonApp, IonRouterOutlet },
@@ -14,16 +15,17 @@ const Page1 = {
     IonPage,
   },
   ionViewDidEnter() {},
-  ionViewDidLeave() { console.log('asd') },
+  ionViewDidLeave() {},
   ionViewWillEnter() {},
-  ionViewWillLeave() { console.log('qwe') },
+  ionViewWillLeave() {},
 }
 
-const Page2 = {
+const Page2 = defineComponent({
   ...Page1,
   name: 'Page2',
   template: '<ion-page data-pageid="page2"></ion-page>',
-}
+  setup() {}
+});
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -47,7 +49,7 @@ describe('Lifecycle Events', () => {
     // Initial render
     router.push('/');
     await router.isReady();
-    mount(App, {
+    const wrapper = mount(App, {
       global: {
         plugins: [router, IonicVue]
       }
@@ -58,6 +60,7 @@ describe('Lifecycle Events', () => {
     expect(page1WillEnterSpy).toHaveBeenCalled();
     expect(page1DidLeaveSpy).not.toHaveBeenCalled();
     expect(page1WillLeaveSpy).not.toHaveBeenCalled();
+    expect(wrapper.html()).toContain('page1');
 
     // Page 2 lifecycle hooks
     expect(page2DidEnterSpy).not.toHaveBeenCalled();
@@ -84,5 +87,6 @@ describe('Lifecycle Events', () => {
     expect(page2WillEnterSpy).toHaveBeenCalled();
     expect(page2DidLeaveSpy).not.toHaveBeenCalled();
     expect(page2WillLeaveSpy).not.toHaveBeenCalled();
+    expect(wrapper.html()).toContain('page2');
   });
 });
