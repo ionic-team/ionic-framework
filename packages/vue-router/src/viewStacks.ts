@@ -5,6 +5,7 @@ import {  RouteInfo,
   ViewStacks,
 } from './types';
 import { RouteLocationMatched } from 'vue-router';
+import { ref } from 'vue';
 
 export const createViewStacks = () => {
   let viewStacks: ViewStacks = {};
@@ -95,6 +96,7 @@ export const createViewStacks = () => {
       matchedRoute,
       ionPageElement: ionPage,
       vueComponent,
+      vueComponentRef: ref(),
       ionRoute: false,
       mount: false,
       exact: routeInfo.pathname === matchedRoute.path
