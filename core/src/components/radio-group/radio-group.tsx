@@ -126,7 +126,7 @@ export class RadioGroup implements ComponentInterface {
       if (['ArrowUp', 'ArrowLeft'].includes(ev.key)) {
         next = (index === 0)
           ? radios[radios.length - 1]
-          : radios[index - 1]
+          : radios[index - 1];
       }
 
       if (next && radios.includes(next)) {
