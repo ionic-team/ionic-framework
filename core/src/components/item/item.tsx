@@ -157,7 +157,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // appear as clickable to screen readers
     const input = this.getFirstInput();
     if (input) {
-      this.el.addEventListener('click',ev => this.delegateFocus(ev, input));
+      this.el.addEventListener('click', ev => this.delegateFocus(ev, input));
     }
 
     this.setMultipleInputs();
@@ -254,7 +254,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // Only set onClick if the item is clickable to prevent screen
     // readers from reading all items as clickable
     const clickFn = clickable ? {
-      onClick: (ev: Event) => {openURL(href, ev, routerDirection, routerAnimation);}
+      onClick: (ev: Event) => {openURL(href, ev, routerDirection, routerAnimation); }
     } : {};
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
     this.itemStyles.forEach(value => {
