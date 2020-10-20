@@ -59,7 +59,7 @@ export const createViewStacks = () => {
 
       const regexp = pathToRegexp(viewItemPath, [], {
         end: viewItem.exact,
-        strict: viewItem.exact,
+        strict: false,
         sensitive: false
       });
       return (regexp.exec(pathname)) ? viewItem : undefined;
