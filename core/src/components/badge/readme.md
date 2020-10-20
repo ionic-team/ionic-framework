@@ -142,6 +142,9 @@ export default defineComponent({
 ```
 
 
+You can view a live example of this in Angular [here](https://stackblitz.com/edit/ionic-angular-badge) and in React [here](https://stackblitz.com/edit/ionic-react-badge).
+
+
 
 ## Properties
 
