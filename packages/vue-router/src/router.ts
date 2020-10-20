@@ -59,7 +59,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
      */
     currentNavigationInfo = {
       action: info.type,
-      direction: info.direction === '' ? 'none' : info.direction
+      direction: info.direction === '' ? 'forward' : info.direction
     };
   });
 
