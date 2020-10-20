@@ -1454,6 +1454,9 @@ export default defineComponent({
 ```
 
 
+You can view a live example of this in Angular [here](https://stackblitz.com/edit/ionic-angular-alert) and in React [here](https://stackblitz.com/edit/ionic-react-alert).
+
+
 
 ## Properties
 
