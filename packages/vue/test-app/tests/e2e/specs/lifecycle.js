@@ -29,7 +29,7 @@ describe('Lifecycle', () => {
     });
   });
 
-  it('should fire lifecycle events landed on directly', () => {
+  it('should fire lifecycle events when landed on directly', () => {
     cy.visit('http://localhost:8080/lifecycle');
 
     testLifecycle('lifecycle', {
