@@ -23,6 +23,10 @@
       <ion-item button router-link="/routing/child" id="child">
         <ion-label>Go to Child Page</ion-label>
       </ion-item>
+
+      <ion-item button router-link="/routing/item/123/view" id="item">
+        <ion-label>Go to Parameterized Route</ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>
