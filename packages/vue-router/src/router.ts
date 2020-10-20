@@ -1,7 +1,7 @@
 import {
   Router,
   RouteLocationNormalized,
-  NavigationGuardNext,
+  NavigationGuardNext
 } from 'vue-router';
 import { createLocationHistory } from './locationHistory';
 import { generateId } from './utils';
