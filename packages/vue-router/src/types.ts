@@ -53,3 +53,8 @@ export interface ExternalNavigationOptions {
   routerDirection?: RouteDirection;
   routerAnimation?: AnimationBuilder;
 }
+
+export interface NavigationInformation {
+  action?: RouteAction;
+  direction?: RouteDirection;
+}

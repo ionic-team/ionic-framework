@@ -11,14 +11,20 @@ import {
   RouteParams,
   RouteAction,
   RouteDirection,
-  IonicVueRouterOptions
+  IonicVueRouterOptions,
+  NavigationInformation
 } from './types';
 import { AnimationBuilder } from '@ionic/core';
 
 export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
+  let currentNavigationInfo: NavigationInformation = { direction: undefined, action: undefined };
 
   router.beforeEach((to: RouteLocationNormalized, _: RouteLocationNormalized, next: NavigationGuardNext) => {
-    handleHistoryChange(to);
+    const { direction, action } = currentNavigationInfo;
+    handleHistoryChange(to, action, direction);
+
+    currentNavigationInfo = { direction: undefined, action: undefined };
+
     next();
   });
 
@@ -39,8 +45,23 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     })
   }
 
-  //   NavigationCallback
-  opts.history.listen((to: any, _: any, info: any) => handleHistoryChange({ path: to }, info.type, info.direction));
+  opts.history.listen((_: any, _x: any, info: any) => {
+    /**
+     * history.listen only fires on certain
+     * event such as when the user clicks the
+     * browser back button. It also gives us
+     * additional information as to the type
+     * of navigation (forward, backward, etc).
+     *
+     * We can use this to better handle the
+     * `handleHistoryChange` call in
+     * router.beforeEach
+     */
+    currentNavigationInfo = {
+      action: info.type,
+      direction: info.direction === '' ? 'forward' : info.direction
+    };
+  });
 
   const handleNavigateBack = (defaultHref?: string, routerAnimation?: AnimationBuilder) => {
     // todo grab default back button href from config

@@ -39,6 +39,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/RoutingChild.vue')
   },
   {
+    path: '/routing/item/:id/view',
+    component: () => import('@/views/RoutingParameter.vue')
+  },
+  {
     path: '/navigation',
     component: () => import('@/views/Navigation.vue')
   },
