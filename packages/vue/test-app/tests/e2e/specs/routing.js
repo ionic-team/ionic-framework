@@ -46,6 +46,22 @@ describe('Routing', () => {
     cy.ionPageVisible('home');
     cy.ionPageDoesNotExist('routing');
     cy.ionPageDoesNotExist('routingchild')
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22324
+  it('should show correct view when navigating back from parameterized page to query string page', () => {
+    cy.visit('http://localhost:8080');
+    cy.get('#routing').click();
+    cy.get('#route-params').click();
+    cy.get('#item').click();
+
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('routingparameter');
+
+    cy.ionPageDoesNotExist('routingparameter');
+    cy.ionPageVisible('routing');
   })
 });
 
