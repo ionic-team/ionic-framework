@@ -183,6 +183,7 @@ export default defineComponent({
 </script>
 ```
 
+You can view a live example of this in Angular [here](https://stackblitz.com/edit/ionic-angular-ripple-effect) and in React [here](https://stackblitz.com/edit/ionic-react-ripple-effect).
 
 
 ## Properties
