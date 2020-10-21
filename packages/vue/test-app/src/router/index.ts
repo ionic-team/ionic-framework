@@ -89,6 +89,9 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'tab3',
+        beforeEnter: (to, from, next) => {
+          next({ path: '/tabs/tab1' });
+        },
         component: () => import('@/views/Tab3.vue')
       }
     ]
@@ -120,6 +123,6 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
 
 export default router
