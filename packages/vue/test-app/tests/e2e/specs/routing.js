@@ -46,7 +46,35 @@ describe('Routing', () => {
     cy.ionPageVisible('home');
     cy.ionPageDoesNotExist('routing');
     cy.ionPageDoesNotExist('routingchild')
-  })
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
+  it('should navigate to multiple pages that match the same parameterized url', () => {
+    cy.visit('http://localhost:8080/routing');
+
+    cy.get('#parameter-abc').click();
+    cy.ionPageVisible('routingparameter');
+    cy.get('[data-pageid=routingparameter] #parameter-value').should('have.text', 'abc');
+    cy.ionBackClick('routingparameter');
+
+    cy.ionPageDoesNotExist('routingparameter');
+
+    cy.get('#parameter-xyz').click();
+    cy.ionPageVisible('routingparameter');
+    cy.get('[data-pageid=routingparameter] #parameter-value').should('have.text', 'xyz');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
+  it('should handle parameterized urls properly', () => {
+    cy.visit('http://localhost:8080/routing');
+
+    cy.get('#parameter-abc').click();
+    cy.ionPageVisible('routingparameter');
+
+    cy.get('#parameter-view').click();
+
+    cy.ionPageVisible('routingparameterview');
+  });
 });
 
 describe('Routing - Swipe to Go Back', () => {

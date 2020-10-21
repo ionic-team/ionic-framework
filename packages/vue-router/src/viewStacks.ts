@@ -29,19 +29,6 @@ export const createViewStacks = () => {
     return findViewItemByPath(routeInfo.lastPathname, outletId, false);
   }
 
-  const findViewItemByMatchedRoute = (matchedRoute: any, outletId: number): ViewItem | undefined => {
-    const stack = viewStacks[outletId];
-    if (!stack) return undefined;
-
-    return stack.find((viewItem: ViewItem) => {
-      if (viewItem.matchedRoute.path === matchedRoute.path) {
-        return viewItem;
-      }
-
-      return undefined;
-    });
-  }
-
   const findViewItemInStack = (path: string, stack: ViewItem[]): ViewItem | undefined => {
     return stack.find((viewItem: ViewItem) => {
       if (viewItem.pathname === path) {
@@ -133,7 +120,6 @@ export const createViewStacks = () => {
   return {
     clear,
     findViewItemByRouteInfo,
-    findViewItemByMatchedRoute,
     findLeavingViewItemByRouteInfo,
     createViewItem,
     getChildrenToRender,
