@@ -1,5 +1,6 @@
 import { AnimationBuilder } from '@ionic/core';
 import { RouteLocationMatched, RouterOptions } from 'vue-router';
+import { Ref } from 'vue';
 
 export interface IonicVueRouterOptions extends RouterOptions {
   tabsPrefix?: string;
@@ -40,6 +41,7 @@ export interface ViewItem {
   mount: boolean;
   exact: boolean;
   registerCallback?: () => void;
+  vueComponentRef: Ref;
 }
 
 export interface ViewStacks {

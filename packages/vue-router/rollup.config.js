@@ -15,5 +15,5 @@ export default {
       plugins: [terser()]
     }
   ],
-  external: ['vue-router']
+  external: ['vue-router', 'vue']
 };
