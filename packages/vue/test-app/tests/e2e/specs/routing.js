@@ -49,7 +49,7 @@ describe('Routing', () => {
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
-  it('should navigate to multiple pages that match the same parameterized url', () => {
+  it('should navigate to multiple pages that match the same parameterized route', () => {
     cy.visit('http://localhost:8080/routing');
 
     cy.get('#parameter-abc').click();
@@ -75,6 +75,21 @@ describe('Routing', () => {
 
     cy.ionPageVisible('routingparameterview');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22324
+  it('should show correct view when navigating back from parameterized page to query string page', () => {
+    cy.visit('http://localhost:8080/routing');
+    cy.get('#route-params').click();
+    cy.get('#parameter-view-item').click();
+
+    cy.ionPageVisible('routingparameterview');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('routingparameterview');
+
+    cy.ionPageDoesNotExist('routingparameterview');
+    cy.ionPageVisible('routing');
+  })
 });
 
 describe('Routing - Swipe to Go Back', () => {

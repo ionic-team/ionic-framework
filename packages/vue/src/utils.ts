@@ -1,3 +1,5 @@
+import { Ref } from 'vue';
+
 export const LIFECYCLE_WILL_ENTER = 'ionViewWillEnter';
 export const LIFECYCLE_DID_ENTER = 'ionViewDidEnter';
 export const LIFECYCLE_WILL_LEAVE = 'ionViewWillLeave';
@@ -12,8 +14,8 @@ export const generateId = (type = 'main') => {
 };
 
 // TODO types
-export const fireLifecycle = (vueComponent: any, lifecycle: string) => {
-  if (vueComponent && vueComponent.methods && vueComponent.methods[lifecycle]) {
-    vueComponent.methods[lifecycle]();
+export const fireLifecycle = (vueComponentRef: Ref<any>, lifecycle: string) => {
+  if (vueComponentRef && vueComponentRef.value && vueComponentRef.value[lifecycle]) {
+    vueComponentRef.value[lifecycle]();
   }
 }

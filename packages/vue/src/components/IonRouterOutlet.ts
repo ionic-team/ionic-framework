@@ -195,13 +195,13 @@ export const IonRouterOutlet = defineComponent({
 
       if (enteringViewItem === leavingViewItem) return;
 
-      fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_WILL_ENTER);
+      fireLifecycle(enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
 
       if (leavingViewItem) {
         let animationBuilder = routerAnimation;
         const leavingEl = leavingViewItem.ionPageElement;
 
-        fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_WILL_LEAVE);
+        fireLifecycle(leavingViewItem.vueComponentRef, LIFECYCLE_WILL_LEAVE);
 
         /**
         * If we are going back from a page that
@@ -243,7 +243,7 @@ export const IonRouterOutlet = defineComponent({
           }
         }
 
-        fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_DID_LEAVE);
+        fireLifecycle(leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
       } else {
         /**
          * If there is no leaving element, just show
@@ -254,7 +254,7 @@ export const IonRouterOutlet = defineComponent({
         requestAnimationFrame(() => enteringEl.classList.remove('ion-page-invisible'));
       }
 
-      fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_DID_ENTER);
+      fireLifecycle(enteringViewItem.vueComponentRef, LIFECYCLE_DID_ENTER);
 
       components.value = viewStacks.getChildrenToRender(id);
     }
@@ -359,6 +359,7 @@ export const IonRouterOutlet = defineComponent({
         return h(
           c.vueComponent,
           {
+            ref: c.vueComponentRef,
             key: c.pathname,
             isInOutlet: true,
             registerIonPage: (ionPageEl: HTMLElement) => registerIonPage(c, ionPageEl)
