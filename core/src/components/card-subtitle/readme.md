@@ -2,6 +2,8 @@
 
 `ion-card-subtitle` is a child component of `ion-card`
 
+You can view a live example of this in Angular [here](https://stackblitz.com/edit/ionic-angular-card-subtitle) and in React [here](https://stackblitz.com/edit/ionic-react-card-subtitle).
+
 <!-- Auto Generated Below -->
 
 
