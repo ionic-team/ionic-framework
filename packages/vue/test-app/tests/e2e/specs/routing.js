@@ -62,7 +62,23 @@ describe('Routing', () => {
 
     cy.ionPageDoesNotExist('routingparameter');
     cy.ionPageVisible('routing');
-  })
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
+  it('should work properly with async navigation guards', () => {
+    cy.visit('http://localhost:8080');
+    cy.get('#delayed-redirect').click();
+
+    cy.get('ion-loading').should('exist');
+
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.ionBackClick('routing');
+
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routing');
+  });
 });
 
 describe('Routing - Swipe to Go Back', () => {
