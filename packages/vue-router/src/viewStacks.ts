@@ -27,20 +27,7 @@ export const createViewStacks = () => {
   }
 
   const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number) => {
-    return findViewItemByPath(routeInfo.lastPathname, outletId);
-  }
-
-  const findViewItemByMatchedRoute = (matchedRoute: any, outletId: number): ViewItem | undefined => {
-    const stack = viewStacks[outletId];
-    if (!stack) return undefined;
-
-    return stack.find((viewItem: ViewItem) => {
-      if (viewItem.matchedRoute.path === matchedRoute.path) {
-        return viewItem;
-      }
-
-      return undefined;
-    });
+    return findViewItemByPath(routeInfo.lastPathname, outletId, false);
   }
 
   const findViewItemInStack = (path: string, stack: ViewItem[]): ViewItem | undefined => {
@@ -53,7 +40,7 @@ export const createViewStacks = () => {
     })
   }
 
-  const findViewItemByPath = (path: string, outletId?: number): ViewItem | undefined => {
+  const findViewItemByPath = (path: string, outletId?: number, strict: boolean = true): ViewItem | undefined => {
     const matchView = (viewItem: ViewItem) => {
       const pathname = path;
       const viewItemPath = viewItem.matchedRoute.path;
@@ -73,8 +60,10 @@ export const createViewStacks = () => {
       const quickMatch = findViewItemInStack(path, stack);
       if (quickMatch) return quickMatch;
 
-      const match = stack.find(matchView);
-      if (match) return match;
+      if (!strict) {
+        const match = stack.find(matchView);
+        if (match) return match;
+      }
     } else {
       for (let outletId in viewStacks) {
         const stack = viewStacks[outletId];
@@ -133,7 +122,6 @@ export const createViewStacks = () => {
   return {
     clear,
     findViewItemByRouteInfo,
-    findViewItemByMatchedRoute,
     findLeavingViewItemByRouteInfo,
     createViewItem,
     getChildrenToRender,
