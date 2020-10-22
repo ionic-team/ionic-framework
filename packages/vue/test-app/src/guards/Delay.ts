@@ -6,8 +6,8 @@ import {
 
 export const DelayGuard = async (_: RouteLocationNormalized, _x: RouteLocationNormalized, next: NavigationGuardNext) => {
   const loading = await loadingController.create({
-    message: 'Waiting 1000ms...',
-    duration: 1000
+    message: 'Waiting 500ms...',
+    duration: 500
   });
 
   await loading.present();
