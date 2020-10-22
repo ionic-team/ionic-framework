@@ -1,7 +1,6 @@
 import {
   Router,
-  RouteLocationNormalized,
-  NavigationGuardNext
+  RouteLocationNormalized
 } from 'vue-router';
 import { createLocationHistory } from './locationHistory';
 import { generateId } from './utils';
@@ -19,13 +18,20 @@ import { AnimationBuilder } from '@ionic/core';
 export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
   let currentNavigationInfo: NavigationInformation = { direction: undefined, action: undefined };
 
-  router.beforeEach((to: RouteLocationNormalized, _: RouteLocationNormalized, next: NavigationGuardNext) => {
+  /**
+   * Ionic Vue should only react to navigation
+   * changes once they have been confirmed and should
+   * never affect the outcome of navigation (with the
+   * exception of going back or selecting a tab).
+   * As a result, we should do our work in afterEach
+   * which is fired once navigation is confirmed
+   * and any user guards have run.
+   */
+  router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized) => {
     const { direction, action } = currentNavigationInfo;
     handleHistoryChange(to, action, direction);
 
     currentNavigationInfo = { direction: undefined, action: undefined };
-
-    next();
   });
 
   const locationHistory = createLocationHistory();
