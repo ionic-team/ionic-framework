@@ -48,9 +48,8 @@ export const IonRouterOutlet = defineComponent({
 
     watch(matchedRouteRef, (currentValue, previousValue) => {
       /**
-       * If we have no existing entering item, we need
-       * make sure that there is no existing view according to the
-       * matched route rather than what is in the url bar.
+       * We need to make sure that we are not re-rendering
+       * the same view if navigation changes in a sub-outlet.
        * This is mainly for tabs when outlet 1 renders ion-tabs
        * and outlet 2 renders the individual tab view. We don't
        * want outlet 1 creating a new ion-tabs instance every time
