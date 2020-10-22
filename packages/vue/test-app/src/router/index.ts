@@ -1,10 +1,16 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import Home from '../views/Home.vue'
+import Home from '@/views/Home.vue'
+import { DelayGuard } from '@/guards/Delay';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    component: Home
+  },
+  {
+    path: '/delayed-redirect',
+    beforeEnter: DelayGuard,
     component: Home
   },
   {
