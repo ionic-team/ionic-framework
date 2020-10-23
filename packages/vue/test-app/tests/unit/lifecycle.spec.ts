@@ -86,8 +86,12 @@ describe('Lifecycle Events', () => {
     // Page 1 lifecycle hooks
     expect(Page1.ionViewDidEnter).not.toHaveBeenCalled();
     expect(Page1.ionViewWillEnter).not.toHaveBeenCalled();
+
     expect(Page1.ionViewWillLeave).toHaveBeenCalled();
+    expect(Page1.ionViewWillLeave.mock.instances[0]).toEqual(expect.objectContaining({ name: 'page1' }))
+
     expect(Page1.ionViewDidLeave).toHaveBeenCalled();
+    expect(Page1.ionViewDidLeave.mock.instances[0]).toEqual(expect.objectContaining({ name: 'page1' }))
 
     // Page 2 lifecycle hooks
     expect(Page2.ionViewWillEnter).toHaveBeenCalled();

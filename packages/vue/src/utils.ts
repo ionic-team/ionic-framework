@@ -13,7 +13,7 @@ export const generateId = (type = 'main') => {
 
 // TODO types
 export const fireLifecycle = (vueComponent: any, vueInstance: Ref<ComponentPublicInstance>, lifecycle: LIFECYCLE_EVENTS) => {
-  if (vueComponent[lifecycle]) {
+  if (vueComponent?.[lifecycle]) {
     vueComponent[lifecycle].bind(vueInstance?.value)();
   }
 }
