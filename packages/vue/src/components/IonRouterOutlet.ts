@@ -46,7 +46,19 @@ export const IonRouterOutlet = defineComponent({
     // The base url for this router outlet
     let parentOutletPath: string;
 
-    watch(matchedRouteRef, () => setupViewItem(matchedRouteRef));
+    watch(matchedRouteRef, (currentValue, previousValue) => {
+      /**
+       * We need to make sure that we are not re-rendering
+       * the same view if navigation changes in a sub-outlet.
+       * This is mainly for tabs when outlet 1 renders ion-tabs
+       * and outlet 2 renders the individual tab view. We don't
+       * want outlet 1 creating a new ion-tabs instance every time
+       * we switch tabs.
+       */
+      if (currentValue !== previousValue) {
+        setupViewItem(matchedRouteRef);
+      }
+    });
 
     const canStart = () => {
       const stack = viewStacks.getViewStack(id);
@@ -182,13 +194,13 @@ export const IonRouterOutlet = defineComponent({
 
       if (enteringViewItem === leavingViewItem) return;
 
-      fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_WILL_ENTER);
+      fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
 
       if (leavingViewItem) {
         let animationBuilder = routerAnimation;
         const leavingEl = leavingViewItem.ionPageElement;
 
-        fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_WILL_LEAVE);
+        fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_WILL_LEAVE);
 
         /**
         * If we are going back from a page that
@@ -230,7 +242,7 @@ export const IonRouterOutlet = defineComponent({
           }
         }
 
-        fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_DID_LEAVE);
+        fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
       } else {
         /**
          * If there is no leaving element, just show
@@ -241,7 +253,7 @@ export const IonRouterOutlet = defineComponent({
         requestAnimationFrame(() => enteringEl.classList.remove('ion-page-invisible'));
       }
 
-      fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_DID_ENTER);
+      fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_DID_ENTER);
 
       components.value = viewStacks.getChildrenToRender(id);
     }
@@ -273,30 +285,16 @@ export const IonRouterOutlet = defineComponent({
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
 
       if (!enteringViewItem) {
-        /**
-         * If we have no existing entering item, we need
-         * make sure that there is no existing view according to the
-         * matched route rather than what is in the url bar.
-         * This is mainly for tabs when outlet 1 renders ion-tabs
-         * and outlet 2 renders the individual tab view. We don't
-         * want outlet 1 creating a new ion-tabs instance every time
-         * we switch tabs.
-         */
-        if (viewStacks.findViewItemByMatchedRoute(matchedRouteRef.value, id)) {
-          return;
-        }
-
         enteringViewItem = viewStacks.createViewItem(id, matchedRouteRef.value.components.default, matchedRouteRef.value, currentRoute);
         viewStacks.add(enteringViewItem);
       }
 
       if (!enteringViewItem.mount) {
         enteringViewItem.mount = true;
-        enteringViewItem.vueComponent.components.IonPage.mounted = function () {
-          viewStacks.registerIonPage(enteringViewItem, this.$refs.ionPage);
+        enteringViewItem.registerCallback = () => {
           handlePageTransition();
-          enteringViewItem.vueComponent.components.IonPage.mounted = undefined;
-        };
+          enteringViewItem.registerCallback = undefined;
+        }
       } else {
         handlePageTransition();
       }
@@ -315,20 +313,58 @@ export const IonRouterOutlet = defineComponent({
      */
     onUnmounted(() => viewStacks.clear(id));
 
+    // TODO types
+    const registerIonPage = (viewItem: any, ionPageEl: HTMLElement) => {
+      const oldIonPageEl = viewItem.ionPageElement;
+
+      viewStacks.registerIonPage(viewItem, ionPageEl);
+
+      /**
+       * If there is a registerCallback,
+       * then this component is being registered
+       * as a result of a navigation change.
+       */
+      if (viewItem.registerCallback) {
+        viewItem.registerCallback();
+
+      /**
+       * If there is no registerCallback, then
+       * this component is likely being re-registered
+       * as a result of a hot module replacement.
+       * We need to see if the oldIonPageEl has
+       * .ion-page-invisible. If it does not then we
+       * need to remove it from the new ionPageEl otherwise
+       * the page will be hidden when it is replaced.
+       */
+      } else if (oldIonPageEl && !oldIonPageEl.classList.contains('ion-page-invisible')) {
+        ionPageEl.classList.remove('ion-page-invisible');
+      }
+  };
     return {
       id,
       components,
-      ionRouterOutlet
+      ionRouterOutlet,
+      registerIonPage
     }
   },
   render() {
-    const { components } = this;
+    const { components, registerIonPage } = this;
 
     return h(
       'ion-router-outlet',
       { ref: 'ionRouterOutlet' },
       // TODO types
-      components && components.map((c: any) => h(c.vueComponent, { key: c.pathname, isInOutlet: true }))
+      components && components.map((c: any) => {
+        return h(
+          c.vueComponent,
+          {
+            ref: c.vueComponentRef,
+            key: c.pathname,
+            isInOutlet: true,
+            registerIonPage: (ionPageEl: HTMLElement) => registerIonPage(c, ionPageEl)
+          }
+        )
+      })
     )
   }
 });

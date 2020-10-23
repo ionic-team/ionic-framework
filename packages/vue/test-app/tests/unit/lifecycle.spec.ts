@@ -8,23 +8,35 @@ const App = {
   template: '<ion-app><ion-router-outlet /></ion-app>',
 }
 
+const BasePage = {
+  template: '<ion-page :data-pageid="name"></ion-page>',
+  components: { IonPage },
+}
+
 const Page1 = {
-  name: 'Page1',
-  template: '<ion-page data-pageid="page1"></ion-page>',
-  components: {
-    IonPage,
+  ...BasePage,
+  data() {
+    return {
+      name: 'page1'
+    }
   },
-  ionViewDidEnter() {},
-  ionViewDidLeave() {},
-  ionViewWillEnter() {},
-  ionViewWillLeave() {},
+  ionViewWillEnter: jest.fn(),
+  ionViewDidEnter: jest.fn(),
+  ionViewWillLeave: jest.fn(),
+  ionViewDidLeave: jest.fn(),
 }
 
 const Page2 = defineComponent({
-  ...Page1,
-  name: 'Page2',
-  template: '<ion-page data-pageid="page2"></ion-page>',
-  setup() {}
+  ...BasePage,
+  setup() {
+    return {
+      name: 'page2'
+    }
+  },
+  ionViewWillEnter: jest.fn(),
+  ionViewDidEnter: jest.fn(),
+  ionViewWillLeave: jest.fn(),
+  ionViewDidLeave: jest.fn(),
 });
 
 const router = createRouter({
@@ -37,15 +49,6 @@ const router = createRouter({
 
 describe('Lifecycle Events', () => {
   it('Triggers lifecycle events', async () => {
-    const page1DidEnterSpy = jest.spyOn(Page1, 'ionViewDidEnter');
-    const page1WillEnterSpy = jest.spyOn(Page1, 'ionViewWillEnter');
-    const page1DidLeaveSpy = jest.spyOn(Page1, 'ionViewDidLeave');
-    const page1WillLeaveSpy = jest.spyOn(Page1, 'ionViewWillLeave');
-    const page2DidEnterSpy = jest.spyOn(Page2, 'ionViewDidEnter');
-    const page2WillEnterSpy = jest.spyOn(Page2, 'ionViewWillEnter');
-    const page2DidLeaveSpy = jest.spyOn(Page2, 'ionViewDidLeave');
-    const page2WillLeaveSpy = jest.spyOn(Page2, 'ionViewWillLeave');
-
     // Initial render
     router.push('/');
     await router.isReady();
@@ -56,17 +59,21 @@ describe('Lifecycle Events', () => {
     });
 
     // Page 1 lifecycle hooks
-    expect(page1DidEnterSpy).toHaveBeenCalled();
-    expect(page1WillEnterSpy).toHaveBeenCalled();
-    expect(page1DidLeaveSpy).not.toHaveBeenCalled();
-    expect(page1WillLeaveSpy).not.toHaveBeenCalled();
+    expect(Page1.ionViewWillEnter).toHaveBeenCalledWith();
+    expect(Page1.ionViewWillEnter.mock.instances[0]).toEqual(expect.objectContaining({ name: 'page1' }))
+
+    expect(Page1.ionViewDidEnter).toHaveBeenCalled();
+    expect(Page1.ionViewDidEnter.mock.instances[0]).toEqual(expect.objectContaining({ name: 'page1' }))
+
+    expect(Page1.ionViewWillLeave).not.toHaveBeenCalled();
+    expect(Page1.ionViewDidLeave).not.toHaveBeenCalled();
     expect(wrapper.html()).toContain('page1');
 
     // Page 2 lifecycle hooks
-    expect(page2DidEnterSpy).not.toHaveBeenCalled();
-    expect(page2WillEnterSpy).not.toHaveBeenCalled();
-    expect(page2DidLeaveSpy).not.toHaveBeenCalled();
-    expect(page2WillLeaveSpy).not.toHaveBeenCalled();
+    expect(Page2.ionViewWillEnter).not.toHaveBeenCalled();
+    expect(Page2.ionViewDidEnter).not.toHaveBeenCalled();
+    expect(Page2.ionViewWillLeave).not.toHaveBeenCalled();
+    expect(Page2.ionViewDidLeave).not.toHaveBeenCalled();
 
     // Navigate to 2nd page
     router.push('/2');
@@ -77,16 +84,20 @@ describe('Lifecycle Events', () => {
     await new Promise((r) => setTimeout(r, 100));
 
     // Page 1 lifecycle hooks
-    expect(page1DidEnterSpy).not.toHaveBeenCalled();
-    expect(page1WillEnterSpy).not.toHaveBeenCalled();
-    expect(page1DidLeaveSpy).toHaveBeenCalled();
-    expect(page1WillLeaveSpy).toHaveBeenCalled();
+    expect(Page1.ionViewDidEnter).not.toHaveBeenCalled();
+    expect(Page1.ionViewWillEnter).not.toHaveBeenCalled();
+    expect(Page1.ionViewWillLeave).toHaveBeenCalled();
+    expect(Page1.ionViewDidLeave).toHaveBeenCalled();
 
     // Page 2 lifecycle hooks
-    expect(page2DidEnterSpy).toHaveBeenCalled();
-    expect(page2WillEnterSpy).toHaveBeenCalled();
-    expect(page2DidLeaveSpy).not.toHaveBeenCalled();
-    expect(page2WillLeaveSpy).not.toHaveBeenCalled();
+    expect(Page2.ionViewWillEnter).toHaveBeenCalled();
+    expect((Page2.ionViewWillEnter as jest.Mock).mock.instances[0]).toEqual(expect.objectContaining({ name: 'page2' }))
+
+    expect(Page2.ionViewDidEnter).toHaveBeenCalled();
+    expect((Page2.ionViewDidEnter as jest.Mock).mock.instances[0]).toEqual(expect.objectContaining({ name: 'page2' }))
+
+    expect(Page2.ionViewWillLeave).not.toHaveBeenCalled();
+    expect(Page2.ionViewDidLeave).not.toHaveBeenCalled();
     expect(wrapper.html()).toContain('page2');
   });
 });
