@@ -133,8 +133,13 @@ export class Checkbox implements ComponentInterface {
     const labelId = inputId + '-lbl';
     const mode = getIonMode(this);
     const label = findItemLabel(el);
+    let labelText;
     if (label) {
       label.id = labelId;
+      if (label.textContent) {
+        labelText = label.textContent;
+        label.setAttribute('aria-hidden', 'true');
+      }
     }
     renderHiddenInput(true, el, this.name, (checked ? value : ''), disabled);
 
@@ -167,14 +172,9 @@ export class Checkbox implements ComponentInterface {
         <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}
         </svg>
-        <button
-          type="button"
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          disabled={this.disabled}
-          ref={btnEl => this.buttonEl = btnEl}
-        >
-        </button>
+        <label>
+          {labelText}
+        </label>
       </Host>
     );
   }
