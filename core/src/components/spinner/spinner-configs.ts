@@ -82,14 +82,14 @@ const spinners = {
 
   'lines': {
     dur: 1000,
-    lines: 12,
+    lines: 8,
     fn: (dur: number, index: number, total: number) => {
-      const transform = `rotate(${ 30 * index + (index < 6 ? 180 : -180) }deg)`;
+      const transform = `rotate(${ (360 / total) * index + (index < (total / 2) ? 180 : -180) }deg)`;
       const animationDelay = `${ (dur * index / total) - dur }ms`;
 
       return {
-        y1: 17,
-        y2: 29,
+        y1: 14,
+        y2: 26,
         style: {
           'transform': transform,
           'animation-delay': animationDelay,
@@ -100,9 +100,9 @@ const spinners = {
 
   'lines-small': {
     dur: 1000,
-    lines: 12,
+    lines: 8,
     fn: (dur: number, index: number, total: number) => {
-      const transform = `rotate(${30 * index + (index < 6 ? 180 : -180)}deg)`;
+      const transform = `rotate(${(360 / total) * index + (index < (total / 2) ? 180 : -180)}deg)`;
       const animationDelay = `${ (dur * index / total) - dur }ms`;
       return {
         y1: 12,
