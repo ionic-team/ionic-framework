@@ -113,6 +113,15 @@ describe('Tabs', () => {
     cy.get('ion-tab-button#tab-button-tab2').click();
     cy.ionPageVisible('tab2');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22344
+  it('should show tab 1 when redirecting from tab 3', () => {
+    cy.visit('http://localhost:8080/tabs/tab3');
+
+    cy.ionPageVisible('tab1');
+    cy.ionPageDoesNotExist('tab3');
+    cy.ionPageVisible('tabs');
+  });
 })
 
 describe('Tabs - Swipe to Go Back', () => {
