@@ -145,13 +145,13 @@ export const handleScrollWhileRefreshing = (
   });
 };
 
-export const translateElement = (el?: HTMLElement, value?: string) => {
+export const translateElement = (el?: HTMLElement, value?: string, duration = 200) => {
   if (!el) { return Promise.resolve(); }
 
-  const trans = transitionEndAsync(el, 200);
+  const trans = transitionEndAsync(el, duration);
 
   writeTask(() => {
-    el.style.setProperty('transition', '0.2s all ease-out');
+    el.style.setProperty('transition', `${duration}ms all ease-out`);
 
     if (value === undefined) {
       el.style.removeProperty('transform');

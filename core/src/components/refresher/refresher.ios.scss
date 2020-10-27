@@ -30,7 +30,7 @@ ion-refresher.refresher-native {
   display: block;
 
   z-index: 1;
-  
+
   ion-spinner {
     @include margin(0, auto, 0, auto);
   }
@@ -41,6 +41,7 @@ ion-refresher.refresher-native {
     --refreshing-rotation-duration: 2s;
     display: none;
     animation: var(--refreshing-rotation-duration) ease-out refresher-rotate forwards;
+    animation-delay: 250ms;
   }
   .refresher-refreshing {
     display: none;
@@ -67,6 +68,16 @@ ion-refresher.refresher-native {
   }
 }
 
+.refresher-native.refresher-completing{
+  .refresher-refreshing ion-spinner {
+    animation: 200ms linear refresher-scale forwards;
+  }
+
+  .refresher-refreshing-icon {
+    transform: unset;
+  }
+}
+
 @keyframes refresher-pop {
   0% {
     transform: scale(1);
@@ -87,5 +98,15 @@ ion-refresher.refresher-native {
   }
   to {
     transform: rotate(180deg);
+  }
+}
+
+@keyframes refresher-scale {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+
+  to {
+    transform: scale(0) rotate(180deg);
   }
 }

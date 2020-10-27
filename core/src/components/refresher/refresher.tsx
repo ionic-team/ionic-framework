@@ -147,7 +147,7 @@ export class Refresher implements ComponentInterface {
     this.state = state;
 
     if (getIonMode(this) === 'ios') {
-      await translateElement(el, undefined);
+      await translateElement(el, undefined, 400);
     } else {
       await transitionEndAsync(this.el.querySelector('.refresher-refreshing-icon'), 200);
     }
@@ -231,8 +231,10 @@ export class Refresher implements ComponentInterface {
             }
           }
         } else {
-          this.state = RefresherState.Pulling;
-          handleScrollWhilePulling(pullingSpinner, ticks, opacity, currentTickToShow);
+          if (!this.didRefresh) {
+            this.state = RefresherState.Pulling;
+            handleScrollWhilePulling(pullingSpinner, ticks, opacity, currentTickToShow);
+          }
         }
       });
     };
