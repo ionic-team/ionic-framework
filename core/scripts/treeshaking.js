@@ -67,12 +67,12 @@ async function check(input) {
       virtual({
         __agadoo__: `import ${JSON.stringify(resolved)}`,
         tslib: `
-					const noop = () => {};	
-					export const __awaiter = noop;
-					export const __extends = noop;
-					export const __generator = noop;
-					export const __spreadArrays = noop;
-				`,
+          const noop = () => {};  
+          export const __awaiter = noop;
+          export const __extends = noop;
+          export const __generator = noop;
+          export const __spreadArrays = noop;
+        `,
       }),
     ],
     onwarn: (warning, handle) => {
