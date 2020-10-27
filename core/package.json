@@ -15,11 +15,11 @@
     "progressive web app",
     "pwa"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "es2015": "dist/esm/index.mjs",
-  "es2017": "dist/esm/index.mjs",
-  "jsnext:main": "dist/esm/index.mjs",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "es2015": "dist/esm/index.js",
+  "es2017": "dist/esm/index.js",
+  "jsnext:main": "dist/esm/index.js",
   "collection:main": "dist/collection/index.js",
   "collection": "dist/collection/collection-manifest.json",
   "types": "dist/types/interface.d.ts",
@@ -36,7 +36,7 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
-    "@stencil/core": "1.17.3",
+    "@stencil/core": "2.1.2",
     "@stencil/sass": "1.3.2",
     "@stencil/vue-output-target": "0.1.8",
     "@types/jest": "^26.0.10",
@@ -59,7 +59,8 @@
     "swiper": "5.4.1",
     "tslint": "^6.1.3",
     "tslint-ionic-rules": "0.0.21",
-    "tslint-react": "^5.0.0"
+    "tslint-react": "^5.0.0",
+    "typescript": "^4.0.5"
   },
   "scripts": {
     "build": "npm run clean && npm run build.css && npm run build.vendor && stencil build --docs --es5 --docs-json dist/docs.json && npm run cdnloader",
@@ -88,7 +89,7 @@
     "test.screenshot": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/dev.js",
     "test.screenshot.ci": "stencil test --e2e --screenshot --screenshot-connector=scripts/screenshot/ci.js --ci",
     "test.watch": "jest --watch --no-cache",
-    "test.treeshake": "node scripts/treeshaking.js dist/index.mjs",
+    "test.treeshake": "node scripts/treeshaking.js dist/index.js",
     "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake"
   },
   "author": "Ionic Team",
