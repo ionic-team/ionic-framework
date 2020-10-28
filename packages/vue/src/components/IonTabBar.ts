@@ -20,6 +20,13 @@ export const IonTabBar = defineComponent({
         tabs: {}
     };
     const currentInstance = getCurrentInstance();
+    /**
+     * For each tab, we need to keep track of its
+     * base href as well as any child page that
+     * is active in its stack so that when we go back
+     * to a tab from another tab, we can correctly
+     * show any child pages if necessary.
+     */
     (currentInstance.subTree.children as VNode[]).forEach((child: VNode) => {
       if (child.type && (child.type as any).name === 'IonTabButton') {
         tabState.tabs[child.props.tab] = {
@@ -28,6 +35,11 @@ export const IonTabBar = defineComponent({
           ref: child
         }
 
+        /**
+         * Passing this prop to each tab button
+         * lets it be aware of the state that
+         * ion-tab-bar is managing for it.
+         */
         child.component.props._getTabState = () => tabState;
       }
     });
@@ -42,6 +54,11 @@ export const IonTabBar = defineComponent({
           return currentRoute.pathname.startsWith(href);
         });
 
+      /**
+       * For each tab, check to see if the
+       * base href has changed. If so, update
+       * it in the tabs state.
+       */
       childNodes.forEach((child: VNode) => {
         if (child.type && (child.type as any).name === 'IonTabButton') {
           const tab = tabs[child.props.tab];
@@ -58,6 +75,13 @@ export const IonTabBar = defineComponent({
 
       if (activeTab && prevActiveTab) {
         const prevHref = tabState.tabs[prevActiveTab].currentHref;
+        /**
+         * If the tabs change or the url changes,
+         * update the currentHref for the active tab.
+         * Ex: url changes from /tabs/tab1 --> /tabs/tab1/child
+         * If we went to tab2 then back to tab1, we should
+         * land on /tabs/tab1/child instead of /tabs/tab1.
+         */
         if (activeTab !== prevActiveTab || (prevHref !== currentRoute.pathname)) {
           tabs[activeTab] = {
             ...tabs[activeTab],
@@ -65,6 +89,10 @@ export const IonTabBar = defineComponent({
           }
         }
 
+        /**
+         * If navigating back and the tabs change,
+         * set the previous tab back to its original href.
+         */
         if (currentRoute.routerAction === 'pop' && (activeTab !== prevActiveTab)) {
           tabs[prevActiveTab] = {
             ...tabs[prevActiveTab],
