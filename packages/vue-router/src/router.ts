@@ -239,7 +239,8 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       incomingRouteParams = {
         ...incomingRouteParams,
         routerAction: 'push',
-        routerDirection: 'none'
+        routerDirection: 'none',
+        tab
       }
 
       /**

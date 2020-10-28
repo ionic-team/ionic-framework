@@ -122,6 +122,31 @@ describe('Tabs', () => {
     cy.ionPageDoesNotExist('tab3');
     cy.ionPageVisible('tabs');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22307
+  it('should select correct tab after going back', () => {
+    cy.visit('http://localhost:8080/tabs-secondary/tab1');
+
+    cy.get('ion-tab-button#tab-button-tab2-secondary').click();
+    cy.ionPageVisible('tab2-secondary');
+    cy.ionPageHidden('tab1-secondary');
+
+    cy.get('ion-tab-button#tab-button-tab3-secondary').click();
+    cy.ionPageVisible('tab3-secondary');
+    cy.ionPageHidden('tab2-secondary');
+
+    cy.go('back');
+    cy.ionPageVisible('tab2-secondary');
+    cy.ionPageHidden('tab3-secondary');
+
+    cy.go('back');
+    cy.ionPageVisible('tab1-secondary');
+    cy.ionPageHidden('tab2-secondary');
+
+    cy.get('ion-tab-button#tab-button-tab3-secondary').click();
+    cy.ionPageVisible('tab3-secondary');
+    cy.ionPageHidden('tab1-secondary');
+  });
 })
 
 describe('Tabs - Swipe to Go Back', () => {
