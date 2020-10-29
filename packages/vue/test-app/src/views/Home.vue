@@ -7,7 +7,7 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-header>
+      <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">Test App</ion-title>
         </ion-toolbar>
