@@ -60,6 +60,6 @@
   },
   "vetur": {
     "tags": "dist/vetur/tags.json",
-    "attrbutes": "dist/vetur/attributes.json"
+    "attributes": "dist/vetur/attributes.json"
   }
 }

@@ -1,5 +1,6 @@
 const DocsJson = require('@ionic/core/dist/docs.json');
 const fs = require('fs');
+const { paramCase } = require('change-case');
 
 const generateTags = () => {
   const tagsObject = {};
@@ -7,7 +8,7 @@ const generateTags = () => {
   DocsJson.components.forEach(component => {
     tagsObject[component.tag] = {
       description: component.docs,
-      attributes: component.props.map(prop => prop.name)
+      attributes: component.props.map(prop => paramCase(prop.name))
     }
   });
 
@@ -19,9 +20,11 @@ const generateAttributes = () => {
 
   DocsJson.components.forEach(component => {
     component.props.forEach(prop => {
-      attributesObject[`${component.tag}/${prop.name}`] = {
+
+      attributesObject[`${component.tag}/${paramCase(prop.name)}`] = {
         type: prop.type,
-        description: prop.docs
+        description: prop.docs,
+        options: prop.values.filter(option => option.value !== undefined).map(option => option.value)
       }
     });
   });
