@@ -41,6 +41,12 @@
         <ion-item router-link="/tabs-secondary" id="tab-secondary">
           <ion-label>Tabs Secondary</ion-label>
         </ion-item>
+        <ion-item router-link="/lifecycle" id="lifecycle">
+          <ion-label>Lifecycle</ion-label>
+        </ion-item>
+        <ion-item router-link="/delayed-redirect" id="delayed-redirect">
+          <ion-label>Delayed Redirect</ion-label>
+        </ion-item>
       </ion-list>
 
     </ion-content>
