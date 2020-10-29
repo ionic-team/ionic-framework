@@ -136,10 +136,8 @@ export class Checkbox implements ComponentInterface {
     let labelText;
     if (label) {
       label.id = labelId;
-      if (label.textContent) {
-        labelText = label.textContent;
-        label.setAttribute('aria-hidden', 'true');
-      }
+      labelText = label.textContent;
+      label.setAttribute('aria-hidden', 'true');
     }
 
     let path = indeterminate
@@ -184,7 +182,7 @@ export class Checkbox implements ComponentInterface {
           value={checked ? value : ''}
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
-          ref={el => this.focusEl = el}
+          ref={focusEl => this.focusEl = focusEl}
         />
       </Host>
     );

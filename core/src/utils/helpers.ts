@@ -70,7 +70,7 @@ export const hasShadowDom = (el: HTMLElement) => {
   return !!el.shadowRoot && !!(el as any).attachShadow;
 };
 
-export const findItemLabel = (componentEl: HTMLElement) => {
+export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | null => {
   const itemEl = componentEl.closest('ion-item');
   if (itemEl) {
     return itemEl.querySelector('ion-label');
