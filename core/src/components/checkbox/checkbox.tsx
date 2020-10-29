@@ -171,13 +171,14 @@ export class Checkbox implements ComponentInterface {
             {path}
           </svg>
         </div>
-        <label>
+        <label htmlFor={inputId}>
           {labelText}
         </label>
         <input
           type="checkbox"
           class="aux-input"
           disabled={disabled}
+          id={inputId}
           name={name}
           value={checked ? value : ''}
           onFocus={() => this.onFocus()}
