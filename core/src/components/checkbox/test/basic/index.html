@@ -38,7 +38,7 @@
 
       <ion-item>
         <ion-label>Secondary</ion-label>
-        <ion-checkbox checked color="secondary"></ion-checkbox>
+        <ion-checkbox disabled checked color="secondary"></ion-checkbox>
       </ion-item>
 
       <ion-item>
@@ -103,6 +103,23 @@
     </ion-content>
 
   </ion-app>
+
+  <script>
+    const inputs = document.querySelectorAll('ion-checkbox');
+
+    for (var i = 0; i < inputs.length; i++) {
+      const input = inputs[i];
+
+      input.addEventListener('ionBlur', function() {
+        console.log('Listen ionBlur: fired');
+      });
+
+      input.addEventListener('ionFocus', function() {
+        console.log('Listen ionFocus: fired');
+      });
+    }
+  </script>
+
 </body>
 
 </html>

@@ -49,6 +49,10 @@ label {
   opacity: 0;
 }
 
+input {
+  @include visually-hidden();
+}
+
 .checkbox-icon {
   @include border-radius(var(--border-radius));
 
