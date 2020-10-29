@@ -46,7 +46,66 @@ describe('Routing', () => {
     cy.ionPageVisible('home');
     cy.ionPageDoesNotExist('routing');
     cy.ionPageDoesNotExist('routingchild')
-  })
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
+  it('should navigate to multiple pages that match the same parameterized route', () => {
+    cy.visit('http://localhost:8080/routing');
+
+    cy.get('#parameter-abc').click();
+    cy.ionPageVisible('routingparameter');
+    cy.get('[data-pageid=routingparameter] #parameter-value').should('have.text', 'abc');
+    cy.ionBackClick('routingparameter');
+
+    cy.ionPageDoesNotExist('routingparameter');
+
+    cy.get('#parameter-xyz').click();
+    cy.ionPageVisible('routingparameter');
+    cy.get('[data-pageid=routingparameter] #parameter-value').should('have.text', 'xyz');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
+  it('should handle parameterized urls properly', () => {
+    cy.visit('http://localhost:8080/routing');
+
+    cy.get('#parameter-abc').click();
+    cy.ionPageVisible('routingparameter');
+
+    cy.get('#parameter-view').click();
+
+    cy.ionPageVisible('routingparameterview');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22324
+  it('should show correct view when navigating back from parameterized page to query string page', () => {
+    cy.visit('http://localhost:8080/routing');
+    cy.get('#route-params').click();
+    cy.get('#parameter-view-item').click();
+
+    cy.ionPageVisible('routingparameterview');
+    cy.ionPageHidden('routing');
+
+    cy.ionBackClick('routingparameterview');
+
+    cy.ionPageDoesNotExist('routingparameterview');
+    cy.ionPageVisible('routing');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
+  it('should work properly with async navigation guards', () => {
+    cy.visit('http://localhost:8080');
+    cy.get('#delayed-redirect').click();
+
+    cy.get('ion-loading').should('exist');
+
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('home');
+
+    cy.ionBackClick('routing');
+
+    cy.ionPageVisible('home');
+    cy.ionPageDoesNotExist('routing');
+  });
 });
 
 describe('Routing - Swipe to Go Back', () => {

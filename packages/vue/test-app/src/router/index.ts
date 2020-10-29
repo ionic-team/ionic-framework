@@ -1,11 +1,21 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import Home from '../views/Home.vue'
+import Home from '@/views/Home.vue'
+import { DelayGuard } from '@/guards/Delay';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     component: Home
+  },
+  {
+    path: '/delayed-redirect',
+    beforeEnter: DelayGuard,
+    component: Home
+  },
+  {
+    path: '/lifecycle',
+    component: () => import('@/views/Lifecycle.vue')
   },
   {
     path: '/overlays',
@@ -33,6 +43,14 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/routing/child',
     component: () => import('@/views/RoutingChild.vue')
+  },
+  {
+    path: '/routing/:id',
+    component: () => import('@/views/RoutingParameter.vue')
+  },
+  {
+    path: '/routing/:id/view',
+    component: () => import('@/views/RoutingParameterView.vue')
   },
   {
     path: '/navigation',
@@ -81,6 +99,9 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'tab3',
+        beforeEnter: (to, from, next) => {
+          next({ path: '/tabs/tab1' });
+        },
         component: () => import('@/views/Tab3.vue')
       }
     ]
@@ -112,6 +133,6 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
 
 export default router

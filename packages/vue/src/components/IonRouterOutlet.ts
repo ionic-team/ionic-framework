@@ -46,7 +46,19 @@ export const IonRouterOutlet = defineComponent({
     // The base url for this router outlet
     let parentOutletPath: string;
 
-    watch(matchedRouteRef, () => setupViewItem(matchedRouteRef));
+    watch(matchedRouteRef, (currentValue, previousValue) => {
+      /**
+       * We need to make sure that we are not re-rendering
+       * the same view if navigation changes in a sub-outlet.
+       * This is mainly for tabs when outlet 1 renders ion-tabs
+       * and outlet 2 renders the individual tab view. We don't
+       * want outlet 1 creating a new ion-tabs instance every time
+       * we switch tabs.
+       */
+      if (currentValue !== previousValue) {
+        setupViewItem(matchedRouteRef);
+      }
+    });
 
     const canStart = () => {
       const stack = viewStacks.getViewStack(id);
@@ -182,13 +194,13 @@ export const IonRouterOutlet = defineComponent({
 
       if (enteringViewItem === leavingViewItem) return;
 
-      fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_WILL_ENTER);
+      fireLifecycle(enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
 
       if (leavingViewItem) {
         let animationBuilder = routerAnimation;
         const leavingEl = leavingViewItem.ionPageElement;
 
-        fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_WILL_LEAVE);
+        fireLifecycle(leavingViewItem.vueComponentRef, LIFECYCLE_WILL_LEAVE);
 
         /**
         * If we are going back from a page that
@@ -230,7 +242,7 @@ export const IonRouterOutlet = defineComponent({
           }
         }
 
-        fireLifecycle(leavingViewItem.vueComponent, LIFECYCLE_DID_LEAVE);
+        fireLifecycle(leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
       } else {
         /**
          * If there is no leaving element, just show
@@ -241,7 +253,7 @@ export const IonRouterOutlet = defineComponent({
         requestAnimationFrame(() => enteringEl.classList.remove('ion-page-invisible'));
       }
 
-      fireLifecycle(enteringViewItem.vueComponent, LIFECYCLE_DID_ENTER);
+      fireLifecycle(enteringViewItem.vueComponentRef, LIFECYCLE_DID_ENTER);
 
       components.value = viewStacks.getChildrenToRender(id);
     }
@@ -273,19 +285,6 @@ export const IonRouterOutlet = defineComponent({
       let enteringViewItem = viewStacks.findViewItemByRouteInfo(currentRoute, id);
 
       if (!enteringViewItem) {
-        /**
-         * If we have no existing entering item, we need
-         * make sure that there is no existing view according to the
-         * matched route rather than what is in the url bar.
-         * This is mainly for tabs when outlet 1 renders ion-tabs
-         * and outlet 2 renders the individual tab view. We don't
-         * want outlet 1 creating a new ion-tabs instance every time
-         * we switch tabs.
-         */
-        if (viewStacks.findViewItemByMatchedRoute(matchedRouteRef.value, id)) {
-          return;
-        }
-
         enteringViewItem = viewStacks.createViewItem(id, matchedRouteRef.value.components.default, matchedRouteRef.value, currentRoute);
         viewStacks.add(enteringViewItem);
       }
@@ -359,6 +358,7 @@ export const IonRouterOutlet = defineComponent({
         return h(
           c.vueComponent,
           {
+            ref: c.vueComponentRef,
             key: c.pathname,
             isInOutlet: true,
             registerIonPage: (ionPageEl: HTMLElement) => registerIonPage(c, ionPageEl)
