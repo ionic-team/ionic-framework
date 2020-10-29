@@ -185,7 +185,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install --legacy-peer-deps
+          command: npm install
           working_directory: /tmp/workspace/packages/vue
       - run:
           command: sudo npm link
@@ -208,7 +208,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install --legacy-peer-deps
+          command: npm install
           working_directory: /tmp/workspace/packages/vue-router
       - run:
           command: sudo npm link
