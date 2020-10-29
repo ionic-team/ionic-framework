@@ -168,7 +168,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (input && this.focusEventListener) {
       this.el.removeEventListener('click', ev => this.delegateFocus(ev, input));
     }
-  }  
+  }
 
   componentDidLoad() {
     this.setMultipleInputs();
