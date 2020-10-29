@@ -27,7 +27,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   }
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
-
+  private focusEventListener = false;
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
 
@@ -152,14 +152,25 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
   }
 
-  componentDidLoad() {
+  componentDidUpdate() {
     // Do not use @Listen here to avoid making all items
     // appear as clickable to screen readers
+    // https://github.com/ionic-team/ionic-framework/issues/22011
     const input = this.getFirstInput();
-    if (input) {
+    if (input && !this.focusEventListener) {
       this.el.addEventListener('click', ev => this.delegateFocus(ev, input));
+      this.focusEventListener = true;
     }
+  }
 
+  disconnectedCallback() {
+    const input = this.getFirstInput();
+    if (input && this.focusEventListener) {
+      this.el.removeEventListener('click', ev => this.delegateFocus(ev, input));
+    }
+  }  
+
+  componentDidLoad() {
     this.setMultipleInputs();
   }
 
