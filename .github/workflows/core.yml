@@ -1,11 +1,11 @@
-name: '@ionic/core'
+name: 'Ionic Framework'
 
 on:
   pull_request:
     branches: [ '**' ]
 
 jobs:
-  install:
+  build-core:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -14,15 +14,18 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install Dependencies
       run: npm install
+      run: npm run build -- --ci
       working-directory: core
     - name: Restore Dependency Cache
       uses: actions/cache@v2
       with:
-        path: './core/node_modules'
-        key: ${{ runner.os }}-core-${{ hashFiles('./core/package.json') }}
+        path: |
+          './core/node_modules'
+          './core/.stencil'
+        key: ${{ runner.os }}-core-${{ hashFiles('**/lockfiles') }}
 
-  test:
-    needs: [install]
+  test-core-clean-build:
+    needs: [build-core]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -32,8 +35,26 @@ jobs:
     - name: Restore Dependency Cache
       uses: actions/cache@v2
       with:
-        path: './core/node_modules'
-        key: ${{ runner.os }}-core-${{ hashFiles('./core/package.json') }}
+        path: |
+          './core/node_modules'
+          './core/.stencil'
+        key: ${{ runner.os }}-core-${{ hashFiles('**/lockfiles') }}
+    - name: Checking clean build
+      run: git diff --exit-code
+
+  test-core-lint:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./core
+    steps:
+    - uses: actions/checkout@v2
+    - name: Restore Dependency Cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          './core/node_modules'
+          './core/.stencil'
+        key: ${{ runner.os }}-core-${{ hashFiles('**/lockfiles') }}
     - run: npm run lint
-    - run: npm run build
-    - run: npm run test
