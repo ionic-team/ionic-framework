@@ -152,7 +152,6 @@ export class Checkbox implements ComponentInterface {
 
     return (
       <Host
-        onClick={this.onClick}
         role="checkbox"
         aria-disabled={disabled ? 'true' : null}
         aria-checked={`${checked}`}
@@ -183,6 +182,7 @@ export class Checkbox implements ComponentInterface {
           value={checked ? value : ''}
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
+          onClick={this.onClick}
           ref={focusEl => this.focusEl = focusEl}
         />
       </Host>

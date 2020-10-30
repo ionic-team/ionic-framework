@@ -117,6 +117,10 @@
       input.addEventListener('ionFocus', function() {
         console.log('Listen ionFocus: fired');
       });
+
+      input.addEventListener('ionChange', function(ev) {
+        console.log('Listen ionChange: fired', ev.detail);
+      });      
     }
   </script>
 
