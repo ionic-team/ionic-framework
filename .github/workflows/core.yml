@@ -12,7 +12,10 @@ jobs:
         working-directory: ./core
     steps:
     - uses: actions/checkout@v2
-    - run: npm run build -- --ci
+    - name: Install Dependencies
+      run: npm install
+    - name: Build Core
+      run: npm run build -- --ci
     - name: Restore Dependency Cache
       uses: actions/cache@v2
       with:
