@@ -123,6 +123,10 @@
         </ion-label>
       </ion-list-header>
       <ion-list class="multiple">
+        <ion-item id="delayedInputItem">
+          <ion-label>Delayed input</ion-label>
+        </ion-item>
+
         <ion-item>
           <ion-label>Multiple inputs</ion-label>
           <ion-input placeholder="Input 1"></ion-input>
@@ -199,6 +203,15 @@
       const color = clickableItem.color;
       clickableItem.color = color === undefined ? 'primary' : undefined;
     });
+
+    const delayedInputItem = document.querySelector('#delayedInputItem');
+    const delayedInput = document.createElement('ion-input');
+    delayedInput.type = 'number';
+    delayedInput.value = 34;
+
+    setTimeout(() => {
+      delayedInputItem.appendChild(delayedInput);
+    }, 3000);
 
     const inputs = document.querySelectorAll('ion-input, ion-textarea');
 
