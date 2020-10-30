@@ -265,8 +265,6 @@ export class Range implements ComponentInterface {
     const rect = this.rect = this.rangeSlider!.getBoundingClientRect() as any;
     const currentX = detail.currentX;
 
-    console.log('on start', detail)
-
     // figure out which knob they started closer to
     let ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
     if (document.dir === 'rtl') {
