@@ -87,7 +87,7 @@ jobs:
           ${{ runner.os }}-core-
           ${{ runner.os }}-
 
-    - run: npm run test.spec -- --ci
+    - run: npm run test.spec --ci
 
   test-core-treeshake:
     needs: [build-core]
@@ -107,4 +107,4 @@ jobs:
           ${{ runner.os }}-core-
           ${{ runner.os }}-
 
-    - run: npm run test.treeshake -- --ci
+    - run: npm run test.treeshake --ci
