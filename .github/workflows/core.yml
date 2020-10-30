@@ -29,7 +29,11 @@ jobs:
       run: npm install
     - name: Build Core
       run: npm run build -- --ci
-
+    - name: Persist Core
+      uses: actions/upload-artifact@v2
+      with:
+        name: ionic-core
+        path: ./core
 
   test-core-clean-build:
     needs: [build-core]
@@ -43,14 +47,11 @@ jobs:
       with:
         node-version: 15.x
 
-    - name: Cache Node Modules
-      uses: actions/cache@v2
+    - name: Restore Core
+      uses: actions/download-artifact@v2
       with:
-        path: './core/node_modules'
-        key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-core-
-          ${{ runner.os }}-
+        name: ionic-core
+        path: ./core
 
     - name: Checking clean build
       run: git diff --exit-code
@@ -67,14 +68,11 @@ jobs:
       with:
         node-version: 15.x
 
-    - name: Cache Node Modules
-      uses: actions/cache@v2
+    - name: Restore Core
+      uses: actions/download-artifact@v2
       with:
-        path: './core/node_modules'
-        key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-core-
-          ${{ runner.os }}-
+        name: ionic-core
+        path: ./core
 
     - run: npm run lint
 
@@ -90,14 +88,11 @@ jobs:
       with:
         node-version: 15.x
 
-    - name: Cache Node Modules
-      uses: actions/cache@v2
+    - name: Restore Core
+      uses: actions/download-artifact@v2
       with:
-        path: './core/node_modules'
-        key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-core-
-          ${{ runner.os }}-
+        name: ionic-core
+        path: ./core
 
     - run: npm run test.spec --ci
 
@@ -113,14 +108,11 @@ jobs:
       with:
         node-version: 15.x
 
-    - name: Cache Node Modules
-      uses: actions/cache@v2
+    - name: Restore Core
+      uses: actions/download-artifact@v2
       with:
-        path: './core/node_modules'
-        key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-core-
-          ${{ runner.os }}-
+        name: ionic-core
+        path: ./core
 
     - run: npm run test.treeshake --ci
 
@@ -138,14 +130,11 @@ jobs:
       with:
         node-version: 15.x
 
-    - name: Cache Node Modules
-      uses: actions/cache@v2
+    - name: Restore Core
+      uses: actions/download-artifact@v2
       with:
-        path: './packages/vue/node_modules'
-        key: ${{ runner.os }}-vue-${{ hashFiles('./packages/vue/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-vue-
-          ${{ runner.os }}-
+        name: ionic-core
+        path: ./core
 
     - run: npm install
     - run: ls && sudo npm link
@@ -165,14 +154,11 @@ jobs:
       with:
         node-version: 15.x
 
-    - name: Cache Node Modules
-      uses: actions/cache@v2
+    - name: Restore Core
+      uses: actions/download-artifact@v2
       with:
-        path: './packages/vue-router/node_modules'
-        key: ${{ runner.os }}-vue-router-${{ hashFiles('./packages/vue-router/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-vue-router-
-          ${{ runner.os }}-
+        name: ionic-core
+        path: ./core
 
     - run: npm install
     - run: sudo npm link
