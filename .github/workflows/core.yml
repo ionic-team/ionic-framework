@@ -68,3 +68,43 @@ jobs:
           ${{ runner.os }}-
 
     - run: npm run lint
+
+  test-core-spec:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./core
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache Node Modules
+      uses: actions/cache@v2
+      with:
+        path: './core/node_modules'
+        key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-core-
+          ${{ runner.os }}-
+
+    - run: npm run test.spec -- --ci
+
+  test-core-treeshake:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./core
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache Node Modules
+      uses: actions/cache@v2
+      with:
+        path: './core/node_modules'
+        key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-core-
+          ${{ runner.os }}-
+
+    - run: npm run test.treeshake -- --ci
