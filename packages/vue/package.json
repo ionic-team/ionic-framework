@@ -51,7 +51,8 @@
     "rollup-plugin-terser": "^7.0.2",
     "typescript": "^3.9.7",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-beta.11"
+    "vue-router": "^4.0.0-beta.11",
+    "fs-extra": "^9.0.1"
   },
   "dependencies": {
     "@ionic/core": "5.4.1",
