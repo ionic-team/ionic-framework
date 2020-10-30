@@ -16,7 +16,12 @@ jobs:
       run: npm install
     - name: Build Core
       run: npm run build -- --ci
-    - uses: ionic/cache@v1
+    - name: Restore Dependency Cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          './core/node_modules'
+        key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
 
   test-core-clean-build:
     needs: [build-core]
@@ -25,7 +30,13 @@ jobs:
       run:
         working-directory: ./core
     steps:
-    - uses: ionic/cache@v1
+    - uses: actions/checkout@v2
+    - name: Restore Dependency Cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          './core/node_modules'
+        key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
     - name: Checking clean build
       run: git diff --exit-code
 
@@ -36,5 +47,11 @@ jobs:
       run:
         working-directory: ./core
     steps:
-    - uses: ionic/cache@v1
+    - uses: actions/checkout@v2
+    - name: Restore Dependency Cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          './core/node_modules'
+        key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
     - run: npm run lint
