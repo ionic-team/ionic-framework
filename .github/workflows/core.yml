@@ -148,10 +148,10 @@ jobs:
           ${{ runner.os }}-
 
     - run: npm install
-    - run: sudo npm link
+    - run: ls && sudo npm link
       working-directory: ./core
     - run: sudo npm link @ionic/core
-    - run: ls && npm run build
+    - run: npm run build
 
   build-vue-router:
     needs: [build-core, build-vue]
