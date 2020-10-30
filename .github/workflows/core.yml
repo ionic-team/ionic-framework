@@ -151,7 +151,7 @@ jobs:
     - run: sudo npm link
       working-directory: ./core
     - run: sudo npm link @ionic/core
-    - run: npm run build
+    - run: ls && npm run build
 
   build-vue-router:
     needs: [build-core, build-vue]
