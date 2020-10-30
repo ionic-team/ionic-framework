@@ -79,10 +79,10 @@ export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | n
 };
 
 /**
- * This method is used to add a hidden input to a host element that contains a Shadow DOM. 
+ * This method is used to add a hidden input to a host element that contains a Shadow DOM.
  * It does not add the input inside of the Shadow root which allows it to be picked up
  * inside of forms. It should contain the same values as the host element.
- * 
+ *
  * @param always Add a hidden input even if the container does not use Shadow DOM
  * @param container The element where the input will be added
  * @param name The name of the input
