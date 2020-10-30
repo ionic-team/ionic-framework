@@ -16,13 +16,7 @@ jobs:
       run: npm install
     - name: Build Core
       run: npm run build -- --ci
-    - name: Restore Dependency Cache
-      uses: actions/cache@v2
-      with:
-        path: |
-          './core/node_modules'
-          './core/.stencil'
-        key: ${{ runner.os }}-core-${{ hashFiles('**/lockfiles') }}
+    - uses: ionic/cache@v1
 
   test-core-clean-build:
     needs: [build-core]
@@ -31,14 +25,7 @@ jobs:
       run:
         working-directory: ./core
     steps:
-    - uses: actions/checkout@v2
-    - name: Restore Dependency Cache
-      uses: actions/cache@v2
-      with:
-        path: |
-          './core/node_modules'
-          './core/.stencil'
-        key: ${{ runner.os }}-core-${{ hashFiles('**/lockfiles') }}
+    - uses: ionic/cache@v1
     - name: Checking clean build
       run: git diff --exit-code
 
@@ -49,12 +36,5 @@ jobs:
       run:
         working-directory: ./core
     steps:
-    - uses: actions/checkout@v2
-    - name: Restore Dependency Cache
-      uses: actions/cache@v2
-      with:
-        path: |
-          './core/node_modules'
-          './core/.stencil'
-        key: ${{ runner.os }}-core-${{ hashFiles('**/lockfiles') }}
+    - uses: ionic/cache@v1
     - run: npm run lint

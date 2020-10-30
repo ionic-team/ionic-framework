@@ -1,0 +1,10 @@
+runs:
+  using: "composite"
+  steps:
+    - name: Restore Dependency Cache
+    uses: actions/cache@v2
+    with:
+      path: |
+        './core/node_modules'
+        './core/.stencil'
+      key: ${{ runner.os }}-core-${{ hashFiles('**/lockfiles') }}
