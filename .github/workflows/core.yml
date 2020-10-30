@@ -1,0 +1,39 @@
+name: '@ionic/core'
+
+on:
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/core
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: npm install
+      working-directory: packages/core
+    - name: Restore Dependency Cache
+      uses: actions/cache@v2
+      with:
+        path: './core/node_modules'
+        key: ${{ runner.os }}-core-${{ hashFiles('./core/package.json') }}
+
+  test:
+    needs: [install]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/core
+    steps:
+    - uses: actions/checkout@v2
+    - name: Restore Dependency Cache
+      uses: actions/cache@v2
+      with:
+        path: './core/node_modules'
+        key: ${{ runner.os }}-core-${{ hashFiles('./core/package.json') }}
+    - run: npm run lint
+    - run: npm run build
+    - run: npm run test
