@@ -123,3 +123,62 @@ jobs:
           ${{ runner.os }}-
 
     - run: npm run test.treeshake --ci
+
+
+
+  build-vue:
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/vue
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+
+    - name: Cache Node Modules
+      uses: actions/cache@v2
+      with:
+        path: './packages/vue/node_modules'
+        key: ${{ runner.os }}-vue-${{ hashFiles('./packages/vue/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-vue-
+          ${{ runner.os }}-
+
+    - run: npm install
+    - run: sudo npm link
+      working-directory: ./core
+    - run: sudo npm link @ionic/core
+    - run: npm run build
+
+  build-vue-router:
+    needs: [build-core, build-vue]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/vue-router
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 15.x
+
+    - name: Cache Node Modules
+      uses: actions/cache@v2
+      with:
+        path: './packages/vue-router/node_modules'
+        key: ${{ runner.os }}-vue-router-${{ hashFiles('./packages/vue-router/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-vue-router-
+          ${{ runner.os }}-
+
+    - run: npm install
+    - run: sudo npm link
+      working-directory: ./core
+    - run: sudo npm link @ionic/core
+    - run: sudo npm link
+      working-directory: ./packages/vue
+    - run: sudo npm link @ionic/vue
+    - run: npm run build
