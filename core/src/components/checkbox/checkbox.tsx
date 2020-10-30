@@ -139,7 +139,7 @@ export class Checkbox implements ComponentInterface {
       labelText = label.textContent;
       label.setAttribute('aria-hidden', 'true');
     }
-    renderHiddenInput(true, el, this.name, (checked ? value : ''), disabled);
+    renderHiddenInput(true, el, name, (checked ? value : ''), disabled);
 
     let path = indeterminate
       ? <path d="M6 12L18 12" part="mark" />
