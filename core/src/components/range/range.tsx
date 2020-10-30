@@ -50,6 +50,7 @@ export class Range implements ComponentInterface {
   /**
    * How long, in milliseconds, to wait to trigger the
    * `ionChange` event after each change in the range value.
+   * This also impacts form bindings such as `ngModel` or `v-model`.
    */
   @Prop() debounce = 0;
 
