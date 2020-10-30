@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, forceUpdate, Host, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, State, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { SegmentButtonLayout } from '../../interface';
@@ -89,7 +89,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   render() {
     const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl } = this;
     const mode = getIonMode(this);
-    const hasSegmentColor = () => segmentEl != null && segmentEl.color !== undefined;
+    const hasSegmentColor = () => segmentEl !== null && segmentEl.color !== undefined;
     return (
       <Host
         aria-disabled={disabled ? 'true' : null}
