@@ -12,16 +12,21 @@ jobs:
         working-directory: ./core
     steps:
     - uses: actions/checkout@v2
+
+    - name: Cache Node Modules
+      uses: actions/cache@v2
+      with:
+        path: './core/node_modules'
+        key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-core-
+          ${{ runner.os }}-
+
     - name: Install Dependencies
       run: npm install
     - name: Build Core
       run: npm run build -- --ci
-    - name: Restore Dependency Cache
-      uses: actions/cache@v2
-      with:
-        path: |
-          './core/node_modules'
-        key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
+
 
   test-core-clean-build:
     needs: [build-core]
@@ -31,12 +36,16 @@ jobs:
         working-directory: ./core
     steps:
     - uses: actions/checkout@v2
-    - name: Restore Dependency Cache
+
+    - name: Cache Node Modules
       uses: actions/cache@v2
       with:
-        path: |
-          './core/node_modules'
+        path: './core/node_modules'
         key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-core-
+          ${{ runner.os }}-
+
     - name: Checking clean build
       run: git diff --exit-code
 
@@ -48,10 +57,14 @@ jobs:
         working-directory: ./core
     steps:
     - uses: actions/checkout@v2
-    - name: Restore Dependency Cache
+
+    - name: Cache Node Modules
       uses: actions/cache@v2
       with:
-        path: |
-          './core/node_modules'
+        path: './core/node_modules'
         key: ${{ runner.os }}-core-${{ hashFiles('./core/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-core-
+          ${{ runner.os }}-
+
     - run: npm run lint
