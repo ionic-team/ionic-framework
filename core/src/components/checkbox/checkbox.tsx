@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { CheckboxChangeEventDetail, Color, StyleEventDetail } from '../../interface';
-import { findItemLabel } from '../../utils/helpers';
+import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -139,6 +139,7 @@ export class Checkbox implements ComponentInterface {
       labelText = label.textContent;
       label.setAttribute('aria-hidden', 'true');
     }
+    renderHiddenInput(true, el, this.name, (checked ? value : ''), disabled);
 
     let path = indeterminate
       ? <path d="M6 12L18 12" part="mark" />
@@ -165,21 +166,16 @@ export class Checkbox implements ComponentInterface {
           'interactive': true
         })}
       >
-        <div class="checkbox-container">
-          <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
-            {path}
-          </svg>
-        </div>
+        <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
+          {path}
+        </svg>
         <label htmlFor={inputId}>
           {labelText}
         </label>
         <input
           type="checkbox"
-          class="aux-input"
           disabled={disabled}
           id={inputId}
-          name={name}
-          value={checked ? value : ''}
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
           onClick={this.onClick}
