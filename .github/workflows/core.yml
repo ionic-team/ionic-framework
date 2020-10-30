@@ -9,12 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./packages/core
+        working-directory: ./core
     steps:
     - uses: actions/checkout@v2
     - name: Install Dependencies
       run: npm install
-      working-directory: packages/core
+      working-directory: core
     - name: Restore Dependency Cache
       uses: actions/cache@v2
       with:
@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./packages/core
+        working-directory: ./core
     steps:
     - uses: actions/checkout@v2
     - name: Restore Dependency Cache
