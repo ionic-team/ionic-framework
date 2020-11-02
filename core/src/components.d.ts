@@ -858,7 +858,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
          */
         "debounce": number;
         /**
@@ -1730,7 +1730,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value.
+          * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. This also impacts form bindings such as `ngModel` or `v-model`.
          */
         "debounce": number;
         /**
@@ -1991,7 +1991,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
          */
         "debounce": number;
         /**
@@ -2430,7 +2430,7 @@ export namespace Components {
          */
         "cols"?: number;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
          */
         "debounce": number;
         /**
@@ -4197,7 +4197,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
          */
         "debounce"?: number;
         /**
@@ -4992,7 +4992,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value.
+          * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. This also impacts form bindings such as `ngModel` or `v-model`.
          */
         "debounce"?: number;
         /**
@@ -5265,7 +5265,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
          */
         "debounce"?: number;
         /**
@@ -5741,7 +5741,7 @@ declare namespace LocalJSX {
          */
         "cols"?: number;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
          */
         "debounce"?: number;
         /**
