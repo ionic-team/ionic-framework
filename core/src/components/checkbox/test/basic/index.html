@@ -120,7 +120,11 @@
 
       input.addEventListener('ionChange', function(ev) {
         console.log('Listen ionChange: fired', ev.detail);
-      });      
+      });
+
+      input.addEventListener('click', function() {
+        console.log('Listen click: fired');
+      });
     }
   </script>
 
