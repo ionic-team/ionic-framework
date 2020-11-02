@@ -28,6 +28,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 })
 export class Range implements ComponentInterface {
 
+  private didLoad = false;
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
@@ -177,20 +178,7 @@ export class Range implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  connectedCallback() {
-    this.updateRatio();
-    this.debounceChanged();
-    this.disabledChanged();
-  }
-
-  disconnectedCallback() {
-    if (this.gesture) {
-      this.gesture.destroy();
-      this.gesture = undefined;
-    }
-  }
-
-  async componentDidLoad() {
+  private setupGesture = async () => {
     const rangeSlider = this.rangeSlider;
     if (rangeSlider) {
       this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -203,6 +191,34 @@ export class Range implements ComponentInterface {
         onEnd: ev => this.onEnd(ev),
       });
       this.gesture.enable(!this.disabled);
+    }
+  }
+
+  componentDidLoad() {
+    this.setupGesture();
+    this.didLoad = true;
+  }
+
+  connectedCallback() {
+    this.updateRatio();
+    this.debounceChanged();
+    this.disabledChanged();
+
+    /**
+     * If we have not yet rendered
+     * ion-range, then rangeSlider is not defined.
+     * But if we are moving ion-range via appendChild,
+     * then rangeSlider will be defined.
+     */
+    if (this.didLoad) {
+      this.setupGesture();
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
     }
   }
 
