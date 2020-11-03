@@ -79,6 +79,46 @@ export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | n
 };
 
 /**
+ * This method is used for Ionic's input components that use Shadow DOM. In order to
+ * properly label the inputs to work with screen readers, we need to get the text
+ * content of the label outside of the shadow root and pass it to the input inside
+ * of the shadow root.
+ *
+ * Referencing label elements by id from outside of the component is impossible due
+ * to the shadow boundary, read more here:
+ * https://developer.salesforce.com/blogs/2020/01/accessibility-for-web-components.html
+ *
+ * @param componentEl The shadow element that we need to get the aria label information for
+ * @param inputId The auto-incremented unique string that will be applied to the label
+ */
+export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label: Element | null, labelId: string, labelText: string | null | undefined } => {
+  let labelText;
+
+  // If the user provides their own label via the aria-labelledby attr
+  // we should use that instead of looking for an ion-label
+  const labelledBy = componentEl.getAttribute('aria-labelledby');
+
+  const labelId = labelledBy
+    ? labelledBy
+    : inputId + '-lbl';
+
+  const label = labelledBy
+    ? document.querySelector(`#${labelledBy}`)
+    : findItemLabel(componentEl);
+
+  if (label) {
+    if (!labelledBy) {
+      label.id = labelId;
+    }
+
+    labelText = label.textContent;
+    label.setAttribute('aria-hidden', 'true');
+  }
+
+  return { label, labelId, labelText };
+};
+
+/**
  * This method is used to add a hidden input to a host element that contains a Shadow DOM.
  * It does not add the input inside of the Shadow root which allows it to be picked up
  * inside of forms. It should contain the same values as the host element.
