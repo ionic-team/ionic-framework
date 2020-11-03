@@ -160,7 +160,7 @@ export class Checkbox implements ComponentInterface {
         role="checkbox"
         aria-disabled={disabled ? 'true' : null}
         aria-checked={`${checked}`}
-        aria-labelledby={labelId}
+        aria-labelledby={label ? labelId : null}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
