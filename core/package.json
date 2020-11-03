@@ -75,7 +75,7 @@
     "css.sass": "sass src/css:./css",
     "lint": "npm run lint.ts && npm run lint.sass",
     "lint.fix": "npm run lint.ts.fix && npm run lint.sass.fix",
-    "lint.sass": "stylelint 'src/**/*.scss'",
+    "lint.sass": "stylelint \"src/**/*.scss\"",
     "lint.sass.fix": "npm run lint.sass -- --fix",
     "lint.ts": "tslint --project .",
     "lint.ts.fix": "tslint --project . --fix",
