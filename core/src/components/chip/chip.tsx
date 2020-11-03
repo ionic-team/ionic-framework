@@ -31,7 +31,7 @@ export class Chip implements ComponentInterface {
   /**
    * If `true`, the user cannot interact with the chip.
    */
-  @Prop({ reflect: true }) disabled = false;
+  @Prop() disabled = false;
 
   render() {
     const mode = getIonMode(this);
