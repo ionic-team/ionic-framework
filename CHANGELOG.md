@@ -1,3 +1,159 @@
+## [5.4.1](https://github.com/ionic-team/ionic/compare/v5.4.0...v5.4.1) (2020-10-22)
+
+
+### Bug Fixes
+
+* **select:** properly align label with select in item in MD mode ([#22330](https://github.com/ionic-team/ionic/issues/22330)) ([1a2e532](https://github.com/ionic-team/ionic/commit/1a2e5322fb7ac0dd6bd3d0705b8e32f9d3649bfc)), closes [#19887](https://github.com/ionic-team/ionic/issues/19887)
+* **vue:** going back with query params now goes to correct view ([#22350](https://github.com/ionic-team/ionic/issues/22350)) ([561a4ac](https://github.com/ionic-team/ionic/commit/561a4ac535432873860c3d0a4ac60481929d9089)), closes [#22324](https://github.com/ionic-team/ionic/issues/22324)
+* **vue:** improve compatibility with route guards ([#22371](https://github.com/ionic-team/ionic/issues/22371)) ([31f9bc8](https://github.com/ionic-team/ionic/commit/31f9bc81d6d0fa81f9abe20172bb606651a2d75d)), closes [#22344](https://github.com/ionic-team/ionic/issues/22344)
+* **vue:** improve handling of parameterized urls ([#22360](https://github.com/ionic-team/ionic/issues/22360)) ([6fad0fe](https://github.com/ionic-team/ionic/commit/6fad0fe42814cde1126e6df264b99c069849c87a)), closes [#22359](https://github.com/ionic-team/ionic/issues/22359)
+* **vue:** lifecycle events are now fired in component context ([#22348](https://github.com/ionic-team/ionic/issues/22348)) ([bcef804](https://github.com/ionic-team/ionic/commit/bcef804deac4dea27def475460aff4cdf0d7d2fc)), closes [#22338](https://github.com/ionic-team/ionic/issues/22338)
+
+
+
+# [5.4.0 Sulfur](https://github.com/ionic-team/ionic/compare/v5.3.0...v5.4.0) (2020-10-15)
+
+> This is the first stable release of Ionic Vue.
+
+Enjoy the Vue! :tada:
+
+### New to Ionic Vue?
+
+Check out our [Quickstart Guide](https://ionicframework.com/docs/vue/quickstart) to get up and running. Then be sure to check out our [Building Your First App Guide](https://ionicframework.com/docs/vue/your-first-app) to learn how build a cross platform Ionic Vue application from start to finish!
+
+
+
+# [5.4.0-rc.3](https://github.com/ionic-team/ionic/compare/v5.4.0-rc.2...v5.4.0-rc.3) (2020-10-14)
+
+> This version is dedicated to our upcoming Ionic Vue release.
+
+### Bug Fixes
+
+* **vue:** ion-page component is now properly shown with HMR ([#22319](https://github.com/ionic-team/ionic/issues/22319)) ([c5ab562](https://github.com/ionic-team/ionic/commit/c5ab562eaa098717407e6b3e8139abd2112246a2))
+
+### Upgrade Steps
+
+```
+npm install @ionic/vue@5.4.0-rc.3 @ionic/vue-router@5.4.0-rc.3 --save-exact
+```
+
+### New to Ionic Vue?
+
+Check out our [Quickstart Guide](https://ionicframework.com/docs/vue/quickstart) to get up and running. Then be sure to check out our [Building Your First App Guide](https://ionicframework.com/docs/vue/your-first-app) to learn how build a cross platform Ionic Vue application from start to finish!
+
+
+
+# [5.4.0-rc.2](https://github.com/ionic-team/ionic/compare/v5.4.0-rc.1...v5.4.0-rc.2) (2020-10-13)
+
+> This version is dedicated to our upcoming Ionic Vue release.
+
+### Bug Fixes
+
+* **vue:** do not hide page content when using ion-page in non-routing contexts  ([#22302](https://github.com/ionic-team/ionic/issues/22302)) ([fff82d0](https://github.com/ionic-team/ionic/commit/fff82d0bdcd850e7c70947b39d554e88c4cdfd1e)), closes [#22300](https://github.com/ionic-team/ionic/issues/22300)
+* **vue:** going back from tabs page to a non-tabs page now selects correct page ([#22275](https://github.com/ionic-team/ionic/issues/22275)) ([b06ae16](https://github.com/ionic-team/ionic/commit/b06ae165912cbab811fe4a3c35b4e2b3fe0b425b)), closes [#22258](https://github.com/ionic-team/ionic/issues/22258)
+* **vue:** improve swipe to go back reliability ([#22288](https://github.com/ionic-team/ionic/issues/22288)) ([c74fd41](https://github.com/ionic-team/ionic/commit/c74fd4147b57e6b11c22dffdf6355568a763f30a)), closes [#22237](https://github.com/ionic-team/ionic/issues/22237)
+* **vue:** modal, popover, and nav are now created within application context ([#22282](https://github.com/ionic-team/ionic/issues/22282)) ([6026c65](https://github.com/ionic-team/ionic/commit/6026c65b1ae80af0f8604e7a3bcb220153267955)), closes [#22079](https://github.com/ionic-team/ionic/issues/22079)
+* **vue:** pages now render in correct outlet when using multiple nested outlets ([#22301](https://github.com/ionic-team/ionic/issues/22301)) ([52f655c](https://github.com/ionic-team/ionic/commit/52f655c9d40988cac36f88c88f24195b3f64c431)), closes [#22286](https://github.com/ionic-team/ionic/issues/22286)
+
+### Upgrade Steps
+
+```
+npm install @ionic/vue@5.4.0-rc.2 @ionic/vue-router@5.4.0-rc.2 --save-exact
+```
+
+### New to Ionic Vue?
+
+Check out our [Quickstart Guide](https://ionicframework.com/docs/vue/quickstart) to get up and running. Then be sure to check out our [Building Your First App Guide](https://ionicframework.com/docs/vue/your-first-app) to learn how build a cross platform Ionic Vue application from start to finish!
+
+
+
+# [5.4.0-rc.1](https://github.com/ionic-team/ionic/compare/v5.3.5...v5.4.0-rc.1) (2020-10-08)
+
+> This version is dedicated to our upcoming Ionic Vue release.
+
+### Bug Fixes
+
+* **vue:** correctly handle query params ([#22253](https://github.com/ionic-team/ionic/issues/22253)) ([6849dd3](https://github.com/ionic-team/ionic/commit/6849dd3483fb90aac1ff19834390a652c59a74de)), closes [#22229](https://github.com/ionic-team/ionic/issues/22229)
+* **vue:** correctly show ion-back-button when going back ([#22260](https://github.com/ionic-team/ionic/issues/22260)) ([39d2530](https://github.com/ionic-team/ionic/commit/39d2530427b1cd86975fc95ab2c8da9f4b0b27b3)), closes [#22217](https://github.com/ionic-team/ionic/issues/22217)
+* **vue:** hide layout shift on ion-page components ([#22254](https://github.com/ionic-team/ionic/issues/22254)) ([2bad1bb](https://github.com/ionic-team/ionic/commit/2bad1bb82e0fa3fe9e3db54403565d210f636120)), closes [#22052](https://github.com/ionic-team/ionic/issues/22052)
+* **vue:** ion-tab-bar no longer throws undefined error when re-creating tabs ([#22261](https://github.com/ionic-team/ionic/issues/22261)) ([d746561](https://github.com/ionic-team/ionic/commit/d746561ea29e61db2cfb55d2765b5548fd8b5a78)), closes [#22255](https://github.com/ionic-team/ionic/issues/22255)
+
+### Upgrade Steps
+
+```
+npm install @ionic/vue@5.4.0-rc.1 @ionic/vue-router@5.4.0-rc.1 --save-exact
+```
+
+### New to Ionic Vue?
+
+Check out our [Quickstart Guide](https://ionicframework.com/docs/vue/quickstart) to get up and running. Then be sure to check out our [Building Your First App Guide](https://ionicframework.com/docs/vue/your-first-app) to learn how build a cross platform Ionic Vue application from start to finish!
+
+
+
+## [5.3.5](https://github.com/ionic-team/ionic/compare/v5.3.4...v5.3.5) (2020-10-07)
+
+
+### Bug Fixes
+
+* **button:** allow any element type to use the "icon-only" slot ([#22168](https://github.com/ionic-team/ionic/issues/22168)) ([c454c84](https://github.com/ionic-team/ionic/commit/c454c84ef46322143467600334a0263d4e7df6cb))
+* **datetime:** do not set ampm when the column doesn't exist ([#22220](https://github.com/ionic-team/ionic/issues/22220)) ([18fb885](https://github.com/ionic-team/ionic/commit/18fb8855e0c45fe65843b33811812c51c74de90f)), closes [#22149](https://github.com/ionic-team/ionic/issues/22149)
+* **datetime:** remove the automatic switching from am to pm ([#22207](https://github.com/ionic-team/ionic/issues/22207)) ([f81d18c](https://github.com/ionic-team/ionic/commit/f81d18c6f9f1bce056afda1cac4cf6d6ace0a7ca)), closes [#18924](https://github.com/ionic-team/ionic/issues/18924) [#22171](https://github.com/ionic-team/ionic/issues/22171) [#22199](https://github.com/ionic-team/ionic/issues/22199)
+* **item:** properly align datetime and select with fixed or no labels ([#22221](https://github.com/ionic-team/ionic/issues/22221)) ([f42c688](https://github.com/ionic-team/ionic/commit/f42c688f4630e3dc5d10b947e7f2bee9d5967d8c)), closes [#18773](https://github.com/ionic-team/ionic/issues/18773) [#18761](https://github.com/ionic-team/ionic/issues/18761) [#18779](https://github.com/ionic-team/ionic/issues/18779)
+* **label:** keep color when focused on a floating or stacked label ([#18576](https://github.com/ionic-team/ionic/issues/18576)) ([992580a](https://github.com/ionic-team/ionic/commit/992580a3830321bdf9591681ebe38e823205389d)), closes [#18531](https://github.com/ionic-team/ionic/issues/18531)
+* **select:** do not close popover or set value when switching with arrow keys ([#22210](https://github.com/ionic-team/ionic/issues/22210)) ([1878c8e](https://github.com/ionic-team/ionic/commit/1878c8e7e01c02f06bdc5f1562af0d45531539cf)), closes [#22179](https://github.com/ionic-team/ionic/issues/22179)
+
+
+
+## [5.3.4](https://github.com/ionic-team/ionic/compare/v5.3.3...v5.3.4) (2020-09-25)
+
+
+### Bug Fixes
+
+* **alert:** follow accessibility guidelines outlined by wai-aria ([#22159](https://github.com/ionic-team/ionic/issues/22159)) ([e9b2cc8](https://github.com/ionic-team/ionic/commit/e9b2cc8453f5e1c45d44397df738f60ea5b32efd)), closes [#21744](https://github.com/ionic-team/ionic/issues/21744)
+* **overlays:** return focus to presenting element after dismissal ([#22167](https://github.com/ionic-team/ionic/issues/22167)) ([cc45ad8](https://github.com/ionic-team/ionic/commit/cc45ad815c002c5d890f2e105c546b4c3b3a58c0)), closes [#21768](https://github.com/ionic-team/ionic/issues/21768)
+* **picker-column:** add cancelable check to avoid intervention error in chrome ([#22140](https://github.com/ionic-team/ionic/issues/22140)) ([a24a041](https://github.com/ionic-team/ionic/commit/a24a041064fd9ce6ca161d3522083d50e585e9dd)), closes [#22137](https://github.com/ionic-team/ionic/issues/22137)
+* **radio:** follow accessibility guidelines outlined by wai-aria ([#22113](https://github.com/ionic-team/ionic/issues/22113)) ([ea0e049](https://github.com/ionic-team/ionic/commit/ea0e0499e24865faad3d11f50f7037645f6cdcc8)), closes [#21743](https://github.com/ionic-team/ionic/issues/21743)
+* **reorder:** allow click event propagation when reorder group is disabled ([#21947](https://github.com/ionic-team/ionic/issues/21947)) ([baafe08](https://github.com/ionic-team/ionic/commit/baafe08927b7b858170496605781e6fa682e0147)), closes [#21017](https://github.com/ionic-team/ionic/issues/21017)
+* **segment:** do not allow text selection on desktop ([#22158](https://github.com/ionic-team/ionic/issues/22158)) ([1526bdf](https://github.com/ionic-team/ionic/commit/1526bdfb492c1fa8d71f8a1af8cd97abd9e62642))
+
+
+### Performance Improvements
+
+* **segment:** improve scrolling performance on ios when using segment ([#22110](https://github.com/ionic-team/ionic/issues/22110)) ([68afc49](https://github.com/ionic-team/ionic/commit/68afc49e9ed27acffb0b765b7be6b03e8574850d)), closes [#22095](https://github.com/ionic-team/ionic/issues/22095)
+
+
+
+## [5.3.3](https://github.com/ionic-team/ionic/compare/v5.3.2...v5.3.3) (2020-09-17)
+
+
+### Bug Fixes
+
+* **datetime:** do not reset to am when changing hour and pm is set ([#21997](https://github.com/ionic-team/ionic/issues/21997)) ([8b85fe0](https://github.com/ionic-team/ionic/commit/8b85fe0d9eea39adfdcf790bf00d8ef91d5edbe7)), closes [#19175](https://github.com/ionic-team/ionic/issues/19175) [#19260](https://github.com/ionic-team/ionic/issues/19260) [#20026](https://github.com/ionic-team/ionic/issues/20026) [#16630](https://github.com/ionic-team/ionic/issues/16630)
+* **input:** only focus the first input / textarea when clicking on the parent item ([#22049](https://github.com/ionic-team/ionic/issues/22049)) ([99f2532](https://github.com/ionic-team/ionic/commit/99f2532ee174da79e2b6a462cfa124673edc1170)), closes [#22037](https://github.com/ionic-team/ionic/issues/22037) [#22032](https://github.com/ionic-team/ionic/issues/22032)
+* **react:** Keep a hold of previous routes when doing a redirect, closes [#22053](https://github.com/ionic-team/ionic/issues/22053) ([74af3cb](https://github.com/ionic-team/ionic/commit/74af3cb50b089a6bd60d515158e03b18b86455b8))
+* **react:** redirect routes should unmount leaving component, fixes [#22022](https://github.com/ionic-team/ionic/issues/22022) ([#22029](https://github.com/ionic-team/ionic/issues/22029)) ([b11e06c](https://github.com/ionic-team/ionic/commit/b11e06cec1d3c28bab9f29185fe2c3a2975b092f))
+* **textarea:** do not generate duplicate IDs between ion-input and ion-textarea ([#22074](https://github.com/ionic-team/ionic/issues/22074)) ([c72c7ff](https://github.com/ionic-team/ionic/commit/c72c7ffa983af8885dd93f9adfcb3f2af232d2d9)), closes [#21542](https://github.com/ionic-team/ionic/issues/21542)
+
+
+
+## [5.3.2](https://github.com/ionic-team/ionic/compare/v5.3.1...v5.3.2) (2020-08-27)
+
+
+### Bug Fixes
+
+* **input:** improve reliability of scroll assist when accessory bar is enabled ([#21936](https://github.com/ionic-team/ionic/issues/21936)) ([22477fb](https://github.com/ionic-team/ionic/commit/22477fb9bf7c0637aa5c8d0aab34c8ccc521b0b9)), closes [#21912](https://github.com/ionic-team/ionic/issues/21912)
+* **input:** properly focus the input when clicking the item padding in WebKit ([#21930](https://github.com/ionic-team/ionic/issues/21930)) ([e4964ff](https://github.com/ionic-team/ionic/commit/e4964ff77b317c92b201cf7c265787b55bdde4d4)), closes [#21509](https://github.com/ionic-team/ionic/issues/21509)
+* **input:** remain focused in the input after pressing the clear button ([#21985](https://github.com/ionic-team/ionic/issues/21985)) ([6878fb9](https://github.com/ionic-team/ionic/commit/6878fb9eb99c17908f5630019efaa762b5b006e0)), closes [#21549](https://github.com/ionic-team/ionic/issues/21549)
+* **label:** use translateY so input caret shows up due to webkit issue ([#21949](https://github.com/ionic-team/ionic/issues/21949)) ([00eac33](https://github.com/ionic-team/ionic/commit/00eac33053f49dbebf22ef95fddcb66570ed117a)), closes [#21943](https://github.com/ionic-team/ionic/issues/21943)
+* **overlays:** prevent focus from being stolen when presenting another overlay from within a modal ([#21856](https://github.com/ionic-team/ionic/issues/21856)) ([5c177d7](https://github.com/ionic-team/ionic/commit/5c177d756f7755e766d5b619d49825c4799aee47)), closes [#21840](https://github.com/ionic-team/ionic/issues/21840)
+* **range:** properly display stacked labels in an item with a range ([#21944](https://github.com/ionic-team/ionic/issues/21944)) ([9f4b01e](https://github.com/ionic-team/ionic/commit/9f4b01e17fd2f5e742d32bc9e080b6b394c43d37)), closes [#21625](https://github.com/ionic-team/ionic/issues/21625)
+* **react:** export correct animation types ([#21950](https://github.com/ionic-team/ionic/issues/21950)) ([36e4bf7](https://github.com/ionic-team/ionic/commit/36e4bf7dd76e396f910d28445566b5503cc84c8c))
+* **react:** removed exporting of ionRenderToString to decrease bundle size, closes [#21917](https://github.com/ionic-team/ionic/issues/21917) ([#21928](https://github.com/ionic-team/ionic/issues/21928)) ([434befe](https://github.com/ionic-team/ionic/commit/434befea5f31aa599ee5b1b7edf29238912c23d9))
+* **react:** setting active tab properly on mount, closes [#21830](https://github.com/ionic-team/ionic/issues/21830) ([#21833](https://github.com/ionic-team/ionic/issues/21833)) ([f58424f](https://github.com/ionic-team/ionic/commit/f58424f62596b9eb82bebb8e07c211e1725c025a))
+* **react:** fix tab currentHref when changing tabs, closes [#21834](https://github.com/ionic-team/ionic/issues/21834) ([#21835](https://github.com/ionic-team/ionic/issues/21835)) ([74468ab](https://github.com/ionic-team/ionic/commit/74468ab7972b174ba85bf239306c27080f253a4a))
+
+
+
 ## [5.3.1](https://github.com/ionic-team/ionic/compare/v5.3.0...v5.3.1) (2020-07-27)
 
 
@@ -29,7 +185,7 @@
 * **card:** expose global card css variables ([#21756](https://github.com/ionic-team/ionic/issues/21756)) ([096eef4](https://github.com/ionic-team/ionic/commit/096eef4a79c2d05c37eb224466c6d7d512d2be20)), closes [#21694](https://github.com/ionic-team/ionic/issues/21694)
 * **input:** accept datetime-local, month, and week type values ([#21758](https://github.com/ionic-team/ionic/issues/21758)) ([fa93dff](https://github.com/ionic-team/ionic/commit/fa93dffdb4f350e8db8acc7f06b06761974eea8e)), closes [#21757](https://github.com/ionic-team/ionic/issues/21757)
 * **input, textarea:** expose native events for ionBlur and ionFocus ([#21777](https://github.com/ionic-team/ionic/issues/21777)) ([a625c83](https://github.com/ionic-team/ionic/commit/a625c837a60abc07ad71c696196a89f1a25a4c27)), closes [#17363](https://github.com/ionic-team/ionic/issues/17363)
-* **react:** add custom history to IonReactRouter ([#21775](https://github.com/ionic-team/ionic/issues/21775)) ([d4a5fbd](https://github.com/ionic-team/ionic/commit/d4a5fbd955e8ecccba8b77491943d81fdf5a5ef4)), closes [#20297](https://github.com/ionic-team/ionic/issues/20297) 
+* **react:** add custom history to IonReactRouter ([#21775](https://github.com/ionic-team/ionic/issues/21775)) ([d4a5fbd](https://github.com/ionic-team/ionic/commit/d4a5fbd955e8ecccba8b77491943d81fdf5a5ef4)), closes [#20297](https://github.com/ionic-team/ionic/issues/20297)
 * **react:** add new react router ([#21693](https://github.com/ionic-team/ionic/issues/21693)) ([c171ccb](https://github.com/ionic-team/ionic/commit/c171ccbd37c1ee4b4934758a3a759170ff357cb2))
 * **router:** add navigation hooks ([#21709](https://github.com/ionic-team/ionic/issues/21709)) ([77464ef](https://github.com/ionic-team/ionic/commit/77464ef21aaaa5afa7a02e5417f3ec295b240601))
 * **segment-button, toast:** expose additional shadow parts ([#21532](https://github.com/ionic-team/ionic/issues/21532)) ([a5e4669](https://github.com/ionic-team/ionic/commit/a5e4669c4bcbcb2cdd605ed17c35e42438bd5596))
@@ -310,9 +466,9 @@
 * **modal:** presenting multiple card-style modals now adds border radius properly ([#20476](https://github.com/ionic-team/ionic/issues/20476)) ([abf594a](https://github.com/ionic-team/ionic/commit/abf594aa611562a76e3baecfa38456d41a1410f3)), closes [#20475](https://github.com/ionic-team/ionic/issues/20475)
 * **modal:** prevent card style modal styles from being overridden ([#20470](https://github.com/ionic-team/ionic/issues/20470)) ([86ab77a](https://github.com/ionic-team/ionic/commit/86ab77a6e2cb124510c244110fc78a4bc0654cd1)), closes [#20469](https://github.com/ionic-team/ionic/issues/20469)
 * **react:** do a better job matching up route to sync ([#20446](https://github.com/ionic-team/ionic/issues/20446)) ([c0aadd6](https://github.com/ionic-team/ionic/commit/c0aadd60077e5ba379959d93006e3a9c1418263c)), closes [#20363](https://github.com/ionic-team/ionic/issues/20363)
-* **react:** do not remove pages when navigating between tabs ([#20431](https://github.com/ionic-team/ionic/issues/20431)) ([b6fbe98](https://github.com/ionic-team/ionic/commit/b6fbe98812fbab5ef9e0723802605c0711581dd2)), closes [#20398](https://github.com/ionic-team/ionic/issues/20398) 
+* **react:** do not remove pages when navigating between tabs ([#20431](https://github.com/ionic-team/ionic/issues/20431)) ([b6fbe98](https://github.com/ionic-team/ionic/commit/b6fbe98812fbab5ef9e0723802605c0711581dd2)), closes [#20398](https://github.com/ionic-team/ionic/issues/20398)
 * **react:** icons with MD set should work in browser ([#20463](https://github.com/ionic-team/ionic/issues/20463)) ([82670fe](https://github.com/ionic-team/ionic/commit/82670fe4d0592451cbc243b3008beb3f8f483c30))
-* **react:** update paths of tab buttons when href changes in ion buttons ([#20480](https://github.com/ionic-team/ionic/issues/20480)) ([45d03ba](https://github.com/ionic-team/ionic/commit/45d03baf981d0e10eb1fe689908532adef2ba31d)), closes [#20321](https://github.com/ionic-team/ionic/issues/20321) 
+* **react:** update paths of tab buttons when href changes in ion buttons ([#20480](https://github.com/ionic-team/ionic/issues/20480)) ([45d03ba](https://github.com/ionic-team/ionic/commit/45d03baf981d0e10eb1fe689908532adef2ba31d)), closes [#20321](https://github.com/ionic-team/ionic/issues/20321)
 * **searchbar:** properly align placeholder ([#20460](https://github.com/ionic-team/ionic/issues/20460)) ([4d6e15a](https://github.com/ionic-team/ionic/commit/4d6e15ab18fc894c3826b89362163256adc227f4)), closes [#20456](https://github.com/ionic-team/ionic/issues/20456)
 * **segment:** border radius applies to indicator on ios ([#20541](https://github.com/ionic-team/ionic/issues/20541)) ([9b5854d](https://github.com/ionic-team/ionic/commit/9b5854d79712356f8a3772442c0cc412db09d5e0)), closes [#20539](https://github.com/ionic-team/ionic/issues/20539)
 * **segment:** do not show ripple effect if disabled via config ([#20542](https://github.com/ionic-team/ionic/issues/20542)) ([7a461c5](https://github.com/ionic-team/ionic/commit/7a461c59c5d9a23de0bcdd53397f452d17251fd6)), closes [#20533](https://github.com/ionic-team/ionic/issues/20533)

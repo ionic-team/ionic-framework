@@ -3,10 +3,16 @@
  * Defaults to the current date if
  * no date given
  */
-export const getDateValue = (date: DatetimeData, format: string): number => {
+export const getDateValue = (date: DatetimeData, format: string): number | string => {
   const getValue = getValueFromFormat(date, format);
 
-  if (getValue !== undefined) { return getValue; }
+  if (getValue !== undefined) {
+    if (format === FORMAT_A || format === FORMAT_a) {
+      date.ampm = getValue;
+    }
+
+    return getValue;
+  }
 
   const defaultDate = parseDate(new Date().toISOString());
   return getValueFromFormat((defaultDate as DatetimeData), format);
@@ -322,11 +328,15 @@ export const updateDate = (existingData: DatetimeData, newData: any, displayTime
       }
 
     } else if ((newData.year || newData.hour || newData.month || newData.day || newData.minute || newData.second)) {
-      // newData is from of a datetime picker's selected values
-      // update the existing DatetimeData data with the new values
-
-      // do some magic for 12-hour values
-      if (newData.ampm && newData.hour) {
+      // newData is from the datetime picker's selected values
+      // update the existing datetimeValue with the new values
+      if (newData.ampm !== undefined && newData.hour !== undefined) {
+        // change the value of the hour based on whether or not it is am or pm
+        // if the meridiem is pm and equal to 12, it remains 12
+        // otherwise we add 12 to the hour value
+        // if the meridiem is am and equal to 12, we change it to 0
+        // otherwise we use its current hour value
+        // for example: 8 pm becomes 20, 12 am becomes 0, 4 am becomes 4
         newData.hour.value = (newData.ampm.value === 'pm')
           ? (newData.hour.value === 12 ? 12 : newData.hour.value + 12)
           : (newData.hour.value === 12 ? 0 : newData.hour.value);
@@ -349,7 +359,8 @@ export const updateDate = (existingData: DatetimeData, newData: any, displayTime
             ? (existingData.hour! < 12 ? existingData.hour! + 12 : existingData.hour!)
             : (existingData.hour! >= 12 ? existingData.hour! - 12 : existingData.hour))
       };
-      (existingData as any)['hour'] = newData['hour'].value;
+      existingData['hour'] = newData['hour'].value;
+      existingData['ampm'] = newData['ampm'].value;
       return true;
     }
 
@@ -551,6 +562,7 @@ export interface DatetimeData {
   second?: number;
   millisecond?: number;
   tzOffset?: number;
+  ampm?: string;
 }
 
 export interface LocaleData {

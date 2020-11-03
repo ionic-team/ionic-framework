@@ -10,7 +10,7 @@ Below is a list of components yet to be implemented:
 
 | Component |
 | ------------------ |
-| `IonVirtualScroll` | 
+| `IonVirtualScroll` |
 
 ## Publishing a Native Application
 
@@ -46,7 +46,6 @@ ionic capacitor open <android|ios>
 ## Related
 
 * [Ionic Documentation](https://ionicframework.com/docs/)
-* [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/)
 * [Ionic Forum](https://forum.ionicframework.com/)
 * [Ionicons](http://ionicons.com/)
 * [Capacitor](https://capacitor.ionicframework.com/)

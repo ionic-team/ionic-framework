@@ -38,7 +38,7 @@
   min-height: #{$segment-button-ios-min-height};
 
   // Necessary for the z-index to work properly
-  transform: translate3d(0, 0, 0);
+  transform: translate(0, 0);
 
   font-size: #{$segment-button-ios-font-size};
 
@@ -62,8 +62,6 @@
 
   content: "";
   opacity: 1;
-
-  will-change: opacity;
 }
 
 :host(:first-of-type)::before {
