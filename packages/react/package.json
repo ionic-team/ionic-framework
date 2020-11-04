@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "npm run clean && npm run copy && npm run compile",
-    "clean": "rm -rf dist && rm -rf dist-transpiled && rm -rf routing",
+    "clean": "rimraf dist && rimraf dist-transpiled && rimraf routing",
     "compile": "npm run tsc && rollup -c",
     "release": "np --any-branch --yolo --no-release-draft",
     "lint": "tslint --project .",
@@ -61,6 +61,7 @@
     "np": "^6.4.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "rimraf": "^3.0.2",
     "rollup": "^2.26.4",
     "rollup-plugin-sourcemaps": "^0.6.2",
     "ts-jest": "^26.1.1",
