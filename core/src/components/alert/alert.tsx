@@ -139,8 +139,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     if (
       !inputTypes.has('radio')
       || (ev.target && !this.el.contains(ev.target))
-      || ev.target.classList.contains('alert-button'))
-    {
+      || ev.target.classList.contains('alert-button')) {
       return;
     }
 
@@ -170,7 +169,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
     if (['ArrowUp', 'ArrowLeft'].includes(ev.key)) {
       nextEl = (index === 0)
         ? radios[radios.length - 1]
-        : radios[index - 1]
+        : radios[index - 1];
     }
 
     if (nextEl && radios.includes(nextEl)) {
