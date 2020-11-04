@@ -29,7 +29,15 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    */
   router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized) => {
     const { direction, action } = currentNavigationInfo;
-    handleHistoryChange(to, action, direction);
+
+    /**
+     * When calling router.replace, we are not informed
+     * about the replace action in opts.history.listen
+     * but we can check to see if the latest routing action
+     * was a replace action by looking at the history state.
+     */
+    const replaceAction = history.state.replaced ? 'replace' : undefined;
+    handleHistoryChange(to, action || replaceAction, direction);
 
     currentNavigationInfo = { direction: undefined, action: undefined };
   });

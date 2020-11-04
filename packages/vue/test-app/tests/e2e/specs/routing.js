@@ -106,6 +106,19 @@ describe('Routing', () => {
     cy.ionPageVisible('home');
     cy.ionPageDoesNotExist('routing');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22412
+  it('should correctly replace route in a component', () => {
+    cy.visit('http://localhost:8080/routing?ionic:mode=ios');
+
+    cy.get('#replace').click();
+
+    cy.ionPageVisible('navigation');
+    cy.ionPageHidden('routing');
+
+    cy.ionSwipeToGoBack(true);
+    cy.ionPageVisible('navigation');
+  });
 });
 
 describe('Routing - Swipe to Go Back', () => {
