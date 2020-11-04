@@ -30,6 +30,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private focusEventListener = false;
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
+  private clickListener!: (ev: Event) => void;
 
   @Element() el!: HTMLIonItemElement;
 
@@ -158,7 +159,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // https://github.com/ionic-team/ionic-framework/issues/22011
     const input = this.getFirstInput();
     if (input && !this.focusEventListener) {
-      this.el.addEventListener('click', ev => this.delegateFocus(ev, input));
+      this.clickListener = (ev: Event) => this.delegateFocus(ev, input);
+      this.el.addEventListener('click', this.clickListener);
       this.focusEventListener = true;
     }
   }
@@ -166,7 +168,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   disconnectedCallback() {
     const input = this.getFirstInput();
     if (input && this.focusEventListener) {
-      this.el.removeEventListener('click', ev => this.delegateFocus(ev, input));
+      this.el.removeEventListener('click', this.clickListener);
     }
   }
 
