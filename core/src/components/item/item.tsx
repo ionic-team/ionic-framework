@@ -30,7 +30,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
-  private clickListener!: ((ev: Event) => void) | undefined;
+  private clickListener?: (ev: Event) => void;
 
   @Element() el!: HTMLIonItemElement;
 
