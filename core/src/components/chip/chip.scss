@@ -37,6 +37,11 @@
   box-sizing: border-box;
 }
 
+:host(.chip-disabled) {
+  cursor: default;
+  opacity: .4;
+  pointer-events: none;
+}
 
 // Chip Colors
 // ---------------------------------------------
