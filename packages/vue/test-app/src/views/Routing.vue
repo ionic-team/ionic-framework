@@ -35,6 +35,10 @@
       <ion-item button router-link="/routing/123/view" id="parameter-view-item">
         <ion-label>Go to Parameterized Page View</ion-label>
       </ion-item>
+
+      <ion-item button @click="replace" id="replace">
+        <ion-label>Replace to Navigation page</ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>
@@ -76,7 +80,11 @@ export default defineComponent({
       });
     }
 
-    return { setRouteParams }
+    const replace = () => {
+      router.replace('/navigation');
+    }
+
+    return { setRouteParams, replace }
   }
 });
 </script>

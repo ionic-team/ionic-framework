@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page data-pageid="tab3-secondary">
     <ion-header>
       <ion-toolbar>
         <ion-title>Tab 3 - Secondary</ion-title>
