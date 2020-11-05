@@ -47,6 +47,10 @@ ion-refresher.refresher-native {
     display: none;
     animation: 250ms linear refresher-pop forwards;
   }
+
+  ion-spinner {
+    color: grey;
+  }
 }
 
 .refresher-native.refresher-refreshing,
