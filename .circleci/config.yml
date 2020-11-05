@@ -59,7 +59,7 @@ jobs:
     steps:
       - checkout
       - restore_cache: *restore-cache
-      - run: npm install
+      - run: npm install --legacy-peer-deps
       - save_cache: *save-cache
       - persist_to_workspace:
           root: /tmp/workspace
@@ -75,7 +75,7 @@ jobs:
       - restore_cache: *restore-cache-core
       - restore_cache: *restore-cache-core-stencil
       - run:
-          command: npm install
+          command: npm install --legacy-peer-deps
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core
       - run:
@@ -94,7 +94,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install
+          command: npm install --legacy-peer-deps
           working_directory: /tmp/workspace/angular
       - run:
           command: sudo npm link
@@ -117,7 +117,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install
+          command: npm install --legacy-peer-deps
           working_directory: /tmp/workspace/packages/angular-server
       - run:
           command: npm run build.prod
@@ -134,7 +134,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install
+          command: npm install --legacy-peer-deps
           working_directory: /tmp/workspace/packages/react
       - run:
           command: sudo npm link
@@ -156,7 +156,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install
+          command: npm install --legacy-peer-deps
           working_directory: /tmp/workspace/packages/react-router
       - run:
           command: sudo npm link
@@ -185,7 +185,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install
+          command: npm install --legacy-peer-deps
           working_directory: /tmp/workspace/packages/vue
       - run:
           command: sudo npm link
@@ -208,7 +208,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install
+          command: npm install --legacy-peer-deps
           working_directory: /tmp/workspace/packages/vue-router
       - run:
           command: sudo npm link
@@ -420,7 +420,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install
+          command: npm install --legacy-peer-deps
           working_directory: /tmp/workspace/angular/test/test-app
       - run:
           command: npm run test -- --protractor-config=e2e/protractor-ci.conf.js

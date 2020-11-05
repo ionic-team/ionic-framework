@@ -83,7 +83,24 @@
 .scroll-y,
 .scroll-x {
   -webkit-overflow-scrolling: touch;
-  will-change: scroll-position;
+
+  /**
+   * This adds `.inner-scroll` as part of the
+   * stacking context in WebKit. Without it,
+   * children of ion-content are treated as
+   * siblings rather than descendants. This
+   * can result in the children being put
+   * into their own layers, degrading
+   * scrolling performance.
+   *
+   * An optimization called "layer backing
+   * sharing" usually kicks in to prevent
+   * this, but having translate3d defeats
+   * this optimization.
+   *
+   * See: https://bugs.webkit.org/show_bug.cgi?id=216701
+   */
+  will-change: scroll-position, transform;
 }
 
 .scroll-y {
