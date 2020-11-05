@@ -5,11 +5,12 @@
   "scripts": {
     "lint": "echo add linter",
     "test": "jest",
-    "build": "npm run clean && npm run copy && npm run copy.overlays && npm run compile && npm run bundle && npm run vetur",
+    "build": "npm run clean && npm run copy && npm run copy.overlays && npm run compile && npm run bundle && npm run vetur && npm run build.web-types",
     "bundle": "rollup --config rollup.config.js",
     "clean": "rimraf dist dist-transpiled",
     "compile": "npm run tsc",
     "tsc": "tsc -p .",
+    "build.web-types": "node ./scripts/build-web-types.js",
     "copy": "node ./scripts/copy-css.js",
     "copy.overlays": "node ./scripts/copy-overlays.js",
     "vetur": "node ./scripts/vetur.js"
@@ -62,5 +63,6 @@
   "vetur": {
     "tags": "dist/vetur/tags.json",
     "attributes": "dist/vetur/attributes.json"
-  }
+  },
+  "web-types": "dist/web-types.json"
 }
