@@ -6,7 +6,17 @@ import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { clamp, getElementRoot, raf } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
-import { createPullingAnimation, createSnapBackAnimation, getRefresherAnimationType, handleScrollWhilePulling, handleScrollWhileRefreshing, setSpinnerOpacity, shouldUseNativeRefresher, transitionEndAsync, translateElement } from './refresher.utils';
+import {
+  createPullingAnimation,
+  createSnapBackAnimation,
+  getRefresherAnimationType,
+  handleScrollWhilePulling,
+  handleScrollWhileRefreshing,
+  setSpinnerOpacity,
+  shouldUseNativeRefresher,
+  transitionEndAsync,
+  translateElement
+} from './refresher.utils';
 
 @Component({
   tag: 'ion-refresher',
@@ -207,9 +217,11 @@ export class Refresher implements ComponentInterface {
         }
 
         // delay showing the next tick marks until user has pulled 30px
-        const opacity = clamp(0, Math.abs(scrollTop) / refresherHeight, 0.99);
-        const pullAmount = this.progress = clamp(0, (Math.abs(scrollTop) - 30) / MAX_PULL, 1);
-        const currentTickToShow = clamp(0, Math.floor(pullAmount * NUM_TICKS), NUM_TICKS - 1);
+        const pullAmount = this.progress = clamp(0, (Math.abs(scrollTop) - 10) / MAX_PULL, 1);
+        const computedTicksAmount = pullAmount * NUM_TICKS;
+        const computedTicksToShow = Math.floor(computedTicksAmount);
+        const currentTickToShow = clamp(0, computedTicksToShow, NUM_TICKS - 1);
+        const lastTickOpacity = computedTicksAmount - computedTicksToShow
         const shouldShowRefreshingSpinner = this.state === RefresherState.Refreshing || currentTickToShow === NUM_TICKS - 1;
 
         if (shouldShowRefreshingSpinner) {
@@ -233,7 +245,7 @@ export class Refresher implements ComponentInterface {
         } else {
           if (!this.didRefresh) {
             this.state = RefresherState.Pulling;
-            handleScrollWhilePulling(pullingSpinner, ticks, opacity, currentTickToShow);
+            handleScrollWhilePulling(ticks, currentTickToShow, lastTickOpacity);
           }
         }
       });

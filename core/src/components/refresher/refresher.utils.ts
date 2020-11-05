@@ -123,14 +123,15 @@ export const setSpinnerOpacity = (spinner: HTMLElement, opacity: number) => {
 };
 
 export const handleScrollWhilePulling = (
-  spinner: HTMLElement,
   ticks: NodeListOf<SVGElement>,
-  opacity: number,
-  currentTickToShow: number
+  currentTickToShow: number,
+  lastTickOpacity: number
 ) => {
   writeTask(() => {
-    setSpinnerOpacity(spinner, opacity);
-    ticks.forEach((el, i) => el.style.setProperty('opacity', (i <= currentTickToShow) ? '0.99' : '0'));
+    ticks.forEach((el, i) => {
+      const op = i < currentTickToShow ? ('0.99') : (i === currentTickToShow ? `${lastTickOpacity}` : '0');
+      el.style.setProperty('opacity', op);
+    });
   });
 };
 
