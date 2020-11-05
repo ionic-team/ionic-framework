@@ -1,7 +1,7 @@
 const fs = require("fs")
 
 // Web-types build require docs to be built first
-const docs = require("../../../docs/core.json")
+const docs = require("@ionic/core/dist/docs.json")
 
 const components = []
 
