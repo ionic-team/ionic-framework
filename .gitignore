@@ -58,6 +58,7 @@ prerender-static.html
 # stencil
 angular/css/
 packages/react/css/
+packages/vue/css/
 core/css/
 core/hydrate/
 core/loader/

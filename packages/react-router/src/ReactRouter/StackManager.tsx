@@ -63,17 +63,23 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       setTimeout(() => this.handlePageTransition(routeInfo), 10);
     } else {
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
-      const leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
+      let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
 
-      if (!(routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward')) {
-        const shouldLeavingViewBeRemoved = routeInfo.routeDirection !== 'none' && leavingViewItem && (enteringViewItem !== leavingViewItem);
-        if (shouldLeavingViewBeRemoved) {
-          leavingViewItem!.mount = false;
-        }
+      if (!leavingViewItem && routeInfo.prevRouteLastPathname) {
+        leavingViewItem = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
       }
 
-      if (leavingViewItem && routeInfo.routeOptions?.unmount) {
-        leavingViewItem.mount = false;
+      // Check if leavingViewItem should be unmounted
+      if (leavingViewItem) {
+        if (routeInfo.routeAction === 'replace') {
+          leavingViewItem.mount = false;
+        } else if (!(routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward')) {
+          if (routeInfo.routeDirection !== 'none' && (enteringViewItem !== leavingViewItem)) {
+            leavingViewItem.mount = false;
+          }
+        } else if (routeInfo.routeOptions?.unmount) {
+          leavingViewItem.mount = false;
+        }
       }
 
       const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
@@ -92,12 +98,12 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         // If we have a leavingView but no entering view/route, we are probably leaving to
         // another outlet, so hide this leavingView. We do it in a timeout to give time for a
         // transition to finish.
-        setTimeout(() => {
-          if (leavingViewItem.ionPageElement) {
-            leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
-            leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-          }
-        }, 250);
+        // setTimeout(() => {
+        if (leavingViewItem.ionPageElement) {
+          leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
+          leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+        }
+        // }, 250);
       }
 
       this.forceUpdate();

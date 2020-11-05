@@ -120,7 +120,7 @@ export class Nav implements NavOutlet {
     this.swipeGestureChanged();
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     for (const view of this.views) {
       lifecycle(view.element!, LIFECYCLE_WILL_UNLOAD);
       view._destroy();

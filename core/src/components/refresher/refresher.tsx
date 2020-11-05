@@ -371,8 +371,6 @@ export class Refresher implements ComponentInterface {
     const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLIonSpinnerElement;
     const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner') as HTMLIonSpinnerElement;
 
-    await contentEl.componentOnReady();
-
     if (getIonMode(this) === 'ios') {
       this.setupiOSNativeRefresher(pullingSpinner, refreshingSpinner);
     } else {
@@ -395,6 +393,8 @@ export class Refresher implements ComponentInterface {
       console.error('<ion-refresher> must be used inside an <ion-content>');
       return;
     }
+
+    await contentEl.componentOnReady();
 
     this.scrollEl = await contentEl.getScrollElement();
     this.backgroundContentEl = getElementRoot(contentEl).querySelector('#background-content') as HTMLElement;

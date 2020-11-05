@@ -1,6 +1,6 @@
 const port = 3000;
 
-describe('Navigation Tests', () => {
+describe('Routing Tests', () => {
 
   // before(() => {
   //   Cypress.config('userAgent', 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1')
@@ -241,6 +241,56 @@ describe('Navigation Tests', () => {
     cy.ionPageVisible('settings-page')
   })
 
+  it('/routing/tabs/redirect > Should be on settings page > Home Tab > Should be on home page', () => {
+    // tests that a redirect going to a tab other than the first tab works
+    // fixes bug https://github.com/ionic-team/ionic-framework/issues/21830
+    cy.visit(`http://localhost:${port}/routing/tabs/redirect`)
+    cy.ionPageVisible('settings-page')
+    cy.ionTabClick('Home')
+    cy.ionPageVisible('home-page')
+  })
+
+  it('/routing/ > Details 1 > Details 2 > Details 3 > Back > Settings Tab > Home Tab > Should be at details 2 page', () => {
+    // fixes an issue where route history was being lost after starting to go back, switching tabs
+    // and switching back to the same tab again
+    // for bug https://github.com/ionic-team/ionic-framework/issues/21834
+    cy.visit(`http://localhost:${port}/routing`)
+    cy.ionPageVisible('home-page')
+    cy.ionNav('ion-item', 'Details 1')
+    cy.ionPageVisible('home-details-page-1')
+    cy.ionNav('ion-button', 'Go to Details 2')
+    cy.ionPageVisible('home-details-page-2')
+    cy.ionNav('ion-button', 'Go to Details 3')
+    cy.ionPageVisible('home-details-page-3')
+    cy.ionBackClick('home-details-page-3')
+    cy.ionPageVisible('home-details-page-2')
+    cy.ionTabClick('Settings')
+    cy.ionPageVisible('settings-page')
+    cy.ionTabClick('Home')
+    cy.ionPageVisible('home-details-page-2')
+  })
+
+  it('/routing/tabs/home Menu > Favorites > Menu > Home with redirect, Home page should be visible, and Favorites should be hidden', () => {
+    cy.visit(`http://localhost:${port}/routing/tabs/home`)
+    cy.ionMenuClick()
+    cy.ionMenuNav('Favorites')
+    cy.ionPageVisible('favorites-page')
+    cy.ionMenuClick()
+    cy.ionMenuNav('Home with redirect')
+    cy.ionPageVisible('home-page')
+    cy.ionPageDoesNotExist('favorites-page')
+  })
+
+  it('/routing/tabs/home Menu > Favorites > Menu > Home with router, Home page should be visible, and Favorites should be hidden', () => {
+    cy.visit(`http://localhost:${port}/routing/tabs/home`)
+    cy.ionMenuClick()
+    cy.ionMenuNav('Favorites')
+    cy.ionPageVisible('favorites-page')
+    cy.ionMenuClick()
+    cy.ionMenuNav('Home with router')
+    cy.ionPageVisible('home-page')
+    cy.ionPageHidden('favorites-page')
+  })
   /*
     Tests to add:
     Test that lifecycle events fire

@@ -48,4 +48,4 @@ export { IonicSafeString, getPlatforms, isPlatform } from '@ionic/core';
 export { AnimationBuilder, Gesture, GestureConfig, GestureDetail, mdTransitionAnimation, iosTransitionAnimation, NavComponentWithProps } from '@ionic/core';
 
 // ISOMER
-export * from '@isomer/angular';
+export { Animation, AnimationCallbackOptions, AnimationController, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, createAnimation } from '@isomer/angular';

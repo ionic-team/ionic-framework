@@ -89,10 +89,11 @@ export class Toolbar implements ComponentInterface {
     return (
       <Host
         class={{
-          'in-toolbar': hostContext('ion-toolbar', this.el),
-          [mode]: true,
           ...childStyles,
-          ...createColorClasses(this.color),
+          ...createColorClasses(this.color, {
+            [mode]: true,
+            'in-toolbar': hostContext('ion-toolbar', this.el),
+          }),
         }}
       >
         <div class="toolbar-background"></div>

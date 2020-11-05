@@ -92,6 +92,15 @@ export class ThumbnailExample {
     <ion-label>Item Thumbnail</ion-label>
   </ion-item>
 </template>
+
+<script>
+import { IonItem, IonLabel, IonThumbnail } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonItem, IonLabel, IonThumbnail }
+});
+</script>
 ```
 
 

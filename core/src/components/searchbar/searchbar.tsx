@@ -67,7 +67,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() clearIcon?: string;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
    */
   @Prop() debounce = 250;
 
@@ -452,8 +452,7 @@ export class Searchbar implements ComponentInterface {
       <Host
         role="search"
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'searchbar-animated': animated,
           'searchbar-disabled': this.disabled,
@@ -462,7 +461,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-left-aligned': this.shouldAlignLeft,
           'searchbar-has-focus': this.focused,
           'searchbar-should-show-cancel': this.shouldShowCancelButton()
-        }}
+        })}
       >
 
         <div class="searchbar-input-container">

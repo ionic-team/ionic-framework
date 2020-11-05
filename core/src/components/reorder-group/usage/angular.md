@@ -72,6 +72,7 @@
 ```javascript
 import { Component, ViewChild } from '@angular/core';
 import { IonReorderGroup } from '@ionic/angular';
+import { ItemReorderEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'reorder-group-example',
@@ -83,7 +84,7 @@ export class ReorderGroupExample {
 
   constructor() {}
 
-  doReorder(ev: any) {
+  doReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
     console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
@@ -105,6 +106,7 @@ export class ReorderGroupExample {
 ```javascript
 import { Component, ViewChild } from '@angular/core';
 import { IonReorderGroup } from '@ionic/angular';
+import { ItemReorderEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'reorder-group-example',
@@ -118,7 +120,7 @@ export class ReorderGroupExample {
 
   constructor() {}
 
-  doReorder(ev: any) {
+  doReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     // Before complete is called with the items they will remain in the
     // order before the drag
     console.log('Before complete', this.items);

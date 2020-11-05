@@ -3,7 +3,7 @@ import { getIonMode } from '../global/ionic-global';
 import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
-import { getElementRoot } from './helpers';
+import { addEventListener, getElementRoot, removeEventListener } from './helpers';
 
 let lastId = 0;
 
@@ -63,7 +63,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
   return Promise.resolve() as any;
 };
 
-const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]), textarea, button, select, .ion-focusable';
+const focusableQueryString = '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
 const innerFocusableQueryString = 'input:not([type=hidden]), textarea, button, select';
 
 const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
@@ -138,6 +138,8 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
      * wrapper element as the traps live outside of the wrapper.
      */
     const overlayRoot = getElementRoot(lastOverlay);
+    if (!overlayRoot.contains(target)) { return; }
+
     const overlayWrapper = overlayRoot.querySelector('.ion-overlay-wrapper');
 
     if (!overlayWrapper) { return; }
@@ -258,9 +260,45 @@ export const present = async (
     overlay.didPresent.emit();
   }
 
+  /**
+   * When an overlay that steals focus
+   * is dismissed, focus should be returned
+   * to the element that was focused
+   * prior to the overlay opening. Toast
+   * does not steal focus and is excluded
+   * from returning focus as a result.
+   */
+  if (overlay.el.tagName !== 'ION-TOAST') {
+    focusPreviousElementOnDismiss(overlay.el);
+  }
+
   if (overlay.keyboardClose) {
     overlay.el.focus();
   }
+};
+
+/**
+ * When an overlay component is dismissed,
+ * focus should be returned to the element
+ * that presented the overlay. Otherwise
+ * focus will be set on the body which
+ * means that people using screen readers
+ * or tabbing will need to re-navigate
+ * to where they were before they
+ * opened the overlay.
+ */
+const focusPreviousElementOnDismiss = async (overlayEl: any) => {
+  let previousElement = document.activeElement as HTMLElement | null;
+  if (!previousElement) { return; }
+
+  const shadowRoot = previousElement && previousElement.shadowRoot;
+  if (shadowRoot) {
+    // If there are no inner focusable elements, just focus the host element.
+    previousElement = shadowRoot.querySelector(innerFocusableQueryString) || previousElement;
+  }
+
+  await overlayEl.onDidDismiss();
+  previousElement.focus();
 };
 
 export const dismiss = async (
@@ -350,10 +388,10 @@ export const eventMethod = <T>(element: HTMLElement, eventName: string): Promise
 
 export const onceEvent = (element: HTMLElement, eventName: string, callback: (ev: Event) => void) => {
   const handler = (ev: Event) => {
-    element.removeEventListener(eventName, handler);
+    removeEventListener(element, eventName, handler);
     callback(ev);
   };
-  element.addEventListener(eventName, handler);
+  addEventListener(element, eventName, handler);
 };
 
 export const isCancel = (role: string | undefined): boolean => {

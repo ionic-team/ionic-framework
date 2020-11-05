@@ -119,6 +119,15 @@ export class ProgressBarExample {
   <ion-progress-bar type="indeterminate"></ion-progress-bar>
   <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
 </template>
+
+<script>
+import { IonProgressBar } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonProgressBar }
+});
+</script>
 ```
 
 

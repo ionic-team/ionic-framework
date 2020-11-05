@@ -48,12 +48,12 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * The content's id the menu should use.
    */
-  @Prop({ reflectToAttr: true }) contentId?: string;
+  @Prop({ reflect: true }) contentId?: string;
 
   /**
    * An id for the menu.
    */
-  @Prop({ reflectToAttr: true }) menuId?: string;
+  @Prop({ reflect: true }) menuId?: string;
 
   /**
    * The display type of the menu.
@@ -96,7 +96,7 @@ export class Menu implements ComponentInterface, MenuI {
   /**
    * Which side of the view the menu should be placed.
    */
-  @Prop({ reflectToAttr: true }) side: Side = 'start';
+  @Prop({ reflect: true }) side: Side = 'start';
 
   @Watch('side')
   protected sideChanged() {

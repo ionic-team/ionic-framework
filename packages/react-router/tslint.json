@@ -33,6 +33,7 @@
     "no-unused-expression": false,
     "no-constant-condition": false,
     "no-empty-interface": false,
-    "prefer-conditional-expression": false
+    "prefer-conditional-expression": false,
+    "prefer-object-spread": false
   }
 }
