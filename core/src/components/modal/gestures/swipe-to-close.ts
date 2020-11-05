@@ -42,7 +42,7 @@ export const createSwipeToCloseGesture = (
 
   const onMove = (detail: GestureDetail) => {
     const n = detail.deltaY / height;
-    const step = clamp(0.0001, canDismissPresent ? n / 6 : n, canDismissPresent ? 0.15 : 0.9999);
+    const step = clamp(0.0001, canDismissPresent ? n / 6 : n, 0.9999);
 
     animation.progressStep(step);
   };
@@ -73,12 +73,14 @@ export const createSwipeToCloseGesture = (
 
     animation
       .onFinish(() => {
+        if (shouldComplete && canDismissPresent) {
+          onCanDismiss();
+        }
         if (!shouldComplete || canDismissPresent) {
           gesture.enable(true);
         }
-        if (canDismissPresent) {
-          onCanDismiss();
-        }
+      }, {
+        oneTimeCallback: true
       })
       .progressEnd((shouldComplete && !canDismissPresent) ? 1 : 0, newStepValue, duration);
 
