@@ -248,6 +248,7 @@ ion-checkbox,part,mark
 
 ion-chip,shadow
 ion-chip,prop,color,string | undefined,undefined,false,false
+ion-chip,prop,disabled,boolean,false,false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
 ion-chip,css-prop,--background
