@@ -150,7 +150,9 @@ export default defineComponent({
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `--background`          | Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself. |
 | `--buffer-background`   | Color of the buffer bar                                                                                                               |
+| `--buffer-transition`   | Transition of the buffer bar                                                                                                          |
 | `--progress-background` | Color of the progress bar                                                                                                             |
+| `--progress-transition` | Transition of the progress bar                                                                                                        |
 
 
 ----------------------------------------------

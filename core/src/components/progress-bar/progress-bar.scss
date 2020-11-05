@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "progress-bar.vars";
 
 // Progress bar
 // --------------------------------------------------
@@ -8,11 +9,15 @@
   /**
   * @prop --background:  Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself.
   * @prop --progress-background: Color of the progress bar
+  * @prop --progress-transition: Transition of the progress bar
   * @prop --buffer-background: Color of the buffer bar
+  * @prop --buffer-transition: Transition of the buffer bar
   */
   --background: #{ion-color(primary, base, 0.2)};
   --progress-background: #{ion-color(primary, base)};
+  --progress-transition: #{$progress-bar-transition};
   --buffer-background: var(--background);
+  --buffer-transition: #{$progress-bar-transition};
   display: block;
 
   position: relative;
@@ -57,8 +62,14 @@
 .progress-buffer-bar {
   /* stylelint-disable-next-line property-blacklist */
   transform-origin: left top;
+}
 
-  transition: transform 150ms linear;
+.progress {
+  transition: var(--progress-transition);
+}
+
+.progress-buffer-bar {
+  transition: var(--buffer-transition);
 }
 
 // Progress and background bar
