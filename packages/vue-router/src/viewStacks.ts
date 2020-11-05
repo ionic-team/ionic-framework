@@ -1,18 +1,17 @@
 import { generateId } from './utils';
+import { pathToRegexp } from './regexp';
 import {  RouteInfo,
   ViewItem,
   ViewStacks,
 } from './types';
+import { RouteLocationMatched } from 'vue-router';
+import { shallowRef } from 'vue';
 
 export const createViewStacks = () => {
   let viewStacks: ViewStacks = {};
-  const tabsPrefixes = new Set();
 
-  const addTabsPrefix = (prefix: string) => tabsPrefixes.add(prefix);
-  const hasTabsPrefix = (path: string) => {
-    const values = Array.from(tabsPrefixes.values());
-    const hasPrefix = values.find((v: string) => path.includes(v));
-    return hasPrefix !== undefined;
+  const clear = (outletId: number) => {
+    delete viewStacks[outletId];
   }
 
   const getViewStack = (outletId: number) => {
@@ -28,7 +27,7 @@ export const createViewStacks = () => {
   }
 
   const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number) => {
-    return findViewItemByPath(routeInfo.lastPathname, outletId);
+    return findViewItemByPath(routeInfo.lastPathname, outletId, false);
   }
 
   const findViewItemInStack = (path: string, stack: ViewItem[]): ViewItem | undefined => {
@@ -41,25 +40,44 @@ export const createViewStacks = () => {
     })
   }
 
-  const findViewItemByPath = (path: string, outletId?: number): ViewItem | undefined => {
+  const findViewItemByPath = (path: string, outletId?: number, strict: boolean = true): ViewItem | undefined => {
+    const matchView = (viewItem: ViewItem) => {
+      const pathname = path;
+      const viewItemPath = viewItem.matchedRoute.path;
+
+      const regexp = pathToRegexp(viewItemPath, [], {
+        end: viewItem.exact,
+        strict: viewItem.exact,
+        sensitive: false
+      });
+      return (regexp.exec(pathname)) ? viewItem : undefined;
+    }
+
     if (outletId) {
       const stack = viewStacks[outletId];
       if (!stack) return undefined;
-      return findViewItemInStack(path, stack);
-    }
 
-    for (let outletId in viewStacks) {
-      const stack = viewStacks[outletId];
-      const viewItem = findViewItemInStack(path, stack);
+      const quickMatch = findViewItemInStack(path, stack);
+      if (quickMatch) return quickMatch;
 
-      if (viewItem) {
-        return viewItem;
+      if (!strict) {
+        const match = stack.find(matchView);
+        if (match) return match;
+      }
+    } else {
+      for (let outletId in viewStacks) {
+        const stack = viewStacks[outletId];
+        const viewItem = findViewItemInStack(path, stack);
+        if (viewItem) {
+            return viewItem;
+        }
       }
     }
+
     return undefined;
   }
 
-  const createViewItem = (outletId: number, vueComponent: any, matchedRoute: any, routeInfo: RouteInfo, ionPage?: HTMLElement): ViewItem => {
+  const createViewItem = (outletId: number, vueComponent: any, matchedRoute: RouteLocationMatched, routeInfo: RouteInfo, ionPage?: HTMLElement): ViewItem => {
     return {
       id: generateId('viewItem'),
       pathname: routeInfo.pathname,
@@ -67,8 +85,10 @@ export const createViewStacks = () => {
       matchedRoute,
       ionPageElement: ionPage,
       vueComponent,
+      vueComponentRef: shallowRef(),
       ionRoute: false,
-      mount: false
+      mount: false,
+      exact: routeInfo.pathname === matchedRoute.path
     };
   }
 
@@ -100,8 +120,7 @@ export const createViewStacks = () => {
   }
 
   return {
-    addTabsPrefix,
-    hasTabsPrefix,
+    clear,
     findViewItemByRouteInfo,
     findLeavingViewItemByRouteInfo,
     createViewItem,

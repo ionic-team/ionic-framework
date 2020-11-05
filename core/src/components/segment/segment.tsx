@@ -36,6 +36,22 @@ export class Segment implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
+  @Watch('color')
+  protected colorChanged(value?: Color, oldValue?: Color) {
+
+    /**
+     * If color is set after not having
+     * previously been set (or vice versa),
+     * we need to emit style so the segment-buttons
+     * can apply their color classes properly.
+     */
+    if (
+      (oldValue === undefined && value !== undefined) ||
+      (oldValue !== undefined && value === undefined)
+    ) {
+      this.emitStyle();
+    }
+  }
 
   /**
    * If `true`, the user cannot interact with the segment.
