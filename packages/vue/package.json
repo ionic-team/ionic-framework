@@ -5,11 +5,12 @@
   "scripts": {
     "lint": "echo add linter",
     "test": "jest",
-    "build": "npm run clean && npm run copy && npm run copy.overlays && npm run compile && npm run bundle",
+    "build": "npm run clean && npm run copy && npm run copy.overlays && npm run compile && npm run bundle && npm run build.web-types",
     "bundle": "rollup --config rollup.config.js",
     "clean": "rimraf dist dist-transpiled",
     "compile": "npm run tsc",
     "tsc": "tsc -p .",
+    "build.web-types": "node ./scripts/build-web-types.js",
     "copy": "node ./scripts/copy-css.js",
     "copy.overlays": "node ./scripts/copy-overlays.js"
   },
@@ -56,5 +57,6 @@
   "dependencies": {
     "@ionic/core": "5.4.2",
     "ionicons": "^5.1.2"
-  }
+  },
+  "web-types": "dist/web-types.json"
 }
