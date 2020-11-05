@@ -29,7 +29,15 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    */
   router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized) => {
     const { direction, action } = currentNavigationInfo;
-    handleHistoryChange(to, action, direction);
+
+    /**
+     * When calling router.replace, we are not informed
+     * about the replace action in opts.history.listen
+     * but we can check to see if the latest routing action
+     * was a replace action by looking at the history state.
+     */
+    const replaceAction = history.state.replaced ? 'replace' : undefined;
+    handleHistoryChange(to, action || replaceAction, direction);
 
     currentNavigationInfo = { direction: undefined, action: undefined };
   });
@@ -234,15 +242,33 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     const [pathname] = path.split('?');
 
     if (routeInfo) {
-      incomingRouteParams = Object.assign(Object.assign({}, routeInfo), { routerAction: 'push', routerDirection: 'none' });
-
       const search = (routeInfo.search) ? `?${routeInfo.search}` : '';
-      router.push(routeInfo.pathname + search);
+
+      incomingRouteParams = {
+        ...incomingRouteParams,
+        routerAction: 'push',
+        routerDirection: 'none',
+        tab
+      }
+
+      /**
+       * When going back to a tab
+       * you just left, it's possible
+       * for the route info to be incorrect
+       * as the tab you want is not the
+       * tab you are on.
+       */
+      if (routeInfo.pathname === pathname) {
+        router.push(routeInfo.pathname + search);
+      } else {
+        router.push(pathname + search);
+      }
     }
     else {
       handleNavigate(pathname, 'push', 'none', undefined, tab);
     }
   }
+
   const handleSetCurrentTab = (tab: string) => {
     currentTab = tab;
 
