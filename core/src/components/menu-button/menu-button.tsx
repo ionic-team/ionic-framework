@@ -50,6 +50,11 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
   @Prop() autoHide = true;
 
   /**
+   * The icon to use for the menu button.
+   */
+  @Prop() icon?: string;
+
+  /**
    * The type of the button.
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
@@ -69,9 +74,9 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
   }
 
   render() {
-    const { color, disabled } = this;
+    const { color, disabled, icon } = this;
     const mode = getIonMode(this);
-    const menuIcon = config.get('menuIcon', mode === 'ios' ? 'menu-outline' : 'menu-sharp');
+    const menuIcon: string = icon || config.get('menuIcon', mode === 'ios' ? 'menu-outline' : 'menu-sharp');
     const hidden = this.autoHide && !this.visible;
 
     const attrs = {

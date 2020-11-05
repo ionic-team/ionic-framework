@@ -403,6 +403,7 @@ export const IonMenuButton = /*@__PURE__*/ defineContainer<JSX.IonMenuButton>('i
   'disabled',
   'menu',
   'autoHide',
+  'icon',
   'type'
 ]);
 

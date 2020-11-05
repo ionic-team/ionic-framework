@@ -1283,6 +1283,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * The icon to use for the menu button.
+         */
+        "icon"?: string;
+        /**
           * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
          */
         "menu"?: string;
@@ -4613,6 +4617,10 @@ declare namespace LocalJSX {
           * If `true`, the user cannot interact with the menu button.
          */
         "disabled"?: boolean;
+        /**
+          * The icon to use for the menu button.
+         */
+        "icon"?: string;
         /**
           * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
          */

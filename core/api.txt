@@ -677,6 +677,7 @@ ion-menu-button,shadow
 ion-menu-button,prop,autoHide,boolean,true,false,false
 ion-menu-button,prop,color,string | undefined,undefined,false,false
 ion-menu-button,prop,disabled,boolean,false,false,false
+ion-menu-button,prop,icon,string | undefined,undefined,false,false
 ion-menu-button,prop,menu,string | undefined,undefined,false,false
 ion-menu-button,prop,mode,"ios" | "md",undefined,false,false
 ion-menu-button,prop,type,"button" | "reset" | "submit",'button',false,false
