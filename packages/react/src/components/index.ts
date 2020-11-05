@@ -2,11 +2,8 @@
 import { defineCustomElements } from '@ionic/core/loader';
 import { addIcons } from 'ionicons';
 import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
-<<<<<<< HEAD
 export { createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, iosTransitionAnimation, IonicSafeString, mdTransitionAnimation, NavComponentWithProps, setupConfig } from '@ionic/core';
-=======
-export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, createAnimation, createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, iosTransitionAnimation, IonicSafeString, mdTransitionAnimation, NavComponentWithProps, setupConfig } from '@ionic/core';
->>>>>>> origin/master
+
 export * from './proxies';
 
 // createControllerComponent
@@ -38,7 +35,7 @@ export { isPlatform, getPlatforms, getConfig } from './utils';
 export * from './hrefprops';
 
 // Isomer
-export * from '@isomer/react';
+export { Animation, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle, CreateAnimation, createAnimation } from '@isomer/react';
 
 // Icons that are used by internal components
 addIcons({
