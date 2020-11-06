@@ -6,6 +6,7 @@ import { vueOutputTarget } from '@stencil/vue-output-target';
 import { apiSpecGenerator } from './scripts/api-spec-generator';
 
 export const config: Config = {
+  autoprefixCss: true,
   namespace: 'Ionic',
   bundles: [
     { components: ['ion-action-sheet'] },
