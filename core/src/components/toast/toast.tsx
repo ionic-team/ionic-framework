@@ -94,7 +94,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   /**
    * The direction of the swipe gesture to dismiss the toast.
    */
-  @Prop() swipeGesture: undefined | 'left' | 'right' = undefined;
+  @Prop() swipeGesture: undefined | 'left' | 'right' | 'top' | 'bottom' = undefined;
 
   /**
    * An array of buttons for the toast.
@@ -255,11 +255,25 @@ export class Toast implements ComponentInterface, OverlayInterface {
     this.setGestureDirection(this.swipeGesture!);
   }
 
-  private setGestureDirection(direction: 'left' | 'right') {
-    const translateTarget = direction === 'left' ? 'translateX(-100%)' : 'translateX(100%)';
+  private setGestureDirection(direction: 'left' | 'right' | 'top' | 'bottom') {
+    let translateTarget: string;
+    switch (direction) {
+      case 'left':
+        translateTarget = 'translate(-100%, 0)';
+        break;
+      case 'right':
+        translateTarget = 'translate(100%, 0)';
+        break;
+      case 'top':
+        translateTarget = 'translate(0, -100%)';
+        break;
+      case 'bottom':
+        translateTarget = 'translate(0, 100%)';
+        break;
+    }
     this.animation
       .keyframes([
-        { transform: 'translateX(0)', opacity: 1, offset: 0 },
+        { transform: 'translate(0, 0)', opacity: 1, offset: 0 },
         { transform: translateTarget, opacity: 0, offset: 1 },
       ]);
   }
@@ -268,26 +282,61 @@ export class Toast implements ComponentInterface, OverlayInterface {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'drag',
+      direction: this.swipeGesture === 'left' || this.swipeGesture === 'right' ? 'x' : 'y',
       onStart: () => {
         this.animation.progressStart(false, 0);
       },
       onMove: (detail: GestureDetail) => {
-        const stepValue = this.swipeGesture === 'left'
-          ? this.clamp((detail.startX - detail.currentX) / this.el.clientWidth)
-          : this.clamp((detail.currentX - detail.startX) / this.el.clientWidth);
+        let stepValue = 0;
+        switch (this.swipeGesture) {
+          case 'left':
+            stepValue = this.clamp((detail.startX - detail.currentX) / this.el.clientWidth);
+            break;
+          case 'right':
+            stepValue = this.clamp((detail.currentX - detail.startX) / this.el.clientWidth);
+            break;
+          case 'top':
+            stepValue = this.clamp((detail.startY - detail.currentY) / this.el.clientHeight);
+            break;
+          case 'bottom':
+            stepValue = this.clamp((detail.currentY - detail.startY) / this.el.clientHeight);
+            break;
+        }
 
         this.animation.progressStep(stepValue);
       },
       onEnd: (detail: GestureDetail) => {
-        const stepValue = this.swipeGesture === 'left'
-          ? this.clamp((detail.startX - detail.currentX) / this.el.clientWidth)
-          : this.clamp((detail.currentX - detail.startX) / this.el.clientWidth);
-
-        const velocity = detail.velocityX;
-        const z = this.el.clientWidth / 2.0;
-        const shouldComplete = this.swipeGesture === 'left'
-          ? velocity <= 0 && (velocity < -0.2 || detail.deltaX < -z)
-          : velocity >= 0 && (velocity > 0.2 || detail.deltaX > z);
+        let stepValue = 0;
+        let velocity = 0;
+        let z = 0;
+        let shouldComplete = false;
+        const toastWrapper = this.el.shadowRoot?.querySelector('.toast-wrapper');
+        switch (this.swipeGesture) {
+          case 'left':
+            stepValue = this.clamp((detail.startX - detail.currentX) / this.el.clientWidth);
+            velocity = detail.velocityX;
+            z = toastWrapper!.clientWidth / 2.0;
+            shouldComplete = velocity <= 0 && (velocity < -0.2 || detail.deltaX < -z);
+            break;
+          case 'right':
+            stepValue = this.clamp((detail.currentX - detail.startX) / this.el.clientWidth);
+            velocity = detail.velocityX;
+            z = toastWrapper!.clientWidth / 2.0;
+            shouldComplete = velocity >= 0 && (velocity > 0.2 || detail.deltaX > z);
+            break;
+          case 'top':
+            stepValue = this.clamp((detail.startY - detail.currentY) / this.el.clientHeight);
+            velocity = detail.velocityY;
+            z = toastWrapper!.clientHeight / 2.0;
+            shouldComplete = velocity <= 0 && (velocity < -0.2 || detail.deltaY < -z);
+            break;
+          case 'bottom':
+            stepValue = this.clamp((detail.currentY - detail.startY) / this.el.clientHeight);
+            velocity = detail.velocityY;
+            z = toastWrapper!.clientHeight / 2.0;
+            shouldComplete = velocity >= 0 && (velocity > 0.2 || detail.deltaY > z);
+            break;
+        }
 
         this.animation
           .onFinish(

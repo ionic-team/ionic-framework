@@ -2593,7 +2593,7 @@ export namespace Components {
         /**
           * The direction of the swipe gesture to dismiss the toast.
          */
-        "swipeGesture": undefined | 'left' | 'right';
+        "swipeGesture": undefined | 'left' | 'right' | 'top' | 'bottom';
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -5922,7 +5922,7 @@ declare namespace LocalJSX {
         /**
           * The direction of the swipe gesture to dismiss the toast.
          */
-        "swipeGesture"?: undefined | 'left' | 'right';
+        "swipeGesture"?: undefined | 'left' | 'right' | 'top' | 'bottom';
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
