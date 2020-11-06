@@ -16,4 +16,9 @@ export const fireLifecycle = (vueComponent: any, vueInstance: Ref<ComponentPubli
   if (vueComponent?.[lifecycle]) {
     vueComponent[lifecycle].bind(vueInstance?.value)();
   }
+
+  const instance = vueInstance?.value as any;
+  if (instance?.[lifecycle]) {
+    instance[lifecycle]();
+  }
 }
