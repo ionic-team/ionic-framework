@@ -310,30 +310,30 @@ export class Toast implements ComponentInterface, OverlayInterface {
         let velocity = 0;
         let z = 0;
         let shouldComplete = false;
-        const toastWrapper = this.el.shadowRoot?.querySelector('.toast-wrapper');
+        const toastWrapper = this.el.shadowRoot!.querySelector('.toast-wrapper')!;
         switch (this.swipeGesture) {
           case 'left':
             stepValue = this.clamp((detail.startX - detail.currentX) / this.el.clientWidth);
             velocity = detail.velocityX;
-            z = toastWrapper!.clientWidth / 2.0;
+            z = toastWrapper.clientWidth / 2.0;
             shouldComplete = velocity <= 0 && (velocity < -0.2 || detail.deltaX < -z);
             break;
           case 'right':
             stepValue = this.clamp((detail.currentX - detail.startX) / this.el.clientWidth);
             velocity = detail.velocityX;
-            z = toastWrapper!.clientWidth / 2.0;
+            z = toastWrapper.clientWidth / 2.0;
             shouldComplete = velocity >= 0 && (velocity > 0.2 || detail.deltaX > z);
             break;
           case 'top':
             stepValue = this.clamp((detail.startY - detail.currentY) / this.el.clientHeight);
             velocity = detail.velocityY;
-            z = toastWrapper!.clientHeight / 2.0;
+            z = toastWrapper.clientHeight / 2.0;
             shouldComplete = velocity <= 0 && (velocity < -0.2 || detail.deltaY < -z);
             break;
           case 'bottom':
             stepValue = this.clamp((detail.currentY - detail.startY) / this.el.clientHeight);
             velocity = detail.velocityY;
-            z = toastWrapper!.clientHeight / 2.0;
+            z = toastWrapper.clientHeight / 2.0;
             shouldComplete = velocity >= 0 && (velocity > 0.2 || detail.deltaY > z);
             break;
         }
