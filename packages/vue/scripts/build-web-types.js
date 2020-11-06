@@ -1,20 +1,15 @@
 const fs = require("fs")
-
-// Web-types build require docs to be built first
 const docs = require("@ionic/core/dist/docs.json")
+const { pascalCase } = require('change-case')
 
 const components = []
-
-function toCamelCase(name) {
-  return name.split("-").map(n => n[0].toUpperCase() + n.substr(1)).join("")
-}
 
 for (const component of docs.components) {
   if (!component.usage.vue) continue
   const attributes = []
   const slots = []
   const events = []
-  const componentName = toCamelCase(component.tag)
+  const componentName = pascalCase(component.tag)
   const docUrl = "https://ionicframework.com/docs/api/" + component.tag.substr(4)
 
   for (const prop of component.props || []) {
