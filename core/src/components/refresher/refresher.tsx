@@ -242,7 +242,7 @@ export class Refresher implements ComponentInterface {
     this.gesture = (await import('../../utils/gesture')).createGesture({
           el: this.scrollEl!,
           gestureName: 'refresher',
-          gesturePriority: 10,
+          gesturePriority: 31,
           direction: 'y',
           threshold: 5,
           onStart: () => {
@@ -289,7 +289,7 @@ export class Refresher implements ComponentInterface {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.scrollEl!,
       gestureName: 'refresher',
-      gesturePriority: 10,
+      gesturePriority: 31,
       direction: 'y',
       threshold: 5,
       canStart: () => this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing && this.scrollEl!.scrollTop === 0,
@@ -405,7 +405,7 @@ export class Refresher implements ComponentInterface {
       this.gesture = (await import('../../utils/gesture')).createGesture({
         el: contentEl,
         gestureName: 'refresher',
-        gesturePriority: 10,
+        gesturePriority: 31,
         direction: 'y',
         threshold: 20,
         passive: false,

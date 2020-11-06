@@ -404,6 +404,10 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * If `true`, the user cannot interact with the chip.
+         */
+        "disabled": boolean;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -3726,6 +3730,10 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the chip.
+         */
+        "disabled"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
