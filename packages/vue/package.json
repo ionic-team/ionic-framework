@@ -1,15 +1,16 @@
 {
   "name": "@ionic/vue",
-  "version": "5.4.1",
+  "version": "5.4.2",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "lint": "echo add linter",
     "test": "jest",
-    "build": "npm run clean && npm run copy && npm run copy.overlays && npm run compile && npm run bundle",
+    "build": "npm run clean && npm run copy && npm run copy.overlays && npm run compile && npm run bundle && npm run build.web-types",
     "bundle": "rollup --config rollup.config.js",
     "clean": "rimraf dist dist-transpiled",
     "compile": "npm run tsc",
     "tsc": "tsc -p .",
+    "build.web-types": "node ./scripts/build-web-types.js",
     "copy": "node ./scripts/copy-css.js",
     "copy.overlays": "node ./scripts/copy-overlays.js"
   },
@@ -54,7 +55,8 @@
     "vue-router": "^4.0.0-beta.11"
   },
   "dependencies": {
-    "@ionic/core": "5.4.1",
+    "@ionic/core": "5.4.2",
     "ionicons": "^5.1.2"
-  }
+  },
+  "web-types": "dist/web-types.json"
 }
