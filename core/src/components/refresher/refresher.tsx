@@ -165,7 +165,15 @@ export class Refresher implements ComponentInterface {
   private async setupiOSNativeRefresher(pullingSpinner: HTMLIonSpinnerElement, refreshingSpinner: HTMLIonSpinnerElement) {
     this.elementToTransform = this.scrollEl!;
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
-    const MAX_PULL = this.scrollEl!.clientHeight * 0.16;
+    const height = this.scrollEl!.clientHeight;
+
+    /**
+     * If the scroll element is hidden, then height will be zero.
+     * In that case, just assign a reasonable value for pulling down.
+     * The most common scenario of this happening is when using the
+     * refreshing in a menu that is initially hidden.
+     */
+    const MAX_PULL = (height === 0) ? 80 : height * 0.16;
     const NUM_TICKS = ticks.length;
 
     writeTask(() => ticks.forEach(el => el.style.setProperty('animation', 'none')));
