@@ -285,7 +285,7 @@ export class Datetime implements ComponentInterface {
       if (data.name !== 'ampm' && this.datetimeValue.ampm !== undefined) {
         changeData['ampm'] = {
           value: this.datetimeValue.ampm
-        }
+        };
       }
 
       this.updateDatetimeValue(changeData);

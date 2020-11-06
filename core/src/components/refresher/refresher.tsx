@@ -242,7 +242,7 @@ export class Refresher implements ComponentInterface {
     this.gesture = (await import('../../utils/gesture')).createGesture({
           el: this.scrollEl!,
           gestureName: 'refresher',
-          gesturePriority: 10,
+          gesturePriority: 31,
           direction: 'y',
           threshold: 5,
           onStart: () => {
@@ -289,7 +289,7 @@ export class Refresher implements ComponentInterface {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.scrollEl!,
       gestureName: 'refresher',
-      gesturePriority: 10,
+      gesturePriority: 31,
       direction: 'y',
       threshold: 5,
       canStart: () => this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing && this.scrollEl!.scrollTop === 0,
@@ -371,8 +371,6 @@ export class Refresher implements ComponentInterface {
     const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLIonSpinnerElement;
     const refreshingSpinner = this.el.querySelector('ion-refresher-content .refresher-refreshing ion-spinner') as HTMLIonSpinnerElement;
 
-    await contentEl.componentOnReady();
-
     if (getIonMode(this) === 'ios') {
       this.setupiOSNativeRefresher(pullingSpinner, refreshingSpinner);
     } else {
@@ -396,6 +394,8 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
+    await contentEl.componentOnReady();
+
     this.scrollEl = await contentEl.getScrollElement();
     this.backgroundContentEl = getElementRoot(contentEl).querySelector('#background-content') as HTMLElement;
 
@@ -405,7 +405,7 @@ export class Refresher implements ComponentInterface {
       this.gesture = (await import('../../utils/gesture')).createGesture({
         el: contentEl,
         gestureName: 'refresher',
-        gesturePriority: 10,
+        gesturePriority: 31,
         direction: 'y',
         threshold: 20,
         passive: false,

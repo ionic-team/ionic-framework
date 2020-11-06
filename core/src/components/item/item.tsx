@@ -30,6 +30,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
+  private clickListener?: (ev: Event) => void;
 
   @Element() el!: HTMLIonItemElement;
 
@@ -152,7 +153,33 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
   }
 
+  componentDidUpdate() {
+    // Do not use @Listen here to avoid making all items
+    // appear as clickable to screen readers
+    // https://github.com/ionic-team/ionic-framework/issues/22011
+    const input = this.getFirstInput();
+    if (input && !this.clickListener) {
+      this.clickListener = (ev: Event) => this.delegateFocus(ev, input);
+      this.el.addEventListener('click', this.clickListener);
+    }
+  }
+
+  disconnectedCallback() {
+    const input = this.getFirstInput();
+    if (input && this.clickListener) {
+      this.el.removeEventListener('click', this.clickListener);
+      this.clickListener = undefined;
+    }
+  }
+
   componentDidLoad() {
+    this.setMultipleInputs();
+  }
+
+  // If the item contains multiple clickable elements and/or inputs, then the item
+  // should not have a clickable input cover over the entire item to prevent
+  // interfering with their individual click events
+  private setMultipleInputs() {
     // The following elements have a clickable cover that is relative to the entire item
     const covers = this.el.querySelectorAll('ion-checkbox, ion-datetime, ion-select, ion-radio');
 
@@ -199,22 +226,20 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   // clicking on the left padding of an item is not focusing the input
   // but is opening the keyboard. It will no longer be needed with
   // iOS 14.
-  @Listen('click')
-  delegateFocus(ev: Event) {
+  private delegateFocus(ev: Event, input: HTMLIonInputElement | HTMLIonTextareaElement) {
     const clickedItem = (ev.target as HTMLElement).tagName === 'ION-ITEM';
-    const input = this.getFirstInput();
     let firstActive = false;
 
     // If the first input is the same as the active element we need
     // to focus the first input again, but if the active element
     // is another input inside of the item we shouldn't switch focus
-    if (input && document.activeElement) {
+    if (document.activeElement) {
       firstActive = input.querySelector('input, textarea') === document.activeElement;
     }
 
     // Only focus the first input if we clicked on an ion-item
     // and the first input exists
-    if (clickedItem && input && firstActive) {
+    if (clickedItem && firstActive) {
       input.fireFocusEvents = false;
       input.setBlur();
       input.setFocus();
@@ -239,6 +264,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         rel,
         target
       };
+    // Only set onClick if the item is clickable to prevent screen
+    // readers from reading all items as clickable
+    const clickFn = clickable ? {
+      onClick: (ev: Event) => {openURL(href, ev, routerDirection, routerAnimation); }
+    } : {};
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
     this.itemStyles.forEach(value => {
       Object.assign(childStyles, value);
@@ -267,7 +297,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             class="item-native"
             part="native"
             disabled={disabled}
-            onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
+            {...clickFn}
           >
             <slot name="start"></slot>
             <div class="item-inner">

@@ -2,35 +2,61 @@ import { h, defineComponent, inject } from 'vue';
 
 export const IonTabButton = defineComponent({
   name: 'IonTabButton',
-  setup(_, { attrs, slots }) {
+  props: {
+    _getTabState: { type: Function, default: () => { return {} } },
+    disabled: Boolean,
+    download: String,
+    href: String,
+    rel: String,
+    layout: String,
+    selected: Boolean,
+    tab: String,
+    target: String
+  },
+  setup(props, { slots }) {
     const ionRouter: any = inject('navManager');
     const onClick = (ev: Event) => {
-
       if (ev.cancelable) {
         ev.preventDefault();
       }
 
-      const { tab, href } = attrs;
-      const currentRoute = ionRouter.getCurrentRouteInfo();
+      /**
+       * Keeping track of the originalHref
+       * (i.e. /tabs/tab1) lets us redirect
+       * users back to a child page using currentHref
+       * (i.e. /tabs/tab1/child).
+       */
+      const { tab, href, _getTabState } = props;
+      const tabState = _getTabState();
+      const tappedTab = tabState.tabs[tab] || {};
+      const originalHref = tappedTab.originalHref || href;
+      const currentHref = tappedTab.currentHref || href;
+      const prevActiveTab = tabState.activeTab;
 
-      if (currentRoute.tab === tab) {
-        if (href !== currentRoute.pathname) {
-          ionRouter.resetTab(tab, href);
+      /**
+       * If we are still on the same
+       * tab as before, but the base href
+       * does not equal the current href,
+       * then we must be on a child page and
+       * should direct users back to the root
+       * of the tab.
+       */
+      if (prevActiveTab === tab) {
+        if (originalHref !== currentHref) {
+          ionRouter.resetTab(tab, originalHref);
         }
       } else {
-        // TODO tabs will change/did change
-        ionRouter.changeTab(tab, href)
+        ionRouter.changeTab(tab, currentHref)
       }
-    }
+    };
     return () => {
-      const children = slots.default && slots.default()
       return h(
         'ion-tab-button',
         {
           onClick,
-          ...attrs
+          ...props
         },
-        children
+        slots.default && slots.default()
       )
     }
   }
