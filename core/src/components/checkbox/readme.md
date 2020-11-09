@@ -228,8 +228,8 @@ export class CheckboxExample {
       <ion-label>{{entry.val}}</ion-label>
       <ion-checkbox
         slot="end"
-        @update:modelValue="entry.isChecked = $event"
-        :modelValue="entry.isChecked">
+        @input="entry.checked = $event.target.value"
+        :value="entry.isChecked">
       </ion-checkbox>
     </ion-item>
   </ion-list>
