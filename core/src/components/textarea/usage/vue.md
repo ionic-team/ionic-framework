@@ -38,11 +38,11 @@
 </template>
 
 <script>
-import { IonItem, IonLabe, IonTextarea } from '@ionic/vue';
+import { IonItem, IonLabel, IonTextarea } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  components: { IonItem, IonLabe, IonTextarea }
+  components: { IonItem, IonLabel, IonTextarea }
 });
 </script>
 ```
