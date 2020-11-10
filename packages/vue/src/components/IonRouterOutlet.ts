@@ -10,9 +10,9 @@ import {
   InjectionKey,
   onUnmounted
 } from 'vue';
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core';
 import { useRoute } from 'vue-router';
-import { fireLifecycle, generateId, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../utils';
+import { fireLifecycle, generateId } from '../utils';
 
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
@@ -194,13 +194,13 @@ export const IonRouterOutlet = defineComponent({
 
       if (enteringViewItem === leavingViewItem) return;
 
-      fireLifecycle(enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
+      fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
 
       if (leavingViewItem) {
         let animationBuilder = routerAnimation;
         const leavingEl = leavingViewItem.ionPageElement;
 
-        fireLifecycle(leavingViewItem.vueComponentRef, LIFECYCLE_WILL_LEAVE);
+        fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_WILL_LEAVE);
 
         /**
         * If we are going back from a page that
@@ -242,7 +242,7 @@ export const IonRouterOutlet = defineComponent({
           }
         }
 
-        fireLifecycle(leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
+        fireLifecycle(leavingViewItem.vueComponent, leavingViewItem.vueComponentRef, LIFECYCLE_DID_LEAVE);
       } else {
         /**
          * If there is no leaving element, just show
@@ -253,7 +253,7 @@ export const IonRouterOutlet = defineComponent({
         requestAnimationFrame(() => enteringEl.classList.remove('ion-page-invisible'));
       }
 
-      fireLifecycle(enteringViewItem.vueComponentRef, LIFECYCLE_DID_ENTER);
+      fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_DID_ENTER);
 
       components.value = viewStacks.getChildrenToRender(id);
     }
