@@ -166,7 +166,7 @@ export const translateElement = (el?: HTMLElement, value?: string) => {
 // Utils
 // -----------------------------
 
-export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, mode: string) => {
+export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, mode: string, forceIosWeb: boolean = false, forceMdWeb:boolean = false) => {
   const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
   const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
 
@@ -174,8 +174,8 @@ export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, m
     pullingSpinner !== null &&
     refreshingSpinner !== null &&
     (
-      (mode === 'ios' && isPlatform('mobile') && (referenceEl.style as any).webkitOverflowScrolling !== undefined) ||
-      mode === 'md'
+      (mode === 'ios' && !forceIosWeb && isPlatform('mobile') && (referenceEl.style as any).webkitOverflowScrolling !== undefined) ||
+      mode === 'md' && !forceMdWeb
     )
 
   );

@@ -48,6 +48,7 @@ export class Refresher implements ComponentInterface {
    */
   @State() private state: RefresherState = RefresherState.Inactive;
 
+  
   /**
    * The minimum distance the user must pull down until the
    * refresher will go into the `refreshing` state.
@@ -125,7 +126,9 @@ export class Refresher implements ComponentInterface {
   @Event() ionStart!: EventEmitter<void>;
 
   private checkNativeRefresher() {
-    const useNativeRefresher = shouldUseNativeRefresher(this.el, getIonMode(this));
+	const forceAndroidWeb = this.el.getAttribute('forceAndroidWeb') != null;
+	const forceIosWeb = this.el.getAttribute('forceIosWeb') != null;
+	const useNativeRefresher = shouldUseNativeRefresher(this.el, getIonMode(this), forceIosWeb, forceAndroidWeb);
     if (useNativeRefresher && !this.nativeRefresher) {
       const contentEl = this.el.closest('ion-content');
       this.setupNativeRefresher(contentEl);
