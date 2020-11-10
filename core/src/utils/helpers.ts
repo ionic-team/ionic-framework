@@ -107,7 +107,7 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
     : findItemLabel(componentEl);
 
   if (label) {
-    if (labelledBy !== null) {
+    if (labelledBy === null) {
       label.id = labelId;
     }
 
