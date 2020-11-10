@@ -27,7 +27,8 @@ export const IonTabBar = defineComponent({
      * to a tab from another tab, we can correctly
      * show any child pages if necessary.
      */
-    (currentInstance.subTree.children as VNode[]).forEach((child: VNode) => {
+    const children = (currentInstance.subTree.children || []) as VNode[];
+    children.forEach((child: VNode) => {
       if (child.type && (child.type as any).name === 'IonTabButton') {
         tabState.tabs[child.props.tab] = {
           originalHref: child.props.href,
@@ -45,7 +46,7 @@ export const IonTabBar = defineComponent({
     });
 
     const checkActiveTab = (currentRoute: any) => {
-      const childNodes = currentInstance.subTree.children as VNode[];
+      const childNodes = (currentInstance.subTree.children || []) as VNode[];
       const { tabs, activeTab: prevActiveTab } = tabState;
       const tabKeys = Object.keys(tabs);
       const activeTab = tabKeys
