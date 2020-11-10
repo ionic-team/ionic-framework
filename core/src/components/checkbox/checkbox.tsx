@@ -153,6 +153,7 @@ export class Checkbox implements ComponentInterface {
         onClick={this.onClick}
         aria-labelledby={label ? labelId : null}
         aria-checked={`${checked}`}
+        aria-hidden={disabled ? 'true' : null}
         role={disabled ? '' : 'checkbox'}
         class={createColorClasses(color, {
           [mode]: true,
@@ -166,11 +167,11 @@ export class Checkbox implements ComponentInterface {
         <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}
         </svg>
-        <label htmlFor={inputId} aria-hidden={disabled ? 'true' : null}>
+        <label htmlFor={inputId}>
           {labelText}
         </label>
         <input
-          type={disabled ? 'hidden' : 'checkbox'}
+          type="checkbox"
           aria-disabled={disabled ? 'true' : null}
           disabled={disabled}
           id={inputId}
