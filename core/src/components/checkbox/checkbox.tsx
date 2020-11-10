@@ -172,7 +172,7 @@ export class Checkbox implements ComponentInterface {
         </label>
         <input
           type="checkbox"
-          aria-disabled={disabled ? 'true' : null}
+          aria-checked={`${checked}`}
           disabled={disabled}
           id={inputId}
           onFocus={() => this.onFocus()}
