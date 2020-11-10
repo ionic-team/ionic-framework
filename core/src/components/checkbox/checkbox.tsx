@@ -152,6 +152,8 @@ export class Checkbox implements ComponentInterface {
       <Host
         onClick={this.onClick}
         aria-labelledby={label ? labelId : null}
+        aria-checked={`${checked}`}
+        role="checkbox"
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -169,7 +171,6 @@ export class Checkbox implements ComponentInterface {
         </label>
         <input
           type="checkbox"
-          aria-checked={`${checked}`}
           aria-disabled={disabled ? 'true' : null}
           disabled={disabled}
           id={inputId}
