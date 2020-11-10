@@ -23,6 +23,8 @@ export {
   popoverController
 } from './controllers';
 
+export * from './globalExtensions';
+
 export {
   // Overlay Controllers
   alertController,
