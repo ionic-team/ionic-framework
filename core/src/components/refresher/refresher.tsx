@@ -258,7 +258,7 @@ export class Refresher implements ComponentInterface {
              * will be 0. When the gesture starts, the content
              * will be visible, so try to get the correct
              * client height again. This is most common when
-             * using the refresher in the side menu.
+             * using the refresher in an ion-menu.
              */
             if (MAX_PULL === 0) {
               MAX_PULL = this.scrollEl!.clientHeight * 0.16;
