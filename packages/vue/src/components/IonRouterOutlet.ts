@@ -355,15 +355,36 @@ export const IonRouterOutlet = defineComponent({
       { ref: 'ionRouterOutlet' },
       // TODO types
       components && components.map((c: any) => {
+        let props = {
+          ref: c.vueComponentRef,
+          key: c.pathname,
+          isInOutlet: true,
+          registerIonPage: (ionPageEl: HTMLElement) => registerIonPage(c, ionPageEl)
+        }
+
+        /**
+         * IonRouterOutlet does not support named outlets.
+         */
+        if (c.matchedRoute?.props?.default) {
+          const matchedRoute = c.matchedRoute;
+          const routePropsOption = matchedRoute.props.default;
+          const routeProps = routePropsOption
+            ? routePropsOption === true
+              ? c.params
+              : typeof routePropsOption === 'function'
+              ? routePropsOption(matchedRoute)
+              : routePropsOption
+            : null
+
+          props = {
+            ...props,
+            ...routeProps
+          }
+        }
         return h(
           c.vueComponent,
-          {
-            ref: c.vueComponentRef,
-            key: c.pathname,
-            isInOutlet: true,
-            registerIonPage: (ionPageEl: HTMLElement) => registerIonPage(c, ionPageEl)
-          }
-        )
+          props
+        );
       })
     )
   }
