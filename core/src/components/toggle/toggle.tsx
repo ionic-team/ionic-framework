@@ -192,7 +192,7 @@ export class Toggle implements ComponentInterface {
         aria-labelledby={label ? labelId : null}
         aria-checked={`${checked}`}
         aria-hidden={disabled ? 'true' : null}
-        role="checkbox"
+        role="switch"
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -212,6 +212,7 @@ export class Toggle implements ComponentInterface {
         </label>
         <input
           type="checkbox"
+          role="switch"
           aria-checked={`${checked}`}
           disabled={disabled}
           id={inputId}
