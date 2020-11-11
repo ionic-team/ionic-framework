@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { getIonMode } from '../../global/ionic-global';
 import { CheckboxChangeEventDetail, Color, StyleEventDetail } from '../../interface';
-import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -133,15 +133,9 @@ export class Checkbox implements ComponentInterface {
 
   render() {
     const { color, checked, disabled, el, indeterminate, inputId, name, value } = this;
-    const labelId = inputId + '-lbl';
     const mode = getIonMode(this);
-    const label = findItemLabel(el);
-    let labelText;
-    if (label) {
-      label.id = labelId;
-      labelText = label.textContent;
-      label.setAttribute('aria-hidden', 'true');
-    }
+    const { label, labelId, labelText } = getAriaLabel(el, inputId);
+
     renderHiddenInput(true, el, name, (checked ? value : ''), disabled);
 
     let path = indeterminate
@@ -157,10 +151,10 @@ export class Checkbox implements ComponentInterface {
     return (
       <Host
         onClick={this.onClick}
-        role="checkbox"
-        aria-disabled={disabled ? 'true' : null}
-        aria-checked={`${checked}`}
         aria-labelledby={label ? labelId : null}
+        aria-checked={`${checked}`}
+        aria-hidden={disabled ? 'true' : null}
+        role="checkbox"
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -178,6 +172,7 @@ export class Checkbox implements ComponentInterface {
         </label>
         <input
           type="checkbox"
+          aria-checked={`${checked}`}
           disabled={disabled}
           id={inputId}
           onFocus={() => this.onFocus()}

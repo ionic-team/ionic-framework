@@ -156,8 +156,8 @@ export class IonCheckbox {
 }
 export declare interface IonChip extends Components.IonChip {
 }
-@ProxyCmp({ inputs: ["color", "mode", "outline"] })
-@Component({ selector: "ion-chip", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "mode", "outline"] })
+@ProxyCmp({ inputs: ["color", "disabled", "mode", "outline"] })
+@Component({ selector: "ion-chip", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "disabled", "mode", "outline"] })
 export class IonChip {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {

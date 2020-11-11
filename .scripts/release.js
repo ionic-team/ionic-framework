@@ -63,9 +63,8 @@ async function main() {
 function checkProductionRelease() {
   const corePath = common.projectPath('core');
   const hasEsm = fs.existsSync(path.join(corePath, 'dist', 'esm'));
-  const hasEsmEs5 = fs.existsSync(path.join(corePath, 'dist', 'esm-es5'));
   const hasCjs = fs.existsSync(path.join(corePath, 'dist', 'cjs'));
-  if (!hasEsm || !hasEsmEs5 || !hasCjs) {
+  if (!hasEsm || !hasCjs) {
     throw new Error('core build is not a production build');
   }
 }

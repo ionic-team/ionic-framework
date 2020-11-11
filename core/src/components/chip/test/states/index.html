@@ -17,6 +17,7 @@
   <ion-app>
     <ion-content>
       <h3>Default</h3>
+
       <p>
         <ion-chip>
           <ion-label>Default</ion-label>
@@ -195,6 +196,26 @@
         </ion-chip>
       </p>
 
+      <h3>Disabled</h3>
+
+      <p>
+        <ion-chip disabled>
+          <ion-label>Disabled</ion-label>
+        </ion-chip>
+        <ion-chip outline color="danger" class="ion-focused" disabled>
+          <ion-label>Disabled Outline</ion-label>
+        </ion-chip>
+        <ion-chip color="secondary" class="ion-focused" disabled>
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-label>Disabled Secondary with Icon</ion-label>
+        </ion-chip>
+        <ion-chip outline class="ion-focused" disabled>
+          <ion-icon name="git-pull-request"></ion-icon>
+          <ion-label>Disabled Outline with Icon and Avatar</ion-label>
+          <ion-icon name="close-circle"></ion-icon>
+        </ion-chip>
+      </p>
+
       <h3>Custom</h3>
 
       <!-- Custom Font -->
@@ -244,11 +265,6 @@
 
     p {
       padding-left: 8px;
-    }
-
-    ion-chip {
-      display: inline-block !important;
-      vertical-align: middle;
     }
 
     .wide {

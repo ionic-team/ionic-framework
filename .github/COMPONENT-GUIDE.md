@@ -9,6 +9,7 @@
   * [Ripple Effect](#ripple-effect)
   * [Example Components](#example-components)
   * [References](#references)
+- [Accessibility](#accessibility)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
   * [Example Components](#example-components-1)
   * [Component Structure](#component-structure-1)
@@ -360,6 +361,130 @@ ion-ripple-effect {
 
 - [Material Design States](https://material.io/design/interaction/states.html)
 - [iOS Buttons](https://developer.apple.com/design/human-interface-guidelines/ios/controls/buttons/)
+
+
+## Accessibility
+
+### Checkbox
+
+#### Example Components
+
+- [ion-checkbox](https://github.com/ionic-team/ionic/tree/master/core/src/components/checkbox)
+
+#### VoiceOver
+
+In order for VoiceOver to work properly with a checkbox component there must be a native `input` with `type="checkbox"`, and `aria-checked` and `role="checkbox"` **must** be on the host element. The `aria-hidden` attribute needs to be added if the checkbox is disabled, preventing iOS users from selecting it:
+
+```tsx
+render() {
+  const { checked, disabled } = this;
+
+  return (
+    <Host
+      aria-checked={`${checked}`}
+      aria-hidden={disabled ? 'true' : null}
+      role="checkbox"
+    >
+      <input
+        type="checkbox"
+      />
+      ...
+    </Host>
+  );
+}
+```
+
+#### NVDA
+
+It is required to have `aria-checked` on the native input for checked to read properly and `disabled` to prevent tabbing to the input:
+
+```tsx
+render() {
+  const { checked, disabled } = this;
+
+  return (
+    <Host
+      aria-checked={`${checked}`}
+      aria-hidden={disabled ? 'true' : null}
+      role="checkbox"
+    >
+      <input
+        type="checkbox"
+        aria-checked={`${checked}`}
+        disabled={disabled}
+      />
+      ...
+    </Host>
+  );
+}
+```
+
+#### Labels
+
+A helper function has been created to get the proper `aria-label` for the checkbox. This can be imported as `getAriaLabel` like the following:
+
+```tsx
+const { label, labelId, labelText } = getAriaLabel(el, inputId);
+```
+
+where `el` and `inputId` are the following:
+
+```tsx
+private inputId = `ion-cb-${checkboxIds++}`;
+
+@Element() el!: HTMLElement;
+```
+
+This can then be added to the `Host` like the following:
+
+```tsx
+<Host
+  aria-labelledby={label ? labelId : null}
+  aria-checked={`${checked}`}
+  aria-hidden={disabled ? 'true' : null}
+  role="checkbox"
+>
+```
+
+In addition to that, the checkbox should have a label added:
+
+```tsx
+<Host
+  aria-labelledby={label ? labelId : null}
+  aria-checked={`${checked}`}
+  aria-hidden={disabled ? 'true' : null}
+  role="checkbox"
+>
+  <label htmlFor={inputId}>
+    {labelText}
+  </label>
+  <input
+    type="checkbox"
+    aria-checked={`${checked}`}
+    disabled={disabled}
+    id={inputId}
+  />
+```
+
+#### Hidden Input
+
+A helper function to render a hidden input has been added, it can be added in the `render`:
+
+```tsx
+renderHiddenInput(true, el, name, (checked ? value : ''), disabled);
+```
+
+> This is required for the checkbox to work with forms.
+
+#### Known Issues
+
+When using VoiceOver on macOS, Chrome will announce the following when you are focused on a checkbox:
+
+```
+currently on a checkbox inside of a checkbox
+```
+
+This is a compromise we have to make in order for it to work with the other screen readers & Safari.
 
 
 ## Rendering Anchor or Button

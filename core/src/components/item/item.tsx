@@ -27,9 +27,10 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   }
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
-  private focusEventListener = false;
+
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
+  private clickListener?: (ev: Event) => void;
 
   @Element() el!: HTMLIonItemElement;
 
@@ -157,16 +158,17 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // appear as clickable to screen readers
     // https://github.com/ionic-team/ionic-framework/issues/22011
     const input = this.getFirstInput();
-    if (input && !this.focusEventListener) {
-      this.el.addEventListener('click', ev => this.delegateFocus(ev, input));
-      this.focusEventListener = true;
+    if (input && !this.clickListener) {
+      this.clickListener = (ev: Event) => this.delegateFocus(ev, input);
+      this.el.addEventListener('click', this.clickListener);
     }
   }
 
   disconnectedCallback() {
     const input = this.getFirstInput();
-    if (input && this.focusEventListener) {
-      this.el.removeEventListener('click', ev => this.delegateFocus(ev, input));
+    if (input && this.clickListener) {
+      this.el.removeEventListener('click', this.clickListener);
+      this.clickListener = undefined;
     }
   }
 
