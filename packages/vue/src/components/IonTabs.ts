@@ -33,6 +33,9 @@ export const IonTabs = defineComponent({
       const hasTopSlot = slottedTabBar && slottedTabBar.props?.slot === 'top';
 
       if (slottedTabBar) {
+        if (!slottedTabBar.props) {
+          slottedTabBar.props = {};
+        }
         slottedTabBar.props._tabsWillChange = (tab: string) => $emit(WILL_CHANGE, { tab });
         slottedTabBar.props._tabsDidChange = (tab: string) => $emit(DID_CHANGE, { tab });
       }
