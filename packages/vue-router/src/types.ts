@@ -42,6 +42,7 @@ export interface ViewItem {
   exact: boolean;
   registerCallback?: () => void;
   vueComponentRef: Ref;
+  params?: { [k: string]: any };
 }
 
 export interface ViewStacks {

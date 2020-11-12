@@ -2,7 +2,7 @@
   <ion-page data-pageid="tabs-secondary">
     <ion-content>
       <ion-tabs id="tabs">
-        <ion-tab-bar slot="bottom">
+        <ion-tab-bar slot="top">
           <ion-tab-button tab="tab1-secondary" href="/tabs-secondary/tab1">
             <ion-icon :icon="triangle" />
             <ion-label>Tab 1</ion-label>
