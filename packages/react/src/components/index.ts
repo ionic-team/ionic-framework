@@ -36,6 +36,15 @@ export * from './hrefprops';
 // Ionic Animations
 export { CreateAnimation } from './CreateAnimation';
 
+// Hooks
+export * from '../hooks/useIonActionSheet';
+export * from '../hooks/useIonAlert';
+export * from '../hooks/useIonToast';
+export * from '../hooks/useIonModal';
+export * from '../hooks/useIonPopover';
+export * from '../hooks/useIonPicker';
+export * from '../hooks/useIonLoading';
+
 // Icons that are used by internal components
 addIcons({
   'arrow-back-sharp': arrowBackSharp,
