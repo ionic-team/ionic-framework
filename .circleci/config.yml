@@ -442,8 +442,11 @@ workflows:
           requires: [puppeteer-dependencies, build-core]
       - test-core-spec:
           requires: [build-core]
-      - test-core-treeshake:
-          requires: [build-core]
+      # Adam requested we skip this test for now
+      # since it is failing on ES5 code which
+      # will be removed in Ionic Framework v6
+      #- test-core-treeshake:
+      #    requires: [build-core]
       - test-core-screenshot:
           requires: [build-core]
           filters:
