@@ -1,3 +1,12 @@
+## [5.4.4](https://github.com/ionic-team/ionic/compare/v5.4.3...v5.4.4) (2020-11-12)
+
+
+### Bug Fixes
+
+* **build:** add missing es5 output ([228d349](https://github.com/ionic-team/ionic/commit/228d349c6e29b62cbfee5d5502883682cfa5032f))
+
+
+
 ## [5.4.3](https://github.com/ionic-team/ionic/compare/v5.4.2...v5.4.3) (2020-11-06)
 
 
