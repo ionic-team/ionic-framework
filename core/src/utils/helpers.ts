@@ -70,7 +70,7 @@ export const hasShadowDom = (el: HTMLElement) => {
   return !!el.shadowRoot && !!(el as any).attachShadow;
 };
 
-export const findItemLabel = (componentEl: HTMLElement) => {
+export const findItemLabel = (componentEl: HTMLElement): HTMLIonLabelElement | null => {
   const itemEl = componentEl.closest('ion-item');
   if (itemEl) {
     return itemEl.querySelector('ion-label');
@@ -78,6 +78,58 @@ export const findItemLabel = (componentEl: HTMLElement) => {
   return null;
 };
 
+/**
+ * This method is used for Ionic's input components that use Shadow DOM. In
+ * order to properly label the inputs to work with screen readers, we need
+ * to get the text content of the label outside of the shadow root and pass
+ * it to the input inside of the shadow root.
+ *
+ * Referencing label elements by id from outside of the component is
+ * impossible due to the shadow boundary, read more here:
+ * https://developer.salesforce.com/blogs/2020/01/accessibility-for-web-components.html
+ *
+ * @param componentEl The shadow element that needs the aria label
+ * @param inputId The unique identifier for the input
+ */
+export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label: Element | null, labelId: string, labelText: string | null | undefined } => {
+  let labelText;
+
+  // If the user provides their own label via the aria-labelledby attr
+  // we should use that instead of looking for an ion-label
+  const labelledBy = componentEl.getAttribute('aria-labelledby');
+
+  const labelId = labelledBy !== null
+    ? labelledBy
+    : inputId + '-lbl';
+
+  const label = labelledBy !== null
+    ? document.querySelector(`#${labelledBy}`)
+    : findItemLabel(componentEl);
+
+  if (label) {
+    if (labelledBy === null) {
+      label.id = labelId;
+    }
+
+    labelText = label.textContent;
+    label.setAttribute('aria-hidden', 'true');
+  }
+
+  return { label, labelId, labelText };
+};
+
+/**
+ * This method is used to add a hidden input to a host element that contains
+ * a Shadow DOM. It does not add the input inside of the Shadow root which
+ * allows it to be picked up inside of forms. It should contain the same
+ * values as the host element.
+ *
+ * @param always Add a hidden input even if the container does not use Shadow
+ * @param container The element where the input will be added
+ * @param name The name of the input
+ * @param value The value of the input
+ * @param disabled If true, the input is disabled
+ */
 export const renderHiddenInput = (always: boolean, container: HTMLElement, name: string, value: string | undefined | null, disabled: boolean) => {
   if (always || hasShadowDom(container)) {
     let input = container.querySelector('input.aux-input') as HTMLInputElement | null;

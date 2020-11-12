@@ -31,22 +31,22 @@
       <div class="ion-padding-start">
         <!-- Default to unchecked -->
         <label for="unchecked">Unchecked</label>
-        <input name="unchecked" type="checkbox">
+        <input name="unchecked" id="unchecked" type="checkbox">
         <br>
 
         <!-- Default to checked -->
         <label for="checked">Checked</label>
-        <input name="checked" type="checkbox" checked />
+        <input name="checked" id="checked" type="checkbox" checked />
         <br>
 
         <!-- Default to indeterminate -->
         <label for="indeterminate">Indeterminate</label>
-        <input name="indeterminate" type="checkbox" class="indeterminate">
+        <input name="indeterminate" id="indeterminate" type="checkbox" class="indeterminate">
         <br>
 
         <!-- Default to checked / indeterminate -->
         <label for="both">Checked / Indeterminate</label>
-        <input name="both" type="checkbox" checked class="indeterminate">
+        <input name="both" id="both" type="checkbox" checked class="indeterminate">
         <br>
       </div>
 
@@ -81,15 +81,15 @@
         </ion-label>
       </ion-list-header>
       <div class="ion-padding-start">
-        <ion-checkbox indeterminate></ion-checkbox>
-        <ion-checkbox indeterminate color="secondary"></ion-checkbox>
-        <ion-checkbox indeterminate color="tertiary"></ion-checkbox>
-        <ion-checkbox indeterminate color="success"></ion-checkbox>
-        <ion-checkbox indeterminate color="warning"></ion-checkbox>
-        <ion-checkbox indeterminate color="danger"></ion-checkbox>
-        <ion-checkbox indeterminate color="dark"></ion-checkbox>
-        <ion-checkbox indeterminate color="medium"></ion-checkbox>
-        <ion-checkbox indeterminate color="light"></ion-checkbox>
+        <ion-checkbox aria-label="Default Indeterminate" indeterminate></ion-checkbox>
+        <ion-checkbox aria-label="Secondary Indeterminate" indeterminate color="secondary"></ion-checkbox>
+        <ion-checkbox aria-label="Tertiary Indeterminate" indeterminate color="tertiary"></ion-checkbox>
+        <ion-checkbox aria-label="Success Indeterminate" indeterminate color="success"></ion-checkbox>
+        <ion-checkbox aria-label="Warning Indeterminate" indeterminate color="warning"></ion-checkbox>
+        <ion-checkbox aria-label="Danger Indeterminate" indeterminate color="danger"></ion-checkbox>
+        <ion-checkbox aria-label="Dark Indeterminate" indeterminate color="dark"></ion-checkbox>
+        <ion-checkbox aria-label="Medium Indeterminate" indeterminate color="medium"></ion-checkbox>
+        <ion-checkbox aria-label="Light Indeterminate" indeterminate color="light"></ion-checkbox>
       </div>
 
       <ion-list-header>
@@ -100,20 +100,20 @@
 
       <ul>
         <li>
-          <ion-checkbox name="tall" id="tall" indeterminate></ion-checkbox>
-          <label for="tall">Tall Things</label>
+          <ion-checkbox aria-labelledby="tall-label-0" indeterminate></ion-checkbox>
+          <label id="tall-label-0">Tall Things</label>
           <ul>
             <li>
-              <ion-checkbox name="tall-1" id="tall-1" checked></ion-checkbox>
-              <label for="tall-1">Skyscrapers</label>
+              <ion-checkbox aria-labelledby="tall-label-1" checked></ion-checkbox>
+              <label id="tall-label-1">Skyscrapers</label>
             </li>
             <li>
-              <ion-checkbox name="tall-2" id="tall-2"></ion-checkbox>
-              <label for="tall-2">Trees</label>
+              <ion-checkbox aria-labelledby="tall-label-2"></ion-checkbox>
+              <label id="tall-label-2">Trees</label>
             </li>
             <li>
-              <ion-checkbox name="tall-2" id="tall-2"></ion-checkbox>
-              <label for="tall-2">Giants</label>
+              <ion-checkbox aria-labelledby="tall-label-3"></ion-checkbox>
+              <label id="tall-label-3">Giants</label>
             </li>
           </ul>
         </li>
