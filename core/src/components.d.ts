@@ -394,7 +394,7 @@ export namespace Components {
          */
         "name": string;
         /**
-          * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
+          * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
         "value": string;
     }
@@ -3705,7 +3705,7 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
-          * Emitted when the toggle loses focus.
+          * Emitted when the checkbox loses focus.
          */
         "onIonBlur"?: (event: CustomEvent<void>) => void;
         /**
@@ -3713,7 +3713,7 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: CustomEvent<CheckboxChangeEventDetail>) => void;
         /**
-          * Emitted when the toggle has focus.
+          * Emitted when the checkbox has focus.
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
         /**
@@ -3721,7 +3721,7 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
-          * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
+          * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
         "value"?: string;
     }
