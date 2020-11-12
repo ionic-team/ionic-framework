@@ -171,6 +171,7 @@ export const config: Config = {
       ]
     }
   ],
+  buildEs5: 'prod',
   extras: {
     cssVarsShim: true,
     dynamicImportShim: true,
