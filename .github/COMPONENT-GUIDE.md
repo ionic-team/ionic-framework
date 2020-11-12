@@ -10,6 +10,7 @@
   * [Example Components](#example-components)
   * [References](#references)
 - [Accessibility](#accessibility)
+  * [Checkbox](#checkbox)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
   * [Example Components](#example-components-1)
   * [Component Structure](#component-structure-1)
@@ -370,6 +371,7 @@ ion-ripple-effect {
 #### Example Components
 
 - [ion-checkbox](https://github.com/ionic-team/ionic/tree/master/core/src/components/checkbox)
+- [ion-toggle](https://github.com/ionic-team/ionic/tree/master/core/src/components/toggle)
 
 #### VoiceOver
 

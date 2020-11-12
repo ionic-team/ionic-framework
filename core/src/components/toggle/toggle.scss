@@ -45,8 +45,18 @@
   pointer-events: none;
 }
 
-button {
+label {
   @include input-cover();
+
+  display: flex;
+
+  align-items: center;
+
+  opacity: 0;
+}
+
+input {
+  @include visually-hidden();
 }
 
 // Toggle Background Track: Unchecked
