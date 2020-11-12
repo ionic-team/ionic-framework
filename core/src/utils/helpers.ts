@@ -20,7 +20,10 @@ export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) =>
 
   attributes.forEach(attr => {
     if (el.hasAttribute(attr)) {
-      attributeObject[attr] = el.getAttribute(attr);
+      const value = el.getAttribute(attr);
+      if (value !== null) {
+        attributeObject[attr] = el.getAttribute(attr);
+      }
       el.removeAttribute(attr);
     }
   });
