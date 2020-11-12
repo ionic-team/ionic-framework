@@ -1,8 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, OverlaySelect, PopoverOptions, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, StyleEventDetail } from '../../interface';
-import { findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { findItemLabel, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
@@ -29,7 +28,7 @@ export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;
   private overlay?: OverlaySelect;
   private didInit = false;
-  private buttonEl?: HTMLButtonElement;
+  private focusEl?: HTMLInputElement;
   private mutationO?: MutationObserver;
 
   @Element() el!: HTMLIonSelectElement;
@@ -403,8 +402,8 @@ export class Select implements ComponentInterface {
   }
 
   private setFocus() {
-    if (this.buttonEl) {
-      this.buttonEl.focus();
+    if (this.focusEl) {
+      this.focusEl.focus();
     }
   }
 
@@ -432,22 +431,20 @@ export class Select implements ComponentInterface {
   }
 
   render() {
-    const { placeholder, name, disabled, isExpanded, value, el } = this;
+    const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
     const mode = getIonMode(this);
-    const labelId = this.inputId + '-lbl';
-    const label = findItemLabel(el);
-    if (label) {
-      label.id = labelId;
-    }
+    const { label, labelId, labelText } = getAriaLabel(el, inputId);
+
+    renderHiddenInput(true, el, name, parseValue(value), disabled);
+
+    const displayValue = this.getText();
 
     let addPlaceholderClass = false;
-    let selectText = this.getText();
+    let selectText = displayValue;
     if (selectText === '' && placeholder != null) {
       selectText = placeholder;
       addPlaceholderClass = true;
     }
-
-    renderHiddenInput(true, el, name, parseValue(value), disabled);
 
     const selectTextClasses: CssClassMap = {
       'select-text': true,
@@ -456,14 +453,19 @@ export class Select implements ComponentInterface {
 
     const textPart = addPlaceholderClass ? 'placeholder' : 'text';
 
+    // If there is a label then we need to concatenate it with the
+    // current value and a comma so it separates nicely when the screen reader
+    // announces it, otherwise just announce the value
+    const inputLabel = labelText !== undefined
+      ? `${displayValue}, ${labelText}`
+      : displayValue;
+
     return (
       <Host
         onClick={this.onClick}
-        role="listbox"
-        aria-haspopup="dialog"
+        role="button"
         aria-disabled={disabled ? 'true' : null}
-        aria-expanded={`${isExpanded}`}
-        aria-labelledby={labelId}
+        aria-labelledby={label ? labelId : null}
         class={{
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -476,14 +478,24 @@ export class Select implements ComponentInterface {
         <div class="select-icon" role="presentation" part="icon">
           <div class="select-icon-inner"></div>
         </div>
-        <button
-          type="button"
+        <label htmlFor={inputId}>
+          {inputLabel}
+        </label>
+        <input
+          type="text"
+          disabled={disabled}
+          id={inputId}
+          autocomplete="off"
+          readonly
+          autocapitalize="none"
+          autocorrect="off"
+          role="button"
+          aria-haspopup="listbox"
+          aria-expanded={`${isExpanded}`}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
-          disabled={disabled}
-          ref={(btnEl => this.buttonEl = btnEl)}
-        >
-        </button>
+          ref={(focusEl => this.focusEl = focusEl)}
+        />
       </Host>
     );
   }
