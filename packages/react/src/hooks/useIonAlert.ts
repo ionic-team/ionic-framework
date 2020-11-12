@@ -1,6 +1,7 @@
-import { AlertOptions, alertController, AlertButton } from "@ionic/core";
-import { useController } from "./useController";
-import { HookOverlayOptions } from "./HookOverlayOptions";
+import { AlertButton, AlertOptions, alertController } from '@ionic/core';
+
+import { HookOverlayOptions } from './HookOverlayOptions';
+import { useController } from './useController';
 
 /**
  * A hook for presenting/dismissing an IonAlert component

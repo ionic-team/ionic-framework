@@ -1,6 +1,7 @@
-import { PopoverOptions, popoverController } from "@ionic/core";
-import { useOverlay } from "./useOverlay";
+import { PopoverOptions, popoverController } from '@ionic/core';
+
 import { HookOverlayOptions } from './HookOverlayOptions';
+import { useOverlay } from './useOverlay';
 
 /**
  * A hook for presenting/dismissing an IonPicker component
@@ -27,13 +28,7 @@ export function useIonPopover(component: JSX.Element, componentProps?: any): Use
 }
 
 type UseIonPopoverResult = [
-  {
-    /**
-     * Presents the popover
-     * @param options - Optional - The options to pass to the IonPopover
-     */
-    (options?: Omit<PopoverOptions, 'component' | 'componentProps'> & HookOverlayOptions): void;
-  },
+  (options?: Omit<PopoverOptions, 'component' | 'componentProps'> & HookOverlayOptions) => void,
   /**
    * Dismisses the popover
    */

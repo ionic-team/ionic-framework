@@ -1,6 +1,8 @@
-import { useMemo, useRef } from "react";
-import { attachProps } from "../components/utils";
-import { OverlayEventDetail } from "@ionic/core";
+import { OverlayEventDetail } from '@ionic/core';
+import { useMemo, useRef } from 'react';
+
+import { attachProps } from '../components/utils';
+
 import { HookOverlayOptions } from './HookOverlayOptions';
 
 interface OverlayBase extends HTMLElement {

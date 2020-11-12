@@ -1,11 +1,12 @@
 import {
-  PickerOptions,
-  pickerController,
   PickerButton,
   PickerColumn,
-} from "@ionic/core";
-import { useController } from "./useController";
-import { HookOverlayOptions } from "./HookOverlayOptions";
+  PickerOptions,
+  pickerController,
+} from '@ionic/core';
+
+import { HookOverlayOptions } from './HookOverlayOptions';
+import { useController } from './useController';
 
 /**
  * A hook for presenting/dismissing an IonPicker component
@@ -13,7 +14,7 @@ import { HookOverlayOptions } from "./HookOverlayOptions";
  */
 export function useIonPicker(): UseIonPickerResult {
   const controller = useController<PickerOptions, HTMLIonPickerElement>(
-    "IonPicker",
+    'IonPicker',
     pickerController
   );
 
@@ -26,7 +27,7 @@ export function useIonPicker(): UseIonPickerResult {
     if (Array.isArray(columnsOrOptions)) {
       controller.present({
         columns: columnsOrOptions,
-        buttons: buttons ?? [{ text: "Ok" }],
+        buttons: buttons ?? [{ text: 'Ok' }],
       });
     } else {
       controller.present(columnsOrOptions);

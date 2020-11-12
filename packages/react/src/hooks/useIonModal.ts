@@ -1,6 +1,7 @@
-import { ModalOptions, modalController } from "@ionic/core";
-import { useOverlay, ReactComponentOrElement } from "./useOverlay";
+import { ModalOptions, modalController } from '@ionic/core';
+
 import { HookOverlayOptions } from './HookOverlayOptions';
+import { ReactComponentOrElement, useOverlay } from './useOverlay';
 
 /**
  * A hook for presenting/dismissing an IonModal component
@@ -27,13 +28,7 @@ export function useIonModal(component: ReactComponentOrElement, componentProps?:
 }
 
 type UseIonModalResult = [
-  {
-    /**
-     * Presents the modal
-     * @param options - Optional - The options to pass to the IonModal
-     */
-    (options?: Omit<ModalOptions, 'component' | 'componentProps'> & HookOverlayOptions): void;
-  },
+  (options?: Omit<ModalOptions, 'component' | 'componentProps'> & HookOverlayOptions) => void,
   /**
    * Dismisses the modal
    */

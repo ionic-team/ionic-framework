@@ -1,6 +1,7 @@
-import { ActionSheetOptions, actionSheetController, ActionSheetButton } from "@ionic/core";
-import { useController } from "./useController";
-import { HookOverlayOptions } from "./HookOverlayOptions";
+import { ActionSheetButton, ActionSheetOptions, actionSheetController } from '@ionic/core';
+
+import { HookOverlayOptions } from './HookOverlayOptions';
+import { useController } from './useController';
 
 /**
  * A hook for presenting/dismissing an IonActionSheet component

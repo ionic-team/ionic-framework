@@ -1,6 +1,7 @@
-import { LoadingOptions, loadingController, SpinnerTypes } from "@ionic/core";
-import { useController } from "./useController";
-import { HookOverlayOptions } from "./HookOverlayOptions";
+import { LoadingOptions, SpinnerTypes, loadingController } from '@ionic/core';
+
+import { HookOverlayOptions } from './HookOverlayOptions';
+import { useController } from './useController';
 
 /**
  * A hook for presenting/dismissing an IonLoading component
@@ -8,7 +9,7 @@ import { HookOverlayOptions } from "./HookOverlayOptions";
  */
 export function useIonLoading(): UseIonLoadingResult {
   const controller = useController<LoadingOptions, HTMLIonLoadingElement>(
-    "IonLoading",
+    'IonLoading',
     loadingController
   );
 
@@ -19,15 +20,15 @@ export function useIonLoading(): UseIonLoadingResult {
   ): void;
   function present(options: LoadingOptions & HookOverlayOptions): void;
   function present(
-    messageOrOptions: string | (LoadingOptions & HookOverlayOptions) = "",
+    messageOrOptions: string | (LoadingOptions & HookOverlayOptions) = '',
     duration?: number,
     spinner?: SpinnerTypes
   ) {
-    if (typeof messageOrOptions === "string") {
+    if (typeof messageOrOptions === 'string') {
       controller.present({
         message: messageOrOptions,
         duration,
-        spinner: spinner ?? "lines",
+        spinner: spinner ?? 'lines',
       });
     } else {
       controller.present(messageOrOptions);

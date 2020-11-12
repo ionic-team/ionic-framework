@@ -1,8 +1,9 @@
-import { useMemo, useRef, useEffect, useState } from "react";
-import { attachProps } from "../components/utils";
-import { OverlayEventDetail } from "@ionic/core";
+import { OverlayEventDetail } from '@ionic/core';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-import React from 'react';
+
+import { attachProps } from '../components/utils';
+
 import { HookOverlayOptions } from './HookOverlayOptions';
 
 export type ReactComponentOrElement = React.ComponentClass<any, any> | React.FC<any> | JSX.Element;

@@ -1,6 +1,7 @@
-import { ToastOptions, toastController } from "@ionic/core";
-import { useController } from "./useController";
-import { HookOverlayOptions } from "./HookOverlayOptions";
+import { ToastOptions, toastController } from '@ionic/core';
+
+import { HookOverlayOptions } from './HookOverlayOptions';
+import { useController } from './useController';
 
 /**
  * A hook for presenting/dismissing an IonToast component
@@ -18,7 +19,7 @@ export function useIonToast(): UseIonToastResult {
     if (typeof messageOrOptions === 'string') {
       controller.present({
         message: messageOrOptions,
-        duration: duration
+        duration
       });
     } else {
       controller.present(messageOrOptions);
