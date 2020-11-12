@@ -12,7 +12,7 @@ declare const requestAnimationFrame: any;
  * helper function should be called in componentWillLoad and assigned to a variable
  * that is later used in the render function.
  *
- * This does not need to reactive as changing attributes on the host element
+ * This does not need to be reactive as changing attributes on the host element
  * does not trigger a re-render.
  */
 export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) => {
