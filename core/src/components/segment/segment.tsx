@@ -66,6 +66,16 @@ export class Segment implements ComponentInterface {
   @Prop() scrollable = false;
 
   /**
+   * If `true`, users will be able to swipe between segment buttons to activate them.
+   */
+  @Prop() swipeGesture = true;
+
+  @Watch('swipeGesture')
+  swipeGestureChanged() {
+    this.gestureChanged();
+  }
+
+  /**
    * the value of the segment.
    */
   @Prop({ mutable: true }) value?: string | null;
@@ -111,8 +121,8 @@ export class Segment implements ComponentInterface {
   }
 
   private gestureChanged() {
-    if (this.gesture && !this.scrollable) {
-      this.gesture.enable(!this.disabled);
+    if (this.gesture) {
+      this.gesture.enable(!this.scrollable && !this.disabled && this.swipeGesture);
     }
   }
 
@@ -137,7 +147,6 @@ export class Segment implements ComponentInterface {
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
-    this.gesture.enable(!this.scrollable);
     this.gestureChanged();
 
     if (this.disabled) {
@@ -390,9 +399,18 @@ export class Segment implements ComponentInterface {
   private onClick = (ev: Event) => {
     const current = ev.target as HTMLIonSegmentButtonElement;
     const previous = this.checked;
+
+    // If the current element is a segment then that means
+    // the user tried to swipe to a segment button and
+    // click a segment button at the same time so we should
+    // not update the checked segment button
+    if (current.tagName === 'ION-SEGMENT') {
+      return;
+    }
+
     this.value = current.value;
 
-    if (this.scrollable) {
+    if (this.scrollable || !this.swipeGesture) {
       if (previous) {
         this.checkButton(previous, current);
       } else {

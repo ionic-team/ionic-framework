@@ -1015,6 +1015,7 @@ ion-segment,prop,color,string | undefined,undefined,false,false
 ion-segment,prop,disabled,boolean,false,false,false
 ion-segment,prop,mode,"ios" | "md",undefined,false,false
 ion-segment,prop,scrollable,boolean,false,false,false
+ion-segment,prop,swipeGesture,boolean,true,false,false
 ion-segment,prop,value,null | string | undefined,undefined,false,false
 ion-segment,event,ionChange,SegmentChangeEventDetail,true
 ion-segment,css-prop,--background
