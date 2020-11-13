@@ -434,7 +434,8 @@ export class Select implements ComponentInterface {
   render() {
     const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
     const mode = getIonMode(this);
-    const { label, labelId, labelText } = getAriaLabel(el, inputId);
+    // const { label, labelId, labelText } = getAriaLabel(el, inputId);
+    const { labelText } = getAriaLabel(el, inputId);
 
     renderHiddenInput(true, el, name, parseValue(value), disabled);
 
@@ -457,16 +458,21 @@ export class Select implements ComponentInterface {
     // If there is a label then we need to concatenate it with the
     // current value and a comma so it separates nicely when the screen reader
     // announces it, otherwise just announce the value
-    const inputLabel = labelText !== undefined
+    const displayLabel = labelText !== undefined
       ? `${displayValue}, ${labelText}`
       : displayValue;
 
+    // TODO test that this works with a custom label element
+    // I don't think it will, I think we're going to have to render a hidden
+    // label that just contains the display value and use the
+    // aria-labelledby=user's id + the id of the label containing display value
     return (
       <Host
         onClick={this.onClick}
         role="button"
+        aria-haspopup="listbox"
         aria-disabled={disabled ? 'true' : null}
-        aria-labelledby={label ? labelId : null}
+        aria-label={displayLabel}
         class={{
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -480,7 +486,7 @@ export class Select implements ComponentInterface {
           <div class="select-icon-inner"></div>
         </div>
         <label htmlFor={inputId}>
-          {inputLabel}
+          {displayLabel}
         </label>
         <input
           type="text"
