@@ -490,11 +490,8 @@ export class Select implements ComponentInterface {
           type="text"
           disabled={disabled}
           id={inputId}
-          autocomplete="off"
-          readonly
-          autocapitalize="none"
-          autocorrect="off"
           role="button"
+          readonly
           aria-haspopup="listbox"
           aria-expanded={`${isExpanded}`}
           onFocus={this.onFocus}
