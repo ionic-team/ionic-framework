@@ -420,6 +420,9 @@ export class Select implements ComponentInterface {
   }
 
   private onClick = (ev: UIEvent) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+
     this.setFocus();
     this.open(ev);
   }
