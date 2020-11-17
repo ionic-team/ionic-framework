@@ -347,7 +347,7 @@ export default defineComponent({
       // do something before tab change
     }
     const afterTabChange = () => {
-      /// do something after tab change
+      // do something after tab change
     }
     return {
       calendar,
