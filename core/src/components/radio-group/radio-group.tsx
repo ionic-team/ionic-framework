@@ -83,6 +83,9 @@ export class RadioGroup implements ComponentInterface {
   }
 
   private onClick = (ev: Event) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+
     const selectedRadio = ev.target && (ev.target as HTMLElement).closest('ion-radio');
     if (selectedRadio) {
       const currentValue = this.value;
