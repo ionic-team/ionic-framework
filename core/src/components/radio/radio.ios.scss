@@ -50,21 +50,6 @@
 // iOS Radio: Keyboard Focus
 // -----------------------------------------
 
-:host(.ion-focused) .radio-icon::after {
-  @include border-radius(var(--inner-border-radius));
-  @include position(-8px, null, null, -9px);
-
-  display: block;
-  position: absolute;
-
-  width: 36px;
-  height: 36px;
-
-  background: $radio-ios-background-color-focused;
-
-  content: "";
-  opacity: .2;
-}
 
 
 // iOS Radio Within An Item

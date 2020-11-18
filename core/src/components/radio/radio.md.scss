@@ -81,20 +81,17 @@
 // Material Design Radio: Keyboard Focus
 // -----------------------------------------
 
-:host(.ion-focused) .radio-icon::after {
-  @include border-radius(var(--inner-border-radius));
+.radio-ripple {
   @include position(-12px, null, null, -12px);
 
-  display: block;
-  position: absolute;
+  width: 40px;
+  height: 40px;
 
-  width: 36px;
-  height: 36px;
+  background: ion-color(primary, base, 0.12);
+}
 
-  background: $radio-md-background-color-focused;
-
-  content: "";
-  opacity: .2;
+:host(.ion-color) .radio-ripple {
+  background: current-color(base, 0.12);
 }
 
 
