@@ -88,7 +88,8 @@ export const createViewStacks = () => {
       vueComponentRef: shallowRef(),
       ionRoute: false,
       mount: false,
-      exact: routeInfo.pathname === matchedRoute.path
+      exact: routeInfo.pathname === matchedRoute.path,
+      params: routeInfo.params
     };
   }
 

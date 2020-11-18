@@ -100,7 +100,9 @@
    *
    * See: https://bugs.webkit.org/show_bug.cgi?id=216701
    */
-  will-change: scroll-position, transform;
+  z-index: 0;
+
+  will-change: scroll-position;
 }
 
 .scroll-y {

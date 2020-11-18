@@ -165,7 +165,7 @@ export class Refresher implements ComponentInterface {
   private async setupiOSNativeRefresher(pullingSpinner: HTMLIonSpinnerElement, refreshingSpinner: HTMLIonSpinnerElement) {
     this.elementToTransform = this.scrollEl!;
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
-    const MAX_PULL = this.scrollEl!.clientHeight * 0.16;
+    let MAX_PULL = this.scrollEl!.clientHeight * 0.16;
     const NUM_TICKS = ticks.length;
 
     writeTask(() => ticks.forEach(el => el.style.setProperty('animation', 'none')));
@@ -242,7 +242,7 @@ export class Refresher implements ComponentInterface {
     this.gesture = (await import('../../utils/gesture')).createGesture({
           el: this.scrollEl!,
           gestureName: 'refresher',
-          gesturePriority: 10,
+          gesturePriority: 31,
           direction: 'y',
           threshold: 5,
           onStart: () => {
@@ -250,6 +250,18 @@ export class Refresher implements ComponentInterface {
 
             if (!this.didRefresh) {
               translateElement(this.elementToTransform, '0px');
+            }
+
+            /**
+             * If the content had `display: none` when
+             * the refresher was initialized, its clientHeight
+             * will be 0. When the gesture starts, the content
+             * will be visible, so try to get the correct
+             * client height again. This is most common when
+             * using the refresher in an ion-menu.
+             */
+            if (MAX_PULL === 0) {
+              MAX_PULL = this.scrollEl!.clientHeight * 0.16;
             }
           },
           onMove: ev => {
@@ -289,7 +301,7 @@ export class Refresher implements ComponentInterface {
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.scrollEl!,
       gestureName: 'refresher',
-      gesturePriority: 10,
+      gesturePriority: 31,
       direction: 'y',
       threshold: 5,
       canStart: () => this.state !== RefresherState.Refreshing && this.state !== RefresherState.Completing && this.scrollEl!.scrollTop === 0,
@@ -405,7 +417,7 @@ export class Refresher implements ComponentInterface {
       this.gesture = (await import('../../utils/gesture')).createGesture({
         el: contentEl,
         gestureName: 'refresher',
-        gesturePriority: 10,
+        gesturePriority: 31,
         direction: 'y',
         threshold: 20,
         passive: false,
