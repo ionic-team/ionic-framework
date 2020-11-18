@@ -27,7 +27,10 @@ comment:
         is added to issues that need a code reproduction.
 
 
-        Please provide a reproduction with the minimum amount of code required to reproduce the issue. Without a reliable code reproduction, it is unlikely we will be able to resolve the issue, leading to it being closed.
+        Please reproduce this issue in an Ionic starter application and provide a way for us to access it (GitHub repo, StackBlitz, etc). Without a reliable code reproduction, it is unlikely we will be able to resolve the issue, leading to it being closed.
+
+
+        If you have already provided a code snippet and are seeing this message, it is likely that the code snippet was not enough for our team to reproduce the issue.
 
 
         For a guide on how to create a good reproduction, see our [Contributing Guide](https://ionicframework.com/docs/contributing/how-to-contribute#creating-a-good-code-reproduction).
