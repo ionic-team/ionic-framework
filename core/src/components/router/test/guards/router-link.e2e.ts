@@ -13,7 +13,7 @@ test('router: guards - router-link - allow/allow', async () => {
 
   await page.waitForChanges();
 
-  await checkUrl(page, '#/child');
+  await checkUrl(page, '#/child/1');
 
   const backButton = await page.$('ion-back-button');
   await backButton.click();
@@ -78,14 +78,14 @@ test('router: guards - router-link - allow/block', async () => {
 
   await page.waitForChanges();
 
-  await checkUrl(page, '#/child');
+  await checkUrl(page, '#/child/1');
 
   const backButton = await page.$('ion-back-button');
   await backButton.click();
 
   await page.waitForChanges();
 
-  await checkUrl(page, '#/child');
+  await checkUrl(page, '#/child/1');
 });
 
 // TODO this is an actual bug in the code.
@@ -102,7 +102,7 @@ test('router: guards - router-link - allow/redirect', async () => {
 
   await page.waitForChanges();
 
-  await checkUrl(page, '#/child');
+  await checkUrl(page, '#/child/1');
 
   const backButton = await page.$('ion-back-button');
   await backButton.click();
