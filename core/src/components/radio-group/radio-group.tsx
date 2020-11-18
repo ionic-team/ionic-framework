@@ -10,6 +10,7 @@ export class RadioGroup implements ComponentInterface {
 
   private inputId = `ion-rg-${radioGroupIds++}`;
   private labelId = `${this.inputId}-lbl`;
+  private label?: HTMLIonLabelElement | null;
 
   @Element() el!: HTMLElement;
 
@@ -68,10 +69,9 @@ export class RadioGroup implements ComponentInterface {
   async connectedCallback() {
     // Get the list header if it exists and set the id
     // this is used to set aria-labelledby
-    const el = this.el;
-    const header = el.querySelector('ion-list-header') || el.querySelector('ion-item-divider');
+    const header = this.el.querySelector('ion-list-header') || this.el.querySelector('ion-item-divider');
     if (header) {
-      const label = header.querySelector('ion-label');
+      const label = this.label = header.querySelector('ion-label');
       if (label) {
         this.labelId = label.id = this.name + '-lbl';
       }
@@ -143,12 +143,15 @@ export class RadioGroup implements ComponentInterface {
   }
 
   render() {
+    const { label, labelId } = this;
+    const mode = getIonMode(this);
+
     return (
       <Host
         role="radiogroup"
-        aria-labelledby={this.labelId}
+        aria-labelledby={label ? labelId : null}
         onClick={this.onClick}
-        class={getIonMode(this)}
+        class={mode}
       >
       </Host>
     );

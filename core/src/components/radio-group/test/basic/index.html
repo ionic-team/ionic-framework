@@ -20,85 +20,156 @@
     </ion-header>
 
     <ion-content class="outer-content">
-      <ion-radio-group id="dynamicDisabled" disabled name="tannen" id="group" value="biff">
-        <ion-list-header>
-          <ion-label>Luckiest Man On Earth <span id="group-value"></span></ion-label>
-        </ion-list-header>
+      <p class="ion-text-center">
+        <ion-button onClick="addRadio()">Add Radio</ion-button>
+        <ion-button onClick="addChecked()">Add Checked</ion-button>
+        <ion-button id="removeButton" onClick="removeRadio()">Remove Radio</ion-button>
+      </p>
 
-        <ion-item>
-          <ion-label>Biff
-            <span id="biff"></span>
-          </ion-label>
-          <ion-radio value="biff" slot="start"></ion-radio>
-        </ion-item>
+      <ion-list>
+        <ion-radio-group id="dynamicDisabled" disabled name="tannen" id="group" value="biff">
+          <ion-list-header>
+            <ion-label>Luckiest Man On Earth <span id="group-value"></span></ion-label>
+          </ion-list-header>
 
-        <ion-item>
-          <ion-label>Griff
-            <span id="griff"></span>
-          </ion-label>
-          <ion-radio value="griff" slot="start"></ion-radio>
-        </ion-item>
+          <ion-item>
+            <ion-label>Biff
+              <span id="biff"></span>
+            </ion-label>
+            <ion-radio value="biff" slot="start"></ion-radio>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Buford
-            <span id="buford"></span>
-          </ion-label>
-          <ion-radio value="buford" slot="start"></ion-radio>
-        </ion-item>
+          <ion-item>
+            <ion-label>Griff
+              <span id="griff"></span>
+            </ion-label>
+            <ion-radio value="griff" slot="start"></ion-radio>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>George</ion-label>
-          <ion-radio value="george" slot="start"></ion-radio>
-        </ion-item>
+          <ion-item>
+            <ion-label>Buford
+              <span id="buford"></span>
+            </ion-label>
+            <ion-radio value="buford" slot="start"></ion-radio>
+          </ion-item>
 
-      </ion-radio-group>
+          <ion-item>
+            <ion-label>George</ion-label>
+            <ion-radio value="george" slot="start"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
 
-      <ion-button onClick="addSelect()">Add Select</ion-button>
-      <ion-button onClick="addCheckedSelect()">Add Checked Select</ion-button>
-      <ion-button onClick="removeSelect()">Remove Select</ion-button>
+      <ion-list>
+        <ion-radio-group value="huey">
+          <ion-item>
+            <ion-label>Huey</ion-label>
+            <ion-radio slot="start" value="huey"></ion-radio>
+          </ion-item>
 
+          <ion-item>
+            <ion-label>Dewey</ion-label>
+            <ion-radio slot="start" value="dewey"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Louie</ion-label>
+            <ion-radio slot="start" value="louie"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+
+      <ion-list>
+        <ion-radio-group value="huey">
+          <ion-item-divider>
+            <ion-label>
+              Maintenance Drone
+            </ion-label>
+          </ion-item-divider>
+
+          <ion-item>
+            <ion-label>Huey</ion-label>
+            <ion-radio slot="start" value="huey"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Dewey</ion-label>
+            <ion-radio slot="start" value="dewey"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Louie</ion-label>
+            <ion-radio slot="start" value="louie"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
     </ion-content>
 
     <style>
       .outer-content {
         --background: #f2f2f2;
       }
+
+      ion-list {
+        margin-bottom: 10px !important;
+      }
     </style>
+
     <script>
       let count = 0;
+      const removeButton = document.querySelector('#removeButton');
+
       const valueEl = document.querySelector('#group-value');
       const group = document.querySelector('ion-radio-group');
+
       group.addEventListener('ionChange', (ev) => {
         valueEl.textContent = group.value;
       });
+
       customElements.whenDefined('ion-radio-group')
        .then(() => group.componentOnReady())
        .then(() => {
          valueEl.textContent = group.value;
         });
 
-      function addSelect() {
+      function addRadio() {
         const item = document.createElement('ion-item');
+
         item.innerHTML = `
           <ion-label>Item ${count}</ion-label>
           <ion-radio value="item-${count}" slot="start"></ion-radio>
         `;
         group.appendChild(item);
         count++;
+
+        removeButton.disabled = false;
       }
-      function addCheckedSelect() {
+
+      function addChecked() {
         const item = document.createElement('ion-item');
         item.innerHTML = `
           <ion-label>Item ${count}</ion-label>
           <ion-radio value="item-${count}" slot="start"></ion-radio>
         `;
         group.appendChild(item);
-        
+
         group.value = `item-${count}`;
         count++;
+
+        removeButton.disabled = false;
       }
-      function removeSelect() {
-        group.children[group.children.length - 1].remove();
+
+      function removeRadio() {
+        const removeEl = group.children[group.children.length - 1];
+
+        if (removeEl && removeEl.tagName === 'ION-ITEM') {
+          removeEl.remove();
+
+          // No more radios to remove, disable button
+          if (!group.querySelector('ion-item')) {
+            removeButton.disabled = true;
+          }
+        }
       }
     </script>
   </ion-app>
