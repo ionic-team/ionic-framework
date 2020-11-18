@@ -20,7 +20,6 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   shadow: true
 })
 export class Radio implements ComponentInterface {
-  private focusEl?: HTMLInputElement;
   private inputId = `ion-rb-${radioButtonIds++}`;
   private radioGroup: HTMLIonRadioGroupElement | null = null;
 
@@ -78,9 +77,7 @@ export class Radio implements ComponentInterface {
   /** @internal */
   @Method()
   async setFocus() {
-    if (this.focusEl) {
-      this.focusEl.focus();
-    }
+    this.el.focus();
   }
 
   /** @internal */
@@ -147,6 +144,7 @@ export class Radio implements ComponentInterface {
         aria-hidden={disabled ? 'true' : null}
         aria-labelledby={label ? labelId : null}
         role="radio"
+        tabindex={buttonTabindex}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -157,6 +155,7 @@ export class Radio implements ComponentInterface {
       >
         <div class="radio-icon" part="container">
           <div class="radio-inner" part="mark" />
+          <div class="radio-ripple"></div>
         </div>
         <label htmlFor={inputId}>
           {labelText}
@@ -165,12 +164,11 @@ export class Radio implements ComponentInterface {
           type="radio"
           checked={checked}
           disabled={disabled}
-          tabindex={buttonTabindex}
+          tabindex="-1"
           id={inputId}
           aria-labelledby={label ? labelId : null}
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
-          ref={focusEl => this.focusEl = focusEl}
         />
       </Host>
     );

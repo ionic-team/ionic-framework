@@ -67,21 +67,38 @@
         <ion-radio-group value="huey">
           <ion-item>
             <ion-label>Huey</ion-label>
-            <ion-radio slot="start" value="huey"></ion-radio>
+            <ion-radio slot="start" value="huey" color="danger"></ion-radio>
           </ion-item>
 
           <ion-item>
             <ion-label>Dewey</ion-label>
-            <ion-radio slot="start" value="dewey"></ion-radio>
+            <ion-radio slot="start" value="dewey" color="secondary"></ion-radio>
           </ion-item>
 
           <ion-item>
             <ion-label>Louie</ion-label>
-            <ion-radio slot="start" value="louie"></ion-radio>
+            <ion-radio slot="start" value="louie" color="tertiary"></ion-radio>
           </ion-item>
         </ion-radio-group>
       </ion-list>
 
+      <div style="padding: 10px 16px">
+        <ion-radio-group value="louie">
+          <h5>Custom Labels</h5>
+          <p>
+            <ion-radio id="custom-huey" value="huey"></ion-radio>
+            <label for="custom-huey">Huey</label>
+          </p>
+          <p>
+            <ion-radio id="custom-dewey" value="dewey"></ion-radio>
+            <label for="custom-dewey">Dewey</label>
+          </p>
+          <p>
+            <ion-radio id="custom-louie" value="louie"></ion-radio>
+            <label for="custom-louie">Louie</label>
+          </p>
+        </ion-radio-group>
+      </div>
     </ion-content>
 
   </ion-app>

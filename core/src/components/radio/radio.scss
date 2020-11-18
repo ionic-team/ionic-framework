@@ -55,3 +55,7 @@ label {
 input {
   @include visually-hidden();
 }
+
+:host(:focus) {
+  outline:none;
+}
