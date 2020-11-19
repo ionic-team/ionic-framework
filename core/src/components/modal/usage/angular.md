@@ -36,7 +36,7 @@ export class ModalPage {
 }
 ```
 
-> If you need a wrapper element inside of your modal component, we recommend using an `<div class="ion-page">` so that the component dimensions are still computed properly.
+> If you need a wrapper element inside of your modal component, we recommend using a `<div class="ion-page">` so that the component dimensions are still computed properly.
 
 ### Passing Data
 
