@@ -13,6 +13,10 @@ interface Tab {
 
 export const IonTabBar = defineComponent({
   name: 'IonTabBar',
+  props: {
+    _tabsWillChange: { type: Function, default: () => {} },
+    _tabsDidChange: { type: Function, default: () => {} }
+  },
   mounted() {
     const ionRouter: any = inject('navManager');
     const tabState: TabState = {
@@ -102,12 +106,16 @@ export const IonTabBar = defineComponent({
         }
       }
 
-      const activeChild = childNodes.find((child: VNode) => child.el.tab === activeTab);
+      const activeChild = childNodes.find((child: VNode) => child.props.tab === activeTab);
       const tabBar = this.$refs.ionTabBar;
-
+      const tabDidChange = activeTab !== prevActiveTab;
       if (activeChild && tabBar) {
+        tabDidChange && this.$props._tabsWillChange(activeTab);
+
         ionRouter.handleSetCurrentTab(activeTab);
         tabBar.selectedTab = tabState.activeTab = activeTab;
+
+        tabDidChange && this.$props._tabsDidChange(activeTab);
       }
     };
 

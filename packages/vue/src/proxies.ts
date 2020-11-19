@@ -574,6 +574,7 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-seg
   'color',
   'disabled',
   'scrollable',
+  'swipeGesture',
   'value',
   'ionChange',
   'ionSelect',
