@@ -133,7 +133,7 @@ export class RadioGroup implements ComponentInterface {
       }
 
       if (next && radios.includes(next)) {
-        next.setFocus();
+        next.setFocus(ev);
 
         if (!inSelectPopover) {
           this.value = next.value;

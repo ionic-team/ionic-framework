@@ -98,11 +98,11 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
   // we should use that instead of looking for an ion-label
   const labelledBy = componentEl.getAttribute('aria-labelledby');
 
-  const labelId = labelledBy !== null
+  let labelId = labelledBy !== null
     ? labelledBy
     : inputId + '-lbl';
 
-  const label = labelledBy !== null
+  let label = labelledBy !== null
     ? document.querySelector(`#${labelledBy}`)
     : findItemLabel(componentEl);
 
@@ -113,6 +113,17 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
 
     labelText = label.textContent;
     label.setAttribute('aria-hidden', 'true');
+
+  // if there is no label, check to see if the user has provided
+  // one using the label element
+  } else {
+    const componentId = componentEl.id;
+    label = document.querySelector(`label[for=${componentId}]`);
+
+    if (label) {
+      label.id = labelId = `${componentId}-lbl`;
+      labelText = label.textContent;
+    }
   }
 
   return { label, labelId, labelText };
