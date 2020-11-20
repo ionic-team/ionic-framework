@@ -1,6 +1,7 @@
-import { mount } from '@vue/test-utils';
+import { mount, flushPromises } from '@vue/test-utils';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { IonicVue, IonApp, IonRouterOutlet, IonPage, IonTabs, IonTabBar } from '@ionic/vue';
+import { onBeforeRouteLeave } from 'vue-router';
 
 const App = {
   components: { IonApp, IonRouterOutlet },
@@ -119,5 +120,41 @@ describe('Routing', () => {
 
     const cmp = wrapper.findComponent(Page1);
     expect(cmp.props()).toEqual({ title: 'myPath' });
+  });
+
+  it('should call vue router hooks properly', async () => {
+    const leaveHook = jest.fn();
+    const Page1 = {
+      ...BasePage,
+      setup() {
+        onBeforeRouteLeave(leaveHook);
+      }
+    };
+
+    const Page2 = {
+      ...BasePage
+    };
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Page1 },
+        { path: '/page2', component: Page2 }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    // Navigate to 2nd page
+    router.push('/page2');
+    await flushPromises();
+
+    expect(leaveHook).toBeCalled();
   });
 });
