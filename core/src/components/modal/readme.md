@@ -79,6 +79,8 @@ export class ModalPage {
 }
 ```
 
+> If you need a wrapper element inside of your modal component, we recommend using a `<div class="ion-page">` so that the component dimensions are still computed properly.
+
 ### Passing Data
 
 During creation of a modal, data can be passed in through the `componentProps`.
@@ -251,6 +253,8 @@ function presentModal() {
 }
 ```
 
+> If you need a wrapper element inside of your modal component, we recommend using a `<div class="ion-page">` so that the component dimensions are still computed properly.
+
 ### Passing Data
 
 During creation of a modal, data can be passed in through the `componentProps`. The previous example can be written to include data:
@@ -345,6 +349,8 @@ export const ModalExample: React.FC = () => {
   );
 };
 ```
+
+> If you need a wrapper element inside of your modal component, we recommend using an `<IonPage>` so that the component dimensions are still computed properly.
 
 ### Swipeable Modals
 
@@ -467,6 +473,8 @@ export class PageModal {
 }
 ```
 
+> If you need a wrapper element inside of your modal component, we recommend using a `<div class="ion-page">` so that the component dimensions are still computed properly.
+
 ### Passing Data
 
 During creation of a modal, data can be passed in through the `componentProps`.
@@ -578,16 +586,14 @@ async presentModal() {
 
 ```html
 <template>
-  <div>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{ title }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      {{ content }}
-    </ion-content>
-  </div>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{ title }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    {{ content }}
+  </ion-content>
 </template>
 
 <script>
@@ -671,6 +677,8 @@ export default defineComponent({
 });
 </script>
 ```
+
+> If you need a wrapper element inside of your modal component, we recommend using an `<ion-page>` so that the component dimensions are still computed properly.
 
 
 

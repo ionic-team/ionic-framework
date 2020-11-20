@@ -1,15 +1,13 @@
 ```html
 <template>
-  <div>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{ title }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      {{ content }}
-    </ion-content>
-  </div>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{ title }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    {{ content }}
+  </ion-content>
 </template>
 
 <script>
@@ -93,3 +91,5 @@ export default defineComponent({
 });
 </script>
 ```
+
+> If you need a wrapper element inside of your modal component, we recommend using an `<ion-page>` so that the component dimensions are still computed properly.
