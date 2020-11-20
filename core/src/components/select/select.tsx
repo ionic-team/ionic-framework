@@ -29,7 +29,7 @@ export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;
   private overlay?: OverlaySelect;
   private didInit = false;
-  private focusEl?: HTMLInputElement;
+  private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
 
   @Element() el!: HTMLIonSelectElement;
@@ -437,7 +437,7 @@ export class Select implements ComponentInterface {
   render() {
     const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
     const mode = getIonMode(this);
-    const { labelText } = getAriaLabel(el, inputId);
+    const { labelText, labelId } = getAriaLabel(el, inputId);
 
     renderHiddenInput(true, el, name, parseValue(value), disabled);
 
@@ -483,21 +483,20 @@ export class Select implements ComponentInterface {
         <div class="select-icon" role="presentation" part="icon">
           <div class="select-icon-inner"></div>
         </div>
-        <label htmlFor={inputId}>
+        <label id={labelId}>
           {displayLabel}
         </label>
-        <input
-          type="text"
+        <button
+          type="button"
           disabled={disabled}
           id={inputId}
-          role="button"
-          readonly
+          aria-labelledby={labelId}
           aria-haspopup="listbox"
           aria-expanded={`${isExpanded}`}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           ref={(focusEl => this.focusEl = focusEl)}
-        />
+        ></button>
       </Host>
     );
   }
