@@ -2065,6 +2065,10 @@ export namespace Components {
          */
         "scrollable": boolean;
         /**
+          * If `true`, users will be able to swipe between segment buttons to activate them.
+         */
+        "swipeGesture": boolean;
+        /**
           * the value of the segment.
          */
         "value"?: string | null;
@@ -5374,6 +5378,10 @@ declare namespace LocalJSX {
           * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
          */
         "scrollable"?: boolean;
+        /**
+          * If `true`, users will be able to swipe between segment buttons to activate them.
+         */
+        "swipeGesture"?: boolean;
         /**
           * the value of the segment.
          */
