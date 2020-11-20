@@ -2,11 +2,11 @@
 
 A Toast is a subtle notification commonly used in modern applications. It can be used to provide feedback about an operation or to display a system message. The toast appears on top of the app's content, and can be dismissed by the app to resume user interaction with the app.
 
-### Positioning
+## Positioning
 
 Toasts can be positioned at the top, bottom or middle of the viewport. The position can be passed upon creation. The possible values are `top`, `bottom` and `middle`. If the position is not specified, the toast will be displayed at the bottom of the viewport.
 
-### Dismissing
+## Dismissing
 
 The toast can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the toast options. If a button with a role of `"cancel"` is added, then that button will dismiss the toast. To dismiss the toast after creation, call the `dismiss()` method on the instance.
 
@@ -158,6 +158,150 @@ export const ToastExample: React.FC = () => {
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+import { toastController } from '@ionic/core';
+
+@Component({
+  tag: 'toast-example',
+  styleUrl: 'toast-example.css'
+})
+export class ToastExample {
+  async presentToast() {
+    const toast = await toastController.create({
+      message: 'Your settings have been saved.',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async presentToastWithOptions() {
+    const toast = await toastController.create({
+      header: 'Toast header',
+      message: 'Click to Close',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'star',
+          text: 'Favorite',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    toast.present();
+  }
+
+  render() {
+    return [
+      <ion-content>
+        <ion-button onClick={() => this.presentToast()}>Present Toast</ion-button>
+        <ion-button onClick={() => this.presentToastWithOptions()}>Present Toast: Options</ion-button>
+      </ion-content>
+    ];
+  }
+}
+```
+
+
+### Vue
+
+```html
+<template>
+  <ion-page>
+    <ion-content class="ion-padding">
+      <ion-button @click="openToast">Open Toast</ion-button>
+      <ion-button @click="openToastOptions">Open Toast: Options</ion-button>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script>
+import { IonButton, IonContent, IonPage, toastController } from '@ionic/vue';
+
+export default {
+  components: { IonButton, IonContent, IonPage },
+  methods: {
+    async openToast() {
+      const toast = await toastController
+        .create({
+          message: 'Your settings have been saved.',
+          duration: 2000
+        })
+      return toast.present();
+    },
+    async openToastOptions() {
+      const toast = await toastController
+        .create({
+          header: 'Toast header',
+          message: 'Click to Close',
+          position: 'top',
+          buttons: [
+            {
+              side: 'start',
+              icon: 'star',
+              text: 'Favorite',
+              handler: () => {
+                console.log('Favorite clicked');
+              }
+            }, {
+              text: 'Done',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            }
+          ]
+        })
+      return toast.present();
+    },
+  },
+}
+</script>
+```
+
+Developers can also use this component directly in their template:
+
+```html
+<template>
+  <ion-button @click="setOpen(true)">Show Toast</ion-button>
+  <ion-toast
+    :is-open="isOpenRef"
+    message="Your settings have been saved."
+    :duration="2000"
+    @onDidDismiss="setOpen(false)"
+  >
+  </ion-toast>
+</template>
+
+<script>
+import { IonToast, IonButton } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  components: { IonToast, IonButton },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    
+    return { isOpenRef, setOpen }
+  }
+});
+</script>
+```
+
+
 
 ## Properties
 
@@ -172,7 +316,7 @@ export const ToastExample: React.FC = () => {
 | `header`         | `header`         | Header to be shown in the toast.                                                                                                                                                                                                                                       | `string \| undefined`                                   | `undefined` |
 | `keyboardClose`  | `keyboard-close` | If `true`, the keyboard will be automatically dismissed when the overlay is presented.                                                                                                                                                                                 | `boolean`                                               | `false`     |
 | `leaveAnimation` | --               | Animation to use when the toast is dismissed.                                                                                                                                                                                                                          | `((baseEl: any, opts?: any) => Animation) \| undefined` | `undefined` |
-| `message`        | `message`        | Message to be shown in the toast.                                                                                                                                                                                                                                      | `string \| undefined`                                   | `undefined` |
+| `message`        | `message`        | Message to be shown in the toast.                                                                                                                                                                                                                                      | `IonicSafeString \| string \| undefined`                | `undefined` |
 | `mode`           | `mode`           | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                         | `undefined` |
 | `position`       | `position`       | The position of the toast on the screen.                                                                                                                                                                                                                               | `"bottom" \| "middle" \| "top"`                         | `'bottom'`  |
 | `translucent`    | `translucent`    | If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                   | `boolean`                                               | `false`     |
@@ -200,23 +344,23 @@ Type: `Promise<boolean>`
 
 
 
-### `onDidDismiss() => Promise<OverlayEventDetail<any>>`
+### `onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>`
 
 Returns a promise that resolves when the toast did dismiss.
 
 #### Returns
 
-Type: `Promise<OverlayEventDetail<any>>`
+Type: `Promise<OverlayEventDetail<T>>`
 
 
 
-### `onWillDismiss() => Promise<OverlayEventDetail<any>>`
+### `onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>`
 
 Returns a promise that resolves when the toast will dismiss.
 
 #### Returns
 
-Type: `Promise<OverlayEventDetail<any>>`
+Type: `Promise<OverlayEventDetail<T>>`
 
 
 
@@ -229,6 +373,16 @@ Present the toast overlay after it has been created.
 Type: `Promise<void>`
 
 
+
+
+## Shadow Parts
+
+| Part          | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| `"button"`    | Any button element that is displayed inside of the toast. |
+| `"container"` | The element that wraps all child elements.                |
+| `"header"`    | The header text of the toast.                             |
+| `"message"`   | The body text of the toast.                               |
 
 
 ## CSS Custom Properties
@@ -250,6 +404,7 @@ Type: `Promise<void>`
 | `--min-height`    | Minimum height of the toast                                                                            |
 | `--min-width`     | Minimum width of the toast                                                                             |
 | `--start`         | Position from the left if direction is left-to-right, and from the right if direction is right-to-left |
+| `--white-space`   | White space of the toast message                                                                       |
 | `--width`         | Width of the toast                                                                                     |
 
 

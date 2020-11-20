@@ -1,6 +1,8 @@
 ```javascript
 async function presentLoading() {
   const loading = document.createElement('ion-loading');
+
+  loading.cssClass = 'my-custom-class';
   loading.message = 'Please wait...';
   loading.duration = 2000;
 

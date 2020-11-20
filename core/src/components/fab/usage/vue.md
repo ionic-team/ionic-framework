@@ -1,5 +1,11 @@
 ```html
 <template>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Header</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
   <ion-content>
     <!-- fab placed to the top end -->
     <ion-fab vertical="top" horizontal="end" slot="fixed">
@@ -79,5 +85,66 @@
       </ion-fab-list>
     </ion-fab>
   </ion-content>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-title>Footer</ion-title>
+    </ion-toolbar>
+  </ion-footer>
 </template>
+
+<script>
+import { 
+  IonContent, 
+  IonFab, 
+  IonFabButton, 
+  IonFabList, 
+  IonFooter, 
+  IonHeader, 
+  IonIcon, 
+  IonTitle, 
+  IonToolbar 
+} from '@ionic/vue';
+import { 
+  add, 
+  arrowBackCircle,
+  arrowForwardCircle, 
+  logoFacebook, 
+  logoInstagram, 
+  logoTwitter, 
+  logoVimeo, 
+  person, 
+  settings, 
+  share
+} from 'ionicons/icons';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { 
+    IonContent, 
+    IonFab, 
+    IonFabButton, 
+    IonFabList, 
+    IonFooter, 
+    IonHeader, 
+    IonIcon, 
+    IonTitle, 
+    IonToolbar
+  },
+  setup() {
+    return {
+      add, 
+      arrowBackCircle,
+      arrowForwardCircle, 
+      logoFacebook, 
+      logoInstagram, 
+      logoTwitter, 
+      logoVimeo, 
+      person, 
+      settings, 
+      share
+    }
+  }
+});
+</script>
 ```

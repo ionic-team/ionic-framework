@@ -1,6 +1,6 @@
 import { writeTask } from '@stencil/core';
 
-import { createAnimation } from '../../';
+import { createAnimation } from '../../utils/animation/animation';
 import { isPlatform } from '../../utils/platform';
 
 // MD Native Refresher
@@ -148,7 +148,7 @@ export const handleScrollWhileRefreshing = (
 export const translateElement = (el?: HTMLElement, value?: string) => {
   if (!el) { return Promise.resolve(); }
 
-  const trans = transitionEndAsync(el);
+  const trans = transitionEndAsync(el, 200);
 
   writeTask(() => {
     el.style.setProperty('transition', '0.2s all ease-out');
@@ -181,15 +181,17 @@ export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, m
   );
 };
 
-export const transitionEndAsync = (el: HTMLElement | null) => {
+export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0) => {
   return new Promise(resolve => {
-    transitionEnd(el, resolve);
+    transitionEnd(el, expectedDuration, resolve);
   });
 };
 
-const transitionEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
+const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (ev?: TransitionEvent) => void) => {
   let unRegTrans: (() => void) | undefined;
+  let animationTimeout: any;
   const opts: any = { passive: true };
+  const ANIMATION_FALLBACK_TIMEOUT = 500;
 
   const unregister = () => {
     if (unRegTrans) {
@@ -197,8 +199,8 @@ const transitionEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) 
     }
   };
 
-  const onTransitionEnd = (ev: Event) => {
-    if (el === ev.target) {
+  const onTransitionEnd = (ev?: Event) => {
+    if (ev === undefined || el === ev.target) {
       unregister();
       callback(ev as TransitionEvent);
     }
@@ -207,8 +209,13 @@ const transitionEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) 
   if (el) {
     el.addEventListener('webkitTransitionEnd', onTransitionEnd, opts);
     el.addEventListener('transitionend', onTransitionEnd, opts);
+    animationTimeout = setTimeout(onTransitionEnd, expectedDuration + ANIMATION_FALLBACK_TIMEOUT);
 
     unRegTrans = () => {
+      if (animationTimeout) {
+        clearTimeout(animationTimeout);
+        animationTimeout = undefined;
+      }
       el.removeEventListener('webkitTransitionEnd', onTransitionEnd, opts);
       el.removeEventListener('transitionend', onTransitionEnd, opts);
     };

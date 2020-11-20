@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
@@ -123,6 +123,31 @@
         </ion-label>
       </ion-list-header>
       <ion-list class="multiple">
+        <ion-item id="delayedInputItem">
+          <ion-label>Delayed input</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Multiple inputs</ion-label>
+          <ion-input placeholder="Input 1"></ion-input>
+          <ion-input placeholder="Input 2"></ion-input>
+          <ion-input placeholder="Input 3"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Multiple textareas</ion-label>
+          <ion-textarea placeholder="Textarea 1"></ion-textarea>
+          <ion-textarea placeholder="Textarea 2"></ion-textarea>
+          <ion-textarea placeholder="Textarea 3"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Multiple input/textareas</ion-label>
+          <ion-textarea placeholder="Textarea 1"></ion-textarea>
+          <ion-input placeholder="Input 2"></ion-input>
+          <ion-textarea placeholder="Textarea 3"></ion-textarea>
+        </ion-item>
+
         <ion-item>
           <ion-checkbox slot="start" id="checkbox-start"></ion-checkbox>
           <ion-label>Multiple inputs w/ cover</ion-label>
@@ -179,6 +204,28 @@
       clickableItem.color = color === undefined ? 'primary' : undefined;
     });
 
+    const delayedInputItem = document.querySelector('#delayedInputItem');
+    const delayedInput = document.createElement('ion-input');
+    delayedInput.type = 'number';
+    delayedInput.value = 34;
+
+    setTimeout(() => {
+      delayedInputItem.appendChild(delayedInput);
+    }, 3000);
+
+    const inputs = document.querySelectorAll('ion-input, ion-textarea');
+
+    for (var i = 0; i < inputs.length; i++) {
+      const input = inputs[i];
+
+      input.addEventListener('ionBlur', function() {
+        console.log('Listen ionBlur: fired');
+      });
+
+      input.addEventListener('ionFocus', function() {
+        console.log('Listen ionFocus: fired');
+      });
+    }
 
     function toggleDisabled() {
       isDisabled = !isDisabled;

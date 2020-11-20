@@ -83,6 +83,51 @@ export const HeaderExample: React.FC = () => (
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'header-example',
+  styleUrl: 'header-example.css'
+})
+export class HeaderExample {
+  render() {
+    return [
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+          </ion-buttons>
+          <ion-title>My Navigation Bar</ion-title>
+        </ion-toolbar>
+
+        <ion-toolbar>
+          <ion-title>Subheader</ion-title>
+        </ion-toolbar>
+      </ion-header>,
+
+      // Header without a border
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>Header - No Border</ion-title>
+        </ion-toolbar>
+      </ion-header>,
+
+      <ion-content>
+        <ion-header collapse="condense">
+          <ion-toolbar>
+            <ion-title size="large">My Navigation Bar</ion-title>
+          </ion-toolbar>
+        </ion-header>
+      </ion-content>
+    ];
+  }
+}
+```
+
+
 ### Vue
 
 ```html
@@ -115,6 +160,29 @@ export const HeaderExample: React.FC = () => (
     </ion-header>
   </ion-content>
 </template>
+
+<script>
+import { 
+  IonBackButton, 
+  IonButtons, 
+  IonContent, 
+  IonHeader, 
+  IonTitle, 
+  IonToolbar
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { 
+    IonBackButton, 
+    IonButtons, 
+    IonContent, 
+    IonHeader, 
+    IonTitle, 
+    IonToolbar
+  }
+});
+</script>
 ```
 
 

@@ -1,13 +1,13 @@
 import * as utils from '../utils';
-import 'jest-dom/extend-expect'
+import '@testing-library/jest-dom/extend-expect';
 
 describe('isCoveredByReact', () => {
   it('should identify standard events as covered by React', () => {
-    expect(utils.isCoveredByReact('click', document)).toEqual(true);
+    expect(utils.isCoveredByReact('click')).toEqual(true);
   });
   it('should identify custom events as not covered by React', () => {
-    expect(utils.isCoveredByReact('change', document)).toEqual(true);
-    expect(utils.isCoveredByReact('ionchange', document)).toEqual(false);
+    expect(utils.isCoveredByReact('change')).toEqual(true);
+    expect(utils.isCoveredByReact('ionchange')).toEqual(false);
   });
 });
 
@@ -47,7 +47,7 @@ describe('attachProps', () => {
     });
 
     expect((div as any).testprop).toEqual(['red']);
-    expect(div).toHaveStyle('');
+    expect(div).toHaveStyle(`display: block;`);
     expect(Object.keys((div as any).__events)).toEqual(['ionClick']);
   });
 

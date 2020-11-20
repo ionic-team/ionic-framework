@@ -1,8 +1,9 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
+import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
+import { raf } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -11,6 +12,9 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
+ *
+ * @part native - The native HTML button, anchor or div element that wraps all child elements.
+ * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
  */
 @Component({
   tag: 'ion-item',
@@ -18,11 +22,15 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
     ios: 'item.ios.scss',
     md: 'item.md.scss'
   },
-  shadow: true
+  shadow: {
+    delegatesFocus: true
+  }
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
 
+  private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
+  private clickListener?: (ev: Event) => void;
 
   @Element() el!: HTMLIonItemElement;
 
@@ -82,6 +90,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
+
+  /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
@@ -98,6 +112,18 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    * The type of the button. Only used when an `onclick` or `button` property is present.
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+
+  @Listen('ionColor')
+  labelColorChanged(ev: CustomEvent<string>) {
+    const { color } = this;
+
+    // There will be a conflict with item color if
+    // we apply the label color to item, so we ignore
+    // the label color if the user sets a color on item
+    if (color === undefined) {
+      this.labelColorStyles = ev.detail;
+    }
+  }
 
   @Listen('ionStyle')
   itemStyle(ev: CustomEvent<StyleEventDetail>) {
@@ -123,11 +149,37 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
     if (hasStyleChange) {
       this.itemStyles.set(tagName, newStyles);
-      this.el.forceUpdate();
+      forceUpdate(this);
+    }
+  }
+
+  componentDidUpdate() {
+    // Do not use @Listen here to avoid making all items
+    // appear as clickable to screen readers
+    // https://github.com/ionic-team/ionic-framework/issues/22011
+    const input = this.getFirstInput();
+    if (input && !this.clickListener) {
+      this.clickListener = (ev: Event) => this.delegateFocus(ev, input);
+      this.el.addEventListener('click', this.clickListener);
+    }
+  }
+
+  disconnectedCallback() {
+    const input = this.getFirstInput();
+    if (input && this.clickListener) {
+      this.el.removeEventListener('click', this.clickListener);
+      this.clickListener = undefined;
     }
   }
 
   componentDidLoad() {
+    this.setMultipleInputs();
+  }
+
+  // If the item contains multiple clickable elements and/or inputs, then the item
+  // should not have a clickable input cover over the entire item to prevent
+  // interfering with their individual click events
+  private setMultipleInputs() {
     // The following elements have a clickable cover that is relative to the entire item
     const covers = this.el.querySelectorAll('ion-checkbox, ion-datetime, ion-select, ion-radio');
 
@@ -165,8 +217,40 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return (this.isClickable() || this.hasCover());
   }
 
+  private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
+    const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<HTMLIonInputElement | HTMLIonTextareaElement>;
+    return inputs[0];
+  }
+
+  // This is needed for WebKit due to a delegatesFocus bug where
+  // clicking on the left padding of an item is not focusing the input
+  // but is opening the keyboard. It will no longer be needed with
+  // iOS 14.
+  private delegateFocus(ev: Event, input: HTMLIonInputElement | HTMLIonTextareaElement) {
+    const clickedItem = (ev.target as HTMLElement).tagName === 'ION-ITEM';
+    let firstActive = false;
+
+    // If the first input is the same as the active element we need
+    // to focus the first input again, but if the active element
+    // is another input inside of the item we shouldn't switch focus
+    if (document.activeElement) {
+      firstActive = input.querySelector('input, textarea') === document.activeElement;
+    }
+
+    // Only focus the first input if we clicked on an ion-item
+    // and the first input exists
+    if (clickedItem && firstActive) {
+      input.fireFocusEvents = false;
+      input.setBlur();
+      input.setFocus();
+      raf(() => {
+        input.fireFocusEvents = true;
+      });
+    }
+  }
+
   render() {
-    const { detail, detailIcon, download, lines, disabled, href, rel, target, routerDirection } = this;
+    const { detail, detailIcon, download, labelColorStyles, lines, disabled, href, rel, target, routerAnimation, routerDirection } = this;
     const childStyles = {};
     const mode = getIonMode(this);
     const clickable = this.isClickable();
@@ -180,6 +264,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         rel,
         target
       };
+    // Only set onClick if the item is clickable to prevent screen
+    // readers from reading all items as clickable
+    const clickFn = clickable ? {
+      onClick: (ev: Event) => {openURL(href, ev, routerDirection, routerAnimation); }
+    } : {};
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
     this.itemStyles.forEach(value => {
       Object.assign(childStyles, value);
@@ -190,22 +279,25 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         aria-disabled={disabled ? 'true' : null}
         class={{
           ...childStyles,
-          ...createColorClasses(this.color),
-          'item': true,
-          [mode]: true,
-          [`item-lines-${lines}`]: lines !== undefined,
-          'item-disabled': disabled,
-          'in-list': hostContext('ion-list', this.el),
-          'item-multiple-inputs': this.multipleInputs,
-          'ion-activatable': canActivate,
-          'ion-focusable': true,
+          ...labelColorStyles,
+          ...createColorClasses(this.color, {
+            'item': true,
+            [mode]: true,
+            [`item-lines-${lines}`]: lines !== undefined,
+            'item-disabled': disabled,
+            'in-list': hostContext('ion-list', this.el),
+            'item-multiple-inputs': this.multipleInputs,
+            'ion-activatable': canActivate,
+            'ion-focusable': true,
+          })
         }}
       >
           <TagType
             {...attrs}
             class="item-native"
+            part="native"
             disabled={disabled}
-            onClick={(ev: Event) => openURL(href, ev, routerDirection)}
+            {...clickFn}
           >
             <slot name="start"></slot>
             <div class="item-inner">
@@ -213,7 +305,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
                 <slot></slot>
               </div>
               <slot name="end"></slot>
-              {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
+              {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon"></ion-icon>}
               <div class="item-inner-highlight"></div>
             </div>
             {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

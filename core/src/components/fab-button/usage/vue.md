@@ -3,7 +3,7 @@
   <ion-content>
 
     <!-- Fixed Floating Action Button that does not scroll with the content -->
-    <ion-fab>
+    <ion-fab slot="fixed">
       <ion-fab-button>Button</ion-fab-button>
     </ion-fab>
 
@@ -22,4 +22,13 @@
 
   </ion-content>
 </template>
+
+<script>
+import { IonContent, IonFab, IonFabButton } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonContent, IonFab, IonFabButton }
+});
+</script>
 ```

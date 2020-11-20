@@ -28,7 +28,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
   private usersElement?: HTMLElement;
 
   presented = false;
-  mode = getIonMode(this);
+  lastFocus?: HTMLElement;
 
   @Element() el!: HTMLIonPopoverElement;
 
@@ -116,7 +116,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionPopoverDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-  constructor() {
+  connectedCallback() {
     prepareOverlay(this.el);
   }
 
@@ -160,7 +160,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the popover did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionPopoverDidDismiss');
   }
 
@@ -168,7 +168,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the popover will dismiss.
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionPopoverWillDismiss');
   }
 
@@ -203,6 +203,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
       <Host
         aria-modal="true"
         no-router
+        tabindex="-1"
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
@@ -219,10 +220,15 @@ export class Popover implements ComponentInterface, OverlayInterface {
         onIonBackdropTap={this.onBackdropTap}
       >
         <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop}/>
-        <div class="popover-wrapper">
+
+        <div tabindex="0"></div>
+
+        <div class="popover-wrapper ion-overlay-wrapper">
           <div class="popover-arrow"></div>
           <div class="popover-content"></div>
         </div>
+
+        <div tabindex="0"></div>
       </Host>
     );
   }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
@@ -39,7 +39,7 @@
 
         <ion-item>
           <ion-label position="floating">Placeholder with floating label</ion-label>
-          <ion-datetime placeholder="Select a date"></ion-datetime>
+          <ion-datetime id="datetime-part" placeholder="Select a date"></ion-datetime>
         </ion-item>
 
         <ion-item>
@@ -64,7 +64,7 @@
 
         <ion-item>
           <ion-label>YYYY</ion-label>
-          <ion-datetime id="customPickerOptions" placeholder="Custom Options" display-format="YYYY" min="1981" max="2002"></ion-datetime>
+          <ion-datetime id="customPickerOptions" placeholder="Custom Options" display-format="YYYY" min="1981" max="2002" value="2000"></ion-datetime>
         </ion-item>
 
         <ion-item>
@@ -95,6 +95,14 @@
         </ion-item>
 
         <ion-item>
+          <ion-label>DDD. MMM DD, YY (English/French switch)</ion-label>
+          <ion-datetime id="customMonthShortNames" value="1995-04-15" min="1990-02" max="2000"
+            display-format="DDD. MMM DD, YY"></ion-datetime>
+          <ion-button slot="end" onclick="toggleLanguage()">Language Selected: <span id="selectedLang">en</span>
+          </ion-button>
+        </ion-item>
+
+        <ion-item>
           <ion-label>D MMM YYYY H:mm</ion-label>
           <ion-datetime display-format="D MMM YYYY H:mm" min="1997" max="2010" value="2005-06-17T11:06Z"></ion-datetime>
         </ion-item>
@@ -105,8 +113,8 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>HH:mm</ion-label>
-          <ion-datetime display-format="HH:mm"></ion-datetime>
+          <ion-label>HH:mm A</ion-label>
+          <ion-datetime display-format="HH:mm A"></ion-datetime>
         </ion-item>
 
         <ion-item>
@@ -120,8 +128,22 @@
         </ion-item>
 
         <ion-item>
+          <ion-label>h:mm A</ion-label>
+          <ion-datetime display-format="h:mm A" value="14:23"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
           <ion-label>hh:mm A (15 min steps)</ion-label>
           <ion-datetime display-format="h:mm A" minute-values="0,15,30,45"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>YYYY MMM DD hh:mm A</ion-label>
+          <ion-datetime
+            id="todaysDate"
+            display-format="YYYY MMM DD hh:mm A"
+            minute-values="00,05,10,15,20,25,30,35,40,45,50,55">
+          </ion-datetime>
         </ion-item>
 
         <ion-item>
@@ -178,9 +200,20 @@
       .outer-content {
         --background: #f2f2f2;
       }
+
+      ion-datetime#datetime-part::part(placeholder) {
+        color: rgba(255, 0, 0, 0.5);
+      }
+
+      ion-datetime#datetime-part::part(text) {
+        color: green;
+      }
     </style>
 
     <script>
+      var todaysDateDatetime = document.querySelector('#todaysDate');
+      todaysDateDatetime.value = '2020-09-02T17:15:03.488Z';
+
       var yearValuesArray = [2020, 2016, 2008, 2004, 2000, 1996];
       var customYearValues = document.getElementById('customYearValues');
       customYearValues.yearValues = yearValuesArray;
@@ -218,6 +251,24 @@
         var isTrue = el[prop] ? false : true;
         el[prop] = isTrue;
         console.log('in toggleBoolean, setting', prop, 'to', isTrue);
+      }
+
+      var monthShortNamesEnglish = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      var monthShortNamesFrench = ["jan", "fév", "mar", "avr", "mai", "jui", "jui", "aou", "sep", "oct", "nov", "déc"];
+
+      var selectedLang = "en";
+      var customDayShortNames = document.getElementById('customMonthShortNames');
+      customDayShortNames.monthShortNames = monthShortNamesEnglish;
+
+      function toggleLanguage() {
+        selectedLang = selectedLang === 'en' ? 'fr' : 'en';
+
+        var customMonthShortNames = document.getElementById('customMonthShortNames');
+        var el = document.getElementById('selectedLang');
+
+        el.innerText = selectedLang;
+        if (selectedLang === 'en') { customMonthShortNames.monthShortNames = monthShortNamesEnglish; }
+        else { customMonthShortNames.monthShortNames = monthShortNamesFrench; }
       }
     </script>
   </ion-app>

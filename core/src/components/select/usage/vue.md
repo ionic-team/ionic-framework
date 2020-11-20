@@ -1,4 +1,4 @@
-## Single Selection
+### Single Selection
 
 ```html
 <template>
@@ -29,9 +29,32 @@
 
   </ion-list>
 </template>
+
+<script>
+import { 
+  IonItem, 
+  IonLabel, 
+  IonList,
+  IonListHeader,
+  IonSelect,
+  IonSelectOption
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonItem, 
+    IonLabel, 
+    IonList,
+    IonListHeader,
+    IonSelect,
+    IonSelectOption
+  }
+});
+</script>
 ```
 
-## Multiple Selection
+### Multiple Selection
 
 ```html
 <template>
@@ -69,9 +92,32 @@
     </ion-item>
   </ion-list>
 </template>
+
+<script>
+import { 
+  IonItem, 
+  IonLabel, 
+  IonList,
+  IonListHeader,
+  IonSelect,
+  IonSelectOption
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonItem, 
+    IonLabel, 
+    IonList,
+    IonListHeader,
+    IonSelect,
+    IonSelectOption
+  }
+});
+</script>
 ```
 
-## Interface Options
+### Interface Options
 
 ```html
 <template>
@@ -122,28 +168,51 @@
   </ion-list>
 </template>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { 
+  IonItem, 
+  IonLabel, 
+  IonList,
+  IonListHeader,
+  IonSelect,
+  IonSelectOption
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    customAlertOptions: any = {
+export default defineComponent({
+  components: {
+    IonItem, 
+    IonLabel, 
+    IonList,
+    IonListHeader,
+    IonSelect,
+    IonSelectOption
+  },
+  setup() {
+    const customAlertOptions: any = {
       header: 'Pizza Toppings',
       subHeader: 'Select your toppings',
       message: '$1.00 per topping',
       translucent: true
     };
 
-    customPopoverOptions: any = {
+    const customPopoverOptions: any = {
       header: 'Hair Color',
       subHeader: 'Select your hair color',
       message: 'Only select your dominant hair color'
     };
 
-    customActionSheetOptions: any = {
+    const customActionSheetOptions: any = {
       header: 'Colors',
       subHeader: 'Select your favorite color'
     };
+    
+    return {
+      customAlertOptions,
+      customPopoverOptions,
+      customActionSheetOptions
+    }
   }
+});
 </script>
 ```

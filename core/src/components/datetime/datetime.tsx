@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { DatetimeChangeEventDetail, DatetimeOptions, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
-import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { addEventListener, clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { pickerController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 
@@ -10,6 +10,9 @@ import { DatetimeData, LocaleData, convertDataToISO, convertFormatToKey, convert
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part text - The value of the datetime.
+ * @part placeholder - The placeholder of the datetime.
  */
 @Component({
   tag: 'ion-datetime',
@@ -176,6 +179,7 @@ export class Datetime implements ComponentInterface {
   /**
    * Short abbreviated day of the week names. This can be used to provide
    * locale names for each day in the week. Defaults to English.
+   * Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
    */
   @Prop() dayShortNames?: string[] | string;
 
@@ -267,7 +271,7 @@ export class Datetime implements ComponentInterface {
       this.isExpanded = false;
       this.setFocus();
     });
-    picker.addEventListener('ionPickerColChange', async (event: any) => {
+    addEventListener(picker, 'ionPickerColChange', async (event: any) => {
       const data = event.detail;
 
       const colSelectedIndex = data.selectedIndex;
@@ -277,6 +281,12 @@ export class Datetime implements ComponentInterface {
       changeData[data.name] = {
         value: colOptions[colSelectedIndex].value
       };
+
+      if (data.name !== 'ampm' && this.datetimeValue.ampm !== undefined) {
+        changeData['ampm'] = {
+          value: this.datetimeValue.ampm
+        };
+      }
 
       this.updateDatetimeValue(changeData);
       picker.columns = this.generateColumns();
@@ -300,6 +310,12 @@ export class Datetime implements ComponentInterface {
 
   private generatePickerOptions(): PickerOptions {
     const mode = getIonMode(this);
+    this.locale = {
+      monthNames: convertToArrayOfStrings(this.monthNames, 'monthNames'),
+      monthShortNames: convertToArrayOfStrings(this.monthShortNames, 'monthShortNames'),
+      dayNames: convertToArrayOfStrings(this.dayNames, 'dayNames'),
+      dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
+    };
     const pickerOptions: PickerOptions = {
       mode,
       ...this.pickerOptions,
@@ -501,11 +517,11 @@ export class Datetime implements ComponentInterface {
     min.day = min.day || 1;
     max.day = max.day || 31;
     min.hour = min.hour || 0;
-    max.hour = max.hour || 23;
+    max.hour = max.hour === undefined ? 23 : max.hour;
     min.minute = min.minute || 0;
-    max.minute = max.minute || 59;
+    max.minute = max.minute === undefined ? 59 : max.minute;
     min.second = min.second || 0;
-    max.second = max.second || 59;
+    max.second = max.second === undefined ? 59 : max.second;
 
     // Ensure min/max constraints
     if (min.year > max.year) {
@@ -609,6 +625,10 @@ export class Datetime implements ComponentInterface {
       ? (placeholder != null ? placeholder : '')
       : text;
 
+    const datetimeTextPart = text === undefined
+      ? (placeholder != null ? 'placeholder' : undefined)
+      : 'text';
+
     if (label) {
       label.id = labelId;
     }
@@ -618,7 +638,6 @@ export class Datetime implements ComponentInterface {
     return (
       <Host
         onClick={this.onClick}
-        role="combobox"
         aria-disabled={disabled ? 'true' : null}
         aria-expanded={`${isExpanded}`}
         aria-haspopup="true"
@@ -631,7 +650,7 @@ export class Datetime implements ComponentInterface {
           'in-item': hostContext('ion-item', el)
         }}
       >
-        <div class="datetime-text">{datetimeText}</div>
+        <div class="datetime-text" part={datetimeTextPart}>{datetimeText}</div>
         <button
           type="button"
           onFocus={this.onFocus}

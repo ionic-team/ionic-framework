@@ -4,6 +4,9 @@ Segments display a group of related buttons, sometimes known as segmented contro
 
 Their functionality is similar to tabs, where selecting one will deselect all others. Segments are useful for toggling between different views inside of the content. Tabs should be used instead of a segment when clicking on a control should navigate between pages.
 
+## Scrollable Segments
+
+Segments are not scrollable by default. Each segment button has a fixed width, and the width is determined by dividing the number of segment buttons by the screen width. This ensures that each segment button can be displayed on the screen without having to scroll. As a result, some segment buttons with longer labels may get cut off. To avoid this we recommend either using a shorter label or switching to a scrollable segment by setting the `scrollable` property to `true`. This will cause the segment to scroll horizontally, but will allow each segment button to have a variable width.
 
 <!-- Auto Generated Below -->
 
@@ -35,10 +38,10 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 
 <!-- Segment with anchors -->
 <ion-segment (ionChange)="segmentChanged($event)">
-  <ion-segment-button href="#dogs" value="dogs">
+  <ion-segment-button value="dogs">
     <ion-label>Dogs</ion-label>
   </ion-segment-button>
-  <ion-segment-button href="#cats" value="cats">
+  <ion-segment-button value="cats">
     <ion-label>Cats</ion-label>
   </ion-segment-button>
 </ion-segment>
@@ -145,10 +148,10 @@ export class SegmentExample {
 
 <!-- Segment with anchors -->
 <ion-segment>
-  <ion-segment-button href="#dogs" value="dogs">
+  <ion-segment-button value="dogs">
     <ion-label>Dogs</ion-label>
   </ion-segment-button>
-  <ion-segment-button href="#cats" value="cats">
+  <ion-segment-button value="cats">
     <ion-label>Cats</ion-label>
   </ion-segment-button>
 </ion-segment>
@@ -338,6 +341,117 @@ export const SegmentExamples: React.FC = () => {
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'segment-example',
+  styleUrl: 'segment-example.css'
+})
+export class SegmentExample {
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
+  }
+
+  render() {
+     return [
+      // Default Segment
+      <ion-segment onIonChange={(ev) => this.segmentChanged(ev)}>
+        <ion-segment-button value="friends">
+          <ion-label>Friends</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="enemies">
+          <ion-label>Enemies</ion-label>
+        </ion-segment-button>
+      </ion-segment>,
+
+      // Disabled Segment
+      <ion-segment onIonChange={(ev) => this.segmentChanged(ev)} disabled={true} value="sunny">
+        <ion-segment-button value="sunny">
+          <ion-label>Sunny</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="rainy">
+          <ion-label>Rainy</ion-label>
+        </ion-segment-button>
+      </ion-segment>,
+
+      // Segment with anchors
+      <ion-segment onIonChange={(ev) => this.segmentChanged(ev)}>
+        <ion-segment-button value="dogs">
+          <ion-label>Dogs</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="cats">
+          <ion-label>Cats</ion-label>
+        </ion-segment-button>
+      </ion-segment>,
+
+      // Scrollable Segment
+      <ion-segment scrollable value="heart">
+        <ion-segment-button value="home">
+          <ion-icon name="home"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="heart">
+          <ion-icon name="heart"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="pin">
+          <ion-icon name="pin"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="star">
+          <ion-icon name="star"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="call">
+          <ion-icon name="call"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="globe">
+          <ion-icon name="globe"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="basket">
+          <ion-icon name="basket"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>,
+
+      // Segment with secondary color
+      <ion-segment onIonChange={(ev) => this.segmentChanged(ev)} color="secondary">
+        <ion-segment-button value="standard">
+          <ion-label>Standard</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="hybrid">
+          <ion-label>Hybrid</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="sat">
+          <ion-label>Satellite</ion-label>
+        </ion-segment-button>
+      </ion-segment>,
+
+      // Segment in a toolbar
+      <ion-toolbar>
+        <ion-segment onIonChange={(ev) => this.segmentChanged(ev)}>
+          <ion-segment-button value="camera">
+            <ion-icon name="camera"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="bookmark">
+            <ion-icon name="bookmark"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>,
+
+      // Segment with default selection
+      <ion-segment onIonChange={(ev) => this.segmentChanged(ev)} value="javascript">
+        <ion-segment-button value="python">
+          <ion-label>Python</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="javascript">
+          <ion-label>Javascript</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    ];
+  }
+}
+```
+
+
 ### Vue
 
 ```html
@@ -364,10 +478,10 @@ export const SegmentExamples: React.FC = () => {
 
   <!-- Segment with anchors -->
   <ion-segment @ionChange="segmentChanged($event)">
-    <ion-segment-button href="#dogs" value="dogs">
+    <ion-segment-button value="dogs">
       <ion-label>Dogs</ion-label>
     </ion-segment-button>
-    <ion-segment-button href="#cats" value="cats">
+    <ion-segment-button value="cats">
       <ion-label>Cats</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -434,14 +548,17 @@ export const SegmentExamples: React.FC = () => {
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+import { IonSegment, IonSegmentButton, IonToolbar } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    segmentChanged(ev: any) {
+export default defineComponent({
+  components: { IonSegment, IonSegmentButton, IonToolbar },
+  methods: {
+    segmentChanged(ev: CustomEvent) {
       console.log('Segment changed', ev);
     }
   }
+});
 </script>
 ```
 
@@ -449,13 +566,14 @@ export const SegmentExamples: React.FC = () => {
 
 ## Properties
 
-| Property     | Attribute    | Description                                                                                                                                                                                                                                                            | Type                          | Default     |
-| ------------ | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------- |
-| `color`      | `color`      | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
-| `disabled`   | `disabled`   | If `true`, the user cannot interact with the segment.                                                                                                                                                                                                                  | `boolean`                     | `false`     |
-| `mode`       | `mode`       | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
-| `scrollable` | `scrollable` | If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.                                                         | `boolean`                     | `false`     |
-| `value`      | `value`      | the value of the segment.                                                                                                                                                                                                                                              | `null \| string \| undefined` | `undefined` |
+| Property       | Attribute       | Description                                                                                                                                                                                                                                                            | Type                          | Default     |
+| -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------- |
+| `color`        | `color`         | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`         | `undefined` |
+| `disabled`     | `disabled`      | If `true`, the user cannot interact with the segment.                                                                                                                                                                                                                  | `boolean`                     | `false`     |
+| `mode`         | `mode`          | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`               | `undefined` |
+| `scrollable`   | `scrollable`    | If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.                                                         | `boolean`                     | `false`     |
+| `swipeGesture` | `swipe-gesture` | If `true`, users will be able to swipe between segment buttons to activate them.                                                                                                                                                                                       | `boolean`                     | `true`      |
+| `value`        | `value`         | the value of the segment.                                                                                                                                                                                                                                              | `null \| string \| undefined` | `undefined` |
 
 
 ## Events

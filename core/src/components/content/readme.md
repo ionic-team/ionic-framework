@@ -77,12 +77,53 @@ const ContentExample: React.FC = () => (
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'content-example',
+  styleUrl: 'content-example.css'
+})
+export class ContentExample {
+  logScrollStart() {
+    console.log('Scroll start');
+  }
+
+  logScrolling(ev) {
+    console.log('Scrolling', ev);
+  }
+
+  logScrollEnd() {
+    console.log('Scroll end');
+  }
+
+  render() {
+    return [
+      <ion-content
+        scrollEvents={true}
+        onIonScrollStart={() => this.logScrollStart()}
+        onIonScroll={(ev) => this.logScrolling(ev)}
+        onIonScrollEnd={() => this.logScrollEnd()}>
+          <h1>Main Content</h1>
+
+          <div slot="fixed">
+            <h1>Fixed Content</h1>
+          </div>
+      </ion-content>
+    ];
+  }
+}
+```
+
+
 ### Vue
 
 ```html
 <template>
   <ion-content
-    :scrollEvents="true"
+    :scroll-events="true"
     @ionScrollStart="logScrollStart()"
     @ionScroll="logScrolling($event)"
     @ionScrollEnd="logScrollEnd()">
@@ -93,6 +134,16 @@ const ContentExample: React.FC = () => (
       </div>
   </ion-content>
 </template>
+
+<script>
+import { IonContent } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonContent }
+});
+</script>
+
 ```
 
 
@@ -155,7 +206,7 @@ Type: `Promise<void>`
 
 
 
-### `scrollToPoint(x: number | null | undefined, y: number | null | undefined, duration?: number) => Promise<void>`
+### `scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration?: number) => Promise<void>`
 
 Scroll to a specified X/Y location in the component.
 
@@ -182,6 +233,14 @@ Type: `Promise<void>`
 | --------- | -------------------------------------------------------------------- |
 |           | Content is placed in the scrollable area if provided without a slot. |
 | `"fixed"` | Should be used for fixed content that should not scroll.             |
+
+
+## Shadow Parts
+
+| Part           | Description                              |
+| -------------- | ---------------------------------------- |
+| `"background"` | The background of the content.           |
+| `"scroll"`     | The scrollable container of the content. |
 
 
 ## CSS Custom Properties

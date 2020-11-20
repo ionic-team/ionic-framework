@@ -1,10 +1,24 @@
 import { browser, element, by } from 'protractor';
-import { handleErrorMessages, setProperty, getText, waitTime } from './utils';
+import { handleErrorMessages, getProperty, setProperty, getText, waitTime } from './utils';
 
 describe('form', () => {
 
   afterEach(() => {
     return handleErrorMessages();
+  });
+
+  describe('status updates', () => {
+    beforeEach(async () => {
+      await browser.get('/form');
+      await waitTime(30);
+    });
+
+    it('should update Ionic form classes when calling form methods programatically', async () => {
+      await element(by.css('form #input-touched')).click();
+      await waitTime(100);
+      const classList = (await getProperty('#touched-input-test', 'classList')) as string[];
+      expect(classList.includes('ion-touched')).toEqual(true);
+    });
   });
 
   describe('change', () => {
@@ -17,13 +31,13 @@ describe('form', () => {
       await testStatus('INVALID');
       expect(await getText('#submit')).toEqual('false');
       await testData({
-        'datetime': '2010-08-20',
-        'select': null,
-        'toggle': false,
-        'input': '',
-        'input2': 'Default Value',
-        'checkbox': false,
-        'range': 5
+        datetime: '2010-08-20',
+        select: null,
+        toggle: false,
+        input: '',
+        input2: 'Default Value',
+        checkbox: false,
+        range: 5
       });
     });
 
@@ -35,39 +49,39 @@ describe('form', () => {
       await setProperty('ion-range', 'value', 40);
       await testStatus('VALID');
       await testData({
-        'datetime': '2010-08-20',
-        'select': 'nes',
-        'toggle': false,
-        'input': 'Some value',
-        'input2': 'Default Value',
-        'checkbox': false,
-        'range': 40
+        datetime: '2010-08-20',
+        select: 'nes',
+        toggle: false,
+        input: 'Some value',
+        input2: 'Default Value',
+        checkbox: false,
+        range: 40
       });
     });
 
     it('ion-toggle should change', async () => {
       await element(by.css('form ion-toggle')).click();
       await testData({
-        'datetime': '2010-08-20',
-        'select': null,
-        'toggle': true,
-        'input': '',
-        'input2': 'Default Value',
-        'checkbox': false,
-        'range': 5
+        datetime: '2010-08-20',
+        select: null,
+        toggle: true,
+        input: '',
+        input2: 'Default Value',
+        checkbox: false,
+        range: 5
       });
     });
 
     it('ion-checkbox should change', async () => {
       await element(by.css('ion-checkbox')).click();
       await testData({
-        'datetime': '2010-08-20',
-        'select': null,
-        'toggle': false,
-        'input': '',
-        'input2': 'Default Value',
-        'checkbox': true,
-        'range': 5
+        datetime: '2010-08-20',
+        select: null,
+        toggle: false,
+        input: '',
+        input2: 'Default Value',
+        checkbox: true,
+        range: 5
       });
     });
 
@@ -88,23 +102,23 @@ describe('form', () => {
     it('ion-toggle should change only after blur', async () => {
       await element(by.css('form ion-toggle')).click();
       await testData({
-        'datetime': '2010-08-20',
-        'select': null,
-        'toggle': false,
-        'input': '',
-        'input2': 'Default Value',
-        'checkbox': false,
-        'range': 5
+        datetime: '2010-08-20',
+        select: null,
+        toggle: false,
+        input: '',
+        input2: 'Default Value',
+        checkbox: false,
+        range: 5
       });
       await element(by.css('ion-checkbox')).click();
       await testData({
-        'datetime': '2010-08-20',
-        'select': null,
-        'toggle': true,
-        'input': '',
-        'input2': 'Default Value',
-        'checkbox': false,
-        'range': 5
+        datetime: '2010-08-20',
+        select: null,
+        toggle: true,
+        input: '',
+        input2: 'Default Value',
+        checkbox: false,
+        range: 5
       });
     });
   });

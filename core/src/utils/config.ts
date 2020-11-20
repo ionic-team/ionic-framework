@@ -41,6 +41,11 @@ export interface IonicConfig {
   backButtonText?: string;
 
   /**
+   * Overrides the default defaultHref in all `<ion-back-button>` components.
+   */
+  backButtonDefaultHref?: string;
+
+  /**
    * Overrides the default icon in all `<ion-menu-button>` components.
    */
   menuIcon?: string;
@@ -170,6 +175,11 @@ export interface IonicConfig {
    */
   experimentalTransitionShadow?: boolean;
 
+  /**
+   * If `true`, Ionic will enable a basic DOM sanitizer on component properties that accept custom HTML.
+   */
+  sanitizerEnabled?: boolean;
+
   // PRIVATE configs
   keyboardHeight?: number;
   inputShims?: boolean;
@@ -183,6 +193,8 @@ export interface IonicConfig {
   _forceStatusbarPadding?: boolean;
   _testing?: boolean;
   _zoneGate?: (h: () => any) => any;
+  _ael?: (el: any, name: string, cb: any, opts: any) => any;
+  _rel?: (el: any, name: string, cb: any, opts: any) => any;
 }
 
 export const setupConfig = (config: IonicConfig) => {

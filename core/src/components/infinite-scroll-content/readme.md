@@ -39,19 +39,65 @@ The `ion-infinite-scroll-content` component is not supported in React.
 ```
 
 
+### Stencil
+
+```tsx
+import { Component, h } from '@stencil/core';
+
+@Component({
+  tag: 'infinite-scroll-content-example',
+  styleUrl: 'infinite-scroll-content-example.css'
+})
+export class InfiniteScrollContentExample {
+  render() {
+    return [
+      <ion-content>
+        <ion-infinite-scroll>
+          <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ion-content>
+    ];
+  }
+}
+```
+
+
 ### Vue
 
 ```html
 <template>
-  <ion-content>
-    <ion-infinite-scroll>
-      <ion-infinite-scroll-content
-        loadingSpinner="bubbles"
-        loadingText="Loading more data…">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-  </ion-content>
+  <ion-page>
+    <ion-content>
+      <ion-infinite-scroll>
+        <ion-infinite-scroll-content
+          loading-spinner="bubbles"
+          loading-text="Loading more data…">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-content>
+  </ion-page>
 </template>
+
+<script lang="ts">
+import {
+  IonContent,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  IonPage
+ } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonContent,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
+    IonPage
+  }
+});
 ```
 
 
@@ -61,7 +107,7 @@ The `ion-infinite-scroll-content` component is not supported in React.
 | Property         | Attribute         | Description                                                                                                                                                                                                                                                                                                                     | Type                                                                                                            | Default     |
 | ---------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ----------- |
 | `loadingSpinner` | `loading-spinner` | An animated SVG spinner that shows while loading.                                                                                                                                                                                                                                                                               | `"bubbles" \| "circles" \| "circular" \| "crescent" \| "dots" \| "lines" \| "lines-small" \| null \| undefined` | `undefined` |
-| `loadingText`    | `loading-text`    | Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `string \| undefined`                                                                                           | `undefined` |
+| `loadingText`    | `loading-text`    | Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security) | `IonicSafeString \| string \| undefined`                                                                        | `undefined` |
 
 
 ## Dependencies

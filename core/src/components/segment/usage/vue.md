@@ -22,10 +22,10 @@
 
   <!-- Segment with anchors -->
   <ion-segment @ionChange="segmentChanged($event)">
-    <ion-segment-button href="#dogs" value="dogs">
+    <ion-segment-button value="dogs">
       <ion-label>Dogs</ion-label>
     </ion-segment-button>
-    <ion-segment-button href="#cats" value="cats">
+    <ion-segment-button value="cats">
       <ion-label>Cats</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -92,13 +92,16 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+import { IonSegment, IonSegmentButton, IonToolbar } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    segmentChanged(ev: any) {
+export default defineComponent({
+  components: { IonSegment, IonSegmentButton, IonToolbar },
+  methods: {
+    segmentChanged(ev: CustomEvent) {
       console.log('Segment changed', ev);
     }
   }
+});
 </script>
 ```

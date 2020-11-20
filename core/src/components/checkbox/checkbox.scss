@@ -40,8 +40,18 @@
   --checkmark-color: #{current-color(contrast)};
 }
 
-button {
+label {
   @include input-cover();
+
+  display: flex;
+  
+  align-items: center;
+
+  opacity: 0;
+}
+
+input {
+  @include visually-hidden();
 }
 
 .checkbox-icon {

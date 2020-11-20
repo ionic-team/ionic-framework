@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
+import PageManager from '../routing/PageManager';
 
 import { IonicReactProps } from './IonicReactProps';
 import { createForwardRef } from './utils';
@@ -14,28 +15,29 @@ interface IonPageInternalProps extends IonPageProps {
 
 class IonPageInternal extends React.Component<IonPageInternalProps> {
   context!: React.ContextType<typeof NavContext>;
-  ref: React.RefObject<HTMLDivElement>;
 
   constructor(props: IonPageInternalProps) {
     super(props);
-    this.ref = this.props.forwardedRef || React.createRef();
-  }
-
-  componentDidMount() {
-    if (this.context && this.ref && this.ref.current) {
-      if (this.context.hasIonicRouter()) {
-        this.context.registerIonPage(this.ref.current);
-      }
-    }
   }
 
   render() {
     const { className, children, forwardedRef, ...props } = this.props;
 
     return (
-      <div className={className ? `ion-page ${className}` : 'ion-page'} ref={this.ref} {...props}>
-        {children}
-      </div>
+      this.context.hasIonicRouter() ? (
+        <PageManager
+          className={className ? `${className}` : ''}
+          routeInfo={this.context.routeInfo}
+          forwardedRef={forwardedRef}
+          {...props}
+        >
+          {children}
+        </PageManager>
+      ) : (
+          <div className={className ? `ion-page ${className}` : 'ion-page'} ref={forwardedRef} {...props}>
+            {children}
+          </div>
+        )
     );
   }
 

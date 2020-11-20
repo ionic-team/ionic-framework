@@ -1,4 +1,4 @@
-const tc = require('turbocolor');
+const { cyan, red } = require('colorette');
 const semver = require('semver');
 const execa = require('execa');
 const inquirer = require('inquirer');
@@ -47,7 +47,7 @@ async function main() {
     console.log(`\nionic ${devVersion} published!! 🎉\n`);
 
   } catch (err) {
-    console.log('\n', tc.red(err), '\n');
+    console.log('\n', red(err), '\n');
     process.exit(1);
   }
 
@@ -64,7 +64,7 @@ async function askDevVersion(devVersion) {
       name: 'confirm',
       value: true,
       message: () => {
-        return `Publish the dev build ${tc.cyan(devVersion)}?`;
+        return `Publish the dev build ${cyan(devVersion)}?`;
       }
     }
   ];
@@ -78,6 +78,9 @@ async function setPackageVersionChanges(packages, version) {
     if (package !== 'core') {
       const pkg = common.readPkg(package);
       common.updateDependency(pkg, '@ionic/core', version);
+      if(package === 'packages/react-router') {
+        common.updateDependency(pkg, '@ionic/react', version);
+      }
       common.writePkg(package, pkg);
     }
     const projectRoot = common.projectPath(package);

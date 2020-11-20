@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
-import { debounceEvent, findItemLabel } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, inheritAttributes, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -19,8 +19,20 @@ import { createColorClasses } from '../../utils/theme';
 export class Textarea implements ComponentInterface {
 
   private nativeInput?: HTMLTextAreaElement;
-  private inputId = `ion-input-${textareaIds++}`;
+  private inputId = `ion-textarea-${textareaIds++}`;
   private didBlurAfterEdit = false;
+  private textareaWrapper?: HTMLElement;
+  private inheritedAttributes: { [k: string]: any } = {};
+
+  /**
+   * This is required for a WebKit bug which requires us to
+   * blur and focus an input to properly focus the input in
+   * an item with delegatesFocus. It will no longer be needed
+   * with iOS 14.
+   *
+   * @internal
+   */
+  @Prop() fireFocusEvents = true;
 
   @Element() el!: HTMLElement;
 
@@ -49,7 +61,7 @@ export class Textarea implements ComponentInterface {
   @Prop({ mutable: true }) clearOnEdit = false;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
    */
   @Prop() debounce = 0;
 
@@ -67,6 +79,20 @@ export class Textarea implements ComponentInterface {
   protected disabledChanged() {
     this.emitStyle();
   }
+
+  /**
+   * A hint to the browser for which keyboard to display.
+   * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
+   * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+   */
+  @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+
+  /**
+   * A hint to the browser for which enter key to display.
+   * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
+   * `"previous"`, `"search"`, and `"send"`.
+   */
+  @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
@@ -162,18 +188,18 @@ export class Textarea implements ComponentInterface {
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur!: EventEmitter<void>;
+  @Event() ionBlur!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   connectedCallback() {
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
-      this.el.dispatchEvent(new CustomEvent('ionInputDidLoad', {
+      document.dispatchEvent(new CustomEvent('ionInputDidLoad', {
         detail: this.el
       }));
     }
@@ -187,29 +213,47 @@ export class Textarea implements ComponentInterface {
     }
   }
 
-  componentDidLoad() {
-    this.runAutoGrow();
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['title']);
   }
 
-  // TODO: performance hit, this cause layout thrashing
+  componentDidLoad() {
+    raf(() => this.runAutoGrow());
+  }
+
   private runAutoGrow() {
     const nativeInput = this.nativeInput;
     if (nativeInput && this.autoGrow) {
       readTask(() => {
-        nativeInput.style.height = 'inherit';
+        nativeInput.style.height = 'auto';
         nativeInput.style.height = nativeInput.scrollHeight + 'px';
+        if (this.textareaWrapper) {
+          this.textareaWrapper.style.height = nativeInput.scrollHeight + 'px';
+        }
       });
     }
   }
 
   /**
-   * Sets focus on the specified `ion-textarea`. Use this method instead of the global
-   * `input.focus()`.
+   * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global
+   * `textarea.focus()`.
    */
   @Method()
   async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
+    }
+  }
+
+  /**
+   * Sets blur on the native `textarea` in `ion-textarea`. Use this method instead of the global
+   * `textarea.blur()`.
+   * @internal
+   */
+  @Method()
+  async setBlur() {
+    if (this.nativeInput) {
+      this.nativeInput.blur();
     }
   }
 
@@ -275,18 +319,22 @@ export class Textarea implements ComponentInterface {
     this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onFocus = () => {
+  private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
     this.focusChange();
 
-    this.ionFocus.emit();
+    if (this.fireFocusEvents) {
+      this.ionFocus.emit(ev);
+    }
   }
 
-  private onBlur = () => {
+  private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChange();
 
-    this.ionBlur.emit();
+    if (this.fireFocusEvents) {
+      this.ionBlur.emit(ev);
+    }
   }
 
   private onKeyDown = () => {
@@ -305,34 +353,42 @@ export class Textarea implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
-        }}
+        })}
       >
-        <textarea
-          class="native-textarea"
-          ref={el => this.nativeInput = el}
-          autoCapitalize={this.autocapitalize}
-          autoFocus={this.autofocus}
-          disabled={this.disabled}
-          maxLength={this.maxlength}
-          minLength={this.minlength}
-          name={this.name}
-          placeholder={this.placeholder || ''}
-          readOnly={this.readonly}
-          required={this.required}
-          spellCheck={this.spellcheck}
-          cols={this.cols}
-          rows={this.rows}
-          wrap={this.wrap}
-          onInput={this.onInput}
-          onBlur={this.onBlur}
-          onFocus={this.onFocus}
-          onKeyDown={this.onKeyDown}
+        <div
+          class="textarea-wrapper"
+          ref={el => this.textareaWrapper = el}
         >
-          {value}
-        </textarea>
+          <textarea
+            class="native-textarea"
+            aria-labelledby={labelId}
+            ref={el => this.nativeInput = el}
+            autoCapitalize={this.autocapitalize}
+            autoFocus={this.autofocus}
+            enterKeyHint={this.enterkeyhint}
+            inputMode={this.inputmode}
+            disabled={this.disabled}
+            maxLength={this.maxlength}
+            minLength={this.minlength}
+            name={this.name}
+            placeholder={this.placeholder || ''}
+            readOnly={this.readonly}
+            required={this.required}
+            spellcheck={this.spellcheck}
+            cols={this.cols}
+            rows={this.rows}
+            wrap={this.wrap}
+            onInput={this.onInput}
+            onBlur={this.onBlur}
+            onFocus={this.onFocus}
+            onKeyDown={this.onKeyDown}
+            {...this.inheritedAttributes}
+          >
+            {value}
+          </textarea>
+        </div>
       </Host>
     );
   }

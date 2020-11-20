@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
@@ -14,7 +14,7 @@
     import { alertController } from '../../../../dist/ionic/index.esm.js';
     window.alertController = alertController;
   </script>
-  
+
 <body>
   <ion-app>
 
@@ -75,7 +75,14 @@
         header: 'Alert',
         subHeader: 'Subtitle',
         message: 'This is an alert message.',
-        buttons: ['Cancel', 'Open Modal', 'Delete']
+        buttons: [
+          'Open Modal',
+          {
+            text: 'Delete',
+            role: 'destructive',
+          },
+          'Cancel',
+        ]
       });
     }
 
@@ -161,6 +168,16 @@
           {
             name: 'name7',
             type: 'number'
+          },
+          {
+            name: 'name8',
+            type: 'text',
+            placeholder: 'Advanced Attributes',
+            cssClass: 'specialClass',
+            attributes: {
+              maxlength: 4,
+              inputmode: 'decimal'
+            }
           }
         ],
         buttons: [
@@ -189,7 +206,6 @@
             type: 'radio',
             label: 'Radio 1',
             value: 'value1',
-            checked: true
           },
           {
             type: 'radio',
@@ -199,7 +215,8 @@
           {
             type: 'radio',
             label: 'Radio 3',
-            value: 'value3'
+            value: 'value3',
+            checked: true
           },
           {
             type: 'radio',
@@ -224,12 +241,12 @@
             role: 'cancel',
             cssClass: 'secondary',
             handler: () => {
-              console.log('Confirm Cancel')
+              console.log('Confirm Cancel');
             }
           }, {
             text: 'Ok',
-            handler: () => {
-              console.log('Confirm Ok')
+            handler: (ev) => {
+              console.log('Confirm Ok', ev);
             }
           }
         ]

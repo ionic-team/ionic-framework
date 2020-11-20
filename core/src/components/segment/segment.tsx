@@ -36,6 +36,22 @@ export class Segment implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
+  @Watch('color')
+  protected colorChanged(value?: Color, oldValue?: Color) {
+
+    /**
+     * If color is set after not having
+     * previously been set (or vice versa),
+     * we need to emit style so the segment-buttons
+     * can apply their color classes properly.
+     */
+    if (
+      (oldValue === undefined && value !== undefined) ||
+      (oldValue !== undefined && value === undefined)
+    ) {
+      this.emitStyle();
+    }
+  }
 
   /**
    * If `true`, the user cannot interact with the segment.
@@ -48,6 +64,16 @@ export class Segment implements ComponentInterface {
    * in order to swipe to see hidden buttons.
    */
   @Prop() scrollable = false;
+
+  /**
+   * If `true`, users will be able to swipe between segment buttons to activate them.
+   */
+  @Prop() swipeGesture = true;
+
+  @Watch('swipeGesture')
+  swipeGestureChanged() {
+    this.gestureChanged();
+  }
 
   /**
    * the value of the segment.
@@ -95,8 +121,8 @@ export class Segment implements ComponentInterface {
   }
 
   private gestureChanged() {
-    if (this.gesture && !this.scrollable) {
-      this.gesture.enable(!this.disabled);
+    if (this.gesture) {
+      this.gesture.enable(!this.scrollable && !this.disabled && this.swipeGesture);
     }
   }
 
@@ -121,7 +147,6 @@ export class Segment implements ComponentInterface {
       onMove: ev => this.onMove(ev),
       onEnd: ev => this.onEnd(ev),
     });
-    this.gesture.enable(!this.scrollable);
     this.gestureChanged();
 
     if (this.disabled) {
@@ -143,7 +168,6 @@ export class Segment implements ComponentInterface {
 
     const checkedValidButton = this.setNextIndex(detail, true);
 
-    detail.event.preventDefault();
     detail.event.stopImmediatePropagation();
 
     if (checkedValidButton) {
@@ -214,6 +238,7 @@ export class Segment implements ComponentInterface {
     // If there are no checked buttons, set the current button to checked
     if (!checked) {
       this.value = clicked.value;
+      this.setCheckedClasses();
     }
 
     // If the gesture began on the clicked button with the indicator
@@ -374,10 +399,23 @@ export class Segment implements ComponentInterface {
   private onClick = (ev: Event) => {
     const current = ev.target as HTMLIonSegmentButtonElement;
     const previous = this.checked;
+
+    // If the current element is a segment then that means
+    // the user tried to swipe to a segment button and
+    // click a segment button at the same time so we should
+    // not update the checked segment button
+    if (current.tagName === 'ION-SEGMENT') {
+      return;
+    }
+
     this.value = current.value;
 
-    if (previous && this.scrollable) {
-      this.checkButton(previous, current);
+    if (this.scrollable || !this.swipeGesture) {
+      if (previous) {
+        this.checkButton(previous, current);
+      } else {
+        this.setCheckedClasses();
+      }
     }
 
     this.checked = current;
@@ -385,19 +423,17 @@ export class Segment implements ComponentInterface {
 
   render() {
     const mode = getIonMode(this);
-
     return (
       <Host
         onClick={this.onClick}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'segment-activated': this.activated,
           'segment-disabled': this.disabled,
           'segment-scrollable': this.scrollable
-        }}
+        })}
       >
         <slot></slot>
       </Host>

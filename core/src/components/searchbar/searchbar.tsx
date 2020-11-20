@@ -1,8 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, SearchbarChangeEventDetail, StyleEventDetail } from '../../interface';
+import { AutocompleteTypes, Color, SearchbarChangeEventDetail, StyleEventDetail } from '../../interface';
 import { debounceEvent, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -43,7 +43,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Set the input's autocomplete property.
    */
-  @Prop() autocomplete: 'on' | 'off' = 'off';
+  @Prop() autocomplete: AutocompleteTypes = 'off';
 
   /**
    * Set the input's autocorrect property.
@@ -67,7 +67,7 @@ export class Searchbar implements ComponentInterface {
   @Prop() clearIcon?: string;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
    */
   @Prop() debounce = 250;
 
@@ -87,6 +87,13 @@ export class Searchbar implements ComponentInterface {
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
    */
   @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+
+  /**
+   * A hint to the browser for which enter key to display.
+   * Possible values: `"enter"`, `"done"`, `"go"`, `"next"`,
+   * `"previous"`, `"search"`, and `"send"`.
+   */
+  @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
    * Set the input's placeholder.
@@ -179,7 +186,7 @@ export class Searchbar implements ComponentInterface {
   protected showCancelButtonChanged() {
     requestAnimationFrame(() => {
       this.positionElements();
-      this.el.forceUpdate();
+      forceUpdate(this);
     });
   }
 
@@ -413,24 +420,29 @@ export class Searchbar implements ComponentInterface {
   }
 
   render() {
+    const { cancelButtonText } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const mode = getIonMode(this);
     const clearIcon = this.clearIcon || (mode === 'ios' ? 'close-circle' : 'close-sharp');
     const searchIcon = this.searchIcon || (mode === 'ios' ? 'search-outline' : 'search-sharp');
+    const shouldShowCancelButton = this.shouldShowCancelButton();
 
     const cancelButton = (this.showCancelButton !== 'never') && (
       <button
-        aria-label="cancel"
+        aria-label={cancelButtonText}
+
+        // Screen readers should not announce button if it is not visible on screen
+        aria-hidden={shouldShowCancelButton ? undefined : 'true'}
         type="button"
-        tabIndex={mode === 'ios' && !this.shouldShowCancelButton() ? -1 : undefined}
+        tabIndex={mode === 'ios' && !shouldShowCancelButton ? -1 : undefined}
         onMouseDown={this.onCancelSearchbar}
         onTouchStart={this.onCancelSearchbar}
         class="searchbar-cancel-button"
       >
-        <div>
+        <div aria-hidden="true">
           { mode === 'md'
             ? <ion-icon aria-hidden="true" mode={mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
-            : this.cancelButtonText
+            : cancelButtonText
           }
         </div>
       </button>
@@ -440,8 +452,7 @@ export class Searchbar implements ComponentInterface {
       <Host
         role="search"
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'searchbar-animated': animated,
           'searchbar-disabled': this.disabled,
@@ -450,7 +461,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-left-aligned': this.shouldAlignLeft,
           'searchbar-has-focus': this.focused,
           'searchbar-should-show-cancel': this.shouldShowCancelButton()
-        }}
+        })}
       >
 
         <div class="searchbar-input-container">
@@ -460,6 +471,7 @@ export class Searchbar implements ComponentInterface {
             ref={el => this.nativeInput = el}
             class="searchbar-input"
             inputMode={this.inputmode}
+            enterKeyHint={this.enterkeyhint}
             onInput={this.onInput}
             onBlur={this.onBlur}
             onFocus={this.onFocus}
@@ -468,12 +480,12 @@ export class Searchbar implements ComponentInterface {
             value={this.getValue()}
             autoComplete={this.autocomplete}
             autoCorrect={this.autocorrect}
-            spellCheck={this.spellcheck}
+            spellcheck={this.spellcheck}
           />
 
           {mode === 'md' && cancelButton}
 
-          <ion-icon mode={mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
+          <ion-icon aria-hidden="true" mode={mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
           <button
             aria-label="reset"

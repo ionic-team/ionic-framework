@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { SpinnerTypes } from '../../interface';
-import { sanitizeDOMString } from '../../utils/sanitization';
+import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 
 @Component({
   tag: 'ion-infinite-scroll-content',
@@ -28,7 +28,7 @@ export class InfiniteScrollContent implements ComponentInterface {
    *
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    */
-  @Prop() loadingText?: string;
+  @Prop() loadingText?: string | IonicSafeString;
 
   componentDidLoad() {
     if (this.loadingSpinner === undefined) {

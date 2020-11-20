@@ -10,6 +10,13 @@ import { createColorClasses, hostContext } from '../../utils/theme';
  *
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
+ *
+ * @part tick - An inactive tick mark.
+ * @part tick-active - An active tick mark.
+ * @part pin - The counter that appears above a knob.
+ * @part knob - The handle that is used to drag the range.
+ * @part bar - The inactive part of the bar.
+ * @part bar-active - The active part of the bar.
  */
 @Component({
   tag: 'ion-range',
@@ -21,6 +28,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 })
 export class Range implements ComponentInterface {
 
+  private didLoad = false;
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
@@ -43,6 +51,7 @@ export class Range implements ComponentInterface {
   /**
    * How long, in milliseconds, to wait to trigger the
    * `ionChange` event after each change in the range value.
+   * This also impacts form bindings such as `ngModel` or `v-model`.
    */
   @Prop() debounce = 0;
 
@@ -169,20 +178,7 @@ export class Range implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  connectedCallback() {
-    this.updateRatio();
-    this.debounceChanged();
-    this.disabledChanged();
-  }
-
-  disconnectedCallback() {
-    if (this.gesture) {
-      this.gesture.destroy();
-      this.gesture = undefined;
-    }
-  }
-
-  async componentDidLoad() {
+  private setupGesture = async () => {
     const rangeSlider = this.rangeSlider;
     if (rangeSlider) {
       this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -195,6 +191,34 @@ export class Range implements ComponentInterface {
         onEnd: ev => this.onEnd(ev),
       });
       this.gesture.enable(!this.disabled);
+    }
+  }
+
+  componentDidLoad() {
+    this.setupGesture();
+    this.didLoad = true;
+  }
+
+  connectedCallback() {
+    this.updateRatio();
+    this.debounceChanged();
+    this.disabledChanged();
+
+    /**
+     * If we have not yet rendered
+     * ion-range, then rangeSlider is not defined.
+     * But if we are moving ion-range via appendChild,
+     * then rangeSlider will be defined.
+     */
+    if (this.didLoad) {
+      this.setupGesture();
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
     }
   }
 
@@ -415,14 +439,13 @@ export class Range implements ComponentInterface {
       <Host
         onFocusin={this.onFocus}
         onFocusout={this.onBlur}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,
           'range-has-pin': pin
-        }}
+        })}
       >
 
         <slot name="start"></slot>
@@ -435,14 +458,16 @@ export class Range implements ComponentInterface {
                 'range-tick': true,
                 'range-tick-active': tick.active
               }}
+              part={tick.active ? 'tick-active' : 'tick'}
             />
           ))}
 
-          <div class="range-bar" role="presentation" />
+          <div class="range-bar" role="presentation" part="bar" />
           <div
             class="range-bar range-bar-active"
             role="presentation"
             style={barStyle}
+            part="bar-active"
           />
 
           { renderKnob(isRTL, {
@@ -530,8 +555,8 @@ const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pr
       aria-disabled={disabled ? 'true' : null}
       aria-valuenow={value}
     >
-      {pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
-      <div class="range-knob" role="presentation" />
+      {pin && <div class="range-pin" role="presentation" part="pin">{Math.round(value)}</div>}
+      <div class="range-knob" role="presentation" part="knob" />
     </div>
   );
 };

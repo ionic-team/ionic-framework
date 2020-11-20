@@ -1,7 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { ActionSheetButton, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Gesture } from '../../utils/gesture';
+import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -24,8 +26,11 @@ import { mdLeaveAnimation } from './animations/md.leave';
 export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   presented = false;
+  lastFocus?: HTMLElement;
   animation?: any;
-  mode = getIonMode(this);
+  private wrapperEl?: HTMLElement;
+  private groupEl?: HTMLElement;
+  private gesture?: Gesture;
 
   @Element() el!: HTMLIonActionSheetElement;
 
@@ -113,7 +118,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     return present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
   }
 
-  constructor() {
+  connectedCallback() {
     prepareOverlay(this.el);
   }
 
@@ -135,7 +140,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    * Returns a promise that resolves when the action sheet did dismiss.
    */
   @Method()
-  onDidDismiss(): Promise<OverlayEventDetail> {
+  onDidDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionActionSheetDidDismiss');
   }
 
@@ -144,7 +149,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    *
    */
   @Method()
-  onWillDismiss(): Promise<OverlayEventDetail> {
+  onWillDismiss<T = any>(): Promise<OverlayEventDetail<T>> {
     return eventMethod(this.el, 'ionActionSheetWillDismiss');
   }
 
@@ -193,6 +198,35 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     }
   }
 
+  disconnectedCallback() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
+    }
+  }
+
+  componentDidLoad() {
+    /**
+     * Do not create gesture if:
+     * 1. A gesture already exists
+     * 2. App is running in MD mode
+     * 3. A wrapper ref does not exist
+     */
+    const { groupEl, wrapperEl } = this;
+    if (this.gesture || getIonMode(this) === 'md' || !wrapperEl || !groupEl) { return; }
+
+    readTask(() => {
+      const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
+      if (!isScrollable) {
+        this.gesture = createButtonActiveGesture(
+          wrapperEl,
+          (refEl: HTMLElement) => refEl.classList.contains('action-sheet-button')
+        );
+        this.gesture.enable(true);
+      }
+    });
+  }
+
   render() {
     const mode = getIonMode(this);
     const allButtons = this.getButtons();
@@ -203,6 +237,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       <Host
         role="dialog"
         aria-modal="true"
+        tabindex="-1"
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
@@ -216,9 +251,12 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         onIonBackdropTap={this.onBackdropTap}
       >
         <ion-backdrop tappable={this.backdropDismiss}/>
-        <div class="action-sheet-wrapper" role="dialog">
+
+        <div tabindex="0"></div>
+
+        <div class="action-sheet-wrapper ion-overlay-wrapper" role="dialog" ref={el => this.wrapperEl = el}>
           <div class="action-sheet-container">
-            <div class="action-sheet-group">
+            <div class="action-sheet-group" ref={el => this.groupEl = el}>
               {this.header !== undefined &&
                 <div class="action-sheet-title">
                   {this.header}
@@ -258,6 +296,8 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
             }
           </div>
         </div>
+
+        <div tabindex="0"></div>
       </Host>
     );
   }
