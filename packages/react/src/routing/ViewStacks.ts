@@ -59,9 +59,8 @@ export abstract class ViewStacks {
   }
 
   abstract createViewItem(outletId: string, reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement): ViewItem;
-  // abstract findViewItemByPathname(pathname: string, outletId?: string): ViewItem | undefined;
+  abstract findViewItemByPathname(pathname: string, outletId?: string): ViewItem | undefined;
   abstract findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string): ViewItem | undefined;
   abstract findLeavingViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string): ViewItem | undefined;
   abstract getChildrenToRender(outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo, reRender: () => void, setInTransition: () => void): React.ReactNode[];
-  abstract getViewItemForTransition(pathname: string): ViewItem | undefined;
 }

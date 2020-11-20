@@ -41,7 +41,19 @@ const appPages: AppPage[] = [
     url: '/routing/otherpage',
     iosIcon: heartOutline,
     mdIcon: heartSharp
-  }
+  },
+  {
+    title: 'Home with redirect',
+    url: '/routing/redirect',
+    iosIcon: heartOutline,
+    mdIcon: heartSharp
+  },
+  {
+    title: 'Home with router',
+    url: '/routing/redirect-routing',
+    iosIcon: heartOutline,
+    mdIcon: heartSharp
+  },
 ];
 
 const Menu: React.FunctionComponent<MenuProps> = () => {

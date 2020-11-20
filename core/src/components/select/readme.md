@@ -209,7 +209,7 @@ However, the Select Option does set a class for easier styling and allows for th
   <ion-item>
     <ion-label>Users</ion-label>
     <ion-select [compareWith]="compareWith">
-      <ion-select-option *ngFor="let user of users">{{user.first + ' ' + user.last}}</ion-select-option>
+      <ion-select-option *ngFor="let user of users" [value]="user">{{user.first + ' ' + user.last}}</ion-select-option>
     </ion-select>
   </ion-item>
 </ion-list>
@@ -218,13 +218,19 @@ However, the Select Option does set a class for easier styling and allows for th
 ```typescript
 import { Component } from '@angular/core';
 
+interface User {
+  id: number;
+  first: string;
+  last: string;
+}
+
 @Component({
   selector: 'select-example',
   templateUrl: 'select-example.html',
   styleUrls: ['./select-example.css'],
 })
 export class SelectExample {
-  users: any[] = [
+  users: User[] = [
     {
       id: 1,
       first: 'Alice',
@@ -242,11 +248,75 @@ export class SelectExample {
     }
   ];
 
-  compareWithFn = (o1, o2) => {
+  compareWith(o1: User, o2: User) {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
-  };
+  }
+}
+```
 
-  compareWith = compareWithFn;
+### Objects as Values with Multiple Selection
+
+```html
+<ion-list>
+  <ion-list-header>
+    <ion-label>
+      Objects as Values (compareWith)
+    </ion-label>
+  </ion-list-header>
+
+  <ion-item>
+    <ion-label>Users</ion-label>
+    <ion-select [compareWith]="compareWith" multiple="true">
+      <ion-select-option *ngFor="let user of users" [value]="user">{{user.first + ' ' + user.last}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>
+```
+
+```typescript
+import { Component } from '@angular/core';
+
+interface User {
+  id: number;
+  first: string;
+  last: string;
+}
+
+@Component({
+  selector: 'select-example',
+  templateUrl: 'select-example.html',
+  styleUrls: ['./select-example.css'],
+})
+export class SelectExample {
+  users: User[] = [
+    {
+      id: 1,
+      first: 'Alice',
+      last: 'Smith',
+    },
+    {
+      id: 2,
+      first: 'Bob',
+      last: 'Davis',
+    },
+    {
+      id: 3,
+      first: 'Charlie',
+      last: 'Rosenburg',
+    }
+  ];
+
+  compareWith(o1: User, o2: User | User[]) {
+    if (!o1 || !o2) {
+      return o1 === o2;
+    }
+
+    if (Array.isArray(o2)) {
+      return o2.some((u: User) => u.id === o1.id);
+    }
+
+    return o1.id === o2.id;
+  }
 }
 ```
 
@@ -1084,6 +1154,29 @@ export class SelectExample {
 
   </ion-list>
 </template>
+
+<script>
+import { 
+  IonItem, 
+  IonLabel, 
+  IonList,
+  IonListHeader,
+  IonSelect,
+  IonSelectOption
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonItem, 
+    IonLabel, 
+    IonList,
+    IonListHeader,
+    IonSelect,
+    IonSelectOption
+  }
+});
+</script>
 ```
 
 ### Multiple Selection
@@ -1124,6 +1217,29 @@ export class SelectExample {
     </ion-item>
   </ion-list>
 </template>
+
+<script>
+import { 
+  IonItem, 
+  IonLabel, 
+  IonList,
+  IonListHeader,
+  IonSelect,
+  IonSelectOption
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonItem, 
+    IonLabel, 
+    IonList,
+    IonListHeader,
+    IonSelect,
+    IonSelectOption
+  }
+});
+</script>
 ```
 
 ### Interface Options
@@ -1177,29 +1293,52 @@ export class SelectExample {
   </ion-list>
 </template>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { 
+  IonItem, 
+  IonLabel, 
+  IonList,
+  IonListHeader,
+  IonSelect,
+  IonSelectOption
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    customAlertOptions: any = {
+export default defineComponent({
+  components: {
+    IonItem, 
+    IonLabel, 
+    IonList,
+    IonListHeader,
+    IonSelect,
+    IonSelectOption
+  },
+  setup() {
+    const customAlertOptions: any = {
       header: 'Pizza Toppings',
       subHeader: 'Select your toppings',
       message: '$1.00 per topping',
       translucent: true
     };
 
-    customPopoverOptions: any = {
+    const customPopoverOptions: any = {
       header: 'Hair Color',
       subHeader: 'Select your hair color',
       message: 'Only select your dominant hair color'
     };
 
-    customActionSheetOptions: any = {
+    const customActionSheetOptions: any = {
       header: 'Colors',
       subHeader: 'Select your favorite color'
     };
+    
+    return {
+      customAlertOptions,
+      customPopoverOptions,
+      customActionSheetOptions
+    }
   }
+});
 </script>
 ```
 
