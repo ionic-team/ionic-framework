@@ -128,7 +128,7 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
   // a custom label using the label element
   const componentId = componentEl.id;
 
-  let labelId = labelledBy !== null
+  let labelId = labelledBy !== null && labelledBy.trim() !== ''
     ? labelledBy
     : inputId + '-lbl';
 
