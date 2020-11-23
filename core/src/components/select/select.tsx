@@ -461,8 +461,8 @@ export class Select implements ComponentInterface {
     // current value and a comma so it separates nicely when the screen reader
     // announces it, otherwise just announce the value
     const displayLabel = labelText !== undefined
-      ? `${displayValue}, ${labelText}`
-      : displayValue;
+      ? `${selectText}, ${labelText}`
+      : selectText;
 
     return (
       <Host
@@ -477,7 +477,7 @@ export class Select implements ComponentInterface {
           'select-disabled': disabled,
         }}
       >
-        <div class={selectTextClasses} part={textPart}>
+        <div aria-hidden class={selectTextClasses} part={textPart}>
           {selectText}
         </div>
         <div class="select-icon" role="presentation" part="icon">
