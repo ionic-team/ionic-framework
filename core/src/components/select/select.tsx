@@ -458,8 +458,9 @@ export class Select implements ComponentInterface {
     const textPart = addPlaceholderClass ? 'placeholder' : 'text';
 
     // If there is a label then we need to concatenate it with the
-    // current value and a comma so it separates nicely when the screen reader
-    // announces it, otherwise just announce the value
+    // current value (or placeholder) and a comma so it separates
+    // nicely when the screen reader announces it, otherwise just
+    // announce the value / placeholder
     const displayLabel = labelText !== undefined
       ? `${selectText}, ${labelText}`
       : selectText;
