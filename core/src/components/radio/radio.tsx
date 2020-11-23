@@ -148,8 +148,8 @@ export class Radio implements ComponentInterface {
         aria-labelledby={label ? labelId : null}
         role="radio"
         tabindex={buttonTabindex}
-        onFocus={() => this.onFocus()}
-        onBlur={() => this.onBlur()}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
