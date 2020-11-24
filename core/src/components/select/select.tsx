@@ -462,7 +462,7 @@ export class Select implements ComponentInterface {
     // nicely when the screen reader announces it, otherwise just
     // announce the value / placeholder
     const displayLabel = labelText !== undefined
-      ? `${selectText}, ${labelText}`
+      ? (selectText !== '' ? `${selectText}, ${labelText}` : labelText)
       : selectText;
 
     return (
