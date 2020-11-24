@@ -158,7 +158,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
     // If hitting arrow down or arrow right, move to the next radio
     // If we're on the last radio, move to the first radio
-    if (['ArrowDown', 'ArrowRight'].includes(ev.key)) {
+    if (['ArrowDown', 'ArrowRight'].includes(ev.code)) {
       nextEl = (index === radios.length - 1)
         ? radios[0]
         : radios[index + 1];
@@ -166,7 +166,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
     // If hitting arrow up or arrow left, move to the previous radio
     // If we're on the first radio, move to the last radio
-    if (['ArrowUp', 'ArrowLeft'].includes(ev.key)) {
+    if (['ArrowUp', 'ArrowLeft'].includes(ev.code)) {
       nextEl = (index === 0)
         ? radios[radios.length - 1]
         : radios[index - 1];
