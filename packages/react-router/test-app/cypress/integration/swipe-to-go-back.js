@@ -6,13 +6,12 @@ describe('Swipe To Go Back', () => {
   */
 
   it('/swipe-to-go-back, ', () => {
-    cy.visit(`http://localhost:${port}/swipe-to-go-back`)
-    cy.ionPageVisible('main')
-    cy.ionNav('ion-item', 'Details')
-    cy.ionPageVisible('details')
+    cy.visit(`http://localhost:${port}/swipe-to-go-back`);
+    cy.ionPageVisible('main');
+    cy.ionNav('ion-item', 'Details');
+    cy.ionPageVisible('details');
     cy.wait(350);
     cy.ionSwipeRight();
-    cy.ionPageVisible('main')
-  })
-
-})
+    cy.ionPageVisible('main');
+  });
+});

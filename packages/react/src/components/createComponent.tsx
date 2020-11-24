@@ -5,7 +5,13 @@ import { NavContext } from '../contexts/NavContext';
 import { RouterOptions } from '../models';
 import { RouterDirection } from '../models/RouterDirection';
 
-import { attachProps, camelToDashCase, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
+import {
+  attachProps,
+  camelToDashCase,
+  createForwardRef,
+  dashToPascalCase,
+  isCoveredByReact,
+} from './utils';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.Ref<ElementType>;
@@ -48,9 +54,15 @@ export const createReactComponent = <PropType, ElementType>(
       const { routerLink, routerDirection, routerOptions, routerAnimation } = this.props;
       if (routerLink !== undefined) {
         e.preventDefault();
-        this.context.navigate(routerLink, routerDirection, undefined, routerAnimation, routerOptions);
+        this.context.navigate(
+          routerLink,
+          routerDirection,
+          undefined,
+          routerAnimation,
+          routerOptions
+        );
       }
-    }
+    };
 
     render() {
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
@@ -70,7 +82,7 @@ export const createReactComponent = <PropType, ElementType>(
       const newProps: IonicReactInternalProps<PropType> = {
         ...propsToPass,
         ref: forwardedRef || this.ref,
-        style
+        style,
       };
 
       if (routerLinkComponent) {
@@ -90,11 +102,7 @@ export const createReactComponent = <PropType, ElementType>(
         }
       }
 
-      return React.createElement(
-        tagName,
-        newProps,
-        children
-      );
+      return React.createElement(tagName, newProps, children);
     }
 
     static get displayName() {

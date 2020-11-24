@@ -1,6 +1,4 @@
-import {
-  IonApp
-} from '@ionic/react';
+import { IonApp } from '@ionic/react';
 import React from 'react';
 import { Route, Redirect, BrowserRouter, Link } from 'react-router-dom';
 
@@ -19,7 +17,6 @@ import '@ionic/react/css/float-elements.css';
 import '@ionic/react/css/padding.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
-
 
 /* Theme variables */
 import './theme/variables.css';
