@@ -9,13 +9,15 @@ export interface IonRouterContextState {
   push: (pathname: string, routerDirection?: RouterDirection, routeAction?: RouteAction, routerOptions?: RouterOptions, animationBuilder?: AnimationBuilder) => void;
   back: (animationBuilder?: AnimationBuilder) => void;
   canGoBack: () => boolean;
+  nativeBack: () => void;
 }
 
 export const IonRouterContext = React.createContext<IonRouterContextState>({
   routeInfo: undefined as any,
   push: () => { throw new Error('An Ionic Router is required for IonRouterContext'); },
   back: () => { throw new Error('An Ionic Router is required for IonRouterContext'); },
-  canGoBack: () => { throw new Error('An Ionic Router is required for IonRouterContext'); }
+  canGoBack: () => { throw new Error('An Ionic Router is required for IonRouterContext'); },
+  nativeBack: () => { throw new Error('An Ionic Router is required for IonRouterContext'); }
 });
 
 /**
