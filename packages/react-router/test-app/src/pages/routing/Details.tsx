@@ -1,13 +1,23 @@
 import React, { useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonLabel, IonCard, IonButton, useIonViewWillEnter } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonLabel,
+  IonCard,
+  IonButton,
+  useIonViewWillEnter,
+} from '@ionic/react';
 import { useParams, useLocation } from 'react-router';
 
-interface DetailsProps {
-}
+interface DetailsProps {}
 
 const Details: React.FC<DetailsProps> = () => {
-
-  const { id } = useParams<{ id: string; }>();
+  const { id } = useParams<{ id: string }>();
 
   const location = useLocation();
 
@@ -34,11 +44,13 @@ const Details: React.FC<DetailsProps> = () => {
       </IonHeader>
       <IonContent>
         <IonLabel data-testid="details-label">Details {id}</IonLabel>
-        <br /><br />
+        <br />
+        <br />
         {location.search && (
           <>
             <IonLabel data-testid="query-label">Query Params: {location.search}</IonLabel>
-            <br /><br />
+            <br />
+            <br />
           </>
         )}
         <IonButton routerLink={`/routing/tabs/home/details/${nextId}`}>

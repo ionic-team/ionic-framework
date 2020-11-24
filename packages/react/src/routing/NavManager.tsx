@@ -1,4 +1,3 @@
-
 import { AnimationBuilder } from '@ionic/core';
 import React from 'react';
 
@@ -16,7 +15,14 @@ interface NavManagerProps {
   routeInfo: RouteInfo;
   onNativeBack: () => void;
   onNavigateBack: (route?: string | RouteInfo, animationBuilder?: AnimationBuilder) => void;
-  onNavigate: (path: string, action: RouteAction, direction?: RouterDirection, animationBuilder?: AnimationBuilder, options?: any, tab?: string) => void;
+  onNavigate: (
+    path: string,
+    action: RouteAction,
+    direction?: RouterDirection,
+    animationBuilder?: AnimationBuilder,
+    options?: any,
+    tab?: string
+  ) => void;
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   onChangeTab: (tab: string, path: string, routeOptions?: any) => void;
   onResetTab: (tab: string, path: string, routeOptions?: any) => void;
@@ -27,9 +33,14 @@ interface NavManagerProps {
 }
 
 export class NavManager extends React.PureComponent<NavManagerProps, NavContextState> {
-
   ionRouterContextValue: IonRouterContextState = {
-    push: (pathname: string, routerDirection?: RouterDirection, routeAction?: RouteAction, routerOptions?: RouterOptions, animationBuilder?: AnimationBuilder) => {
+    push: (
+      pathname: string,
+      routerDirection?: RouterDirection,
+      routeAction?: RouteAction,
+      routerOptions?: RouterOptions,
+      animationBuilder?: AnimationBuilder
+    ) => {
       this.navigate(pathname, routerDirection, routeAction, animationBuilder, routerOptions);
     },
     back: (animationBuilder?: AnimationBuilder) => {
@@ -37,7 +48,7 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
     },
     canGoBack: () => this.props.locationHistory.canGoBack(),
     nativeBack: () => this.props.onNativeBack(),
-    routeInfo: this.props.routeInfo
+    routeInfo: this.props.routeInfo,
   };
 
   constructor(props: NavManagerProps) {
@@ -74,7 +85,14 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
     this.props.onNativeBack();
   }
 
-  navigate(path: string, direction: RouterDirection = 'forward', action: RouteAction = 'push', animationBuilder?: AnimationBuilder, options?: any, tab?: string) {
+  navigate(
+    path: string,
+    direction: RouterDirection = 'forward',
+    action: RouteAction = 'push',
+    animationBuilder?: AnimationBuilder,
+    options?: any,
+    tab?: string
+  ) {
     this.props.onNavigate(path, action, direction, animationBuilder, options, tab);
   }
 
@@ -97,11 +115,12 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
   render() {
     return (
       <NavContext.Provider value={{ ...this.state, routeInfo: this.props.routeInfo }}>
-        <IonRouterContext.Provider value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}>
+        <IonRouterContext.Provider
+          value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}
+        >
           {this.props.children}
         </IonRouterContext.Provider>
       </NavContext.Provider>
     );
   }
-
 }

@@ -1,4 +1,3 @@
-
 import { AnimationBuilder } from '@ionic/core';
 
 import { RouteAction } from './RouteAction';
@@ -12,7 +11,7 @@ export interface RouteInfo<TOptions = any> {
   routeDirection?: RouterDirection;
   routeAnimation?: AnimationBuilder;
   routeOptions?: TOptions;
-  params?: {[key: string]: string | string[]};
+  params?: { [key: string]: string | string[] };
   pushedByRoute?: string;
   pathname: string;
   search: string;

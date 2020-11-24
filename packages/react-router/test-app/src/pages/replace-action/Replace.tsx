@@ -1,9 +1,18 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonRouterOutlet, IonButtons, IonBackButton } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonButton,
+  IonRouterOutlet,
+  IonButtons,
+  IonBackButton,
+} from '@ionic/react';
 import { Route, Redirect, useHistory } from 'react-router';
 
-interface TopPageProps {
-}
+interface TopPageProps {}
 
 const ReplaceAction: React.FC<TopPageProps> = () => {
   return (
@@ -27,15 +36,12 @@ const Page1: React.FC = () => (
       </IonToolbar>
     </IonHeader>
     <IonContent>
-      <IonButton routerLink={'/replace-action/page2'}>
-        Goto Page2
-      </IonButton>
+      <IonButton routerLink={'/replace-action/page2'}>Goto Page2</IonButton>
     </IonContent>
   </IonPage>
 );
 
 const Page2: React.FC = () => {
-
   const history = useHistory();
 
   const clickButton = () => {
@@ -47,15 +53,13 @@ const Page2: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton/>
+            <IonBackButton />
           </IonButtons>
           <IonTitle>Page two</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonButton onClick={() => clickButton()}>
-          Goto Page3
-        </IonButton>
+        <IonButton onClick={() => clickButton()}>Goto Page3</IonButton>
       </IonContent>
     </IonPage>
   );
@@ -67,7 +71,7 @@ const Page3: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/replace-action/page1"/>
+            <IonBackButton defaultHref="/replace-action/page1" />
           </IonButtons>
           <IonTitle>Page three</IonTitle>
         </IonToolbar>

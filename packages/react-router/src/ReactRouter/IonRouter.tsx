@@ -9,7 +9,7 @@ import {
   RouterDirection,
   ViewItem,
   generateId,
-  getConfig
+  getConfig,
 } from '@ionic/react';
 import { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import React from 'react';
@@ -21,11 +21,13 @@ import StackManager from './StackManager';
 
 export interface LocationState {
   direction?: RouterDirection;
-  routerOptions?: { as?: string, unmount?: boolean; };
+  routerOptions?: { as?: string; unmount?: boolean };
 }
 
 interface IonRouteProps extends RouteComponentProps<{}, {}, LocationState> {
-  registerHistoryListener: (cb: (location: HistoryLocation<any>, action: HistoryAction) => void) => void;
+  registerHistoryListener: (
+    cb: (location: HistoryLocation<any>, action: HistoryAction) => void
+  ) => void;
 }
 
 interface IonRouteState {
@@ -48,7 +50,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     findViewItemByRouteInfo: this.viewStack.findViewItemByRouteInfo,
     findLeavingViewItemByRouteInfo: this.viewStack.findLeavingViewItemByRouteInfo,
     addViewItem: this.viewStack.add,
-    unMountViewItem: this.viewStack.remove
+    unMountViewItem: this.viewStack.remove,
   };
 
   constructor(props: IonRouteProps) {
@@ -57,7 +59,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     const routeInfo = {
       id: generateId('routeInfo'),
       pathname: this.props.location.pathname,
-      search: this.props.location.search
+      search: this.props.location.search,
     };
 
     this.locationHistory.add(routeInfo);
@@ -70,7 +72,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     this.handleSetCurrentTab = this.handleSetCurrentTab.bind(this);
 
     this.state = {
-      routeInfo
+      routeInfo,
     };
   }
 
@@ -112,7 +114,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           this.incomingRouteParams = {
             routeAction: 'replace',
             routeDirection: 'none',
-            tab: this.currentTab // TODO this isn't legit if replacing to a page that is not in the tabs
+            tab: this.currentTab, // TODO this isn't legit if replacing to a page that is not in the tabs
           };
         }
         if (action === 'POP') {
@@ -125,7 +127,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
             this.incomingRouteParams = {
               routeAction: 'pop',
               routeDirection: direction,
-              tab: this.currentTab
+              tab: this.currentTab,
             };
           }
         }
@@ -134,7 +136,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
             routeAction: 'push',
             routeDirection: location.state?.direction || 'forward',
             routeOptions: location.state?.routerOptions,
-            tab: this.currentTab
+            tab: this.currentTab,
           };
         }
       }
@@ -143,12 +145,14 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
 
       if (this.incomingRouteParams?.id) {
         routeInfo = {
-          ...this.incomingRouteParams as RouteInfo,
-          lastPathname: leavingLocationInfo.pathname
+          ...(this.incomingRouteParams as RouteInfo),
+          lastPathname: leavingLocationInfo.pathname,
         };
         this.locationHistory.add(routeInfo);
       } else {
-        const isPushed = (this.incomingRouteParams.routeAction === 'push' && this.incomingRouteParams.routeDirection === 'forward');
+        const isPushed =
+          this.incomingRouteParams.routeAction === 'push' &&
+          this.incomingRouteParams.routeDirection === 'forward';
         routeInfo = {
           id: generateId('routeInfo'),
           ...this.incomingRouteParams,
@@ -156,7 +160,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           pathname: location.pathname,
           search: location.search,
           params: this.props.match.params,
-          prevRouteLastPathname: leavingLocationInfo.lastPathname
+          prevRouteLastPathname: leavingLocationInfo.lastPathname,
         };
         if (isPushed) {
           routeInfo.tab = leavingLocationInfo.tab;
@@ -182,7 +186,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
       }
 
       this.setState({
-        routeInfo
+        routeInfo,
       });
     }
 
@@ -193,13 +197,20 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     this.props.history.goBack();
   }
 
-  handleNavigate(path: string, routeAction: RouteAction, routeDirection?: RouterDirection, routeAnimation?: AnimationBuilder, routeOptions?: any, tab?: string) {
+  handleNavigate(
+    path: string,
+    routeAction: RouteAction,
+    routeDirection?: RouterDirection,
+    routeAnimation?: AnimationBuilder,
+    routeOptions?: any,
+    tab?: string
+  ) {
     this.incomingRouteParams = Object.assign(this.incomingRouteParams || {}, {
       routeAction,
       routeDirection,
       routeOptions,
       routeAnimation,
-      tab
+      tab,
     });
 
     if (routeAction === 'push') {
@@ -216,7 +227,12 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = this.locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
-        this.incomingRouteParams = { ...prevInfo, routeAction: 'pop', routeDirection: 'back', routeAnimation: routeAnimation || routeInfo.routeAnimation };
+        this.incomingRouteParams = {
+          ...prevInfo,
+          routeAction: 'pop',
+          routeDirection: 'back',
+          routeAnimation: routeAnimation || routeInfo.routeAnimation,
+        };
         if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
           this.props.history.goBack();
         } else {
@@ -252,9 +268,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
 
   render() {
     return (
-      <RouteManagerContext.Provider
-        value={this.routeMangerContextState}
-      >
+      <RouteManagerContext.Provider value={this.routeMangerContextState}>
         <NavManager
           ionRoute={IonRouteInner}
           ionRedirect={{}}

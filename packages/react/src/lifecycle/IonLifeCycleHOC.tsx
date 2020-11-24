@@ -41,11 +41,9 @@ export const withIonLifeCycle = (WrappedComponent: React.ComponentType<any>) => 
     render() {
       return (
         <IonLifeCycleContext.Consumer>
-          {context => {
+          {(context) => {
             this.context = context;
-            return (
-              <WrappedComponent ref={this.componentRef} {...this.props} />
-            );
+            return <WrappedComponent ref={this.componentRef} {...this.props} />;
           }}
         </IonLifeCycleContext.Consumer>
       );

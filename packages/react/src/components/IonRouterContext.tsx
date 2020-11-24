@@ -6,7 +6,13 @@ import { RouteInfo } from '../models/RouteInfo';
 
 export interface IonRouterContextState {
   routeInfo: RouteInfo;
-  push: (pathname: string, routerDirection?: RouterDirection, routeAction?: RouteAction, routerOptions?: RouterOptions, animationBuilder?: AnimationBuilder) => void;
+  push: (
+    pathname: string,
+    routerDirection?: RouterDirection,
+    routeAction?: RouteAction,
+    routerOptions?: RouterOptions,
+    animationBuilder?: AnimationBuilder
+  ) => void;
   back: (animationBuilder?: AnimationBuilder) => void;
   canGoBack: () => boolean;
   nativeBack: () => void;
@@ -14,10 +20,18 @@ export interface IonRouterContextState {
 
 export const IonRouterContext = React.createContext<IonRouterContextState>({
   routeInfo: undefined as any,
-  push: () => { throw new Error('An Ionic Router is required for IonRouterContext'); },
-  back: () => { throw new Error('An Ionic Router is required for IonRouterContext'); },
-  canGoBack: () => { throw new Error('An Ionic Router is required for IonRouterContext'); },
-  nativeBack: () => { throw new Error('An Ionic Router is required for IonRouterContext'); }
+  push: () => {
+    throw new Error('An Ionic Router is required for IonRouterContext');
+  },
+  back: () => {
+    throw new Error('An Ionic Router is required for IonRouterContext');
+  },
+  canGoBack: () => {
+    throw new Error('An Ionic Router is required for IonRouterContext');
+  },
+  nativeBack: () => {
+    throw new Error('An Ionic Router is required for IonRouterContext');
+  },
 });
 
 /**
@@ -29,8 +43,8 @@ export function useIonRouter(): UseIonRouterResult {
     back: context.back,
     push: context.push,
     goBack: context.back,
-    canGoBack: context.canGoBack
-  }
+    canGoBack: context.canGoBack,
+  };
 }
 
 type UseIonRouterResult = {
@@ -47,7 +61,13 @@ type UseIonRouterResult = {
    * @param routerOptions - Optional - Any additional parameters to pass to the router
    * @param animationBuilder - Optional - A custom transition animation to use
    */
-  push(pathname: string, routerDirection?: RouterDirection, routeAction?: RouteAction, routerOptions?: RouterOptions, animationBuilder?: AnimationBuilder): void;
+  push(
+    pathname: string,
+    routerDirection?: RouterDirection,
+    routeAction?: RouteAction,
+    routerOptions?: RouterOptions,
+    animationBuilder?: AnimationBuilder
+  ): void;
   /**
    * Navigates backwards in history, using the IonRouter to determine history
    * @param animationBuilder - Optional - A custom transition animation to use
@@ -57,4 +77,4 @@ type UseIonRouterResult = {
    * Determines if there are any additional routes in the the Router's history. However, routing is not prevented if the browser's history has more entries. Returns true if more entries exist, false if not.
    */
   canGoBack(): boolean;
-}
+};

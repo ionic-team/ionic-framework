@@ -1,8 +1,16 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonList,
+  IonItem,
+  IonLabel,
+} from '@ionic/react';
 
-interface MainProps {
-}
+interface MainProps {}
 
 const Main: React.FC<MainProps> = () => {
   return (
