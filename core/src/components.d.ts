@@ -105,7 +105,7 @@ export namespace Components {
         /**
           * The main title in the heading of the alert.
          */
-        "header"?: string;
+        "header"?: string | null;
         /**
           * Array of input to show in the alert.
          */
@@ -3404,7 +3404,7 @@ declare namespace LocalJSX {
         /**
           * The main title in the heading of the alert.
          */
-        "header"?: string;
+        "header"?: string | null;
         /**
           * Array of input to show in the alert.
          */

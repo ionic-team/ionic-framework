@@ -65,7 +65,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   /**
    * The main title in the heading of the alert.
    */
-  @Prop() header?: string;
+  @Prop() header?: string | null;
 
   /**
    * The subtitle in the heading of the alert. Displayed under the title.
