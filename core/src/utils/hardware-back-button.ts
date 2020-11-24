@@ -19,7 +19,7 @@ interface HandlerRegister {
  * will still happen.
  */
 export const blockHardwareBackButton = () => {
-  document.addEventListener('backbutton', () => {});
+  document.addEventListener('backbutton', () => {}); // tslint:disable-line
 }
 
 export const startHardwareBackButton = () => {
