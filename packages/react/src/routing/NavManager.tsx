@@ -14,6 +14,7 @@ import PageManager from './PageManager';
 
 interface NavManagerProps {
   routeInfo: RouteInfo;
+  onNativeBack: () => void;
   onNavigateBack: (route?: string | RouteInfo, animationBuilder?: AnimationBuilder) => void;
   onNavigate: (path: string, action: RouteAction, direction?: RouterDirection, animationBuilder?: AnimationBuilder, options?: any, tab?: string) => void;
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
@@ -35,6 +36,7 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
       this.goBack(undefined, animationBuilder);
     },
     canGoBack: () => this.props.locationHistory.canGoBack(),
+    nativeBack: () => this.props.onNativeBack(),
     routeInfo: this.props.routeInfo
   };
 
@@ -57,7 +59,7 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
     if (typeof document !== 'undefined') {
       document.addEventListener('ionBackButton', (e: any) => {
         e.detail.register(0, (processNextHandler: () => void) => {
-          this.goBack();
+          this.nativeGoBack();
           processNextHandler();
         });
       });
@@ -66,6 +68,10 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
 
   goBack(route?: string | RouteInfo, animationBuilder?: AnimationBuilder) {
     this.props.onNavigateBack(route, animationBuilder);
+  }
+
+  nativeGoBack() {
+    this.props.onNativeBack();
   }
 
   navigate(path: string, direction: RouterDirection = 'forward', action: RouteAction = 'push', animationBuilder?: AnimationBuilder, options?: any, tab?: string) {
