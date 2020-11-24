@@ -1,4 +1,4 @@
-import { VNode, defineComponent, h, inject, ref, Ref } from 'vue';
+import { VNode, defineComponent, getCurrentInstance, h, inject, ref, Ref } from 'vue';
 
 export interface InputProps extends Object {
   modelValue: string | boolean;
@@ -62,16 +62,22 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
 
     let handleClick: (ev: Event) => void;
     if (routerLinkComponent) {
-      const navManager: NavManager = inject(NAV_MANAGER);
+      const currentInstance = getCurrentInstance();
+      const hasRouter = currentInstance?.appContext?.provides[NAV_MANAGER];
+      const navManager: NavManager | undefined = hasRouter ? inject(NAV_MANAGER) : undefined;
       handleClick = (ev: Event) => {
         const routerProps = Object.keys(props).filter(p => p.startsWith(ROUTER_PROP_REFIX));
         if (routerProps.length === 0) return;
 
-        let navigationPayload: any = { event: ev };
-        routerProps.forEach(prop => {
-          navigationPayload[prop] = (props as any)[prop];
-        });
-        navManager.navigate(navigationPayload);
+        if (navManager !== undefined) {
+          let navigationPayload: any = { event: ev };
+          routerProps.forEach(prop => {
+            navigationPayload[prop] = (props as any)[prop];
+          });
+          navManager.navigate(navigationPayload);
+        } else {
+          console.warn('Tried to navigate, but no router was found. Make sure you have mounted Vue Router.');
+        }
       }
     }
 

@@ -50,8 +50,18 @@
   opacity: var(--placeholder-opacity);
 }
 
-button {
+label {
   @include input-cover();
+
+  display: flex;
+
+  align-items: center;
+
+  opacity: 0;
+}
+
+button {
+  @include visually-hidden();
 }
 
 .select-icon {
