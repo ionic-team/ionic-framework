@@ -478,7 +478,7 @@ export class Select implements ComponentInterface {
           'select-disabled': disabled,
         }}
       >
-        <div aria-hidden class={selectTextClasses} part={textPart}>
+        <div aria-hidden="true" class={selectTextClasses} part={textPart}>
           {selectText}
         </div>
         <div class="select-icon" role="presentation" part="icon">
