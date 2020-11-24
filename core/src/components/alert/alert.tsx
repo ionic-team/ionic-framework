@@ -384,9 +384,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private renderCheckbox(labelledby: string | undefined) {
     const inputs = this.processedInputs;
     const mode = getIonMode(this);
+
     if (inputs.length === 0) {
       return null;
     }
+
     return (
       <div class="alert-checkbox-group" aria-labelledby={labelledby}>
         { inputs.map(i => (
@@ -424,9 +426,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private renderRadio(labelledby: string | undefined) {
     const inputs = this.processedInputs;
+
     if (inputs.length === 0) {
       return null;
     }
+
     return (
       <div class="alert-radio-group" role="radiogroup" aria-labelledby={labelledby} aria-activedescendant={this.activeId}>
         { inputs.map(i => (
@@ -553,7 +557,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
     const msgId = `alert-${overlayIndex}-msg`;
 
     let labelledById: string | undefined;
-    if (header !== undefined) {
+
+    if (header !== null) {
       labelledById = hdrId;
     } else if (subHeader !== undefined) {
       labelledById = subHdrId;
