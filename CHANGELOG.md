@@ -1,3 +1,20 @@
+## [5.5.1](https://github.com/ionic-team/ionic/compare/v5.5.0...v5.5.1) (2020-11-25)
+
+
+### Bug Fixes
+
+* **checkbox:** click handler now fires properly  ([#22573](https://github.com/ionic-team/ionic/issues/22573)) ([0786835](https://github.com/ionic-team/ionic/commit/07868354aaf88deebf7472a5bf0f34d7c823de17)), closes [#22557](https://github.com/ionic-team/ionic/issues/22557)
+* **radio:** properly announce radios on screen readers and resolve axe errors ([#22507](https://github.com/ionic-team/ionic/issues/22507)) ([afcc46e](https://github.com/ionic-team/ionic/commit/afcc46e1cc4d7f6e9d1a50f8b367da4b1d0c3143))
+* **react:** eliminate use of deprecated `findDOMNode`, resolves [#20972](https://github.com/ionic-team/ionic/issues/20972) ([5275332](https://github.com/ionic-team/ionic/commit/5275332e43694f3ee8738a1726c0d202b16c3052))
+* **router:** navigation guards now fire when navigating to a page with params ([#22521](https://github.com/ionic-team/ionic/issues/22521)) ([1956f98](https://github.com/ionic-team/ionic/commit/1956f9896883dc4687488e5418e50ce0f6cbe6c9)), closes [#22516](https://github.com/ionic-team/ionic/issues/22516)
+* **select:** fix a11y issues with axe and screen readers ([#22494](https://github.com/ionic-team/ionic/issues/22494)) ([04b874e](https://github.com/ionic-team/ionic/commit/04b874e32a65588ca79eda9399ab7e9d86a3cb77)), closes [#21552](https://github.com/ionic-team/ionic/issues/21552) [#21548](https://github.com/ionic-team/ionic/issues/21548)
+* **select:** improvements for announcing placeholder and value on screenreaders ([#22556](https://github.com/ionic-team/ionic/issues/22556)) ([ea52db6](https://github.com/ionic-team/ionic/commit/ea52db66f05a185fed6b2e849734a7ffa1c6c6ea))
+* **vue:** onBeforeRouteLeave and onBeforeRouteUpdate hooks now fire properly ([#22542](https://github.com/ionic-team/ionic/issues/22542)) ([8002114](https://github.com/ionic-team/ionic/commit/8002114e720361e60d7a7fe2d15ab88b49a72e1b)), closes [#22540](https://github.com/ionic-team/ionic/issues/22540)
+* **vue:** tabs now correctly fire lifecycle events ([#22479](https://github.com/ionic-team/ionic/issues/22479)) ([cdc2fb6](https://github.com/ionic-team/ionic/commit/cdc2fb652fe5aa149eaa751a77fb506ac1f64195)), closes [#22466](https://github.com/ionic-team/ionic/issues/22466)
+* **vue:** unit testing a routerLink-capable component no longer warns of missing router dependency ([#22532](https://github.com/ionic-team/ionic/issues/22532)) ([4e23aad](https://github.com/ionic-team/ionic/commit/4e23aad3d911188e4a2706545463a81332c00ce9)), closes [#22506](https://github.com/ionic-team/ionic/issues/22506)
+
+
+
 # [5.5.0 Chlorine](https://github.com/ionic-team/ionic/compare/v5.4.4...v5.5.0) (2020-11-18)
 
 

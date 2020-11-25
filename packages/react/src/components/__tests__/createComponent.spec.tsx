@@ -49,6 +49,21 @@ describe('createComponent - ref', () => {
   });
 });
 
+describe('createComponent - strict mode', () => {
+  beforeEach(() => (console.error = (...data: any[]) => {
+    throw new Error(...data);
+  }));
+
+  test('should work without errors in strict mode', () => {
+    const renderResult = render(
+      <React.StrictMode>
+        <IonButton>Strict Mode Rocks</IonButton>
+      </React.StrictMode>
+    );
+    expect(renderResult.getByText(/Rocks/)).toBeTruthy();
+  });
+});
+
 describe('when working with css classes', () => {
   const myClass = 'my-class'
   const myClass2 = 'my-class2'

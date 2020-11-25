@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail } from '../../interface';
-import { addEventListener, findItemLabel, removeEventListener } from '../../utils/helpers';
+import { addEventListener, getAriaLabel, removeEventListener } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
@@ -20,11 +20,10 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   shadow: true
 })
 export class Radio implements ComponentInterface {
-  private buttonEl?: HTMLButtonElement;
   private inputId = `ion-rb-${radioButtonIds++}`;
   private radioGroup: HTMLIonRadioGroupElement | null = null;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonRadioElement;
 
   /**
    * If `true`, the radio is selected.
@@ -77,10 +76,11 @@ export class Radio implements ComponentInterface {
 
   /** @internal */
   @Method()
-  async setFocus() {
-    if (this.buttonEl) {
-      this.buttonEl.focus();
-    }
+  async setFocus(ev: any) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.el.focus();
   }
 
   /** @internal */
@@ -139,17 +139,17 @@ export class Radio implements ComponentInterface {
   render() {
     const { inputId, disabled, checked, color, el, buttonTabindex } = this;
     const mode = getIonMode(this);
-    const labelId = inputId + '-lbl';
-    const label = findItemLabel(el);
-    if (label) {
-      label.id = labelId;
-    }
+    const { label, labelId, labelText } = getAriaLabel(el, inputId);
+
     return (
       <Host
-        role="radio"
-        aria-disabled={disabled ? 'true' : null}
         aria-checked={`${checked}`}
-        aria-labelledby={labelId}
+        aria-hidden={disabled ? 'true' : null}
+        aria-labelledby={label ? labelId : null}
+        role="radio"
+        tabindex={buttonTabindex}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -160,16 +160,18 @@ export class Radio implements ComponentInterface {
       >
         <div class="radio-icon" part="container">
           <div class="radio-inner" part="mark" />
+          <div class="radio-ripple"></div>
         </div>
-        <button
-          ref={btnEl => this.buttonEl = btnEl}
-          type="button"
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
+        <label htmlFor={inputId}>
+          {labelText}
+        </label>
+        <input
+          type="radio"
+          checked={checked}
           disabled={disabled}
-          tabindex={buttonTabindex}
-        >
-        </button>
+          tabindex="-1"
+          id={inputId}
+        />
       </Host>
     );
   }

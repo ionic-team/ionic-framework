@@ -163,7 +163,6 @@ export class Toggle implements ComponentInterface {
 
   private onClick = (ev: Event) => {
     ev.preventDefault();
-    ev.stopPropagation();
 
     if (this.lastDrag + 300 < Date.now()) {
       this.checked = !this.checked;
