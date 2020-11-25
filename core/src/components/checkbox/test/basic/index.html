@@ -26,6 +26,11 @@
     </ion-header>
 
     <ion-content id="content">
+      <ion-item onClick="clickItem()">
+        <ion-label>Clickable Item</ion-label>
+        <ion-checkbox></ion-checkbox>
+      </ion-item>
+
       <ion-item>
         <ion-label>Default</ion-label>
         <ion-checkbox checked></ion-checkbox>
@@ -125,6 +130,10 @@
       input.addEventListener('click', function() {
         console.log('Listen click: fired');
       });
+    }
+
+    const clickItem = () => {
+      console.log('Item click: fired');
     }
   </script>
 
