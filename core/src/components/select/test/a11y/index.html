@@ -31,7 +31,7 @@
         </ion-list-header>
 
         <div class="native-select-wrapper">
-          <label for="pet-select">Choose a Pet</label>
+          <label for="pet-select">Favorite Pet</label>
 
           <select name="pets" id="pet-select">
             <option value="dog">Dog</option>
@@ -52,9 +52,35 @@
         </ion-list-header>
 
         <ion-item>
-          <label for="ionic-select">Choose a Pet Custom</label>
+          <ion-label>Favorite Pet</ion-label>
 
-          <ion-select id="ionic-select">
+          <ion-select>
+            <ion-select-option value="dog">Dog</ion-select-option>
+            <ion-select-option value="cat">Cat</ion-select-option>
+            <ion-select-option value="hamster">Hamster</ion-select-option>
+            <ion-select-option value="parrot">Parrot</ion-select-option>
+            <ion-select-option value="spider">Spider</ion-select-option>
+            <ion-select-option value="goldfish">Goldfish</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Favorite Pet</ion-label>
+
+          <ion-select placeholder="Select a Pet">
+            <ion-select-option value="dog">Dog</ion-select-option>
+            <ion-select-option value="cat">Cat</ion-select-option>
+            <ion-select-option value="hamster">Hamster</ion-select-option>
+            <ion-select-option value="parrot">Parrot</ion-select-option>
+            <ion-select-option value="spider">Spider</ion-select-option>
+            <ion-select-option value="goldfish">Goldfish</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Favorite Pet</ion-label>
+
+          <ion-select value="spider">
             <ion-select-option value="dog">Dog</ion-select-option>
             <ion-select-option value="cat">Cat</ion-select-option>
             <ion-select-option value="hamster">Hamster</ion-select-option>
@@ -73,9 +99,9 @@
         </ion-list-header>
 
         <ion-item>
-          <ion-label>Choose a Pet</ion-label>
+          <label for="ionic-select">Favorite Pet</label>
 
-          <ion-select>
+          <ion-select id="ionic-select">
             <ion-select-option value="dog">Dog</ion-select-option>
             <ion-select-option value="cat">Cat</ion-select-option>
             <ion-select-option value="hamster">Hamster</ion-select-option>
@@ -94,7 +120,7 @@
         </ion-list-header>
 
         <ion-item>
-          <ion-label>Choose a Pet</ion-label>
+          <ion-label>Favorite Pet</ion-label>
 
           <ion-select interface="popover">
             <ion-select-option value="dog">Dog</ion-select-option>
@@ -115,7 +141,7 @@
         </ion-list-header>
 
         <ion-item>
-          <ion-label>Choose a Pet</ion-label>
+          <ion-label>Favorite Pet</ion-label>
 
           <ion-select interface="action-sheet">
             <ion-select-option value="dog">Dog</ion-select-option>
