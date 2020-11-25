@@ -114,7 +114,10 @@ export class Checkbox implements ComponentInterface {
     }
   }
 
-  private onClick = () => {
+  private onClick = (ev: Event) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+
     this.setFocus();
     this.checked = !this.checked;
     this.indeterminate = false;
@@ -168,14 +171,6 @@ export class Checkbox implements ComponentInterface {
           {labelText}
         </label>
         <input
-          onClick={(ev: Event) => {
-            {/**
-              * This is needed otherwise any click
-              * events set on `ion-item` are fired twice
-              */}
-            ev.preventDefault();
-            ev.stopPropagation()
-          }}
           type="checkbox"
           aria-checked={`${checked}`}
           disabled={disabled}
