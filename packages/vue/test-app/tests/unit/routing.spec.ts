@@ -1,7 +1,17 @@
-import { mount, flushPromises } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { IonicVue, IonApp, IonRouterOutlet, IonPage, IonTabs, IonTabBar } from '@ionic/vue';
+import {
+  IonicVue,
+  IonApp,
+  IonRouterOutlet,
+  IonPage,
+  IonTabs,
+  IonTabBar,
+  IonTabButton,
+  IonLabel
+} from '@ionic/vue';
 import { onBeforeRouteLeave } from 'vue-router';
+import { waitForRouter } from './utils';
 
 const App = {
   components: { IonApp, IonRouterOutlet },
@@ -14,6 +24,9 @@ const BasePage = {
 }
 
 describe('Routing', () => {
+  beforeAll(() => {
+    (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
+  });
   it('should pass no props', async () => {
     const Page1 = {
       ...BasePage,
@@ -153,8 +166,83 @@ describe('Routing', () => {
 
     // Navigate to 2nd page
     router.push('/page2');
-    await flushPromises();
+    await waitForRouter();
 
     expect(leaveHook).toBeCalled();
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22492
+  it('should show correct view when replacing', async () => {
+    const Tabs = {
+      components: { IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel },
+      template: `
+        <ion-page>
+          <ion-tabs>
+            <ion-tab-bar slot="top">
+              <ion-tab-button tab="tab1" href="/tabs/tab1">
+                <ion-label>Tab 1</ion-label>
+              </ion-tab-button>
+              <ion-tab-button tab="tab2" href="/tabs/tab2">
+                <ion-label>Tab 2</ion-label>
+              </ion-tab-button>
+            </ion-tab-bar>
+          </ion-tabs>
+        </ion-page>
+      `,
+    }
+    const Tab1 = {
+      components: { IonPage },
+      template: `<ion-page>Tab 1</ion-page>`
+    }
+    const Tab2 = {
+      components: { IonPage },
+      template: `<ion-page>Tab 2</ion-page>`
+    }
+    const Parent = {
+      ...BasePage,
+      template: `<ion-page>Parent Page</ion-page>`
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', redirect: '/tabs/tab1' },
+        { path: '/parent', component: Parent },
+        { path: '/tabs/', component: Tabs, children: [
+          { path: '/', redirect: 'tab1' },
+          { path: 'tab1', component: Tab1 },
+          { path: 'tab2', component: Tab2 }
+        ]}
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    // Go to Tab 2
+    const tabButtons = wrapper.findAllComponents(IonTabButton);
+    tabButtons[1].trigger('click');
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Tab2).exists()).toBe(true);
+    expect(wrapper.findComponent(Parent).exists()).toBe(false);
+
+    router.replace('/parent')
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Parent).exists()).toBe(true);
+    expect(wrapper.findComponent(Tabs).exists()).toBe(false);
+
+    router.replace('/tabs/tab1');
+    await waitForRouter();
+
+    expect(wrapper.findComponent(Parent).exists()).toBe(false);
+    expect(wrapper.findComponent(Tab1).exists()).toBe(true);
+    expect(wrapper.findComponent(Tab2).exists()).toBe(false);
   });
 });
