@@ -75,7 +75,7 @@ addIcons({
   'caret-back-sharp': caretBackSharp,
   'chevron-back': chevronBack,
   'chevron-forward': chevronForward,
-  close: close,
+  close,
   'close-circle': closeCircle,
   'close-sharp': closeSharp,
   'menu-outline': menuOutline,

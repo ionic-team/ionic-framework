@@ -96,7 +96,6 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
   }
 
   handleHistoryChange(location: HistoryLocation<LocationState>, action: HistoryAction) {
-    debugger;
     let leavingLocationInfo: RouteInfo;
     if (this.incomingRouteParams) {
       if (this.incomingRouteParams.routeAction === 'replace') {
