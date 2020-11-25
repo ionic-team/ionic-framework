@@ -12,7 +12,7 @@ import {
 } from 'vue';
 import { AnimationBuilder, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core';
 import { matchedRouteKey, useRoute } from 'vue-router';
-import { fireLifecycle, generateId } from '../utils';
+import { fireLifecycle, generateId, getConfig } from '../utils';
 
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
@@ -62,6 +62,10 @@ export const IonRouterOutlet = defineComponent({
     });
 
     const canStart = () => {
+      const config = getConfig();
+      const swipeEnabled = config && config.get('swipeBackEnabled', ionRouterOutlet.value.mode === 'ios');
+      if (!swipeEnabled) return false;
+
       const stack = viewStacks.getViewStack(id);
       if (!stack || stack.length <= 1) return false;
 
