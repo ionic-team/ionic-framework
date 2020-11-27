@@ -360,7 +360,9 @@ export default defineComponent({
 | `--padding-start`                | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button |
 | `--padding-top`                  | Top padding of the button                                                                                 |
 | `--ripple-color`                 | Color of the button ripple effect                                                                         |
+| `--text-align`                   | Specifies the horizontal alignment of text in an element                                                  |
 | `--transition`                   | Transition of the button                                                                                  |
+| `--white-space`                  | Specifies how white-space inside an element is handled                                                    |
 
 
 ## Dependencies

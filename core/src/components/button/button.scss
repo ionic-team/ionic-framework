@@ -34,6 +34,9 @@
    * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
    * @prop --padding-bottom: Bottom padding of the button
    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
+   *
+   * @prop --text-align: Specifies the horizontal alignment of text in an element
+   * @prop --white-space: Specifies how white-space inside an element is handled
    */
   --overflow: hidden;
   --ripple-color: currentColor;
@@ -44,6 +47,8 @@
   --color-focused: var(--color);
   --color-hover: var(--color);
   --box-shadow: none;
+  --white-space: nowrap;
+  --text-align: center;
 
   display: inline-block;
 
@@ -53,11 +58,11 @@
 
   font-family: $font-family-base;
 
-  text-align: center;
+  text-align: var(--text-align);
   text-decoration: none;
   text-overflow: ellipsis;
 
-  white-space: nowrap;
+  white-space: var(--white-space);
 
   user-select: none;
   vertical-align: top; // the better option for most scenarios

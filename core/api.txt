@@ -181,7 +181,9 @@ ion-button,css-prop,--padding-end
 ion-button,css-prop,--padding-start
 ion-button,css-prop,--padding-top
 ion-button,css-prop,--ripple-color
+ion-button,css-prop,--text-align
 ion-button,css-prop,--transition
+ion-button,css-prop,--white-space
 ion-button,part,native
 
 ion-buttons,scoped
