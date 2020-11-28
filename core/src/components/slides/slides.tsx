@@ -521,6 +521,9 @@ export class Slides implements ComponentInterface {
         <div class="swiper-wrapper">
           <slot></slot>
         </div>
+        
+        <slot name="container"></slot>
+        
         {this.pager && <div class="swiper-pagination" ref={el => this.paginationEl = el}></div>}
         {this.scrollbar && <div class="swiper-scrollbar" ref={el => this.scrollbarEl = el}></div>}
       </Host>
