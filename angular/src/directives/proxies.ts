@@ -661,8 +661,8 @@ export class IonSearchbar {
 }
 export declare interface IonSegment extends Components.IonSegment {
 }
-@ProxyCmp({ inputs: ["color", "disabled", "mode", "scrollable", "value"] })
-@Component({ selector: "ion-segment", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "disabled", "mode", "scrollable", "value"] })
+@ProxyCmp({ inputs: ["color", "disabled", "mode", "scrollable", "swipeGesture", "value"] })
+@Component({ selector: "ion-segment", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "disabled", "mode", "scrollable", "swipeGesture", "value"] })
 export class IonSegment {
   ionChange!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;

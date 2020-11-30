@@ -1,10 +1,14 @@
 import { h, defineComponent, VNode } from 'vue';
 import { IonRouterOutlet } from './IonRouterOutlet';
 
+const WILL_CHANGE = 'ionTabsWillChange';
+const DID_CHANGE = 'ionTabsDidChange';
+
 export const IonTabs = defineComponent({
   name: 'IonTabs',
+  emits: [WILL_CHANGE, DID_CHANGE],
   render() {
-    const { $slots: slots } = this;
+    const { $slots: slots, $emit } = this;
     const slottedContent = slots.default && slots.default();
     let childrenToRender = [
       h('div', {
@@ -25,14 +29,25 @@ export const IonTabs = defineComponent({
      * not show above the tab content.
      */
     if (slottedContent && slottedContent.length > 0) {
-      const topSlottedTabBar = slottedContent.find((child: VNode) => {
-        const isTabBar = child.type && (child.type as any).name === 'IonTabBar';
-        const hasTopSlot = child.props?.slot === 'top';
+      const slottedTabBar = slottedContent.find((child: VNode) => child.type && (child.type as any).name === 'IonTabBar');
+      const hasTopSlotTabBar = slottedTabBar && slottedTabBar.props?.slot === 'top';
 
-        return isTabBar && hasTopSlot;
-      });
+      if (slottedTabBar) {
+        if (!slottedTabBar.props) {
+          slottedTabBar.props = {};
+        }
+        /**
+         * ionTabsWillChange and ionTabsDidChange are
+         * fired from `ion-tabs`, so we need to pass these down
+         * as props so they can fire when the active tab changes.
+         * TODO: We may want to move logic from the tab bar into here
+         * so we do not have code split across two components.
+         */
+        slottedTabBar.props._tabsWillChange = (tab: string) => $emit(WILL_CHANGE, { tab });
+        slottedTabBar.props._tabsDidChange = (tab: string) => $emit(DID_CHANGE, { tab });
+      }
 
-      if (topSlottedTabBar) {
+      if (hasTopSlotTabBar) {
         childrenToRender = [
           ...slottedContent,
           ...childrenToRender

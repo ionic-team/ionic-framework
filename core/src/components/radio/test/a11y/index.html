@@ -34,6 +34,11 @@
         </div>
 
         <div>
+          <input type="radio" id="fooey" value="fooey" disabled/>
+          <label for="fooey">Fooey</label>
+        </div>
+
+        <div>
           <input type="radio" id="louie" name="drone" value="louie">
           <label for="louie">Louie</label>
         </div>
@@ -57,6 +62,11 @@
           </ion-item>
 
           <ion-item>
+            <ion-label>Fooey</ion-label>
+            <ion-radio slot="start" value="fooey" color="secondary" disabled></ion-radio>
+          </ion-item>
+
+          <ion-item>
             <ion-label>Louie</ion-label>
             <ion-radio slot="start" value="louie"></ion-radio>
           </ion-item>
@@ -76,6 +86,11 @@
           </ion-item>
 
           <ion-item>
+            <ion-label>Fooey</ion-label>
+            <ion-radio slot="start" value="fooey" color="secondary" disabled></ion-radio>
+          </ion-item>
+
+          <ion-item>
             <ion-label>Louie</ion-label>
             <ion-radio slot="start" value="louie" color="tertiary"></ion-radio>
           </ion-item>
@@ -85,18 +100,22 @@
       <div style="padding: 10px 16px">
         <ion-radio-group value="louie">
           <h5>Custom Labels</h5>
-          <p>
+          <div>
             <ion-radio id="custom-huey" value="huey"></ion-radio>
             <label for="custom-huey">Huey</label>
-          </p>
-          <p>
+          </div>
+          <div>
             <ion-radio id="custom-dewey" value="dewey"></ion-radio>
             <label for="custom-dewey">Dewey</label>
-          </p>
-          <p>
+          </div>
+          <div>
+            <ion-radio id="custom-fooey" value="fooey" disabled></ion-radio>
+            <label for="custom-fooey">Fooey</label>
+          </div>
+          <div>
             <ion-radio id="custom-louie" value="louie"></ion-radio>
             <label for="custom-louie">Louie</label>
-          </p>
+          </div>
         </ion-radio-group>
       </div>
     </ion-content>
@@ -119,5 +138,29 @@
     margin: 10px 0;
   }
 </style>
+
+<script>
+  const inputs = document.querySelectorAll('ion-radio');
+
+  for (var i = 0; i < inputs.length; i++) {
+    const input = inputs[i];
+
+    input.addEventListener('ionBlur', function() {
+      console.log('Listen ionBlur: fired');
+    });
+
+    input.addEventListener('ionFocus', function() {
+      console.log('Listen ionFocus: fired');
+    });
+
+    input.addEventListener('ionChange', function(ev) {
+      console.log('Listen ionChange: fired', ev.detail);
+    });
+
+    input.addEventListener('click', function() {
+      console.log('Listen click: fired');
+    });
+  }
+</script>
 
 </html>

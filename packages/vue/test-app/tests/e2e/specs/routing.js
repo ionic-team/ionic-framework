@@ -114,7 +114,7 @@ describe('Routing', () => {
     cy.get('#replace').click();
 
     cy.ionPageVisible('navigation');
-    cy.ionPageHidden('routing');
+    cy.ionPageDoesNotExist('routing');
 
     cy.ionSwipeToGoBack(true);
     cy.ionPageVisible('navigation');

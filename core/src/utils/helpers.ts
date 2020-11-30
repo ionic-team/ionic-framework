@@ -5,6 +5,32 @@ import { Side } from '../interface';
 declare const __zone_symbol__requestAnimationFrame: any;
 declare const requestAnimationFrame: any;
 
+/**
+ * Elements inside of web components sometimes need to inherit global attributes
+ * set on the host. For example, the inner input in `ion-input` should inherit
+ * the `title` attribute that developers set directly on `ion-input`. This
+ * helper function should be called in componentWillLoad and assigned to a variable
+ * that is later used in the render function.
+ *
+ * This does not need to be reactive as changing attributes on the host element
+ * does not trigger a re-render.
+ */
+export const inheritAttributes = (el: HTMLElement, attributes: string[] = []) => {
+  const attributeObject: { [k: string]: any } = {};
+
+  attributes.forEach(attr => {
+    if (el.hasAttribute(attr)) {
+      const value = el.getAttribute(attr);
+      if (value !== null) {
+        attributeObject[attr] = el.getAttribute(attr);
+      }
+      el.removeAttribute(attr);
+    }
+  });
+
+  return attributeObject;
+}
+
 export const addEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
   if (typeof (window as any) !== 'undefined') {
     const win = window as any;
@@ -98,11 +124,15 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
   // we should use that instead of looking for an ion-label
   const labelledBy = componentEl.getAttribute('aria-labelledby');
 
-  const labelId = labelledBy !== null
+  // Grab the id off of the component in case they are using
+  // a custom label using the label element
+  const componentId = componentEl.id;
+
+  let labelId = labelledBy !== null && labelledBy.trim() !== ''
     ? labelledBy
     : inputId + '-lbl';
 
-  const label = labelledBy !== null
+  let label = labelledBy !== null && labelledBy.trim() !== ''
     ? document.querySelector(`#${labelledBy}`)
     : findItemLabel(componentEl);
 
@@ -113,6 +143,16 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
 
     labelText = label.textContent;
     label.setAttribute('aria-hidden', 'true');
+
+  // if there is no label, check to see if the user has provided
+  // one by setting an id on the component and using the label element
+  } else if (componentId.trim() !== '') {
+    label = document.querySelector(`label[for=${componentId}]`);
+
+    if (label) {
+      label.id = labelId = `${componentId}-lbl`;
+      labelText = label.textContent;
+    }
   }
 
   return { label, labelId, labelText };

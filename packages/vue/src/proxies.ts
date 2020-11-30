@@ -3,7 +3,7 @@
 /* auto-generated vue proxies */
 import { defineContainer } from './vue-component-lib/utils';
 
-import { JSX } from '@ionic/core';
+import type { JSX } from '@ionic/core';
 
 
 
@@ -574,6 +574,7 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-seg
   'color',
   'disabled',
   'scrollable',
+  'swipeGesture',
   'value',
   'ionChange',
   'ionSelect',

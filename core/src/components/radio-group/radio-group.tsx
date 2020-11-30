@@ -84,7 +84,6 @@ export class RadioGroup implements ComponentInterface {
 
   private onClick = (ev: Event) => {
     ev.preventDefault();
-    ev.stopPropagation();
 
     const selectedRadio = ev.target && (ev.target as HTMLElement).closest('ion-radio');
     if (selectedRadio) {
@@ -113,12 +112,13 @@ export class RadioGroup implements ComponentInterface {
     // Only move the radio if the current focus is in the radio group
     if (ev.target && radios.includes(ev.target)) {
       const index = radios.findIndex(radio => radio === ev.target);
+      const current = radios[index];
 
       let next;
 
       // If hitting arrow down or arrow right, move to the next radio
       // If we're on the last radio, move to the first radio
-      if (['ArrowDown', 'ArrowRight'].includes(ev.key)) {
+      if (['ArrowDown', 'ArrowRight'].includes(ev.code)) {
         next = (index === radios.length - 1)
           ? radios[0]
           : radios[index + 1];
@@ -126,18 +126,25 @@ export class RadioGroup implements ComponentInterface {
 
       // If hitting arrow up or arrow left, move to the previous radio
       // If we're on the first radio, move to the last radio
-      if (['ArrowUp', 'ArrowLeft'].includes(ev.key)) {
+      if (['ArrowUp', 'ArrowLeft'].includes(ev.code)) {
         next = (index === 0)
           ? radios[radios.length - 1]
           : radios[index - 1];
       }
 
       if (next && radios.includes(next)) {
-        next.setFocus();
+        next.setFocus(ev);
 
         if (!inSelectPopover) {
           this.value = next.value;
         }
+      }
+
+      // Update the radio group value when a user presses the
+      // space bar on top of a selected radio (only applies
+      // to radios in a select popover)
+      if (['Space'].includes(ev.code)) {
+        this.value = current.value;
       }
     }
   }

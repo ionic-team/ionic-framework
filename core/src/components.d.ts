@@ -1708,7 +1708,7 @@ export namespace Components {
          */
         "name": string;
         "setButtonTabindex": (value: number) => Promise<void>;
-        "setFocus": () => Promise<void>;
+        "setFocus": (ev: any) => Promise<void>;
         /**
           * the value of the radio.
          */
@@ -2064,6 +2064,10 @@ export namespace Components {
           * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
          */
         "scrollable": boolean;
+        /**
+          * If `true`, users will be able to swipe between segment buttons to activate them.
+         */
+        "swipeGesture": boolean;
         /**
           * the value of the segment.
          */
@@ -5374,6 +5378,10 @@ declare namespace LocalJSX {
           * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
          */
         "scrollable"?: boolean;
+        /**
+          * If `true`, users will be able to swipe between segment buttons to activate them.
+         */
+        "swipeGesture"?: boolean;
         /**
           * the value of the segment.
          */
