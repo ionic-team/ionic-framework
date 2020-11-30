@@ -150,9 +150,9 @@ export class Checkbox implements ComponentInterface {
     return (
       <Host
         onClick={this.onClick}
+        aria-labelledby={label ? labelId : null}
         aria-checked={`${checked}`}
         aria-hidden={disabled ? 'true' : null}
-        aria-labelledby={label ? labelId : null}
         role="checkbox"
         class={createColorClasses(color, {
           [mode]: true,
