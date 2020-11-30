@@ -238,7 +238,11 @@ export const IonRouterOutlet = defineComponent({
         leavingEl.classList.add('ion-page-hidden');
         leavingEl.setAttribute('aria-hidden', 'true');
 
-        if (!(routerAction === 'push' && routerDirection === 'forward')) {
+        if (routerAction === 'replace') {
+          leavingViewItem.mount = false;
+          leavingViewItem.ionPageElement = undefined;
+          leavingViewItem.ionRoute = false;
+        } else if (!(routerAction === 'push' && routerDirection === 'forward')) {
           const shouldLeavingViewBeRemoved = routerDirection !== 'none' && leavingViewItem && (enteringViewItem !== leavingViewItem);
           if (shouldLeavingViewBeRemoved) {
             leavingViewItem.mount = false;
