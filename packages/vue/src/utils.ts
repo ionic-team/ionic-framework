@@ -1,5 +1,5 @@
 import { Ref, ComponentPublicInstance } from 'vue';
-import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core';
+import { Config as CoreConfig, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core';
 
 type LIFECYCLE_EVENTS = typeof LIFECYCLE_WILL_ENTER | typeof LIFECYCLE_DID_ENTER | typeof LIFECYCLE_WILL_LEAVE | typeof LIFECYCLE_DID_LEAVE;
 
@@ -22,3 +22,13 @@ export const fireLifecycle = (vueComponent: any, vueInstance: Ref<ComponentPubli
     instance[lifecycle]();
   }
 }
+
+export const getConfig = (): CoreConfig | null => {
+  if (typeof (window as any) !== 'undefined') {
+    const Ionic = (window as any).Ionic;
+    if (Ionic && Ionic.config) {
+      return Ionic.config;
+    }
+  }
+  return null;
+};
