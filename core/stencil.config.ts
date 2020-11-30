@@ -6,6 +6,7 @@ import { vueOutputTarget } from '@stencil/vue-output-target';
 import { apiSpecGenerator } from './scripts/api-spec-generator';
 
 export const config: Config = {
+  autoprefixCss: true,
   namespace: 'Ionic',
   bundles: [
     { components: ['ion-action-sheet'] },
@@ -83,6 +84,7 @@ export const config: Config = {
         'ion-popover',
         'ion-toast',
 
+        'ion-app',
         'ion-icon'
       ],
       routerLinkComponents: [
@@ -169,6 +171,7 @@ export const config: Config = {
       ]
     }
   ],
+  buildEs5: 'prod',
   extras: {
     cssVarsShim: true,
     dynamicImportShim: true,

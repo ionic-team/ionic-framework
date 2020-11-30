@@ -299,7 +299,7 @@ const focusPreviousElementOnDismiss = async (overlayEl: any) => {
 
   await overlayEl.onDidDismiss();
   previousElement.focus();
-}
+};
 
 export const dismiss = async (
   overlay: OverlayInterface,

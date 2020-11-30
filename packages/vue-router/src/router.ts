@@ -1,7 +1,6 @@
 import {
   Router,
-  RouteLocationNormalized,
-  NavigationGuardNext
+  RouteLocationNormalized
 } from 'vue-router';
 import { createLocationHistory } from './locationHistory';
 import { generateId } from './utils';
@@ -11,15 +10,36 @@ import {
   RouteParams,
   RouteAction,
   RouteDirection,
-  IonicVueRouterOptions
+  IonicVueRouterOptions,
+  NavigationInformation
 } from './types';
 import { AnimationBuilder } from '@ionic/core';
 
 export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
+  let currentNavigationInfo: NavigationInformation = { direction: undefined, action: undefined };
 
-  router.beforeEach((to: RouteLocationNormalized, _: RouteLocationNormalized, next: NavigationGuardNext) => {
-    handleHistoryChange(to);
-    next();
+  /**
+   * Ionic Vue should only react to navigation
+   * changes once they have been confirmed and should
+   * never affect the outcome of navigation (with the
+   * exception of going back or selecting a tab).
+   * As a result, we should do our work in afterEach
+   * which is fired once navigation is confirmed
+   * and any user guards have run.
+   */
+  router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized) => {
+    const { direction, action } = currentNavigationInfo;
+
+    /**
+     * When calling router.replace, we are not informed
+     * about the replace action in opts.history.listen
+     * but we can check to see if the latest routing action
+     * was a replace action by looking at the history state.
+     */
+    const replaceAction = history.state.replaced ? 'replace' : undefined;
+    handleHistoryChange(to, action || replaceAction, direction);
+
+    currentNavigationInfo = { direction: undefined, action: undefined };
   });
 
   const locationHistory = createLocationHistory();
@@ -39,8 +59,23 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     })
   }
 
-  //   NavigationCallback
-  opts.history.listen((to: any, _: any, info: any) => handleHistoryChange({ path: to }, info.type, info.direction));
+  opts.history.listen((_: any, _x: any, info: any) => {
+    /**
+     * history.listen only fires on certain
+     * event such as when the user clicks the
+     * browser back button. It also gives us
+     * additional information as to the type
+     * of navigation (forward, backward, etc).
+     *
+     * We can use this to better handle the
+     * `handleHistoryChange` call in
+     * router.beforeEach
+     */
+    currentNavigationInfo = {
+      action: info.type,
+      direction: info.direction === '' ? 'forward' : info.direction
+    };
+  });
 
   const handleNavigateBack = (defaultHref?: string, routerAnimation?: AnimationBuilder) => {
     // todo grab default back button href from config
@@ -207,15 +242,33 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     const [pathname] = path.split('?');
 
     if (routeInfo) {
-      incomingRouteParams = Object.assign(Object.assign({}, routeInfo), { routerAction: 'push', routerDirection: 'none' });
-
       const search = (routeInfo.search) ? `?${routeInfo.search}` : '';
-      router.push(routeInfo.pathname + search);
+
+      incomingRouteParams = {
+        ...incomingRouteParams,
+        routerAction: 'push',
+        routerDirection: 'none',
+        tab
+      }
+
+      /**
+       * When going back to a tab
+       * you just left, it's possible
+       * for the route info to be incorrect
+       * as the tab you want is not the
+       * tab you are on.
+       */
+      if (routeInfo.pathname === pathname) {
+        router.push(routeInfo.pathname + search);
+      } else {
+        router.push(pathname + search);
+      }
     }
     else {
       handleNavigate(pathname, 'push', 'none', undefined, tab);
     }
   }
+
   const handleSetCurrentTab = (tab: string) => {
     currentTab = tab;
 

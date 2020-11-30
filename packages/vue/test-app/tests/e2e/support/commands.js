@@ -24,11 +24,20 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('ionSwipeToGoBack', (complete = false) => {
-  cy.get('ion-router-outlet')
-    .trigger('mousedown', { position: "left" })
-    .trigger('mousemove', { clientX: (complete) ? 100 : 300, clientY: 275 })
-    .trigger('mouseup', { force: true })
+Cypress.Commands.add('ionSwipeToGoBack', (complete = false, selector = 'ion-router-outlet') => {
+  const increment = (complete) ? 60 : 25;
+  cy.get(selector)
+    .first()
+    .trigger('mousedown', 0, 275, { which: 1, force: true })
+    .trigger('mousemove', increment * 1, 275, { which: 1, force: true })
+    .wait(50)
+    .trigger('mousemove', increment * 2, 275, { which: 1, force: true })
+    .wait(50)
+    .trigger('mousemove', increment * 3, 275, { which: 1, force: true })
+    .wait(50)
+    .trigger('mousemove', increment * 4, 275, { which: 1, force: true })
+    .wait(50)
+    .trigger('mouseup', increment * 4, 275, { which: 1, force: true })
   cy.wait(150);
 })
 

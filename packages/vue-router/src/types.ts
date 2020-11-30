@@ -1,5 +1,6 @@
 import { AnimationBuilder } from '@ionic/core';
-import { RouterOptions } from 'vue-router';
+import { RouteLocationMatched, RouterOptions } from 'vue-router';
+import { Ref } from 'vue';
 
 export interface IonicVueRouterOptions extends RouterOptions {
   tabsPrefix?: string;
@@ -33,11 +34,15 @@ export interface ViewItem {
   id: string;
   pathname: string;
   outletId: number;
-  matchedRoute: any; // todo
+  matchedRoute: RouteLocationMatched;
   ionPageElement?: HTMLElement;
   vueComponent: any; // todo
   ionRoute: boolean;
-  mount: false;
+  mount: boolean;
+  exact: boolean;
+  registerCallback?: () => void;
+  vueComponentRef: Ref;
+  params?: { [k: string]: any };
 }
 
 export interface ViewStacks {
@@ -48,4 +53,9 @@ export interface ExternalNavigationOptions {
   routerLink: string;
   routerDirection?: RouteDirection;
   routerAnimation?: AnimationBuilder;
+}
+
+export interface NavigationInformation {
+  action?: RouteAction;
+  direction?: RouteDirection;
 }

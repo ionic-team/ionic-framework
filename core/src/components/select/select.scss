@@ -50,8 +50,18 @@
   opacity: var(--placeholder-opacity);
 }
 
-button {
+label {
   @include input-cover();
+
+  display: flex;
+
+  align-items: center;
+
+  opacity: 0;
+}
+
+button {
+  @include visually-hidden();
 }
 
 .select-icon {
@@ -76,7 +86,7 @@ button {
 
 .select-icon-inner {
   @include position(50%, null, null, 5px);
-  @include margin(-3px, null, null, null);
+  @include margin(-2px, null, null, null);
 
   position: absolute;
 

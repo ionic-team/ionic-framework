@@ -16,56 +16,47 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-item button @click="setRouteParams" id="route-params">
-        <ion-label>Set Route Parameters</ion-label>
-      </ion-item>
-
-      <ion-item button router-link="/navigation/child" id="child">
-        <ion-label>Go to Child Page</ion-label>
-      </ion-item>
+      <div class="ion-padding">
+        <ion-button expand="block" @click="openModal" id="open-nav-modal">Open Modal</ion-button>
+      </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
 import {
+  IonButton,
   IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
-  IonItem,
-  IonLabel,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  modalController
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import { useRouter } from 'vue-router';
-
+import Nav from '@/components/Nav.vue';
 export default defineComponent({
-  name: 'Navigation',
   components: {
+    IonButton,
     IonBackButton,
     IonButtons,
     IonContent,
     IonHeader,
-    IonItem,
-    IonLabel,
     IonPage,
     IonTitle,
     IonToolbar
   },
   setup() {
-    const router = useRouter();
-    const setRouteParams = () => {
-      router.push({
-        query: {
-          search: 'liamwashere'
-        }
+    const openModal = async () => {
+      const modal = await modalController.create({
+        component: Nav
       });
-    }
 
-    return { setRouteParams }
+      await modal.present();
+    }
+    return { openModal }
   }
 });
 </script>
