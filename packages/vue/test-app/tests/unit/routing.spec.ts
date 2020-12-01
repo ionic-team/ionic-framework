@@ -81,7 +81,7 @@ describe('Routing', () => {
     expect(cmp.props()).toEqual({ title: 'Page 1 Title' });
   });
 
-  it.only('should pass route props as a function', async () => {
+  it('should pass route props as a function', async () => {
     const Page1 = {
       ...BasePage,
       props: {
