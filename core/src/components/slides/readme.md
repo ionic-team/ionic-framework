@@ -429,6 +429,18 @@ const slideOpts = {
 };
 ```
 
+## Container slot
+Swiper allows to add non slide children, which can be used to add additional functionality (e.g. pagination) - to add that kind of child element use named slot "container".
+```html
+<ion-slides>
+  <ion-slide>a</ion-slide>
+  <ion-slide>b</ion-slide>
+  <ion-slide>c</ion-slide>
+  <ion-slide>d</ion-slide>
+  <div slot="container">...</div>
+</ion-slides>
+```
+
 <!-- Auto Generated Below -->
 
 
