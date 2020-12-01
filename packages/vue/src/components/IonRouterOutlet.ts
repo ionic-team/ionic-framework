@@ -387,7 +387,7 @@ export const IonRouterOutlet = defineComponent({
          * When a component is destroyed and re-created, the
          * function is called again.
          */
-        const getPropsFnResult = () => {
+        const getPropsFunctionResult = () => {
           const cachedPropsResult = c.vueComponentData?.propsFunctionResult;
           if (cachedPropsResult) {
             return cachedPropsResult;
@@ -404,7 +404,7 @@ export const IonRouterOutlet = defineComponent({
           ? routePropsOption === true
             ? c.params
             : typeof routePropsOption === 'function'
-            ? getPropsFnResult()
+            ? getPropsFunctionResult()
             : routePropsOption
           : null
 
