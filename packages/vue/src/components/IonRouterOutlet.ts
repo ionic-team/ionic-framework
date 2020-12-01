@@ -377,13 +377,34 @@ export const IonRouterOutlet = defineComponent({
          * IonRouterOutlet does not support named outlets.
          */
         const routePropsOption = c.matchedRoute?.props?.default;
+
+        /**
+         * Since IonRouterOutlet renders multiple components,
+         * each render will cause all props functions to be
+         * called again. As a result, we need to cache the function
+         * result and provide it on each render so that the props
+         * are not lost when navigating from and back to a page.
+         * When a component is destroyed and re-created, the
+         * function is called again.
+         */
+        const getPropsFnResult = () => {
+          const cachedPropsResult = c.vueComponentData?.propsFunctionResult;
+          if (cachedPropsResult) {
+            return cachedPropsResult;
+          } else {
+            const propsFunctionResult = routePropsOption(injectedRoute);
+            c.vueComponentData = {
+              ...c.vueComponentData,
+              propsFunctionResult
+            };
+            return propsFunctionResult;
+          }
+        }
         const routeProps = routePropsOption
           ? routePropsOption === true
             ? c.params
             : typeof routePropsOption === 'function'
-
-            // Only call props function on initial render
-            ? !c.ionPageElement && routePropsOption(injectedRoute)
+            ? getPropsFnResult()
             : routePropsOption
           : null
 

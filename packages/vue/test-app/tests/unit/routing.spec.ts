@@ -81,7 +81,7 @@ describe('Routing', () => {
     expect(cmp.props()).toEqual({ title: 'Page 1 Title' });
   });
 
-  it('should pass route props as a function', async () => {
+  it.only('should pass route props as a function', async () => {
     const Page1 = {
       ...BasePage,
       props: {
@@ -116,6 +116,13 @@ describe('Routing', () => {
     await waitForRouter();
 
     expect(propsFn.mock.calls.length).toBe(1);
+
+    router.back();
+    await waitForRouter();
+
+    expect(propsFn.mock.calls.length).toBe(1);
+
+    expect(cmp.props()).toEqual({ title: '123 Title' });
   });
 
   it('should pass route params as props', async () => {
