@@ -124,8 +124,8 @@ export class Refresher implements ComponentInterface {
    */
   @Event() ionStart!: EventEmitter<void>;
 
-  private checkNativeRefresher() {
-    const useNativeRefresher = shouldUseNativeRefresher(this.el, getIonMode(this));
+  private async checkNativeRefresher() {
+    const useNativeRefresher = await shouldUseNativeRefresher(this.el, getIonMode(this));
     if (useNativeRefresher && !this.nativeRefresher) {
       const contentEl = this.el.closest('ion-content');
       this.setupNativeRefresher(contentEl);
@@ -411,7 +411,7 @@ export class Refresher implements ComponentInterface {
     this.scrollEl = await contentEl.getScrollElement();
     this.backgroundContentEl = getElementRoot(contentEl).querySelector('#background-content') as HTMLElement;
 
-    if (shouldUseNativeRefresher(this.el, getIonMode(this))) {
+    if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
       this.setupNativeRefresher(contentEl);
     } else {
       this.gesture = (await import('../../utils/gesture')).createGesture({
