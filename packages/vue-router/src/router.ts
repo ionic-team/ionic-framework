@@ -1,6 +1,7 @@
 import {
   Router,
-  RouteLocationNormalized
+  RouteLocationNormalized,
+  NavigationFailure
 } from 'vue-router';
 import { createLocationHistory } from './locationHistory';
 import { generateId } from './utils';
@@ -27,7 +28,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    * which is fired once navigation is confirmed
    * and any user guards have run.
    */
-  router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized) => {
+  router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized, failure?: NavigationFailure) => {
+    if (failure) return;
+
     const { direction, action } = currentNavigationInfo;
 
     /**
