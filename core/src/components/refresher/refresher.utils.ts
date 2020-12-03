@@ -168,7 +168,7 @@ export const translateElement = (el?: HTMLElement, value?: string) => {
 
 export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElement, mode: string) => {
   const refresherContent = referenceEl.querySelector('ion-refresher-content');
-  if (!refresherContent) return Promise.resolve(false);
+  if (!refresherContent) { return Promise.resolve(false); }
 
   await refresherContent.componentOnReady();
 
