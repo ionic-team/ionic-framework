@@ -4,7 +4,7 @@ export interface RouterOptions {
    */
   as?: string;
   /**
-   * Optional - If the component should be unmounted after it is transistioned away from. Defaults to false.
+   * Optional - If the component should be unmounted after it is transitioned away from. Defaults to false.
    */
   unmount?: boolean;
 }
