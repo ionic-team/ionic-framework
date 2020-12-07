@@ -2,6 +2,14 @@ import { AnimationBuilder } from '@ionic/core';
 import { RouteLocationMatched, RouterOptions } from 'vue-router';
 import { Ref } from 'vue';
 
+export interface VueComponentData {
+  /**
+   * The cached result of the props
+   * function for a particular view instance.
+   */
+  propsFunctionResult?: any;
+}
+
 export interface IonicVueRouterOptions extends RouterOptions {
   tabsPrefix?: string;
 }
@@ -43,6 +51,7 @@ export interface ViewItem {
   registerCallback?: () => void;
   vueComponentRef: Ref;
   params?: { [k: string]: any };
+  vueComponentData: VueComponentData;
 }
 
 export interface ViewStacks {
