@@ -116,9 +116,10 @@ export const config: Config = {
       type: 'dist',
       esmLoaderPath: '../loader'
     },
-    // {
-    //   type: 'dist-custom-elements-bundle',
-    // },
+    {
+      type: 'dist-custom-elements-bundle',
+      dir: 'components',
+    },
     {
       type: 'docs-readme',
       strict: true
