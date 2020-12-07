@@ -63,6 +63,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     this.locationHistory.add(routeInfo);
     this.handleChangeTab = this.handleChangeTab.bind(this);
     this.handleResetTab = this.handleResetTab.bind(this);
+    this.handleNativeBack = this.handleNativeBack.bind(this);
     this.handleNavigate = this.handleNavigate.bind(this);
     this.handleNavigateBack = this.handleNavigateBack.bind(this);
     this.props.registerHistoryListener(this.handleHistoryChange.bind(this));
@@ -188,6 +189,10 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     this.incomingRouteParams = undefined;
   }
 
+  handleNativeBack() {
+    this.props.history.goBack();
+  }
+
   handleNavigate(path: string, routeAction: RouteAction, routeDirection?: RouterDirection, routeAnimation?: AnimationBuilder, routeOptions?: any, tab?: string) {
     this.incomingRouteParams = Object.assign(this.incomingRouteParams || {}, {
       routeAction,
@@ -255,6 +260,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           ionRedirect={{}}
           stackManager={StackManager}
           routeInfo={this.state.routeInfo!}
+          onNativeBack={this.handleNativeBack}
           onNavigateBack={this.handleNavigateBack}
           onNavigate={this.handleNavigate}
           onSetCurrentTab={this.handleSetCurrentTab}
