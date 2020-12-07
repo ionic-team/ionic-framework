@@ -89,14 +89,19 @@ describe('Routing', () => {
       }
     };
 
+    const propsFn = jest.fn((route) => {
+      return { title: `${route.params.id} Title` }
+    });
+
     const router = createRouter({
       history: createWebHistory(process.env.BASE_URL),
       routes: [
-        { path: '/myPath', component: Page1, props: function(route) { return { title: `${route.path} Title` } } }
+        { path: '/myPath/:id', component: Page1, props: propsFn },
+        { path: '/otherPage', component: Page1 }
       ]
     });
 
-    router.push('/myPath');
+    router.push('/myPath/123');
     await router.isReady();
     const wrapper = mount(App, {
       global: {
@@ -105,7 +110,19 @@ describe('Routing', () => {
     });
 
     const cmp = wrapper.findComponent(Page1);
-    expect(cmp.props()).toEqual({ title: '/myPath Title' });
+    expect(cmp.props()).toEqual({ title: '123 Title' });
+
+    router.push('/otherPage');
+    await waitForRouter();
+
+    expect(propsFn.mock.calls.length).toBe(1);
+
+    router.back();
+    await waitForRouter();
+
+    expect(propsFn.mock.calls.length).toBe(1);
+
+    expect(cmp.props()).toEqual({ title: '123 Title' });
   });
 
   it('should pass route params as props', async () => {
