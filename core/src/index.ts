@@ -62,9 +62,9 @@ export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search'
 export type Side = 'start' | 'end';
 export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Color = PredefinedColors | string;
-export type Mode = "ios" | "md";
+export type Mode = 'ios' | 'md';
 export type ComponentTags = string;
-export type ComponentRef = Function | HTMLElement | string | null;
+export type ComponentRef = () => {} | HTMLElement | string | null;
 // @ts-ignore
 export type ComponentProps<T = null> = {[key: string]: any};
 export type CssClassMap = { [className: string]: boolean };
@@ -87,18 +87,16 @@ export interface StyleEventDetail {
   [styleName: string]: boolean;
 }
 
+export { NavComponentWithProps } from './components/nav/nav-interface';
 
-export { NavComponentWithProps } from "./components/nav/nav-interface";
-
-declare module "./components" {
+declare module './components' {
   export namespace Components {
     export interface IonIcon extends IoniconsComponents.IonIcon{}
   }
 }
 
-declare module "./components" {
+declare module './components' {
   export namespace JSX {
     export interface IonIcon extends IoniconsJSX.IonIcon {}
   }
 }
-
