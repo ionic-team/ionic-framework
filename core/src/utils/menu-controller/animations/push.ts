@@ -1,5 +1,5 @@
 import { getIonMode } from '../../../global/ionic-global';
-import { Animation, MenuI } from '../../../interface';
+import { Animation, MenuI } from '../../../index';
 import { createAnimation } from '../../animation/animation';
 
 import { baseAnimation } from './base';

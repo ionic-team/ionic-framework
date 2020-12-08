@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Host, Listen, Prop, State, h } 
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { Color } from '../../index';
 import { ButtonInterface } from '../../utils/element-interface';
 import { menuController } from '../../utils/menu-controller';
 import { createColorClasses, hostContext } from '../../utils/theme';

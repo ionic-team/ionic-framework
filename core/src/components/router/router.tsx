@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
-import { AnimationBuilder, BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
+import { AnimationBuilder, BackButtonEvent, RouteChain, RouterDirection, RouterEventDetail } from '../../index';
 import { debounce } from '../../utils/helpers';
 
 import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from './utils/constants';

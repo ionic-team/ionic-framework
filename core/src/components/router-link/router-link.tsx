@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color, RouterDirection } from '../../interface';
+import { AnimationBuilder, Color, RouterDirection } from '../../index';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({

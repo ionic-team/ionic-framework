@@ -1,4 +1,4 @@
-import { AnimationBuilder, NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../interface';
+import { AnimationBuilder, NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../index';
 
 import { ROUTER_INTENT_NONE } from './constants';
 

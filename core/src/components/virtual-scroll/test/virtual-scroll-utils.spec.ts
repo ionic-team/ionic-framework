@@ -1,4 +1,4 @@
-import { HeaderFn, ItemHeightFn, VirtualNode } from '../../../interface';
+import { HeaderFn, ItemHeightFn, VirtualNode } from '../../../index';
 import { Range, calcCells, calcHeightIndex, getRange, getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from '../virtual-scroll-utils';
 import { CELL_TYPE_ITEM, CELL_TYPE_HEADER, CELL_TYPE_FOOTER } from '../constants';
 

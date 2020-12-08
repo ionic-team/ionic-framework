@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
+import { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../index';
 import { Gesture, GestureDetail } from '../../utils/gesture';
 import { pointerCoord } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';

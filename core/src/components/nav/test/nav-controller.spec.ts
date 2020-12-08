@@ -1,6 +1,6 @@
 import { newSpecPage, mockWindow } from '@stencil/core/testing';
 
-import { ComponentProps } from '../../../interface';
+import { ComponentProps } from '../../../index';
 import { Nav } from '../nav';
 import { NavOptions } from '../nav-interface';
 import { ViewController } from '../view-controller';

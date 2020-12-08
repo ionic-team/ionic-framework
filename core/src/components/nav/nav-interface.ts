@@ -1,4 +1,4 @@
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../index';
 
 import { ViewController } from './view-controller';
 

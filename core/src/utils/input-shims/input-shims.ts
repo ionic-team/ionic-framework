@@ -1,5 +1,5 @@
 
-import { Config } from '../../interface';
+import { Config } from '../../index';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
 import { enableInputBlurring } from './hacks/input-blurring';

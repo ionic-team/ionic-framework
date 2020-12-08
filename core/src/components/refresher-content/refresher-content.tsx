@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { SpinnerTypes } from '../../interface';
+import { SpinnerTypes } from '../../index';
 import { isPlatform } from '../../utils/platform';
 import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 import { SPINNERS } from '../spinner/spinner-configs';

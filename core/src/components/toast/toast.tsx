@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
+import { AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../index';
 import { dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import { IonicSafeString, sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';

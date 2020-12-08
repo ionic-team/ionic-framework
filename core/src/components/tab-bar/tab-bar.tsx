@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, TabBarChangedEventDetail } from '../../interface';
+import { Color, TabBarChangedEventDetail } from '../../index';
 import { createColorClasses } from '../../utils/theme';
 
 /**

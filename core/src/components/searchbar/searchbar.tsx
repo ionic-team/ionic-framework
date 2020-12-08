@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { AutocompleteTypes, Color, SearchbarChangeEventDetail, StyleEventDetail } from '../../interface';
+import { AutocompleteTypes, Color, SearchbarChangeEventDetail, StyleEventDetail } from '../../index';
 import { debounceEvent, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 

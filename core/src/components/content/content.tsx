@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, List
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import { Color, ScrollBaseDetail, ScrollDetail } from '../../index';
 import { isPlatform } from '../../utils/platform';
 import { createColorClasses, hostContext } from '../../utils/theme';
 

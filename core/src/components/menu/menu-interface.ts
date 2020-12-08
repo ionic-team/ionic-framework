@@ -1,4 +1,4 @@
-import { Animation, Side } from '../../interface';
+import { Animation, Side } from '../../index';
 
 export interface MenuI {
   el: HTMLIonMenuElement;

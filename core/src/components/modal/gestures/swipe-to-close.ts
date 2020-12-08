@@ -1,4 +1,4 @@
-import { Animation } from '../../../interface';
+import { Animation } from '../../../index';
 import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
 import { GestureDetail, createGesture } from '../../../utils/gesture';
 import { clamp } from '../../../utils/helpers';

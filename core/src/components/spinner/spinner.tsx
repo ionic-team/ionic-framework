@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, SpinnerConfig, SpinnerTypes } from '../../interface';
+import { Color, SpinnerConfig, SpinnerTypes } from '../../index';
 import { createColorClasses } from '../../utils/theme';
 
 import { SPINNERS } from './spinner-configs';

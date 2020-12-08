@@ -1,4 +1,4 @@
-import { ComponentRef, FrameworkDelegate } from '../interface';
+import { ComponentRef, FrameworkDelegate } from '../index';
 
 export const attachComponent = async (
   delegate: FrameworkDelegate | undefined,

@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { Color } from '../../index';
 import { clamp } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 

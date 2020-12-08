@@ -1,6 +1,6 @@
 import { getMode, setMode } from '@stencil/core';
 
-import { Mode } from '../interface';
+import { Mode } from '../index';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
 import { config, configFromSession, configFromURL, saveConfig } from './config';

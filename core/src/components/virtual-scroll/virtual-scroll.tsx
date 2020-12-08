@@ -1,6 +1,6 @@
 import { Component, ComponentInterface, Element, FunctionalComponent, Host, Listen, Method, Prop, State, Watch, forceUpdate, h, readTask, writeTask } from '@stencil/core';
 
-import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import { Cell, DomRenderFn, FooterHeightFn, HeaderFn, HeaderHeightFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../index';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM } from './constants';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';

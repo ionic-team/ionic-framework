@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, List
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
+import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../index';
 import { AnchorInterface } from '../../utils/element-interface';
 
 /**

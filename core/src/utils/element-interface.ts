@@ -1,4 +1,4 @@
-// import { RouterDirection } from '../interface';
+// import { RouterDirection } from '../index';
 
 // TODO router direction
 // The interfaces in this file are used to make sure our components

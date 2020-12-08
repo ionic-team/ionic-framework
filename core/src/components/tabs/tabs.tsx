@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Host, Method, Prop, State, h } from '@stencil/core';
 
-import { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
+import { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../index';
 
 /**
  * @slot - Content is placed between the named slots if provided without a slot.

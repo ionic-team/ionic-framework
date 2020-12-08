@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Host, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { SelectPopoverOption } from '../../interface';
+import { SelectPopoverOption } from '../../index';
 import { safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 

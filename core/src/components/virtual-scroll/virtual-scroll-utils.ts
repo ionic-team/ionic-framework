@@ -1,4 +1,4 @@
-import { Cell, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import { Cell, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../index';
 
 import { CELL_TYPE_FOOTER, CELL_TYPE_HEADER, CELL_TYPE_ITEM, NODE_CHANGE_CELL, NODE_CHANGE_NONE, NODE_CHANGE_POSITION } from './constants';
 import { CellType, FooterHeightFn, HeaderHeightFn } from './virtual-scroll-interface';

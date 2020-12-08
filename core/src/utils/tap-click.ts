@@ -1,4 +1,4 @@
-import { Config } from '../interface';
+import { Config } from '../index';
 
 import { now, pointerCoord } from './helpers';
 

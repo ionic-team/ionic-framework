@@ -1,4 +1,4 @@
-import { AnimationBuilder, Mode } from '../../interface';
+import { AnimationBuilder, Mode } from '../../index';
 
 export interface ActionSheetOptions {
   header?: string;

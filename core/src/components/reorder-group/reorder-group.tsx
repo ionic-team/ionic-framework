@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
+import { Gesture, GestureDetail, ItemReorderEventDetail } from '../../index';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 
 const enum ReorderGroupState {

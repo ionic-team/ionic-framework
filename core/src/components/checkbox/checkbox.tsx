@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { CheckboxChangeEventDetail, Color, StyleEventDetail } from '../../interface';
+import { CheckboxChangeEventDetail, Color, StyleEventDetail } from '../../index';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 

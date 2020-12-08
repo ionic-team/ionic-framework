@@ -1,4 +1,4 @@
-import { AnimationBuilder, ComponentProps } from '../../../interface';
+import { AnimationBuilder, ComponentProps } from '../../../index';
 import { NavigationHookCallback } from '../../route/route-interface';
 
 export interface HTMLStencilElement extends HTMLElement {

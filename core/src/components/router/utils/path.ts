@@ -1,4 +1,4 @@
-import { RouteChain, RouterDirection } from '../../../interface';
+import { RouteChain, RouterDirection } from '../../../index';
 
 import { ROUTER_INTENT_FORWARD } from './constants';
 

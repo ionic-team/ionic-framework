@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Side } from '../../interface';
+import { Side } from '../../index';
 import { isEndSide } from '../../utils/helpers';
 
 @Component({

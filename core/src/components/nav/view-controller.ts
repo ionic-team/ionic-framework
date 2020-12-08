@@ -1,4 +1,4 @@
-import { AnimationBuilder, ComponentProps, FrameworkDelegate, NavComponentWithProps } from '../../interface';
+import { AnimationBuilder, ComponentProps, FrameworkDelegate, NavComponentWithProps } from '../../index';
 import { attachComponent } from '../../utils/framework-delegate';
 import { assert } from '../../utils/helpers';
 

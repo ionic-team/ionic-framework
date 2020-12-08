@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../index';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { hapticSelection } from '../../utils/native/haptic';
 import { createColorClasses, hostContext } from '../../utils/theme';

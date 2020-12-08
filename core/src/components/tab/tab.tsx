@@ -1,6 +1,6 @@
 import { Build, Component, ComponentInterface, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
 
-import { ComponentRef, FrameworkDelegate } from '../../interface';
+import { ComponentRef, FrameworkDelegate } from '../../index';
 import { attachComponent } from '../../utils/framework-delegate';
 
 @Component({

@@ -1,4 +1,4 @@
-import { PickerOptions } from '../../interface';
+import { PickerOptions } from '../../index';
 
 export type DatetimeOptions = Partial<PickerOptions>;
 

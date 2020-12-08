@@ -1,4 +1,4 @@
-import { AnimationBuilder, BackButtonEvent, MenuI } from '../../interface';
+import { AnimationBuilder, BackButtonEvent, MenuI } from '../../index';
 import { MENU_BACK_BUTTON_PRIORITY } from '../hardware-back-button';
 
 import { menuOverlayAnimation } from './animations/overlay';

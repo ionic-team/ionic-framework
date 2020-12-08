@@ -1,4 +1,4 @@
-import { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../interface';
+import { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../index';
 
 export interface IonicConfig {
   /**

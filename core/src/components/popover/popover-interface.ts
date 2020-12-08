@@ -1,4 +1,4 @@
-import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../index';
 
 export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   component: T;
