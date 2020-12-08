@@ -36,3 +36,8 @@ $item-md-color:                             var(--ion-item-color, $text-color) !
 // --------------------------------------------------
 $card-md-background:                        var(--ion-card-background, $item-md-background) !default;
 $card-md-color:                             var(--ion-card-color, var(--ion-item-color, $text-color-step-450)) !default;
+
+// Material Design Refresher
+// --------------------------------------------------
+$refresher-md-background:                   var(--ion-refresher-background, var(--ion-color-step-250, #ffffff)) !default;
+$refresher-md-border-color:                 var(--ion-refresher-border-color, var(--ion-color-step-200, #ececec)) !default;
