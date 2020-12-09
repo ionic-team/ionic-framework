@@ -89,7 +89,8 @@ export const createViewStacks = () => {
       ionRoute: false,
       mount: false,
       exact: routeInfo.pathname === matchedRoute.path,
-      params: routeInfo.params
+      params: routeInfo.params,
+      vueComponentData: {}
     };
   }
 

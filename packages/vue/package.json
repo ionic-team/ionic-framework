@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "5.5.1",
+  "version": "5.5.2",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "lint": "echo add linter",
@@ -57,7 +57,7 @@
     "vue-router": "^4.0.0-rc.4"
   },
   "dependencies": {
-    "@ionic/core": "5.5.1",
+    "@ionic/core": "5.5.2",
     "ionicons": "^5.1.2"
   },
   "vetur": {

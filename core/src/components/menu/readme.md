@@ -423,7 +423,7 @@ export class MenuExample {
     </ion-content>
   </ion-menu>
 
-  <ion-router-outlet main></ion-router-outlet>
+  <ion-router-outlet id="main"></ion-router-outlet>
 </template>
 <style>
 .my-custom-menu {

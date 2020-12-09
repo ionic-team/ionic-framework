@@ -5,10 +5,16 @@ import { NavContext } from '../contexts/NavContext';
 import { RouterOptions } from '../models';
 import { RouterDirection } from '../models/RouterDirection';
 
-import { attachProps, camelToDashCase, createForwardRef, dashToPascalCase, isCoveredByReact } from './utils';
+import {
+  attachProps,
+  camelToDashCase,
+  createForwardRef,
+  dashToPascalCase,
+  isCoveredByReact,
+} from './utils';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
-  forwardedRef?: React.Ref<ElementType>;
+  forwardedRef?: React.RefObject<ElementType>;
   href?: string;
   routerLink?: string;
   ref?: React.Ref<any>;
@@ -40,7 +46,7 @@ export const createReactComponent = <PropType, ElementType>(
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       // Try to use the forwarded ref to get the child node.
       // Otherwise, use the one we created.
-      const node = (this.props.forwardedRef || this.ref.current!) as HTMLElement;
+      const node = (this.props.forwardedRef?.current || this.ref.current!) as HTMLElement;
       attachProps(node, this.props, prevProps);
     }
 
@@ -48,9 +54,15 @@ export const createReactComponent = <PropType, ElementType>(
       const { routerLink, routerDirection, routerOptions, routerAnimation } = this.props;
       if (routerLink !== undefined) {
         e.preventDefault();
-        this.context.navigate(routerLink, routerDirection, undefined, routerAnimation, routerOptions);
+        this.context.navigate(
+          routerLink,
+          routerDirection,
+          undefined,
+          routerAnimation,
+          routerOptions
+        );
       }
-    }
+    };
 
     render() {
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
@@ -70,7 +82,7 @@ export const createReactComponent = <PropType, ElementType>(
       const newProps: IonicReactInternalProps<PropType> = {
         ...propsToPass,
         ref: forwardedRef || this.ref,
-        style
+        style,
       };
 
       if (routerLinkComponent) {
@@ -90,11 +102,7 @@ export const createReactComponent = <PropType, ElementType>(
         }
       }
 
-      return React.createElement(
-        tagName,
-        newProps,
-        children
-      );
+      return React.createElement(tagName, newProps, children);
     }
 
     static get displayName() {

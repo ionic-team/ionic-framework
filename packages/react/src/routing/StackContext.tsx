@@ -9,5 +9,5 @@ export interface StackContextState {
 
 export const StackContext = React.createContext<StackContextState>({
   registerIonPage: () => undefined,
-  isInOutlet: () => false
+  isInOutlet: () => false,
 });

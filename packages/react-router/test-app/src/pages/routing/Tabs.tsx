@@ -8,11 +8,9 @@ import Tab3 from './Tab3';
 import { triangle, ellipse, square } from 'ionicons/icons';
 import SettingsDetails from './SettingsDetails';
 
-interface TabsProps {
-}
+interface TabsProps {}
 
 const Tabs: React.FC<TabsProps> = () => {
-
   return (
     <IonTabs>
       <IonRouterOutlet id="tabs">
@@ -24,12 +22,20 @@ const Tabs: React.FC<TabsProps> = () => {
         <Route path="/routing/tabs/settings" component={Tab2} exact={true} />
         <Route path="/routing/tabs/settings/details/:id" component={SettingsDetails} exact={true} />
         <Route path="/routing/tabs/tab3" component={Tab3} />
-        <Route path="/routing/tabs" render={() => <Redirect to="/routing/tabs/home" />} exact={true} />
-        <Route path="/routing/tabs/redirect" render={() => <Redirect to="/routing/tabs/settings" />} exact={true} />
+        <Route
+          path="/routing/tabs"
+          render={() => <Redirect to="/routing/tabs/home" />}
+          exact={true}
+        />
+        <Route
+          path="/routing/tabs/redirect"
+          render={() => <Redirect to="/routing/tabs/settings" />}
+          exact={true}
+        />
         {/* <Route path="/routing/tabs" render={() => <Route render={() => <Redirect to="/tabs/home" />} />} /> */}
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="home" href="/routing/tabs/home" routerOptions={{unmount: true}}>
+        <IonTabButton tab="home" href="/routing/tabs/home" routerOptions={{ unmount: true }}>
           <IonIcon icon={triangle} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
