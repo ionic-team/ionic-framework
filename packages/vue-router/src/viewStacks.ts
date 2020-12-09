@@ -66,13 +66,8 @@ export const createViewStacks = () => {
       const stack = viewStacks[outletId];
       if (!stack) return undefined;
 
-      const quickMatch = findViewItemInStack(path, stack);
-      if (quickMatch) return quickMatch;
-
-      if (!strict) {
-        const match = stack.find(matchView);
-        if (match) return match;
-      }
+      const match = (strict) ? findViewItemInStack(path, stack) : stack.find(matchView);
+      if (match) return match;
     } else {
       for (let outletId in viewStacks) {
         const stack = viewStacks[outletId];
