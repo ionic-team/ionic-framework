@@ -41,8 +41,8 @@
   "peerDependencies": {
     "@ionic/core": "5.5.1",
     "@ionic/react": "5.5.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": ">=16.8.6",
+    "react-dom": ">=16.8.6",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },
