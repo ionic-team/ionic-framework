@@ -20,14 +20,19 @@ export const createViewStacks = () => {
 
   const registerIonPage = (viewItem: ViewItem, ionPage: HTMLElement) => {
     viewItem.ionPageElement = ionPage;
+    viewItem.ionRoute = true;
   }
 
   const findViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number) => {
     return findViewItemByPath(routeInfo.pathname, outletId);
   }
 
-  const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number) => {
-    return findViewItemByPath(routeInfo.lastPathname, outletId, false);
+  const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number, mustBeIonRoute: boolean = true) => {
+    return findViewItemByPath(routeInfo.lastPathname, outletId, false, mustBeIonRoute);
+  }
+
+  const findViewItemByPathname = (pathname: string, outletId?: number) => {
+    return findViewItemByPath(pathname, outletId);
   }
 
   const findViewItemInStack = (path: string, stack: ViewItem[]): ViewItem | undefined => {
@@ -40,8 +45,12 @@ export const createViewStacks = () => {
     })
   }
 
-  const findViewItemByPath = (path: string, outletId?: number, strict: boolean = true): ViewItem | undefined => {
+  const findViewItemByPath = (path: string, outletId?: number, strict: boolean = true, mustBeIonRoute: boolean = false): ViewItem | undefined => {
     const matchView = (viewItem: ViewItem) => {
+      if (mustBeIonRoute && !viewItem.ionRoute) {
+        return false;
+      }
+
       const pathname = path;
       const viewItemPath = viewItem.matchedRoute.path;
 
@@ -125,6 +134,7 @@ export const createViewStacks = () => {
     clear,
     findViewItemByRouteInfo,
     findLeavingViewItemByRouteInfo,
+    findViewItemByPathname,
     createViewItem,
     getChildrenToRender,
     add,

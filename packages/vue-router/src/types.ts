@@ -20,6 +20,7 @@ export interface RouteInfo {
   routerDirection?: RouteDirection;
   routerAnimation?: AnimationBuilder;
   lastPathname?: string;
+  prevRouteLastPathname?: string;
   pathname?: string;
   search?: string;
   params?: { [k: string]: any };

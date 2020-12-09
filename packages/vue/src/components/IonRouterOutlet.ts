@@ -192,17 +192,21 @@ export const IonRouterOutlet = defineComponent({
 
     const handlePageTransition = async () => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
-      const { routerDirection, routerAction, routerAnimation } = routeInfo;
+      const { routerDirection, routerAction, routerAnimation, prevRouteLastPathname } = routeInfo;
 
       const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
-      const leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id);
+      let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id);
       const enteringEl = enteringViewItem.ionPageElement;
 
       if (enteringViewItem === leavingViewItem) return;
 
+      if (!leavingViewItem && prevRouteLastPathname) {
+        leavingViewItem = viewStacks.findViewItemByPathname(prevRouteLastPathname, id);
+      }
+
       fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
 
-      if (leavingViewItem) {
+      if (leavingViewItem && enteringViewItem !== leavingViewItem) {
         let animationBuilder = routerAnimation;
         const leavingEl = leavingViewItem.ionPageElement;
 
