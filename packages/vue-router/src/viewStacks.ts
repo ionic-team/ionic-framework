@@ -54,7 +54,7 @@ export const createViewStacks = (router: Router) => {
       }
 
       const resolvedPath = router.resolve(path);
-      const findMatchedRoute = resolvedPath.matched.find((matchedRoute: RouteLocationMatched) => matchedRoute === viewItem.matchedRoute && path === viewItem.pathname);
+      const findMatchedRoute = resolvedPath.matched.find((matchedRoute: RouteLocationMatched) => matchedRoute === viewItem.matchedRoute && (path === viewItem.pathname || matchedRoute.path.includes(':')));
 
       if (findMatchedRoute) {
         return viewItem;
