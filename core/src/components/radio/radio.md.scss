@@ -12,11 +12,10 @@
   --border-radius: #{$radio-md-icon-border-radius};
 
   @include border-radius(50%);
+  @include padding($radio-md-padding);
 
   width: $radio-md-width;
   height: $radio-md-height;
-
-  padding: $radio-md-padding;
 
   overflow: hidden;
 }
