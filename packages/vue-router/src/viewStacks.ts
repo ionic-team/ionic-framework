@@ -67,7 +67,7 @@ export const createViewStacks = (router: Router) => {
       const stack = viewStacks[outletId];
       if (!stack) return undefined;
 
-      const match = stack.find(matchView);
+      const match = (router) ? stack.find(matchView) : findViewItemInStack(path, stack)
       if (match) return match;
     } else {
       for (let outletId in viewStacks) {
