@@ -59,7 +59,7 @@ export class Tab implements ComponentInterface {
   }
 
   private prepareLazyLoaded(): Promise<HTMLElement | undefined> {
-    if (!this.loaded && this.component != null) {
+    if (!this.loaded && this.component !== undefined) {
       this.loaded = true;
       try {
         return attachComponent(this.delegate, this.el, this.component, ['ion-page']);
