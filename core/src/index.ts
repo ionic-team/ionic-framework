@@ -1,4 +1,6 @@
+
 import 'ionicons';
+// tslint:disable-next-line
 import { Components as IoniconsComponents, JSX as IoniconsJSX } from 'ionicons';
 
 export * from './components';
@@ -89,12 +91,12 @@ export interface StyleEventDetail {
 
 declare module './components' {
   export namespace Components {
-    export interface IonIcon extends IoniconsComponents.IonIcon{}
+    export interface IonIcon extends IoniconsComponents.IonIcon{} // tslint:disable-line
   }
 }
 
 declare module './components' {
   export namespace JSX {
-    export interface IonIcon extends IoniconsJSX.IonIcon {}
+    export interface IonIcon extends IoniconsJSX.IonIcon{} // tslint:disable-line
   }
 }
