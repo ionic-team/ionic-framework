@@ -704,7 +704,7 @@ ion-menu-toggle,prop,menu,string | undefined,undefined,false,false
 ion-modal,scoped
 ion-modal,prop,animated,boolean,true,false,false
 ion-modal,prop,backdropDismiss,boolean,true,false,false
-ion-modal,prop,component,Function | HTMLElement | null | string,undefined,true,false
+ion-modal,prop,component,() => string | {} | HTMLElement | null,undefined,true,false
 ion-modal,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-modal,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
@@ -738,7 +738,7 @@ ion-modal,css-prop,--width
 ion-nav,shadow
 ion-nav,prop,animated,boolean,true,false,false
 ion-nav,prop,animation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
-ion-nav,prop,root,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
+ion-nav,prop,root,(() => string | {} | HTMLElement | null) | ViewController | undefined,undefined,false,false
 ion-nav,prop,rootParams,undefined | { [key: string]: any; },undefined,false,false
 ion-nav,prop,swipeGesture,boolean | undefined,undefined,false,false
 ion-nav,method,canGoBack,canGoBack(view?: ViewController | undefined) => Promise<boolean>
@@ -758,7 +758,7 @@ ion-nav,event,ionNavDidChange,void,false
 ion-nav,event,ionNavWillChange,void,false
 
 ion-nav-link,none
-ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
+ion-nav-link,prop,component,(() => string | {} | HTMLElement | null) | ViewController | undefined,undefined,false,false
 ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-nav-link,prop,routerAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
@@ -806,7 +806,7 @@ ion-picker,css-prop,--width
 ion-popover,scoped
 ion-popover,prop,animated,boolean,true,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false
-ion-popover,prop,component,Function | HTMLElement | null | string,undefined,true,false
+ion-popover,prop,component,() => string | {} | HTMLElement | null,undefined,true,false
 ion-popover,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-popover,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-popover,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
@@ -1160,7 +1160,7 @@ ion-split-pane,css-prop,--side-min-width
 ion-split-pane,css-prop,--side-width
 
 ion-tab,shadow
-ion-tab,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
+ion-tab,prop,component,(() => string | {} | HTMLElement | null) | undefined,undefined,false,false
 ion-tab,prop,tab,string,undefined,true,false
 ion-tab,method,setActive,setActive() => Promise<void>
 
