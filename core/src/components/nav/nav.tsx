@@ -404,6 +404,8 @@ export class Nav implements NavOutlet {
     };
 
     if (direction === 'root') {
+      // TODO: look into type error
+      // @ts-ignore
       finish = this.setRoot(id, params, commonOpts);
     } else {
       const viewController = this.views.find(v => matches(v, id, params));
@@ -415,11 +417,15 @@ export class Nav implements NavOutlet {
           animationBuilder: animation
         });
       } else if (direction === 'forward') {
+        // TODO: look into type error
+        // @ts-ignore
         finish = this.push(id, params, {
           ...commonOpts,
           animationBuilder: animation
         });
       } else if (direction === 'back') {
+        // TODO: look into type error
+        // @ts-ignore
         finish = this.setRoot(id, params, {
           ...commonOpts,
           direction: 'back',

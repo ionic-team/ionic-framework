@@ -132,6 +132,8 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   /** @internal */
   @Method()
   async setRouteId(id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder): Promise<RouteWrite> {
+    // TODO: look into type error
+    // @ts-ignore
     const changed = await this.setRoot(id, params, {
       duration: direction === 'root' ? 0 : undefined,
       direction: direction === 'back' ? 'back' : 'forward',
