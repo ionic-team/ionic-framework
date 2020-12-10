@@ -3,7 +3,7 @@ import { ComponentRef, FrameworkDelegate } from '../index';
 export const attachComponent = async (
   delegate: FrameworkDelegate | undefined,
   container: Element,
-  component: ComponentRef,
+  component: ComponentRef | string,
   cssClasses?: string[],
   componentProps?: { [key: string]: any }
 ): Promise<HTMLElement> => {
