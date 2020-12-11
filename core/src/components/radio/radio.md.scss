@@ -86,11 +86,11 @@
 // Material Design Radio: Keyboard Focus
 // -----------------------------------------
 
-.radio-ripple {
+.radio-focus {
   background: ion-color(primary, base, 0.12);
 }
 
-:host(.ion-color) .radio-ripple {
+:host(.ion-color) .radio-focus {
   background: current-color(base, 0.12);
 }
 

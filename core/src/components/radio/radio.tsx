@@ -163,7 +163,7 @@ export class Radio implements ComponentInterface {
         <div class="radio-icon" part="container">
           <div class="radio-inner" part="mark" />
         </div>
-        <div class="radio-ripple"></div>
+        <div class="radio-focus"></div>
         {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
         <label htmlFor={inputId}>
           {labelText}

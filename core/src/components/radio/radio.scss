@@ -70,7 +70,7 @@ input {
   outline:none;
 }
 
-.radio-ripple {
+.radio-focus {
   @include border-radius(50%);
   @include position(0, null, null, 0);
 
@@ -84,7 +84,7 @@ input {
   opacity: 0;
 }
 
-:host(:focus) .radio-ripple {
+:host(:focus) .radio-focus {
   opacity: 1;
 }
 
