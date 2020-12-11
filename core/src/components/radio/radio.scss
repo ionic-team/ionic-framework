@@ -72,6 +72,7 @@ input {
 
 .radio-ripple {
   @include border-radius(50%);
+  @include position(0, null, null, 0);
 
   position: absolute;
 

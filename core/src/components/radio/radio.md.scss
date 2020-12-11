@@ -87,11 +87,6 @@
 // -----------------------------------------
 
 .radio-ripple {
-  @include position(-12px, null, null, -12px);
-
-  width: 40px;
-  height: 40px;
-
   background: ion-color(primary, base, 0.12);
 }
 
