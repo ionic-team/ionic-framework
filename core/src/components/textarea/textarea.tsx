@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
-import { debounceEvent, findItemLabel, raf } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, inheritAttributes, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -22,6 +22,7 @@ export class Textarea implements ComponentInterface {
   private inputId = `ion-textarea-${textareaIds++}`;
   private didBlurAfterEdit = false;
   private textareaWrapper?: HTMLElement;
+  private inheritedAttributes: { [k: string]: any } = {};
 
   /**
    * This is required for a WebKit bug which requires us to
@@ -60,7 +61,7 @@ export class Textarea implements ComponentInterface {
   @Prop({ mutable: true }) clearOnEdit = false;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
    */
   @Prop() debounce = 0;
 
@@ -210,6 +211,10 @@ export class Textarea implements ComponentInterface {
         detail: this.el
       }));
     }
+  }
+
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['title']);
   }
 
   componentDidLoad() {
@@ -379,6 +384,7 @@ export class Textarea implements ComponentInterface {
             onBlur={this.onBlur}
             onFocus={this.onFocus}
             onKeyDown={this.onKeyDown}
+            {...this.inheritedAttributes}
           >
             {value}
           </textarea>

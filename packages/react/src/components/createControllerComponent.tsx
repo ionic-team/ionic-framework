@@ -16,18 +16,22 @@ export interface ReactControllerProps {
   onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
 }
 
-export const createControllerComponent = <OptionsType extends object, OverlayType extends OverlayBase>(
+export const createControllerComponent = <
+  OptionsType extends object,
+  OverlayType extends OverlayBase
+>(
   displayName: string,
-  controller: { create: (options: OptionsType) => Promise<OverlayType>; }
+  controller: { create: (options: OptionsType) => Promise<OverlayType> }
 ) => {
   const didDismissEventName = `on${displayName}DidDismiss`;
   const didPresentEventName = `on${displayName}DidPresent`;
   const willDismissEventName = `on${displayName}WillDismiss`;
   const willPresentEventName = `on${displayName}WillPresent`;
 
-  type Props = OptionsType & ReactControllerProps & {
-    forwardedRef?: React.RefObject<OverlayType>;
-  };
+  type Props = OptionsType &
+    ReactControllerProps & {
+      forwardedRef?: React.RefObject<OverlayType>;
+    };
 
   class Overlay extends React.Component<Props> {
     overlay?: OverlayType;
@@ -51,7 +55,9 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
 
     componentWillUnmount() {
       this.isUnmounted = true;
-      if (this.overlay) { this.overlay.dismiss(); }
+      if (this.overlay) {
+        this.overlay.dismiss();
+      }
     }
 
     async componentDidUpdate(prevProps: Props) {
@@ -73,16 +79,30 @@ export const createControllerComponent = <OptionsType extends object, OverlayTyp
     }
 
     async present(prevProps?: Props) {
-      const { isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } = this.props;
+      const {
+        isOpen,
+        onDidDismiss,
+        onDidPresent,
+        onWillDismiss,
+        onWillPresent,
+        ...cProps
+      } = this.props;
       this.overlay = await controller.create({
-        ...cProps as any
+        ...(cProps as any),
       });
-      attachProps(this.overlay, {
-        [didDismissEventName]: this.handleDismiss,
-        [didPresentEventName]: (e: CustomEvent) => this.props.onDidPresent && this.props.onDidPresent(e),
-        [willDismissEventName]: (e: CustomEvent) => this.props.onWillDismiss && this.props.onWillDismiss(e),
-        [willPresentEventName]: (e: CustomEvent) => this.props.onWillPresent && this.props.onWillPresent(e)
-      }, prevProps);
+      attachProps(
+        this.overlay,
+        {
+          [didDismissEventName]: this.handleDismiss,
+          [didPresentEventName]: (e: CustomEvent) =>
+            this.props.onDidPresent && this.props.onDidPresent(e),
+          [willDismissEventName]: (e: CustomEvent) =>
+            this.props.onWillDismiss && this.props.onWillDismiss(e),
+          [willPresentEventName]: (e: CustomEvent) =>
+            this.props.onWillPresent && this.props.onWillPresent(e),
+        },
+        prevProps
+      );
       // Check isOpen again since the value could have changed during the async call to controller.create
       // It's also possible for the component to have become unmounted.
       if (this.props.isOpen === true && this.isUnmounted === false) {

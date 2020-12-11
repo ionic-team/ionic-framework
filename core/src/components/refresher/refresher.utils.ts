@@ -166,9 +166,14 @@ export const translateElement = (el?: HTMLElement, value?: string) => {
 // Utils
 // -----------------------------
 
-export const shouldUseNativeRefresher = (referenceEl: HTMLIonRefresherElement, mode: string) => {
-  const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
-  const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
+export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElement, mode: string) => {
+  const refresherContent = referenceEl.querySelector('ion-refresher-content');
+  if (!refresherContent) { return Promise.resolve(false); }
+
+  await refresherContent.componentOnReady();
+
+  const pullingSpinner = refresherContent.querySelector('.refresher-pulling ion-spinner');
+  const refreshingSpinner = refresherContent.querySelector('.refresher-refreshing ion-spinner');
 
   return (
     pullingSpinner !== null &&

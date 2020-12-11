@@ -1,4 +1,3 @@
-
 import { AnimationBuilder } from '@ionic/core';
 import React from 'react';
 
@@ -14,8 +13,16 @@ import PageManager from './PageManager';
 
 interface NavManagerProps {
   routeInfo: RouteInfo;
+  onNativeBack: () => void;
   onNavigateBack: (route?: string | RouteInfo, animationBuilder?: AnimationBuilder) => void;
-  onNavigate: (path: string, action: RouteAction, direction?: RouterDirection, animationBuilder?: AnimationBuilder, options?: any, tab?: string) => void;
+  onNavigate: (
+    path: string,
+    action: RouteAction,
+    direction?: RouterDirection,
+    animationBuilder?: AnimationBuilder,
+    options?: any,
+    tab?: string
+  ) => void;
   onSetCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
   onChangeTab: (tab: string, path: string, routeOptions?: any) => void;
   onResetTab: (tab: string, path: string, routeOptions?: any) => void;
@@ -26,16 +33,22 @@ interface NavManagerProps {
 }
 
 export class NavManager extends React.PureComponent<NavManagerProps, NavContextState> {
-
   ionRouterContextValue: IonRouterContextState = {
-    push: (pathname: string, routerDirection?: RouterDirection, routeAction?: RouteAction, routerOptions?: RouterOptions, animationBuilder?: AnimationBuilder) => {
+    push: (
+      pathname: string,
+      routerDirection?: RouterDirection,
+      routeAction?: RouteAction,
+      routerOptions?: RouterOptions,
+      animationBuilder?: AnimationBuilder
+    ) => {
       this.navigate(pathname, routerDirection, routeAction, animationBuilder, routerOptions);
     },
     back: (animationBuilder?: AnimationBuilder) => {
       this.goBack(undefined, animationBuilder);
     },
     canGoBack: () => this.props.locationHistory.canGoBack(),
-    routeInfo: this.props.routeInfo
+    nativeBack: () => this.props.onNativeBack(),
+    routeInfo: this.props.routeInfo,
   };
 
   constructor(props: NavManagerProps) {
@@ -57,7 +70,7 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
     if (typeof document !== 'undefined') {
       document.addEventListener('ionBackButton', (e: any) => {
         e.detail.register(0, (processNextHandler: () => void) => {
-          this.goBack();
+          this.nativeGoBack();
           processNextHandler();
         });
       });
@@ -68,7 +81,18 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
     this.props.onNavigateBack(route, animationBuilder);
   }
 
-  navigate(path: string, direction: RouterDirection = 'forward', action: RouteAction = 'push', animationBuilder?: AnimationBuilder, options?: any, tab?: string) {
+  nativeGoBack() {
+    this.props.onNativeBack();
+  }
+
+  navigate(
+    path: string,
+    direction: RouterDirection = 'forward',
+    action: RouteAction = 'push',
+    animationBuilder?: AnimationBuilder,
+    options?: any,
+    tab?: string
+  ) {
     this.props.onNavigate(path, action, direction, animationBuilder, options, tab);
   }
 
@@ -91,11 +115,12 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
   render() {
     return (
       <NavContext.Provider value={{ ...this.state, routeInfo: this.props.routeInfo }}>
-        <IonRouterContext.Provider value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}>
+        <IonRouterContext.Provider
+          value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}
+        >
           {this.props.children}
         </IonRouterContext.Provider>
       </NavContext.Provider>
     );
   }
-
 }

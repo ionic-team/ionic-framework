@@ -9,7 +9,6 @@ export class LocationHistory {
   } = {};
 
   add(routeInfo: RouteInfo) {
-
     if (routeInfo.routeAction === 'push' || routeInfo.routeAction == null) {
       this._add(routeInfo);
     } else if (routeInfo.routeAction === 'pop') {
@@ -27,21 +26,21 @@ export class LocationHistory {
   clearTabStack(tab: string) {
     const routeInfos = this._getRouteInfosByKey(tab);
     if (routeInfos) {
-      routeInfos.forEach(ri => {
-        this.locationHistory = this.locationHistory.filter(x => x.id !== ri.id);
+      routeInfos.forEach((ri) => {
+        this.locationHistory = this.locationHistory.filter((x) => x.id !== ri.id);
       });
       this.tabHistory[tab] = [];
     }
   }
 
   update(routeInfo: RouteInfo) {
-    const locationIndex = this.locationHistory.findIndex(x => x.id === routeInfo.id);
+    const locationIndex = this.locationHistory.findIndex((x) => x.id === routeInfo.id);
     if (locationIndex > -1) {
       this.locationHistory.splice(locationIndex, 1, routeInfo);
     }
     const tabArray = this.tabHistory[routeInfo.tab || ''];
     if (tabArray) {
-      const tabIndex = tabArray.findIndex(x => x.id === routeInfo.id);
+      const tabIndex = tabArray.findIndex((x) => x.id === routeInfo.id);
       if (tabIndex > -1) {
         tabArray.splice(tabIndex, 1, routeInfo);
       } else {
@@ -98,7 +97,7 @@ export class LocationHistory {
 
   private _clear() {
     const keys = Object.keys(this.tabHistory);
-    keys.forEach(k => this.tabHistory[k] = []);
+    keys.forEach((k) => (this.tabHistory[k] = []));
     this.locationHistory = [];
   }
 
@@ -153,7 +152,10 @@ export class LocationHistory {
   }
 
   previous() {
-    return this.locationHistory[this.locationHistory.length - 2] || this.locationHistory[this.locationHistory.length - 1];
+    return (
+      this.locationHistory[this.locationHistory.length - 2] ||
+      this.locationHistory[this.locationHistory.length - 1]
+    );
   }
 
   current() {

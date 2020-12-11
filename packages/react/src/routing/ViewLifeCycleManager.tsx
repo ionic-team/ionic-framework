@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 import { DefaultIonLifeCycleContext, IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
@@ -12,7 +11,10 @@ interface ViewTransitionManagerState {
   show: boolean;
 }
 
-export class ViewLifeCycleManager extends React.Component<ViewTransitionManagerProps, ViewTransitionManagerState> {
+export class ViewLifeCycleManager extends React.Component<
+  ViewTransitionManagerProps,
+  ViewTransitionManagerState
+> {
   ionLifeCycleContext = new DefaultIonLifeCycleContext();
   private _isMounted = false;
 
@@ -22,15 +24,18 @@ export class ViewLifeCycleManager extends React.Component<ViewTransitionManagerP
     this.ionLifeCycleContext.onComponentCanBeDestroyed(() => {
       if (!this.props.mount) {
         if (this._isMounted) {
-          this.setState({
-            show: false
-          }, () => this.props.removeView());
+          this.setState(
+            {
+              show: false,
+            },
+            () => this.props.removeView()
+          );
         }
       }
     });
 
     this.state = {
-      show: true
+      show: true,
     };
   }
 

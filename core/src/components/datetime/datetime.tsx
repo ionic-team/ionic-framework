@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { DatetimeChangeEventDetail, DatetimeOptions, PickerColumn, PickerColumnOption, PickerOptions, StyleEventDetail } from '../../interface';
-import { clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
+import { addEventListener, clamp, findItemLabel, renderHiddenInput } from '../../utils/helpers';
 import { pickerController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 
@@ -271,7 +271,7 @@ export class Datetime implements ComponentInterface {
       this.isExpanded = false;
       this.setFocus();
     });
-    picker.addEventListener('ionPickerColChange', async (event: any) => {
+    addEventListener(picker, 'ionPickerColChange', async (event: any) => {
       const data = event.detail;
 
       const colSelectedIndex = data.selectedIndex;
@@ -285,7 +285,7 @@ export class Datetime implements ComponentInterface {
       if (data.name !== 'ampm' && this.datetimeValue.ampm !== undefined) {
         changeData['ampm'] = {
           value: this.datetimeValue.ampm
-        }
+        };
       }
 
       this.updateDatetimeValue(changeData);

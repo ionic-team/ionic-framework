@@ -15,7 +15,9 @@ const packages = [
   'angular',
   'packages/react',
   'packages/react-router',
-  'packages/angular-server'
+  'packages/angular-server',
+  'packages/vue',
+  'packages/vue-router'
 ];
 
 function readPkg(project) {
@@ -132,7 +134,7 @@ function preparePackage(tasks, package, version, install) {
         title: `${pkg.name}: install npm dependencies`,
         task: async () => {
           await fs.remove(path.join(projectRoot, 'node_modules'));
-          await execa('npm', ['i'], { cwd: projectRoot });
+          await execa('npm', ['i', '--legacy-peer-deps'], { cwd: projectRoot });
         }
       });
     }
@@ -142,13 +144,13 @@ function preparePackage(tasks, package, version, install) {
     if (package !== 'core') {
       projectTasks.push({
         title: `${pkg.name}: npm link @ionic/core`,
-        task: () => execa('npm', ['link', '@ionic/core'], { cwd: projectRoot })
+        task: () => execa('npm', ['link', '@ionic/core', '--legacy-peer-deps'], { cwd: projectRoot })
       });
 
       if (package === 'packages/react-router') {
         projectTasks.push({
           title: `${pkg.name}: npm link @ionic/react`,
-          task: () => execa('npm', ['link', '@ionic/react'], { cwd: projectRoot })
+          task: () => execa('npm', ['link', '@ionic/react', '--legacy-peer-deps'], { cwd: projectRoot })
         });
       }
     }
@@ -208,13 +210,13 @@ function prepareDevPackage(tasks, package, version) {
     if (package !== 'core') {
       projectTasks.push({
         title: `${pkg.name}: npm link @ionic/core`,
-        task: () => execa('npm', ['link', '@ionic/core'], { cwd: projectRoot })
+        task: () => execa('npm', ['link', '@ionic/core', '--legacy-peer-deps'], { cwd: projectRoot })
       });
 
       if (package === 'packages/react-router') {
         projectTasks.push({
           title: `${pkg.name}: npm link @ionic/react`,
-          task: () => execa('npm', ['link', '@ionic/react'], { cwd: projectRoot })
+          task: () => execa('npm', ['link', '@ionic/react', '--legacy-peer-deps'], { cwd: projectRoot })
         });
       }
     }
