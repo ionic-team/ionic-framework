@@ -21,7 +21,6 @@ tmp/
 temp/
 core/theme-builder/
 core/test-components/
-core/components/
 core/css/
 angular/css/
 $RECYCLE.BIN/
@@ -66,4 +65,3 @@ core/loader/
 core/www/
 .stencil/
 angular/build/
-core/components/

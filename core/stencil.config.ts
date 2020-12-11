@@ -117,8 +117,7 @@ export const config: Config = {
       esmLoaderPath: '../loader'
     },
     {
-      type: 'dist-custom-elements-bundle',
-      dir: 'components',
+      type: 'dist-custom-elements-bundle'
     },
     {
       type: 'docs-readme',
