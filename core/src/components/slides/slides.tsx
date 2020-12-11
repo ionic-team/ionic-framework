@@ -6,6 +6,10 @@ import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @slot - Default slot for adding children of .swiper-wrapper, so all ion-slide should use this slot.
+ * @slot top - Content is placed within .swiper-container, before .swiper-wrapper.
+ * @slot bottom - Content is placed within .swiper-container, after .swiper-wrapper.
  */
 @Component({
   tag: 'ion-slides',
