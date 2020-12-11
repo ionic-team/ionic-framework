@@ -23,6 +23,7 @@
 
     <ion-content id="content">
       <ion-slides style="background: black" id="slides" pager>
+        <div slot="top">content before slides</div>
         <ion-slide style="background: rgb(0, 200, 0); color: white;">
           <h1>Slide 1</h1>
         </ion-slide>
@@ -32,7 +33,9 @@
         <ion-slide style="background: blue; color: white;">
           <h1>Slide 3</h1>
         </ion-slide>
+        <div slot="bottom">content after slides</div>
       </ion-slides>
+      
       <ion-button expand="block" onclick="addSlide()">Add slide</ion-button>
       <ion-button expand="block" onclick="removeSlide()">Remove slide</ion-button>
 
