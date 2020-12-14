@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "5.5.1",
+  "version": "5.5.2",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -39,13 +39,13 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "5.5.1",
+    "@ionic/core": "5.5.2",
     "ionicons": "^5.1.2",
     "tslib": "*"
   },
   "peerDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": ">=16.8.6",
+    "react-dom": ">=16.8.6"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^8.1.0",

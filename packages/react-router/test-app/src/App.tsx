@@ -32,6 +32,7 @@ import ReplaceAction from './pages/replace-action/Replace';
 import TabsContext from './pages/tab-context/TabContext';
 import { OutletRef } from './pages/outlet-ref/OutletRef';
 import { SwipeToGoBack } from './pages/swipe-to-go-back/SwipToGoBack';
+import Refs from './pages/refs/Refs';
 debugger;
 const App: React.FC = () => {
   return (
@@ -48,6 +49,7 @@ const App: React.FC = () => {
         <Route path="/tab-context" component={TabsContext} />
         <Route path="/outlet-ref" component={OutletRef} />
         <Route path="/swipe-to-go-back" component={SwipeToGoBack} />
+        <Route path="/refs" component={Refs} />
       </IonReactRouter>
     </IonApp>
   );
