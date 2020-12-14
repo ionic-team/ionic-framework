@@ -30,57 +30,53 @@ import { useRoute } from 'vue-router';
 import { ref, computed, watch } from 'vue';
 
 export default {
-name: 'Folder',
-components: {
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonMenuButton,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-},
-setup() {
-  const route = useRoute();
-  const folder = ref(route.params.id || 'Inbox');
-  const matchedFolder = computed(() => route.params.id);
+  name: 'Folder',
+  components: {
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonMenuButton,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+  },
+  setup() {
+    const route = useRoute();
+    const folder = ref(route.params.id || 'Inbox');
+    const matchedFolder = computed(() => route.params.id);
 
-  watch(matchedFolder, () => {
-    folder.value = matchedFolder.value as string;
-  })
+    watch(matchedFolder, () => {
+      folder.value = matchedFolder.value as string;
+    })
 
-  return { folder }
-}
+    return { folder }
+  }
 }
 </script>
 
 <style scoped>
-ion-menu-button {
-color: var(--ion-color-primary);
-}
+  #container {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
-#container {
-text-align: center;
-position: absolute;
-left: 0;
-right: 0;
-top: 50%;
-transform: translateY(-50%);
-}
+  #container strong {
+    font-size: 20px;
+    line-height: 26px;
+  }
 
-#container strong {
-font-size: 20px;
-line-height: 26px;
-}
+  #container p {
+    font-size: 16px;
+    line-height: 22px;
+    color: #8c8c8c;
+    margin: 0;
+  }
 
-#container p {
-font-size: 16px;
-line-height: 22px;
-color: #8c8c8c;
-margin: 0;
-}
-
-#container a {
-text-decoration: none;
-}
+  #container a {
+    text-decoration: none;
+  }
 </style>
