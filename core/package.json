@@ -22,7 +22,7 @@
   "jsnext:main": "dist/esm/index.js",
   "collection:main": "dist/collection/index.js",
   "collection": "dist/collection/collection-manifest.json",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/types/interface.d.ts",
   "files": [
     "css/",
     "dist/",
