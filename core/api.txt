@@ -1259,6 +1259,7 @@ ion-title,css-prop,--color
 ion-toast,shadow
 ion-toast,prop,animated,boolean,true,false,false
 ion-toast,prop,buttons,(string | ToastButton)[] | undefined,undefined,false,false
+ion-toast,prop,centeredText,boolean,false,false,false
 ion-toast,prop,color,string | undefined,undefined,false,false
 ion-toast,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-toast,prop,duration,number,0,false,false

@@ -2536,6 +2536,10 @@ export namespace Components {
          */
         "buttons"?: (ToastButton | string)[];
         /**
+          * If `true`, the text of the toast will be centered.
+         */
+        "centeredText": boolean;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -5866,6 +5870,10 @@ declare namespace LocalJSX {
           * An array of buttons for the toast.
          */
         "buttons"?: (ToastButton | string)[];
+        /**
+          * If `true`, the text of the toast will be centered.
+         */
+        "centeredText"?: boolean;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */

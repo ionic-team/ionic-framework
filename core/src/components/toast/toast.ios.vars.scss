@@ -13,7 +13,7 @@ $toast-ios-translucent-background-color-alpha:    .8 !default;
 $toast-ios-translucent-background-color:          rgba($background-color-rgb, $toast-ios-translucent-background-color-alpha) !default;
 
 /// @prop - Border radius of the toast wrapper
-$toast-ios-border-radius:                         14px !default;
+$toast-ios-border-radius:                         100px !default;
 
 /// @prop - Color of the toast title
 $toast-ios-title-color:                           $text-color-step-150 !default;
@@ -28,7 +28,7 @@ $toast-ios-header-margin-bottom:                  2px !default;
 $toast-ios-content-font-size:                     14px !default;
 
 /// @prop - Padding top of the toast content
-$toast-ios-content-padding-top:                   15px !default;
+$toast-ios-content-padding-top:                   16px !default;
 
 /// @prop - Padding end of the toast content
 $toast-ios-content-padding-end:                   $toast-ios-content-padding-top !default;
