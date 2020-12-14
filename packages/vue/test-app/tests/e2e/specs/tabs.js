@@ -85,6 +85,8 @@ describe('Tabs', () => {
   });
 
   it('should go back from a tabs page to a non-tabs page using ion-back-button', () => {
+    cy.visit('http://localhost:8080');
+
     cy.get('#tabs').click();
     cy.ionPageVisible('tab1');
 
@@ -97,6 +99,8 @@ describe('Tabs', () => {
   });
 
   it('should properly clear stack when leaving tabs', () => {
+    cy.visit('http://localhost:8080/');
+
     cy.get('#tabs').click();
     cy.ionPageVisible('tab1');
 

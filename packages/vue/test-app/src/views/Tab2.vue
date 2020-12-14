@@ -2,6 +2,9 @@
   <ion-page data-pageid="tab2">
     <ion-header>
       <ion-toolbar>
+        <ion-buttons>
+          <ion-back-button default-href="/"></ion-back-button>
+        </ion-buttons>
         <ion-title>Tab 2</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -20,9 +23,29 @@
 </template>
 
 <script>
-  import { IonItem, IonLabel, IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+  import {
+    IonButtons,
+    IonBackButton,
+    IonItem,
+    IonLabel,
+    IonPage,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent
+  } from '@ionic/vue';
 
   export default {
-    components: { IonItem, IonLabel, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
+    components: {
+      IonButtons,
+      IonBackButton,
+      IonItem,
+      IonLabel,
+      IonPage,
+      IonHeader,
+      IonToolbar,
+      IonTitle,
+      IonContent
+    }
   }
 </script>
