@@ -68,6 +68,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'two',
         component: () => import('@/views/NestedChildTwo.vue')
+      },
+      {
+        path: ':id',
+        component: () => import('@/views/Folder.vue')
       }
     ]
   },

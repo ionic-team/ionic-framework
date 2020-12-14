@@ -147,6 +147,28 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab3-secondary');
     cy.ionPageHidden('tab1-secondary');
   });
+
+  // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519
+  it('should show correct tab when switching between tabbed and non-tabbed contexts', () => {
+    cy.visit('http://localhost:8080/routing');
+
+    cy.get('[data-pageid="routing"] #tab1').click();
+    cy.ionPageHidden('routing');
+    cy.ionPageVisible('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageHidden('tab1');
+    cy.ionPageVisible('tab2');
+
+    cy.get('[data-pageid="tab2"] #routing').click();
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('tabs');
+
+    cy.get('[data-pageid="routing"] #tab1').click();
+    cy.ionPageVisible('tab1');
+    cy.ionPageHidden('routing');
+    cy.ionPageHidden('tab2');
+  })
 })
 
 describe('Tabs - Swipe to Go Back', () => {
