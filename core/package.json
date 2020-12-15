@@ -22,7 +22,7 @@
   "jsnext:main": "dist/esm/index.js",
   "collection:main": "dist/collection/index.js",
   "collection": "dist/collection/collection-manifest.json",
-  "types": "dist/types/interface.d.ts",
+  "types": "dist/types/custom-elements.d.ts",
   "files": [
     "css/",
     "dist/",
@@ -63,7 +63,7 @@
     "typescript": "^4.0.5"
   },
   "scripts": {
-    "build": "npm run clean && npm run build.css && npm run build.vendor && stencil build --docs --es5 --docs-json dist/docs.json && npm run cdnloader",
+    "build": "npm run clean && npm run build.css && npm run build.vendor && stencil build --docs --es5 --docs-json dist/docs.json && npm run export-custom-element-types && npm run cdnloader",
     "build.vendor": "rollup --config ./scripts/swiper.rollup.config.js",
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
@@ -73,6 +73,7 @@
     "cdnloader": "node scripts/copy-cdn-loader.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
     "css.sass": "sass src/css:./css",
+    "export-custom-element-types": "node scripts/export-custom-element-types.js",
     "lint": "npm run lint.ts && npm run lint.sass",
     "lint.fix": "npm run lint.ts.fix && npm run lint.sass.fix",
     "lint.sass": "stylelint \"src/**/*.scss\"",
