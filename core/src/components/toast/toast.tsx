@@ -107,11 +107,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * If `true`, the text of the toast will be centered.
-   */
-  @Prop() centeredText = false;
-
-  /**
    * Emitted after the toast has presented.
    */
   @Event({ eventName: 'ionToastDidPresent' }) didPresent!: EventEmitter<void>;
@@ -277,8 +272,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           ...getClassMap(this.cssClass),
-          'toast-translucent': this.translucent,
-          'toast-centered-text': this.centeredText
+          'toast-translucent': this.translucent
         })}
         tabindex="-1"
         onIonToastWillDismiss={this.dispatchCancelHandler}
