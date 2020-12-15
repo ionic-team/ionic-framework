@@ -118,15 +118,14 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           };
         }
         if (action === 'POP') {
-          const ri = this.locationHistory.current();
-          if (ri && ri.pushedByRoute) {
-            const prevInfo = this.locationHistory.findLastLocation(ri);
+          const currentRoute = this.locationHistory.current();
+          if (currentRoute && currentRoute.pushedByRoute) {
+            const prevInfo = this.locationHistory.findLastLocation(currentRoute);
             this.incomingRouteParams = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
           } else {
-            const direction = 'none';
             this.incomingRouteParams = {
               routeAction: 'pop',
-              routeDirection: direction,
+              routeDirection: 'none',
               tab: this.currentTab,
             };
           }

@@ -15,7 +15,7 @@ import {
   IonicVueRouterOptions,
   NavigationInformation
 } from './types';
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/vue';
 
 export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
   let currentNavigationInfo: NavigationInformation = { direction: undefined, action: undefined };

@@ -1,4 +1,4 @@
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/vue';
 import { RouteLocationMatched, RouterOptions } from 'vue-router';
 import { Ref } from 'vue';
 
