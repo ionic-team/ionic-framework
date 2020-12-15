@@ -120,7 +120,7 @@ export const config: Config = {
       type: 'dist-custom-elements-bundle',
       copy: [{
         src: '../scripts/custom-elements.d.ts',
-        dest: '../dist/types/custom-elements.d.ts'
+        dest: 'dist/types/custom-elements.d.ts'
       }]
     },
     {
