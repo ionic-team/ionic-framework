@@ -5,13 +5,14 @@ import { defineContainer } from './vue-component-lib/utils';
 
 import type { JSX } from '@ionic/core';
 
+import { IonAvatar as IonAvatarCmp, IonBackdrop as IonBackdropCmp, IonBadge as IonBadgeCmp, IonButton as IonButtonCmp, IonButtons as IonButtonsCmp, IonCard as IonCardCmp, IonCardContent as IonCardContentCmp, IonCardHeader as IonCardHeaderCmp, IonCardSubtitle as IonCardSubtitleCmp, IonCardTitle as IonCardTitleCmp, IonCheckbox as IonCheckboxCmp, IonChip as IonChipCmp, IonCol as IonColCmp, IonContent as IonContentCmp, IonDatetime as IonDatetimeCmp, IonFab as IonFabCmp, IonFabButton as IonFabButtonCmp, IonFabList as IonFabListCmp, IonFooter as IonFooterCmp, IonGrid as IonGridCmp, IonHeader as IonHeaderCmp, IonImg as IonImgCmp, IonInfiniteScroll as IonInfiniteScrollCmp, IonInfiniteScrollContent as IonInfiniteScrollContentCmp, IonInput as IonInputCmp, IonItem as IonItemCmp, IonItemDivider as IonItemDividerCmp, IonItemGroup as IonItemGroupCmp, IonItemOption as IonItemOptionCmp, IonItemOptions as IonItemOptionsCmp, IonItemSliding as IonItemSlidingCmp, IonLabel as IonLabelCmp, IonList as IonListCmp, IonListHeader as IonListHeaderCmp, IonMenu as IonMenuCmp, IonMenuButton as IonMenuButtonCmp, IonMenuToggle as IonMenuToggleCmp, IonNav as IonNavCmp, IonNavLink as IonNavLinkCmp, IonNote as IonNoteCmp, IonProgressBar as IonProgressBarCmp, IonRadio as IonRadioCmp, IonRadioGroup as IonRadioGroupCmp, IonRange as IonRangeCmp, IonRefresher as IonRefresherCmp, IonRefresherContent as IonRefresherContentCmp, IonReorder as IonReorderCmp, IonReorderGroup as IonReorderGroupCmp, IonRippleEffect as IonRippleEffectCmp, IonRow as IonRowCmp, IonSearchbar as IonSearchbarCmp, IonSegment as IonSegmentCmp, IonSegmentButton as IonSegmentButtonCmp, IonSelect as IonSelectCmp, IonSelectOption as IonSelectOptionCmp, IonSkeletonText as IonSkeletonTextCmp, IonSlide as IonSlideCmp, IonSlides as IonSlidesCmp, IonSpinner as IonSpinnerCmp, IonSplitPane as IonSplitPaneCmp, IonText as IonTextCmp, IonTextarea as IonTextareaCmp, IonThumbnail as IonThumbnailCmp, IonTitle as IonTitleCmp, IonToggle as IonToggleCmp, IonToolbar as IonToolbarCmp, IonVirtualScroll as IonVirtualScrollCmp } from '@ionic/core';
 
 
 
-export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar');
+export const IonAvatar = /*@__PURE__*/ defineContainer<JSX.IonAvatar>('ion-avatar', IonAvatarCmp);
 
 
-export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-backdrop', [
+export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-backdrop', IonBackdropCmp, [
   'visible',
   'tappable',
   'stopPropagation',
@@ -19,12 +20,12 @@ export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-b
 ]);
 
 
-export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge', [
+export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge', IonBadgeCmp, [
   'color'
 ]);
 
 
-export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-button', [
+export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-button', IonButtonCmp, [
   'color',
   'buttonType',
   'disabled',
@@ -48,12 +49,12 @@ export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-butto
 });
 
 
-export const IonButtons = /*@__PURE__*/ defineContainer<JSX.IonButtons>('ion-buttons', [
+export const IonButtons = /*@__PURE__*/ defineContainer<JSX.IonButtons>('ion-buttons', IonButtonsCmp, [
   'collapse'
 ]);
 
 
-export const IonCard = /*@__PURE__*/ defineContainer<JSX.IonCard>('ion-card', [
+export const IonCard = /*@__PURE__*/ defineContainer<JSX.IonCard>('ion-card', IonCardCmp, [
   'color',
   'button',
   'type',
@@ -70,26 +71,26 @@ export const IonCard = /*@__PURE__*/ defineContainer<JSX.IonCard>('ion-card', [
 });
 
 
-export const IonCardContent = /*@__PURE__*/ defineContainer<JSX.IonCardContent>('ion-card-content');
+export const IonCardContent = /*@__PURE__*/ defineContainer<JSX.IonCardContent>('ion-card-content', IonCardContentCmp);
 
 
-export const IonCardHeader = /*@__PURE__*/ defineContainer<JSX.IonCardHeader>('ion-card-header', [
+export const IonCardHeader = /*@__PURE__*/ defineContainer<JSX.IonCardHeader>('ion-card-header', IonCardHeaderCmp, [
   'color',
   'translucent'
 ]);
 
 
-export const IonCardSubtitle = /*@__PURE__*/ defineContainer<JSX.IonCardSubtitle>('ion-card-subtitle', [
+export const IonCardSubtitle = /*@__PURE__*/ defineContainer<JSX.IonCardSubtitle>('ion-card-subtitle', IonCardSubtitleCmp, [
   'color'
 ]);
 
 
-export const IonCardTitle = /*@__PURE__*/ defineContainer<JSX.IonCardTitle>('ion-card-title', [
+export const IonCardTitle = /*@__PURE__*/ defineContainer<JSX.IonCardTitle>('ion-card-title', IonCardTitleCmp, [
   'color'
 ]);
 
 
-export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox>('ion-checkbox', [
+export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox>('ion-checkbox', IonCheckboxCmp, [
   'color',
   'name',
   'checked',
@@ -107,14 +108,14 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox>('ion-c
 });
 
 
-export const IonChip = /*@__PURE__*/ defineContainer<JSX.IonChip>('ion-chip', [
+export const IonChip = /*@__PURE__*/ defineContainer<JSX.IonChip>('ion-chip', IonChipCmp, [
   'color',
   'outline',
   'disabled'
 ]);
 
 
-export const IonCol = /*@__PURE__*/ defineContainer<JSX.IonCol>('ion-col', [
+export const IonCol = /*@__PURE__*/ defineContainer<JSX.IonCol>('ion-col', IonColCmp, [
   'offset',
   'offsetXs',
   'offsetSm',
@@ -142,7 +143,7 @@ export const IonCol = /*@__PURE__*/ defineContainer<JSX.IonCol>('ion-col', [
 ]);
 
 
-export const IonContent = /*@__PURE__*/ defineContainer<JSX.IonContent>('ion-content', [
+export const IonContent = /*@__PURE__*/ defineContainer<JSX.IonContent>('ion-content', IonContentCmp, [
   'color',
   'fullscreen',
   'forceOverscroll',
@@ -155,7 +156,7 @@ export const IonContent = /*@__PURE__*/ defineContainer<JSX.IonContent>('ion-con
 ]);
 
 
-export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-datetime', [
+export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-datetime', IonDatetimeCmp, [
   'name',
   'disabled',
   'readonly',
@@ -190,7 +191,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
 });
 
 
-export const IonFab = /*@__PURE__*/ defineContainer<JSX.IonFab>('ion-fab', [
+export const IonFab = /*@__PURE__*/ defineContainer<JSX.IonFab>('ion-fab', IonFabCmp, [
   'horizontal',
   'vertical',
   'edge',
@@ -201,7 +202,7 @@ export const IonFab = /*@__PURE__*/ defineContainer<JSX.IonFab>('ion-fab', [
 });
 
 
-export const IonFabButton = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion-fab-button', [
+export const IonFabButton = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion-fab-button', IonFabButtonCmp, [
   'color',
   'activated',
   'disabled',
@@ -224,29 +225,29 @@ export const IonFabButton = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion
 });
 
 
-export const IonFabList = /*@__PURE__*/ defineContainer<JSX.IonFabList>('ion-fab-list', [
+export const IonFabList = /*@__PURE__*/ defineContainer<JSX.IonFabList>('ion-fab-list', IonFabListCmp, [
   'activated',
   'side'
 ]);
 
 
-export const IonFooter = /*@__PURE__*/ defineContainer<JSX.IonFooter>('ion-footer', [
+export const IonFooter = /*@__PURE__*/ defineContainer<JSX.IonFooter>('ion-footer', IonFooterCmp, [
   'translucent'
 ]);
 
 
-export const IonGrid = /*@__PURE__*/ defineContainer<JSX.IonGrid>('ion-grid', [
+export const IonGrid = /*@__PURE__*/ defineContainer<JSX.IonGrid>('ion-grid', IonGridCmp, [
   'fixed'
 ]);
 
 
-export const IonHeader = /*@__PURE__*/ defineContainer<JSX.IonHeader>('ion-header', [
+export const IonHeader = /*@__PURE__*/ defineContainer<JSX.IonHeader>('ion-header', IonHeaderCmp, [
   'collapse',
   'translucent'
 ]);
 
 
-export const IonImg = /*@__PURE__*/ defineContainer<JSX.IonImg>('ion-img', [
+export const IonImg = /*@__PURE__*/ defineContainer<JSX.IonImg>('ion-img', IonImgCmp, [
   'alt',
   'src',
   'ionImgWillLoad',
@@ -255,7 +256,7 @@ export const IonImg = /*@__PURE__*/ defineContainer<JSX.IonImg>('ion-img', [
 ]);
 
 
-export const IonInfiniteScroll = /*@__PURE__*/ defineContainer<JSX.IonInfiniteScroll>('ion-infinite-scroll', [
+export const IonInfiniteScroll = /*@__PURE__*/ defineContainer<JSX.IonInfiniteScroll>('ion-infinite-scroll', IonInfiniteScrollCmp, [
   'threshold',
   'disabled',
   'position',
@@ -263,13 +264,13 @@ export const IonInfiniteScroll = /*@__PURE__*/ defineContainer<JSX.IonInfiniteSc
 ]);
 
 
-export const IonInfiniteScrollContent = /*@__PURE__*/ defineContainer<JSX.IonInfiniteScrollContent>('ion-infinite-scroll-content', [
+export const IonInfiniteScrollContent = /*@__PURE__*/ defineContainer<JSX.IonInfiniteScrollContent>('ion-infinite-scroll-content', IonInfiniteScrollContentCmp, [
   'loadingSpinner',
   'loadingText'
 ]);
 
 
-export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput>('ion-input', [
+export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput>('ion-input', IonInputCmp, [
   'fireFocusEvents',
   'color',
   'accept',
@@ -310,7 +311,7 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput>('ion-input',
 });
 
 
-export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', [
+export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', IonItemCmp, [
   'color',
   'button',
   'detail',
@@ -330,16 +331,16 @@ export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', [
 });
 
 
-export const IonItemDivider = /*@__PURE__*/ defineContainer<JSX.IonItemDivider>('ion-item-divider', [
+export const IonItemDivider = /*@__PURE__*/ defineContainer<JSX.IonItemDivider>('ion-item-divider', IonItemDividerCmp, [
   'color',
   'sticky'
 ]);
 
 
-export const IonItemGroup = /*@__PURE__*/ defineContainer<JSX.IonItemGroup>('ion-item-group');
+export const IonItemGroup = /*@__PURE__*/ defineContainer<JSX.IonItemGroup>('ion-item-group', IonItemGroupCmp);
 
 
-export const IonItemOption = /*@__PURE__*/ defineContainer<JSX.IonItemOption>('ion-item-option', [
+export const IonItemOption = /*@__PURE__*/ defineContainer<JSX.IonItemOption>('ion-item-option', IonItemOptionCmp, [
   'color',
   'disabled',
   'download',
@@ -351,19 +352,19 @@ export const IonItemOption = /*@__PURE__*/ defineContainer<JSX.IonItemOption>('i
 ]);
 
 
-export const IonItemOptions = /*@__PURE__*/ defineContainer<JSX.IonItemOptions>('ion-item-options', [
+export const IonItemOptions = /*@__PURE__*/ defineContainer<JSX.IonItemOptions>('ion-item-options', IonItemOptionsCmp, [
   'side',
   'ionSwipe'
 ]);
 
 
-export const IonItemSliding = /*@__PURE__*/ defineContainer<JSX.IonItemSliding>('ion-item-sliding', [
+export const IonItemSliding = /*@__PURE__*/ defineContainer<JSX.IonItemSliding>('ion-item-sliding', IonItemSlidingCmp, [
   'disabled',
   'ionDrag'
 ]);
 
 
-export const IonLabel = /*@__PURE__*/ defineContainer<JSX.IonLabel>('ion-label', [
+export const IonLabel = /*@__PURE__*/ defineContainer<JSX.IonLabel>('ion-label', IonLabelCmp, [
   'color',
   'position',
   'ionColor',
@@ -371,19 +372,19 @@ export const IonLabel = /*@__PURE__*/ defineContainer<JSX.IonLabel>('ion-label',
 ]);
 
 
-export const IonList = /*@__PURE__*/ defineContainer<JSX.IonList>('ion-list', [
+export const IonList = /*@__PURE__*/ defineContainer<JSX.IonList>('ion-list', IonListCmp, [
   'lines',
   'inset'
 ]);
 
 
-export const IonListHeader = /*@__PURE__*/ defineContainer<JSX.IonListHeader>('ion-list-header', [
+export const IonListHeader = /*@__PURE__*/ defineContainer<JSX.IonListHeader>('ion-list-header', IonListHeaderCmp, [
   'color',
   'lines'
 ]);
 
 
-export const IonMenu = /*@__PURE__*/ defineContainer<JSX.IonMenu>('ion-menu', [
+export const IonMenu = /*@__PURE__*/ defineContainer<JSX.IonMenu>('ion-menu', IonMenuCmp, [
   'contentId',
   'menuId',
   'type',
@@ -399,7 +400,7 @@ export const IonMenu = /*@__PURE__*/ defineContainer<JSX.IonMenu>('ion-menu', [
 ]);
 
 
-export const IonMenuButton = /*@__PURE__*/ defineContainer<JSX.IonMenuButton>('ion-menu-button', [
+export const IonMenuButton = /*@__PURE__*/ defineContainer<JSX.IonMenuButton>('ion-menu-button', IonMenuButtonCmp, [
   'color',
   'disabled',
   'menu',
@@ -408,13 +409,13 @@ export const IonMenuButton = /*@__PURE__*/ defineContainer<JSX.IonMenuButton>('i
 ]);
 
 
-export const IonMenuToggle = /*@__PURE__*/ defineContainer<JSX.IonMenuToggle>('ion-menu-toggle', [
+export const IonMenuToggle = /*@__PURE__*/ defineContainer<JSX.IonMenuToggle>('ion-menu-toggle', IonMenuToggleCmp, [
   'menu',
   'autoHide'
 ]);
 
 
-export const IonNav = /*@__PURE__*/ defineContainer<JSX.IonNav>('ion-nav', [
+export const IonNav = /*@__PURE__*/ defineContainer<JSX.IonNav>('ion-nav', IonNavCmp, [
   'delegate',
   'swipeGesture',
   'animated',
@@ -427,7 +428,7 @@ export const IonNav = /*@__PURE__*/ defineContainer<JSX.IonNav>('ion-nav', [
 ]);
 
 
-export const IonNavLink = /*@__PURE__*/ defineContainer<JSX.IonNavLink>('ion-nav-link', [
+export const IonNavLink = /*@__PURE__*/ defineContainer<JSX.IonNavLink>('ion-nav-link', IonNavLinkCmp, [
   'component',
   'componentProps',
   'routerDirection',
@@ -435,12 +436,12 @@ export const IonNavLink = /*@__PURE__*/ defineContainer<JSX.IonNavLink>('ion-nav
 ]);
 
 
-export const IonNote = /*@__PURE__*/ defineContainer<JSX.IonNote>('ion-note', [
+export const IonNote = /*@__PURE__*/ defineContainer<JSX.IonNote>('ion-note', IonNoteCmp, [
   'color'
 ]);
 
 
-export const IonProgressBar = /*@__PURE__*/ defineContainer<JSX.IonProgressBar>('ion-progress-bar', [
+export const IonProgressBar = /*@__PURE__*/ defineContainer<JSX.IonProgressBar>('ion-progress-bar', IonProgressBarCmp, [
   'type',
   'reversed',
   'value',
@@ -449,7 +450,7 @@ export const IonProgressBar = /*@__PURE__*/ defineContainer<JSX.IonProgressBar>(
 ]);
 
 
-export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio>('ion-radio', [
+export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio>('ion-radio', IonRadioCmp, [
   'color',
   'name',
   'disabled',
@@ -464,7 +465,7 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio>('ion-radio',
 });
 
 
-export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('ion-radio-group', [
+export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('ion-radio-group', IonRadioGroupCmp, [
   'allowEmptySelection',
   'name',
   'value',
@@ -476,7 +477,7 @@ export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('i
 });
 
 
-export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range', [
+export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range', IonRangeCmp, [
   'color',
   'debounce',
   'name',
@@ -500,7 +501,7 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range',
 });
 
 
-export const IonRefresher = /*@__PURE__*/ defineContainer<JSX.IonRefresher>('ion-refresher', [
+export const IonRefresher = /*@__PURE__*/ defineContainer<JSX.IonRefresher>('ion-refresher', IonRefresherCmp, [
   'pullMin',
   'pullMax',
   'closeDuration',
@@ -513,7 +514,7 @@ export const IonRefresher = /*@__PURE__*/ defineContainer<JSX.IonRefresher>('ion
 ]);
 
 
-export const IonRefresherContent = /*@__PURE__*/ defineContainer<JSX.IonRefresherContent>('ion-refresher-content', [
+export const IonRefresherContent = /*@__PURE__*/ defineContainer<JSX.IonRefresherContent>('ion-refresher-content', IonRefresherContentCmp, [
   'pullingIcon',
   'pullingText',
   'refreshingSpinner',
@@ -521,24 +522,24 @@ export const IonRefresherContent = /*@__PURE__*/ defineContainer<JSX.IonRefreshe
 ]);
 
 
-export const IonReorder = /*@__PURE__*/ defineContainer<JSX.IonReorder>('ion-reorder');
+export const IonReorder = /*@__PURE__*/ defineContainer<JSX.IonReorder>('ion-reorder', IonReorderCmp);
 
 
-export const IonReorderGroup = /*@__PURE__*/ defineContainer<JSX.IonReorderGroup>('ion-reorder-group', [
+export const IonReorderGroup = /*@__PURE__*/ defineContainer<JSX.IonReorderGroup>('ion-reorder-group', IonReorderGroupCmp, [
   'disabled',
   'ionItemReorder'
 ]);
 
 
-export const IonRippleEffect = /*@__PURE__*/ defineContainer<JSX.IonRippleEffect>('ion-ripple-effect', [
+export const IonRippleEffect = /*@__PURE__*/ defineContainer<JSX.IonRippleEffect>('ion-ripple-effect', IonRippleEffectCmp, [
   'type'
 ]);
 
 
-export const IonRow = /*@__PURE__*/ defineContainer<JSX.IonRow>('ion-row');
+export const IonRow = /*@__PURE__*/ defineContainer<JSX.IonRow>('ion-row', IonRowCmp);
 
 
-export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion-searchbar', [
+export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion-searchbar', IonSearchbarCmp, [
   'color',
   'animated',
   'autocomplete',
@@ -570,7 +571,7 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion
 });
 
 
-export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-segment', [
+export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-segment', IonSegmentCmp, [
   'color',
   'disabled',
   'scrollable',
@@ -586,7 +587,7 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-seg
 });
 
 
-export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButton>('ion-segment-button', [
+export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButton>('ion-segment-button', IonSegmentButtonCmp, [
   'disabled',
   'layout',
   'type',
@@ -598,7 +599,7 @@ export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButt
 });
 
 
-export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-select', [
+export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-select', IonSelectCmp, [
   'disabled',
   'cancelText',
   'okText',
@@ -622,21 +623,21 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-selec
 });
 
 
-export const IonSelectOption = /*@__PURE__*/ defineContainer<JSX.IonSelectOption>('ion-select-option', [
+export const IonSelectOption = /*@__PURE__*/ defineContainer<JSX.IonSelectOption>('ion-select-option', IonSelectOptionCmp, [
   'disabled',
   'value'
 ]);
 
 
-export const IonSkeletonText = /*@__PURE__*/ defineContainer<JSX.IonSkeletonText>('ion-skeleton-text', [
+export const IonSkeletonText = /*@__PURE__*/ defineContainer<JSX.IonSkeletonText>('ion-skeleton-text', IonSkeletonTextCmp, [
   'animated'
 ]);
 
 
-export const IonSlide = /*@__PURE__*/ defineContainer<JSX.IonSlide>('ion-slide');
+export const IonSlide = /*@__PURE__*/ defineContainer<JSX.IonSlide>('ion-slide', IonSlideCmp);
 
 
-export const IonSlides = /*@__PURE__*/ defineContainer<JSX.IonSlides>('ion-slides', [
+export const IonSlides = /*@__PURE__*/ defineContainer<JSX.IonSlides>('ion-slides', IonSlidesCmp, [
   'options',
   'pager',
   'scrollbar',
@@ -659,7 +660,7 @@ export const IonSlides = /*@__PURE__*/ defineContainer<JSX.IonSlides>('ion-slide
 ]);
 
 
-export const IonSpinner = /*@__PURE__*/ defineContainer<JSX.IonSpinner>('ion-spinner', [
+export const IonSpinner = /*@__PURE__*/ defineContainer<JSX.IonSpinner>('ion-spinner', IonSpinnerCmp, [
   'color',
   'duration',
   'name',
@@ -667,7 +668,7 @@ export const IonSpinner = /*@__PURE__*/ defineContainer<JSX.IonSpinner>('ion-spi
 ]);
 
 
-export const IonSplitPane = /*@__PURE__*/ defineContainer<JSX.IonSplitPane>('ion-split-pane', [
+export const IonSplitPane = /*@__PURE__*/ defineContainer<JSX.IonSplitPane>('ion-split-pane', IonSplitPaneCmp, [
   'contentId',
   'disabled',
   'when',
@@ -675,12 +676,12 @@ export const IonSplitPane = /*@__PURE__*/ defineContainer<JSX.IonSplitPane>('ion
 ]);
 
 
-export const IonText = /*@__PURE__*/ defineContainer<JSX.IonText>('ion-text', [
+export const IonText = /*@__PURE__*/ defineContainer<JSX.IonText>('ion-text', IonTextCmp, [
   'color'
 ]);
 
 
-export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-textarea', [
+export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-textarea', IonTextareaCmp, [
   'fireFocusEvents',
   'color',
   'autocapitalize',
@@ -714,17 +715,17 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-t
 });
 
 
-export const IonThumbnail = /*@__PURE__*/ defineContainer<JSX.IonThumbnail>('ion-thumbnail');
+export const IonThumbnail = /*@__PURE__*/ defineContainer<JSX.IonThumbnail>('ion-thumbnail', IonThumbnailCmp);
 
 
-export const IonTitle = /*@__PURE__*/ defineContainer<JSX.IonTitle>('ion-title', [
+export const IonTitle = /*@__PURE__*/ defineContainer<JSX.IonTitle>('ion-title', IonTitleCmp, [
   'color',
   'size',
   'ionStyle'
 ]);
 
 
-export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggle', [
+export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggle', IonToggleCmp, [
   'color',
   'name',
   'checked',
@@ -741,12 +742,12 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggl
 });
 
 
-export const IonToolbar = /*@__PURE__*/ defineContainer<JSX.IonToolbar>('ion-toolbar', [
+export const IonToolbar = /*@__PURE__*/ defineContainer<JSX.IonToolbar>('ion-toolbar', IonToolbarCmp, [
   'color'
 ]);
 
 
-export const IonVirtualScroll = /*@__PURE__*/ defineContainer<JSX.IonVirtualScroll>('ion-virtual-scroll', [
+export const IonVirtualScroll = /*@__PURE__*/ defineContainer<JSX.IonVirtualScroll>('ion-virtual-scroll', IonVirtualScrollCmp, [
   'approxItemHeight',
   'approxHeaderHeight',
   'approxFooterHeight',

@@ -41,15 +41,17 @@ function generateOverlays() {
   ]
 
   let controllerImports = [];
+  let componentImports = [];
   let componentDefinitions = [];
 
   components.forEach(component => {
     const docsBlock = getDocsBlock(component.tag);
     const props = getPropsFromDocsBlock(docsBlock);
 
+    componentImports.push(`${component.name} as ${component.name}Cmp`);
     controllerImports.push(component.controller);
     componentDefinitions.push(`
-export const ${component.name} = /*@__PURE__*/defineOverlayContainer<JSX.${component.name}>('${component.tag}', [${props.join(', ')}], ${component.controller});
+export const ${component.name} = /*@__PURE__*/defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${component.name}Cmp, [${props.join(', ')}], ${component.controller});
     `);
   });
 
@@ -57,7 +59,8 @@ export const ${component.name} = /*@__PURE__*/defineOverlayContainer<JSX.${compo
 
 import {
   JSX,
-  ${controllerImports.join(',\n  ')}
+  ${controllerImports.join(',\n  ')},
+  ${componentImports.join(',\n  ')}
 } from '@ionic/core';
 
 import { defineOverlayContainer } from '../vue-component-lib/overlays';

@@ -40,7 +40,7 @@ const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: 
 * options for the component such as router or v-model
 * integrations.
 */
-export const defineContainer = <Props>(name: string, componentProps: string[] = [], componentOptions: ComponentOptions = {}) => {
+export const defineContainer = <Props>(name: string, customElement: any, componentProps: string[] = [], componentOptions: ComponentOptions = {}) => {
   const { modelProp, modelUpdateEvent, routerLinkComponent } = componentOptions;
 
   /**
@@ -49,6 +49,10 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
   * They refer to whatever properties are set on an instance of a component.
   */
   const Container = defineComponent<Props & InputProps>((props, { attrs, slots, emit }) => {
+    if (!customElements.get(name)) {
+      customElements.define(name, customElement);
+    }
+
     const containerRef = ref<HTMLElement>();
     const classes = new Set(getComponentClasses(attrs.class));
     const onVnodeBeforeMount = (vnode: VNode) => {

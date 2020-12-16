@@ -1,8 +1,12 @@
 import { h, inject, defineComponent } from 'vue';
+import { defineCustomElement } from '../utils';
+import { IonBackButton as IonBackButtonCmp } from '@ionic/core';
 
 export const IonBackButton = defineComponent({
   name: 'IonBackButton',
   setup(_, { attrs, slots }) {
+    defineCustomElement('ion-back-button', IonBackButtonCmp);
+
     const ionRouter: any = inject('navManager');
 
     const onClick = () => {

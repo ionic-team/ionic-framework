@@ -12,9 +12,8 @@
     "sync": "sh ./scripts/sync.sh"
   },
   "dependencies": {
-    "@ionic/vue": "^5.4.1",
-    "@ionic/vue-router": "^5.4.1",
-    "core-js": "^3.6.5",
+    "@ionic/vue": "^5.5.2",
+    "@ionic/vue-router": "^5.5.2",
     "vue": "^3.0.0-0",
     "vue-router": "^4.0.0-rc.4"
   },
@@ -35,6 +34,7 @@
     "cypress": "^5.3.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
+    "stats-webpack-plugin": "^0.7.0",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0",
     "wait-on": "^5.2.0"

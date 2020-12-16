@@ -4,7 +4,7 @@ export interface OverlayProps {
   isOpen?: boolean;
 }
 
-export const defineOverlayContainer = <Props extends object>(name: string, componentProps: string[] = [], controller: any) => {
+export const defineOverlayContainer = <Props extends object>(name: string, customElement: any, componentProps: string[] = [], controller: any) => {
   // TODO
   const eventPrefix = name.toLowerCase().split('-').join('');
   const eventListeners = [
@@ -15,6 +15,10 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
   ];
 
   const Container = defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
+    if (!customElements.get(name)) {
+      customElements.define(name, customElement);
+    }
+
     const overlay = ref();
     const onVnodeMounted = async () => {
       const isOpen = props.isOpen;

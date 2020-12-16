@@ -61,6 +61,9 @@ export const config: Config = {
   outputTargets: [
     vueOutputTarget({
       componentCorePackage: '@ionic/core',
+      useCustomElementsBuild: true,
+      includePolyfills: false,
+      includeDefineCustomElements: false,
       proxiesFile: '../packages/vue/src/proxies.ts',
       excludeComponents: [
         // Routing

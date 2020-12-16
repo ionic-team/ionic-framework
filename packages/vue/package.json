@@ -57,7 +57,7 @@
     "vue-router": "^4.0.0-rc.4"
   },
   "dependencies": {
-    "@ionic/core": "5.5.2",
+    "@ionic/core": "file:../../core",
     "ionicons": "^5.1.2"
   },
   "vetur": {
