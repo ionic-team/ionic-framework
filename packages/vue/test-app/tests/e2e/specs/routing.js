@@ -119,6 +119,63 @@ describe('Routing', () => {
     cy.ionSwipeToGoBack(true);
     cy.ionPageVisible('navigation');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22654
+  it('should show correct view when navigating between parameter urls', () => {
+    cy.visit('http://localhost:8080/nested');
+
+    cy.ionPageVisible('nestedchild');
+
+    cy.get('[data-pageid="routeroutlet"] #trash').click();
+    cy.ionPageVisible('folder');
+
+    cy.get('[data-pageid="routeroutlet"] #outbox').click();
+    cy.ionPageVisible('folder');
+
+    cy.get('[data-pageid="routeroutlet"] #other').click();
+    cy.ionPageVisible('nestedchildtwo');
+    cy.ionPageDoesNotExist('folder');
+
+    cy.get('[data-pageid="routeroutlet"] #spam').click();
+    cy.ionPageVisible('folder');
+    cy.ionPageDoesNotExist('nestedchildtwo');
+
+    cy.get('[data-pageid="routeroutlet"] #outbox').click();
+    cy.ionPageVisible('folder');
+
+    cy.get('[data-pageid="routeroutlet"] #other').click();
+    cy.ionPageVisible('nestedchildtwo');
+    cy.ionPageDoesNotExist('folder');
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22658
+  it('should select correct leaving view when navigating between paramter urls', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing/123');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/456');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/navigation');
+    cy.ionPageVisible('navigation');
+    cy.ionPageHidden('routingparameter');
+
+    cy.routerPush('/routing/789');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/000');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/navigation');
+    cy.ionPageVisible('navigation');
+    cy.ionPageHidden('routingparameter');
+  });
 });
 
 describe('Routing - Swipe to Go Back', () => {

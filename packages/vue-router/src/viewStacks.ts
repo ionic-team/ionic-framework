@@ -1,13 +1,12 @@
 import { generateId } from './utils';
-import { pathToRegexp } from './regexp';
 import {  RouteInfo,
   ViewItem,
   ViewStacks,
 } from './types';
-import { RouteLocationMatched } from 'vue-router';
+import { RouteLocationMatched, Router } from 'vue-router';
 import { shallowRef } from 'vue';
 
-export const createViewStacks = () => {
+export const createViewStacks = (router: Router) => {
   let viewStacks: ViewStacks = {};
 
   const clear = (outletId: number) => {
@@ -20,14 +19,19 @@ export const createViewStacks = () => {
 
   const registerIonPage = (viewItem: ViewItem, ionPage: HTMLElement) => {
     viewItem.ionPageElement = ionPage;
+    viewItem.ionRoute = true;
   }
 
   const findViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number) => {
     return findViewItemByPath(routeInfo.pathname, outletId);
   }
 
-  const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number) => {
-    return findViewItemByPath(routeInfo.lastPathname, outletId, false);
+  const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number, mustBeIonRoute: boolean = true) => {
+    return findViewItemByPath(routeInfo.lastPathname, outletId, mustBeIonRoute);
+  }
+
+  const findViewItemByPathname = (pathname: string, outletId?: number) => {
+    return findViewItemByPath(pathname, outletId);
   }
 
   const findViewItemInStack = (path: string, stack: ViewItem[]): ViewItem | undefined => {
@@ -40,30 +44,31 @@ export const createViewStacks = () => {
     })
   }
 
-  const findViewItemByPath = (path: string, outletId?: number, strict: boolean = true): ViewItem | undefined => {
+  const findViewItemByPath = (path: string, outletId?: number, mustBeIonRoute: boolean = false): ViewItem | undefined => {
     const matchView = (viewItem: ViewItem) => {
-      const pathname = path;
-      const viewItemPath = viewItem.matchedRoute.path;
+      if (
+        (mustBeIonRoute && !viewItem.ionRoute) ||
+        path === ''
+      ) {
+        return false;
+      }
 
-      const regexp = pathToRegexp(viewItemPath, [], {
-        end: viewItem.exact,
-        strict: viewItem.exact,
-        sensitive: false
-      });
-      return (regexp.exec(pathname)) ? viewItem : undefined;
+      const resolvedPath = router.resolve(path);
+      const findMatchedRoute = resolvedPath.matched.find((matchedRoute: RouteLocationMatched) => matchedRoute === viewItem.matchedRoute && (path === viewItem.pathname || matchedRoute.path.includes(':')));
+
+      if (findMatchedRoute) {
+        return viewItem;
+      }
+
+      return undefined;
     }
 
     if (outletId) {
       const stack = viewStacks[outletId];
       if (!stack) return undefined;
 
-      const quickMatch = findViewItemInStack(path, stack);
-      if (quickMatch) return quickMatch;
-
-      if (!strict) {
-        const match = stack.find(matchView);
-        if (match) return match;
-      }
+      const match = (router) ? stack.find(matchView) : findViewItemInStack(path, stack)
+      if (match) return match;
     } else {
       for (let outletId in viewStacks) {
         const stack = viewStacks[outletId];
@@ -125,6 +130,7 @@ export const createViewStacks = () => {
     clear,
     findViewItemByRouteInfo,
     findLeavingViewItemByRouteInfo,
+    findViewItemByPathname,
     createViewItem,
     getChildrenToRender,
     add,

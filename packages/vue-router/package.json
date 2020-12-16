@@ -66,8 +66,5 @@
       "json",
       "jsx"
     ]
-  },
-  "dependencies": {
-    "path-to-regexp": "^6.2.0"
   }
 }

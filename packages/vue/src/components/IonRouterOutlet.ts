@@ -76,14 +76,14 @@ export const IonRouterOutlet = defineComponent({
        * to make sure the view is in the outlet we want.
        */
       const routeInfo = ionRouter.getCurrentRouteInfo();
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id);
 
       return !!enteringViewItem;
     }
     const onStart = async () => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
       const { routerAnimation } = routeInfo;
-      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
+      const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id);
       const leavingViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
 
       if (leavingViewItem) {
@@ -139,7 +139,7 @@ export const IonRouterOutlet = defineComponent({
          * re-hide the page that was going to enter.
          */
         const routeInfo = ionRouter.getCurrentRouteInfo();
-        const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute }, id);
+        const enteringViewItem = viewStacks.findViewItemByRouteInfo({ pathname: routeInfo.pushedByRoute || '' }, id);
         enteringViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
         enteringViewItem.ionPageElement.classList.add('ion-page-hidden');
       }
@@ -192,17 +192,21 @@ export const IonRouterOutlet = defineComponent({
 
     const handlePageTransition = async () => {
       const routeInfo = ionRouter.getCurrentRouteInfo();
-      const { routerDirection, routerAction, routerAnimation } = routeInfo;
+      const { routerDirection, routerAction, routerAnimation, prevRouteLastPathname } = routeInfo;
 
       const enteringViewItem = viewStacks.findViewItemByRouteInfo(routeInfo, id);
-      const leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id);
+      let leavingViewItem = viewStacks.findLeavingViewItemByRouteInfo(routeInfo, id);
       const enteringEl = enteringViewItem.ionPageElement;
 
       if (enteringViewItem === leavingViewItem) return;
 
+      if (!leavingViewItem && prevRouteLastPathname) {
+        leavingViewItem = viewStacks.findViewItemByPathname(prevRouteLastPathname, id);
+      }
+
       fireLifecycle(enteringViewItem.vueComponent, enteringViewItem.vueComponentRef, LIFECYCLE_WILL_ENTER);
 
-      if (leavingViewItem) {
+      if (leavingViewItem && enteringViewItem !== leavingViewItem) {
         let animationBuilder = routerAnimation;
         const leavingEl = leavingViewItem.ionPageElement;
 
