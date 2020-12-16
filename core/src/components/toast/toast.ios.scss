@@ -22,8 +22,6 @@
   display: block;
   position: absolute;
 
-  font-weight: 600;
-
   text-align: center;
 
   z-index: $z-index-overlay-wrapper;
@@ -54,6 +52,8 @@
 
 .toast-content {
   @include padding($toast-ios-content-padding-top, $toast-ios-content-padding-end, $toast-ios-content-padding-bottom, $toast-ios-content-padding-start);
+
+  font-weight: $toast-ios-content-font-weight;
 }
 
 .toast-header {

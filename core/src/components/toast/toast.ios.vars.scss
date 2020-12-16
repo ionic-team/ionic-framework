@@ -18,14 +18,17 @@ $toast-ios-border-radius:                         100px !default;
 /// @prop - Color of the toast title
 $toast-ios-title-color:                           $text-color-step-150 !default;
 
-/// @prop - Font size of the toast title
-$toast-ios-header-font-weight:                    500 !default;
+/// @prop - Font weight of the toast title
+$toast-ios-header-font-weight:                    600 !default;
 
 /// @prop - Spacing between the header and the message
 $toast-ios-header-margin-bottom:                  2px !default;
 
-/// @prop - Font size of the toast title
+/// @prop - Font size of the toast contnet
 $toast-ios-content-font-size:                     14px !default;
+
+/// @prop - Font weight of the toast content
+$toast-ios-content-font-weight:                    600 !default;
 
 /// @prop - Padding top of the toast content
 $toast-ios-content-padding-top:                   16px !default;
