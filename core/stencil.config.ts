@@ -121,7 +121,8 @@ export const config: Config = {
       copy: [{
         src: '../scripts/custom-elements.d.ts',
         dest: 'dist/types/custom-elements.d.ts'
-      }]
+      }],
+      includeGlobalScripts: false
     },
     {
       type: 'docs-readme',
