@@ -139,4 +139,6 @@ const router = createRouter({
   routes
 });
 
+(window as any).debugRouter = router;
+
 export default router

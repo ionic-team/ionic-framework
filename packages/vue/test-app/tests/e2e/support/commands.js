@@ -71,3 +71,9 @@ Cypress.Commands.add('ionPageDoesNotExist', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('not.exist')
 });
+
+Cypress.Commands.add('routerPush', (path) => {
+  cy.window().then(win => {
+    win.debugRouter.push(path);
+  });
+})

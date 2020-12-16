@@ -146,7 +146,36 @@ describe('Routing', () => {
     cy.get('[data-pageid="routeroutlet"] #other').click();
     cy.ionPageVisible('nestedchildtwo');
     cy.ionPageDoesNotExist('folder');
-  })
+  });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22658
+  it('should select correct leaving view when navigating between paramter urls', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/routing/123');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/456');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/navigation');
+    cy.ionPageVisible('navigation');
+    cy.ionPageHidden('routingparameter');
+
+    cy.routerPush('/routing/789');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/routing/000');
+    cy.ionPageVisible('routingparameter');
+    cy.ionPageHidden('home');
+
+    cy.routerPush('/navigation');
+    cy.ionPageVisible('navigation');
+    cy.ionPageHidden('routingparameter');
+  });
 });
 
 describe('Routing - Swipe to Go Back', () => {
