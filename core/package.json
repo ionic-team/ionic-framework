@@ -16,20 +16,22 @@
     "pwa"
   ],
   "main": "dist/index.cjs.js",
-  "module": "dist/custom-elements/index.js",
+  "module": "dist/index.js",
   "es2015": "dist/esm/index.js",
   "es2017": "dist/esm/index.js",
   "jsnext:main": "dist/esm/index.js",
   "collection:main": "dist/collection/index.js",
   "collection": "dist/collection/collection-manifest.json",
-  "types": "dist/types/custom-elements.d.ts",
+  "types": "dist/types/interface.d.ts",
   "files": [
+    "components/",
     "css/",
     "dist/",
     "hydrate/",
     "loader/"
   ],
   "dependencies": {
+    "@stencil/core": "2.4.0-1",
     "ionicons": "^5.1.2",
     "tslib": "^1.10.0"
   },

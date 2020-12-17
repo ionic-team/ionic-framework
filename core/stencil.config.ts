@@ -117,10 +117,12 @@ export const config: Config = {
       esmLoaderPath: '../loader'
     },
     {
-      type: 'dist-custom-elements-bundle',
+      type: 'dist-custom-elements',
+      dir: 'components',
       copy: [{
-        src: '../scripts/custom-elements.d.ts',
-        dest: 'dist/types/custom-elements.d.ts'
+        src: '../scripts/custom-elements',
+        dest: 'components',
+        warn: true
       }],
       includeGlobalScripts: false
     },
@@ -132,9 +134,9 @@ export const config: Config = {
       type: 'docs-json',
       file: '../docs/core.json'
     },
-    {
-      type: 'dist-hydrate-script'
-    },
+    // {
+    //   type: 'dist-hydrate-script'
+    // },
     apiSpecGenerator({
       file: 'api.txt'
     }) as any,

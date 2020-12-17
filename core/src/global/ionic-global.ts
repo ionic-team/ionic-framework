@@ -13,7 +13,7 @@ export const getIonMode = (ref?: any): Mode => {
   return (ref && getMode(ref)) || defaultMode;
 };
 
-export default () => {
+export const initialize = () => {
   const doc = document;
   const win = window;
   Context.config = config;
@@ -70,3 +70,5 @@ export default () => {
     return defaultMode;
   });
 };
+
+export default initialize;
