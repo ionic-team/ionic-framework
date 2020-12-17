@@ -85,17 +85,15 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'tab1',
-        component: () => import('@/views/Tab1.vue'),
-        children: [
-          {
-            path: 'child-one',
-            component: () => import('@/views/Tab1ChildOne.vue')
-          },
-          {
-            path: 'child-two',
-            component: () => import('@/views/Tab1ChildTwo.vue')
-          }
-        ]
+        component: () => import('@/views/Tab1.vue')
+      },
+      {
+        path: 'tab1/child-one',
+        component: () => import('@/views/Tab1ChildOne.vue')
+      },
+      {
+        path: 'tab1/child-two',
+        component: () => import('@/views/Tab1ChildTwo.vue')
       },
       {
         path: 'tab2',

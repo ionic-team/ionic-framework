@@ -17,6 +17,11 @@
             <ion-icon :icon="square" />
             <ion-label>Tab 3</ion-label>
           </ion-tab-button>
+
+          <ion-tab-button tab="tab4" href="/tabs/tab4">
+            <ion-icon :icon="cog" />
+            <ion-label>Tab 4</ion-label>
+          </ion-tab-button>
         </ion-tab-bar>
       </ion-tabs>
     </ion-content>
@@ -25,13 +30,14 @@
 
 <script lang="ts">
 import { IonTabBar, IonTabButton, IonTabs, IonContent, IonLabel, IonIcon, IonPage } from '@ionic/vue';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { cog, ellipse, square, triangle } from 'ionicons/icons';
 
 export default {
   name: 'Tabs',
   components: { IonContent, IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage },
   setup() {
     return {
+      cog,
       ellipse,
       square,
       triangle,

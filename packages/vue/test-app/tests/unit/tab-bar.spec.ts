@@ -68,7 +68,7 @@ describe('ion-tab-bar', () => {
     });
 
     const innerHTML = wrapper.find('ion-tabs').html();
-    expect(innerHTML).toContain(`<div class="tabs-inner" style="position: relative; flex: 1; contain: layout size style;"><ion-router-outlet tabs="true"></ion-router-outlet></div><ion-tab-bar slot="bottom"></ion-tab-bar>`);
+    expect(innerHTML).toContain(`<div class="tabs-inner" style="position: relative; flex: 1; contain: layout size style;"><ion-router-outlet></ion-router-outlet></div><ion-tab-bar slot="bottom"></ion-tab-bar>`);
 
   });
 
@@ -100,7 +100,7 @@ describe('ion-tab-bar', () => {
     });
 
     const innerHTML = wrapper.find('ion-tabs').html();
-    expect(innerHTML).toContain(`<div class="tabs-inner" style="position: relative; flex: 1; contain: layout size style;"><ion-router-outlet tabs="true"></ion-router-outlet></div><ion-tab-bar></ion-tab-bar></ion-tabs>`)
+    expect(innerHTML).toContain(`<div class="tabs-inner" style="position: relative; flex: 1; contain: layout size style;"><ion-router-outlet></ion-router-outlet></div><ion-tab-bar></ion-tab-bar></ion-tabs>`)
   });
 
   // Verifies the fix for https://github.com/ionic-team/ionic-framework/issues/22642
