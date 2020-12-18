@@ -1,0 +1,58 @@
+@import "./breadcrumb.vars";
+
+// Breadcrumb
+// --------------------------------------------------
+
+:host {
+  display: flex;
+
+  align-items: center;
+
+  color: $breadcrumb-color;
+
+  font-size: 1rem;
+  font-weight: 400;
+
+  letter-spacing: 0.00938em;
+  line-height: 1.5;
+}
+
+.breadcrumb-native {
+  @include text-inherit();
+  @include padding(0);
+  @include margin(0);
+
+  width: 100%;
+
+  outline: none;
+
+  background: inherit;
+}
+
+:host(.breadcrumb-disabled) {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+
+:host(.breadcrumb-active) {
+  color: $breadcrumb-color-active;
+}
+
+// Breadcrumbs: Color
+// ------------------------------------------
+
+:host(.in-breadcrumbs-color.breadcrumb-active) {
+  color: current-color(base);
+}
+
+// Breadcrumb Separator
+// ------------------------------------------
+
+.breadcrumb-separator {
+  @include margin(null, 4px, null, 4px);
+
+  display: inline-flex;
+
+  color: $breadcrumb-color;
+}

@@ -59,6 +59,28 @@ export class IonBadge {
     this.el = r.nativeElement;
   }
 }
+export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
+}
+@ProxyCmp({ inputs: ["active", "color", "disabled", "download", "href", "mode", "rel", "separator", "target"] })
+@Component({ selector: "ion-breadcrumb", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["active", "color", "disabled", "download", "href", "mode", "rel", "separator", "target"] })
+export class IonBreadcrumb {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
+}
+@ProxyCmp({ inputs: ["color", "mode"] })
+@Component({ selector: "ion-breadcrumbs", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "mode"] })
+export class IonBreadcrumbs {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
 export declare interface IonButton extends Components.IonButton {
 }
 @ProxyCmp({ inputs: ["buttonType", "color", "disabled", "download", "expand", "fill", "href", "mode", "rel", "routerAnimation", "routerDirection", "shape", "size", "strong", "target", "type"] })

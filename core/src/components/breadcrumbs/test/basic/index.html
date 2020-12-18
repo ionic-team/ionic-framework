@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Breadcrumbs - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Breadcrumbs - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <p>Default with disabled</p>
+
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#">
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#library">
+          Library
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#disabled" disabled>
+          Disabled
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          Data
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <p>Custom current, danger</p>
+
+      <ion-breadcrumbs color="danger">
+        <ion-breadcrumb href="#disabled" disabled>
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#library">
+          Library
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#data" current>
+          Data
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#file">
+          File
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <p>Custom separator</p>
+
+      <ion-breadcrumbs separator=">">
+        <ion-breadcrumb href="#disabled" disabled>
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#library">
+          Library
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#data" current>
+          Data
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#file">
+          File
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <p>Color: Primary</p>
+
+      <ion-breadcrumbs color="primary">
+        <ion-breadcrumb href="#">
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#library">
+          Library
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#disabled" disabled>
+          Disabled
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          Data
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <p>Color: Danger</p>
+
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#">
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#library">
+          Library
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#disabled" disabled>
+          Disabled
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          Data
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <p>Custom Separator: Icon w/ last</p>
+
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#">
+          Home
+          <ion-icon slot="separator" name="caret-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#library">
+          Library
+          <ion-icon slot="separator" name="caret-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#disabled" disabled>
+          Disabled
+          <ion-icon slot="separator" name="caret-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb separator="true">
+          Data
+          <ion-icon slot="separator" name="star-outline"></ion-icon>
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+    </ion-content>
+  </ion-app>
+
+  <script>
+
+  </script>
+
+  <style>
+    p {
+      padding: 0 16px;
+      font-weight: 500;
+    }
+  </style>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+@import "../../themes/ionic.globals";
+
+// Breadcrumbs
+// --------------------------------------------------
+
+/// @prop - Padding top of the breadcrumbs
+$breadcrumbs-padding-top:               10px !default;
+
+/// @prop - Padding end of the breadcrumbs
+$breadcrumbs-padding-end:               16px !default;
+
+/// @prop - Padding bottom of the breadcrumbs
+$breadcrumbs-padding-bottom:            $breadcrumbs-padding-top !default;
+
+/// @prop - Padding start of the breadcrumbs
+$breadcrumbs-padding-start:             $breadcrumbs-padding-end !default;

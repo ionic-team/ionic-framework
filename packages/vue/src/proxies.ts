@@ -24,6 +24,23 @@ export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge',
 ]);
 
 
+export const IonBreadcrumb = /*@__PURE__*/ defineContainer<JSX.IonBreadcrumb>('ion-breadcrumb', [
+  'color',
+  'active',
+  'disabled',
+  'download',
+  'href',
+  'rel',
+  'separator',
+  'target'
+]);
+
+
+export const IonBreadcrumbs = /*@__PURE__*/ defineContainer<JSX.IonBreadcrumbs>('ion-breadcrumbs', [
+  'color'
+]);
+
+
 export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-button', [
   'color',
   'buttonType',

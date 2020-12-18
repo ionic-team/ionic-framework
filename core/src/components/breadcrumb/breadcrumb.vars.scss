@@ -1,0 +1,22 @@
+@import "../../themes/ionic.globals";
+
+// Breadcrumb
+// --------------------------------------------------
+
+/// @prop - Padding top of the breadcrumb
+$breadcrumb-padding-top:               0 !default;
+
+/// @prop - Padding end of the breadcrumb
+$breadcrumb-padding-end:               0 !default;
+
+/// @prop - Padding bottom of the breadcrumb
+$breadcrumb-padding-bottom:            $breadcrumb-padding-top !default;
+
+/// @prop - Padding start of the breadcrumb
+$breadcrumb-padding-start:             $breadcrumb-padding-end !default;
+
+/// @prop - Color of the breadcrumb
+$breadcrumb-color:                     $text-color-step-450 !default;
+
+/// @prop - Color of the active breadcrumb
+$breadcrumb-color-active:              $text-color !default;

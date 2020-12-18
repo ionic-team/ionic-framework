@@ -1,0 +1,17 @@
+@import "./breadcrumbs.vars";
+
+// Breadcrumbs
+// --------------------------------------------------
+
+:host {
+  /**
+   * @prop --background: Background of the breadcrumbs
+   * @prop --color: Text color of the breadcrumbs
+   */
+   @include font-smoothing();
+   @include padding($breadcrumbs-padding-top, $breadcrumbs-padding-end, $breadcrumbs-padding-bottom, $breadcrumbs-padding-start);
+
+  display: flex;
+
+  align-items: center;
+}

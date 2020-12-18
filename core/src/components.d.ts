@@ -210,6 +210,54 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
     }
+    interface IonBreadcrumb {
+        /**
+          * If `true`, the breadcrumb will take on a different look to show that it is the currently active breadcrumb. Defaults to `true` for the last breadcrumb if it is not set on any.
+         */
+        "active": boolean;
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the breadcrumb.
+         */
+        "disabled": boolean;
+        /**
+          * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+         */
+        "download": string | undefined;
+        /**
+          * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+         */
+        "href": string | undefined;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+         */
+        "rel": string | undefined;
+        /**
+          * If true, show a separator between this breadcrumb and the next. Defaults to `true` for all breadcrumbs except the last.
+         */
+        "separator"?: boolean | undefined;
+        /**
+          * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+         */
+        "target": string | undefined;
+    }
+    interface IonBreadcrumbs {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+    }
     interface IonButton {
         /**
           * The type of button.
@@ -2746,6 +2794,18 @@ declare global {
         prototype: HTMLIonBadgeElement;
         new (): HTMLIonBadgeElement;
     };
+    interface HTMLIonBreadcrumbElement extends Components.IonBreadcrumb, HTMLStencilElement {
+    }
+    var HTMLIonBreadcrumbElement: {
+        prototype: HTMLIonBreadcrumbElement;
+        new (): HTMLIonBreadcrumbElement;
+    };
+    interface HTMLIonBreadcrumbsElement extends Components.IonBreadcrumbs, HTMLStencilElement {
+    }
+    var HTMLIonBreadcrumbsElement: {
+        prototype: HTMLIonBreadcrumbsElement;
+        new (): HTMLIonBreadcrumbsElement;
+    };
     interface HTMLIonButtonElement extends Components.IonButton, HTMLStencilElement {
     }
     var HTMLIonButtonElement: {
@@ -3234,6 +3294,8 @@ declare global {
         "ion-back-button": HTMLIonBackButtonElement;
         "ion-backdrop": HTMLIonBackdropElement;
         "ion-badge": HTMLIonBadgeElement;
+        "ion-breadcrumb": HTMLIonBreadcrumbElement;
+        "ion-breadcrumbs": HTMLIonBreadcrumbsElement;
         "ion-button": HTMLIonButtonElement;
         "ion-buttons": HTMLIonButtonsElement;
         "ion-card": HTMLIonCardElement;
@@ -3508,6 +3570,54 @@ declare namespace LocalJSX {
         "visible"?: boolean;
     }
     interface IonBadge {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+    }
+    interface IonBreadcrumb {
+        /**
+          * If `true`, the breadcrumb will take on a different look to show that it is the currently active breadcrumb. Defaults to `true` for the last breadcrumb if it is not set on any.
+         */
+        "active"?: boolean;
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the breadcrumb.
+         */
+        "disabled"?: boolean;
+        /**
+          * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
+         */
+        "download"?: string | undefined;
+        /**
+          * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+         */
+        "href"?: string | undefined;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+         */
+        "rel"?: string | undefined;
+        /**
+          * If true, show a separator between this breadcrumb and the next. Defaults to `true` for all breadcrumbs except the last.
+         */
+        "separator"?: boolean | undefined;
+        /**
+          * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
+         */
+        "target"?: string | undefined;
+    }
+    interface IonBreadcrumbs {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -6043,6 +6153,8 @@ declare namespace LocalJSX {
         "ion-back-button": IonBackButton;
         "ion-backdrop": IonBackdrop;
         "ion-badge": IonBadge;
+        "ion-breadcrumb": IonBreadcrumb;
+        "ion-breadcrumbs": IonBreadcrumbs;
         "ion-button": IonButton;
         "ion-buttons": IonButtons;
         "ion-card": IonCard;
@@ -6136,6 +6248,8 @@ declare module "@stencil/core" {
             "ion-back-button": LocalJSX.IonBackButton & JSXBase.HTMLAttributes<HTMLIonBackButtonElement>;
             "ion-backdrop": LocalJSX.IonBackdrop & JSXBase.HTMLAttributes<HTMLIonBackdropElement>;
             "ion-badge": LocalJSX.IonBadge & JSXBase.HTMLAttributes<HTMLIonBadgeElement>;
+            "ion-breadcrumb": LocalJSX.IonBreadcrumb & JSXBase.HTMLAttributes<HTMLIonBreadcrumbElement>;
+            "ion-breadcrumbs": LocalJSX.IonBreadcrumbs & JSXBase.HTMLAttributes<HTMLIonBreadcrumbsElement>;
             "ion-button": LocalJSX.IonButton & JSXBase.HTMLAttributes<HTMLIonButtonElement>;
             "ion-buttons": LocalJSX.IonButtons & JSXBase.HTMLAttributes<HTMLIonButtonsElement>;
             "ion-card": LocalJSX.IonCard & JSXBase.HTMLAttributes<HTMLIonCardElement>;
