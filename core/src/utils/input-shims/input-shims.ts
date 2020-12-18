@@ -1,4 +1,5 @@
 
+import { componentOnReady } from '../helpers';
 import { Config } from '../../interface';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
@@ -24,9 +25,8 @@ export const startInputShims = (config: Config) => {
   const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
 
   const registerInput = async (componentEl: HTMLElement) => {
-    if ((componentEl as any).componentOnReady) {
-      await (componentEl as any).componentOnReady();
-    }
+    await new Promise(resolve => componentOnReady(componentEl, resolve));
+
     const inputRoot = componentEl.shadowRoot || componentEl;
     const inputEl = inputRoot.querySelector('input') || inputRoot.querySelector('textarea');
     const scrollEl = componentEl.closest('ion-content');

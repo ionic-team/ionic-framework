@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import { componentOnReady } from '../../utils/helpers'
 
 import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
 
@@ -146,12 +147,12 @@ export class Slides implements ComponentInterface {
         subtree: true
       });
 
-      this.el.componentOnReady().then(() => {
+      componentOnReady(this.el, () => {
         if (!this.didInit) {
           this.didInit = true;
           this.initSwiper();
         }
-      });
+      })
     }
   }
 
@@ -530,6 +531,6 @@ export class Slides implements ComponentInterface {
 
 const waitForSlides = (el: HTMLElement) => {
   return Promise.all(
-    Array.from(el.querySelectorAll('ion-slide')).map(s => s.componentOnReady())
+    Array.from(el.querySelectorAll('ion-slide')).map(s => new Promise(resolve => componentOnReady(s, resolve)))
   );
 };

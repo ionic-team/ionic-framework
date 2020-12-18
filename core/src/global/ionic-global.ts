@@ -1,6 +1,6 @@
 import { getMode, setMode } from '@stencil/core';
 
-import { Mode } from '../interface';
+import { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
 import { config, configFromSession, configFromURL, saveConfig } from './config';
@@ -13,8 +13,10 @@ export const getIonMode = (ref?: any): Mode => {
   return (ref && getMode(ref)) || defaultMode;
 };
 
-export const initialize = () => {
-  const doc = document;
+export const initialize = (userConfig: IonicConfig = {}) => {
+  if (typeof (window as any) === 'undefined') { return; }
+
+  const doc = window.document;
   const win = window;
   Context.config = config;
   const Ionic = (win as any).Ionic = (win as any).Ionic || {};
@@ -28,7 +30,8 @@ export const initialize = () => {
     ...configFromSession(win),
     persistConfig: false,
     ...Ionic.config,
-    ...configFromURL(win)
+    ...configFromURL(win),
+    ...userConfig
   };
 
   config.reset(configObj);

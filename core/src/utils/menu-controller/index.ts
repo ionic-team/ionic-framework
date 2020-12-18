@@ -1,3 +1,4 @@
+import { componentOnReady } from '../helpers';
 import { AnimationBuilder, BackButtonEvent, MenuI } from '../../interface';
 import { MENU_BACK_BUTTON_PRIORITY } from '../hardware-back-button';
 
@@ -199,7 +200,7 @@ const createMenuController = () => {
   const waitUntilReady = () => {
     return Promise.all(
       Array.from(document.querySelectorAll('ion-menu'))
-        .map(menu => menu.componentOnReady())
+        .map(menu => new Promise(resolve => componentOnReady(menu, resolve)))
     );
   };
 
