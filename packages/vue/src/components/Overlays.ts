@@ -9,7 +9,7 @@ import {
   pickerController,
   popoverController,
   toastController,
-} from '@ionic/core';
+} from '@ionic/core/components';
 
 import { IonActionSheet as IonActionSheetCmp } from '@ionic/core/components/ion-action-sheet.js'
 import { IonAlert as IonAlertCmp } from '@ionic/core/components/ion-alert.js'

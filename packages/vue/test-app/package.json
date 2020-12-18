@@ -21,7 +21,6 @@
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
-    "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-e2e-cypress": "^4.5.4",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
@@ -36,8 +35,7 @@
     "eslint-plugin-vue": "^7.0.0-0",
     "stats-webpack-plugin": "^0.7.0",
     "typescript": "~3.9.3",
-    "vue-jest": "^5.0.0-0",
-    "wait-on": "^5.2.0"
+    "vue-jest": "^5.0.0-0"
   },
   "description": "An Ionic project"
 }

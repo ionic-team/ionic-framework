@@ -3,7 +3,7 @@
 /* auto-generated vue proxies */
 import { defineContainer } from './vue-component-lib/utils';
 
-import type { JSX } from '@ionic/core';
+import type { JSX } from '@ionic/core/components';
 
 import { IonAvatar as IonAvatarCmp } from '@ionic/core/components/ion-avatar.js';
 import { IonBackdrop as IonBackdropCmp } from '@ionic/core/components/ion-backdrop.js';

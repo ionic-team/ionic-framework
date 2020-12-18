@@ -61,7 +61,7 @@ export {
 
   // Hardware Back Button
   BackButtonEvent
-} from '@ionic/core';
+} from '@ionic/core/components';
 
 // Icons that are used by internal components
 addIcons({

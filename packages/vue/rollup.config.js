@@ -1,6 +1,6 @@
 import { terser } from "rollup-plugin-terser";
 
-const external = ['ionicons', 'ionicons/icons', '@ionic/core', '@ionic/core/loader', 'vue', 'vue-router'];
+const external = ['ionicons', 'ionicons/icons', 'vue', 'vue-router'];
 
 export default {
   input: 'dist-transpiled/index.js',

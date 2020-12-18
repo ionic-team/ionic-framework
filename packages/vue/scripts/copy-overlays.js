@@ -60,7 +60,7 @@ export const ${component.name} = /*@__PURE__*/defineOverlayContainer<JSX.${compo
 import {
   JSX,
   ${controllerImports.join(',\n  ')},
-} from '@ionic/core';
+} from '@ionic/core/components';
 
 ${componentImports.join('\n')}
 

@@ -1,5 +1,5 @@
 import { App, Plugin } from 'vue';
-import { IonicConfig, initialize } from '@ionic/core';
+import { IonicConfig, initialize } from '@ionic/core/components';
 
 const ael = (el: any, eventName: string, cb: any, opts: any) => el.addEventListener(eventName.toLowerCase(), cb, opts);
 const rel = (el: any, eventName: string, cb: any, opts: any) => el.removeEventListener(eventName.toLowerCase(), cb, opts);

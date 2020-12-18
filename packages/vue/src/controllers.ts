@@ -1,7 +1,7 @@
 import {
   modalController,
   popoverController
-} from '@ionic/core';
+} from '@ionic/core/components';
 import { VueDelegate } from './framework-delegate';
 
 const oldModalCreate = modalController.create.bind(modalController);

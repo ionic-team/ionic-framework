@@ -1,5 +1,5 @@
 import { h, defineComponent } from 'vue';
-import { isPlatform } from '@ionic/core';
+import { isPlatform } from '@ionic/core/components';
 
 export const IonIcon = defineComponent({
   name: 'IonIcon',
