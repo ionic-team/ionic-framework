@@ -15,5 +15,5 @@ export default {
       plugins: [terser()]
     }
   ],
-  external: ['ionicons', 'ionicons/icons', '@ionic/core', '@ionic/core/loader', 'vue', 'vue-router']
+  external: ['ionicons', 'ionicons/icons', '@ionic/core', '@ionic/core/components/*', '@ionic/core/loader', 'vue', 'vue-router']
 };

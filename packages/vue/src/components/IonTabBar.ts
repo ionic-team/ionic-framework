@@ -1,6 +1,6 @@
 import { h, defineComponent, getCurrentInstance, inject, VNode } from 'vue';
 import { defineCustomElement } from '../utils';
-import { IonTabBar as IonTabBarCmp } from '@ionic/core';
+import { IonTabBar as IonTabBarCmp } from '@ionic/core/components/ion-tab-bar.js';
 
 interface TabState {
   activeTab?: string;

@@ -9,14 +9,15 @@ import {
   pickerController,
   popoverController,
   toastController,
-  IonActionSheet as IonActionSheetCmp,
-  IonAlert as IonAlertCmp,
-  IonLoading as IonLoadingCmp,
-  IonModal as IonModalCmp,
-  IonPicker as IonPickerCmp,
-  IonPopover as IonPopoverCmp,
-  IonToast as IonToastCmp
 } from '@ionic/core';
+
+import { IonActionSheet as IonActionSheetCmp } from '@ionic/core/components/ion-action-sheet.js'
+import { IonAlert as IonAlertCmp } from '@ionic/core/components/ion-alert.js'
+import { IonLoading as IonLoadingCmp } from '@ionic/core/components/ion-loading.js'
+import { IonModal as IonModalCmp } from '@ionic/core/components/ion-modal.js'
+import { IonPicker as IonPickerCmp } from '@ionic/core/components/ion-picker.js'
+import { IonPopover as IonPopoverCmp } from '@ionic/core/components/ion-popover.js'
+import { IonToast as IonToastCmp } from '@ionic/core/components/ion-toast.js'
 
 import { defineOverlayContainer } from '../vue-component-lib/overlays';
 

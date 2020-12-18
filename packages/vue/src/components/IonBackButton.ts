@@ -1,6 +1,6 @@
 import { h, inject, defineComponent } from 'vue';
 import { defineCustomElement } from '../utils';
-import { IonBackButton as IonBackButtonCmp } from '@ionic/core';
+import { IonBackButton as IonBackButtonCmp } from '@ionic/core/components/ion-back-button.js';
 
 export const IonBackButton = defineComponent({
   name: 'IonBackButton',

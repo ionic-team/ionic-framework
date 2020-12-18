@@ -43,16 +43,14 @@ const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: 
 export const defineContainer = <Props>(name: string, customElement: any, componentProps: string[] = [], componentOptions: ComponentOptions = {}) => {
   const { modelProp, modelUpdateEvent, routerLinkComponent } = componentOptions;
 
+  customElements.define(name, customElement);
+
   /**
   * Create a Vue component wrapper around a Web Component.
   * Note: The `props` here are not all properties on a component.
   * They refer to whatever properties are set on an instance of a component.
   */
   const Container = defineComponent<Props & InputProps>((props, { attrs, slots, emit }) => {
-    if (!customElements.get(name)) {
-      customElements.define(name, customElement);
-    }
-
     const containerRef = ref<HTMLElement>();
     const classes = new Set(getComponentClasses(attrs.class));
     const onVnodeBeforeMount = (vnode: VNode) => {
