@@ -46,24 +46,31 @@ span {
 
 :host(.skeleton-text-animated) {
   position: relative;
+  overflow: hidden;
 
-  background: linear-gradient(to right, $skeleton-text-background 8%, $skeleton-text-background-animated 18%, $skeleton-text-background 33%);
-  background-size: 800px 104px;
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: shimmer;
-  animation-timing-function: linear;
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent 0,
+      $skeleton-text-background 20%,
+      $skeleton-text-background-animated 60%,
+      transparent
+    );
+    animation: shimmer 2s infinite;
+    content: "";
+  }
 }
 
 /* stylelint-disable property-blacklist */
 @keyframes shimmer {
-  0% {
-    background-position: -468px 0
-  }
-
   100% {
-    background-position: 468px 0
+    transform: translateX(100%);
   }
 }
 /* stylelint-enable property-blacklist */
