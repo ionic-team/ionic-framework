@@ -68,6 +68,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'two',
         component: () => import('@/views/NestedChildTwo.vue')
+      },
+      {
+        path: ':id',
+        component: () => import('@/views/Folder.vue')
       }
     ]
   },
@@ -134,5 +138,7 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
+
+(window as any).debugRouter = router;
 
 export default router

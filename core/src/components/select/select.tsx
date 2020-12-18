@@ -420,9 +420,6 @@ export class Select implements ComponentInterface {
   }
 
   private onClick = (ev: UIEvent) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-
     this.setFocus();
     this.open(ev);
   }
@@ -458,11 +455,12 @@ export class Select implements ComponentInterface {
     const textPart = addPlaceholderClass ? 'placeholder' : 'text';
 
     // If there is a label then we need to concatenate it with the
-    // current value and a comma so it separates nicely when the screen reader
-    // announces it, otherwise just announce the value
+    // current value (or placeholder) and a comma so it separates
+    // nicely when the screen reader announces it, otherwise just
+    // announce the value / placeholder
     const displayLabel = labelText !== undefined
-      ? `${displayValue}, ${labelText}`
-      : displayValue;
+      ? (selectText !== '' ? `${selectText}, ${labelText}` : labelText)
+      : selectText;
 
     return (
       <Host
@@ -477,7 +475,7 @@ export class Select implements ComponentInterface {
           'select-disabled': disabled,
         }}
       >
-        <div class={selectTextClasses} part={textPart}>
+        <div aria-hidden="true" class={selectTextClasses} part={textPart}>
           {selectText}
         </div>
         <div class="select-icon" role="presentation" part="icon">

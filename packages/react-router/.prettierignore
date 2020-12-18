@@ -1,0 +1,4 @@
+dist
+dist-transpiled
+*.md
+build

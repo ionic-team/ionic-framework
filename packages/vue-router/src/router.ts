@@ -1,6 +1,8 @@
 import {
+  parseQuery,
   Router,
-  RouteLocationNormalized
+  RouteLocationNormalized,
+  NavigationFailure
 } from 'vue-router';
 import { createLocationHistory } from './locationHistory';
 import { generateId } from './utils';
@@ -13,7 +15,7 @@ import {
   IonicVueRouterOptions,
   NavigationInformation
 } from './types';
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/vue';
 
 export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
   let currentNavigationInfo: NavigationInformation = { direction: undefined, action: undefined };
@@ -27,7 +29,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    * which is fired once navigation is confirmed
    * and any user guards have run.
    */
-  router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized) => {
+  router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized, failure?: NavigationFailure) => {
+    if (failure) return;
+
     const { direction, action } = currentNavigationInfo;
 
     /**
@@ -87,7 +91,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
           router.back();
         } else {
-          router.replace(prevInfo.pathname + (prevInfo.search || ''));
+          router.replace({ path: prevInfo.pathname, query: parseQuery(prevInfo.search) });
         }
       } else {
         handleNavigate(defaultHref, 'pop', 'back');
@@ -184,6 +188,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           pathname: location.path,
           search: location.fullPath && location.fullPath.split('?')[1] || '',
           params: location.params && location.params,
+          prevRouteLastPathname: leavingLocationInfo.lastPathname
         }
 
         if (isPushed) {
@@ -201,6 +206,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           routeInfo.pushedByRoute = currentRouteInfo?.pushedByRoute || routeInfo.pushedByRoute;
           routeInfo.routerDirection = currentRouteInfo?.routerDirection || routeInfo.routerDirection;
           routeInfo.routerAnimation = currentRouteInfo?.routerAnimation || routeInfo.routerAnimation;
+          routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
         }
 
         locationHistory.add(routeInfo);
@@ -233,7 +239,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       const newRouteInfo = { ...routeInfo };
       newRouteInfo.pathname = originalHref;
       incomingRouteParams = { ...newRouteInfo, routerAction: 'pop', routerDirection: 'back' };
-      router.push(newRouteInfo.pathname + (newRouteInfo.search || ''));
+      router.push({ path: newRouteInfo.pathname, query: parseQuery(newRouteInfo.search) });
     }
   }
 
@@ -242,8 +248,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     const [pathname] = path.split('?');
 
     if (routeInfo) {
-      const search = (routeInfo.search) ? `?${routeInfo.search}` : '';
-
       incomingRouteParams = {
         ...incomingRouteParams,
         routerAction: 'push',
@@ -259,9 +263,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
        * tab you are on.
        */
       if (routeInfo.pathname === pathname) {
-        router.push(routeInfo.pathname + search);
+        router.push({ path: routeInfo.pathname, query: parseQuery(routeInfo.search) });
       } else {
-        router.push(pathname + search);
+        router.push({ path: pathname, query: parseQuery(routeInfo.search) });
       }
     }
     else {

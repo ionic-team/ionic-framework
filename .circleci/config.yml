@@ -212,12 +212,6 @@ jobs:
           working_directory: /tmp/workspace/packages/vue-router
       - run:
           command: sudo npm link
-          working_directory: /tmp/workspace/core
-      - run:
-          command: sudo npm link @ionic/core
-          working_directory: /tmp/workspace/packages/vue-router
-      - run:
-          command: sudo npm link
           working_directory: /tmp/workspace/packages/vue
       - run:
           command: sudo npm link @ionic/vue

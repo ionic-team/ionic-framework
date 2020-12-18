@@ -1,4 +1,12 @@
-import { IonButton, IonContent, IonHeader, IonPage, IonRouterOutlet, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonRouterOutlet,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 import { useEffect } from 'react';
 import React from 'react';
 import { Route, Redirect } from 'react-router';
@@ -18,8 +26,12 @@ const Page: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonButton routerLink="/nested-outlet" routerDirection="root">Back with direction "root"</IonButton>
-        <IonButton routerLink="/nested-outlet" routerDirection="back">Back with direction "back"</IonButton>
+        <IonButton routerLink="/nested-outlet" routerDirection="root">
+          Back with direction "root"
+        </IonButton>
+        <IonButton routerLink="/nested-outlet" routerDirection="back">
+          Back with direction "back"
+        </IonButton>
       </IonContent>
     </IonPage>
   );
@@ -34,8 +46,11 @@ const SecondPage: React.FC = () => {
   }, []);
   return (
     <IonRouterOutlet ionPage>
-      <Route path="/nested-outlet/secondpage" exact={true} 
-        render={() => <Redirect to="/nested-outlet/secondpage/page" />} />
+      <Route
+        path="/nested-outlet/secondpage"
+        exact={true}
+        render={() => <Redirect to="/nested-outlet/secondpage/page" />}
+      />
       <Route path="/nested-outlet/secondpage/page" component={Page} exact={true} />
     </IonRouterOutlet>
   );
@@ -56,7 +71,9 @@ const FirstPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonButton routerLink="/nested-outlet/secondpage/page" routerDirection="forward">Go to second page</IonButton>
+        <IonButton routerLink="/nested-outlet/secondpage/page" routerDirection="forward">
+          Go to second page
+        </IonButton>
       </IonContent>
     </IonPage>
   );
