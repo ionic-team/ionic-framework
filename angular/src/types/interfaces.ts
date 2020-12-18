@@ -10,6 +10,6 @@ export interface IonicWindow extends Window {
 }
 
 export interface HTMLStencilElement extends HTMLElement {
-  componentOnReady(): Promise<this>;
+  componentOnReady()?: Promise<this>;
   forceUpdate(): void;
 }
