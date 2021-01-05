@@ -45,8 +45,8 @@ export class Breadcrumbs implements ComponentInterface {
         : (last ? undefined : true);
       breadcrumb.separator = separator;
 
-      // If there is not a current breadcrumb already
-      // set the last one to current
+      // If there is not an active breadcrumb already
+      // set the last one to active
       if (!active && last) {
         breadcrumb.active = true;
       }

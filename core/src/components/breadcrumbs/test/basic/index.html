@@ -38,7 +38,7 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Custom current, danger</p>
+      <p>Custom active, danger</p>
 
       <ion-breadcrumbs color="danger">
         <ion-breadcrumb href="#disabled" disabled>
@@ -47,7 +47,7 @@
         <ion-breadcrumb href="#library">
           Library
         </ion-breadcrumb>
-        <ion-breadcrumb href="#data" current>
+        <ion-breadcrumb href="#data" active>
           Data
         </ion-breadcrumb>
         <ion-breadcrumb href="#file">
@@ -55,24 +55,24 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Custom separator</p>
+      <p>Last separator</p>
 
-      <ion-breadcrumbs separator=">">
+      <ion-breadcrumbs>
         <ion-breadcrumb href="#disabled" disabled>
           Home
         </ion-breadcrumb>
         <ion-breadcrumb href="#library">
           Library
         </ion-breadcrumb>
-        <ion-breadcrumb href="#data" current>
+        <ion-breadcrumb href="#data" active>
           Data
         </ion-breadcrumb>
-        <ion-breadcrumb href="#file">
+        <ion-breadcrumb href="#file" separator>
           File
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Color: Primary</p>
+      <p>Breadcrumbs Color: Primary</p>
 
       <ion-breadcrumbs color="primary">
         <ion-breadcrumb href="#">
@@ -89,13 +89,31 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Color: Danger</p>
+      <p>Breadcrumb Color: Varied</p>
 
       <ion-breadcrumbs>
+        <ion-breadcrumb href="#" color="secondary">
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#library" color="danger">
+          Library
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#disabled" disabled>
+          Disabled
+        </ion-breadcrumb>
+        <ion-breadcrumb color="tertiary">
+          Data
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+
+      <p>Breadcrumbs (Secondary); Breadcrumb (Danger)</p>
+
+      <ion-breadcrumbs color="secondary">
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library">
+        <ion-breadcrumb href="#library" color="danger">
           Library
         </ion-breadcrumb>
         <ion-breadcrumb href="#disabled" disabled>
@@ -126,6 +144,7 @@
           <ion-icon slot="separator" name="star-outline"></ion-icon>
         </ion-breadcrumb>
       </ion-breadcrumbs>
+
     </ion-content>
   </ion-app>
 

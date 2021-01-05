@@ -29,7 +29,7 @@
   background: inherit;
 }
 
-:host(.breadcrumb-disabled) {
+:host(.breadcrumb-disabled) .breadcrumb-native {
   cursor: default;
   opacity: .5;
   pointer-events: none;
@@ -39,12 +39,6 @@
   color: $breadcrumb-color-active;
 }
 
-// Breadcrumbs: Color
-// ------------------------------------------
-
-:host(.in-breadcrumbs-color.breadcrumb-active) {
-  color: current-color(base);
-}
 
 // Breadcrumb Separator
 // ------------------------------------------
@@ -55,4 +49,18 @@
   display: inline-flex;
 
   color: $breadcrumb-color;
+}
+
+// Breadcrumbs: Color
+// ------------------------------------------
+
+:host(.in-breadcrumbs-color.breadcrumb-active) {
+  color: current-color(base);
+}
+
+// Breadcrumb: Color
+// ------------------------------------------
+
+:host(.ion-color) {
+  color: current-color(base);
 }
