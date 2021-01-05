@@ -12,7 +12,10 @@ import { createColorClasses, hostContext } from '../../utils/theme';
  */
 @Component({
   tag: 'ion-breadcrumb',
-  styleUrl: 'breadcrumb.scss',
+  styleUrls: {
+    'ios': 'breadcrumb.ios.scss',
+    'md': 'breadcrumb.md.scss'
+  },
   shadow: true
 })
 export class Breadcrumb implements ComponentInterface {

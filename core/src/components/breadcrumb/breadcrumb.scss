@@ -6,6 +6,8 @@
 :host {
   display: flex;
 
+  flex: 0 0 auto;
+
   align-items: center;
 
   color: $breadcrumb-color;
@@ -37,6 +39,8 @@
 
 :host(.breadcrumb-active) {
   color: $breadcrumb-color-active;
+
+  font-weight: 500;
 }
 
 
@@ -44,8 +48,6 @@
 // ------------------------------------------
 
 .breadcrumb-separator {
-  @include margin(null, 4px, null, 4px);
-
   display: inline-flex;
 
   color: $breadcrumb-color;

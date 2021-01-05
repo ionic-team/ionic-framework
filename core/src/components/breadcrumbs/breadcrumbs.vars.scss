@@ -14,3 +14,15 @@ $breadcrumbs-padding-bottom:            $breadcrumbs-padding-top !default;
 
 /// @prop - Padding start of the breadcrumbs
 $breadcrumbs-padding-start:             $breadcrumbs-padding-end !default;
+
+/// @prop - Margin top of the breadcrumbs
+$breadcrumbs-margin-top:               10px !default;
+
+/// @prop - Margin end of the breadcrumbs
+$breadcrumbs-margin-end:               null !default;
+
+/// @prop - Margin bottom of the breadcrumbs
+$breadcrumbs-margin-bottom:            $breadcrumbs-margin-top !default;
+
+/// @prop - Margin start of the breadcrumbs
+$breadcrumbs-margin-start:             $breadcrumbs-margin-end !default;

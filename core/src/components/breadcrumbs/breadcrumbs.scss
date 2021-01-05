@@ -8,10 +8,13 @@
    * @prop --background: Background of the breadcrumbs
    * @prop --color: Text color of the breadcrumbs
    */
-   @include font-smoothing();
-   @include padding($breadcrumbs-padding-top, $breadcrumbs-padding-end, $breadcrumbs-padding-bottom, $breadcrumbs-padding-start);
+  @include font-smoothing();
+  @include padding($breadcrumbs-padding-top, $breadcrumbs-padding-end, $breadcrumbs-padding-bottom, $breadcrumbs-padding-start);
+  @include margin($breadcrumbs-margin-top, $breadcrumbs-margin-end, $breadcrumbs-margin-bottom, $breadcrumbs-margin-start);
 
   display: flex;
+
+  flex-wrap: wrap;
 
   align-items: center;
 }

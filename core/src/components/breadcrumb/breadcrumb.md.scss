@@ -1,0 +1,16 @@
+@import "./breadcrumb";
+
+// Breadcrumb
+// --------------------------------------------------
+
+:host {
+
+}
+
+
+// Breadcrumb Separator
+// ------------------------------------------
+
+.breadcrumb-separator {
+  @include margin(null, 8px, null, 8px);
+}
