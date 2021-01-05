@@ -329,7 +329,8 @@ export class Content implements ComponentInterface {
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
-            'overscroll': (scrollX || scrollY) && forceOverscroll
+            'overscroll': (scrollX || scrollY) && forceOverscroll,
+            'scroll-snap': isPlatform('ios')
           }}
           ref={el => this.scrollEl = el!}
           onScroll={(this.scrollEvents) ? ev => this.onScroll(ev) : undefined}
