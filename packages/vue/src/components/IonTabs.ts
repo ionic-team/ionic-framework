@@ -4,7 +4,7 @@ import { IonRouterOutlet } from './IonRouterOutlet';
 const WILL_CHANGE = 'ionTabsWillChange';
 const DID_CHANGE = 'ionTabsDidChange';
 
-export const IonTabs = defineComponent({
+export const IonTabs = /*@__PURE__*/ defineComponent({
   name: 'IonTabs',
   emits: [WILL_CHANGE, DID_CHANGE],
   render() {

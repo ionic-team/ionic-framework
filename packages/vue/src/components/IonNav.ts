@@ -3,7 +3,7 @@ import { VueDelegate } from '../framework-delegate';
 import { defineCustomElement } from '../utils';
 import { IonNav as IonNavCmp } from '@ionic/core/components/ion-nav.js';
 
-export const IonNav = defineComponent({
+export const IonNav = /*@__PURE__*/ defineComponent({
   name: 'IonNav',
   setup(_, { slots }) {
     defineCustomElement('ion-nav', IonNavCmp);

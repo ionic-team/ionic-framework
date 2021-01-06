@@ -51,7 +51,7 @@ function generateOverlays() {
     componentImports.push(`import { ${component.name} as ${component.name}Cmp } from '@ionic/core/components/${component.tag}.js'`);
     controllerImports.push(component.controller);
     componentDefinitions.push(`
-export const ${component.name} = /*@__PURE__*/defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${component.name}Cmp, [${props.join(', ')}], ${component.controller});
+export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${component.name}Cmp, [${props.join(', ')}], ${component.controller});
     `);
   });
 

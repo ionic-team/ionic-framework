@@ -13,7 +13,7 @@ interface Tab {
   ref: VNode
 }
 
-export const IonTabBar = defineComponent({
+export const IonTabBar = /*@__PURE__*/ defineComponent({
   name: 'IonTabBar',
   props: {
     _tabsWillChange: { type: Function, default: () => {} },

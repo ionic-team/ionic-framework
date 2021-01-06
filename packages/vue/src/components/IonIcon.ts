@@ -1,7 +1,7 @@
 import { h, defineComponent } from 'vue';
 import { isPlatform } from '@ionic/core/components';
 
-export const IonIcon = defineComponent({
+export const IonIcon = /*@__PURE__*/ defineComponent({
   name: 'IonIcon',
   props: {
     ariaLabel: String,
