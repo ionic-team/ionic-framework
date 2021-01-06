@@ -1,10 +1,8 @@
-import { Component, ComponentInterface, Element, Host, Prop, h, State } from '@stencil/core';
-import { sep } from 'path';
+import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { AnimationBuilder } from '../../utils/animation/animation-interface';
-import { hasShadowDom } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import { RouterDirection } from '../router/utils/interface';
 
@@ -97,7 +95,6 @@ export class Breadcrumb implements ComponentInterface {
    * another page using `href`.
    */
   @Prop() routerAnimation: AnimationBuilder | undefined;
-
 
   getSeparatorIcon = () => {
     const mode = getIonMode();

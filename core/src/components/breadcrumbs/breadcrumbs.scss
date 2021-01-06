@@ -20,23 +20,25 @@
 }
 
 .breadcrumbs-collapsed-indicator {
-  background: #e1e1e3;
+  @include border-radius(5px);
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
 
   width: 34px;
   height: 21px;
-  border-radius: 5px;
 
-  display: none;
-  align-items: center;
-  justify-content: center;
+  background: #e1e1e3;
 }
 
 .breadcrumbs-collapsed-indicator ion-icon {
+  margin-top: 1px;
+
   color: #5a5b69;
 
   font-size: 25px;
-
-  margin-top: 1px;
 }
 
 :host(.breadcrumbs-collapsed) .breadcrumbs-collapsed-indicator {

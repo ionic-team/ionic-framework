@@ -61,8 +61,8 @@ export class IonBadge {
 }
 export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
 }
-@ProxyCmp({ inputs: ["active", "color", "disabled", "download", "href", "mode", "rel", "separator", "target"] })
-@Component({ selector: "ion-breadcrumb", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["active", "color", "disabled", "download", "href", "mode", "rel", "separator", "target"] })
+@ProxyCmp({ inputs: ["active", "collapsed", "color", "disabled", "download", "href", "lastCollapsed", "mode", "rel", "routerAnimation", "routerDirection", "separator", "target"] })
+@Component({ selector: "ion-breadcrumb", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["active", "collapsed", "color", "disabled", "download", "href", "lastCollapsed", "mode", "rel", "routerAnimation", "routerDirection", "separator", "target"] })
 export class IonBreadcrumb {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
