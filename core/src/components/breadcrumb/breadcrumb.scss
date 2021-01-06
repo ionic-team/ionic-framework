@@ -53,6 +53,13 @@
   color: $breadcrumb-color;
 }
 
+// Breadcrumb: Collapsed
+// ------------------------------------------
+
+:host(.breadcrumb-collapsed) .breadcrumb-native {
+  display: none;
+}
+
 // Breadcrumbs: Color
 // ------------------------------------------
 

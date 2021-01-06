@@ -1,8 +1,12 @@
-import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h, State } from '@stencil/core';
+import { sep } from 'path';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { AnimationBuilder } from '../../utils/animation/animation-interface';
+import { hasShadowDom } from '../../utils/helpers';
+import { createColorClasses, hostContext, openURL } from '../../utils/theme';
+import { RouterDirection } from '../router/utils/interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -20,6 +24,8 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 })
 export class Breadcrumb implements ComponentInterface {
 
+  @Prop() lastCollapsed!: boolean;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -35,6 +41,12 @@ export class Breadcrumb implements ComponentInterface {
    * last breadcrumb if it is not set on any.
    */
   @Prop() active = false;
+
+  /**
+   * If `true`, the breadcrumb will collapse and show an indicator
+   * that it is collapsed in its place.
+   */
+  @Prop() collapsed = false;
 
   /**
    * If `true`, the user cannot interact with the breadcrumb.
@@ -74,6 +86,19 @@ export class Breadcrumb implements ComponentInterface {
    */
   @Prop() target: string | undefined;
 
+  /**
+   * When using a router, it specifies the transition direction when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerDirection: RouterDirection = 'forward';
+
+  /**
+   * When using a router, it specifies the transition animation when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerAnimation: AnimationBuilder | undefined;
+
+
   getSeparatorIcon = () => {
     const mode = getIonMode();
 
@@ -89,7 +114,7 @@ export class Breadcrumb implements ComponentInterface {
   }
 
   render() {
-    const { color, active, disabled, download, el, href, separator, target } = this;
+    const { color, active, collapsed, disabled, download, el, href, lastCollapsed, routerAnimation, routerDirection, separator, target } = this;
     const TagType = href === undefined ? 'span' : 'a' as any;
     const mode = getIonMode(this);
     const attrs = (TagType === 'span')
@@ -100,11 +125,16 @@ export class Breadcrumb implements ComponentInterface {
         target
       };
 
+    const showSeparator = collapsed
+      ? lastCollapsed ? true : false
+      : separator;
+
     return (
       <Host
         class={createColorClasses(color, {
           [mode]: true,
           'breadcrumb-active': active,
+          'breadcrumb-collapsed': collapsed,
           'breadcrumb-disabled': disabled,
           'in-breadcrumbs-color': hostContext('ion-breadcrumbs[color]', el),
           'ion-activatable': true,
@@ -116,12 +146,13 @@ export class Breadcrumb implements ComponentInterface {
           class="breadcrumb-native"
           part="native"
           disabled={disabled}
+          onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
         >
           <slot name="start"></slot>
           <slot></slot>
           <slot name="end"></slot>
         </TagType>
-        { separator &&
+        { showSeparator &&
           <span class="breadcrumb-separator" part="separator">
             <slot name="separator">
               {this.getSeparatorIcon()}

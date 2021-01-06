@@ -5,8 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
+import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection as RouterDirection1, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
+import { RouterDirection } from "./components/router/utils/interface";
+import { AnimationBuilder as AnimationBuilder1 } from "./utils/animation/animation-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
 export namespace Components {
@@ -216,6 +218,10 @@ export namespace Components {
          */
         "active": boolean;
         /**
+          * If `true`, the breadcrumb will collapse and show an indicator that it is collapsed in its place.
+         */
+        "collapsed": boolean;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -231,6 +237,7 @@ export namespace Components {
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
         "href": string | undefined;
+        "lastCollapsed": boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -239,6 +246,14 @@ export namespace Components {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel": string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation": AnimationBuilder | undefined;
+        /**
+          * When using a router, it specifies the transition direction when navigating to another page using `href`.
+         */
+        "routerDirection": RouterDirection;
         /**
           * If true, show a separator between this breadcrumb and the next. Defaults to `true` for all breadcrumbs except the last.
          */
@@ -3585,6 +3600,10 @@ declare namespace LocalJSX {
          */
         "active"?: boolean;
         /**
+          * If `true`, the breadcrumb will collapse and show an indicator that it is collapsed in its place.
+         */
+        "collapsed"?: boolean;
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -3600,6 +3619,7 @@ declare namespace LocalJSX {
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
         "href"?: string | undefined;
+        "lastCollapsed": boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -3608,6 +3628,14 @@ declare namespace LocalJSX {
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel"?: string | undefined;
+        /**
+          * When using a router, it specifies the transition animation when navigating to another page using `href`.
+         */
+        "routerAnimation"?: AnimationBuilder | undefined;
+        /**
+          * When using a router, it specifies the transition direction when navigating to another page using `href`.
+         */
+        "routerDirection"?: RouterDirection;
         /**
           * If true, show a separator between this breadcrumb and the next. Defaults to `true` for all breadcrumbs except the last.
          */

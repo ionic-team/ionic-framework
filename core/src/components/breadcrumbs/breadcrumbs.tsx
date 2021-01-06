@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, h, State } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
@@ -14,6 +14,10 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class Breadcrumbs implements ComponentInterface {
 
+  @State() collapsed!: boolean;
+
+  @State() indicatorOrder!: string;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -25,6 +29,35 @@ export class Breadcrumbs implements ComponentInterface {
 
   componentDidLoad() {
     this.setBreadcrumbSeparator();
+    this.setCollapsed();
+    this.setOrder();
+  }
+
+  private setCollapsed = () => {
+    const breadcrumbs = this.getBreadcrumbs();
+
+    const collapsedBreadcrumbs = breadcrumbs.filter(breadcrumb => breadcrumb.collapsed);
+
+    for (const [index, collapsed] of collapsedBreadcrumbs.entries()) {
+      const last = collapsed === collapsedBreadcrumbs[collapsedBreadcrumbs.length - 1];
+
+      if (last) {
+        collapsed.lastCollapsed = true;
+        this.indicatorOrder = `${index}`;
+      }
+    }
+
+    if (collapsedBreadcrumbs.length > 0) {
+      this.collapsed = true;
+    }
+  }
+
+  private setOrder = () => {
+    const breadcrumbs = this.getBreadcrumbs();
+
+    for (const [index, breadcrumb] of breadcrumbs.entries()) {
+      breadcrumb.style.order = `${index}`;
+    }
   }
 
   private setBreadcrumbSeparator = () => {
@@ -58,13 +91,22 @@ export class Breadcrumbs implements ComponentInterface {
   }
 
   render() {
+    const { color, collapsed, indicatorOrder } = this;
     const mode = getIonMode(this);
+
     return (
       <Host
-        class={createColorClasses(this.color, {
+        class={createColorClasses(color, {
           [mode]: true,
+          'breadcrumbs-collapsed': collapsed,
         })}
+
       >
+        <div class="breadcrumbs-collapsed-indicator" style={{
+          'order': indicatorOrder
+        }}>
+          <ion-icon name="ellipsis-horizontal"></ion-icon>
+        </div>
         <slot></slot>
       </Host>
     );

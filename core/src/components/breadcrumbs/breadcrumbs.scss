@@ -18,3 +18,27 @@
 
   align-items: center;
 }
+
+.breadcrumbs-collapsed-indicator {
+  background: #e1e1e3;
+
+  width: 34px;
+  height: 21px;
+  border-radius: 5px;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.breadcrumbs-collapsed-indicator ion-icon {
+  color: #5a5b69;
+
+  font-size: 25px;
+
+  margin-top: 1px;
+}
+
+:host(.breadcrumbs-collapsed) .breadcrumbs-collapsed-indicator {
+  display: flex;
+}
