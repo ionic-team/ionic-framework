@@ -86,7 +86,7 @@ export const config: Config = {
 
         'ion-app',
         'ion-icon'
-      ]
+      ],
       componentModels: [
         {
           elements: ['ion-checkbox', 'ion-toggle'],
