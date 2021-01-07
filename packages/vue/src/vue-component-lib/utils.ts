@@ -63,7 +63,7 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
     const hasRouter = currentInstance?.appContext?.provides[NAV_MANAGER];
     const navManager: NavManager | undefined = hasRouter ? inject(NAV_MANAGER) : undefined;
     const handleRouterLink = (ev: Event) => {
-      const { routerLink } = props;
+      const { routerLink } = props as any;
       if (!routerLink) return;
 
       const routerProps = Object.keys(props).filter(p => p.startsWith(ROUTER_PROP_REFIX));
@@ -114,12 +114,11 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
   });
 
   Container.displayName = name;
-  Container.props = componentProps;
+  Container.props = [...componentProps, ROUTER_LINK_VALUE];
   if (modelProp) {
     Container.props.push(MODEL_VALUE);
     Container.emits = [UPDATE_VALUE_EVENT];
   }
-  Container.props.push(ROUTER_LINK_VALUE);
 
   return Container;
 };
