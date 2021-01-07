@@ -15,7 +15,7 @@ test('datetime/picker: focus trap', async () => {
   expect(datetime).not.toBe(null);
 
   // TODO fix
-  await page.waitFor(100);
+  await page.waitFor(250);
 
   await page.keyboard.press('Tab');
 
