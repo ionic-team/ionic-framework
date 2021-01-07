@@ -117,10 +117,12 @@ export const config: Config = {
       esmLoaderPath: '../loader'
     },
     {
-      type: 'dist-custom-elements-bundle',
+      type: 'dist-custom-elements',
+      dir: 'components',
       copy: [{
-        src: '../scripts/custom-elements.d.ts',
-        dest: 'dist/types/custom-elements.d.ts'
+        src: '../scripts/custom-elements',
+        dest: 'components',
+        warn: true
       }],
       includeGlobalScripts: false
     },
