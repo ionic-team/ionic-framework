@@ -15,17 +15,37 @@
         </ion-toolbar>
       </ion-header>
 
-      <ExploreContainer name="Tab 2 page" />
+      <ion-item button router-link="/routing" id="routing">
+        <ion-label>Go to /routing</ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-import { IonButtons, IonBackButton, IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+  import {
+    IonButtons,
+    IonBackButton,
+    IonItem,
+    IonLabel,
+    IonPage,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent
+  } from '@ionic/vue';
 
-export default  {
-  name: 'Tab2',
-  components: { IonButtons, IonBackButton, ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
-}
+  export default {
+    components: {
+      IonButtons,
+      IonBackButton,
+      IonItem,
+      IonLabel,
+      IonPage,
+      IonHeader,
+      IonToolbar,
+      IonTitle,
+      IonContent
+    }
+  }
 </script>

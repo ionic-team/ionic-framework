@@ -188,6 +188,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           pathname: location.path,
           search: location.fullPath && location.fullPath.split('?')[1] || '',
           params: location.params && location.params,
+          prevRouteLastPathname: leavingLocationInfo.lastPathname
         }
 
         if (isPushed) {
@@ -205,6 +206,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           routeInfo.pushedByRoute = currentRouteInfo?.pushedByRoute || routeInfo.pushedByRoute;
           routeInfo.routerDirection = currentRouteInfo?.routerDirection || routeInfo.routerDirection;
           routeInfo.routerAnimation = currentRouteInfo?.routerAnimation || routeInfo.routerAnimation;
+          routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
         }
 
         locationHistory.add(routeInfo);
