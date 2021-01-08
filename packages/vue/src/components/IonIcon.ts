@@ -1,5 +1,7 @@
 import { h, defineComponent } from 'vue';
 import { isPlatform } from '@ionic/core/components';
+import { defineCustomElement } from '../utils';
+import { IonIcon as IonIconCmp } from 'ionicons/dist/custom-elements';
 
 export const IonIcon = /*@__PURE__*/ defineComponent({
   name: 'IonIcon',
@@ -17,6 +19,7 @@ export const IonIcon = /*@__PURE__*/ defineComponent({
     src: String
   },
   setup(props, { slots }) {
+    defineCustomElement('ion-icon', IonIconCmp);
     return () => {
       const { icon, ios, md } = props;
 

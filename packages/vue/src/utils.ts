@@ -33,10 +33,10 @@ export const getConfig = (): CoreConfig | null => {
   return null;
 };
 
-export const defineCustomElement = (name: string, customElement: any) => {
+export const defineCustomElement = (tagName: string, customElement: any) => {
   if (typeof customElements === 'undefined') return;
 
-  if (!customElements.get(name)) {
-    customElements.define(name, customElement);
+  if (!customElements.get(tagName)) {
+    customElements.define(tagName, customElement);
   }
 }
