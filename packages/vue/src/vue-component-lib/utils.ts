@@ -48,13 +48,17 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
   * They refer to whatever properties are set on an instance of a component.
   */
   const Container = defineComponent<Props & InputProps>((props, { attrs, slots, emit }) => {
+    let modelPropValue = (props as any)[modelProp];
     const containerRef = ref<HTMLElement>();
     const classes = new Set(getComponentClasses(attrs.class));
     const onVnodeBeforeMount = (vnode: VNode) => {
       // Add a listener to tell Vue to update the v-model
       if (vnode.el) {
         vnode.el.addEventListener(modelUpdateEvent.toLowerCase(), (e: Event) => {
-          emit(UPDATE_VALUE_EVENT, (e?.target as any)[modelProp]);
+          modelPropValue = (e?.target as any)[modelProp];
+          emit(UPDATE_VALUE_EVENT, modelPropValue);
+          emit(modelUpdateEvent.toLowerCase(), e);
+          e.stopImmediatePropagation();
         });
       }
     };
@@ -105,7 +109,7 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
       if (modelProp) {
         propsToAdd = {
           ...propsToAdd,
-          [modelProp]: props.hasOwnProperty('modelValue') ? props.modelValue : (props as any)[modelProp]
+          [modelProp]: props.hasOwnProperty('modelValue') ? props.modelValue : modelPropValue
         }
       }
 
@@ -117,7 +121,7 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
   Container.props = [...componentProps, ROUTER_LINK_VALUE];
   if (modelProp) {
     Container.props.push(MODEL_VALUE);
-    Container.emits = [UPDATE_VALUE_EVENT];
+    Container.emits = [UPDATE_VALUE_EVENT, modelUpdateEvent];
   }
 
   return Container;
