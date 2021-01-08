@@ -57,7 +57,16 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
         vnode.el.addEventListener(modelUpdateEvent.toLowerCase(), (e: Event) => {
           modelPropValue = (e?.target as any)[modelProp];
           emit(UPDATE_VALUE_EVENT, modelPropValue);
-          emit(modelUpdateEvent.toLowerCase(), e);
+
+          /**
+           * We need to emit the change event here
+           * rather than on the web component to ensure
+           * that any v-model bindings have been updated.
+           * Otherwise, the developer will listen on the
+           * native web component, but the v-model will
+           * not have been updated yet.
+           */
+          emit(modelUpdateEvent, e);
           e.stopImmediatePropagation();
         });
       }
