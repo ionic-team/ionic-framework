@@ -4,5 +4,6 @@
   "description": "Ionic Components exported as custom elements, extending HTMLElement.",
   "main": "./index.js",
   "types": "./custom-elements.d.ts",
-  "private": true
+  "private": true,
+  "sideEffects": false
 }
