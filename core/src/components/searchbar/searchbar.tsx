@@ -482,7 +482,8 @@ export class Searchbar implements ComponentInterface {
           'searchbar-no-animate': animated && this.noAnimate,
           'searchbar-has-value': this.hasValue(),
           'searchbar-left-aligned': this.shouldAlignLeft,
-          'searchbar-has-focus': this.shouldShowClearButton(),
+          'searchbar-has-focus': this.focused,
+          'searchbar-should-show-clear': this.shouldShowClearButton(),
           'searchbar-should-show-cancel': this.shouldShowCancelButton()
         })}
       >
