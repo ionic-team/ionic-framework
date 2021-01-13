@@ -3625,6 +3625,10 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted when the collapse changes.
+         */
+        "onIonCollapsed"?: (event: CustomEvent<StyleEventDetail>) => void;
+        /**
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
         "rel"?: string | undefined;
@@ -3654,6 +3658,10 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Emitted when the collapsed button is clicked on.
+         */
+        "onIonCollapsedClick"?: (event: CustomEvent<void>) => void;
     }
     interface IonButton {
         /**

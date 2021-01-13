@@ -18,9 +18,25 @@
       <ion-toolbar>
         <ion-title>Breadcrumbs - Basic</ion-title>
       </ion-toolbar>
+      <ion-toolbar>
+        <ion-breadcrumbs>
+          <ion-breadcrumb href="#">
+            Home
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#library">
+            Library
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#disabled" disabled>
+            Disabled
+          </ion-breadcrumb>
+          <ion-breadcrumb>
+            Data
+          </ion-breadcrumb>
+        </ion-breadcrumbs>
+      </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content class="ion-padding">
       <ion-breadcrumbs>
         <ion-breadcrumb href="#">
           Home
@@ -169,7 +185,7 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Breadcrumbs: collapsed</p>
+      <p>Breadcrumbs: collapsed (no click)</p>
 
       <ion-breadcrumbs>
         <ion-breadcrumb href="#" collapsed>
@@ -195,10 +211,40 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Breadcrumbs: collapsed middle</p>
+      <p>
+        Breadcrumbs: collapsed middle / expand on click
+        <ion-button size="small" fill="clear" onClick="collapseBreadcrumbs()">Re-collapse</ion-button>
+      </p>
 
-      <ion-breadcrumbs>
+
+      <ion-breadcrumbs id="expandOnClick">
         <ion-breadcrumb href="#">
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#library" collapsed class="collapse-on-click">
+          Cameras & Camcorders
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#digital-camera-accessories" collapsed class="collapse-on-click">
+          Digital Camera Accessories
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#camera-lenses" collapsed class="collapse-on-click">
+          Camera Lenses
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#dslr-lenses" collapsed class="collapse-on-click">
+          DSLR Lenses
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#prime-lenses" collapsed class="collapse-on-click">
+          Prime Lenses
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          Product Info
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <p>Breadcrumbs: collapsed / popover on click</p>
+
+      <ion-breadcrumbs id="popoverOnClick">
+        <ion-breadcrumb href="#" collapsed>
           Home
         </ion-breadcrumb>
         <ion-breadcrumb href="#library" collapsed>
@@ -210,10 +256,10 @@
         <ion-breadcrumb href="#camera-lenses" collapsed>
           Camera Lenses
         </ion-breadcrumb>
-        <ion-breadcrumb href="#dslr-lenses" collapsed>
+        <ion-breadcrumb href="#dslr-lenses">
           DSLR Lenses
         </ion-breadcrumb>
-        <ion-breadcrumb href="#prime-lenses" collapsed>
+        <ion-breadcrumb href="#prime-lenses">
           Prime Lenses
         </ion-breadcrumb>
         <ion-breadcrumb>
@@ -224,12 +270,79 @@
   </ion-app>
 
   <script>
+    const expandOnClick = document.querySelector('#expandOnClick');
+    expandOnClick.addEventListener('ionCollapsedClick', () => expandBreadcrumbs());
+
+    function expandBreadcrumbs() {
+      console.log('expand onClick');
+      const breadcrumbs = expandOnClick.querySelectorAll('ion-breadcrumb');
+
+      for (const breadcrumb of breadcrumbs) {
+        if (breadcrumb.collapsed === true) {
+          breadcrumb.collapsed = undefined;
+        }
+      }
+    }
+
+    function collapseBreadcrumbs() {
+      const breadcrumbs = expandOnClick.querySelectorAll('ion-breadcrumb');
+
+      for (const breadcrumb of breadcrumbs) {
+        if (breadcrumb.classList.contains('collapse-on-click')) {
+          breadcrumb.collapsed = true;
+        }
+      }
+    }
+
+    const popoverOnClick = document.querySelector('#popoverOnClick');
+    popoverOnClick.addEventListener('ionCollapsedClick', (ev) => presentPopover(ev));
+
+    class PopoverExamplePage extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-content>
+            <ion-list>
+              <ion-item href="#">
+                <ion-label>Home</ion-label>
+              </ion-item>
+              <ion-item href="#library">
+                <ion-label>Cameras & Camcorders</ion-label>
+              </ion-item>
+              <ion-item href="#digital-camera-accessories">
+                <ion-label>Digital Camera Accessories</ion-label>
+              </ion-item>
+              <ion-item href="#camera-lenses">
+                <ion-label>Camera Lenses</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-content>
+        `;
+      }
+    }
+
+    customElements.define('popover-example-page', PopoverExamplePage);
+
+    function presentPopover(ev) {
+      const popover = Object.assign(document.createElement('ion-popover'), {
+        component: 'popover-example-page',
+        event: ev,
+      });
+      document.body.appendChild(popover);
+      return popover.present();
+    }
 
   </script>
 
   <style>
     p {
-      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
       font-weight: 500;
     }
   </style>

@@ -1,7 +1,7 @@
-import { Component, ComponentInterface, Element, Host, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
+import { Color, StyleEventDetail } from '../../interface';
 import { AnimationBuilder } from '../../utils/animation/animation-interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import { RouterDirection } from '../router/utils/interface';
@@ -22,6 +22,7 @@ import { RouterDirection } from '../router/utils/interface';
 })
 export class Breadcrumb implements ComponentInterface {
 
+  /** @internal */
   @Prop() lastCollapsed!: boolean;
 
   @Element() el!: HTMLElement;
@@ -96,18 +97,15 @@ export class Breadcrumb implements ComponentInterface {
    */
   @Prop() routerAnimation: AnimationBuilder | undefined;
 
-  getSeparatorIcon = () => {
-    const mode = getIonMode();
+  /**
+   * Emitted when the collapse changes.
+   * @internal
+   */
+  @Event() ionCollapsed!: EventEmitter<StyleEventDetail>;
 
-    if (mode === 'ios') {
-      return (
-        <ion-icon name="chevron-forward-outline"></ion-icon>
-      )
-    }
-
-    return (
-      <span>/</span>
-    );
+  @Watch('collapsed')
+  collapsedChanged() {
+    this.ionCollapsed.emit();
   }
 
   render() {
@@ -122,6 +120,8 @@ export class Breadcrumb implements ComponentInterface {
         target
       };
 
+    // If the breadcrumb is collapsed, check if it is the
+    // last collapsed one to show its separator
     const showSeparator = collapsed
       ? lastCollapsed ? true : false
       : separator;
@@ -152,7 +152,10 @@ export class Breadcrumb implements ComponentInterface {
         { showSeparator &&
           <span class="breadcrumb-separator" part="separator">
             <slot name="separator">
-              {this.getSeparatorIcon()}
+              { mode === 'ios'
+                ? <ion-icon name="chevron-forward-outline"></ion-icon>
+                : <span>/</span>
+              }
             </slot>
           </span>
         }

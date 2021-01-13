@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
@@ -6,6 +6,8 @@ import { createColorClasses } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part collapsed-indicator - The indicator element that shows when at least one child breadcrumb is collapsed.
  */
 @Component({
   tag: 'ion-breadcrumbs',
@@ -27,6 +29,16 @@ export class Breadcrumbs implements ComponentInterface {
    */
   @Prop() color?: Color;
 
+  /**
+   * Emitted when the collapsed button is clicked on.
+   */
+  @Event() ionCollapsedClick!: EventEmitter<void>;
+
+  @Listen('ionCollapsed')
+  collapsedChanged() {
+    this.setCollapsed();
+  }
+
   componentDidLoad() {
     this.setBreadcrumbSeparator();
     this.setCollapsed();
@@ -35,6 +47,12 @@ export class Breadcrumbs implements ComponentInterface {
 
   private setCollapsed = () => {
     const breadcrumbs = this.getBreadcrumbs();
+
+    // Initialize all breadcrumbs as not being the last
+    // in case multiple breadcrumbs are collapsed at once
+    for (const breadcrumb of breadcrumbs) {
+      breadcrumb.lastCollapsed = false;
+    }
 
     const collapsedBreadcrumbs = breadcrumbs.filter(breadcrumb => breadcrumb.collapsed);
 
@@ -47,9 +65,7 @@ export class Breadcrumbs implements ComponentInterface {
       }
     }
 
-    if (collapsedBreadcrumbs.length > 0) {
-      this.collapsed = true;
-    }
+    this.collapsed = collapsedBreadcrumbs.length > 0 ? true : false;
   }
 
   private setOrder = () => {
@@ -86,8 +102,12 @@ export class Breadcrumbs implements ComponentInterface {
     }
   }
 
-  private getBreadcrumbs(): HTMLIonBreadcrumbElement[] {
+  private getBreadcrumbs = (): HTMLIonBreadcrumbElement[] => {
     return Array.from(this.el.querySelectorAll('ion-breadcrumb'));
+  }
+
+  private collapsedIndicatorClick = () => {
+    this.ionCollapsedClick.emit();
   }
 
   render() {
@@ -102,9 +122,13 @@ export class Breadcrumbs implements ComponentInterface {
         })}
 
       >
-        <div class="breadcrumbs-collapsed-indicator" style={{
-          'order': indicatorOrder
-        }}>
+        <div
+          part="collapsed-indicator"
+          onClick={() => this.collapsedIndicatorClick()}
+          class="breadcrumbs-collapsed-indicator"
+          style={{
+            'order': indicatorOrder
+          }}>
           <ion-icon name="ellipsis-horizontal"></ion-icon>
         </div>
         <slot></slot>
