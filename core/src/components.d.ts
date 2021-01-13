@@ -28,6 +28,10 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
+          * If `true`, the accordion cannot be interacted with, but does not alter the opacity.
+         */
+        "readonly": boolean;
+        /**
           * The value of the accordion.
          */
         "value"?: string;
@@ -49,6 +53,10 @@ export namespace Components {
           * If `true`, the accordion group can have multiple accordion components expanded at the same time.
          */
         "multiple"?: boolean;
+        /**
+          * If `true`, the accordion group cannot be interacted with, but does not alter the opacity.
+         */
+        "readonly": boolean;
         "requestAccordionToggle": (accordionValue: string | undefined, accordionExpand: boolean) => Promise<void>;
         /**
           * The value of the accordion group.
@@ -3402,6 +3410,10 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
         /**
+          * If `true`, the accordion cannot be interacted with, but does not alter the opacity.
+         */
+        "readonly"?: boolean;
+        /**
           * The value of the accordion.
          */
         "value"?: string;
@@ -3427,6 +3439,10 @@ declare namespace LocalJSX {
           * Emitted when the value property has changed.
          */
         "onIonChange"?: (event: CustomEvent<AccordionGroupChangeEventDetail>) => void;
+        /**
+          * If `true`, the accordion group cannot be interacted with, but does not alter the opacity.
+         */
+        "readonly"?: boolean;
         /**
           * The value of the accordion group.
          */

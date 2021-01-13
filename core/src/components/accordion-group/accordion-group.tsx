@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
 import { AccordionGroupChangeEventDetail } from '../../interface';
 
 /**
@@ -6,9 +6,11 @@ import { AccordionGroupChangeEventDetail } from '../../interface';
  */
 @Component({
   tag: 'ion-accordion-group',
+  styleUrl: 'accordion-group.scss',
   shadow: true
 })
 export class AccordionGroup implements ComponentInterface {
+  @Element() el!: HTMLIonAccordionGroupElement;
 
   /**
    * If `true`, the accordion group can have multiple
@@ -27,6 +29,12 @@ export class AccordionGroup implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * If `true`, the accordion group cannot be interacted with,
+   * but does not alter the opacity.
+   */
+  @Prop() readonly = false;
+
+  /**
    * Describes the expansion behavior for each accordion.
    * Possible values are `"float"`, `"inset"`, `"accordion"`,
    * and `"popout"`. Defaults to `"float"`.
@@ -43,12 +51,40 @@ export class AccordionGroup implements ComponentInterface {
     this.ionChange.emit({ value: this.value });
   }
 
+  @Watch('disabled')
+  disabledChanged() {
+    const { disabled } = this;
+    const accordions = this.getAccordions();
+    for (const accordion of accordions) {
+      accordion.disabled = disabled;
+    }
+  }
+
+  @Watch('readonly')
+  readonlyChanged() {
+    const { readonly } = this;
+    const accordions = this.getAccordions();
+    for (const accordion of accordions) {
+      accordion.readonly = readonly;
+    }
+  }
+
+  async componentDidLoad() {
+    if (this.disabled) {
+      this.disabledChanged();
+    }
+    if (this.readonly) {
+      this.readonlyChanged();
+    }
+  }
+
   /**
    * @internal
    */
   @Method()
   async requestAccordionToggle(accordionValue: string | undefined, accordionExpand: boolean) {
-    const { multiple, value } = this;
+    const { multiple, value, readonly, disabled } = this;
+    if (readonly || disabled) return;
 
     if (accordionExpand) {
       /**
@@ -84,10 +120,20 @@ export class AccordionGroup implements ComponentInterface {
     }
   }
 
-  render() {
+  private getAccordions() {
+    return Array.from(this.el.querySelectorAll('ion-accordion'));
+  }
 
+  render() {
+    const { disabled, readonly } = this;
     return (
-      <Host>
+      <Host
+        class={{
+          'accordion-group-disabled': disabled,
+          'accordion-group-readonly': readonly,
+        }}
+        role="presentation"
+      >
         <slot></slot>
       </Host>
     );

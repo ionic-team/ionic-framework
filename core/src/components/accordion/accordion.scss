@@ -4,6 +4,13 @@
   width: 100%;
 }
 
+:host(.accordion-disabled) #header,
+:host(.accordion-readonly) #header {
+  pointer-events: none;
+
+  opacity: 0.4;
+}
+
 #content {
   overflow: hidden;
   display: none;

@@ -45,6 +45,12 @@ export class Accordion implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
+   * If `true`, the accordion cannot be interacted with,
+   * but does not alter the opacity.
+   */
+  @Prop() readonly = false;
+
+  /**
    * Describes the expansion behavior for each accordion.
    * Possible values are `"float"`, `"inset"`, `"accordion"`,
    * and `"popout"`. Defaults to `"float"`.
@@ -107,7 +113,7 @@ export class Accordion implements ComponentInterface {
   }
 
   render() {
-    const { expanded, expand } = this;
+    const { expanded, expand, disabled, readonly } = this;
     const headerPart = expanded ? 'header expanded' : 'header';
     const contentPart = expanded ? 'content expanded' : 'content';
 
@@ -115,7 +121,9 @@ export class Accordion implements ComponentInterface {
       <Host
         class={{
           [`accordion-expand-${expand}`]: true,
-          ['accordion-expanded']: expanded
+          ['accordion-expanded']: expanded,
+          ['accordion-disabled']: disabled,
+          ['accordion-readonly']: readonly,
         }}
       >
         <button
@@ -124,6 +132,7 @@ export class Accordion implements ComponentInterface {
           part={headerPart}
           aria-expanded={expanded ? 'true' : 'false'}
           aria-controls="content"
+          disabled={disabled}
         >
           <slot name="header"></slot>
         </button>
@@ -133,7 +142,6 @@ export class Accordion implements ComponentInterface {
           part={contentPart}
           role="region"
           aria-labelledby="header"
-          aria-hidden={expanded ? 'false' : 'true'}
         >
           <slot name="content"></slot>
         </div>
