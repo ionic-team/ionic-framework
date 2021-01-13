@@ -1,0 +1,12 @@
+:host {
+  width: 100%;
+}
+
+.content {
+  overflow: hidden;
+  height: 0;
+}
+
+:host(.accordion-expanded) .content {
+  height: auto;
+}

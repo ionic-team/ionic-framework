@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Accordion Group - Basic</title>
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Accordion Group - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-accordion-group>
+        <ion-accordion value="name">
+          <ion-item slot="header">
+            <ion-label>Name</ion-label>
+          </ion-item>
+
+          <ion-text slot="content">Liam DeBeasi</ion-text>
+        </ion-accordion>
+
+        <ion-accordion value="age">
+          <ion-item slot="header">
+            <ion-label>Age</ion-label>
+          </ion-item>
+
+          <ion-text slot="content">25</ion-text>
+        </ion-accordion>
+
+        <ion-accordion value="location">
+          <ion-item slot="header">
+            <ion-label>Location</ion-label>
+          </ion-item>
+
+          <ion-text slot="content">Somerville, MA</ion-text>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-content>
+  </ion-app>
+</body>
+
+</html>

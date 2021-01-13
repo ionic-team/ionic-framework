@@ -5,11 +5,56 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
 export namespace Components {
+    interface IonAccordion {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the accordion cannot be interacted with.
+         */
+        "disabled": boolean;
+        /**
+          * Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.
+         */
+        "expand": 'float' | 'inset' | 'accordion' | 'popout';
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * The value of the accordion.
+         */
+        "value"?: string;
+    }
+    interface IonAccordionGroup {
+        /**
+          * If `true`, the accordion group cannot be interacted with.
+         */
+        "disabled": boolean;
+        /**
+          * Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.
+         */
+        "expand": 'float' | 'inset' | 'accordion' | 'popout';
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * If `true`, the accordion group can have multiple accordion components expanded at the same time.
+         */
+        "multiple"?: boolean;
+        "requestAccordionToggle": (accordionValue: string | undefined, accordionExpand: boolean) => Promise<void>;
+        /**
+          * The value of the accordion group.
+         */
+        "value"?: string | string[] | null;
+    }
     interface IonActionSheet {
         /**
           * If `true`, the action sheet will animate.
@@ -2704,6 +2749,18 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLIonAccordionElement extends Components.IonAccordion, HTMLStencilElement {
+    }
+    var HTMLIonAccordionElement: {
+        prototype: HTMLIonAccordionElement;
+        new (): HTMLIonAccordionElement;
+    };
+    interface HTMLIonAccordionGroupElement extends Components.IonAccordionGroup, HTMLStencilElement {
+    }
+    var HTMLIonAccordionGroupElement: {
+        prototype: HTMLIonAccordionGroupElement;
+        new (): HTMLIonAccordionGroupElement;
+    };
     interface HTMLIonActionSheetElement extends Components.IonActionSheet, HTMLStencilElement {
     }
     var HTMLIonActionSheetElement: {
@@ -3227,6 +3284,8 @@ declare global {
         new (): HTMLIonVirtualScrollElement;
     };
     interface HTMLElementTagNameMap {
+        "ion-accordion": HTMLIonAccordionElement;
+        "ion-accordion-group": HTMLIonAccordionGroupElement;
         "ion-action-sheet": HTMLIonActionSheetElement;
         "ion-alert": HTMLIonAlertElement;
         "ion-app": HTMLIonAppElement;
@@ -3317,6 +3376,62 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface IonAccordion {
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
+          * If `true`, the accordion cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.
+         */
+        "expand"?: 'float' | 'inset' | 'accordion' | 'popout';
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * Emitted when the accordion loses focus.
+         */
+        "onIonBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the accordion has focus.
+         */
+        "onIonFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * The value of the accordion.
+         */
+        "value"?: string;
+    }
+    interface IonAccordionGroup {
+        /**
+          * If `true`, the accordion group cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.
+         */
+        "expand"?: 'float' | 'inset' | 'accordion' | 'popout';
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * If `true`, the accordion group can have multiple accordion components expanded at the same time.
+         */
+        "multiple"?: boolean;
+        /**
+          * Emitted when the value property has changed.
+         */
+        "onIonChange"?: (event: CustomEvent<AccordionGroupChangeEventDetail>) => void;
+        /**
+          * The value of the accordion group.
+         */
+        "value"?: string | string[] | null;
+    }
     interface IonActionSheet {
         /**
           * If `true`, the action sheet will animate.
@@ -6036,6 +6151,8 @@ declare namespace LocalJSX {
         "renderItem"?: (item: any, index: number) => any;
     }
     interface IntrinsicElements {
+        "ion-accordion": IonAccordion;
+        "ion-accordion-group": IonAccordionGroup;
         "ion-action-sheet": IonActionSheet;
         "ion-alert": IonAlert;
         "ion-app": IonApp;
@@ -6129,6 +6246,8 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ion-accordion": LocalJSX.IonAccordion & JSXBase.HTMLAttributes<HTMLIonAccordionElement>;
+            "ion-accordion-group": LocalJSX.IonAccordionGroup & JSXBase.HTMLAttributes<HTMLIonAccordionGroupElement>;
             "ion-action-sheet": LocalJSX.IonActionSheet & JSXBase.HTMLAttributes<HTMLIonActionSheetElement>;
             "ion-alert": LocalJSX.IonAlert & JSXBase.HTMLAttributes<HTMLIonAlertElement>;
             "ion-app": LocalJSX.IonApp & JSXBase.HTMLAttributes<HTMLIonAppElement>;
