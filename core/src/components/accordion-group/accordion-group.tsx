@@ -1,6 +1,7 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
 import { AccordionGroupChangeEventDetail } from '../../interface';
+import { getElementRoot } from '../../utils/helpers';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -70,6 +71,34 @@ export class AccordionGroup implements ComponentInterface {
     }
   }
 
+  @Listen('keydown')
+  onKeydown(ev: KeyboardEvent) {
+    const accordions = this.getAccordions();
+    const activeElement = document.activeElement;
+    if (!activeElement || activeElement.tagName !== 'ION-ACCORDION') { return; }
+
+    // If active accordion is not in this group, do not do anything
+    const closestGroup = activeElement.closest('ion-accordion-group');
+    if (closestGroup !== this.el) { return; }
+
+    // If the active accordion is not in the current array of accordions, do not do anything
+    const startingIndex = accordions.findIndex(a => a === activeElement);
+    if (startingIndex === -1) { return; }
+
+    let accordion: HTMLIonAccordionElement | undefined;
+    if (ev.key === 'ArrowDown') {
+      accordion = this.findNextAccordion(accordions, startingIndex);
+    } else if (ev.key === 'ArrowUp') {
+      accordion = this.findPreviousAccordion(accordions, startingIndex);
+    }
+
+    if (accordion !== undefined && accordion !== activeElement) {
+      const root = getElementRoot(accordion);
+      const header = root.querySelector('button#header')! as HTMLButtonElement;
+      header.focus();
+    }
+  }
+
   async componentDidLoad() {
     if (this.disabled) {
       this.disabledChanged();
@@ -119,6 +148,24 @@ export class AccordionGroup implements ComponentInterface {
         this.value = undefined;
       }
     }
+  }
+
+  private findNextAccordion(accordions: HTMLIonAccordionElement[], startingIndex: number) {
+    const nextAccordion = accordions[startingIndex + 1];
+    if (nextAccordion === undefined) {
+      return accordions[0];
+    }
+
+    return nextAccordion;
+  }
+
+  private findPreviousAccordion(accordions: HTMLIonAccordionElement[], startingIndex: number) {
+    const prevAccordion = accordions[startingIndex - 1];
+    if (prevAccordion === undefined) {
+      return accordions[accordions.length - 1];
+    }
+
+    return prevAccordion;
   }
 
   private getAccordions() {
