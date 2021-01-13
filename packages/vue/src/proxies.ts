@@ -538,6 +538,7 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion
   'placeholder',
   'searchIcon',
   'showCancelButton',
+  'showClearButton',
   'spellcheck',
   'type',
   'value',

@@ -122,6 +122,15 @@ export class Searchbar implements ComponentInterface {
   @Prop() showCancelButton: 'never' | 'focus' | 'always' = 'never';
 
   /**
+   * Sets the behavior for the clear button. Defaults to `"never"`.
+   * Setting to `"focus"` shows the clear button on focus.
+   * Setting to `"never"` hides the clear button.
+   * Setting to `"always"` shows the clear button regardless
+   * of focus state.
+   */
+  @Prop() showClearButton: 'never' | 'focus' | 'always' = 'focus';
+
+  /**
    * If `true`, enable spellcheck on the input.
    */
   @Prop() spellcheck = false;
@@ -419,6 +428,20 @@ export class Searchbar implements ComponentInterface {
     return true;
   }
 
+  /**
+   * Determines whether or not the clear button should be visible onscreen.
+   * Clear button should be shown if one of two conditions applies:
+   * 1. `showClearButton` is set to `always`.
+   * 2. `showClearButton` is set to `focus`, and the searchbar has been focused.
+   */
+  private shouldShowClearButton(): boolean {
+    if ((this.showClearButton === 'never') || (this.showClearButton === 'focus' && !this.focused)) {
+      return false;
+    }
+
+    return true;
+  }
+
   render() {
     const { cancelButtonText } = this;
     const animated = this.animated && config.getBoolean('animated', true);
@@ -459,7 +482,7 @@ export class Searchbar implements ComponentInterface {
           'searchbar-no-animate': animated && this.noAnimate,
           'searchbar-has-value': this.hasValue(),
           'searchbar-left-aligned': this.shouldAlignLeft,
-          'searchbar-has-focus': this.focused,
+          'searchbar-has-focus': this.shouldShowClearButton(),
           'searchbar-should-show-cancel': this.shouldShowCancelButton()
         })}
       >
