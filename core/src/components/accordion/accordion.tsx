@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
-import { addEventListener, removeEventListener } from '../../utils/helpers';
+
 import { Color } from '../../interface';
+import { addEventListener, removeEventListener } from '../../utils/helpers';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -25,7 +26,7 @@ export class Accordion implements ComponentInterface {
 
   @Element() el?: HTMLElement;
 
-  @State() expanded: boolean = false;
+  @State() expanded = false;
 
   /**
    * The color to use from your application's color palette.
@@ -86,15 +87,11 @@ export class Accordion implements ComponentInterface {
     const accordionGroup = this.accordionGroupEl;
     const accordionValue = this.value;
 
-    if (accordionValue === undefined || !accordionGroup) return;
+    if (accordionValue === undefined || !accordionGroup) { return; }
 
     const value = accordionGroup.value;
 
-    if (Array.isArray(value)) {
-      this.expanded = value.includes(accordionValue);
-    } else {
-      this.expanded = value === accordionValue;
-    }
+    this.expanded = (Array.isArray(value)) ? value.includes(accordionValue) : value === accordionValue;
   }
 
   private toggleExpanded() {

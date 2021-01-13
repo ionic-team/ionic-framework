@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
+
 import { AccordionGroupChangeEventDetail } from '../../interface';
 
 /**
@@ -84,7 +85,7 @@ export class AccordionGroup implements ComponentInterface {
   @Method()
   async requestAccordionToggle(accordionValue: string | undefined, accordionExpand: boolean) {
     const { multiple, value, readonly, disabled } = this;
-    if (readonly || disabled) return;
+    if (readonly || disabled) { return; }
 
     if (accordionExpand) {
       /**
@@ -96,7 +97,7 @@ export class AccordionGroup implements ComponentInterface {
       if (multiple) {
         const groupValue = (value || []) as string[];
         const valueExists = groupValue.find(v => v === accordionValue);
-        if (!valueExists && accordionValue !== undefined) {
+        if (valueExists === undefined && accordionValue !== undefined) {
           this.value = [...groupValue, accordionValue];
         }
       /**
