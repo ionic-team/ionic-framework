@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Host, Method, Prop, Watch, h } from '@stencil/core';
 import { AccordionGroupChangeEventDetail } from '../../interface';
 
 /**
@@ -38,6 +38,11 @@ export class AccordionGroup implements ComponentInterface {
    */
   @Event() ionChange!: EventEmitter<AccordionGroupChangeEventDetail>;
 
+  @Watch('value')
+  valueChanged() {
+    this.ionChange.emit({ value: this.value });
+  }
+
   /**
    * @internal
    */
@@ -45,17 +50,38 @@ export class AccordionGroup implements ComponentInterface {
   async requestAccordionToggle(accordionValue: string | undefined, accordionExpand: boolean) {
     const { multiple, value } = this;
 
-    if (!accordionExpand) {
-      this.value = value.filter(v => v !== accordionValue);
-    } else {
-      const isArray = Array.isArray(value);
-      if (isArray) {
-
+    if (accordionExpand) {
+      /**
+       * If group accepts multiple values
+       * check to see if value is already in
+       * in values array. If not, add it
+       * to the array.
+       */
+      if (multiple) {
+        const groupValue = (value || []) as string[];
+        const valueExists = groupValue.find(v => v === accordionValue);
+        if (!valueExists && accordionValue !== undefined) {
+          this.value = [...groupValue, accordionValue];
+        }
+      /**
+       * If group does not accept multiple
+       * values, just set the value.
+       */
       } else {
         this.value = accordionValue;
       }
+    } else {
+      /**
+       * If collapsing accordion, either filter the value
+       * out of the values array or unset the value.
+       */
+      if (multiple) {
+        const groupValue = (value || []) as string[];
+        this.value = groupValue.filter(v => v !== accordionValue);
+      } else {
+        this.value = undefined;
+      }
     }
-    console.log('requested accordion toggle', value, expanded, this.value);
   }
 
   render() {

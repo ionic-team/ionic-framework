@@ -1,12 +1,14 @@
 :host {
+  display: block;
+
   width: 100%;
 }
 
-.content {
+#content {
   overflow: hidden;
-  height: 0;
+  display: none;
 }
 
-:host(.accordion-expanded) .content {
-  height: auto;
+:host(.accordion-expanded) #content {
+  display: block;
 }

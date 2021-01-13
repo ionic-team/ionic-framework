@@ -64,6 +64,7 @@ export class Accordion implements ComponentInterface {
   connectedCallback() {
     const accordionGroupEl = this.accordionGroupEl = this.el && this.el.closest('ion-accordion-group');
     if (accordionGroupEl) {
+      this.updateState();
       addEventListener(accordionGroupEl, 'ionChange', this.updateState);
     }
   }
@@ -75,15 +76,33 @@ export class Accordion implements ComponentInterface {
     }
   }
 
-  private updateState = (ev: CustomEvent) => {
-    console.log('updated state', ev)
+  private updateState = () => {
+    const accordionGroup = this.accordionGroupEl;
+    const accordionValue = this.value;
+
+    if (accordionValue === undefined || !accordionGroup) return;
+
+    const value = accordionGroup.value;
+
+    if (Array.isArray(value)) {
+      this.expanded = value.includes(accordionValue);
+    } else {
+      this.expanded = value === accordionValue;
+    }
   }
 
   private toggleExpanded() {
     const { accordionGroupEl, value, expanded } = this;
     if (accordionGroupEl) {
+      /**
+       * Because the accordion group may or may
+       * not allow multiple accordions open, we
+       * need to request the toggling of this
+       * accordion and the accordion group will
+       * make the decision on whether or not
+       * to allow it.
+       */
       accordionGroupEl.requestAccordionToggle(value, !expanded);
-      console.log('toggle expanded')
     }
   }
 
@@ -101,15 +120,20 @@ export class Accordion implements ComponentInterface {
       >
         <button
           onClick={() => this.toggleExpanded()}
-          class="header"
+          id="header"
           part={headerPart}
+          aria-expanded={expanded ? 'true' : 'false'}
+          aria-controls="content"
         >
           <slot name="header"></slot>
         </button>
 
         <div
-          class="content"
+          id="content"
           part={contentPart}
+          role="region"
+          aria-labelledby="header"
+          aria-hidden={expanded ? 'false' : 'true'}
         >
           <slot name="content"></slot>
         </div>
