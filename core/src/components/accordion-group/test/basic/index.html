@@ -12,40 +12,203 @@
   </head>
 
   <body>
-  <ion-app>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Accordion Group - Basic</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <ion-accordion-group disabled="true">
-        <ion-accordion value="name">
-          <ion-item slot="header">
-            <ion-label>Name</ion-label>
-          </ion-item>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Accordion Group - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list-header>Default</ion-list-header>
+        <ion-accordion-group value="personal-information">
+          <ion-accordion value="personal-information">
+            <ion-item slot="header" color="danger" button>
+              <ion-label>Personal Information</ion-label>
+              <ion-icon name="chevron-up" slot="end"></ion-icon>
+            </ion-item>
 
-          <ion-text slot="content">Liam DeBeasi</ion-text>
-        </ion-accordion>
+            <ion-list slot="content">
+              <ion-item>
+                <ion-label>Name</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Email</ion-label>
+                <ion-input type="email"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Phone</ion-label>
+                <ion-input type="tel"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Extension</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Country</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>City/Province</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-accordion>
 
-        <ion-accordion value="age">
-          <ion-item slot="header">
-            <ion-label>Age</ion-label>
-          </ion-item>
+          <ion-accordion value="billing-address">
+            <ion-item slot="header" color="secondary" button>
+              <ion-label>Billing Address</ion-label>
+            </ion-item>
 
-          <ion-input slot="content" value="25"></ion-input>
-        </ion-accordion>
+            <ion-list slot="content">
+              <ion-item>
+                <ion-label>Address 1</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Address 2</ion-label>
+                <ion-input type="email"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>City</ion-label>
+                <ion-input type="tel"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>State</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Zip Code</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-accordion>
 
-        <ion-accordion value="location">
-          <ion-item slot="header">
-            <ion-label>Location</ion-label>
-          </ion-item>
+          <ion-accordion value="shipping-address">
+            <ion-item slot="header" color="success" button>
+              <ion-label>Shipping Address</ion-label>
+            </ion-item>
 
-          <ion-text slot="content">Somerville, MA</ion-text>
-        </ion-accordion>
-      </ion-accordion-group>
-    </ion-content>
-  </ion-app>
-</body>
+            <ion-list slot="content">
+              <ion-item>
+                <ion-label>Address 1</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Address 2</ion-label>
+                <ion-input type="email"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>City</ion-label>
+                <ion-input type="tel"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>State</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Zip Code</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-accordion>
+        </ion-accordion-group>
 
+        <!--<ion-list-header>Disabled</ion-list-header>
+        <ion-accordion-group disabled="true" value="first">
+          <ion-accordion value="first">
+            <ion-item slot="header">
+              <ion-label>First</ion-label>
+              <ion-icon name="chevron-up" slot="end"></ion-icon>
+            </ion-item>
+
+            <ion-text slot="content">First!</ion-text>
+          </ion-accordion>
+
+          <ion-accordion value="second">
+            <ion-item slot="header">
+              <ion-label>Second</ion-label>
+              <ion-icon name="chevron-up" slot="end"></ion-icon>
+            </ion-item>
+
+            <ion-text slot="content">Second!</ion-text>
+          </ion-accordion>
+
+          <ion-accordion value="third">
+            <ion-item slot="header">
+              <ion-label>Third</ion-label>
+              <ion-icon name="chevron-up" slot="end"></ion-icon>
+            </ion-item>
+
+            <ion-text slot="content">Third!</ion-text>
+          </ion-accordion>
+        </ion-accordion-group>
+
+        <ion-list-header>Readonly</ion-list-header>
+        <ion-accordion-group readonly="true" value="first">
+          <ion-accordion value="first">
+            <ion-item slot="header">
+              <ion-label>First</ion-label>
+              <ion-icon name="chevron-up" slot="end"></ion-icon>
+            </ion-item>
+
+            <ion-text slot="content">First!</ion-text>
+          </ion-accordion>
+
+          <ion-accordion value="second">
+            <ion-item slot="header">
+              <ion-label>Second</ion-label>
+              <ion-icon name="chevron-up" slot="end"></ion-icon>
+            </ion-item>
+
+            <ion-text slot="content">Second!</ion-text>
+          </ion-accordion>
+
+          <ion-accordion value="third">
+            <ion-item slot="header">
+              <ion-label>Third</ion-label>
+              <ion-icon name="chevron-up" slot="end"></ion-icon>
+            </ion-item>
+
+            <ion-text slot="content">Third!</ion-text>
+          </ion-accordion>
+        </ion-accordion-group>
+
+        <ion-list-header>Multiple</ion-list-header>
+        <ion-accordion-group multiple="true">
+          <ion-accordion value="first">
+            <ion-item slot="header">
+              <ion-label>First</ion-label>
+              <ion-icon name="chevron-up" slot="end"></ion-icon>
+            </ion-item>
+
+            <ion-text slot="content">First!</ion-text>
+          </ion-accordion>
+
+          <ion-accordion value="second">
+            <ion-item slot="header">
+              <ion-label>Second</ion-label>
+              <ion-icon name="chevron-up" slot="end"></ion-icon>
+            </ion-item>
+
+            <ion-text slot="content">Second!</ion-text>
+          </ion-accordion>
+
+          <ion-accordion value="third">
+            <ion-item slot="header">
+              <ion-label>Third</ion-label>
+              <ion-icon name="chevron-up" slot="end"></ion-icon>
+            </ion-item>
+
+            <ion-text slot="content">Third!</ion-text>
+          </ion-accordion>
+        </ion-accordion-group>-->
+      </ion-list>
+      </ion-content>
+    </ion-app>
+    <script>
+      //const multipleAccordion = document.querySelector('ion-accordion-group[multiple=true]');
+      //multipleAccordion.value = ['first', 'third'];
+    </script>
+  </body>
 </html>

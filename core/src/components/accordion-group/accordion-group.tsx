@@ -75,10 +75,14 @@ export class AccordionGroup implements ComponentInterface {
   onKeydown(ev: KeyboardEvent) {
     const accordions = this.getAccordions();
     const activeElement = document.activeElement;
-    if (!activeElement || activeElement.tagName !== 'ION-ACCORDION') { return; }
+    if (!activeElement) { return; }
 
     // If active accordion is not in this group, do not do anything
-    const closestGroup = activeElement.closest('ion-accordion-group');
+    const accordionEl = (activeElement.tagName === 'ION-ACCORDION') ? activeElement : activeElement.closest('ion-accordion');
+
+    if (!accordionEl) return;
+
+    const closestGroup = accordionEl.closest('ion-accordion-group');
     if (closestGroup !== this.el) { return; }
 
     // If the active accordion is not in the current array of accordions, do not do anything
@@ -95,6 +99,7 @@ export class AccordionGroup implements ComponentInterface {
     if (accordion !== undefined && accordion !== activeElement) {
       const root = getElementRoot(accordion);
       const header = root.querySelector('button#header')! as HTMLButtonElement;
+
       header.focus();
     }
   }

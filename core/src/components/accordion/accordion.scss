@@ -1,24 +1,50 @@
+@import "./accordion.vars";
+
 :host {
+  /**
+   * @prop --header-padding: The padding of the header wrapper
+   * @prop --content-padding: The padding of the content wrapper;
+   */
+  --content-padding: #{$accordion-header-padding};
   display: block;
+
+  width: 100%;
+
+  position: relative;
+}
+
+button#header {
+  border: none;
+  outline: none;
+  padding: 0;
+
+  appearance: none;
 
   width: 100%;
 }
 
+#content {
+  transition: max-height 300ms cubic-bezier(0.25, 0.8, 0.5, 1);
+
+  overflow: hidden;
+
+  will-change: max-height;
+}
+
+:host(.accordion-collapsing) #content {
+  max-height: 0 !important;
+}
+
+:host(.accordion-collapsed) #content {
+  display: none;
+}
+
+:host(.accordion-expanding) #content {
+  max-height: 0;
+}
+
+
 :host(.accordion-disabled) #header,
 :host(.accordion-readonly) #header {
   pointer-events: none;
-}
-
-:host(.accordion-disabled) #header {
-  opacity: 0.4;
-}
-
-#content {
-  display: none;
-
-  overflow: hidden;
-}
-
-:host(.accordion-expanded) #content {
-  display: block;
 }

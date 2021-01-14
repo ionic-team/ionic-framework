@@ -5,6 +5,50 @@ import { Side } from '../interface';
 declare const __zone_symbol__requestAnimationFrame: any;
 declare const requestAnimationFrame: any;
 
+export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0) => {
+  return new Promise(resolve => {
+    transitionEnd(el, expectedDuration, resolve);
+  });
+};
+
+const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (ev?: TransitionEvent) => void) => {
+  let unRegTrans: (() => void) | undefined;
+  let animationTimeout: any;
+  const opts: any = { passive: true };
+  const ANIMATION_FALLBACK_TIMEOUT = 500;
+
+  const unregister = () => {
+    if (unRegTrans) {
+      unRegTrans();
+    }
+  };
+
+  const onTransitionEnd = (ev?: Event) => {
+    if (ev === undefined || el === ev.target) {
+      unregister();
+      callback(ev as TransitionEvent);
+    }
+  };
+
+  if (el) {
+    el.addEventListener('webkitTransitionEnd', onTransitionEnd, opts);
+    el.addEventListener('transitionend', onTransitionEnd, opts);
+    animationTimeout = setTimeout(onTransitionEnd, expectedDuration + ANIMATION_FALLBACK_TIMEOUT);
+
+    unRegTrans = () => {
+      if (animationTimeout) {
+        clearTimeout(animationTimeout);
+        animationTimeout = undefined;
+      }
+      el.removeEventListener('webkitTransitionEnd', onTransitionEnd, opts);
+      el.removeEventListener('transitionend', onTransitionEnd, opts);
+    };
+  }
+
+  return unregister;
+};
+
+
 /**
  * Elements inside of web components sometimes need to inherit global attributes
  * set on the host. For example, the inner input in `ion-input` should inherit

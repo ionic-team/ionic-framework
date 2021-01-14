@@ -3,10 +3,10 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
-import { clamp, getElementRoot, raf } from '../../utils/helpers';
+import { clamp, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
-import { createPullingAnimation, createSnapBackAnimation, getRefresherAnimationType, handleScrollWhilePulling, handleScrollWhileRefreshing, setSpinnerOpacity, shouldUseNativeRefresher, transitionEndAsync, translateElement } from './refresher.utils';
+import { createPullingAnimation, createSnapBackAnimation, getRefresherAnimationType, handleScrollWhilePulling, handleScrollWhileRefreshing, setSpinnerOpacity, shouldUseNativeRefresher, translateElement } from './refresher.utils';
 
 @Component({
   tag: 'ion-refresher',

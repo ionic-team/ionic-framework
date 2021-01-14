@@ -1,7 +1,15 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
 
 import { Color } from '../../interface';
-import { addEventListener, removeEventListener } from '../../utils/helpers';
+import { addEventListener, raf, removeEventListener, transitionEndAsync } from '../../utils/helpers';
+
+const enum AccordionState {
+  Collapsed = 1 << 0,
+  Collapsing = 1 << 1,
+  Expanded = 1 << 2,
+  Expanding = 1 << 3,
+  Ready = 1 << 4
+}
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -19,14 +27,19 @@ import { addEventListener, removeEventListener } from '../../utils/helpers';
 @Component({
   tag: 'ion-accordion',
   styleUrl: 'accordion.scss',
-  shadow: true
+  shadow: {
+    delegatesFocus: true
+  }
 })
 export class Accordion implements ComponentInterface {
   private accordionGroupEl?: HTMLIonAccordionGroupElement | null;
+  private updateListener = () => this.updateState(false);
+  private contentEl: HTMLDivElement | undefined;
+  private contentElWrapper: HTMLDivElement | undefined;
 
   @Element() el?: HTMLElement;
 
-  @State() expanded = false;
+  @State() state: AccordionState = AccordionState.Collapsed;
 
   /**
    * The color to use from your application's color palette.
@@ -71,19 +84,71 @@ export class Accordion implements ComponentInterface {
   connectedCallback() {
     const accordionGroupEl = this.accordionGroupEl = this.el && this.el.closest('ion-accordion-group');
     if (accordionGroupEl) {
-      this.updateState();
-      addEventListener(accordionGroupEl, 'ionChange', this.updateState);
+      this.updateState(true);
+      addEventListener(accordionGroupEl, 'ionChange', this.updateListener);
     }
   }
 
   disconnectedCallback() {
     const accordionGroupEl = this.accordionGroupEl;
     if (accordionGroupEl) {
-      removeEventListener(accordionGroupEl, 'ionChange', this.updateState);
+      removeEventListener(accordionGroupEl, 'ionChange', this.updateListener);
     }
   }
 
-  private updateState = () => {
+  private expandAccordion = (initialUpdate = false) => {
+    if (initialUpdate) {
+      this.state = AccordionState.Expanded;
+      return;
+    }
+
+    if (this.state === AccordionState.Expanded) return;
+
+    const { contentEl, contentElWrapper } = this;
+    if (contentEl === undefined || contentElWrapper === undefined) return;
+
+    this.state = AccordionState.Expanding;
+
+    raf(async () => {
+      const contentHeight = contentElWrapper.offsetHeight;
+      const waitForTransition = transitionEndAsync(contentEl, 300);
+      contentEl.style.setProperty('max-height', `${contentHeight}px`);
+
+      await waitForTransition;
+
+      this.state = AccordionState.Expanded;
+      contentEl.style.removeProperty('max-height');
+    });
+  }
+
+  private collapseAccordion = (initialUpdate = false) => {
+    if (initialUpdate) {
+      this.state = AccordionState.Collapsed;
+      return;
+    }
+
+    if (this.state === AccordionState.Collapsed) return;
+
+    const { contentEl } = this;
+    if (contentEl === undefined) return;
+
+    raf(() => {
+      const contentHeight = contentEl.offsetHeight;
+      contentEl.style.setProperty('max-height', `${contentHeight}px`);
+
+      raf(async () => {
+        const waitForTransition = transitionEndAsync(contentEl, 300);
+        this.state = AccordionState.Collapsing;
+
+        await waitForTransition;
+
+        this.state = AccordionState.Collapsed;
+        contentEl.style.removeProperty('max-height');
+      });
+    });
+  }
+
+  private updateState = (initialUpdate = false) => {
     const accordionGroup = this.accordionGroupEl;
     const accordionValue = this.value;
 
@@ -91,11 +156,17 @@ export class Accordion implements ComponentInterface {
 
     const value = accordionGroup.value;
 
-    this.expanded = (Array.isArray(value)) ? value.includes(accordionValue) : value === accordionValue;
+    const shouldExpand = (Array.isArray(value)) ? value.includes(accordionValue) : value === accordionValue;
+
+    if (shouldExpand) {
+      this.expandAccordion(initialUpdate);
+    } else {
+      this.collapseAccordion(initialUpdate);
+    }
   }
 
   private toggleExpanded() {
-    const { accordionGroupEl, value, expanded } = this;
+    const { accordionGroupEl, value, state } = this;
     if (accordionGroupEl) {
       /**
        * Because the accordion group may or may
@@ -105,42 +176,51 @@ export class Accordion implements ComponentInterface {
        * make the decision on whether or not
        * to allow it.
        */
-      accordionGroupEl.requestAccordionToggle(value, !expanded);
+      const expand = state === AccordionState.Collapsed;
+      accordionGroupEl.requestAccordionToggle(value, expand);
     }
   }
 
   render() {
-    const { expanded, expand, disabled, readonly } = this;
+    const { expand, disabled, readonly } = this;
+    const expanded = this.state === AccordionState.Expanded;
     const headerPart = expanded ? 'header expanded' : 'header';
     const contentPart = expanded ? 'content expanded' : 'content';
 
     return (
       <Host
         class={{
+          'accordion-ready': this.state === AccordionState.Ready,
+          'accordion-expanding': this.state === AccordionState.Expanding,
+          'accordion-expanded': this.state === AccordionState.Expanded,
+          'accordion-collapsing': this.state === AccordionState.Collapsing,
+          'accordion-collapsed': this.state === AccordionState.Collapsed,
+
           [`accordion-expand-${expand}`]: true,
-          ['accordion-expanded']: expanded,
-          ['accordion-disabled']: disabled,
-          ['accordion-readonly']: readonly,
+          'accordion-disabled': disabled,
+          'accordion-readonly': readonly,
         }}
       >
-        <button
+        <div
           onClick={() => this.toggleExpanded()}
           id="header"
           part={headerPart}
           aria-expanded={expanded ? 'true' : 'false'}
           aria-controls="content"
-          disabled={disabled}
         >
           <slot name="header"></slot>
-        </button>
+        </div>
 
         <div
           id="content"
           part={contentPart}
           role="region"
           aria-labelledby="header"
+          ref={(contentEl) => this.contentEl = contentEl}
         >
-          <slot name="content"></slot>
+          <div id="content-wrapper" ref={(contentElWrapper) => this.contentElWrapper = contentElWrapper}>
+            <slot name="content"></slot>
+          </div>
         </div>
       </Host>
     );
