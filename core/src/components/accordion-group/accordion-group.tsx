@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
 import { AccordionGroupChangeEventDetail } from '../../interface';
-import { getElementRoot } from '../../utils/helpers';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -73,20 +72,18 @@ export class AccordionGroup implements ComponentInterface {
 
   @Listen('keydown')
   onKeydown(ev: KeyboardEvent) {
-    const accordions = this.getAccordions();
     const activeElement = document.activeElement;
     if (!activeElement) { return; }
 
-    // If active accordion is not in this group, do not do anything
     const accordionEl = (activeElement.tagName === 'ION-ACCORDION') ? activeElement : activeElement.closest('ion-accordion');
-
     if (!accordionEl) return;
 
     const closestGroup = accordionEl.closest('ion-accordion-group');
     if (closestGroup !== this.el) { return; }
 
     // If the active accordion is not in the current array of accordions, do not do anything
-    const startingIndex = accordions.findIndex(a => a === activeElement);
+    const accordions = this.getAccordions();
+    const startingIndex = accordions.findIndex(a => a === accordionEl);
     if (startingIndex === -1) { return; }
 
     let accordion: HTMLIonAccordionElement | undefined;
@@ -97,10 +94,7 @@ export class AccordionGroup implements ComponentInterface {
     }
 
     if (accordion !== undefined && accordion !== activeElement) {
-      const root = getElementRoot(accordion);
-      const header = root.querySelector('button#header')! as HTMLButtonElement;
-
-      header.focus();
+      accordion.focus();
     }
   }
 
