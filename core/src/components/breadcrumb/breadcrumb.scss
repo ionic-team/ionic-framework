@@ -73,3 +73,12 @@
 :host(.ion-color) {
   color: current-color(base);
 }
+
+:host(.in-toolbar-color),
+:host(.in-toolbar-color) .breadcrumb-separator {
+  color: current-color(contrast, .8);
+}
+
+:host(.in-toolbar-color.breadcrumb-active) {
+  color: current-color(contrast);
+}

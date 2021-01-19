@@ -4,6 +4,10 @@
 // iOS Modals
 // --------------------------------------------------
 
+:host {
+  --background: #{$overlay-ios-background-color};
+}
+
 :host:first-of-type {
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
 }

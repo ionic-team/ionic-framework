@@ -134,6 +134,8 @@ export class Breadcrumb implements ComponentInterface {
           'breadcrumb-collapsed': collapsed,
           'breadcrumb-disabled': disabled,
           'in-breadcrumbs-color': hostContext('ion-breadcrumbs[color]', el),
+          'in-toolbar': hostContext('ion-toolbar', this.el),
+          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'ion-activatable': true,
           'ion-focusable': true,
         })}

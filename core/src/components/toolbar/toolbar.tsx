@@ -92,7 +92,7 @@ export class Toolbar implements ComponentInterface {
           ...childStyles,
           ...createColorClasses(this.color, {
             [mode]: true,
-            'in-toolbar': hostContext('ion-toolbar', this.el),
+            'in-modal': hostContext('ion-modal', this.el)
           }),
         }}
       >

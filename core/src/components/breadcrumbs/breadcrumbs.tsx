@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, List
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -11,7 +11,10 @@ import { createColorClasses } from '../../utils/theme';
  */
 @Component({
   tag: 'ion-breadcrumbs',
-  styleUrl: 'breadcrumbs.scss',
+  styleUrls: {
+    'ios': 'breadcrumbs.ios.scss',
+    'md': 'breadcrumbs.md.scss'
+  },
   shadow: true
 })
 export class Breadcrumbs implements ComponentInterface {
@@ -118,6 +121,8 @@ export class Breadcrumbs implements ComponentInterface {
       <Host
         class={createColorClasses(color, {
           [mode]: true,
+          'in-toolbar': hostContext('ion-toolbar', this.el),
+          'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'breadcrumbs-collapsed': collapsed,
         })}
 

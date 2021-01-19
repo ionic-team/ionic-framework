@@ -52,3 +52,15 @@
 .breadcrumbs-collapsed-indicator:hover {
   background: #eeeeee;
 }
+
+// Breadcrumbs: In Toolbar
+// --------------------------------------------------
+
+:host(.in-toolbar-color),
+:host(.in-toolbar-color) .breadcrumbs-collapsed-indicator ion-icon {
+  color: #{current-color(contrast)};
+}
+
+:host(.in-toolbar-color) .breadcrumbs-collapsed-indicator {
+  background: #{current-color(contrast, 0.11)};
+}
