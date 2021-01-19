@@ -108,10 +108,20 @@ export class Accordion implements ComponentInterface {
       const waitForTransition = transitionEndAsync(contentEl, 50000);
       contentEl.style.setProperty('max-height', `${contentHeight}px`);
 
+      /**
+       * Force a repaint. We can't use an raf
+       * here as it could cause the collapse animation
+       * to get out of sync with the other
+       * accordion's expand animation.
+       */
+      void contentEl.offsetHeight;
+
       await waitForTransition;
 
-      this.state = AccordionState.Expanded;
-      contentEl.style.removeProperty('max-height');
+      raf(() => {
+        this.state = AccordionState.Expanded;
+        contentEl.style.removeProperty('max-height');
+      });
     });
   }
 
@@ -126,14 +136,22 @@ export class Accordion implements ComponentInterface {
     const { contentEl } = this;
     if (contentEl === undefined) return;
 
-    raf(() => {
+    raf(async () => {
       const contentHeight = contentEl.offsetHeight;
       contentEl.style.setProperty('max-height', `${contentHeight}px`);
 
-      raf(async () => {
-        const waitForTransition = transitionEndAsync(contentEl, 50000);
-        this.state = AccordionState.Collapsing;
+      /**
+       * Force a repaint. We can't use an raf
+       * here as it could cause the collapse animation
+       * to get out of sync with the other
+       * accordion's expand animation.
+       */
+      void contentEl.offsetHeight;
 
+      const waitForTransition = transitionEndAsync(contentEl, 50000);
+      this.state = AccordionState.Collapsing;
+
+      raf(async () => {
         await waitForTransition;
 
         this.state = AccordionState.Collapsed;

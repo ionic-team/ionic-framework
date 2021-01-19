@@ -1,3 +1,5 @@
+@import "../accordion/accordion.vars";
+
 :host {
   display: block;
 }
@@ -7,15 +9,15 @@
  */
 :host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-collapsing),
 :host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-collapsed) {
-  width: calc(100% - 32px);
+  width: calc(100% - #{$accordion-margin * 2});
 }
 
 :host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-expanding),
 :host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-expanded) {
   width: 100%;
-  margin: 16px auto;
+  margin: $accordion-margin auto;
 
-  border-radius: 8px !important;
+  border-radius: $accordion-border-radius !important;
 }
 
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-collapsing),
@@ -25,10 +27,10 @@
 
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanding),
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanded) {
-  width: calc(100% - 32px);
-  margin: 16px auto;
+  width: calc(100% - #{$accordion-margin * 2});
+  margin: $accordion-margin auto;
 
-  border-radius: 8px !important;
+  border-radius: $accordion-border-radius !important;
 }
 
 /**
@@ -36,12 +38,12 @@
  */
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-previous),
 :host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-previous) {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: $accordion-border-radius;
+  border-bottom-right-radius: $accordion-border-radius;
 }
 
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-next),
 :host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-next) {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: $accordion-border-radius;
+  border-top-right-radius: $accordion-border-radius;
 }
