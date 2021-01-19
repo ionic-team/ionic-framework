@@ -39,6 +39,8 @@ export class Accordion implements ComponentInterface {
   @Element() el?: HTMLElement;
 
   @State() state: AccordionState = AccordionState.Collapsed;
+  @State() isNext: boolean = false;
+  @State() isPrevious: boolean = false;
 
   /**
    * The color to use from your application's color palette.
@@ -140,7 +142,7 @@ export class Accordion implements ComponentInterface {
     });
   }
 
-  private updateState = (initialUpdate = false) => {
+  private updateState = async (initialUpdate = false) => {
     const accordionGroup = this.accordionGroupEl;
     const accordionValue = this.value;
 
@@ -154,7 +156,48 @@ export class Accordion implements ComponentInterface {
       this.expandAccordion(initialUpdate);
     } else {
       this.collapseAccordion(initialUpdate);
+
+      /**
+       * When using popout or inset,
+       * the collapsed accordion items
+       * may need additional border radius
+       * applied. Check to see if the
+       * next or previous accordion is selected.
+       */
+      const nextAccordion = this.getNextSibling();
+      const nextAccordionValue = nextAccordion && nextAccordion.value;
+
+      if (nextAccordionValue !== undefined) {
+      this.isPrevious = (Array.isArray(value)) ? value.includes(nextAccordionValue) : value === nextAccordionValue;
+      }
+
+      const previousAccordion = this.getPreviousSibling();
+      const previousAccordionValue = previousAccordion && previousAccordion.value;
+
+      if (previousAccordionValue !== undefined) {
+        this.isNext = (Array.isArray(value)) ? value.includes(previousAccordionValue) : value === previousAccordionValue;
+      }
     }
+  }
+
+  private getNextSibling = () => {
+    if (!this.el) return;
+
+    const nextSibling = this.el.nextElementSibling;
+
+    if (nextSibling?.tagName !== 'ION-ACCORDION') return;
+
+    return nextSibling as HTMLIonAccordionElement;
+  }
+
+  private getPreviousSibling = () => {
+    if (!this.el) return;
+
+    const previousSibling = this.el.previousElementSibling;
+
+    if (previousSibling?.tagName !== 'ION-ACCORDION') return;
+
+    return previousSibling as HTMLIonAccordionElement;
   }
 
   private toggleExpanded() {
@@ -186,6 +229,9 @@ export class Accordion implements ComponentInterface {
           'accordion-expanded': this.state === AccordionState.Expanded,
           'accordion-collapsing': this.state === AccordionState.Collapsing,
           'accordion-collapsed': this.state === AccordionState.Collapsed,
+
+          'accordion-next': this.isNext,
+          'accordion-previous': this.isPrevious,
 
           'accordion-disabled': disabled,
           'accordion-readonly': readonly,

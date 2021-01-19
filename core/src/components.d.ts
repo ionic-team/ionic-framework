@@ -41,6 +41,7 @@ export namespace Components {
           * Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.
          */
         "expand": 'accordion' | 'inset' | 'popout';
+        "getAccordions": () => Promise<HTMLIonAccordionElement[]>;
         /**
           * The mode determines which platform styles to use.
          */

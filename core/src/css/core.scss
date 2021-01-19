@@ -203,9 +203,11 @@ ion-card-header.ion-color .ion-inherit-color {
 }
 
 ion-accordion-group ion-accordion:first-of-type {
-  border-radius: 8px 8px 0px 0px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 ion-accordion-group ion-accordion:last-of-type {
-  border-radius: 0px 0px 8px 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }

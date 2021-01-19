@@ -53,25 +53,25 @@ export class AccordionGroup implements ComponentInterface {
   }
 
   @Watch('disabled')
-  disabledChanged() {
+  async disabledChanged() {
     const { disabled } = this;
-    const accordions = this.getAccordions();
+    const accordions = await this.getAccordions();
     for (const accordion of accordions) {
       accordion.disabled = disabled;
     }
   }
 
   @Watch('readonly')
-  readonlyChanged() {
+  async readonlyChanged() {
     const { readonly } = this;
-    const accordions = this.getAccordions();
+    const accordions = await this.getAccordions();
     for (const accordion of accordions) {
       accordion.readonly = readonly;
     }
   }
 
   @Listen('keydown')
-  onKeydown(ev: KeyboardEvent) {
+  async onKeydown(ev: KeyboardEvent) {
     const activeElement = document.activeElement;
     if (!activeElement) { return; }
 
@@ -82,7 +82,7 @@ export class AccordionGroup implements ComponentInterface {
     if (closestGroup !== this.el) { return; }
 
     // If the active accordion is not in the current array of accordions, do not do anything
-    const accordions = this.getAccordions();
+    const accordions = await this.getAccordions();
     const startingIndex = accordions.findIndex(a => a === accordionEl);
     if (startingIndex === -1) { return; }
 
@@ -167,7 +167,11 @@ export class AccordionGroup implements ComponentInterface {
     return prevAccordion;
   }
 
-  private getAccordions() {
+  /**
+   * @internal
+   */
+  @Method()
+  async getAccordions() {
     return Array.from(this.el.querySelectorAll('ion-accordion'));
   }
 

@@ -30,3 +30,18 @@
 
   border-radius: 8px !important;
 }
+
+/**
+ * Next/Previous Accordions
+ */
+:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-previous),
+:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-previous) {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-next),
+:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-next) {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
