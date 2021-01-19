@@ -42,7 +42,7 @@ export class Breadcrumbs implements ComponentInterface {
     this.setCollapsed();
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.setBreadcrumbSeparator();
     this.setCollapsed();
     this.setOrder();
