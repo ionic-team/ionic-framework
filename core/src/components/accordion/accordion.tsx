@@ -39,8 +39,8 @@ export class Accordion implements ComponentInterface {
   @Element() el?: HTMLElement;
 
   @State() state: AccordionState = AccordionState.Collapsed;
-  @State() isNext: boolean = false;
-  @State() isPrevious: boolean = false;
+  @State() isNext = false;
+  @State() isPrevious = false;
 
   /**
    * The color to use from your application's color palette.
@@ -96,10 +96,10 @@ export class Accordion implements ComponentInterface {
       return;
     }
 
-    if (this.state === AccordionState.Expanded) return;
+    if (this.state === AccordionState.Expanded) { return; }
 
     const { contentEl, contentElWrapper } = this;
-    if (contentEl === undefined || contentElWrapper === undefined) return;
+    if (contentEl === undefined || contentElWrapper === undefined) { return; }
 
     this.state = AccordionState.Expanding;
 
@@ -114,6 +114,7 @@ export class Accordion implements ComponentInterface {
        * to get out of sync with the other
        * accordion's expand animation.
        */
+      // tslint:disable-next-line
       void contentEl.offsetHeight;
 
       await waitForTransition;
@@ -131,10 +132,10 @@ export class Accordion implements ComponentInterface {
       return;
     }
 
-    if (this.state === AccordionState.Collapsed) return;
+    if (this.state === AccordionState.Collapsed) { return; }
 
     const { contentEl } = this;
-    if (contentEl === undefined) return;
+    if (contentEl === undefined) { return; }
 
     raf(async () => {
       const contentHeight = contentEl.offsetHeight;
@@ -146,6 +147,7 @@ export class Accordion implements ComponentInterface {
        * to get out of sync with the other
        * accordion's expand animation.
        */
+      // tslint:disable-next-line
       void contentEl.offsetHeight;
 
       const waitForTransition = transitionEndAsync(contentEl, 50000);
@@ -199,21 +201,21 @@ export class Accordion implements ComponentInterface {
   }
 
   private getNextSibling = () => {
-    if (!this.el) return;
+    if (!this.el) { return; }
 
     const nextSibling = this.el.nextElementSibling;
 
-    if (nextSibling?.tagName !== 'ION-ACCORDION') return;
+    if (nextSibling?.tagName !== 'ION-ACCORDION') { return; }
 
     return nextSibling as HTMLIonAccordionElement;
   }
 
   private getPreviousSibling = () => {
-    if (!this.el) return;
+    if (!this.el) { return; }
 
     const previousSibling = this.el.previousElementSibling;
 
-    if (previousSibling?.tagName !== 'ION-ACCORDION') return;
+    if (previousSibling?.tagName !== 'ION-ACCORDION') { return; }
 
     return previousSibling as HTMLIonAccordionElement;
   }
@@ -270,9 +272,9 @@ export class Accordion implements ComponentInterface {
           part={contentPart}
           role="region"
           aria-labelledby="header"
-          ref={(contentEl) => this.contentEl = contentEl}
+          ref={contentEl => this.contentEl = contentEl}
         >
-          <div id="content-wrapper" ref={(contentElWrapper) => this.contentElWrapper = contentElWrapper}>
+          <div id="content-wrapper" ref={contentElWrapper => this.contentElWrapper = contentElWrapper}>
             <slot name="content"></slot>
           </div>
         </div>

@@ -6,20 +6,23 @@
    */
   --content-padding: #{$accordion-content-padding};
 
-  display: block;
+  @include margin(0, auto, 0, auto);
 
-  width: 100%;
+  display: block;
 
   position: relative;
 
-  box-shadow: $accordion-box-shadow;
-  background-color: $accordion-background-color;
-
-  overflow: hidden;
-  margin: 0 auto;
+  width: 100%;
 
   transform: translateZ(0);
+
   transition: all $accordion-transition-duration $accordion-transition-easing;
+
+  background-color: $accordion-background-color;
+
+  box-shadow: $accordion-box-shadow;
+
+  overflow: hidden;
 
 }
 
@@ -34,6 +37,7 @@
 }
 
 :host(.accordion-collapsing) #content {
+  /* stylelint-disable-next-line declaration-no-important */
   max-height: 0 !important;
 }
 

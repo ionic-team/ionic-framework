@@ -48,7 +48,6 @@ const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (
   return unregister;
 };
 
-
 /**
  * Elements inside of web components sometimes need to inherit global attributes
  * set on the host. For example, the inner input in `ion-input` should inherit

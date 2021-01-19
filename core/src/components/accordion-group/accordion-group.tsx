@@ -76,7 +76,7 @@ export class AccordionGroup implements ComponentInterface {
     if (!activeElement) { return; }
 
     const accordionEl = (activeElement.tagName === 'ION-ACCORDION') ? activeElement : activeElement.closest('ion-accordion');
-    if (!accordionEl) return;
+    if (!accordionEl) { return; }
 
     const closestGroup = accordionEl.closest('ion-accordion-group');
     if (closestGroup !== this.el) { return; }
@@ -151,6 +151,7 @@ export class AccordionGroup implements ComponentInterface {
 
   private findNextAccordion(accordions: HTMLIonAccordionElement[], startingIndex: number) {
     const nextAccordion = accordions[startingIndex + 1];
+    // tslint:disable-next-line:strict-type-predicates
     if (nextAccordion === undefined) {
       return accordions[0];
     }
@@ -160,6 +161,7 @@ export class AccordionGroup implements ComponentInterface {
 
   private findPreviousAccordion(accordions: HTMLIonAccordionElement[], startingIndex: number) {
     const prevAccordion = accordions[startingIndex - 1];
+    // tslint:disable-next-line:strict-type-predicates
     if (prevAccordion === undefined) {
       return accordions[accordions.length - 1];
     }

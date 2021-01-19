@@ -14,10 +14,10 @@
 
 :host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-expanding),
 :host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-expanded) {
-  width: 100%;
-  margin: $accordion-margin auto;
+  @include margin($accordion-margin, auto, $accordion-margin, auto);
+  @include border-radius($accordion-border-radius);
 
-  border-radius: $accordion-border-radius !important;
+  width: 100%;
 }
 
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-collapsing),
@@ -27,10 +27,10 @@
 
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanding),
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanded) {
-  width: calc(100% - #{$accordion-margin * 2});
-  margin: $accordion-margin auto;
+  @include margin($accordion-margin, auto, $accordion-margin, auto);
+  @include border-radius($accordion-border-radius);
 
-  border-radius: $accordion-border-radius !important;
+  width: calc(100% - #{$accordion-margin * 2});
 }
 
 /**
@@ -38,12 +38,10 @@
  */
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-previous),
 :host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-previous) {
-  border-bottom-left-radius: $accordion-border-radius;
-  border-bottom-right-radius: $accordion-border-radius;
+  @include border-radius(null, null, $accordion-border-radius, $accordion-border-radius);
 }
 
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-next),
 :host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-next) {
-  border-top-left-radius: $accordion-border-radius;
-  border-top-right-radius: $accordion-border-radius;
+  @include border-radius($accordion-border-radius, $accordion-border-radius, null, null);
 }

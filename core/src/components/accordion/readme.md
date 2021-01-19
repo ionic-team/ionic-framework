@@ -7,14 +7,13 @@
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                                            | Default     |
-| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ----------- |
-| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                           | `undefined` |
-| `disabled` | `disabled` | If `true`, the accordion cannot be interacted with.                                                                                                                                                                                                                    | `boolean`                                       | `false`     |
-| `expand`   | `expand`   | Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.                                                                                                                   | `"accordion" \| "float" \| "inset" \| "popout"` | `'float'`   |
-| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                 | `undefined` |
-| `readonly` | `readonly` | If `true`, the accordion cannot be interacted with, but does not alter the opacity.                                                                                                                                                                                    | `boolean`                                       | `false`     |
-| `value`    | `value`    | The value of the accordion.                                                                                                                                                                                                                                            | `string \| undefined`                           | `undefined` |
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type                  | Default     |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined` | `undefined` |
+| `disabled` | `disabled` | If `true`, the accordion cannot be interacted with.                                                                                                                                                                                                                    | `boolean`             | `false`     |
+| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
+| `readonly` | `readonly` | If `true`, the accordion cannot be interacted with, but does not alter the opacity.                                                                                                                                                                                    | `boolean`             | `false`     |
+| `value`    | `value`    | The value of the accordion.                                                                                                                                                                                                                                            | `string \| undefined` | `undefined` |
 
 
 ## Events
@@ -40,6 +39,13 @@
 | `"content"`  | The wrapper element for the content slot.                                                                                |
 | `"expanded"` | The expanded element. Can be used in combination with the `header` and `content` parts (i.e. `::part(header expanded)`). |
 | `"header"`   | The wrapper element for the header slot.                                                                                 |
+
+
+## CSS Custom Properties
+
+| Name                | Description                         |
+| ------------------- | ----------------------------------- |
+| `--content-padding` | The padding of the content wrapper; |
 
 
 ----------------------------------------------
