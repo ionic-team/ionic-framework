@@ -1,3 +1,32 @@
 :host {
   display: block;
 }
+
+/**
+ * Accordion Expansion Styles
+ */
+:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-collapsing),
+:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-collapsed) {
+  width: calc(100% - 32px);
+}
+
+:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-expanding),
+:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-expanded) {
+  width: 100%;
+  margin: 16px auto;
+
+  border-radius: 8px !important;
+}
+
+:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-collapsing),
+:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-collapsed) {
+  width: 100%;
+}
+
+:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanding),
+:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanded) {
+  width: calc(100% - 32px);
+  margin: 16px auto;
+
+  border-radius: 8px !important;
+}

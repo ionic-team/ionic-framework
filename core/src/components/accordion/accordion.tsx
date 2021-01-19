@@ -7,8 +7,7 @@ const enum AccordionState {
   Collapsed = 1 << 0,
   Collapsing = 1 << 1,
   Expanded = 1 << 2,
-  Expanding = 1 << 3,
-  Ready = 1 << 4
+  Expanding = 1 << 3
 }
 
 /**
@@ -65,13 +64,6 @@ export class Accordion implements ComponentInterface {
   @Prop() readonly = false;
 
   /**
-   * Describes the expansion behavior for each accordion.
-   * Possible values are `"float"`, `"inset"`, `"accordion"`,
-   * and `"popout"`. Defaults to `"float"`.
-   */
-  @Prop() expand: 'float' | 'inset' | 'accordion' | 'popout' = 'float';
-
-  /**
    * Emitted when the accordion loses focus.
    */
   @Event() ionBlur!: EventEmitter<void>;
@@ -111,7 +103,7 @@ export class Accordion implements ComponentInterface {
 
     raf(async () => {
       const contentHeight = contentElWrapper.offsetHeight;
-      const waitForTransition = transitionEndAsync(contentEl, 300);
+      const waitForTransition = transitionEndAsync(contentEl, 50000);
       contentEl.style.setProperty('max-height', `${contentHeight}px`);
 
       await waitForTransition;
@@ -137,7 +129,7 @@ export class Accordion implements ComponentInterface {
       contentEl.style.setProperty('max-height', `${contentHeight}px`);
 
       raf(async () => {
-        const waitForTransition = transitionEndAsync(contentEl, 300);
+        const waitForTransition = transitionEndAsync(contentEl, 50000);
         this.state = AccordionState.Collapsing;
 
         await waitForTransition;
@@ -182,7 +174,7 @@ export class Accordion implements ComponentInterface {
   }
 
   render() {
-    const { expand, disabled, readonly } = this;
+    const { disabled, readonly } = this;
     const expanded = this.state === AccordionState.Expanded;
     const headerPart = expanded ? 'header expanded' : 'header';
     const contentPart = expanded ? 'content expanded' : 'content';
@@ -190,13 +182,11 @@ export class Accordion implements ComponentInterface {
     return (
       <Host
         class={{
-          'accordion-ready': this.state === AccordionState.Ready,
           'accordion-expanding': this.state === AccordionState.Expanding,
           'accordion-expanded': this.state === AccordionState.Expanded,
           'accordion-collapsing': this.state === AccordionState.Collapsing,
           'accordion-collapsed': this.state === AccordionState.Collapsed,
 
-          [`accordion-expand-${expand}`]: true,
           'accordion-disabled': disabled,
           'accordion-readonly': readonly,
         }}

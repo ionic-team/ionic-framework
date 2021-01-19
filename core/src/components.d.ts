@@ -20,10 +20,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.
-         */
-        "expand": 'float' | 'inset' | 'accordion' | 'popout';
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -44,7 +40,7 @@ export namespace Components {
         /**
           * Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.
          */
-        "expand": 'float' | 'inset' | 'accordion' | 'popout';
+        "expand": 'accordion' | 'inset' | 'popout';
         /**
           * The mode determines which platform styles to use.
          */
@@ -3394,10 +3390,6 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.
-         */
-        "expand"?: 'float' | 'inset' | 'accordion' | 'popout';
-        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -3426,7 +3418,7 @@ declare namespace LocalJSX {
         /**
           * Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.
          */
-        "expand"?: 'float' | 'inset' | 'accordion' | 'popout';
+        "expand"?: 'accordion' | 'inset' | 'popout';
         /**
           * The mode determines which platform styles to use.
          */

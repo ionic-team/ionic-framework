@@ -40,7 +40,7 @@ export class AccordionGroup implements ComponentInterface {
    * Possible values are `"float"`, `"inset"`, `"accordion"`,
    * and `"popout"`. Defaults to `"float"`.
    */
-  @Prop() expand: 'float' | 'inset' | 'accordion' | 'popout' = 'float';
+  @Prop() expand: 'accordion' | 'inset' | 'popout' = 'accordion';
 
   /**
    * Emitted when the value property has changed.
@@ -172,12 +172,13 @@ export class AccordionGroup implements ComponentInterface {
   }
 
   render() {
-    const { disabled, readonly } = this;
+    const { disabled, readonly, expand } = this;
     return (
       <Host
         class={{
           'accordion-group-disabled': disabled,
           'accordion-group-readonly': readonly,
+          [`accordion-group-expand-${expand}`]: true
         }}
         role="presentation"
       >
