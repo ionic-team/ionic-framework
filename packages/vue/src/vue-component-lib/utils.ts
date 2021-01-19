@@ -17,7 +17,6 @@ interface NavManager<T = any> {
 interface ComponentOptions {
   modelProp?: string;
   modelUpdateEvent?: string;
-  routerLinkComponent?: boolean;
 }
 
 const getComponentClasses = (classes: unknown) => {
@@ -41,7 +40,7 @@ const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: 
 * integrations.
 */
 export const defineContainer = <Props>(name: string, componentProps: string[] = [], componentOptions: ComponentOptions = {}) => {
-  const { modelProp, modelUpdateEvent, routerLinkComponent } = componentOptions;
+  const { modelProp, modelUpdateEvent } = componentOptions;
 
   /**
   * Create a Vue component wrapper around a Web Component.
@@ -49,35 +48,47 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
   * They refer to whatever properties are set on an instance of a component.
   */
   const Container = defineComponent<Props & InputProps>((props, { attrs, slots, emit }) => {
+    let modelPropValue = (props as any)[modelProp];
     const containerRef = ref<HTMLElement>();
     const classes = new Set(getComponentClasses(attrs.class));
     const onVnodeBeforeMount = (vnode: VNode) => {
       // Add a listener to tell Vue to update the v-model
       if (vnode.el) {
         vnode.el.addEventListener(modelUpdateEvent.toLowerCase(), (e: Event) => {
-          emit(UPDATE_VALUE_EVENT, (e?.target as any)[modelProp]);
+          modelPropValue = (e?.target as any)[modelProp];
+          emit(UPDATE_VALUE_EVENT, modelPropValue);
+
+          /**
+           * We need to emit the change event here
+           * rather than on the web component to ensure
+           * that any v-model bindings have been updated.
+           * Otherwise, the developer will listen on the
+           * native web component, but the v-model will
+           * not have been updated yet.
+           */
+          emit(modelUpdateEvent, e);
+          e.stopImmediatePropagation();
         });
       }
     };
 
-    let handleClick: (ev: Event) => void;
-    if (routerLinkComponent) {
-      const currentInstance = getCurrentInstance();
-      const hasRouter = currentInstance?.appContext?.provides[NAV_MANAGER];
-      const navManager: NavManager | undefined = hasRouter ? inject(NAV_MANAGER) : undefined;
-      handleClick = (ev: Event) => {
-        const routerProps = Object.keys(props).filter(p => p.startsWith(ROUTER_PROP_REFIX));
-        if (routerProps.length === 0) return;
+    const currentInstance = getCurrentInstance();
+    const hasRouter = currentInstance?.appContext?.provides[NAV_MANAGER];
+    const navManager: NavManager | undefined = hasRouter ? inject(NAV_MANAGER) : undefined;
+    const handleRouterLink = (ev: Event) => {
+      const { routerLink } = props as any;
+      if (!routerLink) return;
 
-        if (navManager !== undefined) {
-          let navigationPayload: any = { event: ev };
-          routerProps.forEach(prop => {
-            navigationPayload[prop] = (props as any)[prop];
-          });
-          navManager.navigate(navigationPayload);
-        } else {
-          console.warn('Tried to navigate, but no router was found. Make sure you have mounted Vue Router.');
-        }
+      const routerProps = Object.keys(props).filter(p => p.startsWith(ROUTER_PROP_REFIX));
+
+      if (navManager !== undefined) {
+        let navigationPayload: any = { event: ev };
+        routerProps.forEach(prop => {
+          navigationPayload[prop] = (props as any)[prop];
+        });
+        navManager.navigate(navigationPayload);
+      } else {
+        console.warn('Tried to navigate, but no router was found. Make sure you have mounted Vue Router.');
       }
     }
 
@@ -86,28 +97,28 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
         classes.add(value);
       });
 
+      const oldClick = (props as any).onClick;
+      const handleClick = (ev: Event) => {
+        if (oldClick !== undefined) {
+          oldClick(ev);
+        }
+        if (!ev.defaultPrevented) {
+          handleRouterLink(ev);
+        }
+      }
+
       let propsToAdd = {
         ...props,
         ref: containerRef,
         class: getElementClasses(containerRef, classes),
-        onClick: (routerLinkComponent) ? handleClick : (props as any).onClick,
+        onClick: handleClick,
         onVnodeBeforeMount: (modelUpdateEvent) ? onVnodeBeforeMount : undefined
       };
-
-      if ((props as any).onClick) {
-        const oldClick = (props as any).onClick;
-        propsToAdd.onClick = (ev: Event) => {
-            oldClick(ev);
-            if (!ev.defaultPrevented) {
-                handleClick(ev);
-            }
-        };
-      }
 
       if (modelProp) {
         propsToAdd = {
           ...propsToAdd,
-          [modelProp]: props.hasOwnProperty('modelValue') ? props.modelValue : (props as any)[modelProp]
+          [modelProp]: props.hasOwnProperty('modelValue') ? props.modelValue : modelPropValue
         }
       }
 
@@ -116,13 +127,10 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
   });
 
   Container.displayName = name;
-  Container.props = componentProps;
+  Container.props = [...componentProps, ROUTER_LINK_VALUE];
   if (modelProp) {
     Container.props.push(MODEL_VALUE);
-    Container.emits = [UPDATE_VALUE_EVENT];
-  }
-  if (routerLinkComponent) {
-    Container.props.push(ROUTER_LINK_VALUE);
+    Container.emits = [UPDATE_VALUE_EVENT, modelUpdateEvent];
   }
 
   return Container;

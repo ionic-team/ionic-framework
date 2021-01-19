@@ -87,13 +87,6 @@ export const config: Config = {
         'ion-app',
         'ion-icon'
       ],
-      routerLinkComponents: [
-        'ion-card',
-        'ion-item',
-        'ion-button',
-        'ion-fab-button',
-
-      ],
       componentModels: [
         {
           elements: ['ion-checkbox', 'ion-toggle'],

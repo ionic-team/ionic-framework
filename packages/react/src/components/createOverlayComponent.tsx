@@ -123,7 +123,7 @@ export const createOverlayComponent = <
     }
 
     render() {
-      return ReactDOM.createPortal(this.props.isOpen ? this.props.children : null, this.el);
+      return ReactDOM.createPortal(this.props.children, this.el);
     }
   }
 
