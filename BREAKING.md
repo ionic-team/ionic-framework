@@ -4,9 +4,23 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Versions
 
+- [Version 6.x](#version-6x)
 - [Version 5.x](#version-5x)
 - [Version 4.x](#version-4x)
 - [Legacy](#legacy)
+
+
+## Version 6.x
+
+- [Config](#config)
+  * [Transition Shadow](#transition-shadow)
+
+
+### Config
+
+#### Transition Shadow
+
+The `experimentalTransitionShadow` config option has been removed. The transition shadow is now enabled when running in `ios` mode.
 
 
 ## Version 5.x
