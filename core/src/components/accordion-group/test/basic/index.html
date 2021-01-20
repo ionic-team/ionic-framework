@@ -10,7 +10,7 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
-      ion-accordion > ion-item ion-icon {
+      /* ion-accordion > ion-item ion-icon {
         transition: transform 300ms cubic-bezier(0.25, 0.8, 0.5, 1);
       }
       ion-accordion.accordion-expanding > ion-item ion-icon {
@@ -18,12 +18,7 @@
       }
       ion-accordion.accordion-expanded > ion-item ion-icon {
         transform: rotate(180deg);
-      }
-
-      #custom ion-accordion {
-        border-radius: 0px;
-        box-shadow: none;
-      }
+      } */
 
       .grid {
         display: grid;
@@ -32,607 +27,130 @@
         grid-column-gap: 20px;
       }
 
-      ion-accordion ion-item:last-of-type {
-        --inner-border-width: 0px;
+      .header-ios ion-toolbar:last-of-type {
+        --border-width: 0px;
       }
 
-      ion-accordion {
-        --content-padding: 0px;
+      // TODO styles below need to be global
+
+      ion-accordion-group.ios.accordion-group-expand-accordion ion-accordion:first-of-type {
+        border-top: 0.55px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)));
+      }
+
+      ion-accordion-group.accordion-group-expand-inset ion-accordion:first-of-type {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+      ion-accordion-group.accordion-group-expand-inset ion-accordion:last-of-type {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-bottom: none;
+      }
+
+      ion-accordion .ion-accordion-expansion-icon {
+        transition: 300ms transform cubic-bezier(0.25, 0.8, 0.5, 1);
+      }
+
+      ion-accordion.accordion-expanding .ion-accordion-expansion-icon,
+      ion-accordion.accordion-expanded .ion-accordion-expansion-icon {
+        transform: rotate(180deg);
       }
 
     </style>
   </head>
   <body>
     <ion-app>
-      <ion-header>
+      <ion-header translucent="true">
         <ion-toolbar>
-          <ion-title>Accordion Group - Basic</ion-title>
+          <ion-title>Topics</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
-        <ion-list>
-          <div class="ion-padding grid">
-            <div class="grid-item">
-              <ion-list-header>Default</ion-list-header> <br />
-              <ion-accordion-group>
-                <ion-accordion value="personal-information">
-                  <ion-item lines="full" slot="header" color="danger" button detail="false">
-                    <ion-label>Personal Information</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+      <ion-content fullscreen="true" color="light">
+        <ion-header collapse="condense">
+          <ion-toolbar color="light">
+            <ion-title size="large">Topics</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <div class="grid ion-padding">
+          <div class="grid-item">
+            <ion-accordion-group expand="inset">
+              <ion-accordion value="attractions">
+                <ion-item slot="header" button detail="false">
+                  <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
+                  <ion-label> Attractions</ion-label>
+                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
+                </ion-item>
+                <ion-list lines="none" slot="content">
+                  <ion-item>
+                    <ion-label>Movie Theaters</ion-label>
                   </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Name</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Email</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Phone</ion-label>
-                      <ion-input type="tel"></ion-input>
-                      </ion-item>
-                    <ion-item>
-                      <ion-label>Extension</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Country</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City/Province</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="billing-address">
-                  <ion-item lines="full" slot="header" color="secondary" button detail="false">
-                    <ion-label>Billing Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+                  <ion-item>
+                    <ion-label>Amusement Parks</ion-label>
                   </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address 1</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="shipping-address">
-                  <ion-item lines="full" slot="header" color="success" button detail="false">
-                    <ion-label>Shipping Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+                  <ion-item>
+                    <ion-label>Mini Golf</ion-label>
                   </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-              </ion-accordion-group>
-            </div>
-
-            <div class="grid-item">
-              <ion-list-header>Inset</ion-list-header> <br />
-              <ion-accordion-group expand="inset">
-                <ion-accordion value="personal-information">
-                  <ion-item lines="full" slot="header" color="danger" button detail="false">
-                    <ion-label>Personal Information</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+                </ion-list>
+              </ion-accordion>
+              <ion-accordion value="dining">
+                <ion-item slot="header" button detail="false">
+                  <ion-icon slot="start" name="pizza"></ion-icon>
+                  <ion-label>Dining</ion-label>
+                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
+                </ion-item>
+                <ion-list lines="none" slot="content">
+                  <ion-item>
+                    <ion-label>Breakfast & Brunch</ion-label>
                   </ion-item>
-                 <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Name</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Email</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Phone</ion-label>
-                      <ion-input type="tel"></ion-input>
-                      </ion-item>
-                    <ion-item>
-                      <ion-label>Extension</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Country</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City/Province</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="billing-address">
-                  <ion-item lines="full" slot="header" color="secondary" button detail="false">
-                    <ion-label>Billing Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+                  <ion-item>
+                    <ion-label>New American</ion-label>
                   </ion-item>
-
-                <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address 1</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="shipping-address">
-                  <ion-item lines="full" slot="header" color="success" button detail="false">
-                    <ion-label>Shipping Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+                  <ion-item>
+                    <ion-label>Sushi Bars</ion-label>
                   </ion-item>
+                </ion-list>
+              </ion-accordion>
+              <ion-accordion value="games">
+                <ion-item slot="header" button detail="false">
+                  <ion-icon slot="start" ios="game-controller-outline" md="game-controller"></ion-icon>
+                  <ion-label>Games</ion-label>
+                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
+                </ion-item>
 
-                <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-              </ion-accordion-group>
-            </div>
-
-            <div class="grid-item">
-              <ion-list-header>Popout</ion-list-header> <br />
-              <ion-accordion-group expand="popout">
-                <ion-accordion value="personal-information">
-                  <ion-item lines="full" slot="header" color="danger" button detail="false">
-                    <ion-label>Personal Information</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+                <ion-list lines="none" slot="content">
+                  <ion-item>
+                    <ion-label>Xbox</ion-label>
                   </ion-item>
-                 <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Name</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Email</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Phone</ion-label>
-                      <ion-input type="tel"></ion-input>
-                      </ion-item>
-                    <ion-item>
-                      <ion-label>Extension</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Country</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City/Province</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="billing-address">
-                  <ion-item lines="full" slot="header" color="secondary" button detail="false">
-                    <ion-label>Billing Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+                  <ion-item>
+                    <ion-label>Playstation</ion-label>
                   </ion-item>
-
-                <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address 1</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="shipping-address">
-                  <ion-item lines="full" slot="header" color="success" button detail="false">
-                    <ion-label>Shipping Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+                  <ion-item>
+                    <ion-label>Switch</ion-label>
                   </ion-item>
+                </ion-list>
+              </ion-accordion>
+              <ion-accordion value="exercise">
+                <ion-item slot="header" button detail="false">
+                  <ion-icon slot="start" ios="bicycle-outline" md="bicycle"></ion-icon>
+                  <ion-label>Exercise</ion-label>
+                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
+                </ion-item>
 
-                <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-              </ion-accordion-group>
-            </div>
-
-            <div class="grid-item">
-              <ion-list-header>Readonly</ion-list-header> <br />
-              <ion-accordion-group readonly="true">
-                <ion-accordion value="personal-information">
-                  <ion-item lines="full" slot="header" color="danger" button detail="false">
-                    <ion-label>Personal Information</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+                <ion-list lines="none" slot="content">
+                  <ion-item>
+                    <ion-label>Jog</ion-label>
                   </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Name</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Email</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Phone</ion-label>
-                      <ion-input type="tel"></ion-input>
-                      </ion-item>
-                    <ion-item>
-                      <ion-label>Extension</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Country</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City/Province</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="billing-address">
-                  <ion-item lines="full" slot="header" color="secondary" button detail="false">
-                    <ion-label>Billing Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+                  <ion-item>
+                    <ion-label>Swim</ion-label>
                   </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address 1</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="shipping-address">
-                  <ion-item lines="full" slot="header" color="success" button detail="false">
-                    <ion-label>Shipping Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
+                  <ion-item>
+                    <ion-label>Nap</ion-label>
                   </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-              </ion-accordion-group>
-            </div>
-
-            <div class="grid-item">
-              <ion-list-header>Disabled</ion-list-header> <br />
-              <ion-accordion-group disabled="true">
-                <ion-accordion value="personal-information">
-                  <ion-item lines="full" slot="header" color="danger" button detail="false">
-                    <ion-label>Personal Information</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
-                  </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Name</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Email</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Phone</ion-label>
-                      <ion-input type="tel"></ion-input>
-                      </ion-item>
-                    <ion-item>
-                      <ion-label>Extension</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Country</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City/Province</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="billing-address">
-                  <ion-item lines="full" slot="header" color="secondary" button detail="false">
-                    <ion-label>Billing Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
-                  </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address 1</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="shipping-address">
-                  <ion-item lines="full" slot="header" color="success" button detail="false">
-                    <ion-label>Shipping Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
-                  </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-              </ion-accordion-group>
-            </div>
-
-            <div class="grid-item">
-              <ion-list-header>Multiple</ion-list-header> <br />
-              <ion-accordion-group multiple="true">
-                <ion-accordion value="personal-information">
-                  <ion-item lines="full" slot="header" color="danger" button detail="false">
-                    <ion-label>Personal Information</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
-                  </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Name</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Email</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Phone</ion-label>
-                      <ion-input type="tel"></ion-input>
-                      </ion-item>
-                    <ion-item>
-                      <ion-label>Extension</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Country</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City/Province</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="billing-address">
-                  <ion-item lines="full" slot="header" color="secondary" button detail="false">
-                    <ion-label>Billing Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
-                  </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address 1</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-                <ion-accordion value="shipping-address">
-                  <ion-item lines="full" slot="header" color="success" button detail="false">
-                    <ion-label>Shipping Address</ion-label>
-                    <ion-icon name="chevron-up" slot="end"></ion-icon>
-                  </ion-item>
-
-                  <ion-list slot="content">
-                    <ion-item>
-                      <ion-label>Address</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Address 2</ion-label>
-                      <ion-input type="email"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>City</ion-label>
-                      <ion-input type="tel"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>State</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Zip Code</ion-label>
-                      <ion-input type="text"></ion-input>
-                    </ion-item>
-                  </ion-list>
-                </ion-accordion>
-              </ion-accordion-group>
-            </div>
+                </ion-list>
+              </ion-accordion>
+            </ion-accordion-group>
           </div>
-        </ion-list>
+        </div>
       </ion-content>
     </ion-app>
   </body>

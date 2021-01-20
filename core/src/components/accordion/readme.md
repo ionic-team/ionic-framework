@@ -41,13 +41,6 @@
 | `"header"`   | The wrapper element for the header slot.                                                                                 |
 
 
-## CSS Custom Properties
-
-| Name                | Description                         |
-| ------------------- | ----------------------------------- |
-| `--content-padding` | The padding of the content wrapper; |
-
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

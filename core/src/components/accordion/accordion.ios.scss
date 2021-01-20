@@ -1,0 +1,6 @@
+@import "./accordion.scss";
+@import "./accordion.ios.vars";
+
+:host {
+  border-bottom: $accordion-ios-border-bottom;
+}

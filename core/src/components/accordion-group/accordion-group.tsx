@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
+import { getIonMode } from '../../global/ionic-global';
 import { AccordionGroupChangeEventDetail } from '../../interface';
 
 /**
@@ -7,7 +8,10 @@ import { AccordionGroupChangeEventDetail } from '../../interface';
  */
 @Component({
   tag: 'ion-accordion-group',
-  styleUrl: 'accordion-group.scss',
+  styleUrls: {
+    ios: 'accordion-group.ios.scss',
+    md: 'accordion-group.md.scss'
+  },
   shadow: true
 })
 export class AccordionGroup implements ComponentInterface {
@@ -37,10 +41,10 @@ export class AccordionGroup implements ComponentInterface {
 
   /**
    * Describes the expansion behavior for each accordion.
-   * Possible values are `"float"`, `"inset"`, `"accordion"`,
-   * and `"popout"`. Defaults to `"float"`.
+   * Possible values are `"accordion"` and `"inset"`.
+   * Defaults to `"accordion"`.
    */
-  @Prop() expand: 'accordion' | 'inset' | 'popout' = 'accordion';
+  @Prop() expand: 'accordion' | 'inset' = 'accordion';
 
   /**
    * Emitted when the value property has changed.
@@ -179,9 +183,12 @@ export class AccordionGroup implements ComponentInterface {
 
   render() {
     const { disabled, readonly, expand } = this;
+    const mode = getIonMode(this);
+
     return (
       <Host
         class={{
+          [mode]: true,
           'accordion-group-disabled': disabled,
           'accordion-group-readonly': readonly,
           [`accordion-group-expand-${expand}`]: true

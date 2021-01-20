@@ -38,9 +38,9 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.
+          * Describes the expansion behavior for each accordion. Possible values are `"accordion"` and `"inset"`. Defaults to `"accordion"`.
          */
-        "expand": 'accordion' | 'inset' | 'popout';
+        "expand": 'accordion' | 'inset';
         "getAccordions": () => Promise<HTMLIonAccordionElement[]>;
         /**
           * The mode determines which platform styles to use.
@@ -3417,9 +3417,9 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * Describes the expansion behavior for each accordion. Possible values are `"float"`, `"inset"`, `"accordion"`, and `"popout"`. Defaults to `"float"`.
+          * Describes the expansion behavior for each accordion. Possible values are `"accordion"` and `"inset"`. Defaults to `"accordion"`.
          */
-        "expand"?: 'accordion' | 'inset' | 'popout';
+        "expand"?: 'accordion' | 'inset';
         /**
           * The mode determines which platform styles to use.
          */

@@ -13,7 +13,6 @@ export const IonAccordion = /*@__PURE__*/ defineContainer<JSX.IonAccordion>('ion
   'value',
   'disabled',
   'readonly',
-  'expand',
   'ionBlur',
   'ionFocus'
 ]);
@@ -63,10 +62,7 @@ export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-butto
   'type',
   'ionFocus',
   'ionBlur'
-],
-{
-  "routerLinkComponent": true
-});
+]);
 
 
 export const IonButtons = /*@__PURE__*/ defineContainer<JSX.IonButtons>('ion-buttons', [
@@ -85,10 +81,7 @@ export const IonCard = /*@__PURE__*/ defineContainer<JSX.IonCard>('ion-card', [
   'routerDirection',
   'routerAnimation',
   'target'
-],
-{
-  "routerLinkComponent": true
-});
+]);
 
 
 export const IonCardContent = /*@__PURE__*/ defineContainer<JSX.IonCardContent>('ion-card-content');
@@ -216,10 +209,7 @@ export const IonFab = /*@__PURE__*/ defineContainer<JSX.IonFab>('ion-fab', [
   'vertical',
   'edge',
   'activated'
-],
-{
-  "routerLinkComponent": true
-});
+]);
 
 
 export const IonFabButton = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion-fab-button', [
@@ -239,10 +229,7 @@ export const IonFabButton = /*@__PURE__*/ defineContainer<JSX.IonFabButton>('ion
   'closeIcon',
   'ionFocus',
   'ionBlur'
-],
-{
-  "routerLinkComponent": true
-});
+]);
 
 
 export const IonFabList = /*@__PURE__*/ defineContainer<JSX.IonFabList>('ion-fab-list', [
@@ -345,10 +332,7 @@ export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', [
   'routerDirection',
   'target',
   'type'
-],
-{
-  "routerLinkComponent": true
-});
+]);
 
 
 export const IonItemDivider = /*@__PURE__*/ defineContainer<JSX.IonItemDivider>('ion-item-divider', [

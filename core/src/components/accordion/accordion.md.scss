@@ -1,0 +1,7 @@
+@import "./accordion.scss";
+@import "./accordion.md.vars";
+
+:host {
+  border-bottom: $accordion-md-border-bottom;
+}
+

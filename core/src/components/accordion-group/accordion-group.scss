@@ -7,41 +7,18 @@
 /**
  * Accordion Expansion Styles
  */
-:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-collapsing),
-:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-collapsed) {
-  width: calc(100% - #{$accordion-margin * 2});
-}
-
-:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-expanding),
-:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-expanded) {
-  @include margin($accordion-margin, auto, $accordion-margin, auto);
-  @include border-radius($accordion-border-radius);
-
-  width: 100%;
-}
-
-:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-collapsing),
-:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-collapsed) {
-  width: 100%;
-}
-
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanding),
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanded) {
-  @include margin($accordion-margin, auto, $accordion-margin, auto);
   @include border-radius($accordion-border-radius);
-
-  width: calc(100% - #{$accordion-margin * 2});
 }
 
 /**
  * Next/Previous Accordions
  */
-:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-previous),
-:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-previous) {
+:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-previous) {
   @include border-radius(null, null, $accordion-border-radius, $accordion-border-radius);
 }
 
-:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-next),
-:host(.accordion-group-expand-popout) ::slotted(ion-accordion.accordion-next) {
+:host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-next) {
   @include border-radius($accordion-border-radius, $accordion-border-radius, null, null);
 }

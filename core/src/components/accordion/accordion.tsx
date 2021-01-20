@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
 
+import { getIonMode } from '../../global/ionic-global';
 import { Color } from '../../interface';
 import { addEventListener, raf, removeEventListener, transitionEndAsync } from '../../utils/helpers';
 
@@ -25,7 +26,10 @@ const enum AccordionState {
  */
 @Component({
   tag: 'ion-accordion',
-  styleUrl: 'accordion.scss',
+  styleUrls: {
+    ios: 'accordion.ios.scss',
+    md: 'accordion.md.scss'
+  },
   shadow: {
     delegatesFocus: true
   }
@@ -108,7 +112,7 @@ export class Accordion implements ComponentInterface {
     if (this.currentRaf !== undefined) {
       cancelAnimationFrame(this.currentRaf);
     }
-    //TODO need to be able to interrupt toggle
+    // TODO need to be able to interrupt toggle
 
     this.currentRaf = raf(async () => {
       console.log('expanding');
@@ -248,6 +252,7 @@ export class Accordion implements ComponentInterface {
 
   render() {
     const { disabled, readonly } = this;
+    const mode = getIonMode(this);
     const expanded = this.state === AccordionState.Expanded;
     const headerPart = expanded ? 'header expanded' : 'header';
     const contentPart = expanded ? 'content expanded' : 'content';
@@ -255,6 +260,7 @@ export class Accordion implements ComponentInterface {
     return (
       <Host
         class={{
+          [mode]: true,
           'accordion-expanding': this.state === AccordionState.Expanding,
           'accordion-expanded': this.state === AccordionState.Expanded,
           'accordion-collapsing': this.state === AccordionState.Collapsing,

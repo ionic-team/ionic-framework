@@ -201,13 +201,3 @@ ion-card-header.ion-color .ion-inherit-color {
 .md .menu-content-push {
   box-shadow: $menu-md-box-shadow;
 }
-
-ion-accordion-group ion-accordion:first-of-type {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-ion-accordion-group ion-accordion:last-of-type {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-}

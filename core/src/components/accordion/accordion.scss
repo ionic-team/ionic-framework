@@ -1,16 +1,7 @@
-@import "./accordion.vars";
+@import "./accordion.vars.scss";
 
 :host {
-  /**
-   * @prop --content-padding: The padding of the content wrapper;
-   */
-  --content-padding: #{$accordion-content-padding};
-
-  @include margin(0, auto, 0, auto);
-
   display: block;
-
-  position: relative;
 
   width: 100%;
 
@@ -20,15 +11,14 @@
 
   background-color: $accordion-background-color;
 
-  box-shadow: $accordion-box-shadow;
-
   overflow: hidden;
+}
 
+::slotted(ion-item[slot="header"]) {
+  --inner-border-width: 0px;
 }
 
 #content {
-  @include padding(var(--content-padding));
-
   transition: max-height $accordion-transition-duration $accordion-transition-easing;
 
   overflow: hidden;
