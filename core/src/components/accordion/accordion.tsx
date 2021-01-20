@@ -36,6 +36,8 @@ export class Accordion implements ComponentInterface {
   private contentEl: HTMLDivElement | undefined;
   private contentElWrapper: HTMLDivElement | undefined;
 
+  private currentRaf: number | undefined;
+
   @Element() el?: HTMLElement;
 
   @State() state: AccordionState = AccordionState.Collapsed;
@@ -103,7 +105,13 @@ export class Accordion implements ComponentInterface {
 
     this.state = AccordionState.Expanding;
 
-    raf(async () => {
+    if (this.currentRaf !== undefined) {
+      cancelAnimationFrame(this.currentRaf);
+    }
+    //TODO need to be able to interrupt toggle
+
+    this.currentRaf = raf(async () => {
+      console.log('expanding');
       const contentHeight = contentElWrapper.offsetHeight;
       const waitForTransition = transitionEndAsync(contentEl, 50000);
       contentEl.style.setProperty('max-height', `${contentHeight}px`);
@@ -119,10 +127,8 @@ export class Accordion implements ComponentInterface {
 
       await waitForTransition;
 
-      raf(() => {
-        this.state = AccordionState.Expanded;
-        contentEl.style.removeProperty('max-height');
-      });
+      this.state = AccordionState.Expanded;
+      contentEl.style.removeProperty('max-height');
     });
   }
 
@@ -137,7 +143,13 @@ export class Accordion implements ComponentInterface {
     const { contentEl } = this;
     if (contentEl === undefined) { return; }
 
-    raf(async () => {
+    if (this.currentRaf !== undefined) {
+      cancelAnimationFrame(this.currentRaf);
+    }
+
+    this.currentRaf = raf(async () => {
+      console.log('collapsing')
+
       const contentHeight = contentEl.offsetHeight;
       contentEl.style.setProperty('max-height', `${contentHeight}px`);
 
@@ -153,12 +165,10 @@ export class Accordion implements ComponentInterface {
       const waitForTransition = transitionEndAsync(contentEl, 50000);
       this.state = AccordionState.Collapsing;
 
-      raf(async () => {
-        await waitForTransition;
+      await waitForTransition;
 
-        this.state = AccordionState.Collapsed;
-        contentEl.style.removeProperty('max-height');
-      });
+      this.state = AccordionState.Collapsed;
+      contentEl.style.removeProperty('max-height');
     });
   }
 
