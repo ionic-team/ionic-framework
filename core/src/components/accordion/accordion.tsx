@@ -115,7 +115,6 @@ export class Accordion implements ComponentInterface {
     // TODO need to be able to interrupt toggle
 
     this.currentRaf = raf(async () => {
-      console.log('expanding');
       const contentHeight = contentElWrapper.offsetHeight;
       const waitForTransition = transitionEndAsync(contentEl, 50000);
       contentEl.style.setProperty('max-height', `${contentHeight}px`);
@@ -152,8 +151,6 @@ export class Accordion implements ComponentInterface {
     }
 
     this.currentRaf = raf(async () => {
-      console.log('collapsing')
-
       const contentHeight = contentEl.offsetHeight;
       contentEl.style.setProperty('max-height', `${contentHeight}px`);
 
