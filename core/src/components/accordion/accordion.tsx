@@ -188,6 +188,7 @@ export class Accordion implements ComponentInterface {
 
     if (shouldExpand) {
       this.expandAccordion(initialUpdate);
+      this.isNext = this.isPrevious = false;
     } else {
       this.collapseAccordion(initialUpdate);
 

@@ -14,6 +14,8 @@
 
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-previous) {
   @include border-radius(null, null, $accordion-md-border-radius, $accordion-md-border-radius);
+
+  border-bottom: none;
 }
 
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-next) {

@@ -1,7 +1,6 @@
 @import "./accordion.scss";
 @import "./accordion.md.vars";
 
-:host {
-  border-bottom: $accordion-md-border-bottom;
+:host(.accordion-previous) ::slotted(ion-item[slot="header"]) {
+  --border-width: 0px;
 }
-

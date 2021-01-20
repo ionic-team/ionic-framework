@@ -7,15 +7,16 @@
 
   transform: translateZ(0);
 
-  transition: all $accordion-transition-duration $accordion-transition-easing;
+  transition: border-radius $accordion-transition-duration $accordion-transition-easing, margin $accordion-transition-duration $accordion-transition-easing;
 
   background-color: $accordion-background-color;
 
   overflow: hidden;
 }
 
-::slotted(ion-item[slot="header"]) {
-  --inner-border-width: 0px;
+:host(.accordion-expanding) ::slotted(ion-item[slot="header"]),
+:host(.accordion-expanded) ::slotted(ion-item[slot="header"]) {
+  --border-width: 0px;
 }
 
 #content {
