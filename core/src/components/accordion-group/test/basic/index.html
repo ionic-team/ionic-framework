@@ -57,12 +57,14 @@
       ion-accordion.accordion-expanded .ion-accordion-expansion-icon {
         transform: rotate(180deg);
       }
-
+      ion-accordion-group.accordion-group-expand-inset.md ion-accordion.accordion-previous ion-item[slot="header"] {
+        --border-width: 0px;
+      }
     </style>
   </head>
   <body>
     <ion-app>
-      <ion-header translucent="true">
+    <ion-header translucent="true">
         <ion-toolbar>
           <ion-title>Topics</ion-title>
         </ion-toolbar>

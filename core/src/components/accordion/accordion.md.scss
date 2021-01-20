@@ -1,6 +1,2 @@
 @import "./accordion.scss";
 @import "./accordion.md.vars";
-
-:host(.accordion-previous) ::slotted(ion-item[slot="header"]) {
-  --border-width: 0px;
-}
