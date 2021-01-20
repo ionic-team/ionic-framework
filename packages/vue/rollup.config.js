@@ -1,5 +1,3 @@
-import { terser } from "rollup-plugin-terser";
-
 export default {
   input: 'dist-transpiled/index.js',
   output: [
@@ -14,8 +12,7 @@ export default {
       dir: 'dist/',
       format: 'commonjs',
       preferConst: true,
-      sourcemap: true,
-      plugins: [terser()]
+      sourcemap: true
     }
   ],
   external: ['ionicons', 'ionicons/icons', '@ionic/core', '@ionic/core/loader', 'vue', 'vue-router']
