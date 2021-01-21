@@ -19,7 +19,7 @@ export const IonTabs = defineComponent({
             'contain': 'layout size style'
         }
       }, [
-        h(IonRouterOutlet)
+        h(IonRouterOutlet, { tabs: true })
       ])
     ];
 
