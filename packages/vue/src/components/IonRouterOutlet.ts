@@ -24,7 +24,7 @@ export const IonRouterOutlet = defineComponent({
     let usingDeprecatedRouteSetup = false;
 
     // TODO: Remove in Ionic Vue v6.0
-    if (attrs.tabs && route.matched[depth].children.length > 0) {
+    if (attrs.tabs && route.matched[depth]?.children?.length > 0) {
       console.warn('[@ionic/vue Deprecation]: Your child routes are nested inside of each tab in your routing config. This format will not be supported in Ionic Vue v6.0. Instead, write your child routes as sibling routes. See https://ionicframework.com/docs/vue/navigation#child-routes-within-tabs for more information.');
       usingDeprecatedRouteSetup = true;
     }
