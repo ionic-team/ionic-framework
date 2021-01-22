@@ -53,7 +53,19 @@ export class AccordionGroup implements ComponentInterface {
 
   @Watch('value')
   valueChanged() {
-    this.ionChange.emit({ value: this.value });
+    const { value, multiple } = this;
+
+    /**
+     * If accordion group does not
+     * let multiple accordions be open
+     * at once, but user passes an array
+     * just grab the first value.
+     */
+    if (!multiple && Array.isArray(value)) {
+      this.value = value[0];
+    } else {
+      this.ionChange.emit({ value: this.value });
+    }
   }
 
   @Watch('disabled')
@@ -132,10 +144,6 @@ export class AccordionGroup implements ComponentInterface {
         if (valueExists === undefined && accordionValue !== undefined) {
           this.value = [...groupValue, accordionValue];
         }
-      /**
-       * If group does not accept multiple
-       * values, just set the value.
-       */
       } else {
         this.value = accordionValue;
       }

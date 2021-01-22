@@ -9,7 +9,6 @@ import type { JSX } from '@ionic/core';
 
 
 export const IonAccordion = /*@__PURE__*/ defineContainer<JSX.IonAccordion>('ion-accordion', [
-  'color',
   'value',
   'disabled',
   'readonly',

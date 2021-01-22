@@ -12,10 +12,6 @@ import { SelectCompareFn } from "./components/select/select-interface";
 export namespace Components {
     interface IonAccordion {
         /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-         */
-        "color"?: Color;
-        /**
           * If `true`, the accordion cannot be interacted with.
          */
         "disabled": boolean;
@@ -3390,10 +3386,6 @@ declare global {
 }
 declare namespace LocalJSX {
     interface IonAccordion {
-        /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-         */
-        "color"?: Color;
         /**
           * If `true`, the accordion cannot be interacted with.
          */

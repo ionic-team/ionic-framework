@@ -1,7 +1,6 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color } from '../../interface';
 import { addEventListener, raf, removeEventListener, transitionEndAsync } from '../../utils/helpers';
 
 const enum AccordionState {
@@ -48,13 +47,6 @@ export class Accordion implements ComponentInterface {
   @State() state: AccordionState = AccordionState.Collapsed;
   @State() isNext = false;
   @State() isPrevious = false;
-
-  /**
-   * The color to use from your application's color palette.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
-   */
-  @Prop() color?: Color;
 
   /**
    * The value of the accordion.
@@ -125,8 +117,18 @@ export class Accordion implements ComponentInterface {
     const slot = headerEl.querySelector('slot');
     if (!slot) { return; }
 
-    const ionItem = slot.assignedElements().find(el => el.tagName === 'ION-ITEM');
+    // This is not defined in unit tests
+    const ionItem = slot.assignedElements && (slot.assignedElements().find(el => el.tagName === 'ION-ITEM') as HTMLIonItemElement | undefined);
     if (!ionItem) { return; }
+
+    /**
+     * For a11y purposes, we make
+     * the ion-item a button so users
+     * can tab to it and use keyboard
+     * navigation to get around.
+     */
+    ionItem.button = true;
+    ionItem.detail = false;
 
     /**
      * Check if there already is a toggle icon.
@@ -291,7 +293,7 @@ export class Accordion implements ComponentInterface {
        * make the decision on whether or not
        * to allow it.
        */
-      const expand = state === AccordionState.Collapsed;
+      const expand = state === AccordionState.Collapsed || state === AccordionState.Collapsing;
       accordionGroupEl.requestAccordionToggle(value, expand);
     }
   }
