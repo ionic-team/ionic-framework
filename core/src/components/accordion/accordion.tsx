@@ -132,7 +132,7 @@ export class Accordion implements ComponentInterface {
      * Check if there already is a toggle icon.
      * If so, do not add another one.
      */
-    const existingToggleIcon = ionItem.querySelector('ion-icon.ion-accordion-toggle-icon');
+    const existingToggleIcon = ionItem.querySelector('.ion-accordion-toggle-icon');
     if (existingToggleIcon) { return; }
 
     const iconEl = document.createElement('ion-icon');
