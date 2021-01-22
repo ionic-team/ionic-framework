@@ -35,6 +35,8 @@ export const createOverlayComponent = <
       forwardedRef?: React.RefObject<OverlayType>;
     };
 
+  let isDismissing = false;
+
   class Overlay extends React.Component<Props> {
     overlay?: OverlayType;
     el!: HTMLDivElement;
@@ -72,6 +74,15 @@ export const createOverlayComponent = <
       }
     }
 
+    shouldComponentUpdate(nextProps: Props) {
+      // Check if the overlay component is about to dismiss
+      if (this.overlay && nextProps.isOpen !== this.props.isOpen && nextProps.isOpen === false) {
+        isDismissing = true;
+      }
+
+      return true;
+    }
+
     async componentDidUpdate(prevProps: Props) {
       if (this.overlay) {
         attachProps(this.overlay, this.props, prevProps);
@@ -82,6 +93,7 @@ export const createOverlayComponent = <
       }
       if (this.overlay && prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
         await this.overlay.dismiss();
+        isDismissing = false;
       }
     }
 
@@ -123,7 +135,12 @@ export const createOverlayComponent = <
     }
 
     render() {
-      return ReactDOM.createPortal(this.props.children, this.el);
+      /**
+       * Continue to render the component even when
+       * overlay is dismissing otherwise component
+       * will be hidden before animation is done.
+       */
+      return ReactDOM.createPortal(this.props.isOpen || isDismissing ? this.props.children : null, this.el);
     }
   }
 
