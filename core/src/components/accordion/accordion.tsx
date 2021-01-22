@@ -299,7 +299,7 @@ export class Accordion implements ComponentInterface {
   render() {
     const { disabled, readonly } = this;
     const mode = getIonMode(this);
-    const expanded = this.state === AccordionState.Expanded;
+    const expanded = this.state === AccordionState.Expanded || this.state === AccordionState.Expanding;
     const headerPart = expanded ? 'header expanded' : 'header';
     const contentPart = expanded ? 'content expanded' : 'content';
 
