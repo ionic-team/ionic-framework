@@ -4,6 +4,8 @@ ion-accordion,prop,color,string | undefined,undefined,false,false
 ion-accordion,prop,disabled,boolean,false,false,false
 ion-accordion,prop,mode,"ios" | "md",undefined,false,false
 ion-accordion,prop,readonly,boolean,false,false,false
+ion-accordion,prop,toggleIcon,string,'chevron-down',false,false
+ion-accordion,prop,toggleIconSlot,"end" | "start",'end',false,false
 ion-accordion,prop,value,string | undefined,undefined,false,false
 ion-accordion,event,ionBlur,void,true
 ion-accordion,event,ionFocus,void,true

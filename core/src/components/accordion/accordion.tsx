@@ -39,6 +39,7 @@ export class Accordion implements ComponentInterface {
   private updateListener = () => this.updateState(false);
   private contentEl: HTMLDivElement | undefined;
   private contentElWrapper: HTMLDivElement | undefined;
+  private headerEl: HTMLDivElement | undefined;
 
   private currentRaf: number | undefined;
 
@@ -72,6 +73,19 @@ export class Accordion implements ComponentInterface {
   @Prop() readonly = false;
 
   /**
+   * The toggle icon to use. This icon will be
+   * rotated when the accordion is expanded
+   * or collapsed.
+   */
+  @Prop() toggleIcon = 'chevron-down';
+
+  /**
+   * The slot inside of `ion-item` to
+   * place the toggle icon. Defaults to `'end'`.
+   */
+  @Prop() toggleIconSlot: 'start' | 'end' = 'end';
+
+  /**
    * Emitted when the accordion loses focus.
    */
   @Event() ionBlur!: EventEmitter<void>;
@@ -94,6 +108,40 @@ export class Accordion implements ComponentInterface {
     if (accordionGroupEl) {
       removeEventListener(accordionGroupEl, 'ionChange', this.updateListener);
     }
+  }
+
+  componentDidLoad() {
+    this.slotToggleIcon();
+  }
+
+  private slotToggleIcon = () => {
+    const { headerEl, toggleIconSlot, toggleIcon } = this;
+    if (!headerEl) { return; }
+
+    /**
+     * Get the first ion-item
+     * slotted in the header slot
+     */
+    const slot = headerEl.querySelector('slot');
+    if (!slot) { return; }
+
+    const ionItem = slot.assignedElements().find(el => el.tagName === 'ION-ITEM');
+    if (!ionItem) { return; }
+
+    /**
+     * Check if there already is a toggle icon.
+     * If so, do not add another one.
+     */
+    const existingToggleIcon = ionItem.querySelector('ion-icon.ion-accordion-toggle-icon');
+    if (existingToggleIcon) { return; }
+
+    const iconEl = document.createElement('ion-icon');
+    iconEl.slot = toggleIconSlot;
+    iconEl.lazy = false;
+    iconEl.classList.add('ion-accordion-toggle-icon');
+    iconEl.icon = toggleIcon;
+
+    ionItem.appendChild(iconEl);
   }
 
   private expandAccordion = (initialUpdate = false) => {
@@ -277,6 +325,7 @@ export class Accordion implements ComponentInterface {
           part={headerPart}
           aria-expanded={expanded ? 'true' : 'false'}
           aria-controls="content"
+          ref={headerEl => this.headerEl = headerEl}
         >
           <slot name="header"></slot>
         </div>

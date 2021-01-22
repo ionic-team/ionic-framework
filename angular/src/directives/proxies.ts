@@ -6,8 +6,8 @@ import { ProxyCmp, proxyOutputs } from "./proxies-utils";
 import { Components } from "@ionic/core";
 export declare interface IonAccordion extends Components.IonAccordion {
 }
-@ProxyCmp({ inputs: ["color", "disabled", "mode", "readonly", "value"] })
-@Component({ selector: "ion-accordion", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "disabled", "mode", "readonly", "value"] })
+@ProxyCmp({ inputs: ["color", "disabled", "mode", "readonly", "toggleIcon", "toggleIconSlot", "value"] })
+@Component({ selector: "ion-accordion", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "disabled", "mode", "readonly", "toggleIcon", "toggleIconSlot", "value"] })
 export class IonAccordion {
   ionBlur!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;

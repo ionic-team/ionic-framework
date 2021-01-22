@@ -39,12 +39,12 @@
         --border-width: 0px;
       }
 
-      ion-accordion .ion-accordion-expansion-icon {
+      ion-accordion .ion-accordion-toggle-icon {
         transition: 300ms transform cubic-bezier(0.25, 0.8, 0.5, 1);
       }
 
-      ion-accordion.accordion-expanding .ion-accordion-expansion-icon,
-      ion-accordion.accordion-expanded .ion-accordion-expansion-icon {
+      ion-accordion.accordion-expanding .ion-accordion-toggle-icon,
+      ion-accordion.accordion-expanded .ion-accordion-toggle-icon {
         transform: rotate(180deg);
       }
       ion-accordion-group.accordion-group-expand-inset.md ion-accordion.accordion-previous ion-item[slot="header"] {
@@ -72,7 +72,6 @@
                 <ion-item lines="full" color="primary" slot="header" button detail="false">
                   <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
                   <ion-label> Attractions</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -90,7 +89,6 @@
                 <ion-item lines="full" color="warning" slot="header" button detail="false">
                   <ion-icon slot="start" name="pizza"></ion-icon>
                   <ion-label>Dining</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -108,7 +106,6 @@
                 <ion-item lines="full" color="danger" slot="header" button detail="false">
                   <ion-icon slot="start" ios="game-controller-outline" md="game-controller"></ion-icon>
                   <ion-label>Games</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -127,7 +124,6 @@
                 <ion-item lines="full" color="success" slot="header" button detail="false">
                   <ion-icon slot="start" ios="bicycle-outline" md="bicycle"></ion-icon>
                   <ion-label>Exercise</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -151,7 +147,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
                   <ion-label> Attractions</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -169,7 +164,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" name="pizza"></ion-icon>
                   <ion-label>Dining</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -187,7 +181,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="game-controller-outline" md="game-controller"></ion-icon>
                   <ion-label>Games</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -206,7 +199,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="bicycle-outline" md="bicycle"></ion-icon>
                   <ion-label>Exercise</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -230,7 +222,6 @@
                 <ion-item lines="full" color="primary" slot="header" button detail="false">
                   <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
                   <ion-label> Attractions</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -248,7 +239,6 @@
                 <ion-item lines="full" color="warning" slot="header" button detail="false">
                   <ion-icon slot="start" name="pizza"></ion-icon>
                   <ion-label>Dining</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -266,7 +256,6 @@
                 <ion-item lines="full" color="danger" slot="header" button detail="false">
                   <ion-icon slot="start" ios="game-controller-outline" md="game-controller"></ion-icon>
                   <ion-label>Games</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -285,7 +274,6 @@
                 <ion-item lines="full" color="success" slot="header" button detail="false">
                   <ion-icon slot="start" ios="bicycle-outline" md="bicycle"></ion-icon>
                   <ion-label>Exercise</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -309,7 +297,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
                   <ion-label> Attractions</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -327,7 +314,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" name="pizza"></ion-icon>
                   <ion-label>Dining</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -345,7 +331,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="game-controller-outline" md="game-controller"></ion-icon>
                   <ion-label>Games</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -364,7 +349,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="bicycle-outline" md="bicycle"></ion-icon>
                   <ion-label>Exercise</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -389,7 +373,6 @@
                 <ion-item lines="full" color="primary" slot="header" button detail="false">
                   <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
                   <ion-label> Attractions</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -407,7 +390,6 @@
                 <ion-item lines="full" color="warning" slot="header" button detail="false">
                   <ion-icon slot="start" name="pizza"></ion-icon>
                   <ion-label>Dining</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -425,7 +407,6 @@
                 <ion-item lines="full" color="danger" slot="header" button detail="false">
                   <ion-icon slot="start" ios="game-controller-outline" md="game-controller"></ion-icon>
                   <ion-label>Games</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -444,7 +425,6 @@
                 <ion-item lines="full" color="success" slot="header" button detail="false">
                   <ion-icon slot="start" ios="bicycle-outline" md="bicycle"></ion-icon>
                   <ion-label>Exercise</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -468,7 +448,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
                   <ion-label> Attractions</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -486,7 +465,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" name="pizza"></ion-icon>
                   <ion-label>Dining</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -504,7 +482,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="game-controller-outline" md="game-controller"></ion-icon>
                   <ion-label>Games</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -523,7 +500,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="bicycle-outline" md="bicycle"></ion-icon>
                   <ion-label>Exercise</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -547,7 +523,6 @@
                 <ion-item lines="full" color="primary" slot="header" button detail="false">
                   <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
                   <ion-label> Attractions</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -565,7 +540,6 @@
                 <ion-item lines="full" color="warning" slot="header" button detail="false">
                   <ion-icon slot="start" name="pizza"></ion-icon>
                   <ion-label>Dining</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -583,7 +557,6 @@
                 <ion-item lines="full" color="danger" slot="header" button detail="false">
                   <ion-icon slot="start" ios="game-controller-outline" md="game-controller"></ion-icon>
                   <ion-label>Games</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -602,7 +575,6 @@
                 <ion-item lines="full" color="success" slot="header" button detail="false">
                   <ion-icon slot="start" ios="bicycle-outline" md="bicycle"></ion-icon>
                   <ion-label>Exercise</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -626,7 +598,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="film-outline" md="film"></ion-icon>
                   <ion-label> Attractions</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -644,7 +615,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" name="pizza"></ion-icon>
                   <ion-label>Dining</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
                 <ion-list lines="none" slot="content">
                   <ion-item>
@@ -662,7 +632,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="game-controller-outline" md="game-controller"></ion-icon>
                   <ion-label>Games</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
@@ -681,7 +650,6 @@
                 <ion-item lines="full" slot="header" button detail="false">
                   <ion-icon slot="start" ios="bicycle-outline" md="bicycle"></ion-icon>
                   <ion-label>Exercise</ion-label>
-                  <ion-icon slot="end" name="chevron-down" class="ion-accordion-expansion-icon"></ion-icon>
                 </ion-item>
 
                 <ion-list lines="none" slot="content">
