@@ -1,4 +1,4 @@
-import { pointerCoord } from '../../helpers';
+import { pointerCoord, raf } from '../../helpers';
 
 import { isFocused, relocateInput } from './common';
 import { getScrollData } from './scroll-data';
@@ -26,7 +26,6 @@ export const enableScrollAssist = (
     // focus this input if the pointer hasn't moved XX pixels
     // and the input doesn't already have focus
     if (!hasPointerMoved(6, coord, endCoord) && !isFocused(inputEl)) {
-      ev.preventDefault();
       ev.stopPropagation();
 
       // begin the input focus process
@@ -88,6 +87,13 @@ const jsSetFocus = async (
 
       // ensure this is the focused input
       inputEl.focus();
+
+      /**
+       * Relocating/Focusing input causes the
+       * click event to be cancelled, so
+       * manually fire one here.
+       */
+      raf(() => componentEl.click());
     };
 
     const doubleKeyboardEventListener = () => {
