@@ -107,6 +107,10 @@ export class AccordionGroup implements ComponentInterface {
       accordion = this.findNextAccordion(accordions, startingIndex);
     } else if (ev.key === 'ArrowUp') {
       accordion = this.findPreviousAccordion(accordions, startingIndex);
+    } else if (ev.key === 'Home') {
+      accordion = accordions[0];
+    } else if (ev.key === 'End') {
+      accordion = accordions[accordions.length - 1];
     }
 
     if (accordion !== undefined && accordion !== activeElement) {
