@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "5.5.2",
+  "version": "5.5.3",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "lint": "echo add linter",
@@ -51,13 +51,12 @@
     "change-case": "^4.1.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.32.1",
-    "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.0.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-rc.4"
   },
   "dependencies": {
-    "@ionic/core": "5.5.2",
+    "@ionic/core": "5.5.3",
     "ionicons": "^5.1.2"
   },
   "vetur": {

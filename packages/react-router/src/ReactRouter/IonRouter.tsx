@@ -118,15 +118,14 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           };
         }
         if (action === 'POP') {
-          const ri = this.locationHistory.current();
-          if (ri && ri.pushedByRoute) {
-            const prevInfo = this.locationHistory.findLastLocation(ri);
+          const currentRoute = this.locationHistory.current();
+          if (currentRoute && currentRoute.pushedByRoute) {
+            const prevInfo = this.locationHistory.findLastLocation(currentRoute);
             this.incomingRouteParams = { ...prevInfo, routeAction: 'pop', routeDirection: 'back' };
           } else {
-            const direction = 'none';
             this.incomingRouteParams = {
               routeAction: 'pop',
-              routeDirection: direction,
+              routeDirection: 'none',
               tab: this.currentTab,
             };
           }
@@ -175,9 +174,18 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
         } else if (routeInfo.routeAction === 'replace') {
           // Make sure to set the lastPathname, etc.. to the current route so the page transitions out
           const currentRouteInfo = this.locationHistory.current();
+
+          /**
+           * If going from /home to /child, then replacing from
+           * /child to /home, we don't want the route info to
+           * say that /home was pushed by /home which is not correct.
+           */
+          const currentPushedBy = currentRouteInfo?.pushedByRoute;
+          const pushedByRoute = (currentPushedBy !== undefined && currentPushedBy !== routeInfo.pathname) ? currentPushedBy : routeInfo.pushedByRoute;
+
           routeInfo.lastPathname = currentRouteInfo?.pathname || routeInfo.lastPathname;
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
-          routeInfo.pushedByRoute = currentRouteInfo?.pushedByRoute || routeInfo.pushedByRoute;
+          routeInfo.pushedByRoute = pushedByRoute;
           routeInfo.routeDirection = currentRouteInfo?.routeDirection || routeInfo.routeDirection;
           routeInfo.routeAnimation = currentRouteInfo?.routeAnimation || routeInfo.routeAnimation;
         }

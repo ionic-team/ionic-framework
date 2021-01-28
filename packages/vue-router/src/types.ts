@@ -1,4 +1,4 @@
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/vue';
 import { RouteLocationMatched, RouterOptions } from 'vue-router';
 import { Ref } from 'vue';
 
@@ -20,6 +20,7 @@ export interface RouteInfo {
   routerDirection?: RouteDirection;
   routerAnimation?: AnimationBuilder;
   lastPathname?: string;
+  prevRouteLastPathname?: string;
   pathname?: string;
   search?: string;
   params?: { [k: string]: any };

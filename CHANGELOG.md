@@ -1,3 +1,24 @@
+## [5.5.3](https://github.com/ionic-team/ionic/compare/v5.5.2...v5.5.3) (2021-01-28)
+
+
+### Bug Fixes
+
+* **react:** do not unmount overlay inner component until overlay is dismissed ([#22813](https://github.com/ionic-team/ionic/issues/22813)) ([ab1fc8f](https://github.com/ionic-team/ionic/commit/ab1fc8f2311fd252146942c7a947ebc96efd054f)), closes [#22761](https://github.com/ionic-team/ionic/issues/22761)
+* **react:** adding dynamic class to ion-page no longer hides component ([#22666](https://github.com/ionic-team/ionic/issues/22666)) ([a01bdb8](https://github.com/ionic-team/ionic/commit/a01bdb8c8dfee760721eeb35a8b556954f3b5b13)), closes [#22631](https://github.com/ionic-team/ionic/issues/22631)
+* **react:** improve view matching logic ([#22569](https://github.com/ionic-team/ionic/issues/22569)) ([f891f66](https://github.com/ionic-team/ionic/commit/f891f667082d2deb5f1b5f0f27af46e46ed1ca0f))
+* **react, vue:** do not show back button when replacing to root page ([#22750](https://github.com/ionic-team/ionic/issues/22750)) ([9e9a372](https://github.com/ionic-team/ionic/commit/9e9a3724979e95f3df1a340be21d16d8664a013c)), closes [#22528](https://github.com/ionic-team/ionic/issues/22528)
+* **refresher:** correctly detect spinner when using native refresher ([#22800](https://github.com/ionic-team/ionic/issues/22800)) ([e2d8e5c](https://github.com/ionic-team/ionic/commit/e2d8e5c4dcf893ddd8aaa556c1dd8fcaf52411c9)), closes [#22706](https://github.com/ionic-team/ionic/issues/22706)
+* **title:** only add large title transition when using collapsible header ([#22762](https://github.com/ionic-team/ionic/issues/22762)) ([348c50b](https://github.com/ionic-team/ionic/commit/348c50b7ea5d4c74498c5d26e40c1c4fe923ee55)), closes [#22760](https://github.com/ionic-team/ionic/issues/22760)
+* **vue:** all ionic vue components can now use router link ([#22743](https://github.com/ionic-team/ionic/issues/22743)) ([3d6ac13](https://github.com/ionic-team/ionic/commit/3d6ac1382e23663a3d010fd253d3c6017d3923e4))
+* **vue:** correctly determine leaving view when transitioning to a new instance of a previous page ([#22655](https://github.com/ionic-team/ionic/issues/22655)) ([e3a05bf](https://github.com/ionic-team/ionic/commit/e3a05bfeb55d8eaa38aa08a37859aa4df6ffa2d4)), closes [#22654](https://github.com/ionic-team/ionic/issues/22654) [#22658](https://github.com/ionic-team/ionic/issues/22658)
+* **vue:** ensure v-model value is properly synced before ionChange event ([#22749](https://github.com/ionic-team/ionic/issues/22749)) ([e1d6627](https://github.com/ionic-team/ionic/commit/e1d6627bf0ef1f47f980db1573c6b2a3d16d7677)), closes [#22610](https://github.com/ionic-team/ionic/issues/22610)
+* **vue:** improve path matching with tabs, deprecated adding additional pages as children of tabs without a router outlet ([#22807](https://github.com/ionic-team/ionic/issues/22807)) ([2a3ce9a](https://github.com/ionic-team/ionic/commit/2a3ce9a74e85111a2f1f470b9d8bfe2cda793ca5)), closes [#22519](https://github.com/ionic-team/ionic/issues/22519)
+* **vue:** improve v-model binding sync between vue wrappers and web components ([#22745](https://github.com/ionic-team/ionic/issues/22745)) ([64719f4](https://github.com/ionic-team/ionic/commit/64719f49f979c0296a01827d3c02599a48ba93a6)), closes [#22731](https://github.com/ionic-team/ionic/issues/22731)
+* **vue:** output commonjs format for node environments ([#22766](https://github.com/ionic-team/ionic/issues/22766)) ([7ecae2e](https://github.com/ionic-team/ionic/commit/7ecae2e4cb5d0eebc6041a8a7a5acc156132c2e1))
+* **vue:** tab bar is now correctly hidden when keyboard is open ([#22687](https://github.com/ionic-team/ionic/issues/22687)) ([5c27dd8](https://github.com/ionic-team/ionic/commit/5c27dd8032d32ebb57c31e1f6c112dc513344b93))
+
+
+
 ## [5.5.2](https://github.com/ionic-team/ionic/compare/v5.5.1...v5.5.2) (2020-12-09)
 
 
