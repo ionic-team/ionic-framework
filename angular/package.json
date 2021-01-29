@@ -42,7 +42,7 @@
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
-    "@ionic/core": "file:../core",
+    "@ionic/core": "5.5.2",
     "tslib": "^1.9.3"
   },
   "peerDependencies": {
