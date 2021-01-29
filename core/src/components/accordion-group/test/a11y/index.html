@@ -10,6 +10,12 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   </head>
+  <style>
+    ion-accordion.accordion-expanding ion-item[slot="header"],
+    ion-accordion.accordion-expanded ion-item[slot="header"] {
+      --color: red;
+    }
+  </style>
 
   <body>
   <ion-app>
@@ -22,7 +28,7 @@
 
       <ion-accordion-group expand="inset">
         <ion-accordion value="personal-information">
-          <ion-item slot="header">
+          <ion-item color="primary" slot="header">
             <ion-label>Personal Information</ion-label>
           </ion-item>
 

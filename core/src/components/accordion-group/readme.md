@@ -1,6 +1,8 @@
 # ion-accordion-group
 
+Accordion group is a container for accordion instances. It manages the state of the accordions and provides keyboard navigation.
 
+For more information as well as usage, see the [ion-accordion Documentation](../accordion)
 
 <!-- Auto Generated Below -->
 

@@ -3395,14 +3395,6 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Emitted when the accordion loses focus.
-         */
-        "onIonBlur"?: (event: CustomEvent<void>) => void;
-        /**
-          * Emitted when the accordion has focus.
-         */
-        "onIonFocus"?: (event: CustomEvent<void>) => void;
-        /**
           * If `true`, the accordion cannot be interacted with, but does not alter the opacity.
          */
         "readonly"?: boolean;

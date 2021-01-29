@@ -9,13 +9,10 @@ export declare interface IonAccordion extends Components.IonAccordion {
 @ProxyCmp({ inputs: ["disabled", "mode", "readonly", "toggleIcon", "toggleIconSlot", "value"] })
 @Component({ selector: "ion-accordion", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["disabled", "mode", "readonly", "toggleIcon", "toggleIconSlot", "value"] })
 export class IonAccordion {
-  ionBlur!: EventEmitter<CustomEvent>;
-  ionFocus!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ["ionBlur", "ionFocus"]);
   }
 }
 export declare interface IonAccordionGroup extends Components.IonAccordionGroup {

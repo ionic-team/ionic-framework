@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { addEventListener, raf, removeEventListener, transitionEndAsync } from '../../utils/helpers';
@@ -76,16 +76,6 @@ export class Accordion implements ComponentInterface {
    * place the toggle icon. Defaults to `'end'`.
    */
   @Prop() toggleIconSlot: 'start' | 'end' = 'end';
-
-  /**
-   * Emitted when the accordion loses focus.
-   */
-  @Event() ionBlur!: EventEmitter<void>;
-
-  /**
-   * Emitted when the accordion has focus.
-   */
-  @Event() ionFocus!: EventEmitter<void>;
 
   connectedCallback() {
     const accordionGroupEl = this.accordionGroupEl = this.el && this.el.closest('ion-accordion-group');
@@ -320,6 +310,7 @@ export class Accordion implements ComponentInterface {
           'accordion-disabled': disabled,
           'accordion-readonly': readonly,
         }}
+
       >
         <div
           onClick={() => this.toggleExpanded()}

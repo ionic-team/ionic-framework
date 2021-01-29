@@ -7,7 +7,7 @@
 
   transform: translateZ(0);
 
-  transition: border-radius $accordion-transition-duration $accordion-transition-easing, margin $accordion-transition-duration $accordion-transition-easing;
+  transition: all $accordion-transition-duration $accordion-transition-easing;
 
   background-color: $accordion-background-color;
 

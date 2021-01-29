@@ -22,6 +22,42 @@ If you would like to manage the icon yourself or use an icon that is not an `ion
 
 Regardless of which option you choose, the icon will automatically be rotated when you expand or collapse the accordion.
 
+## Expansion Styles
+
+### Built in Styles
+
+There are two built in expansion styles: `accordion` and `inset`. This expansion style is set via the `expand` property on `ion-accordion-group`. When `expand="inset"`, the accordion group is given a border radius. On `md` mode, the entire accordion will shift down when it is opened.
+
+### Custom Styles
+
+You can customize the expansion behavior by styling based on the accordion's state:
+
+```css
+ion-accordion {
+  margin: 0 auto;
+}
+
+ion-accordion.accordion-expanding,
+ion-accordion.accordion-expanded {
+  width: calc(100% - 32px);
+  margin: 16px auto;
+}
+```
+
+This example will cause an accordion to have its width shrink when it is opened. You can also style the accordion differently when it is closing by targeting the `.accordion-collapsing` and `.accordion-collapsed` classes.
+
+If you need to target specific pieces of the accordion, we recommend targeting the element directly. For example, if you want to customize the `ion-item` in your `header` slot when the accordion is expanded, you can use the following selector:
+
+```css
+ion-accordion.accordion-expanding ion-item[slot="header"],
+ion-accordion.accordion-expanded ion-item[slot="header"] {
+  --color: red;
+}
+```
+
+This example will set the text color of the header `ion-item` to red when the accordion is expanded.
+
+
 ## Accessibility
 
 When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard support for interacting with the component. The following table details what each key does:
@@ -39,6 +75,14 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Javascript
+
+
+
+
+
 ## Properties
 
 | Property         | Attribute          | Description                                                                                    | Type                  | Default          |
@@ -49,14 +93,6 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
 | `toggleIcon`     | `toggle-icon`      | The toggle icon to use. This icon will be rotated when the accordion is expanded or collapsed. | `string`              | `'chevron-down'` |
 | `toggleIconSlot` | `toggle-icon-slot` | The slot inside of `ion-item` to place the toggle icon. Defaults to `'end'`.                   | `"end" \| "start"`    | `'end'`          |
 | `value`          | `value`            | The value of the accordion.                                                                    | `string \| undefined` | `undefined`      |
-
-
-## Events
-
-| Event      | Description                             | Type                |
-| ---------- | --------------------------------------- | ------------------- |
-| `ionBlur`  | Emitted when the accordion loses focus. | `CustomEvent<void>` |
-| `ionFocus` | Emitted when the accordion has focus.   | `CustomEvent<void>` |
 
 
 ## Slots
