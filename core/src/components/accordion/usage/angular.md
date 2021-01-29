@@ -164,7 +164,7 @@
 </ion-accordion-group>
 
 <!-- Multiple Accordions -->
-<ion-accordion-group multiple="true">
+<ion-accordion-group [multiple]="true" [value]="['colors', 'numbers']">
   <ion-accordion value="colors">
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
@@ -217,8 +217,3 @@
     </ion-list>
   </ion-accordion>
 </ion-accordion-group>
-
-<script>
-  let accordionGroup = document.querySelector('ion-accordion-group');
-  accordionGroup.value = ['colors', 'numbers'];
-</script>
