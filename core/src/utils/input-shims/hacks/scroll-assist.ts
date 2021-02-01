@@ -64,6 +64,13 @@ const jsSetFocus = async (
   relocateInput(componentEl, inputEl, true, scrollData.inputSafeY);
   inputEl.focus();
 
+  /**
+   * Relocating/Focusing input causes the
+   * click event to be cancelled, so
+   * manually fire one here.
+   */
+  raf(() => componentEl.click());
+
   /* tslint:disable-next-line */
   if (typeof window !== 'undefined') {
     let scrollContentTimeout: any;
@@ -87,13 +94,6 @@ const jsSetFocus = async (
 
       // ensure this is the focused input
       inputEl.focus();
-
-      /**
-       * Relocating/Focusing input causes the
-       * click event to be cancelled, so
-       * manually fire one here.
-       */
-      raf(() => componentEl.click());
     };
 
     const doubleKeyboardEventListener = () => {
