@@ -1,6 +1,7 @@
 import { Build, writeTask } from '@stencil/core';
 
 import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../../components/nav/constants';
+import { componentOnReady } from '../helpers';
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
 
 const iosTransitionAnimation = () => import('./ios.transition');
@@ -178,8 +179,8 @@ export const lifecycle = (el: HTMLElement | undefined, eventName: string) => {
 };
 
 const shallowReady = (el: Element | undefined): Promise<any> => {
-  if (el && (el as any).componentOnReady) {
-    return (el as any).componentOnReady();
+  if (el) {
+    return new Promise(resolve => componentOnReady(el, resolve));
   }
   return Promise.resolve();
 };

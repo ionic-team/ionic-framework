@@ -2,6 +2,7 @@ import { writeTask } from '@stencil/core';
 
 import { createAnimation } from '../../utils/animation/animation';
 import { isPlatform } from '../../utils/platform';
+import { componentOnReady } from '../../utils/helpers';
 
 // MD Native Refresher
 // -----------------------------
@@ -170,7 +171,7 @@ export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElem
   const refresherContent = referenceEl.querySelector('ion-refresher-content');
   if (!refresherContent) { return Promise.resolve(false); }
 
-  await refresherContent.componentOnReady();
+  await new Promise(resolve => componentOnReady(refresherContent, resolve));
 
   const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
   const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');

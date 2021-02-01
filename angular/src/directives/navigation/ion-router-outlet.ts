@@ -11,6 +11,8 @@ import { NavController } from '../../providers/nav-controller';
 import { StackController } from './stack-controller';
 import { RouteView, getUrl } from './stack-utils';
 
+import { componentOnReady } from '@ionic/core';
+
 @Directive({
   selector: 'ion-router-outlet',
   exportAs: 'outlet',
@@ -96,13 +98,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
         this.activateWith(context.route, context.resolver || null);
       }
     }
-    if ((this.nativeEl as any).componentOnReady) {
-      this.nativeEl.componentOnReady().then(() => {
-        if (this._swipeGesture === undefined) {
-          this.swipeGesture = this.config.getBoolean('swipeBackEnabled', (this.nativeEl as any).mode === 'ios');
-        }
-      });
-    }
+
+    new Promise(resolve => componentOnReady(this.nativeEl, resolve)).then(() => {
+      if (this._swipeGesture === undefined) {
+        this.swipeGesture = this.config.getBoolean('swipeBackEnabled', (this.nativeEl as any).mode === 'ios');
+      }
+    });
   }
 
   get isActivated(): boolean {

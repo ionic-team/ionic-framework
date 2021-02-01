@@ -1,5 +1,5 @@
+import { componentOnReady } from './helpers';
 import { ComponentRef, FrameworkDelegate } from '../interface';
-
 export const attachComponent = async (
   delegate: FrameworkDelegate | undefined,
   container: Element,
@@ -26,9 +26,8 @@ export const attachComponent = async (
   }
 
   container.appendChild(el);
-  if (el.componentOnReady) {
-    await el.componentOnReady();
-  }
+  await new Promise(resolve => componentOnReady(el, resolve));
+
   return el;
 };
 

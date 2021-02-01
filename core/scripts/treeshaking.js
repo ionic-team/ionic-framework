@@ -4,15 +4,15 @@ const virtual = require('@rollup/plugin-virtual');
 const fs = require('fs');
 
 async function main() {
-  const input = process.argv[2] || getInput();
-  const result = await check(input);
-  const relative = path.relative(process.cwd(), input);
+  const input = process.argv[2] || getMainEntry();
+	const result = await check(input);
+	const relative = path.relative(process.cwd(), input);
 
-  if (result.shaken) {
-    console.error(`Success! ${relative} is fully tree-shakeable`);
-  } else {
-    error(`Failed to tree-shake ${relative}`);
-  }
+	if (result.shaken) {
+		console.error(`Success! ${relative} is fully tree-shakeable`);
+	} else {
+		error(`Failed to tree-shake ${relative}`);
+	};
 }
 
 function error(msg) {
@@ -20,10 +20,10 @@ function error(msg) {
   process.exit(1);
 }
 
-function getInput() {
-  if (!fs.existsSync('package.json')) {
-    error(`Could not find package.json`);
-  }
+function getMainEntry() {
+	if (!fs.existsSync('package.json')) {
+		error(`Could not find package.json`);
+	}
 
   const pkg = JSON.parse(fs.readFileSync('package.json'), 'utf-8');
 
@@ -38,20 +38,20 @@ function getInput() {
 }
 
 function resolve(file) {
-  if (isDirectory(file)) {
-    return ifExists(`${file}/index.js`) || ifExists(`${file}/index.cjs.js`);
-  }
+	if (isDirectory(file)) {
+		return ifExists(`${file}/index.cjs.js`) || ifExists(`${file}/index.js`);
+	}
 
-  return ifExists(file) || ifExists(`${file}.js`) || ifExists(`${file}.cjs.js`);
+	return ifExists(file) || ifExists(`${file}.cjs.js`) || ifExists(`${file}.js`);
 }
 
 function isDirectory(file) {
-  try {
-    const stats = fs.statSync(file);
-    return stats.isDirectory();
-  } catch (err) {
-    return false;
-  }
+	try {
+		const stats = fs.statSync(file);
+		return stats.isDirectory();
+	} catch (err) {
+		return false;
+	}
 }
 
 function ifExists(file) {
@@ -67,7 +67,7 @@ async function check(input) {
       virtual({
         __agadoo__: `import ${JSON.stringify(resolved)}`,
         tslib: `
-          const noop = () => {};  
+          const noop = () => {};
           export const __awaiter = noop;
           export const __extends = noop;
           export const __generator = noop;
