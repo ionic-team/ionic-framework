@@ -174,9 +174,18 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
         } else if (routeInfo.routeAction === 'replace') {
           // Make sure to set the lastPathname, etc.. to the current route so the page transitions out
           const currentRouteInfo = this.locationHistory.current();
+
+          /**
+           * If going from /home to /child, then replacing from
+           * /child to /home, we don't want the route info to
+           * say that /home was pushed by /home which is not correct.
+           */
+          const currentPushedBy = currentRouteInfo?.pushedByRoute;
+          const pushedByRoute = (currentPushedBy !== undefined && currentPushedBy !== routeInfo.pathname) ? currentPushedBy : routeInfo.pushedByRoute;
+
           routeInfo.lastPathname = currentRouteInfo?.pathname || routeInfo.lastPathname;
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
-          routeInfo.pushedByRoute = currentRouteInfo?.pushedByRoute || routeInfo.pushedByRoute;
+          routeInfo.pushedByRoute = pushedByRoute;
           routeInfo.routeDirection = currentRouteInfo?.routeDirection || routeInfo.routeDirection;
           routeInfo.routeAnimation = currentRouteInfo?.routeAnimation || routeInfo.routeAnimation;
         }

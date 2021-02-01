@@ -176,6 +176,21 @@ describe('Routing', () => {
     cy.ionPageVisible('navigation');
     cy.ionPageHidden('routingparameter');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22528
+  it('should not show ion-back-button when replacing to root page', () => {
+    cy.visit('http://localhost:8080');
+
+    cy.routerPush('/navigation');
+    cy.ionPageVisible('navigation');
+    cy.ionPageHidden('home');
+
+    cy.routerReplace('/');
+    cy.ionPageDoesNotExist('navigation');
+    cy.ionPageVisible('home');
+
+    cy.ionBackButtonHidden('home');
+  });
 });
 
 describe('Routing - Swipe to Go Back', () => {
