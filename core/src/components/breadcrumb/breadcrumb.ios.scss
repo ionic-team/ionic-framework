@@ -1,11 +1,33 @@
 @import "./breadcrumb";
+@import "./breadcrumb.ios.vars";
 
 // Breadcrumb
 // --------------------------------------------------
+
+:host {
+  --color: #{$breadcrumb-ios-color};
+}
+
+:host(.breadcrumb-active) {
+  color: $breadcrumb-ios-color-active;
+
+  font-weight: 600;
+}
 
 // Breadcrumb Separator
 // ------------------------------------------
 
 .breadcrumb-separator {
-  @include margin(1px, 4px, null, 4px);
+  @include margin($breadcrumb-ios-separator-margin-top, $breadcrumb-ios-separator-margin-end, $breadcrumb-ios-separator-margin-bottom, $breadcrumb-ios-separator-margin-start);
+}
+
+.breadcrumb-native {
+  @include border-radius(4px);
+  @include padding(2px 4px);
+
+  border: 1px solid transparent;
+}
+
+:host(.ion-focused) .breadcrumb-native {
+  border-color: #{ion-color(primary, base)};
 }

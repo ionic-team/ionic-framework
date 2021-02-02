@@ -23,8 +23,8 @@
           <ion-breadcrumb href="#">
             Home
           </ion-breadcrumb>
-          <ion-breadcrumb href="#library">
-            Library
+          <ion-breadcrumb href="#electronics">
+            Electronics
           </ion-breadcrumb>
           <ion-breadcrumb href="#disabled" disabled>
             Disabled
@@ -37,46 +37,94 @@
     </ion-header>
 
     <ion-content class="ion-padding">
+      <h1>Default</h1>
+
       <ion-breadcrumbs>
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library">
-          Library
+        <ion-breadcrumb href="#electronics">
+          Electronics
         </ion-breadcrumb>
-        <ion-breadcrumb href="#disabled" disabled>
-          Disabled
+        <ion-breadcrumb href="#photography">
+          Photography
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#cameras">
+          Cameras
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#film">
+          Film
         </ion-breadcrumb>
         <ion-breadcrumb>
-          Data
+          35 mm
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Custom active, danger</p>
+      <hr>
 
-      <ion-breadcrumbs color="danger">
-        <ion-breadcrumb href="#disabled" disabled>
+      <h1>Color: Primary</h1>
+
+      <ion-breadcrumbs color="primary">
+        <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library">
-          Library
+        <ion-breadcrumb href="#electronics">
+          Electronics
         </ion-breadcrumb>
-        <ion-breadcrumb href="#data" active>
-          Data
+        <ion-breadcrumb href="#photography">
+          Photography
         </ion-breadcrumb>
-        <ion-breadcrumb href="#file">
-          File
+        <ion-breadcrumb href="#cameras">
+          Cameras
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#film">
+          Film
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          35 mm
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Show last separator</p>
+      <hr>
+
+      <h1>Custom separator</h1>
+
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#">
+          Home
+          <ion-icon slot="separator" name="arrow-forward"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">
+          Electronics
+          <ion-icon slot="separator" name="arrow-forward"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#photography">
+          Photography
+          <ion-icon slot="separator" name="arrow-forward"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#cameras">
+          Cameras
+          <ion-icon slot="separator" name="arrow-forward"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#film">
+          Film
+          <ion-icon slot="separator" name="arrow-forward"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          35 mm
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <hr>
+
+      <h1>Show last separator</h1>
 
       <ion-breadcrumbs>
         <ion-breadcrumb href="#disabled" disabled>
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library">
-          Library
+        <ion-breadcrumb href="#electronics">
+          Electronics
         </ion-breadcrumb>
         <ion-breadcrumb href="#data" active>
           Data
@@ -86,14 +134,16 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Breadcrumbs Color: Primary</p>
+      <hr>
+
+      <h1>Breadcrumbs Color: Primary</h1>
 
       <ion-breadcrumbs color="primary">
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library">
-          Library
+        <ion-breadcrumb href="#electronics">
+          Electronics
         </ion-breadcrumb>
         <ion-breadcrumb href="#disabled" disabled>
           Disabled
@@ -103,14 +153,16 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Breadcrumb Color: Varied</p>
+      <hr>
+
+      <h1>Breadcrumb Color: Varied</h1>
 
       <ion-breadcrumbs>
         <ion-breadcrumb href="#" color="secondary">
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library" color="danger">
-          Library
+        <ion-breadcrumb href="#electronics" color="danger">
+          Electronics
         </ion-breadcrumb>
         <ion-breadcrumb href="#disabled" disabled>
           Disabled
@@ -121,14 +173,16 @@
       </ion-breadcrumbs>
 
 
-      <p>Breadcrumbs (Secondary); Breadcrumb (Danger)</p>
+      <hr>
+
+      <h1>Breadcrumbs (Secondary); Breadcrumb (Danger)</h1>
 
       <ion-breadcrumbs color="secondary">
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library" color="danger">
-          Library
+        <ion-breadcrumb href="#electronics" color="danger">
+          Electronics
         </ion-breadcrumb>
         <ion-breadcrumb href="#disabled" disabled>
           Disabled
@@ -138,15 +192,17 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Custom Separator: Icon w/ last separator showing</p>
+      <hr>
+
+      <h1>Custom Separator: Icon w/ last separator showing</h1>
 
       <ion-breadcrumbs>
         <ion-breadcrumb href="#">
           Home
           <ion-icon slot="separator" name="caret-forward-outline"></ion-icon>
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library">
-          Library
+        <ion-breadcrumb href="#electronics">
+          Electronics
           <ion-icon slot="separator" name="caret-forward-outline"></ion-icon>
         </ion-breadcrumb>
         <ion-breadcrumb href="#disabled" disabled>
@@ -159,13 +215,15 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Breadcrumbs: default wrapping</p>
+      <hr>
+
+      <h1>Breadcrumbs: default wrapping</h1>
 
       <ion-breadcrumbs>
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library">
+        <ion-breadcrumb href="#electronics">
           Cameras & Camcorders
         </ion-breadcrumb>
         <ion-breadcrumb href="#digital-camera-accessories">
@@ -185,13 +243,15 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Breadcrumbs: collapsed (no click)</p>
+      <hr>
+
+      <h1>Breadcrumbs: collapsed (no click)</h1>
 
       <ion-breadcrumbs>
         <ion-breadcrumb href="#" collapsed>
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library" collapsed>
+        <ion-breadcrumb href="#electronics" collapsed>
           Cameras & Camcorders
         </ion-breadcrumb>
         <ion-breadcrumb href="#digital-camera-accessories" collapsed>
@@ -211,17 +271,19 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>
+      <hr>
+
+      <h1>
         Breadcrumbs: collapsed middle / expand on click
         <ion-button size="small" fill="clear" onClick="collapseBreadcrumbs()">Re-collapse</ion-button>
-      </p>
+      </h1>
 
 
       <ion-breadcrumbs id="expandOnClick">
         <ion-breadcrumb href="#">
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library" collapsed class="collapse-on-click">
+        <ion-breadcrumb href="#electronics" collapsed class="collapse-on-click">
           Cameras & Camcorders
         </ion-breadcrumb>
         <ion-breadcrumb href="#digital-camera-accessories" collapsed class="collapse-on-click">
@@ -241,13 +303,15 @@
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <p>Breadcrumbs: collapsed / popover on click</p>
+      <hr>
+
+      <h1>Breadcrumbs: collapsed / popover on click</h1>
 
       <ion-breadcrumbs id="popoverOnClick">
         <ion-breadcrumb href="#" collapsed>
           Home
         </ion-breadcrumb>
-        <ion-breadcrumb href="#library" collapsed>
+        <ion-breadcrumb href="#electronics" collapsed>
           Cameras & Camcorders
         </ion-breadcrumb>
         <ion-breadcrumb href="#digital-camera-accessories" collapsed>
@@ -309,7 +373,7 @@
               <ion-item href="#">
                 <ion-label>Home</ion-label>
               </ion-item>
-              <ion-item href="#library">
+              <ion-item href="#electronics">
                 <ion-label>Cameras & Camcorders</ion-label>
               </ion-item>
               <ion-item href="#digital-camera-accessories">
@@ -338,12 +402,29 @@
   </script>
 
   <style>
-    p {
+    h1 {
       display: flex;
       align-items: center;
       justify-content: space-between;
 
-      font-weight: 500;
+      font-size: 12px;
+      font-weight: normal;
+
+      color: #a1a7b0;
+
+      margin-top: 10px;
+      margin-left: 5px;
+    }
+
+    hr {
+      background: #eff1f3;
+
+      margin-top: 18px;
+      margin-bottom: 25px;
+    }
+
+    ion-content ion-breadcrumbs {
+      padding: 3px 5px;
     }
   </style>
 </body>

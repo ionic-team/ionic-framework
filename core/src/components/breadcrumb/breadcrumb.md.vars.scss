@@ -1,0 +1,22 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Breadcrumb
+// --------------------------------------------------
+
+/// @prop - Color of the breadcrumb
+$breadcrumb-md-color:                       #677483 !default;
+
+/// @prop - Color of the active breadcrumb
+$breadcrumb-md-color-active:                #03060B !default;
+
+/// @prop - Margin top of the breadcrumb separator
+$breadcrumb-md-separator-margin-top:        -1px !default;
+
+/// @prop - Margin end of the breadcrumb separator
+$breadcrumb-md-separator-margin-end:        10px !default;
+
+/// @prop - Margin bottom of the breadcrumb separator
+$breadcrumb-md-separator-margin-bottom:     null !default;
+
+/// @prop - Margin start of the breadcrumb separator
+$breadcrumb-md-separator-margin-start:      10px !default;

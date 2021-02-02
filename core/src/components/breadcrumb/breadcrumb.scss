@@ -4,18 +4,20 @@
 // --------------------------------------------------
 
 :host {
+ /**
+   * @prop --color: Color of the breadcrumb
+   */
   display: flex;
 
   flex: 0 0 auto;
 
   align-items: center;
 
-  color: $breadcrumb-color;
+  color: var(--color);
 
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: $breadcrumb-font-size;
+  font-weight: $breadcrumb-font-weight;
 
-  letter-spacing: 0.00938em;
   line-height: 1.5;
 }
 
@@ -37,12 +39,6 @@
   pointer-events: none;
 }
 
-:host(.breadcrumb-active) {
-  color: $breadcrumb-color-active;
-
-  font-weight: 500;
-}
-
 
 // Breadcrumb Separator
 // ------------------------------------------
@@ -50,8 +46,9 @@
 .breadcrumb-separator {
   display: inline-flex;
 
-  color: $breadcrumb-color;
+  color: var(--color);
 }
+
 
 // Breadcrumb: Collapsed
 // ------------------------------------------
@@ -60,10 +57,16 @@
   display: none;
 }
 
+
 // Breadcrumbs: Color
 // ------------------------------------------
 
+:host(.in-breadcrumbs-color),
 :host(.in-breadcrumbs-color.breadcrumb-active) {
+  color: current-color(base);
+}
+
+:host(.in-breadcrumbs-color) .breadcrumb-separator {
   color: current-color(base);
 }
 
@@ -81,4 +84,19 @@
 
 :host(.in-toolbar-color.breadcrumb-active) {
   color: current-color(contrast);
+}
+
+
+// Breadcrumb: Focused
+// --------------------------------------------------
+
+:host(.ion-focused) .button-native {
+  border: 1px solid var(--color);
+  // color: var(--color-focused);
+
+  // &::after {
+  //   background: var(--background-focused);
+
+  //   opacity: var(--background-focused-opacity);
+  // }
 }

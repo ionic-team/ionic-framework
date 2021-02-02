@@ -1,0 +1,22 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Breadcrumb
+// --------------------------------------------------
+
+/// @prop - Color of the breadcrumb
+$breadcrumb-ios-color:                       #2D4665 !default;
+
+/// @prop - Color of the active breadcrumb
+$breadcrumb-ios-color-active:                #03060B !default;
+
+/// @prop - Margin top of the breadcrumb separator
+$breadcrumb-ios-separator-margin-top:        null !default;
+
+/// @prop - Margin end of the breadcrumb separator
+$breadcrumb-ios-separator-margin-end:        6px !default;
+
+/// @prop - Margin bottom of the breadcrumb separator
+$breadcrumb-ios-separator-margin-bottom:     null !default;
+
+/// @prop - Margin start of the breadcrumb separator
+$breadcrumb-ios-separator-margin-start:      6px !default;

@@ -1,11 +1,34 @@
 @import "./breadcrumb";
+@import "./breadcrumb.md.vars";
 
 // Breadcrumb
 // --------------------------------------------------
+
+:host {
+  --color: #{$breadcrumb-md-color};
+}
+
+:host(.breadcrumb-active) {
+  color: $breadcrumb-md-color-active;
+
+  font-weight: 500;
+}
 
 // Breadcrumb Separator
 // ------------------------------------------
 
 .breadcrumb-separator {
-  @include margin(null, 8px, null, 8px);
+  @include margin($breadcrumb-md-separator-margin-top, $breadcrumb-md-separator-margin-end, $breadcrumb-md-separator-margin-bottom, $breadcrumb-md-separator-margin-start);
+}
+
+// :host(.ion-focused) .breadcrumb-native {
+.breadcrumb-native {
+  // border: 1px solid blue;
+  // color: var(--color-focused);
+
+  // &::after {
+  //   background: var(--background-focused);
+
+  //   opacity: var(--background-focused-opacity);
+  // }
 }

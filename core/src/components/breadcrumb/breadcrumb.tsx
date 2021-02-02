@@ -128,6 +128,7 @@ export class Breadcrumb implements ComponentInterface {
 
     return (
       <Host
+        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,
           'breadcrumb-active': active,
