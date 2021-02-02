@@ -12,6 +12,9 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 6.x
 
+- [Components](#components)
+  * [Tab Bar](#tab-bar)
+  * [Toolbar](#toolbar)
 - [Config](#config)
   * [Transition Shadow](#transition-shadow)
 
@@ -21,6 +24,25 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 #### Transition Shadow
 
 The `experimentalTransitionShadow` config option has been removed. The transition shadow is now enabled when running in `ios` mode.
+
+
+### Components
+
+#### Tab Bar
+
+The default iOS tab bar background color has been updated to better reflect the latest iOS styles. The new default value is:
+
+```css
+var(--ion-tab-bar-background, var(--ion-color-step-50, #f6f6f6));
+```
+
+#### Toolbar
+
+The default iOS toolbar background color has been updated to better reflect the latest iOS styles. The new default value is:
+
+```css
+var(--ion-toolbar-background, var(--ion-color-step-50, #f6f6f6));
+```
 
 
 ## Version 5.x
