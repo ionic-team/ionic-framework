@@ -67,8 +67,8 @@ function addIonicons(projectName: string): Rule {
       input: 'node_modules/ionicons/dist/ionicons/svg',
       output: './svg'
     };
-    addAsset(host, projectName,'build', ioniconsGlob);
-    addAsset(host, projectName,'test', ioniconsGlob);
+    addAsset(host, projectName, 'build', ioniconsGlob);
+    addAsset(host, projectName, 'test', ioniconsGlob);
     return host;
   };
 }
