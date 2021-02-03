@@ -1,5 +1,4 @@
 @import "./accordion.scss";
-@import "./accordion.ios.vars";
 @import "../item/item.ios.vars";
 
 :host(.accordion-next) ::slotted(ion-item[slot="header"]) {
