@@ -68,6 +68,7 @@ describe('ion-tab-bar', () => {
     });
 
     const innerHTML = wrapper.find('ion-tabs').html();
+    // TODO: Remove tabs="true" in Ionic Vue v6.0
     expect(innerHTML).toContain(`<div class="tabs-inner" style="position: relative; flex: 1; contain: layout size style;"><ion-router-outlet tabs="true"></ion-router-outlet></div><ion-tab-bar slot="bottom"></ion-tab-bar>`);
 
   });
@@ -100,6 +101,7 @@ describe('ion-tab-bar', () => {
     });
 
     const innerHTML = wrapper.find('ion-tabs').html();
+    // TODO: Remove tabs="true" in Ionic Vue v6.0
     expect(innerHTML).toContain(`<div class="tabs-inner" style="position: relative; flex: 1; contain: layout size style;"><ion-router-outlet tabs="true"></ion-router-outlet></div><ion-tab-bar></ion-tab-bar></ion-tabs>`)
   });
 

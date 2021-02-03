@@ -2,6 +2,9 @@
   <ion-page data-pageid="home">
     <ion-header :translucent="true">
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
         <ion-title>Test App</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -54,12 +57,14 @@
 </template>
 
 <script lang="ts">
-import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonButtons, IonBackButton, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Home',
   components: {
+    IonButtons,
+    IonBackButton,
     IonContent,
     IonHeader,
     IonItem,
