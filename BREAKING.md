@@ -12,8 +12,18 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 6.x
 
+- [Components](#components)
+  * [Toast](#toast)
 - [Config](#config)
   * [Transition Shadow](#transition-shadow)
+
+
+
+### Components
+
+#### Toast
+
+The `--white-space` CSS variable now defaults to `normal` instead of `pre-wrap`.
 
 
 ### Config
