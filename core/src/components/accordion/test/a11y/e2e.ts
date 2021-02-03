@@ -7,7 +7,7 @@ const getActiveElementText = async (page) => {
 
 test('accordion: a11y', async () => {
   const page = await newE2EPage({
-    url: '/src/components/accordion-group/test/a11y?ionic:_testing=true'
+    url: '/src/components/accordion/test/a11y?ionic:_testing=true'
   });
 
   const compare = await page.compareScreenshot();
@@ -16,7 +16,7 @@ test('accordion: a11y', async () => {
 
 test('accordion:rtl: a11y', async () => {
   const page = await newE2EPage({
-    url: '/src/components/accordion-group/test/a11y?ionic:_testing=true&rtl=true'
+    url: '/src/components/accordion/test/a11y?ionic:_testing=true&rtl=true'
   });
 
   const compare = await page.compareScreenshot();
@@ -25,7 +25,7 @@ test('accordion:rtl: a11y', async () => {
 
 test('accordion: keyboard navigation', async () => {
   const page = await newE2EPage({
-    url: '/src/components/accordion-group/test/a11y?ionic:_testing=true'
+    url: '/src/components/accordion/test/a11y?ionic:_testing=true'
   });
 
   await page.keyboard.press('Tab');
