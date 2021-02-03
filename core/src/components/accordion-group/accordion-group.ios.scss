@@ -1,5 +1,3 @@
-@import "../accordion/accordion.ios.vars";
-
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanding),
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion.accordion-expanded) {
   border-bottom: none;
