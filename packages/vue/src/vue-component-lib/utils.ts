@@ -17,6 +17,7 @@ interface NavManager<T = any> {
 interface ComponentOptions {
   modelProp?: string;
   modelUpdateEvent?: string;
+  externalModelUpdateEvent?: string;
 }
 
 const getComponentClasses = (classes: unknown) => {
@@ -40,7 +41,7 @@ const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: 
 * integrations.
 */
 export const defineContainer = <Props>(name: string, componentProps: string[] = [], componentOptions: ComponentOptions = {}) => {
-  const { modelProp, modelUpdateEvent } = componentOptions;
+  const { modelProp, modelUpdateEvent, externalModelUpdateEvent } = componentOptions;
 
   /**
   * Create a Vue component wrapper around a Web Component.
@@ -66,8 +67,7 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
            * native web component, but the v-model will
            * not have been updated yet.
            */
-          emit(modelUpdateEvent, e);
-          e.stopImmediatePropagation();
+          emit(externalModelUpdateEvent, e);
         });
       }
     };
@@ -112,7 +112,7 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
         ref: containerRef,
         class: getElementClasses(containerRef, classes),
         onClick: handleClick,
-        onVnodeBeforeMount: (modelUpdateEvent) ? onVnodeBeforeMount : undefined
+        onVnodeBeforeMount: (modelUpdateEvent && externalModelUpdateEvent) ? onVnodeBeforeMount : undefined
       };
 
       if (modelProp) {
@@ -130,7 +130,7 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
   Container.props = [...componentProps, ROUTER_LINK_VALUE];
   if (modelProp) {
     Container.props.push(MODEL_VALUE);
-    Container.emits = [UPDATE_VALUE_EVENT, modelUpdateEvent];
+    Container.emits = [UPDATE_VALUE_EVENT, externalModelUpdateEvent];
   }
 
   return Container;
