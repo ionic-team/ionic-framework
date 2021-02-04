@@ -21,25 +21,22 @@
 // --------------------------------------------------
 
 .breadcrumbs-collapsed-indicator {
-  @include border-radius(5px);
-
   display: none;
 
   align-items: center;
   justify-content: center;
 
-  width: 34px;
-  height: 21px;
-
-  background: #f5f5f5;
+  width: 32px;
+  height: 18px;
 }
+
 
 .breadcrumbs-collapsed-indicator ion-icon {
   margin-top: 1px;
 
-  color: #5a5b69;
+  color: #73849a;
 
-  font-size: 25px;
+  font-size: 22px;
 }
 
 :host(.breadcrumbs-collapsed) .breadcrumbs-collapsed-indicator {

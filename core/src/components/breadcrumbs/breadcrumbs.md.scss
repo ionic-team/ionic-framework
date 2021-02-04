@@ -3,7 +3,11 @@
 // Material Design Breadcrumbs
 // --------------------------------------------------
 
+.breadcrumbs-collapsed-indicator {
+  @include border-radius(2px);
 
+  background: #eef1f3;
+}
 
 // Breadcrumbs: In Toolbar
 // --------------------------------------------------

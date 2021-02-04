@@ -31,3 +31,24 @@
 :host(.ion-focused) .breadcrumb-native {
   border-color: #{ion-color(primary, base)};
 }
+
+// Breadcrumb Slotted Icons
+// ------------------------------------------
+
+::slotted(ion-icon) {
+  color: #92a0b3;
+
+  font-size: 18px;
+}
+
+::slotted(ion-icon[slot="start"]) {
+  @include margin(null, 8px, null, null);
+}
+
+::slotted(ion-icon[slot="end"]) {
+  @include margin(null, null, null, 8px);
+}
+
+:host(.breadcrumb-active) ::slotted(ion-icon) {
+  color: #242d39;
+}

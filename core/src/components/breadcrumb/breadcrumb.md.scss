@@ -32,3 +32,24 @@
   //   opacity: var(--background-focused-opacity);
   // }
 }
+
+// Breadcrumb Slotted Icons
+// ------------------------------------------
+
+::slotted(ion-icon) {
+  color: #7d8894;
+
+  font-size: 18px;
+}
+
+::slotted(ion-icon[slot="start"]) {
+  @include margin(null, 8px, null, null);
+}
+
+::slotted(ion-icon[slot="end"]) {
+  @include margin(null, null, null, 8px);
+}
+
+:host(.breadcrumb-active) ::slotted(ion-icon) {
+  color: #222d3a;
+}

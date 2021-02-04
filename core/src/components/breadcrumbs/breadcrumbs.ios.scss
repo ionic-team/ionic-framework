@@ -3,7 +3,11 @@
 // iOS Breadcrumbs
 // --------------------------------------------------
 
+.breadcrumbs-collapsed-indicator {
+  @include border-radius(4px);
 
+  background: #e9edf3;
+}
 
 // Breadcrumbs: In Toolbar
 // --------------------------------------------------

@@ -117,6 +117,119 @@
 
       <hr>
 
+      <h1>Custom icons</h1>
+
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#">
+          <ion-icon slot="start" name="home"></ion-icon>
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#files">
+          <ion-icon slot="start" name="folder"></ion-icon>
+          Files
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#projects">
+          <ion-icon slot="start" name="folder"></ion-icon>
+          Projects
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#user-research">
+          <ion-icon slot="start" name="folder"></ion-icon>
+          User Research
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          <ion-icon slot="start" name="document"></ion-icon>
+          Survey.txt
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <hr>
+
+      <h1>Collapsed</h1>
+
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#" collapsed>
+          <ion-icon slot="start" name="home"></ion-icon>
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#trips">
+          <ion-icon slot="start" name="folder"></ion-icon>
+          Trips
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#tokyo">
+          <ion-icon slot="start" name="folder"></ion-icon>
+          Tokyo 2021
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#photos">
+          <ion-icon slot="start" name="folder"></ion-icon>
+          Photos
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          <ion-icon slot="start" name="image"></ion-icon>
+          cityscape-01-2021.png
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <hr>
+
+      <h1>
+        Breadcrumbs: collapsed middle / expand on click
+        <ion-button size="small" fill="clear" onClick="collapseBreadcrumbs()">Re-collapse</ion-button>
+      </h1>
+
+      <ion-breadcrumbs id="expandOnClick">
+        <ion-breadcrumb href="#">
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#electronics" collapsed class="collapse-on-click">
+          Cameras & Camcorders
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#digital-camera-accessories" collapsed class="collapse-on-click">
+          Digital Camera Accessories
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#camera-lenses" collapsed class="collapse-on-click">
+          Camera Lenses
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#dslr-lenses" collapsed class="collapse-on-click">
+          DSLR Lenses
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#prime-lenses" collapsed class="collapse-on-click">
+          Prime Lenses
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          Product Info
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <hr>
+
+      <h1>Breadcrumbs: collapsed / popover on click</h1>
+
+      <ion-breadcrumbs id="popoverOnClick">
+        <ion-breadcrumb href="#" collapsed>
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#electronics" collapsed>
+          Cameras & Camcorders
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#digital-camera-accessories" collapsed>
+          Digital Camera Accessories
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#camera-lenses" collapsed>
+          Camera Lenses
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#dslr-lenses">
+          DSLR Lenses
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#prime-lenses">
+          Prime Lenses
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          Product Info
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <hr>
+
       <h1>Show last separator</h1>
 
       <ion-breadcrumbs>
@@ -242,94 +355,6 @@
           Product Info
         </ion-breadcrumb>
       </ion-breadcrumbs>
-
-      <hr>
-
-      <h1>Breadcrumbs: collapsed (no click)</h1>
-
-      <ion-breadcrumbs>
-        <ion-breadcrumb href="#" collapsed>
-          Home
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#electronics" collapsed>
-          Cameras & Camcorders
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#digital-camera-accessories" collapsed>
-          Digital Camera Accessories
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#camera-lenses">
-          Camera Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#dslr-lenses">
-          DSLR Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#prime-lenses">
-          Prime Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb>
-          Product Info
-        </ion-breadcrumb>
-      </ion-breadcrumbs>
-
-      <hr>
-
-      <h1>
-        Breadcrumbs: collapsed middle / expand on click
-        <ion-button size="small" fill="clear" onClick="collapseBreadcrumbs()">Re-collapse</ion-button>
-      </h1>
-
-
-      <ion-breadcrumbs id="expandOnClick">
-        <ion-breadcrumb href="#">
-          Home
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#electronics" collapsed class="collapse-on-click">
-          Cameras & Camcorders
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#digital-camera-accessories" collapsed class="collapse-on-click">
-          Digital Camera Accessories
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#camera-lenses" collapsed class="collapse-on-click">
-          Camera Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#dslr-lenses" collapsed class="collapse-on-click">
-          DSLR Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#prime-lenses" collapsed class="collapse-on-click">
-          Prime Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb>
-          Product Info
-        </ion-breadcrumb>
-      </ion-breadcrumbs>
-
-      <hr>
-
-      <h1>Breadcrumbs: collapsed / popover on click</h1>
-
-      <ion-breadcrumbs id="popoverOnClick">
-        <ion-breadcrumb href="#" collapsed>
-          Home
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#electronics" collapsed>
-          Cameras & Camcorders
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#digital-camera-accessories" collapsed>
-          Digital Camera Accessories
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#camera-lenses" collapsed>
-          Camera Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#dslr-lenses">
-          DSLR Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#prime-lenses">
-          Prime Lenses
-        </ion-breadcrumb>
-        <ion-breadcrumb>
-          Product Info
-        </ion-breadcrumb>
-      </ion-breadcrumbs>
     </ion-content>
   </ion-app>
 
@@ -361,7 +386,7 @@
     const popoverOnClick = document.querySelector('#popoverOnClick');
     popoverOnClick.addEventListener('ionCollapsedClick', (ev) => presentPopover(ev));
 
-    class PopoverExamplePage extends HTMLElement {
+    class ListPopover extends HTMLElement {
       constructor() {
         super();
       }
@@ -388,11 +413,12 @@
       }
     }
 
-    customElements.define('popover-example-page', PopoverExamplePage);
+    customElements.define('list-popover', ListPopover);
 
     function presentPopover(ev) {
+      console.log('present ev', ev);
       const popover = Object.assign(document.createElement('ion-popover'), {
-        component: 'popover-example-page',
+        component: 'list-popover',
         event: ev,
       });
       document.body.appendChild(popover);

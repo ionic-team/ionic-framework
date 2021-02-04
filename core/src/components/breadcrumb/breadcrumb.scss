@@ -26,6 +26,10 @@
   @include padding(0);
   @include margin(0);
 
+  display: flex;
+
+  align-items: center;
+
   width: 100%;
 
   outline: none;
@@ -46,7 +50,7 @@
 .breadcrumb-separator {
   display: inline-flex;
 
-  color: var(--color);
+  color: #73849a;
 }
 
 
