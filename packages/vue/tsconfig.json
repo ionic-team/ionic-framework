@@ -7,7 +7,7 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "lib": ["dom", "es2020"],
-    "module": "esnext",
+    "module": "es2015",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitReturns": true,

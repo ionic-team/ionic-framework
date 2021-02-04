@@ -172,7 +172,41 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab1');
     cy.ionPageHidden('routing');
     cy.ionPageHidden('tab2');
-  })
+  });
+
+  // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519
+  it('should not create a new tabs instance when switching between tabbed and non-tabbed contexts', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.routerPush('/');
+    cy.ionPageHidden('tabs');
+    cy.ionPageVisible('home');
+
+    cy.routerPush('/tabs/tab2');
+    cy.ionPageHidden('tab1');
+
+    cy.ionPageHidden('home');
+
+    cy.ionPageVisible('tab2');
+    cy.ionPageVisible('tabs');
+  });
+
+  // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519
+  it('should not create a new tabs instance when switching between tabbed and non-tabbed contexts - new tabs setup', () => {
+    cy.visit('http://localhost:8080/tabs-new/tab1');
+
+    cy.routerPush('/');
+    cy.ionPageHidden('tabs');
+    cy.ionPageVisible('home');
+
+    cy.routerPush('/tabs-new/tab2');
+    cy.ionPageHidden('tab1');
+
+    cy.ionPageHidden('home');
+
+    cy.ionPageVisible('tab2');
+    cy.ionPageVisible('tabs');
+  });
 })
 
 describe('Tabs - Swipe to Go Back', () => {

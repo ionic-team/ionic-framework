@@ -172,8 +172,8 @@ export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElem
 
   await refresherContent.componentOnReady();
 
-  const pullingSpinner = refresherContent.querySelector('.refresher-pulling ion-spinner');
-  const refreshingSpinner = refresherContent.querySelector('.refresher-refreshing ion-spinner');
+  const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
+  const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
 
   return (
     pullingSpinner !== null &&
