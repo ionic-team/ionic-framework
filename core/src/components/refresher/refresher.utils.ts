@@ -1,8 +1,8 @@
 import { writeTask } from '@stencil/core';
 
 import { createAnimation } from '../../utils/animation/animation';
-import { isPlatform } from '../../utils/platform';
 import { componentOnReady } from '../../utils/helpers';
+import { isPlatform } from '../../utils/platform';
 
 // MD Native Refresher
 // -----------------------------

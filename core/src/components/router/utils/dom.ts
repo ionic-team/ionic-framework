@@ -1,5 +1,5 @@
-import { componentOnReady } from '../../../utils/helpers';
 import { AnimationBuilder, NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../interface';
+import { componentOnReady } from '../../../utils/helpers';
 
 import { ROUTER_INTENT_NONE } from './constants';
 

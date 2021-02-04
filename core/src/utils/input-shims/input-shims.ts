@@ -1,6 +1,5 @@
-
-import { componentOnReady } from '../helpers';
 import { Config } from '../../interface';
+import { componentOnReady } from '../helpers';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
 import { enableInputBlurring } from './hacks/input-blurring';
