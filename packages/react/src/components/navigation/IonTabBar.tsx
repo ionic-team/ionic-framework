@@ -46,7 +46,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
         child != null &&
         typeof child === 'object' &&
         child.props &&
-        child.type === IonTabButton
+        (child.type === IonTabButton || child.type.isTabButton)
       ) {
         tabs[child.props.tab] = {
           originalHref: child.props.href,
@@ -128,7 +128,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
         child != null &&
         typeof child === 'object' &&
         child.props &&
-        child.type === IonTabButton
+        (child.type === IonTabButton || child.type.isTabButton)
       ) {
         const tab = tabs[child.props.tab];
         if (!tab || tab.originalHref !== child.props.href) {
@@ -215,7 +215,11 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
         | null
         | undefined
     ) => {
-      if (child != null && child.props && child.type === IonTabButton) {
+      if (
+        child != null &&
+        child.props &&
+        (child.type === IonTabButton || (child as any).type.isTabButton)
+      ) {
         const href =
           child.props.tab === activeTab
             ? this.props.routeInfo?.pathname
