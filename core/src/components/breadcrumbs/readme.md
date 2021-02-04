@@ -31,6 +31,20 @@ Breadcrumbs
 | `mode`   | `mode`    | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined` |
 
 
+## Events
+
+| Event               | Description                                      | Type                |
+| ------------------- | ------------------------------------------------ | ------------------- |
+| `ionCollapsedClick` | Emitted when the collapsed button is clicked on. | `CustomEvent<void>` |
+
+
+## Shadow Parts
+
+| Part                    | Description                                                                       |
+| ----------------------- | --------------------------------------------------------------------------------- |
+| `"collapsed-indicator"` | The indicator element that shows when at least one child breadcrumb is collapsed. |
+
+
 ## CSS Custom Properties
 
 | Name           | Description                   |
