@@ -7,9 +7,7 @@ declare const requestAnimationFrame: any;
 
 export const componentOnReady = (el: any, callback: any) => {
   if (el.componentOnReady) {
-    el.componentOnReady().then(() => {
-      callback();
-    });
+    el.componentOnReady().then(callback);
   } else {
     callback();
   }
