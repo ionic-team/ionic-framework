@@ -64,10 +64,13 @@ export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
 @ProxyCmp({ inputs: ["active", "collapsed", "color", "disabled", "download", "href", "mode", "rel", "routerAnimation", "routerDirection", "separator", "target"] })
 @Component({ selector: "ion-breadcrumb", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["active", "collapsed", "color", "disabled", "download", "href", "mode", "rel", "routerAnimation", "routerDirection", "separator", "target"] })
 export class IonBreadcrumb {
+  ionFocus!: EventEmitter<CustomEvent>;
+  ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ["ionFocus", "ionBlur"]);
   }
 }
 export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {

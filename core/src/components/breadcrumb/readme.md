@@ -24,6 +24,14 @@ Breadcrumb
 | `target`          | `target`           | Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.                                                                                                                                       | `string \| undefined`                                   | `undefined` |
 
 
+## Events
+
+| Event      | Description                              | Type                |
+| ---------- | ---------------------------------------- | ------------------- |
+| `ionBlur`  | Emitted when the breadcrumb loses focus. | `CustomEvent<void>` |
+| `ionFocus` | Emitted when the breadcrumb has focus.   | `CustomEvent<void>` |
+
+
 ## Shadow Parts
 
 | Part          | Description                                                          |

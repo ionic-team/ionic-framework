@@ -3,6 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail } from '../../interface';
 import { AnimationBuilder } from '../../utils/animation/animation-interface';
+import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import { RouterDirection } from '../router/utils/interface';
 
@@ -21,6 +22,7 @@ import { RouterDirection } from '../router/utils/interface';
   shadow: true
 })
 export class Breadcrumb implements ComponentInterface {
+  private inheritedAttributes: { [k: string]: any } = {};
 
   /** @internal */
   @Prop() lastCollapsed!: boolean;
@@ -98,7 +100,17 @@ export class Breadcrumb implements ComponentInterface {
   @Prop() routerAnimation: AnimationBuilder | undefined;
 
   /**
-   * Emitted when the collapse changes.
+   * Emitted when the breadcrumb has focus.
+   */
+  @Event() ionFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the breadcrumb loses focus.
+   */
+  @Event() ionBlur!: EventEmitter<void>;
+
+  /**
+   * Emitted when the collapse property changes.
    * @internal
    */
   @Event() ionCollapsed!: EventEmitter<StyleEventDetail>;
@@ -108,9 +120,24 @@ export class Breadcrumb implements ComponentInterface {
     this.ionCollapsed.emit();
   }
 
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
+  private onFocus = () => {
+    this.ionFocus.emit();
+  }
+
+  private onBlur = () => {
+    this.ionBlur.emit();
+  }
+
   render() {
-    const { color, active, collapsed, disabled, download, el, href, lastCollapsed, routerAnimation, routerDirection, separator, target } = this;
-    const TagType = href === undefined ? 'span' : 'a' as any;
+    const { color, active, collapsed, disabled, download, el, inheritedAttributes, lastCollapsed, routerAnimation, routerDirection, separator, target } = this;
+    const TagType = this.href === undefined ? 'span' : 'a' as any;
+    // Links can still be tabbed to when set to disabled if they have an href
+    // in order to truly disable them we can keep it as an anchor but remove the href
+    const href = disabled ? undefined : this.href;
     const mode = getIonMode(this);
     const attrs = (TagType === 'span')
       ? { }
@@ -128,6 +155,7 @@ export class Breadcrumb implements ComponentInterface {
 
     return (
       <Host
+        onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,
@@ -146,7 +174,9 @@ export class Breadcrumb implements ComponentInterface {
           class="breadcrumb-native"
           part="native"
           disabled={disabled}
-          onClick={(ev: Event) => openURL(href, ev, routerDirection, routerAnimation)}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          {...inheritedAttributes}
         >
           <slot name="start"></slot>
           <slot></slot>

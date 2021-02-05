@@ -37,6 +37,8 @@ export const IonBreadcrumb = /*@__PURE__*/ defineContainer<JSX.IonBreadcrumb>('i
   'target',
   'routerDirection',
   'routerAnimation',
+  'ionFocus',
+  'ionBlur',
   'ionCollapsed'
 ]);
 

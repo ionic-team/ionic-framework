@@ -3625,9 +3625,17 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Emitted when the collapse changes.
+          * Emitted when the breadcrumb loses focus.
+         */
+        "onIonBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the collapse property changes.
          */
         "onIonCollapsed"?: (event: CustomEvent<StyleEventDetail>) => void;
+        /**
+          * Emitted when the breadcrumb has focus.
+         */
+        "onIonFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Specifies the relationship of the target object to the link object. The value is a space-separated list of [link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
          */
