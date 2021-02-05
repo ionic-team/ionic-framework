@@ -87,6 +87,31 @@
 
       <hr>
 
+      <h1>Color: Primary: Tab Focus</h1>
+
+      <ion-breadcrumbs color="primary">
+        <ion-breadcrumb href="#">
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">
+          Electronics
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#photography" class="ion-focused">
+          Photography
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#cameras">
+          Cameras
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#film">
+          Film
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          35 mm
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <hr>
+
       <h1>Custom separator</h1>
 
       <ion-breadcrumbs>
@@ -148,23 +173,50 @@
 
       <ion-breadcrumbs>
         <ion-breadcrumb href="#" collapsed>
-          <ion-icon slot="start" name="home"></ion-icon>
+          <ion-icon slot="start" ios="home" md="home-sharp"></ion-icon>
           Home
         </ion-breadcrumb>
         <ion-breadcrumb href="#trips">
-          <ion-icon slot="start" name="folder"></ion-icon>
+          <ion-icon slot="start" ios="folder" md="folder-sharp"></ion-icon>
           Trips
         </ion-breadcrumb>
         <ion-breadcrumb href="#tokyo">
-          <ion-icon slot="start" name="folder"></ion-icon>
+          <ion-icon slot="start" ios="folder" md="folder-sharp"></ion-icon>
           Tokyo 2021
         </ion-breadcrumb>
         <ion-breadcrumb href="#photos">
-          <ion-icon slot="start" name="folder"></ion-icon>
+          <ion-icon slot="start" ios="folder" md="folder-sharp"></ion-icon>
           Photos
         </ion-breadcrumb>
         <ion-breadcrumb>
-          <ion-icon slot="start" name="image"></ion-icon>
+          <ion-icon slot="start" ios="image" md="image-sharp"></ion-icon>
+          cityscape-01-2021.png
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+
+      <hr>
+
+      <h1>Collapsed: Tab Focus</h1>
+
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#" collapsed>
+          <ion-icon slot="start" ios="home" md="home-sharp"></ion-icon>
+          Home
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#trips">
+          <ion-icon slot="start" ios="folder" md="folder-sharp"></ion-icon>
+          Trips
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#tokyo" class="ion-focused">
+          <ion-icon slot="start" ios="folder" md="folder-sharp"></ion-icon>
+          Tokyo 2021
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#photos">
+          <ion-icon slot="start" ios="folder" md="folder-sharp"></ion-icon>
+          Photos
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          <ion-icon slot="start" ios="image" md="image-sharp"></ion-icon>
           cityscape-01-2021.png
         </ion-breadcrumb>
       </ion-breadcrumbs>
