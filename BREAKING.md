@@ -14,6 +14,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Components](#components)
   * [Header](#header)
+  * [Toast](#toast)
 - [Config](#config)
   * [Transition Shadow](#transition-shadow)
 
@@ -32,6 +33,10 @@ ion-header.header-collapse-condense ion-toolbar:last-of-type {
   --border-width: 0 0 0.55px;
 }
 ```
+
+#### Toast
+
+The `--white-space` CSS variable now defaults to `normal` instead of `pre-wrap`.
 
 
 ### Config
