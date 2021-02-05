@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, Side } from '../../interface';
-import { componentOnReady, isEndSide } from '../../utils/helpers';
+import { isEndSide } from '../../utils/helpers';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -209,18 +209,18 @@ export class ItemSliding implements ComponentInterface {
     this.leftOptions = this.rightOptions = undefined;
 
     for (let i = 0; i < options.length; i++) {
-      componentOnReady(options.item(i), () => {
-        const option = options.item(i);
-        const side = isEndSide(option.side) ? 'end' : 'start';
+      const item = options.item(i);
+      const option = (item.componentOnReady) ? await item.componentOnReady() : item;
 
-        if (side === 'start') {
-          this.leftOptions = option;
-          sides |= ItemSide.Start;
-        } else {
-          this.rightOptions = option;
-          sides |= ItemSide.End;
-        }
-      });
+      const side = isEndSide(option.side) ? 'end' : 'start';
+
+      if (side === 'start') {
+        this.leftOptions = option;
+        sides |= ItemSide.Start;
+      } else {
+        this.rightOptions = option;
+        sides |= ItemSide.End;
+      }
     }
     this.optsDirty = true;
     this.sides = sides;
@@ -232,15 +232,18 @@ export class ItemSliding implements ComponentInterface {
      * do not open left side so swipe to go
      * back will still work.
      */
+     console.log('can start????')
     const rtl = document.dir === 'rtl';
     const atEdge = (rtl) ? (window.innerWidth - gesture.startX) < 15 : gesture.startX < 15;
     if (atEdge) {
+      console.log('at edge')
       return false;
     }
 
     const selected = openSlidingItem;
     if (selected && selected !== this.el) {
       this.closeOpened();
+      console.log('closing openeed')
       return false;
     }
 
@@ -262,6 +265,7 @@ export class ItemSliding implements ComponentInterface {
     if (this.item) {
       this.item.style.transition = 'none';
     }
+    console.log('on start')
   }
 
   private onMove(gesture: GestureDetail) {
@@ -270,6 +274,7 @@ export class ItemSliding implements ComponentInterface {
     }
     let openAmount = this.initialOpenAmount - gesture.deltaX;
 
+    console.log(this.sides);
     switch (this.sides) {
       case ItemSide.End: openAmount = Math.max(0, openAmount); break;
       case ItemSide.Start: openAmount = Math.min(0, openAmount); break;
@@ -277,6 +282,7 @@ export class ItemSliding implements ComponentInterface {
       case ItemSide.None: return;
       default: console.warn('invalid ItemSideFlags value', this.sides); break;
     }
+    console.log('on move',openAmount)
 
     let optsWidth;
     if (openAmount > this.optsWidthRightSide) {
