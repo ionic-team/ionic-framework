@@ -16,11 +16,11 @@
   --ion-toolbar-color: var(--ion-color-light);
 }
 
-.md {
+.md body {
   --ion-toolbar-segment-color: rgba(var(--ion-color-light-rgb), .7);
   --ion-toolbar-segment-color-checked: var(--ion-color-light);
 }
 
-.ios {
+.ios body {
   --ion-toolbar-segment-color-checked: var(--ion-color-primary);
 }
