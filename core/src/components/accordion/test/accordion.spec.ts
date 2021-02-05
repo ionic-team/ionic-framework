@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { AccordionGroup } from '../accordion-group.tsx';
-import { Accordion } from '../../accordion/accordion.tsx';
+import { AccordionGroup } from '../../accordion-group.tsx';
+import { Accordion } from '../accordion/accordion.tsx';
 import { Item } from '../../item/item.tsx';
 
 it('should properly set readonly on child accordions', async () => {
