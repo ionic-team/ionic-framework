@@ -68,7 +68,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * as a decimal percentage of the modal's height, between 0 and 1.
    * For example: [0, .25, .5, 1]
    */
-  @Prop() breakpoints?: number[];
+  @Prop() breakpoints?: number[] = [0, 1];
 
   /**
    * The initial breakpoint to open the sheet modal. This must be included in the
@@ -164,10 +164,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     prepareOverlay(this.el);
   }
 
-  componentWillLoad() {
-    this.breakpoints = this.breakpoints && this.breakpoints.sort((a, b) => a - b);
-  }
-
   /**
    * Present the modal overlay after it has been created.
    */
@@ -198,10 +194,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     // After the sheet has been initialized, we need to transform the
-    // modal to th initial breakpoint
+    // modal to the initial breakpoint
     if (this.type === 'sheet') {
-      const wrapper = this.animation!.childAnimations[0];
-      wrapper.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
+      const { animation } = this;
+      const wrapperAnimation = animation!.childAnimations.find(ani => ani.id === 'wrapperAnimation')!;
+      const backdropAnimation = animation!.childAnimations.find(ani => ani.id === 'backdropAnimation')!;
+
+      wrapperAnimation.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
+      backdropAnimation.keyframes(SheetDefaults.BACKDROP_KEYFRAMES);
 
       this.animation!.progressStart(true, 1 - this.initialBreakpoint);
     }
@@ -244,10 +244,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (getIonMode(this) !== 'ios') { return; }
 
     const ani = this.animation!;
+    const sortBreakpoints = (this.breakpoints?.sort((a, b) => a - b)) || [];
 
     this.gesture = createSheetGesture(
       this.el,
       ani,
+      sortBreakpoints,
       () => {
         /**
          * While the gesture animation is finishing

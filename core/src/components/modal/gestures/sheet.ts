@@ -7,6 +7,10 @@ export const SheetDefaults = {
   WRAPPER_KEYFRAMES: [
     { offset: 0, transform: 'translateY(0vh)' },
     { offset: 1, transform: 'translateY(100vh)' }
+  ],
+  BACKDROP_KEYFRAMES: [
+    { offset: 0, opacity: 'var(--backdrop-opacity)' },
+    { offset: 1, opacity: 0.01 }
   ]
 };
 
@@ -16,15 +20,15 @@ let offset = 0;
 export const createSheetGesture = (
   el: HTMLIonModalElement,
   animation: Animation,
+  breakpoints: number[] = [],
   onDismiss: () => void
 ) => {
   const contentEl = el.querySelector('ion-content');
   const height = window.innerHeight;
   let currentBreakpoint = el.initialBreakpoint;
-  const breakpoints = el.breakpoints;
-  const maxBreakpoint = breakpoints && breakpoints[breakpoints.length - 1];
+  //const maxBreakpoint = breakpoints && breakpoints[breakpoints.length - 1];
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
-  const initialWrapperKeyframes = SheetDefaults.WRAPPER_KEYFRAMES;
+  const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
 
   const canStart = () => true;
 
@@ -37,31 +41,30 @@ export const createSheetGesture = (
     }
 
     animation.progressStart(true, 1 - currentBreakpoint);
+    console.log('current breakpoint', currentBreakpoint)
   };
 
   const onMove = (detail: GestureDetail) => {
     const target = detail.event.target as HTMLElement | null;
 
+    // If we're not dragging inside of the content we need to allow
+    // the modal to drag higher than the maximum breakpoint
     const content = target!.closest('ion-content');
-
-    if (content === null) {
-      // If we're not dragging inside of the content we need to allow
-      // the modal to drag higher than the maximum breakpoint
-      console.log('we are dragging above content, go beyond max breakpoint');
-    } else {
+    if (content !== null) {
       // Target is in the content, we need to allow the modal to increase height
       // until the maximum breakpoint is reached and then allow scrolling the content
       content.scrollY = false;
 
+      /*
       if (wrapperAnimation && maxBreakpoint) {
         wrapperAnimation.keyframes([
           { offset: 0, transform: `translateY(${(1 - maxBreakpoint) * 100}vh)` },
           { offset: 1, transform: `translateY(100vh)` }
         ]);
       }
+      */
 
       if (offset === 0.0001) {
-        console.log('AT MAX BREAKPOINT start scrolling');
         content.scrollY = true;
       }
     }
@@ -69,23 +72,17 @@ export const createSheetGesture = (
     const initialStep = 1 - currentBreakpoint;
     offset = clamp(0.0001, initialStep + (detail.deltaY / height), 0.9999);
 
-    console.log('offset', offset);
-
     animation.progressStep(offset);
   };
 
   const onEnd = (detail: GestureDetail) => {
     const velocity = detail.velocityY;
-    // const step = clamp(0.0001, detail.deltaY / height, 0.9999);
     const threshold = (detail.deltaY + velocity * 1000) / height;
     const diff = currentBreakpoint - threshold;
 
-    let closest = 0;
-    if (breakpoints) {
-      closest = breakpoints.reduce((a, b) => {
-        return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
-      });
-    }
+    let closest = breakpoints.reduce((a, b) => {
+      return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
+    });
 
     const shouldRemainOpen = closest !== 0;
     currentBreakpoint = 0;
@@ -93,12 +90,19 @@ export const createSheetGesture = (
     // TODO this is not returning properly sometimes when velocity is fast
     console.log('closest is', closest);
 
-    if (wrapperAnimation) {
+    if (wrapperAnimation && backdropAnimation) {
       wrapperAnimation.keyframes([
         { offset: 0, transform: `translateY(${offset * 100}vh)` },
         { offset: 1, transform: `translateY(${(1 - closest) * 100}vh)` }
       ]);
-      animation.progressStep(0);
+
+      console.log('hello', offset, closest)
+
+      backdropAnimation.keyframes([
+        { offset: 0, opacity: offset },
+        { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${closest})` },
+
+      ]);
     }
 
     // const duration = (shouldRemainOpen) ? computeDuration(step * height, velocity) : computeDuration((1 - step) * height, velocity);
@@ -108,8 +112,9 @@ export const createSheetGesture = (
     animation
       .onFinish(() => {
         if (shouldRemainOpen) {
-          if (wrapperAnimation) {
-            wrapperAnimation.keyframes(initialWrapperKeyframes);
+          if (wrapperAnimation && backdropAnimation) {
+            wrapperAnimation.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
+            backdropAnimation.keyframes(SheetDefaults.BACKDROP_KEYFRAMES);
             animation.progressStart(true, 1 - closest);
             currentBreakpoint = closest;
           }

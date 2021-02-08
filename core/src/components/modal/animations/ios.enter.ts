@@ -13,10 +13,11 @@ export const iosEnterAnimation = (
   // far from the top, otherwise we will transform it to the top (0vh)
   const initialBreakpoint = (baseEl as HTMLIonModalElement).initialBreakpoint;
   const initialHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}vh` : '0vh';
+  const initialOpacity = initialBreakpoint ? `calc(var(--backdrop-opacity) * ${initialBreakpoint})` : 'var(--backdrop-opacity)';
 
-  const backdropAnimation = createAnimation()
+  const backdropAnimation = createAnimation('backdropAnimation')
     .addElement(baseEl.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
+    .fromTo('opacity', 0.01, initialOpacity)
     .beforeStyles({
       'pointer-events': 'none'
     })
