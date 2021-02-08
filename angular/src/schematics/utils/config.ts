@@ -62,10 +62,10 @@ export function addStyle(host: Tree, projectName: string, stylePath: string) {
   writeConfig(host, config);
 }
 
-export function addAsset(host: Tree, projectName: string, asset: string | {glob: string; input: string; output: string}) {
+export function addAsset(host: Tree, projectName: string, architect: string, asset: string | {glob: string; input: string; output: string}) {
   const config = readConfig(host);
   const appConfig = getAngularAppConfig(config, projectName);
-  appConfig.architect.build.options.assets.push(asset);
+  appConfig.architect[architect].options.assets.push(asset);
   writeConfig(host, config);
 }
 

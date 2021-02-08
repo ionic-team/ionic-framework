@@ -921,22 +921,31 @@
       // create component to open
       const element = document.createElement('div');
       element.innerHTML = `
-      <ion-header>
+      <ion-header translucent="true">
         <ion-toolbar>
           <ion-title>Super Modal</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
-        <h1>Content of doom</h1>
-        <div>Here's some more content</div>
-        <ion-button class="dismiss">Dismiss Modal</ion-button>
+      <ion-content fullscreen="true">
+        <ion-header collapse="condense">
+          <ion-toolbar>
+            <ion-title size="large">Super Modal</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <div class="ion-padding">
+          <h1>Content of doom</h1>
+          <div>Here's some more content</div>
+          <ion-button class="dismiss">Dismiss Modal</ion-button>
+        </div>
       </ion-content>
       `;
 
 
       // present the modal
       const modalElement = Object.assign(document.createElement('ion-modal'), {
-        component: element
+        component: element,
+        swipeToClose: true,
+        presentingElement: document.querySelector('ion-tabs')
       });
 
       // listen for close event
