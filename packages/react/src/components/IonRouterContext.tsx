@@ -44,10 +44,11 @@ export function useIonRouter(): UseIonRouterResult {
     push: context.push,
     goBack: context.back,
     canGoBack: context.canGoBack,
+    routeInfo: context.routeInfo,
   };
 }
 
-type UseIonRouterResult = {
+export type UseIonRouterResult = {
   /**
    * @deprecated - Use goBack instead
    * @param animationBuilder - Optional - A custom transition animation to use
@@ -77,4 +78,5 @@ type UseIonRouterResult = {
    * Determines if there are any additional routes in the the Router's history. However, routing is not prevented if the browser's history has more entries. Returns true if more entries exist, false if not.
    */
   canGoBack(): boolean;
+  routeInfo: RouteInfo;
 };

@@ -17,6 +17,7 @@ interface NavManager<T = any> {
 interface ComponentOptions {
   modelProp?: string;
   modelUpdateEvent?: string;
+  externalModelUpdateEvent?: string;
 }
 
 const getComponentClasses = (classes: unknown) => {
@@ -40,7 +41,7 @@ const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: 
 * integrations.
 */
 export const defineContainer = <Props>(name: string, componentProps: string[] = [], componentOptions: ComponentOptions = {}) => {
-  const { modelProp, modelUpdateEvent } = componentOptions;
+  const { modelProp, modelUpdateEvent, externalModelUpdateEvent } = componentOptions;
 
   /**
   * Create a Vue component wrapper around a Web Component.
@@ -57,6 +58,16 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
         vnode.el.addEventListener(modelUpdateEvent.toLowerCase(), (e: Event) => {
           modelPropValue = (e?.target as any)[modelProp];
           emit(UPDATE_VALUE_EVENT, modelPropValue);
+
+          /**
+           * We need to emit the change event here
+           * rather than on the web component to ensure
+           * that any v-model bindings have been updated.
+           * Otherwise, the developer will listen on the
+           * native web component, but the v-model will
+           * not have been updated yet.
+           */
+          emit(externalModelUpdateEvent, e);
         });
       }
     };
@@ -101,7 +112,7 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
         ref: containerRef,
         class: getElementClasses(containerRef, classes),
         onClick: handleClick,
-        onVnodeBeforeMount: (modelUpdateEvent) ? onVnodeBeforeMount : undefined
+        onVnodeBeforeMount: (modelUpdateEvent && externalModelUpdateEvent) ? onVnodeBeforeMount : undefined
       };
 
       if (modelProp) {
@@ -119,7 +130,7 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
   Container.props = [...componentProps, ROUTER_LINK_VALUE];
   if (modelProp) {
     Container.props.push(MODEL_VALUE);
-    Container.emits = [UPDATE_VALUE_EVENT];
+    Container.emits = [UPDATE_VALUE_EVENT, externalModelUpdateEvent];
   }
 
   return Container;

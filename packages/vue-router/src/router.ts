@@ -202,8 +202,17 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
         } else if (routeInfo.routerAction === 'replace') {
           const currentRouteInfo = locationHistory.current();
+
+          /**
+           * If going from /home to /child, then replacing from
+           * /child to /home, we don't want the route info to
+           * say that /home was pushed by /home which is not correct.
+           */
+          const currentPushedBy = currentRouteInfo?.pushedByRoute;
+          const pushedByRoute = (currentPushedBy !== undefined && currentPushedBy !== routeInfo.pathname) ? currentPushedBy : routeInfo.pushedByRoute;
+
           routeInfo.lastPathname = currentRouteInfo?.pathname || routeInfo.lastPathname;
-          routeInfo.pushedByRoute = currentRouteInfo?.pushedByRoute || routeInfo.pushedByRoute;
+          routeInfo.pushedByRoute = pushedByRoute;
           routeInfo.routerDirection = currentRouteInfo?.routerDirection || routeInfo.routerDirection;
           routeInfo.routerAnimation = currentRouteInfo?.routerAnimation || routeInfo.routerAnimation;
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
