@@ -11,7 +11,7 @@ $select-md-padding-top:         $item-md-padding-top !default;
 $select-md-padding-end:         0 !default;
 
 /// @prop - Padding bottom of the select
-$select-md-padding-bottom:      $item-md-padding-bottom !default;
+$select-md-padding-bottom:      $select-md-padding-top !default;
 
 /// @prop - Padding start of the select
 $select-md-padding-start:       $item-md-padding-start !default;

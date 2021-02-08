@@ -47,7 +47,6 @@ The `@ionic/core` package can by used in simple HTML, or by vanilla JavaScript w
 ## Related
 
 * [Ionic Documentation](https://ionicframework.com/docs/)
-* [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/)
 * [Ionic Forum](https://forum.ionicframework.com/)
 * [Ionicons](http://ionicons.com/)
 * [Stencil](https://stenciljs.com/)

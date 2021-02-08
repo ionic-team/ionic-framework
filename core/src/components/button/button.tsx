@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { hasShadowDom } from '../../utils/helpers';
+import { hasShadowDom, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -28,6 +28,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inItem = false;
   private inListHeader = false;
   private inToolbar = false;
+  private inheritedAttributes: { [k: string]: any } = {};
 
   @Element() el!: HTMLElement;
 
@@ -46,20 +47,20 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * If `true`, the user cannot interact with the button.
    */
-  @Prop({ reflectToAttr: true }) disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
    * without left and right borders.
    */
-  @Prop({ reflectToAttr: true }) expand?: 'full' | 'block';
+  @Prop({ reflect: true }) expand?: 'full' | 'block';
 
   /**
    * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
    * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
    * a toolbar, where the default is `"clear"`.
    */
-  @Prop({ reflectToAttr: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
+  @Prop({ reflect: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
 
   /**
    * When using a router, it specifies the transition direction when navigating to
@@ -96,12 +97,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * The button shape.
    */
-  @Prop({ reflectToAttr: true }) shape?: 'round';
+  @Prop({ reflect: true }) shape?: 'round';
 
   /**
    * The button size.
    */
-  @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
+  @Prop({ reflect: true }) size?: 'small' | 'default' | 'large';
 
   /**
    * If `true`, activates a button with a heavier font weight.
@@ -134,10 +135,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inToolbar = !!this.el.closest('ion-buttons');
     this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
   private get hasIconOnly() {
-    return !!this.el.querySelector('ion-icon[slot="icon-only"]');
+    return !!this.el.querySelector('[slot="icon-only"]');
   }
 
   private get rippleType() {
@@ -184,7 +186,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   render() {
     const mode = getIonMode(this);
-    const { buttonType, type, disabled, rel, target, size, href, color, expand, hasIconOnly, shape, strong } = this;
+    const { buttonType, type, disabled, rel, target, size, href, color, expand, hasIconOnly, shape, strong, inheritedAttributes } = this;
     const finalSize = size === undefined && this.inItem ? 'small' : size;
     const TagType = href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
@@ -204,8 +206,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       <Host
         onClick={this.handleClick}
         aria-disabled={disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(color),
+        class={createColorClasses(color, {
           [mode]: true,
           [buttonType]: true,
           [`${buttonType}-${expand}`]: expand !== undefined,
@@ -219,7 +220,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           'button-disabled': disabled,
           'ion-activatable': true,
           'ion-focusable': true,
-        }}
+        })}
       >
         <TagType
           {...attrs}
@@ -228,6 +229,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           disabled={disabled}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
+          {...inheritedAttributes}
         >
           <span class="button-inner">
             <slot name="icon-only"></slot>

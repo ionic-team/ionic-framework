@@ -49,4 +49,13 @@
     </ion-toolbar>
   </ion-header>
 </template>
+
+<script>
+import { IonButtons, IonHeader, IonMenuButton, IonToolbar } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonButtons, IonHeader, IonMenuButton, IonToolbar }
+});
+</script>
 ```

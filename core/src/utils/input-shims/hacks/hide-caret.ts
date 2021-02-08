@@ -1,3 +1,5 @@
+import { addEventListener, removeEventListener } from '../../helpers';
+
 import { isFocused, relocateInput } from './common';
 
 export const enableHideCaretOnScroll = (componentEl: HTMLElement, inputEl: HTMLInputElement | HTMLTextAreaElement | undefined, scrollEl: HTMLIonContentElement | undefined) => {
@@ -15,13 +17,13 @@ export const enableHideCaretOnScroll = (componentEl: HTMLElement, inputEl: HTMLI
   const hideCaret = () => scrollHideCaret(true);
   const showCaret = () => scrollHideCaret(false);
 
-  scrollEl.addEventListener('ionScrollStart', hideCaret);
-  scrollEl.addEventListener('ionScrollEnd', showCaret);
+  addEventListener(scrollEl, 'ionScrollStart', hideCaret);
+  addEventListener(scrollEl, 'ionScrollEnd', showCaret);
   inputEl.addEventListener('blur', onBlur);
 
   return () => {
-    scrollEl.removeEventListener('ionScrollStart', hideCaret);
-    scrollEl.removeEventListener('ionScrollEnd', showCaret);
+    removeEventListener(scrollEl, 'ionScrollStart', hideCaret);
+    removeEventListener(scrollEl, 'ionScrollEnd', showCaret);
     inputEl.addEventListener('ionBlur', onBlur);
   };
 };

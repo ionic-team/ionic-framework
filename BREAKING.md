@@ -4,9 +4,46 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Versions
 
+- [Version 6.x](#version-6x)
 - [Version 5.x](#version-5x)
 - [Version 4.x](#version-4x)
 - [Legacy](#legacy)
+
+
+## Version 6.x
+
+- [Components](#components)
+  * [Header](#header)
+  * [Toast](#toast)
+- [Config](#config)
+  * [Transition Shadow](#transition-shadow)
+
+
+
+### Components
+
+#### Header
+
+When using a collapsible large title, the last toolbar in the header with `collapse="condense"` no longer has a border. This does not affect the toolbar when the large title is collapsed.
+
+To get the old style back, add the following CSS to your global stylesheet:
+
+```css
+ion-header.header-collapse-condense ion-toolbar:last-of-type {
+  --border-width: 0 0 0.55px;
+}
+```
+
+#### Toast
+
+The `--white-space` CSS variable now defaults to `normal` instead of `pre-wrap`.
+
+
+### Config
+
+#### Transition Shadow
+
+The `experimentalTransitionShadow` config option has been removed. The transition shadow is now enabled when running in `ios` mode.
 
 
 ## Version 5.x

@@ -252,12 +252,16 @@ export class RangeExample {
 </template>
 
 <script>
-export default {
+import { IonItem, IonLabel, IonList, IonRange } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {  IonItem, IonLabel, IonList, IonRange },
   mounted() {
     // Sets initial value for dual-knob ion-range
     this.$refs.rangeDualKnobs.value = { lower: 24, upper: 42 };
   }
-}
+});
 </script>
 ```
 
@@ -268,7 +272,7 @@ export default {
 | Property    | Attribute    | Description                                                                                                                                                                                                                                                            | Type                                          | Default     |
 | ----------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- | ----------- |
 | `color`     | `color`      | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                         | `undefined` |
-| `debounce`  | `debounce`   | How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value.                                                                                                                                                              | `number`                                      | `0`         |
+| `debounce`  | `debounce`   | How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. This also impacts form bindings such as `ngModel` or `v-model`.                                                                                              | `number`                                      | `0`         |
 | `disabled`  | `disabled`   | If `true`, the user cannot interact with the range.                                                                                                                                                                                                                    | `boolean`                                     | `false`     |
 | `dualKnobs` | `dual-knobs` | Show two knobs.                                                                                                                                                                                                                                                        | `boolean`                                     | `false`     |
 | `max`       | `max`        | Maximum integer value of the range.                                                                                                                                                                                                                                    | `number`                                      | `100`       |

@@ -22,4 +22,13 @@
 
   </ion-content>
 </template>
+
+<script>
+import { IonContent, IonFab, IonFabButton } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonContent, IonFab, IonFabButton }
+});
+</script>
 ```

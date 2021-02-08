@@ -198,7 +198,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     }
   }
 
-  componentDidUnload() {
+  disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;

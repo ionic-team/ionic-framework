@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
-import { debounceEvent, findItemLabel, raf } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, inheritAttributes, raf } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -19,9 +19,20 @@ import { createColorClasses } from '../../utils/theme';
 export class Textarea implements ComponentInterface {
 
   private nativeInput?: HTMLTextAreaElement;
-  private inputId = `ion-input-${textareaIds++}`;
+  private inputId = `ion-textarea-${textareaIds++}`;
   private didBlurAfterEdit = false;
   private textareaWrapper?: HTMLElement;
+  private inheritedAttributes: { [k: string]: any } = {};
+
+  /**
+   * This is required for a WebKit bug which requires us to
+   * blur and focus an input to properly focus the input in
+   * an item with delegatesFocus. It will no longer be needed
+   * with iOS 14.
+   *
+   * @internal
+   */
+  @Prop() fireFocusEvents = true;
 
   @Element() el!: HTMLElement;
 
@@ -50,7 +61,7 @@ export class Textarea implements ComponentInterface {
   @Prop({ mutable: true }) clearOnEdit = false;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
    */
   @Prop() debounce = 0;
 
@@ -202,6 +213,10 @@ export class Textarea implements ComponentInterface {
     }
   }
 
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['title']);
+  }
+
   componentDidLoad() {
     raf(() => this.runAutoGrow());
   }
@@ -220,13 +235,25 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * Sets focus on the specified `ion-textarea`. Use this method instead of the global
-   * `input.focus()`.
+   * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global
+   * `textarea.focus()`.
    */
   @Method()
   async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
+    }
+  }
+
+  /**
+   * Sets blur on the native `textarea` in `ion-textarea`. Use this method instead of the global
+   * `textarea.blur()`.
+   * @internal
+   */
+  @Method()
+  async setBlur() {
+    if (this.nativeInput) {
+      this.nativeInput.blur();
     }
   }
 
@@ -296,14 +323,18 @@ export class Textarea implements ComponentInterface {
     this.hasFocus = true;
     this.focusChange();
 
-    this.ionFocus.emit(ev);
+    if (this.fireFocusEvents) {
+      this.ionFocus.emit(ev);
+    }
   }
 
   private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChange();
 
-    this.ionBlur.emit(ev);
+    if (this.fireFocusEvents) {
+      this.ionBlur.emit(ev);
+    }
   }
 
   private onKeyDown = () => {
@@ -322,10 +353,9 @@ export class Textarea implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
-        }}
+        })}
       >
         <div
           class="textarea-wrapper"
@@ -354,6 +384,7 @@ export class Textarea implements ComponentInterface {
             onBlur={this.onBlur}
             onFocus={this.onFocus}
             onKeyDown={this.onKeyDown}
+            {...this.inheritedAttributes}
           >
             {value}
           </textarea>

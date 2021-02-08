@@ -1,14 +1,29 @@
 import React, { useState, ReactElement } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonRouterOutlet } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonRouterOutlet,
+} from '@ionic/react';
 import { Route, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 const DynamicRoutes: React.FC = () => {
-
-  const [routes, setRoutes] = useState<ReactElement[]>([<Route key='sldjflsdj' path='/dynamic-routes/home' render={() => <Home update={addRoute} />} exact={true} />])
+  const [routes, setRoutes] = useState<ReactElement[]>([
+    <Route
+      key="sldjflsdj"
+      path="/dynamic-routes/home"
+      render={() => <Home update={addRoute} />}
+      exact={true}
+    />,
+  ]);
 
   const addRoute = () => {
-    const newRoute = <Route key='lsdjldj' path='/dynamic-routes/newRoute' component={NewRoute} exact={true} />;
+    const newRoute = (
+      <Route key="lsdjldj" path="/dynamic-routes/newRoute" component={NewRoute} exact={true} />
+    );
     setRoutes([...routes, newRoute]);
   };
 
@@ -27,7 +42,6 @@ export default DynamicRoutes;
 const Home: React.FC<{
   update: Function;
 }> = (props) => {
-
   const updateRoute = () => {
     props.update();
   };
@@ -46,16 +60,18 @@ const Home: React.FC<{
           </IonToolbar>
         </IonHeader>
         <div className="container">
-          <strong>Click Add Route Button</strong><br />
-          <button className="" onClick={() => updateRoute()}>Add Route</button><br />
+          <strong>Click Add Route Button</strong>
+          <br />
+          <button className="" onClick={() => updateRoute()}>
+            Add Route
+          </button>
+          <br />
           <Link to="/dynamic-routes/newRoute">Take me to the newRoute</Link>
         </div>
       </IonContent>
     </IonPage>
   );
 };
-
-
 
 const NewRoute: React.FC = () => {
   return (
@@ -77,7 +93,6 @@ const NewRoute: React.FC = () => {
 };
 
 const Failed: React.FC = () => {
-
   return (
     <IonPage data-pageid="dynamic-routes-failed">
       <IonHeader>

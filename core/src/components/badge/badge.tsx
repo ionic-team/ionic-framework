@@ -27,10 +27,9 @@ export class Badge implements ComponentInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
-        }}
+        })}
       >
         <slot></slot>
       </Host>

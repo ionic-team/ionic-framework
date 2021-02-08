@@ -30,6 +30,38 @@ describe('Datetime', () => {
       expect(monthvalue).toEqual(date.getMonth() + 1);
       expect(yearValue).toEqual(date.getFullYear());
     });
+
+    it('it should return the date value for a given time', () => {
+      const dateTimeData: DatetimeData = {
+        hour: 2,
+        minute: 23,
+        tzOffset: 0
+      };
+
+      const hourValue = getDateValue(dateTimeData, 'hh');
+      const minuteValue = getDateValue(dateTimeData, 'mm');
+      const ampmValue = getDateValue(dateTimeData, 'A');
+
+      expect(hourValue).toEqual(2);
+      expect(minuteValue).toEqual(23);
+      expect(ampmValue).toEqual("am");
+    });
+
+    it('it should return the date value for a given time after 12', () => {
+      const dateTimeData: DatetimeData = {
+        hour: 16,
+        minute: 47,
+        tzOffset: 0
+      };
+
+      const hourValue = getDateValue(dateTimeData, 'hh');
+      const minuteValue = getDateValue(dateTimeData, 'mm');
+      const ampmValue = getDateValue(dateTimeData, 'a');
+
+      expect(hourValue).toEqual(4);
+      expect(minuteValue).toEqual(47);
+      expect(ampmValue).toEqual("pm");
+    });
   });
 
   describe('getDateTime()', () => {

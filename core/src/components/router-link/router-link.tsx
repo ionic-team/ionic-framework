@@ -63,11 +63,10 @@ export class RouterLink implements ComponentInterface {
     return (
       <Host
         onClick={this.onClick}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'ion-activatable': true
-        }}
+        })}
       >
         <a {...attrs}>
           <slot></slot>

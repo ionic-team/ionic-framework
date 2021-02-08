@@ -1,12 +1,10 @@
 {
   "extends": ["tslint-ionic-rules/strict", "tslint-react"],
   "linterOptions": {
-    "exclude": [
-      "**/*.spec.ts",
-      "**/*.spec.tsx"
-    ]
+    "exclude": ["**/*.spec.ts", "**/*.spec.tsx"]
   },
   "rules": {
+    "arrow-parens": false,
     "no-conditional-assignment": false,
     "no-non-null-assertion": false,
     "no-unnecessary-type-assertion": false,
@@ -34,6 +32,7 @@
     "prefer-conditional-expression": false,
     "strict-type-predicates": false,
     "interface-over-type-literal": false,
-    "prefer-object-spread": false
+    "prefer-object-spread": false,
+    "whitespace": false
   }
 }

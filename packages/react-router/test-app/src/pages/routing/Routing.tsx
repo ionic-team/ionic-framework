@@ -1,14 +1,22 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonRouterOutlet, IonSplitPane } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonRouterOutlet,
+  IonSplitPane,
+} from '@ionic/react';
 import Menu from './Menu';
 import { Route, Redirect } from 'react-router';
 import Tabs from './Tabs';
 import Favorites from './Favorites';
 import OtherPage from './OtherPage';
 import PropsTest from './PropsTest';
+import RedirectRouting from './RedirectRouting';
 
-interface RoutingProps {
-}
+interface RoutingProps {}
 
 const Routing: React.FC<RoutingProps> = () => {
   return (
@@ -35,9 +43,18 @@ const Routing: React.FC<RoutingProps> = () => {
       }} /> */}
         <Route path="/routing/otherpage" component={OtherPage} />
         <Route path="/routing/propstest" component={PropsTest} />
-        <Route render={() => <IonPage data-pageid="not-found"><IonContent><div>Not found</div></IonContent></IonPage>} />
+        <Route path="/routing/redirect" render={() => <Redirect to="/routing/tabs" />} />
+        <Route path="/routing/redirect-routing" render={() => <RedirectRouting />} />
+        <Route
+          render={() => (
+            <IonPage data-pageid="not-found">
+              <IonContent>
+                <div>Not found</div>
+              </IonContent>
+            </IonPage>
+          )}
+        />
         {/* <Route render={() => <Redirect to="/tabs" />} /> */}
-
       </IonRouterOutlet>
     </IonSplitPane>
   );

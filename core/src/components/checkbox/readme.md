@@ -228,24 +228,29 @@ export class CheckboxExample {
       <ion-label>{{entry.val}}</ion-label>
       <ion-checkbox
         slot="end"
-        @input="entry.checked = $event.target.value"
-        :value="entry.isChecked">
+        @update:modelValue="entry.isChecked = $event"
+        :modelValue="entry.isChecked">
       </ion-checkbox>
     </ion-item>
   </ion-list>
 </template>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { IonCheckbox, IonItem, IonLabel, IonList } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    form = [
+export default defineComponent({
+  components: { IonCheckbox, IonItem, IonLabel, IonList },
+  setup() {
+    const form = [
       { val: 'Pepperoni', isChecked: true },
       { val: 'Sausage', isChecked: false },
       { val: 'Mushroom', isChecked: false }
     ];
+    
+    return { form };
   }
+});
 </script>
 ```
 
@@ -261,16 +266,16 @@ export class CheckboxExample {
 | `indeterminate` | `indeterminate` | If `true`, the checkbox will visually appear as indeterminate.                                                                                                                                                                                                         | `boolean`             | `false`        |
 | `mode`          | `mode`          | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`       | `undefined`    |
 | `name`          | `name`          | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`              | `this.inputId` |
-| `value`         | `value`         | The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.                  | `string`              | `'on'`         |
+| `value`         | `value`         | The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.           | `string`              | `'on'`         |
 
 
 ## Events
 
 | Event       | Description                                    | Type                                     |
 | ----------- | ---------------------------------------------- | ---------------------------------------- |
-| `ionBlur`   | Emitted when the toggle loses focus.           | `CustomEvent<void>`                      |
+| `ionBlur`   | Emitted when the checkbox loses focus.         | `CustomEvent<void>`                      |
 | `ionChange` | Emitted when the checked property has changed. | `CustomEvent<CheckboxChangeEventDetail>` |
-| `ionFocus`  | Emitted when the toggle has focus.             | `CustomEvent<void>`                      |
+| `ionFocus`  | Emitted when the checkbox has focus.           | `CustomEvent<void>`                      |
 
 
 ## Shadow Parts

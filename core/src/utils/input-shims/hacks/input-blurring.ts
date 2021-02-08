@@ -1,5 +1,6 @@
+import { addEventListener, removeEventListener } from '../../helpers';
 
-const SKIP_SELECTOR = 'input, textarea, [no-blur]';
+const SKIP_SELECTOR = 'input, textarea, [no-blur], [contenteditable]';
 
 export const enableInputBlurring = () => {
   let focused = true;
@@ -48,12 +49,12 @@ export const enableInputBlurring = () => {
     }, 50);
   };
 
-  doc.addEventListener('ionScrollStart', onScroll);
+  addEventListener(doc, 'ionScrollStart', onScroll);
   doc.addEventListener('focusin', onFocusin, true);
   doc.addEventListener('touchend', onTouchend, false);
 
   return () => {
-    doc.removeEventListener('ionScrollStart', onScroll, true);
+    removeEventListener(doc, 'ionScrollStart', onScroll, true);
     doc.removeEventListener('focusin', onFocusin, true);
     doc.removeEventListener('touchend', onTouchend, false);
   };

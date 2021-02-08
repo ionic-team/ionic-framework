@@ -423,7 +423,7 @@ export class MenuExample {
     </ion-content>
   </ion-menu>
 
-  <ion-router-outlet main></ion-router-outlet>
+  <ion-router-outlet id="main"></ion-router-outlet>
 </template>
 <style>
 .my-custom-menu {
@@ -431,26 +431,45 @@ export class MenuExample {
 }
 </style>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { 
+  IonContent, 
+  IonHeader, 
+  IonItem, 
+  IonList, 
+  IonMenu, 
+  IonRouterOutlet,
+  IonTitle, 
+  IonToolbar,
+  menuController
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-
+export default defineComponent({
+  components: {
+    IonContent, 
+    IonHeader, 
+    IonItem, 
+    IonList, 
+    IonMenu, 
+    IonRouterOutlet,
+    IonTitle, 
+    IonToolbar
+  },
+  methods: {
     openFirst() {
-      this.menu.enable(true, 'first');
-      this.menu.open('first');
-    }
-
+      menuController.enable(true, 'first');
+      menuController.open('first');
+    },
     openEnd() {
-      this.menu.open('end');
-    }
-
+      menuController.open('end');
+    },
     openCustom() {
-      this.menu.enable(true, 'custom');
-      this.menu.open('custom');
+      menuController.enable(true, 'custom');
+      menuController.open('custom');
     }
   }
+});
 </script>
 ```
 

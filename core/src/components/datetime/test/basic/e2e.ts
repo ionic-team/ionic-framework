@@ -5,19 +5,22 @@ const getActiveElementText = async (page) => {
   return await page.evaluate(el => el && el.textContent, activeElement);
 }
 
+const getActiveElementClass = async (page) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement);
+  return await page.evaluate(el => el && el.className, activeElement);
+}
+
 test('datetime/picker: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/datetime/test/basic?ionic:_testing=true' });
-
   await page.click('#datetime-part');
   await page.waitForSelector('#datetime-part');
 
   let datetime = await page.find('ion-datetime');
 
   expect(datetime).not.toBe(null);
-  await datetime.waitForVisible();
 
   // TODO fix
-  await page.waitFor(100);
+  await page.waitFor(250);
 
   await page.keyboard.press('Tab');
 
@@ -28,8 +31,8 @@ test('datetime/picker: focus trap', async () => {
   await page.keyboard.press('Tab');
   await page.keyboard.up('Shift');
 
-  const activeElementTextTwo = await getActiveElementText(page);
-  expect(activeElementTextTwo).toEqual('1920');
+  const activeElementClass = await getActiveElementClass(page);
+  expect(activeElementClass).toEqual('picker-opt');
 
   await page.keyboard.press('Tab');
 
