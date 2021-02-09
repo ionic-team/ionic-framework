@@ -85,6 +85,8 @@ describe('Tabs', () => {
   });
 
   it('should go back from a tabs page to a non-tabs page using ion-back-button', () => {
+    cy.visit('http://localhost:8080');
+
     cy.get('#tabs').click();
     cy.ionPageVisible('tab1');
 
@@ -97,6 +99,8 @@ describe('Tabs', () => {
   });
 
   it('should properly clear stack when leaving tabs', () => {
+    cy.visit('http://localhost:8080/');
+
     cy.get('#tabs').click();
     cy.ionPageVisible('tab1');
 
@@ -146,6 +150,62 @@ describe('Tabs', () => {
     cy.get('ion-tab-button#tab-button-tab3-secondary').click();
     cy.ionPageVisible('tab3-secondary');
     cy.ionPageHidden('tab1-secondary');
+  });
+
+  // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519
+  it('should show correct tab when switching between tabbed and non-tabbed contexts', () => {
+    cy.visit('http://localhost:8080/routing');
+
+    cy.get('[data-pageid="routing"] #tab1').click();
+    cy.ionPageHidden('routing');
+    cy.ionPageVisible('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab2').click();
+    cy.ionPageHidden('tab1');
+    cy.ionPageVisible('tab2');
+
+    cy.get('[data-pageid="tab2"] #routing').click();
+    cy.ionPageVisible('routing');
+    cy.ionPageHidden('tabs');
+
+    cy.get('[data-pageid="routing"] #tab1').click();
+    cy.ionPageVisible('tab1');
+    cy.ionPageHidden('routing');
+    cy.ionPageHidden('tab2');
+  });
+
+  // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519
+  it('should not create a new tabs instance when switching between tabbed and non-tabbed contexts', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.routerPush('/');
+    cy.ionPageHidden('tabs');
+    cy.ionPageVisible('home');
+
+    cy.routerPush('/tabs/tab2');
+    cy.ionPageHidden('tab1');
+
+    cy.ionPageHidden('home');
+
+    cy.ionPageVisible('tab2');
+    cy.ionPageVisible('tabs');
+  });
+
+  // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519
+  it('should not create a new tabs instance when switching between tabbed and non-tabbed contexts - new tabs setup', () => {
+    cy.visit('http://localhost:8080/tabs-new/tab1');
+
+    cy.routerPush('/');
+    cy.ionPageHidden('tabs');
+    cy.ionPageVisible('home');
+
+    cy.routerPush('/tabs-new/tab2');
+    cy.ionPageHidden('tab1');
+
+    cy.ionPageHidden('home');
+
+    cy.ionPageVisible('tab2');
+    cy.ionPageVisible('tabs');
   });
 })
 

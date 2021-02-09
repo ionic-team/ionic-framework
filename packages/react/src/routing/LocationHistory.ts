@@ -55,7 +55,7 @@ export class LocationHistory {
     const routeInfos = this._getRouteInfosByKey(routeInfo.tab);
     if (routeInfos) {
       // If the latest routeInfo is the same (going back and forth between tabs), replace it
-      if (routeInfos[routeInfos.length - 1]?.id === routeInfo.id) {
+      if (this._areRoutesEqual(routeInfos[routeInfos.length - 1], routeInfo)) {
         routeInfos.pop();
       }
       routeInfos.push(routeInfo);
@@ -63,27 +63,27 @@ export class LocationHistory {
     this.locationHistory.push(routeInfo);
   }
 
+  private _areRoutesEqual(route1?: RouteInfo, route2?: RouteInfo) {
+    if(!route1 || !route2) {
+      return false;
+    }
+    return route1.pathname === route2.pathname && route1.search === route2.search;
+  }
+
   private _pop(routeInfo: RouteInfo) {
     const routeInfos = this._getRouteInfosByKey(routeInfo.tab);
-    let ri: RouteInfo;
+
     if (routeInfos) {
-      // Pop all routes until we are back
-      ri = routeInfos[routeInfos.length - 1];
-      while (ri && ri.id !== routeInfo.id) {
-        routeInfos.pop();
-        ri = routeInfos[routeInfos.length - 1];
-      }
-      // Replace with updated route
+      // Pop the previous route
+      routeInfos.pop();
+      // Replace the current route with an updated version
       routeInfos.pop();
       routeInfos.push(routeInfo);
     }
 
-    ri = this.locationHistory[this.locationHistory.length - 1];
-    while (ri && ri.id !== routeInfo.id) {
-      this.locationHistory.pop();
-      ri = this.locationHistory[this.locationHistory.length - 1];
-    }
-    // Replace with updated route
+    // Pop the previous route
+    this.locationHistory.pop();
+    // Replace the current route with an updated version
     this.locationHistory.pop();
     this.locationHistory.push(routeInfo);
   }
