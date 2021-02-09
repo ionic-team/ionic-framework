@@ -14,7 +14,9 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Components](#components)
   * [Header](#header)
+  * [Tab Bar](#tab-bar)
   * [Toast](#toast)
+  * [Toolbar](#toolbar)
 - [Config](#config)
   * [Transition Shadow](#transition-shadow)
 
@@ -34,9 +36,25 @@ ion-header.header-collapse-condense ion-toolbar:last-of-type {
 }
 ```
 
+#### Tab Bar
+
+The default iOS tab bar background color has been updated to better reflect the latest iOS styles. The new default value is:
+
+```css
+var(--ion-tab-bar-background, var(--ion-color-step-50, #f7f7f7));
+```
+
 #### Toast
 
 The `--white-space` CSS variable now defaults to `normal` instead of `pre-wrap`.
+
+#### Toolbar
+
+The default iOS toolbar background color has been updated to better reflect the latest iOS styles. The new default value is:
+
+```css
+var(--ion-toolbar-background, var(--ion-color-step-50, #f7f7f7));
+```
 
 
 ### Config
@@ -44,6 +62,7 @@ The `--white-space` CSS variable now defaults to `normal` instead of `pre-wrap`.
 #### Transition Shadow
 
 The `experimentalTransitionShadow` config option has been removed. The transition shadow is now enabled when running in `ios` mode.
+
 
 
 ## Version 5.x
