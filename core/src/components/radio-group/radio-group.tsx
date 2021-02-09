@@ -148,7 +148,6 @@ export class RadioGroup implements ComponentInterface {
 
         // Prevent browsers from jumping
         // to the bottom of the screen
-        // pls run tests
         ev.preventDefault();
       }
     }
