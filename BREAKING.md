@@ -41,7 +41,7 @@ ion-header.header-collapse-condense ion-toolbar:last-of-type {
 The default iOS tab bar background color has been updated to better reflect the latest iOS styles. The new default value is:
 
 ```css
-var(--ion-tab-bar-background, var(--ion-color-step-50, #f6f6f6));
+var(--ion-tab-bar-background, var(--ion-color-step-50, #f7f7f7));
 ```
 
 #### Toast
@@ -53,7 +53,7 @@ The `--white-space` CSS variable now defaults to `normal` instead of `pre-wrap`.
 The default iOS toolbar background color has been updated to better reflect the latest iOS styles. The new default value is:
 
 ```css
-var(--ion-toolbar-background, var(--ion-color-step-50, #f6f6f6));
+var(--ion-toolbar-background, var(--ion-color-step-50, #f7f7f7));
 ```
 
 
