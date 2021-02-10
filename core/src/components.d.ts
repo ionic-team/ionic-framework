@@ -574,6 +574,10 @@ export namespace Components {
          */
         "cancelText": string;
         /**
+          * The text to display on the picker's clear button.
+         */
+        "clearText": string;
+        /**
           * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
          */
         "dayNames"?: string[] | string;
@@ -3889,6 +3893,10 @@ declare namespace LocalJSX {
          */
         "cancelText"?: string;
         /**
+          * The text to display on the picker's clear button.
+         */
+        "clearText"?: string;
+        /**
           * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
          */
         "dayNames"?: string[] | string;
@@ -3964,6 +3972,10 @@ declare namespace LocalJSX {
           * Emitted when the value (selected date) has changed.
          */
         "onIonChange"?: (event: CustomEvent<DatetimeChangeEventDetail>) => void;
+        /**
+          * Emitted when the clear button was clicked.
+         */
+        "onIonClear"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the datetime has focus.
          */

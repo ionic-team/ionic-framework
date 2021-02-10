@@ -316,6 +316,7 @@ ion-content,part,scroll
 
 ion-datetime,shadow
 ion-datetime,prop,cancelText,string,'Cancel',false,false
+ion-datetime,prop,clearText,string,'Clear',false,false
 ion-datetime,prop,dayNames,string | string[] | undefined,undefined,false,false
 ion-datetime,prop,dayShortNames,string | string[] | undefined,undefined,false,false
 ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,false,false
@@ -342,6 +343,7 @@ ion-datetime,method,open,open() => Promise<void>
 ion-datetime,event,ionBlur,void,true
 ion-datetime,event,ionCancel,void,true
 ion-datetime,event,ionChange,DatetimeChangeEventDetail,true
+ion-datetime,event,ionClear,void,true
 ion-datetime,event,ionFocus,void,true
 ion-datetime,css-prop,--padding-bottom
 ion-datetime,css-prop,--padding-end
