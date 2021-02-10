@@ -22,7 +22,7 @@ community include:
 * Be respectful of differing opinions, viewpoints, and experiences
 * Giving and gracefully accepting constructive feedback
 * Accept responsibility and apologize to those affected by our mistakes,
-  and learning from the experience
+  and learn from the experience
 * Focus on what is best not just for us as individuals, but for the
   overall community
 
