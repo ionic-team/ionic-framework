@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
@@ -24,20 +23,47 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
 
   componentDidMount() {
     if (this.ionPageElementRef.current) {
+      if (this.context.isInOutlet()) {
+        this.ionPageElementRef.current.classList.add('ion-page-invisible');
+      }
       this.context.registerIonPage(this.ionPageElementRef.current, this.props.routeInfo!);
-      this.ionPageElementRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
-      this.ionPageElementRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
-      this.ionPageElementRef.current.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
-      this.ionPageElementRef.current.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
+      this.ionPageElementRef.current.addEventListener(
+        'ionViewWillEnter',
+        this.ionViewWillEnterHandler.bind(this)
+      );
+      this.ionPageElementRef.current.addEventListener(
+        'ionViewDidEnter',
+        this.ionViewDidEnterHandler.bind(this)
+      );
+      this.ionPageElementRef.current.addEventListener(
+        'ionViewWillLeave',
+        this.ionViewWillLeaveHandler.bind(this)
+      );
+      this.ionPageElementRef.current.addEventListener(
+        'ionViewDidLeave',
+        this.ionViewDidLeaveHandler.bind(this)
+      );
     }
   }
 
   componentWillUnmount() {
     if (this.ionPageElementRef.current) {
-      this.ionPageElementRef.current.removeEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
-      this.ionPageElementRef.current.removeEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
-      this.ionPageElementRef.current.removeEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
-      this.ionPageElementRef.current.removeEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
+      this.ionPageElementRef.current.removeEventListener(
+        'ionViewWillEnter',
+        this.ionViewWillEnterHandler.bind(this)
+      );
+      this.ionPageElementRef.current.removeEventListener(
+        'ionViewDidEnter',
+        this.ionViewDidEnterHandler.bind(this)
+      );
+      this.ionPageElementRef.current.removeEventListener(
+        'ionViewWillLeave',
+        this.ionViewWillLeaveHandler.bind(this)
+      );
+      this.ionPageElementRef.current.removeEventListener(
+        'ionViewDidLeave',
+        this.ionViewDidLeaveHandler.bind(this)
+      );
     }
   }
 
@@ -62,12 +88,13 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
 
     return (
       <IonLifeCycleContext.Consumer>
-        {context => {
+        {(context) => {
           this.ionLifeCycleContext = context;
-          const hidePageClass = this.context.isInOutlet() ? 'ion-page-invisible' : '';
           return (
             <div
-              className={className ? `${className} ion-page ${hidePageClass}` : `ion-page ${hidePageClass}`}
+              className={
+                className ? `${className} ion-page` : `ion-page`
+              }
               ref={this.ionPageElementRef}
               {...props}
             >

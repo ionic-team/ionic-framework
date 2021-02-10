@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { hasShadowDom } from '../../utils/helpers';
+import { hasShadowDom, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -28,6 +28,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inItem = false;
   private inListHeader = false;
   private inToolbar = false;
+  private inheritedAttributes: { [k: string]: any } = {};
 
   @Element() el!: HTMLElement;
 
@@ -134,6 +135,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inToolbar = !!this.el.closest('ion-buttons');
     this.inListHeader = !!this.el.closest('ion-list-header');
     this.inItem = !!this.el.closest('ion-item') || !!this.el.closest('ion-item-divider');
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
   private get hasIconOnly() {
@@ -184,7 +186,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   render() {
     const mode = getIonMode(this);
-    const { buttonType, type, disabled, rel, target, size, href, color, expand, hasIconOnly, shape, strong } = this;
+    const { buttonType, type, disabled, rel, target, size, href, color, expand, hasIconOnly, shape, strong, inheritedAttributes } = this;
     const finalSize = size === undefined && this.inItem ? 'small' : size;
     const TagType = href === undefined ? 'button' : 'a' as any;
     const attrs = (TagType === 'button')
@@ -227,6 +229,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           disabled={disabled}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
+          {...inheritedAttributes}
         >
           <span class="button-inner">
             <slot name="icon-only"></slot>

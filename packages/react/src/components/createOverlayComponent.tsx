@@ -18,18 +18,24 @@ export interface ReactOverlayProps {
   onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
 }
 
-export const createOverlayComponent = <OverlayComponent extends object, OverlayType extends OverlayElement>(
+export const createOverlayComponent = <
+  OverlayComponent extends object,
+  OverlayType extends OverlayElement
+>(
   displayName: string,
-  controller: { create: (options: any) => Promise<OverlayType>; }
+  controller: { create: (options: any) => Promise<OverlayType> }
 ) => {
   const didDismissEventName = `on${displayName}DidDismiss`;
   const didPresentEventName = `on${displayName}DidPresent`;
   const willDismissEventName = `on${displayName}WillDismiss`;
   const willPresentEventName = `on${displayName}WillPresent`;
 
-  type Props = OverlayComponent & ReactOverlayProps & {
-    forwardedRef?: React.RefObject<OverlayType>;
-  };
+  type Props = OverlayComponent &
+    ReactOverlayProps & {
+      forwardedRef?: React.RefObject<OverlayType>;
+    };
+
+  let isDismissing = false;
 
   class Overlay extends React.Component<Props> {
     overlay?: OverlayType;
@@ -54,7 +60,9 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
     }
 
     componentWillUnmount() {
-      if (this.overlay) { this.overlay.dismiss(); }
+      if (this.overlay) {
+        this.overlay.dismiss();
+      }
     }
 
     handleDismiss(event: CustomEvent<OverlayEventDetail<any>>) {
@@ -64,6 +72,15 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
       if (this.props.forwardedRef) {
         (this.props.forwardedRef as any).current = undefined;
       }
+    }
+
+    shouldComponentUpdate(nextProps: Props) {
+      // Check if the overlay component is about to dismiss
+      if (this.overlay && nextProps.isOpen !== this.props.isOpen && nextProps.isOpen === false) {
+        isDismissing = true;
+      }
+
+      return true;
     }
 
     async componentDidUpdate(prevProps: Props) {
@@ -76,24 +93,36 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
       }
       if (this.overlay && prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
         await this.overlay.dismiss();
+        isDismissing = false;
       }
     }
 
     async present(prevProps?: Props) {
-      const { children, isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } = this.props;
+      const {
+        children,
+        isOpen,
+        onDidDismiss,
+        onDidPresent,
+        onWillDismiss,
+        onWillPresent,
+        ...cProps
+      } = this.props;
       const elementProps = {
         ...cProps,
         ref: this.props.forwardedRef,
         [didDismissEventName]: this.handleDismiss,
-        [didPresentEventName]: (e: CustomEvent) => this.props.onDidPresent && this.props.onDidPresent(e),
-        [willDismissEventName]: (e: CustomEvent) => this.props.onWillDismiss && this.props.onWillDismiss(e),
-        [willPresentEventName]: (e: CustomEvent) => this.props.onWillPresent && this.props.onWillPresent(e)
+        [didPresentEventName]: (e: CustomEvent) =>
+          this.props.onDidPresent && this.props.onDidPresent(e),
+        [willDismissEventName]: (e: CustomEvent) =>
+          this.props.onWillDismiss && this.props.onWillDismiss(e),
+        [willPresentEventName]: (e: CustomEvent) =>
+          this.props.onWillPresent && this.props.onWillPresent(e),
       };
 
       this.overlay = await controller.create({
         ...elementProps,
         component: this.el,
-        componentProps: {}
+        componentProps: {},
       });
 
       if (this.props.forwardedRef) {
@@ -106,10 +135,12 @@ export const createOverlayComponent = <OverlayComponent extends object, OverlayT
     }
 
     render() {
-      return ReactDOM.createPortal(
-        this.props.isOpen ? this.props.children : null,
-        this.el
-      );
+      /**
+       * Continue to render the component even when
+       * overlay is dismissing otherwise component
+       * will be hidden before animation is done.
+       */
+      return ReactDOM.createPortal(this.props.isOpen || isDismissing ? this.props.children : null, this.el);
     }
   }
 

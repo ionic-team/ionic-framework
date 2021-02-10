@@ -11,11 +11,7 @@ describe('createComponent - events', () => {
     const FakeOnClick = jest.fn((e) => e);
     const IonButton = createReactComponent<JSX.IonButton, HTMLIonButtonElement>('ion-button');
 
-    const { getByText } = render(
-      <IonButton onClick={FakeOnClick}>
-        ButtonNameA
-      </IonButton>
-    );
+    const { getByText } = render(<IonButton onClick={FakeOnClick}>ButtonNameA</IonButton>);
     fireEvent.click(getByText('ButtonNameA'));
     expect(FakeOnClick).toBeCalledTimes(1);
   });
@@ -24,11 +20,7 @@ describe('createComponent - events', () => {
     const FakeIonFocus = jest.fn((e) => e);
     const IonInput = createReactComponent<JSX.IonInput, HTMLIonInputElement>('ion-input');
 
-    const { getByText } = render(
-      <IonInput onIonFocus={FakeIonFocus}>
-        ButtonNameA
-      </IonInput>
-    );
+    const { getByText } = render(<IonInput onIonFocus={FakeIonFocus}>ButtonNameA</IonInput>);
     const ionInputItem = getByText('ButtonNameA');
     expect(Object.keys((ionInputItem as any).__events)).toEqual(['ionFocus']);
   });
@@ -39,11 +31,7 @@ describe('createComponent - ref', () => {
     const ionButtonRef: React.RefObject<any> = React.createRef();
     const IonButton = createReactComponent<JSX.IonButton, HTMLIonButtonElement>('ion-button');
 
-    const { getByText } = render(
-      <IonButton ref={ionButtonRef}>
-        ButtonNameA
-      </IonButton>
-    )
+    const { getByText } = render(<IonButton ref={ionButtonRef}>ButtonNameA</IonButton>);
     const ionButtonItem = getByText('ButtonNameA');
     expect(ionButtonRef.current).toEqual(ionButtonItem);
   });
@@ -65,8 +53,8 @@ describe('createComponent - strict mode', () => {
 });
 
 describe('when working with css classes', () => {
-  const myClass = 'my-class'
-  const myClass2 = 'my-class2'
+  const myClass = 'my-class';
+  const myClass2 = 'my-class2';
   const customClass = 'custom-class';
 
   describe('when a class is added to className', () => {
@@ -74,11 +62,7 @@ describe('when working with css classes', () => {
     let button: HTMLElement;
 
     beforeEach(() => {
-      renderResult = render(
-        <IonButton className={myClass}>
-          Hello!
-        </IonButton>
-      );
+      renderResult = render(<IonButton className={myClass}>Hello!</IonButton>);
       button = renderResult.getByText(/Hello/);
     });
 
@@ -89,11 +73,7 @@ describe('when working with css classes', () => {
     it('when a class is added to class list outside of React, then that class should still be in class list when rendered again', () => {
       button.classList.add(customClass);
       expect(button.classList.contains(customClass)).toBeTruthy();
-      renderResult.rerender(
-        <IonButton className={myClass}>
-          Hello!
-        </IonButton>
-      );
+      renderResult.rerender(<IonButton className={myClass}>Hello!</IonButton>);
       expect(button.classList.contains(customClass)).toBeTruthy();
     });
   });
@@ -103,11 +83,7 @@ describe('when working with css classes', () => {
     let button: HTMLElement;
 
     beforeEach(() => {
-      renderResult = render(
-        <IonButton className={myClass + ' ' + myClass2}>
-          Hello!
-        </IonButton>
-      );
+      renderResult = render(<IonButton className={myClass + ' ' + myClass2}>Hello!</IonButton>);
       button = renderResult.getByText(/Hello/);
     });
 
@@ -120,11 +96,7 @@ describe('when working with css classes', () => {
       expect(button.classList.contains(myClass)).toBeTruthy();
       expect(button.classList.contains(myClass2)).toBeTruthy();
 
-      renderResult.rerender(
-        <IonButton className={myClass}>
-          Hello!
-        </IonButton>
-      );
+      renderResult.rerender(<IonButton className={myClass}>Hello!</IonButton>);
 
       expect(button.classList.contains(myClass)).toBeTruthy();
       expect(button.classList.contains(myClass2)).toBeFalsy();
@@ -136,15 +108,11 @@ describe('when working with css classes', () => {
       expect(button.classList.contains(myClass2)).toBeTruthy();
       expect(button.classList.contains(customClass)).toBeTruthy();
 
-      renderResult.rerender(
-        <IonButton className={myClass}>
-          Hello!
-        </IonButton>
-      );
+      renderResult.rerender(<IonButton className={myClass}>Hello!</IonButton>);
 
       expect(button.classList.contains(myClass)).toBeTruthy();
       expect(button.classList.contains(myClass)).toBeTruthy();
       expect(button.classList.contains(myClass2)).toBeFalsy();
     });
-  })
+  });
 });

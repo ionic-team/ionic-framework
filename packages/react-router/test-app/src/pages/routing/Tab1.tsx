@@ -1,10 +1,27 @@
 import React, { useEffect, useContext } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, useIonViewWillEnter, useIonViewWillLeave, useIonViewDidEnter, IonButtons, IonMenuButton, IonInput, IonButton, useIonRouter, IonRouterContext } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonList,
+  IonItem,
+  IonLabel,
+  useIonViewWillEnter,
+  useIonViewWillLeave,
+  useIonViewDidEnter,
+  IonButtons,
+  IonMenuButton,
+  IonInput,
+  IonButton,
+  useIonRouter,
+  IonRouterContext,
+} from '@ionic/react';
 import './Tab1.css';
 import { Link } from 'react-router-dom';
 
 const Tab1: React.FC = () => {
-
   useEffect(() => {
     console.log('Home mount');
     return () => console.log('Home unmount');
@@ -38,32 +55,29 @@ const Tab1: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonList>
-          <IonItem routerLink='/routing/tabs/home/details/1'>
+          <IonItem routerLink="/routing/tabs/home/details/1">
             <IonLabel>Details 1</IonLabel>
           </IonItem>
-          <IonItem routerLink='/routing/tabs/home/details/1' routerOptions={{ unmount: true }}>
+          <IonItem routerLink="/routing/tabs/home/details/1" routerOptions={{ unmount: true }}>
             <IonLabel>Details 1 & Unmount</IonLabel>
           </IonItem>
-          <IonItem routerLink='/routing/tabs/home/details/1?hello=there'>
+          <IonItem routerLink="/routing/tabs/home/details/1?hello=there">
             <IonLabel>Details 1 with Query Params</IonLabel>
           </IonItem>
-          <IonItem routerLink='/routing/tabs/settings/details/1'>
+          <IonItem routerLink="/routing/tabs/settings/details/1">
             <IonLabel>Details 1 on settings</IonLabel>
           </IonItem>
-          <IonItem routerLink='/routing/otherpage'>
+          <IonItem routerLink="/routing/otherpage">
             <IonLabel>Other Page</IonLabel>
           </IonItem>
         </IonList>
-        <Link to="/routing/tabs/home/details/1">
-          Go to details 1 via link
-        </Link>
+        <Link to="/routing/tabs/home/details/1">Go to details 1 via link</Link>
         <IonButton onClick={() => ionRouter.push('/routing/tabs/home/details/1')}>
           Go to details 1 via IonRouter
         </IonButton>
-        <br /><br />
-        <Link to="/routing/tabs/settings/details/1">
-          Go to details 1 on settings
-        </Link>
+        <br />
+        <br />
+        <Link to="/routing/tabs/settings/details/1">Go to details 1 on settings</Link>
         <br />
         <br />
         CanGoBack: {JSON.stringify(ionRouter.canGoBack())}

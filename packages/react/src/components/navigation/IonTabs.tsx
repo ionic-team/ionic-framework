@@ -46,13 +46,13 @@ const hostStyles: React.CSSProperties = {
   flexDirection: 'column',
   width: '100%',
   height: '100%',
-  contain: 'layout size style'
+  contain: 'layout size style',
 };
 
 const tabsInner: React.CSSProperties = {
   position: 'relative',
   flex: 1,
-  contain: 'layout size style'
+  contain: 'layout size style',
 };
 
 export class IonTabs extends React.Component<Props> {
@@ -63,7 +63,7 @@ export class IonTabs extends React.Component<Props> {
 
   ionTabContextState: IonTabsContextState = {
     activeTab: undefined,
-    selectTab: () => false
+    selectTab: () => false,
   };
 
   constructor(props: Props) {
@@ -86,31 +86,36 @@ export class IonTabs extends React.Component<Props> {
     let outlet: React.ReactElement<{}> | undefined;
     let tabBar: React.ReactElement | undefined;
 
-    const children = typeof this.props.children === 'function' ?
-      (this.props.children as ChildFunction)(this.ionTabContextState) : this.props.children;
+    const children =
+      typeof this.props.children === 'function'
+        ? (this.props.children as ChildFunction)(this.ionTabContextState)
+        : this.props.children;
 
     React.Children.forEach(children, (child: any) => {
       if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
         return;
       }
-      if (child.type === IonRouterOutlet) {
+      if (child.type === IonRouterOutlet || child.type.isRouterOutlet) {
         outlet = React.cloneElement(child, { tabs: true });
       } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
         outlet = child.props.children[0];
       }
-      if (child.type === IonTabBar) {
+      if (child.type === IonTabBar || child.type.isTabBar) {
         const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
         tabBar = React.cloneElement(child, {
           onIonTabsDidChange,
           onIonTabsWillChange,
-          ref: this.tabBarRef
+          ref: this.tabBarRef,
         });
-      } else if (child.type === Fragment && child.props.children[1].type === IonTabBar) {
+      } else if (
+        child.type === Fragment &&
+        (child.props.children[1].type === IonTabBar || child.props.children[1].type.isTabBar)
+      ) {
         const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
         tabBar = React.cloneElement(child.props.children[1], {
           onIonTabsDidChange,
           onIonTabsWillChange,
-          ref: this.tabBarRef
+          ref: this.tabBarRef,
         });
       }
     });
@@ -125,11 +130,13 @@ export class IonTabs extends React.Component<Props> {
     const { className, ...props } = this.props;
 
     return (
-      <IonTabsContext.Provider
-        value={this.ionTabContextState}
-      >
+      <IonTabsContext.Provider value={this.ionTabContextState}>
         {this.context.hasIonicRouter() ? (
-          <PageManager className={className ? `${className}` : ''} routeInfo={this.context.routeInfo} {...props}>
+          <PageManager
+            className={className ? `${className}` : ''}
+            routeInfo={this.context.routeInfo}
+            {...props}
+          >
             <ion-tabs className="ion-tabs" style={hostStyles}>
               {tabBar.props.slot === 'top' ? tabBar : null}
               <div style={tabsInner} className="tabs-inner">
@@ -139,15 +146,15 @@ export class IonTabs extends React.Component<Props> {
             </ion-tabs>
           </PageManager>
         ) : (
-            <div className={className ? `${className}` : 'ion-tabs'} {...props} style={hostStyles}>
-              {tabBar.props.slot === 'top' ? tabBar : null}
-              <div style={tabsInner} className="tabs-inner">
-                {outlet}
-              </div>
-              {tabBar.props.slot === 'bottom' ? tabBar : null}
+          <div className={className ? `${className}` : 'ion-tabs'} {...props} style={hostStyles}>
+            {tabBar.props.slot === 'top' ? tabBar : null}
+            <div style={tabsInner} className="tabs-inner">
+              {outlet}
             </div>
-          )}
-      </IonTabsContext.Provider >
+            {tabBar.props.slot === 'bottom' ? tabBar : null}
+          </div>
+        )}
+      </IonTabsContext.Provider>
     );
   }
 
