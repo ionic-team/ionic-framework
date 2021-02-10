@@ -20,7 +20,7 @@ community include:
 
 * Demonstrate empathy and kindness towards people
 * Be respectful of differing opinions, viewpoints, and experiences
-* Giving and gracefully accepting constructive feedback
+* Give and gracefully accept constructive feedback
 * Accept responsibility and apologize to those affected by our mistakes,
   and learn from the experience
 * Focus on what is best not just for us as individuals, but for the
