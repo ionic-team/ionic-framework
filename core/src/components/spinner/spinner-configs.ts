@@ -113,6 +113,41 @@ const spinners = {
         }
       };
     }
+  },
+
+  'lines-sharp': {
+    dur: 1000,
+    lines: 12,
+    fn: (dur: number, index: number, total: number) => {
+      const transform = `rotate(${ 30 * index + (index < 6 ? 180 : -180) }deg)`;
+      const animationDelay = `${ (dur * index / total) - dur }ms`;
+
+      return {
+        y1: 17,
+        y2: 29,
+        style: {
+          'transform': transform,
+          'animation-delay': animationDelay,
+        }
+      };
+    }
+  },
+
+  'lines-sharp-small': {
+    dur: 1000,
+    lines: 12,
+    fn: (dur: number, index: number, total: number) => {
+      const transform = `rotate(${30 * index + (index < 6 ? 180 : -180)}deg)`;
+      const animationDelay = `${ (dur * index / total) - dur }ms`;
+      return {
+        y1: 12,
+        y2: 20,
+        style: {
+          'transform': transform,
+          'animation-delay': animationDelay,
+        }
+      };
+    }
   }
 
 };

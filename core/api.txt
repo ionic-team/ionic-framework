@@ -446,7 +446,7 @@ ion-infinite-scroll,method,complete,complete() => Promise<void>
 ion-infinite-scroll,event,ionInfinite,void,true
 
 ion-infinite-scroll-content,none
-ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
+ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | null | undefined,undefined,false,false
 ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefined,undefined,false,false
 
 ion-input,scoped
@@ -626,7 +626,7 @@ ion-loading,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undef
 ion-loading,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-loading,prop,mode,"ios" | "md",undefined,false,false
 ion-loading,prop,showBackdrop,boolean,true,false,false
-ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
+ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | null | undefined,undefined,false,false
 ion-loading,prop,translucent,boolean,false,false,false
 ion-loading,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-loading,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
@@ -918,7 +918,7 @@ ion-refresher,event,ionStart,void,true
 ion-refresher-content,none
 ion-refresher-content,prop,pullingIcon,null | string | undefined,undefined,false,false
 ion-refresher-content,prop,pullingText,IonicSafeString | string | undefined,undefined,false,false
-ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | null | undefined,undefined,false,false
+ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | null | undefined,undefined,false,false
 ion-refresher-content,prop,refreshingText,IonicSafeString | string | undefined,undefined,false,false
 
 ion-reorder,shadow
@@ -1145,7 +1145,7 @@ ion-slides,css-prop,--scroll-bar-background-active
 ion-spinner,shadow
 ion-spinner,prop,color,string | undefined,undefined,false,false
 ion-spinner,prop,duration,number | undefined,undefined,false,false
-ion-spinner,prop,name,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | undefined,undefined,false,false
+ion-spinner,prop,name,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | undefined,undefined,false,false
 ion-spinner,prop,paused,boolean,false,false,false
 ion-spinner,css-prop,--color
 
