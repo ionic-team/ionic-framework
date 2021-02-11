@@ -378,6 +378,15 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
+    /**
+     * If using non-native refresher before make sure
+     * we clean up any old CSS. This can happen when
+     * a user manually calls the refresh method in a
+     * component create callback before the native
+     * refresher is setup.
+     */
+    this.setCss(0, '', false, '');
+
     this.nativeRefresher = true;
 
     const pullingSpinner = this.el.querySelector('ion-refresher-content .refresher-pulling ion-spinner') as HTMLIonSpinnerElement;

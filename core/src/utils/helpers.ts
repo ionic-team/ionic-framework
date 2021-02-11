@@ -133,7 +133,7 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
     : inputId + '-lbl';
 
   let label = labelledBy !== null && labelledBy.trim() !== ''
-    ? document.querySelector(`#${labelledBy}`)
+    ? document.getElementById(labelledBy)
     : findItemLabel(componentEl);
 
   if (label) {
@@ -147,10 +147,15 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
   // if there is no label, check to see if the user has provided
   // one by setting an id on the component and using the label element
   } else if (componentId.trim() !== '') {
-    label = document.querySelector(`label[for=${componentId}]`);
+    label = document.querySelector(`label[for="${componentId}"]`);
 
     if (label) {
-      label.id = labelId = `${componentId}-lbl`;
+      if (label.id !== '') {
+        labelId = label.id;
+      } else {
+        label.id = labelId = `${componentId}-lbl`;
+      }
+
       labelText = label.textContent;
     }
   }

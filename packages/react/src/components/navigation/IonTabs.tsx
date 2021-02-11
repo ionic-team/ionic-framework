@@ -95,19 +95,22 @@ export class IonTabs extends React.Component<Props> {
       if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
         return;
       }
-      if (child.type === IonRouterOutlet) {
+      if (child.type === IonRouterOutlet || child.type.isRouterOutlet) {
         outlet = React.cloneElement(child, { tabs: true });
       } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
         outlet = child.props.children[0];
       }
-      if (child.type === IonTabBar) {
+      if (child.type === IonTabBar || child.type.isTabBar) {
         const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
         tabBar = React.cloneElement(child, {
           onIonTabsDidChange,
           onIonTabsWillChange,
           ref: this.tabBarRef,
         });
-      } else if (child.type === Fragment && child.props.children[1].type === IonTabBar) {
+      } else if (
+        child.type === Fragment &&
+        (child.props.children[1].type === IonTabBar || child.props.children[1].type.isTabBar)
+      ) {
         const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
         tabBar = React.cloneElement(child.props.children[1], {
           onIonTabsDidChange,

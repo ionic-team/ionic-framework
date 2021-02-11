@@ -14,7 +14,7 @@ import {
 } from './utils';
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
-  forwardedRef?: React.Ref<ElementType>;
+  forwardedRef?: React.RefObject<ElementType>;
   href?: string;
   routerLink?: string;
   ref?: React.Ref<any>;
@@ -46,7 +46,7 @@ export const createReactComponent = <PropType, ElementType>(
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       // Try to use the forwarded ref to get the child node.
       // Otherwise, use the one we created.
-      const node = (this.props.forwardedRef || this.ref.current!) as HTMLElement;
+      const node = (this.props.forwardedRef?.current || this.ref.current!) as HTMLElement;
       attachProps(node, this.props, prevProps);
     }
 
@@ -73,7 +73,7 @@ export const createReactComponent = <PropType, ElementType>(
           if (isCoveredByReact(eventName)) {
             (acc as any)[name] = (cProps as any)[name];
           }
-        } else if (typeof (cProps as any)[name] === 'string') {
+        } else if (['string', 'boolean', 'number'].includes(typeof (cProps as any)[name])) {
           (acc as any)[camelToDashCase(name)] = (cProps as any)[name];
         }
         return acc;

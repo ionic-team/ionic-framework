@@ -24,6 +24,7 @@ export const IonTabBar = defineComponent({
         tabs: {}
     };
     const currentInstance = getCurrentInstance();
+    const isTabButton = (child: any) => child.type?.name === 'IonTabButton';
     /**
      * For each tab, we need to keep track of its
      * base href as well as any child page that
@@ -33,7 +34,7 @@ export const IonTabBar = defineComponent({
      */
     const children = (currentInstance.subTree.children || []) as VNode[];
     children.forEach((child: VNode) => {
-      if (child.type && (child.type as any).name === 'IonTabButton') {
+      if (isTabButton(child)) {
         tabState.tabs[child.props.tab] = {
           originalHref: child.props.href,
           currentHref: child.props.href,
@@ -65,7 +66,7 @@ export const IonTabBar = defineComponent({
        * it in the tabs state.
        */
       childNodes.forEach((child: VNode) => {
-        if (child.type && (child.type as any).name === 'IonTabButton') {
+        if (isTabButton(child)) {
           const tab = tabs[child.props.tab];
           if (!tab || (tab.originalHref !== child.props.href)) {
 
@@ -106,7 +107,7 @@ export const IonTabBar = defineComponent({
         }
       }
 
-      const activeChild = childNodes.find((child: VNode) => child.props.tab === activeTab);
+      const activeChild = childNodes.find((child: VNode) => isTabButton(child) && child.props?.tab === activeTab);
       const tabBar = this.$refs.ionTabBar;
       const tabDidChange = activeTab !== prevActiveTab;
       if (activeChild && tabBar) {
