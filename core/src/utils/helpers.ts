@@ -5,6 +5,14 @@ import { Side } from '../interface';
 declare const __zone_symbol__requestAnimationFrame: any;
 declare const requestAnimationFrame: any;
 
+export const componentOnReady = (el: any, callback: any) => {
+  if (el.componentOnReady) {
+    el.componentOnReady().then(callback);
+  } else {
+    callback();
+  }
+}
+
 /**
  * Elements inside of web components sometimes need to inherit global attributes
  * set on the host. For example, the inner input in `ion-input` should inherit
