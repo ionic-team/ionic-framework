@@ -14,10 +14,10 @@ test('slides: prevent-default', async () => {
   const button = await page.find('#changeBackgroundButton');
   const contentWithBackground = await page.find('#contentWithBackground');
 
-  await page.waitFor(500);
+  await page.waitForTimeout(500);
 
   await scroller.click();
-  await page.waitFor(500);
+  await page.waitForTimeout(500);
 
   screenshotCompares.push(await page.compareScreenshot('scroll down button'));
 
