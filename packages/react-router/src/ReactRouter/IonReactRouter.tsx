@@ -1,4 +1,9 @@
-import { Action as HistoryAction, History, Location as HistoryLocation, createBrowserHistory as createHistory } from 'history';
+import {
+  Action as HistoryAction,
+  History,
+  Location as HistoryLocation,
+  createBrowserHistory as createHistory,
+} from 'history';
 import React from 'react';
 import { BrowserRouterProps, Router } from 'react-router-dom';
 
@@ -9,8 +14,7 @@ interface IonReactRouterProps extends BrowserRouterProps {
 }
 
 export class IonReactRouter extends React.Component<IonReactRouterProps> {
-
-  historyListenHandler?: ((location: HistoryLocation, action: HistoryAction) => void);
+  historyListenHandler?: (location: HistoryLocation, action: HistoryAction) => void;
   history: History;
 
   constructor(props: IonReactRouterProps) {

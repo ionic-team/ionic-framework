@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { getIonMode } from '../../global/ionic-global';
 import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
-import { debounceEvent, findItemLabel } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -21,7 +21,7 @@ export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
   private didBlurAfterEdit = false;
-  private tabindex?: string | number;
+  private inheritedAttributes: { [k: string]: any } = {};
 
   /**
    * This is required for a WebKit bug which requires us to
@@ -51,6 +51,7 @@ export class Input implements ComponentInterface {
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+   * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
    */
   @Prop() autocapitalize = 'off';
 
@@ -225,14 +226,7 @@ export class Input implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   componentWillLoad() {
-    // If the ion-input has a tabindex attribute we get the value
-    // and pass it down to the native input, then remove it from the
-    // ion-input to avoid causing tabbing twice on the same element
-    if (this.el.hasAttribute('tabindex')) {
-      const tabindex = this.el.getAttribute('tabindex');
-      this.tabindex = tabindex !== null ? tabindex : undefined;
-      this.el.removeAttribute('tabindex');
-    }
+    this.inheritedAttributes = inheritAttributes(this.el, ['tabindex', 'title']);
   }
 
   connectedCallback() {
@@ -428,13 +422,13 @@ export class Input implements ComponentInterface {
           spellcheck={this.spellcheck}
           step={this.step}
           size={this.size}
-          tabindex={this.tabindex}
           type={this.type}
           value={value}
           onInput={this.onInput}
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onKeyDown={this.onKeydown}
+          {...this.inheritedAttributes}
         />
         {(this.clearInput && !this.readonly && !this.disabled) && <button
           aria-label="reset"

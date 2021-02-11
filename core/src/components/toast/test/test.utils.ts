@@ -20,7 +20,7 @@ export const testToast = async (
     await button.waitForVisible();
     await button.click();
 
-    await page.waitFor(250);
+    await page.waitForTimeout(250);
 
     let toast = await page.find('ion-toast');
     await toast.waitForVisible();

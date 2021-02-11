@@ -1,13 +1,20 @@
 import React from 'react';
-import { IonRouterOutlet, IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonButtons, IonBackButton } from '@ionic/react';
+import {
+  IonRouterOutlet,
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonItem,
+  IonButtons,
+  IonBackButton,
+} from '@ionic/react';
 import { Route } from 'react-router';
 
-interface SwipeToGoBackProps {
-}
+interface SwipeToGoBackProps {}
 
 export const SwipeToGoBack: React.FC<SwipeToGoBackProps> = () => {
-
-
   return (
     <IonRouterOutlet id="swipe-to-go-back">
       <Route path="/swipe-to-go-back" component={Main} exact />
@@ -25,9 +32,7 @@ const Main: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonItem routerLink="/swipe-to-go-back/details">
-          Details
-        </IonItem>
+        <IonItem routerLink="/swipe-to-go-back/details">Details</IonItem>
       </IonContent>
     </IonPage>
   );
@@ -50,4 +55,3 @@ const Details: React.FC = () => {
     </IonPage>
   );
 };
-

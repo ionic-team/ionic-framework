@@ -1,6 +1,8 @@
 import {
+  parseQuery,
   Router,
-  RouteLocationNormalized
+  RouteLocationNormalized,
+  NavigationFailure
 } from 'vue-router';
 import { createLocationHistory } from './locationHistory';
 import { generateId } from './utils';
@@ -13,7 +15,7 @@ import {
   IonicVueRouterOptions,
   NavigationInformation
 } from './types';
-import { AnimationBuilder } from '@ionic/core';
+import { AnimationBuilder } from '@ionic/vue';
 
 export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
   let currentNavigationInfo: NavigationInformation = { direction: undefined, action: undefined };
@@ -27,9 +29,19 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
    * which is fired once navigation is confirmed
    * and any user guards have run.
    */
-  router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized) => {
+  router.afterEach((to: RouteLocationNormalized, _: RouteLocationNormalized, failure?: NavigationFailure) => {
+    if (failure) return;
+
     const { direction, action } = currentNavigationInfo;
-    handleHistoryChange(to, action, direction);
+
+    /**
+     * When calling router.replace, we are not informed
+     * about the replace action in opts.history.listen
+     * but we can check to see if the latest routing action
+     * was a replace action by looking at the history state.
+     */
+    const replaceAction = history.state.replaced ? 'replace' : undefined;
+    handleHistoryChange(to, action || replaceAction, direction);
 
     currentNavigationInfo = { direction: undefined, action: undefined };
   });
@@ -79,7 +91,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
         if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
           router.back();
         } else {
-          router.replace(prevInfo.pathname + (prevInfo.search || ''));
+          router.replace({ path: prevInfo.pathname, query: parseQuery(prevInfo.search) });
         }
       } else {
         handleNavigate(defaultHref, 'pop', 'back');
@@ -176,6 +188,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           pathname: location.path,
           search: location.fullPath && location.fullPath.split('?')[1] || '',
           params: location.params && location.params,
+          prevRouteLastPathname: leavingLocationInfo.lastPathname
         }
 
         if (isPushed) {
@@ -189,10 +202,20 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
           routeInfo.pushedByRoute = lastRoute?.pushedByRoute;
         } else if (routeInfo.routerAction === 'replace') {
           const currentRouteInfo = locationHistory.current();
+
+          /**
+           * If going from /home to /child, then replacing from
+           * /child to /home, we don't want the route info to
+           * say that /home was pushed by /home which is not correct.
+           */
+          const currentPushedBy = currentRouteInfo?.pushedByRoute;
+          const pushedByRoute = (currentPushedBy !== undefined && currentPushedBy !== routeInfo.pathname) ? currentPushedBy : routeInfo.pushedByRoute;
+
           routeInfo.lastPathname = currentRouteInfo?.pathname || routeInfo.lastPathname;
-          routeInfo.pushedByRoute = currentRouteInfo?.pushedByRoute || routeInfo.pushedByRoute;
+          routeInfo.pushedByRoute = pushedByRoute;
           routeInfo.routerDirection = currentRouteInfo?.routerDirection || routeInfo.routerDirection;
           routeInfo.routerAnimation = currentRouteInfo?.routerAnimation || routeInfo.routerAnimation;
+          routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
         }
 
         locationHistory.add(routeInfo);
@@ -225,7 +248,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       const newRouteInfo = { ...routeInfo };
       newRouteInfo.pathname = originalHref;
       incomingRouteParams = { ...newRouteInfo, routerAction: 'pop', routerDirection: 'back' };
-      router.push(newRouteInfo.pathname + (newRouteInfo.search || ''));
+      router.push({ path: newRouteInfo.pathname, query: parseQuery(newRouteInfo.search) });
     }
   }
 
@@ -234,15 +257,31 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     const [pathname] = path.split('?');
 
     if (routeInfo) {
-      incomingRouteParams = Object.assign(Object.assign({}, routeInfo), { routerAction: 'push', routerDirection: 'none' });
+      incomingRouteParams = {
+        ...incomingRouteParams,
+        routerAction: 'push',
+        routerDirection: 'none',
+        tab
+      }
 
-      const search = (routeInfo.search) ? `?${routeInfo.search}` : '';
-      router.push(routeInfo.pathname + search);
+      /**
+       * When going back to a tab
+       * you just left, it's possible
+       * for the route info to be incorrect
+       * as the tab you want is not the
+       * tab you are on.
+       */
+      if (routeInfo.pathname === pathname) {
+        router.push({ path: routeInfo.pathname, query: parseQuery(routeInfo.search) });
+      } else {
+        router.push({ path: pathname, query: parseQuery(routeInfo.search) });
+      }
     }
     else {
       handleNavigate(pathname, 'push', 'none', undefined, tab);
     }
   }
+
   const handleSetCurrentTab = (tab: string) => {
     currentTab = tab;
 

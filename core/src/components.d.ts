@@ -394,7 +394,7 @@ export namespace Components {
          */
         "name": string;
         /**
-          * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
+          * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
         "value": string;
     }
@@ -403,6 +403,10 @@ export namespace Components {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the chip.
+         */
+        "disabled": boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -830,7 +834,7 @@ export namespace Components {
          */
         "accept"?: string;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize": string;
         /**
@@ -1704,7 +1708,7 @@ export namespace Components {
          */
         "name": string;
         "setButtonTabindex": (value: number) => Promise<void>;
-        "setFocus": () => Promise<void>;
+        "setFocus": (ev: any) => Promise<void>;
         /**
           * the value of the radio.
          */
@@ -2060,6 +2064,10 @@ export namespace Components {
           * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
          */
         "scrollable": boolean;
+        /**
+          * If `true`, users will be able to swipe between segment buttons to activate them.
+         */
+        "swipeGesture": boolean;
         /**
           * the value of the segment.
          */
@@ -3701,7 +3709,7 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
-          * Emitted when the toggle loses focus.
+          * Emitted when the checkbox loses focus.
          */
         "onIonBlur"?: (event: CustomEvent<void>) => void;
         /**
@@ -3709,7 +3717,7 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: CustomEvent<CheckboxChangeEventDetail>) => void;
         /**
-          * Emitted when the toggle has focus.
+          * Emitted when the checkbox has focus.
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
         /**
@@ -3717,7 +3725,7 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
-          * The value of the toggle does not mean if it's checked or not, use the `checked` property for that.  The value of a toggle is analogous to the value of a `<input type="checkbox">`, it's only used when the toggle participates in a native `<form>`.
+          * The value of the checkbox does not mean if it's checked or not, use the `checked` property for that.  The value of a checkbox is analogous to the value of an `<input type="checkbox">`, it's only used when the checkbox participates in a native `<form>`.
          */
         "value"?: string;
     }
@@ -3726,6 +3734,10 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the chip.
+         */
+        "disabled"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -4169,7 +4181,7 @@ declare namespace LocalJSX {
          */
         "accept"?: string;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize"?: string;
         /**
@@ -5366,6 +5378,10 @@ declare namespace LocalJSX {
           * If `true`, the segment buttons will overflow and the user can swipe to see them. In addition, this will disable the gesture to drag the indicator between the buttons in order to swipe to see hidden buttons.
          */
         "scrollable"?: boolean;
+        /**
+          * If `true`, users will be able to swipe between segment buttons to activate them.
+         */
+        "swipeGesture"?: boolean;
         /**
           * the value of the segment.
          */

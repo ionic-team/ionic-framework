@@ -9,7 +9,14 @@ export interface NavContextState {
   getPageManager: () => any;
   getStackManager: () => any;
   goBack: (route?: string | RouteInfo, animationBuilder?: AnimationBuilder) => void;
-  navigate: (path: string, direction?: RouterDirection | 'none', ionRouteAction?: 'push' | 'replace' | 'pop', animationBuilder?: AnimationBuilder, options?: any, tab?: string) => void;
+  navigate: (
+    path: string,
+    direction?: RouterDirection | 'none',
+    ionRouteAction?: 'push' | 'replace' | 'pop',
+    animationBuilder?: AnimationBuilder,
+    options?: any,
+    tab?: string
+  ) => void;
   hasIonicRouter: () => boolean;
   routeInfo?: RouteInfo;
   setCurrentTab: (tab: string, routeInfo: RouteInfo) => void;
@@ -17,14 +24,14 @@ export interface NavContextState {
   resetTab: (tab: string, originalHref: string, originalRouteOptions?: any) => void;
 }
 
-export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
+export const NavContext = /*@__PURE__*/ React.createContext<NavContextState>({
   getIonRedirect: () => undefined,
   getIonRoute: () => undefined,
   getPageManager: () => undefined,
   getStackManager: () => undefined,
   goBack: (route?: string | RouteInfo) => {
     if (typeof window !== 'undefined') {
-      if (typeof (route) === 'string') {
+      if (typeof route === 'string') {
         window.location.pathname = route;
       } else {
         window.history.back();
@@ -48,5 +55,5 @@ export const NavContext = /*@__PURE__*/React.createContext<NavContextState>({
     if (typeof window !== 'undefined') {
       window.location.pathname = path;
     }
-  }
+  },
 });

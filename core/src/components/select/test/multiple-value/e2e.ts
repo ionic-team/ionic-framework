@@ -13,7 +13,7 @@ test('select: multiple-value', async () => {
 
   const alert = await page.find('ion-alert');
   await alert.waitForVisible();
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   compare = await page.compareScreenshot('should open toppings multiple select');
   expect(compare).toMatchScreenshot();

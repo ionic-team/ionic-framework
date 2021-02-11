@@ -5,6 +5,11 @@ const getActiveElementText = async (page) => {
   return await page.evaluate(el => el && el.textContent, activeElement);
 }
 
+const getActiveElementClass = async (page) => {
+  const activeElement = await page.evaluateHandle(() => document.activeElement);
+  return await page.evaluate(el => el && el.className, activeElement);
+}
+
 test('datetime/picker: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/datetime/test/basic?ionic:_testing=true' });
   await page.click('#datetime-part');
@@ -15,7 +20,7 @@ test('datetime/picker: focus trap', async () => {
   expect(datetime).not.toBe(null);
 
   // TODO fix
-  await page.waitFor(100);
+  await page.waitForTimeout(250);
 
   await page.keyboard.press('Tab');
 
@@ -26,8 +31,8 @@ test('datetime/picker: focus trap', async () => {
   await page.keyboard.press('Tab');
   await page.keyboard.up('Shift');
 
-  const activeElementTextTwo = await getActiveElementText(page);
-  expect(activeElementTextTwo).toEqual('1920');
+  const activeElementClass = await getActiveElementClass(page);
+  expect(activeElementClass).toEqual('picker-opt');
 
   await page.keyboard.press('Tab');
 
@@ -49,7 +54,7 @@ test('datetime: basic', async () => {
 
   const picker = await page.find('ion-picker');
   await picker.waitForVisible();
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   compare = await page.compareScreenshot('should open custom picker');
   expect(compare).toMatchScreenshot();
@@ -65,7 +70,7 @@ test('datetime: basic-rtl', async () => {
 
   const picker = await page.find('ion-picker');
   await picker.waitForVisible();
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   const compare = await page.compareScreenshot('should open custom picker');
   expect(compare).toMatchScreenshot();

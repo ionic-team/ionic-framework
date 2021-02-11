@@ -1,12 +1,25 @@
-import { Config as CoreConfig, Platforms, getPlatforms as getPlatformsCore, isPlatform as isPlatformCore } from '@ionic/core';
+import {
+  Config as CoreConfig,
+  Platforms,
+  getPlatforms as getPlatformsCore,
+  isPlatform as isPlatformCore,
+} from '@ionic/core';
 import React from 'react';
 
 import { IonicReactProps } from '../IonicReactProps';
 
-export type IonicReactExternalProps<PropType, ElementType> = PropType & Omit<React.HTMLAttributes<ElementType>, 'style'> & IonicReactProps;
+export type IonicReactExternalProps<PropType, ElementType> = PropType &
+  Omit<React.HTMLAttributes<ElementType>, 'style'> &
+  IonicReactProps;
 
-export const createForwardRef = <PropType, ElementType>(ReactComponent: any, displayName: string) => {
-  const forwardRef = (props: IonicReactExternalProps<PropType, ElementType>, ref: React.Ref<ElementType>) => {
+export const createForwardRef = <PropType, ElementType>(
+  ReactComponent: any,
+  displayName: string
+) => {
+  const forwardRef = (
+    props: IonicReactExternalProps<PropType, ElementType>,
+    ref: React.Ref<ElementType>
+  ) => {
     return <ReactComponent {...props} forwardedRef={ref} />;
   };
   forwardRef.displayName = displayName;

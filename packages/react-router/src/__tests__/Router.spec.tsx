@@ -7,7 +7,6 @@ import { Route } from 'react-router';
 import { MemoryHistory, createMemoryHistory } from 'history';
 
 describe('Router', () => {
-
   // This test fails because the ion-router-outlet web component (from core)
   // isn't supported in JSDOM, so it never registers
   // TODO: figure out why they are failing on new router code when they worked before
@@ -23,7 +22,7 @@ describe('Router', () => {
           <IonApp>
             <IonReactMemoryRouter history={history}>
               {/* <IonRouterOutlet> */}
-                <Route path="/" component={Page} exact />
+              <Route path="/" component={Page} exact />
               {/* </IonRouterOutlet> */}
             </IonReactMemoryRouter>
           </IonApp>
@@ -32,7 +31,6 @@ describe('Router', () => {
     });
 
     it.skip('should be visible', () => {
-
       const MyPage = () => {
         return (
           <IonPage className="ion-page-invisible">
@@ -42,11 +40,10 @@ describe('Router', () => {
       };
 
       const { container } = render(<IonTestApp Page={MyPage} />);
-      console.log(container.outerHTML)
+      console.log(container.outerHTML);
       const page = container.getElementsByClassName('ion-page')[0];
       expect(page).not.toHaveClass('ion-page-invisible');
       expect(page).toHaveStyle('z-index: 101');
-
     });
 
     it.skip('should fire initial lifecycle events', async () => {
@@ -68,14 +65,9 @@ describe('Router', () => {
         );
       };
 
-
       render(<IonTestApp Page={MyPage} />);
       expect(ionViewWillEnterListener).toHaveBeenCalledTimes(1);
       expect(ionViewDidEnterListener).toHaveBeenCalledTimes(1);
-
     });
-
   });
-
-
-});;
+});
