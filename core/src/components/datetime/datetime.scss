@@ -11,6 +11,9 @@
    * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the datetime
    *
    * @prop --placeholder-color: Color of the datetime placeholder
+   * @prop --placeholder-font-style: Font style of the datetime placeholder
+   * @prop --placeholder-font-weight: Font weight of the datetime placeholder
+   * @prop --placeholder-opacity: Opacity of the datetime placeholder
    */
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
@@ -36,6 +39,10 @@
 
 :host(.datetime-placeholder) {
   color: var(--placeholder-color);
+  font-style:var(--placeholder-font-style);
+  font-family: inherit;
+  font-weight: var(--placeholder-font-weight);
+  opacity: var(--placeholder-opacity);
 }
 
 :host(.datetime-disabled) {
