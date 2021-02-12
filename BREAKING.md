@@ -19,6 +19,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Toolbar](#toolbar)
 - [Config](#config)
   * [Transition Shadow](#transition-shadow)
+- [Angular](#angular)
+  * [Config Provider](#config-provider)
 
 
 
@@ -62,6 +64,14 @@ var(--ion-toolbar-background, var(--ion-color-step-50, #f7f7f7));
 #### Transition Shadow
 
 The `experimentalTransitionShadow` config option has been removed. The transition shadow is now enabled when running in `ios` mode.
+
+
+### Angular
+
+#### Config Provider
+
+The `Config.set()` method has been removed. See https://ionicframework.com/docs/angular/config for examples on how to set config globally, per-component, and per-platform.
+
 
 
 
