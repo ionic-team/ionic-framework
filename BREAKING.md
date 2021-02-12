@@ -21,6 +21,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   * [Transition Shadow](#transition-shadow)
 - [Angular](#angular)
   * [Config Provider](#config-provider)
+- [Vue](#vue)
+  * [Tabs Config](#tabs-config)
 
 
 
@@ -72,6 +74,88 @@ The `experimentalTransitionShadow` config option has been removed. The transitio
 
 The `Config.set()` method has been removed. See https://ionicframework.com/docs/angular/config for examples on how to set config globally, per-component, and per-platform.
 
+
+### Vue
+
+#### Tabs Config
+
+Support for child routes nested inside of tabs has been removed to better conform to Vue Router's best practices. Additional routes should be written as sibling routes with the parent tab as the path prefix:
+
+**Old**
+```typescript
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    redirect: '/tabs/tab1'
+  },
+  {
+    path: '/tabs/',
+    component: Tabs,
+    children: [
+      {
+        path: '',
+        redirect: 'tab1'
+      },
+      {
+        path: 'tab1',
+        component: () => import('@/views/Tab1.vue'),
+        children: {
+          {
+            path: 'view',
+            component: () => import('@/views/Tab1View.vue')
+          }
+        }
+      },
+      {
+        path: 'tab2',
+        component: () => import('@/views/Tab2.vue')
+      },
+      {
+        path: 'tab3',
+        component: () => import('@/views/Tab3.vue')
+      }
+    ]
+  }
+]
+```
+
+**New**
+```typescript
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    redirect: '/tabs/tab1'
+  },
+  {
+    path: '/tabs/',
+    component: Tabs,
+    children: [
+      {
+        path: '',
+        redirect: 'tab1'
+      },
+      {
+        path: 'tab1',
+        component: () => import('@/views/Tab1.vue')
+      },
+      {
+        path: 'tab1/view',
+        component: () => import('@/views/Tab1View.vue')
+      },
+      {
+        path: 'tab2',
+        component: () => import('@/views/Tab2.vue')
+      },
+      {
+        path: 'tab3',
+        component: () => import('@/views/Tab3.vue')
+      }
+    ]
+  }
+]
+```
+
+In the example above `tabs/tab1/view` has been rewritten has a sibling route to `tabs/tab1`. The `path` field now includes the `tab1` prefix.
 
 
 
