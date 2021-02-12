@@ -852,13 +852,16 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                  | Description                                                                                                 |
-| --------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `--padding-bottom`    | Bottom padding of the datetime                                                                              |
-| `--padding-end`       | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the datetime |
-| `--padding-start`     | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the datetime |
-| `--padding-top`       | Top padding of the datetime                                                                                 |
-| `--placeholder-color` | Color of the datetime placeholder                                                                           |
+| Name                        | Description                                                                                                 |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `--padding-bottom`          | Bottom padding of the datetime                                                                              |
+| `--padding-end`             | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the datetime |
+| `--padding-start`           | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the datetime |
+| `--padding-top`             | Top padding of the datetime                                                                                 |
+| `--placeholder-color`       | Color of the datetime placeholder                                                                           |
+| `--placeholder-font-style`  | Font style of the datetime placeholder                                                                      |
+| `--placeholder-font-weight` | Font weight of the datetime placeholder                                                                     |
+| `--placeholder-opacity`     | Opacity of the datetime placeholder                                                                         |
 
 
 ----------------------------------------------

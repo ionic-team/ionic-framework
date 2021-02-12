@@ -348,6 +348,9 @@ ion-datetime,css-prop,--padding-end
 ion-datetime,css-prop,--padding-start
 ion-datetime,css-prop,--padding-top
 ion-datetime,css-prop,--placeholder-color
+ion-datetime,css-prop,--placeholder-font-style
+ion-datetime,css-prop,--placeholder-font-weight
+ion-datetime,css-prop,--placeholder-opacity
 ion-datetime,part,placeholder
 ion-datetime,part,text
 
