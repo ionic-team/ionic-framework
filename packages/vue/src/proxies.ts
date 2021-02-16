@@ -480,6 +480,7 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range',
   'disabled',
   'value',
   'ionChange',
+  'ionRawChange',
   'ionStyle',
   'ionFocus',
   'ionBlur'

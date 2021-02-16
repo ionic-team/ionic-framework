@@ -562,13 +562,14 @@ export declare interface IonRange extends Components.IonRange {
 @Component({ selector: "ion-range", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "debounce", "disabled", "dualKnobs", "max", "min", "mode", "name", "pin", "snaps", "step", "ticks", "value"] })
 export class IonRange {
   ionChange!: EventEmitter<CustomEvent>;
+  ionRawChange!: EventEmitter<CustomEvent>;
   ionFocus!: EventEmitter<CustomEvent>;
   ionBlur!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ["ionChange", "ionFocus", "ionBlur"]);
+    proxyOutputs(this, this.el, ["ionChange", "ionRawChange", "ionFocus", "ionBlur"]);
   }
 }
 export declare interface IonRefresher extends Components.IonRefresher {

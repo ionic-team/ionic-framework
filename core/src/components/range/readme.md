@@ -288,11 +288,12 @@ export default defineComponent({
 
 ## Events
 
-| Event       | Description                                  | Type                                  |
-| ----------- | -------------------------------------------- | ------------------------------------- |
-| `ionBlur`   | Emitted when the range loses focus.          | `CustomEvent<void>`                   |
-| `ionChange` | Emitted when the value property has changed. | `CustomEvent<RangeChangeEventDetail>` |
-| `ionFocus`  | Emitted when the range has focus.            | `CustomEvent<void>`                   |
+| Event          | Description                                                                                                               | Type                                  |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| `ionBlur`      | Emitted when the range loses focus.                                                                                       | `CustomEvent<void>`                   |
+| `ionChange`    | Emitted when the value property has changed. This event is debounced when the `debounce` property is set.                 | `CustomEvent<RangeChangeEventDetail>` |
+| `ionFocus`     | Emitted when the range has focus.                                                                                         | `CustomEvent<void>`                   |
+| `ionRawChange` | Emitted when the value property has changed. This event is not debounced. It is typically used to set a custom pin label. | `CustomEvent<RangeChangeEventDetail>` |
 
 
 ## Slots
@@ -300,6 +301,7 @@ export default defineComponent({
 | Slot      | Description                                                                        |
 | --------- | ---------------------------------------------------------------------------------- |
 | `"end"`   | Content is placed to the right of the range slider in LTR, and to the left in RTL. |
+| `"pin"`   | Content is used as the pin label. It defaults to `Math.round(value)`.              |
 | `"start"` | Content is placed to the left of the range slider in LTR, and to the right in RTL. |
 
 

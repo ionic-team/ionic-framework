@@ -10,6 +10,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
  *
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
+ * @slot pin - Content is used as the pin label. It defaults to `Math.round(value)`.
  *
  * @part tick - An inactive tick mark.
  * @part tick-active - An active tick mark.
@@ -140,6 +141,7 @@ export class Range implements ComponentInterface {
     value = this.ensureValueInBounds(value);
 
     this.ionChange.emit({ value });
+    this.ionRawChange.emit({ value });
   }
 
   private clampBounds = (value: any): number => {
@@ -159,8 +161,16 @@ export class Range implements ComponentInterface {
 
   /**
    * Emitted when the value property has changed.
+   * This event is debounced when the `debounce` property is set.
    */
   @Event() ionChange!: EventEmitter<RangeChangeEventDetail>;
+
+  /**
+   * Emitted when the value property has changed.
+   * This event is not debounced. It is typically used to set a custom pin
+   * label.
+   */
+  @Event() ionRawChange!: EventEmitter<RangeChangeEventDetail>;
 
   /**
    * Emitted when the styles change.
@@ -555,7 +565,7 @@ const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pr
       aria-disabled={disabled ? 'true' : null}
       aria-valuenow={value}
     >
-      {pin && <div class="range-pin" role="presentation" part="pin">{Math.round(value)}</div>}
+      {pin && <div class="range-pin" role="presentation" part="pin"><slot name="pin">{Math.round(value)}</slot></div>}
       <div class="range-knob" role="presentation" part="knob" />
     </div>
   );

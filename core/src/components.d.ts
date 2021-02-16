@@ -5036,13 +5036,17 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: CustomEvent<void>) => void;
         /**
-          * Emitted when the value property has changed.
+          * Emitted when the value property has changed. This event is debounced when the `debounce` property is set.
          */
         "onIonChange"?: (event: CustomEvent<RangeChangeEventDetail>) => void;
         /**
           * Emitted when the range has focus.
          */
         "onIonFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the value property has changed. This event is not debounced. It is typically used to set a custom pin label.
+         */
+        "onIonRawChange"?: (event: CustomEvent<RangeChangeEventDetail>) => void;
         /**
           * Emitted when the styles change.
          */
