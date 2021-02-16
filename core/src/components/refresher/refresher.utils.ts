@@ -1,7 +1,7 @@
 import { writeTask } from '@stencil/core';
 
 import { createAnimation } from '../../utils/animation/animation';
-import { componentOnReady } from '../../utils/helpers';
+import { clamp, componentOnReady } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
 // MD Native Refresher
@@ -125,13 +125,18 @@ export const setSpinnerOpacity = (spinner: HTMLElement, opacity: number) => {
 
 export const handleScrollWhilePulling = (
   ticks: NodeListOf<SVGElement>,
-  currentTickToShow: number,
-  lastTickOpacity: number
+  numTicks: number,
+  pullAmount: number
 ) => {
+  const max = 1;
   writeTask(() => {
     ticks.forEach((el, i) => {
-      const op = i < currentTickToShow ? ('0.99') : (i === currentTickToShow ? `${lastTickOpacity}` : '0');
-      el.style.setProperty('opacity', op);
+      const min = i * (max / numTicks);
+      const range = max - min;
+      const start = pullAmount - min;
+      const progression = clamp(0, start / range, 1);
+
+      el.style.setProperty('opacity', progression.toString());
     });
   });
 };

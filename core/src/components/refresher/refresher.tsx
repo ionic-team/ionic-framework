@@ -157,7 +157,7 @@ export class Refresher implements ComponentInterface {
     this.state = state;
 
     if (getIonMode(this) === 'ios') {
-      await translateElement(el, undefined, 400);
+      await translateElement(el, undefined, 300);
     } else {
       await transitionEndAsync(this.el.querySelector('.refresher-refreshing-icon'), 200);
     }
@@ -175,7 +175,7 @@ export class Refresher implements ComponentInterface {
   private async setupiOSNativeRefresher(pullingSpinner: HTMLIonSpinnerElement, refreshingSpinner: HTMLIonSpinnerElement) {
     this.elementToTransform = this.scrollEl!;
     const ticks = pullingSpinner.shadowRoot!.querySelectorAll('svg');
-    let MAX_PULL = this.scrollEl!.clientHeight * 0.16;
+    let MAX_PULL = this.scrollEl!.clientHeight * 0.15;
     const NUM_TICKS = ticks.length;
 
     writeTask(() => ticks.forEach(el => el.style.setProperty('animation', 'none')));
@@ -217,12 +217,8 @@ export class Refresher implements ComponentInterface {
         }
 
         // delay showing the next tick marks until user has pulled 30px
-        const pullAmount = this.progress = clamp(0, (Math.abs(scrollTop) - 10) / MAX_PULL, 1);
-        const computedTicksAmount = pullAmount * NUM_TICKS;
-        const computedTicksToShow = Math.floor(computedTicksAmount);
-        const currentTickToShow = clamp(0, computedTicksToShow, NUM_TICKS - 1);
-        const lastTickOpacity = computedTicksAmount - computedTicksToShow
-        const shouldShowRefreshingSpinner = this.state === RefresherState.Refreshing || currentTickToShow === NUM_TICKS - 1;
+        const pullAmount = this.progress = clamp(0, (Math.abs(scrollTop) - 30) / MAX_PULL, 1);
+        const shouldShowRefreshingSpinner = this.state === RefresherState.Refreshing || pullAmount === 1;
 
         if (shouldShowRefreshingSpinner) {
           if (this.pointerDown) {
@@ -243,10 +239,8 @@ export class Refresher implements ComponentInterface {
             }
           }
         } else {
-          if (!this.didRefresh) {
-            this.state = RefresherState.Pulling;
-            handleScrollWhilePulling(ticks, currentTickToShow, lastTickOpacity);
-          }
+          this.state = RefresherState.Pulling;
+          handleScrollWhilePulling(ticks, NUM_TICKS, pullAmount);
         }
       });
     };

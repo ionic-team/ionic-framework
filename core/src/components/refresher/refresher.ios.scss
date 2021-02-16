@@ -36,21 +36,21 @@ ion-refresher.refresher-native {
   }
 }
 
-.refresher-native {
-  .refresher-refreshing ion-spinner {
-    --refreshing-rotation-duration: 2s;
-    display: none;
-    animation: var(--refreshing-rotation-duration) ease-out refresher-rotate forwards;
-    animation-delay: 250ms;
-  }
-  .refresher-refreshing {
-    display: none;
-    animation: 250ms linear refresher-pop forwards;
-  }
+.refresher-native .refresher-refreshing ion-spinner {
+  --refreshing-rotation-duration: 2s;
+  display: none;
+  animation: var(--refreshing-rotation-duration) ease-out refresher-rotate forwards;
+}
+.refresher-native .refresher-refreshing {
+  display: none;
+  animation: 250ms linear refresher-pop forwards;
+}
 
-  ion-spinner {
-    color: grey;
-  }
+.refresher-native ion-spinner {
+  color: #{$refresher-ios-native-spinner-color};
+
+  width: #{$refresher-ios-native-spinner-width};
+  height: #{$refresher-ios-native-spinner-height};
 }
 
 .refresher-native.refresher-refreshing,
@@ -72,14 +72,10 @@ ion-refresher.refresher-native {
   }
 }
 
-.refresher-native.refresher-completing{
-  .refresher-refreshing ion-spinner {
-    animation: 200ms linear refresher-scale forwards;
-  }
+.refresher-native.refresher-completing ion-refresher-content .refresher-refreshing-icon {
+  transition: 300ms;
 
-  .refresher-refreshing-icon {
-    transform: unset;
-  }
+  transform: scale(0) rotate(180deg);
 }
 
 @keyframes refresher-pop {
@@ -102,15 +98,5 @@ ion-refresher.refresher-native {
   }
   to {
     transform: rotate(180deg);
-  }
-}
-
-@keyframes refresher-scale {
-  from {
-    transform: scale(1) rotate(0deg);
-  }
-
-  to {
-    transform: scale(0) rotate(180deg);
   }
 }
