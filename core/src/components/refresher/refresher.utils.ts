@@ -131,6 +131,12 @@ export const handleScrollWhilePulling = (
   const max = 1;
   writeTask(() => {
     ticks.forEach((el, i) => {
+      /**
+       * Compute the opacity of each tick
+       * mark as a percentage of the pullAmount
+       * offset by max / numTicks so
+       * the tick marks are shown staggered.
+       */
       const min = i * (max / numTicks);
       const range = max - min;
       const start = pullAmount - min;
