@@ -47,10 +47,10 @@ ion-refresher.refresher-native {
 }
 
 .refresher-native ion-spinner {
-  color: #{$refresher-ios-native-spinner-color};
-
   width: #{$refresher-ios-native-spinner-width};
   height: #{$refresher-ios-native-spinner-height};
+
+  color: #{$refresher-ios-native-spinner-color};
 }
 
 .refresher-native.refresher-refreshing,
@@ -73,9 +73,9 @@ ion-refresher.refresher-native {
 }
 
 .refresher-native.refresher-completing ion-refresher-content .refresher-refreshing-icon {
-  transition: 300ms;
-
   transform: scale(0) rotate(180deg);
+
+  transition: 300ms;
 }
 
 @keyframes refresher-pop {
