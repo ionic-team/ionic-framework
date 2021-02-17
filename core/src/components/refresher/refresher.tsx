@@ -200,7 +200,6 @@ export class Refresher implements ComponentInterface {
             return;
           }
 
-          writeTask(() => setSpinnerOpacity(pullingSpinner, 0));
           return;
         }
 
@@ -216,8 +215,15 @@ export class Refresher implements ComponentInterface {
           }
         }
 
-        // delay showing the next tick marks until user has pulled 30px
-        const pullAmount = this.progress = clamp(0, (Math.abs(scrollTop) - 30) / MAX_PULL, 1);
+        /**
+         * We want to delay the start of this gesture by ~30px
+         * when initially pulling down so the refresher does not
+         * overlap with the content. But when letting go of the
+         * gesture before the refresher completes, we want the
+         * refresher tick marks to quickly fade out.
+         */
+        const offset = (this.didStart) ? 30 : 0;
+        const pullAmount = this.progress = clamp(0, (Math.abs(scrollTop) - offset) / MAX_PULL, 1);
         const shouldShowRefreshingSpinner = this.state === RefresherState.Refreshing || pullAmount === 1;
 
         if (shouldShowRefreshingSpinner) {
