@@ -144,13 +144,22 @@ export default defineComponent({
 | `value`    | `value`    | The value determines how much of the active bar should display when the `type` is `"determinate"`. The value should be between [0, 1].                                                                                                                                 | `number`                           | `0`             |
 
 
+## Shadow Parts
+
+| Part         | Description                                                                                           |
+| ------------ | ----------------------------------------------------------------------------------------------------- |
+| `"buffer"`   | The buffer bar used to show additional progress while buffering.                                      |
+| `"circles"`  | The circles that animate while buffering, only shows when buffer is set.                              |
+| `"progress"` | The progress bar that shows the current value (determinate) or slides back and forth (indeterminate). |
+
+
 ## CSS Custom Properties
 
-| Name                    | Description                                                                                                                           |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `--background`          | Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself. |
-| `--buffer-background`   | Color of the buffer bar                                                                                                               |
-| `--progress-background` | Color of the progress bar                                                                                                             |
+| Name                    | Description                                                                                                                          |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `--background`          | Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself |
+| `--buffer-background`   | Color of the buffer bar                                                                                                              |
+| `--progress-background` | Color of the progress bar                                                                                                            |
 
 
 ----------------------------------------------
