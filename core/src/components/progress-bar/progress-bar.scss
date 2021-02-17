@@ -1,18 +1,19 @@
 @import "../../themes/ionic.globals";
 
 // Progress bar
-// --------------------------------------------------
-// Host has no background by default - this will be added to the progress-buffer-bar
+// ------------------------------------------------------------------------
 
+// Host has no background by default - this will be added to the progress-buffer-bar
 :host {
   /**
-  * @prop --background:  Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself.
-  * @prop --progress-background: Color of the progress bar
-  * @prop --buffer-background: Color of the buffer bar
-  */
+   * @prop --background:  Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself
+   * @prop --progress-background: Color of the progress bar
+   * @prop --buffer-background: Color of the buffer bar
+   */
   --background: #{ion-color(primary, base, 0.2)};
   --progress-background: #{ion-color(primary, base)};
   --buffer-background: var(--background);
+
   display: block;
 
   position: relative;
@@ -25,12 +26,7 @@
   overflow: hidden;
 }
 
-:host(.ion-color) {
-  --progress-background: #{current-color(base)};
-  --buffer-background: #{current-color(base, 0.2)};
-}
-
-// indeterminate has no progress-buffer-bar, so it will be added to the host
+// Indeterminate has no progress-buffer-bar, so background will be added to the host
 :host(.progress-bar-indeterminate) {
   background: var(--buffer-background);
 }
@@ -50,22 +46,9 @@
   height: 100%;
 }
 
-// Determinate progress bar
-// --------------------------------------------------
-
 .progress,
-.progress-buffer-bar {
-  /* stylelint-disable-next-line property-blacklist */
-  transform-origin: left top;
-
-  transition: transform 150ms linear;
-}
-
-// Progress and background bar
-// --------------------------------------------------
-
-.progress,
-.progress-indeterminate {
+.indeterminate-bar-primary,
+.indeterminate-bar-secondary {
   background: var(--progress-background);
 
   z-index: 2;
@@ -85,8 +68,26 @@
   }
 }
 
-// MD based animation on indeterminate type
-// --------------------------------------------------
+
+// Progress Bar: Determinate
+// ------------------------------------------------------------------------
+
+.progress,
+.progress-buffer-bar {
+  /* stylelint-disable-next-line property-blacklist */
+  transform-origin: left top;
+
+  transition: transform 150ms linear;
+}
+
+
+// Progress Bar: Indeterminate
+// ------------------------------------------------------------------------
+
+// Inherit background to avoid exposing the inner bar as a part
+.progress-indeterminate {
+  background: inherit;
+}
 
 .indeterminate-bar-primary {
   /* stylelint-disable property-blacklist */
@@ -120,20 +121,24 @@
   }
 }
 
-// Buffer style
-// --------------------------------------------------
+// Progress Bar: Buffer Circles
+// ------------------------------------------------------------------------
 
 .buffer-circles {
-  background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px center;
+  @include background-position(5px, center);
+
+  background-image: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%);
+  background-repeat: repeat-x;
   background-size: 10px 10px;
 
   z-index: 0;
   animation: buffering 450ms infinite linear;
 }
 
+// Progress Bar: Reversed
+// ------------------------------------------------------------------------
 // If reversed is set to true, the animation will be reversed
-// and the bars starting at the top right
-// --------------------------------------------------
+// and the bar will start at the top right
 
 :host(.progress-bar-reversed) {
   .progress,
@@ -150,8 +155,8 @@
   }
 }
 
-// Progress paused
-// --------------------------------------------------
+// Progress Bar: Paused
+// ------------------------------------------------------------------------
 
 :host(.progress-paused) {
   .indeterminate-bar-secondary,
@@ -161,8 +166,29 @@
   }
 }
 
-// Animation Keyframes
-// --------------------------------------------------
+// Progress Bar: Color
+// ------------------------------------------------------------------------
+
+:host(.ion-color.progress-bar-indeterminate),
+:host(.ion-color) .progress-buffer-bar:before {
+  background: #{current-color(base, 0.2)};
+}
+
+:host(.ion-color) .buffer-circles {
+  background-image: radial-gradient(ellipse at center, #{current-color(base, 0.2)} 0%, #{current-color(base, 0.2)} 30%, transparent 30%);
+}
+
+:host(.ion-color) {
+  .progress,
+  .indeterminate-bar-primary,
+  .indeterminate-bar-secondary {
+    background: #{current-color(base)};
+  }
+}
+
+
+// Progress Bar: Animation Keyframes
+// ------------------------------------------------------------------------
 // Source: https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_keyframes.scss
 
 @keyframes primary-indeterminate-translate {
@@ -262,3 +288,4 @@
     transform: translateX(-10px);
   }
 }
+

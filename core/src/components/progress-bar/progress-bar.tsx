@@ -8,6 +8,10 @@ import { createColorClasses } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part progress - The progress bar that shows the current value (determinate) or slides back and forth (indeterminate).
+ * @part circles - The circles that animate while buffering, only shows when buffer is set.
+ * @part buffer - The buffer bar used to show additional progress while buffering.
  */
 @Component({
   tag: 'ion-progress-bar',
@@ -78,8 +82,8 @@ export class ProgressBar implements ComponentInterface {
 
 const renderIndeterminate = () => {
   return [
-    <div class="indeterminate-bar-primary"><span class="progress-indeterminate"></span></div>,
-    <div class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
+    <div part="progress" class="indeterminate-bar-primary"><span class="progress-indeterminate"></span></div>,
+    <div part="progress" class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
   ];
 };
 
@@ -88,8 +92,8 @@ const renderProgress = (value: number, buffer: number) => {
   const finalBuffer = clamp(0, buffer, 1);
 
   return [
-    <div class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
-    finalBuffer !== 1 && <div class="buffer-circles"></div>,
-    <div class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
+    <div part="progress" class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
+    finalBuffer !== 1 && <div part="circles" class="buffer-circles"></div>,
+    <div part="buffer" class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
   ];
 };
