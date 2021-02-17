@@ -100,7 +100,8 @@ const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex, 
  */
 export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex, scrollEl: HTMLElement) => {
   writeTask(() => {
-    handleToolbarBorderIntersection(ev, mainHeaderIndex, scrollEl.scrollTop);
+    const scrollTop = scrollEl.scrollTop;
+    handleToolbarBorderIntersection(ev, mainHeaderIndex, scrollTop);
 
     const event = ev[0];
 
@@ -132,7 +133,7 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
 
       const hasValidIntersection = (intersection.x === 0 && intersection.y === 0) || (intersection.width !== 0 && intersection.height !== 0);
 
-      if (hasValidIntersection) {
+      if (hasValidIntersection && scrollTop > 0) {
         setHeaderActive(mainHeaderIndex);
         setHeaderActive(scrollHeaderIndex, false);
         setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0]);
