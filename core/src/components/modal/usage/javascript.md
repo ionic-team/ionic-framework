@@ -31,6 +31,8 @@ function presentModal() {
 }
 ```
 
+> If you need a wrapper element inside of your modal component, we recommend using a `<div class="ion-page">` so that the component dimensions are still computed properly.
+
 ### Passing Data
 
 During creation of a modal, data can be passed in through the `componentProps`. The previous example can be written to include data:

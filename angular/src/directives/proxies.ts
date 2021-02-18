@@ -156,8 +156,8 @@ export class IonCheckbox {
 }
 export declare interface IonChip extends Components.IonChip {
 }
-@ProxyCmp({ inputs: ["color", "mode", "outline"] })
-@Component({ selector: "ion-chip", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "mode", "outline"] })
+@ProxyCmp({ inputs: ["color", "disabled", "mode", "outline"] })
+@Component({ selector: "ion-chip", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "disabled", "mode", "outline"] })
 export class IonChip {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -278,8 +278,8 @@ export class IonHeader {
 }
 export declare interface IonIcon extends Components.IonIcon {
 }
-@ProxyCmp({ inputs: ["ariaLabel", "color", "flipRtl", "icon", "ios", "lazy", "md", "mode", "name", "size", "src"] })
-@Component({ selector: "ion-icon", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["ariaLabel", "color", "flipRtl", "icon", "ios", "lazy", "md", "mode", "name", "size", "src"] })
+@ProxyCmp({ inputs: ["ariaHidden", "ariaLabel", "color", "flipRtl", "icon", "ios", "lazy", "md", "mode", "name", "sanitize", "size", "src"] })
+@Component({ selector: "ion-icon", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["ariaHidden", "ariaLabel", "color", "flipRtl", "icon", "ios", "lazy", "md", "mode", "name", "sanitize", "size", "src"] })
 export class IonIcon {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -661,8 +661,8 @@ export class IonSearchbar {
 }
 export declare interface IonSegment extends Components.IonSegment {
 }
-@ProxyCmp({ inputs: ["color", "disabled", "mode", "scrollable", "value"] })
-@Component({ selector: "ion-segment", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "disabled", "mode", "scrollable", "value"] })
+@ProxyCmp({ inputs: ["color", "disabled", "mode", "scrollable", "swipeGesture", "value"] })
+@Component({ selector: "ion-segment", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "disabled", "mode", "scrollable", "swipeGesture", "value"] })
 export class IonSegment {
   ionChange!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;

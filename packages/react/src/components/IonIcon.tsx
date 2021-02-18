@@ -26,11 +26,13 @@ type InternalProps = IonIconProps & {
 };
 
 class IonIconContainer extends React.PureComponent<InternalProps> {
-
   constructor(props: InternalProps) {
     super(props);
     if (this.props.name) {
-      deprecationWarning('icon-name', 'In Ionic React, you import icons from "ionicons/icons" and set the icon you imported to the "icon" property. Setting the "name" property has no effect.');
+      deprecationWarning(
+        'icon-name',
+        'In Ionic React, you import icons from "ionicons/icons" and set the icon you imported to the "icon" property. Setting the "name" property has no effect.'
+      );
     }
   }
 
@@ -61,4 +63,7 @@ class IonIconContainer extends React.PureComponent<InternalProps> {
   }
 }
 
-export const IonIcon = createForwardRef<IonIconProps & IonicReactProps, HTMLIonIconElement>(IonIconContainer, 'IonIcon');
+export const IonIcon = createForwardRef<IonIconProps & IonicReactProps, HTMLIonIconElement>(
+  IonIconContainer,
+  'IonIcon'
+);

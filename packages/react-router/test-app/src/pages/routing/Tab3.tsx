@@ -1,9 +1,18 @@
 import React, { useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, withIonLifeCycle, IonButtons, IonMenuButton, IonButton } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  withIonLifeCycle,
+  IonButtons,
+  IonMenuButton,
+  IonButton,
+} from '@ionic/react';
 import './Tab3.css';
 
 class Tab3 extends React.Component {
-
   componentDidMount() {
     console.log('Tab3 mount');
   }
@@ -29,15 +38,13 @@ class Tab3 extends React.Component {
   // }
 
   render() {
-   
-
     return (
       <IonPage data-pageid="tab3-page">
         <IonHeader>
           <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
+            <IonButtons slot="start">
+              <IonMenuButton />
+            </IonButtons>
             <IonTitle>Tab 3</IonTitle>
           </IonToolbar>
         </IonHeader>
@@ -47,6 +54,6 @@ class Tab3 extends React.Component {
       </IonPage>
     );
   }
-};
+}
 
 export default withIonLifeCycle(Tab3);

@@ -71,3 +71,22 @@ Cypress.Commands.add('ionPageDoesNotExist', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('not.exist')
 });
+
+Cypress.Commands.add('routerPush', (path) => {
+  cy.window().then(win => {
+    win.debugRouter.push(path);
+  });
+});
+
+Cypress.Commands.add('routerReplace', (path) => {
+  cy.window().then(win => {
+    win.debugRouter.replace(path);
+  });
+});
+
+Cypress.Commands.add('ionBackButtonHidden', (pageId) => {
+  cy.get(`div.ion-page[data-pageid=${pageId}]`)
+    .should('be.visible', true)
+    .find('ion-back-button')
+    .should('not.be.visible')
+});
