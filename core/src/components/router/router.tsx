@@ -61,7 +61,17 @@ export class Router implements ComponentInterface {
     await waitUntilNavNode();
     console.debug('[ion-router] found nav');
 
-    await this.onRoutesChanged();
+    const canProceed = await this.runGuards(this.getPath());
+    if (canProceed !== true) {
+      if (typeof canProceed === 'object') {
+        const path = parsePath(canProceed.redirect);
+        const queryString = canProceed.redirect.split('?')[1];
+        this.setPath(path, ROUTER_INTENT_NONE, queryString);
+        await this.writeNavStateRoot(path, ROUTER_INTENT_NONE);
+      }
+    } else {
+      await this.onRoutesChanged();
+    }
   }
 
   componentDidLoad() {
