@@ -64,8 +64,9 @@ export class Router implements ComponentInterface {
     const canProceed = await this.runGuards(this.getPath());
     if (canProceed !== true) {
       if (typeof canProceed === 'object') {
-        const path = parsePath(canProceed.redirect);
-        const queryString = canProceed.redirect.split('?')[1];
+        const { redirect } = canProceed;
+        const path = parsePath(redirect);
+        const queryString = redirect.substring(redirect.indexOf('?') + 1);
         this.setPath(path, ROUTER_INTENT_NONE, queryString);
         await this.writeNavStateRoot(path, ROUTER_INTENT_NONE);
       }
@@ -132,13 +133,14 @@ export class Router implements ComponentInterface {
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
     let path = parsePath(url);
-    let queryString = url.split('?')[1];
+    let queryString = url.substring(url.indexOf('?') + 1);
 
     const canProceed = await this.runGuards(path);
     if (canProceed !== true) {
       if (typeof canProceed === 'object') {
-        path = parsePath(canProceed.redirect);
-        queryString = canProceed.redirect.split('?')[1];
+        const { redirect } = canProceed;
+        path = parsePath(redirect);
+        queryString = redirect.substring(redirect.indexOf('?') + 1);
       } else {
         return false;
       }

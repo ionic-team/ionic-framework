@@ -204,8 +204,8 @@
       const allow = () => true;
 
       const page = document.querySelector('ion-route[component="child-page"]');
-      page.beforeEnter = () => { console.log('c be'); };
-      page.beforeLeave = () => { console.log('c bl'); }
+      page.beforeEnter = allow;
+      page.beforeLeave = allow;
 
       const guardPage = document.querySelector('ion-route[component="guard-initial-page"]');
       guardPage.beforeEnter = () => {
