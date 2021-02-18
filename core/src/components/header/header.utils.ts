@@ -72,7 +72,7 @@ export const setToolbarBackgroundOpacity = (toolbar: ToolbarIndex, opacity?: num
   }
 };
 
-const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) => {
+const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollTop: number) => {
   if (!ev[0].isIntersecting) { return; }
 
   /**
@@ -80,8 +80,13 @@ const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) 
    * does not always reset the scrollTop position to 0 when letting go. It will
    * set to 1 once the rubber band effect has ended. This causes the background to
    * appear slightly on certain app setups.
+   *
+   * Additionally, we check if user is rubber banding (scrolling is negative)
+   * as this can mean they are using pull to refresh. Once the refresher starts,
+   * the content is transformed which can cause the intersection observer to erroneously
+   * fire here as well.
    */
-  const scale = (ev[0].intersectionRatio > 0.9) ? 0 : ((1 - ev[0].intersectionRatio) * 100) / 75;
+  const scale = (ev[0].intersectionRatio > 0.9 || scrollTop <= 0) ? 0 : ((1 - ev[0].intersectionRatio) * 100) / 75;
 
   mainHeaderIndex.toolbars.forEach(toolbar => {
     setToolbarBackgroundOpacity(toolbar, (scale === 1) ? undefined : scale);
@@ -93,9 +98,10 @@ const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex) 
  * and show the primary toolbar content. If the toolbars are not intersecting,
  * hide the primary toolbar content and show the scrollable toolbar content
  */
-export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex) => {
+export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollHeaderIndex: HeaderIndex, scrollEl: HTMLElement) => {
   writeTask(() => {
-    handleToolbarBorderIntersection(ev, mainHeaderIndex);
+    const scrollTop = scrollEl.scrollTop;
+    handleToolbarBorderIntersection(ev, mainHeaderIndex, scrollTop);
 
     const event = ev[0];
 
@@ -127,7 +133,7 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
 
       const hasValidIntersection = (intersection.x === 0 && intersection.y === 0) || (intersection.width !== 0 && intersection.height !== 0);
 
-      if (hasValidIntersection) {
+      if (hasValidIntersection && scrollTop > 0) {
         setHeaderActive(mainHeaderIndex);
         setHeaderActive(scrollHeaderIndex, false);
         setToolbarBackgroundOpacity(mainHeaderIndex.toolbars[0]);
