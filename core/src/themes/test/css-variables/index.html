@@ -52,6 +52,9 @@
       font-size: 48px;
     }
 
+    ion-progress-bar {
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 
@@ -620,10 +623,6 @@
             <section>
               <p>
                 <ion-toolbar>
-                  <ion-title>Default</ion-title>
-                </ion-toolbar>
-
-                <ion-toolbar>
                   <ion-buttons slot="start">
                     <ion-button color="danger">
                       <ion-icon slot="icon-only" name="add"></ion-icon>
@@ -758,6 +757,18 @@
                   </ion-buttons>
                   <ion-title>Dark</ion-title>
                 </ion-toolbar>
+              </p>
+
+              <p>
+                <ion-progress-bar value="0.5"></ion-progress-bar>
+                <ion-progress-bar value="0.5" color="secondary"></ion-progress-bar>
+                <ion-progress-bar value="0.5" color="tertiary"></ion-progress-bar>
+                <ion-progress-bar type="indeterminate" color="danger"></ion-progress-bar>
+                <ion-progress-bar type="indeterminate" color="warning"></ion-progress-bar>
+                <ion-progress-bar value="0.2" buffer="0.3" color="success"></ion-progress-bar>
+                <ion-progress-bar value="0.5" color="light"></ion-progress-bar>
+                <ion-progress-bar value="0.5" color="medium"></ion-progress-bar>
+                <ion-progress-bar value="0.2" buffer="0.3" color="dark"></ion-progress-bar>
               </p>
             </section>
           </div>
