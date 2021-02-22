@@ -122,11 +122,12 @@ export class Searchbar implements ComponentInterface {
   @Prop() showCancelButton: 'never' | 'focus' | 'always' = 'never';
 
   /**
-   * Sets the behavior for the clear button. Defaults to `"never"`.
-   * Setting to `"focus"` shows the clear button on focus.
+   * Sets the behavior for the clear button. Defaults to `"focus"`.
+   * Setting to `"focus"` shows the clear button on focus if the
+   * input is not empty.
    * Setting to `"never"` hides the clear button.
    * Setting to `"always"` shows the clear button regardless
-   * of focus state.
+   * of focus state, but only if the input is not empty.
    */
   @Prop() showClearButton: 'never' | 'focus' | 'always' = 'focus';
 
@@ -240,7 +241,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Clears the input field and triggers the control change.
    */
-  private onClearInput = (ev?: Event) => {
+  private onClearInput = (ev?: Event, shouldFocus?: boolean) => {
     this.ionClear.emit();
 
     if (ev) {
@@ -255,6 +256,16 @@ export class Searchbar implements ComponentInterface {
       if (value !== '') {
         this.value = '';
         this.ionInput.emit();
+
+        /**
+         * When tapping clear button
+         * ensure input is focused after
+         * clearing input so users
+         * can quickly start typing.
+         */
+        if (shouldFocus && !this.focused) {
+          this.setFocus();
+        }
       }
     }, 16 * 4);
   }
@@ -516,8 +527,8 @@ export class Searchbar implements ComponentInterface {
             type="button"
             no-blur
             class="searchbar-clear-button"
-            onMouseDown={this.onClearInput}
-            onTouchStart={this.onClearInput}
+            onMouseDown={ev => this.onClearInput(ev, true)}
+            onTouchStart={ev => this.onClearInput(ev, true)}
           >
             <ion-icon aria-hidden="true" mode={mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
           </button>

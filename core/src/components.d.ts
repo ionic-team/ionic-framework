@@ -2035,7 +2035,7 @@ export namespace Components {
          */
         "showCancelButton": 'never' | 'focus' | 'always';
         /**
-          * Sets the behavior for the clear button. Defaults to `"never"`. Setting to `"focus"` shows the clear button on focus. Setting to `"never"` hides the clear button. Setting to `"always"` shows the clear button regardless of focus state.
+          * Sets the behavior for the clear button. Defaults to `"focus"`. Setting to `"focus"` shows the clear button on focus if the input is not empty. Setting to `"never"` hides the clear button. Setting to `"always"` shows the clear button regardless of focus state, but only if the input is not empty.
          */
         "showClearButton": 'never' | 'focus' | 'always';
         /**
@@ -5341,7 +5341,7 @@ declare namespace LocalJSX {
          */
         "showCancelButton"?: 'never' | 'focus' | 'always';
         /**
-          * Sets the behavior for the clear button. Defaults to `"never"`. Setting to `"focus"` shows the clear button on focus. Setting to `"never"` hides the clear button. Setting to `"always"` shows the clear button regardless of focus state.
+          * Sets the behavior for the clear button. Defaults to `"focus"`. Setting to `"focus"` shows the clear button on focus if the input is not empty. Setting to `"never"` hides the clear button. Setting to `"always"` shows the clear button regardless of focus state, but only if the input is not empty.
          */
         "showClearButton"?: 'never' | 'focus' | 'always';
         /**
