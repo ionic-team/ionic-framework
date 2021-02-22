@@ -924,6 +924,9 @@
       <ion-header translucent="true">
         <ion-toolbar>
           <ion-title>Super Modal</ion-title>
+          <ion-buttons slot="start">
+            <ion-button class="dismiss">Close</ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content fullscreen="true">
@@ -932,10 +935,21 @@
             <ion-title size="large">Super Modal</ion-title>
           </ion-toolbar>
         </ion-header>
-        <div class="ion-padding">
-          <h1>Content of doom</h1>
-          <div>Here's some more content</div>
-          <ion-button class="dismiss">Dismiss Modal</ion-button>
+
+        <br />
+
+        <div>
+          <ion-list>
+            <ion-item>
+              <ion-label>Item A</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item B</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>Item C</ion-label>
+            </ion-item>
+          </ion-list>
         </div>
       </ion-content>
       `;
