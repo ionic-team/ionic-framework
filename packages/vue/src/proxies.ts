@@ -97,7 +97,8 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox>('ion-c
 ],
 {
   "modelProp": "checked",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -180,7 +181,8 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -294,7 +296,8 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput>('ion-input',
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -445,7 +448,8 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio>('ion-radio',
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -457,7 +461,8 @@ export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('i
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -481,7 +486,8 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range',
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -552,7 +558,8 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -568,7 +575,8 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-seg
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -580,7 +588,8 @@ export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButt
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -604,7 +613,8 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-selec
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -696,7 +706,8 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-t
 ],
 {
   "modelProp": "value",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 
@@ -723,7 +734,8 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggl
 ],
 {
   "modelProp": "checked",
-  "modelUpdateEvent": "ionChange"
+  "modelUpdateEvent": "v-ionChange",
+  "externalModelUpdateEvent": "ionChange"
 });
 
 

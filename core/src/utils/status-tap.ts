@@ -1,5 +1,7 @@
 import { readTask, writeTask } from '@stencil/core';
 
+import { componentOnReady } from './helpers';
+
 export const startStatusTap = () => {
   const win = window;
   win.addEventListener('statusTap', () => {
@@ -12,7 +14,7 @@ export const startStatusTap = () => {
       }
       const contentEl = el.closest('ion-content');
       if (contentEl) {
-        contentEl.componentOnReady().then(() => {
+        new Promise(resolve => componentOnReady(contentEl, resolve)).then(() => {
           writeTask(() => contentEl.scrollToTop(300));
         });
       }

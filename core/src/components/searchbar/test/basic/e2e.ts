@@ -11,7 +11,7 @@ test('searchbar: basic', async () => {
   let searchbar = await page.find('#basic');
   await searchbar.callMethod('setFocus');
 
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
   searchbar = await page.find('#basic');
   expect(searchbar).toHaveClass('searchbar-has-focus');
 
@@ -21,7 +21,7 @@ test('searchbar: basic', async () => {
   searchbar = await page.find('#noCancel');
   await searchbar.callMethod('setFocus');
 
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
   searchbar = await page.find('#noCancel');
   expect(searchbar).toHaveClass('searchbar-has-focus');
 
@@ -43,7 +43,7 @@ test('searchbar:rtl: basic', async () => {
   let searchbar = await page.find('#basic');
   await searchbar.callMethod('setFocus');
 
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
   searchbar = await page.find('#basic');
   expect(searchbar).toHaveClass('searchbar-has-focus');
 
@@ -53,7 +53,7 @@ test('searchbar:rtl: basic', async () => {
   searchbar = await page.find('#noCancel');
   await searchbar.callMethod('setFocus');
 
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
   searchbar = await page.find('#noCancel');
   expect(searchbar).toHaveClass('searchbar-has-focus');
 

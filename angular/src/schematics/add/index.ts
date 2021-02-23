@@ -40,20 +40,23 @@ function addIonicAngularModuleToAppModule(projectSourceRoot: Path): Rule {
 function addIonicStyles(projectName: string, projectSourceRoot: Path): Rule {
   return (host: Tree) => {
     const ionicStyles = [
+      'node_modules/@ionic/angular/css/core.css',
       'node_modules/@ionic/angular/css/normalize.css',
       'node_modules/@ionic/angular/css/structure.css',
       'node_modules/@ionic/angular/css/typography.css',
-      'node_modules/@ionic/angular/css/core.css',
+      'node_modules/@ionic/angular/css/display.css',
       'node_modules/@ionic/angular/css/padding.css',
       'node_modules/@ionic/angular/css/float-elements.css',
       'node_modules/@ionic/angular/css/text-alignment.css',
       'node_modules/@ionic/angular/css/text-transformation.css',
       'node_modules/@ionic/angular/css/flex-utils.css',
       `${projectSourceRoot}/theme/variables.css`
-    ].forEach(entry => {
+    ]
+
+    ionicStyles.forEach(entry => {
       addStyle(host, projectName, entry);
     });
-    return host;
+   return host;
   };
 }
 
@@ -64,7 +67,8 @@ function addIonicons(projectName: string): Rule {
       input: 'node_modules/ionicons/dist/ionicons/svg',
       output: './svg'
     };
-    addAsset(host, projectName, ioniconsGlob);
+    addAsset(host, projectName, 'build', ioniconsGlob);
+    addAsset(host, projectName, 'test', ioniconsGlob);
     return host;
   };
 }

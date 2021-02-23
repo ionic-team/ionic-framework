@@ -1,18 +1,15 @@
-import { terser } from "rollup-plugin-terser";
-
 export default {
   input: 'dist-transpiled/index.js',
   output: [
     {
-      file: 'dist/index.js',
-      format: 'esm',
-      sourcemap: true
+      file: 'dist/index.esm.js',
+      format: 'es',
+      sourcemap: true,
     },
     {
-      file: 'dist/index.min.js',
-      format: 'esm',
+      file: 'dist/index.js',
+      format: 'commonjs',
       sourcemap: true,
-      plugins: [terser()]
     }
   ],
   external: ['vue-router', 'vue']

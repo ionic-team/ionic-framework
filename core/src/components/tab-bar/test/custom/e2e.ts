@@ -15,7 +15,7 @@ test('tab-bar: custom', async () => {
   await page.keyboard.press('Tab');
 
   screenshotCompares.push(await page.compareScreenshot('tab-bar: custom tabbed'));
-  await page.waitFor(10000);
+  await page.waitForTimeout(10000);
   for (const screenshotCompare of screenshotCompares) {
     expect(screenshotCompare).toMatchScreenshot();
   }
