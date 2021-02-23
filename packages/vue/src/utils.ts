@@ -3,6 +3,8 @@ import { Config as CoreConfig, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYC
 
 type LIFECYCLE_EVENTS = typeof LIFECYCLE_WILL_ENTER | typeof LIFECYCLE_DID_ENTER | typeof LIFECYCLE_WILL_LEAVE | typeof LIFECYCLE_DID_LEAVE;
 
+export type LifecycleHooks = 'onIonViewWillEnter' | 'onIonViewDidEnter' | 'onIonViewWillLeave' | 'onIonViewDidLeave';
+
 const ids: { [k: string]: number } = { main: 0 };
 
 export const generateId = (type = 'main') => {
@@ -20,6 +22,14 @@ export const fireLifecycle = (vueComponent: any, vueInstance: Ref<ComponentPubli
   const instance = vueInstance?.value as any;
   if (instance?.[lifecycle]) {
     instance[lifecycle]();
+  }
+
+  if (instance) {
+    const hook = 'on' + lifecycle.charAt(0).toUpperCase() + lifecycle.slice(1);
+    const hooks = instance[hook];
+    if (hooks) {
+      hooks.forEach((hook: Function) => hook.bind(instance)());
+    }
   }
 }
 
