@@ -60,6 +60,12 @@ This example will set the text color of the header `ion-item` to red when the ac
 
 ## Accessibility
 
+### Animations
+
+By default, animations are enabled when expanding or collapsing an accordion item. Animations will be automatically disabled when the `prefers-reduced-motion` media query is supported and set to `reduce`. For browsers that do not support this, animations can be disabled by setting the `animated` config in your Ionic Framework app.
+
+### Keyboard Navigation
+
 When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard support for interacting with the component. The following table details what each key does:
 
 | Key                | Function                                                     |

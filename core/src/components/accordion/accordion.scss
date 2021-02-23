@@ -7,8 +7,6 @@
 
   transform: translateZ(0);
 
-  transition: all $accordion-transition-duration $accordion-transition-easing;
-
   background-color: $accordion-background-color;
 
   overflow: hidden;
@@ -19,9 +17,11 @@
   --border-width: 0px;
 }
 
-#content {
+:host(.accordion-animated) #content {
   transition: max-height $accordion-transition-duration $accordion-transition-easing;
+}
 
+#content {
   overflow: hidden;
 
   will-change: max-height;
@@ -53,4 +53,11 @@
 :host(.accordion-disabled) #header,
 :host(.accordion-disabled) #content {
   opacity: $accordion-disabled-opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.accordion-animated) #content,
+  #content {
+    transition: none;
+  }
 }

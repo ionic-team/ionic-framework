@@ -1,5 +1,6 @@
 import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { addEventListener, raf, removeEventListener, transitionEndAsync } from '../../utils/helpers';
 
@@ -309,6 +310,8 @@ export class Accordion implements ComponentInterface {
 
           'accordion-disabled': disabled,
           'accordion-readonly': readonly,
+
+          'accordion-animated': config.getBoolean('animated', true)
         }}
 
       >
