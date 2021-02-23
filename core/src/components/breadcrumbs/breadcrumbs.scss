@@ -21,6 +21,9 @@
 // --------------------------------------------------
 
 .breadcrumbs-collapsed-indicator {
+  @include padding(0);
+  @include margin(0, 14px);
+
   display: none;
 
   align-items: center;
@@ -28,8 +31,14 @@
 
   width: 32px;
   height: 18px;
-}
 
+  border: 0;
+
+  outline: none;
+
+  cursor: pointer;
+  appearance: none;
+}
 
 .breadcrumbs-collapsed-indicator ion-icon {
   margin-top: 1px;
@@ -43,12 +52,6 @@
   display: flex;
 }
 
-// Breadcrumbs: States
-// --------------------------------------------------
-
-.breadcrumbs-collapsed-indicator:hover {
-  background: #eeeeee;
-}
 
 // Breadcrumbs: In Toolbar
 // --------------------------------------------------

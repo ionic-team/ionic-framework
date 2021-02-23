@@ -127,15 +127,18 @@ export class Breadcrumbs implements ComponentInterface {
         })}
 
       >
-        <div
+        <button
           part="collapsed-indicator"
           onClick={() => this.collapsedIndicatorClick()}
-          class="breadcrumbs-collapsed-indicator"
+          class={{
+            'breadcrumbs-collapsed-indicator': true,
+            'ion-focusable': true,
+          }}
           style={{
             'order': indicatorOrder
           }}>
           <ion-icon name="ellipsis-horizontal"></ion-icon>
-        </div>
+        </button>
         <slot></slot>
       </Host>
     );
