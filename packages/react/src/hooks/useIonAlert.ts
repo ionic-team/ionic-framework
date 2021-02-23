@@ -5,7 +5,7 @@ import { useController } from './useController';
 
 /**
  * A hook for presenting/dismissing an IonAlert component
- * @returns - Returns the present and dismiss methods in an array
+ * @returns Returns the present and dismiss methods in an array
  */
 export function useIonAlert(): UseIonAlertResult {
   const controller = useController<AlertOptions, HTMLIonAlertElement>(
@@ -36,13 +36,13 @@ type UseIonAlertResult = [
   {
     /**
      * Presents the alert
-     * @param message - The main message to be displayed in the alert
-     * @param buttons - Optional - Array of buttons to be added to the alert
+     * @param message The main message to be displayed in the alert
+     * @param buttons Optional - Array of buttons to be added to the alert
      */
     (message: string, buttons?: AlertButton[]): void;
     /**
      * Presents the alert
-     * @param options - The options to pass to the IonAlert
+     * @param options The options to pass to the IonAlert
      */
     (options: AlertOptions & HookOverlayOptions): void;
   },

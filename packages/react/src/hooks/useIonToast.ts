@@ -5,7 +5,7 @@ import { useController } from './useController';
 
 /**
  * A hook for presenting/dismissing an IonToast component
- * @returns - Returns the present and dismiss methods in an array
+ * @returns Returns the present and dismiss methods in an array
  */
 export function useIonToast(): UseIonToastResult {
   const controller = useController<ToastOptions, HTMLIonToastElement>(
@@ -36,13 +36,13 @@ type UseIonToastResult = [
   {
     /**
      * Presents the toast
-     * @param message - Message to be shown in the toast.
-     * @param duration - Optional - How many milliseconds to wait before hiding the toast. By default, it will show until dismissToast() is called.
+     * @param message Message to be shown in the toast.
+     * @param duration Optional - How many milliseconds to wait before hiding the toast. By default, it will show until dismissToast() is called.
      */
     (message: string, duration?: number): void;
     /**
      * Presents the Toast
-     * @param options - The options to pass to the IonToast.
+     * @param options The options to pass to the IonToast.
      */
     (options: ToastOptions & HookOverlayOptions): void;
   },
