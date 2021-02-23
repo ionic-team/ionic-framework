@@ -17,6 +17,10 @@
   --border-width: 0px;
 }
 
+:host(.accordion-animated) {
+  transition: all $accordion-transition-duration $accordion-transition-easing;
+}
+
 :host(.accordion-animated) #content {
   transition: max-height $accordion-transition-duration $accordion-transition-easing;
 }
@@ -56,8 +60,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :host(.accordion-animated) #content,
+  :host,
   #content {
-    transition: none;
+    /* stylelint-disable declaration-no-important */
+    transition: none !important;
   }
 }

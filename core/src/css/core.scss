@@ -224,9 +224,9 @@ ion-accordion.accordion-animated .ion-accordion-toggle-icon {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  ion-accordion.accordion-animated .ion-accordion-toggle-icon,
   ion-accordion .ion-accordion-toggle-icon {
-    transition: none;
+    /* stylelint-disable declaration-no-important */
+    transition: none !important;
   }
 }
 
