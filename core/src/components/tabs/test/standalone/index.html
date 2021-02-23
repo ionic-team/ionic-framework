@@ -73,7 +73,9 @@
   <script>
     customElements.whenDefined('ion-tabs').then(async () => {
       const tabs = document.querySelector('ion-tabs');
-      await tabs.componentOnReady();
+      if (tabs.componentOnReady) {
+        await tabs.componentOnReady();
+      }
       await tabs.select('tab-three');
     });
   </script>

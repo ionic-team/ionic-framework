@@ -54,6 +54,7 @@ export class ProgressBar implements ComponentInterface {
     const { color, type, reversed, value, buffer } = this;
     const paused = config.getBoolean('_testing');
     const mode = getIonMode(this);
+    const isReversed = document.dir === 'rtl' ? !reversed : reversed;
     return (
       <Host
         role="progressbar"
@@ -64,12 +65,12 @@ export class ProgressBar implements ComponentInterface {
           [mode]: true,
           [`progress-bar-${type}`]: true,
           'progress-paused': paused,
-          'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
+          'progress-bar-reversed': isReversed
         })}
       >
         {type === 'indeterminate'
           ? renderIndeterminate()
-          : renderProgress(value, buffer)
+          : renderProgress(value, buffer, isReversed)
         }
       </Host>
     );
@@ -83,13 +84,13 @@ const renderIndeterminate = () => {
   ];
 };
 
-const renderProgress = (value: number, buffer: number) => {
+const renderProgress = (value: number, buffer: number, reversed: boolean) => {
   const finalValue = clamp(0, value, 1);
   const finalBuffer = clamp(0, buffer, 1);
 
   return [
     <div class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
-    finalBuffer !== 1 && <div class="buffer-circles"></div>,
+    finalBuffer !== 1 && <div class={{ 'buffer-circles': true, 'buffer-circles-reversed': reversed }} style={{ width: `calc(${(1 - finalBuffer) * 100}%)` }}></div>,
     <div class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
   ];
 };

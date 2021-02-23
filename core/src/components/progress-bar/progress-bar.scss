@@ -10,7 +10,7 @@
   * @prop --progress-background: Color of the progress bar
   * @prop --buffer-background: Color of the buffer bar
   */
-  --background: #{ion-color(primary, base, 0.2)};
+  --background: #{ion-color(primary, base, 0.3)};
   --progress-background: #{ion-color(primary, base)};
   --buffer-background: var(--background);
   display: block;
@@ -27,7 +27,7 @@
 
 :host(.ion-color) {
   --progress-background: #{current-color(base)};
-  --buffer-background: #{current-color(base, 0.2)};
+  --buffer-background: #{current-color(base, 0.3)};
 }
 
 // indeterminate has no progress-buffer-bar, so it will be added to the host
@@ -72,17 +72,10 @@
 }
 
 .progress-buffer-bar {
-  // It's currently here because --buffer-background has an alpha
-  // Otherwise the buffer circles would be seen through
-  background: #fff;
+  background: var(--buffer-background);
 
-  z-index: 1; // Make it behind the progress
-
-  &:before {
-    background: var(--buffer-background);
-
-    content: "";
-  }
+  // Make it behind the progress
+  z-index: 1;
 }
 
 // MD based animation on indeterminate type
@@ -109,7 +102,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  left:  -54.888891%;
+  left: -54.888891%;
   /* stylelint-enable property-blacklist */
 
   animation: secondary-indeterminate-translate 2s infinite linear;
@@ -123,8 +116,26 @@
 // Buffer style
 // --------------------------------------------------
 
+.buffer-circles.buffer-circles-reversed {
+  /* stylelint-disable property-blacklist */
+  right: unset;
+  left: 2px;
+
+  background-position: right;
+  /* stylelint-enable property-blacklist */
+}
+
 .buffer-circles {
-  background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px center;
+  /* stylelint-disable property-blacklist */
+  right: -8px;
+
+  left: unset;
+  /* stylelint-enable property-blacklist */
+
+  background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px;
+
+  /* stylelint-disable-next-line property-blacklist */
+  background-position: left;
   background-size: 10px 10px;
 
   z-index: 0;

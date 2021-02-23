@@ -40,6 +40,24 @@ The `@ionic/core` package can by used in simple HTML, or by vanilla JavaScript w
 * [@ionic/angular](https://www.npmjs.com/package/@ionic/angular)
 
 
+## Custom Elements Build (Experimental)
+
+In addition to the default, self lazy-loading components built by Stencil, this package also comes with each component exported as a stand-alone custom element within `@ionic/core/components`. Each component extends `HTMLElement`, and does not lazy-load itself. Instead, this package is useful for projects already using a bundler such as Webpack or Rollup. While all components are available to be imported, the custom elements build also ensures bundlers only import what's used, and tree-shakes any unused components.
+
+Below is an example of importing `ion-toggle`, and initializing Ionic so it's able to correctly load the "mode", such as Material Design or iOS. Additionally, the `initialize({...})` function can receive the Ionic config.
+
+```typescript
+import { IonBadge } from "@ionic/core/components/ion-badge";
+import { initialize } from "@ionic/core/components";
+
+initialize();
+
+customElements.define("ion-badge", IonBadge);
+```
+
+Notice how `IonBadge` is imported from `@ionic/core/components/ion-badge` rather than just `@ionic/core/components`. Additionally, the `initialize` function is imported from `@ionic/core/components` rather than `@ionic/core`. All of this helps to ensure bundlers do not pull in more code than is needed.
+
+
 ## How to contribute
 
 [Check out the CONTRIBUTE guide](CONTRIBUTING.md)
