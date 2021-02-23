@@ -119,7 +119,7 @@
 .buffer-circles.buffer-circles-reversed {
   /* stylelint-disable property-blacklist */
   right: unset;
-  left: 0;
+  left: 2px;
 
   background-position: right;
   /* stylelint-enable property-blacklist */
@@ -127,7 +127,7 @@
 
 .buffer-circles {
   /* stylelint-disable property-blacklist */
-  right: 0;
+  right: -8px;
 
   left: unset;
   /* stylelint-enable property-blacklist */

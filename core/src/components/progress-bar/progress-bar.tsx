@@ -90,7 +90,7 @@ const renderProgress = (value: number, buffer: number, reversed: boolean) => {
 
   return [
     <div class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
-    finalBuffer !== 1 && <div class={{ 'buffer-circles': true, 'buffer-circles-reversed': reversed }} style={{ width: `calc(${(1 - finalBuffer) * 100}% + 4px)` }}></div>,
+    finalBuffer !== 1 && <div class={{ 'buffer-circles': true, 'buffer-circles-reversed': reversed }} style={{ width: `calc(${(1 - finalBuffer) * 100}%)` }}></div>,
     <div class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
   ];
 };
