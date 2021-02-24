@@ -42,6 +42,7 @@
 .progress-buffer-bar {
   @include position(0, 0, 0, 0);
   position: absolute;
+
   width: 100%;
   height: 100%;
 }
@@ -55,8 +56,8 @@
 // Extend a bit to overflow. The size of animated distance.
 .buffer-circles {
   /* stylelint-disable property-blacklist */
-  left: -10px;
   right: -10px;
+  left: -10px;
   /* stylelint-enable property-blacklist */
 }
 
@@ -66,9 +67,10 @@
 .progress,
 .progress-buffer-bar,
 .buffer-circles-container {
-  transition: transform 150ms linear;
   /* stylelint-disable-next-line property-blacklist */
   transform-origin: left top;
+
+  transition: transform 150ms linear;
 }
 
 // Progress and background bar
@@ -77,11 +79,13 @@
 .progress,
 .progress-indeterminate {
   background: var(--progress-background);
+
   z-index: 2;
 }
 
 .progress-buffer-bar {
   background: var(--buffer-background);
+
   z-index: 1;
 }
 
