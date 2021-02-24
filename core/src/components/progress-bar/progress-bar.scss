@@ -54,8 +54,10 @@
 
 // Extend a bit to overflow. The size of animated distance.
 .buffer-circles {
+  /* stylelint-disable property-blacklist */
   left: -10px;
   right: -10px;
+  /* stylelint-enable property-blacklist */
 }
 
 // Determinate progress bar
