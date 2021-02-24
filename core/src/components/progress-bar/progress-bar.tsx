@@ -95,7 +95,6 @@ const renderProgress = (value: number, buffer: number) => {
         <div class="buffer-circles"></div>
       </div>
     </div>,
-    <div class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}
-    ></div>,
+    <div class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
   ];
 };
