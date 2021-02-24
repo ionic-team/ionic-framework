@@ -130,6 +130,8 @@
   right: -8px;
 
   left: unset;
+
+  transition: width 150ms linear;
   /* stylelint-enable property-blacklist */
 
   background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px;
