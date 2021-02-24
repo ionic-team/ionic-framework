@@ -96,7 +96,7 @@ const createHook = <T extends Function = () => any>(lifecycle: LifecycleHooks) =
   return (hook: T, target: ComponentInternalInstance | null = getCurrentInstance()) => injectHook(lifecycle, hook, target);
 }
 
-export const onIonViewWillEnter = createHook('onIonViewWillEnter');
-export const onIonViewDidEnter = createHook('onIonViewDidEnter');
-export const onIonViewWillLeave = createHook('onIonViewWillLeave');
-export const onIonViewDidLeave = createHook('onIonViewDidLeave');
+export const onIonViewWillEnter = createHook(LifecycleHooks.WillEnter);
+export const onIonViewDidEnter = createHook(LifecycleHooks.DidEnter);
+export const onIonViewWillLeave = createHook(LifecycleHooks.WillLeave);
+export const onIonViewDidLeave = createHook(LifecycleHooks.DidLeave);

@@ -3,7 +3,18 @@ import { Config as CoreConfig, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYC
 
 type LIFECYCLE_EVENTS = typeof LIFECYCLE_WILL_ENTER | typeof LIFECYCLE_DID_ENTER | typeof LIFECYCLE_WILL_LEAVE | typeof LIFECYCLE_DID_LEAVE;
 
-export type LifecycleHooks = 'onIonViewWillEnter' | 'onIonViewDidEnter' | 'onIonViewWillLeave' | 'onIonViewDidLeave';
+export enum LifecycleHooks {
+  WillEnter = 'onIonViewWillEnter',
+  DidEnter = 'onIonViewDidEnter',
+  WillLeave = 'onIonViewWillLeave',
+  DidLeave = 'onIonViewDidLeave'
+}
+const hookNames = {
+  [LIFECYCLE_WILL_ENTER]: LifecycleHooks.WillEnter,
+  [LIFECYCLE_DID_ENTER]: LifecycleHooks.DidEnter,
+  [LIFECYCLE_WILL_LEAVE]: LifecycleHooks.WillLeave,
+  [LIFECYCLE_DID_LEAVE]: LifecycleHooks.DidLeave
+}
 
 const ids: { [k: string]: number } = { main: 0 };
 
@@ -25,7 +36,7 @@ export const fireLifecycle = (vueComponent: any, vueInstance: Ref<ComponentPubli
   }
 
   if (instance) {
-    const hook = 'on' + lifecycle.charAt(0).toUpperCase() + lifecycle.slice(1);
+    const hook = hookNames[lifecycle];
     const hooks = instance[hook];
     if (hooks) {
       hooks.forEach((hook: Function) => hook.bind(instance)());
