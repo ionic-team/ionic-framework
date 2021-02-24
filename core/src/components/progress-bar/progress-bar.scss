@@ -133,9 +133,10 @@
   left: unset;
   /* stylelint-enable property-blacklist */
 
-  background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px;
+  background-image: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%);
 
   /* stylelint-disable-next-line property-blacklist */
+  background-repeat: repeat-x;
   background-position: left;
   background-size: 10px 10px;
 

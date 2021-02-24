@@ -107,12 +107,12 @@
    */
 
   /* indeterminate background */
-  .custom-color-parts {
+  .custom-color-parts[type="indeterminate"] {
     background:rgb(158, 157, 36, 0.2);
   }
 
   /* determinate background */
-  .custom-color-parts::part(buffer)::before {
+  .custom-color-parts::part(buffer) {
     background:rgb(158, 157, 36, 0.2);
   }
 
@@ -123,7 +123,7 @@
 
   /* buffer circles */
   .custom-color-parts::part(circles) {
-    background-image: radial-gradient(ellipse at center,  rgb(158, 157, 36, 0.2) 0%,  rgb(158, 157, 36, 0.2) 30%, transparent 30%);
+    background-image: radial-gradient(ellipse at center, rgb(158, 157, 36, 0.2) 0%, rgb(158, 157, 36, 0.2) 30%, transparent 30%);
   }
 
   /*
