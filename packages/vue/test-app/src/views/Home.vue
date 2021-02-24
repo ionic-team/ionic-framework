@@ -57,8 +57,8 @@
 </template>
 
 <script lang="ts">
-import { IonButtons, IonBackButton, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, onIonViewDidEnter, onIonViewWillEnter, onIonViewWillLeave, onIonViewDidLeave } from '@ionic/vue';
-import { defineComponent, onMounted } from 'vue';
+import { IonButtons, IonBackButton, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Home',
@@ -73,26 +73,6 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar
-  },
-  setup() {
-    onMounted(() => { console.log('m1')})
-    onMounted(() => {console.log('m2')})
-
-    onIonViewWillEnter(() => {
-      console.log('will enter');
-    });
-
-    onIonViewDidEnter(() => {
-      console.log('did enter');
-    });
-
-    onIonViewWillLeave(() => {
-      console.log('will leave');
-    });
-
-    onIonViewDidLeave(() => {
-      console.log('did leave');
-    });
   }
 });
 </script>

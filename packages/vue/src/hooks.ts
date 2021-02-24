@@ -92,9 +92,7 @@ const injectHook = (lifecycleType: LifecycleHooks, hook: Function, component: Co
 }
 
 const createHook = <T extends Function = () => any>(lifecycle: LifecycleHooks) => {
-  return (hook: T, target: ComponentInternalInstance | null = getCurrentInstance()) => {
-    return injectHook(lifecycle, hook, target);
-  }
+  return (hook: T, target: ComponentInternalInstance | null = getCurrentInstance()) => injectHook(lifecycle, hook, target);
 }
 
 export const onIonViewWillEnter = createHook('onIonViewWillEnter');
