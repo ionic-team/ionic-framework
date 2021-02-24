@@ -54,7 +54,6 @@ export class ProgressBar implements ComponentInterface {
     const { color, type, reversed, value, buffer } = this;
     const paused = config.getBoolean('_testing');
     const mode = getIonMode(this);
-    const isReversed = document.dir === 'rtl' ? !reversed : reversed;
     return (
       <Host
         role="progressbar"
@@ -65,12 +64,12 @@ export class ProgressBar implements ComponentInterface {
           [mode]: true,
           [`progress-bar-${type}`]: true,
           'progress-paused': paused,
-          'progress-bar-reversed': isReversed
+          'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
         })}
       >
         {type === 'indeterminate'
           ? renderIndeterminate()
-          : renderProgress(value, buffer, isReversed)
+          : renderProgress(value, buffer)
         }
       </Host>
     );
@@ -84,13 +83,24 @@ const renderIndeterminate = () => {
   ];
 };
 
-const renderProgress = (value: number, buffer: number, reversed: boolean) => {
+const renderProgress = (value: number, buffer: number) => {
   const finalValue = clamp(0, value, 1);
   const finalBuffer = clamp(0, buffer, 1);
 
   return [
     <div class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
-    finalBuffer !== 1 && <div class={{ 'buffer-circles': true, 'buffer-circles-reversed': reversed }} style={{ width: `calc(${(1 - finalBuffer) * 100}%)` }}></div>,
+    /**
+     * Buffer circles with two container to move
+     * the circles behind the buffer progress
+     * with respecting the animation.
+     * When finalBuffer === 1, we use display: none
+     * instead of removing the element to avoid flickering.
+     */
+    <div class={{ 'buffer-circles-container': true, 'ion-hide': finalBuffer === 1 }} style={{ transform: `translateX(${finalBuffer * 100}%)` }}>
+      <div class="buffer-circles-container" style={{ transform: `translateX(-${finalBuffer * 100}%)` }}>
+        <div class="buffer-circles"></div>
+      </div>
+    </div>,
     <div class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
   ];
 };

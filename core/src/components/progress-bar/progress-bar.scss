@@ -39,22 +39,34 @@
 .progress-indeterminate,
 .indeterminate-bar-primary,
 .indeterminate-bar-secondary,
-.progress-buffer-bar,
-.progress-buffer-bar:before,
-.buffer-circles {
+.progress-buffer-bar {
   @include position(0, 0, 0, 0);
-
   position: absolute;
 
   width: 100%;
   height: 100%;
 }
 
+.buffer-circles-container,
+.buffer-circles {
+  @include position(0, 0, 0, 0);
+  position: absolute;
+}
+
+// Extend a bit to overflow. The size of animated distance.
+.buffer-circles {
+  /* stylelint-disable property-blacklist */
+  right: -10px;
+  left: -10px;
+  /* stylelint-enable property-blacklist */
+}
+
 // Determinate progress bar
 // --------------------------------------------------
 
 .progress,
-.progress-buffer-bar {
+.progress-buffer-bar,
+.buffer-circles-container {
   /* stylelint-disable-next-line property-blacklist */
   transform-origin: left top;
 
@@ -74,8 +86,11 @@
 .progress-buffer-bar {
   background: var(--buffer-background);
 
-  // Make it behind the progress
   z-index: 1;
+}
+
+.buffer-circles-container {
+  overflow: hidden;
 }
 
 // MD based animation on indeterminate type
@@ -116,28 +131,8 @@
 // Buffer style
 // --------------------------------------------------
 
-.buffer-circles.buffer-circles-reversed {
-  /* stylelint-disable property-blacklist */
-  right: unset;
-  left: 2px;
-
-  background-position: right;
-  /* stylelint-enable property-blacklist */
-}
-
 .buffer-circles {
-  /* stylelint-disable property-blacklist */
-  right: -8px;
-
-  left: unset;
-
-  transition: width 150ms linear;
-  /* stylelint-enable property-blacklist */
-
-  background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px;
-
-  /* stylelint-disable-next-line property-blacklist */
-  background-position: left;
+  background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px center;
   background-size: 10px 10px;
 
   z-index: 0;
@@ -149,18 +144,7 @@
 // --------------------------------------------------
 
 :host(.progress-bar-reversed) {
-  .progress,
-  .progress-buffer-bar {
-    /* stylelint-disable-next-line property-blacklist */
-    transform-origin: right top;
-  }
-
-  .buffer-circles,
-  .indeterminate-bar-primary,
-  .indeterminate-bar-secondary,
-  .progress-indeterminate {
-    animation-direction: reverse;
-  }
+  transform: scaleX(-1);
 }
 
 // Progress paused
