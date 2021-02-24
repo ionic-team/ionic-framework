@@ -65,6 +65,7 @@
 .progress-buffer-bar,
 .buffer-circles-container {
   transition: transform 150ms linear;
+  /* stylelint-disable-next-line property-blacklist */
   transform-origin: left top;
 }
 
