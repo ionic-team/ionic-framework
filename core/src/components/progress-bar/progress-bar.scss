@@ -135,10 +135,11 @@
 .buffer-circles {
   background-image: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%);
 
-  /* stylelint-disable-next-line property-blacklist */
+  /* stylelint-disable property-blacklist */
   background-repeat: repeat-x;
   background-position: 5px center;
   background-size: 10px 10px;
+  /* stylelint-enable property-blacklist */
 
   z-index: 0;
   animation: buffering 450ms infinite linear;
