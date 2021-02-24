@@ -1,3 +1,40 @@
+### Use with useIonLoading Hook
+
+```tsx
+import React from 'react';
+import { IonButton, IonContent, IonPage, useIonLoading } from '@ionic/react';
+
+interface LoadingProps {}
+
+const LoadingExample: React.FC<LoadingProps> = () => {
+  const [present] = useIonLoading();
+  return (
+    <IonPage>
+      <IonContent>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present({
+              duration: 3000,
+            })
+          }
+        >
+          Show Loading
+        </IonButton>
+        <IonButton
+          expand="block"
+          onClick={() => present('Loading', 2000, 'dots')}
+        >
+          Show Loading using params
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+### Use with IonLoading Component
+
 ```tsx
 import React, { useState } from 'react';
 import { IonLoading, IonButton, IonContent } from '@ionic/react';
