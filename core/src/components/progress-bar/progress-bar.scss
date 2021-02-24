@@ -91,10 +91,6 @@
 
 .buffer-circles-container {
   overflow: hidden;
-  &.hidden {
-    // Moved from tsx due to transition issue.
-    display: none;
-  }
 }
 
 // MD based animation on indeterminate type
