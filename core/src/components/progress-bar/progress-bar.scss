@@ -10,7 +10,7 @@
   * @prop --progress-background: Color of the progress bar
   * @prop --buffer-background: Color of the buffer bar
   */
-  --background: #{ion-color(primary, base, 0.2)};
+  --background: #{ion-color(primary, base, 0.3)};
   --progress-background: #{ion-color(primary, base)};
   --buffer-background: var(--background);
   display: block;
@@ -27,7 +27,7 @@
 
 :host(.ion-color) {
   --progress-background: #{current-color(base)};
-  --buffer-background: #{current-color(base, 0.2)};
+  --buffer-background: #{current-color(base, 0.3)};
 }
 
 // indeterminate has no progress-buffer-bar, so it will be added to the host
