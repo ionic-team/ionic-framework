@@ -73,10 +73,15 @@
 // --------------------------------------------------
 
 .progress,
-.progress-indeterminate {
+.indeterminate-bar-primary,
+.indeterminate-bar-secondary {
   background: var(--progress-background);
 
   z-index: 2;
+}
+
+.progress-indeterminate {
+  background: inherit;
 }
 
 .progress-buffer-bar {
@@ -163,12 +168,12 @@
 // ------------------------------------------------------------------------
 
 :host(.ion-color.progress-bar-indeterminate),
-:host(.ion-color) .progress-buffer-bar:before {
-  background: #{current-color(base, 0.2)};
+:host(.ion-color) .progress-buffer-bar {
+  background: #{current-color(base, 0.3)};
 }
 
 :host(.ion-color) .buffer-circles {
-  background-image: radial-gradient(ellipse at center, #{current-color(base, 0.2)} 0%, #{current-color(base, 0.2)} 30%, transparent 30%);
+  background-image: radial-gradient(ellipse at center, #{current-color(base, 0.3)} 0%, #{current-color(base, 0.3)} 30%, transparent 30%);
 }
 
 :host(.ion-color) {
