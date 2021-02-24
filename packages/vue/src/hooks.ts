@@ -70,9 +70,10 @@ export const useKeyboard = (): IonKeyboardRef => {
   }
 }
 
-// TODO figure out any here
-const injectHook = (lifecycleType: LifecycleHooks, hook: Function, component: ComponentInternalInstance | null): any => {
+const injectHook = (lifecycleType: LifecycleHooks, hook: Function, component: ComponentInternalInstance | null): Function | undefined => {
   if (component) {
+
+    // Add to public instance so it is accessible to IonRouterOutlet
     const target = component as any;
     const hooks = target.proxy[lifecycleType] || (target.proxy[lifecycleType] = []);
     const wrappedHook = (...args: unknown[]) => {
