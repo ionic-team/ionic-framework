@@ -90,24 +90,12 @@ const renderProgress = (value: number, buffer: number) => {
   return [
     <div class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
     // Buffer circles with two container to move the circles behind the buffer progress with respecting the animation.
-    <div
-      class={{'buffer-circles-container': true, hidden: finalBuffer === 1}}
-      style={{
-        transform: `translateX(${finalBuffer * 100}%)`,
-      }}
-    >
-      <div
-        class="buffer-circles-container"
-        style={{
-          transform: `translateX(-${finalBuffer * 100}%)`,
-        }}
-      >
+    <div class={{ 'buffer-circles-container': true, hidden: finalBuffer === 1 }} style={{ transform: `translateX(${finalBuffer * 100}%)` }}>
+      <div class="buffer-circles-container" style={{ transform: `translateX(-${finalBuffer * 100}%)` }}>
         <div class="buffer-circles"></div>
       </div>
     </div>,
-    <div
-      class="progress-buffer-bar"
-      style={{ transform: `scaleX(${finalBuffer})` }}
+    <div class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}
     ></div>,
   ];
 };
