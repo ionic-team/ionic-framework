@@ -81,10 +81,12 @@ export class ProgressBar implements ComponentInterface {
 }
 
 const renderIndeterminate = () => {
-  return [
-    <div part="progress" class="indeterminate-bar-primary"><span class="progress-indeterminate"></span></div>,
-    <div part="progress" class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
-  ];
+  return (
+    <div part="buffer" class="progress-buffer-bar">
+      <div part="progress" class="indeterminate-bar-primary"><span class="progress-indeterminate"></span></div>,
+      <div part="progress" class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
+    </div>
+  );
 };
 
 const renderProgress = (value: number, buffer: number) => {

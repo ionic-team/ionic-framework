@@ -26,11 +26,6 @@
   overflow: hidden;
 }
 
-// Indeterminate has no progress-buffer-bar, so background will be added to the host
-:host(.progress-bar-indeterminate) {
-  background: var(--buffer-background);
-}
-
 .progress,
 .progress-indeterminate,
 .indeterminate-bar-primary,
@@ -168,7 +163,6 @@
 // Progress Bar: Color
 // ------------------------------------------------------------------------
 
-:host(.ion-color.progress-bar-indeterminate),
 :host(.ion-color) .progress-buffer-bar {
   background: #{current-color(base, 0.3)};
 }
