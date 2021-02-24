@@ -35,20 +35,45 @@
 .progress-indeterminate,
 .indeterminate-bar-primary,
 .indeterminate-bar-secondary,
-.progress-buffer-bar,
-.progress-buffer-bar:before,
-.buffer-circles {
+.progress-buffer-bar {
   @include position(0, 0, 0, 0);
-
   position: absolute;
 
   width: 100%;
   height: 100%;
 }
 
+.buffer-circles-container,
+.buffer-circles {
+  @include position(0, 0, 0, 0);
+  position: absolute;
+}
+
+// Extend a bit to overflow. The size of animated distance.
+.buffer-circles {
+  /* stylelint-disable property-blacklist */
+  right: -10px;
+  left: -10px;
+  /* stylelint-enable property-blacklist */
+}
+
+// Determinate progress bar
+// --------------------------------------------------
+
 .progress,
-.indeterminate-bar-primary,
-.indeterminate-bar-secondary {
+.progress-buffer-bar,
+.buffer-circles-container {
+  /* stylelint-disable-next-line property-blacklist */
+  transform-origin: left top;
+
+  transition: transform 150ms linear;
+}
+
+// Progress and background bar
+// --------------------------------------------------
+
+.progress,
+.progress-indeterminate {
   background: var(--progress-background);
 
   z-index: 2;
@@ -57,30 +82,15 @@
 .progress-buffer-bar {
   background: var(--buffer-background);
 
-  // Make it behind the progress
   z-index: 1;
 }
 
-
-// Progress Bar: Determinate
-// ------------------------------------------------------------------------
-
-.progress,
-.progress-buffer-bar {
-  /* stylelint-disable-next-line property-blacklist */
-  transform-origin: left top;
-
-  transition: transform 150ms linear;
+.buffer-circles-container {
+  overflow: hidden;
 }
 
-
-// Progress Bar: Indeterminate
-// ------------------------------------------------------------------------
-
-// Inherit background to avoid exposing the inner bar as a part
-.progress-indeterminate {
-  background: inherit;
-}
+// MD based animation on indeterminate type
+// --------------------------------------------------
 
 .indeterminate-bar-primary {
   /* stylelint-disable property-blacklist */
@@ -117,29 +127,12 @@
 // Progress Bar: Buffer Circles
 // ------------------------------------------------------------------------
 
-.buffer-circles.buffer-circles-reversed {
-  /* stylelint-disable property-blacklist */
-  right: unset;
-  left: 2px;
-
-  background-position: right;
-  /* stylelint-enable property-blacklist */
-}
-
 .buffer-circles {
-  /* stylelint-disable property-blacklist */
-  right: -8px;
-
-  left: unset;
-
-  transition: width 150ms linear;
-  /* stylelint-enable property-blacklist */
-
   background-image: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%);
 
   /* stylelint-disable-next-line property-blacklist */
   background-repeat: repeat-x;
-  background-position: left;
+  background-position: 5px center;
   background-size: 10px 10px;
 
   z-index: 0;
@@ -152,18 +145,7 @@
 // and the bar will start at the top right
 
 :host(.progress-bar-reversed) {
-  .progress,
-  .progress-buffer-bar {
-    /* stylelint-disable-next-line property-blacklist */
-    transform-origin: right top;
-  }
-
-  .buffer-circles,
-  .indeterminate-bar-primary,
-  .indeterminate-bar-secondary,
-  .progress-indeterminate {
-    animation-direction: reverse;
-  }
+  transform: scaleX(-1);
 }
 
 // Progress Bar: Paused
