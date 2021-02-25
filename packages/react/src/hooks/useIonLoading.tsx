@@ -38,7 +38,7 @@ export function useIonLoading(): UseIonLoadingResult {
   return [present, controller.dismiss];
 }
 
-type UseIonLoadingResult = [
+export type UseIonLoadingResult = [
   {
     /**
      * Presents the loading indicator

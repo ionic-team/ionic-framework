@@ -27,7 +27,7 @@ export function useIonModal(component: ReactComponentOrElement, componentProps?:
   ];
 }
 
-type UseIonModalResult = [
+export type UseIonModalResult = [
   (options?: Omit<ModalOptions, 'component' | 'componentProps'> & HookOverlayOptions) => void,
   /**
    * Dismisses the modal

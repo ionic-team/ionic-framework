@@ -32,7 +32,7 @@ export function useIonAlert(): UseIonAlertResult {
   ];
 }
 
-type UseIonAlertResult = [
+export type UseIonAlertResult = [
   {
     /**
      * Presents the alert

@@ -32,7 +32,7 @@ export function useIonToast(): UseIonToastResult {
   ];
 }
 
-type UseIonToastResult = [
+export type UseIonToastResult = [
   {
     /**
      * Presents the toast

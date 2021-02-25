@@ -70,13 +70,13 @@ export * from './hrefprops';
 export { CreateAnimation } from './CreateAnimation';
 
 // Hooks
-export * from '../hooks/useIonActionSheet';
-export * from '../hooks/useIonAlert';
-export * from '../hooks/useIonToast';
-export * from '../hooks/useIonModal';
-export * from '../hooks/useIonPopover';
-export * from '../hooks/useIonPicker';
-export * from '../hooks/useIonLoading';
+export { useIonActionSheet, UseIonActionSheetResult } from '../hooks/useIonActionSheet';
+export { useIonAlert, UseIonAlertResult } from '../hooks/useIonAlert';
+export { useIonToast, UseIonToastResult } from '../hooks/useIonToast';
+export { useIonModal, UseIonModalResult } from '../hooks/useIonModal';
+export { useIonPopover, UseIonPopoverResult } from '../hooks/useIonPopover';
+export { useIonPicker, UseIonPickerResult } from '../hooks/useIonPicker';
+export { useIonLoading, UseIonLoadingResult } from '../hooks/useIonLoading';
 
 // Icons that are used by internal components
 addIcons({

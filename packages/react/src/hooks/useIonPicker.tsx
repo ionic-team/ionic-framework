@@ -37,7 +37,7 @@ export function useIonPicker(): UseIonPickerResult {
   return [present, controller.dismiss];
 }
 
-type UseIonPickerResult = [
+export type UseIonPickerResult = [
   {
     /**
      * Presents the picker

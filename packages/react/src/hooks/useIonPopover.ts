@@ -27,7 +27,7 @@ export function useIonPopover(component: ReactComponentOrElement, componentProps
   ];
 }
 
-type UseIonPopoverResult = [
+export type UseIonPopoverResult = [
   (options?: Omit<PopoverOptions, 'component' | 'componentProps'> & HookOverlayOptions) => void,
   /**
    * Dismisses the popover

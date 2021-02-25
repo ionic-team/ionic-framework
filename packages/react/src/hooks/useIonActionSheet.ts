@@ -32,7 +32,7 @@ export function useIonActionSheet(): UseIonActionSheetResult {
   ];
 }
 
-type UseIonActionSheetResult = [
+export type UseIonActionSheetResult = [
   {
     /**
      * Presents the action sheet
