@@ -1,5 +1,5 @@
 ```tsx
-/* Using useIonModal Hook */ 
+/* Using with useIonModal Hook */ 
 
 import React, { useState } from 'react';
 import { IonButton, IonContent, IonPage, useIonModal } from '@ionic/react';
@@ -61,7 +61,7 @@ const ModalExample: React.FC = () => {
 ```
 
 ```tsx
-/* Using IonModal Component */
+/* Using with IonModal Component */
 
 import React, { useState } from 'react';
 import { IonModal, IonButton, IonContent } from '@ionic/react';

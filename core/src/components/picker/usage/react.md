@@ -1,5 +1,5 @@
 ```tsx
-/* Usage with useIonPicker Hook */
+/* Using with useIonPicker Hook */
 
 import React, { useState } from 'react';
 import { IonButton, IonContent, IonPage, useIonPicker } from '@ionic/react';
