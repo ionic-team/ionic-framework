@@ -3,13 +3,23 @@
 :host {
   display: block;
 
-  width: 100%;
+  position: relative;
 
-  transform: translateZ(0);
+  width: 100%;
 
   background-color: $accordion-background-color;
 
   overflow: hidden;
+
+  /**
+   * This is required to force WebKit
+   * to create a new stacking context
+   * otherwise the border radius is
+   * temporarily lost when hovering over
+   * the ion-item or expanding/collapsing
+   * the accordion.
+   */
+  z-index: 0;
 }
 
 :host(.accordion-expanding) ::slotted(ion-item[slot="header"]),
