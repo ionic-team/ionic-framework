@@ -153,27 +153,30 @@ export class Accordion implements ComponentInterface {
     if (this.currentRaf !== undefined) {
       cancelAnimationFrame(this.currentRaf);
     }
-    // TODO need to be able to interrupt toggle
 
-    this.currentRaf = raf(async () => {
-      const contentHeight = contentElWrapper.offsetHeight;
-      const waitForTransition = transitionEndAsync(contentEl, 50000);
-      contentEl.style.setProperty('max-height', `${contentHeight}px`);
+    if (this.shouldAnimate()) {
+      this.currentRaf = raf(async () => {
+        const contentHeight = contentElWrapper.offsetHeight;
+        const waitForTransition = transitionEndAsync(contentEl, 2000);
+        contentEl.style.setProperty('max-height', `${contentHeight}px`);
 
-      /**
-       * Force a repaint. We can't use an raf
-       * here as it could cause the collapse animation
-       * to get out of sync with the other
-       * accordion's expand animation.
-       */
-      // tslint:disable-next-line
-      void contentEl.offsetHeight;
+        /**
+         * Force a repaint. We can't use an raf
+         * here as it could cause the collapse animation
+         * to get out of sync with the other
+         * accordion's expand animation.
+         */
+        // tslint:disable-next-line
+        void contentEl.offsetHeight;
 
-      await waitForTransition;
+        await waitForTransition;
 
+        this.state = AccordionState.Expanded;
+        contentEl.style.removeProperty('max-height');
+      });
+    } else {
       this.state = AccordionState.Expanded;
-      contentEl.style.removeProperty('max-height');
-    });
+    }
   }
 
   private collapseAccordion = (initialUpdate = false) => {
@@ -191,27 +194,50 @@ export class Accordion implements ComponentInterface {
       cancelAnimationFrame(this.currentRaf);
     }
 
-    this.currentRaf = raf(async () => {
-      const contentHeight = contentEl.offsetHeight;
-      contentEl.style.setProperty('max-height', `${contentHeight}px`);
+    if (this.shouldAnimate()) {
+      this.currentRaf = raf(async () => {
+        const contentHeight = contentEl.offsetHeight;
+        contentEl.style.setProperty('max-height', `${contentHeight}px`);
 
-      /**
-       * Force a repaint. We can't use an raf
-       * here as it could cause the collapse animation
-       * to get out of sync with the other
-       * accordion's expand animation.
-       */
-      // tslint:disable-next-line
-      void contentEl.offsetHeight;
+        /**
+         * Force a repaint. We can't use an raf
+         * here as it could cause the collapse animation
+         * to get out of sync with the other
+         * accordion's expand animation.
+         */
+        // tslint:disable-next-line
+        void contentEl.offsetHeight;
 
-      const waitForTransition = transitionEndAsync(contentEl, 50000);
-      this.state = AccordionState.Collapsing;
+        const waitForTransition = transitionEndAsync(contentEl, 2000);
+        this.state = AccordionState.Collapsing;
 
-      await waitForTransition;
+        await waitForTransition;
 
+        this.state = AccordionState.Collapsed;
+        contentEl.style.removeProperty('max-height');
+      });
+    } else {
       this.state = AccordionState.Collapsed;
-      contentEl.style.removeProperty('max-height');
-    });
+    }
+  }
+
+  /**
+   * Helper function to determine if
+   * something should animate.
+   * If prefers-reduced-motion is set
+   * then we should not animate, regardless
+   * of what is set in the config.
+   */
+  private shouldAnimate = () => {
+    if (typeof (window as any) === 'undefined') { return false; }
+
+    const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) { return true; }
+
+    const animated = config.get('animated', true);
+    if (animated) { return true; }
+
+    return false;
   }
 
   private updateState = async (initialUpdate = false) => {
