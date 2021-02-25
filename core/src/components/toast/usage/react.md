@@ -1,6 +1,6 @@
-### Using the useIonToast Hook
-
 ```tsx
+/* Using the useIonToast Hook */
+
 import React from 'react';
 import { IonButton, IonContent, IonPage, useIonToast } from '@ionic/react';
 
@@ -38,9 +38,9 @@ const ToastExample: React.FC = () => {
 };
 ```
 
-### Using the IonToast Component
-
 ```tsx
+/* Using the IonToast Component */
+
 import React, { useState } from 'react';
 import { IonToast, IonContent, IonButton } from '@ionic/react';
 

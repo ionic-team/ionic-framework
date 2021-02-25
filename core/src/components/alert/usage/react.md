@@ -1,6 +1,6 @@
-### Using with useIonAlert Hook
-
 ```tsx
+/* Using with useIonAlert Hook */
+
 import React from 'react';
 import { IonButton, IonContent, IonPage, useIonAlert } from '@ionic/react';
 
@@ -37,9 +37,10 @@ const AlertExample: React.FC = () => {
   );
 };
 ```
-### Using with IonAlert Component
 
 ```tsx
+/* Using with IonAlert Component */
+
 import React, { useState } from 'react';
 import { IonAlert, IonButton, IonContent } from '@ionic/react';
 

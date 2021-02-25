@@ -1,6 +1,6 @@
-### Using with useIonActionSheet Hook
-
 ```tsx
+/* Using with useIonActionSheet Hook */
+
 import React from 'react';
 import {
   IonButton,
@@ -48,9 +48,10 @@ const ActionSheetExample: React.FC = () => {
   );
 };
 ```
-### Using with IonActionSheet Component
 
 ```tsx
+/* Using with IonActionSheet Component */
+
 import React, { useState } from 'react';
 import { IonActionSheet, IonContent, IonButton } from '@ionic/react';
 import { trash, share, caretForwardCircle, heart, close } from 'ionicons/icons';

@@ -1,6 +1,6 @@
-### Usage with useIonPopover Hook
-
 ```tsx
+/* Usage with useIonPopover Hook */
+
 import React from 'react';
 import {
   IonButton,
@@ -48,8 +48,10 @@ const PopoverExample: React.FC = () => {
   );
 };
 ```
-### Usage with IonPopover Component
+
 ```tsx
+/* Usage with IonPopover Component */
+
 import React, { useState } from 'react';
 import { IonPopover, IonButton } from '@ionic/react';
 

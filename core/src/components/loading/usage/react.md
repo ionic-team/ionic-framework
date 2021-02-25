@@ -1,6 +1,6 @@
-### Use with useIonLoading Hook
-
 ```tsx
+/* Use with useIonLoading Hook */
+
 import React from 'react';
 import { IonButton, IonContent, IonPage, useIonLoading } from '@ionic/react';
 
@@ -33,9 +33,9 @@ const LoadingExample: React.FC<LoadingProps> = () => {
 };
 ```
 
-### Use with IonLoading Component
-
 ```tsx
+/* Use with IonLoading Component */
+
 import React, { useState } from 'react';
 import { IonLoading, IonButton, IonContent } from '@ionic/react';
 
