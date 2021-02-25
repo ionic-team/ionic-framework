@@ -131,7 +131,7 @@ async function presentLoadingWithOptions() {
 ### React
 
 ```tsx
-/* Use with useIonLoading Hook */
+/* Using with useIonLoading Hook */
 
 import React from 'react';
 import { IonButton, IonContent, IonPage, useIonLoading } from '@ionic/react';
@@ -166,7 +166,7 @@ const LoadingExample: React.FC<LoadingProps> = () => {
 ```
 
 ```tsx
-/* Use with IonLoading Component */
+/* Using with IonLoading Component */
 
 import React, { useState } from 'react';
 import { IonLoading, IonButton, IonContent } from '@ionic/react';

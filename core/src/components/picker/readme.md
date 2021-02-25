@@ -12,7 +12,7 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 ### React
 
 ```tsx
-/* Usage with useIonPicker Hook */
+/* Using with useIonPicker Hook */
 
 import React, { useState } from 'react';
 import { IonButton, IonContent, IonPage, useIonPicker } from '@ionic/react';

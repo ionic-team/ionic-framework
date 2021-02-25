@@ -114,7 +114,7 @@ function presentPopover(ev) {
 ### React
 
 ```tsx
-/* Usage with useIonPopover Hook */
+/* Using with useIonPopover Hook */
 
 import React from 'react';
 import {
@@ -165,7 +165,7 @@ const PopoverExample: React.FC = () => {
 ```
 
 ```tsx
-/* Usage with IonPopover Component */
+/* Using with IonPopover Component */
 
 import React, { useState } from 'react';
 import { IonPopover, IonButton } from '@ionic/react';
