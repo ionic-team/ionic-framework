@@ -241,7 +241,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           routeDirection: 'back',
           routeAnimation: routeAnimation || routeInfo.routeAnimation,
         };
-        if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
+        if (routeInfo.lastPathname === routeInfo.pushedByRoute || prevInfo.pathname === routeInfo.pushedByRoute) {
           this.props.history.goBack();
         } else {
           this.handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back');
