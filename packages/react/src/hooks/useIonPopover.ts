@@ -1,7 +1,7 @@
 import { PopoverOptions, popoverController } from '@ionic/core';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
-import { useOverlay, ReactComponentOrElement } from './useOverlay';
+import { ReactComponentOrElement, useOverlay } from './useOverlay';
 
 /**
  * A hook for presenting/dismissing an IonPicker component

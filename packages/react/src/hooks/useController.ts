@@ -68,7 +68,7 @@ export function useController<
         onWillPresent && onWillPresent(e),
     });
 
-    overlayRef.current.present();    
+    overlayRef.current.present();
   };
 
   const dismiss = async () => {
