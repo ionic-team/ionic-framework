@@ -20,7 +20,7 @@ test('datetime/picker: focus trap', async () => {
   expect(datetime).not.toBe(null);
 
   // TODO fix
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   await page.keyboard.press('Tab');
 
@@ -54,7 +54,7 @@ test('datetime: basic', async () => {
 
   const picker = await page.find('ion-picker');
   await picker.waitForVisible();
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   compare = await page.compareScreenshot('should open custom picker');
   expect(compare).toMatchScreenshot();
@@ -70,7 +70,7 @@ test('datetime: basic-rtl', async () => {
 
   const picker = await page.find('ion-picker');
   await picker.waitForVisible();
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   const compare = await page.compareScreenshot('should open custom picker');
   expect(compare).toMatchScreenshot();

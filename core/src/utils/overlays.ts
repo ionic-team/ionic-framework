@@ -3,7 +3,7 @@ import { getIonMode } from '../global/ionic-global';
 import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
-import { addEventListener, getElementRoot, removeEventListener } from './helpers';
+import { addEventListener, componentOnReady, getElementRoot, removeEventListener } from './helpers';
 
 let lastId = 0;
 
@@ -57,7 +57,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
       // append the overlay element to the document body
       getAppRoot(document).appendChild(element);
 
-      return element.componentOnReady() as any;
+      return new Promise(resolve => componentOnReady(element, resolve));
     });
   }
   return Promise.resolve() as any;

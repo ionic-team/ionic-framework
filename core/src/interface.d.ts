@@ -76,6 +76,8 @@ export interface StyleEventDetail {
   [styleName: string]: boolean;
 }
 
+export { NavComponentWithProps } from "./components/nav/nav-interface";
+
 declare module "./components" {
   export namespace Components {
     export interface IonIcon extends IoniconsComponents.IonIcon{}

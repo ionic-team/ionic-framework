@@ -11,7 +11,7 @@ test('item: inputs', async () => {
     page,
     '{"date":"","select":"n64","toggle":"","input":"","input2":"","checkbox":"","range":"10"}'
   );
-  await page.waitFor(100);
+  await page.waitForTimeout(100);
 
   // Default case, enabled and no value
   let compare = await page.compareScreenshot();
@@ -21,13 +21,13 @@ test('item: inputs', async () => {
   const disableToggle = await page.find('#btnDisabled');
   await disableToggle.waitForVisible();
   await disableToggle.click();
-  await page.waitFor(300);
+  await page.waitForTimeout(300);
 
   // check form
   await page.click('#submit');
-  await page.waitFor(100);
+  await page.waitForTimeout(100);
   await checkFormResult(page, '{}');
-  await page.waitFor(100);
+  await page.waitForTimeout(100);
 
   // screenshot
   compare = await page.compareScreenshot('should disable all');
@@ -36,7 +36,7 @@ test('item: inputs', async () => {
   // Reenable and set some value
   await disableToggle.click();
   await page.click('#btnSomeValue');
-  await page.waitFor(100);
+  await page.waitForTimeout(100);
 
   // check form
   await page.click('#submit');
@@ -44,28 +44,28 @@ test('item: inputs', async () => {
     page,
     '{"date":"2016-12-09","select":"nes","toggle":"on","input":"Some text","input2":"Some text","checkbox":"on","range":"20"}'
   );
-  await page.waitFor(100);
+  await page.waitForTimeout(100);
 
   compare = await page.compareScreenshot('should reenable and set value');
   expect(compare).toMatchScreenshot();
 
   // Set "null"
   await page.click('#btnNullValue');
-  await page.waitFor(100);
+  await page.waitForTimeout(100);
 
   compare = await page.compareScreenshot('should set null');
   expect(compare).toMatchScreenshot();
 
   // Set "empty"
   await page.click('#btnEmptyValue');
-  await page.waitFor(100);
+  await page.waitForTimeout(100);
 
   compare = await page.compareScreenshot('should set empty');
   expect(compare).toMatchScreenshot();
 
   // Set "empty"
   await page.click('#btnEmptyValue');
-  await page.waitFor(100);
+  await page.waitForTimeout(100);
 
   compare = await page.compareScreenshot('should set empty');
   expect(compare).toMatchScreenshot();
@@ -73,7 +73,7 @@ test('item: inputs', async () => {
   // Test multiple
   await page.click('#checkbox-start');
   await page.click('#datetime-end');
-  await page.waitFor(300);
+  await page.waitForTimeout(300);
 
   compare = await page.compareScreenshot(
     'should check checkbox and open datepicker'
@@ -81,7 +81,7 @@ test('item: inputs', async () => {
   expect(compare).toMatchScreenshot();
 
   await page.click('#button-end');
-  await page.waitFor(100);
+  await page.waitForTimeout(100);
 
   compare = await page.compareScreenshot('should change button color to red');
   expect(compare).toMatchScreenshot();

@@ -11,6 +11,13 @@ export const transitionEndAsync = (el: HTMLElement | null, expectedDuration = 0)
   });
 };
 
+/**
+ * Allows developer to wait for a transition
+ * to finish and fallback to a timer if the
+ * transition is cancelled or otherwise
+ * never finishes. Also see transitionEndAsync
+ * which is an await-able version of this.
+ */
 const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (ev?: TransitionEvent) => void) => {
   let unRegTrans: (() => void) | undefined;
   let animationTimeout: any;
@@ -47,6 +54,22 @@ const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (
 
   return unregister;
 };
+
+/**
+ * Utility function to wait for
+ * componentOnReady on Stencil
+ * components if not using a
+ * custom elements build or
+ * quickly resolve if using
+ * a custom elements build.
+ */
+export const componentOnReady = (el: any, callback: any) => {
+  if (el.componentOnReady) {
+    el.componentOnReady().then(callback);
+  } else {
+    callback();
+  }
+}
 
 /**
  * Elements inside of web components sometimes need to inherit global attributes
@@ -176,7 +199,7 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
     : inputId + '-lbl';
 
   let label = labelledBy !== null && labelledBy.trim() !== ''
-    ? document.querySelector(`#${labelledBy}`)
+    ? document.getElementById(labelledBy)
     : findItemLabel(componentEl);
 
   if (label) {
@@ -190,10 +213,15 @@ export const getAriaLabel = (componentEl: HTMLElement, inputId: string): { label
   // if there is no label, check to see if the user has provided
   // one by setting an id on the component and using the label element
   } else if (componentId.trim() !== '') {
-    label = document.querySelector(`label[for=${componentId}]`);
+    label = document.querySelector(`label[for="${componentId}"]`);
 
     if (label) {
-      label.id = labelId = `${componentId}-lbl`;
+      if (label.id !== '') {
+        labelId = label.id;
+      } else {
+        label.id = labelId = `${componentId}-lbl`;
+      }
+
       labelText = label.textContent;
     }
   }

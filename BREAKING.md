@@ -12,8 +12,53 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 ## Version 6.x
 
+- [Components](#components)
+  * [Header](#header)
+  * [Tab Bar](#tab-bar)
+  * [Toast](#toast)
+  * [Toolbar](#toolbar)
 - [Config](#config)
   * [Transition Shadow](#transition-shadow)
+- [Angular](#angular)
+  * [Config Provider](#config-provider)
+- [Vue](#vue)
+  * [Tabs Config](#tabs-config)
+
+
+
+### Components
+
+#### Header
+
+When using a collapsible large title, the last toolbar in the header with `collapse="condense"` no longer has a border. This does not affect the toolbar when the large title is collapsed.
+
+To get the old style back, add the following CSS to your global stylesheet:
+
+```css
+ion-header.header-collapse-condense ion-toolbar:last-of-type {
+  --border-width: 0 0 0.55px;
+}
+```
+
+#### Tab Bar
+
+The default iOS tab bar background color has been updated to better reflect the latest iOS styles. The new default value is:
+
+```css
+var(--ion-tab-bar-background, var(--ion-color-step-50, #f7f7f7));
+```
+
+#### Toast
+
+The `--white-space` CSS variable now defaults to `normal` instead of `pre-wrap`.
+
+#### Toolbar
+
+The default iOS toolbar background color has been updated to better reflect the latest iOS styles. The new default value is:
+
+```css
+var(--ion-toolbar-background, var(--ion-color-step-50, #f7f7f7));
+```
 
 
 ### Config
@@ -21,6 +66,97 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 #### Transition Shadow
 
 The `experimentalTransitionShadow` config option has been removed. The transition shadow is now enabled when running in `ios` mode.
+
+
+### Angular
+
+#### Config Provider
+
+The `Config.set()` method has been removed. See https://ionicframework.com/docs/angular/config for examples on how to set config globally, per-component, and per-platform.
+
+
+### Vue
+
+#### Tabs Config
+
+Support for child routes nested inside of tabs has been removed to better conform to Vue Router's best practices. Additional routes should be written as sibling routes with the parent tab as the path prefix:
+
+**Old**
+```typescript
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    redirect: '/tabs/tab1'
+  },
+  {
+    path: '/tabs/',
+    component: Tabs,
+    children: [
+      {
+        path: '',
+        redirect: 'tab1'
+      },
+      {
+        path: 'tab1',
+        component: () => import('@/views/Tab1.vue'),
+        children: {
+          {
+            path: 'view',
+            component: () => import('@/views/Tab1View.vue')
+          }
+        }
+      },
+      {
+        path: 'tab2',
+        component: () => import('@/views/Tab2.vue')
+      },
+      {
+        path: 'tab3',
+        component: () => import('@/views/Tab3.vue')
+      }
+    ]
+  }
+]
+```
+
+**New**
+```typescript
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    redirect: '/tabs/tab1'
+  },
+  {
+    path: '/tabs/',
+    component: Tabs,
+    children: [
+      {
+        path: '',
+        redirect: 'tab1'
+      },
+      {
+        path: 'tab1',
+        component: () => import('@/views/Tab1.vue')
+      },
+      {
+        path: 'tab1/view',
+        component: () => import('@/views/Tab1View.vue')
+      },
+      {
+        path: 'tab2',
+        component: () => import('@/views/Tab2.vue')
+      },
+      {
+        path: 'tab3',
+        component: () => import('@/views/Tab3.vue')
+      }
+    ]
+  }
+]
+```
+
+In the example above `tabs/tab1/view` has been rewritten has a sibling route to `tabs/tab1`. The `path` field now includes the `tab1` prefix.
+
 
 
 ## Version 5.x
