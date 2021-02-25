@@ -14,7 +14,6 @@ import {
   handleScrollWhileRefreshing,
   setSpinnerOpacity,
   shouldUseNativeRefresher,
-  transitionEndAsync,
   translateElement
 } from './refresher.utils';
 
