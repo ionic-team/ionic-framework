@@ -204,6 +204,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     }
     return (
       <Host
+        ragatanga
         onClick={this.handleClick}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {

@@ -1,0 +1,20 @@
+/// gera as propriedades css de texto com valor inherit.
+@mixin text-inherit() {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-decoration: inherit;
+  text-indent: inherit;
+  text-overflow: inherit;
+  text-transform: inherit;
+  text-align: inherit;
+  white-space: inherit;
+  color: inherit;
+}
+
+@mixin font-smoothing() {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}

@@ -1,0 +1,331 @@
+:root {
+  // brand color
+  --med-color-brand-primary-darkest: #{$med-color-brand-primary-darkest};
+  --med-color-brand-primary-darkest-rgb: #{$med-color-brand-primary-darkest-rgb};
+
+  --med-color-brand-primary-dark: #{$med-color-brand-primary-dark};
+  --med-color-brand-primary-dark-rgb: #{$med-color-brand-primary-dark-rgb};
+
+  --med-color-brand-primary-medium: #{$med-color-brand-primary-medium};
+  --med-color-brand-primary-medium-rgb: #{$med-color-brand-primary-medium-rgb};
+
+  --med-color-brand-primary-light: #{$med-color-brand-primary-light};
+  --med-color-brand-primary-light-rgb: #{$med-color-brand-primary-light-rgb};
+
+  --med-color-brand-primary-lightest: #{$med-color-brand-primary-lightest};
+  --med-color-brand-primary-lightest-rgb: #{$med-color-brand-primary-lightest-rgb};
+
+  --med-color-brand-primary-gradient: #{$med-color-brand-primary-gradient};
+
+  // aula color
+  --med-color-aula-darkest: #{$med-color-aula-darkest};
+  --med-color-aula-darkest-rgb: #{$med-color-aula-darkest-rgb};
+
+  --med-color-aula-dark: #{$med-color-aula-dark};
+  --med-color-aula-dark-rgb: #{$med-color-aula-dark-rgb};
+
+  --med-color-aula-medium: #{$med-color-aula-medium};
+  --med-color-aula-medium-rgb: #{$med-color-aula-medium-rgb};
+
+  --med-color-aula-light: #{$med-color-aula-light};
+  --med-color-aula-light-rgb: #{$med-color-aula-light-rgb};
+
+  --med-color-aula-lightest: #{$med-color-aula-lightest};
+  --med-color-aula-lightest-rgb: #{$med-color-aula-lightest-rgb};
+
+  // material color
+  --med-color-material-darkest: #{$med-color-material-darkest};
+  --med-color-material-darkest-rgb: #{$med-color-material-darkest-rgb};
+
+  --med-color-material-dark: #{$med-color-material-dark};
+  --med-color-material-dark-rgb: #{$med-color-material-dark-rgb};
+
+  --med-color-material-medium: #{$med-color-material-medium};
+  --med-color-material-medium-rgb: #{$med-color-material-medium-rgb};
+
+  --med-color-material-light: #{$med-color-material-light};
+  --med-color-material-light-rgb: #{$med-color-material-light-rgb};
+
+  --med-color-material-lightest: #{$med-color-material-lightest};
+  --med-color-material-lightest-rgb: #{$med-color-material-lightest-rgb};
+
+  // questões color
+  --med-color-questoes-darkest: #{$med-color-questoes-darkest};
+  --med-color-questoes-darkest-rgb: #{$med-color-questoes-darkest-rgb};
+
+  --med-color-questoes-dark: #{$med-color-questoes-dark};
+  --med-color-questoes-dark-rgb: #{$med-color-questoes-dark-rgb};
+
+  --med-color-questoes-medium: #{$med-color-questoes-medium};
+  --med-color-questoes-medium-rgb: #{$med-color-questoes-medium-rgb};
+
+  --med-color-questoes-light: #{$med-color-questoes-light};
+  --med-color-questoes-light-rgb: #{$med-color-questoes-light-rgb};
+
+  --med-color-questoes-lightest: #{$med-color-questoes-lightest};
+  --med-color-questoes-lightest-rgb: #{$med-color-questoes-lightest-rgb};
+
+  // revalida color
+  --med-color-revalida-darkest: #{$med-color-revalida-darkest};
+  --med-color-revalida-darkest-rgb: #{$med-color-revalida-darkest-rgb};
+
+  --med-color-revalida-dark: #{$med-color-revalida-dark};
+  --med-color-revalida-dark-rgb: #{$med-color-revalida-dark-rgb};
+
+  --med-color-revalida-medium: #{$med-color-revalida-medium};
+  --med-color-revalida-medium-rgb: #{$med-color-revalida-medium-rgb};
+
+  --med-color-revalida-light: #{$med-color-revalida-light};
+  --med-color-revalida-light-rgb: #{$med-color-revalida-light-rgb};
+
+  --med-color-revalida-lightest: #{$med-color-revalida-lightest};
+  --med-color-revalida-lightest-rgb: #{$med-color-revalida-lightest-rgb};
+
+  // provas & checklist color
+  --med-color-provaschecklist-darkest: #{$med-color-provaschecklist-darkest};
+  --med-color-provaschecklist-darkest-rgb: #{$med-color-provaschecklist-darkest-rgb};
+
+  --med-color-provaschecklist-dark: #{$med-color-provaschecklist-dark};
+  --med-color-provaschecklist-dark-rgb: #{$med-color-provaschecklist-dark-rgb};
+
+  --med-color-provaschecklist-medium: #{$med-color-provaschecklist-medium};
+  --med-color-provaschecklist-medium-rgb: #{$med-color-provaschecklist-medium-rgb};
+
+  --med-color-provaschecklist-light: #{$med-color-provaschecklist-light};
+  --med-color-provaschecklist-light-rgb: #{$med-color-provaschecklist-light-rgb};
+
+  --med-color-provaschecklist-lightest: #{$med-color-provaschecklist-lightest};
+  --med-color-provaschecklist-lightest-rgb: #{$med-color-provaschecklist-lightest-rgb};
+
+  // neutral dark color
+  --med-color-neutral-dark-prime: #{$med-color-neutral-dark-prime};
+  --med-color-neutral-dark-prime-rgb: #{$med-color-neutral-dark-prime-rgb};
+
+  --med-color-neutral-dark-40: #{$med-color-neutral-dark-40};
+  --med-color-neutral-dark-40-rgb: #{$med-color-neutral-dark-40-rgb};
+
+  --med-color-neutral-dark-30: #{$med-color-neutral-dark-30};
+  --med-color-neutral-dark-30-rgb: #{$med-color-neutral-dark-30-rgb};
+
+  --med-color-neutral-dark-20: #{$med-color-neutral-dark-20};
+  --med-color-neutral-dark-20-rgb: #{$med-color-neutral-dark-20-rgb};
+
+  --med-color-neutral-dark-10: #{$med-color-neutral-dark-10};
+  --med-color-neutral-dark-10-rgb: #{$med-color-neutral-dark-10-rgb};
+
+  // neutral light color
+  --med-color-neutral-light-prime: #{$med-color-neutral-light-prime};
+  --med-color-neutral-light-prime-rgb: #{$med-color-neutral-light-prime-rgb};
+
+  --med-color-neutral-light-40: #{$med-color-neutral-light-40};
+  --med-color-neutral-light-40-rgb: #{$med-color-neutral-light-40-rgb};
+
+  --med-color-neutral-light-30: #{$med-color-neutral-light-30};
+  --med-color-neutral-light-30-rgb: #{$med-color-neutral-light-30-rgb};
+
+  --med-color-neutral-light-20: #{$med-color-neutral-light-20};
+  --med-color-neutral-light-20-rgb: #{$med-color-neutral-light-20-rgb};
+
+  --med-color-neutral-light-10: #{$med-color-neutral-light-10};
+  --med-color-neutral-light-10-rgb: #{$med-color-neutral-light-10-rgb};
+
+  --med-color-neutral-gradient: #{$med-color-neutral-gradient};
+
+  // feedback warning color
+  --med-color-feedback-warning-darkest: #{$med-color-feedback-warning-darkest};
+  --med-color-feedback-warning-darkest-rgb: #{$med-color-feedback-warning-darkest-rgb};
+
+  --med-color-feedback-warning-dark: #{$med-color-feedback-warning-dark};
+  --med-color-feedback-warning-dark-rgb: #{$med-color-feedback-warning-dark-rgb};
+
+  --med-color-feedback-warning-medium: #{$med-color-feedback-warning-medium};
+  --med-color-feedback-warning-medium-rgb: #{$med-color-feedback-warning-medium-rgb};
+
+  --med-color-feedback-warning-light: #{$med-color-feedback-warning-light};
+  --med-color-feedback-warning-light-rgb: #{$med-color-feedback-warning-light-rgb};
+
+  --med-color-feedback-warning-lightest: #{$med-color-feedback-warning-lightest};
+  --med-color-feedback-warning-lightest-rgb: #{$med-color-feedback-warning-lightest-rgb};
+
+  // feedback warning color
+  --med-color-feedback-error-darkest: #{$med-color-feedback-error-darkest};
+  --med-color-feedback-error-darkest-rgb: #{$med-color-feedback-error-darkest-rgb};
+
+  --med-color-feedback-error-dark: #{$med-color-feedback-error-dark};
+  --med-color-feedback-error-dark-rgb: #{$med-color-feedback-error-dark-rgb};
+
+  --med-color-feedback-error-medium: #{$med-color-feedback-error-medium};
+  --med-color-feedback-error-medium-rgb: #{$med-color-feedback-error-medium-rgb};
+
+  --med-color-feedback-error-light: #{$med-color-feedback-error-light};
+  --med-color-feedback-error-light-rgb: #{$med-color-feedback-error-light-rgb};
+
+  --med-color-feedback-error-lightest: #{$med-color-feedback-error-lightest};
+  --med-color-feedback-error-lightest-rgb: #{$med-color-feedback-error-lightest-rgb};
+
+  // feedback success color
+  --med-color-feedback-success-darkest: #{$med-color-feedback-success-darkest};
+  --med-color-feedback-success-darkest-rgb: #{$med-color-feedback-success-darkest-rgb};
+
+  --med-color-feedback-success-dark: #{$med-color-feedback-success-dark};
+  --med-color-feedback-success-dark-rgb: #{$med-color-feedback-success-dark-rgb};
+
+  --med-color-feedback-success-medium: #{$med-color-feedback-success-medium};
+  --med-color-feedback-success-medium-rgb: #{$med-color-feedback-success-medium-rgb};
+
+  --med-color-feedback-success-light: #{$med-color-feedback-success-light};
+  --med-color-feedback-success-light-rgb: #{$med-color-feedback-success-light-rgb};
+
+  --med-color-feedback-success-lightest: #{$med-color-feedback-success-lightest};
+  --med-color-feedback-success-lightest-rgb: #{$med-color-feedback-success-lightest-rgb};
+
+  // font family
+  --med-font-family-brand: #{$med-font-family-brand};
+  --med-font-family-base: #{$med-font-family-base};
+
+  // font size
+  --med-font-size-nano: #{$med-font-size-nano};
+  --med-font-size-xxxs: #{$med-font-size-xxxs};
+  --med-font-size-xxs: #{$med-font-size-xxs};
+  --med-font-size-xs: #{$med-font-size-xs};
+  --med-font-size-sm: #{$med-font-size-sm};
+  --med-font-size-md: #{$med-font-size-md};
+  --med-font-size-lg: #{$med-font-size-lg};
+  --med-font-size-xl: #{$med-font-size-xl};
+  --med-font-size-xxl: #{$med-font-size-xxl};
+  --med-font-size-xxxl: #{$med-font-size-xxxl};
+  --med-font-size-huge: #{$med-font-size-huge};
+
+  // font weight
+  --med-font-weight-thin: #{$med-font-weight-thin};
+  --med-font-weight-light: #{$med-font-weight-light};
+  --med-font-weight-regular: #{$med-font-weight-regular};
+  --med-font-weight-medium: #{$med-font-weight-medium};
+  --med-font-weight-semibold: #{$med-font-weight-semibold};
+  --med-font-weight-bold: #{$med-font-weight-bold};
+  --med-font-weight-extrabold: #{$med-font-weight-extrabold};
+  --med-font-weight-heavy: #{$med-font-weight-heavy};
+
+  // line height
+  --med-line-height-compressed: #{$med-line-height-compressed};
+  --med-line-height-default: #{$med-line-height-default};
+  --med-line-height-double: #{$med-line-height-compressed};
+
+  // spacing inset
+  --med-spacing-inset-nano: #{$med-spacing-inset-nano};
+  --med-spacing-inset-xs: #{$med-spacing-inset-xs};
+  --med-spacing-inset-sm: #{$med-spacing-inset-sm};
+  --med-spacing-inset-base: #{$med-spacing-inset-base};
+  --med-spacing-inset-md: #{$med-spacing-inset-md};
+  --med-spacing-inset-md: #{$med-spacing-inset-md};
+  --med-spacing-inset-md: #{$med-spacing-inset-md};
+  --med-spacing-inset-xxl: #{$med-spacing-inset-xxl};
+
+  // spacing squish
+  --med-spacing-squish-nano: #{$med-spacing-squish-nano};
+  --med-spacing-squish-xs: #{$med-spacing-squish-xs};
+  --med-spacing-squish-sm: #{$med-spacing-squish-sm};
+  --med-spacing-squish-base: #{$med-spacing-squish-base};
+  --med-spacing-squish-md: #{$med-spacing-squish-md};
+  --med-spacing-squish-lg: #{$med-spacing-squish-lg};
+  --med-spacing-squish-xl: #{$med-spacing-squish-xl};
+  --med-spacing-squish-xxl: #{$med-spacing-squish-xxl};
+
+  // spacing stretch
+  --med-spacing-stretch-nano: #{$med-spacing-stretch-nano};
+  --med-spacing-stretch-xs: #{$med-spacing-stretch-xs};
+  --med-spacing-stretch-sm: #{$med-spacing-stretch-sm};
+  --med-spacing-stretch-base: #{$med-spacing-stretch-base};
+  --med-spacing-stretch-md: #{$med-spacing-stretch-md};
+  --med-spacing-stretch-lg: #{$med-spacing-stretch-lg};
+  --med-spacing-stretch-xl: #{$med-spacing-stretch-xl};
+  --med-spacing-stretch-xxl: #{$med-spacing-stretch-xxl};
+
+  // spacing inline
+  --med-spacing-inline-quark: #{$med-spacing-inline-quark};
+  --med-spacing-inline-nano: #{$med-spacing-inline-nano};
+  --med-spacing-inline-xxxs: #{$med-spacing-inline-xxxs};
+  --med-spacing-inline-base: #{$med-spacing-inline-base};
+  --med-spacing-inline-xxs: #{$med-spacing-inline-xxs};
+  --med-spacing-inline-xs: #{$med-spacing-inline-xs};
+  --med-spacing-inline-sm: #{$med-spacing-inline-sm};
+  --med-spacing-inline-md: #{$med-spacing-inline-md};
+  --med-spacing-inline-lg: #{$med-spacing-inline-lg};
+  --med-spacing-inline-xl: #{$med-spacing-inline-xl};
+  --med-spacing-inline-xxl: #{$med-spacing-inline-xxl};
+  --med-spacing-inline-xxxl: #{$med-spacing-inline-xxxl};
+  --med-spacing-inline-huge: #{$med-spacing-inline-huge};
+  --med-spacing-inline-ultra: #{$med-spacing-inline-ultra};
+
+  // spacing stack
+  --med-spacing-stack-quark: #{$med-spacing-stack-quark};
+  --med-spacing-stack-nano: #{$med-spacing-stack-nano};
+  --med-spacing-stack-xxxs: #{$med-spacing-stack-xxxs};
+  --med-spacing-stack-base: #{$med-spacing-stack-base};
+  --med-spacing-stack-xxs: #{$med-spacing-stack-xxs};
+  --med-spacing-stack-xs: #{$med-spacing-stack-xs};
+  --med-spacing-stack-sm: #{$med-spacing-stack-sm};
+  --med-spacing-stack-md: #{$med-spacing-stack-md};
+  --med-spacing-stack-lg: #{$med-spacing-stack-lg};
+  --med-spacing-stack-xl: #{$med-spacing-stack-xl};
+  --med-spacing-stack-xxl: #{$med-spacing-stack-xxl};
+  --med-spacing-stack-xxxl: #{$med-spacing-stack-xxxl};
+  --med-spacing-stack-huge: #{$med-spacing-stack-huge};
+  --med-spacing-stack-ultra: #{$med-spacing-stack-ultra};
+
+  // border radius
+  --med-border-radius-none: #{$med-border-radius-none};
+  --med-border-radius-quark: #{$med-border-radius-quark};
+  --med-border-radius-nano: #{$med-border-radius-nano};
+
+  --med-border-radius-sm: #{$med-border-radius-sm};
+  --med-border-radius-md: #{$med-border-radius-md};
+  --med-border-radius-lg: #{$med-border-radius-lg};
+
+  --med-border-radius-pill: #{$med-border-radius-pill};
+  --med-border-radius-full: #{$med-border-radius-full};
+
+  // speech bubble
+  --med-border-radius-speech-left-down: #{$med-border-radius-speech-left-down};
+  --med-border-radius-speech-right-down: #{$med-border-radius-speech-right-down};
+  --med-border-radius-speech-right-up: #{$med-border-radius-speech-right-up};
+  --med-border-radius-speech-left-up: #{$med-border-radius-speech-left-up};
+
+  // table
+  --med-border-radius-table-down-sm: #{$med-border-radius-table-down-sm};
+  --med-border-radius-table-up-sm: #{$med-border-radius-table-up-sm};
+
+  --med-border-radius-table-down-md: #{$med-border-radius-table-down-md};
+  --med-border-radius-table-up-md: #{$med-border-radius-table-up-md};
+
+  // border widths
+  --med-border-width-none: #{$med-border-width-none};
+  --med-border-width-quark: #{$med-border-width-quark};
+  --med-border-width-nano: #{$med-border-width-nano};
+  --med-border-width-hairline: #{$med-border-width-hairline};
+  --med-border-width-thin: #{$med-border-width-thin};
+  --med-border-width-thick: #{$med-border-width-thick};
+  --med-border-width-bold: #{$med-border-width-bold};
+  --med-border-width-heavy: #{$med-border-width-heavy};
+
+  // opacity levels
+  --med-opacity-level-semiopaque: #{$med-opacity-level-semiopaque};
+  --med-opacity-level-intense: #{$med-opacity-level-intense};
+  --med-opacity-level-half: #{$med-opacity-level-half};
+  --med-opacity-level-medium: #{$med-opacity-level-medium};
+  --med-opacity-level-light: #{$med-opacity-level-light};
+  --med-opacity-level-semitransparent: #{$med-opacity-level-semitransparent};
+
+  // shadow levels
+  --med-shadow-level-0: #{$med-shadow-level-0};
+  --med-shadow-level-1: #{$med-shadow-level-1};
+  --med-shadow-level-2: #{$med-shadow-level-2};
+  --med-shadow-level-3: #{$med-shadow-level-3};
+  --med-shadow-level-4: #{$med-shadow-level-4};
+  --med-shadow-level-5: #{$med-shadow-level-5};
+  --med-shadow-level-6: #{$med-shadow-level-6};
+  --med-shadow-level-7: #{$med-shadow-level-7};
+  --med-shadow-level-8: #{$med-shadow-level-8};
+  --med-shadow-level-9: #{$med-shadow-level-9};
+  --med-shadow-level-10: #{$med-shadow-level-10};
+}
