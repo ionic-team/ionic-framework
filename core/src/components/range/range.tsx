@@ -5,6 +5,10 @@ import { Color, Gesture, GestureDetail, KnobName, RangeChangeEventDetail, RangeV
 import { clamp, debounceEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+import { PinFormatter } from './range-interface';
+
+const DEFAULT_PIN_FORMATTER: PinFormatter = (value: number): number => Math.round(value);
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
@@ -97,6 +101,12 @@ export class Range implements ComponentInterface {
    * is pressed.
    */
   @Prop() pin = false;
+
+  /**
+   * A callback used to format the pin text.
+   * By default the pin text is set to `Math.round(value)`.
+   */
+  @Prop() pinFormatter?: PinFormatter;
 
   /**
    * If `true`, the knob snaps to tick marks evenly spaced based
@@ -405,6 +415,7 @@ export class Range implements ComponentInterface {
     const isRTL = doc.dir === 'rtl';
     const start = isRTL ? 'right' : 'left';
     const end = isRTL ? 'left' : 'right';
+    const pinFormatter = this.pinFormatter || DEFAULT_PIN_FORMATTER;
 
     const tickStyle = (tick: any) => {
       return {
@@ -476,6 +487,7 @@ export class Range implements ComponentInterface {
             value: this.valA,
             ratio: this.ratioA,
             pin,
+            pinFormatter,
             disabled,
             handleKeyboard,
             min,
@@ -488,6 +500,7 @@ export class Range implements ComponentInterface {
             value: this.valB,
             ratio: this.ratioB,
             pin,
+            pinFormatter,
             disabled,
             handleKeyboard,
             min,
@@ -509,11 +522,11 @@ interface RangeKnob {
   disabled: boolean;
   pressed: boolean;
   pin: boolean;
-
+  pinFormatter: PinFormatter;
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
-const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) => {
+const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pressed, pin, pinFormatter, handleKeyboard }: RangeKnob) => {
   const start = isRTL ? 'right' : 'left';
 
   const knobStyle = () => {
@@ -555,7 +568,7 @@ const renderKnob = (isRTL: boolean, { knob, value, ratio, min, max, disabled, pr
       aria-disabled={disabled ? 'true' : null}
       aria-valuenow={value}
     >
-      {pin && <div class="range-pin" role="presentation" part="pin">{Math.round(value)}</div>}
+      {pin && <div class="range-pin" role="presentation" part="pin">{pinFormatter(value)}</div>}
       <div class="range-knob" role="presentation" part="knob" />
     </div>
   );
