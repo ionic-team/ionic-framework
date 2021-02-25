@@ -47,6 +47,13 @@ export function useController<
       ...rest
     } = options;
 
+    const handleDismiss = (event: CustomEvent<OverlayEventDetail<any>>) => {
+      if (onDidDismiss) {
+        onDidDismiss(event);
+      }
+      overlayRef.current = undefined;
+    }
+
     overlayRef.current = await controller.create({
       ...(rest as any),
     });
@@ -61,14 +68,7 @@ export function useController<
         onWillPresent && onWillPresent(e),
     });
 
-    overlayRef.current.present();
-
-    function handleDismiss(event: CustomEvent<OverlayEventDetail<any>>) {
-      if (onDidDismiss) {
-        onDidDismiss(event);
-      }
-      overlayRef.current = undefined;
-    }
+    overlayRef.current.present();    
   };
 
   const dismiss = async () => {
