@@ -1,0 +1,181 @@
+:root {
+  // brand color
+  --med-color-brand-primary-darkest: #{$med-color-brand-primary-darkest};
+  --med-color-brand-primary-darkest-rgb: #{$med-color-brand-primary-darkest-rgb};
+
+  --med-color-brand-primary-dark: #{$med-color-brand-primary-dark};
+  --med-color-brand-primary-dark-rgb: #{$med-color-brand-primary-dark-rgb};
+
+  --med-color-brand-primary-medium: #{$med-color-brand-primary-medium};
+  --med-color-brand-primary-medium-rgb: #{$med-color-brand-primary-medium-rgb};
+
+  --med-color-brand-primary-light: #{$med-color-brand-primary-light};
+  --med-color-brand-primary-light-rgb: #{$med-color-brand-primary-light-rgb};
+
+  --med-color-brand-primary-lightest: #{$med-color-brand-primary-lightest};
+  --med-color-brand-primary-lightest-rgb: #{$med-color-brand-primary-lightest-rgb};
+
+  --med-color-brand-primary-gradient: #{$med-color-brand-primary-gradient};
+
+  // aula color
+  --med-color-aula-darkest: #{$med-color-aula-darkest};
+  --med-color-aula-darkest-rgb: #{$med-color-aula-darkest-rgb};
+
+  --med-color-aula-dark: #{$med-color-aula-dark};
+  --med-color-aula-dark-rgb: #{$med-color-aula-dark-rgb};
+
+  --med-color-aula-medium: #{$med-color-aula-medium};
+  --med-color-aula-medium-rgb: #{$med-color-aula-medium-rgb};
+
+  --med-color-aula-light: #{$med-color-aula-light};
+  --med-color-aula-light-rgb: #{$med-color-aula-light-rgb};
+
+  --med-color-aula-lightest: #{$med-color-aula-lightest};
+  --med-color-aula-lightest-rgb: #{$med-color-aula-lightest-rgb};
+
+  // material color
+  --med-color-material-darkest: #{$med-color-material-darkest};
+  --med-color-material-darkest-rgb: #{$med-color-material-darkest-rgb};
+
+  --med-color-material-dark: #{$med-color-material-dark};
+  --med-color-material-dark-rgb: #{$med-color-material-dark-rgb};
+
+  --med-color-material-medium: #{$med-color-material-medium};
+  --med-color-material-medium-rgb: #{$med-color-material-medium-rgb};
+
+  --med-color-material-light: #{$med-color-material-light};
+  --med-color-material-light-rgb: #{$med-color-material-light-rgb};
+
+  --med-color-material-lightest: #{$med-color-material-lightest};
+  --med-color-material-lightest-rgb: #{$med-color-material-lightest-rgb};
+
+  // questões color
+  --med-color-questoes-darkest: #{$med-color-questoes-darkest};
+  --med-color-questoes-darkest-rgb: #{$med-color-questoes-darkest-rgb};
+
+  --med-color-questoes-dark: #{$med-color-questoes-dark};
+  --med-color-questoes-dark-rgb: #{$med-color-questoes-dark-rgb};
+
+  --med-color-questoes-medium: #{$med-color-questoes-medium};
+  --med-color-questoes-medium-rgb: #{$med-color-questoes-medium-rgb};
+
+  --med-color-questoes-light: #{$med-color-questoes-light};
+  --med-color-questoes-light-rgb: #{$med-color-questoes-light-rgb};
+
+  --med-color-questoes-lightest: #{$med-color-questoes-lightest};
+  --med-color-questoes-lightest-rgb: #{$med-color-questoes-lightest-rgb};
+
+  // revalida color
+  --med-color-revalida-darkest: #{$med-color-revalida-darkest};
+  --med-color-revalida-darkest-rgb: #{$med-color-revalida-darkest-rgb};
+
+  --med-color-revalida-dark: #{$med-color-revalida-dark};
+  --med-color-revalida-dark-rgb: #{$med-color-revalida-dark-rgb};
+
+  --med-color-revalida-medium: #{$med-color-revalida-medium};
+  --med-color-revalida-medium-rgb: #{$med-color-revalida-medium-rgb};
+
+  --med-color-revalida-light: #{$med-color-revalida-light};
+  --med-color-revalida-light-rgb: #{$med-color-revalida-light-rgb};
+
+  --med-color-revalida-lightest: #{$med-color-revalida-lightest};
+  --med-color-revalida-lightest-rgb: #{$med-color-revalida-lightest-rgb};
+
+  // provas & checklist color
+  --med-color-provaschecklist-darkest: #{$med-color-provaschecklist-darkest};
+  --med-color-provaschecklist-darkest-rgb: #{$med-color-provaschecklist-darkest-rgb};
+
+  --med-color-provaschecklist-dark: #{$med-color-provaschecklist-dark};
+  --med-color-provaschecklist-dark-rgb: #{$med-color-provaschecklist-dark-rgb};
+
+  --med-color-provaschecklist-medium: #{$med-color-provaschecklist-medium};
+  --med-color-provaschecklist-medium-rgb: #{$med-color-provaschecklist-medium-rgb};
+
+  --med-color-provaschecklist-light: #{$med-color-provaschecklist-light};
+  --med-color-provaschecklist-light-rgb: #{$med-color-provaschecklist-light-rgb};
+
+  --med-color-provaschecklist-lightest: #{$med-color-provaschecklist-lightest};
+  --med-color-provaschecklist-lightest-rgb: #{$med-color-provaschecklist-lightest-rgb};
+
+  // neutral dark color
+  --med-color-neutral-dark-prime: #{$med-color-neutral-dark-prime};
+  --med-color-neutral-dark-prime-rgb: #{$med-color-neutral-dark-prime-rgb};
+
+  --med-color-neutral-dark-40: #{$med-color-neutral-dark-40};
+  --med-color-neutral-dark-40-rgb: #{$med-color-neutral-dark-40-rgb};
+
+  --med-color-neutral-dark-30: #{$med-color-neutral-dark-30};
+  --med-color-neutral-dark-30-rgb: #{$med-color-neutral-dark-30-rgb};
+
+  --med-color-neutral-dark-20: #{$med-color-neutral-dark-20};
+  --med-color-neutral-dark-20-rgb: #{$med-color-neutral-dark-20-rgb};
+
+  --med-color-neutral-dark-10: #{$med-color-neutral-dark-10};
+  --med-color-neutral-dark-10-rgb: #{$med-color-neutral-dark-10-rgb};
+
+  // neutral light color
+  --med-color-neutral-light-prime: #{$med-color-neutral-light-prime};
+  --med-color-neutral-light-prime-rgb: #{$med-color-neutral-light-prime-rgb};
+
+  --med-color-neutral-light-40: #{$med-color-neutral-light-40};
+  --med-color-neutral-light-40-rgb: #{$med-color-neutral-light-40-rgb};
+
+  --med-color-neutral-light-30: #{$med-color-neutral-light-30};
+  --med-color-neutral-light-30-rgb: #{$med-color-neutral-light-30-rgb};
+
+  --med-color-neutral-light-20: #{$med-color-neutral-light-20};
+  --med-color-neutral-light-20-rgb: #{$med-color-neutral-light-20-rgb};
+
+  --med-color-neutral-light-10: #{$med-color-neutral-light-10};
+  --med-color-neutral-light-10-rgb: #{$med-color-neutral-light-10-rgb};
+
+  --med-color-neutral-gradient: #{$med-color-neutral-gradient};
+
+  // feedback warning color
+  --med-color-feedback-warning-darkest: #{$med-color-feedback-warning-darkest};
+  --med-color-feedback-warning-darkest-rgb: #{$med-color-feedback-warning-darkest-rgb};
+
+  --med-color-feedback-warning-dark: #{$med-color-feedback-warning-dark};
+  --med-color-feedback-warning-dark-rgb: #{$med-color-feedback-warning-dark-rgb};
+
+  --med-color-feedback-warning-medium: #{$med-color-feedback-warning-medium};
+  --med-color-feedback-warning-medium-rgb: #{$med-color-feedback-warning-medium-rgb};
+
+  --med-color-feedback-warning-light: #{$med-color-feedback-warning-light};
+  --med-color-feedback-warning-light-rgb: #{$med-color-feedback-warning-light-rgb};
+
+  --med-color-feedback-warning-lightest: #{$med-color-feedback-warning-lightest};
+  --med-color-feedback-warning-lightest-rgb: #{$med-color-feedback-warning-lightest-rgb};
+
+  // feedback warning color
+  --med-color-feedback-error-darkest: #{$med-color-feedback-error-darkest};
+  --med-color-feedback-error-darkest-rgb: #{$med-color-feedback-error-darkest-rgb};
+
+  --med-color-feedback-error-dark: #{$med-color-feedback-error-dark};
+  --med-color-feedback-error-dark-rgb: #{$med-color-feedback-error-dark-rgb};
+
+  --med-color-feedback-error-medium: #{$med-color-feedback-error-medium};
+  --med-color-feedback-error-medium-rgb: #{$med-color-feedback-error-medium-rgb};
+
+  --med-color-feedback-error-light: #{$med-color-feedback-error-light};
+  --med-color-feedback-error-light-rgb: #{$med-color-feedback-error-light-rgb};
+
+  --med-color-feedback-error-lightest: #{$med-color-feedback-error-lightest};
+  --med-color-feedback-error-lightest-rgb: #{$med-color-feedback-error-lightest-rgb};
+
+  // feedback success color
+  --med-color-feedback-success-darkest: #{$med-color-feedback-success-darkest};
+  --med-color-feedback-success-darkest-rgb: #{$med-color-feedback-success-darkest-rgb};
+
+  --med-color-feedback-success-dark: #{$med-color-feedback-success-dark};
+  --med-color-feedback-success-dark-rgb: #{$med-color-feedback-success-dark-rgb};
+
+  --med-color-feedback-success-medium: #{$med-color-feedback-success-medium};
+  --med-color-feedback-success-medium-rgb: #{$med-color-feedback-success-medium-rgb};
+
+  --med-color-feedback-success-light: #{$med-color-feedback-success-light};
+  --med-color-feedback-success-light-rgb: #{$med-color-feedback-success-light-rgb};
+
+  --med-color-feedback-success-lightest: #{$med-color-feedback-success-lightest};
+  --med-color-feedback-success-lightest-rgb: #{$med-color-feedback-success-lightest-rgb};
+}
