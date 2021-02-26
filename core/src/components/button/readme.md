@@ -354,6 +354,14 @@ export default defineComponent({
 | `--color-activated`              | Text color of the button when pressed                                                                     |
 | `--color-focused`                | Text color of the button when focused with the tab key                                                    |
 | `--color-hover`                  | Text color of the button when hover                                                                       |
+| `--med-background`               | Define o background do botão.                                                                             |
+| `--med-border-radius`            | Define o border-radius do botão.                                                                          |
+| `--med-border-width`             | Define o border-width do botão.                                                                           |
+| `--med-color`                    | Define a cor do botão.                                                                                    |
+| `--med-font-size`                | Define o font-size do botão.                                                                              |
+| `--med-font-weight`              | Define o font-weight do botão.                                                                            |
+| `--med-line-height`              | Define o line-height do botão.                                                                            |
+| `--med-padding`                  | Define o padding do botão.                                                                                |
 | `--opacity`                      | Opacity of the button                                                                                     |
 | `--padding-bottom`               | Bottom padding of the button                                                                              |
 | `--padding-end`                  | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button |
