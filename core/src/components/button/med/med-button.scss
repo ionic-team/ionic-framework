@@ -56,6 +56,9 @@
 :host {
   // tokens
   --med-padding: #{$med-spacing-squish-lg};
+  --med-padding-size-large: #{$med-spacing-squish-sm};
+  --med-padding-size-default: #{$med-spacing-squish-base};
+  --med-padding-size-small: #{$med-spacing-squish-sm};
 
   --med-background: #{$med-color-brand-primary-gradient};
   --med-background-hover: #{$med-color-brand-primary-medium};
@@ -314,24 +317,31 @@
 
 // large
 :host(.button-large) {
-  --padding-top: #{$button-md-large-padding-top};
+  /* --padding-top: #{$button-md-large-padding-top};
   --padding-start: #{$button-md-large-padding-start};
   --padding-end: #{$button-md-large-padding-end};
-  --padding-bottom: #{$button-md-large-padding-bottom};
+  --padding-bottom: #{$button-md-large-padding-bottom}; */
 
-  height: #{$button-md-large-height};
-  font-size: #{$button-md-large-font-size};
+  //height: #{$button-md-large-height};
+  //font-size: #{$button-md-large-font-size};
+}
+
+// default
+:host(.button-default) {
+  --med-padding: var(--med-padding-size-default);
 }
 
 // small
 :host(.button-small) {
-  --padding-top: #{$button-md-small-padding-top};
+  --med-padding: var(--med-padding-size-small);
+
+  /* --padding-top: #{$button-md-small-padding-top};
   --padding-start: #{$button-md-small-padding-start};
   --padding-end: #{$button-md-small-padding-end};
-  --padding-bottom: #{$button-md-small-padding-bottom};
+  --padding-bottom: #{$button-md-small-padding-bottom}; */
 
-  height: #{$button-md-small-height};
-  font-size: #{$button-md-small-font-size};
+  //height: #{$button-md-small-height};
+  //font-size: #{$button-md-small-font-size};
 }
 
 // ******************************
