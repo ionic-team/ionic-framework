@@ -135,7 +135,8 @@
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
 
-  background: var(--background);
+  //background: var(--background);
+  background: var(--med-background-hover);
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
@@ -254,7 +255,7 @@
   contain: content;
 }
 
-:host(.button-block) .button-native::after {
+:host(.button-block) .button-native::before {
   clear: both;
 }
 
@@ -358,10 +359,14 @@
 // ******************************
 
 // default
-.button-native::after {
+.button-native::before {
   @include button-state();
-  // med
+
+  // ********** //
+  opacity: 1;
+  background: var(--med-background);
   transition: opacity 1000ms;
+// ********** //
 }
 
 // disabled
@@ -376,7 +381,7 @@
   color: var(--color-activated);
 }
 
-:host(.ion-activated) .button-native::after {
+:host(.ion-activated) .button-native::before {
   background: var(--background-activated);
   opacity: var(--background-activated-opacity);
 }
@@ -386,18 +391,18 @@
   color: var(--color-focused);
 }
 
-:host(.ion-focused) .button-native::after {
+:host(.ion-focused) .button-native::before {
   background: var(--background-focused);
   opacity: var(--background-focused-opacity);
 }
 
-:host(.button-solid.ion-color.ion-focused) .button-native::after {
+:host(.button-solid.ion-color.ion-focused) .button-native::before {
   background: #{current-color(contrast)};
   opacity: .24;
 }
 
-:host(.button-clear.ion-color.ion-focused) .button-native::after,
-:host(.button-outline.ion-color.ion-focused) .button-native::after {
+:host(.button-clear.ion-color.ion-focused) .button-native::before,
+:host(.button-outline.ion-color.ion-focused) .button-native::before {
   background: #{current-color(base)};
   opacity: .12;
 }
@@ -408,23 +413,24 @@
     color: var(--color-hover);
   }
 
-  :host(:hover) .button-native::after {
-    background: blue;
+  :host(:hover) .button-native::before {
     //opacity: var(--background-hover-opacity);
-    // med
-    opacity: 1;
-    transition: opacity 1000ms;
+
+    // ********** //
+      opacity: 0;
+      transition: opacity 1000ms;
+    // ********** //
   }
 }
 
 @media (any-hover: hover) {
-  :host(.button-solid.ion-color:hover) .button-native::after {
+  :host(.button-solid.ion-color:hover) .button-native::before {
     background: #{current-color(contrast)};
     opacity: .08;
   }
 
-  :host(.button-clear.ion-color:hover) .button-native::after,
-  :host(.button-outline.ion-color:hover) .button-native::after {
+  :host(.button-clear.ion-color:hover) .button-native::before,
+  :host(.button-outline.ion-color:hover) .button-native::before {
     background: #{current-color(base)};
     opacity: .04;
   }
