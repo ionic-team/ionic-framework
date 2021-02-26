@@ -91,13 +91,13 @@ export const config: Config = {
         {
           elements: ['ion-checkbox', 'ion-toggle'],
           targetAttr: 'checked',
-          event: 'v-ionChange',
+          event: 'v-ion-change',
           externalEvent: 'ionChange'
         },
         {
           elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-textarea'],
           targetAttr: 'value',
-          event: 'v-ionChange',
+          event: 'v-ion-change',
           externalEvent: 'ionChange'
         }
       ],
