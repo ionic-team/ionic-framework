@@ -879,3 +879,17 @@ export class IonToolbar {
     this.el = r.nativeElement;
   }
 }
+export declare interface MedButton extends Components.MedButton {
+}
+@ProxyCmp({ inputs: ["disabled", "download", "href", "rel", "target", "type"] })
+@Component({ selector: "med-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["disabled", "download", "href", "rel", "target", "type"] })
+export class MedButton {
+  medFocus!: EventEmitter<CustomEvent>;
+  medBlur!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ["medFocus", "medBlur"]);
+  }
+}

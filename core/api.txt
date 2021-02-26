@@ -1358,3 +1358,22 @@ ion-virtual-scroll,prop,renderItem,((item: any, index: number) => any) | undefin
 ion-virtual-scroll,method,checkEnd,checkEnd() => Promise<void>
 ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => Promise<void>
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
+
+med-button,shadow
+med-button,prop,disabled,boolean,false,false,true
+med-button,prop,download,string | undefined,undefined,false,false
+med-button,prop,href,string | undefined,undefined,false,false
+med-button,prop,rel,string | undefined,undefined,false,false
+med-button,prop,target,string | undefined,undefined,false,false
+med-button,prop,type,"button" | "reset" | "submit",'button',false,false
+med-button,event,medBlur,void,true
+med-button,event,medFocus,void,true
+med-button,css-prop,--background
+med-button,css-prop,--border
+med-button,css-prop,--border-radius
+med-button,css-prop,--box-shadow
+med-button,css-prop,--color
+med-button,css-prop,--font-size
+med-button,css-prop,--padding
+med-button,css-prop,--transition
+med-button,part,inner

@@ -19,8 +19,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-button',
   styleUrls: {
-    ios: 'button.ios.scss',
-    md: 'button.md.scss'
+    ios: './med/med-button.scss',
+    md: './med/med-button.scss'
   },
   shadow: true,
 })

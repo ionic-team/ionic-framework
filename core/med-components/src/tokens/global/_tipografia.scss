@@ -1,3 +1,14 @@
+@import '../../global/variables';
+
+// font family
+$med-font-family-brand: 'fsemeric' !default;
+$med-font-family-base: 'fsemeric' !default;
+
+// line height
+$med-line-height-compressed: 100% !default;
+$med-line-height-default: #{line-height()} !default;
+$med-line-height-double: 200% !default;
+
 :root {
   // font family
   --med-font-family-brand: #{$med-font-family-brand};
