@@ -59,7 +59,7 @@ describe('Overlays', () => {
     cy.get('ion-toast').should('not.exist');
   });
 
-  it('it should pass props to modal via controller', () => {
+  it('should pass props to modal via controller', () => {
     cy.get('ion-radio#ion-modal').click();
     cy.get('ion-radio#controller').click();
 
@@ -69,7 +69,7 @@ describe('Overlays', () => {
     cy.get('ion-modal ion-content').should('have.text', 'Custom Title');
   });
 
-  it('it should pass props to modal via component', () => {
+  it('should pass props to modal via component', () => {
     cy.get('ion-radio#ion-modal').click();
     cy.get('ion-radio#component').click();
 
@@ -79,7 +79,7 @@ describe('Overlays', () => {
     cy.get('ion-modal ion-content').should('have.text', 'Custom Title');
   });
 
-  it('it should pass props to popover via controller', () => {
+  it('should pass props to popover via controller', () => {
     cy.get('ion-radio#ion-popover').click();
     cy.get('ion-radio#controller').click();
 
@@ -89,7 +89,7 @@ describe('Overlays', () => {
     cy.get('ion-popover ion-content').should('have.text', 'Custom Title');
   });
 
-  it('it should pass props to popover via component', () => {
+  it('should pass props to popover via component', () => {
     cy.get('ion-radio#ion-popover').click();
     cy.get('ion-radio#component').click();
 
@@ -97,5 +97,11 @@ describe('Overlays', () => {
     cy.get('ion-popover').should('exist');
 
     cy.get('ion-popover ion-content').should('have.text', 'Custom Title');
+  });
+
+  it('should only open one instance at a time when props change quickly on component', () => {
+    cy.get('#change-loading-props').click();
+
+    cy.get('ion-loading').should('have.length', 1);
   });
 })
