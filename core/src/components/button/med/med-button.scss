@@ -360,6 +360,8 @@
 // default
 .button-native::after {
   @include button-state();
+  // med
+  transition: opacity 1000ms;
 }
 
 // disabled
@@ -407,8 +409,11 @@
   }
 
   :host(:hover) .button-native::after {
-    background: var(--background-hover);
-    opacity: var(--background-hover-opacity);
+    background: blue;
+    //opacity: var(--background-hover-opacity);
+    // med
+    opacity: 1;
+    transition: opacity 1000ms;
   }
 }
 
