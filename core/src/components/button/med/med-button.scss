@@ -82,7 +82,7 @@
   --med-overflow: hidden;
 
   // ionic
-  --overflow: hidden;
+  /* --overflow: hidden;
   --ripple-color: #000;
   --border-width: initial;
   --border-color: initial;
@@ -98,8 +98,8 @@
   --padding-end: #{$button-md-padding-end};
   --transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
                 background-color 15ms linear,
-                color 15ms linear;
-
+                color 15ms linear;*/
+  
   //@include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
 
   
