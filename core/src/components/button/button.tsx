@@ -184,14 +184,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.ionBlur.emit();
   }
 
-  private handleMouseEnter = () => {
-    this.el.classList.add('med-hover');
-  }
-
-  private handleMouseLeave = () => {
-    this.el.classList.remove('med-hover');
-  }
-
   render() {
     const mode = getIonMode(this);
     const { buttonType, type, disabled, rel, target, size, href, color, expand, hasIconOnly, shape, strong, inheritedAttributes } = this;
@@ -214,8 +206,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       <Host
         ragatanga
         onClick={this.handleClick}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,

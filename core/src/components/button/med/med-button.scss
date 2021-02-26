@@ -99,10 +99,9 @@
 
   //@include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
 
-  //height: #{$button-md-height};
+  
   font-size: var(--med-font-size);
   font-weight: var(--med-font-weight);
-  //letter-spacing: #{$button-md-letter-spacing};
   text-transform: var(--med-text-transform);
   color: var(--med-color);
 
@@ -118,6 +117,9 @@
   vertical-align: -webkit-baseline-middle; // the best for those that support it
   pointer-events: auto;
   font-kerning: none;
+
+  //height: #{$button-md-height};
+  //letter-spacing: #{$button-md-letter-spacing};
 }
 
 // ******************************
@@ -364,22 +366,22 @@
   pointer-events: none;
 }
 
-:host(.button-disabled)::before {
-  @include button-state();
-
+:host(.button-disabled) .button-native::before {
   opacity: 1;
-  background: var(--med-background);
-  transition:var(--med-transition);
+  background: var(--med-background-disabled);
 }
 
 // activated
 :host(.ion-activated) {
-  color: var(--color-activated);
+  //color: var(--color-activated);
 }
 
 :host(.ion-activated) .button-native::before {
-  background: var(--background-activated);
-  opacity: var(--background-activated-opacity);
+  //opacity: var(--background-activated-opacity);
+
+  background: var(--med-background-activated);
+
+  opacity: 1;
 }
 
 // focused
@@ -387,13 +389,23 @@
   //color: var(--color-focused);
 }
 
+:host(.ion-focused) .button-native {
+  //color: var(--color-focused);
+
+  border-width: var(--med-border-width-focused);
+  border-color: var(--med-border-color-focused);
+
+  border-style: solid;
+}
+
 :host(.ion-focused) .button-native::before {
   //background: var(--background-focused);
   //opacity: var(--background-focused-opacity);
 
-  opacity: 1;
   background: var(--med-background-focused);
   transition: var(--med-transition);
+
+  opacity: 1;
 }
 
 :host(.button-solid.ion-color.ion-focused) .button-native::before {
@@ -416,9 +428,10 @@
   :host(:hover) .button-native::before {
     //opacity: var(--background-hover-opacity);
 
-    opacity: 0;
     transition: var(--med-transition);
-}
+
+    opacity: 0;
+  }
 
   :host(.button-solid.ion-color:hover) .button-native::before {
     background: #{current-color(contrast)};

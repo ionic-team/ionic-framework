@@ -11,12 +11,29 @@
     <link href="./css/ionic.bundle.css" rel="stylesheet">
     <script nomodule src="./dist/ionic/ionic.js"></script>
     <script type="module" src="./dist/ionic/ionic.esm.js"></script></head>
+
+    <style>
+      .custom {
+        --med-text-transform: initial;
+      }
+    </style>
   </head>
   <body>
     <ion-app>
       <ion-content>
-        <!-- <med-button>med-button</med-button> -->
-        <ion-button>med-button</ion-button>
+        <h2>Primary Button</h2>
+        <ion-button class="custom">Primary Button</ion-button>
+        <ion-button>primary button</ion-button>
+
+        <h2>Estados</h2>
+        <ion-button>primário md</ion-button>
+        <ion-button class="ion-activated">primário md</ion-button>
+        <ion-button disabled>primário md</ion-button>
+        <ion-button class="ion-focused">primário md</ion-button>
+
+        <h2>Primary Button Block</h2>
+        <ion-button expand="block">Primary Button</ion-button>
+        <ion-button expand="block">primary button</ion-button>
       </ion-content>
     </ion-app> 
   </body>
