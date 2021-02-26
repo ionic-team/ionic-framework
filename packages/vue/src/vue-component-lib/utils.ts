@@ -96,8 +96,6 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
     }
 
     return () => {
-      modelPropValue = (props as any)[modelProp];
-
       getComponentClasses(attrs.class).forEach(value => {
         classes.add(value);
       });
