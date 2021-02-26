@@ -366,8 +366,8 @@
 // focused
 
 :host(.ion-focused) .button-native {
-  background: var(--med-background-focused);
-  //--med-background: linear-gradient(var(--med-background-focused), var(--med-background-focused));
+  //background: var(--med-background-focused);
+  --med-background: linear-gradient(var(--med-background-focused), var(--med-background-focused));
   border-width: var(--med-border-width-focused);
   border-color: var(--med-border-color-focused);
 }
@@ -383,6 +383,11 @@
 }
 
 // hover
+:host(.med-hover) {
+  transition: var(--med-transition);
+  --med-background: linear-gradient(var(--med-background-hover), var(--med-background-hover));
+}
+
 @media (any-hover: hover) {
   :host(:hover) .button-native {
     --med-background: linear-gradient(var(--med-background-hover), var(--med-background-hover));
