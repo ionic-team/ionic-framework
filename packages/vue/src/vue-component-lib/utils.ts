@@ -36,12 +36,13 @@ const getElementClasses = (ref: Ref<HTMLElement | undefined>, componentClasses: 
 * @prop componentProps - An array of properties on the
 * component. These usually match up with the @Prop definitions
 * in each component's TSX file.
-* @prop componentOptions - An object that defines additional
-* options for the component such as router or v-model
-* integrations.
+* @prop modelProp - The prop that v-model binds to (i.e. value)
+* @prop modelUpdateEvent - The event that is fired when the value changes (i.e. ionChange)
 */
-export const defineContainer = <Props>(name: string, componentProps: string[] = [], componentOptions: ComponentOptions = {}) => {
+export const defineContainer = <Props>(name: string, customElement: any, componentProps: string[] = [], componentOptions: ComponentOptions = {}) => {
   const { modelProp, modelUpdateEvent, externalModelUpdateEvent } = componentOptions;
+
+  customElements.define(name, customElement);
 
   /**
   * Create a Vue component wrapper around a Web Component.
