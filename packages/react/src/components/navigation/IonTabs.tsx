@@ -85,6 +85,7 @@ export class IonTabs extends React.Component<Props> {
   render() {
     let outlet: React.ReactElement<{}> | undefined;
     let tabBar: React.ReactElement | undefined;
+    const { className, onIonTabsDidChange, onIonTabsWillChange, ...props } = this.props;
 
     const children =
       typeof this.props.children === 'function'
@@ -95,20 +96,23 @@ export class IonTabs extends React.Component<Props> {
       if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
         return;
       }
-      if (child.type === IonRouterOutlet) {
+      if (child.type === IonRouterOutlet || child.type.isRouterOutlet) {
         outlet = React.cloneElement(child, { tabs: true });
       } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
         outlet = child.props.children[0];
       }
-      if (child.type === IonTabBar) {
-        const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
+      if (child.type === IonTabBar || child.type.isTabBar) {
+
         tabBar = React.cloneElement(child, {
           onIonTabsDidChange,
           onIonTabsWillChange,
           ref: this.tabBarRef,
         });
-      } else if (child.type === Fragment && child.props.children[1].type === IonTabBar) {
-        const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
+      } else if (
+        child.type === Fragment &&
+        (child.props.children[1].type === IonTabBar || child.props.children[1].type.isTabBar)
+      ) {
+
         tabBar = React.cloneElement(child.props.children[1], {
           onIonTabsDidChange,
           onIonTabsWillChange,
@@ -123,8 +127,6 @@ export class IonTabs extends React.Component<Props> {
     if (!tabBar) {
       throw new Error('IonTabs needs a IonTabBar');
     }
-
-    const { className, ...props } = this.props;
 
     return (
       <IonTabsContext.Provider value={this.ionTabContextState}>

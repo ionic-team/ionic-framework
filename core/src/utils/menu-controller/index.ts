@@ -1,6 +1,6 @@
-import { componentOnReady } from '../helpers';
 import { AnimationBuilder, BackButtonEvent, MenuI } from '../../interface';
 import { MENU_BACK_BUTTON_PRIORITY } from '../hardware-back-button';
+import { componentOnReady } from '../helpers';
 
 import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';

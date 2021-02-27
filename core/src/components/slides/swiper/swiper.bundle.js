@@ -320,7 +320,7 @@ function transform(transform) {
   }
   return this;
 }
-function transition(duration) {
+function transition$1(duration) {
   if (typeof duration !== 'string') {
     duration = `${duration}ms`; // eslint-disable-line
   }
@@ -459,7 +459,7 @@ function trigger(...args) {
   }
   return this;
 }
-function transitionEnd(callback) {
+function transitionEnd$1(callback) {
   const events = ['webkitTransitionEnd', 'transitionend'];
   const dom = this;
   let i;
@@ -850,11 +850,11 @@ const Methods = {
   removeAttr,
   data,
   transform,
-  transition: transition,
+  transition: transition$1,
   on,
   off,
   trigger,
-  transitionEnd: transitionEnd,
+  transitionEnd: transitionEnd$1,
   outerWidth,
   outerHeight,
   offset,
@@ -2029,7 +2029,7 @@ function transitionStart (runCallbacks = true, direction) {
   }
 }
 
-function transitionEnd$1 (runCallbacks = true, direction) {
+function transitionEnd (runCallbacks = true, direction) {
   const swiper = this;
   const { activeIndex, previousIndex, params } = swiper;
   swiper.animating = false;
@@ -2059,10 +2059,10 @@ function transitionEnd$1 (runCallbacks = true, direction) {
   }
 }
 
-var transition$1 = {
+var transition = {
   setTransition,
   transitionStart,
-  transitionEnd: transitionEnd$1,
+  transitionEnd,
 };
 
 function slideTo (index = 0, speed = this.params.speed, runCallbacks = true, internal) {
@@ -2233,9 +2233,9 @@ function slidePrev (speed = this.params.speed, runCallbacks = true, internal) {
   }
   const normalizedTranslate = normalize(translate);
   const normalizedSnapGrid = snapGrid.map((val) => normalize(val));
-  const normalizedSlidesGrid = slidesGrid.map((val) => normalize(val));
+  slidesGrid.map((val) => normalize(val));
 
-  const currentSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate)];
+  snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate)];
   let prevSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate) - 1];
   if (typeof prevSnap === 'undefined' && params.cssMode) {
     snapGrid.forEach((snap) => {
@@ -3866,7 +3866,7 @@ var defaults = {
 const prototypes = {
   update,
   translate,
-  transition: transition$1,
+  transition,
   slide,
   loop,
   grabCursor,

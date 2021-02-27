@@ -39,6 +39,10 @@
       <ion-item button @click="replace" id="replace">
         <ion-label>Replace to Navigation page</ion-label>
       </ion-item>
+
+      <ion-item button router-link="/tabs/tab1" id="tab1">
+        <ion-label>Go to /tabs/tab1</ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>

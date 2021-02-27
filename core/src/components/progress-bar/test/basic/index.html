@@ -9,7 +9,9 @@
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <style>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+  <style>
     .custom-bar-background {
       --buffer-background: red;
     }
@@ -126,13 +128,26 @@
         </ion-list-header>
         <ion-progress-bar color="tertiary" buffer="0"></ion-progress-bar>
 
+        <ion-list-header>
+          <ion-label>
+            Buffer (change buffer with slider)
+          </ion-label>
+        </ion-list-header>
+        <ion-progress-bar class="progressBarBuffer" value="0.20" buffer="0.4"></ion-progress-bar>
+        <ion-progress-bar class="progressBarBuffer" value="0.20" buffer="0.4" reversed="true"></ion-progress-bar>
+
+        <ion-item>
+          <ion-range pin="true" value="0" id="progressValueBuffer">
+            <ion-label slot="start">0</ion-label>
+            <ion-label slot="end">100</ion-label>
+          </ion-range>
+        </ion-item>
       </ion-list>
-
     </ion-content>
-
   </ion-app>
 
   <script>
+    // Progress Bar Value
     const progressValue = document.getElementById('progressValue');
     const progressBar = document.getElementById('progressBar');
 
@@ -140,6 +155,13 @@
       progressBar.value = ev.detail.value / 100;
     });
 
+    // Progress Bar Buffer
+    const progressValueBuffer = document.getElementById('progressValueBuffer');
+    const progressBarBuffer = document.querySelectorAll('.progressBarBuffer');
+
+    progressValueBuffer.addEventListener('ionChange', function (ev) {
+      progressBarBuffer.forEach(ele => ele.buffer = ev.detail.value / 100);
+    });
   </script>
 </body>
 

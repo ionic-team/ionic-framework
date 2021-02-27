@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, Side } from '../../interface';
-import { componentOnReady, isEndSide } from '../../utils/helpers';
+import { isEndSide } from '../../utils/helpers';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -209,18 +209,24 @@ export class ItemSliding implements ComponentInterface {
     this.leftOptions = this.rightOptions = undefined;
 
     for (let i = 0; i < options.length; i++) {
-      componentOnReady(options.item(i), () => {
-        const option = options.item(i);
-        const side = isEndSide(option.side) ? 'end' : 'start';
+      const item = options.item(i);
 
-        if (side === 'start') {
-          this.leftOptions = option;
-          sides |= ItemSide.Start;
-        } else {
-          this.rightOptions = option;
-          sides |= ItemSide.End;
-        }
-      });
+      /**
+       * We cannot use the componentOnReady helper
+       * util here since we need to wait for all of these items
+       * to be ready before we set `this.sides` and `this.optsDirty`.
+       */
+      const option = ((item as any).componentOnReady !== undefined) ? await item.componentOnReady() : item;
+
+      const side = isEndSide(option.side) ? 'end' : 'start';
+
+      if (side === 'start') {
+        this.leftOptions = option;
+        sides |= ItemSide.Start;
+      } else {
+        this.rightOptions = option;
+        sides |= ItemSide.End;
+      }
     }
     this.optsDirty = true;
     this.sides = sides;

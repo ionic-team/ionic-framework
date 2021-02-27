@@ -168,7 +168,7 @@
     </style>
 
     <script>
-      customElements.whenDefined('ion-select-option').then(() => {
+      customElements.whenDefined('ion-select-option').then(async () => {
         let selects = document.querySelectorAll('ion-select');
         selects.forEach(function (select) {
           select.addEventListener("ionChange", function () {

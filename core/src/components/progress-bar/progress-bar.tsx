@@ -89,7 +89,18 @@ const renderProgress = (value: number, buffer: number) => {
 
   return [
     <div class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
-    finalBuffer !== 1 && <div class="buffer-circles"></div>,
+    /**
+     * Buffer circles with two container to move
+     * the circles behind the buffer progress
+     * with respecting the animation.
+     * When finalBuffer === 1, we use display: none
+     * instead of removing the element to avoid flickering.
+     */
+    <div class={{ 'buffer-circles-container': true, 'ion-hide': finalBuffer === 1 }} style={{ transform: `translateX(${finalBuffer * 100}%)` }}>
+      <div class="buffer-circles-container" style={{ transform: `translateX(-${finalBuffer * 100}%)` }}>
+        <div class="buffer-circles"></div>
+      </div>
+    </div>,
     <div class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
   ];
 };

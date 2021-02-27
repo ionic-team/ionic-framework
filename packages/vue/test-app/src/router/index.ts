@@ -68,6 +68,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'two',
         component: () => import('@/views/NestedChildTwo.vue')
+      },
+      {
+        path: ':id',
+        component: () => import('@/views/Folder.vue')
       }
     ]
   },
@@ -82,16 +86,14 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'tab1',
         component: () => import('@/views/Tab1.vue'),
-        children: [
-          {
-            path: 'child-one',
-            component: () => import('@/views/Tab1ChildOne.vue')
-          },
-          {
-            path: 'child-two',
-            component: () => import('@/views/Tab1ChildTwo.vue')
-          }
-        ]
+      },
+      {
+        path: 'tab1/child-one',
+        component: () => import('@/views/Tab1ChildOne.vue')
+      },
+      {
+        path: 'tab1/child-two',
+        component: () => import('@/views/Tab1ChildTwo.vue')
       },
       {
         path: 'tab2',
@@ -134,5 +136,7 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
+
+(window as any).debugRouter = router;
 
 export default router

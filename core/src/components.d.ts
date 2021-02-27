@@ -834,7 +834,7 @@ export namespace Components {
          */
         "accept"?: string;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize": string;
         /**
@@ -2034,6 +2034,10 @@ export namespace Components {
           * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
          */
         "showCancelButton": 'never' | 'focus' | 'always';
+        /**
+          * Sets the behavior for the clear button. Defaults to `"focus"`. Setting to `"focus"` shows the clear button on focus if the input is not empty. Setting to `"never"` hides the clear button. Setting to `"always"` shows the clear button regardless of focus state, but only if the input is not empty.
+         */
+        "showClearButton": 'never' | 'focus' | 'always';
         /**
           * If `true`, enable spellcheck on the input.
          */
@@ -4181,7 +4185,7 @@ declare namespace LocalJSX {
          */
         "accept"?: string;
         /**
-          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+          * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
          */
         "autocapitalize"?: string;
         /**
@@ -5336,6 +5340,10 @@ declare namespace LocalJSX {
           * Sets the behavior for the cancel button. Defaults to `"never"`. Setting to `"focus"` shows the cancel button on focus. Setting to `"never"` hides the cancel button. Setting to `"always"` shows the cancel button regardless of focus state.
          */
         "showCancelButton"?: 'never' | 'focus' | 'always';
+        /**
+          * Sets the behavior for the clear button. Defaults to `"focus"`. Setting to `"focus"` shows the clear button on focus if the input is not empty. Setting to `"never"` hides the clear button. Setting to `"always"` shows the clear button regardless of focus state, but only if the input is not empty.
+         */
+        "showClearButton"?: 'never' | 'focus' | 'always';
         /**
           * If `true`, enable spellcheck on the input.
          */
