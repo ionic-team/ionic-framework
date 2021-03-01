@@ -607,7 +607,7 @@ const AlertExample: React.FC = () => {
               message: 'alert from hook',
               buttons: [
                 'Cancel',
-                { text: 'Ok', handler: (d) => console.log('ok presses') },
+                { text: 'Ok', handler: (d) => console.log('ok pressed') },
               ],
               onDidDismiss: (e) => console.log('did dismiss'),
             })
