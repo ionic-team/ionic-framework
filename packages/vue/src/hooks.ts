@@ -70,6 +70,10 @@ export const useKeyboard = (): IonKeyboardRef => {
   }
 }
 
+/**
+ * Creates an returns a function that
+ * can be used to provide a lifecycle hook.
+ */
 const injectHook = (lifecycleType: LifecycleHooks, hook: Function, component: ComponentInternalInstance | null): Function | undefined => {
   if (component) {
 

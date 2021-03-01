@@ -35,11 +35,15 @@ export const fireLifecycle = (vueComponent: any, vueInstance: Ref<ComponentPubli
     instance[lifecycle]();
   }
 
+  /**
+   * Fire any Composition API
+   * Ionic Lifecycle hooks
+   */
   if (instance) {
     const hook = hookNames[lifecycle];
     const hooks = instance[hook];
     if (hooks) {
-      hooks.forEach((hook: Function) => hook.bind(instance)());
+      hooks.forEach((hook: Function) => hook());
     }
   }
 }
