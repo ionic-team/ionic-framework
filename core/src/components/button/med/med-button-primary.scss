@@ -3,102 +3,154 @@
 @import "./med-button.scss";
 @import "../../../../med-components/src/tokens/global/global";
 
-:host([primary]) {
 
-  // tokens
-  --med-padding: #{$med-spacing-squish-lg};
-  --med-padding-size-large: #{$med-spacing-squish-sm};
-  --med-padding-size-default: #{$med-spacing-squish-base};
-  --med-padding-size-small: #{$med-spacing-squish-sm};
+// ******************************
+// med default
+// ******************************
 
-  --med-background: #{$med-color-brand-primary-gradient};
-  --med-background-hover: #{$med-color-brand-primary-medium};
-  --med-background-disabled: #{$med-color-neutral-light-20};
-  --med-background-activated: #{$med-color-brand-primary-dark};
-  --med-background-focused: #{$med-color-brand-primary-medium};
+/**
+  * @prop --med-padding: Define o padding do botão.
+  * @prop --med-background: Define o background do botão.
+  * @prop --med-border-radius: Define o border-radius do botão.
+  * @prop --med-border-width: Define o border-width do botão.
+  * @prop --med-font-size: Define o font-size do botão.
+  * @prop --med-font-weight: Define o font-weight do botão.
+  * @prop --med-line-height: Define o line-height do botão.
+  * @prop --med-color: Define a cor do botão.
+  */
 
-  --med-border-radius: #{$med-border-radius-pill};
-  --med-border-width: #{$med-border-width-none};
-  --med-border-width-focused: #{$med-border-width-thin};
-  --med-border-color-focused: #{$med-color-brand-primary-lightest};
+// ******************************
+// ionic default
+// ******************************
+
+/**
+  * @prop --background: Background of the button
+  * @prop --background-activated: Background of the button when pressed. Note: setting this will interfere with the Material Design ripple.
+  * @prop --background-activated-opacity: Opacity of the button when pressed
+  * @prop --background-focused: Background of the button when focused with the tab key
+  * @prop --background-focused-opacity: Opacity of the button when focused with the tab key
+  * @prop --background-hover: Background of the button on hover
+  * @prop --background-hover-opacity: Opacity of the background on hover
+  *
+  * @prop --color: Text color of the button
+  * @prop --color-activated: Text color of the button when pressed
+  * @prop --color-focused: Text color of the button when focused with the tab key
+  * @prop --color-hover: Text color of the button when hover
+  *
+  * @prop --transition: Transition of the button
+  *
+  * @prop --border-radius: Border radius of the button
+  * @prop --border-width: Border width of the button
+  * @prop --border-style: Border style of the button
+  * @prop --border-color: Border color of the button
+  *
+  * @prop --ripple-color: Color of the button ripple effect
+  *
+  * @prop --box-shadow: Box shadow of the button
+  * @prop --opacity: Opacity of the button
+  *
+  * @prop --padding-top: Top padding of the button
+  * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the button
+  * @prop --padding-bottom: Bottom padding of the button
+  * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the button
+  */
+
+  :host([primary]) {
+    // tokens
+    --med-padding: #{$med-spacing-squish-lg};
+    --med-padding-size-large: #{$med-spacing-squish-sm};
+    --med-padding-size-default: #{$med-spacing-squish-base};
+    --med-padding-size-small: #{$med-spacing-squish-sm};
   
-  --med-font-size: #{$med-font-size-xs};
-  --med-font-weight: #{$med-font-weight-semibold};
-  --med-line-height: #{$med-line-height-compressed};
-  --med-color: #{$med-color-neutral-light-prime};
-  --med-text-transform: uppercase;
-  --med-transition: opacity 100ms ease-out;
+    --med-background: #{$med-color-brand-primary-gradient};
+    --med-background-hover: #{$med-color-brand-primary-medium};
+    --med-background-disabled: #{$med-color-neutral-light-20};
+    --med-background-activated: #{$med-color-brand-primary-dark};
+    --med-background-focused: #{$med-color-brand-primary-medium};
   
-  // sobreescrita ionic
-  --med-overflow: hidden;
-
-  // ionic
-  /* --overflow: hidden;
-  --ripple-color: #000;
-  --border-width: initial;
-  --border-color: initial;
-  --border-style: initial;
-  --color-activated: var(--color);
-  --color-focused: var(--color);
-  --color-hover: var(--color);
-  --box-shadow: none;
-  --border-radius: #{$button-md-border-radius};
-  --padding-top: #{$button-md-padding-top};
-  --padding-bottom: #{$button-md-padding-bottom};
-  --padding-start: #{$button-md-padding-start};
-  --padding-end: #{$button-md-padding-end};
-  --transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
-                background-color 15ms linear,
-                color 15ms linear;*/
+    --med-border-radius: #{$med-border-radius-pill};
+    --med-border-width: #{$med-border-width-none};
+    --med-border-width-focused: #{$med-border-width-thin};
+    --med-border-color-focused: #{$med-color-brand-primary-lightest};
+    
+    --med-font-size: #{$med-font-size-xs};
+    --med-font-weight: #{$med-font-weight-semibold};
+    --med-line-height: #{$med-line-height-compressed};
+    --med-color: #{$med-color-neutral-light-prime};
+    --med-text-transform: uppercase;
+    --med-transition: opacity 100ms ease-out;
+    
+    // sobreescrita ionic
+    --med-overflow: hidden;
   
-  //@include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
-
+    // ionic
+    /* --overflow: hidden;
+    --ripple-color: #000;
+    --border-width: initial;
+    --border-color: initial;
+    --border-style: initial;
+    --color-activated: var(--color);
+    --color-focused: var(--color);
+    --color-hover: var(--color);
+    --box-shadow: none;
+    --border-radius: #{$button-md-border-radius};
+    --padding-top: #{$button-md-padding-top};
+    --padding-bottom: #{$button-md-padding-bottom};
+    --padding-start: #{$button-md-padding-start};
+    --padding-end: #{$button-md-padding-end};
+    --transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),
+                  background-color 15ms linear,
+                  color 15ms linear;*/
+    
+    //@include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
   
-  font-size: var(--med-font-size);
-  font-weight: var(--med-font-weight);
-  text-transform: var(--med-text-transform);
-  color: var(--med-color);
-
-  font-family: $font-family-base;
-  display: inline-block;
-  width: auto;
-  text-align: center;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  user-select: none;
-  vertical-align: top; // the better option for most scenarios
-  vertical-align: -webkit-baseline-middle; // the best for those that support it
-  pointer-events: auto;
-  font-kerning: none;
-
-  //height: #{$button-md-height};
-  //letter-spacing: #{$button-md-letter-spacing};
-
+    
+    font-size: var(--med-font-size);
+    font-weight: var(--med-font-weight);
+    text-transform: var(--med-text-transform);
+    color: var(--med-color);
+  
+    font-family: $font-family-base;
+    display: inline-block;
+    width: auto;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    user-select: none;
+    vertical-align: top; // the better option for most scenarios
+    vertical-align: -webkit-baseline-middle; // the best for those that support it
+    pointer-events: auto;
+    font-kerning: none;
+  
+    //height: #{$button-md-height};
+    //letter-spacing: #{$button-md-letter-spacing};
+  }
+  
   // ******************************
   // inner elements
   // ******************************
-
+  
   .button-native {
     @include border-radius(var(--med-border-radius));
     @include font-smoothing();
     @include margin(0);
     @include text-inherit();
     //@include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-
+  
     background: var(--med-background-hover);
     padding: var(--med-padding);
     border-width: var(--med-border-width);
     color: var(--med-color);
-
+  
     //background: var(--background);
     //border-style: var(--border-style);
     //border-color: var(--border-color);
     //box-shadow: var(--box-shadow);
     //opacity: var(--opacity);
     //overflow: var(--overflow);
-    //transition: var(--transition);
-
+     //transition: var(--transition);
+  
     overflow: hidden;
     display: block;
     position: relative;
@@ -112,11 +164,11 @@
     box-sizing: border-box;
     appearance: none;
   }
-
+  
   .button-native::-moz-focus-inner {
     border: 0;
   }
-
+  
   .button-inner {
     display: flex;
     position: relative;
@@ -128,13 +180,13 @@
     height: 100%;
     z-index: 1;
   }
-
+  
   // ******************************
   // fill @prop
   // ******************************
-
+  
   // solid
-  .button-solid {
+  :host([primary].button-solid) {
     //--background: #{ion-color(primary, base)};
     //--color: #{ion-color(primary, contrast)};
     //--background-activated: transparent;
@@ -145,112 +197,309 @@
     //--background-hover-opacity: .08;
     //--box-shadow: #{$button-md-box-shadow};
   }
-
-  .button-solid.ion-activated {
+  
+  :host([primary].button-solid.ion-activated) {
     //--box-shadow: #{$button-md-box-shadow-activated};
   }
-
+  
+  // outline
+  :host([primary].button-outline) {
+    --border-color: #{ion-color(primary, base)};
+    --background: transparent;
+    --color: #{ion-color(primary, base)};
+    --border-width: 2px;
+    --border-style: solid;
+    --box-shadow: none;
+    --background-activated: transparent;
+    --background-focused: #{ion-color(primary, base)};
+    --background-hover: #{ion-color(primary, base)};
+    --background-activated-opacity: 0;
+    --background-focused-opacity: .12;
+    --background-hover-opacity: .04;
+  }
+  
+  :host([primary].button-outline.ion-activated.ion-color) .button-native {
+    background: transparent;
+  }
+  
+  // clear
+  :host([primary].button-clear) {
+    --border-width: 0;
+    --background: transparent;
+    --color: #{ion-color(primary, base)};
+    --background-activated: transparent;
+    --background-focused: #{ion-color(primary, base)};
+    --background-hover: #{ion-color(primary, base)};
+    --background-activated-opacity: 0;
+    --background-focused-opacity: .12;
+    --background-hover-opacity: .04;
+  }
+  
+  // ******************************
+  // expand @prop
+  // ******************************
+  
+  // block
+  :host([primary].button-block) {
+    display: block;
+  }
+  
+  :host([primary].button-block) .button-native {
+    @include margin-horizontal(0);
+  
+    display: block;
+    width: 100%;
+    clear: both;
+    contain: content;
+  }
+  
+  :host([primary].button-block) .button-native::before {
+    clear: both;
+  }
+  
+  // full
+  :host([primary].button-full) {
+    display: block;
+  }
+  
+  :host([primary].button-full) .button-native {
+    @include margin-horizontal(0);
+  
+    display: block;
+    width: 100%;
+    contain: content;
+  }
+  
+  :host([primary].button-full:not(.button-round)) .button-native {
+    @include border-radius(0);
+  
+    border-right-width: 0;
+    border-left-width: 0;
+  }
+  
+  // ******************************
+  // color @prop
+  // ******************************
+  
+  // solid
+  :host([primary].button-solid.ion-color) .button-native {
+    background: current-color(base);
+    color: current-color(contrast);
+  }
+  
+  // outline
+  :host([primary].button-outline.ion-color) .button-native {
+    border-color: current-color(base);
+    background: transparent;
+    color: current-color(base);
+  }
+  
+  // clear
+  :host([primary].button-clear.ion-color) .button-native {
+    background: transparent;
+    color: current-color(base);
+  }
+  
+  // ******************************
+  // shape @prop
+  // ******************************
+  
+  // round
+  :host([primary].button-round) {
+    --border-radius: #{$button-md-round-border-radius};
+    --padding-top: #{$button-md-round-padding-top};
+    --padding-start: #{$button-md-round-padding-start};
+    --padding-end: #{$button-md-round-padding-end};
+    --padding-bottom: #{$button-md-round-padding-bottom};
+  }
+  
+  // ******************************
+  // size @prop
+  // ******************************
+  
+  // large
+  :host([primary].button-large) {
+    /* --padding-top: #{$button-md-large-padding-top};
+    --padding-start: #{$button-md-large-padding-start};
+    --padding-end: #{$button-md-large-padding-end};
+    --padding-bottom: #{$button-md-large-padding-bottom}; */
+  
+    //height: #{$button-md-large-height};
+    //font-size: #{$button-md-large-font-size};
+  }
+  
+  // default
+  :host([primary].button-default) {
+    --med-padding: var(--med-padding-size-default);
+  }
+  
+  // small
+  :host([primary].button-small) {
+    --med-padding: var(--med-padding-size-small);
+  
+    /* --padding-top: #{$button-md-small-padding-top};
+    --padding-start: #{$button-md-small-padding-start};
+    --padding-end: #{$button-md-small-padding-end};
+    --padding-bottom: #{$button-md-small-padding-bottom}; */
+  
+    //height: #{$button-md-small-height};
+    //font-size: #{$button-md-small-font-size};
+  }
+  
+  // ******************************
+  // strong @prop
+  // ******************************
+  
+  // strong
+  :host([primary].button-strong) {
+    font-weight: #{$button-md-strong-font-weight};
+  }
+  
+  ::slotted(ion-icon[slot="icon-only"]) {
+    @include padding(0);
+  }
+  
   // ******************************
   // states
   // ******************************
-
+  
   // default
-  .button-native::after {
-    content: none;
-  }
-
   .button-native::before {
     @include button-state();
-
+  
     opacity: 1;
     background: var(--med-background);
     transition:var(--med-transition);
   }
-
+  
   // disabled
-  &.button-disabled {
+  :host([primary].button-disabled) {
     cursor: default;
     pointer-events: none;
   }
-
-  &.button-disabled .button-native::after {
-    content: none;
-  }
-
-  &.button-disabled .button-native::before {
+  
+  :host([primary].button-disabled) .button-native::before {
     opacity: 1;
     background: var(--med-background-disabled);
   }
-
+  
   // activated
-  &.ion-activated {
+  :host([primary].ion-activated) {
     //color: var(--color-activated);
   }
-
-  &.button-activated .button-native::after {
-    content: none;
-  }
-
-  &.ion-activated .button-native::before {
+  
+  :host([primary].ion-activated) .button-native::before {
     //opacity: var(--background-activated-opacity);
-
+  
     background: var(--med-background-activated);
-
+  
     opacity: 1;
   }
-
+  
   // focused
-  &.ion-focused {
+  :host([primary].ion-focused) {
     //color: var(--color-focused);
   }
-
-  &.ion-focused .button-native {
+  
+  :host([primary].ion-focused) .button-native {
     //color: var(--color-focused);
-
+  
     border-width: var(--med-border-width-focused);
     border-color: var(--med-border-color-focused);
-
+  
     border-style: solid;
   }
-
-  &.ion-focused .button-native::after {
-    content: none;
-  }
-
-  &.ion-focused .button-native::before {
+  
+  :host([primary].ion-focused) .button-native::before {
     //background: var(--background-focused);
     //opacity: var(--background-focused-opacity);
-
+  
     background: var(--med-background-focused);
     transition: var(--med-transition);
-
+  
     opacity: 1;
   }
-
+  
+  :host([primary].button-solid.ion-color.ion-focused) .button-native::before {
+    background: #{current-color(contrast)};
+    opacity: .24;
+  }
+  
+  :host([primary].button-clear.ion-color.ion-focused) .button-native::before,
+  :host([primary].button-outline.ion-color.ion-focused) .button-native::before {
+    background: #{current-color(base)};
+    opacity: .12;
+  }
+  
   // hover
   @media (any-hover: hover) {
-    &:hover {
+    :host([primary]:hover) {
       //color: var(--color-hover);
     }
-
-    &:hover .button-native::after {
-      content: none;
-    }
-
-    &:hover .button-native::before {
+  
+    :host([primary]:hover) .button-native::before {
       //opacity: var(--background-hover-opacity);
-
+  
       transition: var(--med-transition);
-
+  
       opacity: 0;
     }
+  
+    :host([primary].button-solid.ion-color:hover) .button-native::before {
+      background: #{current-color(contrast)};
+      opacity: .08;
+    }
+  
+    :host([primary].button-clear.ion-color:hover) .button-native::before,
+    :host([primary].button-outline.ion-color:hover) .button-native::before {
+      background: #{current-color(base)};
+      opacity: .04;
+    }
   }
-
+  
+  // ******************************
+  // slotted
+  // ******************************
+  
+  // ion-icon
+  ::slotted(ion-icon) {
+    font-size: 1.4em;
+    pointer-events: none;
+  }
+  
+  ::slotted(ion-icon[slot="start"]) {
+    @include margin(0, .3em, 0, -.3em);
+  }
+  
+  ::slotted(ion-icon[slot="end"]) {
+    @include margin(0, -.2em, 0, .3em);
+  }
+  
+  ::slotted(ion-icon[slot="icon-only"]) {
+    font-size: 1.8em;
+  }
+  
   // ******************************
   // ripple
   // ******************************
-
+  
   ion-ripple-effect {
     color: var(--ripple-color);
   }
-}
+  
+  // ******************************
+  // ion-button em toolbar
+  // ******************************
+  
+  :host([primary].in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+    color: #{var(--ion-toolbar-color, var(--color))};
+  }
+  
+  :host([primary].button-outline.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+    border-color: #{var(--ion-toolbar-color, var(--color, var(--border-color)))};
+  }
+  
+  :host([primary].button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+    background: #{var(--ion-toolbar-color, var(--background))};
+    color: #{var(--ion-toolbar-background, var(--color))};
+  }
