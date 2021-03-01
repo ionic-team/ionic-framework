@@ -71,7 +71,7 @@ export declare interface IonVirtualScroll {
    * entire virtual scroll is reset, which is an expensive operation and
    * should be avoided if possible.
    */
-  items?: any[];
+  items?: any[] | null;
 
   /**
    * An optional function that maps each item within their height.
