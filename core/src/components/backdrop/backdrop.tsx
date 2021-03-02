@@ -67,6 +67,7 @@ export class Backdrop implements ComponentInterface {
     return (
       <Host
         tabindex="-1"
+        aria-hidden="true"
         class={{
           [mode]: true,
           'backdrop-hide': !this.visible,

@@ -45,7 +45,7 @@
         </ion-label>
       </ion-item>
       <ion-item>
-        <ion-icon name="call" slot="start"></ion-icon>
+        <ion-icon :icon="call" slot="start"></ion-icon>
         <ion-label>
           <h3>
             {{ data.heading }}
@@ -62,7 +62,7 @@
   </div>
 
   <!-- Skeleton screen -->
-  <div *ngIf="!data">
+  <div v-if="!data">
     <div class="ion-padding custom-skeleton">
       <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
       <ion-skeleton-text animated></ion-skeleton-text>
@@ -138,22 +138,44 @@
   }
 </style>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { 
+  IonAvatar,
+  IonIcon,
+  IonItem, 
+  IonLabel, 
+  IonList, 
+  IonListHeader,
+  IonSkeletonText,
+  IonThumbnail
+} from '@ionic/vue';
+import { call } from 'ionicons/icons';
+import { defineComponent, ref } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    data: any;
-
-    mounted() {
-      setTimeout(() => {
-        this.data = {
-          'heading': 'Normal text',
-          'para1': 'Lorem ipsum dolor sit amet, consectetur',
-          'para2': 'adipiscing elit.'
-        };
-      }, 5000);
-    }
+export default defineComponent({
+  components: {
+    IonAvatar,
+    IonIcon,
+    IonItem, 
+    IonLabel, 
+    IonList, 
+    IonListHeader,
+    IonSkeletonText,
+    IonThumbnail
+  },
+  setup() {
+    const data = ref();
+    
+    setTimeout(() => {
+      data.value = {
+        'heading': 'Normal text',
+        'para1': 'Lorem ipsum dolor sit amet, consectetur',
+        'para2': 'adipiscing elit.'
+      };
+    }, 5000);
+    
+    return { data }
   }
+});
 </script>
 ```

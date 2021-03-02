@@ -31,4 +31,13 @@
     overflow: hidden;
   }
 </style>
+
+<script>
+import { IonApp, IonContent, IonRippleEffect } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonApp, IonContent, IonRippleEffect }
+});
+</script>
 ```

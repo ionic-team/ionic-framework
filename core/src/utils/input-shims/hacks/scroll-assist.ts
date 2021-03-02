@@ -1,4 +1,4 @@
-import { pointerCoord } from '../../helpers';
+import { pointerCoord, raf } from '../../helpers';
 
 import { isFocused, relocateInput } from './common';
 import { getScrollData } from './scroll-data';
@@ -26,7 +26,6 @@ export const enableScrollAssist = (
     // focus this input if the pointer hasn't moved XX pixels
     // and the input doesn't already have focus
     if (!hasPointerMoved(6, coord, endCoord) && !isFocused(inputEl)) {
-      ev.preventDefault();
       ev.stopPropagation();
 
       // begin the input focus process
@@ -65,6 +64,13 @@ const jsSetFocus = async (
   relocateInput(componentEl, inputEl, true, scrollData.inputSafeY);
   inputEl.focus();
 
+  /**
+   * Relocating/Focusing input causes the
+   * click event to be cancelled, so
+   * manually fire one here.
+   */
+  raf(() => componentEl.click());
+
   /* tslint:disable-next-line */
   if (typeof window !== 'undefined') {
     let scrollContentTimeout: any;
@@ -74,6 +80,7 @@ const jsSetFocus = async (
         clearTimeout(scrollContentTimeout);
       }
 
+      window.removeEventListener('ionKeyboardDidShow', doubleKeyboardEventListener);
       window.removeEventListener('ionKeyboardDidShow', scrollContent);
 
       // scroll the input into place
@@ -87,6 +94,11 @@ const jsSetFocus = async (
 
       // ensure this is the focused input
       inputEl.focus();
+    };
+
+    const doubleKeyboardEventListener = () => {
+      window.removeEventListener('ionKeyboardDidShow', doubleKeyboardEventListener);
+      window.addEventListener('ionKeyboardDidShow', scrollContent);
     };
 
     if (contentEl) {
@@ -106,7 +118,20 @@ const jsSetFocus = async (
        */
       const totalScrollAmount = scrollEl.scrollHeight - scrollEl.clientHeight;
       if (scrollData.scrollAmount > (totalScrollAmount - scrollEl.scrollTop)) {
-        window.addEventListener('ionKeyboardDidShow', scrollContent);
+
+        /**
+         * On iOS devices, the system will show a "Passwords" bar above the keyboard
+         * after the initial keyboard is shown. This prevents the webview from resizing
+         * until the "Passwords" bar is shown, so we need to wait for that to happen first.
+         */
+        if (inputEl.type === 'password') {
+
+          // Add 50px to account for the "Passwords" bar
+          scrollData.scrollAmount += 50;
+          window.addEventListener('ionKeyboardDidShow', doubleKeyboardEventListener);
+        } else {
+          window.addEventListener('ionKeyboardDidShow', scrollContent);
+        }
 
         /**
          * This should only fire in 2 instances:

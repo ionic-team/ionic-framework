@@ -705,16 +705,16 @@ export class ItemSlidingExample {
 
       <ion-item-options side="start">
         <ion-item-option>
-          <ion-icon slot="icon-only" name="heart"></ion-icon>
+          <ion-icon slot="icon-only" :icon="heart"></ion-icon>
         </ion-item-option>
       </ion-item-options>
 
       <ion-item-options side="end">
         <ion-item-option color="danger">
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
+          <ion-icon slot="icon-only" :icon="trash"></ion-icon>
         </ion-item-option>
         <ion-item-option>
-          <ion-icon slot="icon-only" name="star"></ion-icon>
+          <ion-icon slot="icon-only" :icon="star"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
@@ -728,11 +728,11 @@ export class ItemSlidingExample {
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="start" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          <ion-icon slot="start" :ios="ellipsisHorizontal" :md="ellipsisVertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">
-          <ion-icon slot="start" name="archive"></ion-icon>
+          <ion-icon slot="start" :icon="archive"></ion-icon>
           Archive
         </ion-item-option>
       </ion-item-options>
@@ -747,11 +747,11 @@ export class ItemSlidingExample {
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          <ion-icon slot="end" :ios="ellipsisHorizontal" :md="ellipsisVertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">
-          <ion-icon slot="end" name="archive"></ion-icon>
+          <ion-icon slot="end" :icon="archive"></ion-icon>
           Archive
         </ion-item-option>
       </ion-item-options>
@@ -766,11 +766,11 @@ export class ItemSlidingExample {
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="top" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          <ion-icon slot="top" :ios="ellipsis-horizontal" :md="ellipsis-vertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">
-          <ion-icon slot="top" name="archive"></ion-icon>
+          <ion-icon slot="top" :icon="archive"></ion-icon>
           Archive
         </ion-item-option>
       </ion-item-options>
@@ -785,17 +785,60 @@ export class ItemSlidingExample {
       </ion-item>
       <ion-item-options>
         <ion-item-option color="primary">
-          <ion-icon slot="bottom" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+          <ion-icon slot="bottom" :ios="ellipsisHorizontal" :md="ellipsisVertical"></ion-icon>
           More
         </ion-item-option>
         <ion-item-option color="secondary">
-          <ion-icon slot="bottom" name="archive"></ion-icon>
+          <ion-icon slot="bottom" :icon="archive"></ion-icon>
           Archive
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
 </template>
+
+<script>
+import { 
+  IonIcon, 
+  IonItem, 
+  IonItemOption, 
+  IonItemOptions, 
+  IonItemSliding, 
+  IonLabel, 
+  IonList
+} from '@ionic/vue';
+import { 
+  archive, 
+  ellipsisHorizontal, 
+  ellipsisVertical,
+  heart, 
+  star, 
+  trash
+} from 'ionicons/icons';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { 
+    IonIcon, 
+    IonItem, 
+    IonItemOption, 
+    IonItemOptions, 
+    IonItemSliding, 
+    IonLabel, 
+    IonList
+  },
+  setup() {
+    return {
+      archive, 
+      ellipsisHorizontal, 
+      ellipsisVertical,
+      heart, 
+      star, 
+      trash
+    }
+  }
+});
+</script>
 ```
 
 

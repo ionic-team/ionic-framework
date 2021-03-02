@@ -53,4 +53,25 @@
     <ion-label>Checkbox</ion-label>
   </ion-item>
 </template>
+
+<script>
+import { 
+  IonCheckbox, 
+  IonInput, 
+  IonItem, 
+  IonLabel,
+  IonToggle
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { 
+    IonCheckbox, 
+    IonInput, 
+    IonItem, 
+    IonLabel,
+    IonToggle
+  }
+});
+</script>
 ```

@@ -22,23 +22,28 @@
       <ion-label>{{entry.val}}</ion-label>
       <ion-checkbox
         slot="end"
-        @input="entry.checked = $event.target.value"
-        :value="entry.isChecked">
+        @update:modelValue="entry.isChecked = $event"
+        :modelValue="entry.isChecked">
       </ion-checkbox>
     </ion-item>
   </ion-list>
 </template>
 
-<script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+<script>
+import { IonCheckbox, IonItem, IonLabel, IonList } from '@ionic/vue';
+import { defineComponent } from 'vue';
 
-  @Component()
-  export default class Example extends Vue {
-    form = [
+export default defineComponent({
+  components: { IonCheckbox, IonItem, IonLabel, IonList },
+  setup() {
+    const form = [
       { val: 'Pepperoni', isChecked: true },
       { val: 'Sausage', isChecked: false },
       { val: 'Mushroom', isChecked: false }
     ];
+    
+    return { form };
   }
+});
 </script>
 ```

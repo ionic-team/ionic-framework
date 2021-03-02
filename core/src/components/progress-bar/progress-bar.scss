@@ -10,7 +10,7 @@
   * @prop --progress-background: Color of the progress bar
   * @prop --buffer-background: Color of the buffer bar
   */
-  --background: #{ion-color(primary, base, 0.2)};
+  --background: #{ion-color(primary, base, 0.3)};
   --progress-background: #{ion-color(primary, base)};
   --buffer-background: var(--background);
   display: block;
@@ -27,7 +27,7 @@
 
 :host(.ion-color) {
   --progress-background: #{current-color(base)};
-  --buffer-background: #{current-color(base, 0.2)};
+  --buffer-background: #{current-color(base, 0.3)};
 }
 
 // indeterminate has no progress-buffer-bar, so it will be added to the host
@@ -39,22 +39,34 @@
 .progress-indeterminate,
 .indeterminate-bar-primary,
 .indeterminate-bar-secondary,
-.progress-buffer-bar,
-.progress-buffer-bar:before,
-.buffer-circles {
+.progress-buffer-bar {
   @include position(0, 0, 0, 0);
-
   position: absolute;
 
   width: 100%;
   height: 100%;
 }
 
+.buffer-circles-container,
+.buffer-circles {
+  @include position(0, 0, 0, 0);
+  position: absolute;
+}
+
+// Extend a bit to overflow. The size of animated distance.
+.buffer-circles {
+  /* stylelint-disable property-blacklist */
+  right: -10px;
+  left: -10px;
+  /* stylelint-enable property-blacklist */
+}
+
 // Determinate progress bar
 // --------------------------------------------------
 
 .progress,
-.progress-buffer-bar {
+.progress-buffer-bar,
+.buffer-circles-container {
   /* stylelint-disable-next-line property-blacklist */
   transform-origin: left top;
 
@@ -72,17 +84,13 @@
 }
 
 .progress-buffer-bar {
-  // It's currently here because --buffer-background has an alpha
-  // Otherwise the buffer circles would be seen through
-  background: #fff;
+  background: var(--buffer-background);
 
-  z-index: 1; // Make it behind the progress
+  z-index: 1;
+}
 
-  &:before {
-    background: var(--buffer-background);
-
-    content: "";
-  }
+.buffer-circles-container {
+  overflow: hidden;
 }
 
 // MD based animation on indeterminate type
@@ -109,7 +117,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  left:  -54.888891%;
+  left: -54.888891%;
   /* stylelint-enable property-blacklist */
 
   animation: secondary-indeterminate-translate 2s infinite linear;
@@ -136,18 +144,7 @@
 // --------------------------------------------------
 
 :host(.progress-bar-reversed) {
-  .progress,
-  .progress-buffer-bar {
-    /* stylelint-disable-next-line property-blacklist */
-    transform-origin: right top;
-  }
-
-  .buffer-circles,
-  .indeterminate-bar-primary,
-  .indeterminate-bar-secondary,
-  .progress-indeterminate {
-    animation-direction: reverse;
-  }
+  transform: scaleX(-1);
 }
 
 // Progress paused

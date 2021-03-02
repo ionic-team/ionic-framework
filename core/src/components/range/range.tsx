@@ -28,6 +28,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 })
 export class Range implements ComponentInterface {
 
+  private didLoad = false;
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
@@ -50,6 +51,7 @@ export class Range implements ComponentInterface {
   /**
    * How long, in milliseconds, to wait to trigger the
    * `ionChange` event after each change in the range value.
+   * This also impacts form bindings such as `ngModel` or `v-model`.
    */
   @Prop() debounce = 0;
 
@@ -176,20 +178,7 @@ export class Range implements ComponentInterface {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  connectedCallback() {
-    this.updateRatio();
-    this.debounceChanged();
-    this.disabledChanged();
-  }
-
-  disconnectedCallback() {
-    if (this.gesture) {
-      this.gesture.destroy();
-      this.gesture = undefined;
-    }
-  }
-
-  async componentDidLoad() {
+  private setupGesture = async () => {
     const rangeSlider = this.rangeSlider;
     if (rangeSlider) {
       this.gesture = (await import('../../utils/gesture')).createGesture({
@@ -202,6 +191,34 @@ export class Range implements ComponentInterface {
         onEnd: ev => this.onEnd(ev),
       });
       this.gesture.enable(!this.disabled);
+    }
+  }
+
+  componentDidLoad() {
+    this.setupGesture();
+    this.didLoad = true;
+  }
+
+  connectedCallback() {
+    this.updateRatio();
+    this.debounceChanged();
+    this.disabledChanged();
+
+    /**
+     * If we have not yet rendered
+     * ion-range, then rangeSlider is not defined.
+     * But if we are moving ion-range via appendChild,
+     * then rangeSlider will be defined.
+     */
+    if (this.didLoad) {
+      this.setupGesture();
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.gesture) {
+      this.gesture.destroy();
+      this.gesture = undefined;
     }
   }
 
@@ -422,14 +439,13 @@ export class Range implements ComponentInterface {
       <Host
         onFocusin={this.onFocus}
         onFocusout={this.onBlur}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,
           'range-has-pin': pin
-        }}
+        })}
       >
 
         <slot name="start"></slot>

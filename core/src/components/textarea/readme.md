@@ -251,6 +251,15 @@ export class TextareaExample {
     <ion-textarea rows="6" cols="20" placeholder="Enter any notes here..."></ion-textarea>
   </ion-item>
 </template>
+
+<script>
+import { IonItem, IonLabel, IonTextarea } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonItem, IonLabel, IonTextarea }
+});
+</script>
 ```
 
 
@@ -265,7 +274,7 @@ export class TextareaExample {
 | `clearOnEdit`    | `clear-on-edit`  | If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.                                                                                                                               | `boolean`                                                                                          | `false`        |
 | `color`          | `color`          | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                                              | `undefined`    |
 | `cols`           | `cols`           | The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.                                                                                                                                                 | `number \| undefined`                                                                              | `undefined`    |
-| `debounce`       | `debounce`       | Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.                                                                                                                                                                | `number`                                                                                           | `0`            |
+| `debounce`       | `debounce`       | Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.                                                                                                | `number`                                                                                           | `0`            |
 | `disabled`       | `disabled`       | If `true`, the user cannot interact with the textarea.                                                                                                                                                                                                                 | `boolean`                                                                                          | `false`        |
 | `enterkeyhint`   | `enterkeyhint`   | A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.                                                                                                                  | `"done" \| "enter" \| "go" \| "next" \| "previous" \| "search" \| "send" \| undefined`             | `undefined`    |
 | `inputmode`      | `inputmode`      | A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.                                                                                                       | `"decimal" \| "email" \| "none" \| "numeric" \| "search" \| "tel" \| "text" \| "url" \| undefined` | `undefined`    |
@@ -286,9 +295,9 @@ export class TextareaExample {
 
 | Event       | Description                               | Type                                     |
 | ----------- | ----------------------------------------- | ---------------------------------------- |
-| `ionBlur`   | Emitted when the input loses focus.       | `CustomEvent<void>`                      |
+| `ionBlur`   | Emitted when the input loses focus.       | `CustomEvent<FocusEvent>`                |
 | `ionChange` | Emitted when the input value has changed. | `CustomEvent<TextareaChangeEventDetail>` |
-| `ionFocus`  | Emitted when the input has focus.         | `CustomEvent<void>`                      |
+| `ionFocus`  | Emitted when the input has focus.         | `CustomEvent<FocusEvent>`                |
 | `ionInput`  | Emitted when a keyboard input occurred.   | `CustomEvent<KeyboardEvent>`             |
 
 
@@ -306,8 +315,8 @@ Type: `Promise<HTMLTextAreaElement>`
 
 ### `setFocus() => Promise<void>`
 
-Sets focus on the specified `ion-textarea`. Use this method instead of the global
-`input.focus()`.
+Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global
+`textarea.focus()`.
 
 #### Returns
 

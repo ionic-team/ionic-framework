@@ -80,7 +80,7 @@ Type: `Promise<boolean>`
 
 
 
-### `insertPages(insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
+### `insertPages(insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
 
 Inserts an array of components into the navigation stack at the specified index.
 The last component in the array will become instantiated as a view, and animate
@@ -145,7 +145,7 @@ Type: `Promise<boolean>`
 
 
 
-### `setPages(views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
+### `setPages(views: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>`
 
 Set the views of the current navigation stack and navigate to the last view.
 By default animations are disabled, but they can be enabled by passing options

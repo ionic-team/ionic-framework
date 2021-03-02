@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Navigation Guards</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+  <style>
+    .toolbar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      width: 200px;
+      background: white;
+      box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+  <script src="../../../../../scripts/testing/scripts.js"></script>
+  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <script>
+
+    class HomePage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Home Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-list>
+            <ion-button id="router-push">router.push</ion-button><br>
+            <ion-router-link href="/child/1">
+              <ion-button id="router-link">ion-router-link</ion-button><br>
+            </ion-router-link>
+            <ion-button href="/child/1" id="href">href</ion-button>
+          </ion-list>
+        </ion-content>`;
+
+        const childButton = this.querySelector('#router-push');
+        childButton.addEventListener('click', () => {
+          const r = document.querySelector('ion-router');
+          r.push('/child/1');
+        });
+      }
+    }
+
+    class ChildPage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons>
+              <ion-back-button default-href="/test"></ion-back-button>
+            </ion-buttons>
+            <ion-title>Child Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+        </ion-content>`;
+      }
+    }
+
+    class TestPage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons>
+              <ion-back-button></ion-back-button>
+            </ion-buttons>
+            <ion-title>Test Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+        </ion-content>`;
+      }
+    }
+
+    customElements.define('home-page', HomePage);
+    customElements.define('child-page', ChildPage);
+    customElements.define('test-page', TestPage);
+
+  </script>
+</head>
+
+<body>
+
+  <div class="toolbar">
+    <ion-radio-group id="beforeEnter" value="allow">
+      <ion-list-header>
+        <ion-label>
+          beforeEnter Behavior
+        </ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Allow Navigation</ion-label>
+        <ion-radio value="allow"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Block Navigation</ion-label>
+        <ion-radio value="block"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Redirect</ion-label>
+        <ion-radio value="redirect"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+
+    <br><br>
+
+    <ion-radio-group id="beforeLeave" value="allow">
+      <ion-list-header>
+        <ion-label>
+          beforeLeave Behavior
+        </ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Allow Navigation</ion-label>
+        <ion-radio value="allow"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Block Navigation</ion-label>
+        <ion-radio value="block"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Redirect</ion-label>
+        <ion-radio value="redirect"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </div>
+
+  <ion-app>
+
+    <ion-router>
+      <ion-route-redirect from="/" to="/home"></ion-route-redirect>
+      <ion-route url="/home" component="home-page"></ion-route>
+      <ion-route url="/test" component="test-page"></ion-route>
+      <ion-route url="/child/:id" component="child-page"></ion-route>
+    </ion-router>
+
+    <ion-nav></ion-nav>
+
+    <script>
+      const beforeEnterGroup = document.querySelector('ion-radio-group#beforeEnter');
+      const beforeLeaveGroup = document.querySelector('ion-radio-group#beforeLeave');
+      beforeEnterGroup.addEventListener('ionChange', (ev) => {
+        switch (ev.detail.value) {
+          case "redirect":
+            page.beforeEnter = redirect;
+            break;
+          case "block":
+            page.beforeEnter = block;
+            break;
+          default:
+            page.beforeEnter = allow;
+            break;
+        }
+      });
+
+      beforeLeaveGroup.addEventListener('ionChange', (ev) => {
+        switch (ev.detail.value) {
+          case "redirect":
+          page.beforeLeave = redirect;
+          break;
+          case "block":
+          page.beforeLeave = block;
+          break;
+          default:
+          page.beforeLeave = allow;
+          break;
+        }
+      });
+
+      const redirect = (to = '/test') => { return { redirect: to }};
+      const block = () => false;
+      const allow = () => true;
+
+      const page = document.querySelector('ion-route[component="child-page"]');
+      page.beforeEnter = allow;
+      page.beforeLeave = allow;
+    </script>
+  </ion-app>
+</body>
+</html>

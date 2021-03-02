@@ -16,6 +16,8 @@ import { createColorClasses } from '../../utils/theme';
   scoped: true
 })
 export class Label implements ComponentInterface {
+  private inRange = false;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -31,6 +33,12 @@ export class Label implements ComponentInterface {
   @Prop() position?: 'fixed' | 'stacked' | 'floating';
 
   /**
+   * Emitted when the color changes.
+   * @internal
+   */
+  @Event() ionColor!: EventEmitter<StyleEventDetail>;
+
+  /**
    * Emitted when the styles change.
    * @internal
    */
@@ -39,8 +47,10 @@ export class Label implements ComponentInterface {
   @State() noAnimate = false;
 
   componentWillLoad() {
+    this.inRange = !!this.el.closest('ion-range');
     this.noAnimate = (this.position === 'floating');
     this.emitStyle();
+    this.emitColor();
   }
 
   componentDidLoad() {
@@ -51,17 +61,37 @@ export class Label implements ComponentInterface {
     }
   }
 
+  @Watch('color')
+  colorChanged() {
+    this.emitColor();
+  }
+
   @Watch('position')
   positionChanged() {
     this.emitStyle();
   }
 
-  private emitStyle() {
-    const position = this.position;
-    this.ionStyle.emit({
-      'label': true,
-      [`label-${position}`]: position !== undefined
+  private emitColor() {
+    const { color } = this;
+
+    this.ionColor.emit({
+      'item-label-color': color !== undefined,
+      [`ion-color-${color}`]: color !== undefined
     });
+  }
+
+  private emitStyle() {
+    const { inRange, position } = this;
+
+    // If the label is inside of a range we don't want
+    // to override the classes added by the label that
+    // is a direct child of the item
+    if (!inRange) {
+      this.ionStyle.emit({
+        'label': true,
+        [`label-${position}`]: position !== undefined
+      });
+    }
   }
 
   render() {
@@ -69,12 +99,11 @@ export class Label implements ComponentInterface {
     const mode = getIonMode(this);
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           [`label-${position}`]: position !== undefined,
           [`label-no-animate`]: (this.noAnimate)
-        }}
+        })}
       >
       </Host>
     );

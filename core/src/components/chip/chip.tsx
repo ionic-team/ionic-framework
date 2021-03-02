@@ -28,17 +28,23 @@ export class Chip implements ComponentInterface {
    */
   @Prop() outline = false;
 
+  /**
+   * If `true`, the user cannot interact with the chip.
+   */
+  @Prop() disabled = false;
+
   render() {
     const mode = getIonMode(this);
 
     return (
       <Host
-        class={{
-          ...createColorClasses(this.color),
+        aria-disabled={this.disabled ? 'true' : null}
+        class={createColorClasses(this.color, {
           [mode]: true,
           'chip-outline': this.outline,
+          'chip-disabled': this.disabled,
           'ion-activatable': true,
-        }}
+        })}
       >
         <slot></slot>
         {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

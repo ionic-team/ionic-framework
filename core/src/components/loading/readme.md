@@ -71,7 +71,6 @@ export class LoadingExample {
 
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
       spinner: null,
       duration: 5000,
       message: 'Click the backdrop to dismiss early...',
@@ -113,7 +112,6 @@ async function presentLoading() {
 async function presentLoadingWithOptions() {
   const loading = document.createElement('ion-loading');
 
-  loading.cssClass = 'my-custom-class';
   loading.spinner = null;
   loading.duration = 5000;
   loading.message = 'Click the backdrop to dismiss early...';
@@ -133,6 +131,43 @@ async function presentLoadingWithOptions() {
 ### React
 
 ```tsx
+/* Using with useIonLoading Hook */
+
+import React from 'react';
+import { IonButton, IonContent, IonPage, useIonLoading } from '@ionic/react';
+
+interface LoadingProps {}
+
+const LoadingExample: React.FC<LoadingProps> = () => {
+  const [present] = useIonLoading();
+  return (
+    <IonPage>
+      <IonContent>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present({
+              duration: 3000,
+            })
+          }
+        >
+          Show Loading
+        </IonButton>
+        <IonButton
+          expand="block"
+          onClick={() => present('Loading', 2000, 'dots')}
+        >
+          Show Loading using params
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+```tsx
+/* Using with IonLoading Component */
+
 import React, { useState } from 'react';
 import { IonLoading, IonButton, IonContent } from '@ionic/react';
 
@@ -185,7 +220,6 @@ export class LoadingExample {
 
   async presentLoadingWithOptions() {
     const loading = await loadingController.create({
-      cssClass: 'my-custom-class',
       spinner: null,
       duration: 5000,
       message: 'Click the backdrop to dismiss early...',
@@ -215,53 +249,90 @@ export class LoadingExample {
 
 ```html
 <template>
-  <IonVuePage :title="'Loading'">
-    <ion-button @click="presentLoading">Show Loading</ion-button>
-    <br />
-    <ion-button @click="presentLoadingWithOptions">Show Loading</ion-button>
-  </IonVuePage>
+  <ion-button @click="presentLoading">Show Loading</ion-button>
+  <br />
+  <ion-button @click="presentLoadingWithOptions">Show Loading</ion-button>
 </template>
 
 <script>
-export default {
+
+<script>
+import { IonButton, loadingController } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   props: {
     timeout: { type: Number, default: 1000 },
   },
   methods: {
-    presentLoading() {
-      return this.$ionic.loadingController
+    async presentLoading() {
+      const loading = await loadingController
         .create({
           cssClass: 'my-custom-class',
           message: 'Please wait...',
           duration: this.timeout,
-        })
-        .then(loading => {
-          setTimeout(function() {
-            loading.dismiss()
-          }, this.timeout)
-          return loading.present()
-        })
+        });
+        
+      await loading.present();
+      
+      setTimeout(function() {
+        loading.dismiss()
+      }, this.timeout);
     },
-    presentLoadingWithOptions() {
-      return this.$ionic.loadingController
+    async presentLoadingWithOptions() {
+      const loading = await loadingController
         .create({
-          cssClass: 'my-custom-class',
           spinner: null,
           duration: this.timeout,
           message: 'Click the backdrop to dismiss early...',
           translucent: true,
           cssClass: 'custom-class custom-loading',
           backdropDismiss: true
-        })
-        .then(loading=> {
-          setTimeout(function() {
-            loading.dismiss()
-          }, this.timeout)
-          return loading.present()
-        })
+        });
+        
+      await loading.present();
+        
+      setTimeout(function() {
+        loading.dismiss()
+      }, this.timeout);
     },
   },
-}
+  components: { IonButton }
+});
+</script>
+```
+
+Developers can also use this component directly in their template:
+
+```html
+<template>
+  <ion-button @click="setOpen(true)">Show Loading</ion-button>
+  <ion-loading
+    :is-open="isOpenRef"
+    cssClass="my-custom-class"
+    message="Please wait..."
+    :duration="timeout"
+    @onDidDismiss="setOpen(false)"
+  >
+  </ion-loading>
+</template>
+
+<script>
+import { IonLoading, IonButton } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  props: {
+    timeout: { type: Number, default: 1000 },
+  },
+  components: { IonLoading, IonButton },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    
+    return { isOpenRef, setOpen }
+  }
+});
 </script>
 ```
 

@@ -14,7 +14,7 @@ test('select: basic', async () => {
 
   let alert = await page.find('ion-alert');
   await alert.waitForVisible();
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   compares.push(await page.compareScreenshot('should open gender single select'));
 
@@ -26,7 +26,7 @@ test('select: basic', async () => {
 
   let actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   compares.push(await page.compareScreenshot('should open skittles action sheet select'));
 
@@ -38,7 +38,7 @@ test('select: basic', async () => {
 
   alert = await page.find('ion-alert');
   await alert.waitForVisible();
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   compares.push(await page.compareScreenshot('should open custom alert select'));
 
@@ -50,7 +50,7 @@ test('select: basic', async () => {
 
   const popover = await page.find('ion-popover');
   await popover.waitForVisible();
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   compares.push(await page.compareScreenshot('should open custom popover select'));
 
@@ -62,7 +62,7 @@ test('select: basic', async () => {
 
   actionSheet = await page.find('ion-action-sheet');
   await actionSheet.waitForVisible();
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   compares.push(await page.compareScreenshot('should open custom action sheet select'));
 

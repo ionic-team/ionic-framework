@@ -1,8 +1,41 @@
-
 import { defineCustomElements } from '@ionic/core/loader';
 import { addIcons } from 'ionicons';
-import { arrowBackSharp, caretBackSharp, chevronBack, chevronForward, close, closeCircle, closeSharp, menuOutline, menuSharp, reorderThreeOutline, reorderTwoSharp, searchOutline, searchSharp } from 'ionicons/icons';
-export { createAnimation, createGesture, AlertButton, AlertInput, Gesture, GestureConfig, GestureDetail, iosTransitionAnimation, IonicSafeString, mdTransitionAnimation, setupConfig } from '@ionic/core';
+import {
+  arrowBackSharp,
+  caretBackSharp,
+  chevronBack,
+  chevronForward,
+  close,
+  closeCircle,
+  closeSharp,
+  menuOutline,
+  menuSharp,
+  reorderThreeOutline,
+  reorderTwoSharp,
+  searchOutline,
+  searchSharp,
+} from 'ionicons/icons';
+export {
+  Animation,
+  AnimationBuilder,
+  AnimationCallbackOptions,
+  AnimationDirection,
+  AnimationFill,
+  AnimationKeyFrames,
+  AnimationLifecycle,
+  createAnimation,
+  createGesture,
+  AlertButton,
+  AlertInput,
+  Gesture,
+  GestureConfig,
+  GestureDetail,
+  iosTransitionAnimation,
+  IonicSafeString,
+  mdTransitionAnimation,
+  NavComponentWithProps,
+  setupConfig,
+} from '@ionic/core';
 export * from './proxies';
 
 // createControllerComponent
@@ -21,16 +54,29 @@ export { IonPage } from './IonPage';
 export { IonTabsContext, IonTabsContextState } from './navigation/IonTabsContext';
 export { IonTabs } from './navigation/IonTabs';
 export { IonTabBar } from './navigation/IonTabBar';
+export { IonTabButton } from './navigation/IonTabButton';
 export { IonBackButton } from './navigation/IonBackButton';
 export { IonRouterOutlet } from './IonRouterOutlet';
 export { IonIcon } from './IonIcon';
+export * from './IonRoute';
+export * from './IonRedirect';
+export * from './IonRouterContext';
 
 // Utils
 export { isPlatform, getPlatforms, getConfig } from './utils';
-export { RouterDirection } from './hrefprops';
+export * from './hrefprops';
 
 // Ionic Animations
 export { CreateAnimation } from './CreateAnimation';
+
+// Hooks
+export { useIonActionSheet, UseIonActionSheetResult } from '../hooks/useIonActionSheet';
+export { useIonAlert, UseIonAlertResult } from '../hooks/useIonAlert';
+export { useIonToast, UseIonToastResult } from '../hooks/useIonToast';
+export { useIonModal, UseIonModalResult } from '../hooks/useIonModal';
+export { useIonPopover, UseIonPopoverResult } from '../hooks/useIonPopover';
+export { useIonPicker, UseIonPickerResult } from '../hooks/useIonPicker';
+export { useIonLoading, UseIonLoadingResult } from '../hooks/useIonLoading';
 
 // Icons that are used by internal components
 addIcons({
@@ -38,7 +84,7 @@ addIcons({
   'caret-back-sharp': caretBackSharp,
   'chevron-back': chevronBack,
   'chevron-forward': chevronForward,
-  'close': close,
+  close,
   'close-circle': closeCircle,
   'close-sharp': closeSharp,
   'menu-outline': menuOutline,
@@ -51,4 +97,6 @@ addIcons({
 
 // TODO: defineCustomElements() is asyncronous
 // We need to use the promise
-defineCustomElements(window);
+if (typeof window !== 'undefined') {
+  defineCustomElements(window);
+}

@@ -212,13 +212,21 @@
 }
 
 
-
 // Material Design Floating/Stacked Label
 // --------------------------------------------------
 
 :host(.item-label-stacked) ::slotted([slot="end"]),
 :host(.item-label-floating) ::slotted([slot="end"]) {
   @include margin($item-md-label-slot-end-margin-top, $item-md-label-slot-end-margin-end, $item-md-label-slot-end-margin-bottom, $item-md-label-slot-end-margin-start);
+}
+
+
+// Material Design Fixed Labels
+// --------------------------------------------------
+
+:host(.item-label-fixed) ::slotted(ion-select),
+:host(.item-label-fixed) ::slotted(ion-datetime) {
+  --padding-start: 8px;
 }
 
 
@@ -273,4 +281,15 @@
 :host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
 :host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
   color: $label-md-text-color-focused;
+}
+
+// Material Design Inputs: Highlight Color
+// --------------------------------------------------
+
+:host(.ion-color) {
+  --highlight-color-focused: #{current-color(contrast)};
+}
+
+:host(.item-label-color) {
+  --highlight-color-focused: #{current-color(base)};
 }

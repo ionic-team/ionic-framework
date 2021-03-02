@@ -1,4 +1,4 @@
-import { copyLayoutViewport, copyVisualViewport, setKeyboardClose, setKeyboardOpen, keyboardDidClose, keyboardDidOpen, keyboardDidResize, resetKeyboardAssist, startKeyboardAssist, trackViewportChanges, KEYBOARD_DID_OPEN, KEYBOARD_DID_CLOSE } from '../keyboard';
+import { copyVisualViewport, setKeyboardClose, setKeyboardOpen, keyboardDidClose, keyboardDidOpen, keyboardDidResize, resetKeyboardAssist, startKeyboardAssist, trackViewportChanges, KEYBOARD_DID_OPEN, KEYBOARD_DID_CLOSE } from '../keyboard';
 
 const mockVisualViewport = (win: Window, visualViewport: any = { width: 320, height: 568 }, layoutViewport = { innerWidth: 320, innerHeight: 568 }): any => {
   win.visualViewport = {
@@ -32,23 +32,11 @@ const resizeVisualViewport = (win: Window, visualViewport: any = {}) => {
   }
 }
 
+const resizeLayoutViewport = (win: Window, layoutViewport: any = {}) => {
+  win = Object.assign(win, { innerWidth: layoutViewport.width, innerHeight: layoutViewport.height });
+}
+
 describe('Keyboard Assist Tests', () => {
-  describe('copyLayoutViewport()', () => {
-    it('should properly copy the layout viewport', () => {
-      const win = {
-        innerWidth: 100,
-        innerHeight: 200
-      };
-
-      const copiedViewport = copyLayoutViewport(win);
-
-      win.innerWidth = 400;
-      win.innerHeight = 800;
-
-      expect(copiedViewport.width).toEqual(100);
-      expect(copiedViewport.height).toEqual(200);
-    });
-  });
 
   describe('copyVisualViewport()', () => {
     it('should properly copy the visual viewport', () => {
@@ -106,6 +94,13 @@ describe('Keyboard Assist Tests', () => {
 
     it('should return true when visual viewport height < layout viewport height and meets or exceeds the keyboard threshold', () => {
       resizeVisualViewport(window, { height: 200 });
+
+      expect(keyboardDidOpen(window)).toEqual(true);
+    });
+
+    it('should return true if the layout and visual viewports resize', () => {
+      resizeLayoutViewport(window, { width: 320, height: 300 });
+      resizeVisualViewport(window, { width: 320, height: 300 });
 
       expect(keyboardDidOpen(window)).toEqual(true);
     });

@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { getIonMode } from '../../global/ionic-global';
 import { AutocompleteTypes, Color, InputChangeEventDetail, StyleEventDetail, TextFieldTypes } from '../../interface';
-import { debounceEvent, findItemLabel } from '../../utils/helpers';
+import { debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -21,7 +21,17 @@ export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
   private didBlurAfterEdit = false;
-  private tabindex?: string | number;
+  private inheritedAttributes: { [k: string]: any } = {};
+
+  /**
+   * This is required for a WebKit bug which requires us to
+   * blur and focus an input to properly focus the input in
+   * an item with delegatesFocus. It will no longer be needed
+   * with iOS 14.
+   *
+   * @internal
+   */
+  @Prop() fireFocusEvents = true;
 
   @State() hasFocus = false;
 
@@ -41,6 +51,7 @@ export class Input implements ComponentInterface {
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user.
+   * Available options: `"off"`, `"none"`, `"on"`, `"sentences"`, `"words"`, `"characters"`.
    */
   @Prop() autocapitalize = 'off';
 
@@ -70,7 +81,7 @@ export class Input implements ComponentInterface {
   @Prop() clearOnEdit?: boolean;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
    */
   @Prop() debounce = 0;
 
@@ -180,15 +191,6 @@ export class Input implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
-   * Update the native input element when the value changes
-   */
-  @Watch('value')
-  protected valueChanged() {
-    this.emitStyle();
-    this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
-  }
-
-  /**
    * Emitted when a keyboard input occurred.
    */
   @Event() ionInput!: EventEmitter<KeyboardEvent>;
@@ -201,12 +203,12 @@ export class Input implements ComponentInterface {
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur!: EventEmitter<void>;
+  @Event() ionBlur!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the styles change.
@@ -214,15 +216,25 @@ export class Input implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
+  /**
+   * Update the item classes when the placeholder changes
+   */
+  @Watch('placeholder')
+  protected placeholderChanged() {
+    this.emitStyle();
+  }
+
+  /**
+   * Update the native input element when the value changes
+   */
+  @Watch('value')
+  protected valueChanged() {
+    this.emitStyle();
+    this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
+  }
+
   componentWillLoad() {
-    // If the ion-input has a tabindex attribute we get the value
-    // and pass it down to the native input, then remove it from the
-    // ion-input to avoid causing tabbing twice on the same element
-    if (this.el.hasAttribute('tabindex')) {
-      const tabindex = this.el.getAttribute('tabindex');
-      this.tabindex = tabindex !== null ? tabindex : undefined;
-      this.el.removeAttribute('tabindex');
-    }
+    this.inheritedAttributes = inheritAttributes(this.el, ['tabindex', 'title']);
   }
 
   connectedCallback() {
@@ -244,13 +256,25 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * Sets focus on the specified `ion-input`. Use this method instead of the global
+   * Sets focus on the native `input` in `ion-input`. Use this method instead of the global
    * `input.focus()`.
    */
   @Method()
   async setFocus() {
     if (this.nativeInput) {
       this.nativeInput.focus();
+    }
+  }
+
+  /**
+   * Sets blur on the native `input` in `ion-input`. Use this method instead of the global
+   * `input.blur()`.
+   * @internal
+   */
+  @Method()
+  async setBlur() {
+    if (this.nativeInput) {
+      this.nativeInput.blur();
     }
   }
 
@@ -293,20 +317,24 @@ export class Input implements ComponentInterface {
     this.ionInput.emit(ev as KeyboardEvent);
   }
 
-  private onBlur = () => {
+  private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChanged();
     this.emitStyle();
 
-    this.ionBlur.emit();
+    if (this.fireFocusEvents) {
+      this.ionBlur.emit(ev);
+    }
   }
 
-  private onFocus = () => {
+  private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
     this.focusChanged();
     this.emitStyle();
 
-    this.ionFocus.emit();
+    if (this.fireFocusEvents) {
+      this.ionFocus.emit(ev);
+    }
   }
 
   private onKeydown = (ev: KeyboardEvent) => {
@@ -331,6 +359,9 @@ export class Input implements ComponentInterface {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
       ev.stopPropagation();
+
+      // Attempt to focus input again after pressing clear button
+      this.setFocus();
     }
 
     this.value = '';
@@ -368,12 +399,11 @@ export class Input implements ComponentInterface {
     return (
       <Host
         aria-disabled={this.disabled ? 'true' : null}
-        class={{
-          ...createColorClasses(this.color),
+        class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus
-        }}
+        })}
       >
         <input
           class="native-input"
@@ -400,13 +430,13 @@ export class Input implements ComponentInterface {
           spellcheck={this.spellcheck}
           step={this.step}
           size={this.size}
-          tabindex={this.tabindex}
           type={this.type}
           value={value}
           onInput={this.onInput}
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onKeyDown={this.onKeydown}
+          {...this.inheritedAttributes}
         />
         {(this.clearInput && !this.readonly && !this.disabled) && <button
           aria-label="reset"

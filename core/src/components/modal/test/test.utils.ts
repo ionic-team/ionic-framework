@@ -28,7 +28,7 @@ export const testModal = async (
 
   let modal = await page.find('ion-modal');
   await modal.waitForVisible();
-  await page.waitFor(100);
+  await page.waitForTimeout(100);
 
   screenshotCompares.push(await page.compareScreenshot());
 

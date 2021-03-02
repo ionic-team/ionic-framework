@@ -31,3 +31,8 @@ $toolbar-md-color:                          var(--ion-toolbar-color, var(--ion-t
 $item-md-background:                        var(--ion-item-background, $background-color) !default;
 $item-md-border-color:                      var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, .13)))) !default;
 $item-md-color:                             var(--ion-item-color, $text-color) !default;
+
+// Material Design Card
+// --------------------------------------------------
+$card-md-background:                        var(--ion-card-background, $item-md-background) !default;
+$card-md-color:                             var(--ion-card-color, var(--ion-item-color, $text-color-step-450)) !default;

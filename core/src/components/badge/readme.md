@@ -130,6 +130,15 @@ export class BadgeExample {
     <ion-badge slot="end">22</ion-badge>
   </ion-item>
 </template>
+
+<script>
+import { IonBadge, IonItem, IonLabel } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonBadge, IonItem, IonLabel }
+});
+</script>
 ```
 
 

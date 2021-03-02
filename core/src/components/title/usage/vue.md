@@ -18,6 +18,15 @@
     <ion-title size="large">Large Title</ion-title>
   </ion-toolbar>
 </template>
+
+<script>
+import { IonTitle, IonToolbar } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: { IonTitle, IonToolbar }
+});
+</script>
 ```
 
 ### Collapsible Large Titles
@@ -26,13 +35,13 @@ Ionic provides a way to create the collapsible titles that exist on stock iOS ap
 
 ```html
 <template>
-  <ion-header translucent="true">
+  <ion-header :translucent="true">
     <ion-toolbar>
       <ion-title>Settings</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content fullscreen="true">
+  <ion-content :fullscreen="true">
     <ion-header collapse="condense">
       <ion-toolbar>
         <ion-title size="large">Settings</ion-title>
@@ -46,25 +55,46 @@ Ionic provides a way to create the collapsible titles that exist on stock iOS ap
 
   </ion-content>
 </template>
+
+<script>
+import { 
+  IonContent, 
+  IonHeader, 
+  IonSearchbar, 
+  IonTitle, 
+  IonToolbar
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonContent, 
+    IonHeader, 
+    IonSearchbar, 
+    IonTitle, 
+    IonToolbar
+  }
+});
+</script>
 ```
 
 In the example above, notice there are two `ion-header` elements. The first `ion-header` represents the "collapsed" state of your collapsible header, and the second `ion-header` represents the "expanded" state of your collapsible header. Notice that the second `ion-header` must have `collapse="condense"` and must exist within `ion-content`. Additionally, in order to get the large title styling, `ion-title` must have `size="large"`.
 
 ```html
 <template>
-  <ion-header translucent="true">
+  <ion-header :translucent="true">
     <ion-toolbar>
-      <ion-buttons collapse="true" slot="end">
+      <ion-buttons :collapse="true" slot="end">
         <ion-button>Click Me</ion-button>
       </ion-buttons>
       <ion-title>Settings</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content fullscreen="true">
+  <ion-content :fullscreen="true">
     <ion-header collapse="condense">
       <ion-toolbar>
-        <ion-buttons collapse="true" slot="end">
+        <ion-buttons :collapse="true" slot="end">
           <ion-button>Click Me</ion-button>
         </ion-buttons>
         <ion-title size="large">Settings</ion-title>
@@ -78,6 +108,31 @@ In the example above, notice there are two `ion-header` elements. The first `ion
 
   </ion-content>
 </template>
+
+<script>
+import { 
+  IonButton,
+  IonButtons,
+  IonContent, 
+  IonHeader, 
+  IonSearchbar, 
+  IonTitle, 
+  IonToolbar
+} from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    IonButton,
+    IonButtons,
+    IonContent, 
+    IonHeader, 
+    IonSearchbar, 
+    IonTitle, 
+    IonToolbar
+  }
+});
+</script>
 ```
 
 In this example, notice that we have added two sets of `ion-buttons` both with `collapse` set to `true`. When the secondary header collapses, the buttons in the secondary header will hide, and the buttons in the primary header will show. This is useful for ensuring that your header buttons always appear next to an `ion-title` element.

@@ -42,7 +42,7 @@ export const openItemSliding = async (id: string, page: any, rtl = false) => {
     await page.mouse.up();
 
     // Add a timeout to make sure the item is open
-    await page.waitFor(2000);
+    await page.waitForTimeout(2000);
   } catch (err) {
     throw err;
   }
@@ -54,5 +54,5 @@ export const closeItemSliding = async (page: any) => {
   await page.mouse.move(0, 0);
   await page.mouse.down();
   await page.mouse.up();
-  await page.waitFor(1000);
+  await page.waitForTimeout(1000);
 };

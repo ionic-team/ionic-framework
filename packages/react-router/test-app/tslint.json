@@ -1,0 +1,37 @@
+{
+  "extends": ["tslint-react"],
+  "linterOptions": {
+    "exclude": ["**/*.ts", "**/*.tsx", "**/*.spec.ts", "**/*.spec.tsx"]
+  },
+  "rules": {
+    "no-conditional-assignment": false,
+    "no-non-null-assertion": false,
+    "no-unnecessary-type-assertion": false,
+    "no-import-side-effect": false,
+    "trailing-comma": false,
+    "no-null-keyword": false,
+    "no-console": false,
+    "no-unbound-method": false,
+    "no-floating-promises": false,
+    "no-invalid-template-strings": true,
+    "ban-export-const-enum": true,
+    "only-arrow-functions": false,
+    "strict-boolean-conditions": [false],
+    "jsx-alignment": false,
+    "jsx-key": false,
+    "jsx-self-close": false,
+    "jsx-curly-spacing": [true, "never"],
+    "jsx-boolean-value": [true, "never"],
+    "jsx-no-bind": false,
+    "jsx-no-lambda": false,
+    "jsx-no-multiline-js": false,
+    "jsx-wrap-multiline": false,
+    "forin": false,
+    "strict-type-predicates": false,
+    "no-unused-expression": false,
+    "no-constant-condition": false,
+    "no-empty-interface": false,
+    "prefer-conditional-expression": false,
+    "no-unused-variable": false
+  }
+}
