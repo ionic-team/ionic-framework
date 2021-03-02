@@ -76,7 +76,9 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     };
   }
 
-  handleChangeTab(tab: string, path: string, routeOptions?: any) {
+  handleChangeTab(tab: string, path?: string, routeOptions?: any) {
+    if (!path) { return; }
+
     const routeInfo = this.locationHistory.getCurrentRouteInfoForTab(tab);
     const [pathname, search] = path.split('?');
     if (routeInfo) {
