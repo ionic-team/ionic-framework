@@ -1358,3 +1358,5 @@ ion-virtual-scroll,prop,renderItem,((item: any, index: number) => any) | undefin
 ion-virtual-scroll,method,checkEnd,checkEnd() => Promise<void>
 ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => Promise<void>
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
+
+med-button,shadow

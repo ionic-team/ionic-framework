@@ -24,7 +24,7 @@
   "collection": "dist/collection/collection-manifest.json",
   "types": "dist/types/interface.d.ts",
   "files": [
-    "components/",
+    "med-components/",
     "css/",
     "dist/",
     "hydrate/",

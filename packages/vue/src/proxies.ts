@@ -797,3 +797,6 @@ export const IonVirtualScroll = /*@__PURE__*/ defineContainer<JSX.IonVirtualScro
   'domRender'
 ]);
 
+
+export const MedButton = /*@__PURE__*/ defineContainer<JSX.MedButton>('med-button');
+

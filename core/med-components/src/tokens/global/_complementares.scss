@@ -1,0 +1,113 @@
+// border radius
+$med-border-radius-none: 0 !default;
+$med-border-radius-quark: 2px !default;
+$med-border-radius-nano: 4px !default;
+
+$med-border-radius-sm: 8px !default;
+$med-border-radius-md: 16px !default;
+$med-border-radius-lg: 24px !default;
+
+$med-border-radius-pill: 31.25em !default;
+$med-border-radius-full: 50% !default;
+
+// speech bubble
+$med-border-radius-speech-left-down: 8px 8px 8px 0 !default;
+$med-border-radius-speech-right-down: 8px 8px 0 8px !default;
+$med-border-radius-speech-right-up: 8px 0 8px 0px !default;
+$med-border-radius-speech-left-up: 0 8px 8px 0px !default;
+
+// table
+$med-border-radius-table-down-sm: 0 0 8px 8px !default;
+$med-border-radius-table-up-sm: 8px 8px 0 0 !default;
+
+$med-border-radius-table-down-md: 16px 16px 0 0 !default;
+$med-border-radius-table-up-md: 0 0 16px 16px !default;
+
+// border widths
+$med-border-width-none: 0 !default;
+$med-border-width-quark: 0.25px !default;
+$med-border-width-nano: 0.5px !default;
+$med-border-width-hairline: 1px !default;
+$med-border-width-thin: 2px !default;
+$med-border-width-thick: 4px !default;
+$med-border-width-bold: 8px !default;
+$med-border-width-heavy: 16px !default;
+
+// opacity levels
+$med-opacity-level-semiopaque: 0.8 !default;
+$med-opacity-level-intense: 0.64 !default;
+$med-opacity-level-half: 0.5 !default;
+$med-opacity-level-medium: 0.32 !default;
+$med-opacity-level-light: 0.16 !default;
+$med-opacity-level-semitransparent: 0.08 !default;
+
+// shadow levels
+$med-shadow-level-0: none !default;
+$med-shadow-level-1: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.14), 0 1px 3px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-2: 0 2px 4px rgba(0, 0, 0, 0.14), 0 3px 4px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-3: 0 3px 3px rgba(0, 0, 0, 0.14), 0 3px 4px rgba(0, 0, 0, 0.12), 0 1px 8px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-4: 0 0 2px rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.12), 0 1px 10px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-5: 0 6px 10px rgba(0, 0, 0, 0.14), 0 1px 18px rgba(0, 0, 0, 0.12), 0 3px 5px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-6: 0 8px 10px rgba(0, 0, 0, 0.14), 0 3px 14px rgba(0, 0, 0, 0.12), 0 4px 5px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-7: 0 9px 12px rgba(0, 0, 0, 0.14), 0 3px 16px rgba(0, 0, 0, 0.12), 0 5px 6px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-8: 0 12px 17px rgba(0, 0, 0, 0.14), 0 5px 22px rgba(0, 0, 0, 0.12), 0 7px 8px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-9: 0 16px 24px rgba(0, 0, 0, 0.14), 0 6px 30px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-10: 0 24px 38px rgba(0, 0, 0, 0.14), 0 9px 46px rgba(0, 0, 0, 0.12), 0 11px 15px rgba(0, 0, 0, 0.2) !default;
+
+:root {
+  // border radius
+  --med-border-radius-none: #{$med-border-radius-none};
+  --med-border-radius-quark: #{$med-border-radius-quark};
+  --med-border-radius-nano: #{$med-border-radius-nano};
+
+  --med-border-radius-sm: #{$med-border-radius-sm};
+  --med-border-radius-md: #{$med-border-radius-md};
+  --med-border-radius-lg: #{$med-border-radius-lg};
+
+  --med-border-radius-pill: #{$med-border-radius-pill};
+  --med-border-radius-full: #{$med-border-radius-full};
+
+  // speech bubble
+  --med-border-radius-speech-left-down: #{$med-border-radius-speech-left-down};
+  --med-border-radius-speech-right-down: #{$med-border-radius-speech-right-down};
+  --med-border-radius-speech-right-up: #{$med-border-radius-speech-right-up};
+  --med-border-radius-speech-left-up: #{$med-border-radius-speech-left-up};
+
+  // table
+  --med-border-radius-table-down-sm: #{$med-border-radius-table-down-sm};
+  --med-border-radius-table-up-sm: #{$med-border-radius-table-up-sm};
+
+  --med-border-radius-table-down-md: #{$med-border-radius-table-down-md};
+  --med-border-radius-table-up-md: #{$med-border-radius-table-up-md};
+
+  // border widths
+  --med-border-width-none: #{$med-border-width-none};
+  --med-border-width-quark: #{$med-border-width-quark};
+  --med-border-width-nano: #{$med-border-width-nano};
+  --med-border-width-hairline: #{$med-border-width-hairline};
+  --med-border-width-thin: #{$med-border-width-thin};
+  --med-border-width-thick: #{$med-border-width-thick};
+  --med-border-width-bold: #{$med-border-width-bold};
+  --med-border-width-heavy: #{$med-border-width-heavy};
+
+  // opacity levels
+  --med-opacity-level-semiopaque: #{$med-opacity-level-semiopaque};
+  --med-opacity-level-intense: #{$med-opacity-level-intense};
+  --med-opacity-level-half: #{$med-opacity-level-half};
+  --med-opacity-level-medium: #{$med-opacity-level-medium};
+  --med-opacity-level-light: #{$med-opacity-level-light};
+  --med-opacity-level-semitransparent: #{$med-opacity-level-semitransparent};
+
+  // shadow levels
+  --med-shadow-level-0: #{$med-shadow-level-0};
+  --med-shadow-level-1: #{$med-shadow-level-1};
+  --med-shadow-level-2: #{$med-shadow-level-2};
+  --med-shadow-level-3: #{$med-shadow-level-3};
+  --med-shadow-level-4: #{$med-shadow-level-4};
+  --med-shadow-level-5: #{$med-shadow-level-5};
+  --med-shadow-level-6: #{$med-shadow-level-6};
+  --med-shadow-level-7: #{$med-shadow-level-7};
+  --med-shadow-level-8: #{$med-shadow-level-8};
+  --med-shadow-level-9: #{$med-shadow-level-9};
+  --med-shadow-level-10: #{$med-shadow-level-10};
+}
