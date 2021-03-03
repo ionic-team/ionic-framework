@@ -68,7 +68,23 @@
   <ion-progress-bar class="custom-border-radius"></ion-progress-bar>
   <ion-progress-bar class="custom-border-radius" value="0.5"></ion-progress-bar>
   <ion-progress-bar class="custom-border-radius" type="indeterminate"></ion-progress-bar>
+
+  <h1>Custom transition</h1>
+  <ion-progress-bar class="random-value" max="100"></ion-progress-bar>
+  <ion-progress-bar class="random-value custom-transition" max="100"></ion-progress-bar>
 </body>
+
+<script>
+  let randomValues = document.querySelectorAll('.random-value');
+
+  setInterval(() => {
+    let value = Math.random();
+
+    for (let i = 0; i < randomValues.length; i++) {
+      randomValues[i].value = value;
+    }
+  }, 100);
+</script>
 
 <style>
   h1 {
@@ -149,6 +165,17 @@
 
    .custom-border-radius[type="indeterminate"]::part(progress) {
      border-radius: 8px;
+   }
+
+  /*
+   * Custom transition for fast value changes
+   * ------------------------------------------------------
+   * The first progress bar in the example has the default
+   * transition, while the second has none. This is
+   * apparent because they use the same values.
+   */
+   .custom-transition::part(progress) {
+     transition: none;
    }
 </style>
 
