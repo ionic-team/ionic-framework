@@ -8,7 +8,7 @@
     "sync:build": "sh scripts/build-ionic.sh",
     "sync": "sh scripts/sync.sh",
     "build": "npm run sync && ng build --prod --no-progress",
-    "pretest": "webdriver-manager update --versions.chrome 87.0.4280.20",
+    "pretest": "webdriver-manager update --versions.chrome 89.0.4389.23",
     "test": "ng e2e --prod --webdriver-update=false",
     "test.dev": "npm run sync && ng e2e",
     "lint": "ng lint",
