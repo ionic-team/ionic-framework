@@ -10,8 +10,9 @@ import { createColorClasses } from '../../utils/theme';
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part progress - The progress bar that shows the current value (determinate) or slides back and forth (indeterminate).
- * @part circles - The circles that animate while buffering, only shows when buffer is set.
- * @part buffer - The buffer bar used to show additional progress while buffering.
+ * @part stream - The animated circles that appear while buffering, only shows when `buffer` is set and `type` is `"determinate"`.
+ * @part track - The track bar is behind the progress bar, if the `buffer` property is set (determinate) the track will be the
+ * width of the `buffer` value.
  */
 @Component({
   tag: 'ion-progress-bar',
@@ -82,7 +83,7 @@ export class ProgressBar implements ComponentInterface {
 
 const renderIndeterminate = () => {
   return (
-    <div part="buffer" class="progress-buffer-bar">
+    <div part="track" class="progress-buffer-bar">
       <div part="progress" class="indeterminate-bar-primary"><span class="progress-indeterminate"></span></div>,
       <div part="progress" class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
     </div>
@@ -104,9 +105,9 @@ const renderProgress = (value: number, buffer: number) => {
      */
     <div class={{ 'buffer-circles-container': true, 'ion-hide': finalBuffer === 1 }} style={{ transform: `translateX(${finalBuffer * 100}%)` }}>
       <div class="buffer-circles-container" style={{ transform: `translateX(-${finalBuffer * 100}%)` }}>
-        <div part="circles" class="buffer-circles"></div>
+        <div part="stream" class="buffer-circles"></div>
       </div>
     </div>,
-    <div part="buffer" class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
+    <div part="track" class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
   ];
 };
