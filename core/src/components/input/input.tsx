@@ -191,15 +191,6 @@ export class Input implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
-   * Update the native input element when the value changes
-   */
-  @Watch('value')
-  protected valueChanged() {
-    this.emitStyle();
-    this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
-  }
-
-  /**
    * Emitted when a keyboard input occurred.
    */
   @Event() ionInput!: EventEmitter<KeyboardEvent>;
@@ -224,6 +215,23 @@ export class Input implements ComponentInterface {
    * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  /**
+   * Update the item classes when the placeholder changes
+   */
+  @Watch('placeholder')
+  protected placeholderChanged() {
+    this.emitStyle();
+  }
+
+  /**
+   * Update the native input element when the value changes
+   */
+  @Watch('value')
+  protected valueChanged() {
+    this.emitStyle();
+    this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
+  }
 
   componentWillLoad() {
     this.inheritedAttributes = inheritAttributes(this.el, ['tabindex', 'title']);
