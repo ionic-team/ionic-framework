@@ -44,6 +44,7 @@
 
   <h1>Custom: colors by part</h1>
   <ion-progress-bar class="custom-color-parts"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-parts" buffer="0.9"></ion-progress-bar>
   <ion-progress-bar class="custom-color-parts" value="0.5"></ion-progress-bar>
   <ion-progress-bar class="custom-color-parts" value="0.20" buffer="0.4"></ion-progress-bar>
   <ion-progress-bar class="custom-color-parts" color="warning" reversed="true" value="0.20" buffer="0.4"></ion-progress-bar>
@@ -122,8 +123,8 @@
    * each element should override the color prop
    */
 
-  /* determinate buffer and indeterminate track */
-  .custom-color-parts::part(buffer) {
+  /* determinate buffer / track and indeterminate track */
+  .custom-color-parts::part(track) {
     background:rgb(158, 157, 36, 0.2);
   }
 
@@ -132,8 +133,8 @@
     background: #9e9d24;
   }
 
-  /* buffer circles */
-  .custom-color-parts::part(circles) {
+  /* buffer stream (animated circles) */
+  .custom-color-parts::part(stream) {
     background-image: radial-gradient(ellipse at center, rgb(158, 157, 36, 0.2) 0%, rgb(158, 157, 36, 0.2) 30%, transparent 30%);
   }
 
