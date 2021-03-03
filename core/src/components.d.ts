@@ -2707,12 +2707,6 @@ export namespace Components {
         "renderItem"?: (item: any, index: number) => any;
     }
     interface MedButton {
-        "disabled": boolean;
-        "download": string | undefined;
-        "href": string | undefined;
-        "rel": string | undefined;
-        "target": string | undefined;
-        "type": 'submit' | 'reset' | 'button';
     }
 }
 declare global {
@@ -6059,14 +6053,6 @@ declare namespace LocalJSX {
         "renderItem"?: (item: any, index: number) => any;
     }
     interface MedButton {
-        "disabled"?: boolean;
-        "download"?: string | undefined;
-        "href"?: string | undefined;
-        "onMedBlur"?: (event: CustomEvent<void>) => void;
-        "onMedFocus"?: (event: CustomEvent<void>) => void;
-        "rel"?: string | undefined;
-        "target"?: string | undefined;
-        "type"?: 'submit' | 'reset' | 'button';
     }
     interface IntrinsicElements {
         "ion-action-sheet": IonActionSheet;

@@ -159,6 +159,29 @@ ion-button,prop,target,string | undefined,undefined,false,false
 ion-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-button,event,ionBlur,void,true
 ion-button,event,ionFocus,void,true
+ion-button,css-prop,--background
+ion-button,css-prop,--background-activated
+ion-button,css-prop,--background-activated-opacity
+ion-button,css-prop,--background-focused
+ion-button,css-prop,--background-focused-opacity
+ion-button,css-prop,--background-hover
+ion-button,css-prop,--background-hover-opacity
+ion-button,css-prop,--border-color
+ion-button,css-prop,--border-radius
+ion-button,css-prop,--border-style
+ion-button,css-prop,--border-width
+ion-button,css-prop,--box-shadow
+ion-button,css-prop,--color
+ion-button,css-prop,--color-activated
+ion-button,css-prop,--color-focused
+ion-button,css-prop,--color-hover
+ion-button,css-prop,--opacity
+ion-button,css-prop,--padding-bottom
+ion-button,css-prop,--padding-end
+ion-button,css-prop,--padding-start
+ion-button,css-prop,--padding-top
+ion-button,css-prop,--ripple-color
+ion-button,css-prop,--transition
 ion-button,part,native
 
 ion-buttons,scoped
@@ -1337,20 +1360,3 @@ ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) =>
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
 
 med-button,shadow
-med-button,prop,disabled,boolean,false,false,true
-med-button,prop,download,string | undefined,undefined,false,false
-med-button,prop,href,string | undefined,undefined,false,false
-med-button,prop,rel,string | undefined,undefined,false,false
-med-button,prop,target,string | undefined,undefined,false,false
-med-button,prop,type,"button" | "reset" | "submit",'button',false,false
-med-button,event,medBlur,void,true
-med-button,event,medFocus,void,true
-med-button,css-prop,--background
-med-button,css-prop,--border
-med-button,css-prop,--border-radius
-med-button,css-prop,--box-shadow
-med-button,css-prop,--color
-med-button,css-prop,--font-size
-med-button,css-prop,--padding
-med-button,css-prop,--transition
-med-button,part,inner
