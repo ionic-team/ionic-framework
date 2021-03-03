@@ -9,7 +9,7 @@ import { createColorClasses } from '../../utils/theme';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @part progress - The progress bar that shows the current value (determinate) or slides back and forth (indeterminate).
+ * @part progress - The progress bar that shows the current value when `type` is `"determinate"` and slides back and forth when `type` is `"indeterminate"`.
  * @part stream - The animated circles that appear while buffering, only shows when `buffer` is set and `type` is `"determinate"`.
  * @part track - The track bar is behind the progress bar, if the `buffer` property is set and `type` is `"determinate"` the track will be the
  * width of the `buffer` value.
