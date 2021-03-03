@@ -110,13 +110,23 @@ export const IonTabBar = defineComponent({
       const activeChild = childNodes.find((child: VNode) => isTabButton(child) && child.props?.tab === activeTab);
       const tabBar = this.$refs.ionTabBar;
       const tabDidChange = activeTab !== prevActiveTab;
-      if (activeChild && tabBar) {
-        tabDidChange && this.$props._tabsWillChange(activeTab);
+      if (tabBar) {
+        if (activeChild) {
+          tabDidChange && this.$props._tabsWillChange(activeTab);
 
-        ionRouter.handleSetCurrentTab(activeTab);
-        tabBar.selectedTab = tabState.activeTab = activeTab;
+          ionRouter.handleSetCurrentTab(activeTab);
+          tabBar.selectedTab = tabState.activeTab = activeTab;
 
-        tabDidChange && this.$props._tabsDidChange(activeTab);
+          tabDidChange && this.$props._tabsDidChange(activeTab);
+        /**
+         * When going to a tab that does
+         * not have an associated ion-tab-button
+         * we need to remove the selected state from
+        * the old tab.
+         */
+        } else {
+          tabBar.selectedTab = tabState.activeTab = '';
+        }
       }
     };
 
