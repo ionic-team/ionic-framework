@@ -207,6 +207,19 @@ describe('Tabs', () => {
     cy.ionPageVisible('tab2');
     cy.ionPageVisible('tabs');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22597
+  it('should deselect old tab button when going to a tab that does not have a tab button', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.get('ion-tab-button#tab-button-tab1').should('have.class', 'tab-selected');
+
+    cy.routerPush('/tabs/tab4');
+    cy.ionPageHidden('tab1');
+    cy.ionPageVisible('tab4');
+
+    cy.get('ion-tab-button#tab-button-tab1').should('not.have.class', 'tab-selected');
+  });
 })
 
 describe('Tabs - Swipe to Go Back', () => {
