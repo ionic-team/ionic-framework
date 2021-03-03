@@ -11,6 +11,7 @@
   * [References](#references)
 - [Accessibility](#accessibility)
   * [Checkbox](#checkbox)
+  * [Switch](#switch)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
   * [Example Components](#example-components-1)
   * [Component Structure](#component-structure-1)
@@ -371,7 +372,6 @@ ion-ripple-effect {
 #### Example Components
 
 - [ion-checkbox](https://github.com/ionic-team/ionic/tree/master/core/src/components/checkbox)
-- [ion-toggle](https://github.com/ionic-team/ionic/tree/master/core/src/components/toggle)
 
 #### VoiceOver
 
@@ -432,9 +432,13 @@ const { label, labelId, labelText } = getAriaLabel(el, inputId);
 where `el` and `inputId` are the following:
 
 ```tsx
-private inputId = `ion-cb-${checkboxIds++}`;
+export class Checkbox implements ComponentInterface {
+  private inputId = `ion-cb-${checkboxIds++}`;
 
-@Element() el!: HTMLElement;
+  @Element() el!: HTMLElement;
+
+  ...
+}
 ```
 
 This can then be added to the `Host` like the following:
@@ -448,7 +452,7 @@ This can then be added to the `Host` like the following:
 >
 ```
 
-In addition to that, the checkbox should have a label added:
+In addition to that, the checkbox input should have a label added:
 
 ```tsx
 <Host
@@ -487,6 +491,137 @@ currently on a checkbox inside of a checkbox
 ```
 
 This is a compromise we have to make in order for it to work with the other screen readers & Safari.
+
+
+### Switch
+
+#### Example Components
+
+- [ion-toggle](https://github.com/ionic-team/ionic/tree/master/core/src/components/toggle)
+
+#### Voiceover
+
+In order for VoiceOver to work properly with a switch component there must be a native `input` with `type="checkbox"` and `role="switch"`, and `aria-checked` and `role="switch"` **must** be on the host element. The `aria-hidden` attribute needs to be added if the switch is disabled, preventing iOS users from selecting it:
+
+```tsx
+render() {
+  const { checked, disabled } = this;
+
+  return (
+    <Host
+      aria-checked={`${checked}`}
+      aria-hidden={disabled ? 'true' : null}
+      role="switch"
+    >
+      <input
+        type="checkbox"
+        role="switch"
+      />
+      ...
+    </Host>
+  );
+}
+```
+
+#### NVDA
+
+It is required to have `aria-checked` on the native input for checked to read properly and `disabled` to prevent tabbing to the input:
+
+```tsx
+render() {
+  const { checked, disabled } = this;
+
+  return (
+    <Host
+      aria-checked={`${checked}`}
+      aria-hidden={disabled ? 'true' : null}
+      role="switch"
+    >
+      <input
+        type="checkbox"
+        role="switch"
+        aria-checked={`${checked}`}
+        disabled={disabled}
+      />
+      ...
+    </Host>
+  );
+}
+```
+
+#### Labels
+
+A helper function has been created to get the proper `aria-label` for the switch. This can be imported as `getAriaLabel` like the following:
+
+```tsx
+const { label, labelId, labelText } = getAriaLabel(el, inputId);
+```
+
+where `el` and `inputId` are the following:
+
+```tsx
+export class Toggle implements ComponentInterface {
+  private inputId = `ion-tg-${toggleIds++}`;
+
+  @Element() el!: HTMLElement;
+
+  ...
+}
+```
+
+This can then be added to the `Host` like the following:
+
+```tsx
+<Host
+  aria-labelledby={label ? labelId : null}
+  aria-checked={`${checked}`}
+  aria-hidden={disabled ? 'true' : null}
+  role="switch"
+>
+```
+
+In addition to that, the checkbox input should have a label added:
+
+```tsx
+<Host
+  aria-labelledby={label ? labelId : null}
+  aria-checked={`${checked}`}
+  aria-hidden={disabled ? 'true' : null}
+  role="switch"
+>
+  <label htmlFor={inputId}>
+    {labelText}
+  </label>
+  <input
+    type="checkbox"
+    role="switch"
+    aria-checked={`${checked}`}
+    disabled={disabled}
+    id={inputId}
+  />
+```
+
+
+#### Hidden Input
+
+A helper function to render a hidden input has been added, it can be added in the `render`:
+
+```tsx
+renderHiddenInput(true, el, name, (checked ? value : ''), disabled);
+```
+
+> This is required for the switch to work with forms.
+
+
+#### Known Issues
+
+When using VoiceOver on macOS or iOS, Chrome will announce the switch as a checked or unchecked `checkbox`:
+
+```
+You are currently on a switch. To select or deselect this checkbox, press Control-Option-Space.
+```
+
+There is a WebKit bug open for this: https://bugs.webkit.org/show_bug.cgi?id=196354
 
 
 ## Rendering Anchor or Button
