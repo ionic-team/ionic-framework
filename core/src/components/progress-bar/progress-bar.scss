@@ -6,9 +6,9 @@
 // Host has no background by default - this will be added to the progress-buffer-bar
 :host {
   /**
-   * @prop --background:  Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself
-   * @prop --progress-background: Color of the progress bar
-   * @prop --buffer-background: Color of the buffer bar
+   * @prop --background: Background of the progress track, or the buffer bar if `buffer` is set
+   * @prop --progress-background: Background of the progress bar representing the current value
+   * @prop --buffer-background: DEPRECATED, use `--background` instead
    */
   --background: #{ion-color(primary, base, 0.3)};
   --progress-background: #{ion-color(primary, base)};
@@ -68,15 +68,10 @@
 // --------------------------------------------------
 
 .progress,
-.indeterminate-bar-primary,
-.indeterminate-bar-secondary {
+.progress-indeterminate {
   background: var(--progress-background);
 
   z-index: 2;
-}
-
-.progress-indeterminate {
-  background: inherit;
 }
 
 .progress-buffer-bar {
@@ -173,8 +168,7 @@
 
 :host(.ion-color) {
   .progress,
-  .indeterminate-bar-primary,
-  .indeterminate-bar-secondary {
+  .progress-indeterminate {
     background: #{current-color(base)};
   }
 }
