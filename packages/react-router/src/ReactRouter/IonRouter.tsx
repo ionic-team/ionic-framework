@@ -76,7 +76,9 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     };
   }
 
-  handleChangeTab(tab: string, path: string, routeOptions?: any) {
+  handleChangeTab(tab: string, path?: string, routeOptions?: any) {
+    if (!path) { return; }
+
     const routeInfo = this.locationHistory.getCurrentRouteInfoForTab(tab);
     const [pathname, search] = path.split('?');
     if (routeInfo) {
@@ -241,7 +243,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           routeDirection: 'back',
           routeAnimation: routeAnimation || routeInfo.routeAnimation,
         };
-        if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
+        if (routeInfo.lastPathname === routeInfo.pushedByRoute || prevInfo.pathname === routeInfo.pushedByRoute) {
           this.props.history.goBack();
         } else {
           this.handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back');

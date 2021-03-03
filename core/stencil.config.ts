@@ -91,13 +91,15 @@ export const config: Config = {
         {
           elements: ['ion-checkbox', 'ion-toggle'],
           targetAttr: 'checked',
-          event: 'v-ionChange',
+          // TODO Ionic v6 remove in favor of v-ion-change
+          event: ['v-ionChange', 'v-ion-change'],
           externalEvent: 'ionChange'
         },
         {
           elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-textarea'],
           targetAttr: 'value',
-          event: 'v-ionChange',
+          // TODO Ionic v6 remove in favor of v-ion-change
+          event: ['v-ionChange', 'v-ion-change'],
           externalEvent: 'ionChange'
         }
       ],
