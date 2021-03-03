@@ -12,7 +12,7 @@ If the `buffer` property is set, a buffer stream will show with animated circles
 
 ### Indeterminate
 
-The indeterminate type should be used when it is unknown how long the process will take. The progress bar is not tied to the `value`, instead it continually grows and shrinks along the track until the process is complete.
+The indeterminate type should be used when it is unknown how long the process will take. The progress bar is not tied to the `value`, instead it continually slides along the track until the process is complete.
 
 <!-- Auto Generated Below -->
 
