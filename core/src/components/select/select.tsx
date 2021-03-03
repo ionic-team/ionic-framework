@@ -465,8 +465,9 @@ export class Select implements ComponentInterface {
     return (
       <Host
         onClick={this.onClick}
-        role="button"
+        role="combobox"
         aria-haspopup="listbox"
+        aria-expanded={`${isExpanded}`}
         aria-disabled={disabled ? 'true' : null}
         aria-label={displayLabel}
         class={{
@@ -476,7 +477,7 @@ export class Select implements ComponentInterface {
           'select-expanded': isExpanded
         }}
       >
-        <div aria-hidden="true" class={selectTextClasses} part={textPart}>
+        <div role="textbox" aria-hidden="true" class={selectTextClasses} part={textPart}>
           {selectText}
         </div>
         <div class="select-icon" role="presentation" part="icon">

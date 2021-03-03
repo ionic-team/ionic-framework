@@ -11,6 +11,7 @@
   * [References](#references)
 - [Accessibility](#accessibility)
   * [Checkbox](#checkbox)
+  * [Select](#select)
 - [Rendering Anchor or Button](#rendering-anchor-or-button)
   * [Example Components](#example-components-1)
   * [Component Structure](#component-structure-1)
@@ -487,6 +488,39 @@ currently on a checkbox inside of a checkbox
 ```
 
 This is a compromise we have to make in order for it to work with the other screen readers & Safari.
+
+### Select
+
+#### Example Components
+
+- [ion-select](https://github.com/ionic-team/ionic/tree/master/core/src/components/select)
+
+#### axe
+
+In order to support aria roles such as `aria-required` the select must have the role of `combobox`. In addition to this the `aria-expanded` property is required to go with this role.
+
+```tsx
+<Host
+  role="combobox"
+  aria-haspopup="listbox"
+  aria-expanded={`${isExpanded}`}
+>
+```
+
+The element containing the displayed text of the select should have the `textbox` role:
+
+```tsx
+<Host
+  role="combobox"
+  aria-haspopup="listbox"
+  aria-expanded={`${isExpanded}`}
+>
+  <div role="textbox" aria-hidden="true" class={selectTextClasses} part={textPart}>
+    {selectText}
+  </div>
+</Host>
+
+```
 
 
 ## Rendering Anchor or Button
