@@ -1,7 +1,8 @@
 # Fork do Ionic Framework 
-
-master -> conteúdo "cru" do Ionic Team
-Release-Branch -> conteúdo alterado
+Branches | Descrição
+--------- | ----------
+master | conteúdo "cru" do Ionic Team
+Release-Branch | conteúdo alterado
 
 ### Como inserir o remote do Ionic Team
 
