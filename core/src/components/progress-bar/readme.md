@@ -1,20 +1,18 @@
 # ion-progress-bar
 
-ion-progress-bar is a horizontal progress bar to visualize the progression of an operation and activity. You can choose between two types: `determinate` and `indeterminate`.
+Progress bars inform users about the status of ongoing processes, such as loading an app, submitting a form, or saving updates. There are two types of progress bars: `determinate` and `indeterminate`.
 
 ## Progress Type
 
 ### Determinate
 
-If the percentage of an operation is known, you should use the determinate type. This is the default type and the progress is represented by the `value` property.
+Determinate is the default type. It should be used when the percentage of an operation is known. The progress is represented by setting the `value` property. This can be used to show the progress increasing from 0 to 100% of the track.
 
-A buffer shows circles as animation to indicate some activity. If the `buffer` property is smaller than 1 you can show the additional buffering progress.
+If the `buffer` property is set, a buffer stream will show with animated circles to indicate activity. The value of the `buffer` property will also be represented by how much visible track there is. If the value of `buffer` is less than the `value` property, there will be no visible track. If `buffer` is equal to `1` then the buffer stream will be hidden.
 
 ### Indeterminate
 
-If an operation is in progress and it's not necessary to indicate how long it will take.
-
-If you add `reversed="true"`, you receive a query which is used to indicate pre-loading.
+The indeterminate type should be used when it is unknown how long the process will take. The progress bar is not tied to the `value`, instead it continually slides along the track until the process is complete.
 
 <!-- Auto Generated Below -->
 
@@ -144,13 +142,22 @@ export default defineComponent({
 | `value`    | `value`    | The value determines how much of the active bar should display when the `type` is `"determinate"`. The value should be between [0, 1].                                                                                                                                 | `number`                           | `0`             |
 
 
+## Shadow Parts
+
+| Part         | Description                                                                                                                                             |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `"progress"` | The progress bar that shows the current value when `type` is `"determinate"` and slides back and forth when `type` is `"indeterminate"`.                |
+| `"stream"`   | The animated circles that appear while buffering. This only shows when `buffer` is set and `type` is `"determinate"`.                                   |
+| `"track"`    | The track bar behind the progress bar. If the `buffer` property is set and `type` is `"determinate"` the track will be the width of the `buffer` value. |
+
+
 ## CSS Custom Properties
 
-| Name                    | Description                                                                                                                           |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `--background`          | Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself. |
-| `--buffer-background`   | Color of the buffer bar                                                                                                               |
-| `--progress-background` | Color of the progress bar                                                                                                             |
+| Name                    | Description                                                            |
+| ----------------------- | ---------------------------------------------------------------------- |
+| `--background`          | Background of the progress track, or the buffer bar if `buffer` is set |
+| `--buffer-background`   | DEPRECATED, use `--background` instead                                 |
+| `--progress-background` | Background of the progress bar representing the current value          |
 
 
 ----------------------------------------------

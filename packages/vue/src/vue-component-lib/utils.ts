@@ -16,7 +16,7 @@ interface NavManager<T = any> {
 
 interface ComponentOptions {
   modelProp?: string;
-  modelUpdateEvent?: string;
+  modelUpdateEvent?: string | string[];
   externalModelUpdateEvent?: string;
 }
 
@@ -55,19 +55,22 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
     const onVnodeBeforeMount = (vnode: VNode) => {
       // Add a listener to tell Vue to update the v-model
       if (vnode.el) {
-        vnode.el.addEventListener(modelUpdateEvent.toLowerCase(), (e: Event) => {
-          modelPropValue = (e?.target as any)[modelProp];
-          emit(UPDATE_VALUE_EVENT, modelPropValue);
+        const eventsNames = Array.isArray(modelUpdateEvent) ? modelUpdateEvent : [modelUpdateEvent];
+        eventsNames.forEach((eventName: string) => {
+          vnode.el.addEventListener(eventName.toLowerCase(), (e: Event) => {
+            modelPropValue = (e?.target as any)[modelProp];
+            emit(UPDATE_VALUE_EVENT, modelPropValue);
 
-          /**
-           * We need to emit the change event here
-           * rather than on the web component to ensure
-           * that any v-model bindings have been updated.
-           * Otherwise, the developer will listen on the
-           * native web component, but the v-model will
-           * not have been updated yet.
-           */
-          emit(externalModelUpdateEvent, e);
+            /**
+             * We need to emit the change event here
+             * rather than on the web component to ensure
+             * that any v-model bindings have been updated.
+             * Otherwise, the developer will listen on the
+             * native web component, but the v-model will
+             * not have been updated yet.
+             */
+            emit(externalModelUpdateEvent, e);
+          });
         });
       }
     };

@@ -1,4 +1,4 @@
-import { defineComponent, h, ref } from 'vue';
+import { defineComponent, h, ref, VNode } from 'vue';
 
 export interface OverlayProps {
   isOpen?: boolean;
@@ -21,27 +21,60 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
       isOpen && (await present(props))
     }
 
-    const onVnodeUpdated = async () => {
-      const isOpen = props.isOpen;
+    const onVnodeUpdated = async (node: VNode, prevNode: VNode) => {
+      const isOpen = node.props!.isOpen;
+      const prevIsOpen = prevNode.props!.isOpen;
+
+      /**
+       * Do not do anything if this prop
+       * did not change.
+       */
+      if (isOpen === prevIsOpen) return;
+
       if (isOpen) {
-        await overlay.value?.present() || present(props);
+        await present(props);
       } else {
-        await overlay.value?.dismiss();
-        overlay.value = undefined;
+        await dismiss();
       }
     }
 
     const onVnodeBeforeUnmount = async () => {
-      await overlay.value?.dismiss();
+      await dismiss();
+    }
+
+    const dismiss = async () => {
+      if (!overlay.value) return;
+
+      await overlay.value;
+
+      overlay.value = overlay.value.dismiss();
+
+      await overlay.value;
+
       overlay.value = undefined;
     }
 
     const present = async (props: Readonly<Props>) => {
+      /**
+       * Do not open another instance
+       * if one is already opened.
+       */
+      if (overlay.value) {
+        await overlay.value;
+      }
+
+      if (overlay.value?.present) {
+        await overlay.value.present();
+        return;
+      }
+
       const component = slots.default && slots.default()[0];
-      overlay.value = await controller.create({
+      overlay.value = controller.create({
         ...props,
         component
       });
+
+      overlay.value = await overlay.value;
 
       eventListeners.forEach(eventListener => {
         overlay.value.addEventListener(eventListener.componentEv, () => {
@@ -59,7 +92,8 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
           style: { display: 'none' },
           onVnodeMounted,
           onVnodeUpdated,
-          onVnodeBeforeUnmount
+          onVnodeBeforeUnmount,
+          isOpen: props.isOpen
         }
       );
     }
