@@ -12,19 +12,171 @@
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
-  <h1>Default Progress Bar</h1>
+  <h1>Default Progress Bars</h1>
   <ion-progress-bar></ion-progress-bar>
-
-  <h1>Default Progress Bar with 50% width</h1>
   <ion-progress-bar value="0.5"></ion-progress-bar>
-
-  <h1>Colorize Progress Bar</h1>
-  <ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
-  <ion-progress-bar color="secondary" value="0.5"></ion-progress-bar>
-
-  <h1>Other types</h1>
   <ion-progress-bar type="indeterminate"></ion-progress-bar>
 
+  <hr>
+
+  <h1>Progress Bar: Colors</h1>
+  <ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
+  <ion-progress-bar color="secondary" value="0.5"></ion-progress-bar>
+  <ion-progress-bar color="tertiary" value="0.5"></ion-progress-bar>
+  <ion-progress-bar color="success" value="0.5"></ion-progress-bar>
+  <ion-progress-bar color="warning" value="0.5"></ion-progress-bar>
+  <ion-progress-bar color="danger" value="0.5"></ion-progress-bar>
+  <ion-progress-bar color="dark" value="0.5"></ion-progress-bar>
+  <ion-progress-bar color="light" value="0.5"></ion-progress-bar>
+
+  <hr>
+
+  <h1>Default Types</h1>
+  <ion-progress-bar></ion-progress-bar>
+  <ion-progress-bar value="0.5"></ion-progress-bar>
+  <ion-progress-bar value="0.20" buffer="0.4"></ion-progress-bar>
+  <ion-progress-bar color="warning" reversed="true" value="0.20" buffer="0.4"></ion-progress-bar>
+  <ion-progress-bar buffer="0"></ion-progress-bar>
+  <ion-progress-bar color="danger" type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+
+  <hr>
+
+  <h1>Custom: colors by part</h1>
+  <ion-progress-bar class="custom-color-parts"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-parts" buffer="0.9"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-parts" value="0.5"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-parts" value="0.20" buffer="0.4"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-parts" color="warning" reversed="true" value="0.20" buffer="0.4"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-parts" buffer="0"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-parts" color="danger" type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-parts" type="indeterminate" reversed="true"></ion-progress-bar>
+
+  <hr>
+
+  <h1>Custom: colors by css variable</h1>
+  <ion-progress-bar class="custom-color-variables"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-variables" value="0.5"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-variables" value="0.20" buffer="0.4"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-variables" color="warning" reversed="true" value="0.20" buffer="0.4"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-variables" buffer="0"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-variables" color="danger" type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar class="custom-color-variables" type="indeterminate" reversed="true"></ion-progress-bar>
+
+  <hr>
+
+  <h1>Custom border radius</h1>
+  <ion-progress-bar class="custom-border-radius"></ion-progress-bar>
+  <ion-progress-bar class="custom-border-radius" value="0.5"></ion-progress-bar>
+  <ion-progress-bar class="custom-border-radius" type="indeterminate"></ion-progress-bar>
+
+  <h1>Custom transition</h1>
+  <ion-progress-bar class="random-value" max="100"></ion-progress-bar>
+  <ion-progress-bar class="random-value custom-transition" max="100"></ion-progress-bar>
 </body>
+
+<script>
+  let randomValues = document.querySelectorAll('.random-value');
+
+  setInterval(() => {
+    let value = Math.random();
+
+    for (let i = 0; i < randomValues.length; i++) {
+      randomValues[i].value = value;
+    }
+  }, 100);
+</script>
+
+<style>
+  h1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 12px;
+    font-weight: normal;
+
+    color: #a1a7b0;
+
+    margin-top: 10px;
+    margin-left: 5px;
+  }
+
+  hr {
+    background: #eff1f3;
+    border: none;
+
+    height: 1px;
+
+    margin-top: 18px;
+    margin-bottom: 25px;
+  }
+
+  ion-progress-bar {
+    margin-bottom: 10px;
+  }
+
+  /*
+   * Custom progress bar color using parts
+   * ------------------------------------------------------
+   * Note: in these examples setting the background on
+   * each element should override the color prop
+   */
+
+  /* determinate buffer / track and indeterminate track */
+  .custom-color-parts::part(track) {
+    background:rgb(158, 157, 36, 0.2);
+  }
+
+  /* determinate and indeterminate progress background */
+  .custom-color-parts::part(progress) {
+    background: #9e9d24;
+  }
+
+  /* buffer stream (animated circles) */
+  .custom-color-parts::part(stream) {
+    background-image: radial-gradient(ellipse at center, rgb(158, 157, 36, 0.2) 0%, rgb(158, 157, 36, 0.2) 30%, transparent 30%);
+  }
+
+  /*
+   * Custom progress bar color using css variables
+   * ------------------------------------------------------
+   * Note: in this example setting the background via
+   * CSS variables should NOT override the color prop
+   */
+  .custom-color-variables {
+    --background: rgb(158, 157, 36, 0.2);
+    --progress-background: #9e9d24;
+  }
+
+  /*
+   * Custom progress bar border radius using parts
+   * ------------------------------------------------------
+   */
+   .custom-border-radius {
+     border-radius: 10px;
+
+     height: 20px;
+   }
+
+   .custom-border-radius::part(progress) {
+     border-radius: 0 50% 50% 0;
+   }
+
+   .custom-border-radius[type="indeterminate"]::part(progress) {
+     border-radius: 8px;
+   }
+
+  /*
+   * Custom transition for fast value changes
+   * ------------------------------------------------------
+   * The first progress bar in the example has the default
+   * transition, while the second has none. This is
+   * apparent because they use the same values.
+   */
+   .custom-transition::part(progress) {
+     transition: none;
+   }
+</style>
 
 </html>
