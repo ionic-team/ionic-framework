@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@s
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { addEventListener, raf, removeEventListener, transitionEndAsync, getElementRoot } from '../../utils/helpers';
+import { addEventListener, getElementRoot, raf, removeEventListener, transitionEndAsync } from '../../utils/helpers';
 
 const enum AccordionState {
   Collapsed = 1 << 0,
@@ -95,7 +95,20 @@ export class Accordion implements ComponentInterface {
 
   componentDidLoad() {
     this.slotToggleIcon();
-    this.setAria();
+
+    /**
+     * We need to wait a tick because we
+     * just set ionItem.button = true and
+     * the button has not have been rendered yet.
+     */
+    raf(() => {
+      /**
+       * Set aria label on button inside of ion-item
+       * once the inner content has been rendered.
+       */
+      const expanded = this.state === AccordionState.Expanded || this.state === AccordionState.Expanding;
+      this.setAria(expanded);
+    });
   }
 
   private getSlottedHeaderIonItem = () => {
@@ -115,10 +128,14 @@ export class Accordion implements ComponentInterface {
     return ionItem;
   }
 
-  private setAria = (expanded: boolean = false) => {
+  private setAria = (expanded = false) => {
     const ionItem = this.getSlottedHeaderIonItem();
     if (!ionItem) { return; }
 
+    /**
+     * Get the native <button> element inside of
+     * ion-item because that is what will be focused
+     */
     const root = getElementRoot(ionItem);
     const button = root.querySelector('button');
     if (!button) { return; }
