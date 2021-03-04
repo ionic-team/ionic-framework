@@ -1,18 +1,19 @@
 @import "../../themes/ionic.globals";
 
 // Progress bar
-// --------------------------------------------------
-// Host has no background by default - this will be added to the progress-buffer-bar
+// ------------------------------------------------------------------------
 
+// Host has no background by default - this will be added to the progress-buffer-bar
 :host {
   /**
-  * @prop --background:  Same as --buffer-background when using a determinate progress bar, otherwise it styles the background of the ion-progress-bar itself.
-  * @prop --progress-background: Color of the progress bar
-  * @prop --buffer-background: Color of the buffer bar
-  */
+   * @prop --background: Background of the progress track, or the buffer bar if `buffer` is set
+   * @prop --progress-background: Background of the progress bar representing the current value
+   * @prop --buffer-background: DEPRECATED, use `--background` instead
+   */
   --background: #{ion-color(primary, base, 0.3)};
   --progress-background: #{ion-color(primary, base)};
   --buffer-background: var(--background);
+
   display: block;
 
   position: relative;
@@ -23,16 +24,6 @@
 
   direction: ltr;
   overflow: hidden;
-}
-
-:host(.ion-color) {
-  --progress-background: #{current-color(base)};
-  --buffer-background: #{current-color(base, 0.3)};
-}
-
-// indeterminate has no progress-buffer-bar, so it will be added to the host
-:host(.progress-bar-indeterminate) {
-  background: var(--buffer-background);
 }
 
 .progress,
@@ -128,27 +119,33 @@
   }
 }
 
-// Buffer style
-// --------------------------------------------------
+// Progress Bar: Buffer Circles
+// ------------------------------------------------------------------------
 
 .buffer-circles {
-  background: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%) repeat-x 5px center;
+  background-image: radial-gradient(ellipse at center, var(--buffer-background) 0%, var(--buffer-background) 30%, transparent 30%);
+
+  /* stylelint-disable property-blacklist */
+  background-repeat: repeat-x;
+  background-position: 5px center;
   background-size: 10px 10px;
+  /* stylelint-enable property-blacklist */
 
   z-index: 0;
   animation: buffering 450ms infinite linear;
 }
 
+// Progress Bar: Reversed
+// ------------------------------------------------------------------------
 // If reversed is set to true, the animation will be reversed
-// and the bars starting at the top right
-// --------------------------------------------------
+// and the bar will start at the top right
 
 :host(.progress-bar-reversed) {
   transform: scaleX(-1);
 }
 
-// Progress paused
-// --------------------------------------------------
+// Progress Bar: Paused
+// ------------------------------------------------------------------------
 
 :host(.progress-paused) {
   .indeterminate-bar-secondary,
@@ -158,8 +155,27 @@
   }
 }
 
-// Animation Keyframes
-// --------------------------------------------------
+// Progress Bar: Color
+// ------------------------------------------------------------------------
+
+:host(.ion-color) .progress-buffer-bar {
+  background: #{current-color(base, 0.3)};
+}
+
+:host(.ion-color) .buffer-circles {
+  background-image: radial-gradient(ellipse at center, #{current-color(base, 0.3)} 0%, #{current-color(base, 0.3)} 30%, transparent 30%);
+}
+
+:host(.ion-color) {
+  .progress,
+  .progress-indeterminate {
+    background: #{current-color(base)};
+  }
+}
+
+
+// Progress Bar: Animation Keyframes
+// ------------------------------------------------------------------------
 // Source: https://github.com/material-components/material-components-web/blob/master/packages/mdc-linear-progress/_keyframes.scss
 
 @keyframes primary-indeterminate-translate {
@@ -259,3 +275,4 @@
     transform: translateX(-10px);
   }
 }
+
