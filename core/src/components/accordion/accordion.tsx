@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Host, Prop, State, h } from '@s
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { addEventListener, raf, removeEventListener, transitionEndAsync } from '../../utils/helpers';
+import { addEventListener, raf, removeEventListener, transitionEndAsync, getElementRoot } from '../../utils/helpers';
 
 const enum AccordionState {
   Collapsed = 1 << 0,
@@ -95,10 +95,11 @@ export class Accordion implements ComponentInterface {
 
   componentDidLoad() {
     this.slotToggleIcon();
+    this.setAria();
   }
 
-  private slotToggleIcon = () => {
-    const { headerEl, toggleIconSlot, toggleIcon } = this;
+  private getSlottedHeaderIonItem = () => {
+    const { headerEl } = this;
     if (!headerEl) { return; }
 
     /**
@@ -110,7 +111,26 @@ export class Accordion implements ComponentInterface {
 
     // This is not defined in unit tests
     const ionItem = slot.assignedElements && (slot.assignedElements().find(el => el.tagName === 'ION-ITEM') as HTMLIonItemElement | undefined);
+
+    return ionItem;
+  }
+
+  private setAria = (expanded: boolean = false) => {
+    const ionItem = this.getSlottedHeaderIonItem();
     if (!ionItem) { return; }
+
+    const root = getElementRoot(ionItem);
+    const button = root.querySelector('button');
+    if (!button) { return; }
+
+    button.setAttribute('aria-expanded', `${expanded}`);
+  }
+
+  private slotToggleIcon = () => {
+    const ionItem = this.getSlottedHeaderIonItem();
+    if (!ionItem) { return; }
+
+    const { toggleIconSlot, toggleIcon } = this;
 
     /**
      * For a11y purposes, we make
@@ -133,6 +153,7 @@ export class Accordion implements ComponentInterface {
     iconEl.lazy = false;
     iconEl.classList.add('ion-accordion-toggle-icon');
     iconEl.icon = toggleIcon;
+    iconEl.ariaHidden = 'true';
 
     ionItem.appendChild(iconEl);
   }
@@ -322,6 +343,8 @@ export class Accordion implements ComponentInterface {
     const headerPart = expanded ? 'header expanded' : 'header';
     const contentPart = expanded ? 'content expanded' : 'content';
 
+    this.setAria(expanded);
+
     return (
       <Host
         class={{
@@ -345,7 +368,6 @@ export class Accordion implements ComponentInterface {
           onClick={() => this.toggleExpanded()}
           id="header"
           part={headerPart}
-          aria-expanded={expanded ? 'true' : 'false'}
           aria-controls="content"
           ref={headerEl => this.headerEl = headerEl}
         >
