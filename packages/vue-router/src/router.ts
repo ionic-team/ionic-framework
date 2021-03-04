@@ -252,7 +252,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     }
   }
 
-  const changeTab = (tab: string, path: string) => {
+  const changeTab = (tab: string, path?: string) => {
+    if (!path) return;
+
     const routeInfo = locationHistory.getCurrentRouteInfoForTab(tab);
     const [pathname] = path.split('?');
 
