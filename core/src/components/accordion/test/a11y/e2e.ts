@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+import { AxePuppeteer } from '@axe-core/puppeteer';
 
 const getActiveElementText = async (page) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
@@ -12,6 +13,9 @@ test('accordion: a11y', async () => {
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
+
+  const results = await new AxePuppeteer(page).analyze();
+  expect(results.violations.length).toEqual(0);
 });
 
 test('accordion:rtl: a11y', async () => {
