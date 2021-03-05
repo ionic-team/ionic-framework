@@ -203,10 +203,6 @@ ion-card-header.ion-color .ion-inherit-color {
 }
 
 // Accordion Styles
-ion-accordion-group.ios.accordion-group-expand-accordion ion-accordion:first-of-type {
-  border-top: 0.55px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-250, #c8c7cc)));
-}
-
 ion-accordion-group.accordion-group-expand-inset ion-accordion:first-of-type {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -236,4 +232,9 @@ ion-accordion.accordion-expanded .ion-accordion-toggle-icon {
 }
 ion-accordion-group.accordion-group-expand-inset.md ion-accordion.accordion-previous ion-item[slot="header"] {
   --border-width: 0px;
+}
+
+ion-accordion-group.accordion-group-expand-inset.md ion-accordion.accordion-expanding:first-of-type,
+ion-accordion-group.accordion-group-expand-inset.md ion-accordion.accordion-expanded:first-of-type {
+  margin-top: 0;
 }
