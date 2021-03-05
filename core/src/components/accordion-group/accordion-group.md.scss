@@ -1,4 +1,8 @@
+@import "./accordion-group";
 @import "../accordion/accordion.md.vars";
+
+// Material Design Accordion Group
+// --------------------------------------------------
 
 :host(.accordion-group-expand-inset) ::slotted(ion-accordion) {
   box-shadow: $accordion-md-box-shadow;

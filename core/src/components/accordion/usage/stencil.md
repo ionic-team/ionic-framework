@@ -1,3 +1,4 @@
+```tsx
 import { Component, h } from '@stencil/core';
 
 @Component({
@@ -13,7 +14,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Colors</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Red</ion-label>
@@ -30,7 +31,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Shapes</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Circle</ion-label>
@@ -47,7 +48,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Numbers</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>1</ion-label>
@@ -59,16 +60,16 @@ export const AccordionExample {
               <ion-label>3</ion-label>
             </ion-item>
           </ion-list>
-        </ion-accordion>  
+        </ion-accordion>
       </ion-accordion-group>
-      
+
       // Custom Icon
       <ion-accordion-group>
         <ion-accordion value="colors" toggle-icon="arrow-down-circle">
           <ion-item slot="header">
             <ion-label>Colors</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Red</ion-label>
@@ -85,7 +86,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Shapes</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Circle</ion-label>
@@ -102,7 +103,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Numbers</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>1</ion-label>
@@ -116,14 +117,14 @@ export const AccordionExample {
           </ion-list>
         </ion-accordion>
       </ion-accordion-group>
-      
+
       // Open Accordion
       <ion-accordion-group value="colors">
         <ion-accordion value="colors">
           <ion-item slot="header">
             <ion-label>Colors</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Red</ion-label>
@@ -140,7 +141,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Shapes</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Circle</ion-label>
@@ -157,7 +158,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Numbers</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>1</ion-label>
@@ -171,14 +172,14 @@ export const AccordionExample {
           </ion-list>
         </ion-accordion>
       </ion-accordion-group>
-      
+
       // Multiple Accordions
       <ion-accordion-group multiple={true} value={['colors', 'numbers']}>
         <ion-accordion value="colors">
           <ion-item slot="header">
             <ion-label>Colors</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Red</ion-label>
@@ -195,7 +196,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Shapes</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Circle</ion-label>
@@ -212,7 +213,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Numbers</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>1</ion-label>
@@ -229,3 +230,4 @@ export const AccordionExample {
     ];
   }
 );
+```

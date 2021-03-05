@@ -1,6 +1,6 @@
 # ion-accordion
 
-Accordions provide collapsable sections in your content to reduce vertical space while providing a way of organizing and grouping information. `ion-accordion` should be grouped inside `ion-accordion-group` components.
+Accordions provide collapsible sections in your content to reduce vertical space while providing a way of organizing and grouping information. All `ion-accordion` components should be grouped inside `ion-accordion-group` components.
 
 ## Anatomy
 
@@ -8,11 +8,11 @@ Accordions provide collapsable sections in your content to reduce vertical space
 
 The `header` slot is used as the toggle that will expand or collapse your accordion. We recommend you use an `ion-item` here to take advantage of the accessibility and theming functionalities.
 
-When using `ion-item` in the `header` slot, the `ion-item`'s `button` prop is set to `true` and the `detail` prop is set to `false`. In addition, we will also automatically add a toggle icon to the `ion-item`. This icon will automatically be rotated when you expand or collapse the accordion. See [#customizing-icons](Customizing Icons) for more information.
+When using `ion-item` in the `header` slot, the `ion-item`'s `button` prop is set to `true` and the `detail` prop is set to `false`. In addition, we will also automatically add a toggle icon to the `ion-item`. This icon will automatically be rotated when you expand or collapse the accordion. See [Customizing Icons](#customizing-icons) for more information.
 
 ### Content
 
-The `content` slot is used as the part of the accordion that is revealed or hidden depending on the state of your accordion. You can place anything here except for another `ion-content` instance as only one instance of `ion-content` is supposed to be added per page.
+The `content` slot is used as the part of the accordion that is revealed or hidden depending on the state of your accordion. You can place anything here except for another `ion-content` instance as only one instance of `ion-content` should be added per page.
 
 ## Customizing Icons
 
@@ -85,13 +85,14 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
 
 ### Angular
 
+```html
 <!-- Basic -->
 <ion-accordion-group>
   <ion-accordion value="colors">
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -108,7 +109,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -125,7 +126,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -137,7 +138,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
         <ion-label>3</ion-label>
       </ion-item>
     </ion-list>
-  </ion-accordion>  
+  </ion-accordion>
 </ion-accordion-group>
 
 <!-- Custom Icon -->
@@ -146,7 +147,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -163,7 +164,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -180,7 +181,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -201,7 +202,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -218,7 +219,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -235,7 +236,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -256,7 +257,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -273,7 +274,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -290,7 +291,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -304,17 +305,19 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     </ion-list>
   </ion-accordion>
 </ion-accordion-group>
+```
 
 
 ### Javascript
 
+```html
 <!-- Basic -->
 <ion-accordion-group>
   <ion-accordion value="colors">
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -331,7 +334,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -348,7 +351,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -360,7 +363,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
         <ion-label>3</ion-label>
       </ion-item>
     </ion-list>
-  </ion-accordion>  
+  </ion-accordion>
 </ion-accordion-group>
 
 <!-- Custom Icon -->
@@ -369,7 +372,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -386,7 +389,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -403,7 +406,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -424,7 +427,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -441,7 +444,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -458,7 +461,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -479,7 +482,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -496,7 +499,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -513,7 +516,7 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -532,10 +535,12 @@ When used inside an `ion-accordion-group`, `ion-accordion` has full keyboard sup
   let accordionGroup = document.querySelector('ion-accordion-group');
   accordionGroup.value = ['colors', 'numbers'];
 </script>
+```
 
 
 ### React
 
+```tsx
 import React from 'react';
 
 import { IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel } from '@ionic/react';
@@ -548,7 +553,7 @@ export const AccordionExample: React.FC = () => (
       <IonItem slot="header">
         <IonLabel>Colors</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>Red</IonLabel>
@@ -565,7 +570,7 @@ export const AccordionExample: React.FC = () => (
       <IonItem slot="header">
         <IonLabel>Shapes</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>Circle</IonLabel>
@@ -582,7 +587,7 @@ export const AccordionExample: React.FC = () => (
       <IonItem slot="header">
         <IonLabel>Numbers</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>1</IonLabel>
@@ -594,16 +599,16 @@ export const AccordionExample: React.FC = () => (
           <IonLabel>3</IonLabel>
         </IonItem>
       </ion-list>
-    </IonAccordion>  
+    </IonAccordion>
   </IonAccordionGroup>
-  
+
   {/*-- Custom Icon --*/}
   <IonAccordionGroup>
     <IonAccordion value="colors" toggleIcon={arrowDownCircle}>
       <IonItem slot="header">
         <IonLabel>Colors</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>Red</IonLabel>
@@ -620,7 +625,7 @@ export const AccordionExample: React.FC = () => (
       <IonItem slot="header">
         <IonLabel>Shapes</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>Circle</IonLabel>
@@ -637,7 +642,7 @@ export const AccordionExample: React.FC = () => (
       <IonItem slot="header">
         <IonLabel>Numbers</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>1</IonLabel>
@@ -651,14 +656,14 @@ export const AccordionExample: React.FC = () => (
       </ion-list>
     </IonAccordion>
   </IonAccordionGroup>
-  
+
   {/*-- Open Accordion --*/}
   <IonAccordionGroup value="colors">
     <IonAccordion value="colors">
       <IonItem slot="header">
         <IonLabel>Colors</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>Red</IonLabel>
@@ -675,7 +680,7 @@ export const AccordionExample: React.FC = () => (
       <IonItem slot="header">
         <IonLabel>Shapes</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>Circle</IonLabel>
@@ -692,7 +697,7 @@ export const AccordionExample: React.FC = () => (
       <IonItem slot="header">
         <IonLabel>Numbers</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>1</IonLabel>
@@ -706,14 +711,14 @@ export const AccordionExample: React.FC = () => (
       </ion-list>
     </IonAccordion>
   </IonAccordionGroup>
-  
+
   {/*-- Multiple Accordions --*/}
   <IonAccordionGroup multiple={true} value={['colors', 'numbers']}>
     <IonAccordion value="colors">
       <IonItem slot="header">
         <IonLabel>Colors</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>Red</IonLabel>
@@ -730,7 +735,7 @@ export const AccordionExample: React.FC = () => (
       <IonItem slot="header">
         <IonLabel>Shapes</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>Circle</IonLabel>
@@ -747,7 +752,7 @@ export const AccordionExample: React.FC = () => (
       <IonItem slot="header">
         <IonLabel>Numbers</IonLabel>
       </IonItem>
-      
+
       <ion-list slot="content">
         <IonItem>
           <IonLabel>1</IonLabel>
@@ -762,10 +767,12 @@ export const AccordionExample: React.FC = () => (
     </IonAccordion>
   </IonAccordionGroup>
 );
+```
 
 
 ### Stencil
 
+```tsx
 import { Component, h } from '@stencil/core';
 
 @Component({
@@ -781,7 +788,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Colors</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Red</ion-label>
@@ -798,7 +805,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Shapes</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Circle</ion-label>
@@ -815,7 +822,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Numbers</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>1</ion-label>
@@ -827,16 +834,16 @@ export const AccordionExample {
               <ion-label>3</ion-label>
             </ion-item>
           </ion-list>
-        </ion-accordion>  
+        </ion-accordion>
       </ion-accordion-group>
-      
+
       // Custom Icon
       <ion-accordion-group>
         <ion-accordion value="colors" toggle-icon="arrow-down-circle">
           <ion-item slot="header">
             <ion-label>Colors</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Red</ion-label>
@@ -853,7 +860,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Shapes</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Circle</ion-label>
@@ -870,7 +877,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Numbers</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>1</ion-label>
@@ -884,14 +891,14 @@ export const AccordionExample {
           </ion-list>
         </ion-accordion>
       </ion-accordion-group>
-      
+
       // Open Accordion
       <ion-accordion-group value="colors">
         <ion-accordion value="colors">
           <ion-item slot="header">
             <ion-label>Colors</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Red</ion-label>
@@ -908,7 +915,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Shapes</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Circle</ion-label>
@@ -925,7 +932,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Numbers</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>1</ion-label>
@@ -939,14 +946,14 @@ export const AccordionExample {
           </ion-list>
         </ion-accordion>
       </ion-accordion-group>
-      
+
       // Multiple Accordions
       <ion-accordion-group multiple={true} value={['colors', 'numbers']}>
         <ion-accordion value="colors">
           <ion-item slot="header">
             <ion-label>Colors</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Red</ion-label>
@@ -963,7 +970,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Shapes</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>Circle</ion-label>
@@ -980,7 +987,7 @@ export const AccordionExample {
           <ion-item slot="header">
             <ion-label>Numbers</ion-label>
           </ion-item>
-          
+
           <ion-list slot="content">
             <ion-item>
               <ion-label>1</ion-label>
@@ -997,10 +1004,12 @@ export const AccordionExample {
     ];
   }
 );
+```
 
 
 ### Vue
 
+```html
 <template>
   <!-- Basic -->
   <ion-accordion-group>
@@ -1008,7 +1017,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -1025,7 +1034,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -1042,7 +1051,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -1054,7 +1063,7 @@ export const AccordionExample {
         <ion-label>3</ion-label>
       </ion-item>
     </ion-list>
-  </ion-accordion>  
+  </ion-accordion>
 </ion-accordion-group>
 
   <!-- Custom Icon -->
@@ -1063,7 +1072,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -1080,7 +1089,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -1097,7 +1106,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -1118,7 +1127,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -1135,7 +1144,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -1152,7 +1161,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -1173,7 +1182,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Colors</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Red</ion-label>
@@ -1190,7 +1199,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Shapes</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>Circle</ion-label>
@@ -1207,7 +1216,7 @@ export const AccordionExample {
     <ion-item slot="header">
       <ion-label>Numbers</ion-label>
     </ion-item>
-    
+
     <ion-list slot="content">
       <ion-item>
         <ion-label>1</ion-label>
@@ -1235,6 +1244,7 @@ export default defineComponent({
   }
 });
 </script>
+```
 
 
 
