@@ -18,6 +18,18 @@ test('accordion: a11y', async () => {
   expect(results.violations.length).toEqual(0);
 });
 
+test('accordion: basic', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/accordion/test/basic?ionic:_testing=true'
+  });
+
+  const compare = await page.compareScreenshot();
+  expect(compare).toMatchScreenshot();
+
+  const results = await new AxePuppeteer(page).analyze();
+  expect(results.violations.length).toEqual(0);
+});
+
 test('accordion:rtl: a11y', async () => {
   const page = await newE2EPage({
     url: '/src/components/accordion/test/a11y?ionic:_testing=true&rtl=true'
