@@ -186,13 +186,13 @@ export class Accordion implements ComponentInterface {
     const { contentEl, contentElWrapper } = this;
     if (contentEl === undefined || contentElWrapper === undefined) { return; }
 
-    this.state = AccordionState.Expanding;
-
     if (this.currentRaf !== undefined) {
       cancelAnimationFrame(this.currentRaf);
     }
 
     if (this.shouldAnimate()) {
+      this.state = AccordionState.Expanding;
+
       this.currentRaf = raf(async () => {
         const contentHeight = contentElWrapper.offsetHeight;
         const waitForTransition = transitionEndAsync(contentEl, 2000);
@@ -270,12 +270,12 @@ export class Accordion implements ComponentInterface {
     if (typeof (window as any) === 'undefined') { return false; }
 
     const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) { return true; }
+    if (prefersReducedMotion) { return false; }
 
     const animated = config.get('animated', true);
-    if (animated) { return true; }
+    if (!animated) { return false; }
 
-    return false;
+    return true;
   }
 
   private updateState = async (initialUpdate = false) => {
