@@ -175,7 +175,7 @@ export class Tabs implements NavOutlet {
     if (this.useRouter && href !== undefined) {
       const router = document.querySelector('ion-router');
       if (router) {
-        router.push(href);
+        router.push(href, 'root');
       }
     } else {
       this.select(tab);
