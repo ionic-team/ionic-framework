@@ -127,7 +127,7 @@
       });
 
       customElements.whenDefined('ion-radio-group')
-       .then(() => group.componentOnReady())
+       .then(() => group.componentOnReady && group.componentOnReady())
        .then(() => {
          valueEl.textContent = group.value;
         });

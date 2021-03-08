@@ -5,7 +5,7 @@ test('segment: toolbar', async () => {
     url: '/src/components/segment/test/toolbar?ionic:_testing=true'
   });
 
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
@@ -16,7 +16,7 @@ test('segment:rtl: toolbar', async () => {
     url: '/src/components/segment/test/toolbar?ionic:_testing=true&rtl=true'
   });
 
-  await page.waitFor(250);
+  await page.waitForTimeout(250);
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();

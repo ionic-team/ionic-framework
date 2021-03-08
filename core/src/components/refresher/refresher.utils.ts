@@ -1,6 +1,7 @@
 import { writeTask } from '@stencil/core';
 
 import { createAnimation } from '../../utils/animation/animation';
+import { clamp, componentOnReady } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
 // MD Native Refresher
@@ -123,14 +124,26 @@ export const setSpinnerOpacity = (spinner: HTMLElement, opacity: number) => {
 };
 
 export const handleScrollWhilePulling = (
-  spinner: HTMLElement,
   ticks: NodeListOf<SVGElement>,
-  opacity: number,
-  currentTickToShow: number
+  numTicks: number,
+  pullAmount: number
 ) => {
+  const max = 1;
   writeTask(() => {
-    setSpinnerOpacity(spinner, opacity);
-    ticks.forEach((el, i) => el.style.setProperty('opacity', (i <= currentTickToShow) ? '0.99' : '0'));
+    ticks.forEach((el, i) => {
+      /**
+       * Compute the opacity of each tick
+       * mark as a percentage of the pullAmount
+       * offset by max / numTicks so
+       * the tick marks are shown staggered.
+       */
+      const min = i * (max / numTicks);
+      const range = max - min;
+      const start = pullAmount - min;
+      const progression = clamp(0, start / range, 1);
+
+      el.style.setProperty('opacity', progression.toString());
+    });
   });
 };
 
@@ -145,13 +158,13 @@ export const handleScrollWhileRefreshing = (
   });
 };
 
-export const translateElement = (el?: HTMLElement, value?: string) => {
+export const translateElement = (el?: HTMLElement, value?: string, duration = 200) => {
   if (!el) { return Promise.resolve(); }
 
-  const trans = transitionEndAsync(el, 200);
+  const trans = transitionEndAsync(el, duration);
 
   writeTask(() => {
-    el.style.setProperty('transition', '0.2s all ease-out');
+    el.style.setProperty('transition', `${duration}ms all ease-out`);
 
     if (value === undefined) {
       el.style.removeProperty('transform');
@@ -170,7 +183,7 @@ export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElem
   const refresherContent = referenceEl.querySelector('ion-refresher-content');
   if (!refresherContent) { return Promise.resolve(false); }
 
-  await refresherContent.componentOnReady();
+  await new Promise(resolve => componentOnReady(refresherContent, resolve));
 
   const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
   const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');

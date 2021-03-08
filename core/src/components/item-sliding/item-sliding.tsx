@@ -209,7 +209,14 @@ export class ItemSliding implements ComponentInterface {
     this.leftOptions = this.rightOptions = undefined;
 
     for (let i = 0; i < options.length; i++) {
-      const option = await options.item(i).componentOnReady();
+      const item = options.item(i);
+
+      /**
+       * We cannot use the componentOnReady helper
+       * util here since we need to wait for all of these items
+       * to be ready before we set `this.sides` and `this.optsDirty`.
+       */
+      const option = ((item as any).componentOnReady !== undefined) ? await item.componentOnReady() : item;
 
       const side = isEndSide(option.side) ? 'end' : 'start';
 

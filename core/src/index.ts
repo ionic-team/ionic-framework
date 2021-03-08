@@ -5,6 +5,8 @@ export { iosTransitionAnimation } from './utils/transition/ios.transition';
 export { mdTransitionAnimation } from './utils/transition/md.transition';
 export { getTimeGivenProgression } from './utils/animation/cubic-bezier';
 export { createGesture } from './utils/gesture';
+export { initialize } from './global/ionic-global';
+export { componentOnReady } from './utils/helpers';
 export { isPlatform, Platforms, getPlatforms } from './utils/platform';
 export { IonicSafeString } from './utils/sanitization';
 export { IonicConfig, getMode, setupConfig } from './utils/config';

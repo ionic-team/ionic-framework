@@ -73,7 +73,7 @@ export const createReactComponent = <PropType, ElementType>(
           if (isCoveredByReact(eventName)) {
             (acc as any)[name] = (cProps as any)[name];
           }
-        } else if (typeof (cProps as any)[name] === 'string') {
+        } else if (['string', 'boolean', 'number'].includes(typeof (cProps as any)[name])) {
           (acc as any)[camelToDashCase(name)] = (cProps as any)[name];
         }
         return acc;

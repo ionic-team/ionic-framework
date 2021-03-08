@@ -62,7 +62,9 @@
 
       <br />
 
-      <ion-button expand="block" @click="present($event)" id="present-overlay">Present Overlay</ion-button>
+      <ion-button @click="present($event)" id="present-overlay">Present Overlay</ion-button>
+
+      <ion-button @click="changeLoadingProps()" id="change-loading-props">Quickly Change Loading Props</ion-button>
 
       <ion-action-sheet
         :is-open="isActionSheetOpen"
@@ -314,7 +316,18 @@ export default defineComponent({
       }
     }
 
+    const changeLoadingProps = () => {
+      setLoadingRef(true);
+      setTimeout(() => {
+        setLoadingRef(false);
+        setTimeout(() => {
+          setLoadingRef(true);
+        }, 10);
+      }, 10);
+    }
+
     return {
+      changeLoadingProps,
       overlayProps,
       present,
       componentType,

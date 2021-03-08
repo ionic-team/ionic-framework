@@ -145,6 +145,10 @@ export class RadioGroup implements ComponentInterface {
       // to radios in a select popover)
       if (['Space'].includes(ev.code)) {
         this.value = current.value;
+
+        // Prevent browsers from jumping
+        // to the bottom of the screen
+        ev.preventDefault();
       }
     }
   }
