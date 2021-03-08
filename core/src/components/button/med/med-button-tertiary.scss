@@ -27,11 +27,6 @@
 :host([tertiary].ion-focused) {
   .button-native {
     color: var(--med-background-focused);
-
-    &::before {
-      //background: var(--med-background-focused);
-
-    }
   }
 }
 
@@ -39,13 +34,11 @@
 @media (any-hover: hover) {
   :host([tertiary]:hover) {
     .button-native {
-      //background: var(--med-background-hover);
       color: var(--med-background-hover);
     }
 
     .button-native::before {
       opacity: 1;
-      //background: var(--med-background-hover);
     }
   }
 }

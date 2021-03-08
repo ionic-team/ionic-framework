@@ -148,7 +148,6 @@
 // focused
 :host(.ion-focused) {
   .button-native {
-
     &::before {
       background: var(--med-background-focused);
       opacity: 1;
@@ -160,10 +159,6 @@
 // hover
 @media (any-hover: hover) {
   :host(:hover) {
-    .button-native {
-      //background: var(--med-background-hover);
-    }
-
     .button-native::before {
       opacity: 1;
       background: var(--med-background-hover);
