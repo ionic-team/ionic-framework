@@ -41,7 +41,6 @@ export const createSheetGesture = (
     }
 
     animation.progressStart(true, 1 - currentBreakpoint);
-    console.log('current breakpoint', currentBreakpoint)
   };
 
   const onMove = (detail: GestureDetail) => {
@@ -105,11 +104,12 @@ export const createSheetGesture = (
 
     animation
       .onFinish(() => {
+        animation.progressStart(true, 1);
         if (shouldRemainOpen) {
           if (wrapperAnimation && backdropAnimation) {
             wrapperAnimation.keyframes(SheetDefaults.WRAPPER_KEYFRAMES);
             backdropAnimation.keyframes(SheetDefaults.BACKDROP_KEYFRAMES);
-            animation.progressStart(true, 1 - closest);
+            animation.progressStep(1 - closest);
             currentBreakpoint = closest;
           }
 

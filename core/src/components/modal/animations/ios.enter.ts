@@ -15,6 +15,8 @@ export const iosEnterAnimation = (
   const initialHeight = initialBreakpoint ? `${100 - (initialBreakpoint * 100)}vh` : '0vh';
   const initialOpacity = initialBreakpoint ? `calc(var(--backdrop-opacity) * ${initialBreakpoint})` : 'var(--backdrop-opacity)';
 
+  console.log('initial breakpoint', initialBreakpoint)
+
   const backdropAnimation = createAnimation('backdropAnimation')
     .addElement(baseEl.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, initialOpacity)
