@@ -1,0 +1,41 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Global/Mixins/Tipografia" />
+
+# 🧪 Tipografia
+
+Mixins **globais** relacionados a **tipografia**.
+
+## 💈 Utilização
+
+No arquivo em que a utilização dos **mixins** forem **necessárias**, importar:
+
+``` scss
+@import '~@mbrandao/med-components/src/global/global';
+```
+
+## 🧪 font-face()
+
+Mixin criado para gerar uma dada **@font-face**.
+
+### 💈 Utilização:
+
+```scss
+@include font-face(
+  "fsemeric",
+  "fsemeric/Regular/FSEmericWeb-Regular",
+  400,
+  "normal",
+  "FSEmericWeb"
+);
+```
+
+### font-face($font-name, $font-path, $weight, $style, $svg-id);
+
+| Parâmetro      | Descrição                     | Tipo   | Default |
+| -------------- | ----------------------------- | ------ | ------- |
+| **$font-name** | Define o font-family da fonte | String | -       |
+| **$font-path** | Define o path da fonte        | String | -       |
+| **$weight**    | Define o peso da fonte        | Number | -       |
+| **$style**     | Define o estilo da fonte      | String | -       |
+| **$svg-id**    | Define o id do svg da fonte   | String | -       |
