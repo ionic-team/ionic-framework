@@ -1,0 +1,150 @@
+@import "../../../themes/ionic.globals";
+@import "../../../../med-components/src/tokens/global/global";
+
+:host {
+  // tokens
+  --med-padding: #{$med-spacing-squish-lg};
+
+  --med-background: #{$med-color-brand-primary-gradient};
+  --med-background-hover: #{$med-color-brand-primary-medium};
+  --med-background-disabled: #{$med-color-neutral-light-20};
+  --med-background-activated: #{$med-color-brand-primary-dark};
+  --med-background-focused: #{$med-color-brand-primary-medium};
+
+  --med-border-radius: #{$med-border-radius-pill};
+  --med-border-width: #{$med-border-width-none};
+  --med-border-width-focused: #{$med-border-width-thin};
+  --med-border-color-focused: #{$med-color-brand-primary-lightest};
+
+  --med-font-size: #{$med-font-size-xs};
+  --med-font-weight: #{$med-font-weight-semibold};
+  --med-line-height: #{$med-line-height-compressed};
+  --med-color: #{$med-color-neutral-light-prime};
+  --med-text-transform: uppercase;
+  --med-transition: opacity 100ms ease-out;
+  --med-overflow: hidden;
+
+  font-family: inherit;
+  display: inline-block;
+  width: auto;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  user-select: none;
+  vertical-align: top; // the better option for most scenarios
+  vertical-align: -webkit-baseline-middle; // the best for those that support it
+  pointer-events: auto;
+  font-kerning: none;
+
+  .button-native {
+    @include font-smoothing();
+    @include text-inherit();
+
+    overflow: hidden;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    line-height: 1;
+    contain: layout style;
+    cursor: pointer;
+    z-index: 0;
+    box-sizing: border-box;
+    appearance: none;
+    margin: 0;
+
+    &::-moz-focus-inner {
+      border: 0;
+    }
+
+    &::before {
+      @include button-state();
+
+      opacity: 1;
+    }
+  }
+
+  .button-inner {
+    display: flex;
+    position: relative;
+    flex-flow: row nowrap;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+}
+
+// block
+:host([block]) {
+  display: block;
+
+  .button-native {
+    display: block;
+    width: 100%;
+    clear: both;
+    contain: content;
+    margin-left: 0;
+    margin-right: 0;
+
+    &::before {
+      clear: both;
+    }
+  }
+}
+
+// full
+:host([full]) {
+  display: block;
+
+  .button-native {
+    display: block;
+    width: 100%;
+    contain: content;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+// disabled
+:host([disabled]) {
+  cursor: default;
+  pointer-events: none;
+
+  .button-native::before {
+    opacity: 1;
+  }
+}
+
+// activated
+:host(.ion-activated) .button-native::before {
+  opacity: 1;
+}
+
+// focused
+:host(.ion-focused) {
+  .button-native {
+    border-style: solid;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+// hover
+@media (any-hover: hover) {
+  :host(:hover) {
+    .button-native::before {
+      opacity: 0;
+    }
+  }
+}
+
+@import "./med-button-primary.scss";
+@import "./med-button-secondary.scss";
+@import "./med-button-tertiary.scss";

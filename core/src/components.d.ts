@@ -2706,8 +2706,6 @@ export namespace Components {
          */
         "renderItem"?: (item: any, index: number) => any;
     }
-    interface MedButton {
-    }
 }
 declare global {
     interface HTMLIonActionSheetElement extends Components.IonActionSheet, HTMLStencilElement {
@@ -3232,12 +3230,6 @@ declare global {
         prototype: HTMLIonVirtualScrollElement;
         new (): HTMLIonVirtualScrollElement;
     };
-    interface HTMLMedButtonElement extends Components.MedButton, HTMLStencilElement {
-    }
-    var HTMLMedButtonElement: {
-        prototype: HTMLMedButtonElement;
-        new (): HTMLMedButtonElement;
-    };
     interface HTMLElementTagNameMap {
         "ion-action-sheet": HTMLIonActionSheetElement;
         "ion-alert": HTMLIonAlertElement;
@@ -3326,7 +3318,6 @@ declare global {
         "ion-toggle": HTMLIonToggleElement;
         "ion-toolbar": HTMLIonToolbarElement;
         "ion-virtual-scroll": HTMLIonVirtualScrollElement;
-        "med-button": HTMLMedButtonElement;
     }
 }
 declare namespace LocalJSX {
@@ -6052,8 +6043,6 @@ declare namespace LocalJSX {
          */
         "renderItem"?: (item: any, index: number) => any;
     }
-    interface MedButton {
-    }
     interface IntrinsicElements {
         "ion-action-sheet": IonActionSheet;
         "ion-alert": IonAlert;
@@ -6142,7 +6131,6 @@ declare namespace LocalJSX {
         "ion-toggle": IonToggle;
         "ion-toolbar": IonToolbar;
         "ion-virtual-scroll": IonVirtualScroll;
-        "med-button": MedButton;
     }
 }
 export { LocalJSX as JSX };
@@ -6236,7 +6224,6 @@ declare module "@stencil/core" {
             "ion-toggle": LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
             "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
             "ion-virtual-scroll": LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;
-            "med-button": LocalJSX.MedButton & JSXBase.HTMLAttributes<HTMLMedButtonElement>;
         }
     }
 }
