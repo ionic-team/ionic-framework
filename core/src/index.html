@@ -16,7 +16,6 @@
       .custom {
         --med-text-transform: initial;
       }
-
       ion-button {
         margin: 15px;
       }
@@ -25,17 +24,28 @@
   <body>
     <ion-app>
       <ion-content>
+        <div style="background:#333;">
+          <ion-button>ion button</ion-button>
+          <ion-button disabled>ion button</ion-button>
+          <ion-button class="ion-focused">ion button</ion-button>
+          <ion-button class="ion-activated">ion button</ion-button>
+          <ion-button block>ion button</ion-button>
+          <ion-button full>ion button</ion-button>
 
-        <ion-button secondary>ion button</ion-button>
-        <ion-button secondary disabled>ion button</ion-button>
+          <ion-button secondary>ion button</ion-button>
+          <ion-button secondary disabled>ion button</ion-button>
+          <ion-button secondary class="ion-focused">ion button</ion-button>
+          <ion-button secondary class="ion-activated">ion button</ion-button>
+          <ion-button secondary block>ion button</ion-button>
+          <ion-button secondary full>ion button</ion-button>
 
-        <ion-button>ion button</ion-button>
-        <ion-button disabled>ion button</ion-button>
-        <ion-button class="ion-focused">ion button</ion-button>
-        <ion-button class="ion-activated">ion button</ion-button>
-        <ion-button block>ion button</ion-button>
-        <ion-button full>ion button</ion-button>
-
+          <ion-button tertiary>ion button</ion-button>
+          <ion-button tertiary disabled>ion button</ion-button>
+          <ion-button tertiary class="ion-focused">ion button</ion-button>
+          <ion-button tertiary class="ion-activated">ion button</ion-button>
+          <ion-button tertiary block>ion button</ion-button>
+          <ion-button tertiary full>ion button</ion-button>
+        </div>
       </ion-content>
     </ion-app>
   </body>
