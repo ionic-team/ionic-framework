@@ -26,7 +26,7 @@ export const createSheetGesture = (
   const contentEl = el.querySelector('ion-content');
   const height = window.innerHeight;
   let currentBreakpoint = el.initialBreakpoint;
-  //const maxBreakpoint = breakpoints && breakpoints[breakpoints.length - 1];
+  // const maxBreakpoint = breakpoints && breakpoints[breakpoints.length - 1];
   const wrapperAnimation = animation.childAnimations.find(ani => ani.id === 'wrapperAnimation');
   const backdropAnimation = animation.childAnimations.find(ani => ani.id === 'backdropAnimation');
 
@@ -80,15 +80,12 @@ export const createSheetGesture = (
     const threshold = (detail.deltaY + velocity * 1000) / height;
     const diff = currentBreakpoint - threshold;
 
-    let closest = breakpoints.reduce((a, b) => {
+    const closest = breakpoints.reduce((a, b) => {
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
 
     const shouldRemainOpen = closest !== 0;
     currentBreakpoint = 0;
-
-    // TODO this is not returning properly sometimes when velocity is fast
-    console.log('closest is', closest);
 
     if (wrapperAnimation && backdropAnimation) {
       wrapperAnimation.keyframes([
@@ -96,12 +93,9 @@ export const createSheetGesture = (
         { offset: 1, transform: `translateY(${(1 - closest) * 100}vh)` }
       ]);
 
-      console.log('hello', offset, closest)
-
       backdropAnimation.keyframes([
-        { offset: 0, opacity: offset },
-        { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${closest})` },
-
+        { offset: 0, opacity: `calc(var(--backdrop-opacity) * ${1 - offset})` },
+        { offset: 1, opacity: `calc(var(--backdrop-opacity) * ${closest})` }
       ]);
     }
 

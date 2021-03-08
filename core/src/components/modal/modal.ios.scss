@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host:first-of-type {
-  --backdrop-opacity: var(--ion-backdrop-opacity, 1);
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
 }
 
 @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
