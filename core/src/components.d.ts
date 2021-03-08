@@ -1273,32 +1273,6 @@ export namespace Components {
          */
         "type"?: string;
     }
-    interface IonMenuButton {
-        /**
-          * Automatically hides the menu button when the corresponding menu is not active
-         */
-        "autoHide": boolean;
-        /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-         */
-        "color"?: Color;
-        /**
-          * If `true`, the user cannot interact with the menu button.
-         */
-        "disabled": boolean;
-        /**
-          * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
-         */
-        "menu"?: string;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * The type of the button.
-         */
-        "type": 'submit' | 'reset' | 'button';
-    }
     interface IonMenuToggle {
         /**
           * Automatically hides the content when the corresponding menu is not active.  By default, it's `true`. Change it to `false` in order to keep `ion-menu-toggle` always visible regardless the state of the menu.
@@ -2706,6 +2680,8 @@ export namespace Components {
          */
         "renderItem"?: (item: any, index: number) => any;
     }
+    interface MedNavbar {
+    }
 }
 declare global {
     interface HTMLIonActionSheetElement extends Components.IonActionSheet, HTMLStencilElement {
@@ -2947,12 +2923,6 @@ declare global {
     var HTMLIonMenuElement: {
         prototype: HTMLIonMenuElement;
         new (): HTMLIonMenuElement;
-    };
-    interface HTMLIonMenuButtonElement extends Components.IonMenuButton, HTMLStencilElement {
-    }
-    var HTMLIonMenuButtonElement: {
-        prototype: HTMLIonMenuButtonElement;
-        new (): HTMLIonMenuButtonElement;
     };
     interface HTMLIonMenuToggleElement extends Components.IonMenuToggle, HTMLStencilElement {
     }
@@ -3230,6 +3200,12 @@ declare global {
         prototype: HTMLIonVirtualScrollElement;
         new (): HTMLIonVirtualScrollElement;
     };
+    interface HTMLMedNavbarElement extends Components.MedNavbar, HTMLStencilElement {
+    }
+    var HTMLMedNavbarElement: {
+        prototype: HTMLMedNavbarElement;
+        new (): HTMLMedNavbarElement;
+    };
     interface HTMLElementTagNameMap {
         "ion-action-sheet": HTMLIonActionSheetElement;
         "ion-alert": HTMLIonAlertElement;
@@ -3271,7 +3247,6 @@ declare global {
         "ion-list-header": HTMLIonListHeaderElement;
         "ion-loading": HTMLIonLoadingElement;
         "ion-menu": HTMLIonMenuElement;
-        "ion-menu-button": HTMLIonMenuButtonElement;
         "ion-menu-toggle": HTMLIonMenuToggleElement;
         "ion-modal": HTMLIonModalElement;
         "ion-nav": HTMLIonNavElement;
@@ -3318,6 +3293,7 @@ declare global {
         "ion-toggle": HTMLIonToggleElement;
         "ion-toolbar": HTMLIonToolbarElement;
         "ion-virtual-scroll": HTMLIonVirtualScrollElement;
+        "med-navbar": HTMLMedNavbarElement;
     }
 }
 declare namespace LocalJSX {
@@ -4615,32 +4591,6 @@ declare namespace LocalJSX {
           * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
          */
         "type"?: string;
-    }
-    interface IonMenuButton {
-        /**
-          * Automatically hides the menu button when the corresponding menu is not active
-         */
-        "autoHide"?: boolean;
-        /**
-          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-         */
-        "color"?: Color;
-        /**
-          * If `true`, the user cannot interact with the menu button.
-         */
-        "disabled"?: boolean;
-        /**
-          * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle
-         */
-        "menu"?: string;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * The type of the button.
-         */
-        "type"?: 'submit' | 'reset' | 'button';
     }
     interface IonMenuToggle {
         /**
@@ -6043,6 +5993,8 @@ declare namespace LocalJSX {
          */
         "renderItem"?: (item: any, index: number) => any;
     }
+    interface MedNavbar {
+    }
     interface IntrinsicElements {
         "ion-action-sheet": IonActionSheet;
         "ion-alert": IonAlert;
@@ -6084,7 +6036,6 @@ declare namespace LocalJSX {
         "ion-list-header": IonListHeader;
         "ion-loading": IonLoading;
         "ion-menu": IonMenu;
-        "ion-menu-button": IonMenuButton;
         "ion-menu-toggle": IonMenuToggle;
         "ion-modal": IonModal;
         "ion-nav": IonNav;
@@ -6131,6 +6082,7 @@ declare namespace LocalJSX {
         "ion-toggle": IonToggle;
         "ion-toolbar": IonToolbar;
         "ion-virtual-scroll": IonVirtualScroll;
+        "med-navbar": MedNavbar;
     }
 }
 export { LocalJSX as JSX };
@@ -6177,7 +6129,6 @@ declare module "@stencil/core" {
             "ion-list-header": LocalJSX.IonListHeader & JSXBase.HTMLAttributes<HTMLIonListHeaderElement>;
             "ion-loading": LocalJSX.IonLoading & JSXBase.HTMLAttributes<HTMLIonLoadingElement>;
             "ion-menu": LocalJSX.IonMenu & JSXBase.HTMLAttributes<HTMLIonMenuElement>;
-            "ion-menu-button": LocalJSX.IonMenuButton & JSXBase.HTMLAttributes<HTMLIonMenuButtonElement>;
             "ion-menu-toggle": LocalJSX.IonMenuToggle & JSXBase.HTMLAttributes<HTMLIonMenuToggleElement>;
             "ion-modal": LocalJSX.IonModal & JSXBase.HTMLAttributes<HTMLIonModalElement>;
             "ion-nav": LocalJSX.IonNav & JSXBase.HTMLAttributes<HTMLIonNavElement>;
@@ -6224,6 +6175,7 @@ declare module "@stencil/core" {
             "ion-toggle": LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
             "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
             "ion-virtual-scroll": LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;
+            "med-navbar": LocalJSX.MedNavbar & JSXBase.HTMLAttributes<HTMLMedNavbarElement>;
         }
     }
 }

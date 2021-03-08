@@ -1,0 +1,53 @@
+@import "../../../../med-components/src/tokens/global/global";
+:host {
+  --med-background: #000;
+  --med-color: #fff;
+  --med-title-color: #fff;
+  --med-subtitle-color: #fff;
+  --med-title-max-width: calc(100% - 160px);
+  --med-padding: #{$med-spacing-squish-xs};
+  --med-padding-center: #{$med-spacing-stack-xxxs};
+
+  .med-navbar {
+    display: flex;
+    background: var(--med-background);
+    align-items: center;
+    justify-content: center;
+    padding: var(--med-padding);
+    color: #fff;
+
+    &__left,
+    &__right {
+      display: flex;
+    }
+
+    &__center {
+      padding-top: var(--med-padding-center);
+      padding-bottom: var(--med-padding-center);
+      flex: 1;
+      text-align: center;
+    }
+  }
+}
+
+::slotted(*) {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+::slotted([slot="start"]) {
+  padding-right: var(--med-padding-center);
+}
+
+::slotted([slot="title"]) {
+  padding: var(--med-padding-center);
+  color: var(--med-title-color);
+}
+
+::slotted([slot="subtitle"]) {
+  color: var(--med-subtitle-color);
+}
+
+::slotted([slot="end"]) {
+  padding: var(--med-padding-center);
+}

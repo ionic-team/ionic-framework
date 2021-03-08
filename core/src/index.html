@@ -20,18 +20,24 @@
       ion-button {
         margin: 15px;
       }
+      .left-teste {
+        width: 50px;
+        background-color: red;
+        height: 10px
+      }
+      .right-teste {
+        width: 100px;
+        background-color: red;
+        height: 10px
+      }
     </style>
   </head>
   <body>
-    <ion-app>
-      <ion-content>
-
-        <ion-button>ion button</ion-button>
-        <ion-button disabled>ion button</ion-button>
-        <ion-button class="ion-focused">ion button</ion-button>
-        <ion-button class="ion-activated">ion button</ion-button>
-
-      </ion-content>
-    </ion-app>
+    <med-navbar>
+      <span slot="start">left left</span>
+      <span slot="title">Page Title</span>
+      <span slot="subtitle">Page Subtitle</span>
+      <span slot="end">right right right</span>
+    </med-navbar>
   </body>
 </html>

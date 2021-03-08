@@ -22,5 +22,8 @@
   },
   "engines": {
     "node": ">= 10"
+  },
+  "dependencies": {
+    "resize-observer-polyfill": "^1.5.1"
   }
 }
