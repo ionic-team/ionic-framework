@@ -223,25 +223,23 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           'ion-focusable': true,
         })}
       >
-        <div class="center">
-          <TagType
-            {...attrs}
-            class="button-native"
-            part="native"
-            disabled={disabled}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            {...inheritedAttributes}
-          >
-            <span class="button-inner">
-              <slot name="icon-only"></slot>
-              <slot name="start"></slot>
-              <slot></slot>
-              <slot name="end"></slot>
-            </span>
-            {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
-          </TagType>
-        </div>
+        <TagType
+          {...attrs}
+          class="button-native"
+          part="native"
+          disabled={disabled}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          {...inheritedAttributes}
+        >
+          <span class="button-inner">
+            <slot name="icon-only"></slot>
+            <slot name="start"></slot>
+            <slot></slot>
+            <slot name="end"></slot>
+          </span>
+          {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+        </TagType>
       </Host>
     );
   }
