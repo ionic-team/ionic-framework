@@ -1,7 +1,7 @@
 :host([secondary]) {
 
   .button-native {
-    width: 100%;
+    width: calc(100% - 4px);
     border-style: solid;
     border-color: var(--med-border-color);
     border-width: var(--med-border-width);
@@ -17,24 +17,42 @@
 // disabled
 :host([secondary][disabled]) {
   .button-native {
-    //background: var(--med-background-disabled);
     border-color: var(--med-background-disabled);
     color: var(--med-background-disabled);
   }
 }
 
 // activated
-:host(.ion-activated) .button-native::before {
-  //background: var(--med-background-activated);
+:host([secondary].ion-activated) .button-native {
+  border-color: var(--med-background-activated);
+  color: var(--med-background-activated);
 }
 
 // focused
-:host(.ion-focused) {
+:host([secondary].ion-focused) {
   .button-native {
+    border-color: var(--med-background-focused);
+    color: var(--med-background-focused);
 
     &::before {
       //background: var(--med-background-focused);
 
+    }
+  }
+}
+
+// hover
+@media (any-hover: hover) {
+  :host([secondary]:hover) {
+    .button-native {
+      //background: var(--med-background-hover);
+      border-color: var(--med-background-hover);
+      color: var(--med-background-hover);
+    }
+
+    .button-native::before {
+      opacity: 1;
+      //background: var(--med-background-hover);
     }
   }
 }

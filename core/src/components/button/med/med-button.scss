@@ -23,6 +23,7 @@
   --med-line-height: #{$med-line-height-compressed};
   --med-color: #{$med-color-neutral-light-prime};
   --med-color-secondary: #{$med-color-brand-primary-light};
+  --med-color-tertiary: #{$med-color-neutral-light-prime};
   --med-text-transform: uppercase;
   --med-transition: all 100ms ease-out;
   --med-overflow: hidden;
@@ -44,11 +45,6 @@
   vertical-align: -webkit-baseline-middle; // the best for those that support it
   pointer-events: auto;
   font-kerning: none;
-
-  .center {
-    display: flex;
-    align-items: center;
-  }
 
   .button-native {
     @include font-smoothing();
