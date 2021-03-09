@@ -37,9 +37,9 @@ export class MedNavbar {
         }
 
         if(entry.target.id === 'left') {
-          this.centerEl.style.setProperty('--padding-right',`${entry.contentRect.width - rightWidth}px`);
+          this.centerEl.style.setProperty('--padding-right',`${Math.round(entry.contentRect.width - rightWidth)}px`);
         } else if (entry.target.id === 'right') {
-          this.centerEl.style.setProperty('--padding-left',`${entry.contentRect.width - leftWidth}px`);
+          this.centerEl.style.setProperty('--padding-left',`${Math.round(entry.contentRect.width - leftWidth)}px`);
         }
       }
     });

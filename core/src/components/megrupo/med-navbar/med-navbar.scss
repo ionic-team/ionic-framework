@@ -61,7 +61,6 @@
   color: var(--title-color);
   display: block;
 }
-  
 
 ::slotted([slot="subtitle"]) {
   font-size: var(--subtitle-font-size);
@@ -74,27 +73,3 @@
   align-items: center;
   justify-content: flex-end;
 }
-
-
-/* :host(.absolute-center) {
-  .center {
-    width: var(--title-max-width);
-    padding-top: var(--padding-center);
-    padding-bottom: var(--padding-center);
-  }
-
-  .title {
-    width: var(--title-max-width);
-
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    &nbsp;
-  }
-} */
