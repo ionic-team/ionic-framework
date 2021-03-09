@@ -1,6 +1,6 @@
 on:
   schedule:
-  - cron:  "*/15 * * * *"
+  - cron:  "00 00,12 * * *"
   workflow_dispatch:
 
 jobs:
