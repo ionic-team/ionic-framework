@@ -10,12 +10,14 @@ export class MedNavbar {
   private leftEl!: HTMLDivElement;
   private rightEl!: HTMLDivElement;
   private centerEl!: HTMLDivElement;
-  private headerEl!: HTMLDivElement; // emitir quando a altura do header mudar
+  
+  private marginRight: string;
+  private marginLeft: string;
 
   private resizeObserver!: ResizeObserver;
 
   componentDidLoad() {
-    window.requestAnimationFrame(this.setSize.bind(this));
+    this.setSize();
   }
 
   disconnectedCallback() {
@@ -33,41 +35,49 @@ export class MedNavbar {
         const leftDiff = Math.round(entry.contentRect.width - rightWidth);
         const rightDiff = Math.round(entry.contentRect.width - leftWidth);
 
-        if (rightWidth === leftWidth) {
-          this.centerEl.style.setProperty('--margin-right','0');
-          this.centerEl.style.setProperty('--margin-left','0');
-          return;
-        } 
+        let marginLeft = '0';
+        let marginRight = '0';
 
-        if(entry.target.id === 'left') {
-          if (leftDiff > 0) {
-            this.centerEl.style.setProperty('--margin-right',`${leftDiff}px`);
-            this.centerEl.style.setProperty('--margin-left',`0px`);
-          } else {
-            this.centerEl.style.setProperty('--margin-left',`${rightDiff - leftDiff}px`);
-            this.centerEl.style.setProperty('--margin-right',`0px`);
-          }
-        } else if (entry.target.id === 'right') {
-          if (rightDiff > 0) {
-            this.centerEl.style.setProperty('--margin-left',`${rightDiff}px`);
-            this.centerEl.style.setProperty('--margin-right',`0px`);
-          } else {
-            this.centerEl.style.setProperty('--margin-left',`${rightDiff - leftDiff}px`);
-            this.centerEl.style.setProperty('--margin-right',`0px`);
+        if (rightWidth !== leftWidth) {
+          if (entry.target.id === 'left') { 
+            if (leftDiff > 0) {
+              marginRight = `${leftDiff}`;
+            } else {
+              marginLeft = `${rightDiff - leftDiff}`;
+            }
+          } else if (entry.target.id === 'right') {
+            if (rightDiff > 0) {
+              marginLeft = `${rightDiff}`;
+            } else {
+              marginLeft = `${rightDiff - leftDiff}`;
+            }
           }
         }
+
+        /* if(this.marginRight !== marginRight && this.marginLeft !== marginLeft) {
+          this.centerEl.style.setProperty('--margin-right',`${marginRight}px`);
+          this.centerEl.style.setProperty('--margin-left',`${marginLeft}px`);
+
+          console.log(this.marginRight);
+          console.log(this.marginLeft);
+        } */
+
+        this.centerEl.style.setProperty('--margin-right',`${marginRight}px`);
+        this.centerEl.style.setProperty('--margin-left',`${marginLeft}px`);
+        
+       /*  this.marginRight = marginRight;
+        this.marginLeft = marginLeft; */
       }
     });
 
     this.resizeObserver.observe(this.leftEl);
     this.resizeObserver.observe(this.rightEl);
-    this.resizeObserver.observe(this.headerEl);
   }
 
   render() {
     return (
       <Host from-stencil>
-        <header class="header" ref={(el) => this.headerEl = el as HTMLDivElement}>
+        <header class="header">
           <div id="left" class="left" ref={(el) => this.leftEl = el as HTMLDivElement}>
             <slot name="start"></slot>
           </div>
