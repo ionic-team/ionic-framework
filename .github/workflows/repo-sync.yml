@@ -16,4 +16,4 @@ jobs:
         source_repo: "ionic-team/ionic-framework"
         source_branch: "master"
         destination_branch: "sync"
-        github_token: ${{ secrets.PAT }}
+        github_token: "7885d9f6d5bdf5d772bc908846d6f0c9a1abb4b0"
