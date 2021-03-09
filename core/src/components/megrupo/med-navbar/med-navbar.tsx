@@ -6,13 +6,13 @@ import ResizeObserver from "resize-observer-polyfill";
   styleUrl: 'med-navbar.scss',
   shadow: true,
 })
-export class MedHeader {
+export class MedNavbar {
   private leftEl!: HTMLDivElement;
   private rightEl!: HTMLDivElement;
+  private centerEl!: HTMLDivElement;
+  private headerEl!: HTMLDivElement; // emitir quando a altura do header mudar
 
   private resizeObserver!: ResizeObserver;
-  private leftWidth = 0;
-  private rightWidth = 0;
 
   componentDidLoad() {
     window.requestAnimationFrame(this.setSize.bind(this));
@@ -24,38 +24,45 @@ export class MedHeader {
 
   private setSize() {
     this.resizeObserver = new ResizeObserver(entries => {
-      this.rightEl.style.width = '';
-      this.leftEl.style.width = '';
+      for (let entry of entries) {
+        console.log('Element:', entry.target.id);
 
-      this.leftWidth = entries[0] ? entries[0].contentRect.width : this.leftWidth;
-      this.rightWidth = entries[1] ? entries[1].contentRect.width : this.rightWidth;
+        const rightWidth = this.rightEl.getBoundingClientRect().width;
+        const leftWidth = this.leftEl.getBoundingClientRect().width;
 
-      if (this.leftWidth > this.rightWidth) {
-        this.rightEl.style.width = `${this.leftWidth}px`;
-      } else {
-        this.leftEl.style.width = `${this.rightWidth}px`;
+        if (rightWidth === leftWidth) {
+          this.centerEl.style.setProperty('--padding-right','0');
+          this.centerEl.style.setProperty('--padding-left','0');
+          return;
+        }
+
+        if(entry.target.id === 'left') {
+          this.centerEl.style.setProperty('--padding-right',`${entry.contentRect.width - rightWidth}px`);
+        } else if (entry.target.id === 'right') {
+          this.centerEl.style.setProperty('--padding-left',`${entry.contentRect.width - leftWidth}px`);
+        }
       }
-
-      console.log('left',this.leftWidth);
-      console.log('right',this.rightWidth);
     });
 
     this.resizeObserver.observe(this.leftEl);
     this.resizeObserver.observe(this.rightEl);
+    this.resizeObserver.observe(this.headerEl);
   }
 
   render() {
     return (
-      <Host>
-       <header class="med-navbar">
-          <div class="med-navbar__left" ref={(el) => this.leftEl = el as HTMLDivElement}>
+      <Host from-stencil>
+        <header class="header" ref={(el) => this.headerEl = el as HTMLDivElement}>
+          <div id="left" class="left" ref={(el) => this.leftEl = el as HTMLDivElement}>
             <slot name="start"></slot>
           </div>
-          <div class="med-navbar__center">
-            <slot name="title"></slot>
-            <slot name="subtitle"></slot>
+          <div class="center" ref={(el) => this.centerEl = el as HTMLDivElement}>
+            <div class="title">
+              <slot name="title"></slot>
+              <slot name="subtitle"></slot>
+            </div>
           </div>
-          <div class="med-navbar__right" ref={(el) => this.rightEl = el as HTMLDivElement}>
+          <div id="right" class="right" ref={(el) => this.rightEl = el as HTMLDivElement}>
             <slot name="end"></slot>
           </div>
         </header>

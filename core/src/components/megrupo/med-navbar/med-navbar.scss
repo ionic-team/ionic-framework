@@ -1,32 +1,47 @@
 @import "../../../../med-components/src/tokens/global/global";
+
 :host {
-  --med-background: #000;
-  --med-color: #fff;
-  --med-title-color: #fff;
-  --med-subtitle-color: #fff;
-  --med-title-max-width: calc(100% - 160px);
-  --med-padding: #{$med-spacing-squish-xs};
-  --med-padding-center: #{$med-spacing-stack-xxxs};
+  --title-font-size: 17px;
+  --subtitle-font-size: 15px;
+  --background: #000;
+  --title-color: #fff;
+  --subtitle-color: red;
+  --title-max-width: calc(100% - 160px);
+  --padding: #{$med-spacing-squish-xs};
+  --padding-center: #{$med-spacing-stack-xxxs};
 
-  .med-navbar {
+  .header {
+    background: var(--background);
+    padding: var(--padding);
+
+    position: relative;
     display: flex;
-    background: var(--med-background);
     align-items: center;
-    justify-content: center;
-    padding: var(--med-padding);
-    color: #fff;
+    justify-content: space-between;
+    box-sizing: border-box;
+    min-height: 48px;
+  }
 
-    &__left,
-    &__right {
-      display: flex;
-    }
+  .left,
+  .right {
+    display: flex;
+    align-items: center;
+  }
 
-    &__center {
-      padding-top: var(--med-padding-center);
-      padding-bottom: var(--med-padding-center);
-      flex: 1;
-      text-align: center;
-    }
+  .left {
+    justify-content: flex-start;
+  }
+
+  .right {
+    justify-content: flex-end;
+  }
+
+  .center {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding-left: var(--padding-left);
+    padding-right: var(--padding-right);
   }
 }
 
@@ -36,18 +51,50 @@
 }
 
 ::slotted([slot="start"]) {
-  padding-right: var(--med-padding-center);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 ::slotted([slot="title"]) {
-  padding: var(--med-padding-center);
-  color: var(--med-title-color);
+  font-size: var(--title-font-size);
+  color: var(--title-color);
+  display: block;
 }
+  
 
 ::slotted([slot="subtitle"]) {
-  color: var(--med-subtitle-color);
+  font-size: var(--subtitle-font-size);
+  color: var(--subtitle-color);
+  display: block;
 }
 
 ::slotted([slot="end"]) {
-  padding: var(--med-padding-center);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
+
+
+/* :host(.absolute-center) {
+  .center {
+    width: var(--title-max-width);
+    padding-top: var(--padding-center);
+    padding-bottom: var(--padding-center);
+  }
+
+  .title {
+    width: var(--title-max-width);
+
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    &nbsp;
+  }
+} */

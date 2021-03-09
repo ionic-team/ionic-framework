@@ -20,24 +20,62 @@
       ion-button {
         margin: 15px;
       }
-      .left-teste {
-        width: 50px;
+
+      .icon {
+        width: 24px;
         background-color: red;
-        height: 10px
+        height: 24px;
       }
-      .right-teste {
-        width: 100px;
-        background-color: red;
-        height: 10px
+
+      med-navbar {
+        color: #fff;
       }
     </style>
   </head>
   <body>
     <med-navbar>
-      <span slot="start">left left</span>
-      <span slot="title">Page Title</span>
+      <div class="icon" slot="start"></div>
+      <div class="teste" slot="start"></div>
+
+      <span slot="title">Page </span>
       <span slot="subtitle">Page Subtitle</span>
-      <span slot="end">right right right</span>
+
+      <div class="icon" slot="end"></div>
+      <div class="teste2" slot="end"></div>
+      <div class="teste3" slot="end"></div>
     </med-navbar>
+
+    <script>
+      setTimeout(() => {
+        const el = document.createElement('div');
+        el.classList.add('icon', 'tttt');
+
+        document.querySelector('.teste').insertAdjacentElement('afterbegin', el);
+      }, 3000);
+
+      setTimeout(() => {
+        const el = document.createElement('div');
+        el.classList.add('icon');
+
+        document.querySelector('.tttt').insertAdjacentElement('afterend', el);
+      }, 4000);
+
+      setTimeout(() => {
+        const el = document.createElement('div');
+        el.classList.add('icon');
+        const el2 = document.createElement('div');
+        el2.classList.add('icon');
+
+        document.querySelector('.teste2').insertAdjacentElement('afterbegin', el);
+        document.querySelector('.teste2').insertAdjacentElement('afterbegin', el2);
+      }, 6000);
+
+      setTimeout(() => {
+        const el = document.createElement('div');
+        el.textContent = "teste muito maluco";
+
+        document.querySelector('.tttt').insertAdjacentElement('afterend', el);
+      }, 9000);
+    </script>
   </body>
 </html>
