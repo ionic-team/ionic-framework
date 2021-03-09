@@ -15,7 +15,7 @@ Release-Branch | conteúdo alterado
     ```
 3. Especifique um novo repositório upstream remote que será sincronizado com a bifurcação.
     ```
-    git remote add https://github.com/ionic-team/ionic-framework
+    git remote add upstream https://github.com/ionic-team/ionic-framework
     ```
 4. Verifique o novo repositório upstream especificado para a bifurcação.
     ```
