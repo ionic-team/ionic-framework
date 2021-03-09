@@ -33,7 +33,7 @@
   </head>
   <body>
     <med-navbar>
-      <div class="icon" slot="start"></div>
+     
       <div class="teste" slot="start"></div>
 
       <span slot="title">Page Page Page Page Page</span>
@@ -44,7 +44,7 @@
       <div class="teste3" slot="end"></div>
     </med-navbar>
 
-    <ion-app>
+   <!--  <ion-app>
       <ion-content>
         <div style="background:#333;">
           <ion-button>ion button</ion-button>
@@ -69,7 +69,7 @@
           <ion-button tertiary full>ion button</ion-button>
         </div>
       </ion-content>
-    </ion-app>
+    </ion-app> -->
 
     <script>
       setTimeout(() => {
@@ -79,12 +79,12 @@
         document.querySelector('.teste').insertAdjacentElement('afterbegin', el);
       }, 3000);
 
-      setTimeout(() => {
+     setTimeout(() => {
         const el = document.createElement('div');
         el.classList.add('icon');
 
         document.querySelector('.tttt').insertAdjacentElement('afterend', el);
-      }, 4000);
+      }, 6000);
 
       setTimeout(() => {
         const el = document.createElement('div');
@@ -94,9 +94,9 @@
 
         document.querySelector('.teste2').insertAdjacentElement('afterbegin', el);
         document.querySelector('.teste2').insertAdjacentElement('afterbegin', el2);
-      }, 6000);
+      }, 4000);
 
-      setTimeout(() => {
+     setTimeout(() => {
         const el = document.createElement('div');
         el.textContent = "teste muito maluco";
 

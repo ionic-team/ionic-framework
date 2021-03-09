@@ -26,20 +26,35 @@ export class MedNavbar {
     this.resizeObserver = new ResizeObserver(entries => {
       for (let entry of entries) {
         console.log('Element:', entry.target.id);
+        console.log('Size:', entry.contentRect.width);
 
         const rightWidth = this.rightEl.getBoundingClientRect().width;
         const leftWidth = this.leftEl.getBoundingClientRect().width;
+        const leftDiff = Math.round(entry.contentRect.width - rightWidth);
+        const rightDiff = Math.round(entry.contentRect.width - leftWidth);
 
         if (rightWidth === leftWidth) {
-          this.centerEl.style.setProperty('--padding-right','0');
-          this.centerEl.style.setProperty('--padding-left','0');
+          this.centerEl.style.setProperty('--margin-right','0');
+          this.centerEl.style.setProperty('--margin-left','0');
           return;
-        }
+        } 
 
         if(entry.target.id === 'left') {
-          this.centerEl.style.setProperty('--padding-right',`${Math.round(entry.contentRect.width - rightWidth)}px`);
+          if (leftDiff > 0) {
+            this.centerEl.style.setProperty('--margin-right',`${leftDiff}px`);
+            this.centerEl.style.setProperty('--margin-left',`0px`);
+          } else {
+            this.centerEl.style.setProperty('--margin-left',`${rightDiff - leftDiff}px`);
+            this.centerEl.style.setProperty('--margin-right',`0px`);
+          }
         } else if (entry.target.id === 'right') {
-          this.centerEl.style.setProperty('--padding-left',`${Math.round(entry.contentRect.width - leftWidth)}px`);
+          if (rightDiff > 0) {
+            this.centerEl.style.setProperty('--margin-left',`${rightDiff}px`);
+            this.centerEl.style.setProperty('--margin-right',`0px`);
+          } else {
+            this.centerEl.style.setProperty('--margin-left',`${rightDiff - leftDiff}px`);
+            this.centerEl.style.setProperty('--margin-right',`0px`);
+          }
         }
       }
     });
