@@ -16,7 +16,17 @@ export { IonApp } from './components/IonApp';
 
 export * from './components/Overlays';
 
-export { IonKeyboardRef, IonRouter, useBackButton, useIonRouter, useKeyboard } from './hooks';
+export {
+  IonKeyboardRef,
+  IonRouter,
+  useBackButton,
+  useIonRouter,
+  useKeyboard,
+  onIonViewWillEnter,
+  onIonViewDidEnter,
+  onIonViewWillLeave,
+  onIonViewDidLeave
+} from './hooks';
 
 export {
   modalController,
