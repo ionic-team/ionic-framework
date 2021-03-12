@@ -1,6 +1,5 @@
 @import "../themes/ionic.skip-warns.scss";
 @import "../components/slides/slides.ios.vars.scss";
-@import "../components/slides/slides.md.vars.scss";
 
 // Slides
 // --------------------------------------------------
@@ -19,12 +18,10 @@
   display: block;
 
   user-select: none;
-}
 
-// iOS Slides
-// --------------------------------------------------
-
-.ios .swiper-container {
+  // These values are the same for iOS and MD
+  // We just do not add a .md or .ios class beforehand
+  // so the styles are easier to override by the user.
   --bullet-background: #{$slides-ios-bullet-background};
   --bullet-background-active: #{$slides-ios-bullet-background-active};
   --progress-bar-background: #{$slides-ios-progress-bar-background};
@@ -32,19 +29,6 @@
   --scroll-bar-background: #{$slides-ios-scroll-bar-background};
   --scroll-bar-background-active: #{$slides-ios-scroll-bar-drag-background};
 }
-
-// Material Design Slides
-// --------------------------------------------------
-
-.md .swiper-container {
-  --bullet-background: #{$slides-md-bullet-background};
-  --bullet-background-active: #{$slides-md-bullet-background-active};
-  --progress-bar-background: #{$slides-md-progress-bar-background};
-  --progress-bar-background-active: #{$slides-md-progress-bar-background-active};
-  --scroll-bar-background: #{$slides-md-scroll-bar-background};
-  --scroll-bar-background-active: #{$slides-md-scroll-bar-drag-background};
-}
-
 
 // Pagination Bullets
 // --------------------------------------------------
