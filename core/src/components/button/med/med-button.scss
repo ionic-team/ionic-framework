@@ -18,15 +18,16 @@
   --med-border-width-focused: #{$med-border-width-thin};
   --med-border-color-focused: #{$med-color-brand-primary-lightest};
 
-  --med-font-size: #{$med-font-size-xs};
+  --med-font-size: #{$med-font-size-xxs};
   --med-font-weight: #{$med-font-weight-semibold};
   --med-line-height: #{$med-line-height-compressed};
   --med-color: #{$med-color-neutral-light-prime};
   --med-color-secondary: #{$med-color-brand-primary-light};
   --med-color-tertiary: #{$med-color-neutral-light-prime};
   --med-text-transform: uppercase;
-  --med-transition: all 100ms ease-out;
+  --med-transition: all 300ms ease-out;
   --med-overflow: hidden;
+  --med-tertiary-disable-color: #{$med-color-neutral-dark-20};
 
   font-size: var(--med-font-size);
   font-weight: var(--med-font-weight);
