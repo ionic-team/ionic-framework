@@ -14,19 +14,19 @@
 // disabled
 :host([tertiary][disabled]) {
   .button-native {
-    color: var(--med-background-disabled);
+    color: var(--med-tertiary-disable-color);
   }
 }
 
 // activated
 :host([tertiary].ion-activated) .button-native {
-  color: var(--med-background-activated);
+  color: var(--med-color-secondary);
 }
 
 // focused
 :host([tertiary].ion-focused) {
   .button-native {
-    color: var(--med-background-focused);
+    color: var(--med-border-color-focused);
   }
 }
 
