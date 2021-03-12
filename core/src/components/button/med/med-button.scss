@@ -3,36 +3,31 @@
 
 :host {
   // tokens
-  --med-padding: #{$med-spacing-squish-lg};
-  --med-height: 48px;
+  --padding: #{$med-spacing-squish-lg};
+  --height: 48px;
 
-  --med-background: #{$med-color-brand-primary-gradient};
-  --med-background-hover: #{$med-color-brand-primary-medium};
-  --med-background-disabled: #{$med-color-neutral-light-20};
-  --med-background-activated: #{$med-color-brand-primary-dark};
-  --med-background-focused: #{$med-color-brand-primary-medium};
+  --background: #{$med-color-brand-primary-gradient};
+  --background-hover: #{$med-color-brand-primary-medium};
+  --background-disabled: #{$med-color-neutral-light-20};
+  --background-activated: #{$med-color-brand-primary-dark};
+  --background-focused: #{$med-color-brand-primary-medium};
 
-  --med-border-radius: #{$med-border-radius-pill};
-  --med-border-width: #{$med-border-width-thin};
-  --med-border-color: #{$med-color-brand-primary-light};
-  --med-border-width-focused: #{$med-border-width-thin};
-  --med-border-color-focused: #{$med-color-brand-primary-lightest};
+  --border-radius: #{$med-border-radius-pill};
 
-  --med-font-size: #{$med-font-size-xxs};
-  --med-font-weight: #{$med-font-weight-semibold};
-  --med-line-height: #{$med-line-height-compressed};
-  --med-color: #{$med-color-neutral-light-prime};
-  --med-color-secondary: #{$med-color-brand-primary-light};
-  --med-color-tertiary: #{$med-color-neutral-light-prime};
-  --med-text-transform: uppercase;
-  --med-transition: all 300ms ease-out;
-  --med-overflow: hidden;
-  --med-tertiary-disable-color: #{$med-color-neutral-dark-20};
+  --font-size: #{$med-font-size-xxs};
+  --font-weight: #{$med-font-weight-semibold};
+  --line-height: #{$med-line-height-compressed};
+  --color: #{$med-color-neutral-light-prime};
+  --color-tertiary: #{$med-color-neutral-light-prime};
+  --text-transform: uppercase;
+  --transition: all 300ms ease-out;
+  --overflow: hidden;
 
-  font-size: var(--med-font-size);
-  font-weight: var(--med-font-weight);
-  text-transform: var(--med-text-transform);
-  color: var(--med-color);
+
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  text-transform: var(--text-transform);
+  color: var(--color);
 
   font-family: inherit;
   display: inline-block;
@@ -65,12 +60,11 @@
     margin: 0;
     border: 0;
 
-
-    height: var(--med-height);
-    padding: var(--med-padding);
-    color: var(--med-color);
-    border-radius: var(--med-border-radius);
-    background: var(--med-background);
+    height: var(--height);
+    padding: var(--padding);
+    color: var(--color);
+    border-radius: var(--border-radius);
+    background: var(--background);
 
     &::-moz-focus-inner {
       border: 0;
@@ -78,8 +72,8 @@
 
     &::before {
       @include button-state();
-      background: var(--med-background);
-      transition: var(--med-transition);
+      background: var(--background);
+      transition: var(--transition);
       opacity: 1;
     }
   }
@@ -135,7 +129,7 @@
   pointer-events: none;
 
   .button-native::before {
-    background: var(--med-background-disabled);
+    background: var(--background-disabled);
     opacity: 1;
   }
 }
@@ -143,16 +137,16 @@
 // activated
 :host(.ion-activated) .button-native::before {
   opacity: 1;
-  background: var(--med-background-activated);
+  background: var(--background-activated);
 }
 
 // focused
 :host(.ion-focused) {
   .button-native {
     &::before {
-      background: var(--med-background-focused);
+      background: var(--background-focused);
       opacity: 1;
-      transition: var(--med-transition);
+      transition: var(--transition);
     }
   }
 }
@@ -162,7 +156,7 @@
   :host(:hover) {
     .button-native::before {
       opacity: 1;
-      background: var(--med-background-hover);
+      background: var(--background-hover);
     }
   }
 }
