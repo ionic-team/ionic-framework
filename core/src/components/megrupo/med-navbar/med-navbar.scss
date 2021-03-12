@@ -1,0 +1,75 @@
+@import "../../../../med-components/src/tokens/global/global";
+
+:host {
+  --title-font-size: 17px;
+  --subtitle-font-size: 15px;
+  --background: #000;
+  --title-color: #fff;
+  --subtitle-color: red;
+  --title-max-width: calc(100% - 160px);
+  --padding: #{$med-spacing-squish-xs};
+  --padding-center: #{$med-spacing-stack-xxxs};
+
+  .header {
+    background: var(--background);
+    padding: var(--padding);
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    min-height: 48px;
+  }
+
+  .left,
+  .right {
+    display: flex;
+    align-items: center;
+  }
+
+  .left {
+    justify-content: flex-start;
+  }
+
+  .right {
+    justify-content: flex-end;
+  }
+
+  .center {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-left: var(--margin-left);
+    margin-right: var(--margin-right);
+  }
+}
+
+::slotted(*) {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+::slotted([slot="start"]) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+::slotted([slot="title"]) {
+  font-size: var(--title-font-size);
+  color: var(--title-color);
+  display: block;
+}
+
+::slotted([slot="subtitle"]) {
+  font-size: var(--subtitle-font-size);
+  color: var(--subtitle-color);
+  display: block;
+}
+
+::slotted([slot="end"]) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

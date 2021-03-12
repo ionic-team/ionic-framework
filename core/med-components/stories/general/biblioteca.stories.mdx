@@ -1,0 +1,96 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="General/Biblioteca" />
+
+# 📚 Biblioteca
+
+- **[link github](https://github.com/marcelo-brandao/med-components)**
+- **[link package npm](https://www.npmjs.com/package/@mbrandao/med-components)**
+
+## 🗂️ Conteúdo
+
+- **[Introdução](http://desenv.ordomederi.com/med-components/?path=/story/general-biblioteca--page#introdução)**
+- **[Instalação](http://desenv.ordomederi.com/med-components/?path=/story/general-biblioteca--page#instalação)**
+- **[Utilização](http://desenv.ordomederi.com/med-components/?path=/story/general-biblioteca--page#utilização)**
+
+## 📜 Introdução
+
+A biblioteca **med-components** foi criada com o intuito de ser compartilhada entre as aplicações medgrupo de forma global.
+Ela **não pode ser** incrementada com particularidades de outros projetos, apenas consumida.
+
+As particularidades devem ser documentadas no próprios projetos, seguindo o padrão presente nessa documentação. O time **[TheOffice](https://medgrupo.slack.com/archives/C013J7002G5)**
+é responsável por **facilitar** e dar o **suporte** e **mentoria** necessários para criação dos mesmos. Com isso o conhecimento
+não fica centralizado e criamos uma cultura de documentação nos times.
+
+- **[Documentação MSPRO]()**
+- **[Documentação Externa Pages]()**
+- **[Documentação Inscrições]()**
+- **[Documentação Recursos]()**
+
+## 🎥 Tutoriais
+
+Abaixo temos um video tutorial, ensinando a instalar e configurar o pacote para uso em qualquer projeto.
+
+- **[Overview + configuração](https://drive.google.com/file/d/16WzGqlD4Wy6yAyU3M_I0lHkB18w1TixH/view)**
+
+## 🛠️ Instalação
+
+### npm
+
+``` bash
+npm i -D @mbrandao/med-components
+```
+
+### yarn
+
+``` bash
+yarn add --dev @mbrandao/med-components
+```
+
+## 💈 Utilização
+
+### Medsoft
+
+Para utilizar a biblioteca, no arquivo **./src/medsoft/global.scss**, importar:
+
+``` scss
+@import '~@mbrandao/med-components/src/med-components-medsoft';
+```
+Se existir a necessidade da utilização de **variáveis, functions e mixins SASS**, no arquivo em que eles serão
+utilizados, importar:
+
+``` scss
+@import '~@mbrandao/med-components/src/medsoft/medsoft';
+```
+
+### External Pages
+
+Para utilizar a biblioteca, no arquivo **./src/assets/styles/global.scss**, importar:
+
+``` scss
+@import '~@mbrandao/med-components/src/med-components.scss';
+```
+
+Se existir a necessidade da utilização de **variáveis, functions e mixins SASS**, no arquivo em que eles serão
+utilizados, importar:
+
+``` scss
+@import '~@mbrandao/med-components/src/global/global';
+```
+
+### Inscrições
+
+Para utilizar a biblioteca, no arquivo **./src/styles.scss**, importar:
+
+``` scss
+@import '~@mbrandao/med-components/src/med-components.scss';
+```
+
+Se existir a necessidade da utilização de **variáveis, functions e mixins SASS**, no arquivo em que eles serão
+utilizados, importar:
+
+``` scss
+@import '~@mbrandao/med-components/src/global/global';
+```
+
+### Recursos

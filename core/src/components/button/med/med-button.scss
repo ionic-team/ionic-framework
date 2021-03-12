@@ -4,7 +4,6 @@
 :host {
   // tokens
   --med-padding: #{$med-spacing-squish-lg};
-  --med-height: 48px;
 
   --med-background: #{$med-color-brand-primary-gradient};
   --med-background-hover: #{$med-color-brand-primary-medium};
@@ -13,8 +12,7 @@
   --med-background-focused: #{$med-color-brand-primary-medium};
 
   --med-border-radius: #{$med-border-radius-pill};
-  --med-border-width: #{$med-border-width-thin};
-  --med-border-color: #{$med-color-brand-primary-light};
+  --med-border-width: #{$med-border-width-none};
   --med-border-width-focused: #{$med-border-width-thin};
   --med-border-color-focused: #{$med-color-brand-primary-lightest};
 
@@ -22,15 +20,9 @@
   --med-font-weight: #{$med-font-weight-semibold};
   --med-line-height: #{$med-line-height-compressed};
   --med-color: #{$med-color-neutral-light-prime};
-  --med-color-secondary: #{$med-color-brand-primary-light};
   --med-text-transform: uppercase;
-  --med-transition: all 100ms ease-out;
+  --med-transition: opacity 100ms ease-out;
   --med-overflow: hidden;
-
-  font-size: var(--med-font-size);
-  font-weight: var(--med-font-weight);
-  text-transform: var(--med-text-transform);
-  color: var(--med-color);
 
   font-family: inherit;
   display: inline-block;
@@ -45,11 +37,6 @@
   pointer-events: auto;
   font-kerning: none;
 
-  .center {
-    display: flex;
-    align-items: center;
-  }
-
   .button-native {
     @include font-smoothing();
     @include text-inherit();
@@ -57,7 +44,8 @@
     overflow: hidden;
     display: block;
     position: relative;
-    width: calc(100% + 4px);
+    width: 100%;
+    height: 100%;
     outline: none;
     line-height: 1;
     contain: layout style;
@@ -66,14 +54,6 @@
     box-sizing: border-box;
     appearance: none;
     margin: 0;
-    border: 0;
-
-
-    height: var(--med-height);
-    padding: var(--med-padding);
-    color: var(--med-color);
-    border-radius: var(--med-border-radius);
-    background: var(--med-background);
 
     &::-moz-focus-inner {
       border: 0;
@@ -81,8 +61,7 @@
 
     &::before {
       @include button-state();
-      background: var(--med-background);
-      transition: var(--med-transition);
+
       opacity: 1;
     }
   }
@@ -128,7 +107,6 @@
     contain: content;
     margin-left: 0;
     margin-right: 0;
-    border-radius: 0;
   }
 }
 
@@ -138,7 +116,6 @@
   pointer-events: none;
 
   .button-native::before {
-    background: var(--med-background-disabled);
     opacity: 1;
   }
 }
@@ -146,17 +123,15 @@
 // activated
 :host(.ion-activated) .button-native::before {
   opacity: 1;
-  background: var(--med-background-activated);
 }
 
 // focused
 :host(.ion-focused) {
   .button-native {
+    border-style: solid;
 
     &::before {
-      background: var(--med-background-focused);
       opacity: 1;
-      transition: var(--med-transition);
     }
   }
 }
@@ -164,13 +139,8 @@
 // hover
 @media (any-hover: hover) {
   :host(:hover) {
-    .button-native {
-      //background: var(--med-background-hover);
-    }
-
     .button-native::before {
-      opacity: 1;
-      background: var(--med-background-hover);
+      opacity: 0;
     }
   }
 }

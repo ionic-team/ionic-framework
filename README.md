@@ -1,8 +1,15 @@
 # Fork do Ionic Framework 
 Branches | Descrição
 --------- | ----------
-master | conteúdo "cru" do Ionic Team
-Release-Branch | conteúdo alterado
+master | branch de destino final (contendo a versão usada em med-components)
+Release-Branch | conteúdo alterado que, quando finalizado, irá para a master
+sync | conteúdo "cru" do Ionic Team, atualizado automaticamente 2x ao dia
+
+### Sync automático entre o Ionic-team e nosso repositório
+
+1. Duas vezes ao dia (0 e 12h UTC), a branch sync é atualizada com o conteúdo do Ionic Team.
+2. Ela pode ser mergeada para a Release-Branch para testes de compatibilidade de versões.
+3. Mais informações em: https://github.com/MEDGRUPOGIT/ionic-framework/blob/master/.github/workflows/repo-sync.yml
 
 ### Como inserir o remote do Ionic Team
 
@@ -15,7 +22,7 @@ Release-Branch | conteúdo alterado
     ```
 3. Especifique um novo repositório upstream remote que será sincronizado com a bifurcação.
     ```
-    git remote add https://github.com/ionic-team/ionic-framework
+    git remote add upstream https://github.com/ionic-team/ionic-framework
     ```
 4. Verifique o novo repositório upstream especificado para a bifurcação.
     ```
