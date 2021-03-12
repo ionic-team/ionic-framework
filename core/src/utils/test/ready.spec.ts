@@ -16,23 +16,26 @@ describe('componentOnReady()', () => {
   });
 
   it('should correctly call callback for a lazy loaded component', (done) => {
+    const cb = jest.fn((el) => {
+      return new Promise((resolve) => {
+        setTimeout(() => resolve(el), 250);
+      });
+    });
+
     customElements.define('hello-world', class extends HTMLElement {
       constructor() {
         super();
       }
 
       componentOnReady() {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(this);
-          }, 250);
-        })
+        return cb(this);
       }
     });
 
     const component = document.createElement('hello-world');
     componentOnReady(component, (el) => {
       expect(el).toEqual(component);
+      expect(cb).toHaveBeenCalledTimes(1);
       done();
     })
   });
