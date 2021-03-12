@@ -1,0 +1,60 @@
+:host {
+  font-size: var(--med-font-size);
+  font-weight: var(--med-font-weight);
+  text-transform: var(--med-text-transform);
+  color: var(--med-color);
+
+  .button-native {
+    @include font-smoothing();
+    @include text-inherit();
+
+    background: var(--med-background-hover);
+    padding: var(--med-padding);
+    border-width: var(--med-border-width);
+    color: var(--med-color);
+    border-radius: var(--med-border-radius);
+
+    &::before {
+      background: var(--med-background);
+      transition:var(--med-transition);
+    }
+  }
+}
+  
+// disabled
+:host([disabled]) {
+  .button-native::before {
+    background: var(--med-background-disabled);
+  }
+}
+
+// activated
+:host(.ion-activated) .button-native::before {
+  background: var(--med-background-activated);
+}
+  
+// focused
+:host(.ion-focused) {
+  .button-native {
+    border-width: var(--med-border-width-focused);
+    border-color: var(--med-border-color-focused);
+
+    &::before {
+      background: var(--med-background-focused);
+      transition: var(--med-transition);
+    }
+  }
+}
+
+// hover
+@media (any-hover: hover) {
+  :host(:hover) {
+    .button-native::before {
+      transition: var(--med-transition);
+    }
+  }
+}
+  
+ion-ripple-effect {
+  color: var(--ripple-color);
+}
