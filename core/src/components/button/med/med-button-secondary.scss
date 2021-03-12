@@ -1,0 +1,44 @@
+:host([secondary]) {
+
+  .button-native {
+    width: 100%;
+    border-style: solid;
+    border-color: var(--med-border-color);
+    border-width: var(--med-border-width);
+    background: transparent;
+    color: var(--med-color-secondary);
+
+    &::before {
+      background: transparent;
+    }
+  }
+}
+
+// disabled
+:host([secondary][disabled]) {
+  .button-native {
+    //background: var(--med-background-disabled);
+    border-color: var(--med-background-disabled);
+    color: var(--med-background-disabled);
+  }
+}
+
+// activated
+:host(.ion-activated) .button-native::before {
+  //background: var(--med-background-activated);
+}
+
+// focused
+:host(.ion-focused) {
+  .button-native {
+
+    &::before {
+      //background: var(--med-background-focused);
+
+    }
+  }
+}
+
+ion-ripple-effect {
+  color: var(--ripple-color);
+}

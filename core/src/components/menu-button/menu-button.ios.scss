@@ -1,0 +1,36 @@
+@import "../../themes/ionic.globals.ios";
+@import "./menu-button";
+
+// iOS Menu Button
+// --------------------------------------------------
+
+:host {
+  --background-focused: currentColor;
+  --background-focused-opacity: .1;
+  --border-radius: 4px;
+  --color: #{ion-color(primary, base)};
+  --padding-start: 5px;
+  --padding-end: 5px;
+
+  height: 32px;
+
+  font-size: 31px;
+}
+
+
+// Menu Button: Activated
+// --------------------------------------------------
+
+:host(.ion-activated) {
+  opacity: .4;
+}
+
+
+// Menu Button: Hover
+// --------------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    opacity: .6;
+  }
+}
