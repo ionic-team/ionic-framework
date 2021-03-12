@@ -32,6 +32,10 @@ export class PickerColumnCmp implements ComponentInterface {
   private tmrId: any;
   private noAnimate = true;
 
+  private pressed = false;
+  private pressedTimeout: any;
+  private pressedTime = 100;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -247,6 +251,12 @@ export class PickerColumnCmp implements ComponentInterface {
   // TODO should this check disabled?
 
   private onStart(detail: GestureDetail) {
+    if (!this.pressedTimeout) {
+      this.pressedTimeout = setTimeout(() => {
+        this.pressed = true;
+      }, this.pressedTime);
+    }
+
     // We have to prevent default in order to block scrolling under the picker
     // but we DO NOT have to stop propagation, since we still want
     // some "click" events to capture
@@ -274,6 +284,17 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   private onMove(detail: GestureDetail) {
+    if (this.pressedTimeout) {
+      clearTimeout(this.pressedTimeout);
+      this.pressedTimeout = null;
+    }
+
+    this.pressedTimeout = setTimeout(() => {
+      this.pressed = true;
+    }, this.pressedTime);
+
+    this.pressed = false;
+
     if (detail.event.cancelable) {
       detail.event.preventDefault();
     }
@@ -333,6 +354,14 @@ export class PickerColumnCmp implements ComponentInterface {
         }
       }
 
+      if (this.pressed) {
+        this.setSelected(this.col.prevSelected!, TRANSITION_DURATION);
+      }
+
+      this.pressed = false;
+      clearTimeout(this.pressedTimeout);
+      this.pressedTimeout = null;
+
       this.decelerate();
     }
   }
@@ -391,7 +420,7 @@ export class PickerColumnCmp implements ComponentInterface {
           style={{ maxWidth: col.optionsWidth! }}
           ref={el => this.optsEl = el}
         >
-          { col.options.map((o, index) =>
+          {col.options.map((o, index) =>
             <Button
               type="button"
               class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
