@@ -9,7 +9,10 @@ describe('componentOnReady()', () => {
     });
 
     const component = document.createElement('hello-world');
-    componentOnReady(component, () => done())
+    componentOnReady(component, (el) => {
+      expect(el).toEqual(component);
+      done();
+    })
   });
 
   it('should correctly call callback for a lazy loaded component', async (done) => {
@@ -21,13 +24,16 @@ describe('componentOnReady()', () => {
       componentOnReady() {
         return new Promise((resolve) => {
           setTimeout(() => {
-            resolve();
+            resolve(this);
           }, 250);
         })
       }
     });
 
     const component = document.createElement('hello-world');
-    componentOnReady(component, () => done())
+    componentOnReady(component, (el) => {
+      expect(el).toEqual(component);
+      done();
+    })
   });
 });
