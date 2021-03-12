@@ -1,0 +1,154 @@
+@import "../../../../med-components/functions";
+@import "../../../../med-components/variables";
+
+:host {
+  --padding: #{$med-spacing-squish-xs};
+  --background: var(--med-global-background, #{$med-color-neutral-dark-prime});
+
+  --title-color: var(--med-global-color, #{$med-color-neutral-light-prime});
+  --title-font-size: #{$med-font-size-xs};
+  --title-line-height: #{$med-line-height-compressed};
+  --title-font-weight: #{$med-font-weight-semibold};
+
+  --subtitle-color: var(--global-color, #{$med-color-neutral-light-prime});
+  --subtitle-font-size: #{$med-font-size-xxxs};
+  --subtitle-line-height: #{line-height($med-font-size-xxxs)};
+  --subtitle-font-weight: #{$med-font-weight-semibold};
+
+  --center-padding: #{$med-spacing-stack-xxxs};
+
+  --slotted-color: var(--med-global-color, #{$med-color-neutral-light-prime});
+  --slotted-spacing: #{$med-spacing-inline-base};
+  
+  .header {
+    background: var(--background);
+    padding: var(--padding);
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    min-height: 48px;
+  }
+
+  .left,
+  .right {
+    display: flex;
+    align-items: center;
+  }
+
+  .left {
+    justify-content: flex-start;
+  }
+
+  .right {
+    justify-content: flex-end;
+  }
+
+  .center {
+    // setado via ts //
+    padding-left: var(--padding-left);
+    padding-right: var(--padding-right);
+    // setado via ts //
+
+    padding-top: var(--center-padding);
+    padding-bottom: var(--center-padding);
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+//
+// text-transform
+//
+:host([text-initial]) {
+  .center {
+    text-transform: initial;
+  }
+}
+
+//
+// transparent
+//
+:host([transparent="light"]) {
+  --background: transparent;
+  --title-color: var(--med-global-color, #{$med-color-neutral-light-prime});
+  --subtitle-color: var(--global-color, #{$med-color-neutral-light-prime});
+  --slotted-color: var(--med-global-color, #{$med-color-neutral-light-prime});
+}
+
+:host([transparent="dark"]) {
+  --background: transparent;
+  --title-color: var(--med-global-color, #{$med-color-neutral-dark-prime});
+  --subtitle-color: var(--global-color, #{$med-color-neutral-dark-prime});
+  --slotted-color: var(--med-global-color, #{$med-color-neutral-dark-prime});
+}
+
+//
+// slotted
+//
+::slotted(*) {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+::slotted([slot="start"]) {
+  color: var(--slotted-color);
+  margin-right: var(--slotted-spacing) !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+::slotted([slot="title"]) {
+  color: var(--title-color);
+  font-size: var(--title-font-size);
+  font-weight: var(--title-font-weight);
+  line-height: var(--title-line-height);
+
+  display: block;
+}
+
+::slotted([slot="subtitle"]) {
+  color: var(--subtitle-color);
+  font-size: var(--subtitle-font-size);
+  font-weight: var(--subtitle-font-weight);
+  line-height: var(--subtitle-line-height);
+
+  display: block;
+}
+
+::slotted([slot="end"]) {
+  color: var(--slotted-color);
+  margin-left: var(--slotted-spacing) !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+//
+// theme
+//
+:host-context(body.dark),
+:host-context(data-theme[dark]) {
+  --background: var(--med-global-background, #{$med-color-neutral-dark-prime});
+  --title-color: var(--med-global-color, #{$med-color-neutral-light-prime});
+  --subtitle-color: var(--global-color, #{$med-color-neutral-light-prime});
+  --slotted-color: var(--med-global-color, #{$med-color-neutral-light-prime});
+}
+
+:host-context(body.light),
+:host-context(data-theme[light]) {
+  --background: var(--med-global-background, #{$med-color-neutral-light-prime});
+  --title-color: var(--med-global-color, #{$med-color-neutral-dark-prime});
+  --subtitle-color: var(--global-color, #{$med-color-neutral-dark-prime});
+  --slotted-color: var(--med-global-color, #{$med-color-neutral-dark-prime});
+}

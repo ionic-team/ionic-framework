@@ -1,0 +1,375 @@
+//
+// devices
+//
+
+$med-iphone-x-top: 40px !default;
+$med-iphone-top: 20px !default;
+$med-mac-top: 15px !default;
+
+//
+// breakpoints
+//
+
+$med-grid-breakpoints: (
+  'xxs': 340px,
+  'xs': 380px,
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px,
+) !default;
+
+//
+// cores
+//
+
+// brand color
+$med-color-brand-primary-darkest: #074953 !default;
+$med-color-brand-primary-darkest-rgb: 7, 73, 83 !default;
+
+$med-color-brand-primary-dark: #137585 !default;
+$med-color-brand-primary-dark-rgb: 19, 117, 133 !default;
+
+$med-color-brand-primary-medium: #3aa8b9 !default;
+$med-color-brand-primary-medium-rgb: 58, 168, 185 !default;
+
+$med-color-brand-primary-light: #73d6e5 !default;
+$med-color-brand-primary-light-rgb: 115, 214, 229 !default;
+
+$med-color-brand-primary-lightest: #b0ecf5 !default;
+$med-color-brand-primary-lightest-rgb: 176, 236, 245 !default;
+
+$med-color-brand-primary-gradient: linear-gradient(to right, $med-color-brand-primary-medium, $med-color-brand-primary-dark) !default;
+
+// aula color
+$med-color-aula-darkest: #075344 !default;
+$med-color-aula-darkest-rgb: 7, 83, 68 !default;
+
+$med-color-aula-dark: #13856e !default;
+$med-color-aula-dark-rgb: 19, 133, 110 !default;
+
+$med-color-aula-medium: #3ab89f !default;
+$med-color-aula-medium-rgb: 58, 184, 159 !default;
+
+$med-color-aula-light: #73e5cf !default;
+$med-color-aula-light-rgb: 115, 229, 207 !default;
+
+$med-color-aula-lightest: #b0f5e7 !default;
+$med-color-aula-lightest-rgb: 176, 245, 231 !default;
+
+// material color
+$med-color-material-darkest: #552607 !default;
+$med-color-material-darkest-rgb: 85, 38, 7 !default;
+
+$med-color-material-dark: #854013 !default;
+$med-color-material-dark-rgb: 133, 64, 19 !default;
+
+$med-color-material-medium: #b86d3b !default;
+$med-color-material-medium-rgb: 184, 109, 59 !default;
+
+$med-color-material-light: #e5a173 !default;
+$med-color-material-light-rgb: 229, 161, 115 !default;
+
+$med-color-material-lightest: #f5ccb0 !default;
+$med-color-material-lightest-rgb: 245, 204, 176 !default;
+
+// questões color
+$med-color-questoes-darkest: #073953 !default;
+$med-color-questoes-darkest-rgb: 7, 57, 83 !default;
+
+$med-color-questoes-dark: #135f85 !default;
+$med-color-questoes-dark-rgb: 19, 95, 133 !default;
+
+$med-color-questoes-medium: #3a8eb8 !default;
+$med-color-questoes-medium-rgb: 58, 142, 184 !default;
+
+$med-color-questoes-light: #73bfe5 !default;
+$med-color-questoes-light-rgb: 115, 191, 229 !default;
+
+$med-color-questoes-lightest: #b0def5 !default;
+$med-color-questoes-lightest-rgb: 176, 222, 245 !default;
+
+// revalida color
+$med-color-revalida-darkest: #53071e !default;
+$med-color-revalida-darkest-rgb: 83, 7, 30 !default;
+
+$med-color-revalida-dark: #851335 !default;
+$med-color-revalida-dark-rgb: 133, 19, 53 !default;
+
+$med-color-revalida-medium: #b83a60 !default;
+$med-color-revalida-medium-rgb: 184, 58, 96 !default;
+
+$med-color-revalida-light: #e57395 !default;
+$med-color-revalida-light-rgb: 229, 115, 149 !default;
+
+$med-color-revalida-lightest: #f5b0c5 !default;
+$med-color-revalida-lightest-rgb: 245, 176, 197 !default;
+
+// provas & checklist color
+$med-color-provaschecklist-darkest: #2b0755 !default;
+$med-color-provaschecklist-darkest-rgb: 43, 7, 85 !default;
+
+$med-color-provaschecklist-dark: #481385 !default;
+$med-color-provaschecklist-dark-rgb: 72, 19, 133 !default;
+
+$med-color-provaschecklist-medium: #753bb8 !default;
+$med-color-provaschecklist-medium-rgb: 117, 59, 184 !default;
+
+$med-color-provaschecklist-light: #a873e5 !default;
+$med-color-provaschecklist-light-rgb: 168, 115, 229 !default;
+
+$med-color-provaschecklist-lightest: #d1b2f5 !default;
+$med-color-provaschecklist-lightest-rgb: 209, 178, 245 !default;
+
+// neutral dark color
+$med-color-neutral-dark-prime: #141414 !default;
+$med-color-neutral-dark-prime-rgb: 20, 20, 20 !default;
+
+$med-color-neutral-dark-40: #292929 !default;
+$med-color-neutral-dark-40-rgb: 41, 41, 41 !default;
+
+$med-color-neutral-dark-30: #474747 !default;
+$med-color-neutral-dark-30-rgb: 71, 71, 71 !default;
+
+$med-color-neutral-dark-20: #5c5c5c !default;
+$med-color-neutral-dark-20-rgb: 92, 92, 92 !default;
+
+$med-color-neutral-dark-10: #7a7a7a !default;
+$med-color-neutral-dark-10-rgb: 122, 122, 122 !default;
+
+// neutral light color
+$med-color-neutral-light-prime: #fafafa !default;
+$med-color-neutral-light-prime-rgb: 250, 250, 250 !default;
+
+$med-color-neutral-light-40: #ebebeb !default;
+$med-color-neutral-light-40-rgb: 235, 235, 235 !default;
+
+$med-color-neutral-light-30: #d6d6d6 !default;
+$med-color-neutral-light-30-rgb: 214, 214, 214 !default;
+
+$med-color-neutral-light-20: #c2c2c2 !default;
+$med-color-neutral-light-20-rgb: 194, 194, 194 !default;
+
+$med-color-neutral-light-10: #adadad !default;
+$med-color-neutral-light-10-rgb: 173, 173, 173 !default;
+
+$med-color-neutral-gradient: linear-gradient(to right, $med-color-neutral-dark-prime, $med-color-neutral-light-prime) !default;
+
+// feedback warning color
+$med-color-feedback-warning-darkest: #504606 !default;
+$med-color-feedback-warning-darkest-rgb: 80, 70, 6 !default;
+
+$med-color-feedback-warning-dark: #857513 !default;
+$med-color-feedback-warning-dark-rgb: 133, 117, 19 !default;
+
+$med-color-feedback-warning-medium: #b8a73b !default;
+$med-color-feedback-warning-medium-rgb: 184, 167, 59 !default;
+
+$med-color-feedback-warning-light: #e5d673 !default;
+$med-color-feedback-warning-light-rgb: 229, 214, 115 !default;
+
+$med-color-feedback-warning-lightest: #f5ecb0 !default;
+$med-color-feedback-warning-lightest-rgb: 245, 236, 176 !default;
+
+// feedback warning color
+$med-color-feedback-error-darkest: #520c07 !default;
+$med-color-feedback-error-darkest-rgb: 82, 12, 7 !default;
+
+$med-color-feedback-error-dark: #851a13 !default;
+$med-color-feedback-error-dark-rgb: 133, 26, 19 !default;
+
+$med-color-feedback-error-medium: #b8433b !default;
+$med-color-feedback-error-medium-rgb: 184, 67, 59 !default;
+
+$med-color-feedback-error-light: #e57a73 !default;
+$med-color-feedback-error-light-rgb: 229, 122, 115 !default;
+
+$med-color-feedback-error-lightest: #f5b5b0 !default;
+$med-color-feedback-error-lightest-rgb: 245, 181, 176 !default;
+
+// feedback success color
+$med-color-feedback-success-darkest: #065010 !default;
+$med-color-feedback-success-darkest-rgb: 6, 80, 16 !default;
+
+$med-color-feedback-success-dark: #138522 !default;
+$med-color-feedback-success-dark-rgb: 19, 133, 34 !default;
+
+$med-color-feedback-success-medium: #3bb84b !default;
+$med-color-feedback-success-medium-rgb: 59, 184, 75 !default;
+
+$med-color-feedback-success-light: #73e582 !default;
+$med-color-feedback-success-light-rgb: 115, 229, 130 !default;
+
+$med-color-feedback-success-lightest: #b0f5b9 !default;
+$med-color-feedback-success-lightest-rgb: 176, 245, 185 !default;
+
+//
+// tipografia
+//
+
+// font family
+$med-font-family-brand: 'fsemeric' !default;
+$med-font-family-base: 'fsemeric' !default;
+
+// font size
+$med-font-size-nano: 10px !default;
+$med-font-size-xxxs: 12px !default;
+$med-font-size-xxs: 14px !default;
+$med-font-size-xs: 16px !default;
+$med-font-size-sm: 20px !default;
+$med-font-size-md: 24px !default;
+$med-font-size-lg: 32px !default;
+$med-font-size-xl: 40px !default;
+$med-font-size-xxl: 48px !default;
+$med-font-size-xxxl: 64px !default;
+$med-font-size-huge: 96px !default;
+
+// font weight
+$med-font-weight-thin: 250 !default;
+$med-font-weight-light: 300 !default;
+$med-font-weight-regular: 400 !default;
+$med-font-weight-medium: 500 !default;
+$med-font-weight-semibold: 600 !default;
+$med-font-weight-bold: 700 !default;
+$med-font-weight-extrabold: 800 !default;
+$med-font-weight-heavy: 900 !default;
+
+// letter spacing
+$med-letter-spacing-ultracompressed: -0.04 !default;
+$med-letter-spacing-compressed: -0.02 !default;
+$med-letter-spacing-default: 0 !default;
+$med-letter-spacing-medium: 0.02 !default;
+$med-letter-spacing-expanded: 0.05 !default;
+$med-letter-spacing-distant: 0.1 !default;
+$med-letter-spacing-far: 0.2 !default;
+
+// line height
+$med-line-height-compressed: 100% !default;
+$med-line-height-default: #{line-height()} !default;
+$med-line-height-double: 200% !default;
+
+//
+// espacamento
+//
+
+// spacing inset
+$med-spacing-inset-nano: 4px !default;
+$med-spacing-inset-xs: 8px !default;
+$med-spacing-inset-sm: 16px !default;
+$med-spacing-inset-base: 24px !default;
+$med-spacing-inset-md: 32px !default;
+$med-spacing-inset-lg: 40px !default;
+$med-spacing-inset-xl: 48px !default;
+$med-spacing-inset-xxl: 64px !default;
+
+// spacing squish
+$med-spacing-squish-nano: 4px 8px !default;
+$med-spacing-squish-xs: 8px 16px !default;
+$med-spacing-squish-sm: 8px 24px !default;
+$med-spacing-squish-base: 8px 32px !default;
+$med-spacing-squish-md: 16px 24px !default;
+$med-spacing-squish-lg: 16px 32px !default;
+$med-spacing-squish-xl: 24px 32px !default;
+$med-spacing-squish-xxl: 32px 40px !default;
+
+// spacing stretch
+$med-spacing-stretch-nano: 8px 4px !default;
+$med-spacing-stretch-xs: 16px 8px !default;
+$med-spacing-stretch-sm: 24px 8px !default;
+$med-spacing-stretch-base: 32px 8px !default;
+$med-spacing-stretch-md: 24px 16px !default;
+$med-spacing-stretch-lg: 32px 16px !default;
+$med-spacing-stretch-xl: 32px 24px !default;
+$med-spacing-stretch-xxl: 40px 32px !default;
+
+// spacing inline
+$med-spacing-inline-quark: 2px !default;
+$med-spacing-inline-nano: 4px !default;
+$med-spacing-inline-xxxs: 8px !default;
+$med-spacing-inline-base: 16px !default;
+$med-spacing-inline-xxs: 24px !default;
+$med-spacing-inline-xs: 32px !default;
+$med-spacing-inline-sm: 40px !default;
+$med-spacing-inline-md: 48px !default;
+$med-spacing-inline-lg: 56px !default;
+$med-spacing-inline-xl: 64px !default;
+$med-spacing-inline-xxl: 72px !default;
+$med-spacing-inline-xxxl: 80px !default;
+$med-spacing-inline-huge: 120px !default;
+$med-spacing-inline-ultra: 160px !default;
+
+// spacing stack
+$med-spacing-stack-quark: 2px !default;
+$med-spacing-stack-nano: 4px !default;
+$med-spacing-stack-xxxs: 8px !default;
+$med-spacing-stack-base: 16px !default;
+$med-spacing-stack-xxs: 24px !default;
+$med-spacing-stack-xs: 32px !default;
+$med-spacing-stack-sm: 40px !default;
+$med-spacing-stack-md: 48px !default;
+$med-spacing-stack-lg: 56px !default;
+$med-spacing-stack-xl: 64px !default;
+$med-spacing-stack-xxl: 72px !default;
+$med-spacing-stack-xxxl: 80px !default;
+$med-spacing-stack-huge: 120px !default;
+$med-spacing-stack-ultra: 160px !default;
+
+//
+// complementares
+//
+
+// border radius
+$med-border-radius-none: 0 !default;
+$med-border-radius-quark: 2px !default;
+$med-border-radius-nano: 4px !default;
+
+$med-border-radius-sm: 8px !default;
+$med-border-radius-md: 16px !default;
+$med-border-radius-lg: 24px !default;
+
+$med-border-radius-pill: 31.25em !default;
+$med-border-radius-full: 50% !default;
+
+// speech bubble
+$med-border-radius-speech-left-down: 8px 8px 8px 0 !default;
+$med-border-radius-speech-right-down: 8px 8px 0 8px !default;
+$med-border-radius-speech-right-up: 8px 0 8px 0px !default;
+$med-border-radius-speech-left-up: 0 8px 8px 0px !default;
+
+// table
+$med-border-radius-table-down-sm: 0 0 8px 8px !default;
+$med-border-radius-table-up-sm: 8px 8px 0 0 !default;
+
+$med-border-radius-table-down-md: 16px 16px 0 0 !default;
+$med-border-radius-table-up-md: 0 0 16px 16px !default;
+
+// border widths
+$med-border-width-none: 0 !default;
+$med-border-width-quark: 0.25px !default;
+$med-border-width-nano: 0.5px !default;
+$med-border-width-hairline: 1px !default;
+$med-border-width-thin: 2px !default;
+$med-border-width-thick: 4px !default;
+$med-border-width-bold: 8px !default;
+$med-border-width-heavy: 16px !default;
+
+// opacity levels
+$med-opacity-level-semiopaque: 0.8 !default;
+$med-opacity-level-intense: 0.64 !default;
+$med-opacity-level-half: 0.5 !default;
+$med-opacity-level-medium: 0.32 !default;
+$med-opacity-level-light: 0.16 !default;
+$med-opacity-level-semitransparent: 0.08 !default;
+
+// shadow levels
+$med-shadow-level-0: none !default;
+$med-shadow-level-1: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.14), 0 1px 3px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-2: 0 2px 4px rgba(0, 0, 0, 0.14), 0 3px 4px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-3: 0 3px 3px rgba(0, 0, 0, 0.14), 0 3px 4px rgba(0, 0, 0, 0.12), 0 1px 8px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-4: 0 0 2px rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.12), 0 1px 10px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-5: 0 6px 10px rgba(0, 0, 0, 0.14), 0 1px 18px rgba(0, 0, 0, 0.12), 0 3px 5px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-6: 0 8px 10px rgba(0, 0, 0, 0.14), 0 3px 14px rgba(0, 0, 0, 0.12), 0 4px 5px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-7: 0 9px 12px rgba(0, 0, 0, 0.14), 0 3px 16px rgba(0, 0, 0, 0.12), 0 5px 6px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-8: 0 12px 17px rgba(0, 0, 0, 0.14), 0 5px 22px rgba(0, 0, 0, 0.12), 0 7px 8px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-9: 0 16px 24px rgba(0, 0, 0, 0.14), 0 6px 30px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.2) !default;
+$med-shadow-level-10: 0 24px 38px rgba(0, 0, 0, 0.14), 0 9px 46px rgba(0, 0, 0, 0.12), 0 11px 15px rgba(0, 0, 0, 0.2) !default;

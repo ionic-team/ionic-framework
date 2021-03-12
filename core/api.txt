@@ -159,29 +159,6 @@ ion-button,prop,target,string | undefined,undefined,false,false
 ion-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-button,event,ionBlur,void,true
 ion-button,event,ionFocus,void,true
-ion-button,css-prop,--background
-ion-button,css-prop,--background-activated
-ion-button,css-prop,--background-activated-opacity
-ion-button,css-prop,--background-focused
-ion-button,css-prop,--background-focused-opacity
-ion-button,css-prop,--background-hover
-ion-button,css-prop,--background-hover-opacity
-ion-button,css-prop,--border-color
-ion-button,css-prop,--border-radius
-ion-button,css-prop,--border-style
-ion-button,css-prop,--border-width
-ion-button,css-prop,--box-shadow
-ion-button,css-prop,--color
-ion-button,css-prop,--color-activated
-ion-button,css-prop,--color-focused
-ion-button,css-prop,--color-hover
-ion-button,css-prop,--opacity
-ion-button,css-prop,--padding-bottom
-ion-button,css-prop,--padding-end
-ion-button,css-prop,--padding-start
-ion-button,css-prop,--padding-top
-ion-button,css-prop,--ripple-color
-ion-button,css-prop,--transition
 ion-button,part,native
 
 ion-buttons,scoped
@@ -1359,4 +1336,4 @@ ion-virtual-scroll,method,checkEnd,checkEnd() => Promise<void>
 ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => Promise<void>
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
 
-med-button,shadow
+med-navbar,shadow

@@ -2,8 +2,6 @@
 // breakpoints
 //
 
-// private
-
 @function breakpoint-next(
   $name,
   $breakpoints: $med-grid-breakpoints,
@@ -54,8 +52,6 @@
 ) {
   @return $font-size * $letter-spacing;
 }
-
-// private
 
 @function strip-unit($number) {
   @if type-of($number) == "number" and not unitless($number) {

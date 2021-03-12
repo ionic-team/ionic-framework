@@ -879,10 +879,10 @@ export class IonToolbar {
     this.el = r.nativeElement;
   }
 }
-export declare interface MedButton extends Components.MedButton {
+export declare interface MedNavbar extends Components.MedNavbar {
 }
-@Component({ selector: "med-button", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>" })
-export class MedButton {
+@Component({ selector: "med-navbar", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>" })
+export class MedNavbar {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
