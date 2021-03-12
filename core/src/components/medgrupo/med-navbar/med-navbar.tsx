@@ -1,5 +1,6 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, h, Element, Event, EventEmitter } from '@stencil/core';
 import ResizeObserver from "resize-observer-polyfill";
+import { navbarResizeEventDetail } from './med-navbar-interface';
 
 @Component({
   tag: 'med-navbar',
@@ -7,26 +8,30 @@ import ResizeObserver from "resize-observer-polyfill";
   shadow: true,
 })
 export class MedNavbar {
+  @Element() el!: HTMLElement;
+  @Event() medResize!: EventEmitter<navbarResizeEventDetail>;
+
   private leftEl!: HTMLDivElement;
   private rightEl!: HTMLDivElement;
   private centerEl!: HTMLDivElement;
 
-  private resizeObserver!: ResizeObserver;
+  private hostHeight = 0;
+
+  private sidesResizeObserver!: ResizeObserver;
+  private hostResizeObserver!: ResizeObserver;
 
   componentDidLoad() {
     this.setSize();
   }
 
   disconnectedCallback() {
-    this.resizeObserver.disconnect();
+    this.sidesResizeObserver.disconnect();
+    this.hostResizeObserver.disconnect();
   }
 
   private setSize() {
-    this.resizeObserver = new ResizeObserver(entries => {
+    this.sidesResizeObserver = new ResizeObserver(entries => {
       for (let entry of entries) {
-        console.log('Element:', entry.target.id);
-        console.log('Size:', entry.contentRect.width);
-
         const rightWidth = Number(this.rightEl.getBoundingClientRect().width);
         const leftWidth = Number(this.leftEl.getBoundingClientRect().width);
         const leftDiff = entry.contentRect.width - rightWidth;
@@ -62,26 +67,44 @@ export class MedNavbar {
       }
     });
 
-    this.resizeObserver.observe(this.leftEl);
-    this.resizeObserver.observe(this.rightEl);
+    this.hostResizeObserver = new ResizeObserver(() => {
+      let newHostHeight = Number(this.el.getBoundingClientRect().height);
+
+      if (newHostHeight !== this.hostHeight) {
+        this.medResize.emit({ height: newHostHeight });
+        this.hostHeight = newHostHeight;
+      }
+    });
+
+    this.sidesResizeObserver.observe(this.leftEl);
+    this.sidesResizeObserver.observe(this.rightEl);
+    this.hostResizeObserver.observe(this.el);
   }
 
   render() {
     return (
       <Host from-stencil>
         <header class="header">
-          <div id="left" class="left" ref={(el) => this.leftEl = el as HTMLDivElement}>
-            <slot name="start"></slot>
-          </div>
-          <div class="center" ref={(el) => this.centerEl = el as HTMLDivElement}>
-            <div class="title">
+          <slot name="top"></slot>
+
+          <div class="header__container">
+            <div id="left" class="left" ref={(el) => this.leftEl = el as HTMLDivElement}>
+              <slot name="left"></slot>
+            </div>
+
+            <div class="center" ref={(el) => this.centerEl = el as HTMLDivElement}>
+            
+              <slot name="center"></slot>
               <slot name="title"></slot>
               <slot name="subtitle"></slot>
+
+            </div>
+
+            <div id="right" class="right" ref={(el) => this.rightEl = el as HTMLDivElement}>
+              <slot name="right"></slot>
             </div>
           </div>
-          <div id="right" class="right" ref={(el) => this.rightEl = el as HTMLDivElement}>
-            <slot name="end"></slot>
-          </div>
+          
         </header>
       </Host>
     );
