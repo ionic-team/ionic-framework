@@ -1,7 +1,7 @@
 import { componentOnReady } from '../helpers';
 
 describe('componentOnReady()', () => {
-  it('should correctly call callback for a custom element', async (done) => {
+  it('should correctly call callback for a custom element', (done) => {
     customElements.define('hello-world', class extends HTMLElement {
       constructor() {
         super();
@@ -15,7 +15,7 @@ describe('componentOnReady()', () => {
     })
   });
 
-  it('should correctly call callback for a lazy loaded component', async (done) => {
+  it('should correctly call callback for a lazy loaded component', (done) => {
     customElements.define('hello-world', class extends HTMLElement {
       constructor() {
         super();

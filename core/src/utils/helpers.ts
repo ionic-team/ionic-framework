@@ -19,7 +19,7 @@ declare const requestAnimationFrame: any;
  */
 export const componentOnReady = (el: any, callback: any) => {
   if (el.componentOnReady) {
-    el.componentOnReady().then((el: any) => callback(el));
+    el.componentOnReady().then((resolvedEl: any) => callback(resolvedEl));
   } else {
     raf(() => callback(el));
   }
