@@ -236,9 +236,9 @@ export namespace Components {
          */
         "fill"?: 'clear' | 'outline' | 'solid' | 'default';
         /**
-          * if `form` is defined, on button click the specified form will be submitted. Useful when `ion-button` is outside of the form.
+          * The ID of the `<form>` element that should be submitted on button click.
          */
-        "form": HTMLFormElement | undefined;
+        "form": string | undefined;
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -3539,9 +3539,9 @@ declare namespace LocalJSX {
          */
         "fill"?: 'clear' | 'outline' | 'solid' | 'default';
         /**
-          * if `form` is defined, on button click the specified form will be submitted. Useful when `ion-button` is outside of the form.
+          * The ID of the `<form>` element that should be submitted on button click.
          */
-        "form"?: HTMLFormElement | undefined;
+        "form"?: string | undefined;
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */

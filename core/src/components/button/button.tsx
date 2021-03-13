@@ -167,18 +167,36 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       // if form property is defined, it will be used to submit
       // else climb up the dom to see if we're in a <form>
       // and if so, then use JS to submit it
-      const form = (this.form) ? this.form : this.el.closest('form');
-      if (form) {
+      const formElement = this.getForm(this.el, this.form);
+      if (formElement) {
         ev.preventDefault();
 
         const fakeButton = document.createElement('button');
         fakeButton.type = this.type;
         fakeButton.style.display = 'none';
-        form.appendChild(fakeButton);
+        formElement.appendChild(fakeButton);
         fakeButton.click();
         fakeButton.remove();
       }
     }
+  }
+
+  /**
+  * Given a reference element, find the closest form.
+  * If there is no reference element, search the document.
+  * If `id` is provided, the selector will only look for forms
+  * given that id.
+  */
+  private getForm = (refEl: HTMLElement, id?: string) => {
+    const selector = (id) ? `form#${id}` : 'form';
+    if (refEl) {
+      const form = refEl.closest(selector);
+      if (form) return form;
+    }
+
+    if (typeof (document as any) === 'undefined') return null;
+
+    return document.querySelector(selector);
   }
 
   private onFocus = () => {
