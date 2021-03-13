@@ -184,19 +184,19 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   }
 
   /**
-  * Given a reference element, find the closest form.
-  * If there is no reference element, search the document.
-  * If `id` is provided, the selector will only look for forms
-  * given that id.
-  */
+   * Given a reference element, find the closest form.
+   * If there is no reference element, search the document.
+   * If `id` is provided, the selector will only look for forms
+   * given that id.
+   */
   private getForm = (refEl: HTMLElement, id?: string) => {
-    const selector = (id) ? `form#${id}` : 'form';
-    if (refEl) {
+    const selector = (typeof (id as any) !== 'undefined') ? `form#${id}` : 'form';
+    if (typeof (refEl as any) !== 'undefined') {
       const form = refEl.closest(selector);
-      if (form) return form;
+      if (form) { return form; }
     }
 
-    if (typeof (document as any) === 'undefined') return null;
+    if (typeof (document as any) === 'undefined') { return null; }
 
     return document.querySelector(selector);
   }
