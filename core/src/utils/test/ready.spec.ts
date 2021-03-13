@@ -10,7 +10,7 @@ describe('componentOnReady()', () => {
 
     const component = document.createElement('hello-world');
     componentOnReady(component, (el) => {
-      expect(el).toEqual(component);
+      expect(el).toBe(component);
       done();
     })
   });
@@ -34,7 +34,7 @@ describe('componentOnReady()', () => {
 
     const component = document.createElement('hello-world');
     componentOnReady(component, (el) => {
-      expect(el).toEqual(component);
+      expect(el).toBe(component);
       expect(cb).toHaveBeenCalledTimes(1);
       done();
     })
