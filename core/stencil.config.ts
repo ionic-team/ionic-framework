@@ -1,10 +1,12 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
+import { vueOutputTarget } from '@stencil/vue-output-target';
 
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
 
 export const config: Config = {
+  autoprefixCss: true,
   namespace: 'Ionic',
   bundles: [
     { components: ['ion-action-sheet'] },
@@ -57,6 +59,51 @@ export const config: Config = {
     })
   ],
   outputTargets: [
+    vueOutputTarget({
+      componentCorePackage: '@ionic/core',
+      proxiesFile: '../packages/vue/src/proxies.ts',
+      excludeComponents: [
+        // Routing
+        'ion-router',
+        'ion-route',
+        'ion-route-redirect',
+        'ion-router-link',
+        'ion-router-outlet',
+        'ion-back-button',
+        'ion-tab-button',
+        'ion-tabs',
+        'ion-tab',
+        'ion-tab-bar',
+
+        // Overlays
+        'ion-action-sheet',
+        'ion-alert',
+        'ion-loading',
+        'ion-modal',
+        'ion-picker',
+        'ion-popover',
+        'ion-toast',
+
+        'ion-app',
+        'ion-icon'
+      ],
+      componentModels: [
+        {
+          elements: ['ion-checkbox', 'ion-toggle'],
+          targetAttr: 'checked',
+          // TODO Ionic v6 remove in favor of v-ion-change
+          event: ['v-ionChange', 'v-ion-change'],
+          externalEvent: 'ionChange'
+        },
+        {
+          elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-textarea'],
+          targetAttr: 'value',
+          // TODO Ionic v6 remove in favor of v-ion-change
+          event: ['v-ionChange', 'v-ion-change'],
+          externalEvent: 'ionChange'
+        }
+      ],
+    }),
     {
       type: 'docs-vscode',
       file: 'dist/html.html-data.json',
@@ -66,9 +113,16 @@ export const config: Config = {
       type: 'dist',
       esmLoaderPath: '../loader'
     },
-    // {
-    //   type: 'dist-custom-elements-bundle',
-    // },
+    {
+      type: 'dist-custom-elements',
+      dir: 'components',
+      copy: [{
+        src: '../scripts/custom-elements',
+        dest: 'components',
+        warn: true
+      }],
+      includeGlobalScripts: false
+    },
     {
       type: 'docs-readme',
       strict: true
@@ -121,6 +175,7 @@ export const config: Config = {
       ]
     }
   ],
+  buildEs5: 'prod',
   extras: {
     cssVarsShim: true,
     dynamicImportShim: true,

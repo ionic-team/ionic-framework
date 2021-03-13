@@ -8,6 +8,20 @@ interface HandlerRegister {
   id: number;
 }
 
+/**
+ * When hardwareBackButton: false in config,
+ * we need to make sure we also block the default
+ * webview behavior. If we don't then it will be
+ * possible for users to navigate backward while
+ * an overlay is still open. Additionally, it will
+ * give the appearance that the hardwareBackButton
+ * config is not working as the page transition
+ * will still happen.
+ */
+export const blockHardwareBackButton = () => {
+  document.addEventListener('backbutton', () => {}); // tslint:disable-line
+}
+
 export const startHardwareBackButton = () => {
   const doc = document;
 

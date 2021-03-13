@@ -1,0 +1,69 @@
+{
+  "name": "@ionic/vue-router",
+  "version": "5.6.0",
+  "description": "Vue Router integration for @ionic/vue",
+  "scripts": {
+    "test.spec": "jest",
+    "lint": "echo add linter",
+    "bundle": "rollup --config rollup.config.js",
+    "build": "npm run clean && npm run compile && npm run bundle",
+    "clean": "rimraf dist",
+    "compile": "npm run tsc",
+    "tsc": "tsc -p ."
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/ionic.git"
+  },
+  "keywords": [
+    "ionic",
+    "framework",
+    "vue",
+    "mobile",
+    "app",
+    "hybrid",
+    "webapp",
+    "cordova",
+    "progressive",
+    "web",
+    "app",
+    "pwa"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "homepage": "https://github.com/ionic-team/ionic#readme",
+  "devDependencies": {
+    "@ionic/vue": "5.4.1",
+    "@types/jest": "^26.0.13",
+    "@types/node": "^14.10.1",
+    "jest": "^26.6.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.32.1",
+    "ts-jest": "^26.4.3",
+    "typescript": "^4.0.5",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-beta.11"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(js|ts|tsx)$": "<rootDir>/test/jest.preprocessor.js"
+    },
+    "testRegex": "(\\.(test|spec))\\.(ts?|tsx?|jsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json",
+      "jsx"
+    ]
+  }
+}

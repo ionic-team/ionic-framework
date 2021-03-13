@@ -35,7 +35,7 @@ Cypress.Commands.add('ionPageVisible', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('not.have.class', 'ion-page-hidden')
     .should('not.have.class', 'ion-page-invisible')
-    .should('have.length', 1)
+    .should('have.length', 1);
 
   // cy.get(`div.ion-page[data-pageid=${pageId}]`)
   //   .should('not.have.class', 'ion-page')
@@ -45,39 +45,36 @@ Cypress.Commands.add('ionPageVisible', (pageId) => {
 
   // cy.get(`div.ion-page[data-pageid=${pageId}]`).should('not.have.class', 'ion-page-visible')
   // cy.get(`div.ion-page[data-pageid=${pageId}]`).should('have.attr', 'style', 'z-index: 101;')
-})
+});
 
 Cypress.Commands.add('ionPageInvisible', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('have.class', 'ion-page-invisible')
-    .should('have.length', 1)
-})
-
+    .should('have.length', 1);
+});
 
 Cypress.Commands.add('ionPageHidden', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('have.class', 'ion-page-hidden')
-    .should('have.length', 1)
-})
+    .should('have.length', 1);
+});
 
 Cypress.Commands.add('ionPageDoesNotExist', (pageId) => {
-  cy.get(`div.ion-page[data-pageid=${pageId}]`)
-    .should('not.exist')
-})
-
+  cy.get(`div.ion-page[data-pageid=${pageId}]`).should('not.exist');
+});
 
 Cypress.Commands.add('ionNav', (element, contains) => {
   cy.contains(element, contains).click();
   cy.wait(250);
-})
+});
 
 Cypress.Commands.add('ionSwipeRight', (element, contains) => {
   cy.get('ion-router-outlet')
-    .trigger('mousedown', { position: "left" })
+    .trigger('mousedown', { position: 'left' })
     .trigger('mousemove', { clientX: 100, clientY: 275 })
-    .trigger('mouseup', { force: true })
+    .trigger('mouseup', { force: true });
   cy.wait(150);
-})
+});
 
 Cypress.Commands.add('ionMenuNav', (contains) => {
   // cy.get('ion-menu.show-menu').should('exist');
@@ -99,12 +96,12 @@ Cypress.Commands.add('ionMenuNav', (contains) => {
   // cy.wait(1000)
   // cy.contains('ion-item', contains).click()
   // cy.contains('ion-item', contains).parent('ion-menu-toggle').click({ force: true });
-})
+});
 
 Cypress.Commands.add('ionTabClick', (tabText) => {
   // TODO: figure out how to get rid of this wait. Switching tabs after a forward nav to a details page needs it
-  cy.wait(250)
-  cy.contains('ion-tab-button', tabText).click({ force: true })
+  cy.wait(250);
+  cy.contains('ion-tab-button', tabText).click({ force: true });
   // cy.get('ion-tab-button.tab-selected').contains(tabText)
 });
 
@@ -113,7 +110,7 @@ Cypress.Commands.add('ionBackClick', (pageId) => {
     .should('be.visible', true)
     // .should('have.length', 1)
     .find('ion-back-button')
-    .click()
+    .click();
 });
 
 Cypress.Commands.add('ionMenuClick', () => {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
@@ -73,7 +73,9 @@
   <script>
     customElements.whenDefined('ion-tabs').then(async () => {
       const tabs = document.querySelector('ion-tabs');
-      await tabs.componentOnReady();
+      if (tabs.componentOnReady) {
+        await tabs.componentOnReady();
+      }
       await tabs.select('tab-three');
     });
   </script>

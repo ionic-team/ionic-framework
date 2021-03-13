@@ -249,6 +249,7 @@ ion-checkbox,part,mark
 
 ion-chip,shadow
 ion-chip,prop,color,string | undefined,undefined,false,false
+ion-chip,prop,disabled,boolean,false,false,false
 ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
 ion-chip,css-prop,--background
@@ -844,6 +845,9 @@ ion-progress-bar,prop,value,number,0,false,false
 ion-progress-bar,css-prop,--background
 ion-progress-bar,css-prop,--buffer-background
 ion-progress-bar,css-prop,--progress-background
+ion-progress-bar,part,progress
+ion-progress-bar,part,stream
+ion-progress-bar,part,track
 
 ion-radio,shadow
 ion-radio,prop,color,string | undefined,undefined,false,false
@@ -987,6 +991,7 @@ ion-searchbar,prop,mode,"ios" | "md",undefined,false,false
 ion-searchbar,prop,placeholder,string,'Search',false,false
 ion-searchbar,prop,searchIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,showCancelButton,"always" | "focus" | "never",'never',false,false
+ion-searchbar,prop,showClearButton,"always" | "focus" | "never",'focus',false,false
 ion-searchbar,prop,spellcheck,boolean,false,false,false
 ion-searchbar,prop,type,"email" | "number" | "password" | "search" | "tel" | "text" | "url",'search',false,false
 ion-searchbar,prop,value,null | string | undefined,'',false,false
@@ -1015,6 +1020,7 @@ ion-segment,prop,color,string | undefined,undefined,false,false
 ion-segment,prop,disabled,boolean,false,false,false
 ion-segment,prop,mode,"ios" | "md",undefined,false,false
 ion-segment,prop,scrollable,boolean,false,false,false
+ion-segment,prop,swipeGesture,boolean,true,false,false
 ion-segment,prop,value,null | string | undefined,undefined,false,false
 ion-segment,event,ionChange,SegmentChangeEventDetail,true
 ion-segment,css-prop,--background

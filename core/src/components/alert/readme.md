@@ -588,6 +588,48 @@ function presentAlertCheckbox() {
 ### React
 
 ```tsx
+/* Using with useIonAlert Hook */
+
+import React from 'react';
+import { IonButton, IonContent, IonPage, useIonAlert } from '@ionic/react';
+
+const AlertExample: React.FC = () => {
+  const [present] = useIonAlert();
+  return (
+    <IonPage>
+      <IonContent fullscreen>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present({
+              cssClass: 'my-css',
+              header: 'Alert',
+              message: 'alert from hook',
+              buttons: [
+                'Cancel',
+                { text: 'Ok', handler: (d) => console.log('ok pressed') },
+              ],
+              onDidDismiss: (e) => console.log('did dismiss'),
+            })
+          }
+        >
+          Show Alert
+        </IonButton>
+        <IonButton
+          expand="block"
+          onClick={() => present('hello with params', [{ text: 'Ok' }])}
+        >
+          Show Alert using params
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+```tsx
+/* Using with IonAlert Component */
+
 import React, { useState } from 'react';
 import { IonAlert, IonButton, IonContent } from '@ionic/react';
 
@@ -1415,6 +1457,40 @@ export default defineComponent({
       return alert.present();
     },
   },
+});
+</script>
+```
+
+Developers can also use this component directly in their template:
+
+```html
+<template>
+  <ion-button @click="setOpen(true)">Show Alert</ion-button>
+  <ion-alert
+    :is-open="isOpenRef"
+    header="Alert"
+    sub-header="Subtitle"
+    message="This is an alert message."
+    css-class="my-custom-class"
+    :buttons="buttons"
+    @onDidDismiss="setOpen(false)"
+  >
+  </ion-alert>
+</template>
+
+<script>
+import { IonAlert, IonButton } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  components: { IonAlert, IonButton },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    const buttons = ['Ok'];
+    
+    return { buttons, isOpenRef, setOpen }
+  }
 });
 </script>
 ```

@@ -3,7 +3,7 @@ import { getIonMode } from '../global/ionic-global';
 import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
-import { getElementRoot } from './helpers';
+import { addEventListener, componentOnReady, getElementRoot, removeEventListener } from './helpers';
 
 let lastId = 0;
 
@@ -57,7 +57,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
       // append the overlay element to the document body
       getAppRoot(document).appendChild(element);
 
-      return element.componentOnReady() as any;
+      return new Promise(resolve => componentOnReady(element, resolve));
     });
   }
   return Promise.resolve() as any;
@@ -299,7 +299,7 @@ const focusPreviousElementOnDismiss = async (overlayEl: any) => {
 
   await overlayEl.onDidDismiss();
   previousElement.focus();
-}
+};
 
 export const dismiss = async (
   overlay: OverlayInterface,
@@ -388,10 +388,10 @@ export const eventMethod = <T>(element: HTMLElement, eventName: string): Promise
 
 export const onceEvent = (element: HTMLElement, eventName: string, callback: (ev: Event) => void) => {
   const handler = (ev: Event) => {
-    element.removeEventListener(eventName, handler);
+    removeEventListener(element, eventName, handler);
     callback(ev);
   };
-  element.addEventListener(eventName, handler);
+  addEventListener(element, eventName, handler);
 };
 
 export const isCancel = (role: string | undefined): boolean => {

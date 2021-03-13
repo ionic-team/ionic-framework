@@ -10,7 +10,7 @@ interface IonReactMemoryRouterProps extends MemoryRouterProps {
 
 export class IonReactMemoryRouter extends React.Component<IonReactMemoryRouterProps> {
   history: MemoryHistory;
-  historyListenHandler?: ((location: HistoryLocation, action: HistoryAction) => void);
+  historyListenHandler?: (location: HistoryLocation, action: HistoryAction) => void;
 
   constructor(props: IonReactMemoryRouterProps) {
     super(props);

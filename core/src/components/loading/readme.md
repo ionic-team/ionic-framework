@@ -131,6 +131,43 @@ async function presentLoadingWithOptions() {
 ### React
 
 ```tsx
+/* Using with useIonLoading Hook */
+
+import React from 'react';
+import { IonButton, IonContent, IonPage, useIonLoading } from '@ionic/react';
+
+interface LoadingProps {}
+
+const LoadingExample: React.FC<LoadingProps> = () => {
+  const [present] = useIonLoading();
+  return (
+    <IonPage>
+      <IonContent>
+        <IonButton
+          expand="block"
+          onClick={() =>
+            present({
+              duration: 3000,
+            })
+          }
+        >
+          Show Loading
+        </IonButton>
+        <IonButton
+          expand="block"
+          onClick={() => present('Loading', 2000, 'dots')}
+        >
+          Show Loading using params
+        </IonButton>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+```tsx
+/* Using with IonLoading Component */
+
 import React, { useState } from 'react';
 import { IonLoading, IonButton, IonContent } from '@ionic/react';
 
@@ -261,6 +298,40 @@ export default defineComponent({
     },
   },
   components: { IonButton }
+});
+</script>
+```
+
+Developers can also use this component directly in their template:
+
+```html
+<template>
+  <ion-button @click="setOpen(true)">Show Loading</ion-button>
+  <ion-loading
+    :is-open="isOpenRef"
+    cssClass="my-custom-class"
+    message="Please wait..."
+    :duration="timeout"
+    @onDidDismiss="setOpen(false)"
+  >
+  </ion-loading>
+</template>
+
+<script>
+import { IonLoading, IonButton } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  props: {
+    timeout: { type: Number, default: 1000 },
+  },
+  components: { IonLoading, IonButton },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    
+    return { isOpenRef, setOpen }
+  }
 });
 </script>
 ```

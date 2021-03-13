@@ -24,6 +24,10 @@ export const ChipExamples: React.FC = () => {
           <IonLabel color="dark">Secondary w/ Dark label</IonLabel>
         </IonChip>
 
+        <IonChip disabled={true}>
+          <IonLabel>Disabled Chip</IonLabel>
+        </IonChip>
+
         <IonChip>
           <IonIcon icon={pin} />
           <IonLabel>Default</IonLabel>

@@ -307,59 +307,117 @@ will match the following tab:
 
 ### Vue
 
+**Tabs.vue**
 ```html
 <template>
-  <!-- Listen to before and after tab change events -->
-  <ion-tabs @IonTabsWillChange="beforeTabChange" @IonTabsDidChange="afterTabChange">
-    <ion-tab tab="schedule">
-      <Schedule />
-    </ion-tab>
-
-    <!-- Match by "app.speakers" route name -->
-    <ion-tab tab="speakers" :routes="'app.speakers'">
-      <Speakers />
-    </ion-tab>
-
-    <!-- Match by an array of route names -->
-    <ion-tab tab="map" :routes="['app.map', 'app.other.route']">
-      <Map />
-    </ion-tab>
-
-    <!-- Get matched routes with a helper method -->
-    <ion-tab tab="about" :routes="getMatchedRoutes">
-      <About />
-    </ion-tab>
-
-    <!-- Use v-slot:bottom with Vue ^2.6.0 -->
-    <template slot="bottom">
-      <ion-tab-bar>
-        <ion-tab-button tab="schedule">
-          <ion-icon name="calendar"></ion-icon>
+  <ion-page>
+    <ion-tabs @ionTabsWillChange="beforeTabChange" @ionTabsDidChange="afterTabChange">
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="schedule" href="/tabs/schedule">
+          <ion-icon :icon="calendar"></ion-icon>
           <ion-label>Schedule</ion-label>
           <ion-badge>6</ion-badge>
         </ion-tab-button>
-
-        <!-- Provide a custom route to navigate to -->
-        <ion-tab-button tab="speakers" :to="{ name: 'app.speakers' }">
-          <ion-icon name="person-circle"></ion-icon>
+  
+        <ion-tab-button tab="speakers" href="/tabs/speakers">
+          <ion-icon :icon="personCircle"></ion-icon>
           <ion-label>Speakers</ion-label>
         </ion-tab-button>
-
-        <!-- Provide extra data to route -->
-        <ion-tab-button tab="map" :to="{ name: 'app.map', params: { mode: 'dark' } }">
-          <ion-icon name="map"></ion-icon>
-          <ion-label>Map</ion-label>
-        </ion-tab-button>
-
-        <!-- Provide custom click handler -->
-        <ion-tab-button tab="about" @click="goToAboutTab">
-          <ion-icon name="information-circle"></ion-icon>
-          <ion-label>About</ion-label>
-        </ion-tab-button>
       </ion-tab-bar>
-    </template>
-  </ion-tabs>
+    </ion-tabs>
+  </ion-page>
 </template>
+
+<script>
+import { defineComponent } from 'vue';
+import { 
+  IonIcon, 
+  IonLabel, 
+  IonPage,
+  IonTabBar, 
+  IonTabButton, 
+  IonTabs
+} from '@ionic/vue';
+import { calendar, personCircle } from 'ionicons/icons';
+
+export default defineComponent({
+  components: { IonIcon, IonLabel, IonPage, IonTabBar, IonTabButton, IonTabs },
+  setup() {
+    const beforeTabChange = () => {
+      // do something before tab change
+    }
+    const afterTabChange = () => {
+      // do something after tab change
+    }
+    return {
+      calendar,
+      personCircle,
+      beforeTabChange,
+      afterTabChange
+    }
+  }
+});
+</script>
+```
+
+**Schedule.vue**
+```html
+<template>
+  <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Schedule</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="ion-padding">Schedule Tab</ion-content>
+  </ion-page>
+</template>
+
+<script>
+import { defineComponent } from 'vue';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from '@ionic/vue';
+
+export default defineComponent({
+  components: { IonContent, IonHeader, IonPage, IonTitle, IonToolbar }
+});
+</script>
+```
+
+**Speakers.vue**
+```html
+<template>
+  <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Speakers</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="ion-padding">Speakers Tab</ion-content>
+  </ion-page>
+</template>
+
+<script>
+import { defineComponent } from 'vue';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from '@ionic/vue';
+
+export default defineComponent({
+  components: { IonContent, IonHeader, IonPage, IonTitle, IonToolbar }
+});
+</script>
 ```
 
 

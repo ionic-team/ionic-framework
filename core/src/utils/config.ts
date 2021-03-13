@@ -193,6 +193,8 @@ export interface IonicConfig {
   _forceStatusbarPadding?: boolean;
   _testing?: boolean;
   _zoneGate?: (h: () => any) => any;
+  _ael?: (el: any, name: string, cb: any, opts: any) => any;
+  _rel?: (el: any, name: string, cb: any, opts: any) => any;
 }
 
 export const setupConfig = (config: IonicConfig) => {

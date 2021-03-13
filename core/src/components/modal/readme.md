@@ -79,6 +79,8 @@ export class ModalPage {
 }
 ```
 
+> If you need a wrapper element inside of your modal component, we recommend using a `<div class="ion-page">` so that the component dimensions are still computed properly.
+
 ### Passing Data
 
 During creation of a modal, data can be passed in through the `componentProps`.
@@ -251,6 +253,8 @@ function presentModal() {
 }
 ```
 
+> If you need a wrapper element inside of your modal component, we recommend using a `<div class="ion-page">` so that the component dimensions are still computed properly.
+
 ### Passing Data
 
 During creation of a modal, data can be passed in through the `componentProps`. The previous example can be written to include data:
@@ -328,6 +332,70 @@ modalElement.presentingElement = await modalController.getTop(); // Get the top-
 ### React
 
 ```tsx
+/* Using with useIonModal Hook */ 
+
+import React, { useState } from 'react';
+import { IonButton, IonContent, IonPage, useIonModal } from '@ionic/react';
+
+const Body: React.FC<{
+  count: number;
+  onDismiss: () => void;
+  onIncrement: () => void;
+}> = ({ count, onDismiss, onIncrement }) => (
+  <div>
+    count: {count}
+    <IonButton expand="block" onClick={() => onIncrement()}>
+      Increment Count
+    </IonButton>
+    <IonButton expand="block" onClick={() => onDismiss()}>
+      Close
+    </IonButton>
+  </div>
+);
+
+const ModalExample: React.FC = () => {
+  const [count, setCount] = useState(0);
+
+  const handleIncrement = () => {
+    setCount(count + 1);
+  };
+
+  const handleDismiss = () => {
+    dismiss();
+  };
+
+  /**
+   * First parameter is the component to show, second is the props to pass
+   */
+  const [present, dismiss] = useIonModal(Body, {
+    count,
+    onDismiss: handleDismiss,
+    onIncrement: handleIncrement,
+  });
+
+  return (
+    <IonPage>
+      <IonContent fullscreen>
+        <IonButton
+          expand="block"
+          onClick={() => {
+            present({
+              cssClass: 'my-class',
+            });
+          }}
+        >
+          Show Modal
+        </IonButton>
+        <div>Count: {count}</div>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+```tsx
+/* Using with IonModal Component */
+
 import React, { useState } from 'react';
 import { IonModal, IonButton, IonContent } from '@ionic/react';
 
@@ -467,6 +535,8 @@ export class PageModal {
 }
 ```
 
+> If you need a wrapper element inside of your modal component, we recommend using a `<div class="ion-page">` so that the component dimensions are still computed properly.
+
 ### Passing Data
 
 During creation of a modal, data can be passed in through the `componentProps`.
@@ -578,16 +648,14 @@ async presentModal() {
 
 ```html
 <template>
-  <div>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{ title }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      {{ content }}
-    </ion-content>
-  </div>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{ title }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    {{ content }}
+  </ion-content>
 </template>
 
 <script>
@@ -631,12 +699,7 @@ export default {
           component: Modal,
           cssClass: 'my-custom-class',
           componentProps: {
-            data: {
-              content: 'New Content',
-            },
-            propsData: {
-              title: 'New title',
-            },
+            title: 'New Title'
           },
         })
       return modal.present();
@@ -645,6 +708,39 @@ export default {
 }
 </script>
 ```
+
+Developers can also use this component directly in their template:
+
+```html
+<template>
+  <ion-button @click="setOpen(true)">Show Modal</ion-button>
+  <ion-modal
+    :is-open="isOpenRef"
+    css-class="my-custom-class"
+    @onDidDismiss="setOpen(false)"
+  >
+    <Modal :data="data"></Modal>
+  </ion-modal>
+</template>
+
+<script>
+import { IonModal, IonButton } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+import Modal from './modal.vue'
+
+export default defineComponent({
+  components: { IonModal, IonButton, Modal },
+  setup() {
+    const isOpenRef = ref(false);
+    const setOpen = (state: boolean) => isOpenRef.value = state;
+    const data = { content: 'New Content' };
+    return { isOpenRef, setOpen, data }
+  }
+});
+</script>
+```
+
+> If you need a wrapper element inside of your modal component, we recommend using an `<ion-page>` so that the component dimensions are still computed properly.
 
 
 

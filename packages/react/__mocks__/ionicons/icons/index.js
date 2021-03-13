@@ -1,34 +1,34 @@
 module.exports = {
   close: {
     ios: '',
-    md: ''
+    md: '',
   },
   reorder: {
     ios: '',
-    md: ''
+    md: '',
   },
   menu: {
     ios: '',
-    md: ''
+    md: '',
   },
   arrowForward: {
     ios: '',
-    md: ''
+    md: '',
   },
   arrowBack: {
     ios: '',
-    md: ''
+    md: '',
   },
   arrowDown: {
     ios: '',
-    md: ''
+    md: '',
   },
   search: {
     ios: '',
-    md: ''
+    md: '',
   },
   closeCircle: {
     ios: '',
-    md: ''
+    md: '',
   },
 };

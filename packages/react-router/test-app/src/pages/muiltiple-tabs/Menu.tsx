@@ -5,21 +5,23 @@ export const Menu: React.FC = () => {
     <IonMenu contentId="main" menuId="first">
       <IonContent>
         <IonList>
-          <IonMenuToggle key={"e1"} autoHide={false}>
+          <IonMenuToggle key={'e1'} autoHide={false}>
             <IonItem
-              routerLink={"/multiple-tabs"}
+              routerLink={'/multiple-tabs'}
               routerDirection="none"
               lines="none"
-              detail={false}>
+              detail={false}
+            >
               <IonLabel>Tab 1</IonLabel>
             </IonItem>
           </IonMenuToggle>
-          <IonMenuToggle key={"e2"} autoHide={false}>
+          <IonMenuToggle key={'e2'} autoHide={false}>
             <IonItem
-              routerLink={"/multiple-tabs/tab2"}
+              routerLink={'/multiple-tabs/tab2'}
               routerDirection="none"
               lines="none"
-              detail={false}>
+              detail={false}
+            >
               <IonLabel>Tab 2</IonLabel>
             </IonItem>
           </IonMenuToggle>

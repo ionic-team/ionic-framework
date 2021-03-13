@@ -7,7 +7,6 @@ Ionic Angular specific building blocks on top of [@ionic/core](https://www.npmjs
 
 * [Ionic Core Components](https://www.npmjs.com/package/@ionic/core)
 * [Ionic Documentation](https://ionicframework.com/docs/)
-* [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/)
 * [Ionic Forum](https://forum.ionicframework.com/)
 * [Ionicons](http://ionicons.com/)
 * [Stencil](https://stenciljs.com/)

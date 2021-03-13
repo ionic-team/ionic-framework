@@ -5,7 +5,7 @@ import {
   StackContextState,
   ViewItem,
   generateId,
-  getConfig
+  getConfig,
 } from '@ionic/react';
 import React from 'react';
 import { matchPath } from 'react-router-dom';
@@ -16,7 +16,7 @@ interface StackManagerProps {
   routeInfo: RouteInfo;
 }
 
-interface StackManagerState { }
+interface StackManagerState {}
 
 export class StackManager extends React.PureComponent<StackManagerProps, StackManagerState> {
   id: string;
@@ -26,7 +26,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
   stackContextValue: StackContextState = {
     registerIonPage: this.registerIonPage.bind(this),
-    isInOutlet: () => true
+    isInOutlet: () => true,
   };
 
   constructor(props: StackManagerProps) {
@@ -57,7 +57,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   async handlePageTransition(routeInfo: RouteInfo) {
-
     // If routerOutlet isn't quite ready, give it another try in a moment
     if (!this.routerOutletElement || !this.routerOutletElement.commit) {
       setTimeout(() => this.handlePageTransition(routeInfo), 10);
@@ -66,7 +65,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
 
       if (!leavingViewItem && routeInfo.prevRouteLastPathname) {
-        leavingViewItem = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
+        leavingViewItem = this.context.findViewItemByPathname(
+          routeInfo.prevRouteLastPathname,
+          this.id
+        );
       }
 
       // Check if leavingViewItem should be unmounted
@@ -74,7 +76,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         if (routeInfo.routeAction === 'replace') {
           leavingViewItem.mount = false;
         } else if (!(routeInfo.routeAction === 'push' && routeInfo.routeDirection === 'forward')) {
-          if (routeInfo.routeDirection !== 'none' && (enteringViewItem !== leavingViewItem)) {
+          if (routeInfo.routeDirection !== 'none' && enteringViewItem !== leavingViewItem) {
             leavingViewItem.mount = false;
           }
         } else if (routeInfo.routeOptions?.unmount) {
@@ -82,7 +84,10 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
       }
 
-      const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
+      const enteringRoute = matchRoute(
+        this.ionRouterOutlet?.props.children,
+        routeInfo
+      ) as React.ReactElement;
       if (enteringViewItem) {
         enteringViewItem.reactElement = enteringRoute;
       }
@@ -120,7 +125,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   async setupRouterOutlet(routerOutlet: HTMLIonRouterOutletElement) {
-
     const canStart = () => {
       const config = getConfig();
       const swipeEnabled = config && config.get('swipeBackEnabled', routerOutlet.mode === 'ios');
@@ -137,20 +141,28 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     routerOutlet.swipeHandler = {
       canStart,
       onStart,
-      onEnd: _shouldContinue => true
+      onEnd: (_shouldContinue) => true,
     };
   }
 
-  async transitionPage(routeInfo: RouteInfo, enteringViewItem: ViewItem, leavingViewItem?: ViewItem) {
-
+  async transitionPage(
+    routeInfo: RouteInfo,
+    enteringViewItem: ViewItem,
+    leavingViewItem?: ViewItem
+  ) {
     const routerOutlet = this.routerOutletElement!;
 
-    const direction = (routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root')
-      ? undefined
-      : routeInfo.routeDirection;
+    const direction =
+      routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root'
+        ? undefined
+        : routeInfo.routeDirection;
 
     if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
-      if (leavingViewItem && leavingViewItem.ionPageElement && (enteringViewItem === leavingViewItem)) {
+      if (
+        leavingViewItem &&
+        leavingViewItem.ionPageElement &&
+        enteringViewItem === leavingViewItem
+      ) {
         // If a page is transitioning to another version of itself
         // we clone it so we can have an animation to show
 
@@ -184,7 +196,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         direction: direction as any,
         showGoBack: direction === 'forward',
         progressAnimation: false,
-        animationBuilder: routeInfo.routeAnimation
+        animationBuilder: routeInfo.routeAnimation,
       });
     }
   }
@@ -200,25 +212,28 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       this.props.routeInfo,
       () => {
         this.forceUpdate();
-      });
+      }
+    );
 
     return (
       <StackContext.Provider value={this.stackContextValue}>
-        {React.cloneElement(ionRouterOutlet as any, {
-          ref: (node: HTMLIonRouterOutletElement) => {
-            if (ionRouterOutlet.props.setRef) {
-              ionRouterOutlet.props.setRef(node);
-            }
-            if (ionRouterOutlet.props.forwardedRef) {
-              ionRouterOutlet.props.forwardedRef.current = node;
-            }
-            this.routerOutletElement = node;
-            const { ref } = ionRouterOutlet as any;
-            if (typeof ref === 'function') {
-              ref(node);
-            }
-          }
-        },
+        {React.cloneElement(
+          ionRouterOutlet as any,
+          {
+            ref: (node: HTMLIonRouterOutletElement) => {
+              if (ionRouterOutlet.props.setRef) {
+                ionRouterOutlet.props.setRef(node);
+              }
+              if (ionRouterOutlet.props.forwardedRef) {
+                ionRouterOutlet.props.forwardedRef.current = node;
+              }
+              this.routerOutletElement = node;
+              const { ref } = ionRouterOutlet as any;
+              if (typeof ref === 'function') {
+                ref(node);
+              }
+            },
+          },
           components
         )}
       </StackContext.Provider>
@@ -238,7 +253,7 @@ function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
     const matchProps = {
       exact: child.props.exact,
       path: child.props.path || child.props.from,
-      component: child.props.component
+      component: child.props.component,
     };
     const match = matchPath(routeInfo.pathname, matchProps);
     if (match) {
@@ -264,7 +279,7 @@ function matchComponent(node: React.ReactElement, pathname: string, forceExact?:
   const matchProps = {
     exact: forceExact ? true : node.props.exact,
     path: node.props.path || node.props.from,
-    component: node.props.component
+    component: node.props.component,
   };
   const match = matchPath(pathname, matchProps);
 

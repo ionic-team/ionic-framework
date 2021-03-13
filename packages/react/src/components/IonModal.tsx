@@ -6,4 +6,7 @@ export type ReactModalOptions = Omit<ModalOptions, 'component' | 'componentProps
   children: React.ReactNode;
 };
 
-export const IonModal = /*@__PURE__*/createOverlayComponent<ReactModalOptions, HTMLIonModalElement>('IonModal', modalController);
+export const IonModal = /*@__PURE__*/ createOverlayComponent<
+  ReactModalOptions,
+  HTMLIonModalElement
+>('IonModal', modalController);

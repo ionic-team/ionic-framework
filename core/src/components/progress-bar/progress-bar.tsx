@@ -8,6 +8,11 @@ import { createColorClasses } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @part progress - The progress bar that shows the current value when `type` is `"determinate"` and slides back and forth when `type` is `"indeterminate"`.
+ * @part stream - The animated circles that appear while buffering. This only shows when `buffer` is set and `type` is `"determinate"`.
+ * @part track - The track bar behind the progress bar. If the `buffer` property is set and `type` is `"determinate"` the track will be the
+ * width of the `buffer` value.
  */
 @Component({
   tag: 'ion-progress-bar',
@@ -77,10 +82,12 @@ export class ProgressBar implements ComponentInterface {
 }
 
 const renderIndeterminate = () => {
-  return [
-    <div class="indeterminate-bar-primary"><span class="progress-indeterminate"></span></div>,
-    <div class="indeterminate-bar-secondary"><span class="progress-indeterminate"></span></div>
-  ];
+  return (
+    <div part="track" class="progress-buffer-bar">
+      <div class="indeterminate-bar-primary"><span part="progress" class="progress-indeterminate"></span></div>
+      <div class="indeterminate-bar-secondary"><span part="progress" class="progress-indeterminate"></span></div>
+    </div>
+  );
 };
 
 const renderProgress = (value: number, buffer: number) => {
@@ -88,8 +95,19 @@ const renderProgress = (value: number, buffer: number) => {
   const finalBuffer = clamp(0, buffer, 1);
 
   return [
-    <div class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
-    finalBuffer !== 1 && <div class="buffer-circles"></div>,
-    <div class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
+    <div part="progress" class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
+    /**
+     * Buffer circles with two container to move
+     * the circles behind the buffer progress
+     * with respecting the animation.
+     * When finalBuffer === 1, we use display: none
+     * instead of removing the element to avoid flickering.
+     */
+    <div class={{ 'buffer-circles-container': true, 'ion-hide': finalBuffer === 1 }} style={{ transform: `translateX(${finalBuffer * 100}%)` }}>
+      <div class="buffer-circles-container" style={{ transform: `translateX(-${finalBuffer * 100}%)` }}>
+        <div part="stream" class="buffer-circles"></div>
+      </div>
+    </div>,
+    <div part="track" class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
   ];
 };

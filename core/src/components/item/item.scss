@@ -407,8 +407,16 @@ button, a {
 // Item Select
 // --------------------------------------------------
 
+:host(:not(.item-label)) ::slotted(ion-select) {
+  --padding-start: 0;
+
+  max-width: none;
+}
+
 :host(.item-label-stacked) ::slotted(ion-select),
 :host(.item-label-floating) ::slotted(ion-select) {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
   --padding-start: 0;
 
   align-self: stretch;
@@ -421,6 +429,10 @@ button, a {
 
 // Item Datetime
 // --------------------------------------------------
+
+:host(:not(.item-label)) ::slotted(ion-datetime) {
+  --padding-start: 0;
+}
 
 :host(.item-label-stacked) ::slotted(ion-datetime),
 :host(.item-label-floating) ::slotted(ion-datetime) {

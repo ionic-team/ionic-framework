@@ -51,7 +51,7 @@
     </ion-content>
   </ion-menu>
 
-  <ion-router-outlet main></ion-router-outlet>
+  <ion-router-outlet id="main"></ion-router-outlet>
 </template>
 <style>
 .my-custom-menu {
@@ -69,7 +69,7 @@ import {
   IonRouterOutlet,
   IonTitle, 
   IonToolbar,
-  mentController
+  menuController
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
@@ -86,15 +86,15 @@ export default defineComponent({
   },
   methods: {
     openFirst() {
-      mentController.enable(true, 'first');
-      mentController.open('first');
+      menuController.enable(true, 'first');
+      menuController.open('first');
     },
     openEnd() {
-      mentController.open('end');
+      menuController.open('end');
     },
     openCustom() {
-      mentController.enable(true, 'custom');
-      mentController.open('custom');
+      menuController.enable(true, 'custom');
+      menuController.open('custom');
     }
   }
 });

@@ -1,12 +1,7 @@
 {
   "extends": ["tslint-react"],
   "linterOptions": {
-    "exclude": [
-      "**/*.ts",
-      "**/*.tsx",
-      "**/*.spec.ts",
-      "**/*.spec.tsx"
-    ]
+    "exclude": ["**/*.ts", "**/*.tsx", "**/*.spec.ts", "**/*.spec.tsx"]
   },
   "rules": {
     "no-conditional-assignment": false,

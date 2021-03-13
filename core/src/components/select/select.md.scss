@@ -15,3 +15,7 @@
   width: 19px;
   height: 19px;
 }
+
+:host-context(.item-label-floating) .select-icon {
+  @include transform(translate3d(0, -9px, 0));
+}
