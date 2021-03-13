@@ -121,10 +121,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
-   * if `form` is defined, on button click the specified form will be submitted.
-   * Useful when `ion-button` is outside of the form.
+   * The ID of the `<form>` element that should be
+   * submitted on button click.
    */
-  @Prop() form: HTMLFormElement | undefined;
+  @Prop() form: string | undefined;
 
   /**
    * Emitted when the button has focus.
