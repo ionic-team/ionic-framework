@@ -23,7 +23,13 @@ export const createViewStacks = (router: Router) => {
   }
 
   const findViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number, useDeprecatedRouteSetup: boolean = false) => {
-    return findViewItemByPath(routeInfo.pathname, outletId, false, useDeprecatedRouteSetup);
+    let viewItem = findViewItemByPath(routeInfo.pathname, outletId, false, useDeprecatedRouteSetup);
+
+    if (viewItem) {
+      viewItem.params = { ...routeInfo.params };
+    }
+
+    return viewItem;
   }
 
   const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number, mustBeIonRoute: boolean = true, useDeprecatedRouteSetup: boolean = false) => {
