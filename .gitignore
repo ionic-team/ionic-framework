@@ -66,3 +66,6 @@ core/loader/
 core/www/
 .stencil/
 angular/build/
+
+# med-components
+core/storybook-static/
