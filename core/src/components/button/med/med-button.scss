@@ -23,7 +23,6 @@
   --transition: all 300ms ease-out;
   --overflow: hidden;
 
-
   font-size: var(--font-size);
   font-weight: var(--font-weight);
   text-transform: var(--text-transform);
@@ -154,6 +153,10 @@
 // hover
 @media (any-hover: hover) {
   :host(:hover) {
+    .button-native:hover::before {
+      transition: var(--transition);
+    }
+
     .button-native::before {
       opacity: 1;
       background: var(--background-hover);
@@ -161,6 +164,5 @@
   }
 }
 
-@import "./med-button-primary.scss";
 @import "./med-button-secondary.scss";
 @import "./med-button-tertiary.scss";
