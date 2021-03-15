@@ -16,6 +16,70 @@ defineCustomElements();
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
+  layout: '',
+  controls: { expanded: true },
+  themes: [
+    {
+      name: 'No Mode',
+      color: '#fff'
+    },
+    {
+      name: 'Dark Mode',
+      class: ['dark'],
+      color: '#000'
+    },
+    {
+      name: 'Light Mode',
+      class: ['light'],
+      color: '#fff'
+    },
+  ],
+  viewport: {
+    viewports: {
+      xxs: {
+        name: 'xxs',
+        styles: {
+          width: '340px',
+          height: '100%'
+        },
+      },
+      xs: {
+        name: 'xs',
+        styles: {
+          width: '380px',
+          height: '100%'
+        },
+      },
+      sm: {
+        name: 'sm',
+        styles: {
+          width: '576px',
+          height: '100%'
+        },
+      },
+      md: {
+        name: 'md',
+        styles: {
+          width: '768px',
+          height: '100%'
+        },
+      },
+      lg: {
+        name: 'lg',
+        styles: {
+          width: '992px',
+          height: '100%'
+        },
+      },
+      xl: {
+        name: 'xl',
+        styles: {
+          width: '1200px',
+          height: '100%'
+        },
+      },
+    },
+  },
   options: {
     storySort: {
       order: [
