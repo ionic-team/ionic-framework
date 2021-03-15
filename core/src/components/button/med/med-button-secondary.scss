@@ -1,17 +1,10 @@
 :host([secondary]) {
---padding: #{$med-spacing-squish-base};
 
 --background: transparent;
 --background-hover: #{$med-color-brand-primary-medium};
 --background-disabled: #{$med-color-neutral-light-20};
 --background-activated: #{$med-color-brand-primary-dark};
 --background-focused: #{$med-color-brand-primary-medium};
-
---color: #{$med-color-brand-primary-light};
---color-disable: #{$med-color-neutral-light-20};
---color-activated: #{$med-color-brand-primary-dark};
---color-hover: #{$med-color-brand-primary-medium};
---color-focused: #{$med-color-brand-primary-medium};
 
 --border-radius: #{$med-border-radius-pill};
 --border-color: #{$med-color-brand-primary-light};
@@ -21,13 +14,17 @@
 --border-color-activated: #{$med-color-brand-primary-dark};
 --border-color-hover: #{$med-color-brand-primary-medium};
 
+--color: #{$med-color-brand-primary-light};
+--color-disable: #{$med-color-neutral-light-20};
+--color-activated: #{$med-color-brand-primary-dark};
+--color-hover: #{$med-color-brand-primary-medium};
+--color-focused: #{$med-color-brand-primary-medium};
+
 --font-size: #{$med-font-size-xxs};
 --font-weight: #{$med-font-weight-semibold};
 --line-height: #{$med-line-height-compressed};
---color: #{$med-color-brand-primary-light};
---text-transform: uppercase;
+--padding: #{$med-spacing-squish-base};
 --transition: all 300ms ease-out;
---overflow: hidden;
 
   .button-native {
     width: calc(100% - 4px);
@@ -69,6 +66,7 @@
     .button-native {
       border-color: var(--border-color-hover);
       color: var(--color-hover);
+      transition: var(--transition);
     }
 
     .button-native::before {
