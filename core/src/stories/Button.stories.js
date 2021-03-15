@@ -1,34 +1,19 @@
-import { Button } from './Button';
+import { html } from 'lit-html';
 
 export default {
-  title: 'Example/Button',
-  argTypes: {
-    backgroundColor: { control: 'color' },
-    onClick: { action: 'onClick' },
-  },
-};
+  title: 'MyComponent',
+}
 
-const Template = (args) => Button(args);
+const Template = ({ first, middle, last }) => {
 
-export const Primary = Template.bind({});
-Primary.args = {
-  primary: true,
-  label: 'Button',
-};
+  return html`<ion-button></ion-button>`
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  label: 'Button',
-};
+}
 
-export const Large = Template.bind({});
-Large.args = {
-  size: 'large',
-  label: 'Button',
-};
+export const MyComponent = Template.bind({});
 
-export const Small = Template.bind({});
-Small.args = {
-  size: 'small',
-  label: 'Button',
+MyComponent.args = {
+  first: 'First',
+  middle: 'Middle',
+  last: 'Last',
 };

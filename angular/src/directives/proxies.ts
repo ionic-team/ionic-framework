@@ -883,9 +883,11 @@ export declare interface MedNavbar extends Components.MedNavbar {
 }
 @Component({ selector: "med-navbar", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>" })
 export class MedNavbar {
+  medResize!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ["medResize"]);
   }
 }

@@ -1,0 +1,57 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Global/Functions/Tipografia" />
+
+# ⚙️ Tipografia
+
+Funções **globais** relacionadas a **tipografia**.
+
+## 💈 Utilização
+
+No arquivo em que a utilização das **functions** forem **necessárias**, importar:
+
+``` scss
+@import '~@mbrandao/med-components/src/global/global';
+```
+
+## ⚙️ line-height()
+
+Função criada para ser utilizada junto a propriedade CSS **line-height**. O valor da propriedade utiliza o cálculo
+**ceiling((font-size \* 1,3) 8)** para ser gerada. O valor do parâmero da função necessita dos tokens
+**[$med-font-size-*](http://desenv.ordomederi.com/med-components/?path=/story/global-variables--page#-tokens-med-font-size-) no formato SASS**,
+pois valores no formato **CSS Properties** não funcionam em conjunto com **SASS Functions**.
+
+### 💈 Utilização:
+
+```scss
+.class {
+  line-height: line-height($med-font-size-md);
+}
+```
+
+### line-height($font-size: $med-font-size-xs);
+
+| Parâmetro      | Descrição                                                                                                                                                                                                                 | Tipo   | Default               |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | --------------------- |
+| **$font-size** | Valor dos tokens **[$med-font-size-*](http://desenv.ordomederi.com/med-components/?path=/story/global-variables--page#-tokens-med-font-size-)** necessário para geração do valor final da propriedade CSS **line-height** | Number | **$med-font-size-xs** |
+
+## ⚙️ letter-spacing()
+
+Função criada para ser utilizada junto a propriedade CSS **letter-spacing**. O valor da propriedade leva em conta o **tamanho da fonte sendo utilizada no elemento**  para ser gerada. O valor do parâmero da função necessita
+dos tokens **[$med-font-size-*](http://desenv.ordomederi.com/med-components/?path=/story/global-variables--page#-tokens-med-font-size-) e [$med-letter-spacing-*](http://desenv.ordomederi.com/med-components/?path=/story/global-variables--page#-tokens-med-letter-spacing-) no formato SASS**,
+pois valores no formato **CSS Properties** não funcionam em conjunto com **SASS Functions**.
+
+### 💈 Utilização:
+
+```scss
+.class {
+  letter-spacing: letter-spacing($med-font-size-md, $med-letter-spacing-medium);
+}
+```
+
+### letter-spacing($font-size: $med-font-size-xs, $letter-spacing: $med-line-spacing-default);
+
+| Parâmetro           | Descrição                                                                                                                                                                                                                              | Tipo   | Default                       |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ----------------------------- |
+| **$font-size**      | Valor dos tokens **[$med-font-size-*](http://desenv.ordomederi.com/med-components/?path=/story/global-variables--page#-tokens-med-font-size-)** necessário para geração do valor final da propriedade CSS **letter-spacing**           | Number | **$med-font-size-xs**         |
+| **$letter-spacing** | Valor dos tokens **[$med-letter-spacing-*](http://desenv.ordomederi.com/med-components/?path=/story/global-variables--page#-tokens-med-letter-spacing-)** necessário para geração do valor final da propriedade CSS **letter-spacing** | Number | **$med-line-spacing-default** |

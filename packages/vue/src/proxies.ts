@@ -798,5 +798,7 @@ export const IonVirtualScroll = /*@__PURE__*/ defineContainer<JSX.IonVirtualScro
 ]);
 
 
-export const MedNavbar = /*@__PURE__*/ defineContainer<JSX.MedNavbar>('med-navbar');
+export const MedNavbar = /*@__PURE__*/ defineContainer<JSX.MedNavbar>('med-navbar', [
+  'medResize'
+]);
 
