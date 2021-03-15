@@ -1,0 +1,12 @@
+.style {
+  margin: 10px;
+}
+h3 {
+  color: #404040;
+}
+
+.coluna {
+  float: left;
+  width: 50%;
+  margin-bottom: 30px;
+}
