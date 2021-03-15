@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/ion-button/overview',
+  title: 'Components/ion-button',
   decorators: [withDesign],
 };
 
@@ -14,8 +14,8 @@ const Template = () => {
   `
 }
 
-export const Default = Template.bind({});
-Default.parameters = {
+export const Overview = Template.bind({});
+Overview.parameters = {
   design: {
     type: 'figma',
     url: 'https://www.figma.com/file/2j9jNt3PmQXpzD3IQJkyZe/Componentes?node-id=717%3A0',
