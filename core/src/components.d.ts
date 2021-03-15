@@ -9,6 +9,7 @@ import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, Autocompl
 import { IonicSafeString } from "./utils/sanitization";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
+import { navbarResizeEventDetail } from "./components/medgrupo/med-navbar/med-navbar-interface";
 export namespace Components {
     interface IonActionSheet {
         /**
@@ -6053,6 +6054,7 @@ declare namespace LocalJSX {
         "renderItem"?: (item: any, index: number) => any;
     }
     interface MedNavbar {
+        "onMedResize"?: (event: CustomEvent<navbarResizeEventDetail>) => void;
     }
     interface IntrinsicElements {
         "ion-action-sheet": IonActionSheet;

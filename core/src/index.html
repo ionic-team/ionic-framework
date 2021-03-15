@@ -20,6 +20,20 @@
       ion-button {
         margin: 15px;
       }
+
+      .icon {
+        height: 24px;
+        width: 24px;
+        background-color: red;
+      }
+
+      .ribbon {
+        height: 20px;
+        width: 100%;
+        background-color: red;
+        display: block;
+      }
+      
       .teste{
         background: #333 !important;
       }
@@ -28,8 +42,16 @@
   <body>
     <ion-app>
       <med-navbar>
-        <span slot="title">title</span>
-        <span slot="subtitle">subtitle</span>
+        <div class="ribbon"slot="top"></div>
+
+        <div class="icon" slot="left"></div>
+
+        <span slot="title">teste muito com texto longo</span>
+        <span slot="subtitle">teste muito com texto longo</span>
+      
+        <div class="icon" slot="right"></div>
+        <div class="icon" slot="right"></div>
+
       </med-navbar>
 
       <ion-content>

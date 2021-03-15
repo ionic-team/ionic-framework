@@ -22,14 +22,17 @@
   
   .header {
     background: var(--background);
-    padding: var(--padding);
 
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    min-height: 48px;
+    &__container {
+      padding: var(--padding);
+
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+      min-height: 48px;
+    }
   }
 
   .left,
@@ -58,6 +61,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     text-transform: uppercase;
     text-align: center;
     width: 100%;
@@ -98,7 +102,7 @@
   padding: 0 !important;
 }
 
-::slotted([slot="start"]) {
+::slotted([slot="left"]) {
   color: var(--slotted-color);
   margin-right: var(--slotted-spacing) !important;
 
@@ -125,7 +129,7 @@
   display: block;
 }
 
-::slotted([slot="end"]) {
+::slotted([slot="right"]) {
   color: var(--slotted-color);
   margin-left: var(--slotted-spacing) !important;
 
@@ -151,4 +155,15 @@
   --title-color: var(--med-global-color, #{$med-color-neutral-dark-prime});
   --subtitle-color: var(--global-color, #{$med-color-neutral-dark-prime});
   --slotted-color: var(--med-global-color, #{$med-color-neutral-dark-prime});
+}
+
+//
+// device
+//
+:host-context(body.dark),
+:host-context(data-theme[dark]) {
+  --background: var(--med-global-background, #{$med-color-neutral-dark-prime});
+  --title-color: var(--med-global-color, #{$med-color-neutral-light-prime});
+  --subtitle-color: var(--global-color, #{$med-color-neutral-light-prime});
+  --slotted-color: var(--med-global-color, #{$med-color-neutral-light-prime});
 }
