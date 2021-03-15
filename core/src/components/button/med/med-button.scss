@@ -17,16 +17,23 @@
   --font-size: #{$med-font-size-xxs};
   --font-weight: #{$med-font-weight-semibold};
   --line-height: #{$med-line-height-compressed};
-  --color: #{$med-color-neutral-light-prime};
-  --color-tertiary: #{$med-color-neutral-light-prime};
+
   --text-transform: uppercase;
-  --transition: all 300ms ease-out;
+  --transition: background 300ms ease-out;
   --overflow: hidden;
+
+  --color: #{$med-color-neutral-light-prime};
+  --color-disable: var(--color);
+  --color-activated: var(--color);
+  --color-hover: var(--color);
+  --color-focused: var(--color);
+
 
   font-size: var(--font-size);
   font-weight: var(--font-weight);
   text-transform: var(--text-transform);
   color: var(--color);
+
 
   font-family: inherit;
   display: inline-block;
@@ -127,6 +134,10 @@
   cursor: default;
   pointer-events: none;
 
+  .button-native {
+    color: var(--color-disable);
+  }
+
   .button-native::before {
     background: var(--background-disabled);
     opacity: 1;
@@ -134,18 +145,26 @@
 }
 
 // activated
-:host(.ion-activated) .button-native::before {
-  opacity: 1;
-  background: var(--background-activated);
+:host(.ion-activated) {
+  .button-native {
+    color: var(--color-activated);
+  }
+
+  .button-native::before {
+    opacity: 1;
+    background: var(--background-activated);
+  }
 }
+
 
 // focused
 :host(.ion-focused) {
   .button-native {
+    color: var(--color-focused);
+
     &::before {
       background: var(--background-focused);
       opacity: 1;
-      transition: var(--transition);
     }
   }
 }
@@ -153,8 +172,8 @@
 // hover
 @media (any-hover: hover) {
   :host(:hover) {
-    .button-native:hover::before {
-      transition: var(--transition);
+    .button-native {
+      color: var(--color-hover);
     }
 
     .button-native::before {
