@@ -1,0 +1,211 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Conhecimento/Metodologia BEM" />
+
+# 🎓 Metodologia BEM
+
+Resumo da documentação oficial presente em **[BEM Methodology Documentation](https://en.bem.info/methodology/quick-start/)**.
+
+## 🗂️ Conteúdo
+
+- **[Notas](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#notas)**
+- **[Geral](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#geral)**
+  - **[Convenção de Nomenclatura](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#conven%C3%A7%C3%A3o-de-nomenclatura)**
+  - **[Features](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#features)**
+- **[Entidade Bloco](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#entidade-bloco)**
+  - **[Nomenclatura](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#nomenclatura)**
+  - **[Features](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#features-1)**
+  - **[Exemplo](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#exemplo)**
+- **[Entidade Elemento](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#entidade-elemento)**
+  - **[Nomenclatura](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#nomenclatura-1)**
+  - **[Features](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#features-2)**
+  - **[Exemplo](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#exemplo-1)**
+- **[Entidade Modificador](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#entidade-modificador)**
+  - **[Nomenclatura](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#nomenclatura-2)**
+  - **[Features](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#features-3)**
+  - **[Exemplo](http://desenv.ordomederi.com/med-components/?path=/story/conhecimento-metodologia-bem--page#exemplo-2)**
+
+## 📝 Notas
+
+Embora a metodologia tenha todo um **[ecossistema](https://en.bem.info/)** em torno dela, essa seção cobre o
+uso da metodologia aplicada apenas a nomenclatura de classes CSS.
+
+## 📍 Geral
+
+Blocos, elementos, e modificadores são todos chamados de **entidades BEM**.
+
+Ao fornecer convenções de nomenclatura para classes CSS a metodologia:
+- Evita colisões de nomes, fornecendo nomes exclusivos
+- Evita problemas de especificidade de CSS, limitando ou removendo totalmente a necessidade de cascatas
+
+### Convenção de Nomenclatura
+
+O nome de uma entidade BEM na abordagem clássica deve:
+
+- Ser único.
+- Transmitir um significado.
+- Ser escrito em caracteres minúsculos.
+- Ser separado por um hífen **(-)** se for composto.
+- `block-name__elem-name_mod-name_mod-val`
+
+Existem convenções e regras alternativas de nomes que são usadas na comunidade BEM, como:
+
+- Estilo de dois traços: `block-name__elem-name--mod-name--mod-val`.
+- Camelcase style: `blockName-elemName_modName_modVal`.
+- React style: `BlockName-ElemName_modName_modVal`.
+- Sem estilo de namespace: onde o nome do bloco ou elemento não é incluído antes do modificador.
+
+A documentação oficial especifica que você pode criar sua própria nomenclatura personalizada para entidades BEM, uma vez que seja possível separar blocos de elementos e modificadores de maneira programática.
+
+**⚠️ No medgrupo utilizamos a variação dois traços: `block-name__elem-name--mod-name--mod-val`**
+
+### Features
+
+- As entidades de bloco e elemento podem ser aninhadas.
+- Apenas atributos de classe devem ser usados ​​para fazer referência a uma entidade BEM.
+- Os seletores não devem ser aninhados ou combinados.
+
+## 📍 Entidade Bloco
+
+Um bloco:
+
+- É um componente logicamente e funcionalmente independente.
+- Deve ser criado se puder ser reutilizado e não depender de nada.
+
+### Nomenclatura
+
+O nome do bloco deve:
+
+- Define o namespace para seus elementos e modificadores.
+- Descreve sua finalidade (_o que é? Um cabeçalho? Um botão?_).
+- Ser separados por um hífen **(-)** se for composto.
+
+### Features
+
+- Os blocos podem ser aninhados.
+- Um bloco não deve definir nenhuma geometria ou posicionamento externo (_margin, position_).
+
+### 💡 Exemplo
+
+```html
+<body class="page">
+  <header class="header page__header">...</header>
+  <footer class="footer page__footer">...</footer>
+</body>
+```
+
+```css
+.page { ... }
+.page__header { ... }
+.page__footer { ... }
+
+.header { ... }
+.footer { ... }
+```
+
+## 📍 Entidade Elemento
+
+Um elemento:
+
+- É uma parte composta de um bloco não pode ser usado separadamente dele.
+- Deve ser criado se uma seção de código não puder ser usada separadamente sem a entidade pai.
+
+### Nomenclatura
+
+O nome do elemento deve:
+
+- Descrever sua finalidade (_o que é? Um item? Um texto?_).
+- Ser separado do nome do bloco por um sublinhado duplo **(__)**.
+  - `block-name__element-name`
+- ⚠️**Não definir uma hierarquia como:**
+  - `block-name__elem-name__elem-name`
+
+### Features
+
+- Os elementos podem ser aninhados.
+
+### 💡 Exemplo
+
+```html
+<header class="header">
+  <nav class="nav">
+    <ul class="nav__list">
+      <li class="nav__item">
+        <a class="nav__link"></a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link"></a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link"></a>
+      </li>
+    </ul>
+  </nav>
+</header>
+```
+
+```css
+.header { ... }
+
+.nav { ... }
+.nav__list { ... }
+.nav__item { ... }
+.nav__link { ... }
+```
+
+## 📍 Entidade Modificador
+
+Um modificador:
+
+- É uma entidade que define a **aparência**, **estado** ou **comportamento** de um bloco ou elemento.
+
+### Nomenclatura
+
+O nome do modificador deve:
+
+- Descrever sua finalidade (_o que é? Um item? Um texto?_).
+- O nome do modificador é separado do nome do **bloco** ou **elemento** por um único sublinhado **(_)**.
+  - `block-name_modifier-name`
+  - `block-name__element-name_modifier-name`
+- O **valor** do modificador é separado do **nome** do modificador por um único sublinhado **(_)**.
+  - `block-name_modifier-name_modifier-value`
+  - `block-name__element-name_modifier-name_modifier-value`
+- Para modificadores booleanos, o **valor** não é incluído no nome.
+  - `block-name_active`
+
+**⚠️Lembrando que nós utilizamos a variação dois traços: `block-name__elem-name--mod-name--mod-val`**
+
+### Features
+
+- Um modificador não pode ser usado sozinho.
+
+### 💡 Exemplo
+
+```html
+<header class="header">
+  <nav class="nav">
+    <ul class="nav__list">
+      <li class="nav__item">
+        <a class="nav__link nav__link_active nav__link_size_small"></a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link"></a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link"></a>
+      </li>
+    </ul>
+  </nav>
+</header>
+```
+
+```css
+.header { ... }
+
+.nav { ... }
+.nav__list { ... }
+.nav__item { ... }
+.nav__link { ... }
+.nav__link_active { ... }
+.nav__link_size_small { ... }
+```

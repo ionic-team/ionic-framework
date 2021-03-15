@@ -1337,3 +1337,4 @@ ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) =>
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
 
 med-navbar,shadow
+med-navbar,event,medResize,navbarResizeEventDetail,true
