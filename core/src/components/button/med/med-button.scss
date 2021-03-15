@@ -3,8 +3,6 @@
 
 :host {
   // tokens
-  --padding: #{$med-spacing-squish-lg};
-  --height: 48px;
 
   --background: #{$med-color-brand-primary-gradient};
   --background-hover: #{$med-color-brand-primary-medium};
@@ -14,26 +12,25 @@
 
   --border-radius: #{$med-border-radius-pill};
 
-  --font-size: #{$med-font-size-xxs};
-  --font-weight: #{$med-font-weight-semibold};
-  --line-height: #{$med-line-height-compressed};
-
-  --text-transform: uppercase;
-  --transition: background 300ms ease-out;
-  --overflow: hidden;
-
   --color: #{$med-color-neutral-light-prime};
   --color-disable: var(--color);
   --color-activated: var(--color);
   --color-hover: var(--color);
   --color-focused: var(--color);
 
+  --font-size: #{$med-font-size-xxs};
+  --font-weight: #{$med-font-weight-semibold};
+  --height: 48px;
+  --line-height: #{$med-line-height-compressed};
+  --padding: #{$med-spacing-squish-lg};
+  --text-transform: uppercase;
+  --transition: background 300ms ease-out;
+  --overflow: hidden;
 
   font-size: var(--font-size);
   font-weight: var(--font-weight);
   text-transform: var(--text-transform);
   color: var(--color);
-
 
   font-family: inherit;
   display: inline-block;
@@ -155,7 +152,6 @@
     background: var(--background-activated);
   }
 }
-
 
 // focused
 :host(.ion-focused) {

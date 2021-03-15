@@ -1,5 +1,4 @@
 :host([tertiary]) {
-  --padding: #{$med-spacing-squish-base};
 
   --background: transparent;
   --background-hover: #{$med-color-brand-primary-medium};
@@ -7,22 +6,20 @@
   --background-activated: #{$med-color-brand-primary-dark};
   --background-focused: #{$med-color-brand-primary-medium};
 
+  --border-radius: 0;
+  --border-width: 0;
+
   --color: #{$med-color-brand-primary-light};
   --color-disable: #{$med-color-neutral-light-20};
   --color-activated: #{$med-color-brand-primary-dark};
   --color-hover: #{$med-color-brand-primary-medium};
   --color-focused: #{$med-color-brand-primary-medium};
 
-  --border-radius: 0;
-  --border-width: 0;
-
   --font-size: #{$med-font-size-xxs};
   --font-weight: #{$med-font-weight-semibold};
   --line-height: #{$med-line-height-compressed};
-  --color: #{$med-color-brand-primary-light};
-  --text-transform: uppercase;
-  --transition: all 300ms ease-out;
-  --overflow: hidden;
+  --padding: #{$med-spacing-squish-base};
+  --transition: color 300ms ease-out;
 
     .button-native {
       width: calc(100% - 4px);
@@ -60,6 +57,7 @@
     :host([tertiary]:hover) {
       .button-native {
         color: var(--color-hover);
+        transition: var(--transition);
       }
 
       .button-native::before {
