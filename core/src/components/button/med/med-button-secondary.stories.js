@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/ion-button/primary',
+  title: 'Components/ion-button/secondary',
   decorators: [withDesign],
 };
 
@@ -10,7 +10,7 @@ const Template = () => {
   return html`
   <ion-app>
     <ion-content>
-      <ion-button>ion button</ion-button>
+      <ion-button secondary>ion button</ion-button>
     </ion-content>
   </ion-app>
     `
@@ -28,7 +28,7 @@ const TemplateDisabled = () => {
   return html`
   <ion-app>
     <ion-content>
-      <ion-button disabled>ion button</ion-button>
+      <ion-button secondary disabled>ion button</ion-button>
     </ion-content>
   </ion-app>
     `
@@ -46,7 +46,7 @@ const TemplateBlock = () => {
   return html`
   <ion-app>
     <ion-content>
-      <ion-button block>ion button</ion-button>
+      <ion-button secondary block>ion button</ion-button>
     </ion-content>
   </ion-app>
     `
@@ -64,7 +64,7 @@ const TemplateFull = () => {
   return html`
   <ion-app>
     <ion-content>
-      <ion-button full>ion button</ion-button>
+      <ion-button secondary full>ion button</ion-button>
     </ion-content>
   </ion-app>
     `
