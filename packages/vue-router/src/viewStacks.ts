@@ -25,6 +25,18 @@ export const createViewStacks = (router: Router) => {
   const findViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number, useDeprecatedRouteSetup: boolean = false) => {
     let viewItem = findViewItemByPath(routeInfo.pathname, outletId, false, useDeprecatedRouteSetup);
 
+    /**
+     * Given a route such as /path/:id,
+     * going from /page/1 to /home
+     * to /page/2 will cause the same
+     * view item from /page/1 to match
+     * for /page/2 so we need to make
+     * sure any params get updated.
+     * Not normally an issue for accessing
+     * the params via useRouter from vue-router,
+     * but when passing params as props not doing
+     * this would cause the old props to show up.
+     */
     if (viewItem) {
       viewItem.params = { ...routeInfo.params };
     }
