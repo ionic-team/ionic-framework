@@ -262,4 +262,48 @@ describe('Routing', () => {
     expect(wrapper.findComponent(Tab1).exists()).toBe(true);
     expect(wrapper.findComponent(Tab2).exists()).toBe(false);
   });
+
+  it('should show the latest props passed to a route', async () => {
+    const Page1 = {
+      ...BasePage,
+      props: {
+        title: { type: String, default: 'Default Title' }
+      }
+    };
+
+    const Home = {
+      ...BasePage
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/', component: Home },
+        { path: '/:title', component: Page1, props: true }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    router.push('/abc');
+    await waitForRouter();
+
+    const cmp = wrapper.findComponent(Page1);
+    expect(cmp.props()).toEqual({ title: 'abc' });
+
+    router.back();
+    await waitForRouter();
+
+    router.push('/xyz');
+    await waitForRouter();
+
+    const cmpAgain = wrapper.findComponent(Page1);
+    expect(cmpAgain.props()).toEqual({ title: 'xyz' });
+  });
 });
