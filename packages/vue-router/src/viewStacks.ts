@@ -37,8 +37,14 @@ export const createViewStacks = (router: Router) => {
      * but when passing params as props not doing
      * this would cause the old props to show up.
      */
-    if (viewItem) {
-      viewItem.params = { ...routeInfo.params };
+    if (viewItem && viewItem.params !== routeInfo.params) {
+      /**
+       * Clear the props function result
+       * as the value may have changed due
+       * to different props.
+       */
+      delete viewItem.vueComponentData.propsFunctionResult;
+      viewItem.params = routeInfo.params;
     }
 
     return viewItem;
