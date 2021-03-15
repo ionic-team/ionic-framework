@@ -1,48 +1,73 @@
 :host([tertiary]) {
+  --padding: #{$med-spacing-squish-base};
 
-  .button-native {
-    width: calc(100% - 4px);
-    background: transparent;
-    color: var(--med-color-tertiary);
+  --background: transparent;
+  --background-hover: #{$med-color-brand-primary-medium};
+  --background-disabled: #{$med-color-neutral-light-20};
+  --background-activated: #{$med-color-brand-primary-dark};
+  --background-focused: #{$med-color-brand-primary-medium};
 
-    &::before {
-      background: transparent;
-    }
-  }
-}
+  --color: #{$med-color-brand-primary-light};
+  --color-disable: #{$med-color-neutral-light-20};
+  --color-activated: #{$med-color-brand-primary-dark};
+  --color-hover: #{$med-color-brand-primary-medium};
+  --color-focused: #{$med-color-brand-primary-medium};
 
-// disabled
-:host([tertiary][disabled]) {
-  .button-native {
-    color: var(--med-tertiary-disable-color);
-  }
-}
+  --border-radius: 0;
+  --border-width: 0;
 
-// activated
-:host([tertiary].ion-activated) .button-native {
-  color: var(--med-color-secondary);
-}
+  --font-size: #{$med-font-size-xxs};
+  --font-weight: #{$med-font-weight-semibold};
+  --line-height: #{$med-line-height-compressed};
+  --color: #{$med-color-brand-primary-light};
+  --text-transform: uppercase;
+  --transition: all 300ms ease-out;
+  --overflow: hidden;
 
-// focused
-:host([tertiary].ion-focused) {
-  .button-native {
-    color: var(--med-border-color-focused);
-  }
-}
-
-// hover
-@media (any-hover: hover) {
-  :host([tertiary]:hover) {
     .button-native {
-      color: var(--med-background-hover);
-    }
+      width: calc(100% - 4px);
+      border-style: solid;
+      border-color: var(--border-color);
+      border-width: var(--border-width);
 
-    .button-native::before {
-      opacity: 1;
+      &::before {
+        background: transparent;
+      }
     }
   }
-}
 
-ion-ripple-effect {
-  color: var(--ripple-color);
-}
+  // disabled
+  :host([tertiary][disabled]) {
+    .button-native {
+      color: var(--color-disable);
+    }
+  }
+
+  // activated
+  :host([tertiary].ion-activated) .button-native {
+    color: var(--color-activated);
+  }
+
+  // focused
+  :host([tertiary].ion-focused) {
+    .button-native {
+      color: var(--color-focused);
+    }
+  }
+
+  // hover
+  @media (any-hover: hover) {
+    :host([tertiary]:hover) {
+      .button-native {
+        color: var(--color-hover);
+      }
+
+      .button-native::before {
+        opacity: 1;
+      }
+    }
+  }
+
+  ion-ripple-effect {
+    color: var(--ripple-color);
+  }
