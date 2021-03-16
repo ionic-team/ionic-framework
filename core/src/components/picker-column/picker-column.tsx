@@ -32,9 +32,7 @@ export class PickerColumnCmp implements ComponentInterface {
   private tmrId: any;
   private noAnimate = true;
 
-  private pressed = false;
-  private pressedTimeout: any;
-  private pressedTime = 100;
+  private lastMoveTime = 0;
 
   @Element() el!: HTMLElement;
 
@@ -251,12 +249,6 @@ export class PickerColumnCmp implements ComponentInterface {
   // TODO should this check disabled?
 
   private onStart(detail: GestureDetail) {
-    if (!this.pressedTimeout) {
-      this.pressedTimeout = setTimeout(() => {
-        this.pressed = true;
-      }, this.pressedTime);
-    }
-
     // We have to prevent default in order to block scrolling under the picker
     // but we DO NOT have to stop propagation, since we still want
     // some "click" events to capture
@@ -284,21 +276,12 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   private onMove(detail: GestureDetail) {
-    if (this.pressedTimeout) {
-      clearTimeout(this.pressedTimeout);
-      this.pressedTimeout = null;
-    }
-
-    this.pressedTimeout = setTimeout(() => {
-      this.pressed = true;
-    }, this.pressedTime);
-
-    this.pressed = false;
-
     if (detail.event.cancelable) {
       detail.event.preventDefault();
     }
     detail.event.stopPropagation();
+
+    this.lastMoveTime = Date.now();
 
     // update the scroll position relative to pointer start position
     let y = this.y + detail.deltaY;
@@ -340,6 +323,8 @@ export class PickerColumnCmp implements ComponentInterface {
         this.setSelected(parseInt(opt.getAttribute('opt-index')!, 10), TRANSITION_DURATION);
       }
 
+    } else if (Date.now() - this.lastMoveTime >= PRESSED_TIME) {
+      this.setSelected(this.col.prevSelected!, TRANSITION_DURATION);
     } else {
       this.y += detail.deltaY;
 
@@ -353,14 +338,6 @@ export class PickerColumnCmp implements ComponentInterface {
           this.velocity = Math.abs(this.velocity);
         }
       }
-
-      if (this.pressed) {
-        this.setSelected(this.col.prevSelected!, TRANSITION_DURATION);
-      }
-
-      this.pressed = false;
-      clearTimeout(this.pressedTimeout);
-      this.pressedTimeout = null;
 
       this.decelerate();
     }
@@ -444,3 +421,4 @@ const PICKER_OPT_SELECTED = 'picker-opt-selected';
 const DECELERATION_FRICTION = 0.97;
 const MAX_PICKER_SPEED = 90;
 const TRANSITION_DURATION = 150;
+const PRESSED_TIME = 100;
