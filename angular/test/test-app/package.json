@@ -16,7 +16,8 @@
     "serve:ssr": "node dist/test-app/server/main.js",
     "build:ssr": "ng build --prod && ng run test-app:server:production",
     "dev:ssr": "ng run test-app:serve-ssr",
-    "prerender": "ng run test-app:prerender"
+    "prerender": "ng run test-app:prerender",
+    "cypress.open": "cypress open"
   },
   "dependencies": {
     "@angular/animations": "^9.1.12",
@@ -50,6 +51,7 @@
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^12.12.54",
     "codelyzer": "^5.2.2",
+    "cypress": "^6.7.1",
     "jasmine-core": "^3.5.0",
     "jasmine-spec-reporter": "^4.2.1",
     "karma": "^4.4.1",
