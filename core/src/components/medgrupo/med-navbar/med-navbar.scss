@@ -1,5 +1,6 @@
 @import "../../../../med-components/functions";
 @import "../../../../med-components/variables";
+@import "../../../../med-components/mixins";
 
 :host {
   --padding: #{$med-spacing-squish-xs};
@@ -22,6 +23,10 @@
   
   .header {
     background: var(--background);
+
+    @include iphone-x-range  {
+      padding-top: $med-iphone-x-top + $med-spacing-stack-xxxs !important;
+    }
 
     &__container {
       padding: var(--padding);
@@ -50,10 +55,10 @@
   }
 
   .center {
-    // setado via ts //
+    // setado via tsx //
     padding-left: var(--padding-left);
     padding-right: var(--padding-right);
-    // setado via ts //
+    // setado via tsx //
 
     padding-top: var(--center-padding);
     padding-bottom: var(--center-padding);
@@ -71,6 +76,7 @@
 //
 // text-transform
 //
+
 :host([text-initial]) {
   .center {
     text-transform: initial;
@@ -80,6 +86,7 @@
 //
 // transparent
 //
+
 :host([transparent="light"]) {
   --background: transparent;
   --title-color: var(--med-global-color, #{$med-color-neutral-light-prime});
@@ -97,6 +104,7 @@
 //
 // slotted
 //
+
 ::slotted(*) {
   margin: 0 !important;
   padding: 0 !important;
@@ -139,8 +147,25 @@
 }
 
 //
+// platforms
+//
+
+:host-context(.platform-ios) {
+  .header {
+    padding-top: $med-iphone-top + $med-spacing-stack-xxxs !important;
+  }
+}
+
+:host-context(.platform-macintel) {
+  .header {
+    padding-top: $med-mac-top + $med-spacing-stack-xxxs !important;
+  }
+}
+
+//
 // theme
 //
+
 :host-context(body.dark),
 :host-context(data-theme[dark]) {
   --background: var(--med-global-background, #{$med-color-neutral-dark-prime});
@@ -160,6 +185,7 @@
 //
 // device
 //
+
 :host-context(body.dark),
 :host-context(data-theme[dark]) {
   --background: var(--med-global-background, #{$med-color-neutral-dark-prime});
