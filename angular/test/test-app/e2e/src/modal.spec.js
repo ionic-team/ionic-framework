@@ -1,4 +1,4 @@
-describe('modals', () => {
+describe('Modals', () => {
   beforeEach(() => {
     cy.visit('/modals');
   })

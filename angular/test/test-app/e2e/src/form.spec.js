@@ -1,4 +1,4 @@
-describe('form', () => {
+describe('Form', () => {
   beforeEach(() => {
     cy.visit('/form');
   })

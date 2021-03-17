@@ -1,4 +1,4 @@
-describe('inputs', () => {
+describe('Inputs', () => {
   beforeEach(() => {
     cy.visit('/inputs');
   })
