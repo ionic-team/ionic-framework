@@ -33,12 +33,17 @@
     transform 150ms $label-md-transition-timing-function;
 }
 
+:host-context(.item-textarea).label-floating {
+  @include transform(translateY(185%));
+}
+
 :host(.label-stacked),
 :host(.label-floating) {
   @include margin(0, 0, 0, 0);
 }
 
 :host-context(.item-has-focus).label-floating,
+:host-context(.item-has-placeholder:not(.item-input)).label-floating,
 :host-context(.item-has-value).label-floating {
   @include transform(translateY(50%), scale(.75));
 }
