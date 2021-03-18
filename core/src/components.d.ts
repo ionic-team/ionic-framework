@@ -586,6 +586,10 @@ export namespace Components {
          */
         "dayValues"?: number[] | number | string;
         /**
+          * The default datetime value selected when the picker opens without value being set. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
+         */
+        "defaultValue"?: string | null;
+        /**
           * If `true`, the user cannot interact with the datetime.
          */
         "disabled": boolean;
@@ -3904,6 +3908,10 @@ declare namespace LocalJSX {
           * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
          */
         "dayValues"?: number[] | number | string;
+        /**
+          * The default datetime value selected when the picker opens without value being set. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
+         */
+        "defaultValue"?: string | null;
         /**
           * If `true`, the user cannot interact with the datetime.
          */

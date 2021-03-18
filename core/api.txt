@@ -319,6 +319,7 @@ ion-datetime,prop,cancelText,string,'Cancel',false,false
 ion-datetime,prop,dayNames,string | string[] | undefined,undefined,false,false
 ion-datetime,prop,dayShortNames,string | string[] | undefined,undefined,false,false
 ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,false,false
+ion-datetime,prop,defaultValue,null | string | undefined,undefined,false,false
 ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,displayFormat,string,'MMM D, YYYY',false,false
 ion-datetime,prop,displayTimezone,string | undefined,undefined,false,false

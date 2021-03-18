@@ -201,6 +201,16 @@ export class Datetime implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | null;
 
   /**
+   * The default datetime value selected when the picker opens without value
+   * being set. Value must be a date string following the
+   * [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime),
+   * such as `1996-12-19`. The format does not have to be specific to an exact
+   * datetime. For example, the minimum could just be the year, such as `1994`.
+   * Defaults to the beginning of the year, 100 years ago from today.
+   */
+  @Prop() defaultValue?: string | null;
+
+  /**
    * Update the datetime value when the value changes
    */
   @Watch('value')
@@ -250,7 +260,11 @@ export class Datetime implements ComponentInterface {
       dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
     };
 
-    this.updateDatetimeValue(this.value);
+    if (this.value === undefined && this.defaultValue !== undefined) {
+      this.updateDatetimeValue(this.defaultValue);
+    } else {
+      this.updateDatetimeValue(this.value);
+    }
     this.emitStyle();
   }
 
@@ -331,7 +345,11 @@ export class Datetime implements ComponentInterface {
           text: this.cancelText,
           role: 'cancel',
           handler: () => {
-            this.updateDatetimeValue(this.value);
+            if (this.value === undefined && this.defaultValue !== undefined) {
+              this.updateDatetimeValue(this.defaultValue);
+            } else {
+              this.updateDatetimeValue(this.value);
+            }
             this.ionCancel.emit();
           }
         },
