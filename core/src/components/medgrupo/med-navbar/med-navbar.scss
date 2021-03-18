@@ -4,21 +4,21 @@
 
 :host {
   --padding: #{$med-spacing-squish-xs};
-  --background: var(--med-global-background, #{$med-color-neutral-dark-prime});
+  --background: var(--med-theme-background, #{$med-color-neutral-dark-prime});
 
-  --title-color: var(--med-global-color, #{$med-color-neutral-light-prime});
+  --title-color: var(--med-theme-color, #{$med-color-neutral-light-prime});
   --title-font-size: #{$med-font-size-xs};
   --title-line-height: #{$med-line-height-compressed};
   --title-font-weight: #{$med-font-weight-semibold};
 
-  --subtitle-color: var(--global-color, #{$med-color-neutral-light-prime});
+  --subtitle-color: var(--med-theme-color, #{$med-color-neutral-light-prime});
   --subtitle-font-size: #{$med-font-size-xxxs};
   --subtitle-line-height: #{line-height($med-font-size-xxxs)};
   --subtitle-font-weight: #{$med-font-weight-semibold};
 
   --center-padding: #{$med-spacing-stack-xxxs};
 
-  --slotted-color: var(--med-global-color, #{$med-color-neutral-light-prime});
+  --slotted-color: var(--med-theme-color, #{$med-color-neutral-light-prime});
   --slotted-spacing: #{$med-spacing-inline-base};
   
   .header {
