@@ -49,3 +49,11 @@ Cypress.Commands.add('testStack', (selector, expected) => {
     expect(children).to.deep.equal(expected);
   })
 })
+
+Cypress.Commands.add('testLifeCycle', (selector, expected) => {
+  cy.get(`${selector} #ngOnInit`).invoke('text').should('equal', '1');
+  cy.get(`${selector} #ionViewWillEnter`).invoke('text').should('equal', expected.ionViewWillEnter.toString());
+  cy.get(`${selector} #ionViewDidEnter`).invoke('text').should('equal', expected.ionViewDidEnter.toString());
+  cy.get(`${selector} #ionViewWillLeave`).invoke('text').should('equal', expected.ionViewWillLeave.toString());
+  cy.get(`${selector} #ionViewDidLeave`).invoke('text').should('equal', expected.ionViewDidLeave.toString());
+})
