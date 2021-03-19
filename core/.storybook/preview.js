@@ -16,8 +16,8 @@ defineCustomElements();
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
-  layout: '',
   controls: { expanded: true },
+  backgrounds: { disable: true },
   themes: [
     {
       name: 'No Mode',
@@ -32,6 +32,16 @@ export const parameters = {
       name: 'Light Mode',
       class: ['light'],
       color: '#fff'
+    },
+    {
+      name: 'Gold - Dark Mode',
+      class: ['dark', 'gold'],
+      color: '#b89d58'
+    },
+    {
+      name: 'Gold - Light Mode',
+      class: ['light', 'gold'],
+      color: '#b89d58'
     },
   ],
   viewport: {
@@ -85,11 +95,10 @@ export const parameters = {
       order: [
         'General', ['Welcome', 'Biblioteca', 'Arquitetura', 'Styleguide'],
         'Conhecimento', ['Metodologia BEM'],
+        'Sass', ['Variables', 'Functions', 'Mixins'],
         'Tokens', ['Tokens', 'Cores', 'Tipografia', 'Espacamento', 'Complementares', 'Exemplo'],
-        'Global', ['Variables'],
-        'Medsoft', ['Arquitetura', 'Variables', 'Mixins'],
-        'External Pages',
-        'Inscrições'],
+        'Components'
+      ],
     },
   },
 }
