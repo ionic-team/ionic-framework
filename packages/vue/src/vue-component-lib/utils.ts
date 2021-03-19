@@ -48,7 +48,9 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
   * Note: The `props` here are not all properties on a component.
   * They refer to whatever properties are set on an instance of a component.
   */
-  const Container = defineComponent<Props & InputProps>((props, { attrs, slots, emit }) => {
+  const Container = defineComponent<Props & InputProps>({
+    name: name,
+    setup(props, { attrs, slots, emit }) {
     let modelPropValue = (props as any)[modelProp];
     const containerRef = ref<HTMLElement>();
     const classes = new Set(getComponentClasses(attrs.class));
@@ -127,7 +129,7 @@ export const defineContainer = <Props>(name: string, componentProps: string[] = 
 
       return h(name, propsToAdd, slots.default && slots.default());
     }
-  });
+  }});
 
   Container.displayName = name;
   Container.props = [...componentProps, ROUTER_LINK_VALUE];
