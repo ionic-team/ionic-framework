@@ -1,19 +1,22 @@
 :host([tertiary]) {
 
   --background: transparent;
-  --background-hover: #{$med-color-brand-primary-medium};
+  --background-hover: #{$med-color-brand-primary-medium-rgb};
+  --background-hover-opacity: #{$med-opacity-level-light};
   --background-disabled: #{$med-color-neutral-light-20};
   --background-activated: #{$med-color-brand-primary-dark};
+  --background-activated-opacity: #{$med-opacity-level-light};
   --background-focused: #{$med-color-brand-primary-medium};
+  --background-focused-opacity: #{$med-opacity-level-light};
 
   --border-radius: 0;
   --border-width: 0;
 
-  --color: #{$med-color-brand-primary-light};
-  --color-disable: #{$med-color-neutral-light-20};
-  --color-activated: #{$med-color-brand-primary-dark};
-  --color-hover: #{$med-color-brand-primary-medium};
-  --color-focused: #{$med-color-brand-primary-medium};
+  --color: #{$med-color-neutral-light-prime};
+  --color-disable: #{$med-color-neutral-light-10};
+  --color-activated: #{$med-color-neutral-light-prime};
+  --color-hover: #{$med-color-neutral-light-prime};
+  --color-focused: #{$med-color-neutral-light-prime};
 
   --font-size: #{$med-font-size-xxs};
   --font-weight: #{$med-font-weight-semibold};
@@ -21,51 +24,77 @@
   --padding: #{$med-spacing-squish-base};
   --transition: color 300ms ease-out;
 
+  --height: 32px;
+
+  --button-ripple-color: #{$med-color-brand-primary-medium};
+  --button-ripple-opacity: #{$med-opacity-level-light};
+
+  .tertiary-tap {
+    padding: 8px;
+  }
+  .button-native {
+    border-style: solid;
+    border-color: var(--border-color);
+    border-width: var(--border-width);
+
+    &::before {
+      background: transparent;
+    }
+  }
+}
+
+// block
+:host([block]) {
+
+  .tertiary-tap {
+    padding: 0;
+  }
+}
+
+// full
+:host([full]) {
+  --height:48px;
+  .tertiary-tap {
+    padding: 0;
+  }
+}
+
+// disabled
+:host([tertiary][disabled]) {
+  .button-native {
+    color: var(--color-disable);
+  }
+}
+
+// activated
+:host([tertiary].ion-activated) .button-native {
+  color: var(--color-activated);
+  background: transparent;
+}
+
+// focused
+:host([tertiary].ion-focused) {
+  .button-native {
+    color: var(--color-focused);
+  }
+}
+
+// hover
+@media (any-hover: hover) {
+  :host([tertiary]:hover) {
     .button-native {
-      width: calc(100% - 4px);
-      border-style: solid;
-      border-color: var(--border-color);
-      border-width: var(--border-width);
+      color: var(--color-hover);
+      transition: var(--transition);
+    }
 
-      &::before {
-        background: transparent;
-      }
+    .button-native::before {
+      opacity: 1;
+      background: rgba(var(--background-hover), var(--background-hover-opacity));
     }
   }
+}
 
-  // disabled
-  :host([tertiary][disabled]) {
-    .button-native {
-      color: var(--color-disable);
-    }
-  }
-
-  // activated
-  :host([tertiary].ion-activated) .button-native {
-    color: var(--color-activated);
-  }
-
-  // focused
-  :host([tertiary].ion-focused) {
-    .button-native {
-      color: var(--color-focused);
-    }
-  }
-
-  // hover
-  @media (any-hover: hover) {
-    :host([tertiary]:hover) {
-      .button-native {
-        color: var(--color-hover);
-        transition: var(--transition);
-      }
-
-      .button-native::before {
-        opacity: 1;
-      }
-    }
-  }
-
-  ion-ripple-effect {
-    color: var(--ripple-color);
-  }
+ion-ripple-effect {
+  --ripple-color: var(--button-ripple-color);
+  --ripple-opacity: var(--button-ripple-opacity);
+}
