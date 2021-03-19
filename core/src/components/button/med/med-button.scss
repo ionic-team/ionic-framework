@@ -27,6 +27,9 @@
   --transition: background 300ms ease-out;
   --overflow: hidden;
 
+  --button-ripple-color: #{$med-color-brand-primary-dark};
+  --button-ripple-opacity: #{$med-opacity-level-light};
+
   font-size: var(--font-size);
   font-weight: var(--font-weight);
   text-transform: var(--text-transform);
@@ -52,7 +55,7 @@
     overflow: hidden;
     display: block;
     position: relative;
-    width: calc(100% + 4px);
+    width: 100%;
     outline: none;
     line-height: 1;
     contain: layout style;
@@ -177,6 +180,11 @@
       background: var(--background-hover);
     }
   }
+}
+
+ion-ripple-effect {
+  --ripple-color: var(--button-ripple-color);
+  --ripple-opacity: var(--button-ripple-opacity);
 }
 
 @import "./med-button-secondary.scss";

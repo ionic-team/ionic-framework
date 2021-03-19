@@ -223,7 +223,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           'ion-focusable': true,
         })}
       >
-        <div class="center">
+        <div class="tertiary-tap">
           <TagType
             {...attrs}
             class="button-native"
