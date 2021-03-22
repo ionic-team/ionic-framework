@@ -6,3 +6,7 @@
 :host {
   display: block;
 }
+
+:host(.accordion-group-expand-inset) {
+  @include margin(16px, 16px, 16px, 16px);
+}
