@@ -41,10 +41,10 @@ export class AccordionGroup implements ComponentInterface {
 
   /**
    * Describes the expansion behavior for each accordion.
-   * Possible values are `"accordion"` and `"inset"`.
-   * Defaults to `"accordion"`.
+   * Possible values are `"compact"` and `"inset"`.
+   * Defaults to `"compact"`.
    */
-  @Prop() expand: 'accordion' | 'inset' = 'accordion';
+  @Prop() expand: 'compact' | 'inset' = 'compact';
 
   /**
    * Emitted when the value property has changed.

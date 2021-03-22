@@ -9,14 +9,14 @@ For more information as well as usage, see the [Accordion Documentation](../acco
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                      | Type                                      | Default       |
-| ---------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------------- |
-| `disabled` | `disabled` | If `true`, the accordion group cannot be interacted with.                                                                        | `boolean`                                 | `false`       |
-| `expand`   | `expand`   | Describes the expansion behavior for each accordion. Possible values are `"accordion"` and `"inset"`. Defaults to `"accordion"`. | `"accordion" \| "inset"`                  | `'accordion'` |
-| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                                | `"ios" \| "md"`                           | `undefined`   |
-| `multiple` | `multiple` | If `true`, the accordion group can have multiple accordion components expanded at the same time.                                 | `boolean \| undefined`                    | `undefined`   |
-| `readonly` | `readonly` | If `true`, the accordion group cannot be interacted with, but does not alter the opacity.                                        | `boolean`                                 | `false`       |
-| `value`    | `value`    | The value of the accordion group.                                                                                                | `null \| string \| string[] \| undefined` | `undefined`   |
+| Property   | Attribute  | Description                                                                                                                  | Type                                      | Default     |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ----------- |
+| `disabled` | `disabled` | If `true`, the accordion group cannot be interacted with.                                                                    | `boolean`                                 | `false`     |
+| `expand`   | `expand`   | Describes the expansion behavior for each accordion. Possible values are `"compact"` and `"inset"`. Defaults to `"compact"`. | `"compact" \| "inset"`                    | `'compact'` |
+| `mode`     | `mode`     | The mode determines which platform styles to use.                                                                            | `"ios" \| "md"`                           | `undefined` |
+| `multiple` | `multiple` | If `true`, the accordion group can have multiple accordion components expanded at the same time.                             | `boolean \| undefined`                    | `undefined` |
+| `readonly` | `readonly` | If `true`, the accordion group cannot be interacted with, but does not alter the opacity.                                    | `boolean`                                 | `false`     |
+| `value`    | `value`    | The value of the accordion group.                                                                                            | `null \| string \| string[] \| undefined` | `undefined` |
 
 
 ## Events
