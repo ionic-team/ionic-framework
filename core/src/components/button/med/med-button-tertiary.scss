@@ -2,15 +2,13 @@
   --background: transparent;
   --background-hover: #{$med-color-brand-primary-medium-rgb};
   --background-hover-opacity: #{$med-opacity-level-light};
-  --background-disabled: #{$med-color-neutral-light-20};
-  --background-activated: #{$med-color-brand-primary-dark};
-  --background-activated-opacity: #{$med-opacity-level-light};
-  --background-focused: #{$med-color-brand-primary-medium};
+  --background-disabled: transparent;
+  --background-activated: transparent;
+  --background-focused: #{$med-color-brand-primary-medium-rgb};
   --background-focused-opacity: #{$med-opacity-level-light};
 
-  --border-width: 0;
   --border-radius: 0;
-  
+
   --color: #{$med-color-neutral-light-prime};
   --color-disable: #{$med-color-neutral-light-10};
   --color-activated: #{$med-color-neutral-light-prime};
@@ -26,86 +24,27 @@
 
   --button-ripple-color: #{$med-color-brand-primary-medium};
   --button-ripple-opacity: #{$med-opacity-level-light};
-
-  .tertiary-tap {
-    padding: 8px;
-  }
-
-  .button-native {
-    border-style: solid;
-    border-color: var(--border-color);
-    border-width: var(--border-width);
-
-    &::before {
-      background: transparent;
-    }
-  }
 }
-
-//
-// block
-//
-
-:host([block]) {
-  .tertiary-tap {
-    padding: 0;
-  }
-}
-
-//
-// full
-//
 
 :host([full]) {
-  --height:48px;
-
-  .tertiary-tap {
-    padding: 0;
-  }
+  --height: 48px;
 }
 
-//
-// states
-//
-
-// disabled
-:host([tertiary][disabled]) {
+:host(.ion-focused) {
   .button-native {
-    color: var(--color-disable);
+    &::before {
+      background: rgba(var(--background-focused), var(--background-focused-opacity));
+    }
   }
 }
 
-// activated
-:host([tertiary].ion-activated) .button-native {
-  color: var(--color-activated);
-  background: transparent;
-}
-
-// focused
-:host([tertiary].ion-focused) {
-  .button-native {
-    color: var(--color-focused);
-  }
-}
-
-// hover
 @media (any-hover: hover) {
   :host([tertiary]:hover) {
-    .button-native {
-      color: var(--color-hover);
-      transition: var(--transition);
-    }
-
     .button-native::before {
-      opacity: 1;
       background: rgba(var(--background-hover), var(--background-hover-opacity));
     }
   }
 }
-
-//
-// ripple
-//
 
 ion-ripple-effect {
   --ripple-color: var(--button-ripple-color);

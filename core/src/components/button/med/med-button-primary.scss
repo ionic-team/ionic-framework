@@ -55,6 +55,10 @@
   pointer-events: auto;
   font-kerning: none;
 
+  .tertiary-tap {
+    padding: 8px;
+  }
+
   .button-native {
     @include font-smoothing();
     @include text-inherit();
@@ -115,6 +119,10 @@
 :host([block]) {
   display: block;
 
+  .tertiary-tap {
+    padding: 0;
+  }
+
   .button-native {
     display: block;
     width: 100%;
@@ -136,6 +144,10 @@
 :host([full]) {
   display: block;
 
+  .tertiary-tap {
+    padding: 0;
+  }
+
   .button-native {
     display: block;
     width: 100%;
@@ -151,9 +163,9 @@
 //
 
 // disabled
-:host([disabled]),
-:host([disabled].ion-activated),
-:host([disabled].ion-focused) {
+:host([disabled]:not([disabled="false"])),
+:host([disabled].ion-activated:not([disabled="false"].ion-activated)),
+:host([disabled].ion-focused:not([disabled="false"].ion-focused)) {
   cursor: default;
   pointer-events: none;
 
