@@ -222,7 +222,7 @@
     }
   }
 
-  :host([disabled]:hover) {
+  :host([disabled]:hover:not([disabled="false"]):hover) {
     .button-native {
       border-color: var(--border-color-disabled);
       color: var(--color-disable);
