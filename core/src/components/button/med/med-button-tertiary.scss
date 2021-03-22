@@ -1,5 +1,4 @@
 :host([tertiary]) {
-
   --background: transparent;
   --background-hover: #{$med-color-brand-primary-medium-rgb};
   --background-hover-opacity: #{$med-opacity-level-light};
@@ -22,8 +21,7 @@
   --font-weight: #{$med-font-weight-semibold};
   --line-height: #{$med-line-height-compressed};
   --padding: #{$med-spacing-squish-base};
-  --transition: color 300ms ease-out;
-
+  --transition: all 300ms ease-out;
   --height: 32px;
 
   --button-ripple-color: #{$med-color-brand-primary-medium};
@@ -32,6 +30,7 @@
   .tertiary-tap {
     padding: 8px;
   }
+
   .button-native {
     border-style: solid;
     border-color: var(--border-color);
@@ -43,21 +42,31 @@
   }
 }
 
+//
 // block
-:host([block]) {
+//
 
+:host([block]) {
   .tertiary-tap {
     padding: 0;
   }
 }
 
+//
 // full
+//
+
 :host([full]) {
   --height:48px;
+
   .tertiary-tap {
     padding: 0;
   }
 }
+
+//
+// states
+//
 
 // disabled
 :host([tertiary][disabled]) {
@@ -93,6 +102,10 @@
     }
   }
 }
+
+//
+// ripple
+//
 
 ion-ripple-effect {
   --ripple-color: var(--button-ripple-color);

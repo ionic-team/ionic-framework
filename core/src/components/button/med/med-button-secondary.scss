@@ -1,33 +1,32 @@
 :host([secondary]) {
+  --background: transparent;
+  --background-hover: #{$med-color-brand-primary-medium};
+  --background-disabled: #{$med-color-neutral-light-20};
+  --background-activated: #{$med-color-brand-primary-dark};
+  --background-focused: #{$med-color-brand-primary-medium};
 
---background: transparent;
---background-hover: #{$med-color-brand-primary-medium};
---background-disabled: #{$med-color-neutral-light-20};
---background-activated: #{$med-color-brand-primary-dark};
---background-focused: #{$med-color-brand-primary-medium};
+  --border-radius: #{$med-border-radius-pill};
+  --border-width: #{$med-border-width-thin};
+  --border-color: #{$med-color-brand-primary-light};
+  --border-color-disabled: #{$med-color-neutral-light-20};
+  --border-color-focused: #{$med-color-brand-primary-medium};
+  --border-color-activated: #{$med-color-brand-primary-dark};
+  --border-color-hover: #{$med-color-brand-primary-medium};
 
---border-radius: #{$med-border-radius-pill};
---border-color: #{$med-color-brand-primary-light};
---border-width: #{$med-border-width-thin};
---border-color-disabled: #{$med-color-neutral-light-20};
---border-color-focused: #{$med-color-brand-primary-medium};
---border-color-activated: #{$med-color-brand-primary-dark};
---border-color-hover: #{$med-color-brand-primary-medium};
+  --color: #{$med-color-brand-primary-light};
+  --color-disable: #{$med-color-neutral-light-20};
+  --color-activated: #{$med-color-brand-primary-dark};
+  --color-hover: #{$med-color-brand-primary-medium};
+  --color-focused: #{$med-color-brand-primary-medium};
 
---color: #{$med-color-brand-primary-light};
---color-disable: #{$med-color-neutral-light-20};
---color-activated: #{$med-color-brand-primary-dark};
---color-hover: #{$med-color-brand-primary-medium};
---color-focused: #{$med-color-brand-primary-medium};
+  --font-size: #{$med-font-size-xxs};
+  --font-weight: #{$med-font-weight-semibold};
+  --line-height: #{$med-line-height-compressed};
+  --padding: #{$med-spacing-squish-base};
+  --transition: all 300ms ease-out;
 
---font-size: #{$med-font-size-xxs};
---font-weight: #{$med-font-weight-semibold};
---line-height: #{$med-line-height-compressed};
---padding: #{$med-spacing-squish-base};
---transition: all 300ms ease-out;
-
---button-ripple-color: #{$med-color-brand-primary-medium};
---button-ripple-opacity: #{$med-opacity-level-light};
+  --button-ripple-color: #{$med-color-brand-primary-medium};
+  --button-ripple-opacity: #{$med-opacity-level-light};
 
   .button-native {
     width: calc(100% - 4px);
@@ -40,6 +39,10 @@
     }
   }
 }
+
+//
+// states
+//
 
 // disabled
 :host([secondary][disabled]) {
@@ -77,6 +80,10 @@
     }
   }
 }
+
+//
+// ripple
+//
 
 ion-ripple-effect {
   --ripple-color: var(--button-ripple-color);

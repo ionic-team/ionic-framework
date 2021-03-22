@@ -1,0 +1,39 @@
+:host([icon-only]) {
+  --background: transparent;
+
+  --padding: #{$med-spacing-inset-nano};
+  --height: 40px;
+  --width: 40px;
+
+  --fill: #{$med-color-neutral-light-prime};
+
+  svg {
+    fill: var(--fill);
+  }
+}
+
+//
+// states
+//
+
+// disabled
+:host([icon-only][disabled]) {
+  --fill: #{$med-color-neutral-dark-10};
+}
+
+// activated
+:host(.ion-activated) {
+  --fill: #{$med-color-neutral-dark-40};
+}
+
+// focused
+:host(.ion-focused) {
+  --fill: #{$med-color-neutral-dark-40};
+}
+
+// hover
+@media (any-hover: hover) {
+  :host(:hover) {
+    --fill: #{$med-color-neutral-dark-40};
+  }
+}
