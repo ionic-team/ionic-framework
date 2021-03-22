@@ -232,6 +232,7 @@ ion-accordion.accordion-expanded .ion-accordion-toggle-icon {
 }
 ion-accordion-group.accordion-group-expand-inset.md ion-accordion.accordion-previous ion-item[slot="header"] {
   --border-width: 0px;
+  --inner-border-width: 0px;
 }
 
 ion-accordion-group.accordion-group-expand-inset.md ion-accordion.accordion-expanding:first-of-type,
