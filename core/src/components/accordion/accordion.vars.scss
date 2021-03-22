@@ -14,3 +14,6 @@ $accordion-transition-easing:     cubic-bezier(0.25, 0.8, 0.5, 1) !default;
 
 /// @prop - Opacity of the disabled accordion
 $accordion-disabled-opacity:      0.4 !default;
+
+/// @prop - Margin of the inset accordion
+$accordion-inset-margin:          16px !default;

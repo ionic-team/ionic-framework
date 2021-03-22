@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "../accordion/accordion.vars";
 
 // Accordion Group
 // --------------------------------------------------
@@ -8,5 +9,5 @@
 }
 
 :host(.accordion-group-expand-inset) {
-  @include margin(16px, 16px, 16px, 16px);
+  @include margin($accordion-inset-margin, $accordion-inset-margin, $accordion-inset-margin, $accordion-inset-margin);
 }
