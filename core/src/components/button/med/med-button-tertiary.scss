@@ -4,16 +4,15 @@
   --background-hover-opacity: #{$med-opacity-level-light};
   --background-disabled: transparent;
   --background-activated: transparent;
-  --background-focused2: #{$med-color-brand-primary-medium-rgb};
+  --background-focused: #{$med-color-brand-primary-medium-rgb};
   --background-focused-opacity: #{$med-opacity-level-light};
-  --background-focused: rgba(var(--background-focused2), var(--background-focused-opacity));
 
-  --border-radius: 0;
+  --border-radius: #{$med-border-radius-nano};
 
   --color: #{$med-color-neutral-light-prime};
+  --color-hover: #{$med-color-neutral-light-prime};
   --color-disable: #{$med-color-neutral-light-10};
   --color-activated: #{$med-color-neutral-light-prime};
-  --color-hover: #{$med-color-neutral-light-prime};
   --color-focused: #{$med-color-neutral-light-prime};
 
   --font-size: #{$med-font-size-xxs};
@@ -25,6 +24,11 @@
 
   --button-ripple-color: #{$med-color-brand-primary-medium};
   --button-ripple-opacity: #{$med-opacity-level-light};
+
+  ion-ripple-effect {
+    --ripple-color: var(--button-ripple-color);
+    --ripple-opacity: var(--button-ripple-opacity);
+  }
 }
 
 :host([tertiary]) {
@@ -73,7 +77,23 @@
   }
 }
 
-ion-ripple-effect {
-  --ripple-color: var(--button-ripple-color);
-  --ripple-opacity: var(--button-ripple-opacity);
+//
+// theme
+//
+
+:host([tertiary]):host-context(body.light),
+:host([tertiary]):host-context(data-theme[light]) {
+  --background: transparent;
+  --background-hover: #{$med-color-brand-primary-medium-rgb};
+  --background-hover-opacity: #{$med-opacity-level-light};
+  --background-disabled: transparent;
+  --background-activated: transparent;
+  --background-focused: #{$med-color-brand-primary-medium-rgb};
+  --background-focused-opacity: #{$med-opacity-level-light};
+
+  --color: #{$med-color-neutral-dark-10};
+  --color-hover: #{$med-color-neutral-dark-10};
+  --color-disable: #{$med-color-neutral-light-10};
+  --color-activated: #{$med-color-neutral-dark-10};
+  --color-focused: #{$med-color-neutral-dark-10};
 }

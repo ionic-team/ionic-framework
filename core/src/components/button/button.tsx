@@ -142,10 +142,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     if(this.el.classList.contains('button')) {
       this.el.classList.remove('button');
     }
-
-    if(this.el.classList.contains('button-disabled')) {
-      this.el.classList.remove('button-disabled');
-    }
   }
 
   private get hasIconOnly() {
@@ -227,7 +223,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
           'button-has-icon-only': hasIconOnly,
-          'button-disabled': disabled,
           'ion-activatable': true,
           'ion-focusable': true,
         })}

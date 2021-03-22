@@ -13,8 +13,12 @@
     <script type="module" src="./dist/ionic/ionic.esm.js"></script></head>
 
     <style>
-      .custom {
-        --med-text-transform: initial;
+      body.dark ion-content {
+        --background: #141414;
+      }
+
+      body.light {
+        --background: #fafafa;
       }
 
       ion-button {
@@ -33,13 +37,9 @@
         background-color: red;
         display: block;
       }
-
-      .teste{
-        background: #000 !important;
-      }
     </style>
   </head>
-  <body>
+  <body class="dark">
     <ion-app>
       <med-navbar>
         <div class="ribbon"slot="top"></div>
@@ -59,29 +59,43 @@
       </med-navbar>
 
       <ion-content>
-        <div class="teste">
-          <ion-button class="button">ion button</ion-button>
-          <ion-button disabled>ion button</ion-button>
-          <ion-button class="ion-focused">ion button</ion-button>
-          <ion-button class="ion-activated">ion button</ion-button>
-          <ion-button block>ion button</ion-button>
-          <ion-button full>ion button</ion-button>
+        <ion-button class="button">ion button</ion-button>
+        <ion-button disabled>ion button</ion-button>
+        <ion-button class="ion-focused">ion button</ion-button>
+        <ion-button class="ion-activated">ion button</ion-button>
+        <ion-button block>ion button</ion-button>
+        <ion-button full>ion button</ion-button>
 
-          <ion-button secondary>ion button</ion-button>
-          <ion-button secondary disabled>ion button</ion-button>
-          <ion-button secondary class="ion-focused">ion button</ion-button>
-          <ion-button secondary class="ion-activated">ion button</ion-button>
-          <ion-button secondary block>ion button</ion-button>
-          <ion-button secondary full>ion button</ion-button>
+        <ion-button secondary>ion button</ion-button>
+        <ion-button secondary disabled>ion button</ion-button>
+        <ion-button secondary class="ion-focused">ion button</ion-button>
+        <ion-button secondary class="ion-activated">ion button</ion-button>
+        <ion-button secondary block>ion button</ion-button>
+        <ion-button secondary full>ion button</ion-button>
 
-          <ion-button tertiary>ion button</ion-button>
-          <ion-button tertiary disabled>ion button</ion-button>
-          <ion-button tertiary class="ion-focused">ion button</ion-button>
-          <ion-button tertiary class="ion-activated">ion button</ion-button>
-          <ion-button tertiary block>ion button</ion-button>
-          <ion-button tertiary full>ion button</ion-button>
-        </div>
+        <ion-button tertiary>ion button</ion-button>
+        <ion-button tertiary disabled>ion button</ion-button>
+        <ion-button tertiary class="ion-focused">ion button</ion-button>
+        <ion-button tertiary class="ion-activated">ion button</ion-button>
+        <ion-button tertiary block>ion button</ion-button>
+        <ion-button tertiary full>ion button</ion-button>
+
+        <button id="theme" style="padding: 10px">toggle theme</button>
       </ion-content>
     </ion-app>
+
+    <script>
+      document.querySelector('#theme').addEventListener('click', () => {
+        const body = document.querySelector('body');
+
+        if(body.classList.contains('dark')) {
+          body.classList.remove('dark');
+          body.classList.add('light');
+        } else {
+          body.classList.add('dark');
+          body.classList.remove('light');
+        }
+      })
+    </script>
   </body>
 </html>

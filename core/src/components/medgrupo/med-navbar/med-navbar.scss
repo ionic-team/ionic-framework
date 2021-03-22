@@ -166,14 +166,6 @@
 // theme
 //
 
-:host-context(body.dark),
-:host-context(data-theme[dark]) {
-  --background: var(--med-global-background, #{$med-color-neutral-dark-prime});
-  --title-color: var(--med-global-color, #{$med-color-neutral-light-prime});
-  --subtitle-color: var(--global-color, #{$med-color-neutral-light-prime});
-  --slotted-color: var(--med-global-color, #{$med-color-neutral-light-prime});
-}
-
 :host-context(body.light),
 :host-context(data-theme[light]) {
   --background: var(--med-global-background, #{$med-color-neutral-light-prime});

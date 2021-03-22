@@ -10,16 +10,16 @@
   --border-color: #{$med-color-brand-primary-light};
   --border-radius: #{$med-border-radius-pill};
 
-  --border-color-disabled: #{$med-color-neutral-light-20};
-  --border-color-focused: #{$med-color-brand-primary-medium};
-  --border-color-activated: #{$med-color-brand-primary-dark};
   --border-color-hover: #{$med-color-brand-primary-medium};
-
+  --border-color-disabled: #{$med-color-neutral-light-20};
+  --border-color-activated: #{$med-color-brand-primary-dark};
+  --border-color-focused: #{$med-color-brand-primary-medium};
+  
   --color: #{$med-color-brand-primary-light};
-  --color-disable: #{$med-color-neutral-light-20};
-  --color-focused: #{$med-color-brand-primary-medium};
-  --color-activated: #{$med-color-brand-primary-dark};
   --color-hover: #{$med-color-brand-primary-medium};
+  --color-disable: #{$med-color-neutral-light-20};
+  --color-activated: #{$med-color-brand-primary-dark};
+  --color-focused: #{$med-color-brand-primary-medium};
 
   --font-size: #{$med-font-size-xxs};
   --font-weight: #{$med-font-weight-semibold};
@@ -30,9 +30,27 @@
 
   --button-ripple-color: #{$med-color-brand-primary-medium};
   --button-ripple-opacity: #{$med-opacity-level-light};
+
+  ion-ripple-effect {
+    --ripple-color: var(--button-ripple-color);
+    --ripple-opacity: var(--button-ripple-opacity);
+  }
 }
 
-ion-ripple-effect {
-  --ripple-color: var(--button-ripple-color);
-  --ripple-opacity: var(--button-ripple-opacity);
+//
+// theme
+//
+
+:host([tertiary]):host-context(body.light),
+:host([tertiary]):host-context(data-theme[light]) {
+  --border-color-disabled: #{$med-color-neutral-light-10};
+  --border-color-focused: #{$med-color-brand-primary-dark};
+  --border-color-activated: #{$med-color-brand-primary-light};
+  --border-color-hover: #{$med-color-brand-primary-dark};
+
+  --color: #{$med-color-neutral-light-10};
+  --color-disable: #{$med-color-neutral-light-10};
+  --color-activated: #{$med-color-brand-primary-light};
+  --color-hover: #{$med-color-brand-primary-dark};
+  --color-focused: #{$med-color-brand-primary-dark};
 }

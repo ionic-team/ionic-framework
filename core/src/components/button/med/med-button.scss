@@ -13,15 +13,15 @@
   --border-style: none;
   --border-color: initial;
 
-  --border-color-disabled: initial;
-  --border-color-focused: initial;
-  --border-color-activated: initial;
   --border-color-hover: initial;
-
+  --border-color-disabled: initial;
+  --border-color-activated: initial;
+  --border-color-focused: initial;
+  
   --color: #{$med-color-neutral-light-prime};
+  --color-hover: #{$med-color-neutral-light-prime};
   --color-disable: #{$med-color-neutral-light-prime};
   --color-activated: #{$med-color-neutral-light-prime};
-  --color-hover: #{$med-color-neutral-light-prime};
   --color-focused: #{$med-color-neutral-light-prime};
 
   --font-size: #{$med-font-size-xxs};
@@ -55,6 +55,11 @@
   pointer-events: auto;
   font-kerning: none;
   cursor: pointer;
+
+  ion-ripple-effect {
+    --ripple-color: var(--button-ripple-color);
+    --ripple-opacity: var(--button-ripple-opacity);
+  }
 
   .button-native {
     @include font-smoothing();
@@ -148,6 +153,23 @@
 }
 
 //
+// size
+//
+
+:host([size="sm"]) {
+  --height: 40px;
+}
+
+:host([size="xs"]) {
+  --height: 32px;
+}
+
+:host([size="xxs"]) {
+  --height: 24px;
+}
+
+
+//
 // states
 //
 
@@ -178,6 +200,12 @@
       opacity: 1;
     }
   }
+
+  /* :host(.ion-activated:hover) {
+    .button-native::before {
+      background: transparent;
+    }
+  } */
 }
 
 // disabled
@@ -222,15 +250,6 @@
       opacity: 1;
     }
   }
-}
-
-//
-// ripple
-//
-
-ion-ripple-effect {
-  --ripple-color: var(--button-ripple-color);
-  --ripple-opacity: var(--button-ripple-opacity);
 }
 
 @import "./med-button-secondary.scss";
