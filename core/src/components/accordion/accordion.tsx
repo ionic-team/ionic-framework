@@ -94,6 +94,7 @@ export class Accordion implements ComponentInterface {
   }
 
   componentDidLoad() {
+    this.setItemDefaults();
     this.slotToggleIcon();
 
     /**
@@ -109,6 +110,30 @@ export class Accordion implements ComponentInterface {
       const expanded = this.state === AccordionState.Expanded || this.state === AccordionState.Expanding;
       this.setAria(expanded);
     });
+  }
+
+  private setItemDefaults = () => {
+    const ionItem = this.getSlottedHeaderIonItem();
+    if (!ionItem) { return; }
+
+    /**
+     * For a11y purposes, we make
+     * the ion-item a button so users
+     * can tab to it and use keyboard
+     * navigation to get around.
+     */
+    ionItem.button = true;
+    ionItem.detail = false;
+
+    /**
+     * By default, the lines in an
+     * item should be full here, but
+     * only do that if a user has
+     * not explicitly overridden them
+     */
+    if (ionItem.lines === undefined) {
+      ionItem.lines = 'full';
+    }
   }
 
   private getSlottedHeaderIonItem = () => {
@@ -148,15 +173,6 @@ export class Accordion implements ComponentInterface {
     if (!ionItem) { return; }
 
     const { toggleIconSlot, toggleIcon } = this;
-
-    /**
-     * For a11y purposes, we make
-     * the ion-item a button so users
-     * can tab to it and use keyboard
-     * navigation to get around.
-     */
-    ionItem.button = true;
-    ionItem.detail = false;
 
     /**
      * Check if there already is a toggle icon.
