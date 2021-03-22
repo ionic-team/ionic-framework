@@ -138,6 +138,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
+  componentDidLoad() {
+    if(this.el.classList.contains('button')) {
+      this.el.classList.remove('button');
+    }
+  }
+
   private get hasIconOnly() {
     return !!this.el.querySelector('[slot="icon-only"]');
   }
