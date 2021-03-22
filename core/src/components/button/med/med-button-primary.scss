@@ -9,12 +9,20 @@
   --background-focused: #{$med-color-brand-primary-medium};
 
   --border-radius: #{$med-border-radius-pill};
+  --border-width: 0;
+  --border-style: none;
+  --border-color: initial;
+
+  --border-color-disabled: initial;
+  --border-color-focused: initial;
+  --border-color-activated: initial;
+  --border-color-hover: initial;
 
   --color: #{$med-color-neutral-light-prime};
-  --color-disable: var(--color);
-  --color-activated: var(--color);
-  --color-hover: var(--color);
-  --color-focused: var(--color);
+  --color-disable: #{$med-color-neutral-light-prime};
+  --color-activated: #{$med-color-neutral-light-prime};
+  --color-hover: #{$med-color-neutral-light-prime};
+  --color-focused: #{$med-color-neutral-light-prime};
 
   --font-size: #{$med-font-size-xxs};
   --font-weight: #{$med-font-weight-semibold};
@@ -69,6 +77,9 @@
     width: var(--width);
     padding: var(--padding);
     color: var(--color);
+    border-width: var(--border-width);
+    border-style: var(--border-style);
+    border-color: var(--border-color);
     border-radius: var(--border-radius);
     background: var(--background);
 
@@ -140,11 +151,14 @@
 //
 
 // disabled
-:host([disabled]) {
+:host([disabled]),
+:host([disabled].ion-activated),
+:host([disabled].ion-focused) {
   cursor: default;
   pointer-events: none;
 
   .button-native {
+    border-color: var(--border-color-disabled);
     color: var(--color-disable);
   }
 
@@ -157,18 +171,20 @@
 // activated
 :host(.ion-activated) {
   .button-native {
+    border-color: var(--border-color-activated);
     color: var(--color-activated);
   }
 
   .button-native::before {
-    opacity: 1;
     background: var(--background-activated);
+    opacity: 1;
   }
 }
 
 // focused
 :host(.ion-focused) {
   .button-native {
+    border-color: var(--border-color-focused);
     color: var(--color-focused);
 
     &::before {
@@ -182,12 +198,27 @@
 @media (any-hover: hover) {
   :host(:hover) {
     .button-native {
+      border-color: var(--border-color-hover);
       color: var(--color-hover);
+      transition: var(--transition);
     }
 
     .button-native::before {
       opacity: 1;
       background: var(--background-hover);
+      transition: var(--transition);
+    }
+  }
+
+  :host([disabled]:hover) {
+    .button-native {
+      border-color: var(--border-color-disabled);
+      color: var(--color-disable);
+    }
+  
+    .button-native::before {
+      background: var(--background-disabled);
+      opacity: 1;
     }
   }
 }

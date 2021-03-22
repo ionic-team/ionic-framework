@@ -1,11 +1,18 @@
 :host([icon-only]) {
   --background: transparent;
 
+  --border-radius: #{$med-border-radius-pill};
+  --border-width: #{$med-border-width-thin};
+  --border-color: #{$med-color-brand-primary-light};
+
   --padding: #{$med-spacing-inset-nano};
   --height: 40px;
   --width: 40px;
 
   --fill: #{$med-color-neutral-light-prime};
+
+  --button-ripple-color: #{$med-color-brand-primary-dark};
+  --button-ripple-opacity: #{$med-opacity-level-light};
 
   svg {
     fill: var(--fill);
