@@ -4,8 +4,9 @@
   --background-hover-opacity: #{$med-opacity-level-light};
   --background-disabled: transparent;
   --background-activated: transparent;
-  --background-focused: #{$med-color-brand-primary-medium-rgb};
+  --background-focused2: #{$med-color-brand-primary-medium-rgb};
   --background-focused-opacity: #{$med-opacity-level-light};
+  --background-focused: rgba(var(--background-focused2), var(--background-focused-opacity));
 
   --border-radius: 0;
 
@@ -26,23 +27,49 @@
   --button-ripple-opacity: #{$med-opacity-level-light};
 }
 
-:host([full]) {
-  --height: 48px;
-}
-
-:host(.ion-focused) {
-  .button-native {
-    &::before {
-      background: rgba(var(--background-focused), var(--background-focused-opacity));
-    }
+:host([tertiary]) {
+  .tertiary-tap {
+    padding: 8px;
   }
 }
+
+//
+// block
+//
+
+:host([block]) {
+  .tertiary-tap {
+    padding: 0;
+  }
+}
+
+//
+// full
+//
+
+:host([full]) {
+  --height: 48px;
+
+  .tertiary-tap {
+    padding: 0;
+  }
+}
+
+//
+// states
+//
 
 @media (any-hover: hover) {
   :host([tertiary]:hover) {
     .button-native::before {
       background: rgba(var(--background-hover), var(--background-hover-opacity));
     }
+  }
+}
+
+:host([tertiary].ion-focused) {
+  .button-native::before {
+    background: rgba(var(--background-focused), var(--background-focused-opacity));
   }
 }
 
