@@ -29,7 +29,7 @@
   --line-height: #{$med-line-height-compressed};
   --text-transform: uppercase;
   --padding: #{$med-spacing-squish-lg};
-  --transition: all 300ms ease-out;
+  --transition: background 300ms ease-out, color 300ms ease-out, border-color 300ms ease-out;
   --overflow: hidden;
   --height: 48px;
   --width: auto;
@@ -83,6 +83,7 @@
     border-color: var(--border-color);
     border-radius: var(--border-radius);
     background: var(--background);
+    transition: var(--transition);
 
     &::-moz-focus-inner {
       border: 0;
@@ -90,7 +91,6 @@
 
     &::before {
       @include button-state();
-      background: var(--background);
       transition: var(--transition);
       opacity: 1;
     }
@@ -157,13 +157,11 @@
     .button-native {
       border-color: var(--border-color-hover);
       color: var(--color-hover);
-      transition: var(--transition);
     }
 
     .button-native::before {
       opacity: 1;
       background: var(--background-hover);
-      transition: var(--transition);
     }
   }
 

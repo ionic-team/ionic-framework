@@ -142,6 +142,10 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     if(this.el.classList.contains('button')) {
       this.el.classList.remove('button');
     }
+
+    if(this.el.classList.contains('button-disabled')) {
+      this.el.classList.remove('button-disabled');
+    }
   }
 
   private get hasIconOnly() {
