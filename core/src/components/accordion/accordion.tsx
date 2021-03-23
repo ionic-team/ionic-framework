@@ -40,6 +40,7 @@ export class Accordion implements ComponentInterface {
   private contentEl: HTMLDivElement | undefined;
   private contentElWrapper: HTMLDivElement | undefined;
   private headerEl: HTMLDivElement | undefined;
+  private accordionId = `ion-accordion-${accordionIds++}`;
 
   private currentRaf: number | undefined;
 
@@ -52,7 +53,7 @@ export class Accordion implements ComponentInterface {
   /**
    * The value of the accordion.
    */
-  @Prop() value?: string;
+  @Prop() value: string = this.accordionId;
 
   /**
    * If `true`, the accordion cannot be interacted with.
@@ -298,7 +299,7 @@ export class Accordion implements ComponentInterface {
     const accordionGroup = this.accordionGroupEl;
     const accordionValue = this.value;
 
-    if (accordionValue === undefined || !accordionGroup) { return; }
+    if (!accordionGroup) { return; }
 
     const value = accordionGroup.value;
 
@@ -422,3 +423,5 @@ export class Accordion implements ComponentInterface {
     );
   }
 }
+
+let accordionIds = 0;

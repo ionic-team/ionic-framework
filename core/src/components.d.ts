@@ -34,7 +34,7 @@ export namespace Components {
         /**
           * The value of the accordion.
          */
-        "value"?: string;
+        "value": string;
     }
     interface IonAccordionGroup {
         /**

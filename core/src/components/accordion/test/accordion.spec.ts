@@ -227,3 +227,33 @@ it('should accept a string when multiple="true"', async () => {
   expect(accordions[1].classList.contains('accordion-collapsed')).toEqual(true);
   expect(accordions[2].classList.contains('accordion-collapsed')).toEqual(true);
 });
+
+it('should set default values if not provided', async () => {
+  const page = await newSpecPage({
+    components: [Item, Accordion, AccordionGroup],
+    html: `
+      <ion-accordion-group>
+        <ion-accordion>
+          <ion-item slot="header">Label</ion-item>
+          <div slot="content">Content</div>
+        </ion-accordion>
+      </ion-accordion-group>
+    `
+  });
+
+  const accordionGroup = page.body.querySelector('ion-accordion-group');
+  const accordion = accordionGroup.querySelector('ion-accordion');
+
+  /**
+   * ID is determined via an auto incrementing counter
+   * so do not hard code ion-accordion-0 as it might
+   * change depending on how many accordions
+   * are used in these tests.
+   */
+  expect(accordion.value).toContain('ion-accordion-');
+
+  accordionGroup.value = accordion.value;
+  await page.waitForChanges();
+
+  expect(accordion.classList.contains('accordion-collapsed')).toEqual(false);
+});
