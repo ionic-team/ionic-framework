@@ -73,6 +73,6 @@ export const Complementares = TemplateComplementares.bind({});
 Complementares.parameters = {
   design: {
     type: 'figma',
-    url: 'https://www.figma.com/file/4QvnRfhttlJ2hIKQbuEPZl/Tokens?node-id=309%3A1150',
+    url: 'https://www.figma.com/file/4QvnRfhttlJ2hIKQbuEPZl/Tokens?node-id=1191%3A1652',
   },
 }

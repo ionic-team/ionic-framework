@@ -8,11 +8,11 @@ export default {
 
 const Template = () => {
   return html`
-  <ion-app>
-    <ion-content>
-      <ion-button secondary>ion button</ion-button>
-    </ion-content>
-  </ion-app>
+    <ion-app>
+      <ion-content>
+        <ion-button secondary>ion button</ion-button>
+      </ion-content>
+    </ion-app>
     `
   }
 
@@ -26,11 +26,11 @@ Default.parameters = {
 
 const TemplateDisabled = () => {
   return html`
-  <ion-app>
-    <ion-content>
-      <ion-button secondary disabled>ion button</ion-button>
-    </ion-content>
-  </ion-app>
+    <ion-app>
+      <ion-content>
+        <ion-button secondary disabled>ion button</ion-button>
+      </ion-content>
+    </ion-app>
     `
   }
 
@@ -44,11 +44,11 @@ Disabled.parameters = {
 
 const TemplateBlock = () => {
   return html`
-  <ion-app>
-    <ion-content>
-      <ion-button secondary block>ion button</ion-button>
-    </ion-content>
-  </ion-app>
+    <ion-app>
+      <ion-content>
+        <ion-button secondary block>ion button</ion-button>
+      </ion-content>
+    </ion-app>
     `
   }
 
@@ -62,11 +62,11 @@ Block.parameters = {
 
 const TemplateFull = () => {
   return html`
-  <ion-app>
-    <ion-content>
-      <ion-button secondary full>ion button</ion-button>
-    </ion-content>
-  </ion-app>
+    <ion-app>
+      <ion-content>
+        <ion-button secondary full>ion button</ion-button>
+      </ion-content>
+    </ion-app>
     `
   }
 

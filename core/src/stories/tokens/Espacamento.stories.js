@@ -82,6 +82,6 @@ export const Espacamento = TemplateEspacamento.bind({});
 Espacamento.parameters = {
   design: {
     type: 'figma',
-    url: 'https://www.figma.com/file/4QvnRfhttlJ2hIKQbuEPZl/Tokens?node-id=563%3A472',
+    url: 'https://www.figma.com/file/4QvnRfhttlJ2hIKQbuEPZl/Tokens?node-id=550%3A1',
   },
 }

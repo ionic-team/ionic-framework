@@ -20,10 +20,6 @@ export const parameters = {
   backgrounds: { disable: true },
   themes: [
     {
-      name: 'No Mode',
-      color: '#fff'
-    },
-    {
       name: 'Dark Mode',
       class: ['dark'],
       color: '#000'
@@ -31,7 +27,8 @@ export const parameters = {
     {
       name: 'Light Mode',
       class: ['light'],
-      color: '#fff'
+      color: '#fff', 
+      default: true 
     },
     {
       name: 'Gold - Dark Mode',

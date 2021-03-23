@@ -155,6 +155,6 @@ export const Cores = TemplateCores.bind({});
 Cores.parameters = {
   design: {
     type: 'figma',
-    url: 'https://www.figma.com/file/4QvnRfhttlJ2hIKQbuEPZl/Tokens?node-id=308%3A120',
+    url: 'https://www.figma.com/file/4QvnRfhttlJ2hIKQbuEPZl/Tokens?node-id=1191%3A1346',
   },
 }

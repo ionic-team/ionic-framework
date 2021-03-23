@@ -62,6 +62,6 @@ export const Tipografia = TemplateTipografia.bind({});
 Tipografia.parameters = {
   design: {
     type: 'figma',
-    url: 'https://www.figma.com/file/4QvnRfhttlJ2hIKQbuEPZl/Tokens?node-id=309%3A92',
+    url: 'https://www.figma.com/file/4QvnRfhttlJ2hIKQbuEPZl/Tokens?node-id=1191%3A1160',
   },
 }

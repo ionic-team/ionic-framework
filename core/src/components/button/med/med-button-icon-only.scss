@@ -2,12 +2,14 @@
   --background: transparent;
   --background-hover: #{$med-color-neutral-dark-40-rgb};
   --background-hover-opacity: #{$med-opacity-level-half};
+  --background-disabled: transparent;
+  --background-activated: transparent;
   --background-focused: #{$med-color-neutral-dark-40-rgb};
   --background-focused-opacity: #{$med-opacity-level-half};
 
   --border-radius: #{$med-border-radius-pill};
-  --border-width: #{$med-border-width-thin};
-  --border-color: #{$med-color-brand-primary-light};
+  --border-width: 0;
+  --border-color: transparent;
 
   --padding: #{$med-spacing-inset-nano};
   --height: 40px;
@@ -20,6 +22,11 @@
 
   svg {
     fill: var(--fill);
+  }
+
+  ion-ripple-effect {
+    --ripple-color: var(--button-ripple-color);
+    --ripple-opacity: var(--button-ripple-opacity);
   }
 }
 
