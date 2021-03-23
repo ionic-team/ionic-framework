@@ -469,8 +469,8 @@ workflows:
     jobs:
       #liamtest- puppeteer-dependencies
       #liamtest- build
-      #liamtest- build-core:
-      #liamtest    requires: [build]
+      - build-core:
+          requires: [build]
       #liamtest- test-core-clean-build:
       #liamtest    requires: [build-core]
       #liamtest- test-core-lint:
