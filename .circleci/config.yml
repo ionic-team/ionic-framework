@@ -438,6 +438,10 @@ jobs:
           root: /tmp/workspace
           paths:
             - "*"
+      - persist_to_workspace:
+          root: /home/circleci/.cache/Cypress
+          paths:
+            - "*"
 
   test-vue-spec:
     <<: *defaults
@@ -456,7 +460,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm run start
+          command: npm run serve
           working_directory: /tmp/workspace/packages/vue/test-app
           background: true
       - run:
@@ -519,12 +523,12 @@ workflows:
       #liamtest    requires: [build-vue]
       #liamtest- test-vue-router-lint:
       #liamtest    requires: [build-vue-router]
-      - test-vue-router-spec:
-          requires: [build-vue-router]
+      #liamtest- test-vue-router-spec:
+      #liamtest    requires: [build-vue-router]
       - install-vue-test-app:
           requires: [build-vue, build-vue-router]
-      - test-vue-spec:
-          requires: [install-vue-test-app]
+      #liamtest- test-vue-spec:
+      #liamtest    requires: [install-vue-test-app]
       - test-vue-e2e:
           requires: [install-vue-test-app]
       #liamtest- test-angular-lint:
