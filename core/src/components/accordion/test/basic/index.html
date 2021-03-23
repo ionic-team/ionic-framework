@@ -16,14 +16,34 @@
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
     </style>
   </head>
   <body>
     <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Accordion - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
       <ion-content fullscreen="true" color="light">
-        <h1>Accordion - Basic</h1>
+        <ion-header collapse="condense">
+          <ion-toolbar color="light">
+            <ion-title size="large">Accordion - Basic</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
         <div class="grid ion-padding">
           <div class="grid-item">
+            <h2>Inset, Color - iOS</h2>
             <ion-accordion-group mode="ios" expand="inset">
               <ion-accordion value="attractions">
                 <ion-item color="primary" slot="header" button detail="false">
@@ -99,6 +119,7 @@
           </div>
 
           <div class="grid-item">
+            <h2>Inset - iOS</h2>
             <ion-accordion-group mode="ios" expand="inset">
               <ion-accordion value="attractions">
                 <ion-item slot="header" button detail="false">
@@ -174,6 +195,7 @@
           </div>
 
           <div class="grid-item">
+            <h2>Inset, Color - MD</h2>
             <ion-accordion-group mode="md" expand="inset">
               <ion-accordion value="attractions">
                 <ion-item color="primary" slot="header" button detail="false">
@@ -249,6 +271,7 @@
           </div>
 
           <div class="grid-item">
+            <h2>Inset - MD</h2>
             <ion-accordion-group mode="md" expand="inset">
               <ion-accordion value="attractions">
                 <ion-item slot="header" button detail="false">
@@ -325,6 +348,7 @@
         </div>
         <div class="grid ion-padding">
           <div class="grid-item">
+            <h2>Compact, Color - iOS</h2>
             <ion-accordion-group mode="ios">
               <ion-accordion value="attractions">
                 <ion-item color="primary" slot="header" button detail="false">
@@ -400,6 +424,7 @@
           </div>
 
           <div class="grid-item">
+            <h2>Compact - iOS</h2>
             <ion-accordion-group mode="ios">
               <ion-accordion value="attractions">
                 <ion-item slot="header" button detail="false">
@@ -475,6 +500,7 @@
           </div>
 
           <div class="grid-item">
+            <h2>Compact, Color - MD</h2>
             <ion-accordion-group mode="md">
               <ion-accordion value="attractions">
                 <ion-item color="primary" slot="header" button detail="false">
@@ -550,6 +576,7 @@
           </div>
 
           <div class="grid-item">
+            <h2>Compact - MD</h2>
             <ion-accordion-group mode="md">
               <ion-accordion value="attractions">
                 <ion-item slot="header" button detail="false">
@@ -626,6 +653,7 @@
         </div>
         <div class="grid ion-padding">
           <div class="grid-item">
+            <h2>Multiple</h2>
             <ion-accordion-group expand="inset" mode="md" multiple="true">
               <ion-accordion value="attractions">
                 <ion-item slot="header" button detail="false">
