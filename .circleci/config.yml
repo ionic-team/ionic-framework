@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1.26.0
 
 aliases:
   - &restore-cache
@@ -447,14 +449,28 @@ jobs:
           command: npm run test:unit
           working_directory: /tmp/workspace/packages/vue/test-app
 
+  test-vue-e2e:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run start
+          working_directory: /tmp/workspace/packages/vue/test-app
+          background: true
+      - run:
+          command: npm run cypress
+          working_directory: /tmp/workspace/packages/vue/test-app
+
 workflows:
   version: 2
   build:
     jobs:
-      - puppeteer-dependencies
-      - build
-      - build-core:
-          requires: [build]
+      #liamtest- puppeteer-dependencies
+      #liamtest- build
+      #liamtest- build-core:
+      #liamtest    requires: [build]
       #liamtest- test-core-clean-build:
       #liamtest    requires: [build-core]
       #liamtest- test-core-lint:
@@ -508,6 +524,8 @@ workflows:
       - install-vue-test-app:
           requires: [build-vue, build-vue-router]
       - test-vue-spec:
+          requires: [install-vue-test-app]
+      - test-vue-e2e:
           requires: [install-vue-test-app]
       #liamtest- test-angular-lint:
       #liamtest    requires: [build-angular]
