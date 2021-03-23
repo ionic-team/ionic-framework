@@ -429,7 +429,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm install
+          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/vue/test-app npm install
           working_directory: /tmp/workspace/packages/vue/test-app
       - run:
           command: npm run sync
