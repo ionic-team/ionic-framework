@@ -460,7 +460,7 @@ jobs:
           working_directory: /tmp/workspace/packages/vue/test-app
           background: true
       - run:
-          command: npm run cypress
+          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/vue/test-app npm run cypress
           working_directory: /tmp/workspace/packages/vue/test-app
 
 workflows:
