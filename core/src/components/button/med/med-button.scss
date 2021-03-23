@@ -17,7 +17,7 @@
   --border-color-disabled: initial;
   --border-color-activated: initial;
   --border-color-focused: initial;
-  
+
   --color: #{$med-color-neutral-light-prime};
   --color-hover: #{$med-color-neutral-light-prime};
   --color-disable: #{$med-color-neutral-light-prime};
@@ -194,7 +194,7 @@
       border-color: var(--border-color-disabled);
       color: var(--color-disable);
     }
-  
+
     .button-native::before {
       background: var(--background-disabled);
       opacity: 1;
@@ -210,8 +210,8 @@
 
 // disabled
 :host([disabled]:not([disabled="false"])),
-:host([disabled].ion-activated:not([disabled="false"].ion-activated)),
-:host([disabled].ion-focused:not([disabled="false"].ion-focused)) {
+:host([disabled].ion-activated:not([disabled="false"])),
+:host([disabled].ion-focused:not([disabled="false"])) {
   cursor: default;
   pointer-events: none;
 
