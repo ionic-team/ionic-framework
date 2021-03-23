@@ -455,63 +455,63 @@ workflows:
       - build
       - build-core:
           requires: [build]
-      - test-core-clean-build:
-          requires: [build-core]
-      - test-core-lint:
-          requires: [build-core]
-      - test-core-e2e:
-          requires: [puppeteer-dependencies, build-core]
-      - test-core-spec:
-          requires: [build-core]
+      #liamtest- test-core-clean-build:
+      #liamtest    requires: [build-core]
+      #liamtest- test-core-lint:
+      #liamtest    requires: [build-core]
+      #liamtest- test-core-e2e:
+      #liamtest    requires: [puppeteer-dependencies, build-core]
+      #liamtest- test-core-spec:
+      #liamtest    requires: [build-core]
       # Adam requested we skip this test for now
       # since it is failing on ES5 code which
       # will be removed in Ionic Framework v6
       #- test-core-treeshake:
       #    requires: [build-core]
-      - test-core-screenshot:
-          requires: [build-core]
-          filters:
-            branches:
-              ignore: master
-      - test-core-screenshot-master:
-          requires: [build-core]
-          filters:
-            branches:
-              only: master
+      #liamtest- test-core-screenshot:
+      #liamtest    requires: [build-core]
+      #liamtest    filters:
+      #liamtest      branches:
+      #liamtest        ignore: master
+      #liamtest- test-core-screenshot-master:
+      #liamtest    requires: [build-core]
+      #liamtest    filters:
+      #liamtest      branches:
+      #liamtest        only: master
 
-      - build-angular:
-          requires: [build-core]
-      - build-angular-server:
-          requires: [build-angular]
-      - build-react:
-          requires: [build-core]
-      - build-react-router:
-          requires: [build-core, build-react]
-      - test-react-lint:
-          requires: [build-react]
-      - test-react-router-lint:
-          requires: [build-react-router]
-      - test-react-spec:
-          requires: [build-react]
-      - test-react-router-spec:
-          requires: [build-react-router]
+      #liamtest- build-angular:
+      #liamtest    requires: [build-core]
+      #liamtest- build-angular-server:
+      #liamtest    requires: [build-angular]
+      #liamtest- build-react:
+      #liamtest    requires: [build-core]
+      #liamtest- build-react-router:
+      #liamtest    requires: [build-core, build-react]
+      #liamtest- test-react-lint:
+      #liamtest    requires: [build-react]
+      #liamtest- test-react-router-lint:
+      #liamtest    requires: [build-react-router]
+      #liamtest- test-react-spec:
+      #liamtest    requires: [build-react]
+      #liamtest- test-react-router-spec:
+      #liamtest    requires: [build-react-router]
       - build-vue:
           requires: [build-core]
       - build-vue-router:
           requires: [build-core, build-vue]
-      - test-vue-lint:
-          requires: [build-vue]
-      - test-vue-router-lint:
-          requires: [build-vue-router]
+      #liamtest- test-vue-lint:
+      #liamtest    requires: [build-vue]
+      #liamtest- test-vue-router-lint:
+      #liamtest    requires: [build-vue-router]
       - test-vue-router-spec:
           requires: [build-vue-router]
       - install-vue-test-app:
           requires: [build-vue, build-vue-router]
       - test-vue-spec:
           requires: [install-vue-test-app]
-      - test-angular-lint:
-          requires: [build-angular]
-      - test-angular-e2e:
-          requires:
-            - build-angular
-            - build-angular-server
+      #liamtest- test-angular-lint:
+      #liamtest    requires: [build-angular]
+      #liamtest- test-angular-e2e:
+      #liamtest    requires:
+      #liamtest      - build-angular
+      #liamtest      - build-angular-server
