@@ -13,9 +13,6 @@ test('accordion: a11y', async () => {
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
-
-  const results = await new AxePuppeteer(page).analyze();
-  expect(results.violations.length).toEqual(0);
 });
 
 test('accordion: basic', async () => {
@@ -25,9 +22,6 @@ test('accordion: basic', async () => {
 
   const compare = await page.compareScreenshot();
   expect(compare).toMatchScreenshot();
-
-  const results = await new AxePuppeteer(page).analyze();
-  expect(results.violations.length).toEqual(0);
 });
 
 test('accordion:rtl: a11y', async () => {
@@ -58,4 +52,13 @@ test('accordion: keyboard navigation', async () => {
 
   await page.keyboard.press('ArrowUp');
   expect(await getActiveElementText(page)).toEqual('Shipping Address');
+});
+
+test('accordion: axe', async () => {
+  const page = await newE2EPage({
+    url: '/src/components/accordion/test/standalone?ionic:_testing=true'
+  });
+
+  const results = await new AxePuppeteer(page).analyze();
+  expect(results.violations.length).toEqual(0);
 });
