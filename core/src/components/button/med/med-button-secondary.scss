@@ -28,8 +28,8 @@
   --transition: background 300ms ease-out, color 300ms ease-out, border-color 300ms ease-out;
   --width: calc(100% - 4px);
 
-  --button-ripple-color: #{$med-color-brand-primary-medium};
-  --button-ripple-opacity: #{$med-opacity-level-light};
+  --button-ripple-color: transparent;
+  --button-ripple-opacity: 0;
 
   ion-ripple-effect {
     --ripple-color: var(--button-ripple-color);
