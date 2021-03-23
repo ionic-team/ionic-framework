@@ -438,10 +438,6 @@ jobs:
           root: /tmp/workspace
           paths:
             - "*"
-      - persist_to_workspace:
-          root: /home/circleci/.cache/Cypress
-          paths:
-            - "*"
 
   test-vue-spec:
     <<: *defaults
