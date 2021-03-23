@@ -433,9 +433,9 @@ jobs:
           command: npm run sync
           working_directory: /tmp/workspace/packages/vue/test-app
       - persist_to_workspace:
-        root: /tmp/workspace
-        paths:
-          - "*"
+          root: /tmp/workspace
+          paths:
+            - "*"
 
   test-vue-spec:
     <<: *defaults
