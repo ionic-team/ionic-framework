@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/ion-button/primary',
+  title: 'Components/ion-button/default',
   decorators: [withDesign],
 };
 
