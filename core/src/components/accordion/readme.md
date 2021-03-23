@@ -26,7 +26,7 @@ Regardless of which option you choose, the icon will automatically be rotated wh
 
 ### Built in Styles
 
-There are two built in expansion styles: `accordion` and `inset`. This expansion style is set via the `expand` property on `ion-accordion-group`. When `expand="inset"`, the accordion group is given a border radius. On `md` mode, the entire accordion will shift down when it is opened.
+There are two built in expansion styles: `compact` and `inset`. This expansion style is set via the `expand` property on `ion-accordion-group`. When `expand="inset"`, the accordion group is given a border radius. On `md` mode, the entire accordion will shift down when it is opened.
 
 ### Custom Styles
 
