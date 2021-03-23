@@ -17,12 +17,8 @@
 
   --fill: #{$med-color-neutral-light-prime};
 
-  --button-ripple-color: #{$med-color-neutral-dark-40};
-  --button-ripple-opacity: 1;
-
-  svg {
-    fill: var(--fill);
-  }
+  --button-ripple-color: transparent;
+  --button-ripple-opacity: 0;
 
   ion-ripple-effect {
     --ripple-color: var(--button-ripple-color);
