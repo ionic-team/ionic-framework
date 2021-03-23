@@ -420,6 +420,33 @@ jobs:
           command: npm run test -- --protractor-config=e2e/protractor-ci.conf.js
           working_directory: /tmp/workspace/angular/test/test-app
 
+  install-vue-test-app:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm install
+          working_directory: /tmp/workspace/packages/vue/test-app
+      - run:
+          command: npm run sync
+          working_directory: /tmp/workspace/packages/vue/test-app
+      - persist_to_workspace:
+        root: /tmp/workspace
+        paths:
+          - "*"
+
+  test-vue-spec:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run test:unit
+          working_directory: /tmp/workspace/packages/vue/test-app
+
 workflows:
   version: 2
   build:
@@ -478,6 +505,10 @@ workflows:
           requires: [build-vue-router]
       - test-vue-router-spec:
           requires: [build-vue-router]
+      - install-vue-test-app:
+          requires: [build-vue, build-vue-router]
+      - test-vue-spec:
+          requires: [install-vue-test-app]
       - test-angular-lint:
           requires: [build-angular]
       - test-angular-e2e:
