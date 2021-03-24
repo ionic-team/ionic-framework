@@ -199,7 +199,7 @@ jobs:
           command: npm run build
           working_directory: /tmp/workspace/packages/vue
       - persist_to_workspace:
-          root: /tmp/workspace/packages/vue
+          root: /tmp/workspace
           paths:
             - "*"
 
@@ -222,7 +222,7 @@ jobs:
           command: npm run build
           working_directory: /tmp/workspace/packages/vue-router
       - persist_to_workspace:
-          root: /tmp/workspace/packages/vue-router
+          root: /tmp/workspace
           paths:
             - "*"
 
@@ -432,7 +432,7 @@ jobs:
           command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/vue/test-app npm install
           working_directory: /tmp/workspace/packages/vue/test-app
       - persist_to_workspace:
-          root: /tmp/workspace/packages/vue/test-app
+          root: /tmp/workspace
           paths:
             - "*"
 
@@ -521,10 +521,11 @@ workflows:
       #liamtest- test-vue-router-spec:
       #liamtest    requires: [build-vue-router]
       - install-vue-test-app
+          requires: [build-vue, build-vue-router]
       #liamtest- test-vue-spec:
       #liamtest    requires: [install-vue-test-app, build-vue, build-vue-router]
       - test-vue-e2e:
-          requires: [install-vue-test-app, build-vue, build-vue-router]
+          requires: [install-vue-test-app]
       #liamtest- test-angular-lint:
       #liamtest    requires: [build-angular]
       #liamtest- test-angular-e2e:
