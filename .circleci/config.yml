@@ -5,28 +5,28 @@ orbs:
 aliases:
   - &restore-cache
       keys:
-        - dependency-cache-{{ checksum "package.json" }}-6
+        - dependency-cache-{{ checksum "package.json" }}-7
 
   - &save-cache
-      key: dependency-cache-{{ checksum "package.json" }}-6
+      key: dependency-cache-{{ checksum "package.json" }}-7
       paths:
         - node_modules
 
   - &restore-cache-core
       keys:
-        - dependency-cache-{{ checksum "core/package.json" }}-6
+        - dependency-cache-{{ checksum "core/package.json" }}-7
 
   - &save-cache-core
-      key: dependency-cache-{{ checksum "core/package.json" }}-6
+      key: dependency-cache-{{ checksum "core/package.json" }}-7
       paths:
         - core/node_modules
 
   - &restore-cache-core-stencil
       keys:
-        - stencil-cache-5
+        - stencil-cache-6
 
   - &save-cache-core-stencil
-      key: stencil-cache-5
+      key: stencil-cache-6
       paths:
         - core/.stencil
         - core/screenshot/images
@@ -513,19 +513,18 @@ workflows:
       - build-vue:
           requires: [build-core]
       - build-vue-router:
-          requires: [build-core, build-vue]
+          requires: [build-vue]
       #liamtest- test-vue-lint:
       #liamtest    requires: [build-vue]
       #liamtest- test-vue-router-lint:
       #liamtest    requires: [build-vue-router]
       #liamtest- test-vue-router-spec:
       #liamtest    requires: [build-vue-router]
-      - install-vue-test-app:
-          requires: [build-core]
+      - install-vue-test-app
       #liamtest- test-vue-spec:
-      #liamtest    requires: [install-vue-test-app]
+      #liamtest    requires: [install-vue-test-app, build-vue, build-vue-router]
       - test-vue-e2e:
-          requires: [install-vue-test-app]
+          requires: [install-vue-test-app, build-vue, build-vue-router]
       #liamtest- test-angular-lint:
       #liamtest    requires: [build-angular]
       #liamtest- test-angular-e2e:
