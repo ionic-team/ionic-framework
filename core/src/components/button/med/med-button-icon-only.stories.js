@@ -40,7 +40,7 @@ const TemplateDisabled = () => {
       </ion-content>
     </ion-app>
     `
-  }
+}
 
 export const Disabled = TemplateDisabled.bind({});
 Disabled.parameters = {
