@@ -5,28 +5,28 @@ orbs:
 aliases:
   - &restore-cache
       keys:
-        - dependency-cache-{{ checksum "package.json" }}-4
+        - dependency-cache-{{ checksum "package.json" }}-5
 
   - &save-cache
-      key: dependency-cache-{{ checksum "package.json" }}-4
+      key: dependency-cache-{{ checksum "package.json" }}-5
       paths:
         - node_modules
 
   - &restore-cache-core
       keys:
-        - dependency-cache-{{ checksum "core/package.json" }}-4
+        - dependency-cache-{{ checksum "core/package.json" }}-5
 
   - &save-cache-core
-      key: dependency-cache-{{ checksum "core/package.json" }}-4
+      key: dependency-cache-{{ checksum "core/package.json" }}-5
       paths:
         - core/node_modules
 
   - &restore-cache-core-stencil
       keys:
-        - stencil-cache-3
+        - stencil-cache-4
 
   - &save-cache-core-stencil
-      key: stencil-cache-3
+      key: stencil-cache-4
       paths:
         - core/.stencil
         - core/screenshot/images
@@ -77,7 +77,7 @@ jobs:
       - restore_cache: *restore-cache-core
       - restore_cache: *restore-cache-core-stencil
       - run:
-          command: npm install --legacy-peer-deps
+          command: npm install --legacy-peer-deps && more package.json
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core
       - run:
@@ -431,9 +431,6 @@ jobs:
       - run:
           command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/vue/test-app npm install
           working_directory: /tmp/workspace/packages/vue/test-app
-      - run:
-          command: npm run sync
-          working_directory: /tmp/workspace/packages/vue/test-app
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
@@ -446,6 +443,9 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
+          command: npm run sync
+          working_directory: /tmp/workspace/packages/vue/test-app
+      - run:
           command: npm run test:unit
           working_directory: /tmp/workspace/packages/vue/test-app
 
@@ -455,6 +455,9 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
+      - run:
+          command: npm run sync
+          working_directory: /tmp/workspace/packages/vue/test-app
       - run:
           command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/vue/test-app npm run test:e2e
           working_directory: /tmp/workspace/packages/vue/test-app
@@ -510,7 +513,7 @@ workflows:
       - build-vue:
           requires: [build-core]
       - build-vue-router:
-          requires: [build-core, build-vue]
+          requires: [build-core]
       #liamtest- test-vue-lint:
       #liamtest    requires: [build-vue]
       #liamtest- test-vue-router-lint:
@@ -518,7 +521,7 @@ workflows:
       #liamtest- test-vue-router-spec:
       #liamtest    requires: [build-vue-router]
       - install-vue-test-app:
-          requires: [build-vue, build-vue-router]
+          requires: [build-core]
       #liamtest- test-vue-spec:
       #liamtest    requires: [install-vue-test-app]
       - test-vue-e2e:
