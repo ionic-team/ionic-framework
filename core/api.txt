@@ -1,4 +1,24 @@
 
+ion-accordion,shadow
+ion-accordion,prop,disabled,boolean,false,false,false
+ion-accordion,prop,mode,"ios" | "md",undefined,false,false
+ion-accordion,prop,readonly,boolean,false,false,false
+ion-accordion,prop,toggleIcon,string,'chevron-down',false,false
+ion-accordion,prop,toggleIconSlot,"end" | "start",'end',false,false
+ion-accordion,prop,value,string,`ion-accordion-${accordionIds++}`,false,false
+ion-accordion,part,content
+ion-accordion,part,expanded
+ion-accordion,part,header
+
+ion-accordion-group,shadow
+ion-accordion-group,prop,disabled,boolean,false,false,false
+ion-accordion-group,prop,expand,"compact" | "inset",'compact',false,false
+ion-accordion-group,prop,mode,"ios" | "md",undefined,false,false
+ion-accordion-group,prop,multiple,boolean | undefined,undefined,false,false
+ion-accordion-group,prop,readonly,boolean,false,false,false
+ion-accordion-group,prop,value,null | string | string[] | undefined,undefined,false,false
+ion-accordion-group,event,ionChange,AccordionGroupChangeEventDetail<any>,true
+
 ion-action-sheet,scoped
 ion-action-sheet,prop,animated,boolean,true,false,false
 ion-action-sheet,prop,backdropDismiss,boolean,true,false,false
