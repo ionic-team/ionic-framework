@@ -201,7 +201,9 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - packages/vue
+            - packages/vue/node_modules
+            - packages/vue/dist
+            - packages/vue/css
 
   build-vue-router:
     <<: *defaults
