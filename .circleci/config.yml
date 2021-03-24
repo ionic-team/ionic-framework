@@ -5,19 +5,19 @@ orbs:
 aliases:
   - &restore-cache
       keys:
-        - dependency-cache-{{ checksum "package.json" }}-3
+        - dependency-cache-{{ checksum "package.json" }}-4
 
   - &save-cache
-      key: dependency-cache-{{ checksum "package.json" }}-3
+      key: dependency-cache-{{ checksum "package.json" }}-4
       paths:
         - node_modules
 
   - &restore-cache-core
       keys:
-        - dependency-cache-{{ checksum "core/package.json" }}-3
+        - dependency-cache-{{ checksum "core/package.json" }}-4
 
   - &save-cache-core
-      key: dependency-cache-{{ checksum "core/package.json" }}-3
+      key: dependency-cache-{{ checksum "core/package.json" }}-4
       paths:
         - core/node_modules
 
