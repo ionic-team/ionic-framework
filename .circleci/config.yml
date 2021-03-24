@@ -199,10 +199,10 @@ jobs:
           command: npm run build
           working_directory: /tmp/workspace/packages/vue
       - persist_to_workspace:
-          root: /tmp/workspace/packages/vue
+          root: /tmp/workspace
           paths:
-            - node_modules
-            - dist
+            - packages/vue/node_modules
+            - packages/vue/dist
 
   build-vue-router:
     <<: *defaults
@@ -223,10 +223,10 @@ jobs:
           command: npm run build
           working_directory: /tmp/workspace/packages/vue-router
       - persist_to_workspace:
-          root: /tmp/workspace/packages/vue-router
+          root: /tmp/workspace
           paths:
-            - node_modules
-            - dist
+            - packages/vue-router/node_modules
+            - packages/vue-router/dist
 
   test-core-clean-build:
     <<: *defaults
@@ -434,9 +434,9 @@ jobs:
           command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/vue/test-app npm install
           working_directory: /tmp/workspace/packages/vue/test-app
       - persist_to_workspace:
-          root: /tmp/workspace/packages/vue/test-app
+          root: /tmp/workspace
           paths:
-            - node_modules
+            - packages/vue/test-app/node_modules
 
   test-vue-spec:
     <<: *defaults
