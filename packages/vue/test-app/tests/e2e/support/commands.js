@@ -25,18 +25,17 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('ionSwipeToGoBack', (complete = false, selector = 'ion-router-outlet') => {
-  const increment = (complete) ? 60 : 25;
+  const increment = (complete) ? 60 : 5;
   cy.get(selector)
     .first()
     .trigger('mousedown', 0, 275, { which: 1, force: true })
     .trigger('mousemove', increment * 1, 275, { which: 1, force: true })
-    .wait(50)
+    .wait(25)
     .trigger('mousemove', increment * 2, 275, { which: 1, force: true })
-    .wait(50)
+    .wait(25)
     .trigger('mousemove', increment * 3, 275, { which: 1, force: true })
-    .wait(50)
+    .wait(25)
     .trigger('mousemove', increment * 4, 275, { which: 1, force: true })
-    .wait(50)
     .trigger('mouseup', increment * 4, 275, { which: 1, force: true })
   cy.wait(150);
 })
