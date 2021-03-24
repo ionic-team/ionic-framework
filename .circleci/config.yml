@@ -436,7 +436,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - packages/vue/test-app/node_modules
+            - packages/vue/test-app/
 
   test-vue-spec:
     <<: *defaults
