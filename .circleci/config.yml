@@ -203,6 +203,7 @@ jobs:
           paths:
             - packages/vue/node_modules
             - packages/vue/dist
+            - packages/vue/css
 
   build-vue-router:
     <<: *defaults
