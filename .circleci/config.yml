@@ -521,11 +521,11 @@ workflows:
       #liamtest- test-vue-router-spec:
       #liamtest    requires: [build-vue-router]
       - install-vue-test-app:
-          requires: [build-vue, build-vue-router]
-      #liamtest- test-vue-spec:
-      #liamtest    requires: [install-vue-test-app, build-vue, build-vue-router]
+          requires: [build-core]
+      - test-vue-spec:
+          requires: [install-vue-test-app, build-vue, build-vue-router]
       - test-vue-e2e:
-          requires: [install-vue-test-app]
+          requires: [install-vue-test-app, build-vue, build-vue-router]
       #liamtest- test-angular-lint:
       #liamtest    requires: [build-angular]
       #liamtest- test-angular-e2e:
