@@ -5,28 +5,28 @@ orbs:
 aliases:
   - &restore-cache
       keys:
-        - dependency-cache-{{ checksum "package.json" }}-5
+        - dependency-cache-{{ checksum "package.json" }}-6
 
   - &save-cache
-      key: dependency-cache-{{ checksum "package.json" }}-5
+      key: dependency-cache-{{ checksum "package.json" }}-6
       paths:
         - node_modules
 
   - &restore-cache-core
       keys:
-        - dependency-cache-{{ checksum "core/package.json" }}-5
+        - dependency-cache-{{ checksum "core/package.json" }}-6
 
   - &save-cache-core
-      key: dependency-cache-{{ checksum "core/package.json" }}-5
+      key: dependency-cache-{{ checksum "core/package.json" }}-6
       paths:
         - core/node_modules
 
   - &restore-cache-core-stencil
       keys:
-        - stencil-cache-4
+        - stencil-cache-5
 
   - &save-cache-core-stencil
-      key: stencil-cache-4
+      key: stencil-cache-5
       paths:
         - core/.stencil
         - core/screenshot/images
@@ -77,7 +77,7 @@ jobs:
       - restore_cache: *restore-cache-core
       - restore_cache: *restore-cache-core-stencil
       - run:
-          command: npm install --legacy-peer-deps && cat package.json
+          command: npm install --legacy-peer-deps
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core
       - run:
@@ -513,7 +513,7 @@ workflows:
       - build-vue:
           requires: [build-core]
       - build-vue-router:
-          requires: [build-core]
+          requires: [build-core, build-vue]
       #liamtest- test-vue-lint:
       #liamtest    requires: [build-vue]
       #liamtest- test-vue-router-lint:
