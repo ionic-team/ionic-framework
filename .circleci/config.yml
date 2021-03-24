@@ -23,10 +23,10 @@ aliases:
 
   - &restore-cache-core-stencil
       keys:
-        - stencil-cache-2
+        - stencil-cache-3
 
   - &save-cache-core-stencil
-      key: stencil-cache-2
+      key: stencil-cache-3
       paths:
         - core/.stencil
         - core/screenshot/images
@@ -455,10 +455,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - run:
-          command: npm run serve
-          working_directory: /tmp/workspace/packages/vue/test-app
-          background: true
       - run:
           command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/vue/test-app npm run test:e2e
           working_directory: /tmp/workspace/packages/vue/test-app
