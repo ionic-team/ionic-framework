@@ -1226,7 +1226,7 @@ export namespace Components {
          */
         "close": (animated?: boolean) => Promise<boolean>;
         /**
-          * The content's id the menu should use.
+          * The `id` of the main content. When using a router this is typically `ion-router-outlet`. When not using a router, this is typically your main view's `ion-content`. This is not the id of the `ion-content` inside of your `ion-menu`.
          */
         "contentId"?: string;
         /**
@@ -2304,7 +2304,7 @@ export namespace Components {
     }
     interface IonSplitPane {
         /**
-          * The content `id` of the split-pane's main content.
+          * The `id` of the main content. When using a router this is typically `ion-router-outlet`. When not using a router, this is typically your main view's `ion-content`. This is not the id of the `ion-content` inside of your `ion-menu`.
          */
         "contentId"?: string;
         /**
@@ -4578,7 +4578,7 @@ declare namespace LocalJSX {
     }
     interface IonMenu {
         /**
-          * The content's id the menu should use.
+          * The `id` of the main content. When using a router this is typically `ion-router-outlet`. When not using a router, this is typically your main view's `ion-content`. This is not the id of the `ion-content` inside of your `ion-menu`.
          */
         "contentId"?: string;
         /**
@@ -5635,7 +5635,7 @@ declare namespace LocalJSX {
     }
     interface IonSplitPane {
         /**
-          * The content `id` of the split-pane's main content.
+          * The `id` of the main content. When using a router this is typically `ion-router-outlet`. When not using a router, this is typically your main view's `ion-content`. This is not the id of the `ion-content` inside of your `ion-menu`.
          */
         "contentId"?: string;
         /**
