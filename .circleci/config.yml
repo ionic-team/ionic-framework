@@ -77,7 +77,7 @@ jobs:
       - restore_cache: *restore-cache-core
       - restore_cache: *restore-cache-core-stencil
       - run:
-          command: npm install --legacy-peer-deps && more package.json
+          command: npm install --legacy-peer-deps && cat package.json
           working_directory: /tmp/workspace/core
       - save_cache: *save-cache-core
       - run:
