@@ -1,5 +1,3 @@
-const { hasUncaughtExceptionCaptureCallback } = require("process");
-
 describe('Slides', () => {
   beforeEach(() => {
     cy.visit('/slides');

@@ -1,5 +1,3 @@
-const { hasUncaughtExceptionCaptureCallback } = require("process");
-
 describe('Router Link', () => {
   beforeEach(() => {
     cy.visit('/router-link');
