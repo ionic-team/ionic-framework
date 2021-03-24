@@ -201,9 +201,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - packages/vue/node_modules
-            - packages/vue/dist
-            - packages/vue/css
+            - packages/vue
 
   build-vue-router:
     <<: *defaults
@@ -226,8 +224,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - packages/vue-router/node_modules
-            - packages/vue-router/dist
+            - packages/vue-router
 
   test-core-clean-build:
     <<: *defaults
@@ -437,7 +434,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - packages/vue/test-app/
+            - packages/vue/test-app
 
   test-vue-spec:
     <<: *defaults
