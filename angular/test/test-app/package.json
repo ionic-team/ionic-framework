@@ -8,9 +8,6 @@
     "sync:build": "sh scripts/build-ionic.sh",
     "sync": "sh scripts/sync.sh",
     "build": "npm run sync && ng build --prod --no-progress",
-    "pretest": "webdriver-manager update --versions.chrome 89.0.4389.23",
-    "test": "ng e2e --prod --webdriver-update=false",
-    "test.dev": "npm run sync && ng e2e",
     "lint": "ng lint",
     "postinstall": "npm run sync && ngcc",
     "serve:ssr": "node dist/test-app/server/main.js",
@@ -19,8 +16,8 @@
     "prerender": "ng run test-app:prerender",
     "cy.open": "cypress open",
     "cy.run": "cypress run",
-    "e2e": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy.run\" --kill-others --success first",
-    "e2e.watch": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy.open\" --kill-others --success first"
+    "test": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy.run\" --kill-others --success first",
+    "test.watch": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy.open\" --kill-others --success first"
   },
   "dependencies": {
     "@angular/animations": "^9.1.12",
