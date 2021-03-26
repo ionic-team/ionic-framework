@@ -16,7 +16,7 @@ describe('Tabs', () => {
 
       cy.get('#tab-button-contact').click();
       tab = testTabTitle('Tab 2 - Page 1');
-      tab.find('.segment-changed').should('have.text', 'false');
+      tab.find('.segment-changed').should('have.text', 'true');
     });
 
     it('should simulate stack + double tab click', () => {
