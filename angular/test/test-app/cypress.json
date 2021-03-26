@@ -3,5 +3,6 @@
   "testFiles": "**/*.spec.js",
   "baseUrl": "http://localhost:4200/",
   "ignoreTestFiles": "**/examples/*",
-  "video": false
+  "video": false,
+  "screenshotOnRunFailure": false
 }
