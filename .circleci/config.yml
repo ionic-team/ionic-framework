@@ -87,6 +87,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
+            - core/node_modules
             - core/dist
             - core/components
             - core/css
