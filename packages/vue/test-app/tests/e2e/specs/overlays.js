@@ -1,5 +1,6 @@
 describe('Overlays', () => {
   beforeEach(() => {
+    cy.viewport(1000, 900);
     cy.visit('http://localhost:8080/overlays')
   })
 
@@ -7,7 +8,6 @@ describe('Overlays', () => {
 
   for (let overlay of overlays) {
     it(`should open and close ${overlay} via controller`, () => {
-      console.log(overlay)
       cy.get(`ion-radio#${overlay}`).click();
       cy.get('ion-radio#controller').click();
 
@@ -34,7 +34,6 @@ describe('Overlays', () => {
 
   for (let overlay of overlays) {
     it(`should open and close ${overlay} via component`, () => {
-      console.log(overlay)
       cy.get(`ion-radio#${overlay}`).click();
       cy.get('ion-radio#component').click();
 
@@ -104,4 +103,55 @@ describe('Overlays', () => {
 
     cy.get('ion-loading').should('have.length', 1);
   });
+
+  it('should fire lifecycle events on overlays', () => {
+    cy.get('ion-radio#ion-modal').click();
+    cy.get('ion-radio#component').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 0,
+      didDismiss: 0
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLifecycle('overlays', {
+      willPresent: 1,
+      didPresent: 1,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    testLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 1,
+      didDismiss: 1
+    });
+
+    cy.get('ion-modal #dismiss').click();
+
+    testLifecycle('overlays', {
+      willPresent: 2,
+      didPresent: 2,
+      willDismiss: 2,
+      didDismiss: 2
+    });
+  });
 })
+
+const testLifecycle = (selector, expected = {}) => {
+  cy.get(`[data-pageid=${selector}] #willPresent`).should('have.text', expected.willPresent);
+  cy.get(`[data-pageid=${selector}] #didPresent`).should('have.text', expected.didPresent);
+  cy.get(`[data-pageid=${selector}] #willDismiss`).should('have.text', expected.willDismiss);
+  cy.get(`[data-pageid=${selector}] #didDismiss`).should('have.text', expected.didDismiss);
+}
+
