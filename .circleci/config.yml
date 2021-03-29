@@ -187,6 +187,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
+            - packages/react-router/node_modules
             - packages/react-router/dist
 
   build-vue:
