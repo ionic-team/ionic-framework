@@ -228,9 +228,9 @@ export class Input implements ComponentInterface {
    * Update the native input element when the value changes
    */
   @Watch('value')
-  protected valueChanged() {
+  protected valueChanged(value = this.value) {
     this.emitStyle();
-    this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
+    this.ionChange.emit({ value: value == null ? value : value.toString() });
   }
 
   componentWillLoad() {
@@ -436,6 +436,7 @@ export class Input implements ComponentInterface {
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onKeyDown={this.onKeydown}
+          onChange={(ev) => valueChanged(ev.target.value)}
           {...this.inheritedAttributes}
         />
         {(this.clearInput && !this.readonly && !this.disabled) && <button
