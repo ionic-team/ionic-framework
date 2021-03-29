@@ -1,30 +1,32 @@
 version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1.27.0
 
 aliases:
   - &restore-cache
       keys:
-        - dependency-cache-{{ checksum "package.json" }}-3
+        - dependency-cache-{{ checksum "package.json" }}-7
 
   - &save-cache
-      key: dependency-cache-{{ checksum "package.json" }}-3
+      key: dependency-cache-{{ checksum "package.json" }}-7
       paths:
         - node_modules
 
   - &restore-cache-core
       keys:
-        - dependency-cache-{{ checksum "core/package.json" }}-3
+        - dependency-cache-{{ checksum "core/package.json" }}-7
 
   - &save-cache-core
-      key: dependency-cache-{{ checksum "core/package.json" }}-3
+      key: dependency-cache-{{ checksum "core/package.json" }}-7
       paths:
         - core/node_modules
 
   - &restore-cache-core-stencil
       keys:
-        - stencil-cache-2
+        - stencil-cache-6
 
   - &save-cache-core-stencil
-      key: stencil-cache-2
+      key: stencil-cache-6
       paths:
         - core/.stencil
         - core/screenshot/images
@@ -64,7 +66,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - "*"
+            - node_modules
 
   build-core:
     <<: *defaults
@@ -85,7 +87,12 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - "*"
+            - core/node_modules
+            - core/dist
+            - core/components
+            - core/css
+            - core/hydrate
+            - core/loader
 
   build-angular:
     <<: *defaults
@@ -108,7 +115,8 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - "*"
+            - angular/node_modules
+            - angular/dist
 
   build-angular-server:
     <<: *defaults
@@ -125,7 +133,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - "*"
+            - packages/angular-server/dist
 
   build-react:
     <<: *defaults
@@ -148,7 +156,10 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - "*"
+            - packages/react/node_modules
+            - packages/react/dist
+            - packages/react/css
+
   build-react-router:
     <<: *defaults
     steps:
@@ -176,7 +187,8 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - "*"
+            - packages/react-router/node_modules
+            - packages/react-router/dist
 
   build-vue:
     <<: *defaults
@@ -199,7 +211,9 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - "*"
+            - packages/vue/node_modules
+            - packages/vue/dist
+            - packages/vue/css
 
   build-vue-router:
     <<: *defaults
@@ -222,7 +236,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - "*"
+            - packages/vue-router/dist
 
   test-core-clean-build:
     <<: *defaults
@@ -420,6 +434,46 @@ jobs:
           command: npm run test -- --protractor-config=e2e/protractor-ci.conf.js
           working_directory: /tmp/workspace/angular/test/test-app
 
+  install-vue-test-app:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/vue/test-app npm install
+          working_directory: /tmp/workspace/packages/vue/test-app
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - packages/vue/test-app
+
+  test-vue-spec:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run sync
+          working_directory: /tmp/workspace/packages/vue/test-app
+      - run:
+          command: npm run test:unit
+          working_directory: /tmp/workspace/packages/vue/test-app
+
+  test-vue-e2e:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run sync
+          working_directory: /tmp/workspace/packages/vue/test-app
+      - run:
+          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/vue/test-app npm run test:e2e
+          working_directory: /tmp/workspace/packages/vue/test-app
+
 workflows:
   version: 2
   build:
@@ -471,13 +525,19 @@ workflows:
       - build-vue:
           requires: [build-core]
       - build-vue-router:
-          requires: [build-core, build-vue]
+          requires: [build-vue]
       - test-vue-lint:
           requires: [build-vue]
       - test-vue-router-lint:
           requires: [build-vue-router]
       - test-vue-router-spec:
           requires: [build-vue-router]
+      - install-vue-test-app:
+          requires: [build-core]
+      - test-vue-spec:
+          requires: [install-vue-test-app, build-vue, build-vue-router]
+      - test-vue-e2e:
+          requires: [install-vue-test-app, build-vue, build-vue-router]
       - test-angular-lint:
           requires: [build-angular]
       - test-angular-e2e:
