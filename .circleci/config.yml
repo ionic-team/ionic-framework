@@ -66,7 +66,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - "*"
+            - node_modules
 
   build-core:
     <<: *defaults
@@ -87,7 +87,11 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - "*"
+            - core/dist
+            - core/components
+            - core/css
+            - core/hydrate
+            - core/loader
 
   build-angular:
     <<: *defaults
@@ -150,6 +154,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
+            - packages/react/node_modules
             - packages/react/dist
             - packages/react/css
 
@@ -203,6 +208,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
+            - packages/vue/node_modules
             - packages/vue/dist
             - packages/vue/css
 
