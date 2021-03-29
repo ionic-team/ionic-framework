@@ -35,8 +35,8 @@ Cypress.Commands.add('ionSwipeToGoBack', (complete = false, selector = 'ion-rout
     .wait(25)
     .trigger('mousemove', increment * 3, 275, { which: 1, force: true })
     .wait(25)
-    .trigger('mousemove', increment * 4, 275, { which: 1, force: true })
-    .trigger('mouseup', increment * 4, 275, { which: 1, force: true })
+    .trigger('mousemove', (complete) ? increment * 4 : increment * 0, 275, { which: 1, force: true })
+    .trigger('mouseup', (complete) ? increment * 4 : increment * 0, 275, { which: 1, force: true })
   cy.wait(150);
 })
 
