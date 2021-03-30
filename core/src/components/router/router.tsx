@@ -64,9 +64,8 @@ export class Router implements ComponentInterface {
       if (typeof canProceed === 'object') {
         const { redirect } = canProceed;
         const path = parsePath(redirect);
-        const queryString = redirect.substring(redirect.indexOf('?') + 1);
-        this.setPath(path, ROUTER_INTENT_NONE, queryString);
-        await this.writeNavStateRoot(path, ROUTER_INTENT_NONE);
+        this.setPath(path.segments, ROUTER_INTENT_NONE, path.queryString);
+        await this.writeNavStateRoot(path.segments, ROUTER_INTENT_NONE);
       }
     } else {
       await this.onRoutesChanged();
@@ -81,17 +80,17 @@ export class Router implements ComponentInterface {
   @Listen('popstate', { target: 'window' })
   protected async onPopState() {
     const direction = this.historyDirection();
-    let path = this.getPath();
+    let segments = this.getPath();
 
-    const canProceed = await this.runGuards(path);
+    const canProceed = await this.runGuards(segments);
     if (canProceed !== true) {
       if (typeof canProceed === 'object') {
-        path = parsePath(canProceed.redirect);
+        segments = parsePath(canProceed.redirect).segments;
       } else {
         return false;
       }
     }
-    return this.writeNavStateRoot(path, direction);
+    return this.writeNavStateRoot(segments, direction);
   }
 
   @Listen('ionBackButton', { target: 'document' })
@@ -129,21 +128,19 @@ export class Router implements ComponentInterface {
       url = (new URL(url, window.location.href)).pathname;
     }
 
-    let path = parsePath(url);
-    let queryString = url.split('?')[1];
+    let parsedPath = parsePath(url);
 
-    const canProceed = await this.runGuards(path);
+    const canProceed = await this.runGuards(parsedPath.segments);
     if (canProceed !== true) {
       if (typeof canProceed === 'object') {
-        path = parsePath(canProceed.redirect);
-        queryString = canProceed.redirect.split('?')[1];
+        parsedPath = parsePath(canProceed.redirect)
       } else {
         return false;
       }
     }
 
-    this.setPath(path, direction, queryString);
-    return this.writeNavStateRoot(path, direction, animation);
+    this.setPath(parsedPath.segments, direction, parsedPath.queryString);
+    return this.writeNavStateRoot(parsedPath.segments, direction, animation);
   }
 
   /**
@@ -282,7 +279,11 @@ export class Router implements ComponentInterface {
   //
   // When the beforeLeave hook does not return true (to allow navigating) then that value is returned early and the beforeEnter is executed.
   // Otherwise the beforeEnterHook hook of the target route is executed.
-  private async runGuards(to: string[] | null = this.getPath(), from: string[] | null = parsePath(this.previousPath)) {
+  private async runGuards(to: string[] | null = this.getPath(), from?: string[] | null) {
+    if (from === undefined) {
+      from = parsePath(this.previousPath).segments;
+    }
+
     if (!to || !from) { return true; }
 
     const routes = readRoutes(this.el);
