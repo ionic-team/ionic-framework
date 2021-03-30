@@ -57,9 +57,7 @@ export class Router implements ComponentInterface {
   @Event() ionRouteDidChange!: EventEmitter<RouterEventDetail>;
 
   async componentWillLoad() {
-    console.debug('[ion-router] router will load');
     await waitUntilNavNode();
-    console.debug('[ion-router] found nav');
 
     const canProceed = await this.runGuards(this.getPath());
     if (canProceed !== true) {
@@ -92,7 +90,6 @@ export class Router implements ComponentInterface {
       }
       return false;
     }
-    console.debug('[ion-router] URL changed -> update nav', path, direction);
     return this.writeNavStateRoot(path, direction);
   }
 
@@ -130,7 +127,6 @@ export class Router implements ComponentInterface {
     if (url.startsWith('.')) {
       url = (new URL(url, window.location.href)).pathname;
     }
-    console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
     let path = parsePath(url);
     let queryString = url.split('?')[1];
@@ -161,8 +157,6 @@ export class Router implements ComponentInterface {
   /** @internal */
   @Method()
   async printDebug() {
-    console.debug('CURRENT PATH', this.getPath());
-    console.debug('PREVIOUS PATH', this.previousPath);
     printRoutes(readRoutes(this.el));
     printRedirects(readRedirects(this.el));
   }
@@ -188,7 +182,6 @@ export class Router implements ComponentInterface {
       return false;
     }
 
-    console.debug('[ion-router] nav changed -> update URL', ids, path);
     this.setPath(path, direction);
 
     await this.safeWriteNavState(outlet, chain, ROUTER_INTENT_NONE, path, null, ids.length);
@@ -322,10 +315,6 @@ export class Router implements ComponentInterface {
 
     const changed = await writeNavState(node, chain, direction, index, false, animation);
     this.busy = false;
-
-    if (changed) {
-      console.debug('[ion-router] route changed', path);
-    }
 
     // emit did change
     if (routeEvent) {
