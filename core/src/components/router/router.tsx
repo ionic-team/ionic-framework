@@ -40,7 +40,7 @@ export class Router implements ComponentInterface {
    * Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might
    * requires additional server-side configuration in order to properly work.
    *
-   * On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.
+   * On the other side hash-navigation is much easier to deploy, it even works over the file protocol.
    *
    * By default, this property is `true`, change to `false` to allow hash-less URLs.
    */
@@ -276,24 +276,26 @@ export class Router implements ComponentInterface {
     }
     return resolve;
   }
+
+  // Executes the beforeLeave hook of the source route and the beforeEnter hook of the target route if they exist.
+  //
+  // When the beforeLeave hook does not return true (to allow navigating) then that value is returned early and the beforeEnter is executed.
+  // Otherwise the beforeEnterHook hook of the target route is executed.
   private async runGuards(to: string[] | null = this.getPath(), from: string[] | null = parsePath(this.previousPath)) {
     if (!to || !from) { return true; }
 
     const routes = readRoutes(this.el);
 
-    const toChain = routerPathToChain(to, routes);
     const fromChain = routerPathToChain(from, routes);
-
-    const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
     const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
 
     const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
     if (canLeave === false || typeof canLeave === 'object') { return canLeave; }
 
-    const canEnter = beforeEnterHook ? await beforeEnterHook() : true;
-    if (canEnter === false || typeof canEnter === 'object') { return canEnter; }
+    const toChain = routerPathToChain(to, routes);
+    const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
 
-    return true;
+    return beforeEnterHook ? beforeEnterHook() : true;
   }
 
   private async writeNavState(
