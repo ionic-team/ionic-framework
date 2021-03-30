@@ -7,8 +7,8 @@ export const readRedirects = (root: Element): RouteRedirect[] => {
     .map(el => {
       const to = readProp(el, 'to');
       return {
-        from: parsePath(readProp(el, 'from')),
-        to: to == null ? undefined : parsePath(to),
+        from: parsePath(readProp(el, 'from')).segments,
+        to: to == null ? undefined : parsePath(to).segments,
       };
     });
 };
@@ -26,7 +26,7 @@ export const readRouteNodes = (root: Element, node = root): RouteTree => {
         throw new Error('component missing in ion-route');
       }
       return {
-        path: parsePath(readProp(el, 'url')),
+        path: parsePath(readProp(el, 'url')).segments,
         id: component.toLowerCase(),
         params: el.componentProps,
         beforeLeave: el.beforeLeave,

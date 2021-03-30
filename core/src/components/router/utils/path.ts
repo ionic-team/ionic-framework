@@ -30,7 +30,7 @@ export const chainToPath = (chain: RouteChain): string[] | null => {
 
 export const writePath = (history: History, root: string, useHash: boolean, path: string[], direction: RouterDirection, state: number, queryString?: string) => {
   let url = generatePath([
-    ...parsePath(root),
+    ...parsePath(root).segments,
     ...path
   ]);
   if (useHash) {
@@ -73,23 +73,33 @@ export const readPath = (loc: Location, root: string, useHash: boolean): string[
       : '';
   }
 
-  const prefix = parsePath(root);
-  const path = parsePath(pathname);
+  const prefix = parsePath(root).segments;
+  const path = parsePath(pathname).segments;
   return removePrefix(prefix, path);
 };
 
-export const parsePath = (path: string | undefined | null): string[] => {
-  if (path == null) {
-    return [''];
-  }
-  const removeQueryString = path.split('?')[0];
-  const segments = removeQueryString.split('/')
-    .map(s => s.trim())
-    .filter(s => s.length > 0);
+// Parses the path to:
+// - segments an array of '/' separated parts,
+// - queryString (undefined when no query string).
+export const parsePath = (path: string | undefined | null): {segments: string[], queryString?: string} => {
+  let segments = [''];
+  let queryString;
 
-  if (segments.length === 0) {
-    return [''];
-  } else {
-    return segments;
+  if (path != null) {
+    const qsStart = path.indexOf('?');
+    if (qsStart > -1) {
+      queryString = path.substr(qsStart + 1);
+      path = path.substr(0, qsStart);
+    }
+
+    segments = path.split('/')
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+
+    if (segments.length === 0) {
+      segments = [''];
+    }
   }
+
+  return { segments, queryString };
 };
