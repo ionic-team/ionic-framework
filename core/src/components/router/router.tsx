@@ -87,8 +87,9 @@ export class Router implements ComponentInterface {
     if (canProceed !== true) {
       if (typeof canProceed === 'object') {
         path = parsePath(canProceed.redirect);
+      } else {
+        return false;
       }
-      return false;
     }
     return this.writeNavStateRoot(path, direction);
   }
