@@ -88,7 +88,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       const prevInfo = locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
         incomingRouteParams = { ...prevInfo, routerAction: 'pop', routerDirection: 'back', routerAnimation: routerAnimation || routeInfo.routerAnimation };
-        if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
+        if (routeInfo.lastPathname === routeInfo.pushedByRoute || prevInfo.pathname === routeInfo.pushedByRoute) {
           router.back();
         } else {
           router.replace({ path: prevInfo.pathname, query: parseQuery(prevInfo.search) });
@@ -252,7 +252,9 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     }
   }
 
-  const changeTab = (tab: string, path: string) => {
+  const changeTab = (tab: string, path?: string) => {
+    if (!path) return;
+
     const routeInfo = locationHistory.getCurrentRouteInfoForTab(tab);
     const [pathname] = path.split('?');
 

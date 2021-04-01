@@ -10,7 +10,6 @@ const rootDir = path.join(__dirname, '../');
 
 const packages = [
   'core',
-  'core/components',
   'docs',
   'angular',
   'packages/react',

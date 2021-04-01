@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page data-pageid="overlays">
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons>
@@ -62,7 +62,16 @@
 
       <br />
 
-      <ion-button expand="block" @click="present($event)" id="present-overlay">Present Overlay</ion-button>
+      <ion-button @click="present($event)" id="present-overlay">Present Overlay</ion-button>
+
+      <ion-button @click="changeLoadingProps()" id="change-loading-props">Quickly Change Loading Props</ion-button>
+
+      <br /><br />
+
+      Modal onWillPresent: <div id="willPresent">{{ willPresent }}</div><br />
+      Modal onDidPresent: <div id="didPresent">{{ didPresent }}</div><br />
+      Modal onWillDismiss: <div id="willDismiss">{{ willDismiss }}</div><br />
+      Modal onDidDismiss: <div id="didDismiss">{{ didDismiss }}</div><br />
 
       <ion-action-sheet
         :is-open="isActionSheetOpen"
@@ -91,7 +100,10 @@
       <ion-modal
         :is-open="isModalOpen"
         :componentProps="overlayProps"
-        @onDidDismiss="setModalRef(false)"
+        @onWillPresent="onModalWillPresent"
+        @onDidPresent="onModalDidPresent"
+        @onWillDismiss="onModalWillDismiss"
+        @onDidDismiss="onModalDidDismiss"
       >
         <ModalContent></ModalContent>
       </ion-modal>
@@ -314,7 +326,36 @@ export default defineComponent({
       }
     }
 
+    const changeLoadingProps = () => {
+      setLoadingRef(true);
+      setTimeout(() => {
+        setLoadingRef(false);
+        setTimeout(() => {
+          setLoadingRef(true);
+        }, 10);
+      }, 10);
+    }
+
+    const willPresent = ref(0);
+    const didPresent = ref(0);
+    const willDismiss = ref(0);
+    const didDismiss = ref(0);
+
+    const onModalWillPresent = () => willPresent.value += 1;
+    const onModalDidPresent = () => { didPresent.value += 1; setModalRef(true); }
+    const onModalWillDismiss = () => willDismiss.value += 1;
+    const onModalDidDismiss = () => { didDismiss.value += 1; setModalRef(false); }
+
     return {
+      onModalWillPresent,
+      onModalDidPresent,
+      onModalWillDismiss,
+      onModalDidDismiss,
+      willPresent,
+      didPresent,
+      willDismiss,
+      didDismiss,
+      changeLoadingProps,
       overlayProps,
       present,
       componentType,

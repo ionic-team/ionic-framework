@@ -107,6 +107,10 @@ const routes: Array<RouteRecordRaw> = [
           next({ path: '/tabs/tab1' });
         },
         component: () => import('@/views/Tab3.vue')
+      },
+      {
+        path: 'tab4',
+        component: () => import('@/views/Tab4.vue')
       }
     ]
   },

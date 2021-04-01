@@ -145,7 +145,7 @@
   appearance: none;
 }
 
-:host(.searchbar-has-value.searchbar-has-focus) .searchbar-clear-button {
+:host(.searchbar-has-value.searchbar-should-show-clear) .searchbar-clear-button {
   display: block;
 }
 
