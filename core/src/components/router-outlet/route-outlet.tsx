@@ -19,6 +19,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
   private ani?: Animation;
+  private immediatelyEndNextAniWithParams?: { shouldComplete: boolean, step: number, dur: number };
   private animationEnabled = true;
 
   @Element() el!: HTMLElement;
@@ -60,45 +61,59 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   /** @internal */
   @Event({ bubbles: false }) ionNavDidChange!: EventEmitter<void>;
 
+  private endSwipeBackGestureAnimation(shouldComplete: boolean, step: number, dur: number) {
+    if (this.ani) {
+      this.animationEnabled = false;
+      
+      this.ani.onFinish(() => {
+        this.animationEnabled = true;
+
+        if (this.swipeHandler) {
+          this.swipeHandler.onEnd(shouldComplete);
+        }
+      }, { oneTimeCallback: true });
+
+      // Account for rounding errors in JS
+      let newStepValue = (shouldComplete) ? -0.001 : 0.001;
+
+      /**
+       * Animation will be reversed here, so need to
+       * reverse the easing curve as well
+       *
+       * Additionally, we need to account for the time relative
+       * to the new easing curve, as `stepValue` is going to be given
+       * in terms of a linear curve.
+       */
+      if (!shouldComplete) {
+        this.ani.easing('cubic-bezier(1, 0, 0.68, 0.28)');
+        newStepValue += getTimeGivenProgression([0, 0], [1, 0], [0.68, 0.28], [1, 1], step)[0];
+      } else {
+        newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], step)[0];
+      }
+
+      this.ani.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
+    }
+    /**
+     * end has been called before the animation reference is set.
+     * leaving this unhandled results in an infinit-running animation
+     * which blocks all further animations / routing until app restart.
+     */
+    else {
+      this.immediatelyEndNextAniWithParams = { shouldComplete, step, dur };
+    }
+}
+
   async connectedCallback() {
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
       () => !!this.swipeHandler && this.swipeHandler.canStart() && this.animationEnabled,
-      () => this.swipeHandler && this.swipeHandler.onStart(),
+      () => {
+        this.ani = undefined;
+        return this.swipeHandler && this.swipeHandler.onStart();
+      },
       step => this.ani && this.ani.progressStep(step),
       (shouldComplete, step, dur) => {
-        if (this.ani) {
-          this.animationEnabled = false;
-
-          this.ani.onFinish(() => {
-            this.animationEnabled = true;
-
-            if (this.swipeHandler) {
-              this.swipeHandler.onEnd(shouldComplete);
-            }
-          }, { oneTimeCallback: true });
-
-          // Account for rounding errors in JS
-          let newStepValue = (shouldComplete) ? -0.001 : 0.001;
-
-          /**
-           * Animation will be reversed here, so need to
-           * reverse the easing curve as well
-           *
-           * Additionally, we need to account for the time relative
-           * to the new easing curve, as `stepValue` is going to be given
-           * in terms of a linear curve.
-           */
-          if (!shouldComplete) {
-            this.ani.easing('cubic-bezier(1, 0, 0.68, 0.28)');
-            newStepValue += getTimeGivenProgression([0, 0], [1, 0], [0.68, 0.28], [1, 1], step)[0];
-          } else {
-            newStepValue += getTimeGivenProgression([0, 0], [0.32, 0.72], [0, 1], [1, 1], step)[0];
-          }
-
-          this.ani.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
-
-        }
+        this.endSwipeBackGestureAnimation(shouldComplete, step, dur);
       }
     );
     this.swipeHandlerChanged();
@@ -191,7 +206,21 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       leavingEl,
       baseEl: el,
       progressCallback: (opts.progressAnimation
-        ? ani => this.ani = ani
+        ? ani => {
+            this.ani = ani;
+            /**
+             * the animation gesture might have ended before this callback is triggered.
+             * gracefully end the animation.
+             */
+            if (this.immediatelyEndNextAniWithParams) {
+                this.endSwipeBackGestureAnimation(
+                    this.immediatelyEndNextAniWithParams.shouldComplete,
+                    this.immediatelyEndNextAniWithParams.step,
+                    this.immediatelyEndNextAniWithParams.dur,
+                );
+                this.immediatelyEndNextAniWithParams = undefined;
+            }
+        }
         : undefined
       ),
       ...opts,
