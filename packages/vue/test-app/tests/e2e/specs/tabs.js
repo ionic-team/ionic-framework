@@ -220,6 +220,27 @@ describe('Tabs', () => {
 
     cy.get('ion-tab-button#tab-button-tab1').should('not.have.class', 'tab-selected');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23101
+  it('should return to previous tab instance when using the ion-back-button', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.get('#tabs-secondary').click();
+    cy.ionPageHidden('tabs');
+    cy.ionPageVisible('tab1-secondary');
+
+    cy.get('ion-tab-button#tab-button-tab2-secondary').click();
+    cy.ionPageHidden('tab1-secondary');
+    cy.ionPageVisible('tab2-secondary');
+
+    cy.get('ion-tab-button#tab-button-tab1-secondary').click();
+    cy.ionPageHidden('tab2-secondary');
+    cy.ionPageVisible('tab1-secondary');
+
+    cy.ionBackClick('tab1-secondary');
+    cy.ionPageDoesNotExist('tabs-secondary');
+    cy.ionPageVisible('tab1');
+  })
 })
 
 describe('Tabs - Swipe to Go Back', () => {
