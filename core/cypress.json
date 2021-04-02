@@ -1,0 +1,9 @@
+{
+  "projectId": "zect48",
+  "integrationFolder": "./src",
+  "testFiles": "**/e2e.new.ts",
+  "baseUrl": "http://localhost:4444/src/",
+  "ignoreTestFiles": "**/examples/*",
+  "video": false,
+  "screenshotOnRunFailure": false
+}

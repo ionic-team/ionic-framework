@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('icon: items', () => {
+  beforeEach(() => {
+    cy.visit('components/icon/test/items?ionic:_testing=true');
+  })
 
-test('icon: items', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/icon/test/items?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-icon').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

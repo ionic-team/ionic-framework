@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('button: outline', () => {
+  beforeEach(() => {
+    cy.visit('components/button/test/outline?ionic:_testing=true');
+  })
 
-test('button: outline', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/button/test/outline?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-button').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

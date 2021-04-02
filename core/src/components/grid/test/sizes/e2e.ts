@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('grid: sizes', () => {
+  beforeEach(() => {
+    cy.visit('components/grid/test/sizes?ionic:_testing=true');
+  })
 
-test('grid: sizes', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/grid/test/sizes?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-grid').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

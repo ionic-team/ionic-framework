@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('button: round', () => {
+  beforeEach(() => {
+    cy.visit('components/button/test/round?ionic:_testing=true');
+  })
 
-test('button: round', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/button/test/round?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-button').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

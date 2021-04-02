@@ -1,6 +1,6 @@
-describe('avatar: standalone', () => {
+describe('avatar: basic', () => {
   beforeEach(() => {
-    cy.visit('components/avatar/test/standalone?ionic:_testing=true');
+    cy.visit('components/avatar/test/basic?ionic:_testing=true');
   })
 
   it('should render', () => {

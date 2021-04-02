@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('chip: basic', () => {
+  beforeEach(() => {
+    cy.visit('components/chip/test/basic?ionic:_testing=true');
+  })
 
-test('chip: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/chip/test/basic?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-chip').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

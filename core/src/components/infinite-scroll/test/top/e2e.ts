@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('infinite-scroll: top', () => {
+  beforeEach(() => {
+    cy.visit('components/infinite-scroll/test/top?ionic:_testing=true');
+  })
 
-test('infinite-scroll: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/infinite-scroll/test/basic?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-infinite-scroll').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

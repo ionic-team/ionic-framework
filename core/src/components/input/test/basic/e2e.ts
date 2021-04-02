@@ -1,39 +1,35 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('input: basic', () => {
+  beforeEach(() => {
+    cy.visit('components/input/test/basic?ionic:_testing=true');
+  })
 
-test('input: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/input/test/basic?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-input').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
 
-  const compares = [];
+  it('should focus item with lines full', () => {
+    cy.get('[data-cy="input-full"]').click();
 
-  compares.push(await page.compareScreenshot());
+    cy.get('[data-cy="item-full"]').should('have.class', 'item-has-focus');
 
-  const fullInput = await page.find('#fullInput');
-  await fullInput.click();
+    // cy.screenshot();
+  });
 
-  const fullItem = await page.find('#fullItem');
-  expect(fullItem).toHaveClass('item-has-focus');
+  it('should focus item with lines inset', () => {
+    cy.get('[data-cy="input-inset"]').click();
 
-  compares.push(await page.compareScreenshot('full input focused'));
+    cy.get('[data-cy="item-inset"]').should('have.class', 'item-has-focus');
 
-  const insetInput = await page.find('#insetInput');
-  await insetInput.click();
+    // cy.screenshot();
+  });
 
-  const insetItem = await page.find('#insetItem');
-  expect(insetItem).toHaveClass('item-has-focus');
+  it('should focus item with lines none', () => {
+    cy.get('[data-cy="input-none"]').click();
 
-  compares.push(await page.compareScreenshot('inset input focused'));
+    cy.get('[data-cy="item-none"]').should('have.class', 'item-has-focus');
 
-  const noneInput = await page.find('#noneInput');
-  await noneInput.click();
-
-  const noneItem = await page.find('#noneItem');
-  expect(noneItem).toHaveClass('item-has-focus');
-
-  compares.push(await page.compareScreenshot('no lines input focused'));
-
-  for (const compare of compares) {
-    expect(compare).toMatchScreenshot();
-  }
+    // cy.screenshot();
+  });
 });

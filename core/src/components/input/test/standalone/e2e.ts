@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('input: standalone', () => {
+  beforeEach(() => {
+    cy.visit('components/input/test/standalone?ionic:_testing=true');
+  })
 
-test('input: standalone', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/input/test/standalone?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-input').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

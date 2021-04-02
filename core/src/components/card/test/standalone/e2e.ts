@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('card: standalone', () => {
+  beforeEach(() => {
+    cy.visit('components/card/test/standalone?ionic:_testing=true');
+  })
 
-test('card: standalone', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/card/test/standalone?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-card').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

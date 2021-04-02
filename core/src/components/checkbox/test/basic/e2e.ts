@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('checkbox: basic', () => {
+  beforeEach(() => {
+    cy.visit('components/checkbox/test/basic?ionic:_testing=true');
+  })
 
-test('checkbox: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/checkbox/test/basic?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-checkbox').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

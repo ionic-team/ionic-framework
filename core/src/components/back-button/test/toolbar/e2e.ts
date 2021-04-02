@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('back-button: toolbar', () => {
+  beforeEach(() => {
+    cy.visit('components/back-button/test/toolbar?ionic:_testing=true');
+  })
 
-test('back-button: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/back-button/test/basic?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-back-button').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });
