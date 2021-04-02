@@ -137,32 +137,50 @@ function presentAlertRadio() {
       type: 'radio',
       label: 'Radio 1',
       value: 'value1',
+      handler: () => {
+        console.log('Radio 1 selected');
+      },
       checked: true
     },
     {
       type: 'radio',
       label: 'Radio 2',
-      value: 'value2'
+      value: 'value2',
+      handler: () => {
+        console.log('Radio 2 selected');
+      }
     },
     {
       type: 'radio',
       label: 'Radio 3',
-      value: 'value3'
+      value: 'value3',
+      handler: () => {
+        console.log('Radio 3 selected');
+      }
     },
     {
       type: 'radio',
       label: 'Radio 4',
-      value: 'value4'
+      value: 'value4',
+      handler: () => {
+        console.log('Radio 4 selected');
+      }
     },
     {
       type: 'radio',
       label: 'Radio 5',
-      value: 'value5'
+      value: 'value5',
+      handler: () => {
+        console.log('Radio 5 selected');
+      }
     },
     {
       type: 'radio',
       label: 'Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 ',
-      value: 'value6'
+      value: 'value6',
+      handler: () => {
+        console.log('Radio 6 selected');
+      }
     }
   ];
   alert.buttons = [
@@ -193,37 +211,55 @@ function presentAlertCheckbox() {
       type: 'checkbox',
       label: 'Checkbox 1',
       value: 'value1',
+      handler: () => {
+        console.log('Checkbox 1 selected');
+      },
       checked: true
     },
 
     {
       type: 'checkbox',
       label: 'Checkbox 2',
-      value: 'value2'
+      value: 'value2',
+      handler: () => {
+        console.log('Checkbox 2 selected');
+      }
     },
 
     {
       type: 'checkbox',
       label: 'Checkbox 3',
-      value: 'value3'
+      value: 'value3',
+      handler: () => {
+        console.log('Checkbox 3 selected');
+      }
     },
 
     {
       type: 'checkbox',
       label: 'Checkbox 4',
-      value: 'value4'
+      value: 'value4',
+      handler: () => {
+        console.log('Checkbox 4 selected');
+      }
     },
 
     {
       type: 'checkbox',
       label: 'Checkbox 5',
-      value: 'value5'
+      value: 'value5',
+      handler: () => {
+        console.log('Checkbox 5 selected');
+      }
     },
 
     {
       type: 'checkbox',
       label: 'Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6',
-      value: 'value6'
+      value: 'value6',
+      handler: () => {
+        console.log('Checkbox 6 selected');
+      }
     }
   ];
   alert.buttons = [
