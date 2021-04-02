@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('menu-button: standalone', () => {
+  beforeEach(() => {
+    cy.visit('components/menu-button/test/standalone?ionic:_testing=true');
+  })
 
-test('menu-button: standalone', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/menu-button/test/standalone?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-menu-button').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

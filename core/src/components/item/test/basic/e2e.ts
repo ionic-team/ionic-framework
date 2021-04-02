@@ -1,19 +1,23 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('item: basic', () => {
+  beforeEach(() => {
+    cy.visit('components/item/test/basic?ionic:_testing=true');
+  })
 
-test('item: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/item/test/basic?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-item').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });
 
-test('item: basic-rtl', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/item/test/basic?ionic:_testing=true&rtl=true'
-  });
+describe('item: basic, rtl', () => {
+  beforeEach(() => {
+    cy.visit('components/item/test/basic?ionic:_testing=true&rtl=true');
+  })
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  it('should render', () => {
+    cy.get('ion-item').should('have.class', 'hydrated');
+
+    // cy.screenshot();
+  });
 });

@@ -1,94 +1,77 @@
-import { E2EPage, newE2EPage } from '@stencil/core/testing';
+describe('item: inputs', () => {
+  beforeEach(() => {
+    cy.visit('components/item/test/inputs?ionic:_testing=true');
+  })
 
-test('item: inputs', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/item/test/inputs?ionic:_testing=true',
+  it('should render', () => {
+    cy.get('ion-item').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
 
-  // check form
-  await page.click('#submit');
-  await checkFormResult(
-    page,
-    '{"date":"","select":"n64","toggle":"","input":"","input2":"","checkbox":"","range":"10"}'
-  );
-  await page.waitForTimeout(100);
+  it('should check form', () => {
+    cy.get('[data-cy="submit"]').click();
+    checkFormResult('{"date":"","select":"n64","toggle":"","input":"","input2":"","checkbox":"","range":"10"}');
 
-  // Default case, enabled and no value
-  let compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+    // cy.screenshot();
+  });
 
-  // Disable everything
-  const disableToggle = await page.find('#btnDisabled');
-  await disableToggle.waitForVisible();
-  await disableToggle.click();
-  await page.waitForTimeout(300);
+  it('should disable inputs', () => {
+    cy.get('[data-cy="toggle-disabled"]').click();
+    cy.get('[data-cy="submit"]').click();
+    checkFormResult('{}');
 
-  // check form
-  await page.click('#submit');
-  await page.waitForTimeout(100);
-  await checkFormResult(page, '{}');
-  await page.waitForTimeout(100);
+    // cy.screenshot();
+  });
 
-  // screenshot
-  compare = await page.compareScreenshot('should disable all');
-  expect(compare).toMatchScreenshot();
+  it('should enable and set values', () => {
+    // disable
+    cy.get('[data-cy="toggle-disabled"]').click();
 
-  // Reenable and set some value
-  await disableToggle.click();
-  await page.click('#btnSomeValue');
-  await page.waitForTimeout(100);
+    // enable
+    cy.get('[data-cy="toggle-disabled"]').click();
 
-  // check form
-  await page.click('#submit');
-  await checkFormResult(
-    page,
-    '{"date":"2016-12-09","select":"nes","toggle":"on","input":"Some text","input2":"Some text","checkbox":"on","range":"20"}'
-  );
-  await page.waitForTimeout(100);
+    // set some values
+    cy.get('[data-cy="set-some-value"]').click();
+    cy.get('[data-cy="submit"]').click();
 
-  compare = await page.compareScreenshot('should reenable and set value');
-  expect(compare).toMatchScreenshot();
+    checkFormResult('{"date":"2016-12-09","select":"nes","toggle":"on","input":"Some text","input2":"Some text","checkbox":"on","range":"20"}');
 
-  // Set "null"
-  await page.click('#btnNullValue');
-  await page.waitForTimeout(100);
+    // cy.screenshot();
+  });
 
-  compare = await page.compareScreenshot('should set null');
-  expect(compare).toMatchScreenshot();
+  it('should set to null', () => {
+    cy.get('[data-cy="set-null-value"]').click();
 
-  // Set "empty"
-  await page.click('#btnEmptyValue');
-  await page.waitForTimeout(100);
+    // cy.screenshot();
+  });
 
-  compare = await page.compareScreenshot('should set empty');
-  expect(compare).toMatchScreenshot();
+  it('should set to empty', () => {
+    cy.get('[data-cy="set-empty-value"]').click();
 
-  // Set "empty"
-  await page.click('#btnEmptyValue');
-  await page.waitForTimeout(100);
+    // cy.screenshot();
+  });
 
-  compare = await page.compareScreenshot('should set empty');
-  expect(compare).toMatchScreenshot();
+  it('should set to undefined', () => {
+    cy.get('[data-cy="set-undefined-value"]').click();
 
-  // Test multiple
-  await page.click('#checkbox-start');
-  await page.click('#datetime-end');
-  await page.waitForTimeout(300);
+    // cy.screenshot();
+  });
 
-  compare = await page.compareScreenshot(
-    'should check checkbox and open datepicker'
-  );
-  expect(compare).toMatchScreenshot();
+  it('should test multiple', () => {
+    cy.get('[data-cy="checkbox-start"]').click();
+    cy.get('[data-cy="datetime-end"]').click();
 
-  await page.click('#button-end');
-  await page.waitForTimeout(100);
+    // cy.screenshot();
+  });
 
-  compare = await page.compareScreenshot('should change button color to red');
-  expect(compare).toMatchScreenshot();
+  it('should change button color to red', () => {
+    cy.get('#button-end').click();
+
+    // cy.screenshot();
+  });
 });
 
-const checkFormResult = async (page: E2EPage, content: string) => {
-  const div = await page.find('#form-result');
-
-  expect(div.textContent).toEqual(content);
+const checkFormResult = (content: string) => {
+  cy.get('#form-result').contains(content);
 };

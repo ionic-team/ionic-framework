@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('list: inset', () => {
+  beforeEach(() => {
+    cy.visit('components/list/test/inset?ionic:_testing=true');
+  })
 
-test('list: inset', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/list/test/inset?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-list').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

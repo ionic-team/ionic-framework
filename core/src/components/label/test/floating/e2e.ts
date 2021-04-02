@@ -1,6 +1,6 @@
-describe('label: headings', () => {
+describe('label: floating', () => {
   beforeEach(() => {
-    cy.visit('components/label/test/headings?ionic:_testing=true');
+    cy.visit('components/label/test/floating?ionic:_testing=true');
   })
 
   it('should render', () => {

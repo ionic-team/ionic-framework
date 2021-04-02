@@ -75,7 +75,7 @@
           </ion-item>
         </ion-list>
 
-        <ion-button id="submit" type="submit">Submit</ion-button>
+        <ion-button data-cy="submit" type="submit">Submit</ion-button>
         <p id="form-result"></p>
       </form>
 
@@ -87,32 +87,32 @@
         </ion-list-header>
         <ion-item-divider>Value Controls</ion-item-divider>
 
-        <ion-item button onClick="toggleDisabled()" id="btnDisabled">
+        <ion-item button onClick="toggleDisabled()" data-cy="toggle-disabled">
           Toggle Disable
         </ion-item>
-        <ion-item button onClick="setSomeValue()" id="btnSomeValue">
+        <ion-item button onClick="setSomeValue()" data-cy="set-some-value">
           Set some value
         </ion-item>
-        <ion-item button onClick="setEmptyValue()" id="btnEmptyValue">
+        <ion-item button onClick="setEmptyValue()" data-cy="set-empty-value">
           Set empty value
         </ion-item>
-        <ion-item button onClick="setNullValue()" id="btnNullValue">
+        <ion-item button onClick="setNullValue()" data-cy="set-null-value">
           Set "null" value
         </ion-item>
-        <ion-item button onClick="setUndefinedValue()" id="btnUndefinedValue">
+        <ion-item button onClick="setUndefinedValue()" data-cy="set-undefined-value">
           Set "undefined" value
         </ion-item>
         <ion-item-divider>Label Controls</ion-item-divider>
-        <ion-item button onClick="setLabelDefault()" id="btnLabelDefault">
+        <ion-item button onClick="setLabelDefault()" data-cy="set-label-default">
           Default
         </ion-item>
-        <ion-item button onClick="setLabelFloating()" id="btnLabelFloating">
+        <ion-item button onClick="setLabelFloating()" data-cy="set-label-floating">
           Floating
         </ion-item>
-        <ion-item button onClick="setLabelStacked()" id="btnLabelStacked">
+        <ion-item button onClick="setLabelStacked()" data-cy="set-label-stacked">
           Stacked
         </ion-item>
-        <ion-item button onClick="setLabelFixed()" id="btnLabelFixed">
+        <ion-item button onClick="setLabelFixed()" data-cy="set-label-fixed">
           Fixed
         </ion-item>
       </ion-list>
@@ -149,9 +149,9 @@
         </ion-item>
 
         <ion-item>
-          <ion-checkbox slot="start" id="checkbox-start"></ion-checkbox>
+          <ion-checkbox slot="start" data-cy="checkbox-start"></ion-checkbox>
           <ion-label>Multiple inputs w/ cover</ion-label>
-          <ion-datetime placeholder="startTime" display-format="HH:mm" id="datetime-end"></ion-datetime>
+          <ion-datetime placeholder="startTime" display-format="HH:mm" data-cy="datetime-end"></ion-datetime>
           <ion-checkbox slot="end" id="checkbox-end"></ion-checkbox>
         </ion-item>
 
