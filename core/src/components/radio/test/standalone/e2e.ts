@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('radio: standalone', () => {
+  beforeEach(() => {
+    cy.visit('components/radio/test/standalone?ionic:_testing=true');
+  })
 
-test('radio: standalone', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/radio/test/standalone?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-radio').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

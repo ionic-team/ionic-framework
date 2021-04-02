@@ -1,19 +1,23 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('radio: a11y', () => {
+  beforeEach(() => {
+    cy.visit('components/radio/test/a11y?ionic:_testing=true');
+  })
 
-test('radio: a11y', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/radio/test/a11y?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-radio').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });
 
-test('radio:rtl: a11y', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/radio/test/a11y?ionic:_testing=true&rtl=true'
-  });
+describe('radio: a11y, rtl', () => {
+  beforeEach(() => {
+    cy.visit('components/radio/test/a11y?ionic:_testing=true&rtl=true');
+  })
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  it('should render', () => {
+    cy.get('ion-radio').should('have.class', 'hydrated');
+
+    // cy.screenshot();
+  });
 });
