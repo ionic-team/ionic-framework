@@ -1,6 +1,6 @@
-describe('button: clear', () => {
+describe('button: states', () => {
   beforeEach(() => {
-    cy.visit('components/button/test/clear?ionic:_testing=true');
+    cy.visit('components/button/test/states?ionic:_testing=true');
   })
 
   it('should render', () => {
