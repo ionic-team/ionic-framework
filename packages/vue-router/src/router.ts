@@ -98,7 +98,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
              * will go back in a linear fashion.
              */
             prevInfo.pathname === routeInfo.pushedByRoute &&
-            routeInfo.tab !== prevInfo.tab
+            routeInfo.tab === prevInfo.tab
           )
         ) {
           router.back();
