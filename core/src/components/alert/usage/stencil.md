@@ -18,6 +18,9 @@ export class AlertExample {
     });
 
     await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   async presentAlertMultipleButtons() {

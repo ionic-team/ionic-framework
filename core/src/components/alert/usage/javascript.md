@@ -8,7 +8,10 @@ function presentAlert() {
   alert.buttons = ['OK'];
 
   document.body.appendChild(alert);
-  return alert.present();
+  await alert.present();
+
+  const { role } = await alert.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 
 function presentAlertMultipleButtons() {
