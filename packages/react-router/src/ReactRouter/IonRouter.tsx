@@ -253,7 +253,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
              * will go back in a linear fashion.
              */
             prevInfo.pathname === routeInfo.pushedByRoute &&
-            routeInfo.tab === prevInfo.tab
+            routeInfo.tab === '' && prevInfo.tab === ''
           )
         ) {
           this.props.history.goBack();
