@@ -7,7 +7,8 @@
     "@capacitor/android": "^2.2.0",
     "@capacitor/core": "1.5.2",
     "@capacitor/ios": "^2.2.0",
-    "@ionic/react": "file:../../react/ionic-react-5.5.0.tgz",
+    "@ionic/react": "5.6.3",
+    "@ionic/react-router": "^5.6.3",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
@@ -87,7 +88,8 @@
     "build": "node scripts/build.js",
     "test": "cypress open",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
-    "e2e": "npm run copyRouter && concurrently \"node scripts/start.js --no-cache\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first"
+    "e2e": "npm run copyRouter && concurrently \"node scripts/start.js --no-cache\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
+    "sync": "sh ./scripts/sync.sh"
   },
   "eslintConfig": {
     "extends": "react-app"
