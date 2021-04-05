@@ -135,3 +135,18 @@
 
   pointer-events: none;
 }
+
+
+// Item Floating: Placeholder
+// ----------------------------------------------------------------
+// When used with a floating item the placeholder should hide
+
+:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value)) {
+  opacity: 0;
+}
+
+:host-context(.item-label-floating.item-has-placeholder:not(.item-has-value).item-has-focus) {
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+  opacity: 1;
+}

@@ -7,7 +7,8 @@
     "@capacitor/android": "^2.2.0",
     "@capacitor/core": "1.5.2",
     "@capacitor/ios": "^2.2.0",
-    "@ionic/react": "file:../../react/ionic-react-5.5.0.tgz",
+    "@ionic/react": "5.6.3",
+    "@ionic/react-router": "^5.6.3",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
@@ -26,7 +27,7 @@
     "babel-preset-react-app": "^9.1.1",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
-    "concurrently": "^5.2.0",
+    "concurrently": "^6.0.0",
     "cpy-cli": "^3.1.1",
     "css-loader": "3.4.2",
     "dotenv": "8.2.0",
@@ -73,6 +74,7 @@
     "ts-pnp": "1.1.5",
     "typescript": "3.7.4",
     "url-loader": "2.3.0",
+    "wait-on": "^5.3.0",
     "webpack": "4.41.5",
     "webpack-dev-server": "3.10.2",
     "webpack-manifest-plugin": "2.2.0",
@@ -85,7 +87,10 @@
     "copyRouter": "cpy ../src/ReactRouter ./src/ReactRouter",
     "start": "concurrently \"npm-watch copyRouter\" \"node scripts/start.js --no-cache\"",
     "build": "node scripts/build.js",
-    "test": "cypress open"
+    "test": "cypress open",
+    "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
+    "e2e": "npm run copyRouter && concurrently \"node scripts/start.js --no-cache\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
+    "sync": "sh ./scripts/sync.sh"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -104,7 +109,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "1.5.2",
-    "cypress": "^4.9.0",
+    "cypress": "^6.8.0",
     "react-scripts": "3.4.1"
   },
   "description": "An Ionic project",

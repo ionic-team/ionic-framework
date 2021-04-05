@@ -194,7 +194,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         deepWait: true,
         duration: direction === undefined ? 0 : undefined,
         direction: direction as any,
-        showGoBack: direction === 'forward',
+        showGoBack: !!routeInfo.pushedByRoute,
         progressAnimation: false,
         animationBuilder: routeInfo.routeAnimation,
       });
