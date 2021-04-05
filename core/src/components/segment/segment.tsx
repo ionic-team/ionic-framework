@@ -425,6 +425,7 @@ export class Segment implements ComponentInterface {
     const mode = getIonMode(this);
     return (
       <Host
+        role="tablist"
         onClick={this.onClick}
         class={createColorClasses(this.color, {
           [mode]: true,

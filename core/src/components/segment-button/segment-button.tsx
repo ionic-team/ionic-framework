@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Host, Prop, State, forceUpdate,
 import { getIonMode } from '../../global/ionic-global';
 import { SegmentButtonLayout } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
-import { addEventListener, removeEventListener } from '../../utils/helpers';
+import { addEventListener, inheritAttributes, removeEventListener } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 let ids = 0;
@@ -25,6 +25,7 @@ let ids = 0;
 })
 export class SegmentButton implements ComponentInterface, ButtonInterface {
   private segmentEl: HTMLIonSegmentElement | null = null;
+  private inheritedAttributes: { [k: string]: any } = {};
 
   @Element() el!: HTMLElement;
 
@@ -49,6 +50,10 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
    * The value of the segment button.
    */
   @Prop() value: string = 'ion-sb-' + (ids++);
+
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-controls']);
+  }
 
   connectedCallback() {
     const segmentEl = this.segmentEl = this.el.closest('ion-segment');
@@ -87,7 +92,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   }
 
   render() {
-    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl } = this;
+    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl, inheritedAttributes } = this;
     const mode = getIonMode(this);
     const hasSegmentColor = () => segmentEl !== null && segmentEl.color !== undefined;
     return (
@@ -112,11 +117,13 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
         }}
       >
         <button
+          role="tab"
           type={type}
-          aria-pressed={checked ? 'true' : 'false'}
+          aria-selected={checked ? 'true' : 'false'}
           class="button-native"
           part="native"
           disabled={disabled}
+          {...inheritedAttributes}
         >
           <span class="button-inner">
             <slot></slot>
