@@ -68,13 +68,21 @@ Cypress.Commands.add('ionNav', (element, contains) => {
   cy.wait(250);
 });
 
-Cypress.Commands.add('ionSwipeRight', (element, contains) => {
-  cy.get('ion-router-outlet')
-    .trigger('mousedown', { position: 'left' })
-    .trigger('mousemove', { clientX: 100, clientY: 275 })
-    .trigger('mouseup', { force: true });
+Cypress.Commands.add('ionSwipeToGoBack', (complete = false, selector = 'ion-router-outlet') => {
+  const increment = (complete) ? 60 : 5;
+  cy.get(selector)
+    .first()
+    .trigger('mousedown', 0, 275, { which: 1, force: true })
+    .trigger('mousemove', increment * 1, 275, { which: 1, force: true })
+    .wait(25)
+    .trigger('mousemove', increment * 2, 275, { which: 1, force: true })
+    .wait(25)
+    .trigger('mousemove', increment * 3, 275, { which: 1, force: true })
+    .wait(25)
+    .trigger('mousemove', (complete) ? increment * 4 : increment * 0, 275, { which: 1, force: true })
+    .trigger('mouseup', (complete) ? increment * 4 : increment * 0, 275, { which: 1, force: true })
   cy.wait(150);
-});
+})
 
 Cypress.Commands.add('ionMenuNav', (contains) => {
   // cy.get('ion-menu.show-menu').should('exist');
