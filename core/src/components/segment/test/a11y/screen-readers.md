@@ -2,20 +2,23 @@
 
 ### Tabbing to Segment Button
 
-  | native | Ionic
--- | -- | --
-VoiceOver macOS - Chrome | Personal information,  collapsed, button | Personal information, collapsed, button
-VoiceOver macOS - Safari | Personal information, collapsed, button | Personal information, collapsed, button
-VoiceOver iOS | Personal information, collapsed | Personal information, button, main, landmark, collapsed
-Android TalkBack | Collapsed, personal information, button | Collapsed, personal information, button
-Windows NVDA | Personal information, button, unavailable, collapsed | Clickable Personal Information button collapsed
+|                          | native                                           | Ionic                                            |
+| ------------------------ | ------------------------------------------------ | ------------------------------------------------ |
+| VoiceOver macOS - Chrome | BOOKMARKS, tab, 1 of 3, Tab Options, tab group   | BOOKMARKS, tab, 1 of 1, Tab Options, tab group   |
+| VoiceOver macOS - Safari | BOOKMARKS, tab, 1 of 3, Tab Options, tab group   | BOOKMARKS, tab, 1 of 3, Tab Options, tab group   |
+| VoiceOver iOS            | Bookmarks, tab                                   | Bookmarks, tab                                   |
+| Android TalkBack         | Bookmarks, tab                                   | Bookmarks, tab                                   |
+| Windows NVDA             | Tab Options, tab control, BOOKMARKS, tab, 1 of 3 | Tab Options, tab control, BOOKMARKS, tab, 1 of 3 |
 
 ### Selecting Segment Button
 
-  | native | Ionic
--- | -- | --
-VoiceOver macOS - Chrome | Personal information, dimmed expanded, button | Personal information, expanded, button
-VoiceOver macOS - Safari | Personal information, dimmed expanded, button | Personal information, expanded, button
-VoiceOver iOS | Personal information, dimmed, expanded | Personal information, main, landmark, expanded
-Android TalkBack | Expanded | Expanded
-Windows NVDA | Unavailable, expanded | Expanded
+|                          | native                                                   | Ionic                    |
+| ------------------------ | -------------------------------------------------------- | ------------------------ |
+| VoiceOver macOS - Chrome | BOOKMARKS, selected, tab, 1 of 3, Tab Options, tab group | --                       |
+| VoiceOver macOS - Safari | BOOKMARKS, selected, tab, 1 of 3, Tab Options, tab group | --                       |
+| VoiceOver iOS            | selected, Bookmarks, tab                                 | selected, Bookmarks, tab |
+| Android TalkBack         | selected                                                 | --                       |
+| Windows NVDA             | BOOKMARKS, tab, 1 of 3, selected                         | --                       |
+
+Note: The `aria-label` for tablist is typically only read on the first interaction.
+
