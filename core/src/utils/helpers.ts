@@ -56,18 +56,22 @@ const transitionEnd = (el: HTMLElement | null, expectedDuration = 0, callback: (
 };
 
 /**
- * Utility function to wait for
- * componentOnReady on Stencil
- * components if not using a
- * custom elements build or
- * quickly resolve if using
- * a custom elements build.
+ * Waits for a component to be ready for
+ * both custom element and non-custom element builds.
+ * If non-custom element build, el.componentOnReady
+ * will be used.
+ * For custom element builds, we wait a frame
+ * so that the inner contents of the component
+ * have a chance to render.
+ *
+ * Use this utility rather than calling
+ * el.componentOnReady yourself.
  */
 export const componentOnReady = (el: any, callback: any) => {
   if (el.componentOnReady) {
-    el.componentOnReady().then(callback);
+    el.componentOnReady().then((resolvedEl: any) => callback(resolvedEl));
   } else {
-    callback();
+    raf(() => callback(el));
   }
 }
 
