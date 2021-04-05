@@ -399,6 +399,33 @@ jobs:
           command: npm run test.spec
           working_directory: /tmp/workspace/packages/react-router
 
+  install-react-test-app:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react-router/test-app npm install
+          working_directory: /tmp/workspace/packages/react-router/test-app
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - packages/react-router/test-app
+
+  test-react-e2e:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          command: npm run sync
+          working_directory: /tmp/workspace/packages/react-router/test-app
+      - run:
+          command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/react-router/test-app npm run e2e
+          working_directory: /tmp/workspace/packages/react-router/test-app
+
   test-vue-router-spec:
     <<: *defaults
     steps:
@@ -522,6 +549,10 @@ workflows:
           requires: [build-react]
       - test-react-router-spec:
           requires: [build-react-router]
+      - install-react-test-app:
+          requires: [build-core]
+      - test-react-e2e:
+          requires: [install-react-test-app, build-react, build-react-router]
       - build-vue:
           requires: [build-core]
       - build-vue-router:
