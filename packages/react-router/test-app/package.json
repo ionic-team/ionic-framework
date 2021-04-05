@@ -27,6 +27,7 @@
     "babel-preset-react-app": "^9.1.1",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "concurrently": "^6.0.0",
     "cpy-cli": "^3.1.1",
     "css-loader": "3.4.2",
     "dotenv": "8.2.0",
@@ -73,6 +74,7 @@
     "ts-pnp": "1.1.5",
     "typescript": "3.7.4",
     "url-loader": "2.3.0",
+    "wait-on": "^5.3.0",
     "webpack": "4.41.5",
     "webpack-dev-server": "3.10.2",
     "webpack-manifest-plugin": "2.2.0",
@@ -107,10 +109,8 @@
   },
   "devDependencies": {
     "@capacitor/cli": "1.5.2",
-    "concurrently": "^6.0.0",
     "cypress": "^6.8.0",
-    "react-scripts": "3.4.1",
-    "wait-on": "^5.3.0"
+    "react-scripts": "3.4.1"
   },
   "description": "An Ionic project",
   "jest": {
