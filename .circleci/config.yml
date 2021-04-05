@@ -505,73 +505,73 @@ workflows:
   version: 2
   build:
     jobs:
-      - puppeteer-dependencies
+      #liam- puppeteer-dependencies
       - build
       - build-core:
           requires: [build]
-      - test-core-clean-build:
-          requires: [build-core]
-      - test-core-lint:
-          requires: [build-core]
-      - test-core-e2e:
-          requires: [puppeteer-dependencies, build-core]
-      - test-core-spec:
-          requires: [build-core]
+      #liam- test-core-clean-build:
+      #liam    requires: [build-core]
+      #liam- test-core-lint:
+      #liam    requires: [build-core]
+      #liam- test-core-e2e:
+      #liam    requires: [puppeteer-dependencies, build-core]
+      #liam- test-core-spec:
+      #liam    requires: [build-core]
       # Adam requested we skip this test for now
       # since it is failing on ES5 code which
       # will be removed in Ionic Framework v6
       #- test-core-treeshake:
       #    requires: [build-core]
-      - test-core-screenshot:
-          requires: [build-core]
-          filters:
-            branches:
-              ignore: master
-      - test-core-screenshot-master:
-          requires: [build-core]
-          filters:
-            branches:
-              only: master
+      #liam- test-core-screenshot:
+      #liam    requires: [build-core]
+      #liam    filters:
+      #liam      branches:
+      #liam        ignore: master
+      #liam- test-core-screenshot-master:
+      #liam    requires: [build-core]
+      #liam    filters:
+      #liam      branches:
+      #liam        only: master
 
-      - build-angular:
-          requires: [build-core]
-      - build-angular-server:
-          requires: [build-angular]
+      #liam- build-angular:
+      #liam    requires: [build-core]
+      #liam- build-angular-server:
+      #liam    requires: [build-angular]
       - build-react:
           requires: [build-core]
       - build-react-router:
           requires: [build-core, build-react]
-      - test-react-lint:
-          requires: [build-react]
-      - test-react-router-lint:
-          requires: [build-react-router]
-      - test-react-spec:
-          requires: [build-react]
-      - test-react-router-spec:
-          requires: [build-react-router]
+      #liam- test-react-lint:
+      #liam    requires: [build-react]
+      #liam- test-react-router-lint:
+      #liam    requires: [build-react-router]
+      #liam- test-react-spec:
+      #liam    requires: [build-react]
+      #liam- test-react-router-spec:
+      #liam    requires: [build-react-router]
       - install-react-test-app:
           requires: [build-core]
       - test-react-e2e:
           requires: [install-react-test-app, build-react, build-react-router]
-      - build-vue:
-          requires: [build-core]
-      - build-vue-router:
-          requires: [build-vue]
-      - test-vue-lint:
-          requires: [build-vue]
-      - test-vue-router-lint:
-          requires: [build-vue-router]
-      - test-vue-router-spec:
-          requires: [build-vue-router]
-      - install-vue-test-app:
-          requires: [build-core]
-      - test-vue-spec:
-          requires: [install-vue-test-app, build-vue, build-vue-router]
-      - test-vue-e2e:
-          requires: [install-vue-test-app, build-vue, build-vue-router]
-      - test-angular-lint:
-          requires: [build-angular]
-      - test-angular-e2e:
-          requires:
-            - build-angular
-            - build-angular-server
+      #liam- build-vue:
+      #liam    requires: [build-core]
+      #liam- build-vue-router:
+      #liam    requires: [build-vue]
+      #liam- test-vue-lint:
+      #liam    requires: [build-vue]
+      #liam- test-vue-router-lint:
+      #liam    requires: [build-vue-router]
+      #liam- test-vue-router-spec:
+      #liam    requires: [build-vue-router]
+      #liam- install-vue-test-app:
+      #liam    requires: [build-core]
+      #liam- test-vue-spec:
+      #liam    requires: [install-vue-test-app, build-vue, build-vue-router]
+      #liam- test-vue-e2e:
+      #liam    requires: [install-vue-test-app, build-vue, build-vue-router]
+      #liam- test-angular-lint:
+      #liam    requires: [build-angular]
+      #liam- test-angular-e2e:
+      #liam    requires:
+      #liam      - build-angular
+      #liam      - build-angular-server
