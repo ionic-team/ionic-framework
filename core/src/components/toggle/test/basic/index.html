@@ -76,6 +76,11 @@
           <ion-toggle slot="start" style="--border-radius: 0px;--handle-border-radius: 0px;" checked></ion-toggle>
         </ion-item>
 
+        <ion-item>
+          <ion-label>Stop Immediate Event Propogation</ion-label>
+          <ion-toggle slot="start" checked id="eventPropogation"></ion-toggle>
+        </ion-item>
+
       </ion-list>
 
 
@@ -121,6 +126,11 @@
         var isTrue = el[prop] ? false : true;
         el[prop] = isTrue;
       }
+
+      document.getElementById('eventPropogation').addEventListener('click', (evt) => {
+        evt.stopImmediatePropagation();
+        console.log('clicked');
+      });
     </script>
 
   </ion-app>
