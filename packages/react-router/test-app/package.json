@@ -85,7 +85,9 @@
     "copyRouter": "cpy ../src/ReactRouter ./src/ReactRouter",
     "start": "concurrently \"npm-watch copyRouter\" \"node scripts/start.js --no-cache\"",
     "build": "node scripts/build.js",
-    "test": "cypress open"
+    "test": "cypress open",
+    "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
+    "e2e": "npm run copyRouter && concurrently \"node scripts/start.js --no-cache\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first"
   },
   "eslintConfig": {
     "extends": "react-app"
