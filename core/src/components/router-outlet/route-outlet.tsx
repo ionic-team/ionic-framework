@@ -64,7 +64,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private endSwipeBackGestureAnimation(shouldComplete: boolean, step: number, dur: number) {
     if (this.ani) {
       this.animationEnabled = false;
-      
+
       this.ani.onFinish(() => {
         this.animationEnabled = true;
 
