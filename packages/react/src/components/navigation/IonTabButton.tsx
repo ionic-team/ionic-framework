@@ -8,7 +8,7 @@ import { IonTabButtonInner } from '../inner-proxies';
 type Props = LocalJSX.IonTabButton &
   IonicReactProps & {
     routerOptions?: RouterOptions;
-    ref?: React.RefObject<HTMLIonTabButtonElement>;
+    ref?: React.Ref<HTMLIonTabButtonElement>;
     onClick?: (e: any) => void;
   };
 
