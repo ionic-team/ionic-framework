@@ -113,6 +113,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
+  /**
+   * Specifies if the first input should be focused if the ion-item is clicked
+   */
+  @Prop() delegateClick: boolean = true;
+
   @Listen('ionColor')
   labelColorChanged(ev: CustomEvent<string>) {
     const { color } = this;
@@ -158,7 +163,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // appear as clickable to screen readers
     // https://github.com/ionic-team/ionic-framework/issues/22011
     const input = this.getFirstInput();
-    if (input && !this.clickListener) {
+    if (input && this.delegateClick && !this.clickListener) {
       this.clickListener = (ev: Event) => this.delegateFocus(ev, input);
       this.el.addEventListener('click', this.clickListener);
     }
