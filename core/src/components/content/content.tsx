@@ -307,6 +307,7 @@ export class Content implements ComponentInterface {
     const { scrollX, scrollY } = this;
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
+    const TagType = this.el.closest('ion-menu') !== null ? 'div' : 'main' as any;
     const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', true));
 
     this.resize();
@@ -324,19 +325,19 @@ export class Content implements ComponentInterface {
         }}
       >
         <div id="background-content" part="background"></div>
-        <main
+        <TagType
           class={{
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
             'overscroll': (scrollX || scrollY) && forceOverscroll
           }}
-          ref={el => this.scrollEl = el!}
-          onScroll={(this.scrollEvents) ? ev => this.onScroll(ev) : undefined}
+          ref={(el: HTMLElement) => this.scrollEl = el!}
+          onScroll={(this.scrollEvents) ? (ev: UIEvent) => this.onScroll(ev) : undefined}
           part="scroll"
         >
           <slot></slot>
-        </main>
+        </TagType>
 
         {transitionShadow ? (
           <div class="transition-effect">
