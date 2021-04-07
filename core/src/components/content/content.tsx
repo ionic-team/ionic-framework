@@ -307,7 +307,7 @@ export class Content implements ComponentInterface {
     const { scrollX, scrollY } = this;
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
-    const TagType = this.el.closest('ion-menu') !== null ? 'div' : 'main' as any;
+    const TagType = this.el.closest('ion-menu, ion-popover, ion-modal') !== null ? 'div' : 'main' as any;
     const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', true));
 
     this.resize();
