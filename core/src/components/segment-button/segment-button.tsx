@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Host, Prop, State, forceUpdate,
 import { getIonMode } from '../../global/ionic-global';
 import { SegmentButtonLayout } from '../../interface';
 import { ButtonInterface } from '../../utils/element-interface';
-import { addEventListener, inheritAttributes, removeEventListener } from '../../utils/helpers';
+import { addEventListener, removeEventListener } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 let ids = 0;
@@ -25,7 +25,6 @@ let ids = 0;
 })
 export class SegmentButton implements ComponentInterface, ButtonInterface {
   private segmentEl: HTMLIonSegmentElement | null = null;
-  private inheritedAttributes: { [k: string]: any } = {};
 
   @Element() el!: HTMLElement;
 
@@ -50,10 +49,6 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
    * The value of the segment button.
    */
   @Prop() value: string = 'ion-sb-' + (ids++);
-
-  componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-controls']);
-  }
 
   connectedCallback() {
     const segmentEl = this.segmentEl = this.el.closest('ion-segment');
@@ -91,13 +86,28 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     }
   }
 
+  private get tabIndex() {
+    if (this.disabled) { return -1; }
+
+    const hasTabIndex = this.el.hasAttribute('tabindex');
+
+    if (hasTabIndex) {
+      return this.el.getAttribute('tabindex');
+    }
+
+    return 0;
+  }
+
   render() {
-    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl, inheritedAttributes } = this;
+    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl, tabIndex } = this;
     const mode = getIonMode(this);
     const hasSegmentColor = () => segmentEl !== null && segmentEl.color !== undefined;
     return (
       <Host
+        role="tab"
+        aria-selected={checked ? 'true' : 'false'}
         aria-disabled={disabled ? 'true' : null}
+        tabIndex={tabIndex}
         class={{
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
@@ -117,13 +127,11 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
         }}
       >
         <button
-          role="tab"
           type={type}
-          aria-selected={checked ? 'true' : 'false'}
+          tabIndex={-1}
           class="button-native"
           part="native"
           disabled={disabled}
-          {...inheritedAttributes}
         >
           <span class="button-inner">
             <slot></slot>
