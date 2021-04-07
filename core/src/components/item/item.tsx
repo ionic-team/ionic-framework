@@ -116,7 +116,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * Specifies if the first input should be focused if the ion-item is clicked
    */
-  @Prop() delegateClick: boolean = true;
+  @Prop() delegateClick = true;
 
   @Listen('ionColor')
   labelColorChanged(ev: CustomEvent<string>) {
