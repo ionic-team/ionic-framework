@@ -27,6 +27,7 @@ export class Content implements ComponentInterface {
   private cTop = -1;
   private cBottom = -1;
   private scrollEl!: HTMLElement;
+  private isMainContent = true;
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
   // V8 will be able to inline any read/write to it since it's a monomorphic class.
@@ -104,6 +105,10 @@ export class Content implements ComponentInterface {
    * Emitted when the scroll has ended.
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
+
+  connectedCallback() {
+    this.isMainContent = this.el.closest('ion-menu, ion-popover, ion-modal') === null;
+  }
 
   disconnectedCallback() {
     this.onScrollEnd();
@@ -304,10 +309,10 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { scrollX, scrollY } = this;
+    const { isMainContent, scrollX, scrollY } = this;
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
-    const TagType = this.el.closest('ion-menu, ion-popover, ion-modal') !== null ? 'div' : 'main' as any;
+    const TagType = isMainContent ? 'main' : 'div' as any;
     const transitionShadow = (mode === 'ios' && config.getBoolean('experimentalTransitionShadow', true));
 
     this.resize();
