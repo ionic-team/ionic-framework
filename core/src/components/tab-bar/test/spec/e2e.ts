@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('tab-bar: spec', () => {
+  beforeEach(() => {
+    cy.visit('components/tab-bar/test/spec?ionic:_testing=true');
+  })
 
-test('tab-bar: spec', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/tab-bar/test/spec?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-tab-bar').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

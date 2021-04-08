@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('toggle: standalone', () => {
+  beforeEach(() => {
+    cy.visit('components/toggle/test/standalone?ionic:_testing=true');
+  })
 
-test('toggle: standalone', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/toggle/test/standalone?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-toggle').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

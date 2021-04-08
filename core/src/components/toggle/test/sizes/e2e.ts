@@ -1,19 +1,23 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('toggle: sizes', () => {
+  beforeEach(() => {
+    cy.visit('components/toggle/test/sizes?ionic:_testing=true');
+  })
 
-test('toggle: sizes', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/toggle/test/sizes?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-toggle').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });
 
-test('toggle:rtl: sizes', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/toggle/test/sizes?ionic:_testing=true&rtl=true'
-  });
+describe('toggle: sizes, rtl', () => {
+  beforeEach(() => {
+    cy.visit('components/toggle/test/sizes?ionic:_testing=true&rtl=true');
+  })
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  it('should render', () => {
+    cy.get('ion-toggle').should('have.class', 'hydrated');
+
+    // cy.screenshot();
+  });
 });

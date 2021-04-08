@@ -1,19 +1,23 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('tab-bar: scenarios', () => {
+  beforeEach(() => {
+    cy.visit('components/tab-bar/test/scenarios?ionic:_testing=true');
+  })
 
-test('tab-bar: scenarios', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/tab-bar/test/scenarios?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-tab-bar').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });
 
-test('tab-bar:rtl: scenarios', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/tab-bar/test/scenarios?ionic:_testing=true&rtl=true'
-  });
+describe('tab-bar: scenarios, rtl', () => {
+  beforeEach(() => {
+    cy.visit('components/tab-bar/test/scenarios?ionic:_testing=true&rtl=true');
+  })
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  it('should render', () => {
+    cy.get('ion-tab-bar').should('have.class', 'hydrated');
+
+    // cy.screenshot();
+  });
 });

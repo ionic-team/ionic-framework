@@ -1,26 +1,23 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('tabs: standalone', () => {
+  beforeEach(() => {
+    cy.visit('components/tabs/test/standalone?ionic:_testing=true');
+  })
 
-test('tabs: standalone', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/tabs/test/standalone?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-tabs').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
 
-  const compares = [];
+  it('should go to tab one', () => {
+    cy.get('#tab-button-tab-one').click();
 
-  // Initial page load
-  compares.push(await page.compareScreenshot());
+    // cy.screenshot();
+  });
 
-  let tabButton = await page.find('#tab-button-tab-one');
-  await tabButton.click();
+  it('should go to tab two', () => {
+    cy.get('#tab-button-tab-two').click();
 
-  compares.push(await page.compareScreenshot(`tab one`));
-
-  tabButton = await page.find('#tab-button-tab-two');
-  await tabButton.click();
-
-  compares.push(await page.compareScreenshot(`tab two`));
-
-  for (const compare of compares) {
-    expect(compare).toMatchScreenshot();
-  }
+    // cy.screenshot();
+  });
 });

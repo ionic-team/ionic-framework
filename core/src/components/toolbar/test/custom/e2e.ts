@@ -1,19 +1,23 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('toolbar: custom', () => {
+  beforeEach(() => {
+    cy.visit('components/toolbar/test/custom?ionic:_testing=true');
+  })
 
-test('toolbar: custom', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/toolbar/test/custom?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-toolbar').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });
 
-test('toolbar:rtl: custom', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/toolbar/test/custom?ionic:_testing=true&rtl=true'
-  });
+describe('toolbar: custom, rtl', () => {
+  beforeEach(() => {
+    cy.visit('components/toolbar/test/custom?ionic:_testing=true&rtl=true');
+  })
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  it('should render', () => {
+    cy.get('ion-toolbar').should('have.class', 'hydrated');
+
+    // cy.screenshot();
+  });
 });

@@ -1,19 +1,23 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('toolbar: modes', () => {
+  beforeEach(() => {
+    cy.visit('components/toolbar/test/modes?ionic:_testing=true');
+  })
 
-test('toolbar: modes', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/toolbar/test/modes?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-toolbar').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });
 
-test('toolbar:rtl: modes', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/toolbar/test/modes?ionic:_testing=true&rtl=true'
-  });
+describe('toolbar: modes, rtl', () => {
+  beforeEach(() => {
+    cy.visit('components/toolbar/test/modes?ionic:_testing=true&rtl=true');
+  })
 
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  it('should render', () => {
+    cy.get('ion-toolbar').should('have.class', 'hydrated');
+
+    // cy.screenshot();
+  });
 });

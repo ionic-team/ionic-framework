@@ -1,32 +1,33 @@
-import { newE2EPage } from '@stencil/core/testing';
-
-test('split-pane: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/split-pane/test/basic?ionic:_testing=true'
-  });
-
-  const screenshotCompares = [];
+describe('split-pane: basic', () => {
   const MIN_WIDTH = '#side-min-width';
   const MAX_WIDTH = '#side-max-width';
   const WIDTH = '#side-width';
 
-  screenshotCompares.push(await page.compareScreenshot());
+  beforeEach(() => {
+    cy.visit('components/split-pane/test/basic?ionic:_testing=true');
+  })
 
-  await page.click(MIN_WIDTH);
+  it('should render', () => {
+    cy.get('ion-split-pane').should('have.class', 'hydrated');
 
-  screenshotCompares.push(await page.compareScreenshot());
+    // cy.screenshot();
+  })
 
-  await page.click(MIN_WIDTH);
-  await page.click(MAX_WIDTH);
+  it('should set the side to the min width', () => {
+    cy.get(MIN_WIDTH).click();
 
-  screenshotCompares.push(await page.compareScreenshot());
+    // cy.screenshot();
+  })
 
-  await page.click(MAX_WIDTH);
-  await page.click(WIDTH);
+  it('should set the side to the max width', () => {
+    cy.get(MAX_WIDTH).click();
 
-  screenshotCompares.push(await page.compareScreenshot());
+    // cy.screenshot();
+  })
 
-  for (const screenshotCompare of screenshotCompares) {
-    expect(screenshotCompare).toMatchScreenshot();
-  }
+  it('should set the side to a fixed width', () => {
+    cy.get(WIDTH).click();
+
+    // cy.screenshot();
+  })
 });

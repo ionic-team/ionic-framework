@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('spinner: basic', () => {
+  beforeEach(() => {
+    cy.visit('components/spinner/test/basic?ionic:_testing=true');
+  })
 
-test('spinner: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/spinner/test/basic?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-spinner').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

@@ -1,11 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('virtual-scroll: basic', () => {
+  beforeEach(() => {
+    cy.visit('components/virtual-scroll/test/basic?ionic:_testing=true');
+  })
 
-test('virtual-scroll: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/virtual-scroll/test/basic?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-virtual-scroll').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-  await page.waitForTimeout(300);
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

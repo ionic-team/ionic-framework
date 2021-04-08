@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('toolbar: spec', () => {
+  beforeEach(() => {
+    cy.visit('components/toolbar/test/spec?ionic:_testing=true');
+  })
 
-test('toolbar: spec', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/toolbar/test/spec?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-toolbar').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

@@ -1,18 +1,17 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('textarea: basic', () => {
+  beforeEach(() => {
+    cy.visit('components/textarea/test/basic?ionic:_testing=true');
+  })
 
-test('textarea: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/textarea/test/basic?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-textarea').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
 
-  const compares = [];
+  it('should change value', () => {
+    cy.get('#timeout').should('have.value', 'timeout');
 
-  compares.push(await page.compareScreenshot());
-
-  await page.waitForTimeout(250);
-  compares.push(await page.compareScreenshot('value changed'));
-
-  for (const compare of compares) {
-    expect(compare).toMatchScreenshot();
-  }
+    // cy.screenshot();
+  });
 });

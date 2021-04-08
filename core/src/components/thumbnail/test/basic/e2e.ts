@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('thumbnail: basic', () => {
+  beforeEach(() => {
+    cy.visit('components/thumbnail/test/basic?ionic:_testing=true');
+  })
 
-test('thumbnail: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/thumbnail/test/basic'
+  it('should render', () => {
+    cy.get('ion-thumbnail').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

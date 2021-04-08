@@ -69,17 +69,17 @@
           <f></f>
           <f></f>
           <f></f>
-          
+
           <ion-item>
             <ion-label>Toggle Side Min Width</ion-label>
             <ion-toggle id="side-min-width"></ion-toggle>
           </ion-item>
-          
+
           <ion-item>
             <ion-label>Toggle Side Max Width</ion-label>
             <ion-toggle id="side-max-width"></ion-toggle>
           </ion-item>
-          
+
           <ion-item>
             <ion-label>Toggle Side Fixed Width</ion-label>
             <ion-toggle id="side-width"></ion-toggle>
@@ -97,10 +97,10 @@
     const sideWidth = document.querySelector('ion-toggle#side-width');
 
     const splitPane = document.querySelector('ion-split-pane');
-    
-    sideMinWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-min-width'));    
-    sideMaxWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-max-width'));    
-    sideWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-width')); 
+
+    sideMinWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-min-width'));
+    sideMaxWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-max-width'));
+    sideWidth.addEventListener('ionChange', () => splitPane.classList.toggle('side-width'));
 
     const menuCtrl = document.querySelector('ion-menu-controller');
     function openStart() {
@@ -117,16 +117,16 @@
       --side-width: 150px;
       --side-min-width: 150px;
     }
-    
+
     .side-min-width {
       --side-min-width: 500px;
     }
-    
+
     .side-max-width {
       --side-max-width: 75px;
       --side-min-width: 0px;
     }
-    
+
     f {
       display: block;
       height: 150px;

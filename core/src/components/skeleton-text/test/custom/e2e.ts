@@ -1,10 +1,11 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('skeleton-text: custom', () => {
+  beforeEach(() => {
+    cy.visit('components/skeleton-text/test/custom?ionic:_testing=true');
+  })
 
-test('skeleton-text: custom', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/skeleton-text/test/custom?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-skeleton-text').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
-
-  const compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
 });

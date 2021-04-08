@@ -1,25 +1,29 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('tabs: basic', () => {
+  beforeEach(() => {
+    cy.visit('components/tabs/test/basic?ionic:_testing=true');
+  })
 
-test('tabs: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/tabs/test/basic?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-tabs').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
 
-  let compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  it('should go to tab two', () => {
+    cy.get('[data-cy="e2eTabTwoButton"]').click();
 
-  const button2 = await page.find('.e2eTabTwoButton');
-  await button2.click();
-  compare = await page.compareScreenshot(`tab two`);
-  expect(compare).toMatchScreenshot();
+    // cy.screenshot();
+  });
 
-  const button3 = await page.find('.e2eTabThreeButton');
-  await button3.click();
-  compare = await page.compareScreenshot(`tab three, disabled`);
-  expect(compare).toMatchScreenshot();
+  it('should not go to tab three', () => {
+    cy.get('[data-cy="e2eTabThreeButton"]').click({ force: true });
 
-  const button4 = await page.find('.e2eTabFourButton');
-  await button4.click();
-  compare = await page.compareScreenshot(`tab four`);
-  expect(compare).toMatchScreenshot();
+    // cy.screenshot();
+  });
+
+  it('should go to tab four', () => {
+    cy.get('[data-cy="e2eTabFourButton"]').click();
+
+    // cy.screenshot();
+  });
 });
