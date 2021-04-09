@@ -1,13 +1,13 @@
 import { generateTestName } from '../../../../utils/test/utils';
 
-const dirs = [false, true];
+const dirs = ['ltr', 'rtl'];
 
-dirs.forEach(rtl => {
-  const testName = generateTestName('fab', 'basic', rtl);
+dirs.forEach(dir => {
+  const testName = generateTestName('fab', 'basic', dir);
 
   describe(testName, () => {
     beforeEach(() => {
-      cy.goToUrl('fab', 'basic', rtl);
+      cy.goToUrl('fab', 'basic', dir);
     })
 
     it('should render', () => {

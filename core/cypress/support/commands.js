@@ -24,9 +24,9 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('goToUrl', (component, test, rtl) => {
+Cypress.Commands.add('goToUrl', (component, test, dir) => {
   let url = `components/${component}/test/${test}?ionic:_testing=true`;
-  if (rtl) {
+  if (dir === 'rtl') {
     url = `${url}&rtl=true`;
   }
 

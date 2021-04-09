@@ -4,12 +4,12 @@ import { E2EElement, E2EPage } from '@stencil/core/testing';
  * Generates a test name to be passed in the describe of an e2e test
  * @param component - The component name, ex: 'fab'
  * @param name - The component's test name, ex: 'basic'
- * @param rtl - Whether the test is being run in rtl mode
+ * @param dir - The direction to run the test, either 'ltr' or 'rtl'
  */
-export const generateTestName = (component: string, name: string, rtl = false): string => {
+export const generateTestName = (component: string, name: string, dir: string): string => {
   let testName = `${component}: ${name}`;
 
-  if (rtl) {
+  if (dir === 'rtl') {
     testName = `${testName}, rtl`;
   }
 

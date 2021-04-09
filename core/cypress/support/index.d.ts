@@ -3,10 +3,11 @@
 declare namespace Cypress {
   interface Chainable<Subject> {
     /**
-     * Visit a cypress url based on the document direction
+     * Visit a test url with Cypress and pass in a direction
      * @example
-     * cy.goToUrl('fab', 'basic', true);
+     * cy.goToUrl('alert', 'standalone', 'ltr');
+     * cy.goToUrl('fab', 'basic', 'rtl');
      */
-    goToUrl(component: string, test: string, rtl: boolean): Chainable<any>
+    goToUrl(component: string, test: string, dir: string): Chainable<any>
   }
 }
