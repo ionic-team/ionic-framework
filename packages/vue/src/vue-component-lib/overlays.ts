@@ -1,20 +1,37 @@
-import { defineComponent, h, ref, VNode } from 'vue';
+import { defineComponent, h, ref, VNode, getCurrentInstance } from 'vue';
+import { needsKebabCase } from '../utils';
 
 export interface OverlayProps {
   isOpen?: boolean;
 }
 
 export const defineOverlayContainer = <Props extends object>(name: string, componentProps: string[] = [], controller: any) => {
-  // TODO
+  /**
+   * Vue 3.0.6 fixed a bug where events on custom elements
+   * were always converted to lower case, so "ionRefresh"
+   * became "ionRefresh". We need to account for the old
+   * issue as well as the new behavior where "ionRefresh"
+   * is converted to "ion-refresh".
+   * See https://github.com/vuejs/vue-next/pull/2847
+   */
   const eventPrefix = name.toLowerCase().split('-').join('');
-  const eventListeners = [
+  const lowerCaseListeners = [
     { componentEv: `${eventPrefix}willpresent`, frameworkEv: 'onWillPresent' },
     { componentEv: `${eventPrefix}didpresent`, frameworkEv: 'onDidPresent' },
     { componentEv: `${eventPrefix}willdismiss`, frameworkEv: 'onWillDismiss' },
     { componentEv: `${eventPrefix}diddismiss`, frameworkEv: 'onDidDismiss' },
   ];
+  const kebabCaseListeners = [
+    { componentEv: `${name}-will-present`, frameworkEv: 'onWillPresent' },
+    { componentEv: `${name}-did-present`, frameworkEv: 'onDidPresent' },
+    { componentEv: `${name}-will-dismiss`, frameworkEv: 'onWillDismiss' },
+    { componentEv: `${name}-did-dismiss`, frameworkEv: 'onDidDismiss' },
+  ];
 
   const Container = defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
+    const instance = getCurrentInstance();
+    const adjustedEventListeners = needsKebabCase(instance.appContext.app.version) ? kebabCaseListeners : lowerCaseListeners;
+
     const overlay = ref();
     const onVnodeMounted = async () => {
       const isOpen = props.isOpen;
@@ -76,7 +93,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
 
       overlay.value = await overlay.value;
 
-      eventListeners.forEach(eventListener => {
+      adjustedEventListeners.forEach(eventListener => {
         overlay.value.addEventListener(eventListener.componentEv, () => {
           emit(eventListener.frameworkEv);
         });
@@ -101,7 +118,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
 
   Container.displayName = name;
   Container.props = [...componentProps, 'isOpen'];
-  Container.emits = eventListeners.map(ev => ev.frameworkEv);
+  Container.emits = [...lowerCaseListeners.map(ev => ev.frameworkEv), ...kebabCaseListeners.map(ev => ev.frameworkEv)];
 
   return Container;
 }

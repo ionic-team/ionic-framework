@@ -1,3 +1,51 @@
+## [5.6.4](https://github.com/ionic-team/ionic/compare/v5.6.3...v5.6.4) (2021-04-08)
+
+
+### Bug Fixes
+
+* **angular:** swiping back quickly no longer causes app to get stuck ([#23125](https://github.com/ionic-team/ionic/issues/23125)) ([28c52fd](https://github.com/ionic-team/ionic/commit/28c52fd4e3df3d96b4ec83075a322e110e938a1a)), closes [#15154](https://github.com/ionic-team/ionic/issues/15154)
+* **input:** inherit aria-label to input ([#23159](https://github.com/ionic-team/ionic/issues/23159)) ([61f094d](https://github.com/ionic-team/ionic/commit/61f094d30665c9afec428028883a5d9a085892d8))
+* **react:** overlays now correctly unmount any child components after dismissing ([#23149](https://github.com/ionic-team/ionic/issues/23149)) ([dee6eb3](https://github.com/ionic-team/ionic/commit/dee6eb30df370047bbc872b00ab6d801dd11fa81)), closes [#23140](https://github.com/ionic-team/ionic/issues/23140)
+* **react, vue:** correct view now chosen when going back inside tabs ([#23154](https://github.com/ionic-team/ionic/issues/23154)) ([7203190](https://github.com/ionic-team/ionic/commit/72031902347dc279045e2e099f69852a23dd8436)), closes [#23087](https://github.com/ionic-team/ionic/issues/23087) [#23101](https://github.com/ionic-team/ionic/issues/23101)
+* **toggle:** prevent click event from firing twice ([#23146](https://github.com/ionic-team/ionic/issues/23146)) ([42e6c90](https://github.com/ionic-team/ionic/commit/42e6c90c4632423386b165dddc4b94a55c075e2e)), closes [#23041](https://github.com/ionic-team/ionic/issues/23041)
+* **vue:** account for event name changes in vue 3.0.6+ for overlay components ([#23100](https://github.com/ionic-team/ionic/issues/23100)) ([27318cf](https://github.com/ionic-team/ionic/commit/27318cf58563c4b38d0b7045fb61451f45954a8f))
+* **vue:** components now integrate properly with vee-validate ([#23114](https://github.com/ionic-team/ionic/issues/23114)) ([ba51daf](https://github.com/ionic-team/ionic/commit/ba51daf17c4438aea6826882f82a04ebf8d6a5d8)), closes [#22886](https://github.com/ionic-team/ionic/issues/22886)
+
+
+
+## [5.6.3](https://github.com/ionic-team/ionic/compare/v5.6.2...v5.6.3) (2021-03-23)
+
+
+### Bug Fixes
+
+* **all:** update tslib to resolve export errors ([#23092](https://github.com/ionic-team/ionic-framework/pull/23092)) ([0cdd326](https://github.com/ionic-team/ionic-framework/commit/0cdd326a4a02729a306bccfcadca7370475eae32)), closes [#23090](https://github.com/ionic-team/ionic-framework/issues/23090)
+* **react:** correctly show ion-back-button when going back ([#23069](https://github.com/ionic-team/ionic/issues/23069)) ([1c93b75](https://github.com/ionic-team/ionic/commit/1c93b75e397961e374620eb43bee3d6bb4389836)), closes [#22692](https://github.com/ionic-team/ionic/issues/22692)
+
+
+
+## [5.6.2](https://github.com/ionic-team/ionic/compare/v5.6.1...v5.6.2) (2021-03-22)
+
+
+### Bug Fixes
+
+* **item:** detail icon now respects rtl mode ([#23081](https://github.com/ionic-team/ionic/issues/23081)) ([b04fb6e](https://github.com/ionic-team/ionic/commit/b04fb6e849bc9d6283271aaadc2b8aaae1f3961d)), closes [#23078](https://github.com/ionic-team/ionic/issues/23078)
+
+
+
+## [5.6.1](https://github.com/ionic-team/ionic/compare/v5.6.0...v5.6.1) (2021-03-17)
+
+
+### Bug Fixes
+
+* **custom-elements:** overlays now present correctly when using custom elements build ([#23039](https://github.com/ionic-team/ionic/issues/23039)) ([e4bf052](https://github.com/ionic-team/ionic/commit/e4bf052794af9aac07f887013b9250d2a045eba3)), closes [#23029](https://github.com/ionic-team/ionic/issues/23029)
+* **item:** detail icon is no longer announced by screen readers ([#23055](https://github.com/ionic-team/ionic/issues/23055)) ([c877061](https://github.com/ionic-team/ionic/commit/c877061a328c6ab6fa7248b9880d0205c6c4f6c1)), closes [#23054](https://github.com/ionic-team/ionic/issues/23054)
+* **label:** properly float labels for non-input items ([#23060](https://github.com/ionic-team/ionic/issues/23060)) ([c8a3999](https://github.com/ionic-team/ionic/commit/c8a3999da109b1719777f2acb791ab5388d371ea))
+* **react:** only pass tab event props from IonTabs to IonTabBar if defined ([#23024](https://github.com/ionic-team/ionic/issues/23024)) ([f94e618](https://github.com/ionic-team/ionic/commit/f94e618a7b307b143eb39c061dc9e6b80e11f862)), closes [#23023](https://github.com/ionic-team/ionic/issues/23023)
+* **refresher:** progressEnd no longer errors when pulling quickly in MD native refresher ([#23056](https://github.com/ionic-team/ionic/issues/23056)) ([67617fb](https://github.com/ionic-team/ionic/commit/67617fbc0f7ec825f1fa4c6e7e2da70e3fcd2d66))
+* **virtual-scroll:** allow null in items property ([#23047](https://github.com/ionic-team/ionic/issues/23047)) ([2a253a1](https://github.com/ionic-team/ionic/commit/2a253a1d334ca2c6a478a5bc426e3115268a29af))
+* **vue:** passing params as props are correctly updated when switching pages ([#23049](https://github.com/ionic-team/ionic/issues/23049)) ([2f54bc1](https://github.com/ionic-team/ionic/commit/2f54bc14699656e6905452a4233d982f83d0001f)), closes [#23043](https://github.com/ionic-team/ionic/issues/23043)
+
+
 # [5.6.0 Argon](https://github.com/ionic-team/ionic/compare/v5.5.4...v5.6.0) (2021-03-04)
 
 

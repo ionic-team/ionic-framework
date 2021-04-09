@@ -333,7 +333,7 @@ ion-datetime,prop,monthShortNames,string | string[] | undefined,undefined,false,
 ion-datetime,prop,monthValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,pickerFormat,string | undefined,undefined,false,false
-ion-datetime,prop,pickerOptions,undefined | { columns?: PickerColumn[] | undefined; buttons?: PickerButton[] | undefined; cssClass?: string | string[] | undefined; showBackdrop?: boolean | undefined; backdropDismiss?: boolean | undefined; animated?: boolean | undefined; mode?: "ios" | "md" | undefined; keyboardClose?: boolean | undefined; id?: string | undefined; enterAnimation?: AnimationBuilder | undefined; leaveAnimation?: AnimationBuilder | undefined; },undefined,false,false
+ion-datetime,prop,pickerOptions,undefined | { columns?: PickerColumn[] | undefined; buttons?: PickerButton[] | undefined; cssClass?: string | string[] | undefined; showBackdrop?: boolean | undefined; backdropDismiss?: boolean | undefined; animated?: boolean | undefined; mode?: Mode | undefined; keyboardClose?: boolean | undefined; id?: string | undefined; enterAnimation?: AnimationBuilder | undefined; leaveAnimation?: AnimationBuilder | undefined; },undefined,false,false
 ion-datetime,prop,placeholder,null | string | undefined,undefined,false,false
 ion-datetime,prop,readonly,boolean,false,false,false
 ion-datetime,prop,value,null | string | undefined,undefined,false,false
@@ -937,8 +937,8 @@ ion-ripple-effect,prop,type,"bounded" | "unbounded",'bounded',false,false
 ion-ripple-effect,method,addRipple,addRipple(x: number, y: number) => Promise<() => void>
 
 ion-route,none
-ion-route,prop,beforeEnter,(() => boolean | NavigationHookOptions | Promise<NavigationHookResult>) | undefined,undefined,false,false
-ion-route,prop,beforeLeave,(() => boolean | NavigationHookOptions | Promise<NavigationHookResult>) | undefined,undefined,false,false
+ion-route,prop,beforeEnter,(() => NavigationHookResult | Promise<NavigationHookResult>) | undefined,undefined,false,false
+ion-route,prop,beforeLeave,(() => NavigationHookResult | Promise<NavigationHookResult>) | undefined,undefined,false,false
 ion-route,prop,component,string,undefined,true,false
 ion-route,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-route,prop,url,string,'',false,false

@@ -1,8 +1,7 @@
 import { App, Plugin } from 'vue';
 import { IonicConfig, setupConfig } from '@ionic/core';
 import { applyPolyfills, defineCustomElements } from '@ionic/core/loader';
-
-const needsKebabCase = (version: string) => !['3.0.0', '3.0.1', '3.0.2', '3.0.3', '3.0.4', '3.0.5'].includes(version);
+import { needsKebabCase } from './utils';
 
 /**
 * We need to make sure that the web component fires an event

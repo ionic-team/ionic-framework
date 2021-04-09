@@ -37,7 +37,7 @@ const Details: React.FC<DetailsProps> = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons>
-            <IonBackButton defaultHref="/routing/tabs/home"></IonBackButton>
+            <IonBackButton></IonBackButton>
           </IonButtons>
           <IonTitle>Details</IonTitle>
         </IonToolbar>
