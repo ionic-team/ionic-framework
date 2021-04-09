@@ -12,17 +12,23 @@
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
 
 <body>
-  <ion-fab-button href="https://ionicframework.com">
-    <ion-icon name="logo-ionitron"></ion-icon>
-  </ion-fab-button>
-  <ion-fab-button href="https://ionicframework.com" target="_blank">
-    <ion-icon name="logo-ionitron"></ion-icon>
-  </ion-fab-button>
+  <ion-fab horizontal="end">
+    <ion-fab-button href="https://ionicframework.com">
+      <ion-icon name="logo-ionitron"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
-  <ion-button href="https://ionicframework.com" target="_blank">
-    <ion-icon name="logo-ionitron"></ion-icon>
-  </ion-button>
+  <ion-fab vertical="center">
+    <ion-fab-button href="https://ionicframework.com" target="_blank">
+      <ion-icon name="logo-ionitron"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
+  <ion-fab horizontal="center" vertical="bottom">
+    <ion-button href="https://ionicframework.com" target="_blank">
+      <ion-icon name="logo-ionitron"></ion-icon>
+    </ion-button>
+  </ion-fab>
 
   <script>
     function insertAfter(el, referenceNode) {

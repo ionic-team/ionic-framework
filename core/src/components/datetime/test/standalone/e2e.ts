@@ -1,27 +1,29 @@
-import { newE2EPage } from '@stencil/core/testing';
+describe('datetime: standalone', () => {
+  beforeEach(() => {
+    cy.visit('components/datetime/test/standalone?ionic:_testing=true');
+  })
 
-test('datetime: standalone', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/datetime/test/standalone?ionic:_testing=true'
+  it('should render', () => {
+    cy.get('ion-datetime').should('have.class', 'hydrated');
+
+    // cy.screenshot();
   });
 
-  let compare = await page.compareScreenshot();
-  expect(compare).toMatchScreenshot();
+  it('should open the basic picker', () => {
+    cy.get('#basic').click();
 
-  const datetime = await page.find('#basic');
-  await datetime.click();
+    cy.get('ion-picker').should('be.visible');
 
-  const picker = await page.find('ion-picker');
-  await picker.waitForVisible();
-  await page.waitForTimeout(250);
+    // cy.screenshot();
+  });
 
-  compare = await page.compareScreenshot('should open basic picker');
-  expect(compare).toMatchScreenshot();
+  it('should click the "October" option', () => {
+    cy.get('#basic').click();
 
-  const octoberOpt = await page.find({ text: 'October' });
-  await octoberOpt.click();
-  await page.waitForTimeout(500);
+    cy.get('ion-picker').should('be.visible');
 
-  compare = await page.compareScreenshot('should click "October" option');
-  expect(compare).toMatchScreenshot();
+    cy.contains('October').click();
+
+    // cy.screenshot();
+  });
 });
