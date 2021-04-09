@@ -1,6 +1,6 @@
 {
   "integrationFolder": "./e2e",
-  "testFiles": "**/*.spec.js",
+  "testFiles": "**/*.spec.ts",
   "baseUrl": "http://localhost:4200/",
   "ignoreTestFiles": "**/examples/*",
   "video": false,

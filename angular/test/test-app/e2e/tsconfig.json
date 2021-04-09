@@ -9,6 +9,7 @@
     "module": "commonjs",
     "target": "es5",
     "types": [
+      "cypress",
       "node"
     ]
   }
