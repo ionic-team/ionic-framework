@@ -5,7 +5,8 @@
   },
   "extends": "../tsconfig.json",
   "include": [
-    "cypress/support/index.d.ts"
+    "src/**spec.ts",
+    "../cypress/support/index.d.ts"
   ],
   "compilerOptions": {
     "outDir": "../out-tsc/app",

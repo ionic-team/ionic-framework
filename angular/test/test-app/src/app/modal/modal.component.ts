@@ -40,7 +40,7 @@ export class ModalComponent {
     modal.onDidDismiss().then(() => {
       NgZone.assertInAngularZone();
       if (!this.onWillDismiss) {
-        throw new Error('onWillDismiss should be emited first');
+        throw new Error('onWillDismiss should be emitted first');
       }
       this.onDidDismiss = true;
     });
