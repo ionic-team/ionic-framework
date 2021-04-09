@@ -48,7 +48,7 @@
     "aws-sdk": "^2.738.0",
     "clean-css-cli": "^4.1.11",
     "concurrently": "^6.0.0",
-    "cypress": "^6.8.0",
+    "cypress": "^7.0.1",
     "domino": "^2.1.6",
     "fs-extra": "^9.0.1",
     "jest": "^26.4.1",
@@ -99,7 +99,7 @@
     "cy.open": "cypress open",
     "cy.run": "cypress run",
     "cy.test": "concurrently \"npm run start -- -p 4444\" \"wait-on http-get://localhost:4444 && npm run cy.run\" --kill-others --success first",
-    "cy.test.watch": "concurrently \"npm run start -- -p 4444\" \"wait-on http-get://localhost:4444 && npm run cy.open\" --kill-others --success first"
+    "cy.test.watch": "concurrently \"npm run start -- -p 4444 --no-open\" \"wait-on http-get://localhost:4444 && npm run cy.open\" --kill-others --success first"
   },
   "author": "Ionic Team",
   "license": "MIT",

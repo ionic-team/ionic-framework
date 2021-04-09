@@ -1,6 +1,22 @@
 import { E2EElement, E2EPage } from '@stencil/core/testing';
-import { ElementHandle } from 'puppeteer';
 
+/**
+ * Generates a test name to be passed in the describe of an e2e test
+ * @param component - The component name, ex: 'fab'
+ * @param name - The component's test name, ex: 'basic'
+ * @param rtl - Whether the test is being run in rtl mode
+ */
+export const generateTestName = (component: string, name: string, rtl = false): string => {
+  let testName = `${component}: ${name}`;
+
+  if (rtl) {
+    testName = `${testName}, rtl`;
+  }
+
+  return testName;
+}
+
+// TODO delete
 export const generateE2EUrl = (component: string, type: string, rtl = false): string => {
   let url = `/src/components/${component}/test/${type}?ionic:_testing=true`;
   if (rtl) {

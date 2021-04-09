@@ -23,3 +23,12 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('goToUrl', (component, test, rtl) => {
+  let url = `components/${component}/test/${test}?ionic:_testing=true`;
+  if (rtl) {
+    url = `${url}&rtl=true`;
+  }
+
+  cy.visit(url);
+});
