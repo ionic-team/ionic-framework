@@ -118,6 +118,7 @@ describe('Tabs', () => {
 
     it('should load lazy loaded tab', () => {
       cy.get('#tab-button-lazy').click();
+      cy.ionPageVisible('app-tabs-tab3');
       testTabTitle('Tab 3 - Page 1');
     });
 
