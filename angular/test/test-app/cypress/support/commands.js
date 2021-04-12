@@ -57,3 +57,30 @@ Cypress.Commands.add('testLifeCycle', (selector, expected) => {
   cy.get(`${selector} #ionViewWillLeave`).invoke('text').should('equal', expected.ionViewWillLeave.toString());
   cy.get(`${selector} #ionViewDidLeave`).invoke('text').should('equal', expected.ionViewDidLeave.toString());
 })
+
+Cypress.Commands.add('ionPageVisible', (selector) => {
+  cy.get(selector)
+    .should('have.class', 'ion-page')
+    .should('not.have.class', 'ion-page-hidden')
+    .should('not.have.class', 'ion-page-invisible')
+    .should('have.length', 1)
+})
+
+Cypress.Commands.add('ionPageHidden', (selector) => {
+  cy.get(selector)
+    .should('have.class', 'ion-page')
+    .should('have.class', 'ion-page-hidden')
+    .should('have.length', 1)
+})
+
+Cypress.Commands.add('ionPageInvisible', (selector) => {
+  cy.get(selector)
+    .should('have.class', 'ion-page')
+    .should('have.class', 'ion-page-invisible')
+    .should('have.length', 1)
+})
+
+Cypress.Commands.add('ionPageDoesNotExist', (selector) => {
+  cy.get(selector)
+    .should('not.exist')
+});

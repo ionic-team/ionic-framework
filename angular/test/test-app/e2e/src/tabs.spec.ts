@@ -301,7 +301,6 @@ describe('Tabs', () => {
 
 
 function testTabTitle(title) {
-  cy.wait(1000);
   const tab = getSelectedTab();
 
   // Find is used to get a direct descendant instead of get

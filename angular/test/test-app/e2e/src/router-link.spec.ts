@@ -128,7 +128,6 @@ describe('Router Link', () => {
 });
 
 function testForward() {
-  cy.wait(2500);
   cy.testStack('ion-router-outlet', ['app-router-link', 'app-router-link-page']);
   cy.testLifeCycle('app-router-link-page', {
     ionViewWillEnter: 1,
@@ -139,7 +138,6 @@ function testForward() {
   cy.get('app-router-link-page #canGoBack').should('have.text', 'true');
 
   cy.go('back');
-  cy.wait(100);
   cy.testStack('ion-router-outlet', ['app-router-link']);
   cy.testLifeCycle('app-router-link', {
     ionViewWillEnter: 2,

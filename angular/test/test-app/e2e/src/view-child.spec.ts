@@ -1,7 +1,6 @@
 describe('View Child', () => {
   beforeEach(() => {
     cy.visit('/view-child');
-    cy.wait(30);
   })
 
   it('should get a reference to all children', () => {

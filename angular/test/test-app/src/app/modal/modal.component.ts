@@ -27,6 +27,7 @@ export class ModalComponent {
   async open(TheModalComponent: any) {
     const modal = await this.modalCtrl.create({
       component: TheModalComponent,
+      animated: false,
       componentProps: {
         value: '123',
         prop: '321'
