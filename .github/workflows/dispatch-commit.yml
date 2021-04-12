@@ -14,5 +14,6 @@ jobs:
       - uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: https://github.com/MEDGRUPOGIT/med-components
+          repository: MEDGRUPOGIT/med-components
           event-type: new-commit
+          client-payload:  '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
