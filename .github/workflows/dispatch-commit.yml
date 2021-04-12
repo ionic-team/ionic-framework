@@ -13,6 +13,6 @@ jobs:
     steps:
       - uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.REPO_ACCESS_TOKEN  }}
           repository: "https://github.com/MEDGRUPOGIT/med-components"
           event-type: new-commit
