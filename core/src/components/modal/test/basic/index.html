@@ -55,7 +55,17 @@
       element.innerHTML = `
       <ion-header>
         <ion-toolbar>
-          <ion-title>Super Modal</ion-title>
+          <ion-buttons slot="start">
+            <ion-button color="danger">
+              Cancel
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button>
+              Add
+            </ion-button>
+          </ion-buttons>
+          <ion-title>New Event</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
