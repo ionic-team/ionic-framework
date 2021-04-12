@@ -36,6 +36,7 @@
     "tslib": "^2.1.0"
   },
   "devDependencies": {
+    "@axe-core/puppeteer": "^4.1.1",
     "@jest/core": "^26.6.3",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
