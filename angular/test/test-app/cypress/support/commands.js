@@ -73,13 +73,6 @@ Cypress.Commands.add('ionPageHidden', (selector) => {
     .should('have.length', 1)
 })
 
-Cypress.Commands.add('ionPageInvisible', (selector) => {
-  cy.get(selector)
-    .should('have.class', 'ion-page')
-    .should('have.class', 'ion-page-invisible')
-    .should('have.length', 1)
-})
-
 Cypress.Commands.add('ionPageDoesNotExist', (selector) => {
   cy.get(selector)
     .should('not.exist')

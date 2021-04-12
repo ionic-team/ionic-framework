@@ -33,6 +33,36 @@ declare namespace Cypress {
      * ```
      */
     testLifeCycle(selector: string, expected: any): Chainable<any>
+
+    /**
+     * Test whether or not an .ion-page element is visible.
+     * Use this to test a page after navigating to it.
+     * @example
+     * ```
+     * cy.ionPageVisible('app-my-page');
+     * ```
+     */
+    ionPageVisible(selector: string): Chainable<any>
+
+    /**
+     * Test whether or not an .ion-page element is hidden
+     * Use this to test a page after navigating away from it.
+     * @example
+     * ```
+     * cy.ionPageHidden('app-my-page');
+     * ```
+     */
+    ionPageHidden(selector: string): Chainable<any>
+
+    /**
+     * Test whether or not an .ion-page element exists.
+     * Use this to test a page after popping it off the stack.
+     * @example
+     * ```
+     * cy.ionPageDoesNotExist('app-my-page');
+     * ```
+     */
+    ionPageDoesNotExist(selector: string): Chainable<any>
   }
 }
 
