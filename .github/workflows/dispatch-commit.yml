@@ -14,7 +14,7 @@ jobs:
       - name: git-sync
         uses: wei/git-sync@v3
         with:
-          source_repo: "MEDGRUPOGIT/ionic-framework"
+          source_repo: "https://fbalbinoribeiro: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@github.com/MEDGRUPOGIT/ionic-framework.git"
           source_branch: "master"
-          destination_repo: "MEDGRUPOGIT/med-components"
+          destination_repo: "https://fbalbinoribeiro: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@github.com/MEDGRUPOGIT/med-components.git"
           destination_branch: "sync"
