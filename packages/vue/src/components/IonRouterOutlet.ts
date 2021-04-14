@@ -28,7 +28,8 @@ export const IonRouterOutlet = defineComponent({
       console.warn('[@ionic/vue Deprecation]: Your child routes are nested inside of each tab in your routing config. This format will not be supported in Ionic Vue v6.0. Instead, write your child routes as sibling routes. See https://ionicframework.com/docs/vue/navigation#child-routes-within-tabs for more information.');
       usingDeprecatedRouteSetup = true;
     }
-    const matchedRouteRef: any = computed(() => {
+
+    const getMatchedRouteRefFromRoute = () => {
       const matchedRoute = route.matched[depth];
 
       if (matchedRoute && attrs.tabs && route.matched[depth + 1] && usingDeprecatedRouteSetup) {
@@ -36,7 +37,9 @@ export const IonRouterOutlet = defineComponent({
       }
 
       return matchedRoute;
-    });
+    }
+
+    const matchedRouteRef: any = computed(getMatchedRouteRefFromRoute);
 
     provide(viewDepthKey, depth + 1)
     provide(matchedRouteKey, matchedRouteRef);
@@ -55,16 +58,24 @@ export const IonRouterOutlet = defineComponent({
     // The base url for this router outlet
     let parentOutletPath: string;
 
-    watch(matchedRouteRef, (currentValue, previousValue) => {
+    /**
+     * We need to watch the route object
+     * to listen for navigation changes.
+     * Previously we had watched matchedRouteRef,
+     * but if you had a /page/:id route, going from
+     * page/1 to page/2 would not cause this callback
+     * to fire since the matchedRouteRef was the same.
+     */
+    watch(route, () => {
+      const matchedRoute = getMatchedRouteRefFromRoute();
+
       /**
-       * We need to make sure that we are not re-rendering
-       * the same view if navigation changes in a sub-outlet.
-       * This is mainly for tabs when outlet 1 renders ion-tabs
-       * and outlet 2 renders the individual tab view. We don't
-       * want outlet 1 creating a new ion-tabs instance every time
-       * we switch tabs.
+       * Since all router outlets will run this callback
+       * when the route changes, we only want to run this
+       * code if we are in the correct outlet that
+       * should respond to this route change.
        */
-      if (currentValue !== previousValue) {
+      if (matchedRoute === matchedRouteRef.value) {
         setupViewItem(matchedRouteRef);
       }
     });
