@@ -66,17 +66,29 @@ export const IonRouterOutlet = defineComponent({
      * page/1 to page/2 would not cause this callback
      * to fire since the matchedRouteRef was the same.
      */
-    watch(route, () => {
-      const matchedRoute = getMatchedRouteRefFromRoute();
+    watch([route, matchedRouteRef], (currentValue, previousValue) => {
+      const currentMatchedRouteRef = currentValue[1];
+      const previousMatchedRouteRef = previousValue[1];
 
       /**
-       * Since all router outlets will run this callback
-       * when the route changes, we only want to run the
-       * following code if we are in the correct outlet that
-       * should respond to this route change.
+       * If matched route ref has changed
+       * then we definitely have a new view
+       * item to setup
        */
-      if (matchedRoute === matchedRouteRef.value) {
+      if (currentMatchedRouteRef !== previousMatchedRouteRef) {
         setupViewItem(matchedRouteRef);
+      } else {
+        const matchedRoute = getMatchedRouteRefFromRoute();
+
+        /**
+         * Since all router outlets will run this callback
+         * when the route changes, we only want to run the
+         * following code if we are in the correct outlet that
+         * should respond to this route change.
+         */
+        if (matchedRoute && matchedRoute === matchedRouteRef.value && matchedRoute.path === route.path) {
+            setupViewItem(matchedRouteRef);
+        }
       }
     });
 

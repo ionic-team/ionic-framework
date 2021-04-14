@@ -18,6 +18,9 @@
 
       <ion-button id="parameter-view" :router-link="'/routing/' + $route.params.id + '/view'">Go to Single View</ion-button>
 
+      <ion-button router-link="/routing/abc">Go to Parameter Page ABC</ion-button>
+      <ion-button router-link="/routing/xyz">Go to Parameter Page XYZ</ion-button>
+
       <div class="ion-padding" id="parameter-value">
         {{ $route.params.id }}
       </div>
