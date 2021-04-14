@@ -71,8 +71,8 @@ export const IonRouterOutlet = defineComponent({
 
       /**
        * Since all router outlets will run this callback
-       * when the route changes, we only want to run this
-       * code if we are in the correct outlet that
+       * when the route changes, we only want to run the
+       * following code if we are in the correct outlet that
        * should respond to this route change.
        */
       if (matchedRoute === matchedRouteRef.value) {
