@@ -24,6 +24,8 @@
       <div class="ion-padding" id="parameter-value">
         {{ $route.params.id }}
       </div>
+
+      {{ $props.id }}
     </ion-content>
   </ion-page>
 </template>
@@ -42,6 +44,9 @@ import {
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+  props: {
+    id: { type: String, default: 'my default' }
+  },
   components: {
     IonButton,
     IonBackButton,
@@ -51,6 +56,8 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar
-  }
+  },
+  setup(props) {
+  console.log('props',props)}
 });
 </script>

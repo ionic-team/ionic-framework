@@ -29,7 +29,7 @@ export const IonRouterOutlet = defineComponent({
       usingDeprecatedRouteSetup = true;
     }
 
-    const getMatchedRouteRefFromRoute = () => {
+    const matchedRouteRef: any = computed(() => {
       const matchedRoute = route.matched[depth];
 
       if (matchedRoute && attrs.tabs && route.matched[depth + 1] && usingDeprecatedRouteSetup) {
@@ -37,9 +37,7 @@ export const IonRouterOutlet = defineComponent({
       }
 
       return matchedRoute;
-    }
-
-    const matchedRouteRef: any = computed(getMatchedRouteRefFromRoute);
+    });
 
     provide(viewDepthKey, depth + 1)
     provide(matchedRouteKey, matchedRouteRef);
@@ -66,29 +64,24 @@ export const IonRouterOutlet = defineComponent({
      * page/1 to page/2 would not cause this callback
      * to fire since the matchedRouteRef was the same.
      */
-    watch([route, matchedRouteRef], (currentValue, previousValue) => {
-      const currentMatchedRouteRef = currentValue[1];
-      const previousMatchedRouteRef = previousValue[1];
-
+    watch([route, matchedRouteRef], ([currentRoute, currentMatchedRouteRef], [_, previousMatchedRouteRef]) => {
       /**
-       * If matched route ref has changed
-       * then we definitely have a new view
-       * item to setup
+       * If the matched route ref has changed,
+       * then we need to set up a new view item.
+       * If the matched route ref has not changed,
+       * it is possible that this is a parameterized URL
+       * change such as /page/1 to /page/2. In that case,
+       * we can assume that the `route` object has changed,
+       * but we should only set up a new view item in this outlet
+       * if that last matched view item matches our current matched
+       * view item otherwise if we had this in a nested outlet the
+       * parent outlet would re-render as well as the child page.
        */
-      if (currentMatchedRouteRef !== previousMatchedRouteRef) {
+      if (
+        currentMatchedRouteRef !== previousMatchedRouteRef ||
+        currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef
+      ) {
         setupViewItem(matchedRouteRef);
-      } else {
-        const matchedRoute = getMatchedRouteRefFromRoute();
-
-        /**
-         * Since all router outlets will run this callback
-         * when the route changes, we only want to run the
-         * following code if we are in the correct outlet that
-         * should respond to this route change.
-         */
-        if (matchedRoute && matchedRoute === matchedRouteRef.value && matchedRoute.path === route.path) {
-            setupViewItem(matchedRouteRef);
-        }
       }
     });
 
