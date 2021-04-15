@@ -22,10 +22,8 @@
       <ion-button router-link="/routing/xyz">Go to Parameter Page XYZ</ion-button>
 
       <div class="ion-padding" id="parameter-value">
-        {{ $route.params.id }}
+        {{ $props.id }}
       </div>
-
-      {{ $props.id }}
     </ion-content>
   </ion-page>
 </template>
@@ -56,8 +54,6 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar
-  },
-  setup(props) {
-  console.log('props',props)}
+  }
 });
 </script>
