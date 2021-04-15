@@ -94,6 +94,13 @@ export const createOverlayComponent = <
       if (this.overlay && prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
         await this.overlay.dismiss();
         isDismissing = false;
+
+        /**
+         * Now that the overlay is dismissed
+         * we need to render again so that any
+         * inner components will be unmounted
+         */
+        this.forceUpdate();
       }
     }
 

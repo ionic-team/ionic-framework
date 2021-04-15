@@ -61,7 +61,10 @@ export class ToastExample {
         }
       ]
     });
-    toast.present();
+    await toast.present();
+  
+    const { role } = await toast.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
 }
@@ -103,7 +106,10 @@ async function presentToastWithOptions() {
   ];
 
   document.body.appendChild(toast);
-  return toast.present();
+  await toast.present();
+  
+  const { role } = await toast.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 ```
 
@@ -242,7 +248,10 @@ export class ToastExample {
         }
       ]
     });
-    toast.present();
+    await toast.present();
+  
+    const { role } = await toast.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   render() {
@@ -306,7 +315,10 @@ export default {
             }
           ]
         })
-      return toast.present();
+      await toast.present();
+  
+      const { role } = await toast.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 }

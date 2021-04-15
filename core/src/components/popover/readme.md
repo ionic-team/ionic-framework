@@ -62,7 +62,10 @@ export class PopoverExample {
       event: ev,
       translucent: true
     });
-    return await popover.present();
+    await popover.present();
+  
+    const { role } = await popover.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 }
 ```
@@ -106,7 +109,11 @@ function presentPopover(ev) {
     translucent: true
   });
   document.body.appendChild(popover);
-  return popover.present();
+
+  await popover.present();
+  
+  const { role } = await popover.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 ```
 
@@ -216,7 +223,10 @@ export class PopoverExample {
       event: ev,
       translucent: true
     });
-    return await popover.present();
+    await popover.present();
+  
+    const { role } = await popover.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   render() {
@@ -300,7 +310,10 @@ export default {
           event: ev,
           translucent: true
         })
-      return popover.present();
+      await popover.present();
+  
+      const { role } = await popover.onDidDismiss();
+      console.log('onDidDismiss resolved with role', role);
     },
   },
 }
