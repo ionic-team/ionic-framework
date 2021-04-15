@@ -144,7 +144,11 @@ export class RadioGroup implements ComponentInterface {
       // space bar on top of a selected radio (only applies
       // to radios in a select popover)
       if (['Space'].includes(ev.code)) {
-        this.value = current.value;
+        if (this.allowEmptySelection && this.value !== undefined) {
+          this.value = undefined;
+        } else {
+          this.value = current.value;
+        }
 
         // Prevent browsers from jumping
         // to the bottom of the screen
