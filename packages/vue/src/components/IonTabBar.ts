@@ -38,7 +38,8 @@ export const IonTabBar = defineComponent({
       tabState: {
         activeTab: undefined,
         tabs: {}
-      }
+      },
+      tabVnodes: []
     }
   },
   updated() {
@@ -52,7 +53,7 @@ export const IonTabBar = defineComponent({
     const ionRouter: any = inject('navManager');
     const tabState: TabState = this.$data.tabState;
     const currentInstance = getCurrentInstance();
-    const tabs = getTabs(currentInstance.subTree.children || [] as VNodeNormalizedChildren);
+    const tabs = this.$data.tabVnodes = getTabs(currentInstance.subTree.children || [] as VNodeNormalizedChildren);
     tabs.forEach(child => {
       tabState.tabs[child.props.tab] = {
         originalHref: child.props.href,
@@ -155,7 +156,7 @@ export const IonTabBar = defineComponent({
     const ionRouter: any = inject('navManager');
 
     ionRouter.registerHistoryChangeListener(() => {
-      this.checkActiveTab.bind(this)(ionRouter, [])
+      this.checkActiveTab.bind(this)(ionRouter, this.$data.tabVnodes)
     });
   },
   setup(_, { slots }) {
