@@ -1,4 +1,4 @@
-import { h, defineComponent, getCurrentInstance, inject, VNode, VNodeNormalizedChildren } from 'vue';
+import { h, defineComponent, getCurrentInstance, inject, VNode } from 'vue';
 
 interface TabState {
   activeTab?: string;
@@ -13,13 +13,13 @@ interface Tab {
 
 const isTabButton = (child: any) => child.type?.name === 'IonTabButton';
 
-const getTabs = (nodes: any) => {
+const getTabs = (nodes: VNode[]) => {
   let tabs: VNode[] = [];
   nodes.forEach((node: VNode) => {
     if (isTabButton(node)) {
       tabs.push(node);
     } else if (Array.isArray(node.children) && node.children.length > 1) {
-      const childTabs = getTabs(node.children);
+      const childTabs = getTabs(node.children as VNode[]);
       tabs = [...tabs, ...childTabs];
     }
   });
@@ -56,7 +56,7 @@ export const IonTabBar = defineComponent({
        */
       const tabState: TabState = this.$data.tabState;
       const currentInstance = getCurrentInstance();
-      const tabs = this.$data.tabVnodes = getTabs(currentInstance.subTree.children || [] as VNodeNormalizedChildren);
+      const tabs = this.$data.tabVnodes = getTabs((currentInstance.subTree.children || []) as VNode[]);
       tabs.forEach(child => {
         tabState.tabs[child.props.tab] = {
           originalHref: child.props.href,
