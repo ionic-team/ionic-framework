@@ -76,7 +76,7 @@ export const IonTabBar = defineComponent({
     },
     checkActiveTab(ionRouter: any) {
       const currentRoute = ionRouter.getCurrentRouteInfo();
-      const childNodes = this.$data.$tabVnodes;
+      const childNodes = this.$data.tabVnodes;
       const { tabs, activeTab: prevActiveTab } = this.$data.tabState;
       const tabState = this.$data.tabState;
       const tabKeys = Object.keys(tabs);
