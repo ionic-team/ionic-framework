@@ -13,7 +13,7 @@
             <ion-label>Tab {{ tab.id }}</ion-label>
           </ion-tab-button>
 
-          <ion-button @click="addTab()">Add Tab</ion-button>
+          <ion-button id="add-tab" @click="addTab()">Add Tab</ion-button>
         </ion-tab-bar>
       </ion-tabs>
     </ion-content>
