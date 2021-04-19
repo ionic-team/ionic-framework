@@ -18,7 +18,7 @@ const getTabs = (nodes: any) => {
   nodes.forEach((node: VNode) => {
     if (isTabButton(node)) {
       tabs.push(node);
-    } else if (node.children.length > 1) {
+    } else if (Array.isArray(node.children) && node.children.length > 1) {
       const childTabs = getTabs(node.children);
       tabs = [...tabs, ...childTabs];
     }
@@ -43,35 +43,37 @@ export const IonTabBar = defineComponent({
     }
   },
   updated() {
-    /**
-     * For each tab, we need to keep track of its
-     * base href as well as any child page that
-     * is active in its stack so that when we go back
-     * to a tab from another tab, we can correctly
-     * show any child pages if necessary.
-     */
-    const ionRouter: any = inject('navManager');
-    const tabState: TabState = this.$data.tabState;
-    const currentInstance = getCurrentInstance();
-    const tabs = this.$data.tabVnodes = getTabs(currentInstance.subTree.children || [] as VNodeNormalizedChildren);
-    tabs.forEach(child => {
-      tabState.tabs[child.props.tab] = {
-        originalHref: child.props.href,
-        currentHref: child.props.href,
-        ref: child
-      }
-
-      /**
-       * Passing this prop to each tab button
-       * lets it be aware of the state that
-       * ion-tab-bar is managing for it.
-       */
-      child.component.props._getTabState = () => tabState;
-    });
-
-    this.checkActiveTab(ionRouter, tabs);
+    this.setupTabState(inject('navManager'));
   },
   methods: {
+    setupTabState(ionRouter: any) {
+      /**
+       * For each tab, we need to keep track of its
+       * base href as well as any child page that
+       * is active in its stack so that when we go back
+       * to a tab from another tab, we can correctly
+       * show any child pages if necessary.
+       */
+      const tabState: TabState = this.$data.tabState;
+      const currentInstance = getCurrentInstance();
+      const tabs = this.$data.tabVnodes = getTabs(currentInstance.subTree.children || [] as VNodeNormalizedChildren);
+      tabs.forEach(child => {
+        tabState.tabs[child.props.tab] = {
+          originalHref: child.props.href,
+          currentHref: child.props.href,
+          ref: child
+        }
+
+        /**
+         * Passing this prop to each tab button
+         * lets it be aware of the state that
+         * ion-tab-bar is managing for it.
+         */
+        child.component.props._getTabState = () => tabState;
+      });
+
+      this.checkActiveTab(ionRouter, tabs);
+    },
     checkActiveTab(ionRouter: any, tabVNodes: any = []) {
       const currentRoute = ionRouter.getCurrentRouteInfo();
       const childNodes = tabVNodes;
@@ -154,6 +156,8 @@ export const IonTabBar = defineComponent({
   },
   mounted() {
     const ionRouter: any = inject('navManager');
+
+    this.setupTabState(ionRouter);
 
     ionRouter.registerHistoryChangeListener(() => {
       this.checkActiveTab.bind(this)(ionRouter, this.$data.tabVnodes)
