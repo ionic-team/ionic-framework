@@ -266,7 +266,7 @@ describe('Tabs', () => {
   });
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22847
-  it('should support nested tabs', () => {
+  it('should support dynamic tabs', () => {
     cy.visit('http://localhost:8080/tabs/tab1');
 
     cy.ionPageVisible('tab1');
