@@ -20,7 +20,7 @@ describe('Datetime a11y', () => {
             html: `<ion-item>
                 <ion-label>A11y Test</ion-label>
                 <ion-datetime></ion-datetime>
-            </ion-item`
+            </ion-item>`
         })
 
         const ariaLabelledBy = page.body.querySelector('ion-datetime').getAttribute('aria-labelledby');
