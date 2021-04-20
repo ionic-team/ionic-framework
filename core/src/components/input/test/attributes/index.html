@@ -46,6 +46,10 @@
           <ion-input id="input3" value="inputs"></ion-input>
         </ion-item>
 
+        <ion-item>
+          <ion-input id="input4" placeholder="No Label" aria-label="input4"></ion-input>
+        </ion-item>
+
         <ion-list>
           <ion-item>
             Number Test&nbsp;
@@ -58,6 +62,10 @@
           <ion-item>
             Default Test&nbsp;
             <span id="defaultInputResult"></span>
+          </ion-item>
+          <ion-item>
+            No Label Test&nbsp;
+            <span id="noLabelInputResult"></span>
           </ion-item>
         </ion-list>
 
@@ -73,6 +81,9 @@
 
       var defaultInput = checkInput('input3');
       updateResult(defaultInput, 'defaultInputResult');
+
+      var noLabelInput = checkInput('input4');
+      updateResult(noLabelInput, 'noLabelInputResult');
 
       // Update results of input
       function updateResult(result, resultId) {
@@ -121,6 +132,14 @@
             value: 'inputs',
             readonly: undefined,
             disabled: undefined
+          });
+        } else if (id === 'input4') {
+          return testAttributes(el, inputEl, {
+            id: 'input4',
+            type: undefined,
+            readonly: undefined,
+            disabled: undefined,
+            'aria-label': 'input4'
           });
         }
         return false;
