@@ -20,7 +20,7 @@ describe('Textarea a11y', () => {
             html: `<ion-item>
                 <ion-label>A11y Test</ion-label>
                 <ion-textarea></ion-textarea>
-            </ion-item`
+            </ion-item>`
         })
 
         const ariaLabelledBy = page.body.querySelector('ion-textarea textarea').getAttribute('aria-labelledby');
