@@ -25,7 +25,7 @@ describe('radio-group', () => {
   it('Spacebar should not deselect without allowEmptySelection', async () => {
     const page = await newE2EPage();
     await page.setContent(`
-      <ion-radio-group value="one" allow-empty-selection="false" >
+      <ion-radio-group value="one" allow-empty-selection="false">
         <ion-item>
           <ion-label>One</ion-label>
           <ion-radio id="one" value="one"></ion-radio>
