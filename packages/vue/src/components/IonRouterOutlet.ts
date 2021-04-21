@@ -55,16 +55,31 @@ export const IonRouterOutlet = defineComponent({
     // The base url for this router outlet
     let parentOutletPath: string;
 
-    watch(matchedRouteRef, (currentValue, previousValue) => {
+    /**
+     * We need to watch the route object
+     * to listen for navigation changes.
+     * Previously we had watched matchedRouteRef,
+     * but if you had a /page/:id route, going from
+     * page/1 to page/2 would not cause this callback
+     * to fire since the matchedRouteRef was the same.
+     */
+    watch([route, matchedRouteRef], ([currentRoute, currentMatchedRouteRef], [_, previousMatchedRouteRef]) => {
       /**
-       * We need to make sure that we are not re-rendering
-       * the same view if navigation changes in a sub-outlet.
-       * This is mainly for tabs when outlet 1 renders ion-tabs
-       * and outlet 2 renders the individual tab view. We don't
-       * want outlet 1 creating a new ion-tabs instance every time
-       * we switch tabs.
+       * If the matched route ref has changed,
+       * then we need to set up a new view item.
+       * If the matched route ref has not changed,
+       * it is possible that this is a parameterized URL
+       * change such as /page/1 to /page/2. In that case,
+       * we can assume that the `route` object has changed,
+       * but we should only set up a new view item in this outlet
+       * if that last matched view item matches our current matched
+       * view item otherwise if we had this in a nested outlet the
+       * parent outlet would re-render as well as the child page.
        */
-      if (currentValue !== previousValue) {
+      if (
+        currentMatchedRouteRef !== previousMatchedRouteRef ||
+        currentRoute.matched[currentRoute.matched.length - 1] === currentMatchedRouteRef
+      ) {
         setupViewItem(matchedRouteRef);
       }
     });
