@@ -312,6 +312,11 @@ button, a {
   flex: 1;
 }
 
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
+  align-self: center;
+}
+
 
 // Item Input
 // --------------------------------------------------

@@ -73,6 +73,17 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() download: string | undefined;
 
   /**
+   * The fill for the item. If "solid" it will have a background, if
+   * "outline" it will be transparent with a border.
+   */
+  @Prop() fill?: 'outline' | 'solid';
+
+  /**
+   * The shape of the item. If "round" it will have increased
+   * border radius.
+   */
+  @Prop() shape?: 'round';
+  /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
@@ -250,7 +261,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   render() {
-    const { detail, detailIcon, download, labelColorStyles, lines, disabled, href, rel, target, routerAnimation, routerDirection } = this;
+    const { detail, detailIcon, download, fill, labelColorStyles, lines, disabled, href, rel, shape, target, routerAnimation, routerDirection } = this;
     const childStyles = {};
     const mode = getIonMode(this);
     const clickable = this.isClickable();
@@ -284,6 +295,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item': true,
             [mode]: true,
             [`item-lines-${lines}`]: lines !== undefined,
+            [`item-fill-${fill}`]: fill !== undefined,
+            [`item-shape-${shape}`]: shape !== undefined,
             'item-disabled': disabled,
             'in-list': hostContext('ion-list', this.el),
             'item-multiple-inputs': this.multipleInputs,

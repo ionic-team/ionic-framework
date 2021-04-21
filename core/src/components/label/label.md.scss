@@ -48,6 +48,14 @@
   @include transform(translateY(50%), scale(.75));
 }
 
+// TODO Outline inputs only
+// @include transform(translateY(-5.75px), translateX(-32px), scale(.75));
+:host-context(.item-fill-outline.item-has-focus).label-floating,
+:host-context(.item-fill-outline.item-has-placeholder:not(.item-input)).label-floating,
+:host-context(.item-fill-outline.item-has-value).label-floating {
+  @include transform(translateY(-5.75px), scale(.75));
+}
+
 :host-context(.item-has-focus).label-stacked:not(.ion-color),
 :host-context(.item-has-focus).label-floating:not(.ion-color) {
   color: $label-md-text-color-focused;

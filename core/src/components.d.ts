@@ -1038,6 +1038,10 @@ export namespace Components {
          */
         "download": string | undefined;
         /**
+          * The fill for the item. If "solid" it will have a background, if "outline" it will be transparent with a border.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
         "href": string | undefined;
@@ -1061,6 +1065,10 @@ export namespace Components {
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection": RouterDirection;
+        /**
+          * The shape of the item. If "round" it will have increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
@@ -4467,6 +4475,10 @@ declare namespace LocalJSX {
          */
         "download"?: string | undefined;
         /**
+          * The fill for the item. If "solid" it will have a background, if "outline" it will be transparent with a border.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
         "href"?: string | undefined;
@@ -4490,6 +4502,10 @@ declare namespace LocalJSX {
           * When using a router, it specifies the transition direction when navigating to another page using `href`.
          */
         "routerDirection"?: RouterDirection;
+        /**
+          * The shape of the item. If "round" it will have increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * Specifies where to display the linked URL. Only applies when an `href` is provided. Special keywords: `"_blank"`, `"_self"`, `"_parent"`, `"_top"`.
          */
