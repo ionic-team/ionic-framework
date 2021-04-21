@@ -264,6 +264,27 @@ describe('Tabs', () => {
 
     cy.url().should('include', '/tabs/tab1');
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22847
+  it('should support dynamic tabs', () => {
+    cy.visit('http://localhost:8080/tabs/tab1');
+
+    cy.ionPageVisible('tab1');
+
+    cy.get('ion-tab-button').its('length').should('equal', 3);
+    cy.get('ion-tab-button#tab-button-tab1').should('have.class', 'tab-selected');
+
+    cy.get('#add-tab').click();
+
+    cy.get('ion-tab-button').its('length').should('equal', 4);
+
+    cy.get('ion-tab-button#tab-button-tab4').click();
+    cy.ionPageVisible('tab4');
+    cy.ionPageHidden('tab1');
+
+    cy.get('ion-tab-button#tab-button-tab1').should('not.have.class', 'tab-selected');
+    cy.get('ion-tab-button#tab-button-tab4').should('have.class', 'tab-selected');
+  });
 })
 
 describe('Tabs - Swipe to Go Back', () => {
