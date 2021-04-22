@@ -67,18 +67,19 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
       resetTab: this.props.onResetTab,
     };
 
-    this.handleIonBackButton = this.handleIonBackButton.bind(this);
-  }
-
-  componentDidMount() {
-    document.addEventListener('ionBackButton', this.handleIonBackButton);
+    if (typeof document !== 'undefined') {
+      this.handleHardwareBackButton = this.handleHardwareBackButton.bind(this);
+      document.addEventListener('ionBackButton', this.handleHardwareBackButton);
+    }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('ionBackButton', this.handleIonBackButton)
+    if (typeof document !== 'undefined') {
+      document.removeEventListener('ionBackButton', this.handleHardwareBackButton)
+    }
   }
 
-  handleIonBackButton(e: any) {
+  handleHardwareBackButton(e: any) {
     e.detail.register(0, (processNextHandler: () => void) => {
       this.nativeGoBack();
       processNextHandler();
