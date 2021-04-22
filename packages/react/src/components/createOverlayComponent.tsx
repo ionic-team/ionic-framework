@@ -2,7 +2,7 @@ import { OverlayEventDetail } from '@ionic/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { attachProps } from './utils';
+import { attachProps, setRef } from './utils';
 
 interface OverlayElement extends HTMLElement {
   present: () => Promise<void>;
@@ -32,7 +32,7 @@ export const createOverlayComponent = <
 
   type Props = OverlayComponent &
     ReactOverlayProps & {
-      forwardedRef?: React.RefObject<OverlayType>;
+      forwardedRef?: React.ForwardedRef<OverlayType>;
     };
 
   let isDismissing = false;
@@ -69,9 +69,7 @@ export const createOverlayComponent = <
       if (this.props.onDidDismiss) {
         this.props.onDidDismiss(event);
       }
-      if (this.props.forwardedRef) {
-        (this.props.forwardedRef as any).current = undefined;
-      }
+      setRef(this.props.forwardedRef, null)
     }
 
     shouldComponentUpdate(nextProps: Props) {
@@ -132,10 +130,7 @@ export const createOverlayComponent = <
         componentProps: {},
       });
 
-      if (this.props.forwardedRef) {
-        (this.props.forwardedRef as any).current = this.overlay;
-      }
-
+      setRef(this.props.forwardedRef, this.overlay);
       attachProps(this.overlay, elementProps, prevProps);
 
       await this.overlay.present();

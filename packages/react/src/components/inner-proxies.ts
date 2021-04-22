@@ -18,7 +18,7 @@ export const IonBackButtonInner = /*@__PURE__*/ createReactComponent<
 export const IonRouterOutletInner = /*@__PURE__*/ createReactComponent<
   JSX.IonRouterOutlet & {
     setRef?: (val: HTMLIonRouterOutletElement) => void;
-    forwardedRef?: React.RefObject<HTMLIonRouterOutletElement>;
+    forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
   },
   HTMLIonRouterOutletElement
 >('ion-router-outlet');
