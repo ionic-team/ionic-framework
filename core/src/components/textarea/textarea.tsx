@@ -363,7 +363,7 @@ export class Textarea implements ComponentInterface {
         >
           <textarea
             class="native-textarea"
-            aria-labelledby={labelId}
+            aria-labelledby={label ? labelId : null}
             ref={el => this.nativeInput = el}
             autoCapitalize={this.autocapitalize}
             autoFocus={this.autofocus}

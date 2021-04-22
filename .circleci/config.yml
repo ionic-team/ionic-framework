@@ -458,7 +458,7 @@ jobs:
           command: npm install --legacy-peer-deps
           working_directory: /tmp/workspace/angular/test/test-app
       - run:
-          command: npm run test -- --protractor-config=e2e/protractor-ci.conf.js
+          command: npm run test
           working_directory: /tmp/workspace/angular/test/test-app
 
   install-vue-test-app:

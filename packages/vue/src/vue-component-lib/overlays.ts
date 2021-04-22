@@ -9,7 +9,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
   /**
    * Vue 3.0.6 fixed a bug where events on custom elements
    * were always converted to lower case, so "ionRefresh"
-   * became "ionRefresh". We need to account for the old
+   * became "ionrefresh". We need to account for the old
    * issue as well as the new behavior where "ionRefresh"
    * is converted to "ion-refresh".
    * See https://github.com/vuejs/vue-next/pull/2847
