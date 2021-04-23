@@ -85,9 +85,19 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
         return;
       }
 
+      /**
+       * These are getting passed as props.
+       * Potentially a Vue bug with Web Components?
+       */
+      const restOfProps = { ...(props as any) };
+      delete restOfProps.onWillPresent;
+      delete restOfProps.onDidPresent;
+      delete restOfProps.onWillDismiss;
+      delete restOfProps.onDidDismiss;
+
       const component = slots.default && slots.default()[0];
       overlay.value = controller.create({
-        ...props,
+        ...restOfProps,
         component
       });
 
