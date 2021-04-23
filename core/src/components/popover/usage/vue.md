@@ -60,7 +60,7 @@ Developers can also use this component directly in their template:
     css-class="my-custom-class"
     :event="event"
     :translucent="true"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
     <Popover></Popover>
   </ion-popover>

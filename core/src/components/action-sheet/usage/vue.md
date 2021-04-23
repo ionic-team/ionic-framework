@@ -76,7 +76,7 @@ Developers can also use this component directly in their template:
     header="Albums"
     css-class="my-custom-class"
     :buttons="buttons"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-action-sheet>
 </template>

@@ -334,7 +334,7 @@ Developers can also use this component directly in their template:
     :is-open="isOpenRef"
     message="Your settings have been saved."
     :duration="2000"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-toast>
 </template>
