@@ -50,9 +50,14 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
       element.classList.add('overlay-hidden');
 
-      // convert the passed in overlay options into props
-      // that get passed down into the new overlay
-      Object.assign(element, opts);
+      /**
+       * Convert the passed in overlay options into props
+       * that get passed down into the new overlay.
+       * Inline is needed for ion-popover as it can
+       * be presented via a controller or written
+       * inline in a template.
+       */
+      Object.assign(element, { ...opts, inline: false });
 
       // append the overlay element to the document body
       getAppRoot(document).appendChild(element);

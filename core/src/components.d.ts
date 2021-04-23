@@ -1660,7 +1660,7 @@ export namespace Components {
         /**
           * The component to display inside of the popover.
          */
-        "component": ComponentRef;
+        "component"?: ComponentRef;
         /**
           * The data to pass to the popover component.
          */
@@ -1684,6 +1684,11 @@ export namespace Components {
           * The event to pass to the popover animation.
          */
         "event": any;
+        "inline": boolean;
+        /**
+          * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -4992,7 +4997,7 @@ declare namespace LocalJSX {
         /**
           * The component to display inside of the popover.
          */
-        "component": ComponentRef;
+        "component"?: ComponentRef;
         /**
           * The data to pass to the popover component.
          */
@@ -5010,6 +5015,11 @@ declare namespace LocalJSX {
           * The event to pass to the popover animation.
          */
         "event"?: any;
+        "inline"?: boolean;
+        /**
+          * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */

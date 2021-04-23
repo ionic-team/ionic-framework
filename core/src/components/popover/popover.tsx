@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
@@ -11,6 +11,29 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+
+const CoreDelegate = () => {
+  let Cmp: any;
+  const attachViewToDom = (parentElement: HTMLElement) => {
+    Cmp = parentElement.closest('ion-popover');
+    const app = document.querySelector('ion-app') || document.body;
+
+    if (app && Cmp) {
+      app.appendChild(Cmp);
+    }
+
+    return Cmp;
+  }
+
+  const removeViewFromDom = () => {
+    if (Cmp) {
+      Cmp.remove();
+    }
+    return Promise.resolve();
+  }
+
+  return { attachViewToDom, removeViewFromDom }
+}
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -26,11 +49,19 @@ import { mdLeaveAnimation } from './animations/md.leave';
 export class Popover implements ComponentInterface, OverlayInterface {
 
   private usersElement?: HTMLElement;
+  private popoverIndex = popoverIds++;
+  private popoverId?: string;
+  private coreDelegate: FrameworkDelegate = CoreDelegate();
+  private currentTransition?: Promise<any>;
 
-  presented = false;
   lastFocus?: HTMLElement;
 
+  @State() presented = false;
+
   @Element() el!: HTMLIonPopoverElement;
+
+  /** @internal */
+  @Prop() inline = true;
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -51,7 +82,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
   /**
    * The component to display inside of the popover.
    */
-  @Prop() component!: ComponentRef;
+  @Prop() component?: ComponentRef;
 
   /**
    * The data to pass to the popover component.
@@ -97,6 +128,24 @@ export class Popover implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
+   * If `true`, the popover will open. If `false`, the popover will close.
+   * Use this if you need finer grained control over presentation, otherwise
+   * just use the popoverController or the `trigger` property.
+   * Note: `isOpen` will not automatically be set back to `false` when
+   * the popover dismisses. You will need to do that in your code.
+   */
+  @Prop() isOpen = false;
+
+  @Watch('isOpen')
+  onIsOpenChange(newValue: boolean, oldValue: boolean) {
+    if (newValue === true && oldValue === false) {
+      this.present();
+    } else if (newValue === false && oldValue === true) {
+      this.dismiss();
+    }
+  }
+
+  /**
    * Emitted after the popover has presented.
    */
   @Event({ eventName: 'ionPopoverDidPresent' }) didPresent!: EventEmitter<void>;
@@ -120,6 +169,14 @@ export class Popover implements ComponentInterface, OverlayInterface {
     prepareOverlay(this.el);
   }
 
+  componentWillLoad() {
+    /**
+     * If user has custom ID set then we should
+     * not assign the default incrementing ID.
+     */
+    this.popoverId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-popover-${this.popoverIndex}`;
+  }
+
   /**
    * Present the popover overlay after it has been created.
    */
@@ -128,6 +185,19 @@ export class Popover implements ComponentInterface, OverlayInterface {
     if (this.presented) {
       return;
     }
+
+    /**
+     * When using an inline popover
+     * and dismissing a popover it is possible to
+     * quickly present the popover while it is
+     * dismissing. We need to await any current
+     * transition to allow the dismiss to finish
+     * before presenting again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
     const container = this.el.querySelector('.popover-content');
     if (!container) {
       throw new Error('container is undefined');
@@ -138,7 +208,12 @@ export class Popover implements ComponentInterface, OverlayInterface {
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['popover-viewport', (this.el as any)['s-sc']], data);
     await deepReady(this.usersElement);
-    return present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.event);
+
+    this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.event);
+
+    await this.currentTransition;
+
+    this.currentTransition = undefined;
   }
 
   /**
@@ -149,10 +224,26 @@ export class Popover implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    const shouldDismiss = await dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.event);
+    /**
+     * When using an inline popover
+     * and presenting a popover it is possible to
+     * quickly dismiss the popover while it is
+     * presenting. We need to await any current
+     * transition to allow the present to finish
+     * before dismissing again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
+    this.currentTransition = dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.event);
+    const shouldDismiss = await this.currentTransition;
     if (shouldDismiss) {
       await detachComponent(this.delegate, this.usersElement);
     }
+
+    this.currentTransition = undefined;
+
     return shouldDismiss;
   }
 
@@ -210,7 +301,9 @@ export class Popover implements ComponentInterface, OverlayInterface {
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,
-          'popover-translucent': this.translucent
+          'popover-translucent': this.translucent,
+          'overlay-hidden': true,
+          'popover-interactive': presented,
         }}
         onIonPopoverDidPresent={onLifecycle}
         onIonPopoverWillPresent={onLifecycle}
@@ -225,7 +318,9 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
         <div class="popover-wrapper ion-overlay-wrapper">
           <div class="popover-arrow"></div>
-          <div class="popover-content"></div>
+          <div class="popover-content">
+            <slot></slot>
+          </div>
         </div>
 
         <div tabindex="0"></div>
@@ -240,3 +335,5 @@ const LIFECYCLE_MAP: any = {
   'ionPopoverWillDismiss': 'ionViewWillLeave',
   'ionPopoverDidDismiss': 'ionViewDidLeave',
 };
+
+let popoverIds = 0;

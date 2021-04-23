@@ -37,6 +37,13 @@
   color: $popover-text-color;
 
   z-index: $z-index-overlay;
+
+  pointer-events: none;
+}
+
+:host(.popover-interactive) .popover-content,
+:host(.popover-interactive) ion-backdrop {
+  pointer-events: auto;
 }
 
 :host(.overlay-hidden) {
