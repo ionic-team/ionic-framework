@@ -206,7 +206,15 @@ export class Popover implements ComponentInterface, OverlayInterface {
       ...this.componentProps,
       popover: this.el
     };
-    this.usersElement = await attachComponent(this.delegate, container, this.component, ['popover-viewport', (this.el as any)['s-sc']], data);
+
+    /**
+     * If using popover inline
+     * we potentially need to use the coreDelegate
+     * so that this works in vanilla JS apps
+     */
+    const delegate = (this.inline) ? this.delegate || this.coreDelegate : this.delegate;
+
+    this.usersElement = await attachComponent(delegate, container, this.component, ['popover-viewport', (this.el as any)['s-sc']], data, this.inline);
     await deepReady(this.usersElement);
 
     this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.event);
@@ -289,7 +297,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle } = this;
+    const { onLifecycle, presented, popoverId } = this;
     return (
       <Host
         aria-modal="true"
@@ -298,6 +306,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
+        id={popoverId}
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,

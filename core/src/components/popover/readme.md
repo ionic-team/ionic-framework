@@ -2,9 +2,52 @@
 
 A Popover is a dialog that appears on top of the current page. It can be used for anything, but generally it is used for overflow actions that don't fit in the navigation bar.
 
-## Presenting
+There are two ways to use `ion-popover`: inline or via the `popoverController`. Each method comes with different considerations, so be sure to use the approach that best fits your use case.
 
-To present a popover, call the `present` method on a popover instance. In order to position the popover relative to the element clicked, a click event needs to be passed into the options of the the `present` method. If the event is not passed, the popover will be positioned in the center of the viewport.
+## Inline Popovers
+
+`ion-popover` can be used by writing the component directly in your template. This reduces the number of handlers you need to wire up in order to present the popover. See [Usage](#usage) for an example of how to write a popover inline. 
+
+Liam: Usage will be filled out via desktop popover PR.
+
+### When to use
+
+Liam: Will be filled out via desktop popover PR.
+
+## Controller Popovers
+
+`ion-popover` can also be presented programmatically by using the `popoverController` imported from Ionic Framework. This allows you to have complete control over when a popover is presented above and beyond the customization that inline popovers give you. See [Usage](#usage) for an example of how to use the `popoverController`.
+
+Liam: Usage will be filled out via desktop popover PR.
+
+
+### When to use
+
+Liam: Will be filled out via desktop popover PR.
+
+## Interfaces
+
+Below you will find all of the options available to you when using the `popoverController`. These options should be supplied when calling `popoverController.create()`.
+
+```typescript
+interface PopoverOptions {
+  component: any;
+  componentProps?: { [key: string]: any };
+  showBackdrop?: boolean;
+  backdropDismiss?: boolean;
+  translucent?: boolean;
+  cssClass?: string | string[];
+  event?: Event;
+  animated?: boolean;
+
+  mode?: 'ios' | 'md';
+  keyboardClose?: boolean;
+  id?: string;
+
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
+}
+```
 
 ## Customization
 
