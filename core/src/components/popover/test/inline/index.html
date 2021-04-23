@@ -20,7 +20,7 @@
       <ion-content class="ion-padding">
         <ion-button onclick="openPopover(event)">Open Popover</ion-button>
 
-        <ion-popover>
+        <ion-popover is-open="true">
           <ion-content class="ion-padding">
             This is my inline popover content!
           </ion-content>
@@ -33,12 +33,12 @@
       const openPopover = (ev) => {
         popover.isOpen = true;
         popover.event = ev;
-
-        popover.addEventListener('didDismiss', () => {
-          popover.isOpen = false;
-          popover.event = undefined;
-        });
       }
+
+      popover.addEventListener('didDismiss', () => {
+        popover.isOpen = false;
+        popover.event = undefined;
+      });
     </script>
 
   </body>

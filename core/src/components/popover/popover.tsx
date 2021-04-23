@@ -6,6 +6,7 @@ import { attachComponent, detachComponent } from '../../utils/framework-delegate
 import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
+import { raf } from '../../utils/helpers';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -199,6 +200,16 @@ export class Popover implements ComponentInterface, OverlayInterface {
      * not assign the default incrementing ID.
      */
     this.popoverId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-popover-${this.popoverIndex}`;
+  }
+
+  componentDidLoad() {
+    /**
+     * If popover was rendered with isOpen="true"
+     * then we should open popover immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
   }
 
   /**
