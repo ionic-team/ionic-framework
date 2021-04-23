@@ -841,10 +841,14 @@ ion-popover,method,dismiss,dismiss(data?: any, role?: string | undefined) => Pro
 ion-popover,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-popover,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-popover,method,present,present() => Promise<void>
+ion-popover,event,didDismiss,OverlayEventDetail<any>,true
+ion-popover,event,didPresent,void,true
 ion-popover,event,ionPopoverDidDismiss,OverlayEventDetail<any>,true
 ion-popover,event,ionPopoverDidPresent,void,true
 ion-popover,event,ionPopoverWillDismiss,OverlayEventDetail<any>,true
 ion-popover,event,ionPopoverWillPresent,void,true
+ion-popover,event,willDismiss,OverlayEventDetail<any>,true
+ion-popover,event,willPresent,void,true
 ion-popover,css-prop,--backdrop-opacity
 ion-popover,css-prop,--background
 ion-popover,css-prop,--box-shadow

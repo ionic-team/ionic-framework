@@ -542,6 +542,26 @@ export class IonNote {
     this.el = r.nativeElement;
   }
 }
+export declare interface IonPopover extends Components.IonPopover {
+}
+@ProxyCmp({ inputs: ["animated", "backdropDismiss", "component", "componentProps", "cssClass", "enterAnimation", "event", "isOpen", "keyboardClose", "leaveAnimation", "mode", "showBackdrop", "translucent"], "methods": ["present", "dismiss", "onDidDismiss", "onWillDismiss"] })
+@Component({ selector: "ion-popover", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["animated", "backdropDismiss", "component", "componentProps", "cssClass", "enterAnimation", "event", "isOpen", "keyboardClose", "leaveAnimation", "mode", "showBackdrop", "translucent"] })
+export class IonPopover {
+  ionPopoverDidPresent!: EventEmitter<CustomEvent>;
+  ionPopoverWillPresent!: EventEmitter<CustomEvent>;
+  ionPopoverWillDismiss!: EventEmitter<CustomEvent>;
+  ionPopoverDidDismiss!: EventEmitter<CustomEvent>;
+  didPresent!: EventEmitter<CustomEvent>;
+  willPresent!: EventEmitter<CustomEvent>;
+  willDismiss!: EventEmitter<CustomEvent>;
+  didDismiss!: EventEmitter<CustomEvent>;
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ["ionPopoverDidPresent", "ionPopoverWillPresent", "ionPopoverWillDismiss", "ionPopoverDidDismiss", "didPresent", "willPresent", "willDismiss", "didDismiss"]);
+  }
+}
 export declare interface IonProgressBar extends Components.IonProgressBar {
 }
 @ProxyCmp({ inputs: ["buffer", "color", "mode", "reversed", "type", "value"] })
