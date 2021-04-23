@@ -1,27 +1,11 @@
-import { defineComponent, h, ref, VNode, getCurrentInstance } from 'vue';
-import { needsKebabCase } from '../utils';
+import { defineComponent, h, ref, VNode } from 'vue';
 
 export interface OverlayProps {
   isOpen?: boolean;
 }
 
 export const defineOverlayContainer = <Props extends object>(name: string, componentProps: string[] = [], controller: any) => {
-  /**
-   * Vue 3.0.6 fixed a bug where events on custom elements
-   * were always converted to lower case, so "ionRefresh"
-   * became "ionrefresh". We need to account for the old
-   * issue as well as the new behavior where "ionRefresh"
-   * is converted to "ion-refresh".
-   * See https://github.com/vuejs/vue-next/pull/2847
-   */
-  const eventPrefix = name.toLowerCase().split('-').join('');
-  const lowerCaseListeners = [
-    { componentEv: `${eventPrefix}willpresent`, frameworkEv: 'willPresent' },
-    { componentEv: `${eventPrefix}didpresent`, frameworkEv: 'didPresent' },
-    { componentEv: `${eventPrefix}willdismiss`, frameworkEv: 'willDismiss' },
-    { componentEv: `${eventPrefix}diddismiss`, frameworkEv: 'didDismiss' },
-  ];
-  const kebabCaseListeners = [
+  const eventListeners = [
     { componentEv: `${name}-will-present`, frameworkEv: 'willPresent' },
     { componentEv: `${name}-did-present`, frameworkEv: 'didPresent' },
     { componentEv: `${name}-will-dismiss`, frameworkEv: 'willDismiss' },
@@ -29,9 +13,6 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
   ];
 
   const Container = defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
-    const instance = getCurrentInstance();
-    const adjustedEventListeners = needsKebabCase(instance.appContext.app.version) ? kebabCaseListeners : lowerCaseListeners;
-
     const overlay = ref();
     const onVnodeMounted = async () => {
       const isOpen = props.isOpen;
@@ -103,7 +84,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, compo
 
       overlay.value = await overlay.value;
 
-      adjustedEventListeners.forEach(eventListener => {
+      eventListeners.forEach(eventListener => {
         overlay.value.addEventListener(eventListener.componentEv, () => {
           emit(eventListener.frameworkEv);
         });
