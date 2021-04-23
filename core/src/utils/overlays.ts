@@ -253,7 +253,7 @@ export const present = async (
   }
   overlay.presented = true;
   overlay.willPresent.emit();
-  overlay.willPresentShorthand && overlay.willPresentShorthand.emit();
+  overlay.willPresentShorthand?.emit();
 
   const mode = getIonMode(overlay);
   // get the user's animation fn if one was provided
@@ -264,7 +264,7 @@ export const present = async (
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
     overlay.didPresent.emit();
-    overlay.didPresentShorthand && overlay.didPresentShorthand.emit();
+    overlay.didPresentShorthand?.emit();
 
   }
 
@@ -327,7 +327,7 @@ export const dismiss = async (
     // Overlay contents should not be clickable during dismiss
     overlay.el.style.setProperty('pointer-events', 'none');
     overlay.willDismiss.emit({ data, role });
-    overlay.willDismissShorthand && overlay.willDismissShorthand.emit({ data, role });
+    overlay.willDismissShorthand?.emit({ data, role });
 
     const mode = getIonMode(overlay);
     const animationBuilder = (overlay.leaveAnimation)
@@ -339,7 +339,7 @@ export const dismiss = async (
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     }
     overlay.didDismiss.emit({ data, role });
-    overlay.didDismissShorthand && overlay.didDismissShorthand.emit({ data, role });
+    overlay.didDismissShorthand?.emit({ data, role });
 
     activeAnimations.delete(overlay);
 

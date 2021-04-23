@@ -8,15 +8,16 @@ describe('Overlays', () => {
 
   for (let overlay of overlays) {
     it(`should open and close ${overlay} via controller`, () => {
+      const selector = `.${overlay}-controller`;
       cy.get(`ion-radio#${overlay}`).click();
       cy.get('ion-radio#controller').click();
 
       cy.get('ion-button#present-overlay').click();
-      cy.get(overlay).should('exist').should('be.visible');
+      cy.get(selector).should('exist').should('be.visible');
 
-      cy.get(`${overlay} ion-backdrop`).click({ force: true });
+      cy.get(`${selector} ion-backdrop`).click({ force: true });
 
-      cy.get(overlay).should('not.exist');
+      cy.get(selector).should('not.exist');
     });
   }
 
