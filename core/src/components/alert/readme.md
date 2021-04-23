@@ -1664,7 +1664,7 @@ Developers can also use this component directly in their template:
     message="This is an alert message."
     css-class="my-custom-class"
     :buttons="buttons"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
   </ion-alert>
 </template>

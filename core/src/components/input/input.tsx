@@ -234,7 +234,7 @@ export class Input implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['tabindex', 'title']);
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label', 'tabindex', 'title']);
   }
 
   connectedCallback() {
@@ -408,7 +408,7 @@ export class Input implements ComponentInterface {
         <input
           class="native-input"
           ref={input => this.nativeInput = input}
-          aria-labelledby={labelId}
+          aria-labelledby={label ? labelId : null}
           disabled={this.disabled}
           accept={this.accept}
           autoCapitalize={this.autocapitalize}

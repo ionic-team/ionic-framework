@@ -88,7 +88,19 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
       const prevInfo = locationHistory.findLastLocation(routeInfo);
       if (prevInfo) {
         incomingRouteParams = { ...prevInfo, routerAction: 'pop', routerDirection: 'back', routerAnimation: routerAnimation || routeInfo.routerAnimation };
-        if (routeInfo.lastPathname === routeInfo.pushedByRoute || prevInfo.pathname === routeInfo.pushedByRoute) {
+        if (
+          routeInfo.lastPathname === routeInfo.pushedByRoute ||
+          (
+            /**
+             * We need to exclude tab switches/tab
+             * context changes here because tabbed
+             * navigation is not linear, but router.back()
+             * will go back in a linear fashion.
+             */
+            prevInfo.pathname === routeInfo.pushedByRoute &&
+            routeInfo.tab === '' && prevInfo.tab === ''
+          )
+        ) {
           router.back();
         } else {
           router.replace({ path: prevInfo.pathname, query: parseQuery(prevInfo.search) });

@@ -22,7 +22,7 @@ interface IonIconProps {
 }
 
 type InternalProps = IonIconProps & {
-  forwardedRef?: React.RefObject<HTMLIonIconElement>;
+  forwardedRef?: React.ForwardedRef<HTMLIonIconElement>;
 };
 
 class IonIconContainer extends React.PureComponent<InternalProps> {

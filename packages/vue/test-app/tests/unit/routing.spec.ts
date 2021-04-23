@@ -358,4 +358,39 @@ describe('Routing', () => {
     const cmpAgain = wrapper.findComponent(Page1);
     expect(cmpAgain.props()).toEqual({ title: 'abc Title' });
   });
+
+  // Verifies fix for https://github.com/ionic-team/ionic-framework/pull/23189
+  it('should update props on a parameterized url', async () => {
+    const Page = {
+      props: {
+        id: { type: String, default: 'Default ID' }
+      },
+      components: { IonPage },
+      template: `<ion-page>{{ $props.id }}</ion-page>`
+    }
+
+    const router = createRouter({
+      history: createWebHistory(process.env.BASE_URL),
+      routes: [
+        { path: '/page/:id', component: Page, props: true },
+        { path: '/', redirect: '/page/1' }
+      ]
+    });
+
+    router.push('/');
+    await router.isReady();
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router, IonicVue]
+      }
+    });
+
+    const page = wrapper.findComponent(Page);
+    expect(page.props()).toEqual({ id: '1' });
+
+    router.push('/page/2');
+    await waitForRouter();
+
+    expect(page.props()).toEqual({ id: '2' });
+  });
 });
