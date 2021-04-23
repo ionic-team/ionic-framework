@@ -5033,6 +5033,14 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted after the popover has dismissed. Shorthand for ionPopoverDidDismiss.
+         */
+        "onDidDismiss"?: (event: CustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the popover has presented. Shorthand for ionPopoverWillDismiss.
+         */
+        "onDidPresent"?: (event: CustomEvent<void>) => void;
+        /**
           * Emitted after the popover has dismissed.
          */
         "onIonPopoverDidDismiss"?: (event: CustomEvent<OverlayEventDetail>) => void;
@@ -5048,6 +5056,14 @@ declare namespace LocalJSX {
           * Emitted before the popover has presented.
          */
         "onIonPopoverWillPresent"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted before the popover has dismissed. Shorthand for ionPopoverWillDismiss.
+         */
+        "onWillDismiss"?: (event: CustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the popover has presented. Shorthand for ionPopoverWillPresent.
+         */
+        "onWillPresent"?: (event: CustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the popover.

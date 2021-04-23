@@ -34,7 +34,7 @@
         popover.isOpen = true;
         popover.event = ev;
 
-        popover.addEventListener('ionPopoverDidDismiss', () => {
+        popover.addEventListener('didDismiss', () => {
           popover.isOpen = false;
           popover.event = undefined;
         });

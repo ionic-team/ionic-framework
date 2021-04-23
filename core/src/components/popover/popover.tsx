@@ -165,6 +165,30 @@ export class Popover implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionPopoverDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted after the popover has presented.
+   * Shorthand for ionPopoverWillDismiss.
+   */
+  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the popover has presented.
+   * Shorthand for ionPopoverWillPresent.
+   */
+  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the popover has dismissed.
+   * Shorthand for ionPopoverWillDismiss.
+   */
+  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the popover has dismissed.
+   * Shorthand for ionPopoverDidDismiss.
+   */
+  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
   connectedCallback() {
     prepareOverlay(this.el);
   }
