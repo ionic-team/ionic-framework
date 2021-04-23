@@ -26,6 +26,7 @@ export class Content implements ComponentInterface {
   private cTop = -1;
   private cBottom = -1;
   private scrollEl!: HTMLElement;
+  private isMainContent = true;
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
   // V8 will be able to inline any read/write to it since it's a monomorphic class.
@@ -103,6 +104,10 @@ export class Content implements ComponentInterface {
    * Emitted when the scroll has ended.
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
+
+  connectedCallback() {
+    this.isMainContent = this.el.closest('ion-menu, ion-popover, ion-modal') === null;
+  }
 
   disconnectedCallback() {
     this.onScrollEnd();
@@ -303,10 +308,11 @@ export class Content implements ComponentInterface {
   }
 
   render() {
-    const { scrollX, scrollY } = this;
+    const { isMainContent, scrollX, scrollY } = this;
     const mode = getIonMode(this);
     const forceOverscroll = this.shouldForceOverscroll();
     const transitionShadow = mode === 'ios';
+    const TagType = isMainContent ? 'main' : 'div' as any;
 
     this.resize();
 
@@ -323,19 +329,19 @@ export class Content implements ComponentInterface {
         }}
       >
         <div id="background-content" part="background"></div>
-        <main
+        <TagType
           class={{
             'inner-scroll': true,
             'scroll-x': scrollX,
             'scroll-y': scrollY,
             'overscroll': (scrollX || scrollY) && forceOverscroll
           }}
-          ref={el => this.scrollEl = el!}
-          onScroll={(this.scrollEvents) ? ev => this.onScroll(ev) : undefined}
+          ref={(el: HTMLElement) => this.scrollEl = el!}
+          onScroll={(this.scrollEvents) ? (ev: UIEvent) => this.onScroll(ev) : undefined}
           part="scroll"
         >
           <slot></slot>
-        </main>
+        </TagType>
 
         {transitionShadow ? (
           <div class="transition-effect">

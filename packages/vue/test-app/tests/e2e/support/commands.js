@@ -47,12 +47,6 @@ Cypress.Commands.add('ionPageVisible', (pageId) => {
     .should('have.length', 1)
 })
 
-Cypress.Commands.add('ionPageInvisible', (pageId) => {
-  cy.get(`div.ion-page[data-pageid=${pageId}]`)
-    .should('have.class', 'ion-page-invisible')
-    .should('have.length', 1)
-})
-
 Cypress.Commands.add('ionPageHidden', (pageId) => {
   cy.get(`div.ion-page[data-pageid=${pageId}]`)
     .should('have.class', 'ion-page-hidden')
