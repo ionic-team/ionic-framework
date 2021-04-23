@@ -109,6 +109,7 @@
       </ion-modal>
 
       <ion-popover
+        css-class="popover-inline"
         :is-open="isPopoverOpen"
         :event="popoverEvent"
         @didDismiss="setPopoverRef(false)"

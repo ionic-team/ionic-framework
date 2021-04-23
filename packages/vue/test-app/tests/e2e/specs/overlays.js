@@ -84,9 +84,9 @@ describe('Overlays', () => {
     cy.get('ion-radio#controller').click();
 
     cy.get('ion-button#present-overlay').click();
-    cy.get('ion-popover').should('exist');
+    cy.get('ion-popover.ion-popover-controller').should('exist');
 
-    cy.get('ion-popover ion-content').should('have.text', 'Custom Title');
+    cy.get('ion-popover.ion-popover-controller ion-content').should('have.text', 'Custom Title');
   });
 
   it('should pass props to popover via component', () => {
@@ -96,7 +96,7 @@ describe('Overlays', () => {
     cy.get('ion-button#present-overlay').click();
     cy.get('ion-popover').should('exist');
 
-    cy.get('ion-popover ion-content').should('have.text', 'Custom Title');
+    cy.get('ion-popover.popover-inline ion-content').should('have.text', 'Custom Title');
   });
 
   it('should only open one instance at a time when props change quickly on component', () => {
