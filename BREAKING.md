@@ -196,7 +196,7 @@ This applies to the following components: `ion-action-sheet`, `ion-alert`, `ion-
 Vue v3.0.6 or newer is required.
 
 ```
-npm install vue@next
+npm install vue@3
 ```
 
 
