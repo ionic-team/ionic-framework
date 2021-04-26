@@ -456,33 +456,6 @@ export const IonNote = /*@__PURE__*/ defineContainer<JSX.IonNote>('ion-note', [
 ]);
 
 
-export const IonPopover = /*@__PURE__*/ defineContainer<JSX.IonPopover>('ion-popover', [
-  'inline',
-  'delegate',
-  'overlayIndex',
-  'enterAnimation',
-  'leaveAnimation',
-  'component',
-  'componentProps',
-  'keyboardClose',
-  'cssClass',
-  'backdropDismiss',
-  'event',
-  'showBackdrop',
-  'translucent',
-  'animated',
-  'isOpen',
-  'ionPopoverDidPresent',
-  'ionPopoverWillPresent',
-  'ionPopoverWillDismiss',
-  'ionPopoverDidDismiss',
-  'didPresent',
-  'willPresent',
-  'willDismiss',
-  'didDismiss'
-]);
-
-
 export const IonProgressBar = /*@__PURE__*/ defineContainer<JSX.IonProgressBar>('ion-progress-bar', [
   'type',
   'reversed',

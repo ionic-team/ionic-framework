@@ -82,6 +82,7 @@ export const config: Config = {
         'ion-loading',
         'ion-modal',
         'ion-picker',
+        'ion-popover',
         'ion-toast',
 
         'ion-app',
