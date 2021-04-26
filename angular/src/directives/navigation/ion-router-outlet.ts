@@ -159,7 +159,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
          * leaving and then going back to the tab context.
          */
         const primaryOutlet = this.activatedView.savedData.get('primary');
-        if (primaryOutlet) {
+        if (primaryOutlet && context.route) {
           primaryOutlet.route = { ...context.route };
         }
 
