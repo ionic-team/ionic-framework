@@ -147,15 +147,27 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   deactivate(): void {
     if (this.activated) {
       if (this.activatedView) {
-        this.activatedView.savedData = new Map(this.getContext()!.children['contexts']);
+        const context = this.getContext()!;
+        this.activatedView.savedData = new Map(context.children['contexts']);
+
+        /**
+         * Angular v11.2.10 introduced a change
+         * where this route context is cleared out when
+         * a router-outlet is deactivated, However,
+         * we need this route information in order to
+         * return a user back to the correct tab when
+         * leaving and then going back to the tab context.
+         */
+        const primaryOutlet = this.activatedView.savedData.get('primary');
+        if (primaryOutlet && context.route) {
+          primaryOutlet.route = { ...context.route };
+        }
 
         /**
          * Ensure we are saving the NavigationExtras
          * data otherwise it will be lost
          */
         this.activatedView.savedExtras = {};
-        const context = this.getContext()!;
-
         if (context.route) {
           const contextSnapshot = context.route.snapshot;
 
