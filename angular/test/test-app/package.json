@@ -36,7 +36,7 @@
     "core-js": "^2.6.11",
     "express": "^4.15.2",
     "rxjs": "^6.5.5",
-    "tslib": "^1.13.0",
+    "tslib": "^2.0.0",
     "zone.js": "^0.10.3"
   },
   "devDependencies": {
