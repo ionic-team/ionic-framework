@@ -1,20 +1,7 @@
 const port = 3000;
 
-describe('Unmounting and remounting routers', () => {
-  /*
-    Tests router navigation when there are multiple
-    IonReactRouter components that are mounted at different times
-    Fixes bug https://github.com/ionic-team/ionic-framework/issues/23170
-  */
- 
+describe('Android hardware back button', () => { 
   it('The hardware back button should only travel back one page at a time', () => {
-    cy.visit(`http://localhost:${port}/`);
-    cy.ionPageVisible('main');
-    cy.ionNav('ion-button', 'Swap Mounted Router')
-    cy.ionPageVisible('unmounted');
-    cy.ionNav('ion-button', 'Swap Mounted Router')
-    cy.ionPageVisible('main');
-
     /*
       The following is copied from ./routing.spec.js
       cy.ionBackClick is replaced with cy.ionHardwareBackEvent
