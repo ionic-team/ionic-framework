@@ -143,10 +143,6 @@ export const IonPickerColumn = /*@__PURE__*/ createReactComponent<
   JSX.IonPickerColumn,
   HTMLIonPickerColumnElement
 >('ion-picker-column');
-export const IonPopover = /*@__PURE__*/ createReactComponent<
-  JSX.IonPopover,
-  HTMLIonPopoverElement
->('ion-popover');
 export const IonNav = /*@__PURE__*/ createReactComponent<JSX.IonNav, HTMLIonNavElement>('ion-nav');
 export const IonProgressBar = /*@__PURE__*/ createReactComponent<
   JSX.IonProgressBar,

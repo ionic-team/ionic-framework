@@ -47,6 +47,7 @@ export { IonPicker } from './IonPicker';
 // createOverlayComponent
 export * from './IonActionSheet';
 export { IonModal } from './IonModal';
+export { IonPopover } from './IonPopover';
 
 // Custom Components
 export { IonPage } from './IonPage';
