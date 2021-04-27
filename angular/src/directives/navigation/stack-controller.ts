@@ -164,10 +164,13 @@ export class StackController {
       if (views.length <= deep) {
         return Promise.resolve(false);
       }
-      const view = views[views.length - deep - 1];
+      let view = views[views.length - deep - 1];
+      let viewSavedData = view.savedData;
+      while (viewSavedData.get('primary')) {
+        view = viewSavedData.get('primary').outlet.stackCtrl.activeView;
+        viewSavedData = view.savedData;
+      }
       let url = view.url;
-
-      const viewSavedData = view.savedData;
       if (viewSavedData) {
         const primaryOutlet = viewSavedData.get('primary');
         if (
