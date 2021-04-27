@@ -33,6 +33,8 @@ interface NavManagerProps {
 }
 
 export class NavManager extends React.PureComponent<NavManagerProps, NavContextState> {
+  _isMounted = false;
+
   ionRouterContextValue: IonRouterContextState = {
     push: (
       pathname: string,
@@ -73,16 +75,23 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
     }
   }
 
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
   componentWillUnmount() {
     if (typeof document !== 'undefined') {
-      document.removeEventListener('ionBackButton', this.handleHardwareBackButton)
+      document.removeEventListener('ionBackButton', this.handleHardwareBackButton);
+      this._isMounted = false;
     }
   }
 
   handleHardwareBackButton(e: any) {
     e.detail.register(0, (processNextHandler: () => void) => {
-      this.nativeGoBack();
-      processNextHandler();
+      if (this._isMounted) {
+        this.nativeGoBack();
+        processNextHandler();
+      }
     });
   }
 
