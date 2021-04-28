@@ -1,5 +1,6 @@
 import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
 
 /**
  * Md Popover Enter Animation
@@ -12,7 +13,8 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation => 
   let originY = 'top';
   let originX = isRTL ? 'right' : 'left';
 
-  const contentEl = baseEl.querySelector('.popover-content') as HTMLElement;
+  const root = getElementRoot(baseEl);
+  const contentEl = root.querySelector('.popover-content') as HTMLElement;
   const contentDimentions = contentEl.getBoundingClientRect();
   const contentWidth = contentDimentions.width;
   const contentHeight = contentDimentions.height;
@@ -85,7 +87,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation => 
   const viewportAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .addElement(root.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
     .beforeStyles({
       'pointer-events': 'none'
@@ -93,7 +95,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation => 
     .afterClearStyles(['pointer-events']);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.popover-wrapper')!)
+    .addElement(root.querySelector('.popover-wrapper')!)
     .fromTo('opacity', 0.01, 1);
 
   contentAnimation
@@ -106,11 +108,10 @@ export const mdEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation => 
     .fromTo('transform', 'scale(0.001)', 'scale(1)');
 
   viewportAnimation
-    .addElement(baseEl.querySelector('.popover-viewport')!)
+    .addElement(root.querySelector('.popover-viewport')!)
     .fromTo('opacity', 0.01, 1);
 
   return baseAnimation
-    .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(300)
     .addAnimation([backdropAnimation, wrapperAnimation, contentAnimation, viewportAnimation]);

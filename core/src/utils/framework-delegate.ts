@@ -29,6 +29,7 @@ export const attachComponent = async (
   }
 
   container.appendChild(el);
+
   await new Promise(resolve => componentOnReady(el, resolve));
 
   return el;

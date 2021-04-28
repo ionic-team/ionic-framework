@@ -823,7 +823,7 @@ ion-picker,css-prop,--min-height
 ion-picker,css-prop,--min-width
 ion-picker,css-prop,--width
 
-ion-popover,scoped
+ion-popover,shadow
 ion-popover,prop,animated,boolean,true,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false
 ion-popover,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
@@ -858,6 +858,9 @@ ion-popover,css-prop,--max-width
 ion-popover,css-prop,--min-height
 ion-popover,css-prop,--min-width
 ion-popover,css-prop,--width
+ion-popover,part,arrow
+ion-popover,part,backdrop
+ion-popover,part,content
 
 ion-progress-bar,shadow
 ion-progress-bar,prop,buffer,number,1,false,false

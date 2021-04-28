@@ -16,9 +16,8 @@ import { mdLeaveAnimation } from './animations/md.leave';
 const CoreDelegate = () => {
   let Cmp: any;
   const attachViewToDom = (parentElement: HTMLElement) => {
-    Cmp = parentElement.closest('ion-popover');
+    Cmp = (parentElement.getRootNode() as ShadowRoot).host;
     const app = document.querySelector('ion-app') || document.body;
-
     if (app && Cmp) {
       app.appendChild(Cmp);
     }
@@ -38,6 +37,12 @@ const CoreDelegate = () => {
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @slot - Content is placed inside of the `.popover-content` element.
+ *
+ * @part backdrop - The `ion-backdrop` element.
+ * @part arrow - The arrow that points to the reference element. Only applies on `ios` mode.
+ * @part content - The wrapper element for the default slot.
  */
 @Component({
   tag: 'ion-popover',
@@ -45,7 +50,7 @@ const CoreDelegate = () => {
     ios: 'popover.ios.scss',
     md: 'popover.md.scss'
   },
-  scoped: true
+  shadow: true
 })
 export class Popover implements ComponentInterface, OverlayInterface {
 
@@ -233,10 +238,6 @@ export class Popover implements ComponentInterface, OverlayInterface {
       await this.currentTransition;
     }
 
-    const container = this.el.querySelector('.popover-content');
-    if (!container) {
-      throw new Error('container is undefined');
-    }
     const data = {
       ...this.componentProps,
       popover: this.el
@@ -249,7 +250,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
      */
     const delegate = (this.inline) ? this.delegate || this.coreDelegate : this.delegate;
 
-    this.usersElement = await attachComponent(delegate, container, this.component, ['popover-viewport', (this.el as any)['s-sc']], data, this.inline);
+    this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, this.inline);
     await deepReady(this.usersElement);
 
     this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.event);
@@ -356,13 +357,13 @@ export class Popover implements ComponentInterface, OverlayInterface {
         onIonDismiss={this.onDismiss}
         onIonBackdropTap={this.onBackdropTap}
       >
-        <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop}/>
+        <ion-backdrop part="backdrop" tappable={this.backdropDismiss} visible={this.showBackdrop}/>
 
         <div tabindex="0"></div>
 
         <div class="popover-wrapper ion-overlay-wrapper">
-          <div class="popover-arrow"></div>
-          <div class="popover-content">
+          <div class="popover-arrow" part="arrow"></div>
+          <div class="popover-content" part="content">
             <slot></slot>
           </div>
         </div>
