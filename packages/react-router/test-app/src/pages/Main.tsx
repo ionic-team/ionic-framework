@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  IonButton,
   IonContent,
   IonHeader,
   IonPage,
@@ -11,13 +10,11 @@ import {
   IonLabel,
 } from '@ionic/react';
 
-interface MainProps {
-  swapMountedRouter: () => any
-}
+interface MainProps {}
 
-const Main: React.FC<MainProps> = ({ swapMountedRouter }) => {
+const Main: React.FC<MainProps> = () => {
   return (
-    <IonPage data-pageid="main">
+    <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Main</IonTitle>
@@ -60,9 +57,6 @@ const Main: React.FC<MainProps> = ({ swapMountedRouter }) => {
           </IonItem>
           <IonItem routerLink="/Refs">
             <IonLabel>Refs</IonLabel>
-          </IonItem>
-          <IonItem>
-            <IonButton onClick={swapMountedRouter}>Swap Mounted Router</IonButton>
           </IonItem>
         </IonList>
       </IonContent>
