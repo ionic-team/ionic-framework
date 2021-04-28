@@ -392,7 +392,7 @@ export const dismiss = async (
 
     const mode = getIonMode(overlay);
     const animationBuilder = (overlay.leaveAnimation)
-      ?overlay.leaveAnimation
+      ? overlay.leaveAnimation
       : config.get(name, mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
     // If dismissed via gesture, no need to play leaving animation again
