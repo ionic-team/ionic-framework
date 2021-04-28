@@ -1,6 +1,6 @@
-import { IonApp, setupConfig } from '@ionic/react';
-import React, { useState } from 'react';
-import { Route } from 'react-router-dom';
+import { IonApp } from '@ionic/react';
+import React from 'react';
+import { Route, Redirect, BrowserRouter, Link } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -36,25 +36,12 @@ import Refs from './pages/refs/Refs';
 import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/DynamicIonpageClassnames';
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
-import Unmounted from './pages/unmounted/Unmounted';
 debugger;
-
-setupConfig({
-  hardwareBackButton: true
-});
-
 const App: React.FC = () => {
-  const [mainRouterMounted, setMainRouterMounted] = useState(true);
-
-  const swapMountedRouter = () => {
-    setMainRouterMounted(prevState => !prevState);
-  }
-
   return (
     <IonApp>
-    {mainRouterMounted && 
       <IonReactRouter>
-        <Route path="/" render={() => <Main swapMountedRouter={swapMountedRouter}/>} exact />
+        <Route path="/" component={Main} exact />
         <Route path="/routing" component={Routing} />
         <Route path="/dynamic-routes" component={DynamicRoutes} />
         <Route path="/multiple-tabs" component={MultipleTabs} />
@@ -70,10 +57,6 @@ const App: React.FC = () => {
         <Route path="/tabs-secondary" component={TabsSecondary} />
         <Route path="/refs" component={Refs} />
       </IonReactRouter>
-    } 
-    {!mainRouterMounted &&
-      <Unmounted />
-    }  
     </IonApp>
   );
 };
