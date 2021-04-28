@@ -16,7 +16,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 const CoreDelegate = () => {
   let Cmp: any;
   const attachViewToDom = (parentElement: HTMLElement) => {
-    Cmp = (parentElement.getRootNode() as ShadowRoot).host;
+    Cmp = parentElement;
     const app = document.querySelector('ion-app') || document.body;
     if (app && Cmp) {
       app.appendChild(Cmp);
