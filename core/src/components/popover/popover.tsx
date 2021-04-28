@@ -359,16 +359,12 @@ export class Popover implements ComponentInterface, OverlayInterface {
       >
         <ion-backdrop part="backdrop" tappable={this.backdropDismiss} visible={this.showBackdrop}/>
 
-        <div tabindex="0"></div>
-
         <div class="popover-wrapper ion-overlay-wrapper">
           <div class="popover-arrow" part="arrow"></div>
           <div class="popover-content" part="content">
             <slot></slot>
           </div>
         </div>
-
-        <div tabindex="0"></div>
       </Host>
     );
   }
