@@ -1,3 +1,5 @@
+/* eslint-disable */
+/* tslint:disable */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, NgZone, TemplateRef } from "@angular/core";
 import { ProxyCmp, proxyOutputs } from "../proxies-utils";
 import { Components } from "@ionic/core";
