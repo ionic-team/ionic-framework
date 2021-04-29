@@ -1,5 +1,5 @@
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
-import { raf } from '../../utils/helpers';
+import { getElementRoot, raf } from '../../utils/helpers';
 
 interface InteractionCallback {
   eventName: string;
@@ -81,7 +81,8 @@ export const configureDismissInteraction = (
   parentPopoverEl: HTMLIonPopoverElement
 ) => {
   let dismissCallbacks: InteractionCallback[] = [];
-  const parentContentEl = parentPopoverEl.querySelector('.popover-content') as HTMLElement;
+  const root = getElementRoot(parentPopoverEl);
+  const parentContentEl = root.querySelector('.popover-content') as HTMLElement;
 
   switch (triggerAction) {
     case 'hover':
