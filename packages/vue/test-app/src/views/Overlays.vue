@@ -76,7 +76,7 @@
       <ion-action-sheet
         :is-open="isActionSheetOpen"
         :buttons="actionSheetButtons"
-        @onDidDismiss="setActionSheetRef(false)"
+        @didDismiss="setActionSheetRef(false)"
       >
       </ion-action-sheet>
 
@@ -84,7 +84,7 @@
         :is-open="isAlertOpen"
         header="Alert!"
         :buttons="alertButtons"
-        @onDidDismiss="setAlertRef(false)"
+        @didDismiss="setAlertRef(false)"
       >
       </ion-alert>
 
@@ -93,17 +93,17 @@
         :duration="2000"
         message="Loading"
         :backdrop-dismiss="true"
-        @onDidDismiss="setLoadingRef(false)"
+        @didDismiss="setLoadingRef(false)"
       >
       </ion-loading>
 
       <ion-modal
         :is-open="isModalOpen"
         :componentProps="overlayProps"
-        @onWillPresent="onModalWillPresent"
-        @onDidPresent="onModalDidPresent"
-        @onWillDismiss="onModalWillDismiss"
-        @onDidDismiss="onModalDidDismiss"
+        @willPresent="onModalWillPresent"
+        @didPresent="onModalDidPresent"
+        @willDismiss="onModalWillDismiss"
+        @didDismiss="onModalDidDismiss"
       >
         <ModalContent></ModalContent>
       </ion-modal>
@@ -112,7 +112,7 @@
         :is-open="isPopoverOpen"
         :componentProps="overlayProps"
         :event="popoverEvent"
-        @onDidDismiss="setPopoverRef(false)"
+        @didDismiss="setPopoverRef(false)"
       >
         <PopoverContent></PopoverContent>
       </ion-popover>
@@ -122,7 +122,7 @@
         :duration="2000"
         message="Toast"
         :buttons="toastButtons"
-        @onDidDismiss="setToastRef(false)"
+        @didDismiss="setToastRef(false)"
       >
       </ion-toast>
     </ion-content>

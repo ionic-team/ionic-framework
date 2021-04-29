@@ -717,7 +717,7 @@ Developers can also use this component directly in their template:
   <ion-modal
     :is-open="isOpenRef"
     css-class="my-custom-class"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
     <Modal :data="data"></Modal>
   </ion-modal>
