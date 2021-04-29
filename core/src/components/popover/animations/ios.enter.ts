@@ -17,10 +17,10 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation =>
 
   const root = getElementRoot(baseEl);
   const contentEl = root.querySelector('.popover-content') as HTMLElement;
-  const arrowEl = root.querySelector('.popover-arrow') as HTMLElement;
-  const arrowDim = arrowEl.getBoundingClientRect();
-  const arrowWidth = arrowDim.width;
-  const arrowHeight = arrowDim.height;
+  const arrowEl = root.querySelector('.popover-arrow') as HTMLElement | null;
+  const arrowDim = arrowEl && arrowEl.getBoundingClientRect();
+  const arrowWidth = arrowDim ? arrowDim.width : 0;
+  const arrowHeight = arrowDim ? arrowDim.height : 0;
 
   const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, trigger);
   const { arrowWidth, arrowHeight } = getArrowDimensions(arrowEl);
@@ -80,7 +80,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation =>
       contentEl.style.setProperty('left', `calc(${leftValue} + var(--offset-x, 0))`);
       contentEl.style.setProperty('transform-origin', `${originY} ${originX}`);
 
-      if (arrowEl) {
+      if (arrowEl !== null) {
         arrowEl.style.setProperty('top', `calc(${arrowTop}px + var(--offset-y, 0))`);
         arrowEl.style.setProperty('left', `calc(${arrowLeft}px + var(--offset-x, 0))`);
       }
