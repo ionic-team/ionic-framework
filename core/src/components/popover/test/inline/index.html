@@ -20,8 +20,10 @@
       <ion-content class="ion-padding">
         <ion-button onclick="openPopover(event)">Open Popover</ion-button>
 
-        <ion-popover component="translucent-page">
-
+        <ion-popover>
+          <ion-content class="ion-padding">
+            This is my inline popover content!
+          </ion-content>
         </ion-popover>
       </ion-content>
     </ion-app>
@@ -37,22 +39,6 @@
         popover.isOpen = false;
         popover.event = undefined;
       });
-
-      class TranslucentPage extends HTMLElement {
-        constructor() {
-          super();
-        }
-
-        connectedCallback() {
-          this.innerHTML = `
-            <div class="ion-padding">
-              <h1>Translucent Popover</h1>
-            </div>
-          `;
-        }
-      }
-
-      customElements.define('translucent-page', TranslucentPage);
     </script>
 
   </body>
