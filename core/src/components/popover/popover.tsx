@@ -8,12 +8,12 @@ import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../u
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
-import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
 
 const CoreDelegate = () => {
   let Cmp: any;
