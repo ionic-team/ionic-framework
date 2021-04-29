@@ -8,7 +8,7 @@ const POPOVER_IOS_BODY_PADDING = 5;
 /**
  * iOS Popover Enter Animation
  */
-export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation => {
+export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => {
   const { event: ev, size, trigger, reference, side, align } = opts;
   const doc = (baseEl.ownerDocument as any);
   const isRTL = doc.dir === 'rtl';
@@ -18,9 +18,6 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation =>
   const root = getElementRoot(baseEl);
   const contentEl = root.querySelector('.popover-content') as HTMLElement;
   const arrowEl = root.querySelector('.popover-arrow') as HTMLElement | null;
-  const arrowDim = arrowEl && arrowEl.getBoundingClientRect();
-  const arrowWidth = arrowDim ? arrowDim.width : 0;
-  const arrowHeight = arrowDim ? arrowDim.height : 0;
 
   const { contentWidth, contentHeight } = getPopoverDimensions(size, contentEl, trigger);
   const { arrowWidth, arrowHeight } = getArrowDimensions(arrowEl);

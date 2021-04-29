@@ -8,6 +8,7 @@ import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../u
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
+import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
