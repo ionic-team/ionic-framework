@@ -87,11 +87,13 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   /**
    * The component to display inside of the popover.
+   * @internal
    */
   @Prop() component?: ComponentRef;
 
   /**
    * The data to pass to the popover component.
+   * @internal
    */
   @Prop() componentProps?: ComponentProps;
 
@@ -103,6 +105,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
+   * @internal
    */
   @Prop() cssClass?: string | string[];
 
