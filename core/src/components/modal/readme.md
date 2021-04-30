@@ -826,11 +826,10 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part         | Description                                |
-| ------------ | ------------------------------------------ |
-| `"backdrop"` | The `ion-backdrop` element.                |
-| `"content"`  |                                            |
-| `"shadow"`   | The element that renders the modal shadow. |
+| Part         | Description                               |
+| ------------ | ----------------------------------------- |
+| `"backdrop"` | The `ion-backdrop` element.               |
+| `"content"`  | The wrapper element for the default slot. |
 
 
 ## CSS Custom Properties

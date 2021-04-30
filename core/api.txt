@@ -758,7 +758,6 @@ ion-modal,css-prop,--min-width
 ion-modal,css-prop,--width
 ion-modal,part,backdrop
 ion-modal,part,content
-ion-modal,part,shadow
 
 ion-nav,shadow
 ion-nav,prop,animated,boolean,true,false,false
