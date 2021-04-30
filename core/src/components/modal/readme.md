@@ -824,6 +824,15 @@ Type: `Promise<void>`
 | `"= Content is placed inside of the `.modal-content` element."` |             |
 
 
+## Shadow Parts
+
+| Part         | Description                                |
+| ------------ | ------------------------------------------ |
+| `"backdrop"` | The `ion-backdrop` element.                |
+| `"content"`  |                                            |
+| `"shadow"`   | The element that renders the modal shadow. |
+
+
 ## CSS Custom Properties
 
 | Name                 | Description                        |

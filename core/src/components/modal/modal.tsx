@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { attachComponent, detachComponent } from '../../utils/framework-delegate';
+import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
@@ -15,32 +15,13 @@ import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 
-const CoreDelegate = () => {
-  let Cmp: any;
-  const attachViewToDom = (parentElement: HTMLElement) => {
-    Cmp = parentElement;
-    const app = document.querySelector('ion-app') || document.body;
-    if (app && Cmp) {
-      app.appendChild(Cmp);
-    }
-
-    return Cmp;
-  }
-
-  const removeViewFromDom = () => {
-    if (Cmp) {
-      Cmp.remove();
-    }
-    return Promise.resolve();
-  }
-
-  return { attachViewToDom, removeViewFromDom }
-}
-
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot = Content is placed inside of the `.modal-content` element.
+ *
+ * @part backdrop - The `ion-backdrop` element.
+ * @part shadow - The element that renders the modal shadow.
  */
 @Component({
   tag: 'ion-modal',
@@ -425,13 +406,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
         onIonModalWillDismiss={this.onLifecycle}
         onIonModalDidDismiss={this.onLifecycle}
       >
-        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>
+        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} part="backdrop" />
 
-        {mode === 'ios' && <div class="modal-shadow"></div>}
+        {mode === 'ios' && <div class="modal-shadow" part="shadow"></div>}
 
         <div
           role="dialog"
           class="modal-wrapper ion-overlay-wrapper"
+          part="content"
         >
           <slot></slot>
         </div>

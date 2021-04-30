@@ -4,7 +4,7 @@
 // iOS Modals
 // --------------------------------------------------
 
-:host:first-of-type {
+:host(:first-of-type) {
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.4);
 }
 
@@ -65,7 +65,7 @@
 
     transition: all 0.5s ease-in-out;
 
-    &:first-of-type {
+    :host(.modal-card:first-of-type) {
       --backdrop-opacity: 0.18;
     }
   }
