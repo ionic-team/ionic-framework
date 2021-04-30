@@ -425,7 +425,7 @@ const overlayAnimation = async (
   // Make overlay visible in case it's hidden
   baseEl.classList.remove('overlay-hidden');
 
-  const aniRoot = baseEl.shadowRoot || overlay.el;
+  const aniRoot = overlay.el;
   const animation = animationBuilder(aniRoot, opts);
 
   if (!overlay.animated || !config.getBoolean('animated', true)) {
