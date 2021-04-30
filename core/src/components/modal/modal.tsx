@@ -120,11 +120,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() presentingElement?: HTMLElement;
 
   /**
-   * If `true`, the popover will open. If `false`, the popover will close.
+   * If `true`, the modal will open. If `false`, the modal will close.
    * Use this if you need finer grained control over presentation, otherwise
-   * just use the popoverController or the `trigger` property.
+   * just use the modalController or the `trigger` property.
    * Note: `isOpen` will not automatically be set back to `false` when
-   * the popover dismisses. You will need to do that in your code.
+   * the modal dismisses. You will need to do that in your code.
    */
   @Prop() isOpen = false;
 
@@ -307,9 +307,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     /**
-     * When using an inline popover
-     * and presenting a popover it is possible to
-     * quickly dismiss the popover while it is
+     * When using an inline modal
+     * and presenting a modal it is possible to
+     * quickly dismiss the modal while it is
      * presenting. We need to await any current
      * transition to allow the present to finish
      * before dismissing again.
