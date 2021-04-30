@@ -1,5 +1,6 @@
 import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 
 /**
@@ -9,8 +10,9 @@ export const iosEnterAnimation = (
     baseEl: HTMLElement,
     presentingEl?: HTMLElement,
   ): Animation => {
+  const root = getElementRoot(baseEl);
   const backdropAnimation = createAnimation()
-    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .addElement(root.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
     .beforeStyles({
       'pointer-events': 'none'
@@ -18,7 +20,7 @@ export const iosEnterAnimation = (
     .afterClearStyles(['pointer-events']);
 
   const wrapperAnimation = createAnimation()
-    .addElement(baseEl.querySelectorAll('.modal-wrapper, .modal-shadow')!)
+    .addElement(root.querySelectorAll('.modal-wrapper, .modal-shadow')!)
     .beforeStyles({ 'opacity': 1 })
     .fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
 
