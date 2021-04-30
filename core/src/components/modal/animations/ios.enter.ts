@@ -33,6 +33,7 @@ export const iosEnterAnimation = (
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;
     const hasCardModal = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined);
+    const presentingElRoot = getElementRoot(presentingEl);
 
     const presentingAnimation = createAnimation()
       .beforeStyles({
@@ -79,7 +80,7 @@ export const iosEnterAnimation = (
           .afterStyles({
             'transform': finalTransform
           })
-          .addElement(presentingEl.querySelector('.modal-wrapper')!)
+          .addElement(presentingElRoot.querySelector('.modal-wrapper')!)
           .keyframes([
             { offset: 0, filter: 'contrast(1)', transform: 'translateY(0) scale(1)' },
             { offset: 1, filter: 'contrast(0.85)', transform: finalTransform }
@@ -89,7 +90,7 @@ export const iosEnterAnimation = (
           .afterStyles({
             'transform': finalTransform
           })
-          .addElement(presentingEl.querySelector('.modal-shadow')!)
+          .addElement(presentingElRoot.querySelector('.modal-shadow')!)
           .keyframes([
             { offset: 0, opacity: '1', transform: 'translateY(0) scale(1)' },
             { offset: 1, opacity: '0', transform: finalTransform }

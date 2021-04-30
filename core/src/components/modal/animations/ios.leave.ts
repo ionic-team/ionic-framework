@@ -30,6 +30,7 @@ export const iosLeaveAnimation = (
   if (presentingEl) {
     const isMobile = window.innerWidth < 768;
     const hasCardModal = (presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined);
+    const presentingElRoot = getElementRoot(presentingEl);
 
     const presentingAnimation = createAnimation()
       .beforeClearStyles(['transform'])
@@ -72,7 +73,7 @@ export const iosLeaveAnimation = (
         const finalTransform = `translateY(-10px) scale(${toPresentingScale})`;
 
         presentingAnimation
-          .addElement(presentingEl.querySelector('.modal-wrapper')!)
+          .addElement(presentingElRoot.querySelector('.modal-wrapper')!)
           .afterStyles({
             'transform': 'translate3d(0, 0, 0)'
           })
@@ -82,7 +83,7 @@ export const iosLeaveAnimation = (
           ]);
 
         const shadowAnimation = createAnimation()
-          .addElement(presentingEl.querySelector('.modal-shadow')!)
+          .addElement(presentingElRoot.querySelector('.modal-shadow')!)
           .afterStyles({
             'transform': 'translateY(0) scale(1)'
           })

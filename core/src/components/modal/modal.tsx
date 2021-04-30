@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, OverlayEventDetail, OverlayInterface } from '../../interface';
-import { attachComponent, detachComponent, CoreDelegate } from '../../utils/framework-delegate';
+import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
@@ -161,25 +161,25 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * Emitted after the modal has presented.
      * Shorthand for ionModalWillDismiss.
      */
-    @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
 
     /**
      * Emitted before the modal has presented.
      * Shorthand for ionModalWillPresent.
      */
-    @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
 
     /**
      * Emitted before the modal has dismissed.
      * Shorthand for ionModalWillDismiss.
      */
-    @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
     /**
      * Emitted after the modal has dismissed.
      * Shorthand for ionModalDidDismiss.
      */
-    @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   @Watch('swipeToClose')
   swipeToCloseChanged(enable: boolean) {
