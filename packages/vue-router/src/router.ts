@@ -40,6 +40,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
      * but we can check to see if the latest routing action
      * was a replace action by looking at the history state.
      */
+    const history = opts.history;
     const replaceAction = history.state.replaced ? 'replace' : undefined;
     handleHistoryChange(to, action || replaceAction, direction);
 
