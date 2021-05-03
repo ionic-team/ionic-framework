@@ -1658,11 +1658,11 @@ export namespace Components {
          */
         "backdropDismiss": boolean;
         /**
-          * The component to display inside of the popover.
+          * The component to display inside of the popover. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just slot your component inside of `ion-popover`.
          */
-        "component": ComponentRef;
+        "component"?: ComponentRef;
         /**
-          * The data to pass to the popover component.
+          * The data to pass to the popover component. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just set the props directly on your component.
          */
         "componentProps"?: ComponentProps;
         /**
@@ -1684,6 +1684,11 @@ export namespace Components {
           * The event to pass to the popover animation.
          */
         "event": any;
+        "inline": boolean;
+        /**
+          * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -4990,11 +4995,11 @@ declare namespace LocalJSX {
          */
         "backdropDismiss"?: boolean;
         /**
-          * The component to display inside of the popover.
+          * The component to display inside of the popover. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just slot your component inside of `ion-popover`.
          */
-        "component": ComponentRef;
+        "component"?: ComponentRef;
         /**
-          * The data to pass to the popover component.
+          * The data to pass to the popover component. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just set the props directly on your component.
          */
         "componentProps"?: ComponentProps;
         /**
@@ -5010,6 +5015,11 @@ declare namespace LocalJSX {
           * The event to pass to the popover animation.
          */
         "event"?: any;
+        "inline"?: boolean;
+        /**
+          * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5022,6 +5032,14 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Emitted after the popover has dismissed. Shorthand for ionPopoverDidDismiss.
+         */
+        "onDidDismiss"?: (event: CustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the popover has presented. Shorthand for ionPopoverWillDismiss.
+         */
+        "onDidPresent"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted after the popover has dismissed.
          */
@@ -5038,6 +5056,14 @@ declare namespace LocalJSX {
           * Emitted before the popover has presented.
          */
         "onIonPopoverWillPresent"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted before the popover has dismissed. Shorthand for ionPopoverWillDismiss.
+         */
+        "onWillDismiss"?: (event: CustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the popover has presented. Shorthand for ionPopoverWillPresent.
+         */
+        "onWillPresent"?: (event: CustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the popover.

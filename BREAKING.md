@@ -14,6 +14,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 - [Components](#components)
   * [Header](#header)
+  * [Popover](#popover)
   * [Tab Bar](#tab-bar)
   * [Toast](#toast)
   * [Toolbar](#toolbar)
@@ -41,6 +42,12 @@ ion-header.header-collapse-condense ion-toolbar:last-of-type {
   --border-width: 0 0 0.55px;
 }
 ```
+
+#### Popover
+
+Converted `ion-popover` to use [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+If you were targeting the internals of `ion-popover` in your CSS, you will need to target the `backdrop`, `arrow`, or `content` [Shadow Parts](https://ionicframework.com/docs/theming/css-shadow-parts) instead.
 
 #### Tab Bar
 

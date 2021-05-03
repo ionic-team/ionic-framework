@@ -1,5 +1,6 @@
 import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
+import { getElementRoot } from '../../../utils/helpers';
 
 /**
  * iOS Popover Enter Animation
@@ -8,7 +9,8 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation =>
   let originY = 'top';
   let originX = 'left';
 
-  const contentEl = baseEl.querySelector('.popover-content') as HTMLElement;
+  const root = getElementRoot(baseEl);
+  const contentEl = root.querySelector('.popover-content') as HTMLElement;
   const contentDimentions = contentEl.getBoundingClientRect();
   const contentWidth = contentDimentions.width;
   const contentHeight = contentDimentions.height;
@@ -24,7 +26,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation =>
   const targetWidth = (targetDim && targetDim.width) || 0;
   const targetHeight = (targetDim && targetDim.height) || 0;
 
-  const arrowEl = baseEl.querySelector('.popover-arrow') as HTMLElement;
+  const arrowEl = root.querySelector('.popover-arrow') as HTMLElement;
 
   const arrowDim = arrowEl.getBoundingClientRect();
   const arrowWidth = arrowDim.width;
@@ -103,7 +105,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation =>
   const wrapperAnimation = createAnimation();
 
   backdropAnimation
-    .addElement(baseEl.querySelector('ion-backdrop')!)
+    .addElement(root.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
     .beforeStyles({
       'pointer-events': 'none'
@@ -111,11 +113,10 @@ export const iosEnterAnimation = (baseEl: HTMLElement, ev?: Event): Animation =>
     .afterClearStyles(['pointer-events']);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.popover-wrapper')!)
+    .addElement(root.querySelector('.popover-wrapper')!)
     .fromTo('opacity', 0.01, 1);
 
   return baseAnimation
-    .addElement(baseEl)
     .easing('ease')
     .duration(100)
     .addAnimation([backdropAnimation, wrapperAnimation]);

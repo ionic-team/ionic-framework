@@ -50,9 +50,14 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(tagName: string, 
       const element = document.createElement(tagName) as HTMLIonOverlayElement;
       element.classList.add('overlay-hidden');
 
-      // convert the passed in overlay options into props
-      // that get passed down into the new overlay
-      Object.assign(element, opts);
+      /**
+       * Convert the passed in overlay options into props
+       * that get passed down into the new overlay.
+       * Inline is needed for ion-popover as it can
+       * be presented via a controller or written
+       * inline in a template.
+       */
+      Object.assign(element, { ...opts, inline: false });
 
       // append the overlay element to the document body
       getAppRoot(document).appendChild(element);
@@ -112,48 +117,103 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
   const lastOverlay = getOverlay(doc);
   const target = ev.target as HTMLElement | null;
 
-  // If no active overlay, ignore this event
-  if (!lastOverlay || !target) { return; }
-
   /**
-   * If we are focusing the overlay, clear
-   * the last focused element so that hitting
-   * tab activates the first focusable element
-   * in the overlay wrapper.
+   * If no active overlay, ignore this event.
+   *
+   * If this component uses the shadow dom,
+   * this global listener is pointless
+   * since it will not catch the focus
+   * traps as they are inside the shadow root.
+   * We need to add a listener to the shadow root
+   * itself to ensure the focus trap works.
    */
-  if (lastOverlay === target) {
-    lastOverlay.lastFocus = undefined;
+  if (!lastOverlay || !target
+  ) { return; }
 
+  const trapScopedFocus = () => {
     /**
-     * Otherwise, we must be focusing an element
-     * inside of the overlay. The two possible options
-     * here are an input/button/etc or the ion-focus-trap
-     * element. The focus trap element is used to prevent
-     * the keyboard focus from leaving the overlay when
-     * using Tab or screen assistants.
+     * If we are focusing the overlay, clear
+     * the last focused element so that hitting
+     * tab activates the first focusable element
+     * in the overlay wrapper.
      */
-  } else {
-    /**
-     * We do not want to focus the traps, so get the overlay
-     * wrapper element as the traps live outside of the wrapper.
-     */
-    const overlayRoot = getElementRoot(lastOverlay);
-    if (!overlayRoot.contains(target)) { return; }
+    if (lastOverlay === target) {
+      lastOverlay.lastFocus = undefined;
 
-    const overlayWrapper = overlayRoot.querySelector('.ion-overlay-wrapper');
+      /**
+       * Otherwise, we must be focusing an element
+       * inside of the overlay. The two possible options
+       * here are an input/button/etc or the ion-focus-trap
+       * element. The focus trap element is used to prevent
+       * the keyboard focus from leaving the overlay when
+       * using Tab or screen assistants.
+       */
+    } else {
+      /**
+       * We do not want to focus the traps, so get the overlay
+       * wrapper element as the traps live outside of the wrapper.
+       */
 
-    if (!overlayWrapper) { return; }
+      const overlayRoot = getElementRoot(lastOverlay);
+      if (!overlayRoot.contains(target)) { return; }
+
+      const overlayWrapper = overlayRoot.querySelector('.ion-overlay-wrapper');
+      if (!overlayWrapper) { return; }
+
+      /**
+       * If the target is inside the wrapper, let the browser
+       * focus as normal and keep a log of the last focused element.
+       */
+      if (overlayWrapper.contains(target)) {
+        lastOverlay.lastFocus = target;
+      } else {
+        /**
+         * Otherwise, we must have focused one of the focus traps.
+         * We need to wrap the focus to either the first element
+         * or the last element.
+         */
+
+        /**
+         * Once we call `focusFirstDescendant` and focus the first
+         * descendant, another focus event will fire which will
+         * cause `lastOverlay.lastFocus` to be updated before
+         * we can run the code after that. We will cache the value
+         * here to avoid that.
+         */
+        const lastFocus = lastOverlay.lastFocus;
+
+        // Focus the first element in the overlay wrapper
+        focusFirstDescendant(overlayWrapper, lastOverlay);
+
+        /**
+         * If the cached last focused element is the
+         * same as the active element, then we need
+         * to wrap focus to the last descendant. This happens
+         * when the first descendant is focused, and the user
+         * presses Shift + Tab. The previous line will focus
+         * the same descendant again (the first one), causing
+         * last focus to equal the active element.
+         */
+        if (lastFocus === doc.activeElement) {
+          focusLastDescendant(overlayWrapper, lastOverlay);
+        }
+        lastOverlay.lastFocus = doc.activeElement as HTMLElement;
+      }
+    }
+  }
+  const trapShadowFocus = () => {
 
     /**
      * If the target is inside the wrapper, let the browser
      * focus as normal and keep a log of the last focused element.
      */
-    if (overlayWrapper.contains(target)) {
+    if (lastOverlay.contains(target)) {
       lastOverlay.lastFocus = target;
     } else {
       /**
-       * Otherwise, we must have focused one of the focus traps.
-       * We need to wrap the focus to either the first element
+       * Otherwise, we are about to have focus
+       * go out of the overlay. We need to wrap
+       * the focus to either the first element
        * or the last element.
        */
 
@@ -167,7 +227,7 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
       const lastFocus = lastOverlay.lastFocus;
 
       // Focus the first element in the overlay wrapper
-      focusFirstDescendant(overlayWrapper, lastOverlay);
+      focusFirstDescendant(lastOverlay, lastOverlay);
 
       /**
        * If the cached last focused element is the
@@ -179,10 +239,16 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
        * last focus to equal the active element.
        */
       if (lastFocus === doc.activeElement) {
-        focusLastDescendant(overlayWrapper, lastOverlay);
+        focusLastDescendant(lastOverlay, lastOverlay);
       }
       lastOverlay.lastFocus = doc.activeElement as HTMLElement;
     }
+  }
+
+  if (lastOverlay.shadowRoot) {
+    trapShadowFocus();
+  } else {
+    trapScopedFocus();
   }
 };
 
@@ -248,6 +314,7 @@ export const present = async (
   }
   overlay.presented = true;
   overlay.willPresent.emit();
+  overlay.willPresentShorthand?.emit();
 
   const mode = getIonMode(overlay);
   // get the user's animation fn if one was provided
@@ -258,6 +325,8 @@ export const present = async (
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
     overlay.didPresent.emit();
+    overlay.didPresentShorthand?.emit();
+
   }
 
   /**
@@ -319,6 +388,8 @@ export const dismiss = async (
     // Overlay contents should not be clickable during dismiss
     overlay.el.style.setProperty('pointer-events', 'none');
     overlay.willDismiss.emit({ data, role });
+    overlay.willDismissShorthand?.emit({ data, role });
+
     const mode = getIonMode(overlay);
     const animationBuilder = (overlay.leaveAnimation)
       ? overlay.leaveAnimation
@@ -329,6 +400,7 @@ export const dismiss = async (
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     }
     overlay.didDismiss.emit({ data, role });
+    overlay.didDismissShorthand?.emit({ data, role });
 
     activeAnimations.delete(overlay);
 
@@ -353,7 +425,7 @@ const overlayAnimation = async (
   // Make overlay visible in case it's hidden
   baseEl.classList.remove('overlay-hidden');
 
-  const aniRoot = baseEl.shadowRoot || overlay.el;
+  const aniRoot = overlay.el;
   const animation = animationBuilder(aniRoot, opts);
 
   if (!overlay.animated || !config.getBoolean('animated', true)) {
@@ -363,7 +435,7 @@ const overlayAnimation = async (
   if (overlay.keyboardClose) {
     animation.beforeAddWrite(() => {
       const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
-      if (activeElement && activeElement.matches('input, ion-input, ion-textarea')) {
+      if (activeElement && activeElement.matches('input,ion-input, ion-textarea')) {
         activeElement.blur();
       }
     });
