@@ -22,7 +22,7 @@ export const IonRouterOutlet = defineComponent({
     animated: Boolean,
     mode: String
   },
-  setup(_, { attrs }) {
+  setup(props, { attrs }) {
     const injectedRoute = inject(routeLocationKey)!;
     const route = useRoute();
     const depth = inject(viewDepthKey, 0);
