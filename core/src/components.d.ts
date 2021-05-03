@@ -1666,11 +1666,11 @@ export namespace Components {
          */
         "backdropDismiss": boolean;
         /**
-          * The component to display inside of the popover.
+          * The component to display inside of the popover. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just slot your component inside of `ion-popover`.
          */
         "component"?: ComponentRef;
         /**
-          * The data to pass to the popover component.
+          * The data to pass to the popover component. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just set the props directly on your component.
          */
         "componentProps"?: ComponentProps;
         /**
@@ -5037,11 +5037,11 @@ declare namespace LocalJSX {
          */
         "backdropDismiss"?: boolean;
         /**
-          * The component to display inside of the popover.
+          * The component to display inside of the popover. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just slot your component inside of `ion-popover`.
          */
         "component"?: ComponentRef;
         /**
-          * The data to pass to the popover component.
+          * The data to pass to the popover component. You only need to use this if you are not using a JavaScript framework. Otherwise, you can just set the props directly on your component.
          */
         "componentProps"?: ComponentProps;
         /**

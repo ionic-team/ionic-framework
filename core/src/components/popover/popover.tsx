@@ -94,13 +94,17 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   /**
    * The component to display inside of the popover.
-   * @internal
+   * You only need to use this if you are not using
+   * a JavaScript framework. Otherwise, you can just
+   * slot your component inside of `ion-popover`.
    */
   @Prop() component?: ComponentRef;
 
   /**
    * The data to pass to the popover component.
-   * @internal
+   * You only need to use this if you are not using
+   * a JavaScript framework. Otherwise, you can just
+   * set the props directly on your component.
    */
   @Prop() componentProps?: ComponentProps;
 
@@ -285,19 +289,20 @@ export class Popover implements ComponentInterface, OverlayInterface {
      * not assign the default incrementing ID.
      */
     this.popoverId = (this.el.hasAttribute('id')) ? this.el.getAttribute('id')! : `ion-popover-${this.popoverIndex}`;
+
     this.parentPopover = this.el.closest(`ion-popover:not(#${this.popoverId})`) as HTMLIonPopoverElement | null;
   }
 
   componentDidLoad() {
+    const { parentPopover, isOpen } = this;
+
     /**
      * If popover was rendered with isOpen="true"
      * then we should open popover immediately.
      */
-    if (this.isOpen === true) {
+    if (isOpen === true) {
       raf(() => this.present());
     }
-
-    const { parentPopover } = this;
 
     if (parentPopover) {
       addEventListener(parentPopover, 'ionPopoverWillDismiss', () => {
