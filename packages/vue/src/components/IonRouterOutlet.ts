@@ -17,6 +17,11 @@ import { fireLifecycle, generateId, getConfig } from '../utils';
 let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
   name: 'IonRouterOutlet',
+  props: {
+    animation: Object,
+    animated: Boolean,
+    mode: String
+  },
   setup(_, { attrs }) {
     const injectedRoute = inject(routeLocationKey)!;
     const route = useRoute();
@@ -381,15 +386,16 @@ export const IonRouterOutlet = defineComponent({
       components,
       injectedRoute,
       ionRouterOutlet,
-      registerIonPage
+      registerIonPage,
+      props
     }
   },
   render() {
-    const { components, registerIonPage, injectedRoute } = this;
+    const { components, registerIonPage, injectedRoute, props } = this;
 
     return h(
       'ion-router-outlet',
-      { ref: 'ionRouterOutlet' },
+      { ref: 'ionRouterOutlet', ...props },
       // TODO types
       components && components.map((c: any) => {
         let props = {
