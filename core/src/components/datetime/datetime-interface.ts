@@ -1,7 +1,3 @@
-import { PickerOptions } from '../../interface';
+export interface DatetimeOptions {}
 
-export type DatetimeOptions = Partial<PickerOptions>;
-
-export interface DatetimeChangeEventDetail {
-  value: string | undefined | null;
-}
+export interface DatetimeChangeEventDetail {}
