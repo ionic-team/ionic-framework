@@ -18,9 +18,9 @@ let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = defineComponent({
   name: 'IonRouterOutlet',
   props: {
-    animation: Object,
-    animated: Boolean,
-    mode: String
+    animation: { type: Function, default: undefined },
+    animated: { type: Boolean, default: true },
+    mode: { type: String, default: undefined }
   },
   setup(props, { attrs }) {
     const injectedRoute = inject(routeLocationKey)!;
