@@ -406,6 +406,14 @@ button, a {
 
 :host(.item-interactive.ion-invalid) {
   --highlight-background: var(--highlight-color-invalid);
+
+  & ::slotted([slot="helper"]) {
+    display: none;
+  }
+
+  & ::slotted([slot="error"]) {
+    display: block;
+  }
 }
 
 
@@ -480,4 +488,31 @@ button, a {
 
 ion-ripple-effect {
   color: var(--ripple-color);
+}
+
+// Item Button Ripple effect
+// --------------------------------------------------
+
+.item-bottom {
+  @include margin(0);
+  @include padding(
+    var(--padding-top),
+    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
+    var(--padding-bottom),
+    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
+  );
+  display: flex;
+  justify-content: space-between;
+}
+
+::slotted([slot="helper"]),
+::slotted([slot="error"]),
+.item-counter {
+  padding-top: 5px;
+  font-size: 10px;
+}
+
+::slotted([slot="error"]) {
+  color: var(--highlight-color-invalid);
+  display: none;
 }

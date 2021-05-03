@@ -1022,6 +1022,10 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * If `true`, a text based counter will display the input's length over its maxlength.
+         */
+        "counter"?: boolean;
+        /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */
         "detail"?: boolean;
@@ -4458,6 +4462,10 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * If `true`, a text based counter will display the input's length over its maxlength.
+         */
+        "counter"?: boolean;
         /**
           * If `true`, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href` or `button` property is present.
          */

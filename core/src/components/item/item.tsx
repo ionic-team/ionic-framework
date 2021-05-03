@@ -5,6 +5,7 @@ import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { raf } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
+import { InputChangeEventDetail } from '../input/input-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -101,6 +102,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
+   * If `true`, a text based counter will display the input's length over its maxlength. 
+   */
+   @Prop() counter?: boolean = true;
+
+  /**
    * When using a router, it specifies the transition animation when navigating to
    * another page using `href`.
    */
@@ -124,6 +130,13 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
+  @State() counterString: string | null | undefined;
+  
+  @Listen('ionChange')
+  handleIonChange(ev: CustomEvent<InputChangeEventDetail>) {
+    this.updateCounterOutput(ev.target as HTMLIonInputElement);
+  }
+  
   @Listen('ionColor')
   labelColorChanged(ev: CustomEvent<string>) {
     const { color } = this;
@@ -161,6 +174,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (hasStyleChange) {
       this.itemStyles.set(tagName, newStyles);
       forceUpdate(this);
+    }
+  }
+
+  connectedCallback() {
+    if (this.counter) {
+      this.updateCounterOutput(this.getFirstInput());
     }
   }
 
@@ -260,8 +279,15 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
   }
 
+  private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {
+    if (this.counter && !this.multipleInputs && inputEl.maxlength) {
+      const length = inputEl.value == undefined ? '0' : inputEl.value.toString().length;
+      this.counterString = `${length}/${inputEl.maxlength}`; 
+    }
+  }
+
   render() {
-    const { detail, detailIcon, download, fill, labelColorStyles, lines, disabled, href, rel, shape, target, routerAnimation, routerDirection } = this;
+    const { counterString, detail, detailIcon, download, fill, labelColorStyles, lines, disabled, href, rel, shape, target, routerAnimation, routerDirection } = this;
     const childStyles = {};
     const mode = getIonMode(this);
     const clickable = this.isClickable();
@@ -322,8 +348,13 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
               <div class="item-inner-highlight"></div>
             </div>
             {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            <div class="item-highlight"></div>
           </TagType>
-          <div class="item-highlight"></div>
+          <div class="item-bottom">
+            <slot name="error"></slot>
+            <slot name="helper"></slot>
+            {counterString && <ion-note class="item-counter">{counterString}</ion-note>}
+          </div>
       </Host>
     );
   }

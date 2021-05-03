@@ -154,7 +154,7 @@
   font-size: $item-md-note-slot-font-size;
 }
 
-::slotted(ion-note[slot]) {
+::slotted(ion-note[slot]):not(::slotted([slot="helper"], [slot="error"])) {
   @include padding($item-md-note-slot-padding-top, $item-md-note-slot-padding-end, $item-md-note-slot-padding-bottom, $item-md-note-slot-padding-start);
 }
 
