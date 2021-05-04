@@ -14,6 +14,7 @@ export { IonNav } from './components/IonNav';
 export { IonIcon } from './components/IonIcon';
 export { IonApp } from './components/IonApp';
 export { IonPopover } from './components/IonPopover';
+export { IonModal } from './components/IonModal';
 
 export * from './components/Overlays';
 
