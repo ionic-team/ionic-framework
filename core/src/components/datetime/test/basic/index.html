@@ -34,10 +34,38 @@
           <ion-title>Datetime - Basic</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content class="ion-padding grid">
-        <div class="grid-item">
-          <h2>Default</h2>
-          <ion-datetime></ion-datetime>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>iOS - Inline</h2>
+            <ion-datetime mode="ios"></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>MD - Inline</h2>
+            <ion-datetime mode="md"></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>iOS - Overlay</h2>
+            <ion-datetime mode="ios" presentation-style="overlay"></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>MD - Overlay</h2>
+            <ion-datetime mode="md" presentation-style="overlay"></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>Custom</h2>
+            <ion-datetime presentation-style="overlay">
+              <span slot="title">Select a date!!!!</span>
+              <ion-buttons slot="buttons">
+                <ion-button color="secondary">Custom Cancel</ion-button>
+                <ion-button color="success">Custom Confirm</ion-button>
+              </ion-buttons>
+            </ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>Color</h2>
+            <ion-datetime color="danger" presentation-style="overlay"></ion-datetime>
+          </div>
         </div>
       </ion-content>
     </ion-app>

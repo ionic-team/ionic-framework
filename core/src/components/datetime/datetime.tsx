@@ -1,8 +1,8 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { DatetimeChangeEventDetail, DatetimeOptions, StyleEventDetail } from '../../interface';
+import { Color, DatetimeChangeEventDetail, DatetimeOptions, Mode, StyleEventDetail } from '../../interface';
 import { getIonMode } from '../../global/ionic-global';
 import { renderHiddenInput } from '../../utils/helpers';
-import { hostContext } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -25,6 +25,13 @@ export class Datetime implements ComponentInterface {
   @Element() el!: HTMLIonDatetimeElement;
 
   @State() isExpanded = false;
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color = 'primary';
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -284,8 +291,50 @@ export class Datetime implements ComponentInterface {
 
   }
 
+  private renderDefaultiOSButtons() {
+    return [
+      <ion-button color={this.color}>Reset</ion-button>,
+      <ion-button color={this.color}>OK</ion-button>
+    ]
+  }
+
+  private renderDefaultMDButtons() {
+    return [
+      <ion-button color={this.color}>Cancel</ion-button>,
+      <ion-button color={this.color}>Ok</ion-button>
+    ]
+  }
+
+  private renderButtons(mode: Mode) {
+    if (this.presentationStyle === 'inline') return null;
+    return (
+      <slot name="buttons">
+        <ion-buttons>
+          { mode === 'ios' && this.renderDefaultiOSButtons() }
+          { mode === 'md' && this.renderDefaultMDButtons() }
+        </ion-buttons>
+      </slot>
+    );
+  }
+
+  private renderTitle(mode: Mode) {
+    if (this.presentationStyle === 'inline') return null;
+
+    /**
+     * On iOS there is no default title
+     * shown. User can slot in a custom title.
+     */
+    const defaultTitle = mode === 'md' ? 'Select Date' : '';
+
+    return (
+      <slot name="title">
+        {mode !== 'ios' && defaultTitle}
+      </slot>
+    );
+  }
+
   render() {
-    const { name, value, disabled, el } = this;
+    const { name, value, disabled, el, color } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, disabled);
@@ -293,10 +342,13 @@ export class Datetime implements ComponentInterface {
     return (
       <Host
         class={{
-          [mode]: true,
-          'in-item': hostContext('ion-item', el)
+          ...createColorClasses(color, {
+            [mode]: true
+          })
         }}
       >
+        {this.renderTitle(mode)}
+        {this.renderButtons(mode)}
       </Host>
     );
   }

@@ -628,6 +628,10 @@ export namespace Components {
          */
         "cancelText": string;
         /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
+        /**
           * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
          */
         "dayNames"?: string[] | string;
@@ -4037,6 +4041,10 @@ declare namespace LocalJSX {
           * The text to display on the picker's cancel button.
          */
         "cancelText"?: string;
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+         */
+        "color"?: Color;
         /**
           * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
          */
