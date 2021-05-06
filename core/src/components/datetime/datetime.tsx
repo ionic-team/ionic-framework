@@ -1,9 +1,9 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-
-import { getIonMode } from '../../global/ionic-global';
 import { Color, DatetimeChangeEventDetail, DatetimeOptions, Mode, StyleEventDetail } from '../../interface';
+import { getIonMode } from '../../global/ionic-global';
 import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
+import { isPlatform } from '../../utils/platform';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -29,6 +29,7 @@ import { createColorClasses } from '../../utils/theme';
 export class Datetime implements ComponentInterface {
 
   private inputId = `ion-dt-${datetimeIds++}`;
+  private popoverEv?: Event;
 
   @Element() el!: HTMLIonDatetimeElement;
 
@@ -285,9 +286,14 @@ export class Datetime implements ComponentInterface {
       'interactive': true,
       'datetime': true,
       'has-placeholder': this.placeholder != null,
-      // 'has-value': this.hasValue(),
+      //'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
     });
+  }
+
+  private openOverlay(event: Event) {
+    this.popoverEv = event;
+    this.open();
   }
 
   /**
@@ -310,7 +316,73 @@ export class Datetime implements ComponentInterface {
     this.isPresented = false;
   }
 
+  /**
+   * Renders `ion-datetime` when
+   * presentationStyle="inline"
+   */
+  private renderInline() {
+    return [
+      'stubbed inline datetime'
+    ]
+  }
+
+  /**
+   * Renders `ion-datetime` when
+   * presentationStyle="overlay"
+   */
+  private renderOverlay(mode: Mode) {
+    return [
+      this.renderCover(),
+      this.renderOverlayComponent(mode)
+    ]
+  }
+
+  /**
+   * Renders the calendar part of `ion-datetime`
+   * only when the component is presented.
+   * Renders in a popover on desktop and in a
+   * modal on mobile.
+   */
+  private renderOverlayComponent(mode: Mode) {
+    if (!this.isPresented) return;
+
+    const desktop = isPlatform('desktop');
+
+    if (desktop) {
+      return (
+        <ion-popover
+          isOpen={true}
+          showBackdrop={false}
+          event={this.popoverEv}
+          animated={false}
+
+          onIonPopoverDidDismiss={() => this.dismiss()}
+
+          overlayIndex={1}
+        >
+          {this.renderTitle(mode)}
+          {this.renderButtons()}
+        </ion-popover>
+      )
+    } else {
+      return (
+        'Modal Overlay Stubbed'
+      )
+    }
+  }
+
+  /**
+   * Renders the buttons in an
+   * overlay datetime.
+   */
   private renderButtons() {
+    /**
+     * By default we render two buttons:
+     * Cancel - Dismisses the datetime and
+     * does not update the `value` prop.
+     * OK - Dismisses the datetime and
+     * updates the `value` prop.
+     */
     return (
       <slot name="buttons">
         <ion-buttons>
@@ -321,6 +393,10 @@ export class Datetime implements ComponentInterface {
     );
   }
 
+  /**
+   * Renders the title in an overlay
+   * datetime.
+   */
   private renderTitle(mode: Mode) {
     /**
      * On iOS there is no default title
@@ -335,36 +411,26 @@ export class Datetime implements ComponentInterface {
     );
   }
 
+  /**
+   * Renders the cover/trigger that users
+   * need to click in order to open
+   * an overlay datetime.
+   */
   private renderCover() {
+    /**
+     * Wrap the slot in a div
+     * with an onClick handler so
+     * that users do not need to wire
+     * up the click handler themselves
+     * when slotting in a custom cover.
+     */
     return (
-      <div onClick={() => this.open()}>
+      <div onClick={(ev) => this.openOverlay(ev)}>
         <slot name="cover">
           <ion-button class="default">Datetime Default Cover</ion-button>
         </slot>
       </div>
     )
-  }
-
-  private renderInline() {
-    return [
-      'inline datetime'
-    ]
-  }
-
-  private renderOverlay(mode: Mode) {
-    return [
-      this.renderCover(),
-      this.renderOverlayComponent(mode)
-    ]
-  }
-
-  private renderOverlayComponent(mode: Mode) {
-    if (!this.isPresented) { return; }
-
-    return [
-      this.renderTitle(mode),
-      this.renderButtons()
-    ]
   }
 
   render() {
@@ -381,7 +447,7 @@ export class Datetime implements ComponentInterface {
           })
         }}
       >
-        {presentationStyle === 'inline' ? this.renderInline() : this.renderOverlay(mode)}
+        { presentationStyle === 'inline' ? this.renderInline() : this.renderOverlay(mode) }
       </Host>
     );
   }
