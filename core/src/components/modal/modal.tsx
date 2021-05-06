@@ -325,7 +325,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const dismissed = await this.currentTransition;
 
     if (dismissed) {
-      await detachComponent(this.delegate, this.usersElement);
+      const delegate = (this.inline) ? this.delegate || this.coreDelegate : this.delegate;
+      await detachComponent(delegate, this.usersElement);
       if (this.animation) {
         this.animation.destroy();
       }

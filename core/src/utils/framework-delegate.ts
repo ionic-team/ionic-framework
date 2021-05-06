@@ -48,6 +48,7 @@ export const detachComponent = (delegate: FrameworkDelegate | undefined, element
 
 export const CoreDelegate = () => {
   let BaseComponent: any;
+  let Reference: any;
   const attachViewToDom = async (
     parentElement: HTMLElement,
     userComponent: any,
@@ -95,14 +96,27 @@ export const CoreDelegate = () => {
      * add the overlay there.
      */
     const app = document.querySelector('ion-app') || document.body;
+
+    /**
+     * Create a placeholder comment so that
+     * we can return this component to where
+     * it was previously.
+     */
+    Reference = document.createComment('ionic teleport');
+    BaseComponent.parentNode.insertBefore(Reference, BaseComponent);
+
     app.appendChild(BaseComponent);
 
     return BaseComponent;
   }
 
   const removeViewFromDom = () => {
-    if (BaseComponent) {
-      BaseComponent.remove();
+    /**
+     * Return component to where it was previously in the DOM.
+     */
+    if (BaseComponent && Reference) {
+      Reference.parentNode.insertBefore(BaseComponent, Reference);
+      Reference.remove();
     }
     return Promise.resolve();
   }

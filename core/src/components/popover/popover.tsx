@@ -268,7 +268,8 @@ export class Popover implements ComponentInterface, OverlayInterface {
     this.currentTransition = dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.event);
     const shouldDismiss = await this.currentTransition;
     if (shouldDismiss) {
-      await detachComponent(this.delegate, this.usersElement);
+      const delegate = (this.inline) ? this.delegate || this.coreDelegate : this.delegate;
+      await detachComponent(delegate, this.usersElement);
     }
 
     this.currentTransition = undefined;
