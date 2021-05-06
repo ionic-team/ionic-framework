@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { Color, DatetimeChangeEventDetail, DatetimeOptions, Mode, StyleEventDetail } from '../../interface';
+
 import { getIonMode } from '../../global/ionic-global';
+import { Color, DatetimeChangeEventDetail, DatetimeOptions, Mode, StyleEventDetail } from '../../interface';
 import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -9,6 +10,13 @@ import { createColorClasses } from '../../utils/theme';
  *
  * @part text - The value of the datetime.
  * @part placeholder - The placeholder of the datetime.
+ *
+ * @slot title - The title of the datetime. Only visible
+ * when presentationStyle="overlay".
+ * @slot buttons - The buttons in the datetime. Only
+ * visible when presentationStyle="overlay".
+ * @slot cover - The trigger element that opens a datetime.
+ * Only visible when presentationStyle="overlay".
  */
 @Component({
   tag: 'ion-datetime',
@@ -24,7 +32,7 @@ export class Datetime implements ComponentInterface {
 
   @Element() el!: HTMLIonDatetimeElement;
 
-  @State() isExpanded = false;
+  @State() isPresented = false;
 
   /**
    * The color to use from your application's color palette.
@@ -277,7 +285,7 @@ export class Datetime implements ComponentInterface {
       'interactive': true,
       'datetime': true,
       'has-placeholder': this.placeholder != null,
-      //'has-value': this.hasValue(),
+      // 'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
     });
   }
@@ -288,38 +296,32 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async open() {
-
+    console.log('[Stubbed]: open()')
+    this.isPresented = true;
   }
 
-  private renderDefaultiOSButtons() {
-    return [
-      <ion-button color={this.color}>Reset</ion-button>,
-      <ion-button color={this.color}>OK</ion-button>
-    ]
+  /**
+   * Dismisses the datetime overlay.
+   * Only applies when `presentationStyle="overlay"`.
+   */
+  @Method()
+  async dismiss() {
+    console.log('[Stubbed]: dismiss()')
+    this.isPresented = false;
   }
 
-  private renderDefaultMDButtons() {
-    return [
-      <ion-button color={this.color}>Cancel</ion-button>,
-      <ion-button color={this.color}>Ok</ion-button>
-    ]
-  }
-
-  private renderButtons(mode: Mode) {
-    if (this.presentationStyle === 'inline') return null;
+  private renderButtons() {
     return (
       <slot name="buttons">
         <ion-buttons>
-          { mode === 'ios' && this.renderDefaultiOSButtons() }
-          { mode === 'md' && this.renderDefaultMDButtons() }
+          <ion-button color={this.color} onClick={() => this.dismiss()}>Cancel</ion-button>
+          <ion-button color={this.color} onClick={() => this.dismiss()}>Ok</ion-button>
         </ion-buttons>
       </slot>
     );
   }
 
   private renderTitle(mode: Mode) {
-    if (this.presentationStyle === 'inline') return null;
-
     /**
      * On iOS there is no default title
      * shown. User can slot in a custom title.
@@ -333,8 +335,40 @@ export class Datetime implements ComponentInterface {
     );
   }
 
+  private renderCover() {
+    return (
+      <div onClick={() => this.open()}>
+        <slot name="cover">
+          <ion-button class="default">Datetime Default Cover</ion-button>
+        </slot>
+      </div>
+    )
+  }
+
+  private renderInline() {
+    return [
+      'inline datetime'
+    ]
+  }
+
+  private renderOverlay(mode: Mode) {
+    return [
+      this.renderCover(),
+      this.renderOverlayComponent(mode)
+    ]
+  }
+
+  private renderOverlayComponent(mode: Mode) {
+    if (!this.isPresented) { return; }
+
+    return [
+      this.renderTitle(mode),
+      this.renderButtons()
+    ]
+  }
+
   render() {
-    const { name, value, disabled, el, color } = this;
+    const { name, value, disabled, el, color, presentationStyle } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, disabled);
@@ -347,8 +381,7 @@ export class Datetime implements ComponentInterface {
           })
         }}
       >
-        {this.renderTitle(mode)}
-        {this.renderButtons(mode)}
+        {presentationStyle === 'inline' ? this.renderInline() : this.renderOverlay(mode)}
       </Host>
     );
   }

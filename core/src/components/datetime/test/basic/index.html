@@ -60,11 +60,23 @@
                 <ion-button color="secondary">Custom Cancel</ion-button>
                 <ion-button color="success">Custom Confirm</ion-button>
               </ion-buttons>
+              <ion-button slot="cover" color="danger">Custom Cover</ion-button>
             </ion-datetime>
           </div>
           <div class="grid-item">
             <h2>Color</h2>
             <ion-datetime color="danger" presentation-style="overlay"></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>Icon Cover</h2>
+            <ion-item>
+              <ion-input value="May 5th, 2021"></ion-input>
+              <ion-datetime presentation-style="overlay">
+                <ion-button slot="cover" fill="clear" color="dark">
+                  <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
+                </ion-button>
+              </ion-datetime>
+            </ion-item>
           </div>
         </div>
       </ion-content>

@@ -1,4 +1,77 @@
+@import "./datetime.vars";
+
+// Datetime
+// --------------------------------------------------
+
 :host {
-  --background: #{ion-color(primary, base)};
-  --color: #{ion-color(primary, contrast)};
+  /**
+   * @prop --padding-top: Top padding of the datetime
+   * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the datetime
+   * @prop --padding-bottom: Bottom padding of the datetime
+   * @prop --padding-start: Left padding if direction is left-to-right, and right padding if direction is right-to-left of the datetime
+   *
+   * @prop --placeholder-color: Color of the datetime placeholder
+   *
+   * @prop --background: The primary background of the datetime component.
+   * @prop --backdrop-secondary: The secondary background of the datetime component. This is the background of the header in the date picker and the dial and inputs in the time picker.
+   * @prop --background-active: The background of the active interactive components. This is the selected date in the date picker. In the time picker this is the active input and active AM/PM button.
+   * @prop --title-color: The text color of the title.
+   * @prop --color: The primary body text color.
+   * @prop --color-secondary: The color for the days of the week, next and previous buttons, and the AM/PM buttons.
+   * @prop --color-active: The text color of any active text. Applies to the "today" date in the calendar picker. In the time picker this applies to the active input and active AM/PM buttons.
+   * @prop --dial-color:  The color of the text that is selected by the dial in the time picker.
+   * @prop --dial-background: The background of the dial and arm in the time picker.
+   */
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  display: flex;
+  position: relative;
+
+  min-width: $datetime-min-width;
+  min-height: $datetime-min-height;
+
+  font-family: $font-family-base;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  z-index: $z-index-item-input;
+}
+
+:host(.in-item) {
+  position: static;
+}
+
+:host(.datetime-placeholder) {
+  color: var(--placeholder-color);
+}
+
+:host(.datetime-disabled) {
+  opacity: .3;
+  pointer-events: none;
+}
+
+:host(.datetime-readonly) {
+  pointer-events: none;
+}
+
+button {
+  @include input-cover();
+}
+
+.datetime-text {
+  @include text-inherit();
+
+  @include rtl() {
+    direction: rtl;
+  }
+
+  flex: 1;
+
+  min-height: inherit;
+
+  direction: ltr;
+  overflow: inherit;
 }

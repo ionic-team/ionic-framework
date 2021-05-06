@@ -648,6 +648,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Dismisses the datetime overlay. Only applies when `presentationStyle="overlay"`.
+         */
+        "dismiss": () => Promise<void>;
+        /**
           * The display format of the date and time as text that shows within the item. When the `pickerFormat` input is not used, then the `displayFormat` is used for both display the formatted text, and determining the datetime picker's columns. See the `pickerFormat` input description for more info. Defaults to `MMM D, YYYY`.
          */
         "displayFormat": string;
