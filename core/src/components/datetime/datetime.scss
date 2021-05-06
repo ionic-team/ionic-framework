@@ -24,7 +24,7 @@
    */
   //@include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  display: flex;
+  /*display: flex;
   position: relative;
 
   min-width: $datetime-min-width;
@@ -37,7 +37,7 @@
   white-space: nowrap;
 
   overflow: hidden;
-  z-index: $z-index-item-input;
+  z-index: $z-index-item-input;*/
 }
 
 :host(.in-item) {

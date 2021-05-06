@@ -12,7 +12,7 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
@@ -37,49 +37,72 @@
       <ion-content class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2>iOS - Inline</h2>
-            <ion-datetime mode="ios"></ion-datetime>
+            <h2>Inline</h2>
+            <ion-datetime></ion-datetime>
           </div>
+
           <div class="grid-item">
-            <h2>MD - Inline</h2>
-            <ion-datetime mode="md"></ion-datetime>
+            <h2>Popover</h2>
+            <ion-button onclick="presentPopover(defaultPopover, event)">Present Popover</ion-button>
+            <ion-popover id="default-popover">
+              <ion-datetime></ion-datetime>
+            </ion-popover>
           </div>
+
           <div class="grid-item">
-            <h2>iOS - Overlay</h2>
-            <ion-datetime mode="ios" presentation-style="overlay"></ion-datetime>
+            <h2>Modal</h2>
+            TBD
           </div>
+
           <div class="grid-item">
-            <h2>MD - Overlay</h2>
-            <ion-datetime mode="md" presentation-style="overlay"></ion-datetime>
-          </div>
-          <div class="grid-item">
-            <h2>Custom</h2>
-            <ion-datetime presentation-style="overlay">
-              <span slot="title">Select a date!!!!</span>
+            <h2>Inline - Custom</h2>
+            <ion-datetime>
+              <span slot="title">My Custom Title</span>
               <ion-buttons slot="buttons">
-                <ion-button color="secondary">Custom Cancel</ion-button>
-                <ion-button color="success">Custom Confirm</ion-button>
+                <ion-button color="danger">Destroy</ion-button>
+                <ion-button color="primary">Confirm</ion-button>
               </ion-buttons>
-              <ion-button slot="cover" color="danger">Custom Cover</ion-button>
             </ion-datetime>
           </div>
+
           <div class="grid-item">
-            <h2>Color</h2>
-            <ion-datetime color="danger" presentation-style="overlay"></ion-datetime>
-          </div>
-          <div class="grid-item">
-            <h2>Icon Cover</h2>
-            <ion-item>
-              <ion-input value="May 5th, 2021"></ion-input>
-              <ion-datetime presentation-style="overlay">
-                <ion-button slot="cover" fill="clear" color="dark">
-                  <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
-                </ion-button>
+            <h2>Popover - Custom</h2>
+            <ion-button onclick="presentPopover(customPopover, event)">Present Popover</ion-button>
+            <ion-popover id="custom-popover">
+              <ion-datetime>
+                <span slot="title">My Custom Title</span>
+                <ion-buttons slot="buttons">
+                  <ion-button color="danger">Destroy</ion-button>
+                  <ion-button color="primary">Confirm</ion-button>
+                </ion-buttons>
               </ion-datetime>
-            </ion-item>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>Modal - Custom</h2>
+            TBD
           </div>
         </div>
       </ion-content>
+      <script>
+        const defaultPopover = document.querySelector('ion-popover#default-popover');
+        const customPopover = document.querySelector('ion-popover#custom-popover');
+        const presentPopover = (popover, ev) => {
+          popover.event = ev;
+          popover.showBackdrop = false;
+          popover.isOpen = true;
+
+          const dismiss = () => {
+            popover.isOpen = false;
+            popover.event = undefined;
+
+            popover.removeEventListener('didDismiss', dismiss);
+          }
+
+          popover.addEventListener('didDismiss', dismiss);
+        }
+      </script>
     </ion-app>
   </body>
 </html>

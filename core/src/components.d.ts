@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
@@ -712,10 +712,6 @@ export namespace Components {
          */
         "open": () => Promise<void>;
         /**
-          * Any additional options that the modal, popover, or picker interfaces can accept. See the [Modal API docs](../modal) for the modal options. See the [Popover API docs](../popover) for the popover options. See the [Picker API docs](../picker) for the picker options.
-         */
-        "overlayOptions"?: DatetimeOptions;
-        /**
           * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
          */
         "pickerFormat"?: string;
@@ -723,10 +719,6 @@ export namespace Components {
           * The text to display when there's no date selected yet. Using lowercase to match the input attribute
          */
         "placeholder"?: string | null;
-        /**
-          * How the datetime component should be presented. `'inline'` will be display it directly in your template. `'overlay'` will display the calendar style in a modal on mobile and in a popover on desktop. The wheel style will be displayed inside of a picker.
-         */
-        "presentationStyle": 'overlay' | 'inline';
         /**
           * If `true`, users can select a range of dates.
          */
@@ -4142,10 +4134,6 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: CustomEvent<StyleEventDetail>) => void;
         /**
-          * Any additional options that the modal, popover, or picker interfaces can accept. See the [Modal API docs](../modal) for the modal options. See the [Popover API docs](../popover) for the popover options. See the [Picker API docs](../picker) for the picker options.
-         */
-        "overlayOptions"?: DatetimeOptions;
-        /**
           * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
          */
         "pickerFormat"?: string;
@@ -4153,10 +4141,6 @@ declare namespace LocalJSX {
           * The text to display when there's no date selected yet. Using lowercase to match the input attribute
          */
         "placeholder"?: string | null;
-        /**
-          * How the datetime component should be presented. `'inline'` will be display it directly in your template. `'overlay'` will display the calendar style in a modal on mobile and in a popover on desktop. The wheel style will be displayed inside of a picker.
-         */
-        "presentationStyle"?: 'overlay' | 'inline';
         /**
           * If `true`, users can select a range of dates.
          */
