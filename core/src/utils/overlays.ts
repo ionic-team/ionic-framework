@@ -244,17 +244,25 @@ export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTM
  * users use "read screen from top" gestures with
  * TalkBack and VoiceOver, the screen reader will begin
  * to read the content underneath the overlay.
+ *
+ * We need a container where all page components
+ * exist that is separate from where the overlays
+ * are added in the DOM. For most apps, this element
+ * is the top most ion-router-outlet. In the event
+ * that devs are not using a router,
+ * they will need to add the "ion-view-container-root"
+ * id to the element that contains all of their views.
  */
-const setRootAriaHidden = (overlayEl: HTMLElement, hidden = false) => {
+export const setRootAriaHidden = (hidden = false) => {
   const root = getAppRoot(document);
-  const routerOutlet = root.querySelector('ion-router-outlet');
+  const viewContainer = root.querySelector('ion-router-outlet, #ion-view-container-root');
 
-  if (!routerOutlet) { return; }
+  if (!viewContainer) { return; }
 
   if (hidden) {
-    routerOutlet.setAttribute('aria-hidden', 'true');
+    viewContainer.setAttribute('aria-hidden', 'true');
   } else {
-    routerOutlet.removeAttribute('aria-hidden');
+    viewContainer.removeAttribute('aria-hidden');
   }
 }
 
@@ -268,6 +276,9 @@ export const present = async (
   if (overlay.presented) {
     return;
   }
+
+  setRootAriaHidden(true);
+
   overlay.presented = true;
   overlay.willPresent.emit();
 
@@ -335,6 +346,9 @@ export const dismiss = async (
   if (!overlay.presented) {
     return false;
   }
+
+  setRootAriaHidden(false);
+
   overlay.presented = false;
 
   try {
