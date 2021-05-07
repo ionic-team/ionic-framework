@@ -33,6 +33,7 @@ export interface PopoverStyles {
   checkSafeAreaRight: boolean;
   arrowTop: number;
   arrowLeft: number;
+  addPopoverBottomClass: boolean;
 }
 
 /**
@@ -743,9 +744,12 @@ export const calculateWindowAdjustment = (
   contentOriginX: string,
   contentOriginY: string,
   triggerCoordinates?: ReferenceCoordinates,
-  arrowTop = 0,
-  arrowLeft = 0
+  coordArrowTop = 0,
+  coordArrowLeft = 0,
+  arrowHeight = 0
 ): PopoverStyles => {
+  let arrowTop = coordArrowTop;
+  const arrowLeft = coordArrowLeft;
   let left = coordLeft;
   let top = coordTop;
   let bottom;
@@ -755,6 +759,7 @@ export const calculateWindowAdjustment = (
   let checkSafeAreaRight = false;
   const triggerTop = triggerCoordinates ? triggerCoordinates.top + triggerCoordinates.height : bodyHeight / 2 - contentHeight / 2;
   const triggerHeight = triggerCoordinates ? triggerCoordinates.height : 0;
+  let addPopoverBottomClass = false;
 
   /**
    * Adjust popover so it does not
@@ -784,9 +789,10 @@ export const calculateWindowAdjustment = (
     triggerTop + triggerHeight + contentHeight > bodyHeight
   ) {
     if (triggerTop - contentHeight > 0) {
-      // TODO add arrow stuff
-      top = triggerTop - contentHeight - triggerHeight;
+      top = triggerTop - contentHeight - triggerHeight - (arrowHeight - 1);
+      arrowTop = top + contentHeight;
       originY = 'bottom';
+      addPopoverBottomClass = true;
 
     /**
      * If not enough room for popover to appear
@@ -797,5 +803,5 @@ export const calculateWindowAdjustment = (
     }
   }
 
-  return { top, left, bottom, originX, originY, checkSafeAreaLeft, checkSafeAreaRight, arrowTop, arrowLeft };
+  return { top, left, bottom, originX, originY, checkSafeAreaLeft, checkSafeAreaRight, arrowTop, arrowLeft, addPopoverBottomClass };
 }
