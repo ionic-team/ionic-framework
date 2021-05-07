@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { setRootAriaHidden } from '../overlays';
 import { RouterOutlet } from '../../components/router-outlet/route-outlet';
+import { Nav } from '../../components/nav/nav';
 
 describe('setRootAriaHidden()', () => {
   it('should correctly remove and re-add router outlet from accessibility tree', async () => {
@@ -20,6 +21,25 @@ describe('setRootAriaHidden()', () => {
 
     setRootAriaHidden(false);
     expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
+  });
+
+  it('should correctly remove and re-add nav from accessibility tree', async () => {
+    const page = await newSpecPage({
+      components: [Nav],
+      html: `
+        <ion-nav></ion-nav>
+      `
+    });
+
+    const nav = page.body.querySelector('ion-nav');
+
+    expect(nav.hasAttribute('aria-hidden')).toEqual(false);
+
+    setRootAriaHidden(true);
+    expect(nav.hasAttribute('aria-hidden')).toEqual(true);
+
+    setRootAriaHidden(false);
+    expect(nav.hasAttribute('aria-hidden')).toEqual(false);
   });
 
   it('should correctly remove and re-add custom container from accessibility tree', async () => {
