@@ -236,6 +236,28 @@ export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTM
     : overlays.find(o => o.id === id);
 };
 
+/**
+ * When an overlay is presented, the main
+ * focus is the overlay not the page content.
+ * We need to remove the page content from the
+ * accessibility tree otherwise when
+ * users use "read screen from top" gestures with
+ * TalkBack and VoiceOver, the screen reader will begin
+ * to read the content underneath the overlay.
+ */
+const setRootAriaHidden = (overlayEl: HTMLElement, hidden = false) => {
+  const root = getAppRoot(document);
+  const routerOutlet = root.querySelector('ion-router-outlet');
+
+  if (!routerOutlet) { return; }
+
+  if (hidden) {
+    routerOutlet.setAttribute('aria-hidden', 'true');
+  } else {
+    routerOutlet.removeAttribute('aria-hidden');
+  }
+}
+
 export const present = async (
   overlay: OverlayInterface,
   name: keyof IonicConfig,
