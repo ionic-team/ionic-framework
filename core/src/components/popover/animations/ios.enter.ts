@@ -86,7 +86,6 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
         const showArrow = shouldShowArrow(side, didAdjustBounds, ev, trigger);
 
         if (showArrow) {
-          arrowEl.style.removeProperty('display');
           arrowEl.style.setProperty('top', `calc(${arrowTop}px + var(--offset-y, 0))`);
           arrowEl.style.setProperty('left', `calc(${arrowLeft}px + var(--offset-x, 0))`);
         } else {
