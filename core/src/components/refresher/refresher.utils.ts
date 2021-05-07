@@ -15,8 +15,8 @@ export const getRefresherAnimationType = (contentEl: HTMLIonContentElement): Ref
   return hasHeader ? 'translate' : 'scale';
 };
 
-export const createPullingAnimation = (type: RefresherAnimationType, pullingSpinner: HTMLElement) => {
-  return type === 'scale' ? createScaleAnimation(pullingSpinner) : createTranslateAnimation(pullingSpinner);
+export const createPullingAnimation = (type: RefresherAnimationType, pullingSpinner: HTMLElement, refresherEl: HTMLElement) => {
+  return type === 'scale' ? createScaleAnimation(pullingSpinner, refresherEl) : createTranslateAnimation(pullingSpinner, refresherEl);
 };
 
 const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
@@ -85,24 +85,24 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
   return baseAnimation.addAnimation([spinnerArrowContainerAnimation, circleInnerAnimation, circleOuterAnimation]);
 };
 
-const createScaleAnimation = (pullingRefresherIcon: HTMLElement) => {
-  const height = pullingRefresherIcon.clientHeight;
+const createScaleAnimation = (pullingRefresherIcon: HTMLElement, refresherEl: HTMLElement) => {
+  const height = refresherEl.clientHeight;
   const spinnerAnimation = createAnimation()
     .addElement(pullingRefresherIcon)
     .keyframes([
-      { offset: 0, transform: `scale(0) translateY(-${height + 20}px)` },
+      { offset: 0, transform: `scale(0) translateY(-${height}px)` },
       { offset: 1, transform: 'scale(1) translateY(100px)' }
     ]);
 
   return createBaseAnimation(pullingRefresherIcon).addAnimation([spinnerAnimation]);
 };
 
-const createTranslateAnimation = (pullingRefresherIcon: HTMLElement) => {
-  const height = pullingRefresherIcon.clientHeight;
+const createTranslateAnimation = (pullingRefresherIcon: HTMLElement, refresherEl: HTMLElement) => {
+  const height = refresherEl.clientHeight;
   const spinnerAnimation = createAnimation()
     .addElement(pullingRefresherIcon)
     .keyframes([
-      { offset: 0, transform: `translateY(-${height + 20}px)` },
+      { offset: 0, transform: `translateY(-${height}px)` },
       { offset: 1, transform: 'translateY(100px)' }
     ]);
 
