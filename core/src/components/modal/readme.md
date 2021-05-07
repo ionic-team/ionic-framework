@@ -34,7 +34,7 @@ Any of the defined [CSS Custom Properties](#css-custom-properties) can be used t
 
 > If you are building an Ionic Angular app, the styles need to be added to a global stylesheet file. Read [Style Placement](#style-placement) in the Angular section below for more information.
 
-> Stacked modals per default work under the assumption that the modals are the same size. Each subsequent modal will therefore not have a shadow and a darkening backdrop. This is to avoid the effect of backdrops and shadows getting darker and darker with each added modal. This can be changed by setting `--box-shadow` and `--backdrop-opacity` when creating nested modals by setting `cssClass`. For example when showing a confirmation modal over another modal. Example:
+> `ion-modal` works under the assumption that stacked modals are the same size. As a result, each subsequent modal will have no box shadow and a backdrop opacity of `0`. This is to avoid the effect of shadows and backdrops getting darker with each added modal. This can be changed by setting the `--box-shadow` and `--backdrop-opacity` CSS variables:
 ``` 
 ion-modal.stack-modal {
   --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
