@@ -36,6 +36,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 The `pickerOptions` property has been removed. Use the `overlayOptions` property instead.
 
+The `monthNames`, `monthShortNames`, `dayNames`, and `dayShortNames` properties have been removed. Use the `locale` property instead.
+
 #### Header
 
 When using a collapsible large title, the last toolbar in the header with `collapse="condense"` no longer has a border. This does not affect the toolbar when the large title is collapsed.

@@ -1,6 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { Color, DatetimeChangeEventDetail, DatetimeOptions, Mode, StyleEventDetail } from '../../interface';
+
 import { getIonMode } from '../../global/ionic-global';
+import { Color, DatetimeChangeEventDetail, DatetimeOptions, Mode, StyleEventDetail } from '../../interface';
 import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -26,7 +27,7 @@ import { createColorClasses } from '../../utils/theme';
 export class Datetime implements ComponentInterface {
 
   private inputId = `ion-dt-${datetimeIds++}`;
-  private showDefaultTitleAndButtons: boolean = true;
+  private showDefaultTitleAndButtons = true;
 
   @Element() el!: HTMLIonDatetimeElement;
 
@@ -163,29 +164,12 @@ export class Datetime implements ComponentInterface {
   @Prop() minuteValues?: number[] | number | string;
 
   /**
-   * Full names for each month name. This can be used to provide
-   * locale month names. Defaults to English.
+   * The locale to use for `ion-datetime`. This
+   * impacts month and day name formatting.
+   * The `'default'` value refers to the default
+   * locale set by your device.
    */
-  @Prop() monthNames?: string[] | string;
-
-  /**
-   * Short abbreviated names for each month name. This can be used to provide
-   * locale month names. Defaults to English.
-   */
-  @Prop() monthShortNames?: string[] | string;
-
-  /**
-   * Full day of the week names. This can be used to provide
-   * locale names for each day in the week. Defaults to English.
-   */
-  @Prop() dayNames?: string[] | string;
-
-  /**
-   * Short abbreviated day of the week names. This can be used to provide
-   * locale names for each day in the week. Defaults to English.
-   * Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
-   */
-  @Prop() dayShortNames?: string[] | string;
+  @Prop() locale = 'default';
 
   /**
    * The text to display when there's no date selected yet.
@@ -274,7 +258,7 @@ export class Datetime implements ComponentInterface {
       'interactive': true,
       'datetime': true,
       'has-placeholder': this.placeholder != null,
-      //'has-value': this.hasValue(),
+      // 'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
     });
   }

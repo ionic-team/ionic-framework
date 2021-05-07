@@ -632,14 +632,6 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
-         */
-        "dayNames"?: string[] | string;
-        /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
-         */
-        "dayShortNames"?: string[] | string;
-        /**
           * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
          */
         "dayValues"?: number[] | number | string;
@@ -672,6 +664,10 @@ export namespace Components {
          */
         "interactionStyle": 'calendar' | 'wheel';
         /**
+          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
+         */
+        "locale": string;
+        /**
           * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
          */
         "max"?: string;
@@ -691,14 +687,6 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-        /**
-          * Full names for each month name. This can be used to provide locale month names. Defaults to English.
-         */
-        "monthNames"?: string[] | string;
-        /**
-          * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
-         */
-        "monthShortNames"?: string[] | string;
         /**
           * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
          */
@@ -4042,14 +4030,6 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
-         */
-        "dayNames"?: string[] | string;
-        /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
-         */
-        "dayShortNames"?: string[] | string;
-        /**
           * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
          */
         "dayValues"?: number[] | number | string;
@@ -4078,6 +4058,10 @@ declare namespace LocalJSX {
          */
         "interactionStyle"?: 'calendar' | 'wheel';
         /**
+          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
+         */
+        "locale"?: string;
+        /**
           * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
          */
         "max"?: string;
@@ -4097,14 +4081,6 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-        /**
-          * Full names for each month name. This can be used to provide locale month names. Defaults to English.
-         */
-        "monthNames"?: string[] | string;
-        /**
-          * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
-         */
-        "monthShortNames"?: string[] | string;
         /**
           * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
          */
