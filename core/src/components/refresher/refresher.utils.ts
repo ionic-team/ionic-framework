@@ -86,6 +86,15 @@ const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
 };
 
 const createScaleAnimation = (pullingRefresherIcon: HTMLElement, refresherEl: HTMLElement) => {
+  /**
+   * Do not take the height of the refresher icon
+   * because at this point the DOM has not updated,
+   * so the refresher icon is still hidden with
+   * display: none.
+   * The `ion-refresher` container height
+   * is roughly the amount we need to offset
+   * the icon by when pulling down.
+   */
   const height = refresherEl.clientHeight;
   const spinnerAnimation = createAnimation()
     .addElement(pullingRefresherIcon)
@@ -98,6 +107,15 @@ const createScaleAnimation = (pullingRefresherIcon: HTMLElement, refresherEl: HT
 };
 
 const createTranslateAnimation = (pullingRefresherIcon: HTMLElement, refresherEl: HTMLElement) => {
+  /**
+   * Do not take the height of the refresher icon
+   * because at this point the DOM has not updated,
+   * so the refresher icon is still hidden with
+   * display: none.
+   * The `ion-refresher` container height
+   * is roughly the amount we need to offset
+   * the icon by when pulling down.
+   */
   const height = refresherEl.clientHeight;
   const spinnerAnimation = createAnimation()
     .addElement(pullingRefresherIcon)
