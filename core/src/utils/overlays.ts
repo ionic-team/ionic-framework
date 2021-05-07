@@ -252,6 +252,11 @@ export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTM
  * that devs are not using a router,
  * they will need to add the "ion-view-container-root"
  * id to the element that contains all of their views.
+ *
+ * TODO: If Framework supports having multiple top
+ * level router outlets we would need to update this.
+ * Example: One outlet for side menu and one outlet
+ * for main content.
  */
 export const setRootAriaHidden = (hidden = false) => {
   const root = getAppRoot(document);
