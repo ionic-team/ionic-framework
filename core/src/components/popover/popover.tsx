@@ -4,7 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface, PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf } from '../../utils/helpers';
-import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -66,6 +66,9 @@ export class Popover implements ComponentInterface, OverlayInterface {
   private destroyTriggerInteraction?: () => void;
   private destroyKeyboardInteraction?: () => void;
   private destroyDismissInteraction?: () => void;
+
+  private triggerEv?: Event;
+  private focusDescendantOnPresent = false;
 
   lastFocus?: HTMLElement;
 
@@ -314,10 +317,30 @@ export class Popover implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * When opening a popover from a trigger, we should not be
+   * modifying the `event` prop from inside the component.
+   * Additionally, when pressing the "Right" arrow key, we need
+   * to shift focus to the first descendant in the newly presented
+   * popover.
+   *
+   * @internal
+   */
+  @Method()
+  async presentFromTrigger(event?: any, focusDescendant = false) {
+    this.triggerEv = event;
+    this.focusDescendantOnPresent = focusDescendant;
+
+    await this.present();
+
+    this.triggerEv = undefined;
+    this.focusDescendantOnPresent = false;
+  }
+
+  /**
    * Present the popover overlay after it has been created.
    */
   @Method()
-  async present(event?: any, focusFirstItem = false): Promise<void> {
+  async present(): Promise<void> {
     if (this.presented) {
       return;
     }
@@ -353,18 +376,27 @@ export class Popover implements ComponentInterface, OverlayInterface {
     this.configureDismissInteraction();
 
     this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
-      event: this.event || event,
+      event: this.event || this.triggerEv,
       size: this.size,
       trigger: this.triggerEl,
       reference: this.reference,
       side: this.side,
-      align: this.alignment,
-      focusFirstDescendant: focusFirstItem
+      align: this.alignment
     });
 
     await this.currentTransition;
 
     this.currentTransition = undefined;
+
+    /**
+     * If popover is nested and was
+     * presented using the "Right" arrow key,
+     * we need to move focus to the first
+     * descendant inside of the popover.
+     */
+    if (this.focusDescendantOnPresent) {
+      focusFirstDescendant(this.el, this.el);
+    }
   }
 
   /**

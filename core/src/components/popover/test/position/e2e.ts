@@ -176,7 +176,6 @@ const testSideAndAlign = async (page, popoverClass, triggerID, side, alignment, 
       expectedX += centerAlign.left;
       expectedY += centerAlign.top;
       break;
-      break;
     case 'end':
       const endAlign = getEndAlign(side, triggerBbox, popoverBbox);
       expectedX += endAlign.left;

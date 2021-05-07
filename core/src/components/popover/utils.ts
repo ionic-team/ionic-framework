@@ -188,7 +188,7 @@ export const configureTriggerInteraction = (
              */
             hoverTimeout = setTimeout(() => {
               raf(() => {
-                popoverEl.present(ev);
+                popoverEl.presentFromTrigger(ev);
                 hoverTimeout = undefined;
               })
             }, 100);
@@ -224,7 +224,7 @@ export const configureTriggerInteraction = (
         },
         {
           eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.present(ev, true)
+          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true)
         }
       ]
 
@@ -239,7 +239,7 @@ export const configureTriggerInteraction = (
              * menu from appearing.
              */
             ev.preventDefault();
-            popoverEl.present(ev);
+            popoverEl.presentFromTrigger(ev);
           }
         },
         {
@@ -248,7 +248,7 @@ export const configureTriggerInteraction = (
         },
         {
           eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.present(ev, true)
+          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true)
         }
       ]
 
@@ -265,11 +265,11 @@ export const configureTriggerInteraction = (
            * the first popover to dismiss.
            */
           eventName: 'click',
-          callback: (ev: Event) => popoverEl.present(ev)
+          callback: (ev: Event) => popoverEl.presentFromTrigger(ev)
         },
         {
           eventName: 'ionPopoverActivateTrigger',
-          callback: (ev: Event) => popoverEl.present(ev, true)
+          callback: (ev: Event) => popoverEl.presentFromTrigger(ev, true)
         }
       ];
       break;
@@ -603,6 +603,15 @@ const calculatePopoverSide = (
   arrowHeight: number,
   isRTL: boolean
 ) => {
+  const sideLeft = {
+    top: triggerBoundingBox.top,
+    left: triggerBoundingBox.left - contentWidth - arrowWidth
+  }
+  const sideRight = {
+    top: triggerBoundingBox.top,
+    left: triggerBoundingBox.left + triggerBoundingBox.width + arrowWidth
+  }
+
   switch (side) {
     case 'top':
       return {
@@ -610,30 +619,18 @@ const calculatePopoverSide = (
         left: triggerBoundingBox.left
       }
     case 'right':
-      return {
-        top: triggerBoundingBox.top,
-        left: triggerBoundingBox.left + triggerBoundingBox.width + arrowWidth
-      }
+      return sideRight;
     case 'bottom':
       return {
         top: triggerBoundingBox.top + triggerBoundingBox.height + arrowHeight,
         left: triggerBoundingBox.left
       }
     case 'left':
-      return {
-        top: triggerBoundingBox.top,
-        left: triggerBoundingBox.left - contentWidth - arrowWidth
-      }
+      return sideLeft;
     case 'start':
-      return {
-        top: triggerBoundingBox.top,
-        left: (isRTL) ? triggerBoundingBox.left + triggerBoundingBox.width + arrowWidth : triggerBoundingBox.left - contentWidth - arrowWidth
-      }
+      return (isRTL) ? sideRight : sideLeft;
     case 'end':
-      return {
-        top: triggerBoundingBox.top,
-        left: (isRTL) ? triggerBoundingBox.left - contentWidth - arrowWidth : triggerBoundingBox.left + triggerBoundingBox.width + arrowWidth
-      }
+      return (isRTL) ? sideLeft : sideRight;
   }
 }
 
