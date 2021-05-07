@@ -733,6 +733,7 @@ const calculatePopoverCenterAlign = (
  * or overlapping safe area bounds.
  */
 export const calculateWindowAdjustment = (
+  side: PositionSide,
   coordTop: number,
   coordLeft: number,
   bodyPadding: number,
@@ -749,7 +750,7 @@ export const calculateWindowAdjustment = (
   arrowHeight = 0
 ): PopoverStyles => {
   let arrowTop = coordArrowTop;
-  const arrowLeft = coordArrowLeft;
+  let arrowLeft = coordArrowLeft;
   let left = coordLeft;
   let top = coordTop;
   let bottom;
@@ -784,9 +785,13 @@ export const calculateWindowAdjustment = (
   /**
    * Adjust popover so it does not
    * go off the top of the screen.
+   * If popover is on the left or the right of
+   * the trigger, then we should not adjust top
+   * margins.
    */
   if (
-    triggerTop + triggerHeight + contentHeight > bodyHeight
+    triggerTop + triggerHeight + contentHeight > bodyHeight &&
+    (side === 'top' || side === 'bottom')
   ) {
     if (triggerTop - contentHeight > 0) {
       top = triggerTop - contentHeight - triggerHeight - (arrowHeight - 1);

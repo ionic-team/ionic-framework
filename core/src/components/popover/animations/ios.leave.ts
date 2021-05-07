@@ -21,6 +21,8 @@ export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
 
   return baseAnimation
     .easing('ease')
+    .addElement(baseEl)
+    .afterRemoveClass(['popover-bottom'])
     .duration(300)
     .addAnimation([backdropAnimation, wrapperAnimation]);
 };
