@@ -1,7 +1,7 @@
 import { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
-import { calculateWindowAdjustment, getArrowDimensions, getPopoverDimensions, getPopoverPosition } from '../utils';
+import { calculateWindowAdjustment, getArrowDimensions, getPopoverDimensions, getPopoverPosition, shouldShowArrow } from '../utils';
 
 const POPOVER_IOS_BODY_PADDING = 5;
 
@@ -82,8 +82,16 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
       contentEl.style.setProperty('transform-origin', `${originY} ${originX}`);
 
       if (arrowEl !== null) {
-        arrowEl.style.setProperty('top', `calc(${arrowTop}px + var(--offset-y, 0))`);
-        arrowEl.style.setProperty('left', `calc(${arrowLeft}px + var(--offset-x, 0))`);
+        const didAdjustBounds = results.top !== top || results.left !== left;
+        const showArrow = shouldShowArrow(side, didAdjustBounds, ev, trigger);
+
+        if (showArrow) {
+          arrowEl.style.removeProperty('display');
+          arrowEl.style.setProperty('top', `calc(${arrowTop}px + var(--offset-y, 0))`);
+          arrowEl.style.setProperty('left', `calc(${arrowLeft}px + var(--offset-x, 0))`);
+        } else {
+          arrowEl.style.setProperty('display', 'none');
+        }
       }
     })
     .addAnimation([backdropAnimation, wrapperAnimation]);

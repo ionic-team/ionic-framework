@@ -750,7 +750,7 @@ export const calculateWindowAdjustment = (
   arrowHeight = 0
 ): PopoverStyles => {
   let arrowTop = coordArrowTop;
-  let arrowLeft = coordArrowLeft;
+  const arrowLeft = coordArrowLeft;
   let left = coordLeft;
   let top = coordTop;
   let bottom;
@@ -809,4 +809,37 @@ export const calculateWindowAdjustment = (
   }
 
   return { top, left, bottom, originX, originY, checkSafeAreaLeft, checkSafeAreaRight, arrowTop, arrowLeft, addPopoverBottomClass };
+}
+
+export const shouldShowArrow = (
+  side: PositionSide,
+  didAdjustBounds = false,
+  ev?: Event,
+  trigger?: HTMLElement
+) => {
+  /**
+   * If no event provided and
+   * we do not have a trigger,
+   * then this popover was likely
+   * presented via the popoverController
+   * or users called `present` manually.
+   * In this case, the arrow should not be
+   * shown as we do not have a reference.
+   */
+  if (!ev && !trigger) {
+    return false;
+  }
+
+  /**
+   * If popover is on the left or the right
+   * of a trigger, but we needed to adjust the
+   * popover due to screen bounds, then we should
+   * hide the arrow as it will never be pointing
+   * at the trigger.
+   */
+  if (side !== 'top' && side !== 'bottom' && didAdjustBounds) {
+    return false;
+  }
+
+  return true;
 }
