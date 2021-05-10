@@ -25,6 +25,8 @@ export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge',
 
 
 export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-button', [
+  'dsName',
+  'dsSize',
   'color',
   'buttonType',
   'disabled',
@@ -438,6 +440,7 @@ export const IonNote = /*@__PURE__*/ defineContainer<JSX.IonNote>('ion-note', [
 
 
 export const IonProgressBar = /*@__PURE__*/ defineContainer<JSX.IonProgressBar>('ion-progress-bar', [
+  'percentage',
   'type',
   'reversed',
   'value',
@@ -798,7 +801,54 @@ export const IonVirtualScroll = /*@__PURE__*/ defineContainer<JSX.IonVirtualScro
 ]);
 
 
+export const MedAlternativas = /*@__PURE__*/ defineContainer<JSX.MedAlternativas>('med-alternativas', [
+  'alternativas',
+  'keyAlternativa',
+  'keyEnunciado',
+  'keyImagem',
+  'keyPorcentagem',
+  'respostaCorreta',
+  'mostraResposta',
+  'alternativaSelecionada',
+  'medChange',
+  'medGalleryRequest'
+]);
+
+
+export const MedCartaoRespostaItem = /*@__PURE__*/ defineContainer<JSX.MedCartaoRespostaItem>('med-cartao-resposta-item', [
+  'color'
+]);
+
+
+export const MedCartaoRespostaLista = /*@__PURE__*/ defineContainer<JSX.MedCartaoRespostaLista>('med-cartao-resposta-lista');
+
+
+export const MedEnunciado = /*@__PURE__*/ defineContainer<JSX.MedEnunciado>('med-enunciado', [
+  'imagens',
+  'medGalleryRequest'
+]);
+
+
+export const MedHeader = /*@__PURE__*/ defineContainer<JSX.MedHeader>('med-header', [
+  'medResize'
+]);
+
+
 export const MedNavbar = /*@__PURE__*/ defineContainer<JSX.MedNavbar>('med-navbar', [
   'medResize'
 ]);
+
+
+export const MedOption = /*@__PURE__*/ defineContainer<JSX.MedOption>('med-option');
+
+
+export const MedRateBar = /*@__PURE__*/ defineContainer<JSX.MedRateBar>('med-rate-bar');
+
+
+export const MedRateLike = /*@__PURE__*/ defineContainer<JSX.MedRateLike>('med-rate-like', [
+  'medChange'
+]);
+
+
+export const MedToolbar = /*@__PURE__*/ defineContainer<JSX.MedToolbar>('med-toolbar');
 

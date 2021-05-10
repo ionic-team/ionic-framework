@@ -9,7 +9,7 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 @Component({
   tag: 'ion-col',
-  styleUrl: 'col.scss',
+  styleUrl: './med/med-col.scss',
   shadow: true
 })
 export class Col implements ComponentInterface {

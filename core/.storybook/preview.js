@@ -11,6 +11,8 @@ import '../css/structure.css';
 import '../css/text-alignment.css';
 import '../css/text-transformation.css';
 import '../css/typography.css';
+import '../src/stories/assets/fsemeric.css';
+import '../src/stories/assets/custom.css';
 
 defineCustomElements();
 
@@ -21,24 +23,34 @@ export const parameters = {
   themes: [
     {
       name: 'Dark Mode',
-      class: ['dark'],
+      class: ['dark-mode'],
       color: '#000'
     },
     {
       name: 'Light Mode',
-      class: ['light'],
-      color: '#fff', 
-      default: true 
+      class: ['light-mode'],
+      color: '#fff',
+      default: true
     },
     {
       name: 'Gold - Dark Mode',
-      class: ['dark', 'gold'],
+      class: ['dark-mode', 'gold-mode'],
       color: '#b89d58'
     },
     {
       name: 'Gold - Light Mode',
-      class: ['light', 'gold'],
+      class: ['light-mode', 'gold-mode'],
       color: '#b89d58'
+    },
+    {
+      name: 'Image Mode - Dark Mode',
+      class: ['dark-mode', 'image-mode'],
+      color: '#000'
+    },
+    {
+      name: 'Image Mode - Light Mode',
+      class: ['light-mode', 'image-mode'],
+      color: '#fff'
     },
   ],
   viewport: {

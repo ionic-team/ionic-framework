@@ -1,0 +1,7 @@
+@import "../../../med-components/abstracts";
+
+:host {
+  --bar-background: #{$med-color-neutral-light-20};
+  --bar-background-active: #{$med-color-brand-primary-light};
+  padding: 0;
+}

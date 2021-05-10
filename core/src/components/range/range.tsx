@@ -21,7 +21,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-range',
   styleUrls: {
-    ios: 'range.ios.scss',
+    ios: 'range.md.scss',
     md: 'range.md.scss'
   },
   shadow: true

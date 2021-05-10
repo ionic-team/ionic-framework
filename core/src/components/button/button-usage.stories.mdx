@@ -1,0 +1,131 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Global/Button/Usage" />
+
+# Usage
+
+## primary
+
+### Atributos
+
+| Atributo     | Descrição                                  | Valores                |
+| ------------ | ------------------------------------------ | ---------------------- |
+| **ds-name**  | Define o botão                             | **primary**            |
+| **expand**   | Define o estilo 'full' ou 'block' do botão | **full**/**block**     |
+| **disabled** | Define o estado disabled do botão          | **Atributo sem valor** |
+
+```html
+<!-- primary -->
+<ion-button ds-name="primary">ion-button</ion-button>
+
+<!-- disabled -->
+<ion-button ds-name="primary" disabled>ion-button</ion-button>
+
+<!-- expand -->
+<ion-button ds-name="primary" expand="full">ion-button</ion-button>
+<ion-button ds-name="primary" expand="block">ion-button</ion-button>
+```
+
+## secondary
+
+### Atributos
+
+| Atributo     | Descrição                         | Valores                |
+| ------------ | --------------------------------- | ---------------------- |
+| **ds-name**  | Define o botão                    | **secondary**          |
+| **disabled** | Define o estado disabled do botão | **Atributo sem valor** |
+
+```html
+<!-- secondary -->
+<ion-button ds-name="secondary">ion-button</ion-button>
+
+<!-- disabled -->
+<ion-button ds-name="secondary" disabled>ion-button</ion-button>
+```
+
+## tertiary
+
+### Atributos
+
+| Atributo     | Descrição                                  | Valores                |
+| ------------ | ------------------------------------------ | ---------------------- |
+| **ds-name**  | Define o botão                             | **teritiary**          |
+| **expand**   | Define o estilo 'full' ou 'block' do botão | **full**/**block**     |
+| **disabled** | Define o estado disabled do botão          | **Atributo sem valor** |
+
+
+
+```html
+<!-- tertiary -->
+<ion-button ds-name="tertiary">ion-button</ion-button>
+
+<!-- disabled -->
+<ion-button ds-name="tertiary" disabled>ion-button</ion-button>
+
+<!-- expand -->
+<ion-button ds-name="tertiary" expand="full">ion-button</ion-button>
+<ion-button ds-name="tertiary" expand="block">ion-button</ion-button>
+```
+
+## icon-only
+
+### Atributos
+
+| Atributo     | Descrição                         | Valores                     |
+| ------------ | --------------------------------- | --------------------------- |
+| **ds-name**  | Define o botão                    | **icon-only**               |
+| **ds-size**  | Define os tamanhos do botão       | **xs**/**sm**/**md**/**lg** |
+| **disabled** | Define o estado disabled do botão | **Atributo sem valor**      |
+
+```html
+<!-- icon-only -->
+<ion-button ds-name="icon-only">
+  <ion-icon slot="icon-only" name="med-chevron-left"></ion-icon>
+</ion-button>
+
+<!-- disabled -->
+<ion-button ds-name="icon-only" disabled>
+  <ion-icon slot="icon-only" name="med-chevron-left"></ion-icon>
+</ion-button>
+
+<!-- ds-size -->
+<ion-button ds-name="icon-only" ds-size="md">
+  <ion-icon slot="icon-only" name="med-chevron-left"></ion-icon>
+</ion-button>
+```
+
+## icon-label
+
+### Atributos
+
+| Atributo     | Descrição                         | Valores                |
+| ------------ | ----------------------------------| ---------------------- |
+| **ds-name**  | Define o botão                    | **icon-label**         |
+| **disabled** | Define o estado disabled do botão | **Atributo sem valor** |
+
+### Slots
+
+| Slot              | Descrição                              |
+| ----------------- | -------------------------------------- |
+| **slot="start"**  | Posiciona um emento no começo do botão |
+| **slot="end"**    | Posiciona um emento no final do botão  |
+
+```html
+<!-- slot="start" -->
+<ion-button ds-name="icon-label">
+ <ion-icon name="med-arrow-left-circle" slot="start"></ion-icon>
+  voltar
+</ion-button>
+
+<!-- slot="end" -->
+<ion-button ds-name="icon-label">
+  próxima
+  <ion-icon name="med-arrow-right-circle" slot="end"></ion-icon>
+</ion-button>
+
+<!-- disabled -->
+<ion-button ds-name="icon-label" disabled>
+  próxima
+  <ion-icon name="med-chevron-left" slot="end"></ion-icon>
+</ion-button>
+```

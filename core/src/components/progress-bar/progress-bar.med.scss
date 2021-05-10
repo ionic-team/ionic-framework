@@ -1,0 +1,71 @@
+@import "../../../med-components/abstracts";
+@import "../../themes/ionic.globals.scss";
+
+// Progress bar
+// ------------------------------------------------------------------------
+
+// Host has no background by default - this will be added to the progress-buffer-bar
+:host {
+  /**
+   * @prop --background: Background of the progress track, or the buffer bar if `buffer` is set
+   * @prop --progress-background: Background of the progress bar representing the current value
+   * @prop --buffer-background: DEPRECATED, use `--background` instead
+   */
+  --background: transparent;
+  --progress-background: #{$med-color-questoes-light};
+  --progress-correct-background: #{$med-color-feedback-success-light};
+  --buffer-background: transparent;
+  --height: 8px;
+
+  --percentage-font-size: #{$med-font-size-nano};
+  --percentage-font-weight: #{$med-font-weight-regular};
+  --percentage-line-height: #{$med-line-height-compressed};
+  --percentage-color: #{$med-color-neutral-light-10};
+  --percentage-spacing: #{$med-spacing-inline-xxxs};
+
+  display: block;
+  position: relative;
+  contain: strict;
+  overflow: hidden;
+  width: 100%;
+  height: var(--height);
+}
+
+.progress-container {
+  display: flex;
+}
+
+:host-context(med-header) .progress-container {
+  --background: #{$med-color-neutral-light-40};
+}
+
+:host-context(med-header) .progress__percentage {
+  display: none;
+}
+
+.progress {
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+  height: var(--height);
+  background: var(--progress-background);
+
+  &__percentage {
+    font-size: var(--percentage-font-size);
+    font-weight: var(--percentage-font-weight);
+    line-height: var(--percentage-line-height);
+    color: var(--percentage-color);
+    margin-left: var(--percentage-spacing);
+    display: none;
+  }
+
+  &--correct {
+    background: var(--progress-correct-background);
+  }
+}
+
+:host(.percentage) {
+  .progress__percentage {
+    display: block;
+  }
+}

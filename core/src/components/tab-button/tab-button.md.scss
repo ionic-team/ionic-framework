@@ -148,3 +148,122 @@
 
   font-size: 24px;
 }
+
+//
+// custom
+//
+
+@import "../../../med-components/abstracts";
+
+:host {
+  --color: #{$med-color-neutral-light-40};
+  --color-hover: #{$med-color-brand-primary-lightest};
+  --color-focused: #{$med-color-brand-primary-lightest};
+  --color-selected: #{$med-color-brand-primary-light};
+  --color-activated: #{$med-color-brand-primary-light};
+  --background-focused: transparent;
+  --background-focused-opacity: 1;
+  --ripple-color: transparent;
+  --padding-bottom:	#{$med-spacing-stack-xxxs};
+  --padding-end:	#{$med-spacing-inline-nano};
+  --padding-start:	#{$med-spacing-inline-nano};
+  --padding-top: #{$med-spacing-stack-xxxs};
+
+  min-width: 0;
+  max-width: 100%;
+  justify-content: start;
+  font-size: $med-font-size-nano;
+  font-weight: $med-font-weight-regular;
+  line-height: $med-line-height-compressed;
+
+  @include breakpoint-up('sm') {
+    --padding-bottom:	#{$med-spacing-stack-base};
+    --padding-end: #{$med-spacing-inline-xxxs};
+    --padding-start: #{$med-spacing-inline-xxxs};
+    --padding-top: #{$med-spacing-stack-base};
+
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    font-size: $med-font-size-xxxs;
+  }
+}
+
+.button-native {
+  transition: color 0.3s ease-out;
+}
+
+// icon
+:host ::slotted(ion-icon) {
+  min-height: 24px;
+  min-width: 24px;
+  max-width: initial;
+  display: block;
+  contain: unset;
+  overflow: unset;
+}
+
+:host(.tab-layout-icon-top) ::slotted(ion-icon) {
+  margin-top: 0;
+  margin-bottom: $med-spacing-stack-nano;
+
+  @include breakpoint-up('sm') {
+    margin-bottom: 0;
+    margin-right: $med-spacing-inline-xxxs;
+  }
+}
+
+// label
+:host ::slotted(ion-label) {
+  text-overflow: initial;
+  white-space: initial;
+  overflow: initial;
+}
+
+:host(.tab-layout-icon-top) ::slotted(ion-label) {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+// states
+@media (any-hover: hover) {
+  a:hover {
+    color: var(--color-hover);
+  }
+}
+
+:host(.ion-focused) .button-native {
+  color: var(--color-focused);
+
+  &::after {
+    background: var(--background-focused);
+    opacity: var(--background-focused-opacity);
+  }
+}
+
+:host(.ion-activated) .button-native {
+  color: var(--color-activated);
+}
+
+:host(.tab-selected) {
+  color: var(--color-selected);
+}
+
+:host(.tab-disabled) {
+  color: var(--color);
+  opacity: $med-opacity-level-semiopaque;
+}
+
+//
+// light-mode
+//
+
+:host-context(.light-mode) {
+  --color: #{$med-color-neutral-light-10};
+  --color-hover: #{$med-color-brand-primary-lightest};
+  --color-focused: #{$med-color-brand-primary-lightest};
+  --color-selected: #{$med-color-brand-primary-medium};
+  --color-activated: #{$med-color-brand-primary-light};
+  --background: #{$med-color-neutral-light-prime};
+}

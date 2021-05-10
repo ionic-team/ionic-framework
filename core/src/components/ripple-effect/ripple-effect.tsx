@@ -4,7 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-ripple-effect',
-  styleUrl: './med/med-ripple-effect.scss',
+  styleUrl: './ripple-effect.scss',
   shadow: true
 })
 export class RippleEffect implements ComponentInterface {

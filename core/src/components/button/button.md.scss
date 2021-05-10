@@ -30,7 +30,7 @@
     // Material Design Solid Button
     // --------------------------------------------------
 
-    :host(.button-solid) {
+    :host(.med-button-solid) {
     --background-activated: transparent;
     --background-hover: #{ion-color(primary, contrast)};
     --background-focused: #{ion-color(primary, contrast)};
@@ -38,16 +38,18 @@
     --background-focused-opacity: .24;
     --background-hover-opacity: .08;
     --box-shadow: #{$button-md-box-shadow};
+    --background-hover: red;
+                    --background-hover-opacity: 1;
     }
 
-    :host(.button-solid.ion-activated) {
+    :host(.med-button-solid.ion-activated) {
     --box-shadow: #{$button-md-box-shadow-activated};
     }
 
     // Material Design Outline Button
     // --------------------------------------------------
 
-    :host(.button-outline) {
+    :host(.med-button-outline) {
     --border-width: 2px;
     --border-style: solid;
     --box-shadow: none;
@@ -59,7 +61,7 @@
     --background-hover-opacity: .04;
     }
 
-    :host(.button-outline.ion-activated.ion-color) .button-native {
+    :host(.med-button-outline.ion-activated.ion-color) .button-native {
     background: transparent;
     }
 
@@ -67,7 +69,7 @@
     // Material Design Clear Button
     // --------------------------------------------------
 
-    :host(.button-clear) {
+    :host(.med-button-clear) {
     --background-activated: transparent;
     --background-focused: #{ion-color(primary, base)};
     --background-hover: #{ion-color(primary, base)};
@@ -130,30 +132,32 @@
     // Material Design Button: Hover
     // --------------------------------------------------
 
-    :host(.button-solid.ion-color.ion-focused) .button-native::after {
+    :host(.med-button-solid.ion-color.ion-focused) .button-native::after {
     background: #{current-color(contrast)};
 
     opacity: .24;
     }
 
-    :host(.button-clear.ion-color.ion-focused) .button-native::after,
-    :host(.button-outline.ion-color.ion-focused) .button-native::after {
+    :host(.med-button-clear.ion-color.ion-focused) .button-native::after,
+    :host(.med-button-outline.ion-color.ion-focused) .button-native::after {
     background: #{current-color(base)};
 
     opacity: .12;
     }
 
     @media (any-hover: hover) {
-    :host(.button-solid.ion-color:hover) .button-native::after {
+    :host(.med-button-solid.ion-color:hover) .button-native::after {
         background: #{current-color(contrast)};
 
         opacity: .08;
     }
 
-    :host(.button-clear.ion-color:hover) .button-native::after,
-    :host(.button-outline.ion-color:hover) .button-native::after {
+    :host(.med-button-clear.ion-color:hover) .button-native::after,
+    :host(.med-button-outline.ion-color:hover) .button-native::after {
         background: #{current-color(base)};
 
         opacity: .04;
     }
 }
+
+@import './button.med.scss';

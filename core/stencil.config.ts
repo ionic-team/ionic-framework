@@ -55,7 +55,7 @@ export const config: Config = {
   ],
   plugins: [
     sass({
-      injectGlobalPaths: ['src/themes/ionic.skip-warns.scss']
+      injectGlobalPaths: ['src/themes/ionic.skip-warns.scss', 'med-components/med-components.scss']
     })
   ],
   outputTargets: [
@@ -111,7 +111,10 @@ export const config: Config = {
     },
     {
       type: 'dist',
-      esmLoaderPath: '../loader'
+      esmLoaderPath: '../loader',
+      copy: [
+        { src: 'svg', dest: 'svg' }
+      ]
     },
     {
       type: 'dist-custom-elements',

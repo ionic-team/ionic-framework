@@ -1,0 +1,21 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  --spacing: #{$med-spacing-squish-xs};
+  --background: #{$med-color-neutral-dark-40};
+  --font-size: #{$med-font-size-xs};
+  --font-weight: #{$med-font-weight-semibold};
+  --line-height: #{$med-line-height-compressed};
+  --color: #{$med-color-neutral-dark-10};
+
+  padding: var(--spacing);
+  background: var(--background);
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
+  color: var(--color);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

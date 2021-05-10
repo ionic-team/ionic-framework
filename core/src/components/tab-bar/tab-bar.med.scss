@@ -1,0 +1,23 @@
+
+//
+// custom
+//
+
+@import "../../../med-components/abstracts";
+
+:host {
+  --background: #{$med-color-neutral-dark-prime};
+  --box-shadow: #{$med-shadow-level-4};
+
+  height: auto;
+  contain: initial;
+  box-shadow: var(--box-shadow);
+}
+
+//
+// light-mode
+//
+
+:host-context(.light-mode) {
+  --background: #{$med-color-neutral-light-prime};
+}
