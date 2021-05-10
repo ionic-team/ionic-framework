@@ -3,7 +3,7 @@
 @import "../../themes/ionic.globals.ios";
 
 :host {
-  --background: var(--ion-color-step-50, #ffffff);
+  --background: var(--ion-color-step-100, #ffffff);
 
   width: 316px;
 }
@@ -11,8 +11,19 @@
 // Header
 // -----------------------------------
 :host .datetime-title {
-  width: 100%;
-  height: 48px;
+  @include padding($datetime-ios-header-padding, $datetime-ios-header-padding, $datetime-ios-header-padding, $datetime-ios-header-padding);
+
+  border-bottom: $datetime-ios-border-color;
+
+  color: $text-color-step-400;
+
+  font-size: 14px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
 }
 
 // Calendar
@@ -25,7 +36,7 @@
 // Footer
 // -----------------------------------
 :host .datetime-buttons {
-  @include padding(10px, 10px, 10px, 10px);
+  @include padding($datetime-ios-footer-padding, $datetime-ios-footer-padding, $datetime-ios-footer-padding, $datetime-ios-footer-padding);
 
   border-top: $datetime-ios-border-color;
 }

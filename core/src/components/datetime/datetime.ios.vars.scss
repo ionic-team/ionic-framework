@@ -2,4 +2,10 @@
 // --------------------------------------------------
 
 /// @prop - Border color for dividers between header and footer
-$datetime-ios-border-color:  0.55px solid $background-color-step-100 !default;
+$datetime-ios-border-color:         0.55px solid $background-color-step-200 !default;
+
+/// @prop - Padding for content in footer
+$datetime-ios-footer-padding:       6px !default;
+
+/// @prop - Padding for content in header
+$datetime-ios-header-padding:       12px !default;
