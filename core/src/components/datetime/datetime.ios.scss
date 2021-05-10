@@ -36,7 +36,8 @@
   border-top: $datetime-ios-border-color;
 }
 
-:host .datetime-buttons ::slotted(ion-buttons) {
+:host .datetime-buttons ::slotted(ion-buttons),
+:host .datetime-buttons ion-buttons {
   display: flex;
 
   align-items: center;

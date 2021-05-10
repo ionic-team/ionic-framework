@@ -240,6 +240,13 @@ export class Datetime implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
+  connectedCallback() {
+    const modalOrPopover = this.el.closest('ion-modal, ion-popover');
+    if (modalOrPopover) {
+      modalOrPopover.classList.add('overlay-datetime');
+    }
+  }
+
   componentWillLoad() {
     this.emitStyle();
 
@@ -338,8 +345,6 @@ export class Datetime implements ComponentInterface {
      * shown. User can slot in a custom title.
      */
     const defaultTitle = mode === 'md' ? 'Select Date' : '';
-
-    console.log(this.showDefaultTitleAndButtons, mode);
 
     return (
       <div class="datetime-header">
