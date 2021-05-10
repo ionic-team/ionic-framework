@@ -85,14 +85,6 @@ Type: `Promise<void>`
 | `"title"`   | The title of the datetime. Only visible when presentationStyle="overlay".   |
 
 
-## Shadow Parts
-
-| Part            | Description                      |
-| --------------- | -------------------------------- |
-| `"placeholder"` | The placeholder of the datetime. |
-| `"text"`        | The value of the datetime.       |
-
-
 ## CSS Custom Properties
 
 | Name                   | Description                                                                                                                                                             |

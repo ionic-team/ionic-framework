@@ -1,15 +1,12 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, DatetimeChangeEventDetail, DatetimeOptions, Mode, StyleEventDetail } from '../../interface';
+import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../interface';
 import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
- *
- * @part text - The value of the datetime.
- * @part placeholder - The placeholder of the datetime.
  *
  * @slot title - The title of the datetime. Only visible
  * when presentationStyle="overlay".
