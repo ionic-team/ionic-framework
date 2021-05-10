@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
@@ -1650,9 +1650,17 @@ export namespace Components {
     }
     interface IonPopover {
         /**
+          * Describes how to align the popover content with the `reference` point.
+         */
+        "alignment": PositionAlign;
+        /**
           * If `true`, the popover will animate.
          */
         "animated": boolean;
+        /**
+          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode on mobile. Does not apply in `md` mode or on desktop.
+         */
+        "arrow": boolean;
         /**
           * If `true`, the popover will be dismissed when the backdrop is clicked.
          */
@@ -1674,8 +1682,13 @@ export namespace Components {
           * Dismiss the popover overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
           * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
+          * @param dismissParentPopover If `true`, dismissing this popover will also dismiss a parent popover if this popover is nested. Defaults to `true`.
          */
-        "dismiss": (data?: any, role?: string | undefined) => Promise<boolean>;
+        "dismiss": (data?: any, role?: string | undefined, dismissParentPopover?: boolean) => Promise<boolean>;
+        /**
+          * If `true`, the popover will be automatically dismissed when the content has been clicked.
+         */
+        "dismissOnSelect": boolean;
         /**
           * Animation to use when the popover is presented.
          */
@@ -1684,6 +1697,7 @@ export namespace Components {
           * The event to pass to the popover animation.
          */
         "event": any;
+        "getParentPopover": () => Promise<HTMLIonPopoverElement | null>;
         "inline": boolean;
         /**
           * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
@@ -1715,13 +1729,37 @@ export namespace Components {
          */
         "present": () => Promise<void>;
         /**
+          * When opening a popover from a trigger, we should not be modifying the `event` prop from inside the component. Additionally, when pressing the "Right" arrow key, we need to shift focus to the first descendant in the newly presented popover.
+         */
+        "presentFromTrigger": (event?: any, focusDescendant?: boolean) => Promise<void>;
+        /**
+          * Describes what to position the popover relative to. If `'trigger'`, the popover will be positioned relative to the trigger button. If passing in an event, this is determined via event.target. If `'event'`, the popover will be positioned relative to the x/y coordinates of the trigger action. If passing in an event, this is determined via event.clientX and event.clientY.
+         */
+        "reference": PositionReference;
+        /**
           * If `true`, a backdrop will be displayed behind the popover.
          */
         "showBackdrop": boolean;
         /**
+          * Describes which side of the `reference` point to position the popover on. The `'start'` and `'end'` values are RTL-aware, and the `'left'` and `'right'` values are not.
+         */
+        "side": PositionSide;
+        /**
+          * Describes how to calculate the popover width. If `'cover'`, the popover width will match the width of the trigger. If `'auto'`, the popover width will be determined by the content in the popover.
+         */
+        "size": PopoverSize;
+        /**
           * If `true`, the popover will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the popover to open. Use the `trigger-action` property to customize the interaction that results in the popover opening.
+         */
+        "trigger": string | undefined;
+        /**
+          * Describes what kind of interaction with the trigger that should cause the popover to open. Does not apply when the `trigger` property is `undefined`. If `'click'`, the popover will be presented when the trigger is left clicked. If `'hover'`, the popover will be presented when a pointer hovers over the trigger. If `'context-menu'`, the popover will be presented when the trigger is right clicked on desktop and long pressed on mobile. This will also prevent your device's normal context menu from appearing.
+         */
+        "triggerAction": TriggerAction;
     }
     interface IonProgressBar {
         /**
@@ -4987,9 +5025,17 @@ declare namespace LocalJSX {
     }
     interface IonPopover {
         /**
+          * Describes how to align the popover content with the `reference` point.
+         */
+        "alignment"?: PositionAlign;
+        /**
           * If `true`, the popover will animate.
          */
         "animated"?: boolean;
+        /**
+          * If `true`, the popover will display an arrow that points at the `reference` when running in `ios` mode on mobile. Does not apply in `md` mode or on desktop.
+         */
+        "arrow"?: boolean;
         /**
           * If `true`, the popover will be dismissed when the backdrop is clicked.
          */
@@ -5007,6 +5053,10 @@ declare namespace LocalJSX {
          */
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
+        /**
+          * If `true`, the popover will be automatically dismissed when the content has been clicked.
+         */
+        "dismissOnSelect"?: boolean;
         /**
           * Animation to use when the popover is presented.
          */
@@ -5066,13 +5116,33 @@ declare namespace LocalJSX {
         "onWillPresent"?: (event: CustomEvent<void>) => void;
         "overlayIndex": number;
         /**
+          * Describes what to position the popover relative to. If `'trigger'`, the popover will be positioned relative to the trigger button. If passing in an event, this is determined via event.target. If `'event'`, the popover will be positioned relative to the x/y coordinates of the trigger action. If passing in an event, this is determined via event.clientX and event.clientY.
+         */
+        "reference"?: PositionReference;
+        /**
           * If `true`, a backdrop will be displayed behind the popover.
          */
         "showBackdrop"?: boolean;
         /**
+          * Describes which side of the `reference` point to position the popover on. The `'start'` and `'end'` values are RTL-aware, and the `'left'` and `'right'` values are not.
+         */
+        "side"?: PositionSide;
+        /**
+          * Describes how to calculate the popover width. If `'cover'`, the popover width will match the width of the trigger. If `'auto'`, the popover width will be determined by the content in the popover.
+         */
+        "size"?: PopoverSize;
+        /**
           * If `true`, the popover will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the popover to open. Use the `trigger-action` property to customize the interaction that results in the popover opening.
+         */
+        "trigger"?: string | undefined;
+        /**
+          * Describes what kind of interaction with the trigger that should cause the popover to open. Does not apply when the `trigger` property is `undefined`. If `'click'`, the popover will be presented when the trigger is left clicked. If `'hover'`, the popover will be presented when a pointer hovers over the trigger. If `'context-menu'`, the popover will be presented when the trigger is right clicked on desktop and long pressed on mobile. This will also prevent your device's normal context menu from appearing.
+         */
+        "triggerAction"?: TriggerAction;
     }
     interface IonProgressBar {
         /**

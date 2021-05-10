@@ -824,19 +824,27 @@ ion-picker,css-prop,--min-width
 ion-picker,css-prop,--width
 
 ion-popover,shadow
+ion-popover,prop,alignment,"center" | "end" | "start",'center',false,false
 ion-popover,prop,animated,boolean,true,false,false
+ion-popover,prop,arrow,boolean,true,false,false
 ion-popover,prop,backdropDismiss,boolean,true,false,false
 ion-popover,prop,component,Function | HTMLElement | null | string | undefined,undefined,false,false
 ion-popover,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-popover,prop,dismissOnSelect,boolean,false,false,false
 ion-popover,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,event,any,undefined,false,false
 ion-popover,prop,isOpen,boolean,false,false,false
 ion-popover,prop,keyboardClose,boolean,true,false,false
 ion-popover,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,mode,"ios" | "md",undefined,false,false
+ion-popover,prop,reference,"event" | "trigger",'trigger',false,false
 ion-popover,prop,showBackdrop,boolean,true,false,false
+ion-popover,prop,side,"bottom" | "end" | "left" | "right" | "start" | "top",'bottom',false,false
+ion-popover,prop,size,"auto" | "cover",'auto',false,false
 ion-popover,prop,translucent,boolean,false,false,false
-ion-popover,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
+ion-popover,prop,trigger,string | undefined,undefined,false,false
+ion-popover,prop,triggerAction,"click" | "context-menu" | "hover",'click',false,false
+ion-popover,method,dismiss,dismiss(data?: any, role?: string | undefined, dismissParentPopover?: boolean) => Promise<boolean>
 ion-popover,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-popover,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-popover,method,present,present() => Promise<void>
@@ -856,6 +864,8 @@ ion-popover,css-prop,--max-height
 ion-popover,css-prop,--max-width
 ion-popover,css-prop,--min-height
 ion-popover,css-prop,--min-width
+ion-popover,css-prop,--offset-x
+ion-popover,css-prop,--offset-y
 ion-popover,css-prop,--width
 ion-popover,part,arrow
 ion-popover,part,backdrop
