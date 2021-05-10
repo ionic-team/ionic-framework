@@ -208,26 +208,18 @@ export default defineComponent({
 | `"mark"`      | The checkmark or dot used to indicate the checked state. |
 
 
-## CSS Custom Properties
-
-| Name                    | Description                              |
-| ----------------------- | ---------------------------------------- |
-| `--border-radius`       | Border radius of the radio               |
-| `--color`               | Color of the radio                       |
-| `--color-checked`       | Color of the checked radio               |
-| `--inner-border-radius` | Border radius of the inner checked radio |
-
-
 ## Dependencies
 
 ### Used by
 
  - ion-select-popover
+ - [med-alternativas](../medgrupo/team/med-alternativas)
 
 ### Graph
 ```mermaid
 graph TD;
   ion-select-popover --> ion-radio
+  med-alternativas --> ion-radio
   style ion-radio fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

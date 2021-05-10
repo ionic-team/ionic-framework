@@ -10,7 +10,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-badge',
   styleUrls: {
-    ios: 'badge.ios.scss',
+    ios: 'badge.md.scss',
     md: 'badge.md.scss'
   },
   shadow: true

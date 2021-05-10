@@ -35,16 +35,20 @@ Abaixo temos um video tutorial, ensinando a instalar e configurar o pacote para 
 
 ## 🛠️ Instalação
 
-### npm
+No MSPRO, é necessario apenas:
 
-``` bash
-npm i -D @mbrandao/med-components
+- Criar uma branch a partir da Release-Branch ou da master
+- Realizar npm install
+- Garantir que no arquivo package.json existam as referencias abaixo:
+
+```
+"@ionic/core": "git+https://github.com/MEDGRUPOGIT/med-components.git#{versao_tag}",
 ```
 
-### yarn
+Para instalar e utilizar a biblioteca em outra aplicação é necessario a instalação do fork que fizemos do ionic.
 
-``` bash
-yarn add --dev @mbrandao/med-components
+```
+https://github.com/MEDGRUPOGIT/ionic-framework
 ```
 
 ## 💈 Utilização
@@ -54,13 +58,13 @@ yarn add --dev @mbrandao/med-components
 Para utilizar a biblioteca, no arquivo **./src/medsoft/global.scss**, importar:
 
 ``` scss
-@import '~@mbrandao/med-components/src/med-components.scss';
+@import '~@ionic/core/med-components/med-components.scss';
 ```
 Se existir a necessidade da utilização de **variáveis, functions e mixins SASS**, no arquivo em que eles serão
 utilizados, importar:
 
 ``` scss
-@import '~@mbrandao/med-components/src/abstracts';
+@import '~@ionic/core/med-components/abstracts';
 ```
 
 ### External Pages
@@ -68,14 +72,14 @@ utilizados, importar:
 Para utilizar a biblioteca, no arquivo **./src/assets/styles/global.scss**, importar:
 
 ``` scss
-@import '~@mbrandao/med-components/src/med-components.scss';
+@import '~@ionic/core/med-components/med-components.scss';
 ```
 
 Se existir a necessidade da utilização de **variáveis, functions e mixins SASS**, no arquivo em que eles serão
 utilizados, importar:
 
 ``` scss
-@import '~@mbrandao/med-components/src/abstracts';
+@import '~@ionic/core/med-components/abstracts';
 ```
 
 ### Inscrições
@@ -83,12 +87,12 @@ utilizados, importar:
 Para utilizar a biblioteca, no arquivo **./src/styles.scss**, importar:
 
 ``` scss
-@import '~@mbrandao/med-components/src/med-components.scss';
+@import '~@ionic/core/med-components/med-components.scss';
 ```
 
 Se existir a necessidade da utilização de **variáveis, functions e mixins SASS**, no arquivo em que eles serão
 utilizados, importar:
 
 ``` scss
-@import '~@mbrandao/med-components/src/abstracts';
+@import '~@ionic/core/med-components/abstracts';
 ```

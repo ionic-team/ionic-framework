@@ -19,7 +19,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
   tag: 'ion-popover',
   styleUrls: {
     ios: 'popover.ios.scss',
-    md: 'popover.md.scss'
+    md: 'popover.ios.scss'
   },
   scoped: true
 })

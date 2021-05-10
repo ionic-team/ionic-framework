@@ -10,7 +10,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-label',
   styleUrls: {
-    ios: 'label.ios.scss',
+    ios: 'label.md.scss',
     md: 'label.md.scss'
   },
   scoped: true

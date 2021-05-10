@@ -73,5 +73,14 @@ export const DIRECTIVES = [
   d.IonTitle,
   d.IonToggle,
   d.IonToolbar,
-  d.MedNavbar
+  d.MedAlternativas,
+  d.MedCartaoRespostaItem,
+  d.MedCartaoRespostaLista,
+  d.MedEnunciado,
+  d.MedHeader,
+  d.MedNavbar,
+  d.MedOption,
+  d.MedRateBar,
+  d.MedRateLike,
+  d.MedToolbar
 ];

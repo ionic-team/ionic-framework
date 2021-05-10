@@ -1,0 +1,309 @@
+import { html } from 'lit-html';
+import { withDesign } from 'storybook-addon-designs';
+
+export default {
+  title: 'Components/Team/Cartão Resposta Item🚧',
+  decorators: [withDesign],
+};
+
+const TemplateDefault = () => {
+  return html`
+    <ion-app>
+      <ion-content>
+
+        <!-- component -->
+        <med-cartao-resposta-lista>
+
+          <med-cartao-resposta-item>01</med-cartao-resposta-item>
+
+        </med-cartao-resposta-lista>
+        <!-- component -->
+
+      <ion-content>
+    </ion-app>
+    `
+}
+
+export const Default = TemplateDefault.bind({});
+Default.parameters = {
+  design: {
+    type: 'figma',
+    url: '',
+  },
+}
+
+const TemplateCorreta = () => {
+  return html`
+    <ion-app>
+      <ion-content>
+
+        <!-- component -->
+        <med-cartao-resposta-lista>
+
+          <med-cartao-resposta-item color="success-medium">
+            01
+          </med-cartao-resposta-item>
+
+        </med-cartao-resposta-lista>
+        <!-- component -->
+
+      <ion-content>
+    </ion-app>
+    `
+}
+
+export const Correta = TemplateCorreta.bind({});
+Correta.parameters = {
+  design: {
+    type: 'figma',
+    url: '',
+  },
+}
+
+const TemplateIncorreta = () => {
+  return html`
+    <ion-app>
+      <ion-content>
+
+        <!-- component -->
+        <med-cartao-resposta-lista>
+
+          <med-cartao-resposta-item color="error-medium">
+            01
+          </med-cartao-resposta-item>
+
+        </med-cartao-resposta-lista>
+        <!-- component -->
+
+      <ion-content>
+    </ion-app>
+    `
+}
+
+export const Incorreta = TemplateIncorreta.bind({});
+Incorreta.parameters = {
+  design: {
+    type: 'figma',
+    url: '',
+  },
+}
+
+const TemplateCancelada = () => {
+  return html`
+    <ion-app>
+      <ion-content>
+
+        <!-- component -->
+        <med-cartao-resposta-lista>
+
+          <med-cartao-resposta-item color="warning-medium" cancelada>
+            01
+          </med-cartao-resposta-item>
+
+        </med-cartao-resposta-lista>
+        <!-- component -->
+
+      <ion-content>
+    </ion-app>
+    `
+}
+
+export const Cancelada = TemplateCancelada.bind({});
+Cancelada.parameters = {
+  design: {
+    type: 'figma',
+    url: '',
+  },
+}
+
+const TemplateAtiva = () => {
+  return html`
+    <ion-app>
+      <ion-content>
+
+        <!-- component -->
+        <med-cartao-resposta-lista>
+
+          <med-cartao-resposta-item ativo>
+            01
+          </med-cartao-resposta-item>
+
+        </med-cartao-resposta-lista>
+        <!-- component -->
+
+      <ion-content>
+    </ion-app>
+    `
+}
+
+export const Ativa = TemplateAtiva.bind({});
+Ativa.parameters = {
+  design: {
+    type: 'figma',
+    url: '',
+  },
+}
+
+const TemplateDiscursiva = () => {
+  return html`
+    <ion-app>
+      <ion-content>
+
+        <!-- component -->
+        <med-cartao-resposta-lista>
+
+          <med-cartao-resposta-item>
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            01
+          </med-cartao-resposta-item>
+
+        </med-cartao-resposta-lista>
+        <!-- component -->
+
+      <ion-content>
+    </ion-app>
+    `
+}
+
+export const Discursiva = TemplateDiscursiva.bind({});
+Discursiva.parameters = {
+  design: {
+    type: 'figma',
+    url: '',
+  },
+}
+
+const TemplateImpressa = () => {
+  return html`
+    <ion-app>
+      <ion-content>
+
+        <!-- component -->
+        <med-cartao-resposta-lista>
+
+          <med-cartao-resposta-item>
+            01
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+        </med-cartao-resposta-lista>
+        <!-- component -->
+
+      <ion-content>
+    </ion-app>
+    `
+}
+
+export const Impressa = TemplateImpressa.bind({});
+Impressa.parameters = {
+  design: {
+    type: 'figma',
+    url: '',
+  },
+}
+
+const TemplateTodas = () => {
+  return html`
+    <ion-app>
+      <ion-content>
+
+        <!-- component -->
+        <med-cartao-resposta-lista>
+
+          <med-cartao-resposta-item color="success-medium" ativo>
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            01
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item color="error-medium">
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            02
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item color="warning-medium" cancelada>
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            03
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item color="success-medium">
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            04
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item>
+            05
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item>
+            06
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item>
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            07
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item>
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            08
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item>
+            09
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item>
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            10
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item>
+            11
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item>
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            12
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item>
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            13
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item>
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            14
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+          <med-cartao-resposta-item>
+            <ion-icon slot="icon-left-bottom" name="med-discursiva"></ion-icon>
+            15
+            <ion-icon slot="icon-right-bottom" name="med-impresso"></ion-icon>
+          </med-cartao-resposta-item>
+
+        </med-cartao-resposta-lista>
+        <!-- component -->
+
+      <ion-content>
+    </ion-app>
+    `
+}
+
+export const Todas = TemplateTodas.bind({});
+Todas.parameters = {
+  design: {
+    type: 'figma',
+    url: '',
+  },
+}

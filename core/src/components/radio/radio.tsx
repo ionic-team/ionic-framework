@@ -14,8 +14,8 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-radio',
   styleUrls: {
-    ios: 'radio.ios.scss',
-    md: 'radio.md.scss'
+    ios: './med/med-radio.scss',
+    md: './med/med-radio.scss'
   },
   shadow: true
 })
@@ -152,7 +152,7 @@ export class Radio implements ComponentInterface {
         onBlur={this.onBlur}
         class={createColorClasses(color, {
           [mode]: true,
-          'in-item': hostContext('ion-item', el),
+          'in-item': hostContext('ion-item', el) || hostContext('med-option', el),
           'interactive': true,
           'radio-checked': checked,
           'radio-disabled': disabled,

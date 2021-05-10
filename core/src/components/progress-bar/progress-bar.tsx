@@ -17,12 +17,13 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-progress-bar',
   styleUrls: {
-    ios: 'progress-bar.ios.scss',
-    md: 'progress-bar.md.scss'
+    ios: 'progress-bar.med.scss',
+    md: 'progress-bar.med.scss',
   },
   shadow: true
 })
 export class ProgressBar implements ComponentInterface {
+  @Prop() percentage = false;
 
   /**
    * The state of the progress bar, based on if the time the process takes is known or not.
@@ -56,7 +57,7 @@ export class ProgressBar implements ComponentInterface {
   @Prop() color?: Color;
 
   render() {
-    const { color, type, reversed, value, buffer } = this;
+    const { color, type, reversed, value, buffer, percentage } = this;
     const paused = config.getBoolean('_testing');
     const mode = getIonMode(this);
     return (
@@ -68,6 +69,7 @@ export class ProgressBar implements ComponentInterface {
         class={createColorClasses(color, {
           [mode]: true,
           [`progress-bar-${type}`]: true,
+          'percentage': percentage,
           'progress-paused': paused,
           'progress-bar-reversed': document.dir === 'rtl' ? !reversed : reversed
         })}
@@ -91,11 +93,16 @@ const renderIndeterminate = () => {
 };
 
 const renderProgress = (value: number, buffer: number) => {
-  const finalValue = clamp(0, value, 1);
+  const finalValue = value !== 0 ? (value * 100) : 8;
+  const unit = value !== 0 ? '%' : 'px';
   const finalBuffer = clamp(0, buffer, 1);
+  const renderedNumber = value * 100;
 
   return [
-    <div part="progress" class="progress" style={{ transform: `scaleX(${finalValue})` }}></div>,
+    <div class="progress-container">
+      <div part="progress" class={`progress ${finalValue === 100 ? 'progress--correct' : ''}`} style={{ width: `${finalValue}${unit}` }}></div>
+      <span class="progress__percentage">{renderedNumber.toFixed()}%</span>
+    </div>,
     /**
      * Buffer circles with two container to move
      * the circles behind the buffer progress
@@ -108,6 +115,6 @@ const renderProgress = (value: number, buffer: number) => {
         <div part="stream" class="buffer-circles"></div>
       </div>
     </div>,
-    <div part="track" class="progress-buffer-bar" style={{ transform: `scaleX(${finalBuffer})` }}></div>,
+    <div part="track" class="progress-buffer-bar" style={{ transform: `translateX(${finalBuffer})` }}></div>,
   ];
 };

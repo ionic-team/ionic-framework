@@ -9,7 +9,9 @@ import { ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, Autocompl
 import { IonicSafeString } from "./utils/sanitization";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
-import { navbarResizeEventDetail } from "./components/medgrupo/med-navbar/med-navbar-interface";
+import { MedAlternativaInterface } from "./components/medgrupo/team/med-alternativas/med-alternativas-interface";
+import { headerResizeEventDetail } from "./components/medgrupo/global/med-header/med-header-interface";
+import { navbarResizeEventDetail } from "./components/medgrupo/global/med-navbar/med-navbar-interface";
 export namespace Components {
     interface IonActionSheet {
         /**
@@ -228,6 +230,8 @@ export namespace Components {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download": string | undefined;
+        "dsName": 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
+        "dsSize": 'xs' | 'sm' | 'md' | 'lg';
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
          */
@@ -1678,6 +1682,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "percentage": boolean;
         /**
           * If true, reverse the progress bar direction.
          */
@@ -1960,7 +1965,7 @@ export namespace Components {
         /**
           * The mode determines which platform styles to use.
          */
-        "mode": "ios" | "md";
+        "mode": "md" | "ios";
         "setRouteId": (id: string, params: ComponentProps | undefined, direction: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<RouteWrite>;
         "swipeHandler"?: SwipeGestureHandler;
     }
@@ -2707,7 +2712,35 @@ export namespace Components {
          */
         "renderItem"?: (item: any, index: number) => any;
     }
+    interface MedAlternativas {
+        "alternativaSelecionada": string;
+        "alternativas": MedAlternativaInterface | any;
+        "keyAlternativa": string;
+        "keyEnunciado": string;
+        "keyImagem": string;
+        "keyPorcentagem": string;
+        "mostraResposta": boolean;
+        "respostaCorreta": string;
+    }
+    interface MedCartaoRespostaItem {
+        "color"?: Color;
+    }
+    interface MedCartaoRespostaLista {
+    }
+    interface MedEnunciado {
+        "imagens": string[] | string;
+    }
+    interface MedHeader {
+    }
     interface MedNavbar {
+    }
+    interface MedOption {
+    }
+    interface MedRateBar {
+    }
+    interface MedRateLike {
+    }
+    interface MedToolbar {
     }
 }
 declare global {
@@ -3233,11 +3266,65 @@ declare global {
         prototype: HTMLIonVirtualScrollElement;
         new (): HTMLIonVirtualScrollElement;
     };
+    interface HTMLMedAlternativasElement extends Components.MedAlternativas, HTMLStencilElement {
+    }
+    var HTMLMedAlternativasElement: {
+        prototype: HTMLMedAlternativasElement;
+        new (): HTMLMedAlternativasElement;
+    };
+    interface HTMLMedCartaoRespostaItemElement extends Components.MedCartaoRespostaItem, HTMLStencilElement {
+    }
+    var HTMLMedCartaoRespostaItemElement: {
+        prototype: HTMLMedCartaoRespostaItemElement;
+        new (): HTMLMedCartaoRespostaItemElement;
+    };
+    interface HTMLMedCartaoRespostaListaElement extends Components.MedCartaoRespostaLista, HTMLStencilElement {
+    }
+    var HTMLMedCartaoRespostaListaElement: {
+        prototype: HTMLMedCartaoRespostaListaElement;
+        new (): HTMLMedCartaoRespostaListaElement;
+    };
+    interface HTMLMedEnunciadoElement extends Components.MedEnunciado, HTMLStencilElement {
+    }
+    var HTMLMedEnunciadoElement: {
+        prototype: HTMLMedEnunciadoElement;
+        new (): HTMLMedEnunciadoElement;
+    };
+    interface HTMLMedHeaderElement extends Components.MedHeader, HTMLStencilElement {
+    }
+    var HTMLMedHeaderElement: {
+        prototype: HTMLMedHeaderElement;
+        new (): HTMLMedHeaderElement;
+    };
     interface HTMLMedNavbarElement extends Components.MedNavbar, HTMLStencilElement {
     }
     var HTMLMedNavbarElement: {
         prototype: HTMLMedNavbarElement;
         new (): HTMLMedNavbarElement;
+    };
+    interface HTMLMedOptionElement extends Components.MedOption, HTMLStencilElement {
+    }
+    var HTMLMedOptionElement: {
+        prototype: HTMLMedOptionElement;
+        new (): HTMLMedOptionElement;
+    };
+    interface HTMLMedRateBarElement extends Components.MedRateBar, HTMLStencilElement {
+    }
+    var HTMLMedRateBarElement: {
+        prototype: HTMLMedRateBarElement;
+        new (): HTMLMedRateBarElement;
+    };
+    interface HTMLMedRateLikeElement extends Components.MedRateLike, HTMLStencilElement {
+    }
+    var HTMLMedRateLikeElement: {
+        prototype: HTMLMedRateLikeElement;
+        new (): HTMLMedRateLikeElement;
+    };
+    interface HTMLMedToolbarElement extends Components.MedToolbar, HTMLStencilElement {
+    }
+    var HTMLMedToolbarElement: {
+        prototype: HTMLMedToolbarElement;
+        new (): HTMLMedToolbarElement;
     };
     interface HTMLElementTagNameMap {
         "ion-action-sheet": HTMLIonActionSheetElement;
@@ -3327,7 +3414,16 @@ declare global {
         "ion-toggle": HTMLIonToggleElement;
         "ion-toolbar": HTMLIonToolbarElement;
         "ion-virtual-scroll": HTMLIonVirtualScrollElement;
+        "med-alternativas": HTMLMedAlternativasElement;
+        "med-cartao-resposta-item": HTMLMedCartaoRespostaItemElement;
+        "med-cartao-resposta-lista": HTMLMedCartaoRespostaListaElement;
+        "med-enunciado": HTMLMedEnunciadoElement;
+        "med-header": HTMLMedHeaderElement;
         "med-navbar": HTMLMedNavbarElement;
+        "med-option": HTMLMedOptionElement;
+        "med-rate-bar": HTMLMedRateBarElement;
+        "med-rate-like": HTMLMedRateLikeElement;
+        "med-toolbar": HTMLMedToolbarElement;
     }
 }
 declare namespace LocalJSX {
@@ -3548,6 +3644,8 @@ declare namespace LocalJSX {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download"?: string | undefined;
+        "dsName": 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
+        "dsSize": 'xs' | 'sm' | 'md' | 'lg';
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
          */
@@ -4947,6 +5045,7 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "percentage"?: boolean;
         /**
           * If true, reverse the progress bar direction.
          */
@@ -5253,7 +5352,7 @@ declare namespace LocalJSX {
         /**
           * The mode determines which platform styles to use.
          */
-        "mode"?: "ios" | "md";
+        "mode"?: "md" | "ios";
         "onIonNavDidChange"?: (event: CustomEvent<void>) => void;
         "onIonNavWillChange"?: (event: CustomEvent<void>) => void;
         "onIonNavWillLoad"?: (event: CustomEvent<void>) => void;
@@ -6053,8 +6152,41 @@ declare namespace LocalJSX {
          */
         "renderItem"?: (item: any, index: number) => any;
     }
+    interface MedAlternativas {
+        "alternativaSelecionada": string;
+        "alternativas"?: MedAlternativaInterface | any;
+        "keyAlternativa"?: string;
+        "keyEnunciado"?: string;
+        "keyImagem"?: string;
+        "keyPorcentagem"?: string;
+        "mostraResposta": boolean;
+        "onMedChange"?: (event: CustomEvent<MedAlternativaInterface>) => void;
+        "onMedGalleryRequest"?: (event: CustomEvent<MedAlternativaInterface>) => void;
+        "respostaCorreta": string;
+    }
+    interface MedCartaoRespostaItem {
+        "color"?: Color;
+    }
+    interface MedCartaoRespostaLista {
+    }
+    interface MedEnunciado {
+        "imagens": string[] | string;
+        "onMedGalleryRequest"?: (event: CustomEvent<string>) => void;
+    }
+    interface MedHeader {
+        "onMedResize"?: (event: CustomEvent<headerResizeEventDetail>) => void;
+    }
     interface MedNavbar {
         "onMedResize"?: (event: CustomEvent<navbarResizeEventDetail>) => void;
+    }
+    interface MedOption {
+    }
+    interface MedRateBar {
+    }
+    interface MedRateLike {
+        "onMedChange"?: (event: CustomEvent<'like' | 'dislike'>) => void;
+    }
+    interface MedToolbar {
     }
     interface IntrinsicElements {
         "ion-action-sheet": IonActionSheet;
@@ -6144,7 +6276,16 @@ declare namespace LocalJSX {
         "ion-toggle": IonToggle;
         "ion-toolbar": IonToolbar;
         "ion-virtual-scroll": IonVirtualScroll;
+        "med-alternativas": MedAlternativas;
+        "med-cartao-resposta-item": MedCartaoRespostaItem;
+        "med-cartao-resposta-lista": MedCartaoRespostaLista;
+        "med-enunciado": MedEnunciado;
+        "med-header": MedHeader;
         "med-navbar": MedNavbar;
+        "med-option": MedOption;
+        "med-rate-bar": MedRateBar;
+        "med-rate-like": MedRateLike;
+        "med-toolbar": MedToolbar;
     }
 }
 export { LocalJSX as JSX };
@@ -6238,7 +6379,16 @@ declare module "@stencil/core" {
             "ion-toggle": LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
             "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
             "ion-virtual-scroll": LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;
+            "med-alternativas": LocalJSX.MedAlternativas & JSXBase.HTMLAttributes<HTMLMedAlternativasElement>;
+            "med-cartao-resposta-item": LocalJSX.MedCartaoRespostaItem & JSXBase.HTMLAttributes<HTMLMedCartaoRespostaItemElement>;
+            "med-cartao-resposta-lista": LocalJSX.MedCartaoRespostaLista & JSXBase.HTMLAttributes<HTMLMedCartaoRespostaListaElement>;
+            "med-enunciado": LocalJSX.MedEnunciado & JSXBase.HTMLAttributes<HTMLMedEnunciadoElement>;
+            "med-header": LocalJSX.MedHeader & JSXBase.HTMLAttributes<HTMLMedHeaderElement>;
             "med-navbar": LocalJSX.MedNavbar & JSXBase.HTMLAttributes<HTMLMedNavbarElement>;
+            "med-option": LocalJSX.MedOption & JSXBase.HTMLAttributes<HTMLMedOptionElement>;
+            "med-rate-bar": LocalJSX.MedRateBar & JSXBase.HTMLAttributes<HTMLMedRateBarElement>;
+            "med-rate-like": LocalJSX.MedRateLike & JSXBase.HTMLAttributes<HTMLMedRateLikeElement>;
+            "med-toolbar": LocalJSX.MedToolbar & JSXBase.HTMLAttributes<HTMLMedToolbarElement>;
         }
     }
 }

@@ -30,6 +30,9 @@ export * from './components/toast/toast-interface';
 export * from './components/toggle/toggle-interface';
 export * from './components/virtual-scroll/virtual-scroll-interface';
 
+// medgrupo
+export * from './components/medgrupo/team/med-alternativas/med-alternativas-interface';
+
 // Types from utils
 export { Animation, AnimationBuilder, AnimationCallbackOptions, AnimationDirection, AnimationFill, AnimationKeyFrames, AnimationLifecycle } from './utils/animation/animation-interface';
 export * from './utils/overlays-interface';

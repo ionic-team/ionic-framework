@@ -1,5 +1,5 @@
 @import "../../../themes/ionic.globals";
-@import "../../../../med-components/variables";
+@import "../../../../med-components/abstracts";
 
 
 // Material Design Ripple Effect
@@ -13,7 +13,7 @@ $opacity-duration: $fade-in-duration + $fade-out-duration;
 :host {
   --ripple-color: #{$med-color-brand-primary-medium};
   --ripple-opacity: 0;
-  
+
   @include position(0, 0, 0, 0);
 
   position: absolute;
