@@ -59,3 +59,10 @@ describe('shouldRenderViewHeader()', () => {
     expect(shouldRenderViewHeader('ios', 'popover', false)).toEqual(false)
   });
 })
+
+const hasSlot = (el: HTMLElement, slotName: string) => {
+  const shadowRoot = el.shadowRoot;
+  const slot = el.querySelector(`[slot=${slotName}]`);
+
+  return !!slot;
+}

@@ -364,9 +364,9 @@ ion-datetime,event,ionBlur,void,true
 ion-datetime,event,ionCancel,void,true
 ion-datetime,event,ionChange,DatetimeChangeEventDetail,true
 ion-datetime,event,ionFocus,void,true
-ion-datetime,css-prop,--backdrop-secondary
 ion-datetime,css-prop,--background
 ion-datetime,css-prop,--background-active
+ion-datetime,css-prop,--background-secondary
 ion-datetime,css-prop,--color
 ion-datetime,css-prop,--color-active
 ion-datetime,css-prop,--color-secondary

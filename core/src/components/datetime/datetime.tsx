@@ -4,7 +4,6 @@ import { getIonMode } from '../../global/ionic-global';
 import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../interface';
 import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
-
 import { shouldRenderViewButtons, shouldRenderViewHeader } from './datetime.utils';
 
 /**
@@ -313,7 +312,7 @@ export class Datetime implements ComponentInterface {
                 <ion-icon slot="icon-only" icon={this.view === DatetimeView.Calendar ? 'time-outline' : 'calendar-clear-outline'} lazy={false}></ion-icon>
               </ion-button>
               <ion-button>
-                <ion-icon slot="icon-only" icon="pizza-outline" lazy={false}></ion-icon>
+                <ion-icon slot="icon-only" icon='pizza-outline' lazy={false}></ion-icon>
               </ion-button>
             </ion-buttons>
           </div>}
@@ -344,8 +343,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCalendarViewHeader(mode: Mode) {
-    const hasSlottedTitle = !!this.el.querySelector('[slot="title"]');
-    if (!shouldRenderViewHeader(mode, this.presentationType, hasSlottedTitle)) { return; }
+    const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
+    if (!shouldRenderViewHeader(mode, this.presentationType, hasSlottedTitle)) return;
 
     /**
      * On iOS there is no default title
