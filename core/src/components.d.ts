@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimeOptions, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, MenuChangeEventDetail, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
@@ -628,13 +628,9 @@ export namespace Components {
          */
         "cancelText": string;
         /**
-          * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
-        "dayNames"?: string[] | string;
-        /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
-         */
-        "dayShortNames"?: string[] | string;
+        "color"?: Color;
         /**
           * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
          */
@@ -643,6 +639,10 @@ export namespace Components {
           * If `true`, the user cannot interact with the datetime.
          */
         "disabled": boolean;
+        /**
+          * Dismisses the datetime overlay. Only applies when `presentationStyle="overlay"`.
+         */
+        "dismiss": () => Promise<void>;
         /**
           * The display format of the date and time as text that shows within the item. When the `pickerFormat` input is not used, then the `displayFormat` is used for both display the formatted text, and determining the datetime picker's columns. See the `pickerFormat` input description for more info. Defaults to `MMM D, YYYY`.
          */
@@ -660,9 +660,21 @@ export namespace Components {
          */
         "hourValues"?: number[] | number | string;
         /**
+          * Which type of datetime picker that should be used. `'calendar'` will display a calendar picker with a time input. `'wheel'` will display a scrollable list of date and time options.
+         */
+        "interactionStyle": 'calendar' | 'wheel';
+        /**
+          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
+         */
+        "locale": string;
+        /**
           * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
          */
         "max"?: string;
+        /**
+          * Defines the maximum number of individual dates a user can select. Must be a positive integer greater than `0`. Does not apply when `range="true"`.
+         */
+        "maxSelectableDates": number;
         /**
           * The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
          */
@@ -676,14 +688,6 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
         /**
-          * Full names for each month name. This can be used to provide locale month names. Defaults to English.
-         */
-        "monthNames"?: string[] | string;
-        /**
-          * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
-         */
-        "monthShortNames"?: string[] | string;
-        /**
           * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
          */
         "monthValues"?: number[] | number | string;
@@ -692,7 +696,7 @@ export namespace Components {
          */
         "name": string;
         /**
-          * Opens the datetime overlay.
+          * Opens the datetime overlay. Only applies when `presentationStyle="overlay"`.
          */
         "open": () => Promise<void>;
         /**
@@ -700,13 +704,13 @@ export namespace Components {
          */
         "pickerFormat"?: string;
         /**
-          * Any additional options that the picker interface can accept. See the [Picker API docs](../picker) for the picker options.
-         */
-        "pickerOptions"?: DatetimeOptions;
-        /**
           * The text to display when there's no date selected yet. Using lowercase to match the input attribute
          */
         "placeholder"?: string | null;
+        /**
+          * If `true`, users can select a range of dates.
+         */
+        "range": boolean;
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
@@ -4022,13 +4026,9 @@ declare namespace LocalJSX {
          */
         "cancelText"?: string;
         /**
-          * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
-        "dayNames"?: string[] | string;
-        /**
-          * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English. Defaults to: `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`
-         */
-        "dayShortNames"?: string[] | string;
+        "color"?: Color;
         /**
           * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
          */
@@ -4054,9 +4054,21 @@ declare namespace LocalJSX {
          */
         "hourValues"?: number[] | number | string;
         /**
+          * Which type of datetime picker that should be used. `'calendar'` will display a calendar picker with a time input. `'wheel'` will display a scrollable list of date and time options.
+         */
+        "interactionStyle"?: 'calendar' | 'wheel';
+        /**
+          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
+         */
+        "locale"?: string;
+        /**
           * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
          */
         "max"?: string;
+        /**
+          * Defines the maximum number of individual dates a user can select. Must be a positive integer greater than `0`. Does not apply when `range="true"`.
+         */
+        "maxSelectableDates"?: number;
         /**
           * The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
          */
@@ -4069,14 +4081,6 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-        /**
-          * Full names for each month name. This can be used to provide locale month names. Defaults to English.
-         */
-        "monthNames"?: string[] | string;
-        /**
-          * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
-         */
-        "monthShortNames"?: string[] | string;
         /**
           * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
          */
@@ -4110,13 +4114,13 @@ declare namespace LocalJSX {
          */
         "pickerFormat"?: string;
         /**
-          * Any additional options that the picker interface can accept. See the [Picker API docs](../picker) for the picker options.
-         */
-        "pickerOptions"?: DatetimeOptions;
-        /**
           * The text to display when there's no date selected yet. Using lowercase to match the input attribute
          */
         "placeholder"?: string | null;
+        /**
+          * If `true`, users can select a range of dates.
+         */
+        "range"?: boolean;
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */

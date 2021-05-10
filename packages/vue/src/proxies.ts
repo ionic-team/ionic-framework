@@ -173,6 +173,7 @@ export const IonContent = /*@__PURE__*/ defineContainer<JSX.IonContent>('ion-con
 
 
 export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-datetime', [
+  'color',
   'name',
   'disabled',
   'readonly',
@@ -188,13 +189,12 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'dayValues',
   'hourValues',
   'minuteValues',
-  'monthNames',
-  'monthShortNames',
-  'dayNames',
-  'dayShortNames',
-  'pickerOptions',
+  'locale',
   'placeholder',
   'value',
+  'interactionStyle',
+  'range',
+  'maxSelectableDates',
   'ionCancel',
   'ionChange',
   'ionFocus',

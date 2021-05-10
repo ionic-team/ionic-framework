@@ -13,6 +13,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ## Version 6.x
 
 - [Components](#components)
+  * [Datetime](#datetime)
   * [Header](#header)
   * [Popover](#popover)
   * [Tab Bar](#tab-bar)
@@ -30,6 +31,14 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 
 
 ### Components
+
+#### Datetime
+
+The `pickerOptions` property has been removed. Use the `overlayOptions` property instead.
+
+The `monthNames`, `monthShortNames`, `dayNames`, and `dayShortNames` properties have been removed. Use the `locale` property instead.
+
+The `text` and `placeholder` Shadow Parts have been removed.
 
 #### Header
 
