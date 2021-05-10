@@ -3,8 +3,6 @@
 
 :host {
   width: 324px;
-
-  background: var(--ion-background-color);
 }
 
 // Header
@@ -12,8 +10,6 @@
 :host .datetime-title {
   width: 100%;
   height: 124px;
-
-  background: #ccc;
 }
 
 // Calendar/Time
@@ -22,8 +18,6 @@
 :host .datetime-time {
   width: 100%;
   height: 328px;
-
-  background: #ddd;
 }
 
 // Footer

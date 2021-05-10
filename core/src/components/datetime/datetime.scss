@@ -25,6 +25,8 @@
 
   display: block;
 
+  background: var(--background);
+
   //@include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   /*display: flex;

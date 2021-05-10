@@ -1,9 +1,11 @@
 @import "./datetime.scss";
+@import "./datetime.ios.vars.scss";
+@import "../../themes/ionic.globals.ios";
 
 :host {
-  width: 316px;
+  --background: var(--ion-color-step-50, #ffffff);
 
-  background: #eee;
+  width: 316px;
 }
 
 // Header
@@ -11,8 +13,6 @@
 :host .datetime-title {
   width: 100%;
   height: 48px;
-
-  background: #ccc;
 }
 
 // Calendar
@@ -20,14 +20,14 @@
 :host .datetime-calendar {
   width: 316px;
   height: 292px;
-
-  background: #ddd;
 }
 
 // Footer
 // -----------------------------------
 :host .datetime-buttons {
   @include padding(10px, 10px, 10px, 10px);
+
+  border-top: $datetime-ios-border-color;
 }
 
 :host .datetime-buttons ::slotted(ion-buttons) {
