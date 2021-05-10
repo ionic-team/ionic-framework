@@ -27,7 +27,7 @@
 // Material Design Toolbar w/ Color: Default Buttons
 // --------------------------------------------------
 
-:host-context(.ion-color)::slotted(*) .button {
+:host-context(.ion-color)::slotted(*) .med-button {
   --color: initial;
   --color-focused: #{current-color(contrast)};
   --color-hover: #{current-color(contrast)};
@@ -36,7 +36,7 @@
   --background-hover: #{current-color(contrast)};
 }
 
-:host-context(.ion-color)::slotted(*) .button-solid {
+:host-context(.ion-color)::slotted(*) med-button-solid {
   --background: #{current-color(contrast)};
   --background-activated: transparent;
   --background-focused: #{current-color(shade)};
@@ -46,7 +46,7 @@
   --color-hover: #{current-color(base)};
 }
 
-:host-context(.ion-color)::slotted(*) .button-outline {
+:host-context(.ion-color)::slotted(*) med-button-outline {
   --border-color: #{current-color(contrast)};
 }
 
@@ -54,7 +54,7 @@
 // Material Design Toolbar Icon Only Clear Button
 // --------------------------------------------------
 
-::slotted(*) .button-has-icon-only.button-clear {
+::slotted(*) .button-has-icon-onlymed-button-clear {
   --padding-top: 12px;
   --padding-end: 12px;
   --padding-bottom: 12px;
@@ -68,14 +68,14 @@
 }
 
 
-::slotted(*) .button {
+::slotted(*) .med-button {
   --background-hover: currentColor;
 }
 
 // Material Design Toolbar Solid Button
 // --------------------------------------------------
 
-::slotted(*) .button-solid {
+::slotted(*) med-button-solid {
   --color: #{$toolbar-md-background};
   --background: #{$toolbar-md-color};
   --background-activated: transparent;
@@ -86,7 +86,7 @@
 // Material Design Toolbar Outline Button
 // --------------------------------------------------
 
-::slotted(*) .button-outline {
+::slotted(*) med-button-outline {
   --color: initial;
   --background: transparent;
   --background-activated: transparent;
@@ -99,7 +99,7 @@
 // Material Design Toolbar Clear Button
 // --------------------------------------------------
 
-::slotted(*) .button-clear {
+::slotted(*) med-button-clear {
   --color: initial;
   --background: transparent;
   --background-activated: transparent;

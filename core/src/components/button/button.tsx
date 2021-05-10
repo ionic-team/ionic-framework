@@ -19,8 +19,8 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-button',
   styleUrls: {
-    ios: './med/med-button.scss',
-    md: './med/med-button.scss'
+    ios: './button.md.scss',
+    md: './button.md.scss'
   },
   shadow: true,
 })
@@ -31,6 +31,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inheritedAttributes: { [k: string]: any } = {};
 
   @Element() el!: HTMLElement;
+
+  // custom
+  @Prop() dsName!: 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
+  @Prop() dsSize!: 'xs' | 'sm' | 'md' | 'lg';
+  private iconOnly = false;
+  private iconLabel = false;
 
   /**
    * The color to use from your application's color palette.
@@ -208,44 +214,67 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     if (fill === undefined) {
       fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
     }
+    switch (this.dsName) {
+      case 'primary':
+        fill = 'solid';
+        break;
+      case 'secondary':
+        fill = 'outline';
+        break;
+      case 'tertiary':
+        fill = 'clear';
+        break;
+      case 'icon-only':
+        this.iconOnly = true;
+        fill = 'clear';
+        break;
+      case 'icon-label':
+        this.iconLabel = true;
+        fill = 'clear';
+        break;
+      default:
+        break;
+    }
     return (
       <Host
         onClick={this.handleClick}
         aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,
-          [buttonType]: true,
+          [`med-${buttonType}`]: true,
           [`${buttonType}-${expand}`]: expand !== undefined,
           [`${buttonType}-${finalSize}`]: finalSize !== undefined,
           [`${buttonType}-${shape}`]: shape !== undefined,
-          [`${buttonType}-${fill}`]: true,
+          [`med-${buttonType}-${fill}`]: true,
           [`${buttonType}-strong`]: strong,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
-          'button-has-icon-only': hasIconOnly,
+          'button-has-icon-only': hasIconOnly || this.iconOnly,
+          'med-button-disabled': disabled,
           'ion-activatable': true,
           'ion-focusable': true,
+          'in-med-navbar': hostContext('med-navbar', this.el),
+          'in-med-toolbar': hostContext('med-toolbar', this.el),
+          'button-icon-label': this.iconLabel
         })}
       >
-        <div class="tertiary-tap">
-          <TagType
-            {...attrs}
-            class="button-native"
-            part="native"
-            disabled={disabled}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            {...inheritedAttributes}
-          >
-            <span class="button-inner">
-              <slot name="icon-only"></slot>
-              <slot name="start"></slot>
-              <slot></slot>
-              <slot name="end"></slot>
-            </span>
-            {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
-          </TagType>
-        </div>
+        <TagType
+          {...attrs}
+          class="button-native"
+          part="native"
+          disabled={disabled}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          {...inheritedAttributes}
+        >
+          <span class="button-inner">
+            <slot name="icon-only"></slot>
+            <slot name="start"></slot>
+            <slot></slot>
+            <slot name="end"></slot>
+          </span>
+          {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}
+        </TagType>
       </Host>
     );
   }

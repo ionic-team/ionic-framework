@@ -81,3 +81,33 @@ $opacity-duration: $fade-in-duration + $fade-out-duration;
     opacity: 0;
   }
 }
+
+//
+// custom
+//
+
+@import "../../../med-components/abstracts";
+
+/* @keyframes fadeInAnimation {
+  from {
+    animation-timing-function: linear;
+
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutAnimation {
+  from {
+    animation-timing-function: linear;
+
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+} */

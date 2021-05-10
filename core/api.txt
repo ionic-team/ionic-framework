@@ -145,6 +145,8 @@ ion-button,prop,buttonType,string,'button',false,false
 ion-button,prop,color,string | undefined,undefined,false,false
 ion-button,prop,disabled,boolean,false,false,true
 ion-button,prop,download,string | undefined,undefined,false,false
+ion-button,prop,dsName,"icon-label" | "icon-only" | "primary" | "secondary" | "tertiary",undefined,true,false
+ion-button,prop,dsSize,"lg" | "md" | "sm" | "xs",undefined,true,false
 ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
 ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undefined,false,true
 ion-button,prop,href,string | undefined,undefined,false,false
@@ -159,6 +161,29 @@ ion-button,prop,target,string | undefined,undefined,false,false
 ion-button,prop,type,"button" | "reset" | "submit",'button',false,false
 ion-button,event,ionBlur,void,true
 ion-button,event,ionFocus,void,true
+ion-button,css-prop,--background
+ion-button,css-prop,--background-activated
+ion-button,css-prop,--background-activated-opacity
+ion-button,css-prop,--background-focused
+ion-button,css-prop,--background-focused-opacity
+ion-button,css-prop,--background-hover
+ion-button,css-prop,--background-hover-opacity
+ion-button,css-prop,--border-color
+ion-button,css-prop,--border-radius
+ion-button,css-prop,--border-style
+ion-button,css-prop,--border-width
+ion-button,css-prop,--box-shadow
+ion-button,css-prop,--color
+ion-button,css-prop,--color-activated
+ion-button,css-prop,--color-focused
+ion-button,css-prop,--color-hover
+ion-button,css-prop,--opacity
+ion-button,css-prop,--padding-bottom
+ion-button,css-prop,--padding-end
+ion-button,css-prop,--padding-start
+ion-button,css-prop,--padding-top
+ion-button,css-prop,--ripple-color
+ion-button,css-prop,--transition
 ion-button,part,native
 
 ion-buttons,scoped
@@ -815,12 +840,10 @@ ion-progress-bar,shadow
 ion-progress-bar,prop,buffer,number,1,false,false
 ion-progress-bar,prop,color,string | undefined,undefined,false,false
 ion-progress-bar,prop,mode,"ios" | "md",undefined,false,false
+ion-progress-bar,prop,percentage,boolean,false,false,false
 ion-progress-bar,prop,reversed,boolean,false,false,false
 ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false,false
 ion-progress-bar,prop,value,number,0,false,false
-ion-progress-bar,css-prop,--background
-ion-progress-bar,css-prop,--buffer-background
-ion-progress-bar,css-prop,--progress-background
 ion-progress-bar,part,progress
 ion-progress-bar,part,stream
 ion-progress-bar,part,track
@@ -833,10 +856,6 @@ ion-radio,prop,name,string,this.inputId,false,false
 ion-radio,prop,value,any,undefined,false,false
 ion-radio,event,ionBlur,void,true
 ion-radio,event,ionFocus,void,true
-ion-radio,css-prop,--border-radius
-ion-radio,css-prop,--color
-ion-radio,css-prop,--color-checked
-ion-radio,css-prop,--inner-border-radius
 ion-radio,part,container
 ion-radio,part,mark
 
@@ -1339,5 +1358,38 @@ ion-virtual-scroll,method,checkEnd,checkEnd() => Promise<void>
 ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => Promise<void>
 ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>
 
+med-alternativas,shadow
+med-alternativas,prop,alternativaSelecionada,string,undefined,true,true
+med-alternativas,prop,alternativas,any,[],false,false
+med-alternativas,prop,keyAlternativa,string,'Alternativa',false,false
+med-alternativas,prop,keyEnunciado,string,'Enunciado',false,false
+med-alternativas,prop,keyImagem,string,'Imagem',false,false
+med-alternativas,prop,keyPorcentagem,string,'Porcentagem',false,false
+med-alternativas,prop,mostraResposta,boolean,undefined,true,true
+med-alternativas,prop,respostaCorreta,string,undefined,true,true
+med-alternativas,event,medChange,MedAlternativaInterface,true
+med-alternativas,event,medGalleryRequest,MedAlternativaInterface,true
+
+med-cartao-resposta-item,shadow
+med-cartao-resposta-item,prop,color,string | undefined,undefined,false,false
+
+med-cartao-resposta-lista,shadow
+
+med-enunciado,shadow
+med-enunciado,prop,imagens,string | string[],undefined,true,true
+med-enunciado,event,medGalleryRequest,string,true
+
+med-header,shadow
+med-header,event,medResize,headerResizeEventDetail,true
+
 med-navbar,shadow
 med-navbar,event,medResize,navbarResizeEventDetail,true
+
+med-option,shadow
+
+med-rate-bar,shadow
+
+med-rate-like,shadow
+med-rate-like,event,medChange,"dislike" | "like",true
+
+med-toolbar,shadow

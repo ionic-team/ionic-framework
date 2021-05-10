@@ -1,0 +1,24 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Team/Enunciado/Usage" />
+
+# Usage
+
+### Atributos
+
+| Atributo    | Descrição                                    | Type         |
+| ----------- | -------------------------------------------- | ------------ |
+| **imagens** | Define uma lista de imagens para o enunciado | **String[]** |
+
+### Eventos
+
+| Event                 | Descrição                                 | Type               |
+| --------------------- | ----------------------------------------- | ---------- |
+| **medGalleryRequest** | Emitido quando é feito um click na imagem | **String** |
+
+
+```html
+<med-enunciado imagens='["https://via.placeholder.com/500", "https://via.placeholder.com/500", "https://via.placeholder.com/500"]'>
+  Mulher, 52 anos, comparece em consulta médica trazendo os seguintes exames. Albumina sérica = 4,0 mg/dL, creatinina = 1,0 mg/dL; Exame sumário de urina: pH = 7,2, densidade = 1020, proteína = +/4+, glicose = negativa, leucócitos = 2/campo, hemácias = 3/campo; proteinúria de 24 horas = 12g/24 horas. A classificação quanto a origem e a proteína urinária predominante no quadro correspondem a:
+</med-enunciado>
+```

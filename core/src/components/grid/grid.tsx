@@ -4,7 +4,7 @@ import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-grid',
-  styleUrl: 'grid.scss',
+  styleUrl: './med/med-grid.scss',
   shadow: true
 })
 export class Grid implements ComponentInterface {

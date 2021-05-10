@@ -1,0 +1,99 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Global/Navbar/Usage" />
+
+# Usage
+
+## default
+
+### Slots
+
+| Slot                | Descrição                                        |
+| ------------------- | ------------------------------------------------ |
+| **slot="left"**     | Posiciona um elemento no começo da navbar        |
+| **slot="title"**    | Titulo da navbar                                 |
+| **slot="subtitle"** | Subtitulo da navbar                              |
+| **slot="right"**    | Posiciona um elemento no lado direito da navbar  |
+
+```html
+<med-navbar>
+  <ion-button ds-name="icon-label" slot="left">
+    <ion-icon name="med-chevron-left"></ion-icon>
+    voltar
+  </ion-button>
+
+  <span slot="title">Título</span>
+  <span slot="subtitle">subtítulo</span>
+
+  <ion-button ds-name="icon-only" slot="right">
+    <ion-icon slot="icon-only" name="med-star-filled"></ion-icon>
+  </ion-button>
+</med-navbar>
+```
+
+## secondary
+
+### Atributos
+
+| Slot                | Descrição        | Valores       |
+| ------------------- | ---------------- | ------------- |
+| **ds-name**         | Define a navbar  | **secondary** |
+
+### Slots
+
+| Slot                | Descrição                                        |
+| ------------------- | ------------------------------------------------ |
+| **slot="left"**     | Posiciona um elemento no começo da navbar        |
+| **slot="title"**    | Titulo da navbar                                 |
+| **slot="subtitle"** | Subtitulo da navbar                              |
+| **slot="right"**    | Posiciona um elemento no lado direito da navbar  |
+
+```html
+<med-navbar ds-name="secondary">
+  <ion-button ds-name="icon-label" slot="left">
+    <ion-icon name="med-chevron-left"></ion-icon>
+    voltar
+  </ion-button>
+
+  <span slot="title">Título</span>
+  <span slot="subtitle">subtítulo</span>
+
+  <ion-button ds-name="icon-only" slot="right">
+    <ion-icon slot="icon-only" name="med-star-filled"></ion-icon>
+  </ion-button>
+</med-navbar>
+```
+
+## transparent
+
+### Atributos
+
+| slot                | Descrição                                                             | valores            |
+| ------------------- | --------------------------------------------------------------------- | ------------------ |
+| **ds-name**         | Define a navbar                                                       | **transparent**    |
+| **ds-theme**        | Define a cor dos itens da navbar em contrate a determinado background | **dark**/**light** |
+
+### Slots
+
+| Slot                | Descrição                                        |
+| ------------------- | ------------------------------------------------ |
+| **slot="left"**     | Posiciona um elemento no começo da navbar        |
+| **slot="title"**    | Titulo da navbar                                 |
+| **slot="subtitle"** | Subtitulo da navbar                              |
+| **slot="right"**    | Posiciona um elemento no lado direito da navbar  |
+
+```html
+<med-navbar ds-name="transparent" ds-theme="dark">
+  <ion-button ds-name="icon-label" slot="left">
+    <ion-icon name="med-chevron-left"></ion-icon>
+    voltar
+  </ion-button>
+
+  <span slot="title">Título</span>
+  <span slot="subtitle">subtítulo</span>
+
+  <ion-button ds-name="icon-only" slot="right">
+    <ion-icon slot="icon-only" name="med-star-filled"></ion-icon>
+  </ion-button>
+</med-navbar>
+```

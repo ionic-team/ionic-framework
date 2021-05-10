@@ -1,0 +1,142 @@
+@import "../../../../../med-components/abstracts";
+
+:host {
+  --alternativa-spacing: #{$med-spacing-stack-xs};
+  --alternativa-color: #{$med-color-neutral-dark-10};
+  --alternativa-font-size: #{$med-font-size-xs};
+  --alternativa-font-weight: #{$med-font-weight-regular};
+  --alternativa-line-height: #{line-height()};
+  --alternativa-text-align: justify;
+  --alternativa-text-spacing: #{$med-spacing-inline-base};
+  --alternativa-image-spacing: #{$med-spacing-inline-base};
+
+  --background-correto: #{$med-color-feedback-success-medium};
+  --background-incorreto: #{$med-color-feedback-error-medium};
+
+  --progess-background: #{$med-color-feedback-success-light};
+
+  .alternativas {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    &--imagem {
+      @include breakpoint-up('md') {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .alternativa {
+        &:nth-of-type(odd) {
+          margin-right: auto;
+          padding-right: 0;
+
+          @include breakpoint-up('md') {
+           padding-right: #{$med-spacing-inline-base};
+          }
+        }
+
+        &:nth-of-type(even) {
+          margin-right: auto;
+        }
+
+        &__image {
+          display: block;
+
+          @include breakpoint-up('md') {
+            width: 360px;
+          }
+        }
+      }
+    }
+  }
+
+  .alternativa {
+    display: flex;
+
+    &:not(:last-child) {
+      padding-bottom: var(--alternativa-spacing);
+    }
+
+    .image-container {
+      position: relative;
+
+      &__overlay {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.3);
+        cursor: pointer;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &__right {
+      flex: 1;
+      margin-left: var(--alternativa-text-spacing);
+      overflow: hidden;
+    }
+
+    &__text {
+      text-align: var(--alternativa-text-align);
+      color: var(--alternativa-color);
+      font-size: var(--alternativa-font-size);
+      font-weight: var(--alternativa-font-weight);
+      line-height: var(--alternativa-line-height);
+      margin: 0;
+    }
+
+    &__image {
+      width: 100%;
+      height: auto;
+    }
+
+    &__option {
+      position: relative;
+    }
+
+    &--correta {
+      med-option {
+        --background: var(--background-correto);
+      }
+    }
+
+    &--incorreto {
+      med-option {
+        --background: var(--background-incorreto);
+      }
+    }
+  }
+
+  .ion-progress-bar {
+    transition: all 300ms ease;
+    opacity: 0;
+    transform: translateX(-100%);
+
+    &--toggle {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    &--100 {
+      --progress-background: var(--progess-background);
+    }
+  }
+}
+
+// desktop
+:host-context(.plt-desktop) .image-container:hover {
+  .image-container__overlay  {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 300ms ease;
+  }
+}
+
+
