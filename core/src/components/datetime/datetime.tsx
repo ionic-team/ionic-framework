@@ -5,6 +5,8 @@ import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../
 import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
+import { shouldRenderViewButtons } from './datetime.utils';
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
@@ -29,6 +31,7 @@ export class Datetime implements ComponentInterface {
   @Element() el!: HTMLIonDatetimeElement;
 
   @State() isPresented = false;
+  @State() private view: DatetimeView = DatetimeView.Calendar;
 
   /**
    * The color to use from your application's color palette.
@@ -280,7 +283,11 @@ export class Datetime implements ComponentInterface {
     this.isPresented = false;
   }
 
-  private renderButtons() {
+  private toggleView = () => {
+    this.view = (this.view === DatetimeView.Calendar) ? DatetimeView.Time : DatetimeView.Calendar;
+  }
+
+  private renderButtons(mode: Mode) {
     /**
      * By default we render two buttons:
      * Cancel - Dismisses the datetime and
@@ -289,16 +296,43 @@ export class Datetime implements ComponentInterface {
      * updates the `value` prop.
      */
     return (
-      <slot name="buttons">
-        {this.showDefaultTitleAndButtons && <ion-buttons>
-          <ion-button color={this.color} onClick={() => this.dismiss()}>Cancel</ion-button>
-          <ion-button color={this.color} onClick={() => this.dismiss()}>Ok</ion-button>
-        </ion-buttons> }
-      </slot>
+      <div class="datetime-buttons">
+        {shouldRenderViewButtons(mode) && <div class="datetime-view-buttons">
+          <ion-buttons>
+            <ion-button onClick={() => this.toggleView()}>
+              <ion-icon slot="icon-only" icon={this.view === DatetimeView.Calendar ? 'time-outline' : 'calendar-clear-outline'} lazy={false}></ion-icon>
+            </ion-button>
+            <ion-button>
+              <ion-icon slot="icon-only" icon="pizza-outline" lazy={false}></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>}
+
+        <div class="datetime-action-buttons">
+          <slot name="buttons">
+            {this.showDefaultTitleAndButtons && <ion-buttons>
+              <ion-button color={this.color} onClick={() => this.dismiss()}>Cancel</ion-button>
+              <ion-button color={this.color} onClick={() => this.dismiss()}>Ok</ion-button>
+            </ion-buttons> }
+          </slot>
+        </div>
+      </div>
     );
   }
 
-  private renderTitle(mode: Mode) {
+  private renderCalendar() {
+    return (
+      <div class="datetime-calendar">Calendar Placeholder</div>
+    )
+  }
+
+  private renderTime() {
+    return (
+      <div class="datetime-time">Time Placeholder</div>
+    )
+  }
+
+  private renderCalendarViewTitle(mode: Mode) {
     /**
      * On iOS there is no default title
      * shown. User can slot in a custom title.
@@ -306,21 +340,32 @@ export class Datetime implements ComponentInterface {
     const defaultTitle = mode === 'md' ? 'Select Date' : '';
 
     return (
-      <slot name="title">
-        {this.showDefaultTitleAndButtons && mode !== 'ios' && defaultTitle}
-      </slot>
+      <div class="datetime-title">
+        <slot name="title">
+          {this.showDefaultTitleAndButtons && mode !== 'ios' && defaultTitle}
+        </slot>
+      </div>
     );
   }
 
-  private renderDatetime(mode: Mode) {
+  private renderCalendarView(mode: Mode) {
     return [
-      this.renderTitle(mode),
-      this.renderButtons()
+      this.renderCalendarViewTitle(mode),
+      this.renderCalendar(),
+      this.renderButtons(mode)
+    ]
+  }
+
+  private renderTimeView(mode: Mode) {
+    return [
+      this.renderCalendarViewTitle(mode),
+      this.renderTime(),
+      this.renderButtons(mode)
     ]
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented } = this;
+    const { name, value, disabled, el, color, isPresented, view } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, disabled);
@@ -334,11 +379,17 @@ export class Datetime implements ComponentInterface {
           })
         }}
       >
-        DATETIME!<br />
-        {this.renderDatetime(mode)}
+        {
+          view === DatetimeView.Calendar ? this.renderCalendarView(mode) : this.renderTimeView(mode)
+        }
       </Host>
     );
   }
 }
 
 let datetimeIds = 0;
+
+const enum DatetimeView {
+  Calendar = 'calendar',
+  Time = 'time'
+}

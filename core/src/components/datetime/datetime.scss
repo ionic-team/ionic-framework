@@ -22,6 +22,9 @@
    * @prop --dial-color:  The color of the text that is selected by the dial in the time picker.
    * @prop --dial-background: The background of the dial and arm in the time picker.
    */
+
+  display: block;
+
   //@include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   /*display: flex;

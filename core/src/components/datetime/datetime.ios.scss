@@ -1,1 +1,42 @@
 @import "./datetime.scss";
+
+:host {
+  width: 316px;
+
+  background: #eee;
+}
+
+// Header
+// -----------------------------------
+:host .datetime-title {
+  width: 100%;
+  height: 48px;
+
+  background: #ccc;
+}
+
+// Calendar
+// -----------------------------------
+:host .datetime-calendar {
+  width: 316px;
+  height: 292px;
+
+  background: #ddd;
+}
+
+// Footer
+// -----------------------------------
+:host .datetime-buttons {
+  @include padding(10px, 10px, 10px, 10px);
+}
+
+:host .datetime-buttons ::slotted(ion-buttons) {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+:host .datetime-action-buttons {
+  width: 100%;
+}
