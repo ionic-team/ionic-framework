@@ -1,3 +1,7 @@
-export interface DatetimeOptions {}
+export interface DatetimeOptions {
+  tmp?: string;
+}
 
-export interface DatetimeChangeEventDetail {}
+export interface DatetimeChangeEventDetail {
+  value?: string | null;
+}
