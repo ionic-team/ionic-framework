@@ -10,27 +10,22 @@
 
 // Header
 // -----------------------------------
-:host .datetime-title {
+:host .datetime-header {
   @include padding($datetime-ios-header-padding, $datetime-ios-header-padding, $datetime-ios-header-padding, $datetime-ios-header-padding);
 
   border-bottom: $datetime-ios-border-color;
+}
 
+:host .datetime-header .datetime-title {
   color: $text-color-step-400;
 
   font-size: 14px;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  overflow: hidden;
 }
 
 // Calendar
 // -----------------------------------
 :host .datetime-calendar {
-  width: 316px;
-  height: 292px;
+  height: 209px;
 }
 
 // Footer

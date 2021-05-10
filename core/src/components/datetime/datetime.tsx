@@ -332,25 +332,32 @@ export class Datetime implements ComponentInterface {
     )
   }
 
-  private renderCalendarViewTitle(mode: Mode) {
+  private renderCalendarViewHeader(mode: Mode) {
     /**
      * On iOS there is no default title
      * shown. User can slot in a custom title.
      */
     const defaultTitle = mode === 'md' ? 'Select Date' : '';
 
+    console.log(this.showDefaultTitleAndButtons, mode);
+
     return (
-      <div class="datetime-title">
-        <slot name="title">
-          {this.showDefaultTitleAndButtons && mode !== 'ios' && defaultTitle}
-        </slot>
+      <div class="datetime-header">
+        <div class="datetime-title">
+          <slot name="title">
+            {this.showDefaultTitleAndButtons && mode !== 'ios' && defaultTitle}
+          </slot>
+        </div>
+        {mode === 'md' && <div class="datetime-selected-date">
+          Mon, May 10
+        </div>}
       </div>
     );
   }
 
   private renderCalendarView(mode: Mode) {
     return [
-      this.renderCalendarViewTitle(mode),
+      this.renderCalendarViewHeader(mode),
       this.renderCalendar(),
       this.renderButtons(mode)
     ]
@@ -358,7 +365,7 @@ export class Datetime implements ComponentInterface {
 
   private renderTimeView(mode: Mode) {
     return [
-      this.renderCalendarViewTitle(mode),
+      this.renderCalendarViewHeader(mode),
       this.renderTime(),
       this.renderButtons(mode)
     ]
