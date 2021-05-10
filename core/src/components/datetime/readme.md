@@ -87,22 +87,22 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                   | Description                                                                                                                                                             |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--backdrop-secondary` | The secondary background of the datetime component. This is the background of the header in the date picker and the dial and inputs in the time picker.                 |
-| `--background`         | The primary background of the datetime component.                                                                                                                       |
-| `--background-active`  | The background of the active interactive components. This is the selected date in the date picker. In the time picker this is the active input and active AM/PM button. |
-| `--color`              | The primary body text color.                                                                                                                                            |
-| `--color-active`       | The text color of any active text. Applies to the "today" date in the calendar picker. In the time picker this applies to the active input and active AM/PM buttons.    |
-| `--color-secondary`    | The color for the days of the week, next and previous buttons, and the AM/PM buttons.                                                                                   |
-| `--dial-background`    | The background of the dial and arm in the time picker.                                                                                                                  |
-| `--dial-color`         | The color of the text that is selected by the dial in the time picker.                                                                                                  |
-| `--padding-bottom`     | Bottom padding of the datetime                                                                                                                                          |
-| `--padding-end`        | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the datetime                                                             |
-| `--padding-start`      | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the datetime                                                             |
-| `--padding-top`        | Top padding of the datetime                                                                                                                                             |
-| `--placeholder-color`  | Color of the datetime placeholder                                                                                                                                       |
-| `--title-color`        | The text color of the title.                                                                                                                                            |
+| Name                     | Description                                                                                                                                                             |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--background`           | The primary background of the datetime component.                                                                                                                       |
+| `--background-active`    | The background of the active interactive components. This is the selected date in the date picker. In the time picker this is the active input and active AM/PM button. |
+| `--background-secondary` | The secondary background of the datetime component. This is the background of the header in the date picker and the dial and inputs in the time picker.                 |
+| `--color`                | The primary body text color.                                                                                                                                            |
+| `--color-active`         | The text color of any active text. Applies to the "today" date in the calendar picker. In the time picker this applies to the active input and active AM/PM buttons.    |
+| `--color-secondary`      | The color for the days of the week, next and previous buttons, and the AM/PM buttons.                                                                                   |
+| `--dial-background`      | The background of the dial and arm in the time picker.                                                                                                                  |
+| `--dial-color`           | The color of the text that is selected by the dial in the time picker.                                                                                                  |
+| `--padding-bottom`       | Bottom padding of the datetime                                                                                                                                          |
+| `--padding-end`          | Right padding if direction is left-to-right, and left padding if direction is right-to-left of the datetime                                                             |
+| `--padding-start`        | Left padding if direction is left-to-right, and right padding if direction is right-to-left of the datetime                                                             |
+| `--padding-top`          | Top padding of the datetime                                                                                                                                             |
+| `--placeholder-color`    | Color of the datetime placeholder                                                                                                                                       |
+| `--title-color`          | The text color of the title.                                                                                                                                            |
 
 
 ## Dependencies
@@ -111,12 +111,14 @@ Type: `Promise<void>`
 
 - [ion-buttons](../buttons)
 - [ion-button](../button)
+- ion-icon
 
 ### Graph
 ```mermaid
 graph TD;
   ion-datetime --> ion-buttons
   ion-datetime --> ion-button
+  ion-datetime --> ion-icon
   ion-button --> ion-ripple-effect
   style ion-datetime fill:#f9f,stroke:#333,stroke-width:4px
 ```

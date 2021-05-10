@@ -24,3 +24,10 @@
 
   opacity: .01;
 }
+
+:host(.overlay-datetime) {
+  --width: 324px;
+  --height: 515px;
+  --border-radius: 4px;
+  --background: transparent;
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Datetime - Title</title>
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Title</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Inline - Default</h2>
+            <ion-datetime></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Popover - Default</h2>
+            <ion-button onclick="presentPopover(defaultPopover, event)">Present Popover</ion-button>
+            <ion-popover id="default-popover">
+              <ion-datetime></ion-datetime>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>Modal - Default</h2>
+            <ion-button onclick="presentModal()">Present Modal</ion-button>
+          </div>
+
+          <div class="grid-item">
+            <h2>Inline - Slotted Title</h2>
+            <ion-datetime color="danger">
+              <span slot="title">Custom Title</span>
+            </ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Popover - Slotted Title</h2>
+            <ion-button onclick="presentPopover(customPopover, event)">Present Popover</ion-button>
+            <ion-popover id="custom-popover">
+              <ion-datetime>
+                <span slot="title">Custom Title</span>
+              </ion-datetime>
+            </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>Modal - Slotted Title</h2>
+            <ion-button onclick="presentModal('Custom Title')">Present Modal</ion-button>
+          </div>
+        </div>
+      </ion-content>
+      <script>
+        const defaultPopover = document.querySelector('ion-popover#default-popover');
+        const customPopover = document.querySelector('ion-popover#custom-popover');
+        const presentPopover = (popover, ev) => {
+          popover.event = ev;
+          popover.showBackdrop = false;
+          popover.isOpen = true;
+
+          const dismiss = () => {
+            popover.isOpen = false;
+            popover.event = undefined;
+
+            popover.removeEventListener('didDismiss', dismiss);
+          }
+
+          popover.addEventListener('didDismiss', dismiss);
+        }
+
+        const presentModal = async (title) => {
+          const modal = await createModal(title);
+
+          await modal.present();
+        }
+
+        const createModal = (title) => {
+          const titleSrc = (title) ? `<span slot="title">${title}</span>` : '';
+          // create component to open
+          const element = document.createElement('div');
+          element.innerHTML = `
+            <ion-datetime>
+              ${titleSrc}
+            </ion-datetime>
+          `;
+
+          // present the modal
+          const modalElement = Object.assign(document.createElement('ion-modal'), {
+            component: element
+          });
+          document.body.appendChild(modalElement);
+          return modalElement;
+        }
+      </script>
+    </ion-app>
+  </body>
+</html>

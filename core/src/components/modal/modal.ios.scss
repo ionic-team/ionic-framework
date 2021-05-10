@@ -74,3 +74,10 @@
     box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.1);
   }
 }
+
+:host(.overlay-datetime) {
+  --width: 316px;
+  --height: 296px;
+  --background: transparent;
+  --border-radius: #{$modal-ios-border-radius};
+}

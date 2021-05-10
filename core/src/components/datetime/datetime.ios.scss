@@ -1,1 +1,49 @@
 @import "./datetime.scss";
+@import "./datetime.ios.vars.scss";
+@import "../../themes/ionic.globals.ios";
+
+:host {
+  --background: var(--ion-color-step-100, #ffffff);
+
+  width: 316px;
+}
+
+// Header
+// -----------------------------------
+:host .datetime-header {
+  @include padding($datetime-ios-header-padding, $datetime-ios-header-padding, $datetime-ios-header-padding, $datetime-ios-header-padding);
+
+  border-bottom: $datetime-ios-border-color;
+}
+
+:host .datetime-header .datetime-title {
+  color: $text-color-step-400;
+
+  font-size: 14px;
+}
+
+// Calendar
+// -----------------------------------
+:host .datetime-calendar {
+  height: 209px;
+}
+
+// Footer
+// -----------------------------------
+:host .datetime-buttons {
+  @include padding($datetime-ios-footer-padding, $datetime-ios-footer-padding, $datetime-ios-footer-padding, $datetime-ios-footer-padding);
+
+  border-top: $datetime-ios-border-color;
+}
+
+:host .datetime-buttons ::slotted(ion-buttons),
+:host .datetime-buttons ion-buttons {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+:host .datetime-action-buttons {
+  width: 100%;
+}
