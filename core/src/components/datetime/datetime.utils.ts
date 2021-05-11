@@ -43,6 +43,51 @@ export const shouldRenderViewHeader = (mode: Mode, presentationType: 'modal' | '
 }
 
 /**
+ * Given a date object, returns the number
+ * of days in that month.
+ * Month value begin at 1, not 0.
+ * i.e. January = month 1.
+ */
+export const getNumDaysInMonth = (month: number, year: number) => {
+  return (month === 4 || month === 6 || month === 9 || month === 11) ? 30 : (month === 2) ? isLeapYear(year) ? 29 : 28 : 31;
+}
+
+/**
+ * Determines if given year is a
+ * leap year. Returns `true` if year
+ * is a leap year. Returns `false`
+ * otherwise.
+ */
+const isLeapYear = (year: number) => {
+  return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+}
+
+/**
+ * Returns an array containing all of the
+ * days in a month for a given year. Values are
+ * aligned with a week calendar starting on
+ * Sunday using null values.
+ */
+export const getDaysOfMonth = (month: number, year: number) => {
+  const numDays = getNumDaysInMonth(month, year);
+  const offset = new Date(`${month}/1/${year}`).getDay();
+
+  let days = [];
+  for (let i = 1; i <= numDays; i++) {
+    days.push(i);
+  }
+
+  for (let i = 0; i < offset; i++) {
+    days = [
+      null,
+      ...days
+    ]
+  }
+
+  return days;
+}
+
+/**
  * Gets the day of the week, month, and day
  * Used for the header in MD mode.
  */

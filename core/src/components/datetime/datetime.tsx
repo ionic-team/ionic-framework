@@ -5,7 +5,7 @@ import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../
 import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
-import { getDaysOfWeek, getMonthAndDay, getMonthAndYear, shouldRenderViewButtons, shouldRenderViewHeader } from './datetime.utils';
+import { getDaysOfMonth, getDaysOfWeek, getMonthAndDay, getMonthAndYear, shouldRenderViewButtons, shouldRenderViewHeader } from './datetime.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -331,36 +331,69 @@ export class Datetime implements ComponentInterface {
     );
   }
 
+  private renderCalendarHeader(mode: Mode) {
+    return (
+      <div class="calendar-header">
+        <div class="calendar-action-buttons">
+          <div class="calendar-month-year">
+            <ion-item button detail={false} lines="none">
+              <ion-label>
+                {getMonthAndYear(this.locale)} <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
+              </ion-label>
+            </ion-item>
+          </div>
+
+          <div class="calendar-next-prev">
+            <ion-buttons>
+              <ion-button>
+                <ion-icon slot="icon-only" icon="chevron-back" lazy={false}></ion-icon>
+              </ion-button>
+              <ion-button>
+                <ion-icon slot="icon-only" icon="chevron-forward" lazy={false}></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+        </div>
+        <div class="calendar-days-of-week">
+          {getDaysOfWeek(this.locale, mode).map(d => {
+            return <div class="day-of-week">{d}</div>
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  private renderMonth(month: number, year: number) {
+    return (
+      <div class="calendar-month">
+        {getDaysOfMonth(month, year).map(d => {
+          return (
+            <div class="calendar-day">
+              <div class="calendar-day-content">
+                {d}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  private renderCalendarBody(mode: Mode) {
+    return (
+      <div class="calendar-body">
+        {this.renderMonth(4, 2021)}
+        {this.renderMonth(5, 2021)}
+        {this.renderMonth(6, 2021)}
+      </div>
+    )
+  }
+
   private renderCalendar(mode: Mode) {
     return (
       <div class="datetime-calendar">
-        <div class="calendar-header">
-          <div class="calendar-action-buttons">
-            <div class="calendar-month-year">
-              <ion-item button detail={false} lines="none">
-                <ion-label>
-                  {getMonthAndYear(this.locale)} <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
-                </ion-label>
-              </ion-item>
-            </div>
-
-            <div class="calendar-next-prev">
-              <ion-buttons>
-                <ion-button>
-                  <ion-icon slot="icon-only" icon="chevron-back" lazy={false}></ion-icon>
-                </ion-button>
-                <ion-button>
-                  <ion-icon slot="icon-only" icon="chevron-forward" lazy={false}></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </div>
-          </div>
-          <div class="calendar-days-of-week">
-            {getDaysOfWeek(this.locale, mode).map(d => {
-              return <div class="day-of-week">{d}</div>
-            })}
-          </div>
-        </div>
+        {this.renderCalendarHeader(mode)}
+        {this.renderCalendarBody(mode)}
       </div>
     )
   }

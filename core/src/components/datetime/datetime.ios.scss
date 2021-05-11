@@ -24,9 +24,6 @@
 
 // Calendar
 // -----------------------------------
-:host .datetime-calendar {
-  height: 230px;
-}
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
@@ -64,6 +61,15 @@
 
   text-transform: uppercase;
 }
+
+// Calendar / Body
+// -----------------------------------
+:host .calendar-body .calendar-month {
+  @include padding($datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2);
+
+  font-size: 20px;
+}
+
 
 // Footer
 // -----------------------------------

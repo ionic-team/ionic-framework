@@ -62,13 +62,71 @@
 // Calendar / Header / Days of Week
 // -----------------------------------
 :host .calendar-days-of-week {
-  @include padding(0, 3px, 0, 3px);
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
 
-  display: flex;
-
-  justify-content: space-around;
+  text-align: center;
 }
 
+// Calendar / Body
+// -----------------------------------
+:host .calendar-body {
+  display: grid;
+  grid-template-columns: 100% 100% 100%;
+
+  scroll-snap-type: x mandatory;
+
+  overflow-x: scroll;
+
+  // Hide scrollbars on Firefox
+  scrollbar-width: none;
+}
+
+/**
+ * Hide scrollbars on Chrome and Safari
+ */
+:host .calendar-body::-webkit-scrollbar {
+  display: none;
+}
+
+:host .calendar-body .calendar-month {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+
+  text-align: center;
+}
+
+:host .calendar-body .calendar-day {
+  position: relative;
+
+  width: 100%;
+}
+
+/**
+ * Ensures that each day is a square
+ */
+:host .calendar-body .calendar-day:after {
+  display: block;
+
+  padding-top: 100%;
+
+  content: " ";
+}
+
+:host .calendar-day .calendar-day-content {
+  display: flex;
+  position: absolute;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
 
 :host(.in-item) {
   position: static;
