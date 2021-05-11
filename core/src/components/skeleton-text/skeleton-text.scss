@@ -56,13 +56,12 @@ span {
     left: 0;
     transform: translateX(-100%);
     background: linear-gradient(
-      90deg,
-      transparent 0,
-      $skeleton-text-background 20%,
-      $skeleton-text-background-animated 60%,
-      transparent
+      to right,
+      $skeleton-text-background 8%,
+      $skeleton-text-background-animated 18%,
+      $skeleton-text-background 33%
     );
-    animation: shimmer 2s infinite;
+    animation: shimmer 1s infinite;
     content: "";
   }
 }
