@@ -70,6 +70,46 @@
   font-size: 20px;
 }
 
+:host .calendar-body .calendar-day {
+  position: relative;
+
+  width: 100%;
+}
+
+/**
+ * Ensures that each day is a square
+ */
+:host .calendar-body .calendar-day:after {
+  display: block;
+
+  padding-top: 100%;
+
+  content: " ";
+}
+
+/**
+ * Ensures that each day is a square
+ */
+:host .calendar-body .calendar-day:after {
+  display: block;
+
+  padding-top: 100%;
+
+  content: " ";
+}
+
+
+:host .calendar-day .calendar-day-content {
+  display: flex;
+  position: absolute;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
 
 // Footer
 // -----------------------------------

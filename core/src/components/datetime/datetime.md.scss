@@ -64,6 +64,10 @@
   font-size: 13px;
 }
 
+:host .calendar-body .calendar-day {
+  padding: 13px 0px;
+}
+
 // Footer
 // -----------------------------------
 :host .datetime-buttons {
