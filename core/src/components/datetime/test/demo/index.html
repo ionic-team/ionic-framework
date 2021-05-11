@@ -42,7 +42,7 @@
       }
 
       ion-datetime.ios {
-        height: 308px;
+        height: 329px;
 
         border-radius: 12px;
       }
@@ -209,10 +209,18 @@
   <body>
     <ion-app>
       <ion-content>
-        <ion-item lines="none">
-          <ion-label>Dark Mode</ion-label>
-          <ion-checkbox slot="end"></ion-checkbox>
-        </ion-item>
+        <div style="display: flex; justify-content: center">
+          <ion-item lines="none">
+            <ion-label>Dark Mode</ion-label>
+            <ion-checkbox slot="end"></ion-checkbox>
+          </ion-item>
+          <ion-item lines="none" detail="true" href="?ionic:mode=ios">
+            <ion-label>iOS Mode</ion-label>
+          </ion-item>
+          <ion-item lines="none" detail="true" href="?ionic:mode=md">
+            <ion-label>MD Mode</ion-label>
+          </ion-item>
+        </div>
 
         <ion-datetime>
           <span slot="title">Select Date</span>
