@@ -65,7 +65,7 @@
 }
 
 :host .calendar-body .calendar-day {
-  padding: 13px 0px;
+  @include padding(13px, 0, 13px, 0px);
 }
 
 // Footer
