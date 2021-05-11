@@ -62,6 +62,15 @@
 // -----------------------------------
 :host .calendar-body .calendar-month {
   font-size: 13px;
+
+  /**
+   * Calendar on MD will show an empty row
+   * if not enough dates to fill 6th row.
+   * Calendar on iOS fits all dates into
+   * a fixed number of rows and resizes
+   * if necessary.
+   */
+  grid-template-rows: repeat(6, 1fr);
 }
 
 :host .calendar-body .calendar-day {

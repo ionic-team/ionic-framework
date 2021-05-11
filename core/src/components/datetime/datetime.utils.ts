@@ -12,6 +12,32 @@ export const shouldRenderViewButtons = (mode: Mode) => {
   return mode === 'md';
 }
 
+export const shouldRenderViewFooter = (mode: Mode, presentationType: 'modal' | 'popover' | 'inline' = 'inline', hasSlottedButtons = false) => {
+
+  /**
+   * If users has passed in custom buttons,
+   * we should always show them,
+   */
+  if (hasSlottedButtons) { return true; }
+
+  /**
+   * Always show the footer for MD mode
+   * since we need to show the time switch button
+   */
+  if (mode === 'md') { return true; }
+
+  /**
+   * If being used inline on iOS, we only
+   * need to show default buttons if being used
+   * in a modal.
+   */
+  if (presentationType === 'inline' || presentationType === 'popover') {
+    return false;
+  }
+
+  return true;
+}
+
 /**
  * Datetime header is only rendered under
  * the following circumstances:

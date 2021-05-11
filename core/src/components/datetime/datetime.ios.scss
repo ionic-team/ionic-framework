@@ -6,6 +6,10 @@
   --background: var(--ion-color-step-100, #ffffff);
 
   width: 316px;
+
+  display: flex;
+
+  flex-flow: column;
 }
 
 // Header
@@ -24,6 +28,22 @@
 
 // Calendar
 // -----------------------------------
+
+/**
+ * This allows the calendar to take
+ * up 100% of the remaining height.
+ * On iOS, if there are more than
+ * 5 rows of dates, the dates should
+ * be resized to fit into this
+ * container.
+ */
+:host .datetime-calendar {
+  flex: 1 1 auto;
+
+  display: flex;
+
+  flex-flow: column;
+}
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
@@ -64,52 +84,15 @@
 
 // Calendar / Body
 // -----------------------------------
+:host .calendar-body {
+  height: 100%;
+}
+
 :host .calendar-body .calendar-month {
   @include padding($datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2);
 
   font-size: 20px;
 }
-
-:host .calendar-body .calendar-day {
-  position: relative;
-
-  width: 100%;
-}
-
-/**
- * Ensures that each day is a square
- */
-:host .calendar-body .calendar-day:after {
-  display: block;
-
-  padding-top: 100%;
-
-  content: " ";
-}
-
-/**
- * Ensures that each day is a square
- */
-:host .calendar-body .calendar-day:after {
-  display: block;
-
-  padding-top: 100%;
-
-  content: " ";
-}
-
-
-:host .calendar-day .calendar-day-content {
-  display: flex;
-  position: absolute;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-}
-
 
 // Footer
 // -----------------------------------

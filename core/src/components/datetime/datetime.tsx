@@ -5,7 +5,7 @@ import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../
 import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
-import { getDaysOfMonth, getDaysOfWeek, getMonthAndDay, getMonthAndYear, shouldRenderViewButtons, shouldRenderViewHeader } from './datetime.utils';
+import { shouldRenderViewButtons, shouldRenderViewHeader, getDaysOfWeek, getMonthAndYear, getMonthAndDay, getDaysOfMonth, shouldRenderViewFooter } from './datetime.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -296,7 +296,18 @@ export class Datetime implements ComponentInterface {
     this.view = (this.view === DatetimeView.Calendar) ? DatetimeView.Time : DatetimeView.Calendar;
   }
 
+  private nextMonth = () => {
+    console.log('stubbed next')
+  }
+
+  private prevMonth = () => {
+    console.log('stubbed prev');
+  }
+
   private renderFooter(mode: Mode) {
+    const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
+    if (!shouldRenderViewFooter(mode, this.presentationType, hasSlottedButtons)) { return; }
+
     /**
      * By default we render two buttons:
      * Cancel - Dismisses the datetime and
@@ -336,19 +347,19 @@ export class Datetime implements ComponentInterface {
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item button detail={false} lines="none">
+            <ion-item button={true} detail={false} lines="none">
               <ion-label>
-                {getMonthAndYear(this.locale)} <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
+                {getMonthAndYear(this.locale)} <ion-icon icon={ mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
               </ion-label>
             </ion-item>
           </div>
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button>
+              <ion-button onClick={() => this.prevMonth()}>
                 <ion-icon slot="icon-only" icon="chevron-back" lazy={false}></ion-icon>
               </ion-button>
-              <ion-button>
+              <ion-button onClick={() => this.nextMonth()}>
                 <ion-icon slot="icon-only" icon="chevron-forward" lazy={false}></ion-icon>
               </ion-button>
             </ion-buttons>
@@ -368,23 +379,19 @@ export class Datetime implements ComponentInterface {
       <div class="calendar-month">
         {getDaysOfMonth(month, year).map(d => {
           return (
-            <div class="calendar-day">
-              <div class="calendar-day-content">
-                {d}
-              </div>
-            </div>
+            <div class="calendar-day">{d}</div>
           )
         })}
       </div>
     )
   }
 
-  private renderCalendarBody(mode: Mode) {
+  private renderCalendarBody() {
     return (
       <div class="calendar-body">
-        {this.renderMonth(4, 2021)}
-        {this.renderMonth(5, 2021)}
-        {this.renderMonth(6, 2021)}
+        {this.renderMonth(4,2021)}
+        {this.renderMonth(5,2021)}
+        {this.renderMonth(6,2021)}
       </div>
     )
   }
@@ -393,7 +400,7 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="datetime-calendar">
         {this.renderCalendarHeader(mode)}
-        {this.renderCalendarBody(mode)}
+        {this.renderCalendarBody()}
       </div>
     )
   }

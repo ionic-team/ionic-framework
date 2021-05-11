@@ -28,6 +28,11 @@
   background: var(--background);
 }
 
+/**
+ * Title should not wrap
+ * to the next line and should
+ * show ellipsis instead.
+ */
 :host .datetime-header .datetime-title {
   text-overflow: ellipsis;
 
@@ -38,6 +43,12 @@
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
+
+/**
+ * Date/Year button should be on
+ * the opposite side of the component
+ * as the Next/Prev buttons
+ */
 :host .calendar-action-buttons {
   display: flex;
 
@@ -71,6 +82,12 @@
 // Calendar / Body
 // -----------------------------------
 :host .calendar-body {
+
+  /**
+   * We render at most 3 months
+   * at a time, so we can assume
+   * 3 columns here.
+   */
   display: grid;
   grid-template-columns: 100% 100% 100%;
 
@@ -90,14 +107,31 @@
 }
 
 :host .calendar-body .calendar-month {
+  /**
+   * Swiping should snap to at
+   * most one month at a time.
+   */
   scroll-snap-align: start;
   scroll-snap-stop: always;
 
+  /**
+   * Create 7 columns for
+   * 7 days in a week.
+   */
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+}
 
-  text-align: center;
+/**
+ * Center the day text vertically
+ * and horizontally within its grid cell.
+ */
+:host .calendar-body .calendar-month .calendar-day {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
 }
 
 :host(.in-item) {
