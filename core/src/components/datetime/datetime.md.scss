@@ -38,6 +38,15 @@
   height: 328px;
 }
 
+:host .datetime-calendar .calendar-header ion-item {
+  --padding-start: #{$datetime-md-header-padding};
+}
+
+:host .datetime-calendar .calendar-header ion-item,
+:host .datetime-calendar .calendar-header ion-button {
+  --color: #{$text-color-step-350};
+}
+
 // Footer
 // -----------------------------------
 :host .datetime-buttons {

@@ -36,6 +36,28 @@
   overflow: hidden;
 }
 
+:host .datetime-calendar .calendar-header {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+:host .datetime-calendar .calendar-header ion-item,
+:host .datetime-calendar .calendar-header ion-button {
+  --background: translucent;
+}
+
+:host .datetime-calendar .calendar-header ion-item ion-label {
+  display: flex;
+
+  align-items: center;
+}
+
+:host .datetime-calendar .calendar-header ion-item ion-icon {
+  @include padding(0, 0, 0, 4px);
+}
+
+
 :host(.in-item) {
   position: static;
 }

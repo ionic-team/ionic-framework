@@ -331,9 +331,30 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private renderCalendar() {
+  private renderCalendar(mode: Mode) {
     return (
-      <div class="datetime-calendar">Calendar Placeholder</div>
+      <div class="datetime-calendar">
+        <div class="calendar-header">
+          <div class="calendar-month-year">
+            <ion-item button detail={false} lines="none">
+              <ion-label>
+                May 2021 <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
+              </ion-label>
+            </ion-item>
+          </div>
+
+          <div class="calendar-next-prev">
+            <ion-buttons>
+              <ion-button color={this.color}>
+                <ion-icon slot="icon-only" icon="chevron-back" lazy={false}></ion-icon>
+              </ion-button>
+              <ion-button color={this.color}>
+                <ion-icon slot="icon-only" icon="chevron-forward" lazy={false}></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+        </div>
+      </div>
     )
   }
 
@@ -368,7 +389,7 @@ export class Datetime implements ComponentInterface {
   private renderCalendarView(mode: Mode) {
     return [
       this.renderCalendarViewHeader(mode),
-      this.renderCalendar(),
+      this.renderCalendar(mode),
       this.renderFooter(mode)
     ]
   }
