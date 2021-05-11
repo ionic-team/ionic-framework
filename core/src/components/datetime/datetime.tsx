@@ -5,7 +5,7 @@ import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../
 import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
-import { shouldRenderViewButtons, shouldRenderViewHeader, getDaysOfWeek, getMonthAndYear, getMonthAndDay, getDaysOfMonth, shouldRenderViewFooter } from './datetime.utils';
+import { getDaysOfMonth, getDaysOfWeek, getMonthAndDay, getMonthAndYear, shouldRenderViewButtons, shouldRenderViewFooter, shouldRenderViewHeader } from './datetime.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -347,9 +347,9 @@ export class Datetime implements ComponentInterface {
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item button={true} detail={false} lines="none">
+            <ion-item button detail={false} lines="none">
               <ion-label>
-                {getMonthAndYear(this.locale)} <ion-icon icon={ mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
+                {getMonthAndYear(this.locale)} <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
               </ion-label>
             </ion-item>
           </div>
@@ -389,9 +389,9 @@ export class Datetime implements ComponentInterface {
   private renderCalendarBody() {
     return (
       <div class="calendar-body">
-        {this.renderMonth(4,2021)}
-        {this.renderMonth(5,2021)}
-        {this.renderMonth(6,2021)}
+        {this.renderMonth(4, 2021)}
+        {this.renderMonth(5, 2021)}
+        {this.renderMonth(6, 2021)}
       </div>
     )
   }

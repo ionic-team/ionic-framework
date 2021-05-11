@@ -1,4 +1,4 @@
-import { shouldRenderViewButtons, shouldRenderViewHeader, getDaysOfWeek, getMonthAndDay, getNumDaysInMonth } from '../datetime.utils';
+import { shouldRenderViewButtons, shouldRenderViewHeader, getDaysOfWeek, getMonthAndDay, getNumDaysInMonth, shouldRenderViewFooter } from '../datetime.utils';
 
 describe('daysInMonth()', () => {
   it('should return correct days in month for month and year', () => {
@@ -103,6 +103,56 @@ describe('shouldRenderViewHeader()', () => {
 
   it('should return false when in iOS mode with no slotted title in a popover', () => {
     expect(shouldRenderViewHeader('ios', 'popover', false)).toEqual(false)
+  });
+})
+
+describe('shouldRenderViewFooter()', () => {
+  it('should return true when in MD mode with a slotted button inline', () => {
+    expect(shouldRenderViewFooter('md', 'inline', true)).toEqual(true)
+  });
+
+  it('should return true when in MD mode with a slotted button in a modal', () => {
+    expect(shouldRenderViewFooter('md', 'modal', true)).toEqual(true)
+  });
+
+  it('should return true when in MD mode with a slotted button in a popover', () => {
+    expect(shouldRenderViewFooter('md', 'popover', true)).toEqual(true)
+  });
+
+  it('should return true when in MD mode with no slotted button inline', () => {
+    expect(shouldRenderViewFooter('md', 'inline', false)).toEqual(true)
+  });
+
+  it('should return true when in MD mode with no slotted button in a modal', () => {
+    expect(shouldRenderViewFooter('md', 'modal', false)).toEqual(true)
+  });
+
+  it('should return false when in MD mode with no slotted button in a popover', () => {
+    expect(shouldRenderViewFooter('md', 'popover', false)).toEqual(true)
+  });
+
+  it('should return true when in iOS mode with a slotted button inline', () => {
+    expect(shouldRenderViewFooter('ios', 'inline', true)).toEqual(true)
+  });
+
+  it('should return true when in iOS mode with a slotted button in a modal', () => {
+    expect(shouldRenderViewFooter('ios', 'modal', true)).toEqual(true)
+  });
+
+  it('should return true when in iOS mode with a slotted button in a popover', () => {
+    expect(shouldRenderViewFooter('ios', 'popover', true)).toEqual(true)
+  });
+
+  it('should return true when in iOS mode with no slotted button inline', () => {
+    expect(shouldRenderViewFooter('ios', 'inline', false)).toEqual(false)
+  });
+
+  it('should return true when in iOS mode with no slotted button in a modal', () => {
+    expect(shouldRenderViewFooter('ios', 'modal', false)).toEqual(true)
+  });
+
+  it('should return false when in iOS mode with no slotted button in a popover', () => {
+    expect(shouldRenderViewFooter('ios', 'popover', false)).toEqual(false)
   });
 })
 
