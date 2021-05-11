@@ -1,4 +1,32 @@
-import { shouldRenderViewButtons, shouldRenderViewHeader } from '../datetime.utils';
+import { shouldRenderViewButtons, shouldRenderViewHeader, getDaysOfWeek, getMonthAndDay } from '../datetime.utils';
+
+describe('getDaysOfWeek()', () => {
+  it('should return English short names given a locale and mode', () => {
+    expect(getDaysOfWeek('en-US', 'ios')).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+  });
+
+  it('should return English narrow names given a locale and mode', () => {
+    expect(getDaysOfWeek('en-US', 'md')).toEqual(['S', 'M', 'T', 'W', 'T', 'F', 'S']);
+  });
+
+  it('should return Spanish short names given a locale and mode', () => {
+    expect(getDaysOfWeek('es-ES', 'ios')).toEqual(['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb']);
+  });
+
+  it('should return Spanish narrow names given a locale and mode', () => {
+    expect(getDaysOfWeek('es-ES', 'md')).toEqual(['D', 'L', 'M', 'X', 'J', 'V', 'S']);
+  });
+})
+
+describe('getMonthAndDay()', () => {
+  it('should return Tue, May 11', () => {
+    expect(getMonthAndDay('en-US', new Date('05/11/2021'))).toEqual('Tue, May 11');
+  });
+
+  it('should return mar, 11 may', () => {
+    expect(getMonthAndDay('es-ES', new Date('05/11/2021'))).toEqual('mar, 11 may');
+  });
+})
 
 describe('shouldRenderViewButtons()', () => {
   it('should return true when running in md mode', () => {

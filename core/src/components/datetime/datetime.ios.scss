@@ -53,15 +53,16 @@
 // -----------------------------------
 :host .calendar-days-of-week {
   @include padding(0, $datetime-ios-padding / 2, 0, $datetime-ios-padding / 2);
-  line-height: 24px;
 
   color: $text-color-step-700;
 
   font-size: 12px;
 
-  text-transform: uppercase;
-
   font-weight: 600;
+
+  line-height: 24px;
+
+  text-transform: uppercase;
 }
 
 // Footer

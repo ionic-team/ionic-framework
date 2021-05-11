@@ -5,7 +5,7 @@ import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../
 import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
-import { getDaysOfWeek, shouldRenderViewButtons, shouldRenderViewHeader } from './datetime.utils';
+import { getDaysOfWeek, getMonthAndDay, getMonthAndYear, shouldRenderViewButtons, shouldRenderViewHeader } from './datetime.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -339,7 +339,7 @@ export class Datetime implements ComponentInterface {
             <div class="calendar-month-year">
               <ion-item button detail={false} lines="none">
                 <ion-label>
-                  May 2021 <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
+                  {getMonthAndYear(this.locale)} <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
                 </ion-label>
               </ion-item>
             </div>
@@ -356,7 +356,7 @@ export class Datetime implements ComponentInterface {
             </div>
           </div>
           <div class="calendar-days-of-week">
-            {getDaysOfWeek(mode).map(d => {
+            {getDaysOfWeek(this.locale, mode).map(d => {
               return <div class="day-of-week">{d}</div>
             })}
           </div>
@@ -387,7 +387,7 @@ export class Datetime implements ComponentInterface {
           <slot name="title">{defaultTitle}</slot>
         </div>
         {mode === 'md' && <div class="datetime-selected-date">
-          Mon, May 10
+          {getMonthAndDay(this.locale)}
         </div>}
       </div>
     );

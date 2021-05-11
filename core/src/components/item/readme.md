@@ -1922,6 +1922,7 @@ export default defineComponent({
 
 ### Used by
 
+ - [ion-datetime](../datetime)
  - ion-select-popover
 
 ### Depends on
@@ -1934,6 +1935,7 @@ export default defineComponent({
 graph TD;
   ion-item --> ion-icon
   ion-item --> ion-ripple-effect
+  ion-datetime --> ion-item
   ion-select-popover --> ion-item
   style ion-item fill:#f9f,stroke:#333,stroke-width:4px
 ```

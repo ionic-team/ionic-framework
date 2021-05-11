@@ -42,11 +42,53 @@ export const shouldRenderViewHeader = (mode: Mode, presentationType: 'modal' | '
   return true;
 }
 
-// Partially stubbed
-export const getDaysOfWeek = (mode: Mode) => {
-  if (mode === 'ios') {
-    return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  } else {
-    return ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+/**
+ * Gets the day of the week, month, and day
+ * Used for the header in MD mode.
+ */
+export const getMonthAndDay = (locale: string, date: Date = new Date()) => {
+  return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric' }).format(date);
+}
+
+/**
+ * Given a locale and a date object,
+ * return a formatted string that includes
+ * the month name and full year.
+ * Example: May 2021
+ */
+export const getMonthAndYear = (locale: string, date: Date = new Date()) => {
+  return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(date);
+}
+
+/**
+ * Given a locale and a mode,
+ * return an array with formatted days
+ * of the week. iOS should display days
+ * such as "Mon" or "Tue".
+ * MD should display days such as "M"
+ * or "T".
+ */
+export const getDaysOfWeek = (locale: string, mode: Mode) => {
+  /**
+   * Nov 1st, 2020 starts on a Sunday.
+   * ion-datetime assumes weeks start
+   * on Sunday.
+   */
+  const weekdayFormat = mode === 'ios' ? 'short' : 'narrow';
+  const intl = new Intl.DateTimeFormat(locale, { weekday: weekdayFormat })
+  const startDate = new Date('11/01/2020');
+  const daysOfWeek = [];
+
+  /**
+   * For each day of the week,
+   * get the day name.
+   */
+  for (let i = 0; i < 7; i++) {
+    const currentDate = new Date(startDate);
+    currentDate.setDate(currentDate.getDate() + i);
+
+    daysOfWeek.push(intl.format(currentDate))
   }
+
+  return daysOfWeek;
 }
