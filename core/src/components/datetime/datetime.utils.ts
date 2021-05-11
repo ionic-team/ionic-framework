@@ -41,3 +41,12 @@ export const shouldRenderViewHeader = (mode: Mode, presentationType: 'modal' | '
 
   return true;
 }
+
+// Partially stubbed
+export const getDaysOfWeek = (mode: Mode) => {
+  if (mode === 'ios') {
+    return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  } else {
+    return ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  }
+}

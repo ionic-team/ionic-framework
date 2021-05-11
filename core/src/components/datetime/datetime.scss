@@ -36,25 +36,37 @@
   overflow: hidden;
 }
 
-:host .datetime-calendar .calendar-header {
+// Calendar / Header / Action Buttons
+// -----------------------------------
+:host .calendar-action-buttons {
   display: flex;
 
   justify-content: space-between;
 }
 
-:host .datetime-calendar .calendar-header ion-item,
-:host .datetime-calendar .calendar-header ion-button {
+:host .calendar-action-buttons ion-item,
+:host .calendar-action-buttons ion-button {
   --background: translucent;
 }
 
-:host .datetime-calendar .calendar-header ion-item ion-label {
+:host .calendar-action-buttons ion-item ion-label {
   display: flex;
 
   align-items: center;
 }
 
-:host .datetime-calendar .calendar-header ion-item ion-icon {
+:host .calendar-action-buttons ion-item ion-icon {
   @include padding(0, 0, 0, 4px);
+}
+
+// Calendar / Header / Days of Week
+// -----------------------------------
+:host .calendar-days-of-week {
+  @include padding(0, 3px, 0, 3px);
+
+  display: flex;
+
+  justify-content: space-around;
 }
 
 

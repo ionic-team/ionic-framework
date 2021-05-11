@@ -5,7 +5,7 @@ import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../
 import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
-import { shouldRenderViewButtons, shouldRenderViewHeader } from './datetime.utils';
+import { getDaysOfWeek, shouldRenderViewButtons, shouldRenderViewHeader } from './datetime.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -335,23 +335,30 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="datetime-calendar">
         <div class="calendar-header">
-          <div class="calendar-month-year">
-            <ion-item button detail={false} lines="none">
-              <ion-label>
-                May 2021 <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
-              </ion-label>
-            </ion-item>
-          </div>
+          <div class="calendar-action-buttons">
+            <div class="calendar-month-year">
+              <ion-item button detail={false} lines="none">
+                <ion-label>
+                  May 2021 <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
+                </ion-label>
+              </ion-item>
+            </div>
 
-          <div class="calendar-next-prev">
-            <ion-buttons>
-              <ion-button color={this.color}>
-                <ion-icon slot="icon-only" icon="chevron-back" lazy={false}></ion-icon>
-              </ion-button>
-              <ion-button color={this.color}>
-                <ion-icon slot="icon-only" icon="chevron-forward" lazy={false}></ion-icon>
-              </ion-button>
-            </ion-buttons>
+            <div class="calendar-next-prev">
+              <ion-buttons>
+                <ion-button>
+                  <ion-icon slot="icon-only" icon="chevron-back" lazy={false}></ion-icon>
+                </ion-button>
+                <ion-button>
+                  <ion-icon slot="icon-only" icon="chevron-forward" lazy={false}></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </div>
+          </div>
+          <div class="calendar-days-of-week">
+            {getDaysOfWeek(mode).map(d => {
+              return <div class="day-of-week">{d}</div>
+            })}
           </div>
         </div>
       </div>

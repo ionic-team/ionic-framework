@@ -38,13 +38,25 @@
   height: 328px;
 }
 
-:host .datetime-calendar .calendar-header ion-item {
+// Calendar / Header / Action Buttons
+// -----------------------------------
+:host .datetime-calendar .calendar-action-buttons ion-item {
   --padding-start: #{$datetime-md-header-padding};
 }
 
-:host .datetime-calendar .calendar-header ion-item,
-:host .datetime-calendar .calendar-header ion-button {
-  --color: #{$text-color-step-350};
+:host .calendar-action-buttons ion-item,
+:host .calendar-action-buttons ion-button {
+  color: #{$text-color-step-350};
+}
+
+// Calendar / Header / Days of Week
+// -----------------------------------
+:host .calendar-days-of-week {
+  color: $text-color-step-500;
+
+  font-size: 13px;
+
+  line-height: 36px;
 }
 
 // Footer

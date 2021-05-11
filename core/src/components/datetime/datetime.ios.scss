@@ -11,7 +11,7 @@
 // Header
 // -----------------------------------
 :host .datetime-header {
-  @include padding($datetime-ios-header-padding, $datetime-ios-header-padding, $datetime-ios-header-padding, $datetime-ios-header-padding);
+  @include padding($datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
   border-bottom: $datetime-ios-border-color;
 }
@@ -28,26 +28,46 @@
   height: 209px;
 }
 
-:host .datetime-calendar .calendar-header ion-item {
-  --padding-start: #{$datetime-ios-header-padding};
+// Calendar / Header / Action Buttons
+// -----------------------------------
+:host .calendar-action-buttons ion-item {
+  --padding-start: #{$datetime-ios-padding};
+  --background-hover: transparent;
+  --background-activated: transparent;
 }
 
-:host .datetime-calendar .calendar-header ion-item ion-icon {
+:host .calendar-action-buttons ion-item ion-icon,
+:host .calendar-action-buttons ion-buttons ion-button {
   color: current-color(base);
 }
 
-:host .datetime-calendar .calendar-header ion-buttons {
-  @include padding($datetime-ios-header-padding / 2, 0, 0, 0);
+:host .calendar-action-buttons ion-buttons {
+  @include padding($datetime-ios-padding / 2, 0, 0, 0);
 }
 
-:host .datetime-calendar .calendar-header ion-buttons ion-button {
+:host .calendar-action-buttons ion-buttons ion-button {
   @include margin(0, 0, 0, 0);
+}
+
+// Calendar / Header / Days of Week
+// -----------------------------------
+:host .calendar-days-of-week {
+  @include padding(0, $datetime-ios-padding / 2, 0, $datetime-ios-padding / 2);
+  line-height: 24px;
+
+  color: $text-color-step-700;
+
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  font-weight: 600;
 }
 
 // Footer
 // -----------------------------------
 :host .datetime-buttons {
-  @include padding($datetime-ios-footer-padding, $datetime-ios-footer-padding, $datetime-ios-footer-padding, $datetime-ios-footer-padding);
+  @include padding($datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2);
 
   border-top: $datetime-ios-border-color;
 }
