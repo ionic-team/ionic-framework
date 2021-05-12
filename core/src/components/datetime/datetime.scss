@@ -126,12 +126,28 @@
  * Center the day text vertically
  * and horizontally within its grid cell.
  */
-:host .calendar-body .calendar-month .calendar-day {
+:host .calendar-day {
   display: flex;
 
   align-items: center;
 
   justify-content: center;
+
+  appearance: none;
+
+  border: none;
+
+  outline: none;
+
+  background: none;
+
+  color: currentColor;
+
+  cursor: pointer;
+}
+
+:host .calendar-day[disabled] {
+  pointer-events: none;
 }
 
 :host(.in-item) {
@@ -149,10 +165,6 @@
 
 :host(.datetime-readonly) {
   pointer-events: none;
-}
-
-button {
-  @include input-cover();
 }
 
 .datetime-text {

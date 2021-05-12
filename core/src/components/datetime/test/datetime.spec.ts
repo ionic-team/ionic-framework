@@ -1,4 +1,86 @@
-import { shouldRenderViewButtons, shouldRenderViewHeader, getDaysOfWeek, getMonthAndDay, getNumDaysInMonth, shouldRenderViewFooter } from '../datetime.utils';
+import {
+  shouldRenderViewButtons,
+  shouldRenderViewHeader,
+  getDaysOfWeek,
+  getMonthAndDay,
+  getNumDaysInMonth,
+  shouldRenderViewFooter,
+  isSameDay,
+  generateDayAriaLabel,
+  getCalendarDayState
+} from '../datetime.utils';
+
+describe('getCalendarDayState()', () => {
+  it('should return correct state', () => {
+    const refA = { month: 1, day: 1, year: 2019 };
+    const refB = { month: 1, day: 1, year: 2021 };
+    const refC = { month: 1, day: 1, year: 2023 };
+
+    expect(getCalendarDayState('en-US', refA, refB, refC)).toEqual({
+      isActive: false,
+      isToday: false,
+      ariaSelected: null,
+      ariaLabel: 'Tuesday, January 1'
+    });
+
+    expect(getCalendarDayState('en-US', refA, refA, refC)).toEqual({
+      isActive: true,
+      isToday: false,
+      ariaSelected: 'true',
+      ariaLabel: 'Tuesday, January 1'
+    });
+
+    expect(getCalendarDayState('en-US', refA, refB, refA)).toEqual({
+      isActive: false,
+      isToday: true,
+      ariaSelected: null,
+      ariaLabel: 'Today, Tuesday, January 1'
+    });
+
+    expect(getCalendarDayState('en-US', refA, refA, refA)).toEqual({
+      isActive: true,
+      isToday: true,
+      ariaSelected: 'true',
+      ariaLabel: 'Today, Tuesday, January 1'
+    });
+  });
+});
+
+describe('generateDayAriaLabel()', () => {
+  it('should return Wednesday, May 12', () => {
+    const reference = { month: 5, day: 12, year: 2021 };
+
+    expect(generateDayAriaLabel('en-US', false, reference)).toEqual('Wednesday, May 12');
+  });
+  it('should return Today, Wednesday, May 12', () => {
+    const reference = { month: 5, day: 12, year: 2021 };
+
+    expect(generateDayAriaLabel('en-US', true, reference)).toEqual('Today, Wednesday, May 12');
+  });
+  it('should return Saturday, May 1', () => {
+    const reference = { month: 5, day: 1, year: 2021 };
+
+    expect(generateDayAriaLabel('en-US', false, reference)).toEqual('Saturday, May 1');
+  });
+  it('should return Monday, May 31', () => {
+    const reference = { month: 5, day: 31, year: 2021 };
+
+    expect(generateDayAriaLabel('en-US', false, reference)).toEqual('Monday, May 31');
+  });
+});
+
+describe('isSameDay()', () => {
+  it('should return correct results for month, day, and year', () => {
+    const reference = { month: 1, day: 1, year: 2021 }
+
+    expect(isSameDay(reference, { month: 1, day: 1, year: 2021 })).toEqual(true);
+    expect(isSameDay(reference, { month: 2, day: 1, year: 2021 })).toEqual(false);
+    expect(isSameDay(reference, { month: 1, day: 2, year: 2021 })).toEqual(false);
+    expect(isSameDay(reference, { month: 1, day: 1, year: 2022 })).toEqual(false);
+    expect(isSameDay(reference, { month: 0, day: 0, year: 0 })).toEqual(false);
+    expect(isSameDay(reference, { month: null, day: null, year: null })).toEqual(false);
+  })
+})
 
 describe('daysInMonth()', () => {
   it('should return correct days in month for month and year', () => {

@@ -1,5 +1,11 @@
 import { Mode } from '../../interface';
 
+interface DatetimeParts {
+  month: number;
+  day: number | null;
+  year: number;
+}
+
 /**
  * Determines whether or not to render the
  * clock/calendar toggle icon as well as the
@@ -162,4 +168,53 @@ export const getDaysOfWeek = (locale: string, mode: Mode) => {
   }
 
   return daysOfWeek;
+}
+
+/**
+ * Returns true if the selected day is equal to the reference day
+ */
+export const isSameDay = (baseParts: DatetimeParts, compareParts: DatetimeParts) => {
+  return (
+    baseParts.month === compareParts.month &&
+    baseParts.day === compareParts.day &&
+    baseParts.year === compareParts.year
+  );
+}
+
+/**
+ * Given a locale, a date, the selected date, and today's date,
+ * generate the state for a given calendar day button.
+ */
+export const getCalendarDayState = (locale: string, refParts: DatetimeParts, activeParts: DatetimeParts, todayParts: DatetimeParts) => {
+  const isActive = isSameDay(refParts, activeParts);
+  const isToday = isSameDay(refParts, todayParts);
+  return {
+    isActive,
+    isToday,
+    ariaSelected: isActive ? 'true' : null,
+    ariaLabel: generateDayAriaLabel(locale, isToday, refParts)
+  }
+}
+
+/**
+ * Generates an aria-label to be read by screen readers
+ * given a local, a date, and whether or not that date is
+ * today's date.
+ */
+export const generateDayAriaLabel = (locale: string, today: boolean, refParts: DatetimeParts) => {
+  if (!refParts.day) return null;
+
+  /**
+   * MM/DD/YYYY will return midnight in the user's timezone.
+   */
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}`);
+
+  const labelString = new Intl.DateTimeFormat(locale, { weekday: 'long', month: 'long', day: 'numeric' }).format(date);
+
+  /**
+   * If date is today, prepend "Today" so screen readers indicate
+   * that the date is today.
+   */
+  return (today) ? `Today, ${labelString}` : labelString;
+
 }
