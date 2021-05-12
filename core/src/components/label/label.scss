@@ -23,6 +23,8 @@
 
   overflow: hidden;
   box-sizing: border-box;
+
+  --item-slotted-icon-computed-width: 0px;
 }
 
 :host(.ion-color) {

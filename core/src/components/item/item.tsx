@@ -3,7 +3,7 @@ import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forc
 import { getIonMode } from '../../global/ionic-global';
 import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { raf } from '../../utils/helpers';
+import { raf, getFullWidth } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import { InputChangeEventDetail } from '../input/input-interface';
 
@@ -192,6 +192,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       this.clickListener = (ev: Event) => this.delegateFocus(ev, input);
       this.el.addEventListener('click', this.clickListener);
     }
+
+    this.setNotchWidth();
+    this.setLabelTranslateX();
   }
 
   disconnectedCallback() {
@@ -286,6 +289,25 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
   }
 
+  // In MD mode, set the border notch width to equal the computed width of the slotted ion-label
+  private setNotchWidth() {
+    const label = this.el.querySelector('ion-label');
+    const width = (label == null || label.textContent == null) ? 0 : label.clientWidth;
+    this.el.style.setProperty('--label-computed-width', `${width}px`);
+  }
+
+  private setLabelTranslateX() {
+    const label = this.el.querySelector('ion-label');
+    const startEl = this.el.querySelector('[slot="start"]');
+
+    if (label == null || startEl == null) {
+      return;
+    }
+
+    const fullWidth = getFullWidth(startEl);
+    label.style.setProperty('--item-slotted-icon-computed-width', `-${fullWidth}px`);
+  }
+
   render() {
     const { counterString, detail, detailIcon, download, fill, labelColorStyles, lines, disabled, href, rel, shape, target, routerAnimation, routerDirection } = this;
     const childStyles = {};
@@ -348,7 +370,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
               <div class="item-inner-highlight"></div>
             </div>
             {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
-            <div class="item-highlight"></div>
+            <div class="item-highlight-top"></div>
+            <div class="item-highlight-before"></div>
+            <div class="item-highlight-after"></div>
+            <div class="item-highlight-bottom"></div>
+            {/* <div class="item-highlight"></div> */}
           </TagType>
           <div class="item-bottom">
             <slot name="error"></slot>

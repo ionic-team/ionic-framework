@@ -25,6 +25,8 @@
   --highlight-color-focused: #{$item-md-input-highlight-color};
   --highlight-color-valid: #{$item-md-input-highlight-color-valid};
   --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
+  --label-computed-width: 0px;
+  --notch-padding: 4px;
 
   font-size: $item-md-font-size;
   font-weight: normal;
@@ -37,6 +39,8 @@
 // --------------------------------------------------
 
 :host(.ion-color.ion-activated) .item-native {
+  caret-color: #{$item-md-border-bottom-color};
+
   &::after {
     background: transparent;
   }
@@ -208,6 +212,7 @@
 
 ::slotted(ion-label) {
   @include margin($item-md-label-margin-top, $item-md-label-margin-end, $item-md-label-margin-bottom, $item-md-label-margin-start);
+  max-width: min-content !important;
 }
 
 
@@ -322,6 +327,50 @@
 
 :host(.item-fill-outline) .item-native {
   @include border-radius(4px);
+  border: none;
+
+  ::slotted(ion-label) {
+    max-width: min-content;
+  }
+
+  .item-highlight-top,
+  .item-highlight-before,
+  .item-highlight-after,
+  .item-highlight-bottom {
+    @include border-radius(4px);
+    @include position(null, 0, 0, 0);
+    border-radius: inherit;
+    box-sizing: content-box;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    
+    --native-padding-left: 16px;
+    border-width: var(--border-width);
+    border-style: var(--border-style);
+    border-color: var(--border-color);
+  }
+
+  .item-highlight-before {
+    --before-clip: calc(calc(100% - var(--native-padding-left) + var(--notch-padding)) * var(--show-notch));
+    clip-path: inset(0 var(--before-clip) 0 0);
+  }
+
+  .item-highlight-after {
+    --after-clip: calc(calc(var(--native-padding-left) + calc(var(--label-computed-width) * .75) + var(--notch-padding)) * var(--show-notch));
+    clip-path: inset(0 0 0 var(--after-clip));
+  }
+
+  .item-highlight-bottom {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+}
+
+:host(.item-has-focus) .item-highlight-top {
+  visibility: hidden;
 }
 
 :host(.item-fill-outline.item-shape-round) .item-native {

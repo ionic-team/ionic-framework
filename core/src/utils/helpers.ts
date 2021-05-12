@@ -329,3 +329,18 @@ export const debounce = (func: (...args: any[]) => void, wait = 0) => {
     timer = setTimeout(func, wait, ...args);
   };
 };
+
+// Get the full width of an element: margin + padding + width
+export const getFullWidth = (el: Element): number => {
+  const styles = window.getComputedStyle(el);
+  if (styles == null) {
+    return 0;
+  }
+
+  const fullWidth = parseFloat(styles.getPropertyValue('margin-left'))
+    + parseFloat(styles.getPropertyValue('padding-left'))
+    + parseFloat(styles.getPropertyValue('width'))
+    + parseFloat(styles.getPropertyValue('padding-right'))
+    + parseFloat(styles.getPropertyValue('margin-right'));
+  return fullWidth;
+}

@@ -53,7 +53,8 @@
 :host-context(.item-fill-outline.item-has-focus).label-floating,
 :host-context(.item-fill-outline.item-has-placeholder:not(.item-input)).label-floating,
 :host-context(.item-fill-outline.item-has-value).label-floating {
-  @include transform(translateY(-5.75px), scale(.75));
+  //TODO
+  @include transform(translateX(var(--item-slotted-icon-computed-width)), translateY(-9px), scale(.75));
 }
 
 :host-context(.item-has-focus).label-stacked:not(.ion-color),
@@ -64,6 +65,11 @@
 :host-context(.item-has-focus.ion-color).label-stacked:not(.ion-color),
 :host-context(.item-has-focus.ion-color).label-floating:not(.ion-color) {
   color: #{current-color(contrast)};
+}
+
+:host-context(.ion-invalid).label-stacked:not(.ion-color),
+:host-context(.ion-invalid).label-floating:not(.ion-color) {
+  color: var(--highlight-color-invalid);
 }
 
 
