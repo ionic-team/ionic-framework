@@ -293,7 +293,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private setNotchWidth() {
     const label = this.el.querySelector('ion-label');
     const width = (label == null || label.textContent == null) ? 0 : label.clientWidth;
-    this.el.style.setProperty('--label-computed-width', `${width}px`);
+    if (width > 0) {
+      this.el.style.setProperty('--show-notch', `1`);
+      this.el.style.setProperty('--label-computed-width', `${width}px`);
+    }
   }
 
   private setLabelTranslateX() {
