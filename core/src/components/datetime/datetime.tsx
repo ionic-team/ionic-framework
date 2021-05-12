@@ -6,14 +6,14 @@ import { renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 import {
+  getCalendarDayState,
   getDaysOfMonth,
   getDaysOfWeek,
   getMonthAndDay,
   getMonthAndYear,
   shouldRenderViewButtons,
   shouldRenderViewFooter,
-  shouldRenderViewHeader,
-  getCalendarDayState
+  shouldRenderViewHeader
 } from './datetime.utils';
 
 /**
@@ -398,32 +398,34 @@ export class Datetime implements ComponentInterface {
   private renderMonth(month: number, year: number) {
     return (
       <div class="calendar-month">
-        {getDaysOfMonth(month, year).map(day => {
-          const referenceParts = { month, day, year };
-          const { isActive, isToday, ariaLabel, ariaSelected } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts);
+        <div class="calendar-month-grid">
+          {getDaysOfMonth(month, year).map(day => {
+            const referenceParts = { month, day, year };
+            const { isActive, isToday, ariaLabel, ariaSelected } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts);
 
-          return (
-            <button
-              disabled={day === null}
-              class={{
-                'calendar-day': true,
-                'calendar-day-active': isActive,
-                'calendar-day-today': isToday
-              }}
-              aria-selected={ariaSelected}
-              aria-label={ariaLabel}
-              onClick={() => {
-                if (day === null) { return; }
+            return (
+              <button
+                disabled={day === null}
+                class={{
+                  'calendar-day': true,
+                  'calendar-day-active': isActive,
+                  'calendar-day-today': isToday
+                }}
+                aria-selected={ariaSelected}
+                aria-label={ariaLabel}
+                onClick={() => {
+                  if (day === null) { return; }
 
-                this.activeParts = {
-                  month,
-                  day,
-                  year
-                }
-              }}
-            >{day}</button>
-          )
-        })}
+                  this.activeParts = {
+                    month,
+                    day,
+                    year
+                  }
+                }}
+              >{day}</button>
+            )
+          })}
+        </div>
       </div>
     )
   }
@@ -431,9 +433,9 @@ export class Datetime implements ComponentInterface {
   private renderCalendarBody() {
     return (
       <div class="calendar-body">
-        {/*{this.renderMonth(4,2021)}*/}
+        {this.renderMonth(4, 2021)}
         {this.renderMonth(5, 2021)}
-        {/*{this.renderMonth(6,2021)}*/}
+        {this.renderMonth(6, 2021)}
       </div>
     )
   }

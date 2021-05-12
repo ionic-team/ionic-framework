@@ -202,7 +202,7 @@ export const getCalendarDayState = (locale: string, refParts: DatetimeParts, act
  * today's date.
  */
 export const generateDayAriaLabel = (locale: string, today: boolean, refParts: DatetimeParts) => {
-  if (!refParts.day) return null;
+  if (refParts.day === null) { return null; }
 
   /**
    * MM/DD/YYYY will return midnight in the user's timezone.

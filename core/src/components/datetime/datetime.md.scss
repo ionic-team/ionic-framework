@@ -51,6 +51,8 @@
 // Calendar / Header / Days of Week
 // -----------------------------------
 :host .calendar-days-of-week {
+  @include padding(0px, 10px, 0px, 10px);
+
   color: $text-color-step-500;
 
   font-size: 13px;
@@ -60,8 +62,8 @@
 
 // Calendar / Body
 // -----------------------------------
-:host .calendar-body .calendar-month {
-  font-size: 13px;
+:host .calendar-body .calendar-month .calendar-month-grid {
+  @include padding(0px, 10px, 0px, 10px);
 
   /**
    * Calendar on MD will show an empty row
@@ -71,16 +73,46 @@
    * if necessary.
    */
   grid-template-rows: repeat(6, 1fr);
+
 }
 
-:host .calendar-body .calendar-day {
+:host .calendar-day {
   @include padding(13px, 0, 13px, 0px);
+
+  font-size: 14px;
+}
+
+/**
+ * Day that today but not selected
+ * should have ion-color for text color.
+ */
+:host .calendar-day.calendar-day-today {
+  color: current-color(base);
+}
+
+:host .calendar-day.calendar-day-today:after {
+  border: 1px solid current-color(base);
+}
+
+/**
+ * Day that is not today but
+ * is selected should have ion-color for
+ * text color and be bolder.
+ */
+:host .calendar-day.calendar-day-active {
+  color: current-color(contrast);
+}
+
+:host .calendar-day.calendar-day-active:after {
+  border: 1px solid current-color(base);
+
+  background: current-color(base);
 }
 
 // Footer
 // -----------------------------------
 :host .datetime-buttons {
-  @include padding(7px, 14px, 7px, 12px);
+  @include padding(10px, 10px, 10px, 10px);
 
   display: flex;
 

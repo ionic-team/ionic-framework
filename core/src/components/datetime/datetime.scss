@@ -84,26 +84,27 @@
 :host .calendar-body {
 
   /**
-   * We render at most 3 months
-   * at a time, so we can assume
-   * 3 columns here.
+   * Show all calendar months inline
+   * and allow them to take up 100% of
+   * the free space. Do not use CSS Grid
+   * here as there are issues with nested grid
+   * on older browsers.
    */
-  display: grid;
-  grid-template-columns: 100% 100% 100%;
+  display: flex;
+
+  flex-grow: 1;
 
   scroll-snap-type: x mandatory;
 
+  /**
+   * Need to explicitly set overflow-y: hidden
+   * for older implementations of scroll snapping.
+   */
   overflow-x: scroll;
+  overflow-y: hidden;
 
   // Hide scrollbars on Firefox
   scrollbar-width: none;
-}
-
-/**
- * Hide scrollbars on Chrome and Safari
- */
-:host .calendar-body::-webkit-scrollbar {
-  display: none;
 }
 
 :host .calendar-body .calendar-month {
@@ -114,12 +115,27 @@
   scroll-snap-align: start;
   scroll-snap-stop: always;
 
+  flex-shrink: 0;
+
+  width: 100%;
+}
+
+/**
+ * Hide scrollbars on Chrome and Safari
+ */
+:host .calendar-body::-webkit-scrollbar {
+  display: none;
+}
+
+:host .calendar-body .calendar-month-grid {
   /**
    * Create 7 columns for
    * 7 days in a week.
    */
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+
+  height: 100%;
 }
 
 /**
@@ -127,28 +143,66 @@
  * and horizontally within its grid cell.
  */
 :host .calendar-day {
+  @include padding(0px, 0px, 0px, 0px);
+  @include margin(0px, 0px, 0px, 0px);
+
   display: flex;
 
+  position: relative;
+
   align-items: center;
-
   justify-content: center;
-
-  appearance: none;
 
   border: none;
 
   outline: none;
 
   background: none;
-
   color: currentColor;
 
   cursor: pointer;
+
+  appearance: none;
 }
 
 :host .calendar-day[disabled] {
   pointer-events: none;
 }
+
+:host .calendar-day:after {
+  @include border-radius(32px, 32px, 32px, 32px);
+  @include padding(4px, 4px, 4px, 4px);
+  /**
+   * Explicit position values are required here
+   * as pseudo element positioning is incorrect
+   * in older implementations of css grid.
+   */
+
+  @include position(50%, null, null, 50%);
+
+  position: absolute;
+
+  width: 32px;
+  height: 32px;
+
+  transform: translate(-50%, -50%);
+
+  content: " ";
+
+  z-index: -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 :host(.in-item) {
   position: static;
