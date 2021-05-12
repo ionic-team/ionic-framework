@@ -471,7 +471,7 @@ export class Datetime implements ComponentInterface {
           <slot name="title">{defaultTitle}</slot>
         </div>
         {mode === 'md' && <div class="datetime-selected-date">
-          {getMonthAndDay(this.locale)}
+          {getMonthAndDay(this.locale, this.activeParts)}
         </div>}
       </div>
     );

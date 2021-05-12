@@ -123,7 +123,8 @@ export const getDaysOfMonth = (month: number, year: number) => {
  * Gets the day of the week, month, and day
  * Used for the header in MD mode.
  */
-export const getMonthAndDay = (locale: string, date: Date = new Date()) => {
+export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}`);
   return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric' }).format(date);
 }
 
