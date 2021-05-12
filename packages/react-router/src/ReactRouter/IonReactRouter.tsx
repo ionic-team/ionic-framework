@@ -33,7 +33,7 @@ export class IonReactRouter extends React.Component<IonReactRouterProps> {
   * this logic is no longer needed. We can just assume
   * a single object with both location and action.
   */
- handleHistoryChange(location: HistoryLocation, action: HistoryAction) {
+  handleHistoryChange(location: HistoryLocation, action: HistoryAction) {
    const locationValue = (location as any).location || location;
    const actionValue = (location as any).action || action;
    if (this.historyListenHandler) {
