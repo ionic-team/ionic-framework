@@ -6,6 +6,33 @@ interface DatetimeParts {
   year: number;
 }
 
+export const getPreviousMonth = (refParts: DatetimeParts) => {
+  const month = (refParts.month === 1) ? 12 : refParts.month - 1;
+  const year = (refParts.month === 1) ? refParts.year - 1 : refParts.year;
+
+  return { month, year };
+}
+
+export const getNextMonth = (refParts: DatetimeParts) => {
+  const month = (refParts.month === 12) ? 1 : refParts.month + 1;
+  const year = (refParts.month === 12) ? refParts.year + 1 : refParts.year;
+
+  return { month, year };
+}
+
+export const generateMonths = (refParts: DatetimeParts) => {
+  console.log(refParts, 'gen',[
+    getPreviousMonth(refParts),
+    { month: refParts.month, year: refParts.year },
+    getNextMonth(refParts)
+  ])
+  return [
+    getPreviousMonth(refParts),
+    { month: refParts.month, year: refParts.year },
+    getNextMonth(refParts)
+  ]
+}
+
 /**
  * Determines whether or not to render the
  * clock/calendar toggle icon as well as the

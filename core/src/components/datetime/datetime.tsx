@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { Color, DatetimeChangeEventDetail, Mode, StyleEventDetail } from '../../interface';
@@ -13,7 +13,8 @@ import {
   getMonthAndYear,
   shouldRenderViewButtons,
   shouldRenderViewFooter,
-  shouldRenderViewHeader
+  shouldRenderViewHeader,
+  generateMonths
 } from './datetime.utils';
 
 /**
@@ -37,10 +38,17 @@ export class Datetime implements ComponentInterface {
   private presentationType: DatetimePresentationType = DatetimePresentationType.Inline;
   private inputId = `ion-dt-${datetimeIds++}`;
   private showDefaultTitleAndButtons = true;
+  private calendarBodyRef?: HTMLElement;
 
   @State() activeParts = {
     month: 5,
-    day: 15,
+    day: 12,
+    year: 2021
+  }
+
+  @State() workingParts = {
+    month: 5,
+    day: 12,
     year: 2021
   }
 
@@ -270,6 +278,114 @@ export class Datetime implements ComponentInterface {
     }
   }
 
+  componentDidLoad() {
+    const { calendarBodyRef } = this;
+    if (!calendarBodyRef) return;
+
+    const mode = getIonMode(this);
+
+    const months = calendarBodyRef.querySelectorAll('.calendar-month');
+
+    const startMonth = months[0] as HTMLElement;
+    const workingMonth = months[1] as HTMLElement;
+    const endMonth = months[2] as HTMLElement;
+
+    writeTask(() => {
+      workingMonth.scrollIntoView(false);
+
+      let endIO: IntersectionObserver | undefined;
+      let startIO: IntersectionObserver | undefined;
+    const endCallback = (entries: IntersectionObserverEntry[]) => {
+      const ev = entries[0];
+      if (!ev.isIntersecting) { return; }
+
+      if (mode === 'ios') {
+        const ratio = ev.intersectionRatio;
+        const shouldDisable = Math.abs(ratio - 0.7) <= 0.1;
+
+        if (shouldDisable) {
+          calendarBodyRef.style.setProperty('pointer-events', 'none');
+          return;
+        }
+      }
+
+      calendarBodyRef.style.setProperty('overflow', 'hidden');
+
+      const month = parseInt(endMonth.getAttribute('data-month')!);
+      const year = parseInt(endMonth.getAttribute('data-year')!);
+
+      if (!endIO) return;
+      endIO.disconnect();
+
+      writeTask(() => {
+        console.log('setting working parts')
+        this.workingParts = {
+          month,
+          day: 1,
+          year
+        }
+
+        workingMonth.scrollIntoView(false);
+        calendarBodyRef.style.removeProperty('overflow');
+        calendarBodyRef.style.removeProperty('pointer-events');
+
+        if (!endIO) return;
+        endIO.observe(endMonth);
+      });
+    }
+    const startCallback = (entries: IntersectionObserverEntry[]) => {
+      console.log('start callback')
+      const ev = entries[0];
+      if (!ev.isIntersecting) { return; }
+
+      if (mode === 'ios') {
+        const ratio = ev.intersectionRatio;
+        const shouldDisable = Math.abs(ratio - 0.7) <= 0.1;
+
+        if (shouldDisable) {
+          calendarBodyRef.style.setProperty('pointer-events', 'none');
+          return;
+        }
+      }
+
+      calendarBodyRef.style.setProperty('overflow', 'hidden');
+
+      const month = parseInt(startMonth.getAttribute('data-month')!);
+      const year = parseInt(startMonth.getAttribute('data-year')!);
+
+      if (!startIO) return;
+      startIO.disconnect();
+
+      writeTask(() => {
+        this.workingParts = {
+          month,
+          day: 1,
+          year
+        }
+
+        workingMonth.scrollIntoView(false);
+        calendarBodyRef.style.removeProperty('overflow');
+        calendarBodyRef.style.removeProperty('pointer-events');
+
+        if (!startIO) return;
+        startIO.observe(startMonth);
+      });
+    };
+
+      endIO = new IntersectionObserver(endCallback, {
+        threshold: mode === 'ios' ? [0.7, 1] : 1,
+        root: calendarBodyRef
+      });
+      endIO.observe(endMonth);
+
+      startIO = new IntersectionObserver(startCallback, {
+        threshold: mode === 'ios' ? [0.7, 1] : 1,
+        root: calendarBodyRef
+      });
+      startIO.observe(startMonth);
+    });
+  }
+
   componentWillLoad() {
     this.emitStyle();
 
@@ -397,7 +513,8 @@ export class Datetime implements ComponentInterface {
 
   private renderMonth(month: number, year: number) {
     return (
-      <div class="calendar-month">
+      <div class="calendar-month" data-month={month} data-year={year}>
+        {month} / {year}
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year).map(day => {
             const referenceParts = { month, day, year };
@@ -416,11 +533,16 @@ export class Datetime implements ComponentInterface {
                 onClick={() => {
                   if (day === null) { return; }
 
-                  this.activeParts = {
-                    month,
-                    day,
-                    year
-                  }
+                  writeTask(() => {
+                    this.workingParts = {
+                      month,
+                      day,
+                      year
+                    }
+                    console.log('setting working parts', this.workingParts);
+
+                    this.el!.shadowRoot!.querySelectorAll('.calendar-month')[1].scrollIntoView(false);
+                  });
                 }}
               >{day}</button>
             )
@@ -432,10 +554,10 @@ export class Datetime implements ComponentInterface {
 
   private renderCalendarBody() {
     return (
-      <div class="calendar-body">
-        {this.renderMonth(4, 2021)}
-        {this.renderMonth(5, 2021)}
-        {this.renderMonth(6, 2021)}
+      <div class="calendar-body" ref={(el) => this.calendarBodyRef = el}>
+        {generateMonths(this.workingParts).map(({ month, year }) => {
+          return this.renderMonth(month, year);
+        })}
       </div>
     )
   }
