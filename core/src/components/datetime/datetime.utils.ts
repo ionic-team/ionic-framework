@@ -21,7 +21,7 @@ export const getNextMonth = (refParts: DatetimeParts) => {
 }
 
 export const generateMonths = (refParts: DatetimeParts) => {
-  console.log(refParts, 'gen',[
+  console.log(refParts, 'gen', [
     getPreviousMonth(refParts),
     { month: refParts.month, year: refParts.year },
     getNextMonth(refParts)
