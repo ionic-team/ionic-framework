@@ -534,7 +534,7 @@ export class Datetime implements ComponentInterface {
           <div class="calendar-month-year">
             <ion-item button detail={false} lines="none">
               <ion-label>
-                {getMonthAndYear(this.locale)} <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
+                {getMonthAndYear(this.locale, this.workingParts)} <ion-icon icon={mode === 'ios' ? 'chevron-forward' : 'caret-down-sharp'} lazy={false}></ion-icon>
               </ion-label>
             </ion-item>
           </div>

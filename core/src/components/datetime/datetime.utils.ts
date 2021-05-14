@@ -176,7 +176,8 @@ export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
  * the month name and full year.
  * Example: May 2021
  */
-export const getMonthAndYear = (locale: string, date: Date = new Date()) => {
+export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
+  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year}`);
   return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(date);
 }
 
