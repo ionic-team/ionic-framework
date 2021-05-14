@@ -93,9 +93,9 @@
    * this padding a snapping point if applied
    * on .calendar-month
    */
-  @include padding(0, $datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2);
+  @include padding($datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2, $datetime-ios-padding / 2);
 
-  height: calc(100% - #{$datetime-ios-padding / 2});
+  height: calc(100% - #{$datetime-ios-padding});
 }
 
 :host .calendar-day {

@@ -6,6 +6,104 @@ interface DatetimeParts {
   year: number;
 }
 
+export const getPreviousWeek = (refParts: DatetimeParts): DatetimeParts => {
+  const { month, day, year } = refParts;
+  if (!day) {
+    throw new Error('No day provided');
+  }
+
+  const workingParts = {
+    month,
+    day,
+    year
+  }
+
+  workingParts.day = day - 7;
+
+  /**
+   * If wrapping to previous month
+   * update days and decrement month
+   */
+  if (workingParts.day < 1) {
+    workingParts.month -= 1;
+  }
+
+  /**
+   * If moving to previous year, reset
+   * month to December and decrement year
+   */
+  if (workingParts.month < 1) {
+    workingParts.month = 12;
+    workingParts.year -= 1;
+  }
+
+  /**
+   * Determine how many days are in the current
+   * month
+   */
+
+  if (workingParts.day < 1) {
+    const daysInMonth = getNumDaysInMonth(workingParts.month, workingParts.year);
+
+    /**
+     * Take num days in month and add the
+     * number of underflow days. This number will
+     * be negative.
+     * Example: 1 week before Jan 2, 2021 is
+     * December 26, 2021 so:
+     * 2 - 7 = -5
+     * 31 + (-5) = 26
+     */
+    workingParts.day = daysInMonth + workingParts.day;
+  }
+
+  return workingParts;
+}
+
+export const getNextWeek = (refParts: DatetimeParts): DatetimeParts => {
+  const { month, day, year } = refParts;
+  if (!day) {
+    throw new Error('No day provided');
+  }
+
+  const workingParts = {
+    month,
+    day,
+    year
+  }
+
+  const daysInMonth = getNumDaysInMonth(month, year);
+  workingParts.day = day + 7;
+
+  /**
+   * If wrapping to next month
+   * update days and increment month
+   */
+  if (workingParts.day > daysInMonth) {
+    workingParts.day -= daysInMonth;
+    workingParts.month += 1;
+  }
+
+  /**
+   * If moving to next year, reset
+   * month to January and increment year
+   */
+  if (workingParts.month > 12) {
+    workingParts.month = 1;
+    workingParts.year += 1;
+  }
+
+  return workingParts;
+}
+
+export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
+  return {
+    month: parseInt(el.getAttribute('data-month')!),
+    day: parseInt(el.getAttribute('data-day')!),
+    year: parseInt(el.getAttribute('data-year')!),
+  }
+}
+
 const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 

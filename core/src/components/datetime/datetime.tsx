@@ -13,7 +13,10 @@ import {
   getMonthAndDay,
   getMonthAndYear,
   getNextMonth,
+  getNextWeek,
+  getPartsFromCalendarDay,
   getPreviousMonth,
+  getPreviousWeek,
   parseDate,
   shouldRenderViewButtons,
   shouldRenderViewFooter,
@@ -268,6 +271,56 @@ export class Datetime implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
+  private initializeKeyboardListeners = () => {
+    this.calendarBodyRef!.addEventListener('keyup', (ev: KeyboardEvent) => {
+      const activeElement = this.el!.shadowRoot!.activeElement;
+      if (!activeElement || !activeElement.classList.contains('calendar-day')) { return; }
+
+      const parts = getPartsFromCalendarDay(activeElement as HTMLElement)
+
+      switch (ev.key) {
+        case 'ArrowDown':
+          this.workingParts = { ...getNextWeek(parts) as any };
+          break;
+        case 'ArrowUp':
+          this.workingParts = { ...getPreviousWeek(parts) as any };
+          break;
+        case 'ArrowRight':
+          console.log('move to next day');
+          break;
+        case 'ArrowLeft':
+          console.log('move to previous day');
+          break;
+        case 'Home':
+          console.log('move to first day of current week');
+          break;
+        case 'End':
+          console.log('move to last day of current week');
+          break;
+        case 'Home':
+          console.log('move to first day of current week');
+          break;
+        case 'PageUp':
+          console.log('move to previous month');
+          break;
+        case 'PageDown':
+          console.log('move to previous month');
+          break;
+        default:
+          console.log('unrecognized');
+          return;
+      }
+
+      requestAnimationFrame(() => {
+        const month = this.calendarBodyRef!.querySelector('.calendar-month:nth-of-type(2)')!;
+        const padding = month.querySelectorAll('.calendar-day-padding')
+        const day = month.querySelector(`.calendar-day:nth-of-type(${padding.length + this.workingParts.day})`) as HTMLElement;
+        console.log('focusing', day)
+        day.focus();
+      })
+    })
+  }
+
   private processMinParts = () => {
     if (this.min === undefined) {
       this.minParts = undefined;
@@ -449,6 +502,8 @@ export class Datetime implements ComponentInterface {
         root: calendarBodyRef
       });
       startIO.observe(startMonth);
+
+      this.initializeKeyboardListeners();
     });
   }
 
@@ -603,14 +658,19 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="calendar-month">
         <div class="calendar-month-grid">
-          {getDaysOfMonth(month, year).map(day => {
+          {getDaysOfMonth(month, year).map((day, index) => {
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.minParts, this.maxParts);
 
             return (
               <button
+                data-day={day}
+                data-month={month}
+                data-year={year}
+                data-index={index}
                 disabled={disabled}
                 class={{
+                  'calendar-day-padding': day === null,
                   'calendar-day': true,
                   'calendar-day-active': isActive,
                   'calendar-day-today': isToday
