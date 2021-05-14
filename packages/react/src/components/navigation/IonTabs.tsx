@@ -85,6 +85,7 @@ export class IonTabs extends React.Component<Props> {
   render() {
     let outlet: React.ReactElement<{}> | undefined;
     let tabBar: React.ReactElement | undefined;
+    const { className, onIonTabsDidChange, onIonTabsWillChange, ...props } = this.props;
 
     const children =
       typeof this.props.children === 'function'
@@ -100,23 +101,39 @@ export class IonTabs extends React.Component<Props> {
       } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
         outlet = child.props.children[0];
       }
+
+      let childProps: any = {
+        ref: this.tabBarRef
+      }
+
+      /**
+       * Only pass these props
+       * down from IonTabs to IonTabBar
+       * if they are defined, otherwise
+       * if you have a handler set on
+       * IonTabBar it will be overridden.
+       */
+      if (onIonTabsDidChange !== undefined) {
+        childProps = {
+          ...childProps,
+          onIonTabsDidChange
+        }
+      }
+
+      if (onIonTabsWillChange !== undefined) {
+        childProps = {
+          ...childProps,
+          onIonTabsWillChange
+        }
+      }
+
       if (child.type === IonTabBar || child.type.isTabBar) {
-        const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
-        tabBar = React.cloneElement(child, {
-          onIonTabsDidChange,
-          onIonTabsWillChange,
-          ref: this.tabBarRef,
-        });
+        tabBar = React.cloneElement(child, childProps);
       } else if (
         child.type === Fragment &&
         (child.props.children[1].type === IonTabBar || child.props.children[1].type.isTabBar)
       ) {
-        const { onIonTabsDidChange, onIonTabsWillChange } = this.props;
-        tabBar = React.cloneElement(child.props.children[1], {
-          onIonTabsDidChange,
-          onIonTabsWillChange,
-          ref: this.tabBarRef,
-        });
+        tabBar = React.cloneElement(child.props.children[1], childProps);
       }
     });
 
@@ -126,8 +143,6 @@ export class IonTabs extends React.Component<Props> {
     if (!tabBar) {
       throw new Error('IonTabs needs a IonTabBar');
     }
-
-    const { className, ...props } = this.props;
 
     return (
       <IonTabsContext.Provider value={this.ionTabContextState}>

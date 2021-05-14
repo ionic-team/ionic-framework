@@ -59,10 +59,10 @@ prerender-static.html
 angular/css/
 packages/react/css/
 packages/vue/css/
+core/components/
 core/css/
 core/hydrate/
 core/loader/
 core/www/
 .stencil/
 angular/build/
-core/components/

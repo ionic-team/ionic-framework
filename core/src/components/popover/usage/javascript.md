@@ -29,6 +29,10 @@ function presentPopover(ev) {
     translucent: true
   });
   document.body.appendChild(popover);
-  return popover.present();
+
+  await popover.present();
+  
+  const { role } = await popover.onDidDismiss();
+  console.log('onDidDismiss resolved with role', role);
 }
 ```

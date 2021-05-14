@@ -125,7 +125,7 @@ export class ModalPage {
   dismiss() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
-    this.modalCtrl.dismiss({
+    this.modalController.dismiss({
       'dismissed': true
     });
   }
@@ -200,14 +200,14 @@ In most scenarios, using the `ion-router-outlet` element as the `presentingEleme
 ```javascript
 import { ModalController } from '@ionic/angular';
 
-constructor(private modalCtrl: ModalController) {}
+constructor(private modalController: ModalController) {}
 
 async presentModal() {
   const modal = await this.modalController.create({
     component: ModalPage,
     cssClass: 'my-custom-class',
     swipeToClose: true,
-    presentingElement: await this.modalCtrl.getTop() // Get the top-most ion-modal
+    presentingElement: await this.modalController.getTop() // Get the top-most ion-modal
   });
   return await modal.present();
 }
@@ -332,6 +332,70 @@ modalElement.presentingElement = await modalController.getTop(); // Get the top-
 ### React
 
 ```tsx
+/* Using with useIonModal Hook */ 
+
+import React, { useState } from 'react';
+import { IonButton, IonContent, IonPage, useIonModal } from '@ionic/react';
+
+const Body: React.FC<{
+  count: number;
+  onDismiss: () => void;
+  onIncrement: () => void;
+}> = ({ count, onDismiss, onIncrement }) => (
+  <div>
+    count: {count}
+    <IonButton expand="block" onClick={() => onIncrement()}>
+      Increment Count
+    </IonButton>
+    <IonButton expand="block" onClick={() => onDismiss()}>
+      Close
+    </IonButton>
+  </div>
+);
+
+const ModalExample: React.FC = () => {
+  const [count, setCount] = useState(0);
+
+  const handleIncrement = () => {
+    setCount(count + 1);
+  };
+
+  const handleDismiss = () => {
+    dismiss();
+  };
+
+  /**
+   * First parameter is the component to show, second is the props to pass
+   */
+  const [present, dismiss] = useIonModal(Body, {
+    count,
+    onDismiss: handleDismiss,
+    onIncrement: handleIncrement,
+  });
+
+  return (
+    <IonPage>
+      <IonContent fullscreen>
+        <IonButton
+          expand="block"
+          onClick={() => {
+            present({
+              cssClass: 'my-class',
+            });
+          }}
+        >
+          Show Modal
+        </IonButton>
+        <div>Count: {count}</div>
+      </IonContent>
+    </IonPage>
+  );
+};
+```
+
+```tsx
+/* Using with IonModal Component */
+
 import React, { useState } from 'react';
 import { IonModal, IonButton, IonContent } from '@ionic/react';
 
@@ -349,8 +413,6 @@ export const ModalExample: React.FC = () => {
   );
 };
 ```
-
-> If you need a wrapper element inside of your modal component, we recommend using an `<IonPage>` so that the component dimensions are still computed properly.
 
 ### Swipeable Modals
 
@@ -655,7 +717,7 @@ Developers can also use this component directly in their template:
   <ion-modal
     :is-open="isOpenRef"
     css-class="my-custom-class"
-    @onDidDismiss="setOpen(false)"
+    @didDismiss="setOpen(false)"
   >
     <Modal :data="data"></Modal>
   </ion-modal>

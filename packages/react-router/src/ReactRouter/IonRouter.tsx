@@ -76,7 +76,9 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     };
   }
 
-  handleChangeTab(tab: string, path: string, routeOptions?: any) {
+  handleChangeTab(tab: string, path?: string, routeOptions?: any) {
+    if (!path) { return; }
+
     const routeInfo = this.locationHistory.getCurrentRouteInfoForTab(tab);
     const [pathname, search] = path.split('?');
     if (routeInfo) {
@@ -241,7 +243,19 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           routeDirection: 'back',
           routeAnimation: routeAnimation || routeInfo.routeAnimation,
         };
-        if (routeInfo.lastPathname === routeInfo.pushedByRoute) {
+        if (
+          routeInfo.lastPathname === routeInfo.pushedByRoute ||
+          (
+            /**
+             * We need to exclude tab switches/tab
+             * context changes here because tabbed
+             * navigation is not linear, but router.back()
+             * will go back in a linear fashion.
+             */
+            prevInfo.pathname === routeInfo.pushedByRoute &&
+            routeInfo.tab === '' && prevInfo.tab === ''
+          )
+        ) {
           this.props.history.goBack();
         } else {
           this.handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back');

@@ -232,6 +232,10 @@ export class StackController {
     return this.activeView ? this.activeView.stackId : undefined;
   }
 
+  hasRunningTask(): boolean {
+    return this.runningTask !== undefined;
+  }
+
   destroy() {
     this.containerEl = undefined!;
     this.views.forEach(destroyView);
@@ -294,6 +298,7 @@ export class StackController {
       this.runningTask = undefined;
     }
     const promise = this.runningTask = task();
+    promise.finally(() => this.runningTask = undefined);
     return promise;
   }
 }

@@ -1,16 +1,19 @@
 import { ComponentRef, FrameworkDelegate } from '../interface';
 
+import { componentOnReady } from './helpers';
+
 export const attachComponent = async (
   delegate: FrameworkDelegate | undefined,
   container: Element,
-  component: ComponentRef,
+  component?: ComponentRef,
   cssClasses?: string[],
-  componentProps?: { [key: string]: any }
+  componentProps?: { [key: string]: any },
+  inline?: boolean
 ): Promise<HTMLElement> => {
   if (delegate) {
     return delegate.attachViewToDom(container, component, componentProps, cssClasses);
   }
-  if (typeof component !== 'string' && !(component instanceof HTMLElement)) {
+  if (!inline && typeof component !== 'string' && !(component instanceof HTMLElement)) {
     throw new Error('framework delegate is missing');
   }
 
@@ -26,9 +29,9 @@ export const attachComponent = async (
   }
 
   container.appendChild(el);
-  if (el.componentOnReady) {
-    await el.componentOnReady();
-  }
+
+  await new Promise(resolve => componentOnReady(el, resolve));
+
   return el;
 };
 

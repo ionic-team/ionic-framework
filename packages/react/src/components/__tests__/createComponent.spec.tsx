@@ -27,13 +27,23 @@ describe('createComponent - events', () => {
 });
 
 describe('createComponent - ref', () => {
-  test('should pass ref on to web component instance', () => {
+  test('should pass ref on to web component instance (RefObject)', () => {
     const ionButtonRef: React.RefObject<any> = React.createRef();
     const IonButton = createReactComponent<JSX.IonButton, HTMLIonButtonElement>('ion-button');
 
     const { getByText } = render(<IonButton ref={ionButtonRef}>ButtonNameA</IonButton>);
     const ionButtonItem = getByText('ButtonNameA');
     expect(ionButtonRef.current).toEqual(ionButtonItem);
+  });
+
+  test('should pass ref on to web component instance (RefCallback)', () => {
+    let current
+    const ionButtonRef: React.RefCallback<any> = value => current = value;
+    const IonButton = createReactComponent<JSX.IonButton, HTMLIonButtonElement>('ion-button');
+
+    const { getByText } = render(<IonButton ref={ionButtonRef}>ButtonNameA</IonButton>);
+    const ionButtonItem = getByText('ButtonNameA');
+    expect(current).toEqual(ionButtonItem);
   });
 });
 

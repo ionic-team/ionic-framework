@@ -1,4 +1,5 @@
 import { AnimationBuilder, NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../interface';
+import { componentOnReady } from '../../../utils/helpers';
 
 import { ROUTER_INTENT_NONE } from './constants';
 
@@ -18,7 +19,7 @@ export const writeNavState = async (
     if (index >= chain.length || !outlet) {
       return changed;
     }
-    await outlet.componentOnReady();
+    await new Promise(resolve => componentOnReady(outlet, resolve));
 
     const route = chain[index];
     const result = await outlet.setRouteId(route.id, route.params, direction, animation);

@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page data-pageid="overlays">
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons>
@@ -62,12 +62,21 @@
 
       <br />
 
-      <ion-button expand="block" @click="present($event)" id="present-overlay">Present Overlay</ion-button>
+      <ion-button @click="present($event)" id="present-overlay">Present Overlay</ion-button>
+
+      <ion-button @click="changeLoadingProps()" id="change-loading-props">Quickly Change Loading Props</ion-button>
+
+      <br /><br />
+
+      Modal onWillPresent: <div id="willPresent">{{ willPresent }}</div><br />
+      Modal onDidPresent: <div id="didPresent">{{ didPresent }}</div><br />
+      Modal onWillDismiss: <div id="willDismiss">{{ willDismiss }}</div><br />
+      Modal onDidDismiss: <div id="didDismiss">{{ didDismiss }}</div><br />
 
       <ion-action-sheet
         :is-open="isActionSheetOpen"
         :buttons="actionSheetButtons"
-        @onDidDismiss="setActionSheetRef(false)"
+        @didDismiss="setActionSheetRef(false)"
       >
       </ion-action-sheet>
 
@@ -75,7 +84,7 @@
         :is-open="isAlertOpen"
         header="Alert!"
         :buttons="alertButtons"
-        @onDidDismiss="setAlertRef(false)"
+        @didDismiss="setAlertRef(false)"
       >
       </ion-alert>
 
@@ -84,25 +93,28 @@
         :duration="2000"
         message="Loading"
         :backdrop-dismiss="true"
-        @onDidDismiss="setLoadingRef(false)"
+        @didDismiss="setLoadingRef(false)"
       >
       </ion-loading>
 
       <ion-modal
         :is-open="isModalOpen"
         :componentProps="overlayProps"
-        @onDidDismiss="setModalRef(false)"
+        @willPresent="onModalWillPresent"
+        @didPresent="onModalDidPresent"
+        @willDismiss="onModalWillDismiss"
+        @didDismiss="onModalDidDismiss"
       >
         <ModalContent></ModalContent>
       </ion-modal>
 
       <ion-popover
+        css-class="popover-inline"
         :is-open="isPopoverOpen"
-        :componentProps="overlayProps"
         :event="popoverEvent"
-        @onDidDismiss="setPopoverRef(false)"
+        @didDismiss="setPopoverRef(false)"
       >
-        <PopoverContent></PopoverContent>
+        <PopoverContent :title="overlayProps.title"></PopoverContent>
       </ion-popover>
 
       <ion-toast
@@ -110,7 +122,7 @@
         :duration="2000"
         message="Toast"
         :buttons="toastButtons"
-        @onDidDismiss="setToastRef(false)"
+        @didDismiss="setToastRef(false)"
       >
       </ion-toast>
     </ion-content>
@@ -238,32 +250,32 @@ export default defineComponent({
     }
 
     const openActionSheet = async () => {
-      const actionSheet = await actionSheetController.create({ buttons: actionSheetButtons });
+      const actionSheet = await actionSheetController.create({ cssClass: "ion-action-sheet-controller", buttons: actionSheetButtons });
       await actionSheet.present();
     }
 
     const openAlert = async () => {
-      const alert = await alertController.create({ buttons: alertButtons, header: 'Alert!' });
+      const alert = await alertController.create({ cssClass: "ion-alert-controller", buttons: alertButtons, header: 'Alert!' });
       await alert.present();
     }
 
     const openLoading = async () => {
-      const loading = await loadingController.create({ message: "Loading", duration: 2000, backdropDismiss: true });
+      const loading = await loadingController.create({ cssClass: "ion-loading-controller", message: "Loading", duration: 2000, backdropDismiss: true });
       await loading.present();
     }
 
     const openToast = async () => {
-      const toast = await toastController.create({ header: "Toast!", buttons: toastButtons });
+      const toast = await toastController.create({ cssClass: "ion-toast-controller", header: "Toast!", buttons: toastButtons });
       await toast.present();
     }
 
     const openModal = async () => {
-      const modal = await modalController.create({ component: ModalContent, componentProps: overlayProps });
+      const modal = await modalController.create({ cssClass: "ion-modal-controller", component: ModalContent, componentProps: overlayProps });
       await modal.present();
     }
 
     const openPopover = async (event: Event) => {
-      const popover = await popoverController.create({ component: PopoverContent, event, componentProps: overlayProps });
+      const popover = await popoverController.create({ cssClass: "ion-popover-controller", component: PopoverContent, event, componentProps: overlayProps });
       await popover.present();
     }
 
@@ -314,7 +326,36 @@ export default defineComponent({
       }
     }
 
+    const changeLoadingProps = () => {
+      setLoadingRef(true);
+      setTimeout(() => {
+        setLoadingRef(false);
+        setTimeout(() => {
+          setLoadingRef(true);
+        }, 10);
+      }, 10);
+    }
+
+    const willPresent = ref(0);
+    const didPresent = ref(0);
+    const willDismiss = ref(0);
+    const didDismiss = ref(0);
+
+    const onModalWillPresent = () => willPresent.value += 1;
+    const onModalDidPresent = () => { didPresent.value += 1; setModalRef(true); }
+    const onModalWillDismiss = () => willDismiss.value += 1;
+    const onModalDidDismiss = () => { didDismiss.value += 1; setModalRef(false); }
+
     return {
+      onModalWillPresent,
+      onModalDidPresent,
+      onModalWillDismiss,
+      onModalDidDismiss,
+      willPresent,
+      didPresent,
+      willDismiss,
+      didDismiss,
+      changeLoadingProps,
       overlayProps,
       present,
       componentType,

@@ -2,6 +2,7 @@
 import { Components as IoniconsComponents, JSX as IoniconsJSX } from 'ionicons';
 export * from './components';
 export * from './index';
+export * from './components/accordion-group/accordion-group-interface';
 export * from './components/alert/alert-interface';
 export * from './components/action-sheet/action-sheet-interface';
 export * from './components/content/content-interface';
@@ -74,6 +75,8 @@ export interface KeyboardEventDetail {
 export interface StyleEventDetail {
   [styleName: string]: boolean;
 }
+
+export { NavComponentWithProps } from "./components/nav/nav-interface";
 
 declare module "./components" {
   export namespace Components {

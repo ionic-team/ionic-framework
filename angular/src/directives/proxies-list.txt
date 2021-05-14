@@ -2,6 +2,8 @@
 import type * as d from './proxies';
 
 export const DIRECTIVES = [
+  d.IonAccordion,
+  d.IonAccordionGroup,
   d.IonApp,
   d.IonAvatar,
   d.IonBackButton,

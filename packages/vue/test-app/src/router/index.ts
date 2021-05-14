@@ -46,7 +46,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/routing/:id',
-    component: () => import('@/views/RoutingParameter.vue')
+    component: () => import('@/views/RoutingParameter.vue'),
+    props: true
   },
   {
     path: '/routing/:id/view',
@@ -71,7 +72,8 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: ':id',
-        component: () => import('@/views/Folder.vue')
+        component: () => import('@/views/Folder.vue'),
+        props: true
       }
     ]
   },
@@ -82,41 +84,6 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '',
         redirect: '/tabs/tab1'
-      },
-      {
-        path: 'tab1',
-        component: () => import('@/views/Tab1.vue'),
-        children: [
-          {
-            path: 'child-one',
-            component: () => import('@/views/Tab1ChildOne.vue')
-          },
-          {
-            path: 'child-two',
-            component: () => import('@/views/Tab1ChildTwo.vue')
-          }
-        ]
-      },
-      {
-        path: 'tab2',
-        component: () => import('@/views/Tab2.vue')
-      },
-      {
-        path: 'tab3',
-        beforeEnter: (to, from, next) => {
-          next({ path: '/tabs/tab1' });
-        },
-        component: () => import('@/views/Tab3.vue')
-      }
-    ]
-  },
-  {
-    path: '/tabs-new/',
-    component: () => import('@/views/Tabs.vue'),
-    children: [
-      {
-        path: '',
-        redirect: '/tabs-new/tab1'
       },
       {
         path: 'tab1',
@@ -140,6 +107,10 @@ const routes: Array<RouteRecordRaw> = [
           next({ path: '/tabs/tab1' });
         },
         component: () => import('@/views/Tab3.vue')
+      },
+      {
+        path: 'tab4',
+        component: () => import('@/views/Tab4.vue')
       }
     ]
   },

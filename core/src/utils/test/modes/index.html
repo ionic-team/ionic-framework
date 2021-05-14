@@ -148,7 +148,9 @@
       await actionSheet.present();
 
       const picker = document.querySelector('ion-picker');
-      await picker.componentOnReady();
+      if (picker.componentOnReady) {
+        await picker.componentOnReady();
+      }
 
       picker.buttons = [
         { text: "Cancel", role: "cancel" },
