@@ -203,8 +203,16 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
     this.incomingRouteParams = undefined;
   }
 
+  /**
+   * history@4.x uses goBack(), history@5.x uses back()
+   * TODO: If support for React Router <=5 is dropped
+   * this logic is no longer needed. We can just
+   * assume back() is available.
+   */
   handleNativeBack() {
-    this.props.history.goBack();
+    const history = this.props.history as any;
+    const goBack = history.goBack || history.back;
+    goBack();
   }
 
   handleNavigate(
@@ -256,7 +264,15 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
             routeInfo.tab === '' && prevInfo.tab === ''
           )
         ) {
-          this.props.history.goBack();
+          /**
+           * history@4.x uses goBack(), history@5.x uses back()
+           * TODO: If support for React Router <=5 is dropped
+           * this logic is no longer needed. We can just
+           * assume back() is available.
+           */
+          const history = this.props.history as any;
+          const goBack = history.goBack || history.back;
+          goBack();
         } else {
           this.handleNavigate(prevInfo.pathname + (prevInfo.search || ''), 'pop', 'back');
         }
