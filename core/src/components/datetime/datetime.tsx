@@ -462,11 +462,31 @@ export class Datetime implements ComponentInterface {
   }
 
   private nextMonth = () => {
-    console.log('stubbed next')
+    const { calendarBodyRef } = this;
+    if (!calendarBodyRef) { return; }
+
+    const nextMonth = calendarBodyRef.querySelector('.calendar-month:last-of-type');
+    if (!nextMonth) { return; }
+
+    nextMonth.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+      inline: 'nearest'
+    });
   }
 
   private prevMonth = () => {
-    console.log('stubbed prev');
+    const { calendarBodyRef } = this;
+    if (!calendarBodyRef) { return; }
+
+    const prevMonth = calendarBodyRef.querySelector('.calendar-month:first-of-type');
+    if (!prevMonth) { return; }
+
+    prevMonth.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+      inline: 'nearest'
+    });
   }
 
   private renderFooter(mode: Mode) {
