@@ -9,6 +9,11 @@ interface DatetimeParts {
 const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 
+/**
+ * Given an ISO-8601 string, format out the parts
+ * We do not use the JS Date object here because
+ * it adjusts the date for the current timezone.
+ */
 export const parseDate = (val: string | undefined | null): any | undefined => {
   // manually parse IS0 cuz Date.parse cannot be trusted
   // ISO 8601 format: 1994-12-15T13:47:20Z
@@ -283,11 +288,31 @@ export const isSameDay = (baseParts: DatetimeParts, compareParts: DatetimeParts)
   );
 }
 
-const isDayDisabled = (refParts: DatetimeParts, maxParts?: DatetimeParts, minParts?: DatetimeParts) => {
+/**
+ * Returns true if a given day should
+ * not be interactive according to its value,
+ * or the max/min dates.
+ */
+export const isDayDisabled = (refParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
   const { day, month, year } = refParts;
 
+  /**
+   * If this is a filler date (i.e. padding)
+   * then the date is disabled.
+   */
   if (day === null) { return true; }
 
+  /**
+   * Given a min date, perform the following
+   * checks. If any of them are true, then the
+   * day should be disabled:
+   * 1. Is the current year < the min allowed year?
+   * 2. Is the current year === min allowed year,
+   * but the current month < the min allowed month?
+   * 3. Is the current year === min allowed year, the
+   * current month === min allow month, but the current
+   * day < the min allowed day?
+   */
   if (minParts) {
     if (
       year < minParts.year ||
@@ -298,6 +323,17 @@ const isDayDisabled = (refParts: DatetimeParts, maxParts?: DatetimeParts, minPar
     }
   }
 
+  /**
+   * Given a max date, perform the following
+   * checks. If any of them are true, then the
+   * day should be disabled:
+   * 1. Is the current year > the max allowed year?
+   * 2. Is the current year === max allowed year,
+   * but the current month > the max allowed month?
+   * 3. Is the current year === max allowed year, the
+   * current month === max allow month, but the current
+   * day > the max allowed day?
+   */
   if (maxParts) {
     if (
       year > maxParts.year ||
@@ -308,6 +344,11 @@ const isDayDisabled = (refParts: DatetimeParts, maxParts?: DatetimeParts, minPar
     }
   }
 
+  /**
+   * If none of these checks
+   * passed then the date should
+   * be interactive.
+   */
   return false;
 }
 
@@ -315,10 +356,10 @@ const isDayDisabled = (refParts: DatetimeParts, maxParts?: DatetimeParts, minPar
  * Given a locale, a date, the selected date, and today's date,
  * generate the state for a given calendar day button.
  */
-export const getCalendarDayState = (locale: string, refParts: DatetimeParts, activeParts: DatetimeParts, todayParts: DatetimeParts, maxParts?: DatetimeParts, minParts?: DatetimeParts) => {
+export const getCalendarDayState = (locale: string, refParts: DatetimeParts, activeParts: DatetimeParts, todayParts: DatetimeParts, minParts?: DatetimeParts, maxParts?: DatetimeParts) => {
   const isActive = isSameDay(refParts, activeParts);
   const isToday = isSameDay(refParts, todayParts);
-  const disabled = isDayDisabled(refParts, maxParts, minParts);
+  const disabled = isDayDisabled(refParts, minParts, maxParts);
 
   return {
     disabled,

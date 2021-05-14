@@ -605,7 +605,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year).map(day => {
             const referenceParts = { month, day, year };
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.maxParts, this.minParts);
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.minParts, this.maxParts);
 
             return (
               <button

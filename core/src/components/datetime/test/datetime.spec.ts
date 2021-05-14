@@ -10,8 +10,24 @@ import {
   getCalendarDayState,
   getNextMonth,
   getPreviousMonth,
-  generateMonths
+  generateMonths,
+  isDayDisabled
 } from '../datetime.utils';
+
+describe('isDayDisabled', () => {
+  it('should correctly return whether or not a day is disabled', () => {
+    const refDate = { month: 5, day: 12, year: 2021 };
+
+    expect(isDayDisabled(refDate, undefined, undefined)).toEqual(false);
+    expect(isDayDisabled(refDate, { month: 5, day: 12, year: 2021 }, undefined)).toEqual(false);
+    expect(isDayDisabled(refDate, { month: 6, day: 12, year: 2021 }, undefined)).toEqual(true);
+    expect(isDayDisabled(refDate, { month: 5, day: 13, year: 2022 }, undefined)).toEqual(true);
+
+    expect(isDayDisabled(refDate, undefined, { month: 5, day: 12, year: 2021 })).toEqual(false);
+    expect(isDayDisabled(refDate, undefined, { month: 4, day: 12, year: 2021 })).toEqual(true);
+    expect(isDayDisabled(refDate, undefined, { month: 5, day: 11, year: 2021 })).toEqual(true);
+  })
+})
 
 describe('getNextMonth()', () => {
   it('should return correct next month', () => {
