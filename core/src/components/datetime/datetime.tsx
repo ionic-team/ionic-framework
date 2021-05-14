@@ -317,7 +317,10 @@ export class Datetime implements ComponentInterface {
 
       let endIO: IntersectionObserver | undefined;
       let startIO: IntersectionObserver | undefined;
-      const endCallback = (entries: IntersectionObserverEntry[]) => {
+      const ioCallback = (callbackType: 'start' | 'end', entries: IntersectionObserverEntry[]) => {
+        const refIO = (callbackType === 'start') ? startIO : endIO;
+        const refMonth = (callbackType === 'start') ? startMonth : endMonth;
+        const refMonthFn = (callbackType === 'start') ? getPreviousMonth : getNextMonth;
 
         /**
          * If the month is not fully in view, do not do anything
@@ -355,8 +358,8 @@ export class Datetime implements ComponentInterface {
          * otherwise you can sometimes get duplicate
          * events when rubber banding.
          */
-        if (!endIO) { return; }
-        endIO.disconnect();
+        if (!refIO) { return; }
+        refIO.disconnect();
 
         /**
          * Use a writeTask here to ensure
@@ -368,7 +371,7 @@ export class Datetime implements ComponentInterface {
          * if we did not do this.
          */
         writeTask(() => {
-          const { month, year } = getNextMonth(this.workingParts);
+          const { month, year } = refMonthFn(this.workingParts);
 
           this.workingParts = {
             month,
@@ -385,50 +388,15 @@ export class Datetime implements ComponentInterface {
            * and the correct month is in view,
            * we can resume the IO.
            */
-          if (!endIO) { return; }
-          endIO.observe(endMonth);
+          if (!refIO) { return; }
+          refIO.observe(refMonth);
         });
       }
-      const startCallback = (entries: IntersectionObserverEntry[]) => {
-      const ev = entries[0];
-      if (!ev.isIntersecting) { return; }
-
-      if (mode === 'ios') {
-        const ratio = ev.intersectionRatio;
-        const shouldDisable = Math.abs(ratio - 0.7) <= 0.1;
-
-        if (shouldDisable) {
-          calendarBodyRef.style.setProperty('pointer-events', 'none');
-          return;
-        }
-      }
-
-      calendarBodyRef.style.setProperty('overflow', 'hidden');
-
-      if (!startIO) { return; }
-      startIO.disconnect();
-
-      writeTask(() => {
-        const { month, year } = getPreviousMonth(this.workingParts);
-
-        this.workingParts = {
-          month,
-          day: 1,
-          year
-        }
-
-        workingMonth.scrollIntoView(false);
-        calendarBodyRef.style.removeProperty('overflow');
-        calendarBodyRef.style.removeProperty('pointer-events');
-
-        if (!startIO) { return; }
-        startIO.observe(startMonth);
-      });
-    };
 
       /**
-       * Listen on the last month to
-       * append a new month.
+       * Listen on the first month to
+       * prepend a new month and on the last
+       * month to append a new month.
        * The 0.7 threshold is required on ios
        * so that we can remove pointer-events
        * when adding new months.
@@ -443,30 +411,13 @@ export class Datetime implements ComponentInterface {
        * it applies to active gestures which is not
        * something WebKit does.
        */
-      endIO = new IntersectionObserver(endCallback, {
+      endIO = new IntersectionObserver(ev => ioCallback('end', ev), {
         threshold: mode === 'ios' ? [0.7, 1] : 1,
         root: calendarBodyRef
       });
       endIO.observe(endMonth);
 
-      /**
-       * Listen on the prev month to
-       * prepend a new month.
-       * The 0.7 threshold is required on ios
-       * so that we can remove pointer-events
-       * when adding new months.
-       * Adding to a scroll snapping container
-       * while the container is snapping does not
-       * completely work as expected in WebKit.
-       * Adding pointer-events: none allows us to
-       * avoid these issues.
-       *
-       * This should be fine on Chromium, but
-       * when you set pointer-events: none
-       * it applies to active gestures which is not
-       * something WebKit does.
-       */
-      startIO = new IntersectionObserver(startCallback, {
+      startIO = new IntersectionObserver(ev => ioCallback('start', ev), {
         threshold: mode === 'ios' ? [0.7, 1] : 1,
         root: calendarBodyRef
       });
@@ -620,16 +571,11 @@ export class Datetime implements ComponentInterface {
                 onClick={() => {
                   if (day === null) { return; }
 
-                  writeTask(() => {
-                    this.workingParts = {
-                      month,
-                      day,
-                      year
-                    }
-                    console.log('setting working parts', this.workingParts);
-
-                    this.el!.shadowRoot!.querySelectorAll('.calendar-month')[1].scrollIntoView(false);
-                  });
+                  this.activeParts = {
+                    month,
+                    day,
+                    year
+                  }
                 }}
               >{day}</button>
             )
