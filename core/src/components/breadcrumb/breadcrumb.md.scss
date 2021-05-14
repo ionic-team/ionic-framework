@@ -27,6 +27,21 @@
 }
 
 
+// Breadcrumb: Hover
+// ------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:hover) {
+    color: $breadcrumb-md-color-active;
+  }
+
+  :host(.in-breadcrumbs-color:hover),
+  :host(.ion-color:hover) {
+    color: #{current-color(shade)};
+  }
+}
+
+
 // Breadcrumb: Focused
 // ------------------------------------------
 

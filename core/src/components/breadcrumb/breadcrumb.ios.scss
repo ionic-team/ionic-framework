@@ -25,13 +25,15 @@
 // Breadcrumb: Hover
 // ------------------------------------------
 
-:host(:hover) {
-  color: $breadcrumb-ios-color-active;
-}
+@media (any-hover: hover) {
+  :host(:hover) {
+    color: $breadcrumb-ios-color-active;
+  }
 
-:host(.in-breadcrumbs-color:hover),
-:host(.ion-color:hover) {
-  color: #{current-color(base)};
+  :host(.in-breadcrumbs-color:hover),
+  :host(.ion-color:hover) {
+    color: #{current-color(shade)};
+  }
 }
 
 // Breadcrumb: Focused

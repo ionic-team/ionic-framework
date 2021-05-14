@@ -37,7 +37,7 @@
   background: inherit;
 }
 
-:host(.breadcrumb-disabled) .breadcrumb-native {
+:host(.breadcrumb-disabled) {
   cursor: default;
   opacity: .5;
   pointer-events: none;
