@@ -204,12 +204,6 @@ export class Datetime implements ComponentInterface {
   @Prop() locale = 'default';
 
   /**
-   * The text to display when there's no date selected yet.
-   * Using lowercase to match the input attribute
-   */
-  @Prop() placeholder?: string | null;
-
-  /**
    * The value of the datetime as a valid ISO 8601 datetime string.
    */
   @Prop({ mutable: true }) value?: string | null;
@@ -431,7 +425,7 @@ export class Datetime implements ComponentInterface {
     this.ionStyle.emit({
       'interactive': true,
       'datetime': true,
-      'has-placeholder': this.placeholder != null,
+      // 'has-placeholder': this.placeholder != null,
       // 'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
     });
@@ -517,8 +511,8 @@ export class Datetime implements ComponentInterface {
           <div class="datetime-action-buttons">
             <slot name="buttons">
               {this.showDefaultTitleAndButtons && <ion-buttons>
-                <ion-button color={this.color} onClick={() => this.dismiss()}>Cancel</ion-button>
-                <ion-button color={this.color} onClick={() => this.dismiss()}>Ok</ion-button>
+                <ion-button color={this.color} onClick={() => this.dismiss()}>{this.cancelText}</ion-button>
+                <ion-button color={this.color} onClick={() => this.dismiss()}>{this.doneText}</ion-button>
               </ion-buttons> }
             </slot>
           </div>
@@ -658,7 +652,7 @@ export class Datetime implements ComponentInterface {
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, view } = this;
+    const { name, value, disabled, el, color, isPresented, view, readonly } = this;
     const mode = getIonMode(this);
 
     renderHiddenInput(true, el, name, value, disabled);
@@ -668,7 +662,9 @@ export class Datetime implements ComponentInterface {
         class={{
           ...createColorClasses(color, {
             [mode]: true,
-            ['datetime-presented']: isPresented
+            ['datetime-presented']: isPresented,
+            ['datetime-readonly']: readonly,
+            ['datetime-disabled']: disabled
           })
         }}
       >

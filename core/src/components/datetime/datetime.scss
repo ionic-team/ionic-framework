@@ -28,6 +28,15 @@
   background: var(--background);
 }
 
+:host(.datetime-readonly),
+:host(.datetime-disabled) {
+  pointer-events: none;
+}
+
+:host(.datetime-disabled) {
+  opacity: 0.4;
+}
+
 /**
  * Title should not wrap
  * to the next line and should

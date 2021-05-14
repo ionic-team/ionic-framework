@@ -700,10 +700,6 @@ export namespace Components {
          */
         "pickerFormat"?: string;
         /**
-          * The text to display when there's no date selected yet. Using lowercase to match the input attribute
-         */
-        "placeholder"?: string | null;
-        /**
           * If `true`, the datetime appears normal but is not interactive.
          */
         "readonly": boolean;
@@ -4101,10 +4097,6 @@ declare namespace LocalJSX {
           * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
          */
         "pickerFormat"?: string;
-        /**
-          * The text to display when there's no date selected yet. Using lowercase to match the input attribute
-         */
-        "placeholder"?: string | null;
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */

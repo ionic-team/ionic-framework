@@ -217,8 +217,8 @@ export class IonContent {
 }
 export declare interface IonDatetime extends Components.IonDatetime {
 }
-@ProxyCmp({ inputs: ["cancelText", "color", "dayValues", "disabled", "displayFormat", "displayTimezone", "doneText", "hourValues", "interactionStyle", "locale", "max", "min", "minuteValues", "mode", "monthValues", "name", "pickerFormat", "placeholder", "readonly", "value", "yearValues"], "methods": ["open", "dismiss"] })
-@Component({ selector: "ion-datetime", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["cancelText", "color", "dayValues", "disabled", "displayFormat", "displayTimezone", "doneText", "hourValues", "interactionStyle", "locale", "max", "min", "minuteValues", "mode", "monthValues", "name", "pickerFormat", "placeholder", "readonly", "value", "yearValues"] })
+@ProxyCmp({ inputs: ["cancelText", "color", "dayValues", "disabled", "displayFormat", "displayTimezone", "doneText", "hourValues", "interactionStyle", "locale", "max", "min", "minuteValues", "mode", "monthValues", "name", "pickerFormat", "readonly", "value", "yearValues"], "methods": ["open", "dismiss"] })
+@Component({ selector: "ion-datetime", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["cancelText", "color", "dayValues", "disabled", "displayFormat", "displayTimezone", "doneText", "hourValues", "interactionStyle", "locale", "max", "min", "minuteValues", "mode", "monthValues", "name", "pickerFormat", "readonly", "value", "yearValues"] })
 export class IonDatetime {
   ionCancel!: EventEmitter<CustomEvent>;
   ionChange!: EventEmitter<CustomEvent>;

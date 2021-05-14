@@ -352,7 +352,6 @@ ion-datetime,prop,mode,"ios" | "md",undefined,false,false
 ion-datetime,prop,monthValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,name,string,this.inputId,false,false
 ion-datetime,prop,pickerFormat,string | undefined,undefined,false,false
-ion-datetime,prop,placeholder,null | string | undefined,undefined,false,false
 ion-datetime,prop,readonly,boolean,false,false,false
 ion-datetime,prop,value,null | string | undefined,undefined,false,false
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
