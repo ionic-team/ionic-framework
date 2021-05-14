@@ -672,10 +672,6 @@ export namespace Components {
          */
         "max"?: string;
         /**
-          * Defines the maximum number of individual dates a user can select. Must be a positive integer greater than `0`. Does not apply when `range="true"`.
-         */
-        "maxSelectableDates": number;
-        /**
           * The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
          */
         "min"?: string;
@@ -707,10 +703,6 @@ export namespace Components {
           * The text to display when there's no date selected yet. Using lowercase to match the input attribute
          */
         "placeholder"?: string | null;
-        /**
-          * If `true`, users can select a range of dates.
-         */
-        "range": boolean;
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */
@@ -4066,10 +4058,6 @@ declare namespace LocalJSX {
          */
         "max"?: string;
         /**
-          * Defines the maximum number of individual dates a user can select. Must be a positive integer greater than `0`. Does not apply when `range="true"`.
-         */
-        "maxSelectableDates"?: number;
-        /**
           * The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
          */
         "min"?: string;
@@ -4117,10 +4105,6 @@ declare namespace LocalJSX {
           * The text to display when there's no date selected yet. Using lowercase to match the input attribute
          */
         "placeholder"?: string | null;
-        /**
-          * If `true`, users can select a range of dates.
-         */
-        "range"?: boolean;
         /**
           * If `true`, the datetime appears normal but is not interactive.
          */

@@ -235,18 +235,6 @@ export class Datetime implements ComponentInterface {
   @Prop() interactionStyle: 'calendar' | 'wheel' = 'calendar';
 
   /**
-   * If `true`, users can select a range of dates.
-   */
-  @Prop() range = false;
-
-  /**
-   * Defines the maximum number of individual dates a user can
-   * select. Must be a positive integer greater than `0`.
-   * Does not apply when `range="true"`.
-   */
-  @Prop() maxSelectableDates = 1;
-
-  /**
    * Emitted when the datetime selection was cancelled.
    */
   @Event() ionCancel!: EventEmitter<void>;
@@ -388,6 +376,7 @@ export class Datetime implements ComponentInterface {
            * and the correct month is in view,
            * we can resume the IO.
            */
+          // tslint:disable-next-line
           if (refIO === undefined) { return; }
           refIO.observe(refMonth);
         });

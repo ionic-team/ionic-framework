@@ -193,8 +193,6 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'placeholder',
   'value',
   'interactionStyle',
-  'range',
-  'maxSelectableDates',
   'ionCancel',
   'ionChange',
   'ionFocus',
