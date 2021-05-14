@@ -186,7 +186,7 @@ export class Breadcrumb implements ComponentInterface {
           <span class="breadcrumb-separator" part="separator">
             <slot name="separator">
               { mode === 'ios'
-                ? <ion-icon name="chevron-forward-outline"></ion-icon>
+                ? <ion-icon name="chevron-forward-outline" lazy={false}></ion-icon>
                 : <span>/</span>
               }
             </slot>

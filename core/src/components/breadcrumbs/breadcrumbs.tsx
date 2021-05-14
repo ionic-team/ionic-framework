@@ -137,7 +137,7 @@ export class Breadcrumbs implements ComponentInterface {
           style={{
             'order': indicatorOrder
           }}>
-          <ion-icon name="ellipsis-horizontal"></ion-icon>
+          <ion-icon name="ellipsis-horizontal" lazy={false}></ion-icon>
         </button>
         <slot></slot>
       </Host>
