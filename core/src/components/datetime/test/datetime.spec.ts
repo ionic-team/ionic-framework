@@ -7,8 +7,61 @@ import {
   shouldRenderViewFooter,
   isSameDay,
   generateDayAriaLabel,
-  getCalendarDayState
+  getCalendarDayState,
+  getNextMonth,
+  getPreviousMonth,
+  generateMonths
 } from '../datetime.utils';
+
+describe('getNextMonth()', () => {
+  it('should return correct next month', () => {
+    expect(getNextMonth({ month: 5, year: 2021, day: 1 })).toEqual({
+      month: 6,
+      year: 2021,
+      day: null
+    });
+    expect(getNextMonth({ month: 12, year: 2021, day: 30 })).toEqual({
+      month: 1,
+      year: 2022,
+      day: null
+    });
+    expect(getNextMonth({ month: 12, year: 1999, day: 30 })).toEqual({
+      month: 1,
+      year: 2000,
+      day: null
+    });
+  });
+});
+
+describe('getPreviousMonth()', () => {
+  it('should return correct previous month', () => {
+    expect(getPreviousMonth({ month: 5, year: 2021, day: 1 })).toEqual({
+      month: 4,
+      year: 2021,
+      day: null
+    });
+    expect(getPreviousMonth({ month: 1, year: 2021, day: 30 })).toEqual({
+      month: 12,
+      year: 2020,
+      day: null
+    });
+    expect(getPreviousMonth({ month: 1, year: 2000, day: 30 })).toEqual({
+      month: 12,
+      year: 1999,
+      day: null
+    });
+  });
+});
+
+describe('generateMonths()', () => {
+  it('should generate correct month data', () => {
+    expect(generateMonths({ month: 5, year: 2021, day: 1 })).toEqual([
+      { month: 4, year: 2021, day: null },
+      { month: 5, year: 2021, day: null },
+      { month: 6, year: 2021, day: null }
+    ]);
+  });
+});
 
 describe('getCalendarDayState()', () => {
   it('should return correct state', () => {
@@ -120,11 +173,11 @@ describe('getDaysOfWeek()', () => {
 
 describe('getMonthAndDay()', () => {
   it('should return Tue, May 11', () => {
-    expect(getMonthAndDay('en-US', new Date('05/11/2021'))).toEqual('Tue, May 11');
+    expect(getMonthAndDay('en-US', { month: 5, day: 11, year: 2021 })).toEqual('Tue, May 11');
   });
 
   it('should return mar, 11 may', () => {
-    expect(getMonthAndDay('es-ES', new Date('05/11/2021'))).toEqual('mar, 11 may');
+    expect(getMonthAndDay('es-ES', { month: 5, day: 11, year: 2021 })).toEqual('mar, 11 may');
   });
 })
 
@@ -236,11 +289,4 @@ describe('shouldRenderViewFooter()', () => {
   it('should return false when in iOS mode with no slotted button in a popover', () => {
     expect(shouldRenderViewFooter('ios', 'popover', false)).toEqual(false)
   });
-})
-
-const hasSlot = (el: HTMLElement, slotName: string) => {
-  const shadowRoot = el.shadowRoot;
-  const slot = el.querySelector(`[slot=${slotName}]`);
-
-  return !!slot;
-}
+});

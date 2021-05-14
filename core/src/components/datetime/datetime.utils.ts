@@ -6,29 +6,44 @@ interface DatetimeParts {
   year: number;
 }
 
+/**
+ * Given DatetimeParts, generate the previous month.
+ */
 export const getPreviousMonth = (refParts: DatetimeParts) => {
+  /**
+   * If current month is January, wrap backwards
+   *  to December of the previous year.
+   */
   const month = (refParts.month === 1) ? 12 : refParts.month - 1;
   const year = (refParts.month === 1) ? refParts.year - 1 : refParts.year;
 
-  return { month, year };
+  return { month, year, day: null };
 }
 
+/**
+ * Given DatetimeParts, generate the next month.
+ */
 export const getNextMonth = (refParts: DatetimeParts) => {
+  /**
+   * If current month is December, wrap forwards
+   *  to January of the next year.
+   */
   const month = (refParts.month === 12) ? 1 : refParts.month + 1;
   const year = (refParts.month === 12) ? refParts.year + 1 : refParts.year;
 
-  return { month, year };
+  return { month, year, day: null };
 }
 
-export const generateMonths = (refParts: DatetimeParts) => {
-  console.log(refParts, 'gen', [
-    getPreviousMonth(refParts),
-    { month: refParts.month, year: refParts.year },
-    getNextMonth(refParts)
-  ])
+/**
+ * Given DatetimeParts, generate the previous,
+ * current, and and next months.
+ * Only intended to be used for generate month data in the
+ * calendar. As a result, day value is not included.
+ */
+export const generateMonths = (refParts: DatetimeParts): DatetimeParts[] => {
   return [
     getPreviousMonth(refParts),
-    { month: refParts.month, year: refParts.year },
+    { month: refParts.month, year: refParts.year, day: null },
     getNextMonth(refParts)
   ]
 }

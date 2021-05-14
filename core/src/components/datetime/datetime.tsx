@@ -12,6 +12,8 @@ import {
   getDaysOfWeek,
   getMonthAndDay,
   getMonthAndYear,
+  getNextMonth,
+  getPreviousMonth,
   shouldRenderViewButtons,
   shouldRenderViewFooter,
   shouldRenderViewHeader
@@ -348,10 +350,6 @@ export class Datetime implements ComponentInterface {
          */
         calendarBodyRef.style.setProperty('overflow', 'hidden');
 
-        // TODO this should not be needed
-        const month = parseInt(endMonth.getAttribute('data-month')!);
-        const year = parseInt(endMonth.getAttribute('data-year')!);
-
         /**
          * Remove the IO temporarily
          * otherwise you can sometimes get duplicate
@@ -370,6 +368,8 @@ export class Datetime implements ComponentInterface {
          * if we did not do this.
          */
         writeTask(() => {
+          const { month, year } = getNextMonth(this.workingParts);
+
           this.workingParts = {
             month,
             day: 1,
@@ -405,13 +405,12 @@ export class Datetime implements ComponentInterface {
 
       calendarBodyRef.style.setProperty('overflow', 'hidden');
 
-      const month = parseInt(startMonth.getAttribute('data-month')!);
-      const year = parseInt(startMonth.getAttribute('data-year')!);
-
       if (!startIO) { return; }
       startIO.disconnect();
 
       writeTask(() => {
+        const { month, year } = getPreviousMonth(this.workingParts);
+
         this.workingParts = {
           month,
           day: 1,
@@ -602,7 +601,7 @@ export class Datetime implements ComponentInterface {
 
   private renderMonth(month: number, year: number) {
     return (
-      <div class="calendar-month" data-month={month} data-year={year}>
+      <div class="calendar-month">
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year).map(day => {
             const referenceParts = { month, day, year };
