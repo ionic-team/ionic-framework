@@ -358,7 +358,7 @@ export class Datetime implements ComponentInterface {
          * otherwise you can sometimes get duplicate
          * events when rubber banding.
          */
-        if (!refIO) { return; }
+        if (refIO === undefined) { return; }
         refIO.disconnect();
 
         /**
@@ -388,7 +388,7 @@ export class Datetime implements ComponentInterface {
            * and the correct month is in view,
            * we can resume the IO.
            */
-          if (!refIO) { return; }
+          if (refIO === undefined) { return; }
           refIO.observe(refMonth);
         });
       }
