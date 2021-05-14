@@ -172,6 +172,8 @@
   cursor: pointer;
 
   appearance: none;
+
+  z-index: 0;
 }
 
 :host .calendar-day[disabled] {

@@ -659,6 +659,7 @@ export class Datetime implements ComponentInterface {
 
     return (
       <Host
+        aria-disabled={disabled ? 'true' : null}
         class={{
           ...createColorClasses(color, {
             [mode]: true,
