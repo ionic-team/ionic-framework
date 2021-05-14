@@ -178,6 +178,8 @@
 
 :host .calendar-day[disabled] {
   pointer-events: none;
+
+  opacity: 0.4;
 }
 
 :host .calendar-day:after {

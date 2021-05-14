@@ -14,6 +14,7 @@ import {
   getMonthAndYear,
   getNextMonth,
   getPreviousMonth,
+  parseDate,
   shouldRenderViewButtons,
   shouldRenderViewFooter,
   shouldRenderViewHeader
@@ -42,6 +43,9 @@ export class Datetime implements ComponentInterface {
   private showDefaultTitleAndButtons = true;
   private calendarBodyRef?: HTMLElement;
 
+  private minParts?: any;
+  private maxParts?: any;
+
   @State() activeParts = {
     month: 5,
     day: 12,
@@ -56,7 +60,7 @@ export class Datetime implements ComponentInterface {
 
   private todayParts = {
     month: 5,
-    day: 12,
+    day: 14,
     year: 2021
   }
 
@@ -102,6 +106,11 @@ export class Datetime implements ComponentInterface {
    */
   @Prop({ mutable: true }) min?: string;
 
+  @Watch('min')
+  protected minChanged() {
+    this.processMinParts();
+  }
+
   /**
    * The maximum datetime allowed. Value must be a date string
    * following the
@@ -111,6 +120,11 @@ export class Datetime implements ComponentInterface {
    * Defaults to the end of this year.
    */
   @Prop({ mutable: true }) max?: string;
+
+  @Watch('max')
+  protected maxChanged() {
+    this.processMaxParts();
+  }
 
   /**
    * The display format of the date and time as text that shows
@@ -253,6 +267,36 @@ export class Datetime implements ComponentInterface {
    * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  private processMinParts = () => {
+    if (this.min === undefined) {
+      this.minParts = undefined;
+      return;
+    }
+
+    const { month, day, year } = parseDate(this.min);
+
+    this.minParts = {
+      month,
+      day,
+      year
+    }
+  }
+
+  private processMaxParts = () => {
+    if (this.max === undefined) {
+      this.maxParts = undefined;
+      return;
+    }
+
+    const { month, day, year } = parseDate(this.max);
+
+    this.maxParts = {
+      month,
+      day,
+      year
+    }
+  }
 
   connectedCallback() {
     const modalOrPopover = this.el.closest('ion-modal, ion-popover');
@@ -409,6 +453,8 @@ export class Datetime implements ComponentInterface {
   }
 
   componentWillLoad() {
+    this.processMinParts();
+    this.processMaxParts();
     this.emitStyle();
 
     /**
@@ -559,11 +605,11 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year).map(day => {
             const referenceParts = { month, day, year };
-            const { isActive, isToday, ariaLabel, ariaSelected } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts);
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.maxParts, this.minParts);
 
             return (
               <button
-                disabled={day === null}
+                disabled={disabled}
                 class={{
                   'calendar-day': true,
                   'calendar-day-active': isActive,

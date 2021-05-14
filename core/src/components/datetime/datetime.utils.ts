@@ -6,6 +6,64 @@ interface DatetimeParts {
   year: number;
 }
 
+const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
+const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
+
+export const parseDate = (val: string | undefined | null): any | undefined => {
+  // manually parse IS0 cuz Date.parse cannot be trusted
+  // ISO 8601 format: 1994-12-15T13:47:20Z
+  let parse: any[] | null = null;
+
+  if (val != null && val !== '') {
+    // try parsing for just time first, HH:MM
+    parse = TIME_REGEXP.exec(val);
+    if (parse) {
+      // adjust the array so it fits nicely with the datetime parse
+      parse.unshift(undefined, undefined);
+      parse[2] = parse[3] = undefined;
+
+    } else {
+      // try parsing for full ISO datetime
+      parse = ISO_8601_REGEXP.exec(val);
+    }
+  }
+
+  if (parse === null) {
+    // wasn't able to parse the ISO datetime
+    return undefined;
+  }
+
+  // ensure all the parse values exist with at least 0
+  for (let i = 1; i < 8; i++) {
+    parse[i] = parse[i] !== undefined ? parseInt(parse[i], 10) : undefined;
+  }
+
+  let tzOffset = 0;
+  if (parse[9] && parse[10]) {
+    // hours
+    tzOffset = parseInt(parse[10], 10) * 60;
+    if (parse[11]) {
+      // minutes
+      tzOffset += parseInt(parse[11], 10);
+    }
+    if (parse[9] === '-') {
+      // + or -
+      tzOffset *= -1;
+    }
+  }
+
+  return {
+    year: parse[1],
+    month: parse[2],
+    day: parse[3],
+    hour: parse[4],
+    minute: parse[5],
+    second: parse[6],
+    millisecond: parse[7],
+    tzOffset,
+  };
+};
+
 /**
  * Given DatetimeParts, generate the previous month.
  */
@@ -225,14 +283,45 @@ export const isSameDay = (baseParts: DatetimeParts, compareParts: DatetimeParts)
   );
 }
 
+const isDayDisabled = (refParts: DatetimeParts, maxParts?: DatetimeParts, minParts?: DatetimeParts) => {
+  const { day, month, year } = refParts;
+
+  if (day === null) { return true; }
+
+  if (minParts) {
+    if (
+      year < minParts.year ||
+      year === minParts.year && month < minParts.month ||
+      year === minParts.year && month === minParts.month && day < minParts.day!
+    ) {
+      return true;
+    }
+  }
+
+  if (maxParts) {
+    if (
+      year > maxParts.year ||
+      year === maxParts.year && month > maxParts.month ||
+      year === maxParts.year && month === maxParts.month && day > maxParts.day!
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 /**
  * Given a locale, a date, the selected date, and today's date,
  * generate the state for a given calendar day button.
  */
-export const getCalendarDayState = (locale: string, refParts: DatetimeParts, activeParts: DatetimeParts, todayParts: DatetimeParts) => {
+export const getCalendarDayState = (locale: string, refParts: DatetimeParts, activeParts: DatetimeParts, todayParts: DatetimeParts, maxParts?: DatetimeParts, minParts?: DatetimeParts) => {
   const isActive = isSameDay(refParts, activeParts);
   const isToday = isSameDay(refParts, todayParts);
+  const disabled = isDayDisabled(refParts, maxParts, minParts);
+
   return {
+    disabled,
     isActive,
     isToday,
     ariaSelected: isActive ? 'true' : null,
