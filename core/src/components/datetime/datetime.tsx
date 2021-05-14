@@ -297,9 +297,6 @@ export class Datetime implements ComponentInterface {
         case 'End':
           console.log('move to last day of current week');
           break;
-        case 'Home':
-          console.log('move to first day of current week');
-          break;
         case 'PageUp':
           console.log('move to previous month');
           break;

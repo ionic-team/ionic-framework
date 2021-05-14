@@ -8,7 +8,7 @@ interface DatetimeParts {
 
 export const getPreviousWeek = (refParts: DatetimeParts): DatetimeParts => {
   const { month, day, year } = refParts;
-  if (!day) {
+  if (day === null) {
     throw new Error('No day provided');
   }
 
@@ -62,7 +62,7 @@ export const getPreviousWeek = (refParts: DatetimeParts): DatetimeParts => {
 
 export const getNextWeek = (refParts: DatetimeParts): DatetimeParts => {
   const { month, day, year } = refParts;
-  if (!day) {
+  if (day === null) {
     throw new Error('No day provided');
   }
 
@@ -98,9 +98,9 @@ export const getNextWeek = (refParts: DatetimeParts): DatetimeParts => {
 
 export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
   return {
-    month: parseInt(el.getAttribute('data-month')!),
-    day: parseInt(el.getAttribute('data-day')!),
-    year: parseInt(el.getAttribute('data-year')!),
+    month: parseInt(el.getAttribute('data-month')!, 10),
+    day: parseInt(el.getAttribute('data-day')!, 10),
+    year: parseInt(el.getAttribute('data-year')!, 10),
   }
 }
 
