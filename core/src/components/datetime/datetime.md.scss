@@ -82,6 +82,11 @@
   font-size: 14px;
 }
 
+:host .calendar-day:focus:after {
+  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
+  background: current-color(base, 0.2);
+}
+
 /**
  * Day that today but not selected
  * should have ion-color for text color.
