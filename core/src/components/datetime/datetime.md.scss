@@ -83,8 +83,9 @@
 }
 
 :host .calendar-day:focus:after {
-  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
   background: current-color(base, 0.2);
+
+  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
 }
 
 /**
