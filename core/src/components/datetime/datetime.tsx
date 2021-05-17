@@ -10,6 +10,7 @@ import {
   getCalendarDayState,
   getDaysOfMonth,
   getDaysOfWeek,
+  getEndOfWeek,
   getMonthAndDay,
   getMonthAndYear,
   getNextDay,
@@ -19,6 +20,7 @@ import {
   getPreviousDay,
   getPreviousMonth,
   getPreviousWeek,
+  getStartOfWeek,
   parseDate,
   shouldRenderViewButtons,
   shouldRenderViewFooter,
@@ -300,10 +302,10 @@ export class Datetime implements ComponentInterface {
           this.workingParts = { ...getPreviousDay(parts) as any };
           break;
         case 'Home':
-          console.log('move to first day of current week');
+          this.workingParts = { ...getStartOfWeek(parts) as any };
           break;
         case 'End':
-          console.log('move to last day of current week');
+          this.workingParts = { ...getEndOfWeek(parts) as any };
           break;
         case 'PageUp':
           this.workingParts = { ...getPreviousMonth(parts) as any }
@@ -665,7 +667,8 @@ export class Datetime implements ComponentInterface {
     return (
       <div class="calendar-month">
         <div class="calendar-month-grid">
-          {getDaysOfMonth(month, year).map((day, index) => {
+          {getDaysOfMonth(month, year).map((dateObject, index) => {
+            const { day, dayOfWeek } = dateObject;
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(this.locale, referenceParts, this.activeParts, this.todayParts, this.minParts, this.maxParts);
 
@@ -675,6 +678,7 @@ export class Datetime implements ComponentInterface {
                 data-month={month}
                 data-year={year}
                 data-index={index}
+                data-day-of-week={dayOfWeek}
                 disabled={disabled}
                 class={{
                   'calendar-day-padding': day === null,

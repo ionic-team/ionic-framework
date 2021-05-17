@@ -4,6 +4,97 @@ interface DatetimeParts {
   month: number;
   day: number | null;
   year: number;
+  dayOfWeek?: number | null;
+}
+
+export const getStartOfWeek = (refParts: DatetimeParts): DatetimeParts => {
+  const { month, day, year, dayOfWeek } = refParts;
+  if (day === null || dayOfWeek === null || dayOfWeek === undefined) {
+    throw new Error('No day provided');
+  }
+
+  const workingParts = {
+    month,
+    day,
+    year
+  };
+
+  workingParts.day -= dayOfWeek;
+
+  /**
+   * If wrapping to previous month
+   * update days and decrement month
+   */
+  if (workingParts.day < 1) {
+    workingParts.month -= 1;
+  }
+
+  /**
+   * If moving to previous year, reset
+   * month to December and decrement year
+   */
+  if (workingParts.month < 1) {
+    workingParts.month = 12;
+    workingParts.year -= 1;
+  }
+
+  /**
+   * Determine how many days are in the current
+   * month
+   */
+
+  if (workingParts.day < 1) {
+    const daysInMonth = getNumDaysInMonth(workingParts.month, workingParts.year);
+
+    /**
+     * Take num days in month and add the
+     * number of underflow days. This number will
+     * be negative.
+     * Example: 1 week before Jan 2, 2021 is
+     * December 26, 2021 so:
+     * 2 - 7 = -5
+     * 31 + (-5) = 26
+     */
+    workingParts.day = daysInMonth + workingParts.day;
+  }
+
+  return workingParts;
+}
+
+export const getEndOfWeek = (refParts: DatetimeParts): DatetimeParts => {
+  const { month, day, year, dayOfWeek } = refParts;
+  if (day === null || dayOfWeek === null || dayOfWeek === undefined) {
+    throw new Error('No day provided');
+  }
+
+  const workingParts = {
+    month,
+    day,
+    year
+  }
+
+  const daysInMonth = getNumDaysInMonth(month, year);
+  workingParts.day += (6 - dayOfWeek);
+
+  /**
+   * If wrapping to next month
+   * update days and increment month
+   */
+  if (workingParts.day > daysInMonth) {
+    workingParts.day -= daysInMonth;
+    workingParts.month += 1;
+  }
+
+  /**
+   * If moving to next year, reset
+   * month to January and increment year
+   */
+  if (workingParts.month > 12) {
+    workingParts.month = 1;
+    workingParts.year += 1;
+  }
+
+  return workingParts;
 }
 
 export const getNextDay = (refParts: DatetimeParts): DatetimeParts => {
@@ -178,6 +269,7 @@ export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
     month: parseInt(el.getAttribute('data-month')!, 10),
     day: parseInt(el.getAttribute('data-day')!, 10),
     year: parseInt(el.getAttribute('data-year')!, 10),
+    dayOfWeek: parseInt(el.getAttribute('data-day-of-week')!, 10)
   }
 }
 
@@ -386,16 +478,16 @@ const isLeapYear = (year: number) => {
  */
 export const getDaysOfMonth = (month: number, year: number) => {
   const numDays = getNumDaysInMonth(month, year);
-  const offset = new Date(`${month}/1/${year}`).getDay();
+  const offset = new Date(`${month}/1/${year}`).getDay() - 1;
 
   let days = [];
   for (let i = 1; i <= numDays; i++) {
-    days.push(i);
+    days.push({ day: i, dayOfWeek: (offset + i) % 7 });
   }
 
-  for (let i = 0; i < offset; i++) {
+  for (let i = 0; i <= offset; i++) {
     days = [
-      null,
+      { day: null, dayOfWeek: null },
       ...days
     ]
   }

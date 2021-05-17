@@ -15,8 +15,84 @@ import {
   getNextWeek,
   getPreviousWeek,
   getNextDay,
-  getPreviousDay
+  getPreviousDay,
+  getStartOfWeek,
+  getEndOfWeek
 } from '../datetime.utils';
+
+describe('getStartOfWeek()', () => {
+  it('should correctly return the start of the week', () => {
+    expect(getStartOfWeek({
+      month: 5,
+      day: 17,
+      year: 2021,
+      dayOfWeek: 1
+    })).toEqual({
+      month: 5,
+      day: 16,
+      year: 2021
+    });
+
+    expect(getStartOfWeek({
+      month: 5,
+      day: 1,
+      year: 2021,
+      dayOfWeek: 6
+    })).toEqual({
+      month: 4,
+      day: 25,
+      year: 2021,
+    });
+
+    expect(getStartOfWeek({
+      month: 1,
+      day: 2,
+      year: 2021,
+      dayOfWeek: 6
+    })).toEqual({
+      month: 12,
+      day: 27,
+      year: 2020
+    });
+  })
+});
+
+describe('getEndOfWeek()', () => {
+  it('should correctly return the end of the week', () => {
+    expect(getEndOfWeek({
+      month: 5,
+      day: 17,
+      year: 2021,
+      dayOfWeek: 1
+    })).toEqual({
+      month: 5,
+      day: 22,
+      year: 2021
+    });
+
+    expect(getEndOfWeek({
+      month: 5,
+      day: 31,
+      year: 2021,
+      dayOfWeek: 1
+    })).toEqual({
+      month: 6,
+      day: 5,
+      year: 2021,
+    });
+
+    expect(getEndOfWeek({
+      month: 12,
+      day: 29,
+      year: 2021,
+      dayOfWeek: 3
+    })).toEqual({
+      month: 1,
+      day: 1,
+      year: 2022
+    });
+  })
+});
 
 describe('getNextWeek()', () => {
   it('should correctly return the next week', () => {
