@@ -69,32 +69,14 @@
     async function presentBasic() {
       const mode = Ionic.mode;
       await openActionSheet({
-        header: "Albums",
+        header: "Delete Event",
+        subHeader: "Are you sure you want to delete this event?",
         buttons: [{
-          text: 'Delete',
+          text: 'Delete Event',
           role: 'destructive',
           icon: 'trash',
           handler: () => {
             console.log('Delete clicked');
-          }
-        }, {
-          text: 'Share',
-          icon: 'share',
-          cssClass: 'ion-activated',
-          handler: () => {
-            console.log('Share clicked');
-          }
-        }, {
-          text: 'Play (open modal)',
-          icon: 'chevron-forward-circle',
-          handler: () => {
-            console.log('Play clicked');
-          }
-        }, {
-          text: 'Favorite',
-          icon: mode === 'md' ? 'heart' : null,
-          handler: () => {
-            console.log('Favorite clicked');
           }
         }, {
           text: 'Cancel',
