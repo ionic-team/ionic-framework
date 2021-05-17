@@ -266,7 +266,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm run test.e2e --ci
+          command: npm run test.e2e -- --ci --no-build
           working_directory: /tmp/workspace/core
 
   test-core-spec:
@@ -276,7 +276,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm run test.spec --ci
+          command: npm run test.spec -- --ci
           working_directory: /tmp/workspace/core
 
   test-core-treeshake:
@@ -286,7 +286,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm run test.treeshake --ci
+          command: npm run test.treeshake -- --ci
           working_directory: /tmp/workspace/core
 
   test-core-screenshot:
@@ -475,7 +475,7 @@ jobs:
           paths:
             - packages/vue/test-app
 
-  test-vue-spec:
+  test-vue-spec-and-e2e:
     <<: *defaults
     steps:
       - checkout
@@ -486,16 +486,6 @@ jobs:
           working_directory: /tmp/workspace/packages/vue/test-app
       - run:
           command: npm run test:unit
-          working_directory: /tmp/workspace/packages/vue/test-app
-
-  test-vue-e2e:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          command: npm run sync
           working_directory: /tmp/workspace/packages/vue/test-app
       - run:
           command: CYPRESS_CACHE_FOLDER=/tmp/workspace/packages/vue/test-app npm run test:e2e
@@ -565,9 +555,7 @@ workflows:
           requires: [build-vue-router]
       - install-vue-test-app:
           requires: [build-core]
-      - test-vue-spec:
-          requires: [install-vue-test-app, build-vue, build-vue-router]
-      - test-vue-e2e:
+      - test-vue-spec-and-e2e:
           requires: [install-vue-test-app, build-vue, build-vue-router]
       - test-angular-lint:
           requires: [build-angular]
