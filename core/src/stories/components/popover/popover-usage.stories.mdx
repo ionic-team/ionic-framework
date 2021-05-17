@@ -1,0 +1,20 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Components/Global/Popover/Usage" />
+
+# Descrição
+
+Para utilização do popover ver: https://ionicframework.com/docs/api/popover
+
+**As propriedades marcadas com ⚠️ são extritamente necessárias.**
+
+```ts
+async presentPopover(ev: any) {
+  const popover = await this.popoverController.create({
+    cssClass: 'med-popover', ⚠️⚠️⚠️⚠️⚠️⚠️
+    mode: 'ios', ⚠️⚠️⚠️⚠️⚠️⚠️
+    showBackdrop: true ⚠️⚠️⚠️⚠️⚠️⚠️
+  });
+  await popover.present();
+}
+```

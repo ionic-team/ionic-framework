@@ -258,6 +258,19 @@ Type: `Promise<void>`
 | `--padding-top`     | Top padding of the content                                                                                 |
 
 
+## Dependencies
+
+### Used by
+
+ - [med-image-zoom](../medgrupo/global/med-image-zoom)
+
+### Graph
+```mermaid
+graph TD;
+  med-image-zoom --> ion-content
+  style ion-content fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

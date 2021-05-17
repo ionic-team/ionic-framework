@@ -11,7 +11,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-input',
   styleUrls: {
-    ios: 'input.ios.scss',
+    ios: 'input.md.scss',
     md: 'input.md.scss'
   },
   scoped: true

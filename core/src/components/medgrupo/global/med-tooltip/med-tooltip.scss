@@ -1,0 +1,62 @@
+@import "../../../../themes/ionic.globals";
+@import "../../../../../med-components/abstracts";
+
+:host {
+  --button-left-color: #{$med-color-neutral-light-prime};
+  --button-right-color: #{$med-color-brand-primary-medium};
+
+  display: block;
+  padding: $med-spacing-inset-sm;
+
+  .header {
+    padding-top: $med-spacing-stack-xxxs;
+    padding-bottom: $med-spacing-stack-xxxs;
+    font-size: $med-font-size-xxs;
+    font-weight: $med-font-weight-bold;
+    line-height: line-height($med-font-size-xxxs);
+    color: $med-color-neutral-light-prime;
+    margin: 0;
+  }
+
+  .content {
+    font-size: $med-font-size-xxxs;
+    font-weight: $med-font-weight-regular;
+    line-height: line-height($med-font-size-xxxs);
+    color: $med-color-neutral-light-prime;
+    margin: 0;
+  }
+
+  .button-container {
+    padding-top: $med-spacing-stack-base;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .button {
+    @include text-inherit();
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .button--left {
+    font-size: $med-font-size-xxxs;
+    font-weight: $med-font-weight-regular;
+    line-height: line-height($med-font-size-xxxs);
+    color: var(--button-left-color);
+    margin: 0;
+  }
+
+  .button--right {
+    font-size: $med-font-size-xxxs;
+    font-weight: $med-font-weight-regular;
+    line-height: line-height($med-font-size-xxxs);
+    color: var(--button-right-color);
+    margin: 0;
+  }
+}
+
+:host(.simple) {
+  padding: $med-spacing-squish-nano;
+}

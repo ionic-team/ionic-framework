@@ -17,7 +17,7 @@ const TemplateDefault = () => {
 
       <ion-content>
     </ion-app>
-    `
+  `
 }
 
 export const Default = TemplateDefault.bind({});

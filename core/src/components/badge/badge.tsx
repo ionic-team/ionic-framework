@@ -22,6 +22,7 @@ export class Badge implements ComponentInterface {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
+  @Prop() dsSize?: 'sm' | 'md' | 'lg';
 
   render() {
     const mode = getIonMode(this);
@@ -31,7 +32,9 @@ export class Badge implements ComponentInterface {
           [mode]: true,
         })}
       >
-        <slot></slot>
+        <span class="inner">
+          <slot></slot>
+        </span>
       </Host>
     );
   }

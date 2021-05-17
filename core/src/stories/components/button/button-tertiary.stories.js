@@ -31,12 +31,20 @@ Tertiary.argTypes = {
   disabled: {
     disabled: false,
     control: { type: 'boolean' },
-    description: 'Define o comportamento disabled do botão.'
+    description: 'Define o comportamento disabled do botão.',
+    table: {
+      type:  { summary: 'boolean' },
+      defaultValue: { summary: 'undefined' },
+    },
   },
   expand: {
     defaultValue: 'none',
-    options: ['none', 'full', 'block'],
+    options: [undefined, 'full', 'block'],
     control: { type: 'radio'},
-    description: "Define o comportamento 'full' ou 'block' do botão."
+    description: "Define o comportamento 'full' ou 'block' do botão.",
+    table: {
+      type:  { summary: ['full | block'] },
+      defaultValue: { summary: 'undefined' },
+    },
   },
 };

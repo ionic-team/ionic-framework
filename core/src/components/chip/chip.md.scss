@@ -1,1 +1,54 @@
 @import "./chip";
+@import "./chip.med.scss";
+
+//custom
+@import "../../../med-components/abstracts";
+
+:host {
+  --spacing: #{$med-spacing-squish-nano};
+  --background: #{$med-color-neutral-light-30};
+  --border-radius: #{$med-border-radius-pill};
+  --border-width: #{$med-border-width-none};
+  --border-color: #{$med-color-neutral-light-30};
+  --font-size: #{$med-font-size-xxs};
+  --font-weight: #{$med-font-weight-regular};
+  --line-height: #{$med-line-height-compressed};
+  --color: #{$med-color-neutral-dark-30};
+  --ripple-color: rgba(#{$med-color-neutral-dark-prime-rgb}, #{$med-opacity-level-half});
+
+  height: 32px;
+  padding: var(--spacing);
+  background: var(--background);
+  border-radius: var(--border-radius);
+  border-width: var(--border-width);
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
+  color: var(--color);
+}
+
+::slotted(ion-icon:last-child) {
+  margin-inline: #{$med-spacing-inline-nano};
+  margin-right: 0;
+}
+
+::slotted(ion-icon:first-child) {
+  margin-inline: #{$med-spacing-inline-nano};
+  margin-left: 0;
+}
+
+::slotted(ion-label) {
+  margin: #{$med-spacing-inline-nano};
+}
+
+:host([outline]) {
+  --background: transparent;
+  --border-width: #{$med-border-width-hairline};
+  border-color: var(--border-color);
+}
+
+:host([color]) {
+  --background: #{$med-color-questoes-lightest};
+  --border-color: #{$med-color-questoes-medium};
+  --color: #{$med-color-questoes-dark};
+}

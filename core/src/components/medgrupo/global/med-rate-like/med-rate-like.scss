@@ -26,11 +26,15 @@
     transition: color 300ms;
   }
 
-  .button_like .rate {
+  .button--disabled {
+    pointer-events: none;
+  }
+
+  .button--like .rate {
     color: var(--color-like);
   }
 
-  .button_dislike .rate {
+  .button--dislike .rate {
     color: var(--color-dislike);
   }
 }

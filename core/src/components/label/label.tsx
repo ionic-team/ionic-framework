@@ -20,6 +20,8 @@ export class Label implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
+  @Prop() dsName?: 'stacked' | 'helper' | undefined;
+
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.

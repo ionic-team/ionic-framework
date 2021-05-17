@@ -132,6 +132,7 @@ ion-backdrop,event,ionBackdropTap,void,true
 
 ion-badge,shadow
 ion-badge,prop,color,string | undefined,undefined,false,false
+ion-badge,prop,dsSize,"lg" | "md" | "sm" | undefined,undefined,false,false
 ion-badge,prop,mode,"ios" | "md",undefined,false,false
 ion-badge,css-prop,--background
 ion-badge,css-prop,--color
@@ -145,8 +146,8 @@ ion-button,prop,buttonType,string,'button',false,false
 ion-button,prop,color,string | undefined,undefined,false,false
 ion-button,prop,disabled,boolean,false,false,true
 ion-button,prop,download,string | undefined,undefined,false,false
-ion-button,prop,dsName,"icon-label" | "icon-only" | "primary" | "secondary" | "tertiary",undefined,true,false
-ion-button,prop,dsSize,"lg" | "md" | "sm" | "xs",undefined,true,false
+ion-button,prop,dsName,"icon-label" | "icon-only" | "primary" | "secondary" | "tertiary" | undefined,undefined,false,false
+ion-button,prop,dsSize,"lg" | "md" | "sm" | "xs" | undefined,undefined,false,false
 ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
 ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undefined,false,true
 ion-button,prop,href,string | undefined,undefined,false,false
@@ -596,6 +597,7 @@ ion-item-sliding,event,ionDrag,any,true
 
 ion-label,scoped
 ion-label,prop,color,string | undefined,undefined,false,false
+ion-label,prop,dsName,"helper" | "stacked" | undefined,undefined,false,false
 ion-label,prop,mode,"ios" | "md",undefined,false,false
 ion-label,prop,position,"fixed" | "floating" | "stacked" | undefined,undefined,false,false
 ion-label,css-prop,--color
@@ -811,6 +813,7 @@ ion-popover,prop,backdropDismiss,boolean,true,false,false
 ion-popover,prop,component,Function | HTMLElement | null | string,undefined,true,false
 ion-popover,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
 ion-popover,prop,cssClass,string | string[] | undefined,undefined,false,false
+ion-popover,prop,dsName,"tooltip",undefined,true,false
 ion-popover,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-popover,prop,event,any,undefined,false,false
 ion-popover,prop,keyboardClose,boolean,true,false,false
@@ -844,6 +847,9 @@ ion-progress-bar,prop,percentage,boolean,false,false,false
 ion-progress-bar,prop,reversed,boolean,false,false,false
 ion-progress-bar,prop,type,"determinate" | "indeterminate",'determinate',false,false
 ion-progress-bar,prop,value,number,0,false,false
+ion-progress-bar,css-prop,--background
+ion-progress-bar,css-prop,--buffer-background
+ion-progress-bar,css-prop,--progress-background
 ion-progress-bar,part,progress
 ion-progress-bar,part,stream
 ion-progress-bar,part,track
@@ -1382,6 +1388,9 @@ med-enunciado,event,medGalleryRequest,string,true
 med-header,shadow
 med-header,event,medResize,headerResizeEventDetail,true
 
+med-image-zoom,shadow
+med-image-zoom,prop,imagens,any,[],false,true
+
 med-navbar,shadow
 med-navbar,event,medResize,navbarResizeEventDetail,true
 
@@ -1390,6 +1399,13 @@ med-option,shadow
 med-rate-bar,shadow
 
 med-rate-like,shadow
-med-rate-like,event,medChange,"dislike" | "like",true
+med-rate-like,prop,status,RateStatus.DISLIKE | RateStatus.LIKE | undefined,undefined,false,true
+med-rate-like,event,medChange,RateStatus.DISLIKE | RateStatus.LIKE,true
 
 med-toolbar,shadow
+
+med-tooltip,shadow
+med-tooltip,prop,buttonLeft,{ label: string; icon: string; },undefined,true,false
+med-tooltip,prop,buttonRight,{ label: string; icon: string; },undefined,true,false
+med-tooltip,prop,content,string,undefined,true,true
+med-tooltip,prop,header,string,undefined,true,true

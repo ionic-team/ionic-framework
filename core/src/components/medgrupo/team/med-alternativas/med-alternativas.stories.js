@@ -49,31 +49,31 @@ Default.argTypes = {
           Alternativa: 'A',
           Enunciado: 'Enunciado A Lorem ipsum dolor sit amet consectetur adipisicing elit.<br/>Dolores quae repellendus quidem nam. Enunciado A Lorem ipsum dolor sit amet consectetur adipisicing elit.<br/>Dolores quae repellendus quidem nam.',
           Imagem: null,
-          Porcentagem: 100
+          Porcentagem: 1
         },
         {
           Alternativa: 'B',
           Enunciado: 'Enunciado B Lorem ipsum dolor sit amet consectetur adipisicing elit.<br/>Dolores quae repellendus quidem nam.',
           Imagem: null,
-          Porcentagem: 55
+          Porcentagem: 0.55
         },
         {
           Alternativa: 'C',
           Enunciado: 'Enunciado C Lorem ipsum dolor sit amet consectetur adipisicing elit.<br/>Dolores quae repellendus quidem nam.',
           Imagem: null,
-          Porcentagem: 30
+          Porcentagem: 0.3
         },
         {
           Alternativa: 'D',
           Enunciado: 'Enunciado D Lorem ipsum dolor sit amet consectetur adipisicing elit.<br/>Dolores quae repellendus quidem nam.',
           Imagem: null,
-          Porcentagem: 5
+          Porcentagem: 0.05
         },
         {
-          Alternativa: 'D',
+          Alternativa: 'E',
           Enunciado: 'Enunciado D Lorem ipsum dolor sit amet consectetur adipisicing elit.<br/>Dolores quae repellendus quidem nam.',
           Imagem: null,
-          Porcentagem: 5
+          Porcentagem: 0
         },
       ],
       respostaCorreta: 'B',

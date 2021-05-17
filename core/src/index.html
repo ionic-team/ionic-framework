@@ -13,7 +13,10 @@
 
     <script nomodule src="./dist/ionic/ionic.js"></script>
     <script type="module" src="./dist/ionic/ionic.esm.js"></script></head>
-
+    <script type="module">
+      import { modalController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+      window.modalController = modalController;
+    </script>
     <style>
       :root {
         --ion-font-family: 'fsemeric';
@@ -31,22 +34,64 @@
       .light-mode ion-content {
         --background: #fafafa;
       }
+      .modal {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 500px;
+        height: 500px;
+        background-color: aquamarine;
+      }
     </style>
-    <script type="module">
-      import { popoverController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
-      window.popoverController = popoverController;
-    </script>
   </head>
   <body class="dark-mode">
     <ion-app>
-      <ion-content>
+      <ion-content fullscreen class="ion-padding">
+          <ion-button id="single" expand="block">Zoom image single</ion-button>
+          <ion-button id="mult" expand="block">Zoom image mult</ion-button>
         <button id="theme">toggle theme</button>
 
-        <ion-button expand="block">Show Popover</ion-button>
+        <div style="display: flex; justify-content: center;">
+          <ion-icon color="dark-30" name="med-information"></ion-icon>
+        </div>
+
       </ion-content>
     </ion-app>
 
     <script>
+    const button1 = document.querySelector('#single');
+    const button2 = document.querySelector('#mult');
+
+    button1.addEventListener('click', createModal1);
+    button2.addEventListener('click', createModal2);
+
+    async function createModal1() {
+      const modal = await modalController.create({
+        component: 'med-image-zoom',
+        componentProps:{imagens: [
+          {link: "https://via.placeholder.com/500", legenda:"texto"},
+        ]}
+      });
+
+      await modal.present();
+    }
+
+
+    async function createModal2() {
+      const modal = await modalController.create({
+        component: 'med-image-zoom',
+        componentProps:{imagens: [
+          {link: "https://via.placeholder.com/500", legenda:"texto"},
+          {link: "https://via.placeholder.com/500", legenda:"texto2"},
+          {link: "https://via.placeholder.com/500", legenda:"texto2"},
+          {link: "https://via.placeholder.com/500", legenda:"texto3"},
+          {link: "https://via.placeholder.com/500", legenda:"text4"},
+        ]}
+      });
+
+      await modal.present();
+    }
+
       document.querySelector('#theme').addEventListener('click', () => {
         const html = document.querySelector('html');
         const body = document.querySelector('body');
@@ -62,17 +107,29 @@
 
       let currentPopover = null;
 
-      const buttons = document.querySelectorAll('ion-button');
+      const buttons = document.querySelectorAll('ion-icon');
       for (var i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', handleButtonClick);
       }
 
       async function handleButtonClick(ev) {
         popover = await popoverController.create({
-          component: 'popover-example-page',
+          component: 'med-tooltip',
+          cssClass: 'med-tooltip',
+          showBackdrop: false,
+          componentProps: {
+            header: 'Título do Tutorial',
+            content: 'Este é um exemplo de tootip em parágrafo. Esse box contém o tamanho máximo de texto que pode ser exibido. Acima disso, utilize um modal.',
+            buttonLeft: {
+              label: 'Pular tutorial',
+            },
+            buttonRight: {
+              label: 'Confirmar e encerrar',
+              icon: 'med-arrow-right-circle'
+            }
+          },
           mode: 'ios',
           event: ev,
-          translucent: true
         });
         currentPopover = popover;
         return popover.present();
@@ -84,16 +141,15 @@
         }
       }
 
-      customElements.define('popover-example-page', class ModalContent extends HTMLElement {
+      /* customElements.define('custom-popover', class ModalContent extends HTMLElement {
         connectedCallback() {
           this.innerHTML = `
-           <ion-range max="5">
-            <ion-icon slot="start" size="small" name="med-font-decrease-32"></ion-icon>
-            <ion-icon slot="end" name="med-font-increase-32"></ion-icon>
-           </ion-range>
+            <med-tooltip>
+              <p>Tooltip Simples</p>
+            </med-tooltip>
           `;
         }
-      });
+      }); */
     </script>
   </body>
 </html>

@@ -106,6 +106,7 @@ export const parameters = {
         'Conhecimento', ['Metodologia BEM'],
         'Sass', ['Variables', 'Functions', 'Mixins'],
         'Tokens', ['Tokens', 'Cores', 'Tipografia', 'Espacamento', 'Complementares', 'Exemplo'],
+        'Ionic 1',
         'Components'
       ],
     },

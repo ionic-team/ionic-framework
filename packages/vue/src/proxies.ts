@@ -20,7 +20,8 @@ export const IonBackdrop = /*@__PURE__*/ defineContainer<JSX.IonBackdrop>('ion-b
 
 
 export const IonBadge = /*@__PURE__*/ defineContainer<JSX.IonBadge>('ion-badge', [
-  'color'
+  'color',
+  'dsSize'
 ]);
 
 
@@ -363,6 +364,7 @@ export const IonItemSliding = /*@__PURE__*/ defineContainer<JSX.IonItemSliding>(
 
 
 export const IonLabel = /*@__PURE__*/ defineContainer<JSX.IonLabel>('ion-label', [
+  'dsName',
   'color',
   'position',
   'ionColor',
@@ -834,6 +836,11 @@ export const MedHeader = /*@__PURE__*/ defineContainer<JSX.MedHeader>('med-heade
 ]);
 
 
+export const MedImageZoom = /*@__PURE__*/ defineContainer<JSX.MedImageZoom>('med-image-zoom', [
+  'imagens'
+]);
+
+
 export const MedNavbar = /*@__PURE__*/ defineContainer<JSX.MedNavbar>('med-navbar', [
   'medResize'
 ]);
@@ -846,9 +853,18 @@ export const MedRateBar = /*@__PURE__*/ defineContainer<JSX.MedRateBar>('med-rat
 
 
 export const MedRateLike = /*@__PURE__*/ defineContainer<JSX.MedRateLike>('med-rate-like', [
+  'status',
   'medChange'
 ]);
 
 
 export const MedToolbar = /*@__PURE__*/ defineContainer<JSX.MedToolbar>('med-toolbar');
+
+
+export const MedTooltip = /*@__PURE__*/ defineContainer<JSX.MedTooltip>('med-tooltip', [
+  'header',
+  'content',
+  'buttonLeft',
+  'buttonRight'
+]);
 

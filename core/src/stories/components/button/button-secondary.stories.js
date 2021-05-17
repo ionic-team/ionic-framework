@@ -31,6 +31,10 @@ Secondary.argTypes = {
   disabled: {
     disabled: false,
     control: { type: 'boolean' },
-    description: 'Define o comportamento disabled do botão.'
+    description: 'Define o comportamento disabled do botão.',
+    table: {
+      type:  { summary: 'boolean' },
+      defaultValue: { summary: 'undefined' },
+    },
   }
 };

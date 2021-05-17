@@ -32,6 +32,9 @@ export class Popover implements ComponentInterface, OverlayInterface {
 
   @Element() el!: HTMLIonPopoverElement;
 
+  // custom
+  @Prop() dsName!: 'tooltip';
+
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
 

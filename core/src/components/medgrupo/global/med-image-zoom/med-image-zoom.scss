@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  ion-grid {
+    height: 100%;
+  }
+
+  ion-slides {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+    ion-slide {
+      display: inline;
+      height: 100%;
+
+      div {
+        display: block;
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import { withDesign } from 'storybook-addon-designs';
 
 export default {
-  title: 'Components/Global/Button',
+  title: 'Components/Global/Button/Icon Only',
   decorators: [withDesign],
 };
 
@@ -39,18 +39,30 @@ IconOnly.argTypes = {
   disabled: {
     disabled: false,
     control: { type: 'boolean' },
-    description: 'Define o comportamento disabled do botão.'
+    description: 'Define o comportamento disabled do botão.',
+    table: {
+      type:  { summary: 'boolean' },
+      defaultValue: { summary: 'undefined' },
+    },
   },
   size: {
     defaultValue: 'none',
-    options: ['none', 'xs', 'sm', 'md', 'lg'],
+    options: [undefined, 'xs', 'sm', 'md', 'lg'],
     control: { type: 'radio'},
-    description: "Define os tamanhos 'xs', 'sm', 'md' e 'lg' dos botões."
+    description: "Define os tamanhos dos botões.",
+    table: {
+      type:  { summary: ['xs | sm | md | lg'] },
+      defaultValue: { summary: 'undefined' },
+    },
   },
   platform: {
     defaultValue: 'Desktop',
     options: ['Desktop', 'Mobile'],
     control: { type: 'radio' },
-    description: 'Muda a visualização do componente entre plataformas. **Usado apenas no storybook para visualização.**'
+    description: 'Muda a visualização do componente entre plataformas. **Usado apenas no storybook para visualização.**',
+    table: {
+      type:  { summary: ['desktop | mobile'] },
+      defaultValue: { summary: 'desktop' },
+    },
   },
 };

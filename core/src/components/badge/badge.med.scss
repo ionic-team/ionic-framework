@@ -49,3 +49,30 @@
   border-color: #{current-color(base)};
   color: #{current-color(base)};
 }
+
+// sizes
+
+:host([ds-size="sm"]) {
+  font-size: #{$med-font-size-nano};
+  font-weight: #{$med-font-weight-regular};
+  height: 24px;
+  --padding-start: #{$med-spacing-inline-base};
+  --padding-end: #{$med-spacing-inline-base};
+}
+
+:host([ds-size="md"]) {
+  font-size: #{$med-font-size-xxs};
+  font-weight: #{$med-font-weight-medium};
+  height: 32px;
+  --padding-start: #{$med-spacing-inline-base};
+  --padding-end: #{$med-spacing-inline-base};
+}
+
+:host([ds-size="lg"]) {
+  font-size: #{$med-font-size-xs};
+  font-weight: #{$med-font-weight-medium};
+  height: 40px;
+  --padding-start: #{$med-spacing-inline-xxs};
+  --padding-end: #{$med-spacing-inline-xxs};
+}
+

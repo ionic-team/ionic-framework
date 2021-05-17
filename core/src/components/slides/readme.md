@@ -849,6 +849,19 @@ Type: `Promise<void>`
 | `--scroll-bar-background-active`   | Background of the active pagination scroll-bar   |
 
 
+## Dependencies
+
+### Used by
+
+ - [med-image-zoom](../medgrupo/global/med-image-zoom)
+
+### Graph
+```mermaid
+graph TD;
+  med-image-zoom --> ion-slides
+  style ion-slides fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

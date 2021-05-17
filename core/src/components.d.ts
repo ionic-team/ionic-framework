@@ -11,7 +11,9 @@ import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
 import { MedAlternativaInterface } from "./components/medgrupo/team/med-alternativas/med-alternativas-interface";
 import { headerResizeEventDetail } from "./components/medgrupo/global/med-header/med-header-interface";
+import { MedImagensZoomInterface } from "./components/medgrupo/global/med-image-zoom/med-image-zoom-interface";
 import { navbarResizeEventDetail } from "./components/medgrupo/global/med-navbar/med-navbar-interface";
+import { RateStatus } from "./components/medgrupo/global/med-rate-like/med-rate-like.enum";
 export namespace Components {
     interface IonActionSheet {
         /**
@@ -208,6 +210,7 @@ export namespace Components {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        "dsSize"?: 'sm' | 'md' | 'lg';
         /**
           * The mode determines which platform styles to use.
          */
@@ -230,8 +233,8 @@ export namespace Components {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download": string | undefined;
-        "dsName": 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
-        "dsSize": 'xs' | 'sm' | 'md' | 'lg';
+        "dsName"?: 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
+        "dsSize"?: 'xs' | 'sm' | 'md' | 'lg';
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
          */
@@ -1114,6 +1117,7 @@ export namespace Components {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        "dsName"?: 'stacked' | 'helper' | undefined;
         /**
           * The mode determines which platform styles to use.
          */
@@ -1627,6 +1631,7 @@ export namespace Components {
           * @param role The role of the element that is dismissing the popover. For example, 'cancel' or 'backdrop'.
          */
         "dismiss": (data?: any, role?: string | undefined) => Promise<boolean>;
+        "dsName": 'tooltip';
         /**
           * Animation to use when the popover is presented.
          */
@@ -2732,6 +2737,9 @@ export namespace Components {
     }
     interface MedHeader {
     }
+    interface MedImageZoom {
+        "imagens": MedImagensZoomInterface[] | any;
+    }
     interface MedNavbar {
     }
     interface MedOption {
@@ -2739,8 +2747,15 @@ export namespace Components {
     interface MedRateBar {
     }
     interface MedRateLike {
+        "status"?: RateStatus;
     }
     interface MedToolbar {
+    }
+    interface MedTooltip {
+        "buttonLeft": { label: string, icon: string };
+        "buttonRight": { label: string, icon: string };
+        "content": string;
+        "header": string;
     }
 }
 declare global {
@@ -3296,6 +3311,12 @@ declare global {
         prototype: HTMLMedHeaderElement;
         new (): HTMLMedHeaderElement;
     };
+    interface HTMLMedImageZoomElement extends Components.MedImageZoom, HTMLStencilElement {
+    }
+    var HTMLMedImageZoomElement: {
+        prototype: HTMLMedImageZoomElement;
+        new (): HTMLMedImageZoomElement;
+    };
     interface HTMLMedNavbarElement extends Components.MedNavbar, HTMLStencilElement {
     }
     var HTMLMedNavbarElement: {
@@ -3325,6 +3346,12 @@ declare global {
     var HTMLMedToolbarElement: {
         prototype: HTMLMedToolbarElement;
         new (): HTMLMedToolbarElement;
+    };
+    interface HTMLMedTooltipElement extends Components.MedTooltip, HTMLStencilElement {
+    }
+    var HTMLMedTooltipElement: {
+        prototype: HTMLMedTooltipElement;
+        new (): HTMLMedTooltipElement;
     };
     interface HTMLElementTagNameMap {
         "ion-action-sheet": HTMLIonActionSheetElement;
@@ -3419,11 +3446,13 @@ declare global {
         "med-cartao-resposta-lista": HTMLMedCartaoRespostaListaElement;
         "med-enunciado": HTMLMedEnunciadoElement;
         "med-header": HTMLMedHeaderElement;
+        "med-image-zoom": HTMLMedImageZoomElement;
         "med-navbar": HTMLMedNavbarElement;
         "med-option": HTMLMedOptionElement;
         "med-rate-bar": HTMLMedRateBarElement;
         "med-rate-like": HTMLMedRateLikeElement;
         "med-toolbar": HTMLMedToolbarElement;
+        "med-tooltip": HTMLMedTooltipElement;
     }
 }
 declare namespace LocalJSX {
@@ -3622,6 +3651,7 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        "dsSize"?: 'sm' | 'md' | 'lg';
         /**
           * The mode determines which platform styles to use.
          */
@@ -3644,8 +3674,8 @@ declare namespace LocalJSX {
           * This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want).
          */
         "download"?: string | undefined;
-        "dsName": 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
-        "dsSize": 'xs' | 'sm' | 'md' | 'lg';
+        "dsName"?: 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
+        "dsSize"?: 'xs' | 'sm' | 'md' | 'lg';
         /**
           * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
          */
@@ -4562,6 +4592,7 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        "dsName"?: 'stacked' | 'helper' | undefined;
         /**
           * The mode determines which platform styles to use.
          */
@@ -4986,6 +5017,7 @@ declare namespace LocalJSX {
          */
         "cssClass"?: string | string[];
         "delegate"?: FrameworkDelegate;
+        "dsName": 'tooltip';
         /**
           * Animation to use when the popover is presented.
          */
@@ -6176,6 +6208,9 @@ declare namespace LocalJSX {
     interface MedHeader {
         "onMedResize"?: (event: CustomEvent<headerResizeEventDetail>) => void;
     }
+    interface MedImageZoom {
+        "imagens"?: MedImagensZoomInterface[] | any;
+    }
     interface MedNavbar {
         "onMedResize"?: (event: CustomEvent<navbarResizeEventDetail>) => void;
     }
@@ -6184,9 +6219,16 @@ declare namespace LocalJSX {
     interface MedRateBar {
     }
     interface MedRateLike {
-        "onMedChange"?: (event: CustomEvent<'like' | 'dislike'>) => void;
+        "onMedChange"?: (event: CustomEvent<RateStatus>) => void;
+        "status"?: RateStatus;
     }
     interface MedToolbar {
+    }
+    interface MedTooltip {
+        "buttonLeft": { label: string, icon: string };
+        "buttonRight": { label: string, icon: string };
+        "content": string;
+        "header": string;
     }
     interface IntrinsicElements {
         "ion-action-sheet": IonActionSheet;
@@ -6281,11 +6323,13 @@ declare namespace LocalJSX {
         "med-cartao-resposta-lista": MedCartaoRespostaLista;
         "med-enunciado": MedEnunciado;
         "med-header": MedHeader;
+        "med-image-zoom": MedImageZoom;
         "med-navbar": MedNavbar;
         "med-option": MedOption;
         "med-rate-bar": MedRateBar;
         "med-rate-like": MedRateLike;
         "med-toolbar": MedToolbar;
+        "med-tooltip": MedTooltip;
     }
 }
 export { LocalJSX as JSX };
@@ -6384,11 +6428,13 @@ declare module "@stencil/core" {
             "med-cartao-resposta-lista": LocalJSX.MedCartaoRespostaLista & JSXBase.HTMLAttributes<HTMLMedCartaoRespostaListaElement>;
             "med-enunciado": LocalJSX.MedEnunciado & JSXBase.HTMLAttributes<HTMLMedEnunciadoElement>;
             "med-header": LocalJSX.MedHeader & JSXBase.HTMLAttributes<HTMLMedHeaderElement>;
+            "med-image-zoom": LocalJSX.MedImageZoom & JSXBase.HTMLAttributes<HTMLMedImageZoomElement>;
             "med-navbar": LocalJSX.MedNavbar & JSXBase.HTMLAttributes<HTMLMedNavbarElement>;
             "med-option": LocalJSX.MedOption & JSXBase.HTMLAttributes<HTMLMedOptionElement>;
             "med-rate-bar": LocalJSX.MedRateBar & JSXBase.HTMLAttributes<HTMLMedRateBarElement>;
             "med-rate-like": LocalJSX.MedRateLike & JSXBase.HTMLAttributes<HTMLMedRateLikeElement>;
             "med-toolbar": LocalJSX.MedToolbar & JSXBase.HTMLAttributes<HTMLMedToolbarElement>;
+            "med-tooltip": LocalJSX.MedTooltip & JSXBase.HTMLAttributes<HTMLMedTooltipElement>;
         }
     }
 }

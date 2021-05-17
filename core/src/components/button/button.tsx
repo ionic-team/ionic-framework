@@ -33,8 +33,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Element() el!: HTMLElement;
 
   // custom
-  @Prop() dsName!: 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
-  @Prop() dsSize!: 'xs' | 'sm' | 'md' | 'lg';
+  @Prop() dsName?: 'primary' | 'secondary' | 'tertiary' | 'icon-only' | 'icon-label';
+  @Prop() dsSize?: 'xs' | 'sm' | 'md' | 'lg';
   private iconOnly = false;
   private iconLabel = false;
 

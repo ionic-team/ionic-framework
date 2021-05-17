@@ -67,3 +67,67 @@
 }
 
 @import './popover.med.scss';
+
+//
+// custom
+//
+
+@import "../../../med-components/abstracts";
+
+//
+// med-popover
+//
+
+:host(.med-popover) {
+  --box-shadow: #{$med-shadow-level-3};
+  color: $med-color-neutral-light-prime;
+
+  .popover-arrow::after {
+    left: 1px;
+    top: 4px;
+    border-radius: 7px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .popover-content {
+    padding: $med-spacing-inset-sm;
+    border-radius: $med-border-radius-sm;
+    box-shadow: $med-shadow-level-3;
+    --width: 224px;
+
+    @include breakpoint-up('md') {
+      --width: 280px;
+    }
+
+    @include breakpoint-up('lg') {
+      --width: 400px;
+    }
+  }
+}
+
+@supports (backdrop-filter: blur(0)) {
+  :host(.med-popover) .popover-content,
+  :host(.med-popover) .popover-arrow::after {
+    background: $med-color-neutral-dark-40;
+  }
+}
+
+:host(.med-tooltip) {
+  --background: #{$med-color-neutral-dark-30};
+  --box-shadow: #{$med-shadow-level-1};
+  --width: auto;
+  --max-width: 280px;
+
+  .popover-arrow::after {
+    left: 6px;
+    top: 5px;
+    border-radius: 0;
+    width: 8px;
+    height: 8px;
+  }
+
+  .popover-content {
+    border-radius: $med-border-radius-quark;
+  }
+}

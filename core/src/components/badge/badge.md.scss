@@ -13,4 +13,36 @@
   @include border-radius($badge-md-border-radius);
 }
 
-@import "./badge.med.scss"
+@import "./badge.med.scss";
+
+// sizes
+
+:host([ds-size="sm"]) {
+  font-size: #{$med-font-size-nano};
+  font-weight: #{$med-font-weight-regular};
+  height: 24px;
+  --padding-start: #{$med-spacing-inline-base};
+  --padding-end: #{$med-spacing-inline-base};
+  display: inline-flex;
+  align-items: center;
+}
+
+:host([ds-size="md"]) {
+  font-size: #{$med-font-size-xxs};
+  font-weight: #{$med-font-weight-medium};
+  height: 32px;
+  --padding-start: #{$med-spacing-inline-base};
+  --padding-end: #{$med-spacing-inline-base};
+  display: inline-flex;
+  align-items: center;
+}
+
+:host([ds-size="lg"]) {
+  font-size: #{$med-font-size-xs};
+  font-weight: #{$med-font-weight-medium};
+  height: 40px;
+  --padding-start: #{$med-spacing-inline-xxs};
+  --padding-end: #{$med-spacing-inline-xxs};
+  display: inline-flex;
+  align-items: center;
+}

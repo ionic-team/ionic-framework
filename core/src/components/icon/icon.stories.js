@@ -124,16 +124,30 @@ const TemplateIconOnly = () => {
 
         <div class="storybook-only__icon-container">
           <ion-button ds-name="icon-only">
-            <ion-icon slot="icon-only" name="med-font-decrease-32"></ion-icon>
+            <ion-icon slot="icon-only" name="med-font-decrease"></ion-icon>
           </ion-button>
-          - med-font-decrease-32
+          - med-font-decrease
         </div>
 
         <div class="storybook-only__icon-container">
           <ion-button ds-name="icon-only">
-            <ion-icon slot="icon-only" name="med-font-increase-32"></ion-icon>
+            <ion-icon slot="icon-only" name="med-font-increase"></ion-icon>
           </ion-button>
-          - med-font-increase-32
+          - med-font-increase
+        </div>
+
+        <div class="storybook-only__icon-container">
+          <ion-button ds-name="icon-only">
+            <ion-icon slot="icon-only" name="med-information"></ion-icon>
+          </ion-button>
+          - med-information
+        </div>
+
+        <div class="storybook-only__icon-container">
+          <ion-button ds-name="icon-only">
+            <ion-icon slot="icon-only" name="med-check-circle"></ion-icon>
+          </ion-button>
+          - med-check-circle
         </div>
 
       </div>

@@ -1,0 +1,33 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import breakpoints from "../../assets/breakpoints.jpg";
+
+<Meta title="Ionic 1/Ionic 1" />
+
+# Utilização junto ao Ionic 1
+
+Para utilizar os web components junto ao ionic 1 é necessário o binding de atributos e eventos da seguinte maneira.
+
+## Atributos
+
+Utiliza-se a diretiva `stencil-props` passando-se a lista de atributos que se deseja fazer o binding.
+
+```js
+<med-alternativas
+  stencil-props="{
+    alternativas: vm.alternativas,
+    mostraResposta: vm.mostraResposta,
+    respostaCorreta: vm.respostaCorreta
+  }"
+></med-alternativas>
+```
+
+## Eventos
+
+Utiliza-se a diretiva `stencil-events` passando-se a lista de eventos que se deseja escutar e `on-stencil-events` para chamar o método a ser executado no retorno dos listeners.
+
+```js
+<med-alternativas
+  stencil-events="['medChange']"
+  on-stencil-events="vm.outputsAlternativas($event)"
+></med-alternativas>
+```

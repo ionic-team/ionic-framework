@@ -84,10 +84,10 @@ export class MedAlternativas implements MedAlternativasInterface {
                     <div class='image-container__overlay'>Clique para ampliar</div>
                   </div>
 
-                  <ion-progress-bar class={`
+                  <ion-progress-bar percentage class={`
                     ion-progress-bar
                     ${this.mostraResposta && this.alternativaSelecionada ? 'ion-progress-bar--toggle' : '' }
-                    ${alternativa[this.keyPorcentagem] === 100 ? 'ion-progress-bar--100' : '' }`}
+                    ${alternativa[this.keyPorcentagem] === 1 ? 'ion-progress-bar--100' : '' }`}
                     value={alternativa[this.keyPorcentagem]}>
                   </ion-progress-bar>
                 </div>

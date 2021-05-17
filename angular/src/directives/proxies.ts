@@ -50,8 +50,8 @@ export class IonBackdrop {
 }
 export declare interface IonBadge extends Components.IonBadge {
 }
-@ProxyCmp({ inputs: ["color", "mode"] })
-@Component({ selector: "ion-badge", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "mode"] })
+@ProxyCmp({ inputs: ["color", "dsSize", "mode"] })
+@Component({ selector: "ion-badge", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "dsSize", "mode"] })
 export class IonBadge {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -413,8 +413,8 @@ export class IonItemSliding {
 }
 export declare interface IonLabel extends Components.IonLabel {
 }
-@ProxyCmp({ inputs: ["color", "mode", "position"] })
-@Component({ selector: "ion-label", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "mode", "position"] })
+@ProxyCmp({ inputs: ["color", "dsName", "mode", "position"] })
+@Component({ selector: "ion-label", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["color", "dsName", "mode", "position"] })
 export class IonLabel {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
@@ -939,6 +939,17 @@ export class MedHeader {
     proxyOutputs(this, this.el, ["medResize"]);
   }
 }
+export declare interface MedImageZoom extends Components.MedImageZoom {
+}
+@ProxyCmp({ inputs: ["imagens"] })
+@Component({ selector: "med-image-zoom", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["imagens"] })
+export class MedImageZoom {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
 export declare interface MedNavbar extends Components.MedNavbar {
 }
 @Component({ selector: "med-navbar", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>" })
@@ -973,7 +984,8 @@ export class MedRateBar {
 }
 export declare interface MedRateLike extends Components.MedRateLike {
 }
-@Component({ selector: "med-rate-like", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>" })
+@ProxyCmp({ inputs: ["status"] })
+@Component({ selector: "med-rate-like", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["status"] })
 export class MedRateLike {
   medChange!: EventEmitter<CustomEvent>;
   protected el: HTMLElement;
@@ -987,6 +999,17 @@ export declare interface MedToolbar extends Components.MedToolbar {
 }
 @Component({ selector: "med-toolbar", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>" })
 export class MedToolbar {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+export declare interface MedTooltip extends Components.MedTooltip {
+}
+@ProxyCmp({ inputs: ["buttonLeft", "buttonRight", "content", "header"] })
+@Component({ selector: "med-tooltip", changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content></ng-content>", inputs: ["buttonLeft", "buttonRight", "content", "header"] })
+export class MedTooltip {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
