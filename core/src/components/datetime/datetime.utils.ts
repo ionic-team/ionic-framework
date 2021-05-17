@@ -6,6 +6,83 @@ interface DatetimeParts {
   year: number;
 }
 
+export const getNextDay = (refParts: DatetimeParts): DatetimeParts => {
+  const { month, day, year } = refParts;
+  if (day === null) {
+    throw new Error('No day provided');
+  }
+
+  const workingParts = {
+    month,
+    day,
+    year
+  }
+
+  workingParts.day += 1;
+
+  /**
+   * If wrapping to next month
+   * update days and increment month
+   */
+  if (workingParts.day > getNumDaysInMonth(month, year)) {
+    workingParts.day = 1;
+    workingParts.month += 1;
+  }
+
+  /**
+   * If moving to next year, reset
+   * month to January and increment year
+   */
+  if (workingParts.month > 12) {
+    workingParts.month = 1;
+    workingParts.year += 1;
+  }
+
+  return workingParts;
+}
+
+export const getPreviousDay = (refParts: DatetimeParts): DatetimeParts => {
+  const { month, day, year } = refParts;
+  if (day === null) {
+    throw new Error('No day provided');
+  }
+
+  const workingParts = {
+    month,
+    day,
+    year
+  }
+
+  workingParts.day -= 1;
+
+  /**
+   * If wrapping to previous month
+   * update days and decrement month
+   */
+  if (workingParts.day < 1) {
+    workingParts.month -= 1;
+  }
+
+  /**
+   * If moving to previous year, reset
+   * month to December and decrement year
+   */
+  if (workingParts.month < 1) {
+    workingParts.month = 12;
+    workingParts.year -= 1;
+  }
+
+  /**
+   * Determine how many days are in the current
+   * month
+   */
+  if (workingParts.day < 1) {
+    workingParts.day = getNumDaysInMonth(workingParts.month, workingParts.year);
+  }
+
+  return workingParts;
+}
+
 export const getPreviousWeek = (refParts: DatetimeParts): DatetimeParts => {
   const { month, day, year } = refParts;
   if (day === null) {
@@ -178,7 +255,10 @@ export const getPreviousMonth = (refParts: DatetimeParts) => {
   const month = (refParts.month === 1) ? 12 : refParts.month - 1;
   const year = (refParts.month === 1) ? refParts.year - 1 : refParts.year;
 
-  return { month, year, day: null };
+  const numDaysInMonth = getNumDaysInMonth(month, year);
+  const day = (numDaysInMonth < refParts.day!) ? numDaysInMonth : refParts.day;
+
+  return { month, year, day };
 }
 
 /**
@@ -192,19 +272,20 @@ export const getNextMonth = (refParts: DatetimeParts) => {
   const month = (refParts.month === 12) ? 1 : refParts.month + 1;
   const year = (refParts.month === 12) ? refParts.year + 1 : refParts.year;
 
-  return { month, year, day: null };
+  const numDaysInMonth = getNumDaysInMonth(month, year);
+  const day = (numDaysInMonth < refParts.day!) ? numDaysInMonth : refParts.day;
+
+  return { month, year, day };
 }
 
 /**
  * Given DatetimeParts, generate the previous,
  * current, and and next months.
- * Only intended to be used for generate month data in the
- * calendar. As a result, day value is not included.
  */
 export const generateMonths = (refParts: DatetimeParts): DatetimeParts[] => {
   return [
     getPreviousMonth(refParts),
-    { month: refParts.month, year: refParts.year, day: null },
+    { month: refParts.month, year: refParts.year, day: refParts.day },
     getNextMonth(refParts)
   ]
 }

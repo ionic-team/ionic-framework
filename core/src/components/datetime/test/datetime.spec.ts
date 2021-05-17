@@ -11,8 +11,148 @@ import {
   getNextMonth,
   getPreviousMonth,
   generateMonths,
-  isDayDisabled
+  isDayDisabled,
+  getNextWeek,
+  getPreviousWeek,
+  getNextDay,
+  getPreviousDay
 } from '../datetime.utils';
+
+describe('getNextWeek()', () => {
+  it('should correctly return the next week', () => {
+    expect(getNextWeek({
+      month: 5,
+      day: 17,
+      year: 2021
+    })).toEqual({
+      month: 5,
+      day: 24,
+      year: 2021
+    });
+
+    expect(getNextWeek({
+      month: 5,
+      day: 31,
+      year: 2021
+    })).toEqual({
+      month: 6,
+      day: 7,
+      year: 2021
+    });
+
+    expect(getNextWeek({
+      month: 12,
+      day: 29,
+      year: 2021
+    })).toEqual({
+      month: 1,
+      day: 5,
+      year: 2022
+    });
+  })
+})
+
+describe('getPreviousWeek()', () => {
+  it('should correctly return the previous week', () => {
+    expect(getPreviousWeek({
+      month: 5,
+      day: 17,
+      year: 2021
+    })).toEqual({
+      month: 5,
+      day: 10,
+      year: 2021
+    });
+
+    expect(getPreviousWeek({
+      month: 5,
+      day: 1,
+      year: 2021
+    })).toEqual({
+      month: 4,
+      day: 24,
+      year: 2021
+    });
+
+    expect(getPreviousWeek({
+      month: 1,
+      day: 4,
+      year: 2021
+    })).toEqual({
+      month: 12,
+      day: 28,
+      year: 2020
+    });
+  })
+})
+
+describe('getNextDay()', () => {
+  it('should correctly return the next day', () => {
+    expect(getNextDay({
+      month: 5,
+      day: 17,
+      year: 2021
+    })).toEqual({
+      month: 5,
+      day: 18,
+      year: 2021
+    });
+
+    expect(getNextDay({
+      month: 5,
+      day: 31,
+      year: 2021
+    })).toEqual({
+      month: 6,
+      day: 1,
+      year: 2021
+    });
+
+    expect(getNextDay({
+      month: 12,
+      day: 31,
+      year: 2021
+    })).toEqual({
+      month: 1,
+      day: 1,
+      year: 2022
+    });
+  })
+})
+
+describe('getPreviousDay()', () => {
+  it('should correctly return the previous day', () => {
+    expect(getPreviousDay({
+      month: 5,
+      day: 17,
+      year: 2021
+    })).toEqual({
+      month: 5,
+      day: 16,
+      year: 2021
+    });
+
+    expect(getPreviousDay({
+      month: 5,
+      day: 1,
+      year: 2021
+    })).toEqual({
+      month: 4,
+      day: 30,
+      year: 2021
+    });
+
+    expect(getPreviousDay({
+      month: 1,
+      day: 1,
+      year: 2021
+    })).toEqual({
+      month: 12,
+      day: 31,
+      year: 2020
+    });
+  })
+})
 
 describe('isDayDisabled', () => {
   it('should correctly return whether or not a day is disabled', () => {
@@ -27,24 +167,24 @@ describe('isDayDisabled', () => {
     expect(isDayDisabled(refDate, undefined, { month: 4, day: 12, year: 2021 })).toEqual(true);
     expect(isDayDisabled(refDate, undefined, { month: 5, day: 11, year: 2021 })).toEqual(true);
   })
-})
+});
 
 describe('getNextMonth()', () => {
   it('should return correct next month', () => {
     expect(getNextMonth({ month: 5, year: 2021, day: 1 })).toEqual({
       month: 6,
       year: 2021,
-      day: null
+      day: 1
     });
     expect(getNextMonth({ month: 12, year: 2021, day: 30 })).toEqual({
       month: 1,
       year: 2022,
-      day: null
+      day: 30
     });
     expect(getNextMonth({ month: 12, year: 1999, day: 30 })).toEqual({
       month: 1,
       year: 2000,
-      day: null
+      day: 30
     });
   });
 });
@@ -54,17 +194,17 @@ describe('getPreviousMonth()', () => {
     expect(getPreviousMonth({ month: 5, year: 2021, day: 1 })).toEqual({
       month: 4,
       year: 2021,
-      day: null
+      day: 1
     });
     expect(getPreviousMonth({ month: 1, year: 2021, day: 30 })).toEqual({
       month: 12,
       year: 2020,
-      day: null
+      day: 30
     });
     expect(getPreviousMonth({ month: 1, year: 2000, day: 30 })).toEqual({
       month: 12,
       year: 1999,
-      day: null
+      day: 30
     });
   });
 });
@@ -72,9 +212,9 @@ describe('getPreviousMonth()', () => {
 describe('generateMonths()', () => {
   it('should generate correct month data', () => {
     expect(generateMonths({ month: 5, year: 2021, day: 1 })).toEqual([
-      { month: 4, year: 2021, day: null },
-      { month: 5, year: 2021, day: null },
-      { month: 6, year: 2021, day: null }
+      { month: 4, year: 2021, day: 1 },
+      { month: 5, year: 2021, day: 1 },
+      { month: 6, year: 2021, day: 1 }
     ]);
   });
 });
@@ -88,6 +228,7 @@ describe('getCalendarDayState()', () => {
     expect(getCalendarDayState('en-US', refA, refB, refC)).toEqual({
       isActive: false,
       isToday: false,
+      disabled: false,
       ariaSelected: null,
       ariaLabel: 'Tuesday, January 1'
     });
@@ -95,6 +236,7 @@ describe('getCalendarDayState()', () => {
     expect(getCalendarDayState('en-US', refA, refA, refC)).toEqual({
       isActive: true,
       isToday: false,
+      disabled: false,
       ariaSelected: 'true',
       ariaLabel: 'Tuesday, January 1'
     });
@@ -102,6 +244,7 @@ describe('getCalendarDayState()', () => {
     expect(getCalendarDayState('en-US', refA, refB, refA)).toEqual({
       isActive: false,
       isToday: true,
+      disabled: false,
       ariaSelected: null,
       ariaLabel: 'Today, Tuesday, January 1'
     });
@@ -109,6 +252,7 @@ describe('getCalendarDayState()', () => {
     expect(getCalendarDayState('en-US', refA, refA, refA)).toEqual({
       isActive: true,
       isToday: true,
+      disabled: false,
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1'
     });

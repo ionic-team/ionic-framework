@@ -12,9 +12,11 @@ import {
   getDaysOfWeek,
   getMonthAndDay,
   getMonthAndYear,
+  getNextDay,
   getNextMonth,
   getNextWeek,
   getPartsFromCalendarDay,
+  getPreviousDay,
   getPreviousMonth,
   getPreviousWeek,
   parseDate,
@@ -272,7 +274,13 @@ export class Datetime implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   private initializeKeyboardListeners = () => {
-    this.calendarBodyRef!.addEventListener('keyup', (ev: KeyboardEvent) => {
+    /**
+     * We must use keydown not keyup as we want
+     * to prevent scrolling when using the arrow keys.
+     */
+    this.calendarBodyRef!.addEventListener('keydown', (ev: KeyboardEvent) => {
+      ev.preventDefault();
+
       const activeElement = this.el!.shadowRoot!.activeElement;
       if (!activeElement || !activeElement.classList.contains('calendar-day')) { return; }
 
@@ -286,10 +294,10 @@ export class Datetime implements ComponentInterface {
           this.workingParts = { ...getPreviousWeek(parts) as any };
           break;
         case 'ArrowRight':
-          console.log('move to next day');
+          this.workingParts = { ...getNextDay(parts) as any };
           break;
         case 'ArrowLeft':
-          console.log('move to previous day');
+          this.workingParts = { ...getPreviousDay(parts) as any };
           break;
         case 'Home':
           console.log('move to first day of current week');
@@ -298,10 +306,10 @@ export class Datetime implements ComponentInterface {
           console.log('move to last day of current week');
           break;
         case 'PageUp':
-          console.log('move to previous month');
+          this.workingParts = { ...getPreviousMonth(parts) as any }
           break;
         case 'PageDown':
-          console.log('move to previous month');
+          this.workingParts = { ...getNextMonth(parts) as any }
           break;
         default:
           console.log('unrecognized');
@@ -315,6 +323,8 @@ export class Datetime implements ComponentInterface {
         console.log('focusing', day)
         day.focus();
       })
+
+      return false;
     })
   }
 
@@ -447,11 +457,11 @@ export class Datetime implements ComponentInterface {
          * if we did not do this.
          */
         writeTask(() => {
-          const { month, year } = refMonthFn(this.workingParts);
+          const { month, year, day } = refMonthFn(this.workingParts);
 
           this.workingParts = {
             month,
-            day: 1,
+            day: day!,
             year
           }
 
