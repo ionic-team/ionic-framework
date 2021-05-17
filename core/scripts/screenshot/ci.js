@@ -124,7 +124,7 @@ class CIScreenshotConnector extends IonicConnector {
 
     uploadPaths.push(path.join(appRoot, 'scripts', 'testing', 'styles.css'));
 
-    const distDir = path.join(appRoot, 'dist');
+    const distDir = path.join(appRoot, 'dist', 'esm');
     uploadPaths.push(path.join(distDir, 'ionic.js'));
 
     const distIonicDir = path.join(distDir, 'ionic');
