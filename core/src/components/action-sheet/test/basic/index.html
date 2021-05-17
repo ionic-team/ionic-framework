@@ -79,6 +79,25 @@
             console.log('Delete clicked');
           }
         }, {
+          text: 'Share',
+          icon: 'share',
+          cssClass: 'ion-activated',
+          handler: () => {
+            console.log('Share clicked');
+          }
+        }, {
+          text: 'Play (open modal)',
+          icon: 'chevron-forward-circle',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        }, {
+          text: 'Favorite',
+          icon: mode === 'md' ? 'heart' : null,
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
           text: 'Cancel',
           icon: mode === 'md' ? 'close' : null,
           role: 'cancel',
