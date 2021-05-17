@@ -266,7 +266,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm run test.e2e --ci
+          command: npm run test.e2e --ci --no-build
           working_directory: /tmp/workspace/core
 
   test-core-spec:
@@ -276,7 +276,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm run test.spec --ci
+          command: npm run test.spec --ci --no-build
           working_directory: /tmp/workspace/core
 
   test-core-treeshake:
@@ -286,7 +286,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          command: npm run test.treeshake --ci
+          command: npm run test.treeshake --ci --no-build
           working_directory: /tmp/workspace/core
 
   test-core-screenshot:
